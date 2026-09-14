@@ -1428,7 +1428,7 @@ Start Candidate and Origin use their explicit compact v2 keys/grammars, Commit a
 
 #### Event and native qualification boundary
 
-GRS-079/SP-311 now adopt the complete original started-v3 reader/consumer, owned durable projection/checkpoint and exact existing-family registry selection. The goal_run.cancelled row remains its complete active v2 registration and its v3 payload remains a source dependency pending its own separate owner adoption. The original started RP-RUNTIME-365D and cancelled RP-AUTHORITY-INDEFINITE policies remain unchanged. Neither source adoption nor a registry row clears Event depth, original native source/codec/custody/backup qualification or runtime execution; those independent gates remain unproved. No sibling checkpoint or passive none_required disposition is borrowed.
+GRS-079/SP-311 now adopt the complete original started-v3 reader/consumer, owned durable projection/checkpoint and exact existing-family registry selection. GRS-080/SP-312 now separately adopt the complete positive cancelled-v3 consumer, versioned combined projection/checkpoint and exact existing cancelled-family v3 source selection. Existing started-v3 methods, rows and profiles remain unchanged. The original started RP-RUNTIME-365D and cancelled RP-AUTHORITY-INDEFINITE policies remain unchanged. Neither source adoption nor a registry row clears Event depth, original native source/codec/custody/backup qualification or runtime execution; those independent gates remain unproved. No sibling checkpoint or passive none_required disposition is borrowed.
 
 Native installation/capability authentication, complete original source execution, both final fences and all-writer exclusion, exact codec execution, original atomicity/fsync/crash recovery, current/retained replay, coherent backup/restore and compatible outer Goal terminal integration remain NOT_RUN. RequiredCheckpointSuccess is false in the bounded aggregate. No WorkNode, NodeSeed, executable queue, runtime/readiness admission, global safe-stop closure, Step 9 result or governance seal follows from these source contracts.
 
@@ -1620,6 +1620,69 @@ validation_surfaces:
 risk_class: original_started_source_or_projection_currentness_drift
 reasoning_tier: high
 context_scope: original_started_v3_consumer_adoption
+implementation_surfaces:
+- Plans/Backup_Restore_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Executor_Protocol.md#EP-118
+- Plans/storage-plan.md#SP-309
+- Plans/Backup_Restore_System.md#BRS-025
+source_atom_ids: []
+```
+
+
+### BRS-028 - Whole original cancellation source retention and combined projection recovery
+
+Original non-rebuildable D06/D05/D01/Start/Goal/Storage/effect authority keeps its existing exact family keys, full schemas, native provenance and mandatory backup/disclosure rules under BRS025 and its original owners. The new two combined projection/checkpoint families are disposable derived state with optional coherent derivative backup. Their registration does not make original source backup optional, enlarge an authority or require a historical mutable Workflow/Goal-body archive. All 27 retention-policy objects remain exact.
+
+Original started remains RP-RUNTIME-365D@1.0.0: 31,536,000 seconds from run completion with original 1,000,000/run and 5,000,000/project caps, roll_successor, holds and compaction. Original cancelled remains RP-AUTHORITY-INDEFINITE@1.0.0 with actual original deletion/hold/backup controls. Every original native/Goal/Start compact record, process record, FileSafe journal and raw artifact retains its separate source lifetime. Indefinite cancelled retention or a projection hold does not extend another source, recreate a disposed full journal or retain raw files indefinitely.
+
+CombinedStorageProjection contains a complete original started or cancelled EventRecord/payload plus exact original issuance/receipt/selector facts. Treat the full Event as retained source content, not metadata; do not trim fields to manufacture partial success. Every current, staged, retired or held generation has an independent actual source disclosure fence. Missing/expired/deleted original Event or required full causal/effect source makes dependent reads unavailable and triggers the lawful governed derivative rebuild/removal disposition. A historical commitment may survive its own policy but cannot substitute for missing full source. No read refreshes a source TTL or retirement clock.
+
+The cancelled branch carries original Start metadata selectors, not a duplicate full earlier started Event. A cancellation may remain readable after lawful started Event expiry only if a complete new survivor scan and all full cancellation/native/Goal/effect/retained Start sources remain authentic and available. The started projection branch always requires its own complete original started Event. Neither an old held started generation nor a derived cancelled row may reconstruct or disclose expired original content. An old started-v3 root is not converted into the new combined root; both source contracts remain separately bound.
+
+The existing RP-PROJECTION-3GEN@1.0.0 governs exactly the new generation lifecycle: maximum three including staged/current/retired; current no TTL; original retirement plus 604800 seconds subject to authentic holds/references; immutable first preparation/activation/retirement/successor facts; governed rebuild on expiry/overflow. Whole root/dataset binding, generation anchor and advancing frontier must remain coherent. Checkpoint loss permits only a new isolated derived rebuild from actual complete generic retained source and authentic original causal records, never original Event/native/receipt/origin/capability repair. Actual source retention gaps require the full Storage owner proof; an empty survivor scan is not never-started or never-cancelled. Unsupported relevant events halt before the row and incomplete staged coverage cannot cut over as current.
+
+If backed up, optional derived root/generation/dataset values form one coherent unit with exact physical names, complete bytes/codecs, anchors/frontiers, lifecycle facts and actual hold references. Restore first honors current tombstones, deletion, permissions and holds, then independently revalidates actual generic source/current frontier, original custody and source availability. Stale or incomplete derivative state is refused or rebuilt; it cannot overwrite native/Goal controls, claim currentness from an old root, revive source content or substitute for missing mandatory authority. Original authority loss keeps its owner data-loss/unavailable disclosure; disposable projection loss is a different condition.
+
+Each actual backup, restore, janitor, retained-custody and passive disclosure helper independently obtains complete applicable real source/candidate/controls before helpers and reevaluates the entire pure final predicate after every helper and immediately before its effect/release with no interleaving gap. Token/hash equality or caller checks alone are insufficient. Full current cancelled disclosure additionally requires complete fresh positive native/D05/Start and separate Goal controls at the held read boundary; historical reads assert no current state and never reconstruct historical mutable bodies. Native codec/atomicity/crash/retention/hold/backup/restore execution and Event-depth qualification remain NOT_RUN. This source adoption changes no policy, validator, runtime admission or governance lock.
+
+```yaml
+plan_unit_id: BRS-028
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Backup_Restore_System.md
+canonical_text: Complete positive original cancelled-v3 source consumer and bounded versioned projector ownership; native execution remains unproved.
+gui_related: false
+gui_classification_reason: Original runtime custody and derived source currentness contract without visual presentation.
+split_recommended: false
+depends_on:
+- BRS-025
+- BRS-027
+- SP-312
+unblocks: []
+acceptance_criteria:
+- Whole original Event/native/Goal/effect sources and independent helper entry/final predicates are preserved.
+- Only the cancelled Event row changes; two separate derived families preserve all 280 expected predecessor rows and all 27 policies.
+- Existing started-v3 profiles and methods remain unchanged, with explicit fresh combined generation/cutover.
+- Source adoption does not qualify installed native authority, Event depth, runtime or governance.
+validation_surfaces:
+- Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json
+- Plans/goal_run_cancelled_consumer_contracts/cancelled-causal-arguments.schema.json
+- Plans/goal_run_cancelled_consumer_contracts/goal-arguments.schema.json
+- Plans/goal_run_cancelled_consumer_contracts/filesafe-arguments.schema.json
+- Plans/goal_run_cancelled_consumer_contracts/methods.json
+- Plans/goal_run_cancelled_consumer_contracts/physical-families.json
+- Plans/goal_run_cancelled_consumer_schema_resources.json
+- Plans/storage_value_registry.json
+- Plans/event_family_registry.json
+risk_class: original_cancelled_source_or_combined_projection_currentness_drift
+reasoning_tier: high
+context_scope: positive_cancelled_v3_consumer_adoption
 implementation_surfaces:
 - Plans/Backup_Restore_System.md
 node_compile_hint:

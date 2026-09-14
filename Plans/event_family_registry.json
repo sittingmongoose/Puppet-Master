@@ -50,16 +50,16 @@
     },
     {
       "family_id": "event-family-goal-run-cancelled",
-      "family_revision": "2.0.0",
+      "family_revision": "3.0.0",
       "event_type": "goal_run.cancelled",
       "scope_policy": "project_only",
-      "semantic_owner_doc": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
-      "payload_owner_doc": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
-      "payload_schema_id": "pm.goal_runtime_event.goal_run_cancelled.schema.v2",
+      "semantic_owner_doc": "Plans/Goal_Runtime_System.md#GRS-080",
+      "payload_owner_doc": "Plans/storage-plan.md#SP-312",
+      "payload_schema_id": "pm.goal_runtime_event.goal_run_cancelled.schema.v3",
       "payload_schema_ref": {
-        "path": "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json",
+        "path": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
         "json_pointer": "#",
-        "schema_id": "pm.goal_runtime_event.goal_run_cancelled.schema.v2"
+        "schema_id": "pm.goal_runtime_event.goal_run_cancelled.schema.v3"
       },
       "legacy": {
         "aliases": [],
@@ -82,7 +82,15 @@
       "source_refs": [
         "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json#",
         "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
-        "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration"
+        "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration",
+        "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json#",
+        "Plans/Goal_Runtime_System.md#GRS-080",
+        "Plans/Executor_Protocol.md#EP-121",
+        "Plans/storage-plan.md#SP-312",
+        "Plans/Backup_Restore_System.md#BRS-028",
+        "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "Plans/goal_run_cancelled_consumer_contracts/methods.json",
+        "Plans/goal_run_cancelled_consumer_schema_resources.json"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json",
+  "$comment": "Uninstalled whole original source consumer proposal. Actual native owner custody and independent full entry/final predicates remain mandatory. No event admission or capability from serialized data.",
+  "$defs": {
+    "RetainedFileSafeInvocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "binding",
+        "original_terminal_journal",
+        "complete_original_origins"
+      ],
+      "properties": {
+        "binding": {
+          "$ref": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/BindingValue"
+        },
+        "original_terminal_journal": {
+          "$ref": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalValue"
+        },
+        "complete_original_origins": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginValue"
+          }
+        }
+      }
+    },
+    "RetainedFileSafeEffects": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeInvocation"
+      }
+    }
+  }
+}

@@ -1,0 +1,417 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/goal_run_cancelled_causal_arguments.v1.schema.json",
+  "$comment": "Uninstalled whole original source consumer proposal. Actual native owner custody and independent full entry/final predicates remain mandatory. No event admission or capability from serialized data.",
+  "$defs": {
+    "RetainedD05Cause": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "aggregate_result",
+        "aggregate_origin",
+        "domain_birth",
+        "final_domain_cut",
+        "complete_required_flush_history",
+        "complete_core_writer_cuts",
+        "complete_core_event_admissions",
+        "complete_capability_births",
+        "complete_capability_dispositions",
+        "complete_obligations",
+        "reservation_allocation",
+        "compile_reservation_join",
+        "workflow_reservation_join",
+        "complete_original_origin_chain",
+        "complete_original_recovery_records",
+        "original_native_cancel_result",
+        "original_native_cancel_origin",
+        "original_scheduler_stop",
+        "original_inventory_cut",
+        "original_coverage_birth",
+        "complete_d01_stop_origins",
+        "complete_pre_attempt_effect_admissions"
+      ],
+      "properties": {
+        "aggregate_result": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/AggregateResultPhysical"
+            },
+            {
+              "properties": {
+                "value": {
+                  "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ResolvedResult"
+                }
+              }
+            }
+          ]
+        },
+        "aggregate_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginPhysical"
+        },
+        "domain_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/DomainBirthPhysical"
+        },
+        "final_domain_cut": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/DomainCutPhysical"
+        },
+        "complete_required_flush_history": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/FinalFlushRecordPhysical"
+          }
+        },
+        "complete_core_writer_cuts": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CoreWriterCutPhysical"
+          }
+        },
+        "complete_core_event_admissions": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CoreEventAdmissionPhysical"
+          }
+        },
+        "complete_capability_births": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CapabilityBirthPhysical"
+          }
+        },
+        "complete_capability_dispositions": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CapabilityDispositionPhysical"
+          }
+        },
+        "complete_obligations": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ObligationBirthPhysical"
+          }
+        },
+        "reservation_allocation": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ReservationAllocationPhysical"
+        },
+        "compile_reservation_join": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CompileReservationJoinPhysical"
+        },
+        "workflow_reservation_join": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical"
+        },
+        "complete_original_origin_chain": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginPhysical"
+          }
+        },
+        "complete_original_recovery_records": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/RecoveryPhysical"
+          }
+        },
+        "original_native_cancel_result": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageRunOperationResult"
+        },
+        "original_native_cancel_origin": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StoragePublicationOrigin"
+        },
+        "original_scheduler_stop": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageSchedulerStop"
+        },
+        "original_inventory_cut": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageInventoryHead"
+        },
+        "original_coverage_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageCoverageBirth"
+        },
+        "complete_d01_stop_origins": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageMutationOrigin"
+          }
+        },
+        "complete_pre_attempt_effect_admissions": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmissionPhysical"
+          }
+        }
+      }
+    },
+    "RetainedInitializedNoStart": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "control",
+        "initial_control_origin",
+        "original_workflow_birth",
+        "original_workflow_birth_origin"
+      ],
+      "properties": {
+        "control": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageControl"
+            },
+            {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "epoch": {
+                      "const": 0
+                    },
+                    "pending_candidate": {
+                      "type": "null"
+                    },
+                    "committed_start": {
+                      "type": "null"
+                    },
+                    "original_operation_id": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "initial_control_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "original_workflow_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowBirth"
+        },
+        "original_workflow_birth_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowMutationOrigin"
+        }
+      }
+    },
+    "RetainedStartCause": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "original_started"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/RetainedNativeStart"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "original_initialized_no_start"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_causal_arguments.v1.schema.json#/$defs/RetainedInitializedNoStart"
+            }
+          }
+        }
+      ]
+    },
+    "RetainedProcessEffects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "births",
+        "admissions",
+        "termination_results",
+        "shutdown_results",
+        "complete_original_origins"
+      ],
+      "properties": {
+        "births": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessBirthPhysical"
+          }
+        },
+        "admissions": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ShutdownAdmissionPhysical"
+          }
+        },
+        "termination_results": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/TerminationResultPhysical"
+          }
+        },
+        "shutdown_results": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessShutdownResultPhysical"
+          }
+        },
+        "complete_original_origins": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalWriteOriginPhysical"
+          }
+        }
+      }
+    },
+    "RetainedNativeCancellation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_candidate",
+        "intent",
+        "committed_control",
+        "result",
+        "prepare_origin",
+        "publish_origin",
+        "original_d01_update",
+        "original_d01_head",
+        "original_d01_origin",
+        "original_safe_stop",
+        "original_start",
+        "original_process_effects",
+        "action_authority"
+      ],
+      "properties": {
+        "event_candidate": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/StorageEventCandidate"
+        },
+        "intent": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/StorageIntent"
+            },
+            {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "kind": {
+                      "const": "cancel_nonterminal"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "committed_control": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/StorageControl"
+            },
+            {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "phase": {
+                      "const": "committed"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "result": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/StorageResult"
+            },
+            {
+              "properties": {
+                "record": {
+                  "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/CancelledResult"
+                }
+              }
+            }
+          ]
+        },
+        "prepare_origin": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/StorageOrigin"
+            },
+            {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "issuer_method": {
+                      "const": "owner.workflow.executor_cancel.prepare_disposition.v3"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "publish_origin": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/StorageOrigin"
+            },
+            {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "issuer_method": {
+                      "const": "owner.workflow.executor_cancel.publish_disposition.v3"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "original_d01_update": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowUpdate"
+        },
+        "original_d01_head": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowHead"
+        },
+        "original_d01_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowMutationOrigin"
+        },
+        "original_safe_stop": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_causal_arguments.v1.schema.json#/$defs/RetainedD05Cause"
+        },
+        "original_start": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_causal_arguments.v1.schema.json#/$defs/RetainedStartCause"
+        },
+        "original_process_effects": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_causal_arguments.v1.schema.json#/$defs/RetainedProcessEffects"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    }
+  }
+}

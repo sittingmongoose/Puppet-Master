@@ -6379,6 +6379,7 @@
     "MS-138",
     "SSYS-007",
     "SSYS-011",
+    "GRS-080",
     "UCC-147",
     "WM-044",
     "ACD-447",
@@ -6549,6 +6550,7 @@
     "UIW-017",
     "F3-525",
     "SSYS-017",
+    "EP-121",
     "BRS-025",
     "GRS-078",
     "SP-311",
@@ -6561,6 +6563,7 @@
     "SIR-052",
     "SP-310",
     "BRS-027",
+    "SP-312",
     "UCC-159",
     "UCC-160",
     "UCC-161",
@@ -6570,6 +6573,7 @@
     "F3-528",
     "SSYS-027",
     "BRS-026",
+    "BRS-028",
     "WM-052",
     "F3-550",
     "UIW-023",
@@ -13291,6 +13295,21 @@
       "edge_type": "depends_on",
       "from": "BRS-027",
       "to": "SP-311"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-028",
+      "to": "BRS-025"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-028",
+      "to": "BRS-027"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-028",
+      "to": "SP-312"
     },
     {
       "edge_type": "depends_on",
@@ -24309,6 +24328,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "EP-121",
+      "to": "EP-118"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-121",
+      "to": "EP-119"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-121",
+      "to": "EP-120"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "F-067",
       "to": "F-002"
     },
@@ -29160,6 +29194,31 @@
     {
       "edge_type": "depends_on",
       "from": "GRS-079",
+      "to": "SP-214"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-080",
+      "to": "EP-118"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-080",
+      "to": "GRS-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-080",
+      "to": "GRS-031"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-080",
+      "to": "GRS-079"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-080",
       "to": "SP-214"
     },
     {
@@ -68334,6 +68393,36 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-312",
+      "to": "EP-121"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-312",
+      "to": "SP-214"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-312",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-312",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-312",
+      "to": "SP-309"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-312",
+      "to": "SP-311"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -97138,7 +97227,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-14T03:30:11Z",
+  "generated_at_utc": "2026-09-14T03:56:48Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -110718,6 +110807,23 @@
         "heading_level": 3,
         "heading_line": 1581,
         "line": 1595,
+        "path": "Plans/Backup_Restore_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "positive_cancelled_v3_consumer_adoption",
+      "gui_related": false,
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "plan_unit_id": "BRS-028",
+      "reasoning_tier": "high",
+      "risk_class": "original_cancelled_source_or_combined_projection_currentness_drift",
+      "source_location": {
+        "heading": "BRS-028 - Whole original cancellation source retention and combined projection recovery",
+        "heading_level": 3,
+        "heading_line": 1638,
+        "line": 1654,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -130223,6 +130329,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "positive_cancelled_v3_consumer_adoption",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-121",
+      "reasoning_tier": "high",
+      "risk_class": "original_cancelled_source_or_combined_projection_currentness_drift",
+      "source_location": {
+        "heading": "EP-121 - Whole original positive D06 event and causal custody consumption",
+        "heading_level": 3,
+        "heading_line": 8385,
+        "line": 8403,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/FileManager.md",
@@ -149138,6 +149261,23 @@
         "heading_level": 3,
         "heading_line": 7433,
         "line": 7451,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "positive_cancelled_v3_consumer_adoption",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-080",
+      "reasoning_tier": "high",
+      "risk_class": "original_cancelled_source_or_combined_projection_currentness_drift",
+      "source_location": {
+        "heading": "GRS-080 - Positive original cancelled-v3 semantics and bounded read roles",
+        "heading_level": 3,
+        "heading_line": 7496,
+        "line": 7516,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -196812,6 +196952,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "positive_cancelled_v3_consumer_adoption",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-312",
+      "reasoning_tier": "high",
+      "risk_class": "original_cancelled_source_or_combined_projection_currentness_drift",
+      "source_location": {
+        "heading": "Exact delta registration and successor selection",
+        "heading_level": 4,
+        "heading_line": 25861,
+        "line": 25873,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -209959,10 +210116,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15448,
+    "depends_on_edge_count": 15465,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18099,
-    "node_count": 6636,
+    "edge_count": 18116,
+    "node_count": 6640,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0

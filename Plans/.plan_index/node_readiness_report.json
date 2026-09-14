@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15448,
+    "depends_on_edge_count": 15465,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18099,
-    "node_count": 6636,
+    "edge_count": 18116,
+    "node_count": 6640,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-14T03:30:11Z",
+  "generated_at_utc": "2026-09-14T03:56:48Z",
   "gui_related_units": {
     "count": 3169,
     "units": [
@@ -34883,10 +34883,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6636,
+  "plan_unit_count": 6640,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2092,
+      "high": 2096,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -36928,6 +36928,7 @@
       "origin_stale_review_or_agent_publication": 1,
       "origin_visibility_overclaim_or_partial_api_data_loss": 1,
       "origin_webhook_replay_or_api_drift": 1,
+      "original_cancelled_source_or_combined_projection_currentness_drift": 4,
       "original_goal_workflow_source_custody_or_native_admission_drift": 4,
       "original_started_source_or_projection_currentness_drift": 4,
       "original_workflow_source_custody_or_native_admission_drift": 4,
@@ -38689,7 +38690,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6445,
+      "accepted": 6449,
       "retired": 182,
       "superseded": 9
     },
@@ -38761,7 +38762,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 108,
+      "schema_contract": 112,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 16,
@@ -38827,7 +38828,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "f24eaa72ce293a1377d3ec52a43b6ffb19c1fdfdbf13e6c6789cf51d87313692",
+        "expected": "1972a6aa6ef168a46091be5347bc9cff657985a1c21ab1b84665b9ed96c1ed3a",
         "source_path": "Plans/event_family_registry.json"
       },
       {
@@ -38845,7 +38846,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "0f3141c84af54bc6c82374ed4384ead1f2b3ac7b182f1b5aeb90afbc2a6e9181",
+        "expected": "74d4859c34790a3e0f4327260482ad46bc470555556db13169bce0b779b34d3c",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -38863,13 +38864,13 @@
       {
         "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
         "error": "pnc019_source_hash_stale",
-        "expected": "fb7263df315adb62b42da431c75a3c91c63c9c074f97d916cf7320d1a85c66be",
+        "expected": "f9859b9c1c413bf547e524701feb57ac6662a2e254fa7ef6c15730c6cb91c32f",
         "source_path": "Plans/Executor_Protocol.md"
       },
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "4499bc48c8d3946ff0c74b8c37ce5401f34c08db73384c0224ff98446224b85a",
+        "expected": "1186f32bb94582745eca5a5babcaf763681efbc06d890b52d2ca05d83ffa2b3d",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {

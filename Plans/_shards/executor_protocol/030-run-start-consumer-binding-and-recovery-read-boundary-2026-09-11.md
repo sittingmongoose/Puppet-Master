@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L7265-L8382
+Source lines: L7265-L8447
 
-Source SHA256: `fb7263df315adb62b42da431c75a3c91c63c9c074f97d916cf7320d1a85c66be`
+Source SHA256: `f9859b9c1c413bf547e524701feb57ac6662a2e254fa7ef6c15730c6cb91c32f`
 
 ---
 
@@ -321,7 +321,7 @@ Before success, compare every stored producer-owned field against the genuine co
 
 #### Event and native qualification boundary
 
-GRS-079/SP-311 now adopt the complete original started-v3 reader/consumer, owned durable projection/checkpoint and exact existing-family registry selection. The goal_run.cancelled row remains its complete active v2 registration and its v3 payload remains a source dependency pending its own separate owner adoption. The original started RP-RUNTIME-365D and cancelled RP-AUTHORITY-INDEFINITE policies remain unchanged. Neither source adoption nor a registry row clears Event depth, original native source/codec/custody/backup qualification or runtime execution; those independent gates remain unproved. No sibling checkpoint or passive none_required disposition is borrowed.
+GRS-079/SP-311 now adopt the complete original started-v3 reader/consumer, owned durable projection/checkpoint and exact existing-family registry selection. GRS-080/SP-312 now separately adopt the complete positive cancelled-v3 consumer, versioned combined projection/checkpoint and exact existing cancelled-family v3 source selection. Existing started-v3 methods, rows and profiles remain unchanged. The original started RP-RUNTIME-365D and cancelled RP-AUTHORITY-INDEFINITE policies remain unchanged. Neither source adoption nor a registry row clears Event depth, original native source/codec/custody/backup qualification or runtime execution; those independent gates remain unproved. No sibling checkpoint or passive none_required disposition is borrowed.
 
 Native installation/capability authentication, complete original source execution, both final fences and all-writer exclusion, exact codec execution, original atomicity/fsync/crash recovery, current/retained replay, coherent backup/restore and compatible outer Goal terminal integration remain NOT_RUN. RequiredCheckpointSuccess is false in the bounded aggregate. No WorkNode, NodeSeed, executable queue, runtime/readiness admission, global safe-stop closure, Step 9 result or governance seal follows from these source contracts.
 
@@ -1001,7 +1001,7 @@ For every method above, failed/unknown original commit or changed native boundar
 
 #### Event registry, terminal caller and remaining proof boundary
 
-The exact started-v3 source-family selection and complete original reader/consumer/projector/checkpoint are now governed by GRS-079/SP-311. The goal_run.cancelled family keeps its whole v2 registration and separate unadopted v3 source gate. Actual original native v3 publication and reads remain unavailable until the corresponding original owner/custody/codec/root/backup and current-source boundaries qualify. This source contract supplies no Event-depth pass, cannot borrow Executor run.started qualification and cannot replace a full original EventRecord claim with receipt-only custody.
+The exact started-v3 source-family selection and complete original reader/consumer/projector/checkpoint are now governed by GRS-079/SP-311. The separate complete cancelled-v3 consumer/projector/checkpoint and existing-family v3 source selection are now GRS-080/SP-312; original started-v3 routes and all native proof gates remain unchanged. Actual original native v3 publication and reads remain unavailable until the corresponding original owner/custody/codec/root/backup and current-source boundaries qualify. This source contract supplies no Event-depth pass, cannot borrow Executor run.started qualification and cannot replace a full original EventRecord claim with receipt-only custody.
 
 Positive D06 has a separate originally registered terminal-service source boundary and its own required first append barrier. It does not mutate D05's sealed work queues, capability/admission history, final flush or sticky failures. If SP-305's actual outer Goal operation holds a competing pre-reserved sequence/segment/offset append/rotation fence, D06 remains unavailable until the original Goal/Storage owner supplies its explicit compatible caller/assignment successor. No foreign lock release, fake receipt, omitted event, widened numeric domain or generic post-cut exception is admitted. D05 imports no future D06 result, event or Goal terminal; the positive consumer imports complete fresh D05 readback.
 
@@ -1073,7 +1073,7 @@ ContractRef: ContractName:Plans/executor_cancellation_contracts/methods.json, Co
 
 ### EP-120 - Original started Event to native publication custody join
 
-EP-118 already owns the complete original workflow_start_original.v2 producer/coordinator and current D01/Start source, and EP-119 retains actual original D05 observer and shutdown boundaries. GRS-079 and SP-311 now select the exact started-v3 source route and its complete required event consumer/projection/checkpoint contract. They do not alter the original start method signatures, accepted A4 outbox, Start/D01 values, native mutation algorithm, D05 or D06 routes. The goal_run.cancelled family still has its separate unadopted-v3 registry/consumer gate; nothing here selects it.
+EP-118 already owns the complete original workflow_start_original.v2 producer/coordinator and current D01/Start source, and EP-119 retains actual original D05 observer and shutdown boundaries. GRS-079 and SP-311 now select the exact started-v3 source route and its complete required event consumer/projection/checkpoint contract. They do not alter the original start method signatures, accepted A4 outbox, Start/D01 values, native mutation algorithm, D05 or D06 routes. This started unit does not select goal_run.cancelled; its separate complete cancelled-v3 consumer/projector/checkpoint and existing-family source selection are GRS-080/SP-312, with native qualification still independently required.
 
 The passive `owner.goal_run.started.read_retained_native.v1` owner boundary obtains the entire existing Start control at its actual physical key, unchanged original A4 initial control origin, complete original StorageCandidate, StorageCommit and StorageOrigin, plus complete original D01 StorageWorkflowUpdate, StorageWorkflowMutationOrigin and StorageWorkflowHead. Authenticate these as actual original coissued values under native original registration/custody; caller JSON, source hashes, identical operation/transaction strings or method names do not prove provenance. Before any returning helper independently obtain whole actual phase inputs and candidate; after all helpers reevaluate the pure whole source/candidate/current applicable owner/permission/hold/deletion/root/codec/transaction predicate with no helper/interleaving gap to release. Missing original custody is unavailable, never a native repair or new publication.
 
@@ -1113,6 +1113,71 @@ validation_surfaces:
 risk_class: original_started_source_or_projection_currentness_drift
 reasoning_tier: high
 context_scope: original_started_v3_consumer_adoption
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Executor_Protocol.md#EP-118
+- Plans/storage-plan.md#SP-309
+- Plans/Backup_Restore_System.md#BRS-025
+source_atom_ids: []
+```
+
+
+### EP-121 - Whole original positive D06 event and causal custody consumption
+
+EP118's complete positive original_bounded_safe_stop_terminal_publication.v1 registration, D06 v3 methods and D01 coissued original outcome remain the exact producer authority. EP119 and the already adopted original coordinator/started units retain their existing source, boundary and custody contracts. GRS-080/SP-312 now discharge the distinct cancelled-v3 consumer/projector/checkpoint and existing-family source-selection prerequisite. They change no native registration, method signature, coordinator algorithm, original stored value, capability or effect permission. Actual native installation/execution, original authority, codecs, final fences, atomicity and Event depth remain unavailable until independently qualified.
+
+The new retained native method obtains the entire original nonterminal EventCandidate, Intent, committed Control, CancelledResult, prepare and publish Origins, D01 update/head/mutation origin, full original D05 cause, original Start cause and original process effect custody. Original Goal SourceAudit/StopIntent/StopReceipt/ControlPublication/binding sources and full original FileSafe bindings/terminal journals/origin chains are admitted in their separate complete source realms. Every helper independently authenticates full applicable original sources, candidate and current disclosure/owner fences, then repeats the complete final predicate after returning helpers with no gap to release. Copied JSON, a method/profile literal, an original argument hash or serialized capability handle proves no original invocation.
+
+Original native registration must precede DomainBirth and genuinely identify the positive terminal service principal, native entrypoint, original operation and epoch. Full original DomainBirth/final cut, complete writer/capability/obligation and pre-attempt census, original reservation/compile/workflow enrollment, core writer cuts/event admissions, all required flush records and original origin chains establish the bounded D05 outcome. No pre-attempt, unknown or unsupported effect, reopened queue or ordinary late output is admitted. Every required flush failure remains sticky, including an authentic empty event set. D05 required checkpoint success remains false. D06's separate original cancellation Event/first barrier does not rewrite the sealed earlier final flush.
+
+D05 aggregate, D06 disposition, SchedulerStop/native cancellation, effect and flush operations preserve genuinely distinct coordinates. Resolve the selected SchedulerStop native_cancel_result.operation_id against full original native RunOperationResult/PublicationOrigin; join original root Goal Stop/SourceAudit and execution binding, exact inventory/capability boundaries and genuine full D05 result/origin. Do not force those distinct operations equal. Authenticate the exact original control-plane writer, stopped queues and all revoked work/effect/callback/normalizer/drain capabilities through the original owner.
+
+Candidate precedes prepare outputs; the method-specific prepare Origin closes only its original candidate/Intent/control commitments. Committed Control advances its phase/revision once and selects its original immutable Result. Publish Origin closes native/result/control outputs without self/downstream D01 dependency. Original D01 update is owner_status with rule d06_cancel_nonterminal; original_owner_result/origin select that exact D06 result and publish origin. Genuine owner.executor.workflow_source.update_workflow.v3 custody binds complete update/head and original pointer commitment in the same coordinated outcome as native status+1 revision, unchanged activation and original first append. Historical issuance selectors do not authorize fetching/reconstructing old mutable Workflow/Goal bodies or requiring an old head to be current.
+
+The original_started cause carries the entire previously adopted RetainedNativeStart and every original candidate/commit/initial-control-origin/transition/D01 predicate, including the complete five-field ActivationTransitionReceipt. The no-start cause instead requires the genuine initialized StartControl with epoch zero and three null operation/pending/committed fields, original A4 issuance and full original WorkflowBirth/mutation origin for that born run. Absence of a retained started Event or empty dispatch proves neither no-start nor no mutation. Pending Start is unavailable in this bounded reader.
+
+Original effect owners independently resolve the exhaustive complete original FileSafe and disposable-process partition. Full native journal/origin/binding and process birth/admission/termination/shutdown/origin values establish which mutation/settlement/rollback actually occurred and became durable before cancellation. Reference presence, phase or enum alone never suffices. Required original source disposal makes this dependent read unavailable; no archive or source reconstruction is introduced. The exact complete producer submission, original stored Event and full append/custody are compared field by field under the original JCS/idempotency, producer digest and original-value codecs, not by one digest alone.
+
+Current cancelled reads additionally admit complete positive CurrentRead and CurrentSuccessfulReadback, full D05/current Start and separate CurrentGoalStopArgument/current D06 controls at one held actual native/Goal boundary. They do not reuse an old readback as current. Exact matching cancelled native body/control/activation, original result and current complete generic frontier are mandatory; changed native/Goal/source state refuses the view. Passive original/historical reads remain independent of current mutable Workflow/Goal bodies and confer no action. Complete source and independent lower-owner boundary details are SP-312. No reader runs native cancellation, repairs lineage, creates an origin/receipt, mutates D05 or gains terminal writer authority.
+
+```yaml
+plan_unit_id: EP-121
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Complete positive original cancelled-v3 source consumer and bounded versioned projector ownership; native execution remains unproved.
+gui_related: false
+gui_classification_reason: Original runtime custody and derived source currentness contract without visual presentation.
+split_recommended: false
+depends_on:
+- EP-118
+- EP-119
+- EP-120
+unblocks: []
+acceptance_criteria:
+- Whole original Event/native/Goal/effect sources and independent helper entry/final predicates are preserved.
+- Only the cancelled Event row changes; two separate derived families preserve all 280 expected predecessor rows and all 27 policies.
+- Existing started-v3 profiles and methods remain unchanged, with explicit fresh combined generation/cutover.
+- Source adoption does not qualify installed native authority, Event depth, runtime or governance.
+validation_surfaces:
+- Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json
+- Plans/goal_run_cancelled_consumer_contracts/cancelled-causal-arguments.schema.json
+- Plans/goal_run_cancelled_consumer_contracts/goal-arguments.schema.json
+- Plans/goal_run_cancelled_consumer_contracts/filesafe-arguments.schema.json
+- Plans/goal_run_cancelled_consumer_contracts/methods.json
+- Plans/goal_run_cancelled_consumer_contracts/physical-families.json
+- Plans/goal_run_cancelled_consumer_schema_resources.json
+- Plans/storage_value_registry.json
+- Plans/event_family_registry.json
+risk_class: original_cancelled_source_or_combined_projection_currentness_drift
+reasoning_tier: high
+context_scope: positive_cancelled_v3_consumer_adoption
 implementation_surfaces:
 - Plans/Executor_Protocol.md
 node_compile_hint:

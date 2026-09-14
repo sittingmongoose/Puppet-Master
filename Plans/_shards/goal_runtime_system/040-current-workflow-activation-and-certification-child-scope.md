@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6951-L7493
+Source lines: L6951-L7562
 
-Source SHA256: `4499bc48c8d3946ff0c74b8c37ce5401f34c08db73384c0224ff98446224b85a`
+Source SHA256: `1186f32bb94582745eca5a5babcaf763681efbc06d890b52d2ca05d83ffa2b3d`
 
 ---
 
@@ -538,6 +538,75 @@ validation_surfaces:
 risk_class: original_started_source_or_projection_currentness_drift
 reasoning_tier: high
 context_scope: original_started_v3_consumer_adoption
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Executor_Protocol.md#EP-118
+- Plans/storage-plan.md#SP-309
+- Plans/Backup_Restore_System.md#BRS-025
+source_atom_ids: []
+```
+
+
+### GRS-080 - Positive original cancelled-v3 semantics and bounded read roles
+
+This source adoption changes only the existing event-family-goal-run-cancelled row to revision 3.0.0, selecting the entire already canonical Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json resource, schema ID pm.goal_runtime_event.goal_run_cancelled.schema.v3, under complete outer EventRecord 2.0.0. The 42-member Event inventory and other 41 complete rows, including started-v3, remain exact. The old full cancelled-v2 payload resource and its original interpretation remain unchanged. Native execution and Event-depth qualification do not follow from this row.
+
+D-R17 and EP118 own positive native cancellation from a genuine legal nonterminal Workflow, including blocked or stopped. The native body status becomes cancelled and body revision advances exactly once; all other fields, including activation state/revision, remain unchanged. Goal body/control, objective/history/lifecycle, active_run_ref/association, original Stop latch, WorkNode/Attempt/prior results, schedules and quota remain under their existing owners and preservation rules. This is no fifth Goal state, resumed run, replan or newly cancelled already-terminal run. Already terminal native state is preserved byte-for-byte without a new cancelled Event and still needs genuine full D05 success to assert settlement.
+
+The full common v3 runtime envelope preserves authentic project/Goal/run identity, actor/execution role, provider/model/account, exact original timestamps, correlation/causation and every required/optional evidence/artifact/source field. It contains unchanged original Goal context goal_revision and separate required expected_goal_run_revision/goal_run_revision. The latter are exactly the genuine original native before body revision and its successor, matching the complete coissued D01 commitments. An expected Goal revision from v2 is not silently reinterpreted as the Workflow clock. Inner and outer payload schemas/names/identity and keys match the entire genuine original EventCandidate and first original stored Event; current focus, settings or later reconstruction cannot supply missing original fields.
+
+Only user_cancelled is admitted by this positive route. The event-specific payload has exact goal_run_id, cancel_reason, mutation_started, settlement_refs and optional rollback_refs. All effect branches come from genuine exhaustive original D-R17/D05/native FileSafe/process owners: false mutation requires empty settlements and absent rollback; true mutation requires the nonempty genuine durable settlement set, with rollback refs only for actual original rollback. Every required disposition became durable before append. Empty dispatch, a rollback selector, enum or copied result is not original effect proof. activation_aborted/cancelled_before_mutation belongs to its separate owner route and is not enabled here.
+
+The exact idempotency key is pm.goal-runtime-event.v3: plus lowercase SHA-256 of RFC8785 JCS of ["pm.goal-runtime-event-idempotency.v3", scope_partition, "goal_run.cancelled", project_id, goal_id, goal_revision, expected_goal_run_revision, goal_run_revision, goal_run_id, "user_cancelled", mutation_started]. Storage owns reversible scope_partition. Inner and outer keys byte-equal. Producer semantic digest and full stored-value commitment remain separate exact codecs. Original same-key/same-digest custody returns the first original Event/receipt/transition; no second append, timestamp or revision. Changed digest maps to D06 immutable_conflict through original Storage idempotency_conflict; a different key never bypasses native/Goal/Stop/CAS fences. Tail catch-up and dedupe_unavailable retain original Storage authority.
+
+SP214's mandatory per-Workflow-run projection is the separate v4 combined started/cancelled family and owned checkpoint in SP-312. It does not replace that role with a body pointer, metadata-only receipt or none_required. Only owner.goal_run.started_cancelled.project_prefix.v1 has durable effects, restricted to its complete derived row/checkpoint transaction. The two cancelled retained/original readers and combined historical/current readers are passive with no own durable progress. That passive disposition cannot exempt the projector.
+
+The combined reducer supports exactly the already adopted original started-v3 and this positive cancelled-v3. It preserves every original started source/transition/current-read predicate through explicit versioned composition. Known outside-run events count as no-ops only after full generic original validation. Same-run replanned, blocked, certified, stopped, incompatible v2/v3 profile or any other unsupported GoalRun event halts before its row; unknown or malformed generic source also prevents coverage. The native D06's legal source-state breadth is not narrowed: a genuine cancellation after an unsupported event may be passively inspected while this bounded current projector cannot cross the earlier row. No status is inferred from event name, silence or an empty filtered scan.
+
+The original cancelled reader independently requires the complete original Event and original D06/D05/D01/Start custody plus separate original Goal/FileSafe/process effect proof. Retained native audit can return complete genuine metadata without claiming full Event availability. Historical projection asserts original facts only and rederives its whole selected branch from still-retained sources. Current cancelled view additionally requires full freshly admitted positive CurrentRead and CurrentSuccessfulReadback, whole D05/current Start and separate current Goal Stop/current-controls arguments at the actual held native boundary, exact matching current native body/control and the complete current generic frontier. Current started view preserves the complete original current Start/native/separate Goal predicate. Changed or missing sources make the dependent view unavailable; no current state is guessed or mutated.
+
+All six methods and each lower source/effect/Storage/disclosure helper independently obtain entire authentic applicable entry sources and complete candidate before returning helpers, then reevaluate the whole pure final predicate after each helper and immediately before their own effect/release without an intervening helper or unguarded gap. Caller-supplied values, prior checks, hashes and selectors provide no authority. Complete algorithms and source-coupled retention are SP-312, original causal ownership is EP-121 and recovery/disclosure is BRS-028. Goal retains its existing four states. This source route creates no native action, dispatch, certification, WorkNode, runtime qualification or governance result.
+
+```yaml
+plan_unit_id: GRS-080
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: Complete positive original cancelled-v3 source consumer and bounded versioned projector ownership; native execution remains unproved.
+gui_related: false
+gui_classification_reason: Original runtime custody and derived source currentness contract without visual presentation.
+split_recommended: false
+depends_on:
+- GRS-026
+- GRS-031
+- SP-214
+- EP-118
+- GRS-079
+unblocks: []
+acceptance_criteria:
+- Whole original Event/native/Goal/effect sources and independent helper entry/final predicates are preserved.
+- Only the cancelled Event row changes; two separate derived families preserve all 280 expected predecessor rows and all 27 policies.
+- Existing started-v3 profiles and methods remain unchanged, with explicit fresh combined generation/cutover.
+- Source adoption does not qualify installed native authority, Event depth, runtime or governance.
+validation_surfaces:
+- Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json
+- Plans/goal_run_cancelled_consumer_contracts/cancelled-causal-arguments.schema.json
+- Plans/goal_run_cancelled_consumer_contracts/goal-arguments.schema.json
+- Plans/goal_run_cancelled_consumer_contracts/filesafe-arguments.schema.json
+- Plans/goal_run_cancelled_consumer_contracts/methods.json
+- Plans/goal_run_cancelled_consumer_contracts/physical-families.json
+- Plans/goal_run_cancelled_consumer_schema_resources.json
+- Plans/storage_value_registry.json
+- Plans/event_family_registry.json
+risk_class: original_cancelled_source_or_combined_projection_currentness_drift
+reasoning_tier: high
+context_scope: positive_cancelled_v3_consumer_adoption
 implementation_surfaces:
 - Plans/Goal_Runtime_System.md
 node_compile_hint:

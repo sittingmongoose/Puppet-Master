@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json",
+  "$comment": "Uninstalled whole original source consumer proposal. Actual native owner custody and independent full entry/final predicates remain mandatory. No event admission or capability from serialized data.",
+  "$defs": {
+    "RetainedGoalCause": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_source_audit",
+        "original_stop_intent",
+        "original_stop_receipt",
+        "original_control_publication",
+        "original_binding_selection",
+        "original_binding_revision",
+        "original_binding_origin"
+      ],
+      "properties": {
+        "original_source_audit": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageSourceAudit"
+        },
+        "original_stop_intent": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent"
+        },
+        "original_stop_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopReceipt"
+        },
+        "original_control_publication": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageControlPublication"
+        },
+        "original_binding_selection": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingSelection"
+        },
+        "original_binding_revision": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingRevision"
+        },
+        "original_binding_origin": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingOrigin"
+        }
+      }
+    },
+    "CurrentCancelledGoal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_stop",
+        "current_controls"
+      ],
+      "properties": {
+        "current_stop": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument"
+        },
+        "current_controls": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_current_controls_argument.v3.schema.json"
+        }
+      }
+    },
+    "CurrentStartedGoal": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+    },
+    "ProjectGoalCauses": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/RetainedGoalCause"
+      }
+    }
+  }
+}

@@ -1,0 +1,779 @@
+{
+  "status": "SOURCE_CONTRACT_REVIEWED",
+  "base_commit": "e686963ad5fc10bc67de6e5dc81ceb3ff1b773ae",
+  "committed_started_baseline_pins_verified": 93,
+  "canonical_source_files": [
+    {
+      "path": "Plans/Backup_Restore_System.md",
+      "sha256": "42c7a278a65355e1b686b993723e9f93c098db6d2a88c53f763816707043f043",
+      "previous_sha256": "a0dbe6556ee38fd01125e0598fc4018b9ef12f4a75e99f2f1f3aecc591adea14"
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "sha256": "f9859b9c1c413bf547e524701feb57ac6662a2e254fa7ef6c15730c6cb91c32f",
+      "previous_sha256": "fb7263df315adb62b42da431c75a3c91c63c9c074f97d916cf7320d1a85c66be"
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "sha256": "1186f32bb94582745eca5a5babcaf763681efbc06d890b52d2ca05d83ffa2b3d",
+      "previous_sha256": "4499bc48c8d3946ff0c74b8c37ce5401f34c08db73384c0224ff98446224b85a"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "994b8628cdedf681cb2f5f9129e2fe5246dafb59eba2357519e6cdb063a1cd08",
+      "previous_sha256": "469eb75bf20cb060474f15ddad801e13728520432c5537aa9281805257d43d23"
+    },
+    {
+      "path": "Plans/goal_run_cancelled_consumer_contracts/cancelled-causal-arguments.schema.json",
+      "sha256": "4b147c1b69aef2cf57f92b49a9d5382ce28346a34092f4a3d7ab301d1494b72e",
+      "previous_sha256": null
+    },
+    {
+      "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+      "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f",
+      "previous_sha256": null
+    },
+    {
+      "path": "Plans/goal_run_cancelled_consumer_contracts/filesafe-arguments.schema.json",
+      "sha256": "96909602c20d87704873a66d0918483d78d3728ff0b9629f42060f5ae2572b02",
+      "previous_sha256": null
+    },
+    {
+      "path": "Plans/goal_run_cancelled_consumer_contracts/goal-arguments.schema.json",
+      "sha256": "ef5b7c3fbf864c5d152785e8fb7cc7bf7eac4a1bb87470251cf6d98bb281dece",
+      "previous_sha256": null
+    },
+    {
+      "path": "Plans/goal_run_cancelled_consumer_contracts/methods.json",
+      "sha256": "5a44e6eafffb116ee0210c2decf199734d7699dd2d8a15a5afd44bb571b7d6d2",
+      "previous_sha256": null
+    },
+    {
+      "path": "Plans/goal_run_cancelled_consumer_contracts/physical-families.json",
+      "sha256": "b41e2a8bfdea13cea278e7ef16c965efcbd94b172d1778b2ad81a86dc9c90ad8",
+      "previous_sha256": null
+    },
+    {
+      "path": "Plans/goal_run_cancelled_consumer_schema_resources.json",
+      "sha256": "b616a2b1c219dceb152f1d67fee0b23a00afe8c98c0e821bff04a2592704869c",
+      "previous_sha256": null
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "74d4859c34790a3e0f4327260482ad46bc470555556db13169bce0b779b34d3c",
+      "previous_sha256": "0f3141c84af54bc6c82374ed4384ead1f2b3ac7b182f1b5aeb90afbc2a6e9181"
+    },
+    {
+      "path": "Plans/event_family_registry.json",
+      "sha256": "1972a6aa6ef168a46091be5347bc9cff657985a1c21ab1b84665b9ed96c1ed3a",
+      "previous_sha256": "f24eaa72ce293a1377d3ec52a43b6ffb19c1fdfdbf13e6c6789cf51d87313692"
+    }
+  ],
+  "scope": {
+    "new_plan_units": [
+      "GRS-080",
+      "EP-121",
+      "SP-312",
+      "BRS-028"
+    ],
+    "existing_event_type_adopted": "goal_run.cancelled",
+    "family_revision": "3.0.0",
+    "event_membership": 42,
+    "whole_unchanged_event_siblings": 41,
+    "started_v3_preserved": true,
+    "new_storage_families": 2,
+    "total_storage_families": 282,
+    "whole_prior_storage_rows_preserved": 280,
+    "retention_policy_objects_preserved": 27,
+    "new_whole_schema_files": 4,
+    "exact_whole_canonical_resource_reuses": 75,
+    "whole_resource_documents": 79,
+    "isolated_unique_resources": {
+      "native": 124,
+      "goal": 43,
+      "filesafe": 70
+    },
+    "method_count": 6,
+    "complete_callable_routes": 37,
+    "complete_physical_roots": 2,
+    "existing_owner_passage_amendments": 6,
+    "editorial_reference_corrections": 1
+  },
+  "concurrent_main_source_check": {
+    "status": "PASS",
+    "source_baseline": "e686963ad5fc10bc67de6e5dc81ceb3ff1b773ae",
+    "observed_main": "29f9cf9a3ef09b07457d84492f95c12802f82d10",
+    "intervening_changed_paths": [
+      "reports/packet-gap-closure-20260910/r5x-touch-capture-source-audit-checkpoint-20260914.json"
+    ],
+    "whole_source_pins_still_exact": 93,
+    "requires_rebase_before_landing": true
+  },
+  "root_source_checks": {
+    "status": "PASS_SOURCE_ONLY",
+    "base_commit": "e686963ad5fc10bc67de6e5dc81ceb3ff1b773ae",
+    "checks": 4205,
+    "complete_baseline_pins": 93,
+    "source_files": 13,
+    "owner_results": [
+      {
+        "path": "Plans/Backup_Restore_System.md",
+        "plan_unit_id": "BRS-028",
+        "acceptance_criteria": 4,
+        "exact_amendments": 1,
+        "editorial_changes": 0,
+        "whole_existing_text_preserved_except_declared_amendments": true
+      },
+      {
+        "path": "Plans/Executor_Protocol.md",
+        "plan_unit_id": "EP-121",
+        "acceptance_criteria": 4,
+        "exact_amendments": 3,
+        "editorial_changes": 1,
+        "whole_existing_text_preserved_except_declared_amendments": true
+      },
+      {
+        "path": "Plans/Goal_Runtime_System.md",
+        "plan_unit_id": "GRS-080",
+        "acceptance_criteria": 4,
+        "exact_amendments": 0,
+        "editorial_changes": 0,
+        "whole_existing_text_preserved_except_declared_amendments": true
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "plan_unit_id": "SP-312",
+        "acceptance_criteria": 4,
+        "exact_amendments": 2,
+        "editorial_changes": 0,
+        "whole_existing_text_preserved_except_declared_amendments": true
+      }
+    ],
+    "declared_existing_passage_amendments": 6,
+    "editorial_reference_corrections": 1,
+    "storage_before": 280,
+    "storage_after": 282,
+    "whole_existing_storage_rows_preserved": 280,
+    "policies_preserved": 27,
+    "event_membership": 42,
+    "unchanged_event_sibling_rows": 41,
+    "changed_event_type": "goal_run.cancelled",
+    "new_family_revision": "3.0.0",
+    "resource_realms": [
+      {
+        "realm": "native_consumer",
+        "placements": 124,
+        "unique_resources": 124
+      },
+      {
+        "realm": "goal_consumer",
+        "placements": 43,
+        "unique_resources": 43
+      },
+      {
+        "realm": "filesafe_consumer",
+        "placements": 70,
+        "unique_resources": 70
+      }
+    ],
+    "whole_resource_documents": 79,
+    "new_whole_schemas": 4,
+    "whole_source_schemas_preserved": true,
+    "method_count": 6,
+    "method_routes": 37,
+    "physical_roots": 2,
+    "inactive_historical_reference_failures": "Independent review records 22 inherited inactive native failures; root checks actual callable roots only, not whole-map closure.",
+    "native_execution": "NOT_RUN",
+    "schema_instances": "NOT_RUN",
+    "event_depth": "NOT_PROVED",
+    "readiness": "NOT_PROVED"
+  },
+  "applied_checks": {
+    "status": "PASS",
+    "source_files_verified": 13,
+    "existing_owner_text_preserved_except_six_declared_amendments": true,
+    "portable_source_hashes_after_registry_adoption_exact": true,
+    "storage_families": 282,
+    "whole_prior_storage_rows_exact": 280,
+    "retention_policies_exact": 27,
+    "event_membership": 42,
+    "whole_unchanged_event_siblings": 41,
+    "only_changed_event": "goal_run.cancelled",
+    "active_started_version": "v3",
+    "active_cancelled_version": "v3",
+    "indexes": [
+      {
+        "path": "Plans/.plan_index/plan_units.jsonl",
+        "before_count": 6636,
+        "after_count": 6640,
+        "added_records": [
+          "BRS-028",
+          "EP-121",
+          "GRS-080",
+          "SP-312"
+        ],
+        "source_hash_only_changes_in_edited_owner_docs": 529
+      },
+      {
+        "path": "Plans/.plan_index/acceptance_units.jsonl",
+        "before_count": 25765,
+        "after_count": 25781,
+        "added_records": [
+          "BRS-028-A001",
+          "BRS-028-A002",
+          "BRS-028-A003",
+          "BRS-028-A004",
+          "EP-121-A001",
+          "EP-121-A002",
+          "EP-121-A003",
+          "EP-121-A004",
+          "GRS-080-A001",
+          "GRS-080-A002",
+          "GRS-080-A003",
+          "GRS-080-A004",
+          "SP-312-A001",
+          "SP-312-A002",
+          "SP-312-A003",
+          "SP-312-A004"
+        ],
+        "source_hash_only_changes_in_edited_owner_docs": 0
+      }
+    ],
+    "owned_source_and_generated_paths": 718,
+    "generated_changes_only_for_edited_documents": true,
+    "validator_edits": false,
+    "governance_artifact_edits": false,
+    "runtime_readiness": false
+  },
+  "independent_and_author_packages": [
+    {
+      "role": "consumer",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/goal-run-cancelled-v3-consumer-20260914/v1/manifest.json",
+      "manifest_sha256": "e4f360fa2c25d004e1f9d5364c487a7ecf2c5ea0235d6f19259e8402f5abf962",
+      "members_verified": 199
+    },
+    {
+      "role": "consumer_independent_review",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/goal-run-cancelled-v3-consumer-review-20260914/v1/manifest.json",
+      "manifest_sha256": "d76d4d816387db5783577c5db680a6ba8e269c6c55d7be1e85470125e855e6c3",
+      "members_verified": 3
+    },
+    {
+      "role": "adoption",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/goal-run-cancelled-v3-adoption-20260914/v1/manifest.json",
+      "manifest_sha256": "a95200456c9ac11e2bd4b9d7631412fbce2a6c09a7001e459733eb63a9a907d6",
+      "members_verified": 644
+    },
+    {
+      "role": "adoption_independent_review",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/goal-run-cancelled-v3-adoption-review-20260914/v1/manifest.json",
+      "manifest_sha256": "ad9221d025b7673d58daad3ae05768d747b3cfce5ce5f640f4e4af3cec38c933",
+      "members_verified": 3
+    },
+    {
+      "role": "final_placement",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/goal-cancelled-canonical-placement-20260914/v1/manifest.json",
+      "manifest_sha256": "f38aced328c1c2b2c65f313265e133c1c762f3fdae275086386c4b542a8460f5",
+      "members_verified": 764
+    }
+  ],
+  "repository_checks": {
+    "shard_generate": "PASS: 98 docs / 2676 shards",
+    "shard_check": "PASS: 98 docs / 2676 shards",
+    "plan_index_generate": "PASS: 6640 PlanUnits / 25781 acceptance units / 95 docs / zero blockers",
+    "plan_index_validate": "PASS",
+    "node_readiness_status": "blocked_runtime_certification_incomplete",
+    "diff_check": "PASS"
+  },
+  "gates": {
+    "status": "fail",
+    "check_count": 36,
+    "pass_count": 21,
+    "fail_count": 15,
+    "new_failing_check_names": [],
+    "checks": {
+      "check_project_artifact_requirements": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "check_shards": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "json_syntax": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "lint_banned_phrases": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "lint_contractrefs": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "lint_path_refs": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 10,
+        "after_count": 10
+      },
+      "validate_audit_closure": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 201,
+        "after_count": 201
+      },
+      "validate_audit_status_index": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "validate_auto_decisions": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_browser_event_admission": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "validate_case_l_non_event_materialization": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_evidence": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1513,
+        "after_count": 1513
+      },
+      "validate_filesafe_security_policy": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_forge_backup_acceptance": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_github_project_integration": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "validate_goal_runtime_event_fixtures": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_gui_asset_policy": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_implementation_readiness": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 123,
+        "after_count": 124
+      },
+      "validate_new_contracts": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_plan_graph": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1513,
+        "after_count": 1513
+      },
+      "validate_plan_migration": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 180,
+        "after_count": 180
+      },
+      "validate_plans_to_code_handoff_schema": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_pm7_gui_fixtures": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "validate_prd_planning_runtime_contracts": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1240,
+        "after_count": 1240
+      },
+      "validate_project_output_fixtures": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_runtime_artifact_schemas": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_server_command_gap": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_testing_session_event_admission": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "validate_touch_closure": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_ui_command_response": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_usage_contract_drift": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_usage_gui_fixtures": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_web_capability_contracts": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_wiring_matrix": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_working_notebook_contracts": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "verify_spec_lock": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 31,
+        "after_count": 31
+      }
+    },
+    "reported_sample_review": [
+      {
+        "check": "lint_path_refs",
+        "changed_samples": 4,
+        "only_changed_field": "line",
+        "interpretation": "Index line shifts from four new PlanUnits."
+      },
+      {
+        "check": "validate_implementation_readiness",
+        "changed_samples": 4,
+        "only_changed_field": "expected",
+        "interpretation": "Expected current hash changed for the four touched sources; original receipt unchanged."
+      },
+      {
+        "check": "verify_spec_lock",
+        "changed_samples": 2,
+        "only_changed_field": "actual",
+        "interpretation": "Current hash changed for edited Executor/Goal owners; Spec Lock unchanged."
+      }
+    ],
+    "counts_are_reported_full_counts": true,
+    "diagnostic_samples_are_bounded": true
+  },
+  "readiness_diagnosis": {
+    "status": "SOURCE_LIMITATION_IDENTIFIED_READINESS_NOT_QUALIFIED",
+    "validator_path": "/home/sittingmongoose/pm-worktrees/event-authority-goal-cancelled-v3-20260914/scripts/pm-implementation-readiness.py",
+    "validator_sha256": "7101cbd81f9c8670c20c2824f77db1708001ad36213a77d3f383aa5e42c4579f",
+    "event_pure_function": "event_family_registry_data_failures",
+    "event_structural_failures_before": 3,
+    "event_structural_failures_after": 4,
+    "new_exact_path_failures": [
+      {
+        "path": "Plans/event_family_registry.json:families/1",
+        "error": "event_family_registry_goal_payload_ref_mismatch",
+        "event_type": "goal_run.cancelled",
+        "expected": "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json",
+        "actual": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json"
+      }
+    ],
+    "changed_existing_kernel_failure": {
+      "before": {
+        "path": "Plans/event_family_registry.json",
+        "error": "event_family_registry_goal_kernel_membership_mismatch",
+        "expected": [
+          "goal.blocked",
+          "goal.cancelled",
+          "goal.child_status_changed",
+          "goal.completed",
+          "goal.created",
+          "goal.degraded",
+          "goal.evidence_captured",
+          "goal.progressed",
+          "goal.receipt_recorded",
+          "goal.replanned",
+          "goal.scheduled",
+          "goal.stopped",
+          "goal.tool_check_recorded",
+          "goal.updated",
+          "goal.verification_decided",
+          "goal_run.blocked",
+          "goal_run.cancelled",
+          "goal_run.certified",
+          "goal_run.replanned",
+          "goal_run.started",
+          "goal_run.stopped"
+        ],
+        "actual": [
+          "goal.blocked",
+          "goal.cancelled",
+          "goal.child_status_changed",
+          "goal.completed",
+          "goal.created",
+          "goal.degraded",
+          "goal.evidence_captured",
+          "goal.progressed",
+          "goal.receipt_recorded",
+          "goal.replanned",
+          "goal.scheduled",
+          "goal.stopped",
+          "goal.tool_check_recorded",
+          "goal.updated",
+          "goal.verification_decided",
+          "goal_run.blocked",
+          "goal_run.cancelled",
+          "goal_run.certified",
+          "goal_run.replanned",
+          "goal_run.started",
+          "goal_run.stopped"
+        ],
+        "expected_refs": {
+          "goal.created": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+          "goal.scheduled": "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+          "goal.progressed": "Plans/event_payloads/goal_runtime/goal_progressed.schema.json",
+          "goal.tool_check_recorded": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+          "goal.updated": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+          "goal.replanned": "Plans/event_payloads/goal_runtime/goal_replanned.schema.json",
+          "goal.child_status_changed": "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
+          "goal.evidence_captured": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
+          "goal.verification_decided": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json",
+          "goal.receipt_recorded": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
+          "goal.completed": "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
+          "goal.degraded": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
+          "goal.stopped": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
+          "goal.blocked": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
+          "goal.cancelled": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+          "goal_run.started": "Plans/event_payloads/goal_runtime/goal_run_started.schema.json",
+          "goal_run.replanned": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+          "goal_run.blocked": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
+          "goal_run.certified": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+          "goal_run.cancelled": "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json",
+          "goal_run.stopped": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json"
+        },
+        "actual_refs": {
+          "goal_run.blocked": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
+          "goal_run.cancelled": "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json",
+          "goal_run.certified": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+          "goal_run.replanned": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+          "goal_run.started": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+          "goal_run.stopped": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json",
+          "goal.blocked": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
+          "goal.cancelled": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+          "goal.child_status_changed": "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
+          "goal.completed": "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
+          "goal.created": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+          "goal.degraded": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
+          "goal.evidence_captured": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
+          "goal.progressed": "Plans/event_payloads/goal_runtime/goal_progressed.schema.json",
+          "goal.receipt_recorded": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
+          "goal.replanned": "Plans/event_payloads/goal_runtime/goal_replanned.schema.json",
+          "goal.scheduled": "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+          "goal.stopped": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
+          "goal.tool_check_recorded": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+          "goal.updated": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+          "goal.verification_decided": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json"
+        }
+      },
+      "after": {
+        "path": "Plans/event_family_registry.json",
+        "error": "event_family_registry_goal_kernel_membership_mismatch",
+        "expected": [
+          "goal.blocked",
+          "goal.cancelled",
+          "goal.child_status_changed",
+          "goal.completed",
+          "goal.created",
+          "goal.degraded",
+          "goal.evidence_captured",
+          "goal.progressed",
+          "goal.receipt_recorded",
+          "goal.replanned",
+          "goal.scheduled",
+          "goal.stopped",
+          "goal.tool_check_recorded",
+          "goal.updated",
+          "goal.verification_decided",
+          "goal_run.blocked",
+          "goal_run.cancelled",
+          "goal_run.certified",
+          "goal_run.replanned",
+          "goal_run.started",
+          "goal_run.stopped"
+        ],
+        "actual": [
+          "goal.blocked",
+          "goal.cancelled",
+          "goal.child_status_changed",
+          "goal.completed",
+          "goal.created",
+          "goal.degraded",
+          "goal.evidence_captured",
+          "goal.progressed",
+          "goal.receipt_recorded",
+          "goal.replanned",
+          "goal.scheduled",
+          "goal.stopped",
+          "goal.tool_check_recorded",
+          "goal.updated",
+          "goal.verification_decided",
+          "goal_run.blocked",
+          "goal_run.cancelled",
+          "goal_run.certified",
+          "goal_run.replanned",
+          "goal_run.started",
+          "goal_run.stopped"
+        ],
+        "expected_refs": {
+          "goal.created": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+          "goal.scheduled": "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+          "goal.progressed": "Plans/event_payloads/goal_runtime/goal_progressed.schema.json",
+          "goal.tool_check_recorded": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+          "goal.updated": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+          "goal.replanned": "Plans/event_payloads/goal_runtime/goal_replanned.schema.json",
+          "goal.child_status_changed": "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
+          "goal.evidence_captured": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
+          "goal.verification_decided": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json",
+          "goal.receipt_recorded": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
+          "goal.completed": "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
+          "goal.degraded": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
+          "goal.stopped": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
+          "goal.blocked": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
+          "goal.cancelled": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+          "goal_run.started": "Plans/event_payloads/goal_runtime/goal_run_started.schema.json",
+          "goal_run.replanned": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+          "goal_run.blocked": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
+          "goal_run.certified": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+          "goal_run.cancelled": "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json",
+          "goal_run.stopped": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json"
+        },
+        "actual_refs": {
+          "goal_run.blocked": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
+          "goal_run.cancelled": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+          "goal_run.certified": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+          "goal_run.replanned": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+          "goal_run.started": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+          "goal_run.stopped": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json",
+          "goal.blocked": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
+          "goal.cancelled": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+          "goal.child_status_changed": "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
+          "goal.completed": "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
+          "goal.created": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+          "goal.degraded": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
+          "goal.evidence_captured": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
+          "goal.progressed": "Plans/event_payloads/goal_runtime/goal_progressed.schema.json",
+          "goal.receipt_recorded": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
+          "goal.replanned": "Plans/event_payloads/goal_runtime/goal_replanned.schema.json",
+          "goal.scheduled": "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+          "goal.stopped": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
+          "goal.tool_check_recorded": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+          "goal.updated": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+          "goal.verification_decided": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json"
+        }
+      }
+    },
+    "storage_pure_function": "storage_value_registry_data_failures",
+    "storage_failures_before": 85,
+    "storage_failures_after": 85,
+    "interpretation": "The unchanged validator fixes all 21 Goal payload paths to the prior owner schema directory. Selecting complete cancelled v3 adds one exact-path failure and updates the already-failing kernel reference map. Event-name membership remains exact and the previous started path failure persists. Source adoption does not qualify readiness and no validator, original schema or historical payload was rewritten to bypass it.",
+    "native_execution": "NOT_RUN",
+    "family_depth_clearance": false,
+    "governance_seal": false
+  },
+  "evidence_manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-cancelled-v3-canonical-20260914/manifest.json",
+    "sha256": "e420dbaf0a0062623ec92c8ea70151d8bc31c5773c0205f001d8512e3ff1cce7"
+  },
+  "qualifications": [
+    "Complete source contract and registry selection do not establish installed native writer/reader authority or native codec/custody execution.",
+    "Original positive cancellation requires complete D06/D05/D01/Start and separate Goal/FileSafe/process custody with genuine exhaustive effect membership.",
+    "Current cancelled reads require both full CurrentRead and CurrentSuccessfulReadback plus separate fresh Goal controls at the actual held owner boundary.",
+    "The initialized no-start branch requires the original epoch-zero StartControl and A4/birth/origin; missing started Event is not proof.",
+    "The new combined mandatory per-Workflow projector has its own separate whole row/checkpoint/generation roots; all old started-only methods and roots remain exact.",
+    "Unsupported relevant GoalRun transitions halt the global-prefix reducer before their row; none is treated as a no-op.",
+    "Whole original Event content remains coupled to genuine original Event/native/effect source retention across all generation and hold states.",
+    "Historical original source reads cannot reconstruct disposed mutable Workflow/Goal bodies, FileSafe journals or original custody from selectors.",
+    "The inherited 22 inactive native reference failures remain explicitly unqualified; all 39 actual method and physical roots close.",
+    "Only goal_run.cancelled selects v3 in this landing; goal_run.started and all other existing Event rows remain exact.",
+    "Native installation, real codec/source/custody/atomicity/fsync/concurrency/crash/current/retained/TTL/hold/backup/restore execution remains NOT_RUN."
+  ],
+  "native_execution": "NOT_RUN",
+  "schema_instance_execution": "NOT_RUN",
+  "model_execution": "NOT_RUN",
+  "family_depth_clearance": false,
+  "global_D05_closure": false,
+  "step9_started": false,
+  "governance_seal": false,
+  "validator_edits": false,
+  "cost": "Source review and repository checks only; monetary attribution unavailable."
+}
