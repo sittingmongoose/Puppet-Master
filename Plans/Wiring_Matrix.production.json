@@ -52632,9 +52632,7 @@
       "ui_location": "Orchestrator > Blocked run actions > Skip Node",
       "ui_command_id": "cmd.runtime.skip_node",
       "handler_location": "handlers::runtime::skip_node",
-      "expected_event_types": [
-        "goal_run.stopped"
-      ],
+      "expected_event_types": [],
       "acceptance_checks": [
         "cmd.runtime.skip_node must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.runtime.skip_node must expose projected state selector and disabled reason before dispatch",
@@ -52646,10 +52644,12 @@
       "state_selector": "state.commands.runtime_skip_node.availability",
       "disabled_reason_projection": "state.commands.runtime_skip_node.disabled_reason",
       "effect_contract": {
-        "effect_kind": "event",
-        "description": "cmd.runtime.skip_node emits canonical domain event(s) and records dispatch correlation evidence; placeholder command_applied events are invalid.",
+        "effect_kind": "receipt",
+        "description": "cmd.runtime.skip_node records explicit dispatch correlation/result receipt evidence under Plans/UI_Command_Catalog.md runtime allowed actions. It applies only the existing node-contract skip policy: preserve skipped-attempt lineage, do not treat skip as silent success, and do not stop the run merely because a node was skipped. This row declares no unconditional handler EventRecord; it does not classify Skip as UI-only or suppress durable skip history or conditional owner events. When the skip satisfies a prerequisite under that policy, Plans/Executor_Protocol.md section 6 requires node.prerequisite_resolved and same-wake dependent re-evaluation. Concrete typed receipt and native handler evidence remain required before production certification; no new receipt type is defined here.",
         "receipt_or_event_refs": [
-          "goal_run.stopped"
+          "Plans/UI_Command_Catalog.md (Runtime allowed actions: explicit dispatch receipt)",
+          "Plans/human-in-the-loop.md (Skip semantics and runtime action enablement)",
+          "Plans/Executor_Protocol.md section 6 (conditional prerequisite-resolution event)"
         ]
       },
       "accessibility_contract": {
@@ -52672,7 +52672,7 @@
         {
           "test_id": "wiring.catalog.runtime_skip_node.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.runtime.skip_node must emit the declared event types and record dispatch correlation evidence."
+          "requirement": "Assert cmd.runtime.skip_node preserves command_id, origin, correlation_id, handler target and typed result/dispatch receipt evidence. Verify node-contract enablement, preserved skipped-attempt lineage, and graph skip policy. No successful node skip alone may be treated as a run-stop transition; concrete typed receipt and native handler proof remain required."
         },
         {
           "test_id": "wiring.catalog.runtime_skip_node.accessibility",
@@ -52682,11 +52682,11 @@
         {
           "test_id": "wiring.catalog.runtime_skip_node.events",
           "evidence_kind": "event_test",
-          "requirement": "Assert cmd.runtime.skip_node emits canonical event type goal_run.stopped with command_id, origin, correlation_id, and handler target."
+          "requirement": "Assert cmd.runtime.skip_node does not unconditionally emit goal_run.stopped. For a dependency-satisfying skip under the node contract, assert the existing Executor node.prerequisite_resolved event with resolution=skipped and exact source_node_id, resolved_prerequisite_id and target_node_ids, followed by same-wake dependent re-evaluation. For other permitted skips, do not require that event merely because Skip was dispatched; preserve existing skip policy and lineage. Unrelated runnable nodes continue; a separate run-stop event requires its own owner-admitted transition."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.runtime.skip_node emits canonical event type goal_run.stopped with command_id, origin, correlation_id, and handler target."
+        "Assert cmd.runtime.skip_node does not unconditionally emit goal_run.stopped. For a dependency-satisfying skip under the node contract, assert the existing Executor node.prerequisite_resolved event with resolution=skipped and exact source_node_id, resolved_prerequisite_id and target_node_ids, followed by same-wake dependent re-evaluation. For other permitted skips, do not require that event merely because Skip was dispatched; preserve existing skip policy and lineage. Unrelated runnable nodes continue; a separate run-stop event requires its own owner-admitted transition."
       ]
     },
     "catalog.runtime_start_fresh_attempt": {

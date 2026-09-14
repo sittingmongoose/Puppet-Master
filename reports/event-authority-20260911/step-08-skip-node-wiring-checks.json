@@ -1,0 +1,306 @@
+{
+  "status": "SOURCE_WIRING_REPAIR_REVIEWED",
+  "base_commit": "f8ace334f4bf5f13c50e4ab12339648a1fc7908d",
+  "source_check": {
+    "status": "PASS_SOURCE_CONTRACT_ONLY",
+    "base_commit": "f8ace334f4bf5f13c50e4ab12339648a1fc7908d",
+    "source_manifest": {
+      "path": "/home/sittingmongoose/PM-Experiments/skip-node-wiring-repair-20260914/v1/manifest.json",
+      "sha256": "45d8494b9ac772b98c0af59a9f925f5b99e825e09251d0ee7d43e54762cea3be",
+      "members_verified": 20
+    },
+    "whole_source_pins_verified": 6,
+    "exact_owner_passages_verified": 8,
+    "path": "Plans/Wiring_Matrix.production.json",
+    "before_sha256": "c93502858906bf34850ee618aaaed52911a4471435ea7176e72d035177f3d0a0",
+    "after_sha256": "ef3085adb3068257c35b7d848fdf5f16c30257980ec1b414f02c4041c4232bed",
+    "whole_row_count": 1142,
+    "changed_rows": [
+      "catalog.runtime_skip_node"
+    ],
+    "whole_other_rows_preserved": 1141,
+    "all_bytes_outside_row_preserved": true,
+    "declared_exact_field_changes": 6,
+    "full_schema_validation": "PASS",
+    "new_event_admission": false,
+    "new_receipt_identifier": false,
+    "runtime_skip_history_preserved": true,
+    "conditional_prerequisite_resolution_preserved": true,
+    "schema_empty_list_review": "May be empty for UI-only commands is permissive description, not an exclusive restriction; receipt disposition explicitly preserves runtime/durable semantics and no unconditional handler event.",
+    "B01_approval": false,
+    "native_execution": "NOT_RUN",
+    "governance_edits": false,
+    "validator_edits": false
+  },
+  "independent_review": {
+    "status": "PASS_NARROW_SOURCE_REPAIR",
+    "manifest_path": "/home/sittingmongoose/PM-Experiments/skip-node-wiring-repair-review-20260914/v1/manifest.json",
+    "manifest_sha256": "776d9b9cd8e7c12cebc887fe589c8793c503b0221c075561e41ba48b21542cf7",
+    "whole_members_verified": 17,
+    "root_semantic_review": "Full review read; existing node-scoped Skip and explicit receipt owner disposition support repair, with runtime lineage and conditional prerequisite event retained. Empty-list schema description is permissive, not exclusive. No native qualification."
+  },
+  "applied_checks": {
+    "status": "PASS",
+    "source_files": 1,
+    "generated_changes": 0,
+    "plan_index_changes": 0,
+    "no_markdown_owner_edited": true,
+    "whole_other_source_and_generated_files_unchanged": true,
+    "only_source_path": "Plans/Wiring_Matrix.production.json",
+    "diff_check": "PASS"
+  },
+  "repository_checks": {
+    "shard_generate": "PASS, 98 docs / 2676 shards; no generated changes",
+    "shard_check": "PASS, 98 docs / 2676 shards",
+    "plan_index": "UNCHANGED; no markdown owner edit",
+    "diff_check": "PASS"
+  },
+  "gates": {
+    "status": "fail",
+    "pass_count": 21,
+    "fail_count": 15,
+    "all_full_check_counts_unchanged": true,
+    "checks": {
+      "check_project_artifact_requirements": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "check_shards": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "json_syntax": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "lint_banned_phrases": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "lint_contractrefs": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "lint_path_refs": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 10,
+        "after_count": 10
+      },
+      "validate_audit_closure": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 201,
+        "after_count": 201
+      },
+      "validate_audit_status_index": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "validate_auto_decisions": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_browser_event_admission": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "validate_case_l_non_event_materialization": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_evidence": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1513,
+        "after_count": 1513
+      },
+      "validate_filesafe_security_policy": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_forge_backup_acceptance": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_github_project_integration": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "validate_goal_runtime_event_fixtures": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_gui_asset_policy": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_implementation_readiness": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 124,
+        "after_count": 124
+      },
+      "validate_new_contracts": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_plan_graph": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1513,
+        "after_count": 1513
+      },
+      "validate_plan_migration": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 180,
+        "after_count": 180
+      },
+      "validate_plans_to_code_handoff_schema": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_pm7_gui_fixtures": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "validate_prd_planning_runtime_contracts": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1240,
+        "after_count": 1240
+      },
+      "validate_project_output_fixtures": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_runtime_artifact_schemas": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_server_command_gap": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_testing_session_event_admission": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "validate_touch_closure": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_ui_command_response": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_usage_contract_drift": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_usage_gui_fixtures": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_web_capability_contracts": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_wiring_matrix": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_working_notebook_contracts": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "verify_spec_lock": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 31,
+        "after_count": 31
+      }
+    },
+    "reported_sample_review": [],
+    "diagnostic_samples_are_bounded": true
+  },
+  "evidence_manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/skip-node-wiring-repair-20260914/manifest.json",
+    "sha256": "c95fbef5d55ad0b63eec0d0267afcf09cc44e594ee16e1ad5d1c9cb11d853619"
+  },
+  "qualifications": [
+    "This correction removes an unsupported unconditional goal_run.stopped expectation from one Skip node row.",
+    "The command keeps original node-contract enablement, skipped-attempt lineage and graph skip policy.",
+    "Explicit dispatch receipt is an existing allowed owner disposition; no new receipt identity or complete native receipt is invented.",
+    "Conditional node.prerequisite_resolved remains required only for a dependency-satisfying skip, with original fields and same-wake reevaluation.",
+    "Empty unconditional event list does not classify this runtime receipt row as UI-only or no-persist.",
+    "The matrix string fields do not themselves enforce conditional runtime behavior.",
+    "Typed handler/receipt, durable persistence, native dispatch, semantic operation and GUI certification remain unproved."
+  ],
+  "new_event_admission": false,
+  "new_receipt_identity": false,
+  "B01_approval": false,
+  "native_execution": "NOT_RUN",
+  "full_event_depth_clearance": false,
+  "step9_started": false,
+  "governance_seal": false,
+  "validator_edits": false,
+  "cost": "Source review and repository checks only; monetary attribution unavailable."
+}

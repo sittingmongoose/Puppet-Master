@@ -1,0 +1,11 @@
+# Step 08 — Skip node wiring correction
+
+The `catalog.runtime_skip_node` row now follows the existing HITL, Executor and UI Command Catalog owners: skipping advances the rejected execution unit under its graph policy and preserves the skipped attempt. Its unsupported unconditional `goal_run.stopped` expectation is removed from the effect and both event assertions. The existing explicit dispatch-receipt disposition remains subject to full typed receipt/handler proof. A dependency-satisfying skip still requires Executor's conditional `node.prerequisite_resolved` event with the original fields and same-wake dependent reevaluation. This does not choose a new event or make Skip stop the whole Workflow.
+
+Only one of 1142 wiring rows changes. Root and independent review authenticate all six complete source files and eight exact passages at original `a3c511657f73e7b6b9a4af60924f2b54c6b326fa` and current `f8ace334f4bf5f13c50e4ab12339648a1fc7908d`. Complete JSON and byte inverses preserve all 1141 other rows and every byte outside the target row. The full matrix validates against its unchanged schema. The empty event list records no unconditional handler Event; the receipt disposition explicitly preserves runtime history and conditional scheduler events. Its schema description is permissive, not an exclusive UI-only classification. The [machine report](step-08-skip-node-wiring-checks.json) records scope and source/evidence hashes.
+
+Shard generation and checks pass for 98 documents and 2676 shards with no derived changes. No markdown owner or PlanUnit index changes. Standard governance checks remain 21 PASS / 15 FAIL with every full per-check failure count unchanged from the inspector baseline. All reported bounded diagnostics also remain identical; no validator or frozen governance artifact was changed. This source correction supplies no native handler, concrete receipt schema, durable operation, GUI certification, Event depth or runtime readiness.
+
+Frozen external evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/skip-node-wiring-repair-20260914/manifest.json`, SHA-256 `c95fbef5d55ad0b63eec0d0267afcf09cc44e594ee16e1ad5d1c9cb11d853619`.
+
+Cost: source review and repository checks only; monetary attribution unavailable.
