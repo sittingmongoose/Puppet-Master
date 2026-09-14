@@ -2299,10 +2299,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 7,
+        "False": 8,
         "True": 19
       },
-      "heading_count": 54,
+      "heading_count": 55,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -2336,9 +2336,9 @@
         "future restore coordinator",
         "future security adapter registry"
       ],
-      "line_count": 1578,
+      "line_count": 1635,
       "path": "Plans/Backup_Restore_System.md",
-      "plan_unit_count": 26,
+      "plan_unit_count": 27,
       "plan_unit_ids": [
         "BRS-001",
         "BRS-002",
@@ -2365,7 +2365,8 @@
         "BRS-022",
         "BRS-024",
         "BRS-025",
-        "BRS-026"
+        "BRS-026",
+        "BRS-027"
       ],
       "reasoning_tiers": [
         "high",
@@ -2389,6 +2390,7 @@
         "incomplete_or_overbroad_backup_boundary",
         "inconsistent_backup_or_false_completion",
         "original_goal_workflow_source_custody_or_native_admission_drift",
+        "original_started_source_or_projection_currentness_drift",
         "original_workflow_source_custody_or_native_admission_drift",
         "recovery_key_loss_exposure_or_identity_clone",
         "restore_authority_leak",
@@ -2398,10 +2400,10 @@
         "unsafe_restore_or_false_operational_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "bc28b56d875161ad4fc0611db7153e67d3c1fb9179ba616e2411d83f7faa5179",
+      "sha256": "a0dbe6556ee38fd01125e0598fc4018b9ef12f4a75e99f2f1f3aecc591adea14",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 26
+        "accepted": 27
       },
       "title": "Backup And Restore System",
       "unit_type_counts": {
@@ -2413,7 +2415,7 @@
         "owner_boundary": 1,
         "recovery_requirement": 4,
         "requirement": 5,
-        "schema_contract": 3,
+        "schema_contract": 4,
         "security_requirement": 2,
         "validation_requirement": 1
       },
@@ -2426,10 +2428,15 @@
         "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_architecture_admission_record",
         "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_destination_recovery_admission_record",
         "Plans/backup_restore_system_contracts.schema.json#/$defs/restore_operational_safety_record",
+        "Plans/event_family_registry.json",
         "Plans/executor_cancellation_contracts/methods.json",
         "Plans/executor_cancellation_contracts/physical-families.json",
         "Plans/executor_cancellation_contracts/realm-entry-boundaries.json",
         "Plans/executor_cancellation_schema_resources.json",
+        "Plans/goal_run_started_consumer_contracts/consumer.schema.json",
+        "Plans/goal_run_started_consumer_contracts/methods.json",
+        "Plans/goal_run_started_consumer_contracts/physical-families.json",
+        "Plans/goal_run_started_consumer_schema_resources.json",
         "Plans/goal_runtime_workflow_cancel_contracts.schema.json",
         "Plans/goal_workflow_cancel_contracts/entry-boundaries.json",
         "Plans/goal_workflow_cancel_contracts/methods.json",
@@ -5862,10 +5869,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 102,
+        "False": 103,
         "True": 17
       },
-      "heading_count": 275,
+      "heading_count": 276,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -5899,9 +5906,9 @@
         "future Executor intake",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 8325,
+      "line_count": 8382,
       "path": "Plans/Executor_Protocol.md",
-      "plan_unit_count": 119,
+      "plan_unit_count": 120,
       "plan_unit_ids": [
         "EP-002",
         "EP-003",
@@ -6021,7 +6028,8 @@
         "EP-116",
         "EP-117",
         "EP-118",
-        "EP-119"
+        "EP-119",
+        "EP-120"
       ],
       "reasoning_tiers": [
         "high",
@@ -6042,6 +6050,7 @@
         "host_executor_bypass",
         "infinite_repair_loop",
         "migration_lineage",
+        "original_started_source_or_projection_currentness_drift",
         "original_workflow_source_custody_or_native_admission_drift",
         "p0_transport_websocket_streaming_hardening",
         "p1_transport_websocket_streaming_hardening",
@@ -6051,16 +6060,16 @@
         "unverified_execution_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "50fdcfe6be6bf8c9d2accc195c89ca0398668cb2e9010e851c8c930b430e6cbc",
+      "sha256": "fb7263df315adb62b42da431c75a3c91c63c9c074f97d916cf7320d1a85c66be",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 119
+        "accepted": 120
       },
       "title": "Overseer Protocol (Canonical)",
       "unit_type_counts": {
         "compatibility_disposition": 2,
         "requirement": 114,
-        "schema_contract": 3
+        "schema_contract": 4
       },
       "validation_surfaces": [
         "Cumulative snapshots are persisted once",
@@ -6077,12 +6086,17 @@
         "OpenCode remains HTTP/SSE unless upstream contract changes.",
         "Partial-stream failure routing fixtures",
         "Plans/Goal_Runtime_System.md#GRS-077",
+        "Plans/event_family_registry.json",
         "Plans/event_index_consumer_adoption.schema.json",
         "Plans/event_index_consumer_adoption_fixtures.json",
         "Plans/executor_cancellation_contracts/methods.json",
         "Plans/executor_cancellation_contracts/physical-families.json",
         "Plans/executor_cancellation_contracts/realm-entry-boundaries.json",
         "Plans/executor_cancellation_schema_resources.json",
+        "Plans/goal_run_started_consumer_contracts/consumer.schema.json",
+        "Plans/goal_run_started_consumer_contracts/methods.json",
+        "Plans/goal_run_started_consumer_contracts/physical-families.json",
+        "Plans/goal_run_started_consumer_schema_resources.json",
         "Plans/run_started_consumer_contract_fixtures.json",
         "Plans/run_started_consumer_contracts.schema.json",
         "Plans/storage_value_registry.json",
@@ -8194,10 +8208,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 44,
+        "False": 45,
         "True": 32
       },
-      "heading_count": 203,
+      "heading_count": 204,
       "implementation_surfaces": [
         "Concepts/chat-assistant-concepts/5.6 Pro/goals.js",
         "Plans/.plan_index",
@@ -8258,9 +8272,9 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 7430,
+      "line_count": 7493,
       "path": "Plans/Goal_Runtime_System.md",
-      "plan_unit_count": 76,
+      "plan_unit_count": 77,
       "plan_unit_ids": [
         "GRS-001",
         "GRS-048",
@@ -8337,7 +8351,8 @@
         "GRS-075",
         "GRS-076",
         "GRS-077",
-        "GRS-078"
+        "GRS-078",
+        "GRS-079"
       ],
       "reasoning_tiers": [
         "high",
@@ -8389,6 +8404,7 @@
         "model_role_policy_drift",
         "orchestrator_runtime_authority_drift",
         "original_goal_workflow_source_custody_or_native_admission_drift",
+        "original_started_source_or_projection_currentness_drift",
         "p0_agent_control_subagents_hardening",
         "p0_provider_capability_and_metadata_hardening",
         "p1_agent_control_subagents_hardening",
@@ -8414,10 +8430,10 @@
         "workflow_activation_original_source_or_lifetime_drift",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "7d8c007ecdf30ed23e917899114be94b5e84ecb01b6bc5a1ecf205b40ce0b590",
+      "sha256": "4499bc48c8d3946ff0c74b8c37ce5401f34c08db73384c0224ff98446224b85a",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 67,
+        "accepted": 68,
         "superseded": 9
       },
       "title": "Goal Runtime System",
@@ -8427,7 +8443,7 @@
         "owner_boundary": 2,
         "requirement": 47,
         "risk": 1,
-        "schema_contract": 8,
+        "schema_contract": 9,
         "validation_criterion": 2
       },
       "validation_surfaces": [
@@ -8482,6 +8498,10 @@
         "Plans/goal_handoff_contract_fixtures.json",
         "Plans/goal_handoff_contracts.schema.json",
         "Plans/goal_receipt_version_routes.json",
+        "Plans/goal_run_started_consumer_contracts/consumer.schema.json",
+        "Plans/goal_run_started_consumer_contracts/methods.json",
+        "Plans/goal_run_started_consumer_contracts/physical-families.json",
+        "Plans/goal_run_started_consumer_schema_resources.json",
         "Plans/goal_runtime_contracts.schema.json",
         "Plans/goal_runtime_events.schema.json",
         "Plans/goal_runtime_workflow_cancel_contracts.schema.json",
@@ -16849,10 +16869,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 202,
+        "False": 203,
         "True": 102
       },
-      "heading_count": 727,
+      "heading_count": 735,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16930,9 +16950,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 25646,
+      "line_count": 25754,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 304,
+      "plan_unit_count": 305,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -17237,7 +17257,8 @@
         "SP-307",
         "SP-308",
         "SP-309",
-        "SP-310"
+        "SP-310",
+        "SP-311"
       ],
       "reasoning_tiers": [
         "high",
@@ -17290,6 +17311,7 @@
         "migration_backup_canonical_redb_recovery",
         "notification_storage_secret_leak",
         "original_goal_workflow_source_custody_or_native_admission_drift",
+        "original_started_source_or_projection_currentness_drift",
         "original_workflow_source_custody_or_native_admission_drift",
         "p0_memory_history_logging_hardening",
         "p1_provider_capability_and_metadata_hardening",
@@ -17332,10 +17354,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "34e3b477366799070da38d143cd9966c9b4e24ce0eb4af75d05ea72bedd42c93",
+      "sha256": "469eb75bf20cb060474f15ddad801e13728520432c5537aa9281805257d43d23",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 301,
+        "accepted": 302,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
@@ -17345,7 +17367,7 @@
         "migration_contract": 2,
         "owner_boundary": 2,
         "requirement": 252,
-        "schema_contract": 18,
+        "schema_contract": 19,
         "security_contract": 1,
         "storage_contract": 21,
         "storage_security_contract": 1
@@ -17432,6 +17454,10 @@
         "Plans/goal_degraded_history_contract_fixtures.json",
         "Plans/goal_execution_binding_custody.schema.json",
         "Plans/goal_receipt_version_routes.json",
+        "Plans/goal_run_started_consumer_contracts/consumer.schema.json",
+        "Plans/goal_run_started_consumer_contracts/methods.json",
+        "Plans/goal_run_started_consumer_contracts/physical-families.json",
+        "Plans/goal_run_started_consumer_schema_resources.json",
         "Plans/goal_runtime_contracts.schema.json",
         "Plans/goal_runtime_events.schema.json",
         "Plans/goal_runtime_workflow_cancel_contracts.schema.json",
@@ -19467,7 +19493,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-14T02:56:58Z",
+  "generated_at_utc": "2026-09-14T03:30:11Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19475,13 +19501,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3463,
+      "False": 3467,
       "True": 3169
     },
-    "plan_unit_count": 6632,
+    "plan_unit_count": 6636,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6441,
+      "accepted": 6445,
       "retired": 182,
       "superseded": 9
     },
@@ -19553,7 +19579,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 104,
+      "schema_contract": 108,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 16,

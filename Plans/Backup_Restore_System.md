@@ -1428,7 +1428,7 @@ Start Candidate and Origin use their explicit compact v2 keys/grammars, Commit a
 
 #### Event and native qualification boundary
 
-The existing `goal_run.started` and `goal_run.cancelled` family rows remain complete active v2 registrations. The exact new v3 payload resources are source dependencies only. Actual v3 publication remains unavailable until the original event owner separately adopts the full v3 reader/consumer, durable projector and required checkpoint contract, then explicitly selects that family revision/schema in the registry. Source adoption does not clear event depth or borrow a sibling's checkpoint/none_required disposition. The original started RP-RUNTIME-365D and cancelled RP-AUTHORITY-INDEFINITE policies remain unchanged.
+GRS-079/SP-311 now adopt the complete original started-v3 reader/consumer, owned durable projection/checkpoint and exact existing-family registry selection. The goal_run.cancelled row remains its complete active v2 registration and its v3 payload remains a source dependency pending its own separate owner adoption. The original started RP-RUNTIME-365D and cancelled RP-AUTHORITY-INDEFINITE policies remain unchanged. Neither source adoption nor a registry row clears Event depth, original native source/codec/custody/backup qualification or runtime execution; those independent gates remain unproved. No sibling checkpoint or passive none_required disposition is borrowed.
 
 Native installation/capability authentication, complete original source execution, both final fences and all-writer exclusion, exact codec execution, original atomicity/fsync/crash recovery, current/retained replay, coherent backup/restore and compatible outer Goal terminal integration remain NOT_RUN. RequiredCheckpointSuccess is false in the bounded aggregate. No WorkNode, NodeSeed, executable queue, runtime/readiness admission, global safe-stop closure, Step 9 result or governance seal follows from these source contracts.
 
@@ -1576,3 +1576,60 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/goal_runtime_workflow_cancel_contracts.schema.json, ContractName:Plans/goal_workflow_cancel_schema_resources.json, ContractName:Plans/goal_workflow_cancel_contracts/entry-boundaries.json, ContractName:Plans/goal_workflow_cancel_contracts/methods.json, ContractName:Plans/goal_workflow_cancel_contracts/numeric-paths.json, ContractName:Plans/goal_workflow_cancel_contracts/physical-profiles.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json
+
+
+### BRS-027 - Source-coupled started projection recovery and disclosure
+
+BRS-025 remains the owner of mandatory coherent backup for original Workflow Start/D01 authority and genuine Event/first-receipt/seglog custody while retained. The two new SP-311 families are disposable projection/checkpoint state, not replacements for that non-rebuildable original set. Existing source family rows, keys, complete schemas, codecs, hold/deletion rules and all 27 retention-policy objects remain unchanged. A derived family backup flag never turns source backup into optional metadata.
+
+Original goal_run.started keeps exactly RP-RUNTIME-365D@1.0.0: 31,536,000 seconds from run completion, 1,000,000 per run, 5,000,000 per project, roll_successor overflow, original holds and compact expiry. Start/D01 compact authority retains its separately declared original policy and authentic issuance. A surviving projection, checkpoint, source selector, original receipt or native commitment cannot disclose or reconstruct an expired/deleted full EventRecord or missing original native custody. No historical native Body/Control, transient producer or whole input-argument archive is added.
+
+The complete StorageProjection contains full original typed started Event content and original commitments/receipt; it is not content-free metadata. Its disclosure remains source-coupled to genuine retained Event and complete original native custody. Exact RP-PROJECTION-3GEN@1.0.0 governs its own generation/checkpoint lifecycle: current has no TTL, retired first actual retirement plus 604800 seconds, maximum three including staged/current/retired, logical-key cap, authentic holds/references and rebuild overflow/expiry. A projection hold creates no Event or original native-source hold. Source expiry/deletion fences derivative content disclosure and requires the governed source-coupled rebuild/removal disposition; a held retained generation cannot bypass that disclosure fence or be reinterpreted as full current source. No field is trimmed or replaced by a hash to fabricate a readable partial success schema.
+
+Checkpoint loss, corrupt row/dataset binding or incomplete generation invalidates projection coverage and triggers rebuild only from the actual complete current generic source and genuine retained native custody. Actual retention-owner gap decisions must agree with the whole SP278 selection/frontier; empty survivor scan does not prove never-started. Rebuild stages an isolated fresh generation, validates every global prefix record and native cause, and atomically cuts over row/dataset/root under the complete original Storage final fence. Unsupported relevant events halt before their row; missing expected original source yields unavailable. Never rebuild the original Event, receipt, native state, origin or capability from the projection. Original missing non-rebuildable authority retains BRS-025 data-loss/unavailable disclosure rather than being mislabeled a disposable projection loss.
+
+If derived rows/checkpoints are included in a backup image, capture them as a coherent optional root/generation/dataset unit with exact physical keys, codecs, full values, immutable anchors, advancing frontier, lifecycle facts and actual hold references. Their restore does not assert currentness: after current tombstones/deletion/permission/holds are applied, independently revalidate original source availability, actual generic selection/frontier, native owner/custody and source registrations. A stale/incomplete derivative unit is refused or lawfully rebuilt; it never overlays newer native controls, invents old bodies or recreates authority. Original protected backup cannot extend current retention or resurrect tombstoned Event content. Each actual backup, restore, janitor and passive disclosure owner independently obtains whole applicable sources before helpers and repeats the full pure predicate after all helpers with no gap to mutation/release.
+
+Historical read returns full original facts only while its actual sources remain retained and current disclosure permitted. Current projected running read also requires the full fresh native and separate Goal controls and complete current global frontier; advanced native/D06 state is unavailable to that bounded view. Backup/restore, Event depth, real native custody, concurrency/crash/TTL/hold behavior and deterministic replay remain NOT_RUN until independently qualified. No governance seal, current runtime admission or action capability follows from these source definitions.
+
+```yaml
+plan_unit_id: BRS-027
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Backup_Restore_System.md
+canonical_text: Complete original started-v3 source and bounded consumer ownership; native execution remains unproved.
+gui_related: false
+gui_classification_reason: Defines original runtime source, custody, replay and retention contracts without a visual surface.
+split_recommended: false
+depends_on:
+- BRS-025
+- SP-311
+unblocks: []
+acceptance_criteria:
+- Exact original whole source and retained/current boundary is preserved.
+- Only the existing started Event family changes; all other Event rows and all 278 Storage rows and 27 policies remain exact.
+- The mandatory durable projection has complete atomic generation/checkpoint ownership.
+- Source definitions do not claim installed native authority, Event depth or runtime execution.
+validation_surfaces:
+- Plans/goal_run_started_consumer_contracts/consumer.schema.json
+- Plans/goal_run_started_consumer_contracts/methods.json
+- Plans/goal_run_started_consumer_contracts/physical-families.json
+- Plans/goal_run_started_consumer_schema_resources.json
+- Plans/event_family_registry.json
+- Plans/storage_value_registry.json
+risk_class: original_started_source_or_projection_currentness_drift
+reasoning_tier: high
+context_scope: original_started_v3_consumer_adoption
+implementation_surfaces:
+- Plans/Backup_Restore_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Executor_Protocol.md#EP-118
+- Plans/storage-plan.md#SP-309
+- Plans/Backup_Restore_System.md#BRS-025
+source_atom_ids: []
+```

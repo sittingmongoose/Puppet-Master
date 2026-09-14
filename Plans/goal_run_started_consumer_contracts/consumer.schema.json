@@ -1,0 +1,966 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json",
+  "$defs": {
+    "RetainedNativeStart": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "control",
+        "initial_control_origin",
+        "candidate",
+        "commit",
+        "origin",
+        "original_d01_update",
+        "original_d01_origin",
+        "original_d01_head"
+      ],
+      "properties": {
+        "control": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageControl"
+        },
+        "initial_control_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "candidate": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageCandidate"
+        },
+        "commit": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageCommit"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageOrigin"
+        },
+        "original_d01_update": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowUpdate"
+        },
+        "original_d01_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowMutationOrigin"
+        },
+        "original_d01_head": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowHead"
+        }
+      }
+    },
+    "OriginalStarted": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_append",
+        "native_start"
+      ],
+      "properties": {
+        "original_append": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/FullOriginalAppend"
+        },
+        "native_start": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/RetainedNativeStart"
+        }
+      }
+    },
+    "ScopeRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "storage_instance_id"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/RunScope"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "Unavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "reason",
+        "effects",
+        "current_state_asserted"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/RunScope"
+        },
+        "reason": {
+          "enum": [
+            "MISSING_ORIGINAL_VALUE",
+            "SOURCE_EXPIRED",
+            "CUSTODY_MISMATCH",
+            "UNSUPPORTED_RELEVANT_EVENT",
+            "INCOMPLETE_GLOBAL_COVERAGE",
+            "STALE_GENERIC_TOKEN",
+            "STALE_NATIVE",
+            "PENDING_OR_STOPPED",
+            "GENERATION_LIMIT",
+            "INVALID_CHECKPOINT"
+          ]
+        },
+        "effects": {
+          "const": "none"
+        },
+        "current_state_asserted": {
+          "const": false
+        }
+      }
+    },
+    "Projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "status_at_original_event",
+        "activation_at_original_event",
+        "original_event",
+        "native_after_commitment",
+        "captured_goal_context",
+        "original_commit",
+        "original_origin",
+        "original_d01_update",
+        "original_d01_origin",
+        "original_event_value_commitment",
+        "producer_semantic_digest",
+        "first_append_receipt",
+        "action_authority"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/RunScope"
+        },
+        "status_at_original_event": {
+          "const": "running"
+        },
+        "activation_at_original_event": {
+          "const": "active"
+        },
+        "original_event": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/TypedOriginalEvent"
+        },
+        "native_after_commitment": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/BodyIssuanceCommitment"
+        },
+        "captured_goal_context": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/GoalContextCommitment"
+        },
+        "original_commit": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Selector"
+        },
+        "original_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Selector"
+        },
+        "original_d01_update": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Selector"
+        },
+        "original_d01_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Selector"
+        },
+        "original_event_value_commitment": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+        },
+        "producer_semantic_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "first_append_receipt": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/FirstBarrier"
+        },
+        "action_authority": {
+          "const": false
+        }
+      }
+    },
+    "DurableGenericToken": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "checkpoint_key",
+        "checkpoint_ref",
+        "generation_id",
+        "generation_anchor_sha256",
+        "frontier_revision",
+        "frontier_sha256",
+        "index_dataset_name",
+        "source_selection"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "checkpoint_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "checkpoint_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generation_id": {
+          "type": "string",
+          "pattern": "^eig_[0-9a-f]{64}$"
+        },
+        "generation_anchor_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "frontier_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "frontier_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "index_dataset_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_selection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "storage_instance_id",
+            "current_ref",
+            "current_bytes_sha256",
+            "selected_segment_generation",
+            "manifest_ref",
+            "manifest_bytes_sha256",
+            "manifest_generation",
+            "recovery_epoch",
+            "manifest_survivor_prefix_sha256",
+            "retained_inventory_sha256",
+            "durable_watermarks_sha256",
+            "excluded_ranges_sha256",
+            "retired_inputs_sha256"
+          ],
+          "properties": {
+            "storage_instance_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "current_ref": {
+              "const": "storage/seglog/CURRENT"
+            },
+            "current_bytes_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "selected_segment_generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "manifest_ref": {
+              "const": "storage/seglog/manifest.v1.msgpack"
+            },
+            "manifest_bytes_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "manifest_generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "recovery_epoch": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "manifest_survivor_prefix_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "retained_inventory_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "durable_watermarks_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "excluded_ranges_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "retired_inputs_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        }
+      }
+    },
+    "ProcessedPrefix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generic_token",
+        "verified_row_count",
+        "through_sequence_id",
+        "coverage_sha256",
+        "retention_gap_sha256",
+        "row_key",
+        "row_sha256"
+      ],
+      "properties": {
+        "generic_token": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/DurableGenericToken"
+        },
+        "verified_row_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "through_sequence_id": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coverage_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "retention_gap_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "row_key": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "row_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "Generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generation_id",
+        "state",
+        "anchor_sha256",
+        "seed_hex",
+        "profile",
+        "scope",
+        "source_token_at_birth",
+        "dataset_name",
+        "frontier_revision",
+        "prior_frontier_sha256",
+        "frontier_sha256",
+        "processed",
+        "last_transaction_id",
+        "activated_at_utc",
+        "retired_at_utc",
+        "first_prepared_at_utc",
+        "successor_generation_id",
+        "hold_refs"
+      ],
+      "properties": {
+        "generation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "enum": [
+            "staged",
+            "current",
+            "retired"
+          ]
+        },
+        "anchor_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "seed_hex": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "profile": {
+          "const": "goal_run_started_projector.v1"
+        },
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/RunScope"
+        },
+        "source_token_at_birth": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/DurableGenericToken"
+        },
+        "dataset_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "frontier_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "prior_frontier_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "frontier_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "processed": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/ProcessedPrefix"
+        },
+        "last_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "activated_at_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "retired_at_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_prepared_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "successor_generation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^grsg_[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hold_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "Checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "scope",
+        "physical_key",
+        "current_generation_id",
+        "generations"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal_run_started_checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/RunScope"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_generation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "generations": {
+          "type": "object",
+          "maxProperties": 3,
+          "additionalProperties": {
+            "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/Generation"
+          }
+        }
+      }
+    },
+    "StorageProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "dataset_name",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal_run_projection.started.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dataset_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/Projection"
+        }
+      }
+    },
+    "HistoricalRead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original",
+        "projection",
+        "current_state_asserted"
+      ],
+      "properties": {
+        "original": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/OriginalStarted"
+        },
+        "projection": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/StorageProjection"
+        },
+        "current_state_asserted": {
+          "const": false
+        }
+      }
+    },
+    "CurrentNative": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentStartSource"
+    },
+    "CurrentRead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original",
+        "projection",
+        "checkpoint",
+        "current_native",
+        "interpretation",
+        "action_authority"
+      ],
+      "properties": {
+        "original": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/OriginalStarted"
+        },
+        "projection": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/StorageProjection"
+        },
+        "checkpoint": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/Checkpoint"
+        },
+        "current_native": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/CurrentNative"
+        },
+        "interpretation": {
+          "const": "native_verified_running_as_of_same_snapshot"
+        },
+        "action_authority": {
+          "const": false
+        }
+      }
+    },
+    "ProjectorResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checkpoint",
+        "projection",
+        "effects"
+      ],
+      "properties": {
+        "checkpoint": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/Checkpoint"
+        },
+        "projection": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/StorageProjection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "effects": {
+          "const": "projection_and_own_checkpoint_only"
+        }
+      }
+    },
+    "GenericIndexRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "scope_partition",
+        "sequence_id",
+        "event_id",
+        "event_type",
+        "source_locator",
+        "publication_locator",
+        "payload_sha256",
+        "producer_semantic_digest",
+        "idempotency_key",
+        "correlation_id",
+        "causation_event_id",
+        "persisted_at_utc",
+        "redaction_profile",
+        "source_schema_id",
+        "source_schema_version",
+        "projector_replay_only"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.event_record_index.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scope_partition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_locator": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "segment_generation",
+            "segment_name",
+            "byte_offset",
+            "sequence_id"
+          ],
+          "properties": {
+            "segment_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "segment_name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "byte_offset": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "sequence_id": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "description": "Generation-qualified physical locator in the CURRENT-selected index generation. sequence_id must equal the outer sequence_id; readiness must enforce this cross-field equality."
+        },
+        "publication_locator": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "manifest_generation",
+            "recovery_epoch",
+            "survivor_prefix_sha256",
+            "checkpoint_ref",
+            "compaction_translation_manifest_ref"
+          ],
+          "properties": {
+            "manifest_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "recovery_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "survivor_prefix_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "checkpoint_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "compaction_translation_manifest_ref": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Required-present nullable semantic ref. A stale source-generation checkpoint may resolve only through a committed manifest with outcome translated, expired, or deleted; null never authorizes a guessed offset."
+            }
+          },
+          "description": "Publication locator for an SP-278 admitted generation: manifest_generation, recovery_epoch and survivor_prefix_sha256 bind its immutable verified birth anchor; checkpoint_ref resolves that exact current generation node. Currentness separately requires the node frontier to match actual synchronized CURRENT and the committed current manifest/complete source coverage. A birth triple alone is not current proof; ordinary append may change frontier manifest/survivor digests without changing older row anchors. This is an explicit reader-contract qualification with unchanged wire shape."
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "producer_semantic_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "correlation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "causation_event_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "persisted_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "enum": [
+            "no_secrets",
+            "redacted",
+            "secret_refs_only"
+          ]
+        },
+        "source_schema_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_schema_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "projector_replay_only": {
+          "type": "boolean"
+        }
+      }
+    },
+    "GenericOriginalValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event",
+        "first_append_receipt",
+        "full_value_result",
+        "exact_custody"
+      ],
+      "properties": {
+        "event": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/EventRecord"
+        },
+        "first_append_receipt": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/FirstBarrier"
+        },
+        "full_value_result": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
+        },
+        "exact_custody": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2"
+        }
+      }
+    },
+    "GenericFrame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "index_row",
+        "frame_bytes_base64",
+        "original_value"
+      ],
+      "properties": {
+        "index_row": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/GenericIndexRow"
+        },
+        "frame_bytes_base64": {
+          "type": "string",
+          "contentEncoding": "base64"
+        },
+        "original_value": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/GenericOriginalValue"
+        }
+      }
+    },
+    "GenericSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checkpoint",
+        "token",
+        "frames"
+      ],
+      "properties": {
+        "checkpoint": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/checkpoint"
+        },
+        "token": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+        },
+        "frames": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/GenericFrame"
+          }
+        }
+      }
+    },
+    "InspectPrivate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generic",
+        "native_start"
+      ],
+      "properties": {
+        "generic": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/GenericSnapshot"
+        },
+        "native_start": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/RetainedNativeStart"
+        }
+      }
+    },
+    "ProjectPrivate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generic",
+        "native_starts",
+        "checkpoint",
+        "existing_row"
+      ],
+      "properties": {
+        "generic": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/GenericSnapshot"
+        },
+        "native_starts": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/RetainedNativeStart"
+          }
+        },
+        "checkpoint": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/Checkpoint"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "existing_row": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/StorageProjection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

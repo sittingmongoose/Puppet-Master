@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15435,
+    "depends_on_edge_count": 15448,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18086,
-    "node_count": 6632,
+    "edge_count": 18099,
+    "node_count": 6636,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-14T02:56:59Z",
+  "generated_at_utc": "2026-09-14T03:30:11Z",
   "gui_related_units": {
     "count": 3169,
     "units": [
@@ -34883,10 +34883,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6632,
+  "plan_unit_count": 6636,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2088,
+      "high": 2092,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -36929,6 +36929,7 @@
       "origin_visibility_overclaim_or_partial_api_data_loss": 1,
       "origin_webhook_replay_or_api_drift": 1,
       "original_goal_workflow_source_custody_or_native_admission_drift": 4,
+      "original_started_source_or_projection_currentness_drift": 4,
       "original_workflow_source_custody_or_native_admission_drift": 4,
       "orphan_control_or_inaccessible_hover_overlay": 1,
       "outcome_taxonomy_drift": 1,
@@ -38688,7 +38689,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6441,
+      "accepted": 6445,
       "retired": 182,
       "superseded": 9
     },
@@ -38760,7 +38761,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 104,
+      "schema_contract": 108,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 16,
@@ -38826,7 +38827,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "7337830736f02184ff97f0a4a7cf358cf9e34ae9aada68986d6440feda3c8b96",
+        "expected": "f24eaa72ce293a1377d3ec52a43b6ffb19c1fdfdbf13e6c6789cf51d87313692",
         "source_path": "Plans/event_family_registry.json"
       },
       {
@@ -38844,7 +38845,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "0885c0b6f6168b82e6e9bb7ca786b7f5ecb85cb32c6f8909e07871b53a1fb7d1",
+        "expected": "0f3141c84af54bc6c82374ed4384ead1f2b3ac7b182f1b5aeb90afbc2a6e9181",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -38862,13 +38863,13 @@
       {
         "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
         "error": "pnc019_source_hash_stale",
-        "expected": "50fdcfe6be6bf8c9d2accc195c89ca0398668cb2e9010e851c8c930b430e6cbc",
+        "expected": "fb7263df315adb62b42da431c75a3c91c63c9c074f97d916cf7320d1a85c66be",
         "source_path": "Plans/Executor_Protocol.md"
       },
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "7d8c007ecdf30ed23e917899114be94b5e84ecb01b6bc5a1ecf205b40ce0b590",
+        "expected": "4499bc48c8d3946ff0c74b8c37ce5401f34c08db73384c0224ff98446224b85a",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {

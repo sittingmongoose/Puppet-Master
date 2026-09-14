@@ -1,0 +1,37 @@
+{
+  "status": "canonical_source_contract_native_installation_not_run",
+  "preserve": "entire deferred goal_projection_families and original v1/v2 start readers unchanged",
+  "families": [
+    {
+      "name": "goal_run_projection.started.v3",
+      "table": "goal_run_projection.v3@<generation_id>",
+      "key": "goal_run_projection.v3:K(project_id):K(goal_run_id)",
+      "schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/StorageProjection"
+      },
+      "producer": "owner.goal_run.started.project_prefix.v1",
+      "owner": "GoalRuntime projector; Storage physical custody",
+      "consumers": [
+        "Orchestrator",
+        "GoalRuntime views",
+        "certification readers"
+      ],
+      "encoding": "canonical MessagePack",
+      "retention": "RP-PROJECTION-3GEN; derived original Event content never extends RP-RUNTIME-365D original source lifetime",
+      "protocol": "Plans/storage-plan.md#SP-311"
+    },
+    {
+      "name": "goal_run_started_checkpoint.v1",
+      "table": "checkpoints",
+      "key": "goal_run_started_checkpoint.v1:K(storage_instance_id):K(project_id):K(goal_id):K(goal_run_id)",
+      "schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/Checkpoint"
+      },
+      "producer": "owner.goal_run.started.project_prefix.v1",
+      "owner": "GoalRuntime projector; Storage physical custody",
+      "encoding": "canonical MessagePack",
+      "retention": "RP-PROJECTION-3GEN; current no TTL, retired 7 days, max 3 including staged; holds and references fence removal",
+      "protocol": "Plans/storage-plan.md#SP-311"
+    }
+  ]
+}

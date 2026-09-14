@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L7265-L8325
+Source lines: L7265-L8382
 
-Source SHA256: `50fdcfe6be6bf8c9d2accc195c89ca0398668cb2e9010e851c8c930b430e6cbc`
+Source SHA256: `fb7263df315adb62b42da431c75a3c91c63c9c074f97d916cf7320d1a85c66be`
 
 ---
 
@@ -321,7 +321,7 @@ Before success, compare every stored producer-owned field against the genuine co
 
 #### Event and native qualification boundary
 
-The existing `goal_run.started` and `goal_run.cancelled` family rows remain complete active v2 registrations. The exact new v3 payload resources are source dependencies only. Actual v3 publication remains unavailable until the original event owner separately adopts the full v3 reader/consumer, durable projector and required checkpoint contract, then explicitly selects that family revision/schema in the registry. Source adoption does not clear event depth or borrow a sibling's checkpoint/none_required disposition. The original started RP-RUNTIME-365D and cancelled RP-AUTHORITY-INDEFINITE policies remain unchanged.
+GRS-079/SP-311 now adopt the complete original started-v3 reader/consumer, owned durable projection/checkpoint and exact existing-family registry selection. The goal_run.cancelled row remains its complete active v2 registration and its v3 payload remains a source dependency pending its own separate owner adoption. The original started RP-RUNTIME-365D and cancelled RP-AUTHORITY-INDEFINITE policies remain unchanged. Neither source adoption nor a registry row clears Event depth, original native source/codec/custody/backup qualification or runtime execution; those independent gates remain unproved. No sibling checkpoint or passive none_required disposition is borrowed.
 
 Native installation/capability authentication, complete original source execution, both final fences and all-writer exclusion, exact codec execution, original atomicity/fsync/crash recovery, current/retained replay, coherent backup/restore and compatible outer Goal terminal integration remain NOT_RUN. RequiredCheckpointSuccess is false in the bounded aggregate. No WorkNode, NodeSeed, executable queue, runtime/readiness admission, global safe-stop closure, Step 9 result or governance seal follows from these source contracts.
 
@@ -1001,7 +1001,7 @@ For every method above, failed/unknown original commit or changed native boundar
 
 #### Event registry, terminal caller and remaining proof boundary
 
-The active `goal_run.started` and `goal_run.cancelled` family rows remain their whole v2 registrations. The exact new v3 payload schemas are source dependencies, not an active v3 event-registry selection. Original v3 Workflow publication remains unavailable until the separate complete original v3 reader/consumer/projector/checkpoint and registry contract is adopted. This contract supplies no event-depth pass and cannot borrow Executor `run.started` qualification or replace a full EventRecord claim with receipt-only custody.
+The exact started-v3 source-family selection and complete original reader/consumer/projector/checkpoint are now governed by GRS-079/SP-311. The goal_run.cancelled family keeps its whole v2 registration and separate unadopted v3 source gate. Actual original native v3 publication and reads remain unavailable until the corresponding original owner/custody/codec/root/backup and current-source boundaries qualify. This source contract supplies no Event-depth pass, cannot borrow Executor run.started qualification and cannot replace a full original EventRecord claim with receipt-only custody.
 
 Positive D06 has a separate originally registered terminal-service source boundary and its own required first append barrier. It does not mutate D05's sealed work queues, capability/admission history, final flush or sticky failures. If SP-305's actual outer Goal operation holds a competing pre-reserved sequence/segment/offset append/rotation fence, D06 remains unavailable until the original Goal/Storage owner supplies its explicit compatible caller/assignment successor. No foreign lock release, fake receipt, omitted event, widened numeric domain or generic post-cut exception is admitted. D05 imports no future D06 result, event or Goal terminal; the positive consumer imports complete fresh D05 readback.
 
@@ -1069,3 +1069,60 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/executor_cancellation_contracts/methods.json, ContractName:Plans/executor_cancellation_contracts/realm-entry-boundaries.json, ContractName:Plans/executor_cancellation_contracts/physical-families.json, ContractName:Plans/executor_cancellation_schema_resources.json
+
+
+### EP-120 - Original started Event to native publication custody join
+
+EP-118 already owns the complete original workflow_start_original.v2 producer/coordinator and current D01/Start source, and EP-119 retains actual original D05 observer and shutdown boundaries. GRS-079 and SP-311 now select the exact started-v3 source route and its complete required event consumer/projection/checkpoint contract. They do not alter the original start method signatures, accepted A4 outbox, Start/D01 values, native mutation algorithm, D05 or D06 routes. The goal_run.cancelled family still has its separate unadopted-v3 registry/consumer gate; nothing here selects it.
+
+The passive `owner.goal_run.started.read_retained_native.v1` owner boundary obtains the entire existing Start control at its actual physical key, unchanged original A4 initial control origin, complete original StorageCandidate, StorageCommit and StorageOrigin, plus complete original D01 StorageWorkflowUpdate, StorageWorkflowMutationOrigin and StorageWorkflowHead. Authenticate these as actual original coissued values under native original registration/custody; caller JSON, source hashes, identical operation/transaction strings or method names do not prove provenance. Before any returning helper independently obtain whole actual phase inputs and candidate; after all helpers reevaluate the pure whole source/candidate/current applicable owner/permission/hold/deletion/root/codec/transaction predicate with no helper/interleaving gap to release. Missing original custody is unavailable, never a native repair or new publication.
+
+Exact run/storage scope, operation/transaction, owner identity/epoch, candidate and commit references, before/after native selectors, prepared outbox, delivery profile and historical intended payload, captured original Goal context/source commitments, event ID/schema/type, producer semantic digest, first append receipt and original stored-value commitment agree across all complete objects. Start control selects the original immutable commit and operation, with no pending candidate; its initial origin belongs to the same original run birth. Original candidate/native inputs were transient; a retained argument hash is an original issuance commitment, not a claim that a historical full argument or body remains available.
+
+Start Commit.record.transition is the complete unchanged five-field ActivationTransitionReceipt: original activation identity, from_state=start_event_pending, to_state=active, original prepared outbox and actual original cause. The separate original D01 update.record.transition.rule is original_workflow_start and cause is owner_status. D01 update original_owner_result/origin select the actual Start commit/origin; its original lineage origin is the genuine owner.executor.workflow_source.update_workflow.v3 publication and selects the original update/head in its full afterimages. Original head binds that update and native after selectors. Validate exact before/after BodyIssuanceCommitment identity, revisions, owner and ready/start_event_pending to running/active transition. Authenticate original publication rather than requiring the original head to be today's head. Do not dereference historical body/control selectors to require or reconstruct old body copies.
+
+`inspect_original.v1` separately requires the complete genuine SP278 index/checkpoint/token/whole-source frame evidence and full original Event/first barrier/full-value custody; the native metadata reader alone proves no complete EventRecord availability. Current projected running interpretation additionally uses original read_started_current.v2 rules with whole fresh CurrentStartSource and separate CurrentGoalArgument. Its current body commitment must equal the original projected after commitment. EP-118's broader authentic current-source read may still expose later D06 native truth; this started-only current projection refuses that later revision instead of representing it as running. Historical reader requires no new Goal/native body and asserts no currentness or action authority.
+
+No new original Start publication, D01 update, origin, dispatch, Stop, D05 checkpoint, D06 action or Event is caused by any passive method. The concrete GoalRuntime projector writes only its two derived Storage families, never native state. Original source-family policies and mandatory BRS-025 custody backup remain unchanged. Additional bounded passive source consumption is declared by these exact owner methods without rekeying, reschematizing or rewriting any of the coordinator baseline's 278 complete family rows. Actual original native service installation, complete original publication atomicity/fsync, codec/custody execution and post-helper/final fences remain independently unproved; source adoption and matching metadata do not make them available.
+
+```yaml
+plan_unit_id: EP-120
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Complete original started-v3 source and bounded consumer ownership; native execution remains unproved.
+gui_related: false
+gui_classification_reason: Defines original runtime source, custody, replay and retention contracts without a visual surface.
+split_recommended: false
+depends_on:
+- EP-118
+- EP-119
+unblocks: []
+acceptance_criteria:
+- Exact original whole source and retained/current boundary is preserved.
+- Only the existing started Event family changes; all other Event rows and all 278 Storage rows and 27 policies remain exact.
+- The mandatory durable projection has complete atomic generation/checkpoint ownership.
+- Source definitions do not claim installed native authority, Event depth or runtime execution.
+validation_surfaces:
+- Plans/goal_run_started_consumer_contracts/consumer.schema.json
+- Plans/goal_run_started_consumer_contracts/methods.json
+- Plans/goal_run_started_consumer_contracts/physical-families.json
+- Plans/goal_run_started_consumer_schema_resources.json
+- Plans/event_family_registry.json
+- Plans/storage_value_registry.json
+risk_class: original_started_source_or_projection_currentness_drift
+reasoning_tier: high
+context_scope: original_started_v3_consumer_adoption
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Executor_Protocol.md#EP-118
+- Plans/storage-plan.md#SP-309
+- Plans/Backup_Restore_System.md#BRS-025
+source_atom_ids: []
+```

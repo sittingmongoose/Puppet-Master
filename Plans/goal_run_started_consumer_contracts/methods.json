@@ -1,0 +1,129 @@
+{
+  "status": "canonical_source_contract_native_installation_not_run",
+  "methods": [
+    {
+      "method": "owner.goal_run.started.read_retained_native.v1",
+      "request_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/ScopeRequest"
+      },
+      "success_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/RetainedNativeStart"
+      },
+      "unavailable_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/Unavailable"
+      },
+      "effects": "none",
+      "protocol": "Plans/storage-plan.md#SP-311",
+      "caller_supplied_afterimages": false,
+      "authority": "actual owner-private invocation and Storage snapshot; serialized requests/results confer no capability"
+    },
+    {
+      "method": "owner.goal_run.started.inspect_original.v1",
+      "request_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/ScopeRequest"
+      },
+      "success_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/OriginalStarted"
+      },
+      "unavailable_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/Unavailable"
+      },
+      "effects": "none",
+      "protocol": "Plans/storage-plan.md#SP-311",
+      "caller_supplied_afterimages": false,
+      "authority": "actual owner-private invocation and Storage snapshot; serialized requests/results confer no capability",
+      "private_arguments": [
+        {
+          "realm": "current_workflow_native_activation",
+          "schema": {
+            "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/InspectPrivate"
+          }
+        }
+      ]
+    },
+    {
+      "method": "owner.goal_run.started.project_prefix.v1",
+      "request_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/ScopeRequest"
+      },
+      "success_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/ProjectorResult"
+      },
+      "unavailable_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/Unavailable"
+      },
+      "effects": "own projection dataset and checkpoint only",
+      "protocol": "Plans/storage-plan.md#SP-311",
+      "caller_supplied_afterimages": false,
+      "authority": "actual owner-private invocation and Storage snapshot; serialized requests/results confer no capability",
+      "private_arguments": [
+        {
+          "realm": "current_workflow_native_activation",
+          "schema": {
+            "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/ProjectPrivate"
+          }
+        }
+      ]
+    },
+    {
+      "method": "owner.goal_run.started.read_historical.v1",
+      "request_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/ScopeRequest"
+      },
+      "success_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/HistoricalRead"
+      },
+      "unavailable_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/Unavailable"
+      },
+      "effects": "none",
+      "protocol": "Plans/storage-plan.md#SP-311",
+      "caller_supplied_afterimages": false,
+      "authority": "actual owner-private invocation and Storage snapshot; serialized requests/results confer no capability",
+      "private_arguments": [
+        {
+          "realm": "current_workflow_native_activation",
+          "schema": {
+            "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/ProjectPrivate"
+          }
+        }
+      ]
+    },
+    {
+      "method": "owner.goal_run.started.read_current.v1",
+      "request_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/ScopeRequest"
+      },
+      "success_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/CurrentRead"
+      },
+      "unavailable_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/Unavailable"
+      },
+      "effects": "none",
+      "protocol": "Plans/storage-plan.md#SP-311",
+      "caller_supplied_afterimages": false,
+      "authority": "actual owner-private invocation and Storage snapshot; serialized requests/results confer no capability",
+      "private_arguments": [
+        {
+          "realm": "current_workflow_native_activation",
+          "schema": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentStartSource"
+          }
+        },
+        {
+          "realm": "current_goal_controls",
+          "schema": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+          }
+        },
+        {
+          "realm": "current_workflow_native_activation",
+          "schema": {
+            "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/ProjectPrivate"
+          }
+        }
+      ]
+    }
+  ]
+}

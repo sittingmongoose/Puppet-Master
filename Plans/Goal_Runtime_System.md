@@ -7428,3 +7428,66 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/goal_runtime_workflow_cancel_contracts.schema.json, ContractName:Plans/goal_workflow_cancel_schema_resources.json, ContractName:Plans/goal_workflow_cancel_contracts/entry-boundaries.json, ContractName:Plans/goal_workflow_cancel_contracts/methods.json, ContractName:Plans/goal_workflow_cancel_contracts/numeric-paths.json, ContractName:Plans/goal_workflow_cancel_contracts/physical-profiles.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json
+
+
+### GRS-079 - Exact original Workflow started-v3 semantics and read roles
+
+This unit adopts exactly the existing `event-family-goal-run-started` row at family revision 3.0.0. Registry membership remains 42; the other 41 complete rows, including goal_run.cancelled, are unchanged. The selected payload is the complete existing `Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json` resource, schema ID `pm.goal_runtime_event.goal_run_started.schema.v3`, under outer EventRecord 2.0.0. The former v2 payload resource and all 22 original definitions remain byte-exact historical interpretation. The v2 EA-UND-0020-GOAL registration/expected-Goal-revision clauses remain applicable only to the original v2 profile; this exact active source route uses the split clocks below. No sibling Goal/GoalRun event, Executor attempt run.started, or old accepted profile is upgraded by name or alias.
+
+The whole common v3 payload retains event name/version, exact occurred time, project/Goal identity, authentic unchanged Goal revision, actor/execution role, requested/effective provider/model/account, correlation and all required evidence/artifact and optional approved source fields. `expected_goal_revision` and retired `parent_goal_id` are absent from this route. `expected_goal_run_revision`, `goal_run_revision` and inner idempotency_key are required; the two Workflow revisions are the actual original before revision and before-plus-one. The six event-specific fields remain goal_run_id, workgraph_ref, activation_receipt_ref, active_worknode_request_refs, write_mode and certification_tier. Active request membership is the nonempty exact accepted required set, not one representative node. Outer run identity equals the original Workflow GoalRun; all optional thread, actor/provider/model/account and correlation/causation joins use the authentic original producer source. Focus, Settings and later reconstruction cannot supply them.
+
+Original `owner.workflow.activation.commit_start.v2` with `owner.storage.workflow_start.commit_original.v2` retains the complete EP-118/SP-309 start coordinator and separate whole Goal argument. Original activation/readiness proves materialization, staged entrypoints, exact accepted requests, current permission/write authority, provider/model/account resolution, budget, parallelism, writer-capable Storage and no effective Stop. The actual coordinated publication commits ready-to-running and start_event_pending-to-active once, advances native body/activation revisions once, preserves Goal body/control, and publishes the one complete original Event/first receipt/custody plus full native/Start/D01 union. No actual pre-append dispatch, provider call or Usage charge follows from this event or a candidate. Original prestart abort requires genuine proof of no original append/effect and cannot reinterpret a committed start.
+
+The idempotency key remains `pm.goal-runtime-event.v3:` plus lowercase SHA-256 of RFC8785 JCS of `["pm.goal-runtime-event-idempotency.v3", scope_partition, "goal_run.started", project_id, goal_id, goal_revision, expected_goal_run_revision, goal_run_revision, goal_run_id, workgraph_ref, activation_receipt_ref]`. Storage owns exact scope_partition and inner/outer keys byte-equal. Only GoalRunStarted normalizes to goal_run.started with original alias evidence. BuildStarted and other aliases are rejected. Original same-identity/same-digest custody admits no new append/CAS/effect; conflicting digest is idempotency_conflict, stale original Workflow revision is revision_conflict, and unprovable dedupe is dedupe_unavailable. A missing acknowledgement, expired event or newly generated key/timestamp cannot restart the original run. The full original PublicationResult exists only at the held original invocation; later source inspection never reconstructs historical native bodies or a complete original input argument.
+
+SP-214 and D-R20 require the durable GoalRun projection role. This route materializes that role with exactly one versioned derived row per original Workflow run and its own complete generation checkpoint under SP-311. It does not replace the role with a native-body pointer or passive none_required. The five exact source methods are read_retained_native, inspect_original, project_prefix, read_historical and read_current under `owner.goal_run.started.<method>.v1`. The first two and the two final readers have no durable effects/cursor/checkpoint; that zero-effect disposition is specific to those passive methods. project_prefix alone owns its complete projection/checkpoint transaction and is never exempt.
+
+Projection means running/active at the original authenticated started event. Every field derives from the full original typed Event and entire authentic retained Start/D01 causal custody. Known outside-run records are verified no-ops in the global prefix; this same run's replanned, blocked, certified, cancelled or stopped event is unsupported by this bounded reducer and stops before its row. Unknown/malformed rows likewise prevent claimed full coverage. A second original start or conflicting native causal record is refused. No terminal or later-running state is guessed from an event name or silence.
+
+Historical read explicitly asserts original facts only and requires the full original retained Event and causal custody. Current read additionally requires full fresh D01/native Start and separate current Goal controls under the original native boundary, the whole processed global prefix at the actual generic frontier and equality of current native issuance commitment to the original projected running issuance. Native D06 advancement, pending/Stopped authority, changed controls, unprocessed relevant event or unavailable source makes this current view unavailable. `Unavailable` describes source quality, not a fifth Goal state or fabricated Workflow state. Actual later native state keeps its own owner and is never overwritten by the projection. Orchestrator, Goal Runtime views and certification readers consume these exact views; no projection or receipt becomes certification, dispatch, resume, cancellation, Goal mutation or provider/tool/Usage authority.
+
+All actual original owners apply complete independent entry and final guards before write or passive release, including the lower Storage/native custody participants. Complete current/as-of-source behavior, generation/prefix algorithms, retention and loss rules are the full SP-311 contract; original native causal joins are EP-120 and coherent recovery/disclosure is BRS-027. Source admission does not itself prove installed v3 producer/consumer/codec/root/backup services, Event depth or native runtime execution. Those gates remain unavailable until independently qualified. Goal retains exactly its existing four states; no WorkNodes, executable task, checkpoint compiler success, global safe-stop result or governance seal is created.
+
+```yaml
+plan_unit_id: GRS-079
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: Complete original started-v3 source and bounded consumer ownership; native execution remains unproved.
+gui_related: false
+gui_classification_reason: Defines original runtime source, custody, replay and retention contracts without a visual surface.
+split_recommended: false
+depends_on:
+- GRS-026
+- GRS-031
+- SP-214
+- EP-118
+unblocks: []
+acceptance_criteria:
+- Exact original whole source and retained/current boundary is preserved.
+- Only the existing started Event family changes; all other Event rows and all 278 Storage rows and 27 policies remain exact.
+- The mandatory durable projection has complete atomic generation/checkpoint ownership.
+- Source definitions do not claim installed native authority, Event depth or runtime execution.
+validation_surfaces:
+- Plans/goal_run_started_consumer_contracts/consumer.schema.json
+- Plans/goal_run_started_consumer_contracts/methods.json
+- Plans/goal_run_started_consumer_contracts/physical-families.json
+- Plans/goal_run_started_consumer_schema_resources.json
+- Plans/event_family_registry.json
+- Plans/storage_value_registry.json
+risk_class: original_started_source_or_projection_currentness_drift
+reasoning_tier: high
+context_scope: original_started_v3_consumer_adoption
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Executor_Protocol.md#EP-118
+- Plans/storage-plan.md#SP-309
+- Plans/Backup_Restore_System.md#BRS-025
+source_atom_ids: []
+```

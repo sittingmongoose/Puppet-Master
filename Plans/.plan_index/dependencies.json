@@ -6372,6 +6372,7 @@
     "MA-071",
     "MS-137",
     "SSYS-008",
+    "GRS-079",
     "GRRC-031",
     "UCC-146",
     "GRS-046",
@@ -6540,6 +6541,7 @@
     "UIW-016",
     "WM-051",
     "SSYS-024",
+    "EP-120",
     "SP-309",
     "SRV-014",
     "CS-078",
@@ -6549,6 +6551,7 @@
     "SSYS-017",
     "BRS-025",
     "GRS-078",
+    "SP-311",
     "CS-079",
     "UCC-158",
     "C-051",
@@ -6557,6 +6560,7 @@
     "SSYS-026",
     "SIR-052",
     "SP-310",
+    "BRS-027",
     "UCC-159",
     "UCC-160",
     "UCC-161",
@@ -13277,6 +13281,16 @@
       "edge_type": "depends_on",
       "from": "BRS-026",
       "to": "SP-310"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-027",
+      "to": "BRS-025"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-027",
+      "to": "SP-311"
     },
     {
       "edge_type": "depends_on",
@@ -24285,6 +24299,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "EP-120",
+      "to": "EP-118"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-120",
+      "to": "EP-119"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "F-067",
       "to": "F-002"
     },
@@ -29117,6 +29141,26 @@
       "edge_type": "depends_on",
       "from": "GRS-078",
       "to": "SP-309"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-079",
+      "to": "EP-118"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-079",
+      "to": "GRS-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-079",
+      "to": "GRS-031"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-079",
+      "to": "SP-214"
     },
     {
       "edge_type": "depends_on",
@@ -68265,6 +68309,31 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-311",
+      "to": "EP-120"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-311",
+      "to": "SP-214"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-311",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-311",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-311",
+      "to": "SP-309"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -97069,7 +97138,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-14T02:56:58Z",
+  "generated_at_utc": "2026-09-14T03:30:11Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -110632,6 +110701,23 @@
         "heading_level": 3,
         "heading_line": 1493,
         "line": 1514,
+        "path": "Plans/Backup_Restore_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "original_started_v3_consumer_adoption",
+      "gui_related": false,
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "plan_unit_id": "BRS-027",
+      "reasoning_tier": "high",
+      "risk_class": "original_started_source_or_projection_currentness_drift",
+      "source_location": {
+        "heading": "BRS-027 - Source-coupled started projection recovery and disclosure",
+        "heading_level": 3,
+        "heading_line": 1581,
+        "line": 1595,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -130120,6 +130206,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "original_started_v3_consumer_adoption",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-120",
+      "reasoning_tier": "high",
+      "risk_class": "original_started_source_or_projection_currentness_drift",
+      "source_location": {
+        "heading": "EP-120 - Original started Event to native publication custody join",
+        "heading_level": 3,
+        "heading_line": 8328,
+        "line": 8342,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/FileManager.md",
@@ -149018,6 +149121,23 @@
         "heading_level": 4,
         "heading_line": 7356,
         "line": 7362,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "original_started_v3_consumer_adoption",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-079",
+      "reasoning_tier": "high",
+      "risk_class": "original_started_source_or_projection_currentness_drift",
+      "source_location": {
+        "heading": "GRS-079 - Exact original Workflow started-v3 semantics and read roles",
+        "heading_level": 3,
+        "heading_line": 7433,
+        "line": 7451,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -196675,6 +196795,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "original_started_v3_consumer_adoption",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-311",
+      "reasoning_tier": "high",
+      "risk_class": "original_started_source_or_projection_currentness_drift",
+      "source_location": {
+        "heading": "Exact physical and source registration",
+        "heading_level": 4,
+        "heading_line": 25703,
+        "line": 25711,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -209822,10 +209959,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15435,
+    "depends_on_edge_count": 15448,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18086,
-    "node_count": 6632,
+    "edge_count": 18099,
+    "node_count": 6636,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
