@@ -1,0 +1,710 @@
+{
+  "status": "SOURCE_CONTRACT_REVIEWED",
+  "base_commit": "b91d9912b3565b22987f55f9e2474199aa7fdece",
+  "canonical_source_files": [
+    {
+      "path": "Plans/Backup_Restore_System.md",
+      "sha256": "6ba88c4e1737a931d260c4d165e0acfbdd0271aba6d6d52d111b0b48470e9265"
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "sha256": "50fdcfe6be6bf8c9d2accc195c89ca0398668cb2e9010e851c8c930b430e6cbc"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/methods.json",
+      "sha256": "0fbb8d53064eaffd091cb0a1f071453e8cf9e460f897a41369f2b284b1cc08d1"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/physical-families.json",
+      "sha256": "782a05664faaf36dcbaf92c0b0f9d162a67c48b6da687a05b2b9de86ba382a6a"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/realm-entry-boundaries.json",
+      "sha256": "a02eccc62ee30b58066a91c810421c33c8c3babdd91041bcbf509ee937417848"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/bounded-safestop.v2.schema.json",
+      "sha256": "a500726cbf15548663c03f80a13353a9674f5677201e4018fc0a5b90cc54d338"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/filesafe-effect-sources.v2.schema.json",
+      "sha256": "cb4e863836060ba06c8c17c8a3c3cc791aae93409a0cdc339984278cbb128354"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/filesafe-injective-key-sources.v1.schema.json",
+      "sha256": "8a42fa18bbe6ffb9d3a87f037b85c3fa380e0aae0269a0aa4aa9dd713f52eec0"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+      "sha256": "d9414fc79ed8c3c7c14d70f0f120ad0378e2efb11de8c2126ab22e4a72771e7f"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+      "sha256": "2cba0de288750206d9fd7c38f1498f16314fda508d7e866b036e2a0f50a67e0f"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-event-append-custody.v2.schema.json",
+      "sha256": "505bdb5d702546637b80dfddc1d7f32abe411665f88ca193ca5af105c6b69a31"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-mcp-lifecycle.v1.schema.json",
+      "sha256": "081d50dbaef96ce8c5e56b8bc743752943920b9727fdba03583592c6904dcef6"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+      "sha256": "91656f1e79355ad7ac7b6144ead1724c46222aea054fefdc07f4b56a49f87ed9"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point-restore-transaction.v1.schema.json",
+      "sha256": "b6d192c96c552880e7f5e8041c12888e2c3f016076c3aeaef7661c74dbca1e47"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point.v1.schema.json",
+      "sha256": "062e302fe0805f330c99c470df5c20cc247de7032cb424eecca2844b1b2f700e"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-seglog-current.v1.schema.json",
+      "sha256": "f5b1f19aee3876e6c8fdc4ac8418c10941f13e7a56741f31056d2eb37bac9c7f"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-seglog-manifest.v1.schema.json",
+      "sha256": "51b95bc7346c643a21a7f10791c2f78258dfad95d4e44777abba2ba238b02c49"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/process-normalized-producer.v1.schema.json",
+      "sha256": "a1e9a055f48c4917adcbce9fe9cf240363e429a5d0fd9dd3806eaaf0a7ecfd47"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/process-shutdown-sources.v1.schema.json",
+      "sha256": "e0dcd4d5e782cd6344a3039b922a61fddf560a2bd9ec76b7ca2fdcda648959e0"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/safestop-current-goal-arguments.v1.schema.json",
+      "sha256": "3eaa8578efff917e8665efee8bd808a47d18c4e87704b11c75aafe45acafa39e"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/safestop-original-start.v1.schema.json",
+      "sha256": "a738fbb17ad658417a472a1d670205d2c401be236dd6865af5c5d5b4f797de18"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/safestop-start-arguments.v1.schema.json",
+      "sha256": "8d8b15144fdbf04adba95ab6992767fb0450b3f980a886fc0366f34fd3221637"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-activation.v1.schema.json",
+      "sha256": "35516ed8fd894bb1538112fb54190cc7059081afd605fadbf4ff728ebaeba525"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-controls.v3.schema.json",
+      "sha256": "c75fb9f9f8596182b667c38239feac604a09d489326fd0034833ce1058c4730e"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-disposition.v3.schema.json",
+      "sha256": "44bae9a5df18ca8e368b276c6e167645705dc63d6ec2f71c7aaa2f7e2c2aea9e"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-positive-arguments.v1.schema.json",
+      "sha256": "8064368badc33286a0a871695b670c854e7bcde30090da5c3389c3ec174bda63"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-positive-safestop.v1.schema.json",
+      "sha256": "46b7e64d3c2fbfafcc5d66ab28c3f12d91b6523bdf57a31ac53db5eb2c6a9d90"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+      "sha256": "3764857827d36270b40c8adecbd2ce8ce4cb87f2e88803d35f953f32a42e1839"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-start-profile.v2.schema.json",
+      "sha256": "563eb6b8df611954690a6bb306d1f43f26b4371331358361e9246c29563073aa"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-current-activation-arguments.v1.schema.json",
+      "sha256": "cf46eb1bf60b7879d5e8574633a3f2d4f7e02aaef6c6a2867ac8423399340ab7"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-current-activation.v1.schema.json",
+      "sha256": "db896adf069bb321e7ae87535dbd2ef4a4df9b4516f7865716510be6f8e9a4dc"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-original-start.v2.schema.json",
+      "sha256": "9e0b863dde63528b1ea44f7bbc22f2483b78baac3ccc7b0e1b9242946de72b81"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v2.schema.json",
+      "sha256": "f03fb4a96cc262274ce9d6413daf368fcaae93a7f8c797bb2990a1f69304d453"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v3.schema.json",
+      "sha256": "2b5107675393d694299efb0de9acbf2f19de169dfed2dcd53b0013328129fc54"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-start-arguments.v2.schema.json",
+      "sha256": "9d7ec810e213ac46b1fcdcc5367cd1ca69ed763a8719ae3b2bf21ead70beb0dd"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+      "sha256": "99c81558695d812761a9a108657134b4caf3652f33124db675b88e6959897406"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-start-goal-argument.v2.schema.json",
+      "sha256": "aefd025c4b463c1b3e886cae93370b19e66094854a03a65ba724b8f23ef41a8e"
+    },
+    {
+      "path": "Plans/executor_cancellation_schema_resources.json",
+      "sha256": "b8497da06f2937146f0ef8f44af74be177765bf82345a8d3f6e07ef481e938fb"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "6f5e4a274dc571abd4cdfb0a3f87e5a5d03c0076459c0bb78a0a416b7fc1b378"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "3f28948c718e01ff42744ecbb4a791ab66a9d249f7487b21e3f2cbeef6a2f199"
+    }
+  ],
+  "scope": {
+    "new_plan_units": [
+      "EP-118",
+      "EP-119",
+      "SP-309",
+      "BRS-025"
+    ],
+    "new_storage_families": 55,
+    "total_storage_families": 275,
+    "new_whole_schema_files": 32,
+    "exact_whole_canonical_reuses": 43,
+    "whole_resources": 75,
+    "isolated_resource_realms": 7,
+    "method_sections": 7,
+    "recorded_method_metadata_path_and_realm_relocations": 143,
+    "event_registry_unchanged": true,
+    "active_started_and_cancelled_event_payloads": "v2",
+    "v3_payloads_are_source_dependencies_only": true
+  },
+  "source_checks": {
+    "d05-start-source-checks.json": {
+      "status": "PASS_SOURCE_ONLY",
+      "checks": 1283,
+      "realms": {
+        "current_d05_source": {
+          "registered_roots": 119,
+          "evaluation_entries": 82,
+          "reachable_ref_sites": 1987
+        },
+        "current_goal_control": {
+          "registered_roots": 42,
+          "evaluation_entries": 42,
+          "reachable_ref_sites": 3630
+        },
+        "retained_original_d05": {
+          "registered_roots": 70,
+          "evaluation_entries": 70,
+          "reachable_ref_sites": 7397
+        },
+        "filesafe_injective_owner": {
+          "registered_roots": 71,
+          "evaluation_entries": 71,
+          "reachable_ref_sites": 7463
+        }
+      },
+      "whole_physical_families": 16,
+      "whole_role_roots": 9,
+      "inverse_whole_definitions": 67,
+      "native_execution": false,
+      "schema_instances": false,
+      "proposal_scripts_executed": false
+    },
+    "d06-positive-source-checks.json": {
+      "status": "PASS_SOURCE_ONLY",
+      "checks": 1532,
+      "realms": {
+        "current_d05_source": {
+          "registered_roots": 121,
+          "evaluation_entries": 154,
+          "reachable_ref_sites": 9417
+        },
+        "current_goal_control": {
+          "registered_roots": 42,
+          "evaluation_entries": 42,
+          "reachable_ref_sites": 3630
+        },
+        "retained_original_d05": {
+          "registered_roots": 70,
+          "evaluation_entries": 70,
+          "reachable_ref_sites": 7397
+        },
+        "filesafe_injective_owner": {
+          "registered_roots": 71,
+          "evaluation_entries": 71,
+          "reachable_ref_sites": 7463
+        }
+      },
+      "inverse_whole_definitions": 44,
+      "whole_stored_families": 5,
+      "native_execution": false,
+      "schema_instances": false,
+      "proposal_scripts_executed": false
+    },
+    "physical-final-source-checks.json": {
+      "status": "PASS_SOURCE_ONLY",
+      "checks": 591,
+      "new_whole_stored_wrappers": 55,
+      "combined_registry_families": 275,
+      "existing_policies": 27,
+      "existing_whole_rows_preserved": 216,
+      "existing_metadata_only_rows": 4,
+      "all_existing_value_schemas_keys_codecs_lifetimes_preserved": 220,
+      "native_execution": false,
+      "schema_instances": "registry document validation only; no runtime/source instances"
+    },
+    "canonical-resource-checks.json": {
+      "status": "PASS_SOURCE_ONLY",
+      "checks": 1498,
+      "realms": {
+        "current_d05_source": {
+          "registered_roots": 121,
+          "evaluation_roots": 154,
+          "reachable_ref_sites": 9291
+        },
+        "current_goal_control": {
+          "registered_roots": 42,
+          "evaluation_roots": 42,
+          "reachable_ref_sites": 3630
+        },
+        "retained_original_d05": {
+          "registered_roots": 71,
+          "evaluation_roots": 71,
+          "reachable_ref_sites": 7441
+        },
+        "filesafe_injective_owner": {
+          "registered_roots": 71,
+          "evaluation_roots": 71,
+          "reachable_ref_sites": 7463
+        },
+        "start_current_workflow_native_activation": {
+          "registered_roots": 71,
+          "evaluation_roots": 71,
+          "reachable_ref_sites": 9428
+        },
+        "start_current_goal_controls": {
+          "registered_roots": 41,
+          "evaluation_roots": 41,
+          "reachable_ref_sites": 3621
+        },
+        "start_retained_original_d01_d06": {
+          "registered_roots": 48,
+          "evaluation_roots": 48,
+          "reachable_ref_sites": 5974
+        }
+      },
+      "physical_families": 55,
+      "native_execution": false,
+      "schema_instances": false,
+      "unrestricted_historical_alias_scan_claimed": false
+    }
+  },
+  "applied_checks": {
+    "status": "PASS",
+    "source_files_verified": 40,
+    "existing_owner_text_preserved": true,
+    "all_42_event_rows_exact": true,
+    "prior_storage_contracts_preserved": 220,
+    "prior_policies_preserved": 27,
+    "prior_whole_rows_preserved": 216,
+    "metadata_only_rows": [
+      {
+        "family_id": "workflow_goal_run_body",
+        "changed_fields": [
+          "producer",
+          "consumers"
+        ]
+      },
+      {
+        "family_id": "workflow_goal_run_control",
+        "changed_fields": [
+          "producer",
+          "consumers"
+        ]
+      },
+      {
+        "family_id": "workflow_start_outbox_intent",
+        "changed_fields": [
+          "replay_behavior",
+          "consumers"
+        ]
+      },
+      {
+        "family_id": "workflow_original_source_origin",
+        "changed_fields": [
+          "replay_behavior",
+          "consumers"
+        ]
+      }
+    ],
+    "indexes": [
+      {
+        "path": "Plans/.plan_index/plan_units.jsonl",
+        "before_count": 6624,
+        "after_count": 6628,
+        "added_records": [
+          "BRS-025",
+          "EP-118",
+          "EP-119",
+          "SP-309"
+        ],
+        "source_hash_only_changes_in_edited_owner_docs": 443
+      },
+      {
+        "path": "Plans/.plan_index/acceptance_units.jsonl",
+        "before_count": 25713,
+        "after_count": 25729,
+        "added_records": [
+          "BRS-025-A001",
+          "BRS-025-A002",
+          "BRS-025-A003",
+          "BRS-025-A004",
+          "EP-118-A001",
+          "EP-118-A002",
+          "EP-118-A003",
+          "EP-118-A004",
+          "EP-119-A001",
+          "EP-119-A002",
+          "EP-119-A003",
+          "EP-119-A004",
+          "SP-309-A001",
+          "SP-309-A002",
+          "SP-309-A003",
+          "SP-309-A004"
+        ],
+        "source_hash_only_changes_in_edited_owner_docs": 0
+      }
+    ],
+    "owned_source_and_generated_paths": 698,
+    "generated_changes_only_for_edited_documents": true,
+    "validator_edits": false,
+    "governance_artifact_edits": false
+  },
+  "independent_and_author_packages": [
+    {
+      "role": "original_start",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/workflow-start-source-adjudication-20260914/v3/manifest.json",
+      "manifest_sha256": "adaf1e96616171e89b6c16147dabe7a5bc135856d888c04396b7d0046867dca2",
+      "members_verified": 182
+    },
+    {
+      "role": "bounded_d05_start",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/executor-safestop-start-adoption-20260914/v1/manifest.json",
+      "manifest_sha256": "7a034c57dd7a174033d573921a1639455c07601f4d901683807441e2b77490ca",
+      "members_verified": 97
+    },
+    {
+      "role": "positive_d06",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/workflow-cancel-positive-safestop-20260914/v1/manifest.json",
+      "manifest_sha256": "6e6f47524412a1957f008ca9acac2804d461b10a21bb4ed9f52ed46c600befde",
+      "members_verified": 374
+    },
+    {
+      "role": "physical_source",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/executor-cancellation-physical-integration-20260914/final-integration-v1/manifest.json",
+      "manifest_sha256": "1bf873dc809b8d32862d61b8ed30d1a6b82f32e40ad0518c7f56494b0fa9579d",
+      "members_verified": 20
+    },
+    {
+      "role": "source_methods",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/executor-cancellation-physical-integration-20260914/owner-methods-v2/manifest.json",
+      "manifest_sha256": "3272678b60a044b9cfdf50658c5739f34a0fb969f6037636fc0d202f405e2140",
+      "members_verified": 7
+    },
+    {
+      "role": "workflow_owner_prose",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/workflow-source-owner-prose-20260914/v1/manifest.json",
+      "manifest_sha256": "3f21243b890c79eac6f498feeced44c939823140c353a10da0aec5852c6e5be2",
+      "members_verified": 26
+    },
+    {
+      "role": "safestop_role_owner_prose",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/safestop-role-owner-prose-20260914/v1/manifest.json",
+      "manifest_sha256": "ebdddfdd525fabc26eeb2144cdf81cc53db26941510879979a890a83d98030b0",
+      "members_verified": 15
+    },
+    {
+      "role": "independent_first_review",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/executor-cancellation-physical-integration-20260914/canonical-resource-review-v1/manifest.json",
+      "manifest_sha256": "e2db645349c50b9c6710dafca48e7f4c11fcf0a81fe40e9c31331c376b02ccd8",
+      "members_verified": 9
+    },
+    {
+      "role": "independent_final_review",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/executor-cancellation-physical-integration-20260914/canonical-final-review-v1/manifest.json",
+      "manifest_sha256": "f0274f491966055daa6289b28d2de0bbb6233710f40f437598e4edcd4477a562",
+      "members_verified": 5
+    }
+  ],
+  "independent_final_addendum": {
+    "path": "/home/sittingmongoose/PM-Experiments/executor-cancellation-physical-integration-20260914/canonical-final-review-addendum-v1/addendum.json",
+    "sha256": "1b470d055c10e04372aa400d83ed4a5a8047057d6169389da9e62a8bc916c6c5"
+  },
+  "repository_checks": {
+    "shard_generate": "PASS: 98 docs / 2671 shards",
+    "shard_check": "PASS: 98 docs / 2671 shards",
+    "plan_index_generate": "PASS: 6628 PlanUnits / 25729 acceptance units / 95 docs / zero blockers",
+    "plan_index_validate": "PASS",
+    "readiness_status": "blocked_runtime_certification_incomplete",
+    "diff_check": "PASS"
+  },
+  "gates": {
+    "status": "fail",
+    "check_count": 36,
+    "pass_count": 21,
+    "fail_count": 15,
+    "new_failing_check_names": [],
+    "checks": {
+      "check_project_artifact_requirements": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "check_shards": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "json_syntax": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "lint_banned_phrases": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "lint_contractrefs": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "lint_path_refs": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 10,
+        "after_count": 10
+      },
+      "validate_audit_closure": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 201,
+        "after_count": 201
+      },
+      "validate_audit_status_index": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "validate_auto_decisions": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_browser_event_admission": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "validate_case_l_non_event_materialization": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_evidence": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1513,
+        "after_count": 1513
+      },
+      "validate_filesafe_security_policy": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_forge_backup_acceptance": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_github_project_integration": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "validate_goal_runtime_event_fixtures": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_gui_asset_policy": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_implementation_readiness": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 121,
+        "after_count": 121
+      },
+      "validate_new_contracts": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_plan_graph": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1513,
+        "after_count": 1513
+      },
+      "validate_plan_migration": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 180,
+        "after_count": 180
+      },
+      "validate_plans_to_code_handoff_schema": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_pm7_gui_fixtures": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "validate_prd_planning_runtime_contracts": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1240,
+        "after_count": 1240
+      },
+      "validate_project_output_fixtures": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_runtime_artifact_schemas": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_server_command_gap": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_testing_session_event_admission": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 1,
+        "after_count": 1
+      },
+      "validate_touch_closure": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_ui_command_response": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_usage_contract_drift": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_usage_gui_fixtures": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_web_capability_contracts": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_wiring_matrix": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "validate_working_notebook_contracts": {
+        "before_status": "pass",
+        "after_status": "pass",
+        "before_count": 0,
+        "after_count": 0
+      },
+      "verify_spec_lock": {
+        "before_status": "fail",
+        "after_status": "fail",
+        "before_count": 31,
+        "after_count": 31
+      }
+    },
+    "reported_sample_review": {
+      "lint_path_refs": "Four existing failures shift only generated PlanUnit line numbers.",
+      "validate_implementation_readiness": "Two existing stale-source failures reflect the edited Executor and Storage registry hashes; original receipt remains unchanged.",
+      "verify_spec_lock": "Existing Executor stale-hash failure reflects the edited owner hash; Spec Lock remains unchanged."
+    },
+    "counts_are_reported_full_counts": true,
+    "diagnostic_samples_are_bounded": true
+  },
+  "evidence_manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/workflow-stop-canonical-20260914/manifest.json",
+    "sha256": "b2f86a9cf67d09770aea2916e52b6586596a024642ed3592c266b356602a6976"
+  },
+  "qualifications": [
+    "Whole physical value realms never grant a historical writer permission to operate on current native/Goal/Start sources.",
+    "Initial FileSafe acceptance atomically includes Binding, initial Journal, Origin and Head before mutation; Process enqueue takes whole original producer without the three future append fields, with whole EventRecord/custody required after append.",
+    "The bounded positive D05 partition requires whole original allocation census, exact owned FileSafe/disposable Process disposition, all required flush attempts and original barriers; unsupported roles/checkpoints remain unresolved.",
+    "Positive D06 terminal service is separate from the sealed D05 work queues and cannot reopen those queues.",
+    "All 22 inherited historical native completion alias references remain explicitly noncallable; no same-ID whole-source rebinding or unrestricted historical graph closure is claimed.",
+    "The outer Goal Workflow terminal coordinator and started/cancelled consumer-projector-checkpoint adoption remain separate source dependencies.",
+    "No original native registration, capability, codec, transaction, recovery/backup or schema-instance execution was performed."
+  ],
+  "native_execution": "NOT_RUN",
+  "schema_instance_execution": "NOT_RUN",
+  "model_execution": "NOT_RUN",
+  "family_depth_clearance": false,
+  "global_D05_closure": false,
+  "step9_started": false,
+  "governance_seal": false,
+  "validator_edits": false,
+  "cost": "Source review and repository checks only; monetary attribution unavailable."
+}

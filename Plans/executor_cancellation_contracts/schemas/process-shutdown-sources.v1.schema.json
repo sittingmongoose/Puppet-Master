@@ -1,0 +1,3396 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json",
+  "$comment": "Uninstalled bounded original-owner process/stream shutdown source proposal. Not aggregate safeStop and not proof of external effects. Native enforcement and source-authentication semantics in protocol.md are mandatory.",
+  "$defs": {
+    "OriginalMcpLifecycle": {
+      "$ref": "https://puppetmaster.local/schemas/storage_value/mcp_server_lifecycle_record/1.0.0/mcp_server_lifecycle_record.schema.json"
+    },
+    "OriginalSeglogCurrent": {
+      "$ref": "https://puppetmaster.local/proposals/executor_process_original/seglog_current.schema.json"
+    },
+    "OriginalSeglogManifest": {
+      "$ref": "https://puppetmaster.local/proposals/executor_process_original/seglog_manifest.schema.json"
+    },
+    "OriginalAppendCustody": {
+      "$ref": "https://puppetmaster.local/proposals/executor_process_original/event_append_receipt_custody.schema.json"
+    },
+    "ProcessInvocation": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation"
+        },
+        {
+          "properties": {
+            "role": {
+              "const": "process"
+            }
+          }
+        }
+      ]
+    },
+    "Selector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "physical_key",
+        "physical_sha256",
+        "codec"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "codec": {
+          "const": "messagepack_canonical"
+        }
+      }
+    },
+    "OriginLocator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "operation_id",
+        "physical_key",
+        "codec"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "executor_process_source_origin"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_process_source_origin.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "codec": {
+          "const": "messagepack_canonical"
+        }
+      }
+    },
+    "NativeHostIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "host_ref",
+        "host_boot_id",
+        "pid_namespace_ref",
+        "native_root_ref",
+        "native_root_generation",
+        "supervisor_owner_ref",
+        "supervisor_owner_epoch"
+      ],
+      "properties": {
+        "host_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "host_boot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pid_namespace_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_root_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_root_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "supervisor_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "supervisor_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "ProcessIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "host",
+        "native_process_ref",
+        "pid",
+        "kernel_birth_ref",
+        "kernel_start_sequence",
+        "group_ref",
+        "pgid",
+        "session_id"
+      ],
+      "properties": {
+        "host": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NativeHostIdentity"
+        },
+        "native_process_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pid": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "kernel_birth_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kernel_start_sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "group_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pgid": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "session_id": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "NativeCapability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability_id",
+        "kind",
+        "holder_ref",
+        "parent_capability_id",
+        "issued_origin",
+        "disposition",
+        "revocation_origin"
+      ],
+      "properties": {
+        "capability_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "process_spawn",
+            "process_exec",
+            "group_escape",
+            "descriptor_pass",
+            "stdin_write",
+            "output_produce",
+            "normalizer_write",
+            "seglog_append",
+            "callback_state_write",
+            "reconnect",
+            "subscription",
+            "tool_dispatch"
+          ]
+        },
+        "holder_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_capability_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "issued_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginLocator"
+        },
+        "disposition": {
+          "enum": [
+            "active",
+            "revoked",
+            "unknown"
+          ]
+        },
+        "revocation_origin": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginLocator"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "StreamBirth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stream_id",
+        "kind",
+        "native_pipe_read_ref",
+        "native_pipe_write_domain_ref",
+        "normalizer_id",
+        "normalizer_schema_ref",
+        "initial_byte_offset",
+        "initial_normalized_ordinal"
+      ],
+      "properties": {
+        "stream_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "stdout",
+            "stderr"
+          ]
+        },
+        "native_pipe_read_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_pipe_write_domain_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "normalizer_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "normalizer_schema_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "initial_byte_offset": {
+          "const": 0
+        },
+        "initial_normalized_ordinal": {
+          "const": 0
+        }
+      }
+    },
+    "ProbeBirth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "invocation",
+        "dispatch_admission",
+        "dispatch_origin",
+        "original_input_capture",
+        "original_launch_operation_id",
+        "original_launch_transaction_id",
+        "original_command_source",
+        "purpose",
+        "route",
+        "platform",
+        "transport",
+        "ownership",
+        "session_sharing",
+        "server_id",
+        "runtime_generation",
+        "original_mcp_lifecycle",
+        "host",
+        "native_containment_domain_ref",
+        "containment_birth_ref",
+        "root_process_reservation_ref",
+        "spawn_release_capability_ref",
+        "streams",
+        "owner_ref",
+        "owner_epoch",
+        "born_at_utc",
+        "redaction_profile"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.executor.process_probe_birth.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "invocation": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessInvocation"
+        },
+        "dispatch_admission": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector"
+        },
+        "dispatch_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector"
+        },
+        "original_input_capture": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector"
+        },
+        "original_launch_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_launch_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_command_source": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector"
+        },
+        "purpose": {
+          "const": "explicitly_disposable_mcp_diagnostic_probe"
+        },
+        "route": {
+          "const": "run_modes_unix_mcp_3s_v1"
+        },
+        "platform": {
+          "const": "unix"
+        },
+        "transport": {
+          "const": "stdio"
+        },
+        "ownership": {
+          "const": "pm_managed"
+        },
+        "session_sharing": {
+          "const": "none"
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runtime_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_mcp_lifecycle": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalMcpLifecycle"
+        },
+        "host": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NativeHostIdentity"
+        },
+        "native_containment_domain_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "containment_birth_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root_process_reservation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "spawn_release_capability_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "streams": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/StreamBirth"
+          },
+          "maxItems": 2
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "born_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "const": "redacted_refs_only"
+        }
+      }
+    },
+    "ProcessBirth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "probe_birth",
+        "invocation",
+        "dispatch_admission",
+        "dispatch_origin",
+        "process",
+        "parent_process",
+        "native_spawn_operation_id",
+        "native_spawn_transaction_id",
+        "membership_sequence",
+        "original_containment_attachment_ref",
+        "before_exec_gate_ref",
+        "parent_spawn_capability",
+        "original_birth_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.executor.process_member_birth.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "probe_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "invocation": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessInvocation"
+        },
+        "dispatch_admission": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector"
+        },
+        "dispatch_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector"
+        },
+        "process": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessIdentity"
+        },
+        "parent_process": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessIdentity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "native_spawn_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_spawn_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "membership_sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_containment_attachment_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "before_exec_gate_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_spawn_capability": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "original_birth_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "ProcessMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "birth",
+        "birth_source",
+        "state",
+        "terminal_observation"
+      ],
+      "properties": {
+        "birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessBirth"
+        },
+        "birth_source": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "state": {
+          "enum": [
+            "birth_gated",
+            "exec_released",
+            "terminal_waited",
+            "unknown"
+          ]
+        },
+        "terminal_observation": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "StreamMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "birth",
+        "writer_process_refs",
+        "writer_capability_ids",
+        "read_operation_id",
+        "received_byte_end",
+        "normalized_item_end",
+        "state",
+        "finalization_source"
+      ],
+      "properties": {
+        "birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/StreamBirth"
+        },
+        "writer_process_refs": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "writer_capability_ids": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "read_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "received_byte_end": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "normalized_item_end": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "state": {
+          "enum": [
+            "open",
+            "draining",
+            "eof_finalized",
+            "failed",
+            "unknown"
+          ]
+        },
+        "finalization_source": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "NativeMembership": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "probe_birth",
+        "host",
+        "native_containment_domain_ref",
+        "membership_revision",
+        "process_members",
+        "capabilities",
+        "streams",
+        "outside_scope_beneficiaries",
+        "escape_or_untracked_sources",
+        "owner_lease_ref",
+        "native_registry_read_operation_id",
+        "native_registry_read_transaction_id",
+        "observed_at_utc"
+      ],
+      "properties": {
+        "probe_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "host": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NativeHostIdentity"
+        },
+        "native_containment_domain_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "membership_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "process_members": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessMember"
+          }
+        },
+        "capabilities": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NativeCapability"
+          }
+        },
+        "streams": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/StreamMember"
+          },
+          "maxItems": 2
+        },
+        "outside_scope_beneficiaries": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation"
+          }
+        },
+        "escape_or_untracked_sources": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "owner_lease_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_registry_read_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_registry_read_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "MembershipHead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "probe_birth",
+        "revision",
+        "members",
+        "original_mutation_origin"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.executor.process_membership_head.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "probe_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "members": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NativeMembership"
+        },
+        "original_mutation_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginLocator"
+        }
+      }
+    },
+    "ShutdownAdmission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "probe_birth",
+        "original_stop",
+        "original_membership_head",
+        "original_membership",
+        "operation_id",
+        "transaction_id",
+        "shutdown_root_ref",
+        "shutdown_root_generation",
+        "once_key",
+        "original_trigger",
+        "root_delivery_sequence",
+        "grace_duration_ms",
+        "grace_signal",
+        "force_signal",
+        "grace_clock_ref",
+        "owner_ref",
+        "owner_epoch",
+        "accepted_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.executor.process_shutdown_admission.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "probe_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "original_stop": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/StopSource"
+        },
+        "original_membership_head": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "original_membership": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NativeMembership"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "shutdown_root_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "shutdown_root_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "once_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_trigger": {
+          "enum": [
+            "user_cancel",
+            "parent_cancel"
+          ]
+        },
+        "root_delivery_sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "grace_duration_ms": {
+          "const": 3000
+        },
+        "grace_signal": {
+          "const": "SIGTERM"
+        },
+        "force_signal": {
+          "const": "SIGKILL"
+        },
+        "grace_clock_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "accepted_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "SignalResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "signal",
+        "operation_id",
+        "probe_birth",
+        "native_group_ref",
+        "host",
+        "pgid",
+        "group_birth_ref",
+        "target_membership_revision",
+        "issued_at_monotonic_ns",
+        "clock_ref",
+        "result",
+        "native_result_ref",
+        "errno_code",
+        "native_observation_origin"
+      ],
+      "properties": {
+        "signal": {
+          "enum": [
+            "SIGTERM",
+            "SIGKILL"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "probe_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "native_group_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "host": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NativeHostIdentity"
+        },
+        "pgid": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "group_birth_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_membership_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "issued_at_monotonic_ns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "clock_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result": {
+          "enum": [
+            "delivered",
+            "already_terminated_confirmed",
+            "failed",
+            "unknown"
+          ]
+        },
+        "native_result_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "errno_code": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "native_observation_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginLocator"
+        }
+      }
+    },
+    "WaitResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "process",
+        "native_wait_operation_id",
+        "observed_status",
+        "exit_code",
+        "signal_number",
+        "core_dumped",
+        "native_wait_receipt_ref",
+        "observed_at_monotonic_ns",
+        "clock_ref",
+        "native_observation_origin"
+      ],
+      "properties": {
+        "process": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessIdentity"
+        },
+        "native_wait_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observed_status": {
+          "enum": [
+            "exited",
+            "signaled",
+            "still_running",
+            "identity_unavailable",
+            "wait_failed"
+          ]
+        },
+        "exit_code": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "signal_number": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "core_dumped": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "native_wait_receipt_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observed_at_monotonic_ns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "clock_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_observation_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginLocator"
+        }
+      }
+    },
+    "StreamFinalization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "probe_birth",
+        "stream_id",
+        "operation_id",
+        "owner_ref",
+        "owner_epoch",
+        "final_received_byte_end",
+        "ordered_input_chain_sha256",
+        "final_normalized_item_end",
+        "normalized_admission_chain_sha256",
+        "producer_writer_domain_revision",
+        "producer_capability_refs",
+        "disposition",
+        "final_partial_input_disposition",
+        "original_error_event_refs",
+        "original_finalization_origin",
+        "finalized_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.executor.process_stream_finalization.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "probe_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "stream_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "final_received_byte_end": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ordered_input_chain_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "final_normalized_item_end": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "normalized_admission_chain_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "producer_writer_domain_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "producer_capability_refs": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "disposition": {
+          "enum": [
+            "eof_and_parser_finalized",
+            "read_failed",
+            "parser_failed",
+            "producer_unknown",
+            "crash_lost_unflushed_input"
+          ]
+        },
+        "final_partial_input_disposition": {
+          "enum": [
+            "none",
+            "normalizer_emitted_original_error",
+            "unresolved"
+          ]
+        },
+        "original_error_event_refs": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "original_finalization_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginLocator"
+        },
+        "finalized_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "NormalizedAdmission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "probe_birth",
+        "stream_id",
+        "ordinal",
+        "original_normalizer_operation_id",
+        "original_normalizer_transaction_id",
+        "original_normalizer_schema_ref",
+        "input_byte_start",
+        "input_byte_end",
+        "normalized_event_ref",
+        "event_type",
+        "producer_semantic_digest",
+        "event_schema_ref",
+        "original_event_source_ref",
+        "previous_admission",
+        "original_origin"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.executor.shutdown_normalized_admission.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "probe_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "stream_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ordinal": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_normalizer_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_normalizer_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_normalizer_schema_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "input_byte_start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "input_byte_end": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "normalized_event_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer_semantic_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "event_schema_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_event_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "previous_admission": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginLocator"
+        }
+      }
+    },
+    "WriterCut": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "writer_id",
+        "owner_ref",
+        "owner_epoch",
+        "writer_capability_id",
+        "original_queue_id",
+        "queue_generation",
+        "admission_head",
+        "admitted_count",
+        "drained_count",
+        "remaining_count",
+        "normalizer_inflight_count",
+        "admission_members",
+        "admission_state",
+        "native_cut_operation_id",
+        "native_cut_transaction_id"
+      ],
+      "properties": {
+        "writer_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "writer_capability_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_queue_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "queue_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "admission_head": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "admitted_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "drained_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "remaining_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "normalizer_inflight_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "admission_members": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NormalizedAdmission"
+          }
+        },
+        "admission_state": {
+          "enum": [
+            "snapshot_for_preforce",
+            "sealed_for_final",
+            "unknown"
+          ]
+        },
+        "native_cut_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_cut_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "OriginalEventFlushMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "admission",
+        "event",
+        "original_append_custody",
+        "original_full_value_result",
+        "current_event_read_token",
+        "current_event_source_ref"
+      ],
+      "properties": {
+        "admission": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NormalizedAdmission"
+        },
+        "event": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+        },
+        "original_append_custody": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalAppendCustody"
+        },
+        "original_full_value_result": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
+        },
+        "current_event_read_token": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+        },
+        "current_event_source_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "SeglogFlushBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "native_storage_owner_ref",
+        "native_storage_owner_epoch",
+        "native_storage_root_ref",
+        "native_storage_root_generation",
+        "append_writer_lease_ref",
+        "maintenance_fence_ref",
+        "operation_id",
+        "transaction_id",
+        "current_control",
+        "manifest",
+        "current_control_physical_sha256",
+        "manifest_physical_sha256",
+        "selected_segment_sync_operation_refs",
+        "manifest_promotion_operation_ref",
+        "parent_directory_sync_operation_ref",
+        "first_receipt_commit_operation_refs",
+        "codec_registration_ref",
+        "retention_policy_source_ref",
+        "hold_source_ref",
+        "backup_restore_source_ref",
+        "deletion_source_ref",
+        "read_at_utc"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_storage_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_storage_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "native_storage_root_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_storage_root_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "append_writer_lease_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "maintenance_fence_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_control": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalSeglogCurrent"
+        },
+        "manifest": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalSeglogManifest"
+        },
+        "current_control_physical_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "manifest_physical_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "selected_segment_sync_operation_refs": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "manifest_promotion_operation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_directory_sync_operation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "first_receipt_commit_operation_refs": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "codec_registration_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retention_policy_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hold_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "backup_restore_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "deletion_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "read_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "FlushSuccess": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "writer_cuts",
+        "event_members",
+        "storage_boundary",
+        "unresolved_event_admissions"
+      ],
+      "properties": {
+        "status": {
+          "const": "original_required_flush_durable"
+        },
+        "writer_cuts": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/WriterCut"
+          }
+        },
+        "event_members": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalEventFlushMember"
+          }
+        },
+        "storage_boundary": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/SeglogFlushBoundary"
+        },
+        "unresolved_event_admissions": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NormalizedAdmission"
+          },
+          "maxItems": 0
+        }
+      }
+    },
+    "FlushFailure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "writer_cuts",
+        "durable_event_members",
+        "unresolved_event_admissions",
+        "failure_stage",
+        "original_failure_ref",
+        "structured_diagnostic_ref",
+        "diagnostic_persistence",
+        "required_terminal_outcome"
+      ],
+      "properties": {
+        "status": {
+          "const": "original_required_flush_failed"
+        },
+        "writer_cuts": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/WriterCut"
+          }
+        },
+        "durable_event_members": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalEventFlushMember"
+          }
+        },
+        "unresolved_event_admissions": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NormalizedAdmission"
+          }
+        },
+        "failure_stage": {
+          "enum": [
+            "normalizer_drain",
+            "source_validation",
+            "segment_write",
+            "segment_sync",
+            "manifest_promotion",
+            "directory_sync",
+            "first_receipt_custody",
+            "source_currentness",
+            "readback",
+            "unknown"
+          ]
+        },
+        "original_failure_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "structured_diagnostic_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "diagnostic_persistence": {
+          "enum": [
+            "durable",
+            "pending",
+            "unavailable"
+          ]
+        },
+        "required_terminal_outcome": {
+          "const": "done.crashed"
+        }
+      }
+    },
+    "FlushedEventCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "normalized_admission",
+        "original_append_custody",
+        "original_full_value_result"
+      ],
+      "properties": {
+        "normalized_admission": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "original_append_custody": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "original_full_value_result": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
+        }
+      }
+    },
+    "RequiredFlushRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "probe_birth",
+        "shutdown_admission",
+        "operation_id",
+        "stage",
+        "sequence",
+        "writer_cut_source_refs",
+        "event_commitments",
+        "unresolved_admissions",
+        "status",
+        "failure_stage",
+        "original_failure_ref",
+        "structured_diagnostic_ref",
+        "required_terminal_outcome",
+        "native_storage_boundary_operation_ref",
+        "original_origin",
+        "completed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.executor.process_required_flush.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "probe_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "shutdown_admission": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stage": {
+          "enum": [
+            "before_force",
+            "before_final_outcome"
+          ]
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "writer_cut_source_refs": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+          }
+        },
+        "event_commitments": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/FlushedEventCommitment"
+          }
+        },
+        "unresolved_admissions": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+          }
+        },
+        "status": {
+          "enum": [
+            "original_required_flush_durable",
+            "original_required_flush_failed"
+          ]
+        },
+        "failure_stage": {
+          "anyOf": [
+            {
+              "enum": [
+                "normalizer_drain",
+                "source_validation",
+                "segment_write",
+                "segment_sync",
+                "manifest_promotion",
+                "directory_sync",
+                "first_receipt_custody",
+                "source_currentness",
+                "readback",
+                "unknown"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_failure_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "structured_diagnostic_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "required_terminal_outcome": {
+          "enum": [
+            "not_decided_here",
+            "done.crashed"
+          ]
+        },
+        "native_storage_boundary_operation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginLocator"
+        },
+        "completed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "FlushResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "probe_birth",
+        "shutdown_admission",
+        "operation_id",
+        "stage",
+        "sequence",
+        "original_owner_ref",
+        "original_owner_epoch",
+        "original_origin",
+        "result",
+        "original_record",
+        "original_record_source",
+        "completed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.executor.process_required_flush_readback.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "probe_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "shutdown_admission": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stage": {
+          "enum": [
+            "before_force",
+            "before_final_outcome"
+          ]
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginLocator"
+        },
+        "result": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/FlushSuccess"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/FlushFailure"
+            }
+          ]
+        },
+        "original_record": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/RequiredFlushRecord"
+        },
+        "original_record_source": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "completed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "TerminationResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "probe_birth",
+        "shutdown_admission",
+        "operation_id",
+        "grace_signal_result",
+        "grace_started_at_monotonic_ns",
+        "grace_deadline_at_monotonic_ns",
+        "clock_ref",
+        "before_force_flush",
+        "force_signal_result",
+        "member_wait_results",
+        "final_membership",
+        "state",
+        "original_origin",
+        "completed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.executor.process_termination_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "probe_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "shutdown_admission": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "grace_signal_result": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/SignalResult"
+        },
+        "grace_started_at_monotonic_ns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "grace_deadline_at_monotonic_ns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "clock_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "before_force_flush": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "force_signal_result": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/SignalResult"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "member_wait_results": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/WaitResult"
+          }
+        },
+        "final_membership": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NativeMembership"
+        },
+        "state": {
+          "enum": [
+            "original_group_terminated",
+            "native_shutdown_unresolved",
+            "native_shutdown_failed"
+          ]
+        },
+        "original_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginLocator"
+        },
+        "completed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "force_signal_result": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "before_force_flush": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "before_force_flush": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ProcessShutdownResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "probe_birth",
+        "shutdown_admission",
+        "operation_id",
+        "termination",
+        "stream_finalizations",
+        "flush_results",
+        "original_terminal_requirement",
+        "process_disposition",
+        "first_original_result_origin",
+        "completed_at_utc",
+        "workflow_safe_stop_admission",
+        "action_authority"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.executor.process_shutdown_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "probe_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "shutdown_admission": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "termination": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "stream_finalizations": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+          },
+          "maxItems": 2
+        },
+        "flush_results": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+          }
+        },
+        "original_terminal_requirement": {
+          "enum": [
+            "done.cancelled",
+            "done.crashed",
+            "not_ready"
+          ]
+        },
+        "process_disposition": {
+          "enum": [
+            "original_process_and_streams_quiescent",
+            "original_process_shutdown_failed",
+            "original_process_shutdown_unknown"
+          ]
+        },
+        "first_original_result_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginLocator"
+        },
+        "completed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "workflow_safe_stop_admission": {
+          "const": "requires_every_other_original_executor_obligation"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "OriginalWriteOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "probe_birth",
+        "operation_id",
+        "transaction_id",
+        "owner_ref",
+        "owner_epoch",
+        "record_family",
+        "issued_record_key",
+        "issued_record_sha256",
+        "prior_record",
+        "prior_origin",
+        "sequence",
+        "native_boundary_operation_ref",
+        "write_kind",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.executor.process_source_origin.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "probe_birth": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "record_family": {
+          "enum": [
+            "executor_process_probe_birth",
+            "executor_process_member_birth",
+            "executor_process_membership",
+            "executor_process_shutdown_admission",
+            "executor_process_signal_result",
+            "executor_process_wait_result",
+            "executor_process_stream_finalization",
+            "executor_process_normalized_admission",
+            "executor_process_writer_cut",
+            "executor_process_required_flush",
+            "executor_process_termination_result",
+            "executor_process_shutdown_result",
+            "executor_process_shutdown_recovery"
+          ]
+        },
+        "issued_record_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_record_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "prior_record": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prior_origin": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "native_boundary_operation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "write_kind": {
+          "enum": [
+            "probe_admission",
+            "process_birth",
+            "membership_update",
+            "shutdown_admission",
+            "signal_observation",
+            "wait_observation",
+            "normalized_admission",
+            "stream_finalization",
+            "required_flush",
+            "termination_result",
+            "shutdown_result",
+            "crash_recovery"
+          ]
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "RecoverySource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "probe_birth",
+        "original_shutdown_admission",
+        "recovery_operation_id",
+        "recovery_transaction_id",
+        "old_host",
+        "current_host",
+        "original_result",
+        "last_original_origin",
+        "last_durable_storage_boundary",
+        "canonical_terminal_event_source",
+        "disposition",
+        "required_terminal_outcome",
+        "stop_reason",
+        "original_recovery_origin"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.executor.process_shutdown_recovery.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "probe_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "original_shutdown_admission": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recovery_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recovery_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "old_host": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NativeHostIdentity"
+        },
+        "current_host": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NativeHostIdentity"
+        },
+        "original_result": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_original_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "last_durable_storage_boundary": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/SeglogFlushBoundary"
+        },
+        "canonical_terminal_event_source": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disposition": {
+          "enum": [
+            "read_authenticated_original_result",
+            "unfinished_no_terminal_crash_recovered",
+            "native_identity_unavailable",
+            "unresolved_storage_recovery"
+          ]
+        },
+        "required_terminal_outcome": {
+          "enum": [
+            "preserve_original",
+            "done.crashed",
+            "unavailable"
+          ]
+        },
+        "stop_reason": {
+          "enum": [
+            "preserve_original",
+            "crash_recovered",
+            "unavailable"
+          ]
+        },
+        "original_recovery_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginLocator"
+        }
+      }
+    },
+    "ProcessSourceHead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "probe_birth",
+        "revision",
+        "latest_origin",
+        "latest_membership",
+        "shutdown_admission",
+        "shutdown_result",
+        "recovery_source",
+        "owner_ref",
+        "owner_epoch"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.executor.process_source_head.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "probe_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "latest_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "latest_membership": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "shutdown_admission": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shutdown_result": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recovery_source": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "CurrentProcessBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "probe_birth",
+        "host",
+        "current_membership",
+        "current_membership_source",
+        "current_membership_head",
+        "current_mcp_lifecycle",
+        "current_stop",
+        "source_head",
+        "source_head_value",
+        "source_head_revision",
+        "owner_registration_ref",
+        "current_permission_source_ref",
+        "codec_registration_ref",
+        "retention_source_ref",
+        "hold_source_ref",
+        "backup_restore_source_ref",
+        "deletion_source_ref",
+        "native_read_operation_id",
+        "native_read_transaction_id",
+        "native_owner_lease_ref",
+        "read_at_utc"
+      ],
+      "properties": {
+        "probe_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "host": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NativeHostIdentity"
+        },
+        "current_membership": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NativeMembership"
+        },
+        "current_membership_source": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "current_membership_head": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/MembershipHead"
+        },
+        "current_mcp_lifecycle": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalMcpLifecycle"
+        },
+        "current_stop": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/StopSource"
+        },
+        "source_head": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "source_head_value": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessSourceHead"
+        },
+        "source_head_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "owner_registration_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_permission_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "codec_registration_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retention_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hold_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "backup_restore_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "deletion_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_read_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_read_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_owner_lease_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "read_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "MemberDispatchSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "invocation",
+        "admission",
+        "origin"
+      ],
+      "properties": {
+        "invocation": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessInvocation"
+        },
+        "admission": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchAdmission"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/MutationOrigin"
+        }
+      }
+    },
+    "ProcessShutdownSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "birth",
+        "birth_source",
+        "dispatch_admission",
+        "dispatch_origin",
+        "process_births",
+        "member_dispatch_sources",
+        "original_shutdown_admission",
+        "termination_result",
+        "stream_finalizations",
+        "flush_results",
+        "original_result",
+        "original_result_source",
+        "original_origins",
+        "recovery",
+        "current_boundary"
+      ],
+      "properties": {
+        "birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProbeBirth"
+        },
+        "birth_source": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "dispatch_admission": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchAdmission"
+        },
+        "dispatch_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/MutationOrigin"
+        },
+        "process_births": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessBirth"
+          }
+        },
+        "member_dispatch_sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/MemberDispatchSources"
+          }
+        },
+        "original_shutdown_admission": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ShutdownAdmission"
+        },
+        "termination_result": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/TerminationResult"
+        },
+        "stream_finalizations": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/StreamFinalization"
+          },
+          "maxItems": 2
+        },
+        "flush_results": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/FlushResult"
+          }
+        },
+        "original_result": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessShutdownResult"
+        },
+        "original_result_source": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+        },
+        "original_origins": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalWriteOrigin"
+          }
+        },
+        "recovery": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/RecoverySource"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "current_boundary": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/CurrentProcessBoundary"
+        }
+      }
+    },
+    "Unavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "invocation",
+        "reason",
+        "action_authority"
+      ],
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "invocation": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation"
+        },
+        "reason": {
+          "enum": [
+            "source_profile_unsupported",
+            "pooled_or_shared_session",
+            "diagnostic_purpose_not_original",
+            "original_source_unavailable",
+            "native_containment_unproven",
+            "native_process_identity_unavailable",
+            "codec_or_owner_unavailable",
+            "permission_or_retention_unavailable",
+            "source_changed",
+            "original_storage_recovery_unresolved"
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "ShutdownReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "invocation",
+        "original_stop",
+        "read_operation_id"
+      ],
+      "properties": {
+        "invocation": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation"
+        },
+        "original_stop": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/StopSource"
+        },
+        "read_operation_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ShutdownReadResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "sources",
+            "action_authority"
+          ],
+          "properties": {
+            "status": {
+              "const": "available_original_shutdown_sources"
+            },
+            "sources": {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessShutdownSources"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Unavailable"
+        }
+      ]
+    },
+    "QuiescentSources": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessShutdownSources"
+        },
+        {
+          "properties": {
+            "termination_result": {
+              "properties": {
+                "state": {
+                  "const": "original_group_terminated"
+                },
+                "member_wait_results": {
+                  "items": {
+                    "properties": {
+                      "observed_status": {
+                        "enum": [
+                          "exited",
+                          "signaled"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "stream_finalizations": {
+              "items": {
+                "properties": {
+                  "disposition": {
+                    "const": "eof_and_parser_finalized"
+                  },
+                  "final_partial_input_disposition": {
+                    "enum": [
+                      "none",
+                      "normalizer_emitted_original_error"
+                    ]
+                  }
+                }
+              }
+            },
+            "flush_results": {
+              "items": {
+                "properties": {
+                  "result": {
+                    "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/FlushSuccess"
+                  },
+                  "original_record": {
+                    "properties": {
+                      "status": {
+                        "const": "original_required_flush_durable"
+                      },
+                      "failure_stage": {
+                        "type": "null"
+                      },
+                      "original_failure_ref": {
+                        "type": "null"
+                      },
+                      "required_terminal_outcome": {
+                        "const": "not_decided_here"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "original_result": {
+              "properties": {
+                "original_terminal_requirement": {
+                  "const": "done.cancelled"
+                },
+                "process_disposition": {
+                  "const": "original_process_and_streams_quiescent"
+                }
+              }
+            },
+            "current_boundary": {
+              "properties": {
+                "current_membership": {
+                  "properties": {
+                    "outside_scope_beneficiaries": {
+                      "maxItems": 0
+                    },
+                    "escape_or_untracked_sources": {
+                      "maxItems": 0
+                    },
+                    "process_members": {
+                      "items": {
+                        "properties": {
+                          "state": {
+                            "const": "terminal_waited"
+                          }
+                        }
+                      },
+                      "minItems": 1
+                    },
+                    "capabilities": {
+                      "items": {
+                        "properties": {
+                          "disposition": {
+                            "const": "revoked"
+                          }
+                        }
+                      }
+                    },
+                    "streams": {
+                      "items": {
+                        "properties": {
+                          "state": {
+                            "const": "eof_finalized"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "recovery": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "properties": {
+                    "disposition": {
+                      "const": "read_authenticated_original_result"
+                    },
+                    "required_terminal_outcome": {
+                      "const": "preserve_original"
+                    },
+                    "stop_reason": {
+                      "const": "preserve_original"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "ProcessShutdownAssessment": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "sources",
+            "external_effect_resolution",
+            "workflow_safe_stop_admission",
+            "action_authority"
+          ],
+          "properties": {
+            "status": {
+              "const": "this_original_process_shutdown_resolved"
+            },
+            "sources": {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/QuiescentSources"
+            },
+            "external_effect_resolution": {
+              "const": "not_claimed"
+            },
+            "workflow_safe_stop_admission": {
+              "const": "requires_every_other_original_executor_obligation"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "sources",
+            "action_authority"
+          ],
+          "properties": {
+            "status": {
+              "const": "this_original_process_shutdown_unresolved"
+            },
+            "sources": {
+              "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessShutdownSources"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Unavailable"
+        }
+      ]
+    },
+    "ProbeBirthPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "executor_process_probe_birth"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_process_probe_birth.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProbeBirth"
+        }
+      }
+    },
+    "ProcessBirthPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "executor_process_member_birth"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_process_member_birth.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessBirth"
+        }
+      }
+    },
+    "MembershipHeadPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "executor_process_membership"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_process_membership.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/MembershipHead"
+        }
+      }
+    },
+    "ShutdownAdmissionPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "executor_process_shutdown_admission"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_process_shutdown_admission.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ShutdownAdmission"
+        }
+      }
+    },
+    "SignalResultPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "executor_process_signal_result"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_process_signal_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/SignalResult"
+        }
+      }
+    },
+    "WaitResultPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "executor_process_wait_result"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_process_wait_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/WaitResult"
+        }
+      }
+    },
+    "StreamFinalizationPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "executor_process_stream_finalization"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_process_stream_finalization.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/StreamFinalization"
+        }
+      }
+    },
+    "NormalizedAdmissionPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "executor_process_normalized_admission"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_process_normalized_admission.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NormalizedAdmission"
+        }
+      }
+    },
+    "WriterCutPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "executor_process_writer_cut"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_process_writer_cut.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/WriterCut"
+        }
+      }
+    },
+    "RequiredFlushRecordPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "executor_process_required_flush"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_process_required_flush.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/RequiredFlushRecord"
+        }
+      }
+    },
+    "TerminationResultPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "executor_process_termination_result"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_process_termination_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/TerminationResult"
+        }
+      }
+    },
+    "ProcessShutdownResultPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "executor_process_shutdown_result"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_process_shutdown_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessShutdownResult"
+        }
+      }
+    },
+    "OriginalWriteOriginPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "executor_process_source_origin"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_process_source_origin.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalWriteOrigin"
+        }
+      }
+    },
+    "RecoverySourcePhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "executor_process_shutdown_recovery"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_process_shutdown_recovery.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/RecoverySource"
+        }
+      }
+    },
+    "ProcessSourceHeadPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "executor_process_source_head"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_process_source_head.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessSourceHead"
+        }
+      }
+    }
+  }
+}

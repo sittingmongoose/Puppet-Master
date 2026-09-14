@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L24000-L25333
+Source lines: L24000-L25488
 
-Source SHA256: `127c75e80ee14608dc2ca9ea159fb8e36e3d10bf9239380b406de4de8eed23f4`
+Source SHA256: `6f5e4a274dc571abd4cdfb0a3f87e5a5d03c0076459c0bb78a0a416b7fc1b378`
 
 ---
 
@@ -1342,3 +1342,158 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/storage_value_registry.json, ContractName:Plans/workflow_activation_contracts/physical-families.json, ContractName:Plans/workflow_activation_contracts/retention-field-classification.json, ContractName:Plans/workflow_activation_contracts/methods.json, ContractName:Plans/Backup_Restore_System.md#BRS-024, ContractName:Plans/Goal_Runtime_System.md#GRS-077
+
+### SP-309 - Workflow and bounded safe-stop original physical custody
+
+SP-309 registers 55 new complete original-custody families after SP-308's 220-family baseline. The resulting registry has 275 families. `Plans/storage_value_registry.json` and `Plans/executor_cancellation_contracts/physical-families.json` jointly define each entire closed wrapper, original key/codec, native producer, exact consumer, mutability, source realm, retention and coherent backup obligation. Registry `materialized` status is a source-definition posture, not installed native operation or an available writer.
+
+All 220 existing value schemas, keys, codecs and lifetimes and all 27 policy objects remain unchanged. Exactly four existing rows gain bounded method/read/scope metadata: workflow_goal_run_body and workflow_goal_run_control add original start/D06 producer and reader routes; workflow_original_source_origin and workflow_start_outbox_intent add only the reviewed original-start consumer/target annotations. Every other field and all 216 other complete existing rows remain exact. Existing permission_snapshot_record, safe_point_record, safe_point_restore_transaction, mcp_server_lifecycle_record, seglog_current, seglog_manifest and event_append_receipt_custody are whole reused families.
+
+The new families comprise twelve D01/D02/D03 values, four compact original-start values, three FileSafe k1 values, fifteen Process values, sixteen bounded aggregate values and five D06 values. The five D01 lineage wrappers are explicit v4 declarations; the seven ordinary scheduler wrappers retain v2 grammar and validate in the fixed retained original realm. Actual current writers still require their complete current native, Goal and Start phase arguments. A historical value realm never grants an old current-Workflow writer. No unadopted proposal wrapper is treated as a migrated canonical value.
+
+#### Exact original start event and compact custody
+
+The new `goal_run.started` payload identity is `pm.goal_runtime_event.goal_run_started.schema.v3`; outer EventRecord stays 2.0.0. Preserve all 22 original definitions and the whole six-field event-specific payload. Keep goal_revision as authentic unchanged original Goal context, remove expected_goal_revision and retired parent_goal_id, and require expected_goal_run_revision, goal_run_revision and inner idempotency_key. The Workflow revisions equal actual before revision and before-plus-one. Outer run identity equals the Workflow GoalRun; all actor, requested/effective provider/model/account, execution/correlation, graph/request/activation and scope joins come from the admitted original producer. Settings, focus and a later reconstruction supply none of them. Only GoalRunStarted remains an allowed source alias; BuildStarted is rejected.
+
+The producer submission is the complete EventRecord grammar excluding only Storage's future sequence_id, observed_at_utc and persisted_at_utc. Original append supplies those fields and authenticates whole typed event, eleven-field first barrier, full-value result and exact v2 custody as one original outcome. First receipt must be synced with durability_class=barrier. The idempotency key is `pm.goal-runtime-event.v3:` followed by lowercase SHA-256 of RFC8785 JCS of `["pm.goal-runtime-event-idempotency.v3", scope_partition, "goal_run.started", project_id, goal_id, goal_revision, expected_goal_run_revision, goal_run_revision, goal_run_id, workgraph_ref, activation_receipt_ref]`. Storage owns exact scope partition; inner and outer keys byte-equal. Old v2 keys, schema interpretation and retained readers remain unchanged.
+
+Four compact start families retain Candidate/Commit/Control/Origin only. Their complete declarations and original methods are in the exact start physical/method maps. Keys use lowercase hexadecimal exact UTF-8 scalar bytes without normalization; declared decimal components keep canonical decimal form. `pm.workflow.start_custody_json.v1` is complete closed-wrapper RFC8785 UTF-8 with integer-only numbers and rejection of duplicate keys, malformed UTF-8, surrogates and unknown fields. Physical SHA-256 covers those complete bytes. Native semantic body hashes and original EventRecord MessagePack commitments keep their own domains.
+
+Candidate retains compact identities/selectors/digests, never a producer or native-body archive. Commit retains original issue/transition/event commitments; current control selects the authentic original commit. The four metadata families use RP-AUTHORITY-INDEFINITE/1.0.0 under existing deletion/hold/tombstone controls, are canonical_non_rebuildable and require coherent mandatory backup. This does not extend source/body/EventRecord lifetimes. Full original event claims require its actually available full value under original retention; compact surviving custody cannot reconstruct it. Restore authenticates full original participant closure, versions/bytes/origins, current heads, newer committed truth and actual deletion/recovery state; restored data never restores a lease or capability.
+
+The five D01 lineage families explicitly use their v4 schemas/keys and enrollment/update/coverage v3 methods. Seven ordinary scheduler v2 families and their methods remain exact. Positive D06 preserves all five existing v3 persistent grammars, keys, versions, codecs and lifetimes. Every whole source route change is explicit and preserves historical resources at original IDs. No blanket same-ID registry replacement or new body archive is admitted.
+
+
+#### Complete producer digest and exact codec admission
+
+Both original start and D06 producer_semantic_digest use the complete shared `Plans/Contracts_V0.md#EventRecord` producer-owned semantic-field recipe, including its exact optional/null presence rules. They do not hash the whole envelope or add event_id, schema_id, schema_version or Storage-assigned fields to that recipe. Full EventRecord, value and physical-wrapper commitments retain their distinct original domains.
+
+Preserve all original unbounded integer domains. No maximum-safe cap, binary64 rounding, truncation or string substitution is permitted. The actual original owner must establish whole-value encode/decode equality and exact codec bytes before append. Storage qualifies its genuine assignment path and verifies the complete assigned EventRecord, first receipt, custody and co-issued values inside the held original operation. An unqualified encoding path remains unavailable/pending, preserves every real prior effect and never yields a fabricated first receipt, narrowed schema or independent repair. Schema meta-validity does not establish native codec qualification.
+These custody contracts apply with the complete bounded Executor, FileSafe and Process predicates. Physical declarations and complete whole-value schemas reside under `Plans/executor_cancellation_contracts/`; they do not turn metadata into native capabilities or extend referenced content lifetimes.
+
+#### D05 physical families, key algorithms and origin publication
+
+The complete canonical physical declarations identify all sixteen D05 compact redb families and their complete physical wrappers. They use the Storage canonical MessagePack codec, preserving full valid UTF-8, original exact integer domains, required-present nulls, shortest type-preserving encodings, canonical UTF-8-byte map order, no duplicate keys/trailing values/invalid Unicode and no lossy conversion. Original imported owner values retain their original physical codec; they are not re-encoded as new owner records. SHA-256 covers the whole exact new physical wrapper including family/schema/version/storage/key/value, never selected fields.
+
+K(s) is lowercase hexadecimal of exact valid UTF-8 without normalization. B is SHA-256 of UTF-8 `pm.executor.safestop-scope.v2`, one zero byte, and registered canonical MessagePack of the complete C RunScope. Base key is `{family_id}.v2:K(storage_instance_id):B`. ReservationAllocation, DomainBirth and AggregateHead use base alone. CompileReservationJoin and WorkflowReservationJoin append `:K(operation_id)`. PreAttemptEffectAdmission appends `:ordinal` in shortest nonnegative decimal; the native operation identity remains exact in its value and origin, and the domain allocator enforces unique operation-to-ordinal binding. AllocationCurrent is a private whole-source read, not an additional persisted family. CapabilityBirth appends `:K(capability_id)`; CapabilityDisposition appends `:K(capability_id):revision` in shortest positive decimal. ObligationBirth appends `:K(obligation_id)`. DomainCut appends `:revision` using its own contiguous original domain sequence. CoreEventAdmission appends `:K(writer_id):K(queue_id):queue_generation:ordinal`, both shortest nonnegative decimals. Every remaining immutable row appends `:K(operation_id)`; Recovery uses recovery_operation_id. A distinct row of a repeated family requires a distinct real owner operation ID. There is no arbitrary replacement or timestamp-generated identity.
+
+OriginLocator intentionally carries exact origin physical identity and original operation without a content hash, because issued rows precede the origin that authenticates them. Origin hashes complete already-issued immutable wrappers at the same genuine transaction, excluding itself and the mutable AggregateHead. Its previous_origin selects an already-issued origin; first has null. Source sequence begins at one and never wraps. AggregateHead selects the original allocation, the already-issued latest origin and result/cut, retains each compile/Workflow join once issued and the complete append-only pre-attempt admission history and every original required-flush attempt selection, and is advanced by genuine native CAS in the same durable transaction. Origins cannot hash future results, future C/D06 rows, or their own hashes. Full issued compact rows remain at immutable keys; unequal same-key reuse is conflict. Separate stores need a real native coordinator and original recovery, not matching transaction strings.
+
+Family assignments are RP-AUTHORITY-INDEFINITE compact original custody, subject to explicit owner/codec/retention/backup/deletion/hold registration. They do not extend raw event/payload retention. Whole-boundary mandatory backup preserves the original compact source rows and current head together. Unregistered family, missing original row, unavailable current owner value, recovery uncertainty or source deletion causes unavailable. An index, event projection or equal hash cannot recreate lost original source. The compact custody does not grant runtime availability without authentic original installation.
+
+#### FileSafe complete carriers, journal issue custody and keys
+
+Original values retain their exact complete canonical registry value schemas, without field deletion or renaming, and preserve their original full registry declarations, keys, codecs and retention. A source read returns the complete original value and SourceSelector: actual storage instance, family/schema/version, exact physical key, SHA-256 of stored bytes and messagepack_canonical codec. JSON is the schema/interchange description, not a claim that JSON bytes are the stored MessagePack value. Original required nullable fields are still required. Unknown fields fail the original closed schema.
+
+Three new original-owner compact metadata families use the same registered MessagePack canonical codec and wrapper checks: executor_filesafe_invocation_binding.v2.k1:K(storage_instance_id):K(invocation.invocation_id); executor_filesafe_journal_head.v2.k1:K(project_id):K(restore_transaction_id); executor_filesafe_journal_origin.v2.k1:K(project_id):K(restore_transaction_id):N(revision). Each is project-owned, redacted_refs_only, no inline files/blobs/secrets, and is assigned to existing RP-AUTHORITY-INDEFINITE for original dispatch/journal authority. Owner and codec registration, backup/restore and deletion transactions must include all three families before this profile is installed; absent registration is unavailable, not a default policy. Original safe-point retention remains RP-SAFEPOINT-90D-AFTER-RELEASE and cannot be replaced with indefinite raw-content retention. Linked payload/blob holds follow the original owner while unresolved. Metadata retention does not authorize retention, release or copying of raw files.
+
+At initial FileSafe acceptance, the native FileSafe and Storage owners atomically commit the complete invocation binding, original initial journal, first immutable origin and mutable head together in the single original acceptance/journal-preparation transaction, before mutation or C acknowledgement. There is no binding-only or journal-only initial commit. Revision 1 has both prior selectors null and requires authentic original absence plus the independently derived whole initial journal candidate. Every subsequent original journal write atomically commits its full current journal candidate, new immutable origin and mutable head in that actual original journal transaction. Every later revision increments exactly once and authenticates the complete live prior journal before overwrite plus its immutable origin; the prior journal issue commitment persists its identity/hash, not its body; concurrent writers compare the prior head and native owner lease in the transaction. The issued_journal_commitment hashes the exact original stored journal bytes at that original write. prior_journal_commitment and issued_journal_commitment are historical issue commitments carrying original family/key/codec/hash; they do not promise that old values of the mutable same-key journal remain readable. The origin is serialized after that selector is known; the head selects that origin after its bytes exist. No origin hashes its own head or itself. Initial resolution has resolved_original_result null; later result-link-only origins select the first authentic resolution origin. A missing historical origin is not backfilled by the cancellation reader.
+
+##### Injective FileSafe original key algorithm
+
+This source profile requires `filesafe_original_injective_keys.v1` to be authentically installed by the original FileSafe/storage owner before original binding admission and journal preparation, hence before any mutation. Every admission, journal write, origin/head read, acknowledgment, reconciliation, restart readback, backup/restore and deletion boundary must use the exact disjoint `.v2.k1:` key profile defined here. K is lowercase hex of exact valid UTF-8 identifier bytes, with no Unicode normalization, case folding, rejection of colon-containing identifiers or other narrowing of the original identifier domain. N is positive decimal revision with no leading zeros. Components have fixed arity, so the inverse splits only the separator, decodes each even-length lowercase hex component as exact UTF-8, and parses the last numeric component for origin keys. A malformed key, wrong prefix, wrong arity or noncanonical spelling is not an alternative identity.
+
+The three stored value schema IDs, schema versions, headers and complete grammars remain exactly v2; codec is unchanged. This is a physical key/source profile revision, not value-version migration. The new source URI and its own self-references differ together as a complete document. Imported original C2, permission, safe-point and journal roots are unchanged. Consumers must explicitly consume this complete source document and require original profile installation under the native owner boundary; shape equality, version equality or a renamed old selector does not prove provenance. The original owner must check the installed profile in its actual authoritative original admission/preparation and every current boundary, using the existing authentic private source/codec/retention/backup boundary rather than accepting caller-supplied profile strings. No schema-only value is an installation receipt.
+
+An operation originally born under the old raw v2 key profile is unsupported by this successor even if its values compare equal; do not discover, rename, backfill, copy or relabel it into the new profile. Missing authentic original installed-profile custody returns unavailable (unsupported_source_profile or original_custody_missing as applicable); it does not admit new work or remove an inventory member. A caller cannot change the profile for an existing operation. Historical raw-key profiles remain separately versioned and cannot qualify here. Only original new-profile operations are eligible. Existing original safe-point, permission and restore-journal families keep their exact original keys, codecs and lifetimes; this profile applies only to the three new compact metadata families. No whole-journal history or raw content archive is added.
+
+UTF-8 encoding of valid identifier strings is injective; lowercase hex is an injective encoding of bytes and contains no colon; fixed arity colon concatenation is therefore injective. Positive canonical decimal revision is injective and occurs only in its fixed final position. Prefixes are disjoint from the old raw profile and each other.
+
+#### Process complete physical records, keys and original write order
+
+The complete canonical physical declarations identify all fifteen Process compact redb families and their complete Physical wrappers. The whole wrapper has family_id, schema_id, schema_version, storage_instance_id, physical_key and the complete closed payload value. No generic JSON payload is admitted. Original MCP lifecycle, CURRENT, manifest and first-receipt custody values remain unchanged whole original canonical owner schemas and declarations. Those original families retain their existing physical codecs and keys; they do not acquire this new wrapper.
+
+For new keys, K(s) is lowercase hexadecimal of the exact valid UTF-8 bytes of s, without Unicode normalization. B is SHA-256 of the UTF-8 domain `pm.executor.process-probe-key.v1`, one zero byte, then registered canonical MessagePack of the complete DispatchInvocation. No timestamp, PID, display name or caller-selected JSON participates. The key prefix is `{family_id}.v1:K(storage_instance_id):B`. The single immutable ProbeBirth and mutable ProcessSourceHead use that exact prefix. ProcessBirth appends `:K(native_spawn_operation_id)`; membership appends `:revision` using shortest positive decimal; normalized admission appends `:K(stream_id):ordinal` with shortest nonnegative decimal; writer cut appends `:K(writer_id):K(native_cut_operation_id)`; every other immutable source appends `:K(operation_id)` (recovery uses recovery_operation_id). The original source origin uses its own operation_id. An operation issuing several distinct source records reserves distinct original source-write operation IDs within its real transaction; it cannot collide at a same-family key. Reusing an immutable key with unequal bytes is conflict. There is no replacement-write version archive for raw output.
+
+New wrappers use the exact Storage canonical MessagePack codec in Case L-2: shortest type-preserving integers/strings, UTF-8-byte map order, required-present nulls preserved, no duplicate keys or trailing values, no invalid Unicode and no lossy numeric conversion. The existing representation limits are codec refusal, not newly imposed schema limits. SHA-256 covers complete exact physical wrapper bytes. OriginLocator deliberately has exact family/schema/version/key/operation identity but no origin content hash: its record is issued before its authenticating origin can hash the record. OriginalWriteOrigin hashes the issued complete wrapper, identifies the actual native operation/transaction/owner and chains to the prior immutable origin and issued record. It never hashes itself. ProcessSourceHead selects the already-serialized latest origin and current immutable source rows. Origins do not include the mutable head as their own afterimage. The actual native storage writer commits the issued wrapper, its origin and the head CAS at one genuine durable transaction boundary; native capability release follows that commit.
+
+The first probe-admission origin has probe_birth=null and no prior record/origin; later origins select the already-issued immutable birth. Sequence begins at one and increases exactly once per original source write. All mutable current selection is through the actual ProcessSourceHead; membership snapshots are immutable at revision keys. Readers never reconstruct overwritten historical bytes. Full original issued rows remain compact metadata under their own immutable keys. A same-operation read or crash recovery retrieves exactly the original record and origin; it does not issue a new observation time or a replacement successful result.
+
+The new families are assignments to existing RP-AUTHORITY-INDEFINITE for compact original-operation/capability/receipt custody. Canonical owner registration must explicitly add their exact wrappers, keys, codec, whole-boundary backup, holds and deletion handling; absent registration means unavailable. Original MCP lifecycle retains RP-RUNTIME-365D and mandatory backup; original Storage control/receipt families retain their own policies. No assignment extends raw event/log/transcript lifetime. Admission metadata, normalized queue commitments, receipts and terminal source origins contain no raw credentials, decrypted launch environment, absolute host paths or provider-visible output. They are not a hidden logging archive.
+
+#### Event registry, terminal caller and remaining proof boundary
+
+The active `goal_run.started` and `goal_run.cancelled` family rows remain their whole v2 registrations. The exact new v3 payload schemas are source dependencies, not an active v3 event-registry selection. Original v3 Workflow publication remains unavailable until the separate complete original v3 reader/consumer/projector/checkpoint and registry contract is adopted. This contract supplies no event-depth pass and cannot borrow Executor `run.started` qualification or replace a full EventRecord claim with receipt-only custody.
+
+Positive D06 has a separate originally registered terminal-service source boundary and its own required first append barrier. It does not mutate D05's sealed work queues, capability/admission history, final flush or sticky failures. If SP-305's actual outer Goal operation holds a competing pre-reserved sequence/segment/offset append/rotation fence, D06 remains unavailable until the original Goal/Storage owner supplies its explicit compatible caller/assignment successor. No foreign lock release, fake receipt, omitted event, widened numeric domain or generic post-cut exception is admitted. D05 imports no future D06 result, event or Goal terminal; the positive consumer imports complete fresh D05 readback.
+
+RequiredCheckpointSuccess remains false. Every actual required checkpoint, unsupported pre-attempt effect, unknown capability/obligation, pooled/shared process, arbitrary callback or unsupported role remains unresolved in the complete original census. The admitted product controls, default pooling, Stop priority, independent effect ownership and all source/raw lifetimes remain unchanged. No original source is recreated from a schema, event projection, surviving hash, current body, PID scan or new producer operation.
+
+Source/schema checks establish no native installation, actual capability/root authentication, source execution, exhaustive native enrollment, concurrent exclusion, exact codec execution, cross-store atomicity/fsync/crash behavior, complete current/retained replay, backup/restore or outer Goal integration. Those runtime proofs remain NOT_RUN. No runtime launch, global D05 closure, event-depth pass, WorkNode/NodeSeed/readiness admission or governance seal follows.
+#### Exact v3 event-depth handoff
+
+Original-start producer/source adoption does not discharge SP-214's separate event consumers. The actual selected v3 `goal_run.started` route must independently bind the complete original EventRecord/payload, scoped identity/digest, original first receipt and whole-value custody, exact retained/current source reader, current traversal/inspection boundary, every actual effect and its checkpoint or owner-justified none_required disposition. Original source unavailability refuses that claim rather than downgrading it to receipt-only proof. Disposable projection rebuild cannot manufacture original event, source, native state, receipt, dispatch, provider/tool or Usage effects.
+
+The v3 family revision/schema route requires explicit event-registry and consumer adoption while preserving whole historical v2 readers and RP-RUNTIME-365D/1.0.0. The sole GoalRunStarted alias does not change payload admission. SP-278 whole original read/custody and SP-286/CV-339 first-receipt/full-value obligations remain mandatory at their actual lifecycle boundaries. Do not borrow Executor `run.started` reader/checkpoint qualification for Workflow `goal_run.started`, or infer an event-depth pass from the new source schema, its ordinary static checks, a barrier receipt alone or the registration row. Any remaining full original reader/projector/checkpoint/replay integration is explicitly pending its owner contract and proof.
+
+#### Outer Goal caller and qualification boundary
+
+SP-305's original exclusive pre-reserved sequence/segment/offset fence cannot be assumed compatible with the required subsequent D06 append. If the actual outer Goal operation still holds that competing append/rotation fence, positive D06 native availability is blocked until the original Goal/Storage owner supplies its explicit compatible caller/assignment successor. This source does not release a foreign reservation, suppress/reorder D06's required event, widen reserved numeric domains or invent a first receipt. Any separately adopted successor must name its exact original phase, methods, whole arguments and source/codec authority; D06 alone supplies no end-to-end Goal terminal consumption.
+
+These additions establish source contracts only. Native installation/capability authentication, actual original source execution, both final fences/all-writer exclusion, exact codec execution, cross-store atomicity/fsync/crash recovery, current/retained replay, coherent backup/restore and outer Goal integration remain NOT_RUN. No runtime launch, event-depth pass, global D05 closure, WorkNode/NodeSeed/readiness admission or governance seal follows. All previously admitted product controls and separately versioned source contracts remain applicable.
+
+#### Event and native qualification boundary
+
+The existing `goal_run.started` and `goal_run.cancelled` family rows remain complete active v2 registrations. The exact new v3 payload resources are source dependencies only. Actual v3 publication remains unavailable until the original event owner separately adopts the full v3 reader/consumer, durable projector and required checkpoint contract, then explicitly selects that family revision/schema in the registry. Source adoption does not clear event depth or borrow a sibling's checkpoint/none_required disposition. The original started RP-RUNTIME-365D and cancelled RP-AUTHORITY-INDEFINITE policies remain unchanged.
+
+Native installation/capability authentication, complete original source execution, both final fences and all-writer exclusion, exact codec execution, original atomicity/fsync/crash recovery, current/retained replay, coherent backup/restore and compatible outer Goal terminal integration remain NOT_RUN. RequiredCheckpointSuccess is false in the bounded aggregate. No WorkNode, NodeSeed, executable queue, runtime/readiness admission, global safe-stop closure, Step 9 result or governance seal follows from these source contracts.
+
+```yaml
+plan_unit_id: SP-309
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Workflow and bounded safe-stop original physical custody. Exactly 55 complete new wrappers produce
+  a 275-family registry while all 220 existing stored contracts and 27 policy objects remain exact.
+gui_related: false
+gui_classification_reason: Defines original runtime source, owner, storage and verification semantics without a
+  visual surface.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- SP-308
+- EP-118
+- EP-119
+unblocks: []
+acceptance_criteria:
+- Exactly 55 complete new wrappers produce a 275-family registry while all 220 existing stored contracts and 27
+  policy objects remain exact.
+- Four existing family rows receive only the enumerated bounded owner/read/scope metadata; 216 existing whole rows
+  remain unchanged.
+- Exact original key/codec/hash domains, source realms, mutability, first-receipt custody and phase-specific absent/current/retained
+  conditions are preserved.
+- Complete new custody uses the existing authority retention policy without extending referenced event, body, raw
+  input or source lifetimes.
+validation_surfaces:
+- Plans/executor_cancellation_contracts/methods.json
+- Plans/executor_cancellation_contracts/realm-entry-boundaries.json
+- Plans/executor_cancellation_contracts/physical-families.json
+- Plans/executor_cancellation_schema_resources.json
+- Plans/storage_value_registry.json
+risk_class: original_workflow_source_custody_or_native_admission_drift
+reasoning_tier: high
+context_scope: sp_309_original_source_contract
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/executor_cancellation_contracts/methods.json
+- Plans/executor_cancellation_contracts/realm-entry-boundaries.json
+- Plans/executor_cancellation_contracts/physical-families.json
+- Plans/executor_cancellation_schema_resources.json
+source_atom_ids: []
+negative_constraints:
+- No public command, event-membership, Goal lifecycle or retention-policy expansion.
+- No fabricated source, absence, origin, receipt, current body, native authority or retrospective original enrollment.
+- No numeric coercion, lossy codec, hidden effect/census member or required-flush failure removal.
+- No WorkNode/NodeSeed/runtime/readiness/event-depth/global safe-stop or governance claim from source adoption.
+```
+
+ContractRef: ContractName:Plans/executor_cancellation_contracts/methods.json, ContractName:Plans/executor_cancellation_contracts/realm-entry-boundaries.json, ContractName:Plans/executor_cancellation_contracts/physical-families.json, ContractName:Plans/executor_cancellation_schema_resources.json

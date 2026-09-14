@@ -1402,3 +1402,89 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/storage_value_registry.json, ContractName:Plans/workflow_activation_contracts/physical-families.json, ContractName:Plans/workflow_activation_contracts/retention-field-classification.json, ContractName:Plans/workflow_activation_contracts/methods.json, ContractName:Plans/workflow_activation_contracts/association-hash-dependencies.json, ContractName:Plans/Goal_Runtime_System.md#GRS-077, ContractName:Plans/Plan_To_Node_Compilation.md#PNC-025
+
+### BRS-025 - Coherent Workflow and bounded safe-stop custody recovery
+
+BRS-025 defines the complete original coherent backup, restore and recovery boundary for the 55 exact physical families in SP-309. Fifty-four hold full closed original authority/control/receipt metadata, including the four compact original-start families. The D06 event candidate holds the complete bounded goal_run.cancelled producer and typed payload and uses that actual event family's existing RP-AUTHORITY-INDEFINITE@1.0.0 policy. Its event_type and payload are closed to goal_run.cancelled/v3 and payload_ref is required null; it is not a generic event producer or an optional raw-content archive. No persisted D06 value contains a native Body/Control or transient mutation snapshot. Both producer and original event remain under their same actual deletion/hold/redaction authority. The final original-start source persists only compact selectors, commitments, controls and original receipt/issuer metadata. Full start producer and native candidates exist only inside the actual original held publication; the goal_run.started EventRecord retains its own RP-RUNTIME-365D lifetime and is never reconstructed from these rows. Five D01 lineage families use their explicit v4 declarations; unadopted v3 proposal values are not canonical migration inputs. The complete closed schemas in the fixed family/source map determine field classification; no classification comes from a prefix alone.
+
+The existing RP-AUTHORITY-INDEFINITE@1.0.0 policy remains byte-for-byte structurally unchanged: creation anchor, indefinite=true, null TTL/cardinality/byte caps, fail_closed overflow, hold eligibility, expiry_action=none. Applying this already defined authority class to qualifying new original custody rows is explicit; an unknown/unregistered policy is materially incomplete and must never default to indefinite. No new TTL, deletion policy, byte budget or eviction behavior is authored here.
+
+Retain complete required, optional, nullable, nested, numeric, array-membership and typed text values. These records are not described as content-free. Full typed reason/context metadata cannot be shortened, stripped or replaced with a hash to make a retention classification easier. The actual original owner must reject unsafe secrets/raw content before issuance. Selectors, issue commitments, references and compact origins do not extend any referenced original lifetime or recreate disposed content. Mutable current rows keep current state and compact permitted transition custody, not successive full historical body archives. Original full EventRecord, files, blobs, logs, provider output, prompts and native source bodies stay under their existing owners and policies.
+
+Every new authoritative family is non-rebuildable and requires mandatory coherent backup while it exists under its explicit policy. Extend the actual original BRS-024/SP-308 boundary to the complete qualifying new family set and all original references, native controls, compact origins, current heads/pointers, pending coordinator transactions and original first-receipt/seglog state required by a genuine operation. A family list or backup flag alone is not coherent backup. Backup preserves exact original family/key/codec/full value and original identity/operation/epoch lineage; it cannot mint a profile, capability, origin, receipt or historical source.
+
+Restore is one original coordinated identity scope: storage instance, project/Goal/run/compile/invocation identity, original source lineage, controls/heads/pending states, actual permissions, tombstone/deletion/hold state, source registration and codec generations must agree. Restore retains original physical keys, including FileSafe .v2.k1 only for originally installed k1 operations. Never rekey old raw FileSafe values, reinterpret old wrappers, create a missing origin or attach an old numeric process ID. Restored bytes do not revive a native lease, child process, external effect capability or runnable release. Current original owners must independently establish the complete current boundary; otherwise admission remains unavailable.
+
+Recovery reads same-original committed custody and distinguishes real pending work from complete original commits. Missing non-rebuildable authority is data loss/unavailable with the existing actual recovery disclosure path; it is not a rebuildable projection, legacy promotion, schema-shaped success or optional backup omission. Process/aggregate crash and required-flush failure retain their original sticky failure semantics. The FileSafe recovery fence is unresolved, not successful effect transfer.
+
+Deletion, holds and redaction remain actual original-owner/Storage policy decisions. None of these registrations authorizes a new raw archive, release of a held safe point, log or blob, early removal of original receipt/dedupe identity, or recreation after tombstone. Janitor, backup, restore and recovery apply the same complete native current-source/owner/permission/registration/hold/deletion boundary independently before and after every helper and before mutation or disclosure. If required authority cannot be retained/decoded/backed up under its real policy, fail closed.
+
+All existing 220 family value schemas, key shapes, codecs and retention policies and all 27 policy objects remain unchanged. Only the four explicitly enumerated owner-reviewed existing rows may have metadata differences: workflow_goal_run_body and workflow_goal_run_control gain original D06/start producer/readers; workflow_original_source_origin and workflow_start_outbox_intent gain bounded read/scope annotations. Their complete stored schemas, keys, codecs and lifetimes remain unchanged. Existing FileSafe safe_point_record, safe_point_restore_transaction and permission_snapshot_record and Process mcp_server_lifecycle_record, seglog_current, seglog_manifest and event_append_receipt_custody remain exactly reused families, not seven new registrations.
+
+The coherent backup set includes the entire registered original family domain and the actually issued rows for this exact original scope, together with authentic source-owner phase/absence custody for not-yet-issued families. It does not demand a fabricated row for a phase or role that genuinely never occurred. Missing expected original custody, an unknown handoff or an unprovable absence remains unavailable; an empty array or reader observation cannot establish nonissuance. Pending original start/cancellation outcomes remain explicitly pending until the real original coordinator establishes its complete outcome.
+
+Start Candidate and Origin use their explicit compact v2 keys/grammars, Commit and Control retain their declared v1 shapes, and the initial StartControl is issued only in the authentic original begin transaction. Its separate unchanged A4 original origin authenticates that exact initial value/key/hash under the before-birth profile. Later current source reads consume compact original start commit/origin plus actual current control/native sources; they do not promise retained historical full producer/native candidate bodies or a full original publication replay. The independently callable lower Storage start participant repeats the whole genuine original union and final fences; an append receipt or a redb commit alone never establishes the joint original outcome.
+
+
+#### Event and native qualification boundary
+
+The existing `goal_run.started` and `goal_run.cancelled` family rows remain complete active v2 registrations. The exact new v3 payload resources are source dependencies only. Actual v3 publication remains unavailable until the original event owner separately adopts the full v3 reader/consumer, durable projector and required checkpoint contract, then explicitly selects that family revision/schema in the registry. Source adoption does not clear event depth or borrow a sibling's checkpoint/none_required disposition. The original started RP-RUNTIME-365D and cancelled RP-AUTHORITY-INDEFINITE policies remain unchanged.
+
+Native installation/capability authentication, complete original source execution, both final fences and all-writer exclusion, exact codec execution, original atomicity/fsync/crash recovery, current/retained replay, coherent backup/restore and compatible outer Goal terminal integration remain NOT_RUN. RequiredCheckpointSuccess is false in the bounded aggregate. No WorkNode, NodeSeed, executable queue, runtime/readiness admission, global safe-stop closure, Step 9 result or governance seal follows from these source contracts.
+
+```yaml
+plan_unit_id: BRS-025
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Backup_Restore_System.md
+canonical_text: Coherent Workflow and bounded safe-stop custody recovery. Backup covers every genuinely issued original
+  custody participant, mutable head/control, pending coordinator and required first-event/barrier state in the exact
+  original scope.
+gui_related: false
+gui_classification_reason: Defines original runtime source, owner, storage and verification semantics without a
+  visual surface.
+split_recommended: false
+depends_on:
+- BRS-024
+- SP-309
+unblocks: []
+acceptance_criteria:
+- Backup covers every genuinely issued original custody participant, mutable head/control, pending coordinator and
+  required first-event/barrier state in the exact original scope.
+- Authentic source-owner phase and absence custody distinguishes genuinely unissued records from lost or unknown
+  original authority.
+- Restore preserves original full values, keys, versions, operation lineage, deletion/hold state and current source
+  registrations without reviving native capabilities.
+- Unknown source, failed flush, pending transaction or lost non-rebuildable custody remains truthful and fenced.
+validation_surfaces:
+- Plans/executor_cancellation_contracts/methods.json
+- Plans/executor_cancellation_contracts/realm-entry-boundaries.json
+- Plans/executor_cancellation_contracts/physical-families.json
+- Plans/executor_cancellation_schema_resources.json
+- Plans/storage_value_registry.json
+risk_class: original_workflow_source_custody_or_native_admission_drift
+reasoning_tier: high
+context_scope: brs_025_original_source_contract
+implementation_surfaces:
+- Plans/Backup_Restore_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/executor_cancellation_contracts/methods.json
+- Plans/executor_cancellation_contracts/realm-entry-boundaries.json
+- Plans/executor_cancellation_contracts/physical-families.json
+- Plans/executor_cancellation_schema_resources.json
+source_atom_ids: []
+negative_constraints:
+- No public command, event-membership, Goal lifecycle or retention-policy expansion.
+- No fabricated source, absence, origin, receipt, current body, native authority or retrospective original enrollment.
+- No numeric coercion, lossy codec, hidden effect/census member or required-flush failure removal.
+- No WorkNode/NodeSeed/runtime/readiness/event-depth/global safe-stop or governance claim from source adoption.
+```
+
+ContractRef: ContractName:Plans/executor_cancellation_contracts/methods.json, ContractName:Plans/executor_cancellation_contracts/realm-entry-boundaries.json, ContractName:Plans/executor_cancellation_contracts/physical-families.json, ContractName:Plans/executor_cancellation_schema_resources.json

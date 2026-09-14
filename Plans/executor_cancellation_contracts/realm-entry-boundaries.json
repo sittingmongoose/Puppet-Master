@@ -1,0 +1,182 @@
+{
+  "schema_id": "pm.executor_cancellation_realm_entries.v1",
+  "status": "canonical_source_contract_native_installation_not_run",
+  "resource_map_ref": "Plans/executor_cancellation_schema_resources.json",
+  "methods_ref": "Plans/executor_cancellation_contracts/methods.json",
+  "network_fallback": false,
+  "merge_with_other_realms": false,
+  "caller_selected_realm": false,
+  "generic_schema_dispatch": false,
+  "workflow_source_entries": {
+    "source_realm": "start_current_workflow_native_activation",
+    "separate_goal_realm": "start_current_goal_controls",
+    "complete_resources": [
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json",
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json",
+      "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v2.schema.json"
+    ],
+    "phase_argument_map": "Plans/executor_cancellation_contracts/methods.json#/workflow_source_phase_arguments",
+    "separate_goal_resource": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json",
+    "original_start_profile": "workflow_start_original.v2",
+    "compatibility_realm": "start_retained_original_d01_d06",
+    "compatibility_rule": "Original unchanged scheduler value grammars and genuine retained historical reads only. This realm grants no current Workflow writer or mixed-version native admission."
+  },
+  "bounded_safestop_entries": {
+    "status": "canonical_source_contract_native_installation_not_run",
+    "generic_schema_or_realm_dispatch": false,
+    "caller_selectable_realm_or_type": false,
+    "current_d05_source": {
+      "complete_aggregate_definition_roots": [
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WriterRegistration",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/DomainBirth",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CapabilityBirth",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CapabilityDisposition",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CapabilityCurrent",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ObligationBirth",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/UnsupportedSource",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/DomainCut",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CoreEventAdmission",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CoreWriterCut",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/EventReadback",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/EventCommitment",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/FinalFlushRecord",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/FinalFlushHistoryMember",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/FinalFlushReadback",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/RequiredCheckpointSuccess",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CheckpointAssessment",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/FileSafeAssessment",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ProcessAssessment",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/SupportedProcessAssessment",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/InvocationPartition",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/GoalStopSources",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CorrectedCurrentSource",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalSchedulerStop",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/AggregateInput",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/SupportedInput",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/SettlementCommitment",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/AggregateResult",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ResolvedResult",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Origin",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/AggregateHead",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CurrentBoundary",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Recovery",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/SuccessfulReadback",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Unavailable",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ReadResult",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Request",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/LaunchIdentityReservation",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/NativeAllocationIdentity",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ReservationAllocation",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/AllocationCurrent",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CompileReservationJoin",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoin",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ReservationLineage",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectCurrent",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/DomainBirthPhysical",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CapabilityBirthPhysical",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CapabilityDispositionPhysical",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ObligationBirthPhysical",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/DomainCutPhysical",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CoreEventAdmissionPhysical",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CoreWriterCutPhysical",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/FinalFlushRecordPhysical",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/AggregateResultPhysical",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginPhysical",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/AggregateHeadPhysical",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/RecoveryPhysical",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ReservationAllocationPhysical",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CompileReservationJoinPhysical",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical",
+        "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmissionPhysical"
+      ],
+      "complete_current_c_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json",
+      "complete_current_c_definition_count": 64,
+      "current_c_scope": "Original start profile explicitly selected; other status/certification/checkpoint/future positive D06 unsupported.",
+      "equal_cross_owner_value_roots": [
+        "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocation",
+        "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeResolvedDisposition",
+        "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginSelector",
+        "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/PermissionValue",
+        "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalAppendCustody",
+        "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessInvocation",
+        "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessShutdownAssessment",
+        "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/SeglogFlushBoundary",
+        "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector"
+      ],
+      "equal_cross_owner_value_use": "Complete values used solely for current aggregate cross-owner comparisons; not permission to run an original FileSafe/Process owner operation in this realm.",
+      "other_copied_historical_definition_roots": "not callable current entrypoints; presence or successful resolution does not select the historical owner graph under the current handoff body",
+      "reference_check_scope": "All 67 aggregate and all 5 start argument definitions and full reachable values; complete selected frozen start Workflow realm; separate whole Goal/retained/FileSafe realms. Extra historical owner roots remain noncallable.",
+      "complete_current_c_scope": "Entire frozen start v3 Workflow realm and exact retained original bases, full 64-definition D01, 44-definition false-D06 and 31-definition start sources; original native method contracts remain mandatory.",
+      "complete_start_argument_roots": [
+        "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/OriginalStartArgument",
+        "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/BirthStartOutput",
+        "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument",
+        "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/StoppedAggregateArgument",
+        "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/StoppedCurrentBoundaryArgument"
+      ]
+    },
+    "current_goal_control": {
+      "complete_argument_definition_roots": [
+        "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+        "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/OriginalLaunchGoalRead",
+        "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/OriginalWorkflowBirthGoalArgument",
+        "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentAssociatedGoalArgument"
+      ],
+      "operation_scope": "Same actual original owner/private method phase in Plans/executor_cancellation_contracts/methods.json#/bounded_safestop_phase_arguments; whole Goal source/authority remains independent of native Executor source."
+    },
+    "original_role_operations": [
+      {
+        "role": "filesafe",
+        "realm": "filesafe_injective_owner",
+        "whole_source_schema": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json",
+        "mandatory_original_key_profile": "filesafe_original_injective_keys.v1",
+        "required": "Complete original owner input/candidate/read/physical/dependency contracts and authentic original installation; never validation via the current comparison-only route"
+      },
+      {
+        "role": "process",
+        "realm": "retained_original_d05",
+        "whole_source_schema": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json",
+        "required": "Complete original disposable Process owner input/candidate/read/physical/dependency contracts; never validation via the current comparison-only route"
+      }
+    ],
+    "historical_read_rule": "Original old D05/FileSafe2 graphs retain their original sources and disclosure rules; no current k1/A4/Goal authority, migration, backfill or same-ID replacement",
+    "final_boundary_rule": "Each original private reader/lower writer independently checks full source/candidate/native owner and permitted type/realm route before helpers and in final pure predicate after every returning helper; no generic validator grants admission."
+  },
+  "positive_d06_entries": {
+    "source_realm": "current_d05_source",
+    "separate_goal_realm": "current_goal_control",
+    "complete_resources": [
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json",
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v1.schema.json"
+    ],
+    "additional_complete_roots": "Every complete current Workflow/start resource, every D05 definition and complete current-Start argument in bounded_safestop_entries is required; not an arbitrary full historical-map evaluation.",
+    "profile": "original_bounded_safe_stop_terminal_publication.v1",
+    "original_installation": "Actual native terminal registration before DomainBirth; never replace a false-profile registration retrospectively.",
+    "separate_control_argument": "https://puppetmaster.local/proposals/workflow_cancel_current_controls_argument.v3.schema.json",
+    "separate_goal_argument": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+    "retained_read_exception": "read_retained_disposition.v3 is the unchanged full Request to RetainedResult metadata audit; no fresh D05/Start/Goal/native argument and no action authority.",
+    "dependency_direction": "D06 imports whole D05. D05 retains its frozen current C/start dependency and never imports the future positive D06 consumer; recursive equality of five stored value grammars is not native source-profile equivalence."
+  },
+  "role_source_entries": {
+    "filesafe_realm": "filesafe_injective_owner",
+    "filesafe_profile": "filesafe_original_injective_keys.v1",
+    "process_realm": "retained_original_d05",
+    "whole_process_producer_resource": "https://puppetmaster.local/proposals/executor_process_normalized_producer_submission.v1.schema.json",
+    "rule": "Only exact complete original FileSafe/Process operations and original readback roots. Their historical complete input realms remain independently evaluated; joins to current D05/C use whole preserved role and scheduler value grammars plus actual original owner/current native authority. No merged Goal/handoff schema realm or broad historical writer dispatcher."
+  },
+  "schema_identity_rule": "Whole immutable resources preserve literal IDs and original retrieval scopes. Proposal spelling in a retained URI is identity, not an alternate source or runtime authorization. A physical value route resolves only through its fixed family map and authentic original registration.",
+  "remaining_unavailable": {
+    "required_checkpoint_success": false,
+    "unsupported_effects": "unresolved",
+    "unbound_workflow_writers": false,
+    "v3_event_family_adoption": "pending separate complete consumer/projector/checkpoint and registry adoption",
+    "outer_goal_terminal_integration": "pending compatible original owner settlement/append successor",
+    "native_execution": "NOT_RUN"
+  }
+}

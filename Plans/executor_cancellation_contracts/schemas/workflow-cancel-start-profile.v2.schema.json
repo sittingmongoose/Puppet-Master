@@ -1,0 +1,1504 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json",
+  "$comment": "PROPOSED lifetime-correct D06 successor. Complete before/after body values are publication-time inputs only. Later original readback uses immutable transition custody plus the actual full current native body/control and first append originals. Whole D05 remains false.",
+  "$defs": {
+    "Selector": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector"
+    },
+    "Scope": {
+      "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope"
+    },
+    "WorkflowBody": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBody"
+    },
+    "WorkflowControl": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControl"
+    },
+    "RequiredD05SafeStopSuccess": false,
+    "RequiredCurrentGoalRunEventRevisionJoin": {
+      "$ref": "#/$defs/OriginalRevisionJoin"
+    },
+    "CurrentSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "executor",
+        "scheduler_stop"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "executor": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource"
+        },
+        "scheduler_stop": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StopSource"
+        }
+      }
+    },
+    "NativePreimage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "body",
+        "body_selection",
+        "control",
+        "control_selection",
+        "lineage_head",
+        "lineage_update",
+        "lineage_origin"
+      ],
+      "properties": {
+        "body": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBodyPhysical"
+        },
+        "body_selection": {
+          "$ref": "#/$defs/Selector"
+        },
+        "control": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControlPhysical"
+        },
+        "control_selection": {
+          "$ref": "#/$defs/Selector"
+        },
+        "lineage_head": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowHead"
+        },
+        "lineage_update": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowUpdate"
+        },
+        "lineage_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowMutationOrigin"
+        }
+      }
+    },
+    "D05Join": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "goal_stop",
+        "scheduler_stop",
+        "inventory_cut",
+        "whole_original_safe_stop"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_stop": {
+          "$ref": "#/$defs/Selector"
+        },
+        "scheduler_stop": {
+          "$ref": "#/$defs/Selector"
+        },
+        "inventory_cut": {
+          "$ref": "#/$defs/Selector"
+        },
+        "whole_original_safe_stop": {
+          "$ref": "#/$defs/RequiredD05SafeStopSuccess"
+        }
+      }
+    },
+    "NativeEvent": {
+      "allOf": [
+        {
+          "$ref": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_record.schema.json"
+        },
+        {
+          "properties": {
+            "event_type": {
+              "const": "goal_run.cancelled"
+            },
+            "payload_schema_id": {
+              "const": "pm.goal_runtime_event.goal_run_cancelled.schema.v3"
+            },
+            "payload": {
+              "$ref": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/goal_run_cancelled.v3.schema.json"
+            },
+            "payload_ref": {
+              "type": "null"
+            },
+            "scope_kind": {
+              "const": "project"
+            },
+            "replay_policy": {
+              "const": "dedupe_by_idempotency_key"
+            }
+          },
+          "required": [
+            "payload"
+          ]
+        }
+      ]
+    },
+    "EventReadback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event",
+        "append",
+        "custody",
+        "original_revision_join",
+        "original_candidate"
+      ],
+      "properties": {
+        "event": {
+          "$ref": "#/$defs/NativeEvent"
+        },
+        "append": {
+          "$ref": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+        },
+        "custody": {
+          "$ref": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json#/$defs/custody_reader"
+        },
+        "original_revision_join": {
+          "$ref": "#/$defs/RequiredCurrentGoalRunEventRevisionJoin"
+        },
+        "original_candidate": {
+          "$ref": "#/$defs/StorageEventCandidate"
+        }
+      }
+    },
+    "NonterminalBody": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/WorkflowBody"
+        },
+        {
+          "properties": {
+            "status": {
+              "enum": [
+                "ready",
+                "running",
+                "provisional_success",
+                "verifying",
+                "failed_verification",
+                "repairing",
+                "blocked",
+                "stopped"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "TerminalBody": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/WorkflowBody"
+        },
+        {
+          "properties": {
+            "status": {
+              "enum": [
+                "certified",
+                "failed",
+                "cancelled"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "CancelledBody": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/WorkflowBody"
+        },
+        {
+          "properties": {
+            "status": {
+              "const": "cancelled"
+            }
+          }
+        }
+      ]
+    },
+    "StatusMutation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "before_body",
+        "before_control",
+        "after_body",
+        "after_control",
+        "goalrun_event_revision_join"
+      ],
+      "properties": {
+        "kind": {
+          "const": "cancel_nonterminal"
+        },
+        "before_body": {
+          "$ref": "#/$defs/NonterminalBody"
+        },
+        "before_control": {
+          "$ref": "#/$defs/WorkflowControl"
+        },
+        "after_body": {
+          "$ref": "#/$defs/CancelledBody"
+        },
+        "after_control": {
+          "$ref": "#/$defs/WorkflowControl"
+        },
+        "goalrun_event_revision_join": {
+          "$ref": "#/$defs/PreparedRevisionContext"
+        }
+      }
+    },
+    "TerminalPreservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "before_body",
+        "before_control",
+        "after_body",
+        "after_control"
+      ],
+      "properties": {
+        "kind": {
+          "const": "preserve_terminal"
+        },
+        "before_body": {
+          "$ref": "#/$defs/TerminalBody"
+        },
+        "before_control": {
+          "$ref": "#/$defs/WorkflowControl"
+        },
+        "after_body": {
+          "$ref": "#/$defs/TerminalBody"
+        },
+        "after_control": {
+          "$ref": "#/$defs/WorkflowControl"
+        }
+      }
+    },
+    "NativeDisposition": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/StatusMutation"
+        },
+        {
+          "$ref": "#/$defs/TerminalPreservation"
+        }
+      ]
+    },
+    "AdmittedInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current",
+        "preimage",
+        "safe_stop"
+      ],
+      "properties": {
+        "current": {
+          "$ref": "#/$defs/CurrentSource"
+        },
+        "preimage": {
+          "$ref": "#/$defs/NativePreimage"
+        },
+        "safe_stop": {
+          "$ref": "#/$defs/D05Join"
+        }
+      }
+    },
+    "PreparedMutation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "originals",
+        "native",
+        "operation_id",
+        "transaction_id",
+        "workflow_owner_ref",
+        "workflow_owner_epoch"
+      ],
+      "properties": {
+        "originals": {
+          "$ref": "#/$defs/AdmittedInput"
+        },
+        "native": {
+          "$ref": "#/$defs/NativeDisposition"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "Intent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "transaction_id",
+        "workflow_owner_ref",
+        "workflow_owner_epoch",
+        "association_selection",
+        "goal_stop",
+        "scheduler_stop",
+        "inventory_cut",
+        "safe_stop_source",
+        "before_body",
+        "before_control",
+        "prepared_body_sha256",
+        "prepared_control_sha256",
+        "kind",
+        "prepared_at_utc",
+        "event_candidate"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "association_selection": {
+          "$ref": "#/$defs/Selector"
+        },
+        "goal_stop": {
+          "$ref": "#/$defs/Selector"
+        },
+        "scheduler_stop": {
+          "$ref": "#/$defs/Selector"
+        },
+        "inventory_cut": {
+          "$ref": "#/$defs/Selector"
+        },
+        "safe_stop_source": {
+          "$ref": "#/$defs/Selector"
+        },
+        "before_body": {
+          "$ref": "#/$defs/Selector"
+        },
+        "before_control": {
+          "$ref": "#/$defs/Selector"
+        },
+        "prepared_body_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "prepared_control_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "kind": {
+          "enum": [
+            "cancel_nonterminal",
+            "preserve_terminal"
+          ]
+        },
+        "prepared_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "event_candidate": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EventCandidateSelection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "cancel_nonterminal"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "event_candidate": {
+                "$ref": "#/$defs/EventCandidateSelection"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "event_candidate": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "revision",
+        "intent",
+        "phase",
+        "result",
+        "last_origin_operation_id"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "intent": {
+          "$ref": "#/$defs/Selector"
+        },
+        "phase": {
+          "enum": [
+            "prepared",
+            "committed"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_origin_operation_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "CancelledResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "scope",
+        "operation_id",
+        "transaction_id",
+        "workflow_owner_ref",
+        "workflow_owner_epoch",
+        "intent",
+        "before_body",
+        "before_control",
+        "after_body",
+        "after_control",
+        "safe_stop_source",
+        "scheduler_stop",
+        "inventory_cut",
+        "association_selection",
+        "append_receipt",
+        "original_event_value",
+        "committed_at_utc",
+        "action_authority",
+        "event_candidate"
+      ],
+      "properties": {
+        "kind": {
+          "const": "cancelled_from_nonterminal"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "intent": {
+          "$ref": "#/$defs/Selector"
+        },
+        "before_body": {
+          "$ref": "#/$defs/Selector"
+        },
+        "before_control": {
+          "$ref": "#/$defs/Selector"
+        },
+        "after_body": {
+          "$ref": "#/$defs/Selector"
+        },
+        "after_control": {
+          "$ref": "#/$defs/Selector"
+        },
+        "safe_stop_source": {
+          "$ref": "#/$defs/Selector"
+        },
+        "scheduler_stop": {
+          "$ref": "#/$defs/Selector"
+        },
+        "inventory_cut": {
+          "$ref": "#/$defs/Selector"
+        },
+        "association_selection": {
+          "$ref": "#/$defs/Selector"
+        },
+        "append_receipt": {
+          "$ref": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt"
+        },
+        "original_event_value": {
+          "$ref": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment"
+        },
+        "committed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "action_authority": {
+          "const": "none"
+        },
+        "event_candidate": {
+          "$ref": "#/$defs/EventCandidateSelection"
+        }
+      }
+    },
+    "PreservedResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "scope",
+        "operation_id",
+        "transaction_id",
+        "workflow_owner_ref",
+        "workflow_owner_epoch",
+        "intent",
+        "before_body",
+        "before_control",
+        "after_body",
+        "after_control",
+        "safe_stop_source",
+        "scheduler_stop",
+        "inventory_cut",
+        "association_selection",
+        "preserved_status",
+        "committed_at_utc",
+        "action_authority"
+      ],
+      "properties": {
+        "kind": {
+          "const": "terminal_preserved"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "intent": {
+          "$ref": "#/$defs/Selector"
+        },
+        "before_body": {
+          "$ref": "#/$defs/Selector"
+        },
+        "before_control": {
+          "$ref": "#/$defs/Selector"
+        },
+        "after_body": {
+          "$ref": "#/$defs/Selector"
+        },
+        "after_control": {
+          "$ref": "#/$defs/Selector"
+        },
+        "safe_stop_source": {
+          "$ref": "#/$defs/Selector"
+        },
+        "scheduler_stop": {
+          "$ref": "#/$defs/Selector"
+        },
+        "inventory_cut": {
+          "$ref": "#/$defs/Selector"
+        },
+        "association_selection": {
+          "$ref": "#/$defs/Selector"
+        },
+        "preserved_status": {
+          "enum": [
+            "certified",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "committed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "Result": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CancelledResult"
+        },
+        {
+          "$ref": "#/$defs/PreservedResult"
+        }
+      ]
+    },
+    "Origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "issuer_method",
+        "operation_id",
+        "transaction_id",
+        "workflow_owner_ref",
+        "workflow_owner_epoch",
+        "causation",
+        "beforeimages",
+        "afterimages",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "issuer_method": {
+          "enum": [
+            "owner.workflow.executor_cancel.prepare_disposition.v3",
+            "owner.workflow.executor_cancel.publish_disposition.v3"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "causation": {
+          "$ref": "#/$defs/Selector"
+        },
+        "beforeimages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Selector"
+          }
+        },
+        "afterimages": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/PrepareAfterimages"
+            },
+            {
+              "$ref": "#/$defs/PublishAfterimages"
+            }
+          ]
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "issuer_method": {
+                "const": "owner.workflow.executor_cancel.prepare_disposition.v3"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "afterimages": {
+                "$ref": "#/$defs/PrepareAfterimages"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "afterimages": {
+                "$ref": "#/$defs/PublishAfterimages"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ReadbackCancelled": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "result",
+        "origin",
+        "intent",
+        "control",
+        "native_after",
+        "safe_stop",
+        "original_event",
+        "original_d01_lineage"
+      ],
+      "properties": {
+        "kind": {
+          "const": "cancelled_from_nonterminal"
+        },
+        "result": {
+          "$ref": "#/$defs/CancelledResult"
+        },
+        "origin": {
+          "$ref": "#/$defs/Origin"
+        },
+        "intent": {
+          "$ref": "#/$defs/Intent"
+        },
+        "control": {
+          "$ref": "#/$defs/Control"
+        },
+        "native_after": {
+          "$ref": "#/$defs/NativePreimage"
+        },
+        "safe_stop": {
+          "$ref": "#/$defs/D05Join"
+        },
+        "original_event": {
+          "$ref": "#/$defs/EventReadback"
+        },
+        "original_d01_lineage": {
+          "$ref": "#/$defs/OriginalD01Lineage"
+        }
+      }
+    },
+    "ReadbackPreserved": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "result",
+        "origin",
+        "intent",
+        "control",
+        "native_unchanged",
+        "safe_stop",
+        "original_d01_lineage"
+      ],
+      "properties": {
+        "kind": {
+          "const": "terminal_preserved"
+        },
+        "result": {
+          "$ref": "#/$defs/PreservedResult"
+        },
+        "origin": {
+          "$ref": "#/$defs/Origin"
+        },
+        "intent": {
+          "$ref": "#/$defs/Intent"
+        },
+        "control": {
+          "$ref": "#/$defs/Control"
+        },
+        "native_unchanged": {
+          "$ref": "#/$defs/NativePreimage"
+        },
+        "safe_stop": {
+          "$ref": "#/$defs/D05Join"
+        },
+        "original_d01_lineage": {
+          "$ref": "#/$defs/OriginalD01Lineage"
+        }
+      }
+    },
+    "SuccessfulReadback": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ReadbackCancelled"
+        },
+        {
+          "$ref": "#/$defs/ReadbackPreserved"
+        }
+      ]
+    },
+    "Unavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "reason",
+        "workflow_disposition_effect",
+        "prior_native_effects",
+        "action_authority"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "enum": [
+            "safe_stop_source_unsupplied",
+            "event_revision_owner_join_unsupplied",
+            "unsupported_backend",
+            "missing_original",
+            "scope_mismatch",
+            "owner_changed",
+            "permission_changed",
+            "terminal_custody_unknown",
+            "pending_original",
+            "recovery_required",
+            "immutable_conflict"
+          ]
+        },
+        "workflow_disposition_effect": {
+          "enum": [
+            "none",
+            "original_publication_pending"
+          ]
+        },
+        "prior_native_effects": {
+          "const": "preserve_original_truth"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "workflow_owner_ref",
+        "expected_workflow_owner_epoch"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_workflow_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "ReadResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "readback"
+          ],
+          "properties": {
+            "kind": {
+              "const": "disposition"
+            },
+            "readback": {
+              "$ref": "#/$defs/SuccessfulReadback"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "unavailable"
+          ],
+          "properties": {
+            "kind": {
+              "const": "unavailable"
+            },
+            "unavailable": {
+              "$ref": "#/$defs/Unavailable"
+            }
+          }
+        }
+      ]
+    },
+    "RetainedResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result",
+        "origin",
+        "action_authority"
+      ],
+      "properties": {
+        "result": {
+          "$ref": "#/$defs/Result"
+        },
+        "origin": {
+          "$ref": "#/$defs/Origin"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "StorageIntent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_cancel_intent.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/Intent"
+        }
+      }
+    },
+    "StorageControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_cancel_control.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/Control"
+        }
+      }
+    },
+    "StorageResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_cancel_result.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/Result"
+        }
+      }
+    },
+    "StorageOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_cancel_origin.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/Origin"
+        }
+      }
+    },
+    "OriginalRevisionJoin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "transaction_id",
+        "current_goal_body_selection",
+        "current_goal_control_selection",
+        "binding_selection",
+        "association_selection",
+        "expected_goal_run_revision",
+        "goal_run_revision",
+        "original_event",
+        "original_append",
+        "original_custody",
+        "current_native",
+        "original_goal_context_revision",
+        "original_transition",
+        "original_transition_origin",
+        "event_candidate"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_goal_body_selection": {
+          "$ref": "#/$defs/Selector"
+        },
+        "current_goal_control_selection": {
+          "$ref": "#/$defs/Selector"
+        },
+        "binding_selection": {
+          "$ref": "#/$defs/Selector"
+        },
+        "association_selection": {
+          "$ref": "#/$defs/Selector"
+        },
+        "expected_goal_run_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "goal_run_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_event": {
+          "$ref": "#/$defs/NativeEvent"
+        },
+        "original_append": {
+          "$ref": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+        },
+        "original_custody": {
+          "$ref": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json#/$defs/custody_reader"
+        },
+        "current_native": {
+          "$ref": "#/$defs/NativePreimage"
+        },
+        "original_goal_context_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_transition": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowUpdate"
+        },
+        "original_transition_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowMutationOrigin"
+        },
+        "event_candidate": {
+          "$ref": "#/$defs/EventCandidateSelection"
+        }
+      }
+    },
+    "PreparedRevisionContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "before",
+        "candidate_body",
+        "candidate_control",
+        "current_goal_body_selection",
+        "current_goal_control_selection",
+        "binding_selection",
+        "association_selection",
+        "current_goal_revision",
+        "expected_goal_run_revision",
+        "goal_run_revision",
+        "original_producer_event_candidate"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "before": {
+          "$ref": "#/$defs/NativePreimage"
+        },
+        "candidate_body": {
+          "$ref": "#/$defs/CancelledBody"
+        },
+        "candidate_control": {
+          "$ref": "#/$defs/WorkflowControl"
+        },
+        "current_goal_body_selection": {
+          "$ref": "#/$defs/Selector"
+        },
+        "current_goal_control_selection": {
+          "$ref": "#/$defs/Selector"
+        },
+        "binding_selection": {
+          "$ref": "#/$defs/Selector"
+        },
+        "association_selection": {
+          "$ref": "#/$defs/Selector"
+        },
+        "current_goal_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expected_goal_run_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "goal_run_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_producer_event_candidate": {
+          "$ref": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v3/producer-submission.schema.json"
+        }
+      }
+    },
+    "PrepareAfterimages": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "intent",
+        "control",
+        "event_candidate"
+      ],
+      "properties": {
+        "kind": {
+          "const": "prepare"
+        },
+        "intent": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "workflow_cancel_intent"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.workflow_cancel_intent.v3"
+                },
+                "schema_version": {
+                  "const": "3.0.0"
+                }
+              }
+            }
+          ]
+        },
+        "control": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "workflow_cancel_control"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.workflow_cancel_control.v3"
+                },
+                "schema_version": {
+                  "const": "3.0.0"
+                }
+              }
+            }
+          ]
+        },
+        "event_candidate": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EventCandidateSelection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "PublishAfterimages": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "result",
+        "control",
+        "native_body",
+        "native_control"
+      ],
+      "properties": {
+        "kind": {
+          "const": "publish"
+        },
+        "result": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "workflow_cancel_result"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.workflow_cancel_result.v3"
+                },
+                "schema_version": {
+                  "const": "3.0.0"
+                }
+              }
+            }
+          ]
+        },
+        "control": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "workflow_cancel_control"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.workflow_cancel_control.v3"
+                },
+                "schema_version": {
+                  "const": "3.0.0"
+                }
+              }
+            }
+          ]
+        },
+        "native_body": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "workflow_goal_run_body"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.workflow_goal_run_body.v1"
+                },
+                "schema_version": {
+                  "const": "1.0.0"
+                }
+              }
+            }
+          ]
+        },
+        "native_control": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "workflow_goal_run_control"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.workflow_goal_run_control.v1"
+                },
+                "schema_version": {
+                  "const": "1.0.0"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "OriginalD01Lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "update",
+        "head",
+        "pointer",
+        "origin"
+      ],
+      "properties": {
+        "update": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowUpdate"
+        },
+        "head": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowHead"
+        },
+        "pointer": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageCurrentPointer"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowMutationOrigin"
+        }
+      }
+    },
+    "EventCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "transaction_id",
+        "producer_submission",
+        "producer_semantic_digest"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer_submission": {
+          "$ref": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v3/producer-submission.schema.json"
+        },
+        "producer_semantic_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "StorageEventCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_cancel_event_candidate.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/EventCandidate"
+        }
+      }
+    },
+    "EventCandidateSelection": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/Selector"
+        },
+        {
+          "properties": {
+            "family_id": {
+              "const": "workflow_cancel_event_candidate"
+            },
+            "schema_id": {
+              "const": "pm.storage_value.workflow_cancel_event_candidate.v3"
+            },
+            "schema_version": {
+              "const": "3.0.0"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

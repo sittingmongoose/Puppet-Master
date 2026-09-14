@@ -2299,10 +2299,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 5,
+        "False": 6,
         "True": 19
       },
-      "heading_count": 51,
+      "heading_count": 53,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -2336,9 +2336,9 @@
         "future restore coordinator",
         "future security adapter registry"
       ],
-      "line_count": 1404,
+      "line_count": 1490,
       "path": "Plans/Backup_Restore_System.md",
-      "plan_unit_count": 24,
+      "plan_unit_count": 25,
       "plan_unit_ids": [
         "BRS-001",
         "BRS-002",
@@ -2363,7 +2363,8 @@
         "BRS-023",
         "BRS-021",
         "BRS-022",
-        "BRS-024"
+        "BRS-024",
+        "BRS-025"
       ],
       "reasoning_tiers": [
         "high",
@@ -2386,6 +2387,7 @@
         "false_backup_or_restore_receipt",
         "incomplete_or_overbroad_backup_boundary",
         "inconsistent_backup_or_false_completion",
+        "original_workflow_source_custody_or_native_admission_drift",
         "recovery_key_loss_exposure_or_identity_clone",
         "restore_authority_leak",
         "source_history_identity_safety_or_false_recovery",
@@ -2394,10 +2396,10 @@
         "unsafe_restore_or_false_operational_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "6652960da541e9a40b54801f4fb6e7e0eef915453490c91529727c32bd230ccf",
+      "sha256": "6ba88c4e1737a931d260c4d165e0acfbdd0271aba6d6d52d111b0b48470e9265",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 24
+        "accepted": 25
       },
       "title": "Backup And Restore System",
       "unit_type_counts": {
@@ -2409,7 +2411,7 @@
         "owner_boundary": 1,
         "recovery_requirement": 4,
         "requirement": 5,
-        "schema_contract": 1,
+        "schema_contract": 2,
         "security_requirement": 2,
         "validation_requirement": 1
       },
@@ -2422,6 +2424,10 @@
         "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_architecture_admission_record",
         "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_destination_recovery_admission_record",
         "Plans/backup_restore_system_contracts.schema.json#/$defs/restore_operational_safety_record",
+        "Plans/executor_cancellation_contracts/methods.json",
+        "Plans/executor_cancellation_contracts/physical-families.json",
+        "Plans/executor_cancellation_contracts/realm-entry-boundaries.json",
+        "Plans/executor_cancellation_schema_resources.json",
         "Plans/shared_integration_runtime_expansion_contracts.schema.json",
         "Plans/storage_value_registry.json",
         "Plans/workflow_activation_contracts/association-hash-dependencies.json",
@@ -5847,10 +5853,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 100,
+        "False": 102,
         "True": 17
       },
-      "heading_count": 216,
+      "heading_count": 275,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -5884,9 +5890,9 @@
         "future Executor intake",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 7515,
+      "line_count": 8325,
       "path": "Plans/Executor_Protocol.md",
-      "plan_unit_count": 117,
+      "plan_unit_count": 119,
       "plan_unit_ids": [
         "EP-002",
         "EP-003",
@@ -6004,7 +6010,9 @@
         "EP-114",
         "EP-115",
         "EP-116",
-        "EP-117"
+        "EP-117",
+        "EP-118",
+        "EP-119"
       ],
       "reasoning_tiers": [
         "high",
@@ -6025,6 +6033,7 @@
         "host_executor_bypass",
         "infinite_repair_loop",
         "migration_lineage",
+        "original_workflow_source_custody_or_native_admission_drift",
         "p0_transport_websocket_streaming_hardening",
         "p1_transport_websocket_streaming_hardening",
         "scheduler_boundary_drift",
@@ -6033,16 +6042,16 @@
         "unverified_execution_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "0e776e116a335bbad98cf4a07f02282001ca3f398e498cec2c3eb28e7797a6b9",
+      "sha256": "50fdcfe6be6bf8c9d2accc195c89ca0398668cb2e9010e851c8c930b430e6cbc",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 117
+        "accepted": 119
       },
       "title": "Overseer Protocol (Canonical)",
       "unit_type_counts": {
         "compatibility_disposition": 2,
         "requirement": 114,
-        "schema_contract": 1
+        "schema_contract": 3
       },
       "validation_surfaces": [
         "Cumulative snapshots are persisted once",
@@ -6061,8 +6070,13 @@
         "Plans/Goal_Runtime_System.md#GRS-077",
         "Plans/event_index_consumer_adoption.schema.json",
         "Plans/event_index_consumer_adoption_fixtures.json",
+        "Plans/executor_cancellation_contracts/methods.json",
+        "Plans/executor_cancellation_contracts/physical-families.json",
+        "Plans/executor_cancellation_contracts/realm-entry-boundaries.json",
+        "Plans/executor_cancellation_schema_resources.json",
         "Plans/run_started_consumer_contract_fixtures.json",
         "Plans/run_started_consumer_contracts.schema.json",
+        "Plans/storage_value_registry.json",
         "Plans/workflow_activation_contracts/activation-field-map.json",
         "Plans/workflow_activation_contracts/methods.json",
         "Plans/workflow_activation_contracts/native-birth-field-map.json",
@@ -16808,10 +16822,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 200,
+        "False": 201,
         "True": 102
       },
-      "heading_count": 710,
+      "heading_count": 721,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16889,9 +16903,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 25333,
+      "line_count": 25488,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 302,
+      "plan_unit_count": 303,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -17194,7 +17208,8 @@
         "SP-305",
         "SP-306",
         "SP-307",
-        "SP-308"
+        "SP-308",
+        "SP-309"
       ],
       "reasoning_tiers": [
         "high",
@@ -17246,6 +17261,7 @@
         "lost_original_platform_decision_or_false_append_and_retention_authority",
         "migration_backup_canonical_redb_recovery",
         "notification_storage_secret_leak",
+        "original_workflow_source_custody_or_native_admission_drift",
         "p0_memory_history_logging_hardening",
         "p1_provider_capability_and_metadata_hardening",
         "persistence_identity_drift",
@@ -17287,10 +17303,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "127c75e80ee14608dc2ca9ea159fb8e36e3d10bf9239380b406de4de8eed23f4",
+      "sha256": "6f5e4a274dc571abd4cdfb0a3f87e5a5d03c0076459c0bb78a0a416b7fc1b378",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 299,
+        "accepted": 300,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
@@ -17300,7 +17316,7 @@
         "migration_contract": 2,
         "owner_boundary": 2,
         "requirement": 252,
-        "schema_contract": 16,
+        "schema_contract": 17,
         "security_contract": 1,
         "storage_contract": 21,
         "storage_security_contract": 1
@@ -17371,6 +17387,10 @@
         "Plans/event_record_index_binding_hash_vectors.json",
         "Plans/event_record_index_checkpoint.schema.json",
         "Plans/event_record_index_checkpoint_contract_fixtures.json",
+        "Plans/executor_cancellation_contracts/methods.json",
+        "Plans/executor_cancellation_contracts/physical-families.json",
+        "Plans/executor_cancellation_contracts/realm-entry-boundaries.json",
+        "Plans/executor_cancellation_schema_resources.json",
         "Plans/goal_body_custody.schema.json",
         "Plans/goal_body_custody_fixtures.json",
         "Plans/goal_cancel_command_custody.schema.json",
@@ -19411,7 +19431,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-13T23:56:39Z",
+  "generated_at_utc": "2026-09-14T01:53:49Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19419,13 +19439,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3455,
+      "False": 3459,
       "True": 3169
     },
-    "plan_unit_count": 6624,
+    "plan_unit_count": 6628,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6433,
+      "accepted": 6437,
       "retired": 182,
       "superseded": 9
     },
@@ -19497,7 +19517,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 96,
+      "schema_contract": 100,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 16,

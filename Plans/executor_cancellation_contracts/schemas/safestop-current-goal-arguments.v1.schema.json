@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json",
+  "$comment": "Separate original current-Goal owner arguments. No native registry merge, public grant, new physical family or execution claim. Mandatory full-value joins and actual phase/final predicates in adoption-protocol.md.",
+  "$defs": {
+    "CurrentGoalStopArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_controls",
+        "current_stop_control",
+        "current_writer_domain_head",
+        "original_stop_intent",
+        "original_stop_receipt",
+        "original_source_audit"
+      ],
+      "properties": {
+        "current_controls": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_current_controls_argument.v3.schema.json"
+        },
+        "current_stop_control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopControl"
+        },
+        "current_writer_domain_head": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageWriterDomainHead"
+        },
+        "original_stop_intent": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent"
+        },
+        "original_stop_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopReceipt"
+        },
+        "original_source_audit": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageSourceAudit"
+        }
+      }
+    },
+    "OriginalLaunchGoalRead": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/ActualGoalBefore"
+    },
+    "OriginalWorkflowBirthGoalArgument": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/BindingLowerArgument"
+    },
+    "CurrentAssociatedGoalArgument": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/CurrentAssociatedGoalRead"
+    }
+  }
+}

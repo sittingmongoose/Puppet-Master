@@ -6365,6 +6365,7 @@
     "MA-059",
     "MA-069",
     "MA-070",
+    "EP-118",
     "MA-001",
     "MS-136",
     "UCC-116",
@@ -6531,6 +6532,7 @@
     "WM-050",
     "N2-154",
     "PS-143",
+    "EP-119",
     "MA-072",
     "PSB-006",
     "UCC-156",
@@ -6538,12 +6540,14 @@
     "UIW-016",
     "WM-051",
     "SSYS-024",
+    "SP-309",
     "SRV-014",
     "CS-078",
     "UCC-157",
     "UIW-017",
     "F3-525",
     "SSYS-017",
+    "BRS-025",
     "CS-079",
     "UCC-158",
     "C-051",
@@ -13249,6 +13253,16 @@
       "edge_type": "depends_on",
       "from": "BRS-024",
       "to": "SP-308"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-025",
+      "to": "BRS-024"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-025",
+      "to": "SP-309"
     },
     {
       "edge_type": "depends_on",
@@ -24208,6 +24222,51 @@
     {
       "edge_type": "depends_on",
       "from": "EP-117",
+      "to": "SP-308"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-118",
+      "to": "CV-349"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-118",
+      "to": "EP-117"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-118",
+      "to": "GRS-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-118",
+      "to": "SP-308"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-119",
+      "to": "EP-115"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-119",
+      "to": "EP-118"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-119",
+      "to": "GRS-073"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-119",
+      "to": "GRS-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-119",
       "to": "SP-308"
     },
     {
@@ -68102,6 +68161,31 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-309",
+      "to": "EP-118"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-309",
+      "to": "EP-119"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-309",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-309",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-309",
+      "to": "SP-308"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -96906,7 +96990,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-13T23:56:39Z",
+  "generated_at_utc": "2026-09-14T01:53:49Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -110435,6 +110519,23 @@
         "heading_level": 4,
         "heading_line": 1333,
         "line": 1345,
+        "path": "Plans/Backup_Restore_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "brs_025_original_source_contract",
+      "gui_related": false,
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "plan_unit_id": "BRS-025",
+      "reasoning_tier": "high",
+      "risk_class": "original_workflow_source_custody_or_native_admission_drift",
+      "source_location": {
+        "heading": "Event and native qualification boundary",
+        "heading_level": 4,
+        "heading_line": 1429,
+        "line": 1435,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -129883,6 +129984,40 @@
         "heading_level": 4,
         "heading_line": 7430,
         "line": 7453,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "ep_118_original_source_contract",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-118",
+      "reasoning_tier": "high",
+      "risk_class": "original_workflow_source_custody_or_native_admission_drift",
+      "source_location": {
+        "heading": "Event and native qualification boundary",
+        "heading_level": 4,
+        "heading_line": 7576,
+        "line": 7582,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "ep_119_original_source_contract",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-119",
+      "reasoning_tier": "high",
+      "risk_class": "original_workflow_source_custody_or_native_admission_drift",
+      "source_location": {
+        "heading": "Event registry, terminal caller and remaining proof boundary",
+        "heading_level": 4,
+        "heading_line": 8256,
+        "line": 8266,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -196376,6 +196511,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "sp_309_original_source_contract",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-309",
+      "reasoning_tier": "high",
+      "risk_class": "original_workflow_source_custody_or_native_admission_drift",
+      "source_location": {
+        "heading": "Event and native qualification boundary",
+        "heading_level": 4,
+        "heading_line": 25424,
+        "line": 25430,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -209523,10 +209675,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15404,
+    "depends_on_edge_count": 15420,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18055,
-    "node_count": 6624,
+    "edge_count": 18071,
+    "node_count": 6628,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0

@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15404,
+    "depends_on_edge_count": 15420,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18055,
-    "node_count": 6624,
+    "edge_count": 18071,
+    "node_count": 6628,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-13T23:56:39Z",
+  "generated_at_utc": "2026-09-14T01:53:49Z",
   "gui_related_units": {
     "count": 3169,
     "units": [
@@ -34883,10 +34883,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6624,
+  "plan_unit_count": 6628,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2080,
+      "high": 2084,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -36928,6 +36928,7 @@
       "origin_stale_review_or_agent_publication": 1,
       "origin_visibility_overclaim_or_partial_api_data_loss": 1,
       "origin_webhook_replay_or_api_drift": 1,
+      "original_workflow_source_custody_or_native_admission_drift": 4,
       "orphan_control_or_inaccessible_hover_overlay": 1,
       "outcome_taxonomy_drift": 1,
       "output_location_allowlist_boundary": 1,
@@ -38686,7 +38687,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6433,
+      "accepted": 6437,
       "retired": 182,
       "superseded": 9
     },
@@ -38758,7 +38759,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 96,
+      "schema_contract": 100,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 16,
@@ -38842,7 +38843,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "f9c61efae11b408ff633ea51eb67a3b290973842c73d0ac79953bbf50de6b390",
+        "expected": "3f28948c718e01ff42744ecbb4a791ab66a9d249f7487b21e3f2cbeef6a2f199",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -38860,7 +38861,7 @@
       {
         "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
         "error": "pnc019_source_hash_stale",
-        "expected": "0e776e116a335bbad98cf4a07f02282001ca3f398e498cec2c3eb28e7797a6b9",
+        "expected": "50fdcfe6be6bf8c9d2accc195c89ca0398668cb2e9010e851c8c930b430e6cbc",
         "source_path": "Plans/Executor_Protocol.md"
       },
       {

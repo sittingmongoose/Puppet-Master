@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_id": {
+      "const": "pm.storage.seglog_current.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "storage_instance_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "selection_id": {
+      "$ref": "#/$defs/selection_id"
+    },
+    "selected_segment_generation": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 18446744073709551615
+    },
+    "birth_operation_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "schema_id",
+    "schema_version",
+    "storage_instance_id",
+    "selection_id",
+    "selected_segment_generation",
+    "birth_operation_ref"
+  ],
+  "$defs": {
+    "selection_id": {
+      "type": "string",
+      "pattern": "^pm\\.storage\\.selection\\.v1:[0-9a-f]{64}$"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}
