@@ -52,7 +52,7 @@
   Object.assign(base,{id:tid,title:flows[id].label,pinned:false,archived:false,status:'ready',goalId:null,
    messages:[{id:tid+'-request',role:'user',type:'text',body:'Plan the account-selection fix, with a verification step.'},
     {id:tid+'-plan',role:'system',type:'plan-card-v2',planId:pid}]});
-  c.state.threads.push(base);c.state.historyMode='closed';c.state.activity.open=false;
+  c.state.threads.push(base);window.PM56_B16_WORK.attachAccountPlan(template,base);c.state.historyMode='closed';c.state.activity.open=false;
   c.state.editorTabs=[];c.state.activeEditor=null;c.state.editorRevealed=false;
   c.state.demoOpen=false;c.state.menu=null;c.state.dialog=null;c.state.hover=null;
   c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};

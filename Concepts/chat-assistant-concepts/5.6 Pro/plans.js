@@ -737,18 +737,23 @@
       return { id:blockId(x,i), text:t, lines:t.split('\n').length,
                state:(pr && x.t==='plan_step') ? ((pr.step_states[x.plan_step_id]||{}).state||null) : null };
     }).filter(Boolean);
-    var rail = pr ? '<div class="pd-md-rail" aria-hidden="true">'+rows.map(function(row){
-        var cls=row.state?('pd-md-mark pd-md-mark-'+esc(STEP_MARK[row.state]||'idle')):'pd-md-mark';
-        return '<span class="'+cls+'" data-block-id="'+esc(row.id)+'"'+
-               (row.state?' data-step-state="'+esc(row.state)+'"':'')+
-               ' style="--pd-md-lines:'+row.lines+'">'+(row.state?esc(row.state.replace('_',' ')):'')+'</span>';
-      }).join('')+'</div>' : '';
-    return '<div class="pd-md'+(pr?' pd-md-with-rail':'')+'" data-plan-view="markdown">'+rail+
-      '<pre class="pd-md-pre">'+
-      rows.map(function(row){
-        return '<span class="pd-md-block" data-block-id="'+esc(row.id)+'">'+esc(row.text)+'</span>';
-      }).join('\n\n')+
-      '</pre></div>';
+    // The rail occupies the same width before and during execution. Markers
+    // track measured wrapped block positions, never guessed line counts.
+    var rail='<div class="pd-md-rail" aria-hidden="true">'+rows.map(function(row){
+      return '<span class="pd-md-mark pd-md-mark-'+esc(STEP_MARK[row.state]||'idle')+'" data-block-id="'+esc(row.id)+'"'+(row.state?' data-step-state="'+esc(row.state)+'" title="'+esc(row.state.replaceAll('_',' '))+'"':'')+'>'+(row.state?'●':'')+'</span>';
+    }).join('')+'</div>';
+    return '<div class="pd-md pd-md-with-rail" data-plan-view="markdown">'+rail+'<pre class="pd-md-pre">'+rows.map(function(row){return '<span class="pd-md-block" data-block-id="'+esc(row.id)+'">'+esc(row.text)+'</span>';}).join('\n\n')+'\n</pre></div>';
+  }
+  if(typeof document!=='undefined'){
+    const measured=new WeakSet();let pending=false;
+    function scheduleRail(){if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;for(const md of document.querySelectorAll('.pd-md-with-rail')){
+      const pre=md.querySelector('.pd-md-pre');if(!pre)continue;
+      if(!measured.has(pre)){measured.add(pre);new ResizeObserver(scheduleRail).observe(pre);}
+      const top=md.getBoundingClientRect().top;
+      for(const block of pre.querySelectorAll('.pd-md-block')){const mark=md.querySelector('.pd-md-rail [data-block-id="'+CSS.escape(block.dataset.blockId)+'"]');if(!mark)continue;const y=Math.round((block.getBoundingClientRect().top-top)*100)/100+'px';if(mark.style.top!==y)mark.style.top=y;}
+    }});}
+    new MutationObserver(scheduleRail).observe(document,{childList:true,subtree:true});
+    window.addEventListener('resize',scheduleRail);
   }
 
   /* Inline SVG only -- the project forbids emoji glyphs outright. These are the
@@ -828,89 +833,88 @@
   function todoApi(){ return window.PM56_TODOS || null; }
 
   function todosForPlan(r){
-    var api=todoApi(); if(!api || !api.get) return [];
-    var items=api.get(r.thread_id) || [];
-    return items.filter(function(t){ return t.plan_id===r.plan_id; });
+    const api=todoApi(),runId=r.approved?.plan_run_id,project=r.project_id||r.approved?.project_id||'pm',hash=hashOf(body(r));
+    return (api?.get(r.thread_id)||[]).filter(t=>t.thread_id===r.thread_id&&t.project_id===project&&
+      t.plan_id===r.plan_id&&t.plan_version===r.version&&t.plan_hash===hash&&t.run_id===runId);
   }
-
-  /* A digest over exactly the inputs the projection is derived from. Two runs
-     over the same durable records must produce the same hash; any To-Do
-     transition changes it, which is what makes a cached projection detectably
-     stale after a restart rather than quietly wrong. */
-  function currentnessOf(r){
-    var t=todosForPlan(r).map(function(x){
-      return x.todo_id+':'+x.status+':'+x.revision+':'+(x.plan_step_ids||[]).join('+');
-    }).sort().join('|');
-    return hashOf([r.plan_id,r.version,hashOf(body(r)),r.status,t]);
-  }
-
+  function currentnessOf(r){return progress(r).currentness_hash;}
+  /* AssistantPlanProgressProjector is the sole progress derivation. All reads
+     are pure: no cache stamp, revision or timestamp is persisted by observing
+     a projection, including while a multi-owner admission can still fail. */
   function progress(r){
-    var blocks=body(r), ss=steps(blocks), todos=todosForPlan(r);
-    var byStep={}, i, j;
-    for(i=0;i<todos.length;i++){
-      var ids=todos[i].plan_step_ids||[];
-      for(j=0;j<ids.length;j++){ (byStep[ids[j]]=byStep[ids[j]]||[]).push(todos[i]); }
+    const api=todoApi(),blocks=body(r),ss=steps(blocks),hash=hashOf(blocks),runId=r.approved?.plan_run_id||null,run=P().runs[runId];
+    const todos=todosForPlan(r),all=api?.get(r.thread_id)||[],byTodo=new Map(todos.map(t=>[t.todo_id,t])),byStep=new Map(),kids=new Map(),stepById=new Map(),stale=[];
+    const project=r.project_id||r.approved?.project_id||'pm';
+    if(r._projStale)stale.push('projection_refresh_pending');
+    if(r.approved){
+      if(!run||run.project_id!==project||run.thread_id!==r.thread_id||run.plan_id!==r.plan_id||run.plan_version!==r.version||run.plan_hash!==hash||r.approved.hash!==hash||r.approved.version!==r.version)stale.push('plan_run_identity_mismatch');
+      if(run?.required_todo_ids?.some(id=>!byTodo.has(id)))stale.push('required_todo_mapping_missing');
+      if(todos.some(t=>t.run_epoch!==run?.epoch))stale.push('todo_admission_epoch_mismatch');
     }
-    var kids={};
-    for(i=0;i<ss.length;i++){ if(ss[i].parent_step_id) (kids[ss[i].parent_step_id]=kids[ss[i].parent_step_id]||[]).push(ss[i].plan_step_id); }
-
-    var state={};
+    for(const s of ss){if(stepById.has(s.plan_step_id))stale.push('duplicate_plan_step');stepById.set(s.plan_step_id,s);
+      if(s.parent_step_id){if(!kids.has(s.parent_step_id))kids.set(s.parent_step_id,[]);kids.get(s.parent_step_id).push(s.plan_step_id);}}
+    const parentTodoIds=new Set(all.map(t=>t.parent_todo_id).filter(Boolean));
+    for(const t of todos){for(const id of t.plan_step_ids||[]){if(!stepById.has(id))stale.push('unknown_step_mapping');if(!byStep.has(id))byStep.set(id,[]);byStep.get(id).push(t);}}
+    const state=Object.create(null),units=r.backend==='ledger_bound'?list(r.planunits):[],bindings=[];
     function leafState(id){
-      var mapped=byStep[id]||[];
-      if(!mapped.length) return { state:'pending', todo_ids:[], reason:null, work:[], evidence:[] };
-      var counts={}, reason=null, work=[], ev=[];
-      for(var n=0;n<mapped.length;n++){
-        var t=mapped[n];
-        counts[t.status]=(counts[t.status]||0)+1;
-        if(t.status==='blocked' && !reason) reason=t.blocked_reason_ref;
-        work=work.concat(t.active_work_ids||[]);
-        for(var q=0;q<(t.transitions||[]).length;q++){
-          if(t.transitions[q].to_status==='completed'||t.transitions[q].to_status==='skipped') ev.push(t.transitions[q].cause_ref);
+      const mapped=(byStep.get(id)||[]).filter(t=>!parentTodoIds.has(t.todo_id)),counts={},work=[],evidence=[];let reason=null;
+      for(const t of mapped){
+        let status=t.status;const itemBindings=api?.bindingsFor(r.thread_id,t.todo_id)||[];
+        for(const b of itemBindings){if(!bindings.some(x=>x.binding_id===b.binding_id))bindings.push(b);if(['running','admitted','recovery_required'].includes(b.state))work.push(b.work_id);}
+        if(status==='in_progress'&&!itemBindings.some(b=>['running','admitted','recovery_required'].includes(b.state))){stale.push('admitted_work_missing:'+t.todo_id);status='pending';}
+        if(status==='completed'||status==='skipped'){
+          const proof=api?.outcomeSummary(r.thread_id,[t.todo_id]);
+          if(!proof?.ok){stale.push('outcome_evidence_unavailable:'+t.todo_id);status='pending';}else evidence.push(...proof.evidenceRefs);
         }
+        if(status==='blocked'){
+          if(!t.blocked_reason_ref){stale.push('blocker_evidence_missing:'+t.todo_id);status='pending';}
+          else reason=reason||t.blocked_reason_ref;
+        }
+        counts[status]=(counts[status]||0)+1;
       }
-      /* PPROG-006: completed requires EVERY required mapped leaf completed or
-         validly skipped. PPROG-007: blocked only from a genuine blocker. */
-      var st;
-      if(counts.blocked)                                    st='blocked';
-      else if(counts.in_progress)                           st='in_progress';
-      else if(counts.pending)                               st='pending';
-      else if(counts.completed)                             st='completed';
-      else if(counts.skipped)                               st='skipped';
-      else                                                  st='pending';
-      return { state:st, todo_ids:mapped.map(function(t){return t.todo_id;}),
-               reason:reason, work:work, evidence:ev };
+      const st=counts.in_progress?'in_progress':counts.blocked?'blocked':counts.pending?'pending':counts.completed?'completed':counts.skipped?'skipped':'pending';
+      const planunit_ids=units.filter(u=>u.step===id).map(u=>u.id);
+      const adherence=list(r.deviations).filter(d=>d.plan_step_id===id||d.step_id===id);
+      return {state:st,todo_ids:mapped.map(t=>t.todo_id),planunit_ids,reason,work:Array.from(new Set(work)),evidence:Array.from(new Set(evidence)),
+        active_work_refs:Array.from(new Set(work)),evidence_refs:Array.from(new Set(evidence)),deviation_kind:adherence.at(-1)?.kind||adherence.at(-1)?.deviation_kind||null,
+        updated_at:mapped.flatMap(t=>(t.transitions||[]).map(x=>x.created_at)).sort().at(-1)||run?.created_at||null};
     }
-    for(i=0;i<ss.length;i++){ if(!kids[ss[i].plan_step_id]) state[ss[i].plan_step_id]=leafState(ss[i].plan_step_id); }
-    /* PPROG-004/006: a parent is DERIVED from its current children, never
-       declared. Heterogeneous children read `mixed`. */
-    for(i=0;i<ss.length;i++){
-      var id=ss[i].plan_step_id, ch=kids[id];
-      if(!ch) continue;
-      var seen={}, all=[], kid;
-      for(j=0;j<ch.length;j++){ kid=state[ch[j]]||{state:'pending'}; seen[kid.state]=1; all.push(kid.state); }
-      var uniq=Object.keys(seen);
-      var agg;
-      if(uniq.length===1) agg=uniq[0];
-      else if(uniq.every(function(x){ return x==='completed'||x==='skipped'; })) agg='completed';
-      else agg='mixed';
-      state[id]={ state:agg, todo_ids:[], reason:null, work:[], evidence:[], children:ch };
+    // Iterative postorder handles arbitrary depth and order without recursion.
+    const colour=new Map();
+    for(const root of stepById.keys()){
+      if(colour.get(root)===2)continue;
+      const stack=[{id:root,expanded:false}];
+      while(stack.length){const entry=stack.pop(),id=entry.id;
+        if(entry.expanded){
+          const ch=kids.get(id)||[];
+          if(!ch.length)state[id]=leafState(id);
+          else {
+            const child=ch.map(k=>state[k]||{state:'pending',todo_ids:[],work:[],evidence:[],planunit_ids:[]});
+            const unique=Array.from(new Set(child.map(s=>s.state)));
+            const st=unique.length===1?unique[0]:unique.every(x=>x==='completed'||x==='skipped')?'completed':'mixed';
+            const work=Array.from(new Set(child.flatMap(s=>s.work||[]))),evidence=Array.from(new Set(child.flatMap(s=>s.evidence||[])));
+            state[id]={state:st,children:ch.slice(),todo_ids:Array.from(new Set(child.flatMap(s=>s.todo_ids||[]))),
+              planunit_ids:units.filter(u=>u.step===id).map(u=>u.id),reason:child.find(s=>s.reason)?.reason||null,
+              work,evidence,active_work_refs:work,evidence_refs:evidence,updated_at:child.map(s=>s.updated_at).filter(Boolean).sort().at(-1)||run?.created_at||null};
+          }
+          colour.set(id,2);continue;
+        }
+        if(colour.get(id)===2)continue;
+        if(colour.get(id)===1){stale.push('plan_parent_cycle');continue;}
+        colour.set(id,1);stack.push({id,expanded:true});
+        for(const child of (kids.get(id)||[]).slice().reverse())stack.push({id:child,expanded:false});
+      }
     }
-    var proj={
-      /* The typed contract names this projection. It used to declare its
-         schema only in the Details copy, so a consumer holding the object had
-         no way to identify it -- which is the whole point of a schema id. */
-      schema:'pm.assistant_plan.progress_projection.v1',
-      project_id:'pm', thread_id:r.thread_id, assistant_plan_id:r.plan_id,
-      plan_version:r.version, plan_hash:hashOf(blocks),
-      plan_run_id:r.approved?('run-'+r.plan_id+'-V'+r.version):null,
-      projection_revision:(r._projRev||1),
-      currentness_hash:currentnessOf(r),
-      generated_at:new Date().toISOString(),
-      step_states:state,
-      stale:!!r._projStale,
-      source:r._projSource||'durable'
-    };
-    return proj;
+    for(const s of ss)if(s.parent_step_id&&!stepById.has(s.parent_step_id))stale.push('unknown_parent_step');
+    const reasons=Array.from(new Set(stale)),adherence=list(r.deviations);
+    const inputs={project_id:project,thread_id:r.thread_id,assistant_plan_id:r.plan_id,plan_version:r.version,plan_hash:hash,
+      plan_run_id:runId,run:run||null,dispatch_epoch:r.runEpoch||0,list_revision:api?.revisionOf(r.thread_id)||0,todos,bindings,
+      scoped_planunits:units,adherence,step_states:state,currentness_reasons:reasons};
+    return {schema:'pm.assistant_plan.progress_projection.v1',project_id:project,thread_id:r.thread_id,assistant_plan_id:r.plan_id,
+      plan_version:r.version,plan_hash:hash,plan_run_id:runId,
+      projection_revision:(api?.revisionOf(r.thread_id)||0)+(r.runEpoch||0)+(r._projRev||1),
+      currentness_hash:hashOf(inputs),generated_at:todos.flatMap(t=>(t.transitions||[]).map(x=>x.created_at)).concat(run?.created_at||[]).filter(Boolean).sort().at(-1)||null,
+      step_states:state,stale:reasons.length>0,stale_reasons:reasons,source:'shared_session_owners'};
   }
 
   /* The single read every renderer uses. Returns one of the six state words. */
@@ -946,7 +950,7 @@
     if(!k) return null;
     var base=ATTENTION[k]; if(!base) return null;
     return { schema:'pm.assistant_plan.execution_attention_projection.v1',
-             plan_run_id:r.approved?('run-'+r.plan_id+'-V'+r.version):null,
+             plan_run_id:r.approved?.plan_run_id||null,
              condition_kind:k, line:base.line, tone:base.tone,
              reason:r.attention.reason,
              allowed_action_ids:list(r.attention.actions),
@@ -1104,6 +1108,7 @@
     if(r.status==='ready'){ e.revise=true; e.build=true; e.crew=true; e.at=true; e.cancel=true; e.goal=true; }
     else if(r.status==='building'){ e.cancel=true; e.todos=true; e.revise=false; e.report=true; }
     else if(r.status==='completed'){ e.report=true; e.todos=true; }
+    if(r._projStale||(r.approved&&progress(r).stale)){e.build=false;e.crew=false;e.at=false;e.goal=false;}
     var blk=buildBlockers(r);
     if(blk.length){ e.build=false; e.crew=false; e.at=false; e.goal=false; e.blocked_by=blk; }
     return e;
@@ -1286,9 +1291,9 @@
     const stop=window.PM56_SCHED?.stopSnapshot();
     if(opts.scheduleRef&&stop?.stopped)return {ok:false,error:'manual_stop_latched'};
     return TX.run(()=>{
-      const made=todoApi().materializeForPlan({plan_id:r.plan_id,project_id:expected.project_id,thread_id:r.thread_id,version:r.version,run_id:runId,run_epoch:epoch,
-        strict:topology==='goal_driven'||!!r.workRef,workRef:r.workRef,
-        steps:steps(body(r)).map(st=>({id:st.plan_step_id,parent:st.parent_step_id,deps:list(st.depends_on),title:st.title,outcome:st.text}))});
+      const made=todoApi().materializeForPlan({plan_id:r.plan_id,project_id:expected.project_id,thread_id:r.thread_id,version:r.version,plan_hash:expected.hash,run_id:runId,run_epoch:epoch,
+        strict:true,workRef:r.workRef,unit_mapping:Object.fromEntries(steps(body(r)).map(st=>[st.plan_step_id,r.backend==='ledger_bound'?list(r.planunits).filter(u=>u.step===st.plan_step_id).map(u=>u.id):[]])),
+        steps:steps(body(r)).map(st=>({id:st.plan_step_id,parent:st.parent_step_id,deps:list(st.depends_on),title:st.title,outcome:st.text,parallel_group_id:st.parallel_group_id}))});
       if(!made?.ok)TX.fail(made?.error||'todo_materialization_refused');
       let error=validateAdmission(ctx,r,expected);if(error)TX.fail(error);
       let goalResult=null;
@@ -1332,7 +1337,7 @@
     var a=todoApi(), moved=null;
     if(r.workRef&&!r.goalBinding&&inspectGoalPlan(r.plan_id).complete){finalizeGoalRun(r.plan_id);ctx.renderApp();return;}
     if(r.workRef){moved=workOwners.get(r.workRef.kind)?.advance(r.workRef.ref,r);if(moved?.ok===false){r.attention={kind:'attention',reason:moved.error,actions:['details','cancel']};stopRun(r);ctx.renderApp();return;}}
-    else if(a && a.advanceForPlan && !r.goalBinding) moved=a.advanceForPlan(r.plan_id, r.thread_id);
+    else {r.attention={kind:'attention',reason:'No actual execution adapter is attached to this Plan in the local concept.',actions:['details','cancel']};stopRun(r);ctx.renderApp();return;}
     r._projRev=(r._projRev||1)+1;
     /* PFAIL-007: Completed requires the completion predicate to hold --
        every required leaf resolved. `moved===null` means the projector
@@ -1779,12 +1784,12 @@
   function executionReport(r){
     var pr=progress(r), a=attention(r);
     var api=todoApi();
-    var todos=(api&&api.get?(api.get(r.thread_id)||[]):[]).filter(function(t){ return t.plan_id===r.plan_id; });
+    var todos=todosForPlan(r);
     return {
-      schema:'pm.assistant_plan.execution_report.v1', demo:true,
+      schema:'pm.assistant_plan.execution_report.v1',demo:true,concept_only:true,state_scope:'session_memory',project_id:pr.project_id,thread_id:r.thread_id,
       assistant_plan_id:r.plan_id, plan_version:r.version, plan_hash:pr.plan_hash,
       plan_run_id:pr.plan_run_id, generated_at:pr.generated_at,
-      currentness_hash:pr.currentness_hash, stale:pr.stale,
+      currentness_hash:pr.currentness_hash,stale:pr.stale,stale_reasons:pr.stale_reasons,
       is_approved_plan:false,
       step_states:pr.step_states,
       todo_refs:todos.map(function(t){
@@ -1792,6 +1797,8 @@
                  plan_step_ids:t.plan_step_ids, active_work_ids:t.active_work_ids||[],
                  outcome_refs:(t.transitions||[]).map(function(x){ return x.cause_ref; }) };
       }),
+      attempts:todos.flatMap(t=>(api.bindingsFor(r.thread_id,t.todo_id)||[]).map(b=>({...b,current_todo_id:t.todo_id}))),
+      transitions:todos.flatMap(t=>t.transitions||[]),evidence_refs:Array.from(new Set(Object.values(pr.step_states).flatMap(s=>s.evidence_refs||[]))),
       deviations:list(r.deviations),
       attention:a,
       completion_summary:(function(){
@@ -1815,6 +1822,7 @@
     });
     out.push('','## To-Dos','');
     rep.todo_refs.forEach(function(t){ out.push('- `'+t.todo_id+'` '+t.status+' (rev '+t.revision+') → '+t.plan_step_ids.join(', ')); });
+    out.push('','## Attempts and evidence','', '```json',JSON.stringify({attempts:rep.attempts,transitions:rep.transitions,evidence_refs:rep.evidence_refs,deviations:rep.deviations},null,2),'```');
     out.push('','## Completion','', '```json', JSON.stringify(rep.completion_summary,null,2), '```','');
     return out.join('\n');
   }
@@ -2278,6 +2286,7 @@
     const r=planRec({id,thread:x.threadId,title:x.title,strategy:'Deep: BrainStorm',backend:'ledger_bound',version:1,revisions:{1:JSON.parse(JSON.stringify(x.blocks))},status:'ready',current:true,planunits:units,
       ledger:{id:'apl-'+id,scope:'run',entries:JSON.parse(JSON.stringify(x.ledgerEntries))},sources:[{kind:'brainstorm',ref:x.runId,note:'Frozen recorded exploration '+x.sourceHash}],research:JSON.parse(JSON.stringify(x.sourceRefs))});
     r.brainstormRunId=x.runId;r.synthesisFingerprint=fingerprint;P().records[id]=r;
+    window.PM56_B16_WORK?.attachBrainstormPlan(r,thread,origin);
     const card={id:'plan-card-'+id,role:'system',type:'plan-card-v2',planId:id},at=thread.messages.findIndex(m=>m.runId===x.runId);
     thread.messages.splice(at<0?thread.messages.length:at+1,0,card);
     return {ok:true,planId:id,version:1,hash:hashOf(body(r))};
@@ -2320,6 +2329,7 @@
     const record=planRec({id,thread:origin.threadId,title:origin.title+' · Plan',strategy:'Standard',backend:'direct',version:1,revisions:{1:blocks},status:'ready',current:true,
       sources:[{kind:'chat_room',ref:origin.id,message_id:m.id,participant_id:m.senderId,note:m.body}]});
     record.roomSource={runId:origin.id,messageId:m.id,participantId:m.senderId,messageHash:x.messageHash};P().records[id]=record;
+    window.PM56_B16_WORK?.attachRoomPlan(record,thread,origin,m);
     thread.messages.push({id:'plan-card-'+id,role:'system',type:'plan-card-v2',planId:id});
     return {ok:true,planId:id,reused:false};
   }
@@ -2350,15 +2360,24 @@
     if(currentPlan(t.id))return {ok:false,error:'current_plan_requires_explicit_resolution'};
     const payload=owner.plan(o.workRef.ref);if(!payload?.ok||!payload.steps?.length)return {ok:false,error:'work_plan_not_ready'};
     const id='work-plan-'+o.workRef.ref,prior=rec(id);if(prior)return {ok:true,replayed:true,planId:id};
-    const blocks=[h(payload.title,1),p(payload.objective),...payload.steps.map(st=>step(st.id,st.title,st.outcome,st.deps||[]))];
+    const blocks=[h(payload.title,1),p(payload.objective),...payload.steps.map(st=>({...step(st.id,st.title,st.outcome||'',st.deps||[],st.parallel_group_id),parent_step_id:st.parent||null}))];
     const r=planRec({id,thread:t.id,title:payload.title,strategy:'Standard',backend:'direct',version:1,revisions:{1:blocks},status:'ready',current:true,sources:payload.sourceRefs||[]});
     r.project_id=t.projectId||'pm';r.workRef=JSON.parse(JSON.stringify(o.workRef));window.PM56_TX.set(P().records,id,r);window.PM56_TX.set(t,'messages',t.messages.concat({id:'plan-card-'+id,role:'system',type:'plan-card-v2',planId:id}));
     return {ok:true,planId:id,version:1,hash:hashOf(body(r))};
   }
+  function rebindTodoMapping(id,expected,disposition){
+    const r=rec(id),run=r&&P().runs[r.approved?.plan_run_id];
+    if(!r||!run||r.status!=='building'||r.version!==expected.version||hashOf(body(r))!==expected.hash||run.plan_run_id!==expected.plan_run_id)return {ok:false,error:'stale_plan_restructure'};
+    const map=new Map((disposition.rebound||[]).map(x=>[x.from,x.to])),removed=new Set((disposition.canceled||[]).map(x=>x.todo_id));
+    if(run.required_todo_ids.some(id=>removed.has(id)))return {ok:false,error:'required_work_cannot_be_removed'};
+    const ids=run.required_todo_ids.map(id=>map.get(id)||id),items=todoApi().get(r.thread_id)||[];
+    if(ids.some(id=>!items.some(t=>t.todo_id===id&&t.plan_id===r.plan_id&&t.run_id===run.plan_run_id&&t.plan_version===r.version&&t.plan_hash===run.plan_hash)))return {ok:false,error:'restructure_mapping_not_current'};
+    const TX=window.PM56_TX;TX.set(run,'required_todo_ids',ids);TX.set(r,'requiredTodoIds',ids.slice());return {ok:true,ids};
+  }
   window.PM56_GOAL.registerOwner('assistant_plan',{inspect:inspectGoalPlan,advance:(id)=>{const r=rec(id);if(!r)return {ok:false,error:'plan_missing'};runTick(EXT.ctx(),r);return r.attention?{ok:false,error:r.attention.reason}:{ok:true};},complete:finalizeGoalRun});
   window.PM56_PLANS = {
     admissionSnapshot:id=>{const r=rec(id);return r?admissionSnapshot(EXT.ctx(),r):null;},
-    build:o=>buildCommand(EXT.ctx(),rec(o?.plan_id),o||{}), commitRun,bindRun,inspectGoalPlan,createFromWorkRequest,
+    build:o=>buildCommand(EXT.ctx(),rec(o?.plan_id),o||{}),commitRun,bindRun,inspectGoalPlan,createFromWorkRequest,rebindTodoMapping,
     runs:()=>P().runs,
     scopedBundle:ref=>{const r=Object.values(P().records).find(r=>r.backend==='ledger_bound'&&ref===r.plan_id+'@V'+r.version+':planunits');return r?r.planunits:null;},
     registerWorkOwner:(kind,owner)=>{if(workOwners.has(kind))throw new Error('duplicate_plan_work_owner');workOwners.set(kind,owner);},
@@ -2462,4 +2481,5 @@
     worknodes:function(){ return []; },
     orchestrator:function(){ return { entered:false, retired:true }; }
   };
+  window.AssistantPlanProgressProjector={project:window.PM56_PLANS.progress};
 })();

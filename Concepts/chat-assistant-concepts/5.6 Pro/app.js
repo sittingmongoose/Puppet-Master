@@ -1365,9 +1365,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const api=window.PM56_TODOS;
       if(api && api.get){
         const items=api.get(tid);
-        if(items) return items
-          .filter(x=>!items.some(y=>y.parent_todo_id===x.todo_id))   /* leaves only */
-          .map(x=>({id:x.todo_id, threadId:tid, status:x.status, label:x.title}));
+        if(items) {
+          // B16: project the shared owner's leaves; no quadratic peer scan.
+          const leaves=api.leaves ? api.leaves(tid) : (()=>{
+            const parents=new Set(items.map(x=>x.parent_todo_id).filter(Boolean));
+            return items.filter(x=>!parents.has(x.todo_id));
+          })();
+          return leaves.map(x=>({id:x.todo_id, threadId:tid, status:x.status, label:x.title}));
+        }
       }
       return (D.todos||[]).filter(t=>t.threadId===tid);
     })();

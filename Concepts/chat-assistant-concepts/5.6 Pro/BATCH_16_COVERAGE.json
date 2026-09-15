@@ -1,0 +1,1080 @@
+{
+  "batch": 16,
+  "pinned_main": "86a3cbf28f63dcfdf98a8e20269c994f470b60d8",
+  "identity_count": 49,
+  "authority": "Current canonical owners, not historical ID descriptions. Local concept proof only.",
+  "rows": [
+    {
+      "identity": "v2:TODO-001",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "One current thread-local list; no cross-thread/source grouping",
+      "implementation": [
+        "todos.js:materializeForWork, materializeForPlan, get",
+        "plans.js:AssistantPlanProgressProjector",
+        "todo-work-batch16.js"
+      ],
+      "executable_checks": [
+        "controller:currentness-exact-all-keys",
+        "handlers:parallel_outputs"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "v2 exact statement mirrored in pinned audit CSV",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v2:TODO-002",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "Stable hierarchical identities; parents and children",
+      "implementation": [
+        "todos.js:validateGraph, graphIndex, visibleTree",
+        "plans.js:AssistantPlanProgressProjector",
+        "todo-work-batch16.js"
+      ],
+      "executable_checks": [
+        "graph:12,000-deep hierarchy",
+        "handlers:large_identity"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "v2 exact statement mirrored in pinned audit CSV",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v2:TODO-003",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "Bounded independently observable leaf outcomes",
+      "implementation": [
+        "todos.js:work binding expected_outcome; bounded adapters",
+        "plans.js:AssistantPlanProgressProjector",
+        "todo-work-batch16.js"
+      ],
+      "executable_checks": [
+        "handlers:parallel_outputs",
+        "handlers:conversational_outcome"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "v2 exact statement mirrored in pinned audit CSV",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v2:TODO-004",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "Dependencies, simultaneous admission, out-of-order outcomes",
+      "implementation": [
+        "todos.js:runnable, applyTransitions, parent rollup",
+        "plans.js:AssistantPlanProgressProjector",
+        "todo-work-batch16.js"
+      ],
+      "executable_checks": [
+        "controller:concurrent-out-of-order-parent-rollup",
+        "handlers:parallel_outputs"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "v2 exact statement mirrored in pinned audit CSV",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v2:TODO-005",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "Exactly pending/in_progress/completed/blocked/skipped",
+      "implementation": [
+        "todos.js:closed status set",
+        "plans.js:AssistantPlanProgressProjector",
+        "todo-work-batch16.js"
+      ],
+      "executable_checks": [
+        "graph:invalid_statuses",
+        "controller:skip-reopen-retry-closed-causes"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "v2 exact statement mirrored in pinned audit CSV",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v2:TODO-006",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "Dependency waits remain pending",
+      "implementation": [
+        "todos.js:runnable, step-state derivation",
+        "plans.js:AssistantPlanProgressProjector",
+        "todo-work-batch16.js"
+      ],
+      "executable_checks": [
+        "handlers:parallel_outputs"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "v2 exact statement mirrored in pinned audit CSV",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v2:TODO-007",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "Validation is ordinary work; no verification status/metadata",
+      "implementation": [
+        "todos.js:validateGraph, separate validate leaf",
+        "plans.js:AssistantPlanProgressProjector",
+        "todo-work-batch16.js"
+      ],
+      "executable_checks": [
+        "graph:invalid_fields",
+        "handlers:parallel_outputs"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "v2 exact statement mirrored in pinned audit CSV",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v2:TODO-008",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "Completed items inline, filled dot, struck title; no Done grouping",
+      "implementation": [
+        "todos.js:virtualRows, glyph, inline rendering",
+        "plans.js:AssistantPlanProgressProjector",
+        "todo-work-batch16.js"
+      ],
+      "executable_checks": [
+        "browser:parallel, restructure"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "v2 exact statement mirrored in pinned audit CSV",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v2:TODO-009",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "ToDoController is sole graph, binding and transition writer",
+      "implementation": [
+        "todos.js:controller owner entry points; TX journal",
+        "plans.js:AssistantPlanProgressProjector",
+        "todo-work-batch16.js"
+      ],
+      "executable_checks": [
+        "controller:failed-outer-transaction-preserves-all-state",
+        "handlers:real_effect_failure"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "v2 exact statement mirrored in pinned audit CSV",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v2:TODO-010",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "Provider whole-list output is a proposal, never completion authority",
+      "implementation": [
+        "todos.js:propose and replaceThreadList admission separation",
+        "plans.js:AssistantPlanProgressProjector",
+        "todo-work-batch16.js"
+      ],
+      "executable_checks": [
+        "controller:provider-proposal-preserves-omissions"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "v2 exact statement mirrored in pinned audit CSV",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v2:TODO-011",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "Tool success alone is not expected-outcome proof",
+      "implementation": [
+        "todos.js:validateOutcome through registered work owner",
+        "plans.js:AssistantPlanProgressProjector",
+        "todo-work-batch16.js"
+      ],
+      "executable_checks": [
+        "controller:tool-success-and-bulk-assertion-refused",
+        "handlers:stale_progress_and_evidence"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "v2 exact statement mirrored in pinned audit CSV",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v2:TODO-012",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "Each completion has item-level cause/evidence/revisions",
+      "implementation": [
+        "todos.js:applyTransition, transition receipts",
+        "plans.js:AssistantPlanProgressProjector",
+        "todo-work-batch16.js"
+      ],
+      "executable_checks": [
+        "controller:concurrent-out-of-order-parent-rollup",
+        "handlers:parallel_outputs"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "v2 exact statement mirrored in pinned audit CSV",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v2:TODO-013",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "Goal, Plan, Crew and ordinary work share thread list without source headings",
+      "implementation": [
+        "todos.js:appendMaterialized; materializeForPlan/Review/Room",
+        "plans.js:AssistantPlanProgressProjector",
+        "todo-work-batch16.js"
+      ],
+      "executable_checks": [
+        "retained:Review 112 checks",
+        "retained:Room promotion checks",
+        "handlers:restructure_and_fencing"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "v2 exact statement mirrored in pinned audit CSV",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v2:TODO-014",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "To-Dos are Activity-only, not transcript cards",
+      "implementation": [
+        "todos.js:Activity owner projection and To-Do panel",
+        "plans.js:AssistantPlanProgressProjector",
+        "todo-work-batch16.js"
+      ],
+      "executable_checks": [
+        "browser:parallel, restructure, large"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "v2 exact statement mirrored in pinned audit CSV",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v3:APR-008",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "TDR-011 / \u00a79: title, state, explicit assignment, next action first; technical metadata behind disclosure",
+      "implementation": [
+        "todos.js:virtualRows, selectedDetail, rowActions",
+        "todos.css"
+      ],
+      "executable_checks": [
+        "browser:all three scenarios at 1440/900/700"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:TDG-001",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "TDG-001..005: reject self-parenting",
+      "implementation": [
+        "todos.js",
+        "todo-work-batch16.js",
+        "goal-work-batch15.js"
+      ],
+      "executable_checks": [
+        "graph:self_parent_ids"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:TDG-002",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "TDG-001..005: reject all parent cycles",
+      "implementation": [
+        "todos.js",
+        "todo-work-batch16.js",
+        "goal-work-batch15.js"
+      ],
+      "executable_checks": [
+        "graph:parent_cycles"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:TDG-003",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "TDG-001..005: reject dependency cycles across branches",
+      "implementation": [
+        "todos.js",
+        "todo-work-batch16.js",
+        "goal-work-batch15.js"
+      ],
+      "executable_checks": [
+        "graph:dependency_cycles"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:TDG-004",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "TDG-001..005: reject cross-thread items, references, bindings",
+      "implementation": [
+        "todos.js",
+        "todo-work-batch16.js",
+        "goal-work-batch15.js"
+      ],
+      "executable_checks": [
+        "graph:cross_thread_refs"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:TDG-005",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "TDG-001..005: reject duplicate/unknown IDs and references",
+      "implementation": [
+        "todos.js",
+        "todo-work-batch16.js",
+        "goal-work-batch15.js"
+      ],
+      "executable_checks": [
+        "graph:unknown_refs, duplicate_ids"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:TDG-006",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "TDG-006: display order is presentation, not a dependency",
+      "implementation": [
+        "todos.js",
+        "todo-work-batch16.js",
+        "goal-work-batch15.js"
+      ],
+      "executable_checks": [
+        "graph:reordered dependency chain; handlers:parallel_outputs"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:TDG-007",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "TDG-007..009: atomic initial materialization or explicit restructuring",
+      "implementation": [
+        "todos.js",
+        "todo-work-batch16.js",
+        "goal-work-batch15.js"
+      ],
+      "executable_checks": [
+        "handlers:restructure_atomic_failure"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:TDG-008",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "TDG-007..009: retain/rebind/safely cancel/refuse every active work reference",
+      "implementation": [
+        "todos.js",
+        "todo-work-batch16.js",
+        "goal-work-batch15.js"
+      ],
+      "executable_checks": [
+        "controller:replacement-refusal-no-orphans"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:TDG-009",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "TDG-007..009: exact binding identities and current target revisions",
+      "implementation": [
+        "todos.js",
+        "todo-work-batch16.js",
+        "goal-work-batch15.js"
+      ],
+      "executable_checks": [
+        "controller:rebind-keeps-all-prior-attempt-identities"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:TDG-010",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "TDG-010..012: exact currentness beats timestamps",
+      "implementation": [
+        "todos.js",
+        "todo-work-batch16.js",
+        "goal-work-batch15.js"
+      ],
+      "executable_checks": [
+        "controller:currentness-exact-all-keys; handlers:worker_pause_callback_fence"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:TDG-011",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "TDG-010..012: removed children cannot change current parent",
+      "implementation": [
+        "todos.js",
+        "todo-work-batch16.js",
+        "goal-work-batch15.js"
+      ],
+      "executable_checks": [
+        "handlers:restructure_and_fencing"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:TDG-012",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "TDG-010..012: parent derived from current required children, no bulk completion",
+      "implementation": [
+        "todos.js",
+        "todo-work-batch16.js",
+        "goal-work-batch15.js"
+      ],
+      "executable_checks": [
+        "controller:tool-success-and-bulk-assertion-refused"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:TDG-013",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "TDG-013: full uncapped virtual hierarchy, stable search/expand/navigation",
+      "implementation": [
+        "todos.js",
+        "todo-work-batch16.js",
+        "goal-work-batch15.js"
+      ],
+      "executable_checks": [
+        "handlers:large_identity; browser:large"
+      ],
+      "visual_evidence": [
+        "recordings/large-900-orbit/RESULT.json"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "5,050-item browser fixture preserves all items; one actual lookup only. 12,000-deep controller test is not 12,000 executed jobs.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:TDG-014",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "TDG-014: validation remains an ordinary To-Do; no todo-verify product concept",
+      "implementation": [
+        "todos.js",
+        "todo-work-batch16.js",
+        "goal-work-batch15.js"
+      ],
+      "executable_checks": [
+        "graph:invalid_fields; handlers:parallel_outputs"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:TDG-015",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "TDG-015..016: every leaf has cause/outcome/evidence, including conversation",
+      "implementation": [
+        "todos.js",
+        "todo-work-batch16.js",
+        "goal-work-batch15.js"
+      ],
+      "executable_checks": [
+        "handlers:conversational_outcome"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:TDG-016",
+      "current_owner": "Plans/ToDo_Runtime.md",
+      "owner_clause": "TDG-015..016: quota/window waits retain admitted work and owner condition",
+      "implementation": [
+        "todos.js",
+        "todo-work-batch16.js",
+        "goal-work-batch15.js"
+      ],
+      "executable_checks": [
+        "controller:owner-waits-not-blockers-or-status-transitions; retained:B15 quota cases"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-001",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-001..003: exact project/thread/Plan version/hash/PlanRun identity",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "handlers:stale_progress_and_evidence"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-002",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-001..003: sole AssistantPlanProgressProjector, pure reads",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "handlers:projection_is_observation",
+        "handlers:five projection_rollback seams"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-003",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-001..003: stable plan_step_id mappings, never title/focus/order joins",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "handlers:restructure_and_fencing"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-004",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-004..008: five leaf states, mixed aggregates, no percentage",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "handlers:parallel_outputs",
+        "controller:skip-reopen-retry-closed-causes"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-005",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-004..008: concurrent and out-of-display-order step progress",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "handlers:parallel_outputs"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-006",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-004..008: every required leaf complete or validly skipped",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "controller:tool-success-and-bulk-assertion-refused",
+        "retained:B15 completion_currentness"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-007",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-004..008: genuine blockers retain owner condition, dependency waits pending",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "controller:owner-waits-not-blockers-or-status-transitions",
+        "handlers:parallel_outputs"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-008",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-004..008: exact To-Dos, scoped units, active work, evidence and deviations",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "handlers:parallel_outputs",
+        "retained:BrainStorm Build",
+        "browser:restructure execution report"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-009",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-009..011: Rich Text markers adjacent; approved prose unchanged",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "browser:restructure",
+        "handlers:parallel_outputs"
+      ],
+      "visual_evidence": [
+        "recordings/restructure-700-orbit/paused-markdown.png",
+        "recordings/restructure-700-orbit/approved-plan.md"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-010",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-009..011: Markdown rail, stable blocks, byte-exact in-flight export",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "browser:restructure at all three widths"
+      ],
+      "visual_evidence": [
+        "recordings/restructure-700-orbit/paused-markdown.png",
+        "recordings/restructure-700-orbit/approved-plan.md"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-011",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-009..011: sole Build lifecycle control and consistent summary",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "browser:restructure",
+        "retained:B15 surfaces"
+      ],
+      "visual_evidence": [
+        "recordings/parallel-1440-orbit/completed-todos.png",
+        "recordings/restructure-700-orbit/concurrent-todos.png"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-012",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-012..014: stale/currentness disclosure, no mutation from stale projection",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "handlers:stale_progress_and_evidence",
+        "retained:B15 admission preconditions"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-013",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-012..014: reconstruct from owners rather than projection cache",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "handlers:projection_is_observation"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "In-memory owner snapshot/replay only. Durable restart, cross-host restoration and persistent EventRecord admission are explicitly unproved by this concept.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "in_memory_reconstruction_only_durable_proof_outside_scope",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-014",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-012..014: reject late events with wrong identity/revisions/epoch",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "handlers:restructure_and_fencing",
+        "handlers:worker_pause_callback_fence",
+        "controller:currentness-exact-all-keys"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-015",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-015..016: approved document export excludes execution state",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "browser:restructure in-flight export"
+      ],
+      "visual_evidence": [
+        "recordings/restructure-700-orbit/paused-markdown.png",
+        "recordings/restructure-700-orbit/approved-plan.md"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-016",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-015..016: separate execution report on cmd.chat.plan.export",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "browser:restructure execution report",
+        "handlers:parallel_outputs"
+      ],
+      "visual_evidence": [
+        "recordings/restructure-700-orbit/paused-markdown.png",
+        "recordings/restructure-700-orbit/approved-plan.md"
+      ],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-017",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-017: Direct/no ledger/no PlanUnits; Deep reuses scoped units in Details",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "retained:BrainStorm Build",
+        "retained:B15 deep-bound surface",
+        "browser:parallel"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    },
+    {
+      "identity": "v4:PPROG-018",
+      "current_owner": "Plans/Assistant_Plan_Runtime.md",
+      "owner_clause": "PPROG-018: no progress mutation command or model tool; internal recompute only",
+      "implementation": [
+        "plans.js:AssistantPlanProgressProjector, progress, executionReport, renderPlanBody",
+        "plans.css"
+      ],
+      "executable_checks": [
+        "handlers:projection_is_observation",
+        "source-review:no progress mutation command"
+      ],
+      "visual_evidence": [],
+      "implementation_scope": "HTML concept using shared in-memory owners",
+      "proof_boundary": "Local concept behavior only; no native/provider/durable-storage/EventRecord admission or formal acceptance claim.",
+      "historical_wording": "Current owner clause is controlling; original correction-packet full wording not claimed recovered.",
+      "status": "local_concept_evidence_present",
+      "frozen_html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "visual_role": "Positive-path presentation evidence; negative admission/currentness claims use the named executable checks, not screenshots."
+    }
+  ],
+  "verification_index": "BATCH_16_VERIFICATION.json",
+  "formal_audit_or_user_acceptance": false
+}

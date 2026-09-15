@@ -9762,6 +9762,12 @@ button.qs-spine-slot.is-current::after{
 .pd-prov-list em{ flex:1 1 100%; font-style:normal; color:var(--muted); font-size:11px; }
 .pd-runs li[data-run-outcome="failed"]{ border-color:var(--border-strong); }
 
+/* B16: status geometry never changes the approved prose width. */
+.plan-doc .pd-md.pd-md-with-rail{display:block;position:relative;padding-left:24px;min-width:0;box-sizing:border-box}
+.plan-doc .pd-md-with-rail .pd-md-rail{position:absolute;inset:0 auto 0 0;width:18px;border:0;padding:0;display:block;pointer-events:none}
+.plan-doc .pd-md-with-rail .pd-md-mark{position:absolute;left:0;width:18px;min-height:0;height:18px;padding:0;font:500 11px/18px var(--font-ui);text-align:center;transition:color 150ms var(--ease)}
+.plan-doc .pd-md-with-rail .pd-md-pre{min-width:0;max-width:100%;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;margin:0}
+
 /* todos.css — feature module styles.  OWNER: Assistant redesign wave (2026-09-03), To-Do Runtime.
  *
  * Concatenated LAST (after styles.css / motion.css / variants-*.css /
@@ -9919,6 +9925,20 @@ button.qs-spine-slot.is-current::after{
   .todo-caret{ transition:none; }
   .todo-title.is-struck{ transition:none; }
 }
+
+/* Batch 16: fixed viewport rows; all data and identities remain uncapped. */
+.todo-search{display:flex;flex-direction:column;gap:6px;margin:10px 0;font-size:11px;color:var(--muted)}
+.todo-search input{box-sizing:border-box;width:100%;min-width:0;padding:9px 11px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;color:var(--text);font:inherit}
+.todo-tree-navigation{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-bottom:8px}.todo-tree-navigation small{margin-right:auto;color:var(--muted)}
+.todo-viewport{position:relative;overflow:auto;overscroll-behavior:contain;min-height:88px;max-height:440px;scrollbar-gutter:stable;contain:layout paint}
+.todo-virtual-space{display:block!important;position:relative;width:100%;min-width:0}
+.todo-virtual-row{box-sizing:border-box;position:absolute;left:0;right:0;height:82px;overflow:hidden;border:1px solid var(--border);border-radius:11px;background:var(--surface-1);padding:7px 6px 5px;margin-left:var(--todo-indent,0);transition:background 160ms var(--ease)}
+.todo-virtual-row[aria-selected="true"]{background:var(--surface-2)}
+.todo-virtual-row .todo-row{grid-template-columns:14px 16px minmax(0,1fr);gap:5px;padding:0!important;align-items:start}
+.todo-virtual-row .todo-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.25;font-size:11px}
+.todo-virtual-row .todo-copy small{font-size:9px;color:var(--muted);white-space:nowrap;text-overflow:ellipsis;overflow:hidden;width:100%;text-align:left}
+.todo-virtual-row .todo-row-actions{margin-top:auto;gap:3px;flex-wrap:nowrap}.todo-virtual-row .todo-row-actions .text-button{font-size:10px;min-height:22px;padding:0 6px}
+.todo-selected-detail{border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;background:var(--surface-2);overflow-wrap:anywhere;font-size:11px}.todo-selected-detail header{display:flex;flex-wrap:wrap;align-items:start;gap:6px}.todo-selected-detail header strong{flex:1;min-width:100px}.todo-selected-detail p{line-height:1.5}.todo-selected-detail details{margin-top:12px}.todo-selected-detail summary{cursor:pointer}.todo-selected-detail pre,.todo-opened-work pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:10px;max-height:240px;overflow:auto}.todo-hover-overflow{background:none;border:0;color:var(--accent);font-size:11px;text-align:left;padding:7px 0;cursor:pointer}
 
 /* collaboration.css — feature module.  OWNER: Collaborative Workflows
  * (Assistant redesign wave, 2026-09-03). Pairs with collaboration.js.
@@ -12730,6 +12750,9 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 
 .orders15-entry {padding-bottom:56px;}
 .goal-section-v2 .soft-button:disabled {opacity:.45;cursor:not-allowed;}
+
+/* B16 workflow surfaces use the existing concept theme and motion tokens. */
+.b16-entry{border:1px solid var(--border);border-radius:15px;background:var(--surface-1);padding:16px;margin:12px 0;min-width:0}.b16-entry p{color:var(--muted);font-size:12px;line-height:1.5}.b16-actions{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}.b16-actions button{font-size:11px}.b16-workspace{padding:24px;max-width:920px;margin:auto;box-sizing:border-box;overflow-wrap:anywhere}.b16-workspace header small{font-size:10px;letter-spacing:.12em;color:var(--muted)}.b16-workspace h1{font-size:clamp(23px,3vw,34px);line-height:1.16;margin:12px 0}.b16-workspace p{font-size:12px;line-height:1.65;color:var(--muted)}.b16-output-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;margin:24px 0}.b16-output-grid section,.b16-restructure{border:1px solid var(--border);border-radius:14px;padding:16px;background:var(--surface-2)}.b16-workspace h2{font-size:14px;line-height:1.5;margin:0 0 8px}.b16-restructure{margin-bottom:20px}.b16-preview{margin-top:12px;padding-top:8px;border-top:1px solid var(--border)}.b16-preview button{margin-right:6px}.b16-workspace details pre{font-size:10px;white-space:pre-wrap;overflow-wrap:anywhere}.b16-guide{display:flex;gap:12px;justify-content:space-between;align-items:center;padding:10px 12px;border:1px solid var(--border);border-radius:12px;font-size:10px;line-height:1.5;color:var(--muted);margin-top:8px}.b16-guide button{flex-shrink:0;font-size:10px}@media(max-width:750px){.b16-workspace{padding:14px}.b16-guide{align-items:start}.b16-output-grid{grid-template-columns:1fr}}
 
 /* composer.css — in-field composer chrome, selector collapse, follow-up queue.
  *
@@ -29530,18 +29553,23 @@ window.PM56_EXT = window.PM56_EXT || {
       return { id:blockId(x,i), text:t, lines:t.split('\n').length,
                state:(pr && x.t==='plan_step') ? ((pr.step_states[x.plan_step_id]||{}).state||null) : null };
     }).filter(Boolean);
-    var rail = pr ? '<div class="pd-md-rail" aria-hidden="true">'+rows.map(function(row){
-        var cls=row.state?('pd-md-mark pd-md-mark-'+esc(STEP_MARK[row.state]||'idle')):'pd-md-mark';
-        return '<span class="'+cls+'" data-block-id="'+esc(row.id)+'"'+
-               (row.state?' data-step-state="'+esc(row.state)+'"':'')+
-               ' style="--pd-md-lines:'+row.lines+'">'+(row.state?esc(row.state.replace('_',' ')):'')+'</span>';
-      }).join('')+'</div>' : '';
-    return '<div class="pd-md'+(pr?' pd-md-with-rail':'')+'" data-plan-view="markdown">'+rail+
-      '<pre class="pd-md-pre">'+
-      rows.map(function(row){
-        return '<span class="pd-md-block" data-block-id="'+esc(row.id)+'">'+esc(row.text)+'</span>';
-      }).join('\n\n')+
-      '</pre></div>';
+    // The rail occupies the same width before and during execution. Markers
+    // track measured wrapped block positions, never guessed line counts.
+    var rail='<div class="pd-md-rail" aria-hidden="true">'+rows.map(function(row){
+      return '<span class="pd-md-mark pd-md-mark-'+esc(STEP_MARK[row.state]||'idle')+'" data-block-id="'+esc(row.id)+'"'+(row.state?' data-step-state="'+esc(row.state)+'" title="'+esc(row.state.replaceAll('_',' '))+'"':'')+'>'+(row.state?'●':'')+'</span>';
+    }).join('')+'</div>';
+    return '<div class="pd-md pd-md-with-rail" data-plan-view="markdown">'+rail+'<pre class="pd-md-pre">'+rows.map(function(row){return '<span class="pd-md-block" data-block-id="'+esc(row.id)+'">'+esc(row.text)+'</span>';}).join('\n\n')+'\n</pre></div>';
+  }
+  if(typeof document!=='undefined'){
+    const measured=new WeakSet();let pending=false;
+    function scheduleRail(){if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;for(const md of document.querySelectorAll('.pd-md-with-rail')){
+      const pre=md.querySelector('.pd-md-pre');if(!pre)continue;
+      if(!measured.has(pre)){measured.add(pre);new ResizeObserver(scheduleRail).observe(pre);}
+      const top=md.getBoundingClientRect().top;
+      for(const block of pre.querySelectorAll('.pd-md-block')){const mark=md.querySelector('.pd-md-rail [data-block-id="'+CSS.escape(block.dataset.blockId)+'"]');if(!mark)continue;const y=Math.round((block.getBoundingClientRect().top-top)*100)/100+'px';if(mark.style.top!==y)mark.style.top=y;}
+    }});}
+    new MutationObserver(scheduleRail).observe(document,{childList:true,subtree:true});
+    window.addEventListener('resize',scheduleRail);
   }
 
   /* Inline SVG only -- the project forbids emoji glyphs outright. These are the
@@ -29621,89 +29649,88 @@ window.PM56_EXT = window.PM56_EXT || {
   function todoApi(){ return window.PM56_TODOS || null; }
 
   function todosForPlan(r){
-    var api=todoApi(); if(!api || !api.get) return [];
-    var items=api.get(r.thread_id) || [];
-    return items.filter(function(t){ return t.plan_id===r.plan_id; });
+    const api=todoApi(),runId=r.approved?.plan_run_id,project=r.project_id||r.approved?.project_id||'pm',hash=hashOf(body(r));
+    return (api?.get(r.thread_id)||[]).filter(t=>t.thread_id===r.thread_id&&t.project_id===project&&
+      t.plan_id===r.plan_id&&t.plan_version===r.version&&t.plan_hash===hash&&t.run_id===runId);
   }
-
-  /* A digest over exactly the inputs the projection is derived from. Two runs
-     over the same durable records must produce the same hash; any To-Do
-     transition changes it, which is what makes a cached projection detectably
-     stale after a restart rather than quietly wrong. */
-  function currentnessOf(r){
-    var t=todosForPlan(r).map(function(x){
-      return x.todo_id+':'+x.status+':'+x.revision+':'+(x.plan_step_ids||[]).join('+');
-    }).sort().join('|');
-    return hashOf([r.plan_id,r.version,hashOf(body(r)),r.status,t]);
-  }
-
+  function currentnessOf(r){return progress(r).currentness_hash;}
+  /* AssistantPlanProgressProjector is the sole progress derivation. All reads
+     are pure: no cache stamp, revision or timestamp is persisted by observing
+     a projection, including while a multi-owner admission can still fail. */
   function progress(r){
-    var blocks=body(r), ss=steps(blocks), todos=todosForPlan(r);
-    var byStep={}, i, j;
-    for(i=0;i<todos.length;i++){
-      var ids=todos[i].plan_step_ids||[];
-      for(j=0;j<ids.length;j++){ (byStep[ids[j]]=byStep[ids[j]]||[]).push(todos[i]); }
+    const api=todoApi(),blocks=body(r),ss=steps(blocks),hash=hashOf(blocks),runId=r.approved?.plan_run_id||null,run=P().runs[runId];
+    const todos=todosForPlan(r),all=api?.get(r.thread_id)||[],byTodo=new Map(todos.map(t=>[t.todo_id,t])),byStep=new Map(),kids=new Map(),stepById=new Map(),stale=[];
+    const project=r.project_id||r.approved?.project_id||'pm';
+    if(r._projStale)stale.push('projection_refresh_pending');
+    if(r.approved){
+      if(!run||run.project_id!==project||run.thread_id!==r.thread_id||run.plan_id!==r.plan_id||run.plan_version!==r.version||run.plan_hash!==hash||r.approved.hash!==hash||r.approved.version!==r.version)stale.push('plan_run_identity_mismatch');
+      if(run?.required_todo_ids?.some(id=>!byTodo.has(id)))stale.push('required_todo_mapping_missing');
+      if(todos.some(t=>t.run_epoch!==run?.epoch))stale.push('todo_admission_epoch_mismatch');
     }
-    var kids={};
-    for(i=0;i<ss.length;i++){ if(ss[i].parent_step_id) (kids[ss[i].parent_step_id]=kids[ss[i].parent_step_id]||[]).push(ss[i].plan_step_id); }
-
-    var state={};
+    for(const s of ss){if(stepById.has(s.plan_step_id))stale.push('duplicate_plan_step');stepById.set(s.plan_step_id,s);
+      if(s.parent_step_id){if(!kids.has(s.parent_step_id))kids.set(s.parent_step_id,[]);kids.get(s.parent_step_id).push(s.plan_step_id);}}
+    const parentTodoIds=new Set(all.map(t=>t.parent_todo_id).filter(Boolean));
+    for(const t of todos){for(const id of t.plan_step_ids||[]){if(!stepById.has(id))stale.push('unknown_step_mapping');if(!byStep.has(id))byStep.set(id,[]);byStep.get(id).push(t);}}
+    const state=Object.create(null),units=r.backend==='ledger_bound'?list(r.planunits):[],bindings=[];
     function leafState(id){
-      var mapped=byStep[id]||[];
-      if(!mapped.length) return { state:'pending', todo_ids:[], reason:null, work:[], evidence:[] };
-      var counts={}, reason=null, work=[], ev=[];
-      for(var n=0;n<mapped.length;n++){
-        var t=mapped[n];
-        counts[t.status]=(counts[t.status]||0)+1;
-        if(t.status==='blocked' && !reason) reason=t.blocked_reason_ref;
-        work=work.concat(t.active_work_ids||[]);
-        for(var q=0;q<(t.transitions||[]).length;q++){
-          if(t.transitions[q].to_status==='completed'||t.transitions[q].to_status==='skipped') ev.push(t.transitions[q].cause_ref);
+      const mapped=(byStep.get(id)||[]).filter(t=>!parentTodoIds.has(t.todo_id)),counts={},work=[],evidence=[];let reason=null;
+      for(const t of mapped){
+        let status=t.status;const itemBindings=api?.bindingsFor(r.thread_id,t.todo_id)||[];
+        for(const b of itemBindings){if(!bindings.some(x=>x.binding_id===b.binding_id))bindings.push(b);if(['running','admitted','recovery_required'].includes(b.state))work.push(b.work_id);}
+        if(status==='in_progress'&&!itemBindings.some(b=>['running','admitted','recovery_required'].includes(b.state))){stale.push('admitted_work_missing:'+t.todo_id);status='pending';}
+        if(status==='completed'||status==='skipped'){
+          const proof=api?.outcomeSummary(r.thread_id,[t.todo_id]);
+          if(!proof?.ok){stale.push('outcome_evidence_unavailable:'+t.todo_id);status='pending';}else evidence.push(...proof.evidenceRefs);
         }
+        if(status==='blocked'){
+          if(!t.blocked_reason_ref){stale.push('blocker_evidence_missing:'+t.todo_id);status='pending';}
+          else reason=reason||t.blocked_reason_ref;
+        }
+        counts[status]=(counts[status]||0)+1;
       }
-      /* PPROG-006: completed requires EVERY required mapped leaf completed or
-         validly skipped. PPROG-007: blocked only from a genuine blocker. */
-      var st;
-      if(counts.blocked)                                    st='blocked';
-      else if(counts.in_progress)                           st='in_progress';
-      else if(counts.pending)                               st='pending';
-      else if(counts.completed)                             st='completed';
-      else if(counts.skipped)                               st='skipped';
-      else                                                  st='pending';
-      return { state:st, todo_ids:mapped.map(function(t){return t.todo_id;}),
-               reason:reason, work:work, evidence:ev };
+      const st=counts.in_progress?'in_progress':counts.blocked?'blocked':counts.pending?'pending':counts.completed?'completed':counts.skipped?'skipped':'pending';
+      const planunit_ids=units.filter(u=>u.step===id).map(u=>u.id);
+      const adherence=list(r.deviations).filter(d=>d.plan_step_id===id||d.step_id===id);
+      return {state:st,todo_ids:mapped.map(t=>t.todo_id),planunit_ids,reason,work:Array.from(new Set(work)),evidence:Array.from(new Set(evidence)),
+        active_work_refs:Array.from(new Set(work)),evidence_refs:Array.from(new Set(evidence)),deviation_kind:adherence.at(-1)?.kind||adherence.at(-1)?.deviation_kind||null,
+        updated_at:mapped.flatMap(t=>(t.transitions||[]).map(x=>x.created_at)).sort().at(-1)||run?.created_at||null};
     }
-    for(i=0;i<ss.length;i++){ if(!kids[ss[i].plan_step_id]) state[ss[i].plan_step_id]=leafState(ss[i].plan_step_id); }
-    /* PPROG-004/006: a parent is DERIVED from its current children, never
-       declared. Heterogeneous children read `mixed`. */
-    for(i=0;i<ss.length;i++){
-      var id=ss[i].plan_step_id, ch=kids[id];
-      if(!ch) continue;
-      var seen={}, all=[], kid;
-      for(j=0;j<ch.length;j++){ kid=state[ch[j]]||{state:'pending'}; seen[kid.state]=1; all.push(kid.state); }
-      var uniq=Object.keys(seen);
-      var agg;
-      if(uniq.length===1) agg=uniq[0];
-      else if(uniq.every(function(x){ return x==='completed'||x==='skipped'; })) agg='completed';
-      else agg='mixed';
-      state[id]={ state:agg, todo_ids:[], reason:null, work:[], evidence:[], children:ch };
+    // Iterative postorder handles arbitrary depth and order without recursion.
+    const colour=new Map();
+    for(const root of stepById.keys()){
+      if(colour.get(root)===2)continue;
+      const stack=[{id:root,expanded:false}];
+      while(stack.length){const entry=stack.pop(),id=entry.id;
+        if(entry.expanded){
+          const ch=kids.get(id)||[];
+          if(!ch.length)state[id]=leafState(id);
+          else {
+            const child=ch.map(k=>state[k]||{state:'pending',todo_ids:[],work:[],evidence:[],planunit_ids:[]});
+            const unique=Array.from(new Set(child.map(s=>s.state)));
+            const st=unique.length===1?unique[0]:unique.every(x=>x==='completed'||x==='skipped')?'completed':'mixed';
+            const work=Array.from(new Set(child.flatMap(s=>s.work||[]))),evidence=Array.from(new Set(child.flatMap(s=>s.evidence||[])));
+            state[id]={state:st,children:ch.slice(),todo_ids:Array.from(new Set(child.flatMap(s=>s.todo_ids||[]))),
+              planunit_ids:units.filter(u=>u.step===id).map(u=>u.id),reason:child.find(s=>s.reason)?.reason||null,
+              work,evidence,active_work_refs:work,evidence_refs:evidence,updated_at:child.map(s=>s.updated_at).filter(Boolean).sort().at(-1)||run?.created_at||null};
+          }
+          colour.set(id,2);continue;
+        }
+        if(colour.get(id)===2)continue;
+        if(colour.get(id)===1){stale.push('plan_parent_cycle');continue;}
+        colour.set(id,1);stack.push({id,expanded:true});
+        for(const child of (kids.get(id)||[]).slice().reverse())stack.push({id:child,expanded:false});
+      }
     }
-    var proj={
-      /* The typed contract names this projection. It used to declare its
-         schema only in the Details copy, so a consumer holding the object had
-         no way to identify it -- which is the whole point of a schema id. */
-      schema:'pm.assistant_plan.progress_projection.v1',
-      project_id:'pm', thread_id:r.thread_id, assistant_plan_id:r.plan_id,
-      plan_version:r.version, plan_hash:hashOf(blocks),
-      plan_run_id:r.approved?('run-'+r.plan_id+'-V'+r.version):null,
-      projection_revision:(r._projRev||1),
-      currentness_hash:currentnessOf(r),
-      generated_at:new Date().toISOString(),
-      step_states:state,
-      stale:!!r._projStale,
-      source:r._projSource||'durable'
-    };
-    return proj;
+    for(const s of ss)if(s.parent_step_id&&!stepById.has(s.parent_step_id))stale.push('unknown_parent_step');
+    const reasons=Array.from(new Set(stale)),adherence=list(r.deviations);
+    const inputs={project_id:project,thread_id:r.thread_id,assistant_plan_id:r.plan_id,plan_version:r.version,plan_hash:hash,
+      plan_run_id:runId,run:run||null,dispatch_epoch:r.runEpoch||0,list_revision:api?.revisionOf(r.thread_id)||0,todos,bindings,
+      scoped_planunits:units,adherence,step_states:state,currentness_reasons:reasons};
+    return {schema:'pm.assistant_plan.progress_projection.v1',project_id:project,thread_id:r.thread_id,assistant_plan_id:r.plan_id,
+      plan_version:r.version,plan_hash:hash,plan_run_id:runId,
+      projection_revision:(api?.revisionOf(r.thread_id)||0)+(r.runEpoch||0)+(r._projRev||1),
+      currentness_hash:hashOf(inputs),generated_at:todos.flatMap(t=>(t.transitions||[]).map(x=>x.created_at)).concat(run?.created_at||[]).filter(Boolean).sort().at(-1)||null,
+      step_states:state,stale:reasons.length>0,stale_reasons:reasons,source:'shared_session_owners'};
   }
 
   /* The single read every renderer uses. Returns one of the six state words. */
@@ -29739,7 +29766,7 @@ window.PM56_EXT = window.PM56_EXT || {
     if(!k) return null;
     var base=ATTENTION[k]; if(!base) return null;
     return { schema:'pm.assistant_plan.execution_attention_projection.v1',
-             plan_run_id:r.approved?('run-'+r.plan_id+'-V'+r.version):null,
+             plan_run_id:r.approved?.plan_run_id||null,
              condition_kind:k, line:base.line, tone:base.tone,
              reason:r.attention.reason,
              allowed_action_ids:list(r.attention.actions),
@@ -29897,6 +29924,7 @@ window.PM56_EXT = window.PM56_EXT || {
     if(r.status==='ready'){ e.revise=true; e.build=true; e.crew=true; e.at=true; e.cancel=true; e.goal=true; }
     else if(r.status==='building'){ e.cancel=true; e.todos=true; e.revise=false; e.report=true; }
     else if(r.status==='completed'){ e.report=true; e.todos=true; }
+    if(r._projStale||(r.approved&&progress(r).stale)){e.build=false;e.crew=false;e.at=false;e.goal=false;}
     var blk=buildBlockers(r);
     if(blk.length){ e.build=false; e.crew=false; e.at=false; e.goal=false; e.blocked_by=blk; }
     return e;
@@ -30079,9 +30107,9 @@ window.PM56_EXT = window.PM56_EXT || {
     const stop=window.PM56_SCHED?.stopSnapshot();
     if(opts.scheduleRef&&stop?.stopped)return {ok:false,error:'manual_stop_latched'};
     return TX.run(()=>{
-      const made=todoApi().materializeForPlan({plan_id:r.plan_id,project_id:expected.project_id,thread_id:r.thread_id,version:r.version,run_id:runId,run_epoch:epoch,
-        strict:topology==='goal_driven'||!!r.workRef,workRef:r.workRef,
-        steps:steps(body(r)).map(st=>({id:st.plan_step_id,parent:st.parent_step_id,deps:list(st.depends_on),title:st.title,outcome:st.text}))});
+      const made=todoApi().materializeForPlan({plan_id:r.plan_id,project_id:expected.project_id,thread_id:r.thread_id,version:r.version,plan_hash:expected.hash,run_id:runId,run_epoch:epoch,
+        strict:true,workRef:r.workRef,unit_mapping:Object.fromEntries(steps(body(r)).map(st=>[st.plan_step_id,r.backend==='ledger_bound'?list(r.planunits).filter(u=>u.step===st.plan_step_id).map(u=>u.id):[]])),
+        steps:steps(body(r)).map(st=>({id:st.plan_step_id,parent:st.parent_step_id,deps:list(st.depends_on),title:st.title,outcome:st.text,parallel_group_id:st.parallel_group_id}))});
       if(!made?.ok)TX.fail(made?.error||'todo_materialization_refused');
       let error=validateAdmission(ctx,r,expected);if(error)TX.fail(error);
       let goalResult=null;
@@ -30125,7 +30153,7 @@ window.PM56_EXT = window.PM56_EXT || {
     var a=todoApi(), moved=null;
     if(r.workRef&&!r.goalBinding&&inspectGoalPlan(r.plan_id).complete){finalizeGoalRun(r.plan_id);ctx.renderApp();return;}
     if(r.workRef){moved=workOwners.get(r.workRef.kind)?.advance(r.workRef.ref,r);if(moved?.ok===false){r.attention={kind:'attention',reason:moved.error,actions:['details','cancel']};stopRun(r);ctx.renderApp();return;}}
-    else if(a && a.advanceForPlan && !r.goalBinding) moved=a.advanceForPlan(r.plan_id, r.thread_id);
+    else {r.attention={kind:'attention',reason:'No actual execution adapter is attached to this Plan in the local concept.',actions:['details','cancel']};stopRun(r);ctx.renderApp();return;}
     r._projRev=(r._projRev||1)+1;
     /* PFAIL-007: Completed requires the completion predicate to hold --
        every required leaf resolved. `moved===null` means the projector
@@ -30572,12 +30600,12 @@ window.PM56_EXT = window.PM56_EXT || {
   function executionReport(r){
     var pr=progress(r), a=attention(r);
     var api=todoApi();
-    var todos=(api&&api.get?(api.get(r.thread_id)||[]):[]).filter(function(t){ return t.plan_id===r.plan_id; });
+    var todos=todosForPlan(r);
     return {
-      schema:'pm.assistant_plan.execution_report.v1', demo:true,
+      schema:'pm.assistant_plan.execution_report.v1',demo:true,concept_only:true,state_scope:'session_memory',project_id:pr.project_id,thread_id:r.thread_id,
       assistant_plan_id:r.plan_id, plan_version:r.version, plan_hash:pr.plan_hash,
       plan_run_id:pr.plan_run_id, generated_at:pr.generated_at,
-      currentness_hash:pr.currentness_hash, stale:pr.stale,
+      currentness_hash:pr.currentness_hash,stale:pr.stale,stale_reasons:pr.stale_reasons,
       is_approved_plan:false,
       step_states:pr.step_states,
       todo_refs:todos.map(function(t){
@@ -30585,6 +30613,8 @@ window.PM56_EXT = window.PM56_EXT || {
                  plan_step_ids:t.plan_step_ids, active_work_ids:t.active_work_ids||[],
                  outcome_refs:(t.transitions||[]).map(function(x){ return x.cause_ref; }) };
       }),
+      attempts:todos.flatMap(t=>(api.bindingsFor(r.thread_id,t.todo_id)||[]).map(b=>({...b,current_todo_id:t.todo_id}))),
+      transitions:todos.flatMap(t=>t.transitions||[]),evidence_refs:Array.from(new Set(Object.values(pr.step_states).flatMap(s=>s.evidence_refs||[]))),
       deviations:list(r.deviations),
       attention:a,
       completion_summary:(function(){
@@ -30608,6 +30638,7 @@ window.PM56_EXT = window.PM56_EXT || {
     });
     out.push('','## To-Dos','');
     rep.todo_refs.forEach(function(t){ out.push('- `'+t.todo_id+'` '+t.status+' (rev '+t.revision+') → '+t.plan_step_ids.join(', ')); });
+    out.push('','## Attempts and evidence','', '```json',JSON.stringify({attempts:rep.attempts,transitions:rep.transitions,evidence_refs:rep.evidence_refs,deviations:rep.deviations},null,2),'```');
     out.push('','## Completion','', '```json', JSON.stringify(rep.completion_summary,null,2), '```','');
     return out.join('\n');
   }
@@ -31071,6 +31102,7 @@ window.PM56_EXT = window.PM56_EXT || {
     const r=planRec({id,thread:x.threadId,title:x.title,strategy:'Deep: BrainStorm',backend:'ledger_bound',version:1,revisions:{1:JSON.parse(JSON.stringify(x.blocks))},status:'ready',current:true,planunits:units,
       ledger:{id:'apl-'+id,scope:'run',entries:JSON.parse(JSON.stringify(x.ledgerEntries))},sources:[{kind:'brainstorm',ref:x.runId,note:'Frozen recorded exploration '+x.sourceHash}],research:JSON.parse(JSON.stringify(x.sourceRefs))});
     r.brainstormRunId=x.runId;r.synthesisFingerprint=fingerprint;P().records[id]=r;
+    window.PM56_B16_WORK?.attachBrainstormPlan(r,thread,origin);
     const card={id:'plan-card-'+id,role:'system',type:'plan-card-v2',planId:id},at=thread.messages.findIndex(m=>m.runId===x.runId);
     thread.messages.splice(at<0?thread.messages.length:at+1,0,card);
     return {ok:true,planId:id,version:1,hash:hashOf(body(r))};
@@ -31113,6 +31145,7 @@ window.PM56_EXT = window.PM56_EXT || {
     const record=planRec({id,thread:origin.threadId,title:origin.title+' · Plan',strategy:'Standard',backend:'direct',version:1,revisions:{1:blocks},status:'ready',current:true,
       sources:[{kind:'chat_room',ref:origin.id,message_id:m.id,participant_id:m.senderId,note:m.body}]});
     record.roomSource={runId:origin.id,messageId:m.id,participantId:m.senderId,messageHash:x.messageHash};P().records[id]=record;
+    window.PM56_B16_WORK?.attachRoomPlan(record,thread,origin,m);
     thread.messages.push({id:'plan-card-'+id,role:'system',type:'plan-card-v2',planId:id});
     return {ok:true,planId:id,reused:false};
   }
@@ -31143,15 +31176,24 @@ window.PM56_EXT = window.PM56_EXT || {
     if(currentPlan(t.id))return {ok:false,error:'current_plan_requires_explicit_resolution'};
     const payload=owner.plan(o.workRef.ref);if(!payload?.ok||!payload.steps?.length)return {ok:false,error:'work_plan_not_ready'};
     const id='work-plan-'+o.workRef.ref,prior=rec(id);if(prior)return {ok:true,replayed:true,planId:id};
-    const blocks=[h(payload.title,1),p(payload.objective),...payload.steps.map(st=>step(st.id,st.title,st.outcome,st.deps||[]))];
+    const blocks=[h(payload.title,1),p(payload.objective),...payload.steps.map(st=>({...step(st.id,st.title,st.outcome||'',st.deps||[],st.parallel_group_id),parent_step_id:st.parent||null}))];
     const r=planRec({id,thread:t.id,title:payload.title,strategy:'Standard',backend:'direct',version:1,revisions:{1:blocks},status:'ready',current:true,sources:payload.sourceRefs||[]});
     r.project_id=t.projectId||'pm';r.workRef=JSON.parse(JSON.stringify(o.workRef));window.PM56_TX.set(P().records,id,r);window.PM56_TX.set(t,'messages',t.messages.concat({id:'plan-card-'+id,role:'system',type:'plan-card-v2',planId:id}));
     return {ok:true,planId:id,version:1,hash:hashOf(body(r))};
   }
+  function rebindTodoMapping(id,expected,disposition){
+    const r=rec(id),run=r&&P().runs[r.approved?.plan_run_id];
+    if(!r||!run||r.status!=='building'||r.version!==expected.version||hashOf(body(r))!==expected.hash||run.plan_run_id!==expected.plan_run_id)return {ok:false,error:'stale_plan_restructure'};
+    const map=new Map((disposition.rebound||[]).map(x=>[x.from,x.to])),removed=new Set((disposition.canceled||[]).map(x=>x.todo_id));
+    if(run.required_todo_ids.some(id=>removed.has(id)))return {ok:false,error:'required_work_cannot_be_removed'};
+    const ids=run.required_todo_ids.map(id=>map.get(id)||id),items=todoApi().get(r.thread_id)||[];
+    if(ids.some(id=>!items.some(t=>t.todo_id===id&&t.plan_id===r.plan_id&&t.run_id===run.plan_run_id&&t.plan_version===r.version&&t.plan_hash===run.plan_hash)))return {ok:false,error:'restructure_mapping_not_current'};
+    const TX=window.PM56_TX;TX.set(run,'required_todo_ids',ids);TX.set(r,'requiredTodoIds',ids.slice());return {ok:true,ids};
+  }
   window.PM56_GOAL.registerOwner('assistant_plan',{inspect:inspectGoalPlan,advance:(id)=>{const r=rec(id);if(!r)return {ok:false,error:'plan_missing'};runTick(EXT.ctx(),r);return r.attention?{ok:false,error:r.attention.reason}:{ok:true};},complete:finalizeGoalRun});
   window.PM56_PLANS = {
     admissionSnapshot:id=>{const r=rec(id);return r?admissionSnapshot(EXT.ctx(),r):null;},
-    build:o=>buildCommand(EXT.ctx(),rec(o?.plan_id),o||{}), commitRun,bindRun,inspectGoalPlan,createFromWorkRequest,
+    build:o=>buildCommand(EXT.ctx(),rec(o?.plan_id),o||{}),commitRun,bindRun,inspectGoalPlan,createFromWorkRequest,rebindTodoMapping,
     runs:()=>P().runs,
     scopedBundle:ref=>{const r=Object.values(P().records).find(r=>r.backend==='ledger_bound'&&ref===r.plan_id+'@V'+r.version+':planunits');return r?r.planunits:null;},
     registerWorkOwner:(kind,owner)=>{if(workOwners.has(kind))throw new Error('duplicate_plan_work_owner');workOwners.set(kind,owner);},
@@ -31255,58 +31297,16 @@ window.PM56_EXT = window.PM56_EXT || {
     worknodes:function(){ return []; },
     orchestrator:function(){ return { entered:false, retired:true }; }
   };
+  window.AssistantPlanProgressProjector={project:window.PM56_PLANS.progress};
 })();
 
-/* todos.js — feature module.  OWNER: Assistant redesign wave (2026-09-03), To-Do Runtime.
- * Canonical spec: Plans/ToDo_Runtime.md (TDR-001..TDR-009). Packet: 01_IMPLEMENTATION_SPEC.md
- * §6 "To-Dos", 04_GUI_IMPACTS.md §9 "To-Dos Activity UI".
- *
- * WHAT THIS FILE OWNS
- * --------------------
- * The thread-local hierarchical To-Do list: stable item identity, parent/child
- * structure, depends_on[]/parallel_group_id, the five-value status enum, a small
- * ToDoController that is the sole writer of status, individually receipted
- * transitions, derived parent rollup, and the Activity hover/detail projection
- * for the `todo` domain. Two demo threads ('query', 'subagents' — both real
- * thread ids already in data.js) each carry their OWN list on `RT.todos`, so
- * switching threads shows a different list rather than a merged one (TDR-001).
- *
- * WHAT THIS FILE IS HONEST ABOUT
- * -------------------------------
- * There is no `verifying` status and no verification field anywhere in this
- * file, on purpose (TDR-004) — a validation need is modelled as its own leaf
- * (tq-11 "Confirm the rollback rehearsal reproduces the pre-change state").
- * There is no Done section and no source grouping (TDR-007): completed items
- * stay inline, in display order, with a filled dot and strike-through, and
- * `goal_id` lineage on a leaf is never rendered as a group header.
- * Bulk completion is REFUSED, not simulated: `attemptBulkComplete` and
- * `attemptProviderProposal` always return ok:false and mutate nothing, and the
- * demo controls that call them are wired to real refusal records in the
- * Refused attempts log, not a toast alone (Hard Rule 2). `cmd.chat.todos.open_work`
- * is not a registered native command in this concept, so the "Open work"
- * control on an in-progress leaf is rendered disabled with that fact stated in
- * its title, rather than pretending to navigate anywhere (Hard Rule 3/5).
- *
- * TO-DOS ARE ACTIVITY-ONLY. Nothing here renders a transcript card (TDR-007).
- * TO-DOS DO NOT OWN GOALS. `goal_id` on an item is lineage only — this module
- * never writes D.goal or reads goals.js's fixture; the two are linked only by
- * the shared string 'goal-query-perf' appearing as inert lineage on some
- * 'query'-thread leaves, matching goals.js's GOAL_FIXTURE on the same thread.
- *
- * A KNOWN, REPORTED COMPOSITION GAP (see the two EXT.slot registrations below
- * for the exact mechanism, and the end-of-turn report for the exact requested
- * integrator patch): `extEach()` (app.js) CONCATENATES every registered
- * slot's non-empty output rather than letting the first one win. activity-bar.js
- * and activity-panel.js each already register a generic 'todo' domain card
- * built from the legacy flat `D.todos` fixture (data.js), unconditionally for
- * any thread where that fixture has entries ('query' only). This module's own
- * registrations correctly decline (return '') for every OTHER domain, but
- * cannot make activity-bar.js/activity-panel.js decline for 'todo' — that is
- * integrator-owned code this brief forbids editing. Until a one-line guard
- * lands in each of those two files, the 'query' thread's hover card and panel
- * body will show the legacy generic todo card ABOVE this module's real one.
- * This module's own output is correct in isolation; the residual duplication
- * is entirely the other two files' pre-existing, not-yet-updated behaviour.
+/* ToDoController — the sole thread-local To-Do writer and Activity projection.
+ * Current owners: Plans/ToDo_Runtime.md (TDR-001..012, TDG-001..016, APR-008).
+ * Batch 16 adds actual admitted-work bindings, evidence-gated transitions,
+ * atomic restructuring, currentness fencing and uncapped virtualized hierarchy.
+ * Existing literal demo history is historical fixture data, not recovered work.
+ * Typed session-local results/receipts are NOT durable native EventRecords.
+ * Goal, Plan, scheduling, artifacts and work adapters keep their own authority.
  */
 (function(){
   'use strict';
@@ -31631,7 +31631,7 @@ window.PM56_EXT = window.PM56_EXT || {
 
   function restoreFixture(){
     RT.todos = JSON.parse(TODO0);
-    ui.collapsed = {}; ui.receiptsOpen = {}; ui.refusalsOpen = false; ui.detailOpen = {};
+    ui.collapsed = {}; ui.receiptsOpen = {}; ui.refusalsOpen = false; ui.detailOpen = {}; treeViews.clear();
   }
 
   /* =====================================================================
@@ -31644,38 +31644,29 @@ window.PM56_EXT = window.PM56_EXT || {
     for(var i=0;i<list.length;i++) if(list[i].todo_id===id) return list[i];
     return null;
   }
-  function childrenOf(list, parentId){
-    return (list||[]).filter(function(x){ return x.parent_todo_id===parentId; })
-      .sort(function(a,b){ return a.display_order-b.display_order; });
+  const graphIndexes=new WeakMap();
+  function graphIndex(list){
+    if(!list)return {byId:new Map(),children:new Map()};
+    let ix=graphIndexes.get(list);if(ix)return ix;
+    ix={byId:new Map(),children:new Map()};
+    for(const t of list){ix.byId.set(t.todo_id,t);const key=t.parent_todo_id??null;
+      if(!ix.children.has(key))ix.children.set(key,[]);ix.children.get(key).push(t);}
+    for(const children of ix.children.values())children.sort((a,b)=>(a.display_order||0)-(b.display_order||0));
+    graphIndexes.set(list,ix);return ix;
   }
-  function topLevel(list){ return childrenOf(list, null); }
-  function isLeaf(list, item){ return childrenOf(list, item.todo_id).length===0; }
-  /* depends_on[] controls admission: runnable once every dependency is
-     completed or skipped (TDR-003). This never touches `status` — a pending
-     item with an unmet dependency stays pending; it is never blocked. */
-  function runnable(list, item){
-    if(!item.depends_on || !item.depends_on.length) return true;
-    for(var i=0;i<item.depends_on.length;i++){
-      var dep = findItem(list, item.depends_on[i]);
-      if(dep && dep.status!=='completed' && dep.status!=='skipped') return false;
-    }
-    return true;
-  }
-  function unmetDeps(list, item){
-    return (item.depends_on||[]).map(function(id){ return findItem(list,id); })
-      .filter(function(dep){ return dep && dep.status!=='completed' && dep.status!=='skipped'; });
-  }
-  /* Depth-first, display-order traversal — the exact order the tree renders
-     in and the order the hover feed reasons about "next runnable". */
+  function childrenOf(list,parentId){return graphIndex(list).children.get(parentId??null)||[];}
+  function topLevel(list){return childrenOf(list,null);}
+  function isLeaf(list,item){return !childrenOf(list,item.todo_id).length;}
+  function runnable(list,item){const ix=graphIndex(list);return (item.depends_on||[]).every(id=>{
+    const dep=ix.byId.get(id);return dep&&(dep.status==='completed'||dep.status==='skipped');});}
+  function unmetDeps(list,item){const ix=graphIndex(list);return (item.depends_on||[]).map(id=>ix.byId.get(id)||{todo_id:id,title:'Missing reference: '+id,status:'pending'}).filter(t=>!['completed','skipped'].includes(t.status));}
   function docOrder(list){
-    var out = [];
-    function walk(parentId){
-      childrenOf(list, parentId).forEach(function(item){ out.push(item); walk(item.todo_id); });
-    }
-    walk(null);
+    const ix=graphIndex(list),out=[],stack=[...(ix.children.get(null)||[])].reverse(),seen=new Set();
+    while(stack.length){const t=stack.pop();if(seen.has(t.todo_id))continue;seen.add(t.todo_id);out.push(t);
+      const kids=ix.children.get(t.todo_id)||[];for(let i=kids.length-1;i>=0;i--)stack.push(kids[i]);}
     return out;
   }
-  function allLeaves(list){ return docOrder(list).filter(function(x){ return isLeaf(list,x); }); }
+  function allLeaves(list){const ix=graphIndex(list);return docOrder(list).filter(t=>!ix.children.get(t.todo_id)?.length);}
   function parallelSiblings(list, item){
     if(!item.parallel_group_id) return [];
     return childrenOf(list, item.parent_todo_id).filter(function(x){
@@ -31694,107 +31685,31 @@ window.PM56_EXT = window.PM56_EXT || {
      unconditional precondition, not a special case of one action. A model,
      subagent, or provider tool never asserts a status directly; it can only
      reach one of these functions the same way a click does. */
-  function writeTransition(item, toStatus, causeKind, causeRef, note, at){
-    var rec = TR(item.todo_id, item.status, toStatus, causeKind, causeRef, item.revision, at, note);
-    item.transitions.push(rec);
-    item.status = toStatus;
-    item.revision = rec.committed_revision;
-    return rec;
+  function refuse(threadId,code,reason,todoId,source){
+    const store=threadStore(threadId);if(store)window.PM56_TX.set(store,'refusals',(store.refusals||[]).concat({at:nowIso(),code,reason,todo_id:todoId||null,source:source||'user'}));
+    return {ok:false,error:code,code,reason};
   }
-  /* Parent status derives from children, never from direct assertion — a
-     parent-complete action does not exist anywhere in this file (TDR-003). */
-  function bubbleRollup(list, parentId, at){
-    if(!parentId) return;
-    var parent = findItem(list, parentId); if(!parent) return;
-    var kids = childrenOf(list, parentId); if(!kids.length) return;
-    var anyInProgress = kids.some(function(k){ return k.status==='in_progress'; });
-    var anyBlocked = kids.some(function(k){ return k.status==='blocked'; });
-    var anyCompleted = kids.some(function(k){ return k.status==='completed'; });
-    var allDoneOrSkipped = kids.every(function(k){ return k.status==='completed'||k.status==='skipped'; });
-    var allSkipped = kids.every(function(k){ return k.status==='skipped'; });
-    var next = anyInProgress ? 'in_progress'
-      : (allDoneOrSkipped && anyCompleted) ? 'completed'
-      : allSkipped ? 'skipped'
-      : anyBlocked ? 'blocked'
-      : 'pending';
-    if(next!==parent.status){
-      writeTransition(parent, next, 'child_rollup', 'rollup:'+parent.todo_id,
-        'Derived from child status; a parent is never completed by direct assertion.', at);
-      bubbleRollup(list, parent.parent_todo_id, at);
-    }
+  const STALE_MSG=item=>'This row changed since it was opened (now at revision '+item.revision+'). Reopen it and try again.';
+  function workAction(threadId,todoId,revision){
+    const item=findItem(itemsOf(threadId),todoId);if(!item)return refuse(threadId,'todo_not_found','This work is no longer in the current list.',todoId);
+    if(item.revision!==revision)return refuse(threadId,'stale_todo_revision',STALE_MSG(item),todoId);
+    const owner=workOwner(item),result=owner?.execute?.(item.workflow_ref,item,captureTodo(threadId,todoId));
+    return result||refuse(threadId,'owner_unavailable','No execution adapter is available for this historical or proposed item.',todoId);
   }
-  function refuse(threadId, code, reason, todoId, source){
-    var store = threadStore(threadId);
-    if(store) store.refusals.push({ at:nowIso(), code:code, reason:reason, todo_id:todoId||null, source:source||'user' });
-    return { ok:false, code:code, reason:reason };
+  function admit(t,id,rev){return workAction(t,id,rev);}
+  function complete(t,id,rev){return workAction(t,id,rev);}
+  function localTransition(threadId,todoId,revision,extra){const item=findItem(itemsOf(threadId),todoId);
+    if(!item)return {ok:false,error:'todo_not_found'};
+    return applyTransition(threadId,{...captureTodo(threadId,todoId),expected_revision:revision,...extra});}
+  function unblock(t,id,rev){return localTransition(t,id,rev,{to_status:'pending',cause_kind:'dependency_changed',cause_ref:'user:recheck:'+id});}
+  function skip(t,id,rev){
+    const item=findItem(itemsOf(t),id);if(!item)return {ok:false,error:'todo_not_found'};
+    return window.PM56_TX.run(()=>{const active=itemBindings(t,id).filter(liveBinding),owner=workOwner(item);
+      const cancellation=active.length?owner?.stop?.(item.workflow_ref,active):null;
+      return localTransition(t,id,rev,{to_status:'skipped',cause_kind:'explicit_skip',cause_ref:'user:skip:'+id+':'+rev,
+        skip_disposition:{user_approved:true,reason:'Explicitly marked no longer required in To-Do Activity.',cancellation_ref:cancellation?.receipt_ref||null}});});
   }
-  var STALE_MSG = function(item){ return 'This row changed since it was opened (now at revision '+item.revision+'). Reopen it and try again.'; };
-
-  function admit(threadId, todoId, expectedRevision){
-    var list = itemsOf(threadId); if(!list) return refuse(threadId,'todo_not_found','No To-Do list is loaded for this thread.',todoId);
-    var item = findItem(list, todoId); if(!item) return refuse(threadId,'todo_not_found','That item no longer exists in this list.',todoId);
-    if(item.revision!==expectedRevision) return refuse(threadId,'stale_todo_revision',STALE_MSG(item),todoId);
-    if(!isLeaf(list,item)) return refuse(threadId,'invalid_request','A parent carries no work binding; only a leaf is admitted.',todoId);
-    if(item.status!=='pending') return refuse(threadId,'invalid_request','Only a pending item can be admitted.',todoId);
-    if(!runnable(list,item)) return refuse(threadId,'invalid_request','A dependency is not yet completed or skipped.',todoId);
-    var at = nowIso();
-    if(!item.started_at) item.started_at = at;
-    if(!item.active_work_ids.length) item.active_work_ids = ['work-'+item.todo_id+'-'+(item.transitions.length+1)];
-    writeTransition(item,'in_progress','work_admitted','assignment:'+item.todo_id, 'A tool batch was durably admitted for this item.', at);
-    bubbleRollup(list, item.parent_todo_id, at);
-    return { ok:true };
-  }
-  /* Completion is outcome-gated, not tool-success-gated (TDR-004/TDR-006): a
-     tool call succeeding is evidence about the tool, not the outcome, so the
-     accepted note always names the expected_outcome it satisfied. */
-  function complete(threadId, todoId, expectedRevision){
-    var list = itemsOf(threadId); if(!list) return refuse(threadId,'todo_not_found','No To-Do list is loaded for this thread.',todoId);
-    var item = findItem(list, todoId); if(!item) return refuse(threadId,'todo_not_found','That item no longer exists in this list.',todoId);
-    if(item.revision!==expectedRevision) return refuse(threadId,'stale_todo_revision',STALE_MSG(item),todoId);
-    if(item.status!=='in_progress') return refuse(threadId,'outcome_evidence_required','Only an item that is in progress can be completed, and only with accepted outcome evidence.',todoId);
-    var at = nowIso();
-    item.completed_at = at;
-    var note = item.expected_outcome ? ('Outcome evidence accepted: '+item.expected_outcome) : 'Outcome evidence accepted.';
-    writeTransition(item,'completed','outcome_satisfied','evidence:'+item.todo_id+'-'+(item.transitions.length+1), note, at);
-    bubbleRollup(list, item.parent_todo_id, at);
-    return { ok:true };
-  }
-  function unblock(threadId, todoId, expectedRevision){
-    var list = itemsOf(threadId); if(!list) return refuse(threadId,'todo_not_found','No To-Do list is loaded for this thread.',todoId);
-    var item = findItem(list, todoId); if(!item) return refuse(threadId,'todo_not_found','That item no longer exists in this list.',todoId);
-    if(item.revision!==expectedRevision) return refuse(threadId,'stale_todo_revision',STALE_MSG(item),todoId);
-    if(item.status!=='blocked') return refuse(threadId,'invalid_request','Only a blocked item can be unblocked.',todoId);
-    var at = nowIso();
-    item.blocked_reason_ref = null;
-    writeTransition(item,'pending','retry','unblock:'+item.todo_id, 'The blocking condition was resolved; the item returns to pending rather than resuming on its own.', at);
-    bubbleRollup(list, item.parent_todo_id, at);
-    return { ok:true };
-  }
-  function skip(threadId, todoId, expectedRevision){
-    var list = itemsOf(threadId); if(!list) return refuse(threadId,'todo_not_found','No To-Do list is loaded for this thread.',todoId);
-    var item = findItem(list, todoId); if(!item) return refuse(threadId,'todo_not_found','That item no longer exists in this list.',todoId);
-    if(item.revision!==expectedRevision) return refuse(threadId,'stale_todo_revision',STALE_MSG(item),todoId);
-    if(item.status==='completed' || item.status==='skipped') return refuse(threadId,'invalid_request','This item already reached a terminal status.',todoId);
-    if(!isLeaf(list,item)) return refuse(threadId,'invalid_request','A parent status is derived from its children; skip a leaf instead.',todoId);
-    var at = nowIso();
-    writeTransition(item,'skipped','explicit_skip','skip:'+item.todo_id, 'Marked no longer required from Activity Detail.', at);
-    bubbleRollup(list, item.parent_todo_id, at);
-    return { ok:true };
-  }
-  function reopen(threadId, todoId, expectedRevision){
-    var list = itemsOf(threadId); if(!list) return refuse(threadId,'todo_not_found','No To-Do list is loaded for this thread.',todoId);
-    var item = findItem(list, todoId); if(!item) return refuse(threadId,'todo_not_found','That item no longer exists in this list.',todoId);
-    if(item.revision!==expectedRevision) return refuse(threadId,'stale_todo_revision',STALE_MSG(item),todoId);
-    if(item.status!=='completed' && item.status!=='skipped') return refuse(threadId,'invalid_request','Only a completed or skipped item can be reopened.',todoId);
-    var at = nowIso();
-    item.completed_at = null;
-    writeTransition(item,'pending','reopen','reopen:'+item.todo_id, 'Reopened explicitly; the earlier completion or skip stays in the receipt history below.', at);
-    bubbleRollup(list, item.parent_todo_id, at);
-    return { ok:true };
-  }
-  /* THE REQUIRED NEGATIVE PATH (TDR-005/TDR-006). Always refuses and applies
-     nothing — there is no code path anywhere in this controller that marks
-     more than one item complete from a single caller gesture. */
+  function reopen(t,id,rev){return localTransition(t,id,rev,{to_status:'pending',cause_kind:'reopen',cause_ref:'user:reopen:'+id+':'+rev,user_approved:true});}
   function attemptBulkComplete(threadId, source){
     var list = itemsOf(threadId);
     var targets = list ? list.filter(function(x){ return isLeaf(list,x) && x.status!=='completed' && x.status!=='skipped'; }) : [];
@@ -31911,8 +31826,8 @@ window.PM56_EXT = window.PM56_EXT || {
     var rows=feed.rows.slice(0,4);
     return '<button type="button" class="todo-hover-head" data-action="open-activity" data-domain="todo">'+
       '<span class="todo-hover-head-icon">'+ctx.icon('todo',13)+'</span><strong>To-Dos</strong><span class="todo-hover-head-meta">'+feed.done+' of '+feed.total+'</span></button>'+
-      '<div class="todo-hover-list">'+(rows.length?rows.map(function(r){var it=r.item;return '<button type="button" class="todo-hover-row'+(r.current?' is-current':'')+'" data-k="todo-hr:'+esc(it.todo_id)+'" data-action="todo-show-item" data-id="'+esc(it.todo_id)+'"><span class="todo-hover-glyph todo-glyph-'+esc(it.status)+'">'+glyph(it.status)+'</span><span class="todo-hover-title">'+esc(it.title)+'</span></button>';}).join(''):'<p class="todo-hover-empty">Nothing waiting.</p>')+'</div>'+
-      (feed.blockedCount?'<button type="button" class="todo-hover-blocked" data-action="open-activity" data-domain="todo">'+ctx.icon('lock',11)+' '+feed.blockedCount+' blocked</button>':'');
+      '<div class="todo-hover-list">'+(rows.length?rows.map(function(r){var it=r.item;return '<button type="button" class="todo-hover-row'+(r.current?' is-current':'')+'" data-k="todo-hr:'+esc(it.todo_id)+'" data-action="todo-show-item" data-thread="'+esc(it.thread_id)+'" data-id="'+esc(it.todo_id)+'"><span class="todo-hover-glyph todo-glyph-'+esc(it.status)+'">'+glyph(it.status)+'</span><span class="todo-hover-title">'+esc(it.title)+'</span></button>';}).join(''):'<p class="todo-hover-empty">Nothing waiting.</p>')+'</div>'+
+      (feed.total>rows.length?'<button class="todo-hover-overflow" data-action="open-activity" data-domain="todo">Open all '+feed.total+' items</button>':'')+(feed.blockedCount?'<button type="button" class="todo-hover-blocked" data-action="open-activity" data-domain="todo">'+ctx.icon('lock',11)+' '+feed.blockedCount+' blocked</button>':'');
   }
 
   /* extReplace('activityPanelBody',{domain:d,transient}, ...) (app.js) passes
@@ -31960,51 +31875,6 @@ window.PM56_EXT = window.PM56_EXT || {
     return '<ul class="todo-receipts" data-k="todo-receipts:'+esc(item.todo_id)+'">'+rows+'</ul>';
   }
 
-  /* Parents get no work-affecting buttons at all — only the caret. Leaves get
-     exactly the controls valid from their current status (TDR-006's table),
-     each of which calls a real ToDoController entry point. */
-  function rowActions(ctx, list, item){
-    if(!isLeaf(list,item)) return '';
-    var btns = '';
-    if(item.status==='pending'){
-      var can = runnable(list,item);
-      btns += '<button class="text-button" data-action="todo-admit" data-id="'+esc(item.todo_id)+'"'+
-        (can?'':' disabled title="Waiting on: '+esc(unmetDeps(list,item).map(function(d){ return d.title; }).join(', '))+'"')+'>Start</button>';
-      btns += '<button class="text-button" data-action="todo-skip" data-id="'+esc(item.todo_id)+'">Skip</button>';
-    } else if(item.status==='in_progress'){
-      btns += '<button class="text-button" data-action="todo-complete" data-id="'+esc(item.todo_id)+'">Complete</button>';
-      btns += '<button class="text-button" data-action="todo-skip" data-id="'+esc(item.todo_id)+'">Skip</button>';
-    } else if(item.status==='blocked'){
-      btns += '<button class="text-button" data-action="todo-unblock" data-id="'+esc(item.todo_id)+'">Unblock</button>';
-      btns += '<button class="text-button" data-action="todo-skip" data-id="'+esc(item.todo_id)+'">Skip</button>';
-    } else if(item.status==='completed' || item.status==='skipped'){
-      btns += '<button class="text-button" data-action="todo-reopen" data-id="'+esc(item.todo_id)+'">Reopen</button>';
-    }
-    if(item.active_work_ids && item.active_work_ids.length){
-      btns += '<button class="icon-button" type="button" disabled title="cmd.chat.todos.open_work is not a registered command in this concept, so this cannot navigate yet.">'+ctx.icon('monitor-play',12)+'</button>';
-    }
-    return btns;
-  }
-
-  function renderNode(ctx,list,item,depth){
-    var kids=childrenOf(list,item.todo_id), hasKids=kids.length>0, collapsed=!!ui.collapsed[item.todo_id];
-    var more=!!(ui.detailOpen&&ui.detailOpen[item.todo_id]);
-    var caret=hasKids?'<button class="todo-caret'+(collapsed?' is-collapsed':'')+'" type="button" data-action="todo-toggle-parent" data-id="'+esc(item.todo_id)+'" aria-expanded="'+(!collapsed)+'">'+ctx.icon('chevron',11)+'</button>':'<span class="todo-caret-spacer"></span>';
-    var detail='';
-    if(more){
-      detail='<div class="todo-detail" data-k="todo-detail:'+esc(item.todo_id)+'">'+
-        (item.expected_outcome?'<p class="todo-outcome">'+esc(item.expected_outcome)+'</p>':'')+
-        (hasKids?'<p class="todo-parent-note">'+esc(childSummary(list,item))+'</p>':'')+
-        '<div class="todo-chips">'+depChip(list,item)+parallelChip(list,item)+'</div>'+
-        (item.blocked_reason_ref?'<p class="todo-blocked-line">'+ctx.icon('lock',11)+' '+esc(item.blocked_reason_ref)+'</p>':'')+
-        '<div class="todo-detail-actions">'+(item.source_room_run_id?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(item.source_room_run_id)+'" data-message="'+esc(item.source_room_message_id)+'">Open source message</button>':'')+(item.source_review_run_id?'<button class="text-button" data-action="review-open-report" data-run="'+esc(item.source_review_run_id)+'" data-finding="'+esc(item.source_finding_id)+'">Open source finding</button>':'')+rowActions(ctx,list,item)+'<button class="text-button todo-receipts-toggle" data-action="todo-toggle-receipts" data-id="'+esc(item.todo_id)+'" aria-expanded="'+!!ui.receiptsOpen[item.todo_id]+'">History ('+item.transitions.length+')</button></div>'+renderReceipts(item)+'</div>';
-    }
-    return '<div class="todo-node" data-todo-id="'+esc(item.todo_id)+'" data-status="'+esc(item.status)+'" data-k="todo-node:'+esc(item.todo_id)+'" style="--todo-depth:'+depth+'"><div class="todo-row">'+caret+
-      '<span class="todo-glyph todo-glyph-'+esc(item.status)+'" title="'+esc(STATUS_LABEL[item.status]||item.status)+'">'+glyph(item.status)+'</span>'+
-      '<button type="button" class="todo-copy todo-title-button" data-action="todo-toggle-detail" data-id="'+esc(item.todo_id)+'" aria-expanded="'+more+'"><span class="todo-title'+(item.status==='completed'?' is-struck':'')+'">'+esc(item.title)+'</span></button></div>'+detail+
-      (hasKids&&!collapsed?'<div class="todo-children" data-k="todo-children:'+esc(item.todo_id)+'">'+kids.map(function(k){return renderNode(ctx,list,k,depth+1);}).join('')+'</div>':'')+'</div>';
-  }
-
   function pickDemoTarget(list){
     var leaves = docOrder(list).filter(function(x){ return isLeaf(list,x); });
     var inProg = leaves.filter(function(x){ return x.status==='in_progress'; });
@@ -32044,117 +31914,94 @@ window.PM56_EXT = window.PM56_EXT || {
       '<ul class="todo-refusals" data-k="todo-refusals-list">'+(rows||'<li class="todo-refusal-empty">No refused attempts recorded yet.</li>')+'</ul>';
   }
 
-  /* Activity Detail body (04_GUI_IMPACTS.md §9.2): one hierarchical list in
-     display_order within each parent. No Done section, no source headers, no
-     verification column — completed items stay exactly where they are. */
-  function renderPanel(ctx){
-    if(panelDomain(ctx)!=='todo') return '';
-    var tid = currentThreadId(ctx);
-    var list = itemsOf(tid);
-    if(!list) return '<div class="todo-panel todo-panel-empty" data-k="todo-panel"><p>No To-Do list is loaded for this thread yet.</p></div>';
-    var s = summary(tid);
-    var extra = [];
-    if(s.active) extra.push(s.active+' active');
-    if(s.blocked) extra.push(s.blocked+' blocked');
-    if(s.skipped) extra.push(s.skipped+' skipped');
-    var tree = topLevel(list).map(function(p){ return renderNode(ctx,list,p,0); }).join('');
-    return '<div class="todo-panel" data-k="todo-panel">'+
-      '<div class="todo-panel-summary" data-k="todo-summary"><strong>'+s.completed+' of '+s.total+' complete</strong>'+
-        (extra.length?'<span class="todo-summary-extra">'+esc(extra.join(' · '))+'</span>':'')+
-      '</div>'+
-      /* Simulation controls live in Demo Studio, not the task inspector. */ ''+
-      '<div class="todo-refusals-wrap" data-k="todo-refusals-wrap">'+renderRefusals(tid)+'</div>'+
-      '<div class="todo-tree" data-k="todo-tree">'+tree+'</div>'+
-    '</div>';
+  /* View-only virtual hierarchy. The complete graph remains in ToDoController.
+     Fixed row geometry keeps deep/large trees bounded in DOM, never in data. */
+  const ROW_HEIGHT=88;
+  const treeViews=new Map();
+  function treeView(tid){if(!treeViews.has(tid))treeViews.set(tid,{query:'',searchCollapsed:{},top:0,selected:null,work:null});return treeViews.get(tid);}
+  function visibleTree(tid){
+    const list=itemsOf(tid)||[],ix=graphIndex(list),view=treeView(tid),query=view.query.trim().toLocaleLowerCase(),included=new Set();
+    if(query)for(const t of list)if((t.title+' '+t.todo_id).toLocaleLowerCase().includes(query)){
+      let id=t.todo_id;while(id&&!included.has(id)){included.add(id);id=ix.byId.get(id)?.parent_todo_id;}}
+    const out=[],stack=(ix.children.get(null)||[]).map(t=>({item:t,depth:0})).reverse();
+    while(stack.length){const row=stack.pop(),t=row.item;if(query&&!included.has(t.todo_id))continue;out.push(row);
+      if(!(query?view.searchCollapsed[t.todo_id]:ui.collapsed[t.todo_id])){const children=ix.children.get(t.todo_id)||[];for(let i=children.length-1;i>=0;i--)stack.push({item:children[i],depth:row.depth+1});}}
+    return out;
   }
-
-  /* =====================================================================
-     7. ACTIONS — namespaced `todo-*` (module contract §5). Every mutating
-        action reads the item's CURRENT revision itself and passes that as
-        expected_revision, so an ordinary click always succeeds; only the
-        dedicated stale-write demo control deliberately passes an old one.
-        Every one of these changes RT.todos (durable domain state) and calls
-        ctx.renderApp() before toasting — the toast never stands alone.
-     ===================================================================== */
-  var ACTIONS = {
-    'todo-toggle-detail': function(ctx,btn){
-      ui.detailOpen=ui.detailOpen||{}; ui.detailOpen[btn.dataset.id]=!ui.detailOpen[btn.dataset.id]; ctx.renderApp();
-    },
-    'todo-show-item': function(ctx,btn){
-      var id=btn.dataset.id,list=itemsOf(currentThreadId(ctx)),it=list&&findItem(list,id); if(!it)return;
-      ui.detailOpen=ui.detailOpen||{}; ui.detailOpen[id]=true;
-      var parent=it.parent_todo_id; while(parent){delete ui.collapsed[parent];var p=findItem(list,parent);parent=p&&p.parent_todo_id;}
-      Object.assign(ctx.state.activity,{open:true,pinned:true,domain:'todo',scope:'focus'});ctx.state.hover=null;ctx.renderApp();
-      requestAnimationFrame(function(){var el=document.querySelector('[data-todo-id="'+CSS.escape(id)+'"]');if(el)el.scrollIntoView({block:'nearest'});});
-    },
-    'todo-toggle-parent': function(ctx,btn){
-      var id = btn && btn.dataset && btn.dataset.id; if(!id) return;
-      if(ui.collapsed[id]) delete ui.collapsed[id]; else ui.collapsed[id]=true;
-      ctx.renderApp();
-    },
-    'todo-toggle-receipts': function(ctx,btn){
-      var id = btn && btn.dataset && btn.dataset.id; if(!id) return;
-      if(ui.receiptsOpen[id]) delete ui.receiptsOpen[id]; else ui.receiptsOpen[id]=true;
-      ctx.renderApp();
-    },
-    'todo-toggle-refusals': function(ctx){ ui.refusalsOpen = !ui.refusalsOpen; ctx.renderApp(); },
-    'todo-admit': function(ctx,btn){
-      var tid=currentThreadId(ctx), id=btn.dataset.id, list=itemsOf(tid), item=list&&findItem(list,id);
-      if(!item) return;
-      var title=item.title, r=admit(tid,id,item.revision);
-      ctx.renderApp();
-      ctx.toast(r.ok?'Work admitted':'Not admitted', r.ok?('"'+title+'" moved to in progress.'):r.reason);
-    },
-    'todo-complete': function(ctx,btn){
-      var tid=currentThreadId(ctx), id=btn.dataset.id, list=itemsOf(tid), item=list&&findItem(list,id);
-      if(!item) return;
-      var title=item.title, r=complete(tid,id,item.revision);
-      ctx.renderApp();
-      ctx.toast(r.ok?'Outcome accepted':'Not completed', r.ok?('"'+title+'" is complete. Its receipts show the accepted evidence.'):r.reason);
-    },
-    'todo-unblock': function(ctx,btn){
-      var tid=currentThreadId(ctx), id=btn.dataset.id, list=itemsOf(tid), item=list&&findItem(list,id);
-      if(!item) return;
-      var title=item.title, r=unblock(tid,id,item.revision);
-      ctx.renderApp();
-      ctx.toast(r.ok?'Unblocked':'Not unblocked', r.ok?('"'+title+'" returned to pending.'):r.reason);
-    },
-    'todo-skip': function(ctx,btn){
-      var tid=currentThreadId(ctx), id=btn.dataset.id, list=itemsOf(tid), item=list&&findItem(list,id);
-      if(!item) return;
-      var title=item.title, r=skip(tid,id,item.revision);
-      ctx.renderApp();
-      ctx.toast(r.ok?'Marked skipped':'Not skipped', r.ok?('"'+title+'" is skipped and stays inline.'):r.reason);
-    },
-    'todo-reopen': function(ctx,btn){
-      var tid=currentThreadId(ctx), id=btn.dataset.id, list=itemsOf(tid), item=list&&findItem(list,id);
-      if(!item) return;
-      var title=item.title, r=reopen(tid,id,item.revision);
-      ctx.renderApp();
-      ctx.toast(r.ok?'Reopened':'Not reopened', r.ok?('"'+title+'" is pending again; its prior receipts are unchanged.'):r.reason);
-    },
-    'todo-attempt-bulk-complete': function(ctx){
-      var r = attemptBulkComplete(currentThreadId(ctx),'user_bulk_gesture');
-      ui.refusalsOpen = true;
-      ctx.renderApp();
-      ctx.toast('Bulk completion refused', r.reason);
-    },
-    'todo-attempt-provider-proposal': function(ctx){
-      var r = attemptProviderProposal(currentThreadId(ctx));
-      ui.refusalsOpen = true;
-      ctx.renderApp();
-      ctx.toast('Proposal reconciled, not applied', r.reason);
-    },
-    'todo-attempt-stale-write': function(ctx,btn){
-      var r = attemptStaleWrite(currentThreadId(ctx), btn.dataset.id);
-      ui.refusalsOpen = true;
-      ctx.renderApp();
-      ctx.toast('Rejected: stale revision', r.reason);
+  function rowScope(tid,item){return ' data-thread="'+esc(tid)+'" data-id="'+esc(item.todo_id)+'" data-revision="'+item.revision+'" data-list-revision="'+(threadStore(tid).revision||1)+'"';}
+  function rowActions(ctx,list,item){
+    if(!isLeaf(list,item))return '';
+    const tid=item.thread_id,attrs=rowScope(tid,item),owner=workOwner(item),bindings=itemBindings(tid,item.todo_id);
+    let html='';
+    if(['pending','in_progress'].includes(item.status)){
+      const availability=owner?.availability?.(item.workflow_ref,item),can=!!owner?.execute&&runnable(list,item)&&availability?.ok!==false,reason=!owner?.execute?'No executable owner is attached to this historical or proposed item.':!runnable(list,item)?'Waiting for the named dependencies.':availability?.reason||'';
+      html+='<button class="text-button" data-action="'+(item.status==='pending'?'todo-admit':'todo-complete')+'"'+attrs+(can?'':' disabled title="'+esc(reason)+'"')+'>'+(item.status==='pending'?'Start work':'Run work')+'</button>';
     }
+    if(bindings.length)html+='<button class="text-button" data-action="todo-open-work"'+attrs+' data-binding="'+esc(bindings.at(-1).binding_id)+'">Open work</button>';
+    return html;
+  }
+  function virtualRows(ctx,tid,rows,top,height){
+    const list=itemsOf(tid),start=Math.max(0,Math.floor(top/ROW_HEIGHT)-3),end=Math.min(rows.length,Math.ceil((top+height)/ROW_HEIGHT)+3);
+    return rows.slice(start,end).map((row,n)=>{
+      const t=row.item,kids=childrenOf(list,t.todo_id),view=treeView(tid),selected=view.selected===t.todo_id,scope=rowScope(tid,t),collapsed=!!(view.query.trim()?view.searchCollapsed[t.todo_id]:ui.collapsed[t.todo_id]);
+      const wait=t.owner_wait||workOwner(t)?.waitState?.(t.workflow_ref,t),next=kids.length?childSummary(list,t):wait?.reason||wait?.kind||t.blocked_reason_ref||(t.status==='pending'&&!runnable(list,t)?'Waiting for dependencies':STATUS_LABEL[t.status]);
+      return '<div class="todo-node todo-virtual-row" data-todo-id="'+esc(t.todo_id)+'" data-status="'+esc(t.status)+'" data-k="todo-node:'+esc(t.todo_id)+'" style="top:'+((start+n)*ROW_HEIGHT)+'px;--todo-indent:'+Math.min(row.depth*12,48)+'px" role="treeitem" aria-level="'+(row.depth+1)+'"'+(kids.length?' aria-expanded="'+!collapsed+'"':'')+' aria-selected="'+selected+'">'+
+        '<div class="todo-row">'+(kids.length?'<button class="todo-caret'+(collapsed?' is-collapsed':'')+'" data-action="todo-toggle-parent"'+scope+' aria-label="'+(collapsed?'Expand ':'Collapse ')+esc(t.title)+'" aria-expanded="'+!collapsed+'">'+ctx.icon('chevron',11)+'</button>':'<span class="todo-caret-spacer"></span>')+
+        '<span class="todo-glyph todo-glyph-'+esc(t.status)+'" title="'+esc(STATUS_LABEL[t.status])+'">'+glyph(t.status)+'</span><button class="todo-copy todo-title-button" data-action="todo-toggle-detail"'+scope+' aria-expanded="'+selected+'" title="'+esc(t.title)+'"><span class="todo-title'+(t.status==='completed'?' is-struck':'')+'">'+esc(t.title)+'</span><small>'+esc(next)+'</small></button></div><div class="todo-row-actions">'+(t.explicit_assignment_label?'<small>'+esc(t.explicit_assignment_label)+'</small>':'')+rowActions(ctx,list,t)+'</div></div>';
+    }).join('');
+  }
+  function selectedDetail(ctx,tid){
+    const view=treeView(tid),list=itemsOf(tid),item=findItem(list,view.selected);if(!item)return '';
+    return '<section class="todo-selected-detail todo-detail" data-k="todo-detail:'+esc(item.todo_id)+'"><header><strong>'+esc(item.title)+'</strong><button class="text-button" data-action="todo-toggle-detail"'+rowScope(tid,item)+'>Close details</button></header><p>'+esc(item.expected_outcome||childSummary(list,item))+'</p>'+depChip(list,item)+(item.source_room_run_id&&item.source_room_message_id?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(item.source_room_run_id)+'" data-message="'+esc(item.source_room_message_id)+'">Open source message</button>':'')+(item.source_review_run_id&&item.source_finding_id?'<button class="text-button" data-action="review-open-report" data-run="'+esc(item.source_review_run_id)+'" data-finding="'+esc(item.source_finding_id)+'">Open source finding</button>':'')+
+      '<details data-k="todo-technical:'+esc(item.todo_id)+'"><summary>Dependencies, attempts and receipts</summary><pre>'+esc(JSON.stringify({todo_id:item.todo_id,list_revision:threadStore(tid).revision||1,item_revision:item.revision,dependencies:item.depends_on,bindings:itemBindings(tid,item.todo_id),transitions:item.transitions},null,2))+'</pre></details>'+ 
+      (view.work?.todo_id===item.todo_id?'<div class="todo-opened-work" data-k="todo-opened-work"><strong>Exact work · '+esc(view.work.attempt_id)+'</strong><p>'+esc(view.work.work_id)+'</p><pre>'+esc(JSON.stringify(view.work.detail,null,2))+'</pre></div>':'')+'</section>';
+  }
+  function renderPanel(ctx){
+    if(panelDomain(ctx)!=='todo')return '';
+    const tid=currentThreadId(ctx),list=itemsOf(tid);if(!list)return '<div class="todo-panel todo-panel-empty"><p>No To-Do list exists for this thread yet.</p></div>';
+    const view=treeView(tid),rows=visibleTree(tid),s=summary(tid),height=Math.min(440,Math.max(88,rows.length*ROW_HEIGHT));view.top=Math.max(0,Math.min(view.top,rows.length*ROW_HEIGHT-height));
+    return '<div class="todo-panel" data-k="todo-panel:'+esc(tid)+'"><div class="todo-panel-summary"><strong>'+s.completed+' of '+s.total+' complete</strong><span>'+s.active+' active'+(s.blocked?' · '+s.blocked+' blocked':'')+'</span></div><label class="todo-search"><span>Search this hierarchy</span><input type="search" data-todo-search="'+esc(tid)+'" value="'+esc(view.query)+'" placeholder="Title or exact item ID" aria-label="Search this hierarchy"></label><div class="todo-tree-navigation"><small>'+rows.length+' visible of '+list.length+' items</small><button class="text-button" data-action="todo-reveal-last" data-thread="'+esc(tid)+'">Last item</button><button class="text-button" data-action="todo-expand-all" data-thread="'+esc(tid)+'">Expand all</button></div><div class="todo-viewport" data-todo-viewport="'+esc(tid)+'" data-k="todo-viewport:'+esc(tid)+'" role="tree" aria-label="Current thread To-Dos" tabindex="0" style="height:'+height+'px"><div class="todo-tree todo-virtual-space" style="height:'+(rows.length*ROW_HEIGHT)+'px">'+virtualRows(ctx,tid,rows,view.top,height)+'</div></div>'+(!rows.length?'<p>No matching items.</p>':'')+selectedDetail(ctx,tid)+'<div class="todo-refusals-wrap">'+renderRefusals(tid)+'</div></div>';
+  }
+  function revealItem(ctx,tid,id){
+    if(tid!==currentThreadId(ctx))return;
+    const list=itemsOf(tid),ix=graphIndex(list),item=ix.byId.get(id);if(!item)return;
+    const view=treeView(tid);view.query='';view.selected=id;
+    let parent=item.parent_todo_id;while(parent){delete ui.collapsed[parent];parent=ix.byId.get(parent)?.parent_todo_id;}
+    const rows=visibleTree(tid),i=rows.findIndex(r=>r.item.todo_id===id);view.top=Math.max(0,i*ROW_HEIGHT-ROW_HEIGHT);
+    Object.assign(ctx.state.activity,{open:true,pinned:true,domain:'todo',scope:'focus'});ctx.state.hover=null;ctx.renderApp();
+    requestAnimationFrame(()=>{const vp=document.querySelector('[data-todo-viewport="'+CSS.escape(tid)+'"]');if(vp)vp.scrollTop=view.top;});
+  }
+  function scopeAction(ctx,btn){
+    const tid=btn.dataset.thread||currentThreadId(ctx),id=btn.dataset.id,item=findItem(itemsOf(tid),id);
+    if(tid!==currentThreadId(ctx)||!item)return {ok:false,error:'wrong_todo_scope'};
+    if(Number(btn.dataset.revision)!==item.revision||Number(btn.dataset.listRevision)!==(threadStore(tid).revision||1))return {ok:false,error:'stale_todo_control'};
+    return {ok:true,tid,id,item};
+  }
+  function executeRow(ctx,btn){
+    const s=scopeAction(ctx,btn),out=s.ok?workAction(s.tid,s.id,s.item.revision):s;
+    ctx.renderApp();if(!out?.ok)ctx.toast('Work not changed',out?.error||out?.reason||'Owner unavailable');
+  }
+  var ACTIONS={
+    'todo-toggle-detail':(ctx,b)=>{const s=scopeAction(ctx,b);if(!s.ok)return;const v=treeView(s.tid);v.selected=v.selected===s.id?null:s.id;ctx.renderApp();},
+    'todo-show-item':(ctx,b)=>revealItem(ctx,b.dataset.thread||currentThreadId(ctx),b.dataset.id),
+    'todo-toggle-parent':(ctx,b)=>{const s=scopeAction(ctx,b);if(!s.ok)return;const v=treeView(s.tid),collapsed=v.query.trim()?v.searchCollapsed:ui.collapsed;collapsed[s.id]=!collapsed[s.id];v.top=0;ctx.renderApp();},
+    'todo-open-work':(ctx,b)=>{const s=scopeAction(ctx,b);if(!s.ok){ctx.toast('Work not opened',s.error);return;}const out=openWork(s.tid,s.id,b.dataset.binding);if(out.ok){const v=treeView(s.tid);v.selected=s.id;v.work=out;ctx.renderApp();}else ctx.toast('Work unavailable',out.error);},
+    'todo-reveal-last':(ctx,b)=>{const tid=b.dataset.thread,list=itemsOf(tid);if(list?.length)revealItem(ctx,tid,docOrder(list).at(-1).todo_id);},
+    'todo-expand-all':(ctx,b)=>{if(b.dataset.thread!==currentThreadId(ctx))return;for(const t of itemsOf(b.dataset.thread)||[])delete ui.collapsed[t.todo_id];treeView(b.dataset.thread).top=0;treeView(b.dataset.thread).searchCollapsed={};ctx.renderApp();},
+    'todo-toggle-receipts':(ctx,b)=>{ui.receiptsOpen[b.dataset.id]=!ui.receiptsOpen[b.dataset.id];ctx.renderApp();},
+    'todo-toggle-refusals':ctx=>{ui.refusalsOpen=!ui.refusalsOpen;ctx.renderApp();},
+    'todo-admit':executeRow,'todo-complete':executeRow,
+    'todo-attempt-bulk-complete':ctx=>{const out=attemptBulkComplete(currentThreadId(ctx),'user_bulk_gesture');ui.refusalsOpen=true;ctx.renderApp();ctx.toast('Bulk completion refused',out.reason);},
+    'todo-attempt-provider-proposal':ctx=>{const out=attemptProviderProposal(currentThreadId(ctx));ui.refusalsOpen=true;ctx.renderApp();ctx.toast('Proposal refused',out.reason);},
+    'todo-attempt-stale-write':(ctx,b)=>{const out=attemptStaleWrite(currentThreadId(ctx),b.dataset.id);ui.refusalsOpen=true;ctx.renderApp();ctx.toast('Stale write refused',out.reason);}
   };
-  Object.keys(ACTIONS).forEach(function(name){
-    EXT.action(name, function(ctx,btn,ev){ ACTIONS[name](ctx,btn,ev); return true; });
-  });
+  Object.entries(ACTIONS).forEach(([name,fn])=>EXT.action(name,(ctx,b,e)=>{fn(ctx,b,e);return true;}));
+  if(typeof document!=='undefined'){
+    document.addEventListener('input',e=>{const tid=e.target.dataset?.todoSearch;if(!tid)return;const ctx=activeCtx();if(currentThreadId(ctx)!==tid)return;const v=treeView(tid),pos=e.target.selectionStart;v.query=e.target.value;v.searchCollapsed={};v.top=0;ctx.renderApp();const field=document.querySelector('[data-todo-search="'+CSS.escape(tid)+'"]');field?.focus();try{field?.setSelectionRange(pos,pos);}catch(_){};});
+    document.addEventListener('scroll',e=>{const vp=e.target,tid=vp.dataset?.todoViewport;if(!tid)return;const view=treeView(tid);view.top=vp.scrollTop;const space=vp.querySelector('.todo-virtual-space');if(space)space.innerHTML=virtualRows(activeCtx(),tid,visibleTree(tid),view.top,vp.clientHeight);},true);
+    let restorePending=false;
+    new MutationObserver(()=>{if(restorePending)return;restorePending=true;requestAnimationFrame(()=>{restorePending=false;for(const vp of document.querySelectorAll('[data-todo-viewport]')){const v=treeView(vp.dataset.todoViewport);if(Math.abs(vp.scrollTop-v.top)>1)vp.scrollTop=v.top;}});}).observe(document,{childList:true,subtree:true});
+  }
 
   /* =====================================================================
      8. ACTIVITY SLOTS
@@ -32200,256 +32047,372 @@ window.PM56_EXT = window.PM56_EXT || {
      before anything is written, and a rejected candidate leaves the current
      list byte-identical -- there is no partial commit and no silent repair.
      ===================================================================== */
+  /* Validate the complete candidate without changing it or the live list.
+     Iterative traversal avoids both prototype-key collisions and recursion
+     limits for large hierarchies. Presentation order has no role here. */
   function validateGraph(threadId, candidate){
-    var res={ schema:'pm.todo.graph_validation_result.v1',
-              thread_id:threadId, candidate_revision:(candidate&&candidate.revision)||null,
-              valid:true, self_parent_ids:[], parent_cycles:[], dependency_cycles:[],
-              unknown_refs:[], cross_thread_refs:[], duplicate_ids:[], invalid_statuses:[] };
-    var items=(candidate&&candidate.items)||[], byId={}, i, j;
-    for(i=0;i<items.length;i++){
-      var it=items[i];
-      if(byId[it.todo_id]) res.duplicate_ids.push(it.todo_id);
-      byId[it.todo_id]=it;
+    const res={schema:'pm.todo.graph_validation_result.v1',thread_id:threadId,
+      candidate_revision:candidate?.revision??null,valid:false,self_parent_ids:[],
+      parent_cycles:[],dependency_cycles:[],unknown_refs:[],cross_thread_refs:[],
+      duplicate_ids:[],invalid_statuses:[],invalid_fields:[],parent_work_refs:[]};
+    const fail=(id,field)=>res.invalid_fields.push({todo_id:id??null,field});
+    if(typeof threadId!=='string'||!threadId||!candidate||!Array.isArray(candidate.items)){
+      fail(null,'candidate');res.error='invalid_graph';return res;
     }
-    function cycle(startId, next){
-      var seen={}, cur=startId, path=[];
-      while(cur){
-        if(seen[cur]) return path.concat(cur);
-        seen[cur]=1; path.push(cur);
-        cur=next(byId[cur]);
-        if(cur && !byId[cur]) return null;
-      }
-      return null;
+    const items=candidate.items,byId=new Map(),parents=new Map();
+    const validId=id=>typeof id==='string'&&id.length>0;
+    for(const t of items){
+      if(!t||typeof t!=='object'||Array.isArray(t)){fail(null,'item');continue;}
+      if(!validId(t.todo_id)){fail(t.todo_id,'todo_id');continue;}
+      if(byId.has(t.todo_id))res.duplicate_ids.push(t.todo_id);
+      else byId.set(t.todo_id,t);
+      if(t.thread_id!==threadId)res.cross_thread_refs.push(t.todo_id);
+      if(candidate.project_id!=null&&t.project_id!==candidate.project_id)res.cross_thread_refs.push(t.todo_id);
+      if(t.status!=null&&!TODO_STATUSES.includes(t.status))res.invalid_statuses.push({todo_id:t.todo_id,status:t.status});
+      for(const field of ['verification_state','source_group_label','done_category'])
+        if(Object.prototype.hasOwnProperty.call(t,field))fail(t.todo_id,field);
+      if(t.depends_on!=null&&!Array.isArray(t.depends_on))fail(t.todo_id,'depends_on');
+      if(t.active_work_ids!=null&&!Array.isArray(t.active_work_ids))fail(t.todo_id,'active_work_ids');
+      if(t.parent_todo_id!=null&&!validId(t.parent_todo_id))fail(t.todo_id,'parent_todo_id');
+      if(t.parent_todo_id===t.todo_id)res.self_parent_ids.push(t.todo_id);
+      if(t.parent_todo_id!=null)parents.set(t.parent_todo_id,true);
     }
-    for(i=0;i<items.length;i++){
-      var t=items[i];
-      if(t.thread_id && t.thread_id!==threadId) res.cross_thread_refs.push(t.todo_id);
-      /* TDG-014 / TODO-010 / PROVIDER-007. The status vocabulary is closed
-         HERE too, not only on the transition path. Whole-list replacement is
-         exactly how a provider snapshot arrives, so leaving it unvalidated let
-         a model write any word it liked -- `verifying` included -- straight
-         into canonical items while `applyTransition` refused the same word. */
-      if(t.status!=null && TODO_STATUSES.indexOf(t.status)<0)
-        res.invalid_statuses.push({ todo_id:t.todo_id, status:t.status });
-      if(t.parent_todo_id===t.todo_id) res.self_parent_ids.push(t.todo_id);
-      if(t.parent_todo_id && !byId[t.parent_todo_id]) res.unknown_refs.push(t.parent_todo_id);
-      for(j=0;j<(t.depends_on||[]).length;j++){
-        var dep=t.depends_on[j];
-        if(dep===t.todo_id) res.dependency_cycles.push([t.todo_id]);
-        else if(!byId[dep]) res.unknown_refs.push(dep);
-      }
+    const foreign=new Set();
+    for(const [tid,store] of Object.entries(RT.todos?.byThread||{}))if(tid!==threadId)
+      for(const t of store.items||[])foreign.add(t.todo_id);
+    function reference(id,owner){
+      if(!validId(id)||!byId.has(id))res.unknown_refs.push(id??null);
+      if(foreign.has(id)&&!byId.has(id))res.cross_thread_refs.push(owner+':'+id);
     }
-    for(i=0;i<items.length;i++){
-      var pc=cycle(items[i].todo_id, function(x){ return x?x.parent_todo_id:null; });
-      if(pc && pc.length>1){ res.parent_cycles.push(pc); }
+    for(const [id,t] of byId){
+      if(t.parent_todo_id!=null)reference(t.parent_todo_id,id);
+      if(Array.isArray(t.depends_on))for(const dep of t.depends_on)reference(dep,id);
+      if(parents.has(id)&&((t.active_work_ids||[]).length||t.expected_outcome||
+         (Array.isArray(t.work_bindings)&&t.work_bindings.length)))res.parent_work_refs.push(id);
     }
-    /* Dependency cycles of any length, including ones that cross sibling
-       branches: a depth-first walk over depends_on edges only. */
-    var colour={};
-    function dfs(id, stack){
-      if(colour[id]===2) return null;
-      if(colour[id]===1) return stack.slice(stack.indexOf(id)).concat(id);
-      colour[id]=1; stack.push(id);
-      var node=byId[id], deps=(node&&node.depends_on)||[];
-      for(var q=0;q<deps.length;q++){
-        if(!byId[deps[q]]) continue;
-        var found=dfs(deps[q], stack);
-        if(found) return found;
-      }
-      stack.pop(); colour[id]=2; return null;
+    const bindings=Array.isArray(candidate.bindings)?candidate.bindings:[];
+    for(const binding of bindings){
+      if(!binding||typeof binding!=='object'){fail(null,'binding');continue;}
+      reference(binding.todo_id,binding.binding_id||'binding');
+      if(binding.thread_id!=null&&binding.thread_id!==threadId)res.cross_thread_refs.push(binding.binding_id||'binding');
+      if(candidate.project_id!=null&&binding.project_id!=null&&binding.project_id!==candidate.project_id)
+        res.cross_thread_refs.push(binding.binding_id||'binding');
+      if(parents.has(binding.todo_id))res.parent_work_refs.push(binding.todo_id);
     }
-    for(i=0;i<items.length;i++){
-      var dc=dfs(items[i].todo_id,[]);
-      if(dc) res.dependency_cycles.push(dc);
-    }
-    function uniq(a){ return a.filter(function(x,k){ return a.indexOf(x)===k; }); }
-    res.unknown_refs=uniq(res.unknown_refs);
-    res.cross_thread_refs=uniq(res.cross_thread_refs);
-    res.duplicate_ids=uniq(res.duplicate_ids);
-    res.valid = !(res.self_parent_ids.length || res.parent_cycles.length ||
-                  res.dependency_cycles.length || res.unknown_refs.length ||
-                  res.cross_thread_refs.length || res.duplicate_ids.length ||
-                  res.invalid_statuses.length);
-    if(!res.valid) res.error = res.invalid_statuses.length &&
-      !(res.self_parent_ids.length || res.parent_cycles.length || res.dependency_cycles.length ||
-        res.unknown_refs.length || res.cross_thread_refs.length || res.duplicate_ids.length)
-      ? 'invalid_status' : 'invalid_graph';
-    return res;
-  }
-
-  /* TDG-007..009. Replacement is one atomic owner operation. Before the new
-     list commits, EVERY active work reference is classified; nothing is
-     orphaned, and an in-progress item's identity is never deleted while its
-     work continues. */
-  function replaceThreadList(threadId, candidate, opts){
-    opts=opts||{};
-    var store=threadStore(threadId);
-    var check=validateGraph(threadId, candidate);
-    if(!check.valid) return { ok:false, error:'invalid_graph', validation:check };
-    var oldItems=(store&&store.items)||[], newItems=candidate.items||[];
-    var newById={}, i;
-    for(i=0;i<newItems.length;i++) newById[newItems[i].todo_id]=newItems[i];
-    var disp={ schema:'pm.todo.list_replacement_disposition.v1',
-               thread_id:threadId, old_revision:(store&&store.revision)||1,
-               new_revision:((store&&store.revision)||1)+1,
-               retained:[], rebound:[], canceled:[], refused:[], active_work_refs:[] };
-    for(i=0;i<oldItems.length;i++){
-      var o=oldItems[i], active=(o.active_work_ids||[]).length>0 ||
-                                o.status==='in_progress';
-      if(active) disp.active_work_refs=disp.active_work_refs.concat(o.active_work_ids||[]);
-      if(newById[o.todo_id]){
-        /* Same identity survives: the work binding is preserved exactly. */
-        newById[o.todo_id].active_work_ids=(o.active_work_ids||[]).slice();
-        newById[o.todo_id].revision=(o.revision||1)+1;
-        disp.retained.push(o.todo_id);
-      } else if(active){
-        var target=opts.rebind && opts.rebind[o.todo_id];
-        if(target && newById[target]){
-          newById[target].active_work_ids=(newById[target].active_work_ids||[]).concat(o.active_work_ids||[]);
-          disp.rebound.push({ from:o.todo_id, to:target, work:(o.active_work_ids||[]).slice() });
-        } else if(opts.cancelActive){
-          disp.canceled.push({ todo_id:o.todo_id, work:(o.active_work_ids||[]).slice(),
-                               receipt:'cancel:'+o.todo_id });
-        } else {
-          disp.refused.push({ todo_id:o.todo_id, reason:'active work has no rebind target and cancelActive was not requested' });
+    function cycles(edges,out){
+      const colour=new Map();
+      for(const start of byId.keys()){
+        if(colour.has(start))continue;
+        const stack=[{id:start,edges:edges(byId.get(start)),at:0}],positions=new Map([[start,0]]);
+        colour.set(start,1);
+        while(stack.length){
+          const top=stack[stack.length-1];
+          if(top.at===top.edges.length){colour.set(top.id,2);positions.delete(top.id);stack.pop();continue;}
+          const next=top.edges[top.at++];if(!byId.has(next))continue;
+          if(colour.get(next)===1){out.push(stack.slice(positions.get(next)).map(x=>x.id).concat(next));continue;}
+          if(colour.get(next)===2)continue;
+          colour.set(next,1);positions.set(next,stack.length);
+          stack.push({id:next,edges:edges(byId.get(next)),at:0});
         }
       }
     }
-    if(disp.refused.length) return { ok:false, error:'active_work_unresolved', disposition:disp };
-    if(!store){ RT.todos.byThread[threadId]={ items:[], refusals:[] }; store=threadStore(threadId); }
-    store.items=newItems; store.revision=disp.new_revision;
-    return { ok:true, disposition:disp, validation:check };
+    cycles(t=>t.parent_todo_id==null?[]:[t.parent_todo_id],res.parent_cycles);
+    cycles(t=>Array.isArray(t.depends_on)?t.depends_on:[],res.dependency_cycles);
+    for(const key of ['unknown_refs','cross_thread_refs','duplicate_ids','parent_work_refs'])res[key]=Array.from(new Set(res[key]));
+    const graphBad=['self_parent_ids','parent_cycles','dependency_cycles','unknown_refs',
+      'cross_thread_refs','duplicate_ids','invalid_fields','parent_work_refs'].some(k=>res[k].length);
+    res.valid=!graphBad&&!res.invalid_statuses.length;
+    if(!res.valid)res.error=graphBad?'invalid_graph':'invalid_status';
+    return res;
   }
 
-  /* TDG-010. A late event needs list revision, item revision, work binding,
-     Plan version and run epoch to still be current. A stale one is RETAINED as
-     rejected evidence and never applied; timestamp order is not a gate. */
-  /* TDG-014. The CLOSED status vocabulary. It is enforced here rather than
-     documented, because an unvalidated `to_status` let a caller write any word
-     it liked -- including `verifying`, the one status the correction retires by
-     name. A To-Do has five states; validation is an ordinary To-Do, never a
-     status. */
-  var TODO_STATUSES = ['pending','in_progress','completed','blocked','skipped'];
-
-  function applyTransition(threadId, ev){
-    var store=threadStore(threadId);
-    if(!store) return { ok:false, error:'unknown_thread' };
-    var item=findItem(store.items, ev.todo_id);
-    if(!item) return { ok:false, error:'unknown_todo' };
-    if(TODO_STATUSES.indexOf(ev.to_status)<0)
-      return { ok:false, error:'invalid_status', allowed:TODO_STATUSES.slice(),
-               detail:'`'+String(ev.to_status)+'` is not a To-Do status. There is no verification status; validation is an ordinary To-Do.' };
-    var why=null;
-    if(ev.expected_list_revision!=null && ev.expected_list_revision!==(store.revision||1)) why='stale_list_revision';
-    else if(ev.expected_revision!=null && ev.expected_revision!==item.revision)            why='stale_item_revision';
-    else if(ev.work_binding && ev.to_status!=='in_progress' && (item.active_work_ids||[]).indexOf(ev.work_binding)<0)      why='stale_work_binding';
-    else if(ev.plan_version!=null && item.plan_version!=null && ev.plan_version!==item.plan_version) why='stale_plan_version';
-    else if(ev.run_epoch!=null && store.run_epoch!=null && ev.run_epoch!==store.run_epoch)  why='stale_run_epoch';
-    if(why){
-      store.rejected=(store.rejected||[]).concat([{ event:ev, reason:why, at:new Date().toISOString() }]);
-      return { ok:false, error:why, retained_as_evidence:true };
+  /* Batch 16 ToDoController runtime. Records below are session-local concept
+     records, not centrally admitted EventRecords or durable native storage. */
+  var outcomeOwners=new Map();
+  var TODO_STATUSES=['pending','in_progress','completed','blocked','skipped'];
+  var TODO_CAUSES=['work_admitted','outcome_satisfied','dependency_changed','external_block','explicit_skip','retry','reopen','child_rollup'];
+  const copyTodo=x=>JSON.parse(JSON.stringify(x));
+  const sameTodo=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+  function workOwner(item){return outcomeOwners.get(item.outcome_owner)||null;}
+  function bindingsOf(threadId){return threadStore(threadId)?.bindings||[];}
+  function bindingTarget(store,b){return store.binding_targets?.[b.binding_id]?.todo_id||b.todo_id;}
+  function itemBindings(threadId,id){const s=threadStore(threadId);return s?(s.bindings||[]).filter(b=>bindingTarget(s,b)===id):[];}
+  function liveBinding(b){return ['admitted','running','recovery_required'].includes(b.state);}
+  function executionFence(item){
+    const owner=workOwner(item);let fence;
+    try{fence=owner?.fence?.(item.workflow_ref,item);}catch(e){return {error:'work_owner_unavailable'};}
+    return fence||{run_id:item.run_id??null,run_epoch:item.run_epoch??null};
+  }
+  function captureTodo(threadId,todoId){
+    const s=threadStore(threadId),item=s&&findItem(s.items,todoId);if(!item)return null;
+    const fence=executionFence(item);
+    return {project_id:item.project_id||PROJECT_ID,thread_id:threadId,todo_id:todoId,
+      expected_list_revision:s.revision||1,expected_revision:item.revision,
+      plan_id:item.plan_id??null,plan_version:item.plan_version??null,plan_hash:item.plan_hash??null,
+      run_id:item.run_id??null,run_epoch:fence.run_epoch??null,
+      ...(fence.user_stop_epoch!=null?{user_stop_epoch:fence.user_stop_epoch}:{}),
+      ...(fence.error?{fence_error:fence.error}:{})};
+  }
+  function rejectedTodo(store,ev,error){
+    // Rejected evidence is outside the item graph. It participates in any
+    // surrounding command transaction, so failed admission leaves no residue.
+    window.PM56_TX.set(store,'rejected',(store.rejected||[]).concat({event:copyTodo(ev),reason:error,at:nowIso()}));
+    return {ok:false,error,retained_as_evidence:true};
+  }
+  function currentTodoError(threadId,item,ev){
+    const s=threadStore(threadId),snap=captureTodo(threadId,item.todo_id);
+    if(!ev||ev.thread_id!==threadId||ev.project_id!==snap.project_id)return 'wrong_todo_scope';
+    if(ev.expected_list_revision!==(s.revision||1))return 'stale_list_revision';
+    if(ev.expected_revision!==item.revision)return 'stale_item_revision';
+    if(ev.plan_id!==snap.plan_id||ev.plan_version!==snap.plan_version||ev.plan_hash!==snap.plan_hash)return 'stale_plan_binding';
+    if(ev.run_id!==snap.run_id||ev.run_epoch!==snap.run_epoch||ev.user_stop_epoch!==snap.user_stop_epoch||snap.fence_error)return 'stale_run_binding';
+    return null;
+  }
+  function transitionRecord(item,ev,at){
+    const tr=TR(item.todo_id,item.status,ev.to_status,ev.cause_kind,ev.cause_ref,item.revision,at,ev.note||'');
+    tr.transition_id=ev.transition_id||('transition:'+item.todo_id+':'+item.revision+':'+ev.cause_kind);
+    tr.expected_revision=item.revision;tr.committed_revision=item.revision+1;
+    tr.request_fingerprint=JSON.stringify(ev);return tr;
+  }
+  function derivedStatus(children){
+    if(children.some(t=>t.status==='in_progress'))return 'in_progress';
+    if(children.every(t=>t.status==='skipped'))return 'skipped';
+    if(children.every(t=>t.status==='completed'||t.status==='skipped'))return 'completed';
+    if(children.some(t=>t.status==='blocked'))return 'blocked';return 'pending';
+  }
+  function refreshRollups(store,at){
+    const TX=window.PM56_TX,ix=graphIndex(store.items),order=docOrder(store.items);
+    for(let i=order.length-1;i>=0;i--){
+      const item=order[i],children=ix.children.get(item.todo_id);if(!children?.length)continue;
+      const next=derivedStatus(children);if(next===item.status)continue;
+      const cause='rollup:'+item.todo_id+':'+(store.revision||1)+':'+children.map(t=>t.todo_id+'@'+t.revision).join(',');
+      const ev={to_status:next,cause_kind:'child_rollup',cause_ref:cause,note:'Derived from current child membership.'};
+      const tr=transitionRecord(item,ev,at);
+      TX.set(item,'transitions',(item.transitions||[]).concat(tr));TX.set(item,'status',next);TX.set(item,'revision',tr.committed_revision);
+      TX.set(item,'blocked_reason_ref',next==='blocked'?children.find(t=>t.status==='blocked').blocked_reason_ref:null);
+      if(next==='completed')TX.set(item,'completed_at',at);
     }
-    if(item.strict_outcome_contract){
-      if(!isLeaf(store.items,item))return {ok:false,error:'parent_not_executable'};
-      if(ev.run_id!==item.run_id||ev.run_epoch!==item.run_epoch)return {ok:false,error:'stale_run_binding'};
-      if(ev.to_status==='in_progress'){
-        if(item.status!=='pending'||!runnable(store.items,item)||!ev.work_binding)return {ok:false,error:'work_not_admissible'};
-      }else if(ev.to_status==='completed'){
-        const validator=outcomeOwners.get(item.outcome_owner);
-        if(item.status!=='in_progress'||ev.cause_kind!=='outcome_satisfied'||!ev.work_binding||!validator?.(item.workflow_ref,item,ev.cause_ref)?.ok)return {ok:false,error:'outcome_not_verified'};
-      }else if(ev.to_status==='skipped'){
-        if(!ev.skip_disposition?.user_approved||!ev.skip_disposition.reason?.trim())return {ok:false,error:'skip_not_accepted'};
+  }
+  function refreshBindingTargets(store){
+    const targets={...(store.binding_targets||{})},ix=graphIndex(store.items);
+    for(const b of store.bindings||[]){const id=bindingTarget(store,b),item=ix.byId.get(id);if(item)targets[b.binding_id]={todo_id:id,list_revision:store.revision||1,item_revision:item.revision};}
+    window.PM56_TX.set(store,'binding_targets',targets);
+  }
+  function applyTransition(threadId,ev){
+    const store=threadStore(threadId);if(!store)return {ok:false,error:'unknown_thread'};
+    const item=findItem(store.items,ev?.todo_id);if(!item)return rejectedTodo(store,ev||{},'unknown_todo');
+    const replayId=ev.transition_id||('transition:'+item.todo_id+':'+ev.expected_revision+':'+ev.cause_kind);
+    const prior=(item.transitions||[]).find(t=>t.transition_id===replayId);if(prior)return prior.request_fingerprint===JSON.stringify(ev)?{ok:true,replayed:true,transition:prior,item}:{ok:false,error:'conflicting_transition_replay'};
+    const currentError=currentTodoError(threadId,item,ev);if(currentError)return rejectedTodo(store,ev,currentError);
+    if(!TODO_STATUSES.includes(ev.to_status))return {ok:false,error:'invalid_status'};
+    if(!TODO_CAUSES.includes(ev.cause_kind)||typeof ev.cause_ref!=='string'||!ev.cause_ref.trim())return {ok:false,error:'unsupported_transition_cause'};
+    if(!isLeaf(store.items,item))return {ok:false,error:'parent_not_executable'};
+    const owner=workOwner(item),existing=itemBindings(threadId,item.todo_id),active=existing.filter(liveBinding);
+    let binding=ev.work_binding?existing.find(b=>b.binding_id===ev.work_binding):null,newBinding=null;
+    if(ev.to_status==='in_progress'&&item.status==='pending'){
+      if(ev.cause_kind!=='work_admitted'||!runnable(store.items,item))return {ok:false,error:'work_not_admissible'};
+      const b=ev.binding;
+      if(!b||!b.binding_id||b.binding_id!==ev.work_binding||b.todo_id!==item.todo_id||
+        !b.work_id||!b.attempt_id||!['primary_segment','subagent_assignment','crew_assignment','tool_batch','research','validation','artifact_generation'].includes(b.work_kind)||
+        !item.expected_outcome||b.expected_outcome!==item.expected_outcome||b.terminal_result_ref!=null||active.length)return {ok:false,error:'work_binding_required'};
+      for(const [tid,s] of Object.entries(RT.todos.byThread))if((s.bindings||[]).some(x=>x.binding_id===b.binding_id||x.work_id===b.work_id&&x.attempt_id===b.attempt_id))return {ok:false,error:'work_binding_already_admitted'};
+      const admitted=owner?.admit?.(item.workflow_ref,item,b,ev.cause_ref);
+      if(!admitted?.ok)return {ok:false,error:admitted?.error||'work_owner_required'};
+      newBinding={schema:'pm.chat.todo_work_binding.v1',binding_id:b.binding_id,todo_id:b.todo_id,
+        work_kind:b.work_kind,work_id:b.work_id,attempt_id:b.attempt_id,expected_outcome:b.expected_outcome,
+        admitted_at:nowIso(),terminal_result_ref:null,state:'running',project_id:item.project_id||PROJECT_ID,
+        thread_id:threadId,run_id:item.run_id??null,admission_epoch:item.run_epoch??null,
+        plan_id:item.plan_id??null,plan_version:item.plan_version??null,plan_hash:item.plan_hash??null,
+        admission_ref:ev.cause_ref};
+    }else if(ev.to_status==='completed'){
+      if(item.status!=='in_progress'||ev.cause_kind!=='outcome_satisfied'||!binding||!liveBinding(binding))return {ok:false,error:'outcome_evidence_required'};
+      let proof;try{proof=owner?.outcome?.(item.workflow_ref,item,ev.cause_ref,binding);}catch(e){proof={ok:false,error:e.message};}
+      if(!proof?.ok)return {ok:false,error:proof?.error||'outcome_not_verified'};
+    }else if(ev.to_status==='blocked'){
+      if(['completed','skipped'].includes(item.status)||ev.cause_kind!=='external_block'||!ev.blocked_reason_ref||!owner?.condition?.(item.workflow_ref,item,ev.blocked_reason_ref,'blocked')?.ok)return {ok:false,error:'external_block_evidence_required'};
+    }else if(ev.to_status==='skipped'){
+      if(['completed','skipped'].includes(item.status)||ev.cause_kind!=='explicit_skip'||!ev.skip_disposition?.user_approved||!ev.skip_disposition.reason?.trim())return {ok:false,error:'skip_not_accepted'};
+      if(active.some(b=>!owner?.cancel?.(item.workflow_ref,b,ev.skip_disposition.cancellation_ref)?.ok))return {ok:false,error:'safe_cancellation_required'};
+    }else if(ev.to_status==='pending'&&item.status==='blocked'){
+      if(ev.cause_kind!=='dependency_changed'||!owner?.condition?.(item.workflow_ref,item,item.blocked_reason_ref,'cleared')?.ok)return {ok:false,error:'block_not_cleared'};
+      if(active.length)return {ok:false,error:'active_work_requires_recovery'};
+    }else if(ev.to_status==='pending'&&['completed','skipped'].includes(item.status)){
+      if(ev.cause_kind!=='reopen'||!ev.user_approved)return {ok:false,error:'explicit_reopen_required'};
+    }else if(ev.to_status==='pending'&&item.status==='in_progress'){
+      if(ev.cause_kind!=='retry'||!binding||!owner?.retry?.(item.workflow_ref,binding,ev.cause_ref)?.ok)return {ok:false,error:'retry_evidence_required'};
+    }else return {ok:false,error:item.status===ev.to_status?'status_unchanged':'invalid_transition'};
+    return window.PM56_TX.run(()=>{
+      const TX=window.PM56_TX,at=nowIso(),tr=transitionRecord(item,ev,at);
+      if(newBinding){TX.set(store,'bindings',(store.bindings||[]).concat(newBinding));binding=newBinding;TX.set(item,'active_work_ids',[binding.work_id]);}
+      TX.set(item,'transitions',(item.transitions||[]).concat(tr));TX.set(item,'status',ev.to_status);TX.set(item,'revision',tr.committed_revision);
+      if(ev.to_status==='in_progress'&&!item.started_at)TX.set(item,'started_at',at);
+      if(ev.to_status==='completed'){
+        TX.set(item,'completed_at',at);TX.set(binding,'terminal_result_ref',ev.cause_ref);TX.set(binding,'state','succeeded');
+        TX.set(item,'active_work_ids',[]);
+      }
+      if(ev.to_status==='pending'){
+        TX.set(item,'completed_at',null);TX.set(item,'active_work_ids',[]);
+        if(ev.cause_kind==='retry'&&binding){TX.set(binding,'state','failed');TX.set(binding,'terminal_result_ref',ev.cause_ref);}
+      }
+      if(ev.to_status==='skipped'){
+        TX.set(item,'skip_disposition',copyTodo(ev.skip_disposition));TX.set(item,'active_work_ids',[]);
+        for(const b of active){TX.set(b,'state','cancelled');TX.set(b,'terminal_result_ref',ev.skip_disposition.cancellation_ref);}
+      }
+      TX.set(item,'blocked_reason_ref',ev.to_status==='blocked'?ev.blocked_reason_ref:null);
+      TX.set(store,'revision',(store.revision||1)+1);refreshRollups(store,at);refreshBindingTargets(store);
+      return {ok:true,item,transition:tr,binding:binding||null};
+    });
+  }
+  function applyTransitions(threadId,events){
+    if(!Array.isArray(events)||!events.length)return {ok:false,error:'invalid_request'};
+    const s=threadStore(threadId),base=s?.revision||1;
+    if(events.some(e=>e.expected_list_revision!==base)||new Set(events.map(e=>e.todo_id)).size!==events.length)return {ok:false,error:'stale_or_duplicate_batch'};
+    const out=window.PM56_TX.run(()=>{
+      const receipts=[];
+      for(const e of events){const r=window.PM56_TODOS.applyTransition(threadId,{...e,expected_list_revision:s.revision||1});if(!r.ok)return r;receipts.push(r.transition);}
+      return {ok:true,transitions:receipts};
+    });
+    if(!out.ok&&events.some(e=>e.to_status==='completed'))return {...out,detail:out.error,error:'bulk_completion_refused'};return out;
+  }
+  /* Binding targets are mutable associations, not new admitted identities.
+     Even a rebound binding keeps its original todo_id, work_id and attempt_id. */
+  function replaceThreadList(threadId,candidate,opts={}){
+    const store=threadStore(threadId),old=store?.items||[],revision=store?.revision||1;
+    if(opts.source==='provider'||opts.mode==='provider')return {ok:false,error:'provider_proposal_required'};
+    const initial=!old.length;
+    if(!initial&&(opts.mode!=='restructure'||opts.expected_revision!==revision))return {ok:false,error:'explicit_current_restructure_required'};
+    const check=validateGraph(threadId,candidate);if(!check.valid)return {ok:false,error:'invalid_graph',validation:check};
+    const items=copyTodo(candidate.items),byId=new Map(items.map(t=>[t.todo_id,t])),oldById=new Map(old.map(t=>[t.todo_id,t]));
+    const disp={schema:'pm.todo.list_replacement_disposition.v1',thread_id:threadId,old_revision:revision,new_revision:revision+1,retained:[],rebound:[],canceled:[],refused:[],active_work_refs:[]};
+    const targets={...(store?.binding_targets||{})},bindingUpdates=[],reboundIds=new Map();
+    for(const [from,to] of Object.entries(opts.rebind||{}))if(!oldById.has(from)||byId.has(from)||!byId.has(to))return {ok:false,error:'unknown_rebind_reference'};
+    for(const t of items){
+      const prev=oldById.get(t.todo_id);
+      if(!prev&&(t.status&&t.status!=='pending'||t.active_work_ids?.length||t.transitions?.length))return {ok:false,error:'new_items_must_be_pending'};
+      if(prev&&t.status!=null&&t.status!==prev.status)return {ok:false,error:'unsupported_status_assertion'};
+      // Structural proposals cannot replace owner runtime/evidence fields.
+      if(prev){
+        const structural={title:t.title??prev.title,parent_todo_id:t.parent_todo_id??null,depends_on:t.depends_on||[],display_order:t.display_order??prev.display_order,parallel_group_id:t.parallel_group_id??null};
+        if(t.expected_outcome!==undefined&&t.expected_outcome!==prev.expected_outcome&&itemBindings(threadId,prev.todo_id).length)return {ok:false,error:'bound_outcome_changed'};
+        Object.assign(t,copyTodo(prev),structural,{revision:(prev.revision||1)+1});
+        if(!itemBindings(threadId,prev.todo_id).length&&candidate.items.find(x=>x.todo_id===t.todo_id).expected_outcome!==undefined)t.expected_outcome=candidate.items.find(x=>x.todo_id===t.todo_id).expected_outcome;
+        disp.retained.push(t.todo_id);
+      }else Object.assign(t,itemFactory(threadId)({...t,status:'pending',revision:1,transitions:[],active_work_ids:[]}));
+    }
+    for(const b of store?.bindings||[]){
+      const oldId=bindingTarget(store,b),previous=oldById.get(oldId);
+      if(liveBinding(b))disp.active_work_refs.push({binding_id:b.binding_id,work_id:b.work_id,attempt_id:b.attempt_id,todo_id:oldId});
+      if(byId.has(oldId)){targets[b.binding_id]={todo_id:oldId,list_revision:revision+1,item_revision:byId.get(oldId).revision};continue;}
+      const targetId=opts.rebind?.[oldId],target=targetId&&byId.get(targetId);
+      if(target){
+        if(reboundIds.has(targetId)&&reboundIds.get(targetId)!==oldId||oldById.has(targetId)||!isLeaf(items,target)||target.expected_outcome!==b.expected_outcome){disp.refused.push({binding_id:b.binding_id,reason:'incompatible_rebind_target'});continue;}
+        reboundIds.set(targetId,oldId);
+        // Current record follows exact work lineage; the admission record is unchanged.
+        const structure={todo_id:target.todo_id,title:target.title,parent_todo_id:target.parent_todo_id,depends_on:target.depends_on,display_order:target.display_order,parallel_group_id:target.parallel_group_id};
+        Object.assign(target,copyTodo(previous),structure,{revision:(previous.revision||1)+1});
+        targets[b.binding_id]={todo_id:targetId,list_revision:revision+1,item_revision:target.revision};
+        disp.rebound.push({from:oldId,to:targetId,binding_id:b.binding_id,work_id:b.work_id,attempt_id:b.attempt_id});
+      }else if(liveBinding(b)){
+        const receipt=opts.cancellations?.[b.binding_id],owner=workOwner(previous);
+        if(receipt&&owner?.cancel?.(previous.workflow_ref,b,receipt)?.ok){bindingUpdates.push({binding:b,receipt});disp.canceled.push({binding_id:b.binding_id,todo_id:oldId,cancellation_ref:receipt});}
+        else disp.refused.push({binding_id:b.binding_id,todo_id:oldId,reason:'active_work_unresolved'});
       }
     }
-    const values={transitions:(item.transitions||[]).concat([TR(item.todo_id,item.status,ev.to_status,
-      ev.cause_kind||'work_admitted',ev.cause_ref||('event:'+item.todo_id),item.revision,
-      ev.at||new Date().toISOString(),ev.note||'')]),status:ev.to_status,revision:item.revision+1};
-    if(item.strict_outcome_contract&&ev.to_status==='in_progress')values.active_work_ids=[ev.work_binding];
-    if(ev.to_status==='skipped'&&ev.skip_disposition)values.skip_disposition=JSON.parse(JSON.stringify(ev.skip_disposition));
-    if(ev.to_status==='in_progress'&&!item.started_at)values.started_at=ev.at||new Date().toISOString();
-    if(ev.to_status==='completed')values.completed_at=ev.at||new Date().toISOString();
-    if(ev.to_status==='blocked')values.blocked_reason_ref=ev.blocked_reason_ref||ev.cause_ref||('blocker:'+item.todo_id);
-    else if(item.blocked_reason_ref)values.blocked_reason_ref=null;
-    for(const [k,v] of Object.entries(values))window.PM56_TX.set(item,k,v);
-    return { ok:true, item:item };
+    for(const o of old)if(isLeaf(old,o)&&o.status==='in_progress'&&!itemBindings(threadId,o.todo_id).length)disp.refused.push({todo_id:o.todo_id,reason:'unproven_legacy_work_binding'});
+    if(disp.refused.length)return {ok:false,error:'active_work_unresolved',disposition:disp};
+    const finalCheck=validateGraph(threadId,{...candidate,items});if(!finalCheck.valid)return {ok:false,error:'invalid_graph',validation:finalCheck};
+    return window.PM56_TX.run(()=>{
+      const TX=window.PM56_TX,s=store||{items:[],revision:1,refusals:[],bindings:[],binding_targets:{}};
+      if(!store)TX.set(RT.todos.byThread,threadId,s);
+      TX.set(s,'items',items);TX.set(s,'revision',revision+1);TX.set(s,'binding_targets',targets);
+      TX.set(s,'removed',(s.removed||[]).concat(old.filter(t=>!byId.has(t.todo_id)).map(t=>({item:copyTodo(t),removed_at:nowIso(),list_revision:revision+1}))));
+      for(const u of bindingUpdates){TX.set(u.binding,'state','cancelled');TX.set(u.binding,'terminal_result_ref',u.receipt);}
+      refreshRollups(s,nowIso());refreshBindingTargets(s);TX.set(s,'restructures',(s.restructures||[]).concat(disp));
+      return {ok:true,disposition:disp,validation:finalCheck};
+    });
   }
-
-  /* Build materialises the thread list from the Plan's steps when the thread
-     has none yet -- the same thing admitBuild's `todosCreated` receipt claims.
-     Without this the projector would have nothing to derive from and the
-     Building… gutter would be a local counter pretending to be a projection. */
-  var outcomeOwners=new Map();
-  function materializeForPlan(plan){
-    var threadId=plan.thread_id, store=threadStore(threadId), mk=itemFactory(threadId), existing=(store&&store.items)||[];
-    var mine=existing.filter(t=>t.plan_id===plan.plan_id);
-    if(mine.length){
-      var expected=(plan.steps||[]).map(st=>'tp-'+plan.plan_id+'-'+st.id);
-      if(mine.length!==expected.length||expected.some(id=>!mine.find(t=>t.todo_id===id))||mine.some(t=>t.plan_version!==plan.version))return {ok:false,error:'existing_todo_binding_conflict'};
-      return {ok:true,created:0,reused:true,ids:mine.map(t=>t.todo_id)};
+  function proposeTodos(threadId,proposal,expectedRevision){
+    const s=threadStore(threadId),old=s?.items||[];
+    if(expectedRevision!==(s?.revision||1)||!proposal||!Array.isArray(proposal.items))return {ok:false,error:'stale_or_invalid_proposal'};
+    const permitted=new Set(['todo_id','title','status','parent_todo_id','depends_on','parallel_group_id','display_order','expected_outcome']);
+    const byId=new Map(old.map(t=>[t.todo_id,copyTodo(t)])),seen=new Set(),omitted=[];
+    for(const patch of proposal.items){
+      if(!patch||!patch.todo_id||seen.has(patch.todo_id)||Object.keys(patch).some(k=>!permitted.has(k)))return {ok:false,error:'unsupported_provider_proposal'};
+      seen.add(patch.todo_id);const existing=byId.get(patch.todo_id);
+      if(patch.status!=null&&patch.status!==(existing?.status||'pending'))return {ok:false,error:'unsupported_status_assertion'};
+      byId.set(patch.todo_id,{...(existing||itemFactory(threadId)({todo_id:patch.todo_id,status:'pending'})),...copyTodo(patch)});
     }
-    var items=(plan.steps||[]).map((st,i)=>mk({todo_id:'tp-'+plan.plan_id+'-'+st.id,display_order:existing.length+i+1,
+    for(const t of old)if(!seen.has(t.todo_id))omitted.push(t.todo_id);
+    const result=replaceThreadList(threadId,{items:Array.from(byId.values())},{mode:'restructure',expected_revision:expectedRevision});
+    return {...result,omitted_retained:omitted,proposal_only:true};
+  }
+  function materializeForPlan(plan){
+    const threadId=plan.thread_id,store=threadStore(threadId),mk=itemFactory(threadId),existing=store?.items||[];
+    const mine=existing.filter(t=>t.plan_id===plan.plan_id&&t.plan_version===plan.version&&t.run_id===plan.run_id);
+    const expected=(plan.steps||[]).map(st=>'tp-'+plan.plan_id+'-'+st.id);
+    if(mine.length)return mine.length===expected.length&&expected.every(id=>mine.some(t=>t.todo_id===id&&t.plan_hash===plan.plan_hash))?{ok:true,created:0,reused:true,ids:expected}:{ok:false,error:'existing_todo_binding_conflict'};
+    if(existing.some(t=>expected.includes(t.todo_id)))return {ok:false,error:'existing_todo_binding_conflict'};
+    const parentIds=new Set((plan.steps||[]).map(st=>st.parent).filter(Boolean));
+    const items=(plan.steps||[]).map((st,i)=>mk({todo_id:expected[i],display_order:existing.length+i+1,
       project_id:plan.project_id||PROJECT_ID,parent_todo_id:st.parent?'tp-'+plan.plan_id+'-'+st.parent:null,
-      depends_on:(st.deps||[]).map(d=>'tp-'+plan.plan_id+'-'+d),plan_id:plan.plan_id,plan_version:plan.version,plan_step_ids:[st.id],
-      title:st.title,expected_outcome:st.outcome||null,status:'pending',revision:1,transitions:[],
-      ...(plan.strict?{strict_outcome_contract:true,outcome_owner:plan.workRef?.kind||null,workflow_ref:plan.workRef?.ref||null,run_id:plan.run_id,run_epoch:plan.run_epoch||1}:{} )}));
+      depends_on:(st.deps||[]).map(d=>'tp-'+plan.plan_id+'-'+d),parallel_group_id:st.parallel_group_id||null,
+      plan_id:plan.plan_id,plan_version:plan.version,plan_hash:plan.plan_hash,plan_step_ids:[st.id],planunit_ids:(plan.unit_mapping?.[st.id]||[]).slice(),
+      title:st.title,expected_outcome:parentIds.has(st.id)?null:st.outcome||null,status:'pending',revision:1,transitions:[],
+      strict_outcome_contract:true,outcome_owner:plan.workRef?.kind||null,workflow_ref:plan.workRef?.ref||null,run_id:plan.run_id,run_epoch:plan.run_epoch||1}));
     if(!items.length)return {ok:false,error:'no_plan_steps'};
-    var check=validateGraph(threadId,{items:existing.concat(items)});if(!check.valid)return {ok:false,error:'invalid_graph',validation:check};
-    const TX=window.PM56_TX;
-    if(!store){store={items:[],refusals:[],revision:1};TX.set(RT.todos.byThread,threadId,store);}
-    TX.set(store,'items',existing.concat(items));TX.set(store,'revision',(store.revision||1)+1);
-    return {ok:true,created:items.length,reused:false,ids:items.map(t=>t.todo_id)};
+    return appendMaterialized(threadId,existing,items);
+  }
+  function appendMaterialized(threadId,existing,items){
+    const check=validateGraph(threadId,{items:existing.concat(items)});if(!check.valid)return {ok:false,error:'invalid_graph',validation:check};
+    return window.PM56_TX.run(()=>{const TX=window.PM56_TX;let store=threadStore(threadId);
+      if(!store){store={items:[],refusals:[],revision:1,bindings:[],binding_targets:{}};TX.set(RT.todos.byThread,threadId,store);}
+      TX.set(store,'items',existing.concat(items));TX.set(store,'revision',(store.revision||1)+1);refreshBindingTargets(store);
+      return {ok:true,created:items.length,reused:false,ids:items.map(t=>t.todo_id)};});
   }
   function materializeForWork(work){
     const store=threadStore(work.thread_id),existing=store?.items||[],mk=itemFactory(work.thread_id),prefix='tw-'+work.run_id+'-';
-    const ids=(work.steps||[]).map(st=>prefix+st.id);
-    const prior=existing.filter(t=>t.run_id===work.run_id);
-    if(prior.length)return prior.length===ids.length&&ids.every(id=>prior.some(t=>t.todo_id===id))?{ok:true,reused:true,ids}:{ok:false,error:'work_mapping_conflict'};
-    const items=(work.steps||[]).map((st,i)=>mk({todo_id:prefix+st.id,project_id:work.project_id,display_order:existing.length+i+1,title:st.title,expected_outcome:st.outcome,
-      depends_on:(st.deps||[]).map(d=>prefix+d),status:'pending',strict_outcome_contract:true,outcome_owner:work.owner,workflow_ref:work.ref,run_id:work.run_id,run_epoch:work.epoch||1}));
+    const ids=(work.steps||[]).map(st=>prefix+st.id),prior=existing.filter(t=>t.run_id===work.run_id),parents=new Set((work.steps||[]).map(st=>st.parent).filter(Boolean));
+    if(prior.length)return prior.length===ids.length&&ids.every(id=>prior.some(t=>t.todo_id===id&&t.workflow_ref===work.ref&&t.outcome_owner===work.owner))?{ok:true,reused:true,ids}:{ok:false,error:'work_mapping_conflict'};
+    const items=(work.steps||[]).map((st,i)=>mk({todo_id:ids[i],project_id:work.project_id,display_order:existing.length+i+1,title:st.title,expected_outcome:parents.has(st.id)?null:st.outcome,
+      parent_todo_id:st.parent?prefix+st.parent:null,depends_on:(st.deps||[]).map(d=>prefix+d),parallel_group_id:st.parallel_group_id||null,
+      status:'pending',strict_outcome_contract:true,outcome_owner:work.owner,workflow_ref:work.ref,run_id:work.run_id,run_epoch:work.epoch||1}));
     if(!items.length||!outcomeOwners.has(work.owner))return {ok:false,error:'work_owner_required'};
-    const check=validateGraph(work.thread_id,{items:existing.concat(items)});if(!check.valid)return {ok:false,error:'invalid_graph'};
-    const TX=window.PM56_TX;let target=store;if(!target){target={items:[],refusals:[],revision:1};TX.set(RT.todos.byThread,work.thread_id,target);}
-    TX.set(target,'items',existing.concat(items));TX.set(target,'revision',(target.revision||1)+1);return {ok:true,ids,created:items.length};
+    return appendMaterialized(work.thread_id,existing,items);
   }
   function outcomeSummary(threadId,ids){
-    const store=threadStore(threadId),items=store?.items||[],required=(ids||[]).map(id=>items.find(t=>t.todo_id===id));
+    const items=itemsOf(threadId)||[],ix=graphIndex(items),required=(ids||[]).map(id=>ix.byId.get(id));
     if(!ids?.length||required.some(t=>!t))return {ok:false,error:'required_todo_missing',evidenceRefs:[]};
-    const leaves=required.filter(t=>isLeaf(items,t)),evidence=[];
+    const leaves=required.filter(t=>!ix.children.get(t.todo_id)?.length),evidence=[];
     for(const t of leaves){
-      if(t.status==='skipped'){if(!t.skip_disposition?.user_approved||!t.skip_disposition.reason?.trim())return {ok:false,error:'skip_not_accepted',evidenceRefs:[]};continue;}
+      if(t.status==='skipped'){
+        const tr=t.transitions?.at(-1);if(!t.skip_disposition?.user_approved||!t.skip_disposition.reason?.trim()||tr?.cause_kind!=='explicit_skip')return {ok:false,error:'skip_not_accepted',evidenceRefs:[]};
+        evidence.push(tr.cause_ref);continue;
+      }
       if(t.status!=='completed')return {ok:false,error:'required_work_unfinished',evidenceRefs:[]};
-      const tr=t.transitions?.[t.transitions.length-1];
-      if(!tr||tr.to_status!=='completed'||tr.cause_kind!=='outcome_satisfied')return {ok:false,error:'accepted_outcome_missing',evidenceRefs:[]};
-      const validate=outcomeOwners.get(t.outcome_owner);
-      if(!validate||!validate(t.workflow_ref,t,tr.cause_ref)?.ok)return {ok:false,error:'completion_evidence_missing_or_stale',evidenceRefs:[]};
-      evidence.push(tr.cause_ref);
+      const tr=t.transitions?.at(-1),b=itemBindings(threadId,t.todo_id).find(b=>b.state==='succeeded'&&b.terminal_result_ref===tr?.cause_ref);
+      if(!tr||tr.to_status!=='completed'||tr.cause_kind!=='outcome_satisfied'||!b)return {ok:false,error:'accepted_outcome_missing',evidenceRefs:[]};
+      let proof;try{proof=workOwner(t)?.outcome?.(t.workflow_ref,t,tr.cause_ref,b);}catch(e){proof={ok:false};}
+      if(!proof?.ok)return {ok:false,error:'completion_evidence_missing_or_stale',evidenceRefs:[]};evidence.push(tr.cause_ref);
     }
-    if(!leaves.length||!evidence.length)return {ok:false,error:'completion_evidence_missing',evidenceRefs:[]};
+    if(!leaves.length)return {ok:false,error:'completion_evidence_missing',evidenceRefs:[]};
     return {ok:true,evidenceRefs:Array.from(new Set(evidence)),requiredIds:ids.slice()};
   }
-
-  /* One demo tick: admit the next runnable pending leaf, or complete the
-     oldest in-progress one. Ordinary transitions through applyTransition, so
-     the projector sees exactly what a real run would have written. */
-  function advanceForPlan(planId, threadId){
-    var store=threadStore(threadId); if(!store) return null;
-    var mine=store.items.filter(function(t){ return t.plan_id===planId; });
-    var i, t;
-    for(i=0;i<mine.length;i++){
-      t=mine[i];
-      if(t.status==='in_progress' && isLeaf(store.items,t))
-        return applyTransition(threadId,{ todo_id:t.todo_id, to_status:'completed',
-          expected_revision:t.revision, cause_kind:'outcome_satisfied',
-          cause_ref:'evidence:'+t.todo_id, note:'Expected outcome accepted.' });
-    }
-    for(i=0;i<mine.length;i++){
-      t=mine[i];
-      if(t.status==='pending' && isLeaf(store.items,t) && runnable(store.items,t))
-        return applyTransition(threadId,{ todo_id:t.todo_id, to_status:'in_progress',
-          expected_revision:t.revision, cause_kind:'work_admitted',
-          cause_ref:'assignment:'+t.todo_id, note:'Admitted by the Plan run.' });
-    }
-    return null;
+  function advanceForPlan(){return {ok:false,error:'execution_owner_required'};}
+  function setOwnerWait(threadId,todoId,condition){
+    const s=threadStore(threadId),t=s&&findItem(s.items,todoId);if(!t||t.status!=='in_progress')return {ok:false,error:'work_not_running'};
+    if(condition&&!['quota','window','recovery_required'].includes(condition.kind))return {ok:false,error:'invalid_wait'};
+    const owner=workOwner(t);if(!owner?.wait?.(t.workflow_ref,t,condition)?.ok)return {ok:false,error:'owner_wait_required'};
+    return window.PM56_TX.run(()=>{const TX=window.PM56_TX;TX.set(t,'owner_wait',condition?copyTodo(condition):null);
+      for(const b of itemBindings(threadId,todoId).filter(liveBinding)){if(condition?.kind==='recovery_required')TX.set(b,'state','recovery_required');else if(!condition&&b.state==='recovery_required')TX.set(b,'state','running');}
+      TX.set(t,'revision',t.revision+1);TX.set(s,'revision',(s.revision||1)+1);refreshBindingTargets(s);
+      return {ok:true,status:t.status};});
+  }
+  function openWork(threadId,todoId,bindingId){
+    const t=findItem(itemsOf(threadId),todoId),b=itemBindings(threadId,todoId).find(b=>!bindingId||b.binding_id===bindingId);
+    if(!t||!b)return {ok:false,error:'work_binding_not_found'};
+    const owner=workOwner(t),detail=owner?.open?.(t.workflow_ref,b,t);
+    if(!detail?.ok)return {ok:false,error:detail?.error||'owner_unavailable'};
+    return {ok:true,command:'cmd.chat.todos.open_work',concept_only:true,thread_id:threadId,todo_id:todoId,binding_id:b.binding_id,work_id:b.work_id,attempt_id:b.attempt_id,detail};
   }
 
   /* Explicit Review conversion through the existing To-Do owner. All selected
@@ -32473,10 +32436,7 @@ window.PM56_EXT = window.PM56_EXT || {
     });
     var check=validateGraph(run.threadId,{items:existing.concat(made)});
     if(!check.valid) return {ok:false,error:'invalid_graph',validation:check};
-    if(made.length){
-      if(!store){RT.todos.byThread[run.threadId]={items:[],refusals:[],revision:1};store=threadStore(run.threadId);}
-      store.items=existing.concat(made);store.revision=(store.revision||1)+1;
-    }
+    if(made.length){const added=appendMaterialized(run.threadId,existing,made);if(!added.ok)return added;}
     return {ok:true,created:made.length,items:mapped,reused:made.length===0};
   }
 
@@ -32492,13 +32452,18 @@ window.PM56_EXT = window.PM56_EXT || {
       source_participant_id:m.senderId,source_definition_revision:r.definitionRevision,source_message_hash:x.messageHash});
     const check=validateGraph(r.threadId,{items:existing.concat(item)});
     if(!check.valid)return {ok:false,error:'invalid_graph'};
-    if(!store){RT.todos.byThread[r.threadId]={items:[],refusals:[],revision:1};store=threadStore(r.threadId);}
-    store.items=existing.concat(item);store.revision=(store.revision||1)+1;
+    const added=appendMaterialized(r.threadId,existing,[item]);if(!added.ok)return added;
     return {ok:true,todoId:id,reused:false};
   }
 
   window.PM56_TODOS = {
-    materializeForWork, outcomeSummary, registerOutcomeOwner:(kind,validator)=>{if(outcomeOwners.has(kind))throw new Error("duplicate_todo_outcome_owner");outcomeOwners.set(kind,validator);},
+    materializeForWork, outcomeSummary,
+    registerOutcomeOwner:(kind,validator,options={})=>{if(outcomeOwners.has(kind))throw new Error('duplicate_todo_outcome_owner');outcomeOwners.set(kind,{...options,outcome:validator});},
+    capture:captureTodo,bindings:bindingsOf,bindingsFor:itemBindings,openWork,setOwnerWait,
+    visibleTree:tid=>visibleTree(tid).map(r=>({todo_id:r.item.todo_id,depth:r.depth})),
+    applyTransitions,propose:proposeTodos,
+    snapshot:threadId=>{const s=threadStore(threadId);return s?copyTodo(s):null;},
+    runnable:(threadId,todoId)=>{const items=itemsOf(threadId),t=findItem(items,todoId);return !!t&&isLeaf(items,t)&&runnable(items,t);},
     materializeFromRoom:materializeFromRoom,
     /* Body only -- activity-bar.js wraps it in the shared hover-card shell. */
     hoverBody: renderCompact,
@@ -32506,6 +32471,7 @@ window.PM56_EXT = window.PM56_EXT || {
        when no id is given. Returns null when that thread has no list. */
     get: function(threadId){ return itemsOf(threadId || currentThreadId(activeCtx())); },
     summary: function(threadId){ return summary(threadId || currentThreadId(activeCtx())); },
+    leaves: function(threadId){ return allLeaves(itemsOf(threadId || currentThreadId(activeCtx()))||[]); },
     restore: restoreFixture,
     fixture: function(){ return JSON.parse(TODO0); },
     /* Additive Correction v4 (TDG-001..012). Graph validation, atomic list
@@ -32521,6 +32487,7 @@ window.PM56_EXT = window.PM56_EXT || {
     rejectedEvents: function(threadId){ var s=threadStore(threadId); return s?(s.rejected||[]):[]; },
     statusVocabulary: function(){ return TODO_STATUSES.slice(); }
   };
+  window.ToDoController=window.PM56_TODOS;
 })();
 
 /* collaboration.js — feature module.  OWNER: Collaborative Workflows (Assistant
@@ -40241,7 +40208,7 @@ window.PM56_EXT = window.PM56_EXT || {
   Object.assign(base,{id:tid,title:flows[id].label,pinned:false,archived:false,status:'ready',goalId:null,
    messages:[{id:tid+'-request',role:'user',type:'text',body:'Plan the account-selection fix, with a verification step.'},
     {id:tid+'-plan',role:'system',type:'plan-card-v2',planId:pid}]});
-  c.state.threads.push(base);c.state.historyMode='closed';c.state.activity.open=false;
+  c.state.threads.push(base);window.PM56_B16_WORK.attachAccountPlan(template,base);c.state.historyMode='closed';c.state.activity.open=false;
   c.state.editorTabs=[];c.state.activeEditor=null;c.state.editorRevealed=false;
   c.state.demoOpen=false;c.state.menu=null;c.state.dialog=null;c.state.hover=null;
   c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};
@@ -40868,7 +40835,7 @@ window.PM56_EXT = window.PM56_EXT || {
    {id:'query',label:'Local query check',content:source+'\n\n'+checks,provenance:'Result calculated by this concept from the shown local input; not a native benchmark.'},
    {id:'capabilities',label:'Option capabilities',content:'Local filter: no network dependency; preserves input order.\nSnapshot worker: local message transport; preserves input order in the proposed algorithm. Worker execution not measured here.\nHosted index: requires collection upload and a network request by design.\nA hosted route therefore fails the offline constraint.',provenance:'Frozen candidate definitions supplied for this recorded design exercise, not a discovered service capability.'},
    {id:'latency',label:'Unmeasured trade-offs',content:'No device benchmark was supplied. Worker startup, snapshot copies and large-list latency remain to be measured. Hosted indexing can cover undownloaded collections, but requires network access.',provenance:'Explicit uncertainty. No fabricated timings.'}];
-  const input={label:kind==='constraint'?'Offline collection search':'Responsive local search',objective:kind==='constraint'?'Search a downloaded collection offline without uploading its contents.':'Keep typing responsive while searching a locally ranked collection.',constraints,evidence,
+  const input={localQueryFixture:{rows:clone(rows),query},label:kind==='constraint'?'Offline collection search':'Responsive local search',objective:kind==='constraint'?'Search a downloaded collection offline without uploading its contents.':'Keep typing responsive while searching a locally ranked collection.',constraints,evidence,
    answers:[{id:'answer-offline',question:'May collection contents leave this device?',answer:'No.'},{id:'answer-ranking',question:'Should matching results retain their existing ranking?',answer:'Yes.'}],
    scopeNotes:'Compatibility: retain existing query and ranking semantics. Migration: no persisted schema change. Security: no collection upload. Operations: cancel obsolete requests and reject stale results. Rollback: retain the local filter. Cross-system impact: composer input and result rendering only. Device performance remains unmeasured.'};
   input.sourceHash=hash(input);return input;
@@ -42632,7 +42599,7 @@ window.PM56_EXT = window.PM56_EXT || {
  function csv(rows){return [['order_id','customer','quantity','unit_cents','total_cents'],...rows.map(o=>[o.id,o.customer,o.quantity,o.unit_cents,o.total_cents])].map(row=>row.map(quote).join(',')).join('\r\n')+'\r\n';}
  function parseCSV(text){const rows=[];let row=[],field='',quoted=false;for(let i=0;i<text.length;i++){const c=text[i];if(quoted){if(c==='"'){if(text[i+1]==='"'){field+='"';i++;}else quoted=false;}else field+=c;}else if(c==='"'){if(field)throw new Error('invalid_csv_quote');quoted=true;}else if(c===','){row.push(field);field='';}else if(c==='\r'&&text[i+1]==='\n'){row.push(field);rows.push(row);row=[];field='';i++;}else if(c==='\n'||c==='\r')throw new Error('invalid_csv_newline');else field+=c;}if(quoted||field||row.length)throw new Error('incomplete_csv');return rows;}
  function checkedContent(r,stage){const rows=normalized(r);if(stage==='normalize')return JSON.stringify(rows,null,2);if(stage==='export')return csv(rows);const a=art(r.outputs.export);if(!a)throw new Error('csv_missing');const parsed=parseCSV(a.content),expected=[['order_id','customer','quantity','unit_cents','total_cents'],...rows.map(o=>[o.id,o.customer,String(o.quantity),o.unit_cents,o.total_cents])];if(!eq(parsed,expected))throw new Error('csv_round_trip_mismatch');return JSON.stringify({source_id:r.source.id,source_version:r.source.version,source_fingerprint:r.source.hash,source_unchanged:true,rows:rows.length,total_cents:rows.reduce((n,o)=>n+BigInt(o.total_cents),0n).toString(),csv_id:a.id,csv_version:a.version,csv_fingerprint:digest(a.content),round_trip:'equal',method:'Independent state-machine CSV parse compared with source-derived rows and integer totals'},null,2);}
- function validate(ref,item,evidenceId){const r=work.records[ref],proof=art(evidenceId);if(!r||sourceError(r)||!proof||proof.threadId!==r.threadId||proof.projectId!==r.scope.projectId||proof.version!==1)return {ok:false,error:'evidence_unavailable'};try{const e=JSON.parse(proof.content),a=art(e.output_id),stage=STEPS.find(s=>item.todo_id.endsWith('-'+s.id))?.id;if(!stage||e.stage!==stage||e.workflow_id!==r.id||e.todo_id!==item.todo_id||e.work_binding!==item.active_work_ids?.[0]||e.source_fingerprint!==r.source.hash||e.output_id!==r.outputs[stage]||evidenceId!==r.evidence[stage]||!a||a.version!==e.output_version||digest(a.content)!==e.output_fingerprint||a.content!==checkedContent(r,stage))return {ok:false,error:'evidence_not_current_or_verified'};return {ok:true};}catch(e){return {ok:false,error:e.message};}}
+ function validate(ref,item,evidenceId,binding){binding=binding||T.bindingsFor(item.thread_id,item.todo_id).find(b=>b.terminal_result_ref===evidenceId)||T.bindingsFor(item.thread_id,item.todo_id).find(b=>b.state==='running');const r=work.records[ref],proof=art(evidenceId);if(!r||sourceError(r)||!proof||proof.threadId!==r.threadId||proof.projectId!==r.scope.projectId||proof.version!==1)return {ok:false,error:'evidence_unavailable'};try{const e=JSON.parse(proof.content),a=art(e.output_id),stage=STEPS.find(s=>(item.plan_step_ids||[]).includes(s.id)||binding?.todo_id.endsWith('-'+s.id))?.id;if(!stage||e.stage!==stage||e.workflow_id!==r.id||e.todo_id!==binding?.todo_id||e.work_binding!==binding?.binding_id||e.source_fingerprint!==r.source.hash||e.output_id!==r.outputs[stage]||evidenceId!==r.evidence[stage]||!a||a.version!==e.output_version||digest(a.content)!==e.output_fingerprint||a.content!==checkedContent(r,stage))return {ok:false,error:'evidence_not_current_or_verified'};return {ok:true};}catch(e){return {ok:false,error:e.message};}}
  function idsFor(r,owner){return owner?.requiredTodoIds||r.todoIds||[];}
  function inspection(ref,owner){const r=work.records[ref];if(!r)return {eligible:false,complete:false,fingerprint:'missing',reason:'Order workflow unavailable.'};const c=E.ctx(),m=D.models.find(m=>m.id===r.route?.id),permission=c.state.permissions,error=sourceError(r)||(owner?.objective&&!owner.binding&&!objectiveCompatible(ref,owner.objective).ok?objectiveCompatible(ref,owner.objective).error:null)||(!m||m.status!=='ready'||m.accountId!==r.route.accountId?'provider_route_unavailable':permission!==r.permissions?'permission_snapshot_changed':RT.quota?.waiting?'quota_unavailable':null);
   const ids=idsFor(r,owner),items=T.get(r.threadId)||[],mine=ids.map(id=>items.find(t=>t.todo_id===id)),summary=T.outcomeSummary(r.threadId,ids);
@@ -42641,8 +42608,8 @@ window.PM56_EXT = window.PM56_EXT || {
   return {waitKind:RT.quota?.waiting?'quota':null,eligible:!error&&!!next&&mine.every(Boolean),complete,verified:complete,requiredResolved:summary.ok,evidenceRefs:summary.evidenceRefs||[],fingerprint,nextAttemptRef:next?next.todo_id+':'+next.revision:null,reason:error||(!mine.every(Boolean)?'Required work was removed.':!complete&&!next?'No admitted executable outcome is available.':null)};
  }
  function advance(ref,owner){const r=work.records[ref];if(!r)return {ok:false,error:'work_missing'};const v=inspection(ref,owner);if(!v.eligible)return {ok:false,error:v.reason||'work_not_eligible'};const ids=idsFor(r,owner),items=T.get(r.threadId)||[],mine=ids.map(id=>items.find(t=>t.todo_id===id));const item=mine.find(t=>t.status==='in_progress')||mine.find(t=>t.status==='pending'&&t.depends_on.every(id=>items.find(x=>x.todo_id===id)?.status==='completed')),stage=STEPS.find(s=>item.todo_id.endsWith('-'+s.id)).id;
-  const event={todo_id:item.todo_id,expected_revision:item.revision,run_id:item.run_id,run_epoch:item.run_epoch,plan_version:item.plan_version,work_binding:item.active_work_ids?.[0]||r.id+':'+stage+':attempt1'};
-  if(item.status==='pending'){const out=T.applyTransition(r.threadId,{...event,to_status:'in_progress',cause_kind:'work_admitted',cause_ref:r.id+':admit:'+stage,note:'Source-bound local operation admitted.'});if(out.ok)r.attempts.push({stage,todo_id:item.todo_id,work_binding:event.work_binding,admitted_at:now()});return out;}
+  const prior=T.bindingsFor(r.threadId,item.todo_id).find(b=>b.state==='running'||b.state==='recovery_required'),bindingId=prior?.binding_id||r.id+':'+stage+':attempt1';const event={...T.capture(r.threadId,item.todo_id),work_binding:bindingId,binding:prior?undefined:{binding_id:bindingId,todo_id:item.todo_id,work_id:bindingId,attempt_id:'attempt1',work_kind:stage==='verify'?'validation':'artifact_generation',expected_outcome:item.expected_outcome}};
+  if(item.status==='pending')return TX.run(()=>{const out=T.applyTransition(r.threadId,{...event,to_status:'in_progress',cause_kind:'work_admitted',cause_ref:r.id+':admit:'+stage,note:'Source-bound local operation admitted.'});if(out.ok)TX.append(r,'attempts',{stage,todo_id:item.todo_id,work_binding:event.work_binding,admitted_at:now()});return out;});
   return TX.run(()=>{let content;try{content=checkedContent(r,stage);}catch(e){return {ok:false,error:e.message};}const suffix=stage==='export'?'orders.csv':stage==='verify'?'verification.json':'normalized-orders.json',id=r.id+'-'+stage,out=artifact(suffix,content,r.threadId,r.scope.projectId,id),proofId=id+'-evidence',proof=artifact(stage+'-evidence.json',JSON.stringify({workflow_id:r.id,stage,todo_id:item.todo_id,work_binding:event.work_binding,source_fingerprint:r.source.hash,output_id:id,output_version:1,output_fingerprint:digest(content),computed_at:now()},null,2),r.threadId,r.scope.projectId,proofId);
    if(art(id)||art(proofId))return {ok:false,error:'output_identity_already_exists'};
    TX.append(D,'artifacts',out);TX.append(D,'artifacts',proof);TX.set(r.outputs,stage,id);TX.set(r.evidence,stage,proofId);
@@ -42659,7 +42626,16 @@ window.PM56_EXT = window.PM56_EXT || {
   return valid?{ok:true}:{ok:false,error:'This local order-export adapter cannot validate the rewritten objective. Your text is saved; no further work is admitted. Restore the order-export objective or cancel and use a different workflow.'};
  }
  const owner={inspect:inspection,advance,objectiveCompatible,plan:ref=>{const r=work.records[ref];if(!r||sourceError(r))return {ok:false,error:'source_unavailable'};return {ok:true,title:'Verified order export',objective:r.objective,steps:clone(STEPS),sourceRefs:[r.source.id]};}};
- T.registerOutcomeOwner('order_export',validate);G.registerOwner('order_export',owner);P.registerWorkOwner('order_export',owner);
+ T.registerOutcomeOwner('order_export',validate,{
+  admit:(ref,item,binding,cause)=>{const r=work.records[ref],stage=STEPS.find(s=>(item.plan_step_ids||[]).includes(s.id)||item.todo_id.endsWith('-'+s.id));return {ok:!!r&&!sourceError(r)&&!!stage&&binding.binding_id===r.id+':'+stage.id+':attempt1'&&binding.work_id===binding.binding_id&&binding.attempt_id==='attempt1'&&binding.expected_outcome===stage.outcome&&cause===r.id+':admit:'+stage.id};},
+  fence:(ref,item)=>{const r=work.records[ref],p=r?.planId&&P.get(r.planId),g=r?.goalId&&G.byId(r.goalId);return {run_id:item.run_id,run_epoch:p?p.runEpoch:item.run_epoch,...(g?{user_stop_epoch:g.stopEpoch}:{}),...(!r||p&&(!p.approved||p.version!==item.plan_version||P.hash(p.plan_id)!==item.plan_hash||p.approved.plan_run_id!==item.run_id||!['building','completed'].includes(p.status))?{error:'work_identity_not_current'}:{})};},
+  availability:ref=>{const r=work.records[ref],o=r&&activeOwner(r);return {ok:!!r&&(r.planId?o?.status==='building'&&!o.attention:o?.status==='active'),reason:'Resume the current Plan or Goal before executing work.'};},
+  execute:(ref,item)=>{const r=work.records[ref],o=r&&activeOwner(r);if(!r||r.planId&&(o?.status!=='building'||o.attention)||!r.planId&&o?.status!=='active')return {ok:false,error:'work_paused_or_unavailable'};return advance(ref,o);},
+  open:(ref,b,item)=>{const r=work.records[ref];return r?{ok:true,title:'Order export work',source_ref:r.source.id,output_refs:Object.values(r.outputs),evidence_refs:Object.values(r.evidence),binding:clone(b),owner_ref:r.id}:{ok:false,error:'work_missing'};},
+  wait:(ref,item,w)=>({ok:w?.kind==='quota'?!!RT.quota?.waiting:w?.kind==='window'?!!P.get(work.records[ref]?.planId)?.attention:w?.kind==='recovery_required'?!!sourceError(work.records[ref]):!RT.quota?.waiting&&!sourceError(work.records[ref])}),
+  waitState:ref=>RT.quota?.waiting?{kind:'quota',reason:'Waiting for Usage'}:null,
+  condition:(ref,item,reason,state)=>({ok:state==='blocked'?sourceError(work.records[ref])===reason:!sourceError(work.records[ref])})
+ });G.registerOwner('order_export',owner);P.registerWorkOwner('order_export',owner);
  function createWork(t,objective){const id='order-export-'+(++work.seq),a=art(work.sessions[t.id]?.sourceId);if(!a)return {ok:false,error:'source_not_selected'};const r={id,threadId:t.id,scope:G.scope(t.id),route:clone(E.ctx().selectedModel()),permissions:E.ctx().state.permissions,objective,source:{id:a.id,version:a.version,hash:digest(a.content)},outputs:{},evidence:{},attempts:[],todoIds:[],createdAt:now()};TX.set(work.records,id,r);try{normalized(r);}catch(e){return {ok:false,error:e.message};}return {ok:true,record:r};}
  function seed(c,flow){if(!flows[flow])return;const t=clone(c.state.threads.find(t=>t.id==='query')||c.thread),id='batch15-'+flow+'-'+(++work.seq);Object.assign(t,{id,title:flows[flow].title+' · local example',projectId:'concept:batch15:'+work.seq,worktreeId:'concept:orders:'+work.seq,status:'ready',pinned:false,archived:false,goalId:null,messages:[]});c.state.threads.push(t);
   const value={orders:[{id:' ORD-001 ',customer:'River, Inc.',quantity:3,unit_price:'19.99'},{id:'ORD-002',customer:'Ada "A" Chen',quantity:2,unit_price:'0.10'},{id:'ORD-003',customer:'North\nSouth',quantity:7,unit_price:'4.25'},{id:'ORD-004',customer:'München Studio',quantity:1,unit_price:'120.00'},{id:'ORD-005',customer:'Trailing space ',quantity:4,unit_price:'3.33'}]},a=artifact('Supplied orders.json',JSON.stringify(value,null,2),t.id,t.projectId,id+'-source');a.summary='Supplied exercise input; not computed or fetched.';a.provenance='Supplied Batch 15 order fixture.';D.artifacts.push(a);
@@ -42697,7 +42673,212 @@ window.PM56_EXT = window.PM56_EXT || {
  withWork('b15-todos',(c,r)=>{c.state.activity.open=true;c.state.activity.domain='todo';refresh();});
  withWork('b15-download',(c,r,b)=>{if(!Object.values(r.outputs).includes(b.dataset.artifact))return;const a=art(b.dataset.artifact);if(!a)return;const url=URL.createObjectURL(new Blob([a.content],{type:a.extension==='csv'?'text/csv;charset=utf-8':'application/json'})),link=document.createElement('a');link.href=url;link.download=a.name;link.click();setTimeout(()=>URL.revokeObjectURL(url),30000);});
  const gallery=window.PM56_REPAIR_DEMOS,old=gallery.gallery;gallery.gallery=c=>'<section class="demo-section"><h3>Simple Goal & explicit execution · Batch 15</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="b15-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
- window.PM56_ORDER_EXPORT={seed,flows,get:id=>work.records[id],snapshot:tid=>clone(work.records[work.sessions[tid||E.ctx().thread.id]?.workId]||null),session:tid=>clone(work.sessions[tid||E.ctx().thread.id]||null),inspect:inspection,advance,validate,digest,parseCSV};
+ window.PM56_ORDER_EXPORT={formats:{csv,quote},seed,flows,get:id=>work.records[id],snapshot:tid=>clone(work.records[work.sessions[tid||E.ctx().thread.id]?.workId]||null),session:tid=>clone(work.sessions[tid||E.ctx().thread.id]||null),inspect:inspection,advance,validate,digest,parseCSV};
+})();
+
+/* Batch 16 bounded local work adapters. No private To-Do or progress store.
+ * The records below own only input/output artifacts and computation evidence.
+ * Plan, Goal, scheduling, transitions and progress use their existing owners. */
+(function(){
+'use strict';
+const E=PM56_EXT,D=PM56_DATA,R=PM56_RUNTIME,T=PM56_TODOS,P=PM56_PLANS,G=PM56_GOAL,TX=PM56_TX,W=PM56_ORDER_EXPORT;
+const store=R.todoGraphWork={records:{},sessions:{},seq:0},clone=x=>JSON.parse(JSON.stringify(x)),same=(a,b)=>JSON.stringify(a)===JSON.stringify(b),now=()=>new Date().toISOString();
+const art=id=>D.artifacts.find(a=>a.id===id),digest=W.digest;
+const STEPS=[{id:'outputs',title:'Prepare both deliverables',outcome:'',deps:[]},{id:'csv',parent:'outputs',parallel_group_id:'outputs',title:'Write the customer CSV with exact integer-cent totals',outcome:'Every source order appears once in a correctly quoted CSV with exact line totals.',deps:[]},{id:'summary',parent:'outputs',parallel_group_id:'outputs',title:'Compute the independent customer summary',outcome:'The summary groups the unchanged source by customer with exact order counts and integer-cent totals.',deps:[]},{id:'validate',title:'Check both files against the unchanged source',outcome:'An independent CSV parse and customer-total comparison match all source orders and preserve the input bytes.',deps:['csv','summary']}];
+const FLOWS={parallel:{title:'Parallel outputs, honest progress',description:'Independent CSV and summary work; separate validation; immutable Plan exports.'},restructure:{title:'Refine a list without losing work',description:'Pause the Plan-as-Goal, rebind one live item, then resume its exact attempt.'},large:{title:'Every item, even number 5,000',description:'A 5,050-row hierarchy fixture. Search, collapse and open one actual bounded lookup.'}};
+function artifact(id,name,content,t){return {id,name,title:name,kind:'code',type:'text',extension:name.split('.').pop(),projectId:t.projectId||'pm',threadId:t.id,version:1,status:'ready',updated:now(),content,summary:'Computed local artifact; session memory.',provenance:'Batch 16 bounded local computation; no model or provider execution.'};}
+function get(ref){return store.records[ref];}
+function owner(r){return r?.planId?P.get(r.planId):null;}
+function source(r){const a=art(r.source.id);if(!a||a.version!==r.source.version||digest(a.content)!==r.source.hash)throw Error('source_changed_or_unavailable');if(!same(G.scope(r.threadId),r.scope))throw Error('work_scope_changed');return JSON.parse(a.content);}
+function itemStage(r,t,b){return r.steps.find(s=>(t.plan_step_ids||[]).includes(s.id)||t.todo_id===r.todoMap?.[s.id]||b&&r.originalTodoMap?.[s.id]&&b.todo_id===r.originalTodoMap[s.id]);}
+function items(r){const list=T.get(r.threadId)||[];return (owner(r)?.requiredTodoIds||r.todoIds||[]).map(id=>list.find(t=>t.todo_id===id)).filter(Boolean);}
+function leaves(r){return items(r).filter(t=>!items(r).some(child=>child.parent_todo_id===t.todo_id));}
+function planIdentity(r,t){const p=owner(r);if(!p)return r.kind==='large';return !!p.approved&&p.approved.plan_run_id===t.run_id&&p.version===t.plan_version&&P.hash(p.plan_id)===t.plan_hash&&p.status==='building';}
+function normalized(r){const rows=source(r).orders;if(!Array.isArray(rows)||!rows.length)throw Error('invalid_orders');const ids=new Set();return rows.map(o=>{if(typeof o.id!=='string'||ids.has(o.id)||typeof o.customer!=='string'||!Number.isSafeInteger(o.quantity)||o.quantity<1||!/^\d+$/.test(o.unit_cents))throw Error('invalid_order');ids.add(o.id);return {...o,total_cents:(BigInt(o.unit_cents)*BigInt(o.quantity)).toString()};});}
+function computed(r,stage){
+ if(r.kind==='brainstorm_worker')return computedSearch(r,stage);
+ if(r.kind==='room_search')return computedRoom(r,stage);
+ if(r.kind==='account'){
+  const x=source(r),key=x=>JSON.stringify([x.provider,x.account]),original=x.models.find(m=>key(m)===key(x.selected));if(!original)throw Error('selected_account_missing');
+  if(stage==='route')return JSON.stringify({selection_key:key(x.selected),rows:x.models.map(m=>({key:key(m),model_id:m.id})),selected_model_id:original.id},null,2);
+  const route=art(r.outputs.route);if(!route||route.content!==computed(r,'route'))throw Error('account_selection_output_missing');
+  const permutations=[x.models.slice().reverse(),x.models.slice(1).concat(x.models[0]),x.models.slice().sort((a,b)=>a.account.localeCompare(b.account))];
+  const checks=permutations.map(rows=>{const selected=rows.filter(m=>m.provider===x.selected.provider&&m.account===x.selected.account);return selected.length===1&&selected[0].id===original.id;});if(checks.some(x=>!x))throw Error('account_selection_changed');
+  return JSON.stringify({checks,method:'Compare provider/account tuples after refresh, rotation and favorites-order permutation; model id alone is not the key.',source_hash:r.source.hash,unchanged_source:true},null,2);
+ }
+ if(r.kind==='large'){
+  source(r);const list=T.get(r.threadId)||[],id=r.todoIds[0],matches=list.filter(t=>t.todo_id===id);if(matches.length!==1||list.length!==5050)throw Error('catalog_identity_lost');return JSON.stringify({todo_id:id,total_items:list.length,matched:matches[0].title,index:list.findIndex(t=>t.todo_id===id),method:'Exact stable identity lookup in the complete current hierarchy; other rows did not execute.'},null,2);
+ }
+ const rows=normalized(r);
+ if(stage==='csv')return W.formats.csv(rows);
+ if(stage==='summary'){
+  const groups=new Map();for(const o of rows){const g=groups.get(o.customer)||{customer:o.customer,orders:0,total_cents:0n};g.orders++;g.total_cents+=BigInt(o.total_cents);groups.set(o.customer,g);}
+  return JSON.stringify(Array.from(groups.values()).map(g=>({...g,total_cents:g.total_cents.toString()})),null,2);
+ }
+ const csv=art(r.outputs.csv),sum=art(r.outputs.summary);if(!csv||!sum)throw Error('required_outputs_missing');
+ const parsed=W.parseCSV(csv.content),expected=[['order_id','customer','quantity','unit_cents','total_cents'],...rows.map(o=>[o.id,o.customer,String(o.quantity),o.unit_cents,o.total_cents])];if(!same(parsed,expected))throw Error('csv_round_trip_failed');
+ const summary=JSON.parse(sum.content),customers=[...new Set(rows.map(o=>o.customer))];if(summary.length!==customers.length)throw Error('summary_cardinality_failed');
+ for(const customer of customers){const subset=rows.filter(o=>o.customer===customer),g=summary.find(g=>g.customer===customer);if(!g||g.orders!==subset.length||g.total_cents!==subset.reduce((n,o)=>n+BigInt(o.quantity)*BigInt(o.unit_cents),0n).toString())throw Error('independent_summary_check_failed');}
+ return JSON.stringify({source_id:r.source.id,source_version:r.source.version,source_hash:r.source.hash,source_unchanged:true,csv_id:csv.id,summary_id:sum.id,csv_hash:digest(csv.content),summary_hash:digest(sum.content),rows:rows.length,customers:customers.length,total_cents:rows.reduce((n,o)=>n+BigInt(o.total_cents),0n).toString(),checks:['CSV state-machine parse equals source rows','Independent per-customer aggregation equals summary','Source bytes unchanged']},null,2);
+}
+function validate(ref,t,evidenceRef,b){
+ const r=get(ref),a=art(evidenceRef);if(!r||!a||a.threadId!==r.threadId||a.projectId!==r.scope.projectId)return {ok:false,error:'evidence_scope_mismatch'};
+ try{const e=JSON.parse(a.content),st=itemStage(r,t,b),output=art(e.output_id);source(r);if(!st||!output||r.evidence[st.id]!==a.id||r.outputs[st.id]!==output.id||e.binding_id!==b.binding_id||e.admitted_todo_id!==b.todo_id||e.work_id!==b.work_id||e.attempt_id!==b.attempt_id||e.expected_outcome!==t.expected_outcome||e.plan_version!==(t.plan_version??null)||e.plan_hash!==(t.plan_hash??null)||e.run_id!==t.run_id||e.source_hash!==r.source.hash||output.threadId!==r.threadId||output.projectId!==r.scope.projectId||digest(output.content)!==e.output_hash||output.content!==computed(r,st.id))return {ok:false,error:'outcome_not_proved'};return {ok:true};}catch(e){return {ok:false,error:e.message};}
+}
+function inspect(ref,p){
+ const r=get(ref);if(!r)return {eligible:false,complete:false,fingerprint:'missing',reason:'Work owner unavailable'};
+ let error=null;try{source(r);}catch(e){error=e.message;}
+ const mine=leaves(r),expected=(p?.requiredTodoIds||r.todoIds||[]),summary=T.outcomeSummary(r.threadId,expected),ready=mine.filter(t=>t.status==='pending'&&T.runnable(r.threadId,t.todo_id)),live=mine.filter(t=>t.status==='in_progress'),requiredOutputs=r.steps.filter(s=>!r.steps.some(t=>t.parent===s.id)).length;
+ const complete=!error&&summary.ok&&Object.keys(r.outputs).length===requiredOutputs;
+ return {eligible:!error&&!r.wait&&(!!ready.length||!!live.length),complete,verified:complete,requiredResolved:summary.ok,evidenceRefs:summary.evidenceRefs||[],nextAttemptRef:ready[0]?.todo_id||live[0]?.todo_id||null,reason:error||r.wait?.reason||null,waitKind:r.wait?.kind||null,fingerprint:JSON.stringify({source:art(r.source.id),scope:G.scope(r.threadId),items:mine,bindings:T.bindings(r.threadId),outputs:Object.values(r.outputs).map(art),evidence:Object.values(r.evidence).map(art),wait:r.wait})};
+}
+function admission(r,t){const st=itemStage(r,t),id=r.id+':'+st.id+':attempt1';return {...T.capture(r.threadId,t.todo_id),to_status:'in_progress',cause_kind:'work_admitted',cause_ref:r.id+':admit:'+st.id,work_binding:id,binding:{binding_id:id,todo_id:t.todo_id,work_id:id,attempt_id:'attempt1',work_kind:['validate','verify','catalog'].includes(st.id)?'validation':'artifact_generation',expected_outcome:t.expected_outcome}};}
+function advance(ref,p,targetId){
+ const r=get(ref);if(!r)return {ok:false,error:'work_missing'};const plan=owner(r);if(plan&&(plan.status!=='building'||plan.attention))return {ok:false,error:'plan_paused_or_not_building'};const check=inspect(ref,p);if(!check.eligible)return {ok:false,error:check.reason||'work_not_eligible'};
+ if(r.kind==='brainstorm_worker'&&r.workerError)return {ok:false,error:r.workerError};
+ const mine=leaves(r),ready=mine.filter(t=>t.status==='pending'&&T.runnable(r.threadId,t.todo_id)&&(!targetId||t.todo_id===targetId));
+ if(ready.length)return TX.run(()=>{const events=ready.map(t=>admission(r,t)),out=T.applyTransitions(r.threadId,events);if(!out.ok)return out;for(const e of events)TX.append(r,'attempts',{binding_id:e.work_binding,work_id:e.binding.work_id,attempt_id:e.binding.attempt_id,todo_id:e.todo_id,admitted_at:now()});return {ok:true,admitted:events.length};});
+ const candidates=mine.filter(t=>t.status==='in_progress'&&(!targetId||t.todo_id===targetId)),t=candidates.find(t=>itemStage(r,t)?.id==='summary')||candidates[0];if(!t)return {ok:false,error:'work_not_admitted'};
+ if(r.kind==='room_search'&&itemStage(r,t)?.id==='verify')return dispatchRoomCheck(r,t);
+ if(r.kind==='brainstorm_worker'&&itemStage(r,t)?.id==='query')return dispatchSearch(r,t);
+ return TX.run(()=>{const b=T.bindingsFor(r.threadId,t.todo_id).find(b=>b.state==='running'),st=itemStage(r,t,b);if(!b||!st)return {ok:false,error:'binding_not_running'};let content;try{if(r.kind==='brainstorm_worker'&&st.id==='measure')measureSearch(r);content=computed(r,st.id);}catch(e){return {ok:false,error:e.message};}
+  return finishEffect(r,t,b,st,content,T.capture(r.threadId,t.todo_id));
+ });
+}
+
+function finishEffect(r,t,b,st,content,ticket){
+  const ctx=E.ctx(),thread=ctx.state.threads.find(x=>x.id===r.threadId),id=r.id+':output:'+st.id,proofId=r.id+':evidence:'+st.id,name=st.id==='csv'?'customer-orders.csv':st.id==='summary'?'customer-summary.json':st.id==='validate'?'output-checks.json':r.kind==='room_search'&&st.id==='implement'?'local-search.html':st.id+'.json';
+  const output=artifact(id,name,content,thread),proof=artifact(proofId,st.id+'-evidence.json',JSON.stringify({workflow_id:r.id,binding_id:b.binding_id,admitted_todo_id:b.todo_id,work_id:b.work_id,attempt_id:b.attempt_id,expected_outcome:t.expected_outcome,run_id:t.run_id,plan_version:t.plan_version??null,plan_hash:t.plan_hash??null,source_hash:r.source.hash,output_id:id,output_hash:digest(content),computed_at:now()},null,2),thread);
+  TX.append(D,'artifacts',output);TX.append(D,'artifacts',proof);TX.set(r,'outputs',{...r.outputs,[st.id]:id});TX.set(r,'evidence',{...r.evidence,[st.id]:proofId});
+  const out=T.applyTransition(r.threadId,{...ticket,work_binding:b.binding_id,to_status:'completed',cause_kind:'outcome_satisfied',cause_ref:proofId});if(!out.ok)return out;TX.set(r,'lastEffectAt',now());return {ok:true,output_id:id,evidence_ref:proofId,todo_id:t.todo_id};
+}
+const workOwner={inspect,advance,plan:ref=>{const r=get(ref);try{source(r);}catch(e){return {ok:false,error:e.message};}return {ok:true,title:'Customer deliverables',objective:r.objective,steps:clone(r.steps),sourceRefs:[{kind:'artifact',ref:r.source.id}]};}};
+T.registerOutcomeOwner('b16_local',validate,{
+ admit:(ref,t,b,cause)=>{const r=get(ref),st=r&&itemStage(r,t);try{source(r);}catch(e){return {ok:false,error:e.message};}return {ok:!!st&&planIdentity(r,t)&&b.binding_id===r.id+':'+st.id+':attempt1'&&b.work_id===b.binding_id&&b.attempt_id==='attempt1'&&b.expected_outcome===st.outcome&&cause===r.id+':admit:'+st.id};},
+ fence:(ref,t)=>{const r=get(ref),p=owner(r);return {run_id:t.run_id,run_epoch:p?.runEpoch??t.run_epoch,...(!r||p&&(!p.approved||p.version!==t.plan_version||P.hash(p.plan_id)!==t.plan_hash||p.approved.plan_run_id!==t.run_id||p.status!=='building'&&p.status!=='completed')?{error:'work_identity_not_current'}:{})};},
+ availability:ref=>{const r=get(ref),p=owner(r);return {ok:!!r&&!r.wait&&(!p||p.status==='building'&&!p.attention),reason:r?.wait?.reason||p?.attention?.reason||(p?.attention?.kind==='paused'?'Paused; resume through the Plan or Goal owner.':'Plan not running.')};},
+ execute:(ref,t)=>{const r=get(ref),p=owner(r);if(p&&(p.status!=='building'||p.attention))return {ok:false,error:'plan_paused_or_not_building'};return advance(ref,p,t.todo_id);},
+ open:(ref,b)=>{const r=get(ref);return r?{ok:true,title:r.kind==='large'?'Exact hierarchy lookup':'Source-bound local file work',binding:clone(b),source_ref:r.source.id,outputs:Object.values(r.outputs),evidence:Object.values(r.evidence),owner_ref:ref}:{ok:false,error:'owner_unavailable'};},
+ wait:(ref,t,condition)=>({ok:same(get(ref)?.wait||null,condition)}),waitState:ref=>get(ref)?.wait||null,
+ condition:(ref,t,reason,state)=>({ok:state==='blocked'?get(ref)?.block===reason:!get(ref)?.block}),
+ cancel:(ref,b,receipt)=>({ok:get(ref)?.cancellations?.[b.binding_id]===receipt})
+});P.registerWorkOwner('b16_local',workOwner);
+function record(t,sourceArtifact,kind,steps,objective){const id='b16-work-'+(++store.seq),r={id,threadId:t.id,scope:G.scope(t.id),kind,steps:clone(steps),objective,source:{id:sourceArtifact.id,version:sourceArtifact.version,hash:digest(sourceArtifact.content)},outputs:{},evidence:{},attempts:[],todoIds:[],todoMap:{},originalTodoMap:{},planId:null,createdAt:now(),wait:null};TX.set(store.records,id,r);return r;}
+function seed(ctx,flow){if(!FLOWS[flow])return;const t=clone(ctx.state.threads.find(t=>t.id==='query')),id='batch16-'+flow+'-'+(++store.seq);Object.assign(t,{id,title:FLOWS[flow].title,projectId:'concept:b16:'+store.seq,worktreeId:'concept:b16:'+store.seq,pinned:false,archived:false,status:'ready',goalId:null,messages:[]});ctx.state.threads.push(t);
+ const data=flow==='large'?{kind:'hierarchy_fixture',leaf_rows:5000,groups:50}:{orders:[{id:'A-001',customer:'River, Inc.',quantity:3,unit_cents:'1999'},{id:'A-002',customer:'Ada "A" Chen',quantity:2,unit_cents:'10'},{id:'A-003',customer:'North\nSouth',quantity:7,unit_cents:'425'},{id:'A-004',customer:'München Studio',quantity:1,unit_cents:'12000'},{id:'A-005',customer:'River, Inc.',quantity:4,unit_cents:'333'}]},a=artifact(id+':source','Supplied customer orders.json',JSON.stringify(data,null,2),t);a.provenance='Supplied local exercise input, not fetched or generated by a provider.';D.artifacts.push(a);store.sessions[t.id]={flow,guide:true,sourceId:a.id,workId:null};
+ Object.assign(ctx.state,{historyMode:'closed',menu:null,dialog:null,hover:null,editorTabs:[],activeEditor:null,editorRevealed:false,demoOpen:false});ctx.state.activity.open=false;ctx.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};ctx.switchThread(t.id);ctx.state.mode=flow==='large'?'Chat':'Plan';ctx.state.composer=flow==='large'?'Open the 5,000-item hierarchy fixture, and look up the final item by exact identity.':'Create a Plan to produce a customer CSV and an independent summary in parallel, then check both against the unchanged source.';ctx.renderApp();
+}
+function large(r){const list=[];for(let group=0;group<50;group++){const pid=r.id+':group:'+group;list.push({todo_id:pid,thread_id:r.threadId,project_id:r.scope.projectId,title:'Customer records '+(group*100+1)+'–'+((group+1)*100),display_order:group,parent_todo_id:null,depends_on:[],status:'pending'});for(let n=0;n<100;n++){const i=group*100+n+1,id=r.id+':catalog-'+String(i).padStart(5,'0');list.push({todo_id:id,thread_id:r.threadId,project_id:r.scope.projectId,parent_todo_id:pid,display_order:n,depends_on:[],title:i===5000?'Final item 5000 · exact identity lookup':'Customer record '+String(i).padStart(5,'0'),status:'pending',...(i===5000?{expected_outcome:r.steps[0].outcome,outcome_owner:'b16_local',workflow_ref:r.id,run_id:r.id,run_epoch:1}:{})});if(i===5000){TX.set(r,'todoIds',[id]);TX.set(r,'todoMap',{catalog:id});TX.set(r,'originalTodoMap',{catalog:id});}}}return T.replaceThreadList(r.threadId,{items:list},{});}
+R.composer.preSendHooks.unshift((ctx,t,raw)=>{const s=store.sessions[t.id];if(!s||s.workId||R.composer.destination&&R.composer.destination.kind!=='assistant')return false;
+ const out=TX.run(()=>{const a=art(s.sourceId),steps=s.flow==='large'?[{id:'catalog',title:'Look up the last item',outcome:'The complete hierarchy resolves item 5000 exactly once by stable identity.',deps:[]}]:STEPS,r=record(t,a,s.flow==='large'?'large':'parallel',steps,raw);TX.set(t,'messages',t.messages.concat({id:r.id+':request',role:'user',type:'text',body:raw}));if(s.flow==='large'){const made=large(r);if(!made.ok)return made;}else{const made=P.createFromWorkRequest({threadId:t.id,explicitRequest:true,workRef:{kind:'b16_local',ref:r.id}});if(!made.ok)return made;TX.set(r,'planId',made.planId);}
+ TX.set(s,'workId',r.id);TX.set(t,'messages',t.messages.concat({id:r.id+':workspace',role:'assistant',type:'b16-work',workId:r.id}));return {ok:true};});if(!out.ok){ctx.toast('Request not admitted',out.error);return {claimed:true,preserveComposer:true};}return {claimed:true,preserveComposer:false};});
+function restructure(ref,expected){const r=get(ref),p=owner(r);if(!r||!p||!same(expected,{version:p.version,hash:P.hash(p.plan_id),plan_run_id:p.approved?.plan_run_id,list_revision:T.revisionOf(r.threadId)}))return {ok:false,error:'stale_restructure_preview'};
+ const list=T.get(r.threadId)||[],target=list.find(t=>t.run_id===p.approved.plan_run_id&&t.plan_step_ids.includes('csv'));if(!target||target.status!=='in_progress'||r.restructure)return {ok:false,error:'one_active_csv_required'};
+ return TX.run(()=>{const newId=target.todo_id+':refined',candidate=clone(list).filter(t=>t.todo_id!==target.todo_id);for(const t of candidate)t.depends_on=t.depends_on.map(id=>id===target.todo_id?newId:id);
+ candidate.push({todo_id:newId,thread_id:r.threadId,project_id:r.scope.projectId,title:'Write the CSV · retain the admitted attempt',parent_todo_id:target.parent_todo_id,depends_on:target.depends_on,parallel_group_id:target.parallel_group_id,display_order:target.display_order,expected_outcome:target.expected_outcome});
+ const before=clone(T.bindings(r.threadId)),out=T.replaceThreadList(r.threadId,{items:candidate},{mode:'restructure',expected_revision:expected.list_revision,rebind:{[target.todo_id]:newId}});if(!out.ok)return out;
+ const mapped=P.rebindTodoMapping(p.plan_id,expected,out.disposition);if(!mapped.ok)return mapped;
+ if(!same(before,T.bindings(r.threadId)))return {ok:false,error:'binding_identity_changed'};
+ TX.set(r,'restructure',{disposition:out.disposition,original_binding:before.find(b=>b.todo_id===target.todo_id),at:now(),source_hash:r.source.hash,plan_hash:P.hash(p.plan_id)});return {ok:true,disposition:out.disposition};});}
+function attachAccountPlan(p,t){const a=artifact(p.plan_id+':account-source','Account refresh input.json',JSON.stringify({selected:{provider:'Example provider',account:'Personal'},models:[{provider:'Example provider',account:'Team',id:'same-model'},{provider:'Example provider',account:'Personal',id:'same-model'},{provider:'Other provider',account:'Personal',id:'other-model'}]},null,2),t);a.provenance='Supplied local account-selection test input; no live provider query.';D.artifacts.push(a);const steps=p.revisions[p.version].filter(b=>b.t==='plan_step').map(b=>({id:b.plan_step_id,title:b.title,outcome:b.text,deps:b.depends_on||[]})),r=record(t,a,'account',steps,'Keep account selection stable across refresh and reorder.');r.planId=p.plan_id;p.project_id=t.projectId||'pm';p.workRef={kind:'b16_local',ref:r.id};}
+
+// The supplied BrainStorm example executes an actual Blob Worker after explicit
+// Plan Build. These measurements describe this browser, never all target devices.
+const SEARCH_WORKER='self.onmessage = ({data}) => { const start=performance.now(); const ids=data.rows.filter(r=>r.label.toLowerCase().includes(data.query.trim().toLowerCase())).map(r=>r.id); self.postMessage({request_id:data.request_id,ids,worker_ms:performance.now()-start}); };';
+function searchInput(r){const x=source(r);if(!Array.isArray(x.rows)||x.rows.length!==2||!x.rows.every(o=>typeof o.id==='string'&&typeof o.label==='string')||!same(x.rows.map(o=>o.id),['z','a'])||x.query!==' alpha ')throw Error('unsupported_local_search_fixture');return x;}
+function computedSearch(r,stage){
+ const x=searchInput(r);
+ if(stage==='snapshot')return JSON.stringify({rows:x.rows,query:x.query,source_hash:r.source.hash,transport:'local message clone; no network',rank:x.rows.map(o=>o.id)},null,2);
+ const trace=r.workerTrace;
+ if(!trace||trace.source_hash!==r.source.hash||trace.worker_source!==SEARCH_WORKER||!same(trace.responses.map(x=>x.request_id),[1,2])||!same(trace.responses[0].ids,['z','a'])||!same(trace.responses[1].ids,['z'])||!same(trace.discarded_request_ids,[1])||!same(trace.accepted_ids,['z'])||trace.responses.some(x=>!Number.isFinite(x.worker_ms)||x.worker_ms<0||!Number.isFinite(x.round_trip_ms)||x.round_trip_ms<0))throw Error('worker_result_not_proved');
+ if(stage==='query')return JSON.stringify(trace,null,2);
+ const q=art(r.outputs.query),m=r.measurement;
+ if(!q||q.content!==JSON.stringify(trace,null,2)||!m||m.source_hash!==r.source.hash||!same(m.fallback_ids,['z','a'])||m.local_samples_ms.length!==5||m.local_samples_ms.some(x=>!Number.isFinite(x)||x<0)||m.worker_report_hash!==digest(q.content))throw Error('search_measurement_not_proved');
+ return JSON.stringify(m,null,2);
+}
+function measureSearch(r){
+ const x=searchInput(r),samples=[];let fallback;
+ for(let n=0;n<5;n++){const start=performance.now();fallback=x.rows.filter(row=>row.label.toLowerCase().includes(x.query.trim().toLowerCase())).map(row=>row.id);samples.push(performance.now()-start);}
+ TX.set(r,'measurement',{source_hash:r.source.hash,worker_report_hash:digest(art(r.outputs.query).content),local_samples_ms:samples,fallback_ids:fallback,rollback:'Disable the worker and use the local filter; ranking and padded query checked again.',device:navigator.userAgent,logical_processors:navigator.hardwareConcurrency,scope:'This browser session only. Two-row correctness fixture, not a representative performance benchmark or cross-device certification.',conclusion:'No speed improvement is claimed; wider target-device measurements remain outside this local concept proof.'});
+}
+function dispatchSearch(r,t){
+ if(r.pendingWorker)return {ok:true,pending:true};
+ const p=owner(r),b=T.bindingsFor(r.threadId,t.todo_id).find(b=>b.state==='running'),ticket=T.capture(r.threadId,t.todo_id);if(!b||p?.attention)return {ok:false,error:'worker_not_eligible'};
+ let input;try{input=searchInput(r);}catch(e){return {ok:false,error:e.message};}
+ const request={ticket,started:performance.now(),source_hash:r.source.hash},url=URL.createObjectURL(new Blob([SEARCH_WORKER],{type:'text/javascript'}));let worker;
+ try{worker=new Worker(url);}catch(e){URL.revokeObjectURL(url);return {ok:false,error:'worker_unavailable:'+e.message};}URL.revokeObjectURL(url);r.pendingWorker=request;
+ const trace={source_hash:r.source.hash,worker_source:SEARCH_WORKER,device:navigator.userAgent,requests:[{request_id:1,query:input.query},{request_id:2,query:'Zeta'}],responses:[],discarded_request_ids:[],accepted_ids:[],latest_request_id:2};
+ const close=()=>{worker.terminate();if(r.pendingWorker===request)r.pendingWorker=null;};
+ worker.onerror=e=>{close();r.workerError='worker_error:'+e.message;};
+ worker.onmessage=({data})=>{
+  if(r.pendingWorker!==request)return worker.terminate();
+  if(!same(ticket,T.capture(r.threadId,t.todo_id))||p.status!=='building'||p.attention){close();r.rejectedCallbacks=(r.rejectedCallbacks||[]).concat({ticket,reason:'stale_worker_callback',at:now()});return;}
+  trace.responses.push({...data,round_trip_ms:performance.now()-request.started});
+  if(data.request_id!==trace.latest_request_id)trace.discarded_request_ids.push(data.request_id);else trace.accepted_ids=data.ids;
+  if(trace.responses.length!==2)return;
+  close();const out=TX.run(()=>{TX.set(r,'workerTrace',clone(trace));const content=computedSearch(r,'query');return finishEffect(r,t,b,itemStage(r,t,b),content,ticket);});
+  if(!out.ok)r.workerError=out.error;E.ctx().renderApp();
+ };
+ for(const q of trace.requests)worker.postMessage({...q,rows:input.rows});return {ok:true,pending:true};
+}
+function attachBrainstormPlan(p,t,origin){
+ const input=origin?.brainstorm?.input?.localQueryFixture;if(!input||!same(Object.keys(input).sort(),['query','rows']))return;
+ const blocks=p.revisions[p.version].filter(b=>b.t==='plan_step');if(!same(blocks.map(b=>b.plan_step_id),['snapshot','query','measure']))return;
+ const a=artifact(p.plan_id+':local-search-input','Supplied local search input.json',JSON.stringify(input,null,2),t);a.provenance='Exact typed local input frozen by the supplied BrainStorm example. No code is evaluated from prose.';D.artifacts.push(a);
+ const steps=blocks.map(b=>({id:b.plan_step_id,title:b.title,outcome:b.text,deps:b.depends_on||[]})),r=record(t,a,'brainstorm_worker',steps,origin.brainstorm.input.objective);r.planId=p.plan_id;p.project_id=t.projectId||'pm';p.workRef={kind:'b16_local',ref:r.id};
+}
+
+// A second bounded adapter for the supplied Chat Room Search-button example.
+// It creates an executable standalone HTML result, then drives its real DOM
+// handlers in a local frame. Arbitrary promoted conclusions have no executor.
+const ROOM_HTML='<!doctype html><html lang="en"><meta charset="utf-8"><title>Local search entry</title><body><label>Search <input id="query" type="search"></label><button id="search" type="button">Search</button><label><input id="shortcuts" type="checkbox">Enable / shortcut</label><output id="result"></output><script>const query=document.getElementById("query"),button=document.getElementById("search"),shortcut=document.getElementById("shortcuts");button.onclick=()=>{query.focus();document.getElementById("result").textContent="Search requested: "+query.value;};document.addEventListener("keydown",e=>{if(e.key==="/"&&shortcut.checked&&!e.target.closest("input,textarea,select,[contenteditable]")){e.preventDefault();query.focus();}});<\/script></body></html>';
+function computedRoom(r,stage){
+ const input=source(r);if(input.topic!=='Make search easier to reach'||!input.conclusion.includes('Search'))throw Error('unsupported_room_conclusion');
+ if(stage==='implement')return ROOM_HTML;
+ const a=art(r.outputs.implement),v=r.roomCheck;if(!a||a.content!==ROOM_HTML||!v||v.source_hash!==r.source.hash||v.output_hash!==digest(a.content)||v.checks.length!==6||v.checks.some(x=>x.pass!==true))throw Error('search_ui_not_proved');return JSON.stringify(v,null,2);
+}
+function dispatchRoomCheck(r,t){
+ if(r.pendingFrame)return {ok:true,pending:true};
+ const p=owner(r),b=T.bindingsFor(r.threadId,t.todo_id).find(b=>b.state==='running'),ticket=T.capture(r.threadId,t.todo_id);if(!b||p.attention)return {ok:false,error:'check_not_eligible'};
+ const output=art(r.outputs.implement);if(!output||output.content!==ROOM_HTML)return {ok:false,error:'search_output_missing'};
+ const frame=document.createElement('iframe'),pending={ticket};r.pendingFrame=pending;frame.setAttribute('sandbox','allow-scripts allow-same-origin');frame.title='Bounded local search output check';frame.style.cssText='position:fixed;left:-2000px;width:400px;height:240px;visibility:hidden';
+ frame.onload=()=>{
+  const close=()=>{frame.remove();if(r.pendingFrame===pending)r.pendingFrame=null;};
+  if(r.pendingFrame!==pending||!same(ticket,T.capture(r.threadId,t.todo_id))||p.status!=='building'||p.attention){close();r.rejectedCallbacks=(r.rejectedCallbacks||[]).concat({ticket,reason:'stale_frame_callback',at:now()});return;}
+  try{
+   const d=frame.contentDocument,w=frame.contentWindow,button=d.getElementById('search'),query=d.getElementById('query'),toggle=d.getElementById('shortcuts'),checks=[],check=(name,pass)=>checks.push({name,pass:!!pass});
+   check('Visible Search button remains in the output',button.textContent==='Search'&&button.getBoundingClientRect().width>0);query.value='alpha';button.click();check('Actual Search handler focuses input and returns query',d.activeElement===query&&d.getElementById('result').textContent==='Search requested: alpha');
+   query.blur();toggle.checked=false;const off=new w.KeyboardEvent('keydown',{key:'/',bubbles:true,cancelable:true});d.body.dispatchEvent(off);check('Shortcut disabled by default does not focus input',d.activeElement!==query&&!off.defaultPrevented);
+   toggle.checked=true;const on=new w.KeyboardEvent('keydown',{key:'/',bubbles:true,cancelable:true});d.body.dispatchEvent(on);check('Opted-in shortcut uses the actual handler',d.activeElement===query&&on.defaultPrevented);
+   const editing=new w.KeyboardEvent('keydown',{key:'/',bubbles:true,cancelable:true});query.dispatchEvent(editing);check('Slash stays literal in editable input',!editing.defaultPrevented);
+   toggle.checked=false;button.click();check('Disabling shortcut preserves the visible Search route',d.activeElement===query&&button.isConnected);
+   const result={source_hash:r.source.hash,output_hash:digest(output.content),checks,scope:'Actual DOM handlers in a local frame; not a deployed project, provider run, native UI or persistent settings proof.'};close();
+   const out=TX.run(()=>{TX.set(r,'roomCheck',result);const content=computedRoom(r,'verify');return finishEffect(r,t,b,itemStage(r,t,b),content,ticket);});if(!out.ok)r.workerError=out.error;E.ctx().renderApp();
+  }catch(e){close();r.workerError='frame_check_failed:'+e.message;}
+ };
+ frame.srcdoc=ROOM_HTML;document.body.appendChild(frame);return {ok:true,pending:true};
+}
+function attachRoomPlan(p,t,origin,message){
+ if(origin?.chatRoom?.input?.topic!=='Make search easier to reach'||!message?.body.includes('Search'))return;
+ const blocks=p.revisions[p.version].filter(b=>b.t==='plan_step');if(!same(blocks.map(b=>b.plan_step_id),['implement','verify']))return;
+ const a=artifact(p.plan_id+':source','Selected Search conclusion.json',JSON.stringify({topic:origin.chatRoom.input.topic,conclusion:message.body,message_id:message.id,run_id:origin.id,discussion:origin.messages.map(m=>({id:m.id,body:m.body}))},null,2),t);a.provenance='Exact selected conclusion and retained discussion from the supplied Chat Room example.';D.artifacts.push(a);
+ const steps=blocks.map(b=>({id:b.plan_step_id,title:b.title,outcome:b.text,deps:b.depends_on||[]})),r=record(t,a,'room_search',steps,message.body);r.planId=p.plan_id;p.project_id=t.projectId||'pm';p.workRef={kind:'b16_local',ref:r.id};
+}
+const btn=(action,label,r,extra='')=>'<button class="soft-button" data-action="'+action+'"'+(r?' data-work="'+r.id+'"':'')+' '+extra+'>'+E.ctx().esc(label)+'</button>';
+function visual(r){const p=owner(r),ts=leaves(r),i=ts.findIndex(t=>t.status==='in_progress'),done=ts.filter(t=>t.status==='completed').length,complete=inspect(r.id,p).complete;return {ownerProjection:true,statusLabel:complete?'Completed':p?.status==='canceled'?'Canceled':p?.attention?.kind==='paused'?'Paused':r.wait?'Waiting':'Working',workId:r.id,runId:r.id,steps:r.steps.filter(s=>!r.steps.some(x=>x.parent===s.id)).map((s,n)=>({id:'b16-'+s.id,uid:r.id+':'+s.id,kind:s.id==='validate'?'testing':'file',label:s.title,icon:'file',verb:s.title,detail:s.outcome,startAt:n*2,dur:2,rows:[{at:0,text:ts.find(t=>itemStage(r,t)?.id===s.id)?.status||'pending'}],evidence:r.evidence[s.id]?[r.evidence[s.id]]:[],stat:ts.find(t=>itemStage(r,t)?.id===s.id)?.status||'pending'})),step:Math.max(0,i>=0?i:Math.min(done,2)),clock:done*2,running:p?.status==='building'&&!p.attention,completed:complete,expanded:false,elapsed:r.attempts.length?Math.max(0,Math.floor((Date.now()-Date.parse(r.attempts[0].admitted_at))/1000)):0,started:!!p?.approved};}
+function workspace(ctx,r){if(!r)return '<p>Work unavailable.</p>';const p=owner(r);return '<article class="b16-workspace"><header><small>LOCAL FILE WORK · SESSION MEMORY</small><h1>'+ (r.kind==='large'?'The complete hierarchy':'Two outputs. One source.')+'</h1><p>'+(r.kind==='large'?'5,050 preserved items; only the final identity lookup is executable. The other 4,999 leaves are rendering fixtures, not completed jobs.':'CSV and customer summary can be admitted together. The later-listed summary may finish first. An independent check is its own To-Do.')+'</p></header><div class="b16-actions">'+btn('b16-source','Open unchanged source',r)+btn('b16-todos','Open To-Dos',r)+(p?btn('b16-plan','Open Plan',r):'')+'</div><div class="b16-output-grid">'+r.steps.filter(s=>!r.steps.some(t=>t.parent===s.id)).map(s=>'<section><h2>'+ctx.esc(s.title)+'</h2><p>'+ctx.esc(s.outcome)+'</p>'+(r.outputs[s.id]?'<strong>'+ctx.esc(art(r.outputs[s.id]).name)+'</strong><div class="b16-actions">'+btn('b16-artifact','Open output',r,'data-artifact="'+r.outputs[s.id]+'"')+btn('b16-download','Download',r,'data-artifact="'+r.outputs[s.id]+'"')+'</div>':'<small>Not produced yet.</small>')+'</section>').join('')+'</div>'+(p?'<section class="b16-restructure"><h2>Refine current work</h2><p>Rebind the active CSV item to a clearer list entry. Preserve the admitted work, attempt, outcome, Plan bytes and dependency edges.</p>'+btn('b16-preview-restructure','Preview list refinement',r)+(r.preview?'<div class="b16-preview"><p>The CSV work will retain its exact binding. Other work stays in place. No Plan revision is created.</p>'+btn('b16-apply-restructure','Apply refinement',r)+btn('b16-cancel-preview','Cancel',r)+'</div>':'')+(r.restructure?'<p role="status">List refined. Exact work bindings and approved Plan bytes preserved.</p>':'')+(r.lastError?'<p role="status">'+ctx.esc(r.lastError)+'</p>':'')+'</section>':'')+'<details data-k="b16-evidence:'+r.id+'"><summary>Source, attempts and evidence</summary><pre>'+ctx.esc(JSON.stringify({source:r.source,outputs:r.outputs,evidence:r.evidence,attempts:r.attempts,restructure:r.restructure},null,2))+'</pre></details></article>';}
+E.slot('transcriptMessage',ctx=>{if(ctx.m?.type!=='b16-work')return '';const r=get(ctx.m.workId);if(!r)return '<p>Local work is unavailable.</p>';return '<section class="b16-entry"><div><strong>'+(r.kind==='large'?'Hierarchy and exact identity':'Parallel customer deliverables')+'</strong><p>'+(r.kind==='large'?'5,050 preserved rows · one bounded lookup · no job-count claim.':'Real local files · shared To-Dos · immutable Plan.')+'</p></div><div class="b16-actions">'+btn('b16-open','Open workspace',r)+btn('b16-todos','To-Dos',r)+'</div>'+(owner(r)?.approved?ctx.renderOwnedWorking({id:'b16-animation:'+r.id,workId:r.id},visual(r)):'')+'</section>';});
+E.slot('workingOwnerControls',ctx=>get(ctx.rec.workId)?btn('b16-open','Files',get(ctx.rec.workId)):'');
+E.slot('editorTabLabel',ctx=>ctx.editorId?.startsWith('b16-work:')?'Customer deliverables':'');E.slot('editorDocument',ctx=>ctx.editorId?.startsWith('b16-work:')?workspace(ctx,get(ctx.editorId.slice(9))):'');
+E.slot('composerBelow',ctx=>{const s=store.sessions[ctx.thread.id];return s?.guide?'<div class="b16-guide"><span>'+ctx.esc(FLOWS[s.flow].title)+' · '+(s.workId?'Use the ordinary Plan, workspace and Activity controls.':'Send to create the requested Plan or hierarchy. Nothing is executing yet.')+'</span>'+btn('b16-dismiss','Dismiss')+'</div>':'';});
+E.action('b16-start',(ctx,b)=>{seed(ctx,b.dataset.flow);return true;});E.action('b16-dismiss',ctx=>{const s=store.sessions[ctx.thread.id];if(s)s.guide=false;ctx.renderApp();return true;});
+const action=(name,fn)=>E.action(name,(ctx,b)=>{const r=get(b.dataset.work);if(r&&r.threadId===ctx.thread.id)fn(ctx,r,b);return true;});
+action('b16-open',(ctx,r)=>ctx.openEditor('b16-work:'+r.id));action('b16-source',(ctx,r)=>ctx.openEditor(r.source.id));action('b16-plan',(ctx,r)=>r.planId&&P.openDetails(ctx,r.planId));action('b16-todos',(ctx,r)=>{Object.assign(ctx.state.activity,{open:true,domain:'todo',scope:'focus'});if(innerWidth<=1100)ctx.state.editorRevealed=false;ctx.renderApp();});action('b16-artifact',(ctx,r,b)=>{if(Object.values(r.outputs).includes(b.dataset.artifact))ctx.openEditor(b.dataset.artifact);});
+action('b16-download',(ctx,r,b)=>{if(!Object.values(r.outputs).includes(b.dataset.artifact))return;const a=art(b.dataset.artifact),url=URL.createObjectURL(new Blob([a.content],{type:'text/plain;charset=utf-8'})),link=document.createElement('a');link.href=url;link.download=a.name;link.click();setTimeout(()=>URL.revokeObjectURL(url),30000);});
+action('b16-preview-restructure',(ctx,r)=>{const p=owner(r),csv=leaves(r).find(t=>itemStage(r,t)?.id==='csv');r.lastError=null;if(!p?.approved||csv?.status!=='in_progress'||r.restructure)r.lastError='Refinement requires an admitted CSV attempt still in progress. Pause after admission to inspect it.';else r.preview={version:p.version,hash:P.hash(p.plan_id),plan_run_id:p.approved.plan_run_id,list_revision:T.revisionOf(r.threadId)};ctx.renderApp();});
+action('b16-cancel-preview',(ctx,r)=>{r.preview=null;ctx.renderApp();});action('b16-apply-restructure',(ctx,r)=>{const out=restructure(r.id,r.preview);if(!out.ok)r.lastError=out.error;else{r.preview=null;r.lastError=null;}ctx.renderApp();});
+const gallery=PM56_REPAIR_DEMOS,old=gallery.gallery;gallery.gallery=ctx=>'<section class="demo-section"><h3>To-Do graphs & progress · Batch 16</h3><div class="demo-section-body">'+Object.entries(FLOWS).map(([id,f])=>'<button class="demo-trigger" data-action="b16-start" data-flow="'+id+'"><strong>'+ctx.esc(f.title)+'</strong><small>'+ctx.esc(f.description)+'</small></button>').join('')+'</div></section>'+old(ctx);
+window.PM56_B16_WORK={get,seed,inspect,advance,validate,restructure,attachAccountPlan,attachBrainstormPlan,attachRoomPlan,session:tid=>clone(store.sessions[tid||E.ctx().thread.id]||null),snapshot:tid=>clone(get(store.sessions[tid||E.ctx().thread.id]?.workId)||null)};
 })();
 </script>
   <script>(() => {
@@ -44067,9 +44248,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const api=window.PM56_TODOS;
       if(api && api.get){
         const items=api.get(tid);
-        if(items) return items
-          .filter(x=>!items.some(y=>y.parent_todo_id===x.todo_id))   /* leaves only */
-          .map(x=>({id:x.todo_id, threadId:tid, status:x.status, label:x.title}));
+        if(items) {
+          // B16: project the shared owner's leaves; no quadratic peer scan.
+          const leaves=api.leaves ? api.leaves(tid) : (()=>{
+            const parents=new Set(items.map(x=>x.parent_todo_id).filter(Boolean));
+            return items.filter(x=>!parents.has(x.todo_id));
+          })();
+          return leaves.map(x=>({id:x.todo_id, threadId:tid, status:x.status, label:x.title}));
+        }
       }
       return (D.todos||[]).filter(t=>t.threadId===tid);
     })();

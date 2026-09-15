@@ -1,0 +1,191 @@
+{
+  "batch": 16,
+  "label": "Batch 16 frozen HTML concept; bounded local verification with limitations",
+  "status": "implemented_and_locally_verified",
+  "release_verified": true,
+  "candidate_root": "/home/oai/pm-worktrees/b16-redo-20260914/Concepts/chat-assistant-concepts/5.6 Pro",
+  "pinned_main": "86a3cbf28f63dcfdf98a8e20269c994f470b60d8",
+  "html_sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+  "changed_files": [
+    {
+      "path": "BATCH_16_COVERAGE.csv",
+      "sha256": "9da1cd5515a053bb817f5e47d3bdaf5161b13320ea48a8596a8afab6ca841309",
+      "baseline_sha256": null
+    },
+    {
+      "path": "BATCH_16_COVERAGE.json",
+      "sha256": "c08544a9afefab4767c5354a2f5056cbff1144bc97529a12b73eed2c984599d9",
+      "baseline_sha256": null
+    },
+    {
+      "path": "BATCH_16_OWNER_REVIEW.md",
+      "sha256": "5dbd83e3a4154e46ce5675d9ab5695983fb0da03be8a950f57373f1c819909e5",
+      "baseline_sha256": null
+    },
+    {
+      "path": "BATCH_16_README.md",
+      "sha256": "4f58c16ddac6d89bbfe447ee2e0de92413fc0302aa5a0e3378ea0bc1f30e9ef2",
+      "baseline_sha256": null
+    },
+    {
+      "path": "BATCH_16_SOURCE_REVIEW.md",
+      "sha256": "c7a6e3f78e9ce0b2f4dad1ef941fdafe4f92fcd8d0a1395d90169ca5d09efddd",
+      "baseline_sha256": null
+    },
+    {
+      "path": "BATCH_16_VERIFICATION.json",
+      "sha256": "b7f355b004c2fa2ee9345d8e87de916c8c7ccf4b45f99368700301438ead0ff2",
+      "baseline_sha256": null
+    },
+    {
+      "path": "BATCH_16_WIRING.md",
+      "sha256": "e1d35066222f25c497d4c8f6eeb8dece210312ab586d2caa4ad1f7445019d900",
+      "baseline_sha256": null
+    },
+    {
+      "path": "PM_Chat_Assistant_5.6_Pro_Standalone.html",
+      "sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "baseline_sha256": "fbc28efc7b8e1d041d0158e454a05e1eb97e2aba46c32c51937ce5b4420dec1c"
+    },
+    {
+      "path": "app.js",
+      "sha256": "6b6162b1d90d7e4fc335b3498cdbd5e4109839b088a7cab41b2c12fe3c08053f",
+      "baseline_sha256": "eea16188b5d78478dc3ed649d81206240dbf14b64284a48ad46335448754ea8a"
+    },
+    {
+      "path": "brainstorm-demo-batch4.js",
+      "sha256": "66337030b4f5822baec8ebac1cd9b1ca4b4da0c1f19bc546d8be5186d54b38a7",
+      "baseline_sha256": "4b0275448569bc39e6c50097f3e16cfa01cc807a5042ab8ff16f42749b7a3d1d"
+    },
+    {
+      "path": "build.py",
+      "sha256": "5f85864de6ec88b32f6dfaa8a0033947614b0094b9105b3c73c004b2d23f0508",
+      "baseline_sha256": "7e70ce661284f6829cafb51fc6c63250e5ddbcf5fce103b07682989f2590f098"
+    },
+    {
+      "path": "goal-work-batch15.js",
+      "sha256": "c90648977c476ac2c105d676450a57d5cb1501f86300bf599e092acefe817b3c",
+      "baseline_sha256": "bd50223f198f2a8e5748d3554ab86e5d7febf4ee39756fe444834601de74a6ed"
+    },
+    {
+      "path": "index.html",
+      "sha256": "6492fe76b4f08c53acc6b0d884462eed92aaa0ad727e1d62ab62e0d7e1fd271b",
+      "baseline_sha256": "fbc28efc7b8e1d041d0158e454a05e1eb97e2aba46c32c51937ce5b4420dec1c"
+    },
+    {
+      "path": "plan-demo-batch1.js",
+      "sha256": "8f86996a819c705706c3a6b24cb1fe152a3e08eda386f670fbfc43d48f1f27aa",
+      "baseline_sha256": "517a5ada53a0e766d7fc0e09adc481d8b062e8afa504fa40aa4347a4d0c19392"
+    },
+    {
+      "path": "plans.css",
+      "sha256": "947cb18ea16a0fe9a9947417221acec1537ca5bb8f98e2f26adafbc35289b58f",
+      "baseline_sha256": "1ddc944a76b1347b4f6a492af8b2e779092091fe3ced8ab1adc2f3c6b03f0856"
+    },
+    {
+      "path": "plans.js",
+      "sha256": "f73d02578e49d4db2823667b25edb7aa973399692d10242d2555d824468be266",
+      "baseline_sha256": "57152cbff4b3d414f7b1c5e75c81d5bddaf479a9bead3b491c4922ebf2d230f7"
+    },
+    {
+      "path": "tests/b10/qa/regression-review.py",
+      "sha256": "df4a43e9bbc1461499f0c8f47fc621bad025435fa9646a80a861827873321353",
+      "baseline_sha256": "2b9c572d4f512c4d506a04bdcb2726af431b1eb6109cd21812bcf44b5bd1f788"
+    },
+    {
+      "path": "tests/b16/boundaries.py",
+      "sha256": "25a26997f839ee100c2ab96ad33c429b311702009b2cad99f4dcbd924614c7e2",
+      "baseline_sha256": null
+    },
+    {
+      "path": "tests/b16/browser.py",
+      "sha256": "cbfec62301f172048cd2dd06e08c8c34eb5f56d4c51914d8bc11b7eb9527e308",
+      "baseline_sha256": null
+    },
+    {
+      "path": "tests/b16/controller.js",
+      "sha256": "cfe5f6ca9bf2ff9bffc327ee8b0f8e1db57a41bd1c80f8b710a25c1f9e05bd1b",
+      "baseline_sha256": null
+    },
+    {
+      "path": "tests/b16/frames.py",
+      "sha256": "dde0c3c9c7cc889526daf4378125d2a205fd0996bb5998a8ce35bd04e47bc4e5",
+      "baseline_sha256": null
+    },
+    {
+      "path": "tests/b16/graph.js",
+      "sha256": "610bb657bab2a6fecf4979425fd42677f328167dd36ac4121496392a686411fb",
+      "baseline_sha256": null
+    },
+    {
+      "path": "tests/b16/handler-cases.js",
+      "sha256": "1b5e022d774b556701edf6f480ee2545145b0aaf24a9c6a55e521f5ac54f69c0",
+      "baseline_sha256": null
+    },
+    {
+      "path": "tests/b16/installer.py",
+      "sha256": "958b9e3d9074b0ce3eecc9dd26efcc67a7bb0837d7a67a3818aa32f668bd2f41",
+      "baseline_sha256": null
+    },
+    {
+      "path": "tests/b16/package/apply_update.py",
+      "sha256": "ccce4a095a8e36f697e20c3ca0e4d68bc0df84e0eb0c158102bedac4eeba1bc1",
+      "baseline_sha256": null
+    },
+    {
+      "path": "tests/b16/package/build_packages.py",
+      "sha256": "63b54c6cd38ffed566ad1c3bce07a22b29c4481bc02e4098d24f984ee14e48ee",
+      "baseline_sha256": null
+    },
+    {
+      "path": "tests/b16/package/check_cumulative.py",
+      "sha256": "6565ae0ea8470cb78cf0f0dca4f1045af6fff3ddd2649678dcfee881005b8d4d",
+      "baseline_sha256": null
+    },
+    {
+      "path": "tests/b16/run.py",
+      "sha256": "b73e4981464e67903a278653bf68060d76d5cb10926e075800ebe68a0a8fe6b7",
+      "baseline_sha256": null
+    },
+    {
+      "path": "todo-work-batch16.css",
+      "sha256": "0eb4d84685a3765492f49dc60aa4b031b9d05b50f8a2d730e2783b24e436d6cd",
+      "baseline_sha256": null
+    },
+    {
+      "path": "todo-work-batch16.js",
+      "sha256": "c68af3a89eee2005f7b7980b33e863106563509994be817b61d0d6d865e3c78b",
+      "baseline_sha256": null
+    },
+    {
+      "path": "todos.css",
+      "sha256": "4a4cc62c70d2b551e25a5184d4abc32b4a5c6e14ff7b12f02457f5947e281133",
+      "baseline_sha256": "5e4a03f182c4c53435c2a4db019ec51760f5cc78c0b5c8452d568fc8bf4e3eba"
+    },
+    {
+      "path": "todos.js",
+      "sha256": "d5b3253a3edf9079eb7508f531d4b990cee2cc37e4b6d9b0ec581a8748028876",
+      "baseline_sha256": "a580e2da88c1a4b808fca59d2ba2ce21c854192b83f2f32a0e280407d11c4630"
+    }
+  ],
+  "implemented": [
+    "Fail-closed complete graph; exact work bindings; accepted item outcomes; atomic restructuring; pure Plan progress; uncapped virtual hierarchy/search; real parallel outputs and independent validation; source/Plan immutability; retained B1 account-selection, BrainStorm Worker and Chat Room Search-output Build adapters; source links restored; quadratic Activity scan removed"
+  ],
+  "intermediate_results": {
+    "graph_assertions": 78,
+    "controller_assertions": 122,
+    "handler_cases": 15,
+    "handler_assertions": 106,
+    "ordinary_layout_journeys": 9,
+    "layout_assertions": 192,
+    "recordings": 4,
+    "encoded_frames": 3427,
+    "consecutive_contact_sheets": 45
+  },
+  "pending": [],
+  "last_checked_archive": "pm-b16-UNVERIFIED-checkpoint-05.zip",
+  "next_step": "Apply only the guarded merge-only ZIP after its preflight; user review and repository landing remain separate. Do not start Batch 17.",
+  "checkpoint": "final-html-concept",
+  "current_defect": "No known failing functional or archive gate. Documented motion/capture, durable/native scope and nonfunctional whitespace limitations remain.",
+  "release_scope": "HTML concept only; final outer ZIP verification receipt is separate"
+}
