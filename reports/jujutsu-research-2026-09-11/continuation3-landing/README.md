@@ -41,9 +41,18 @@ stable node and edge references, identity preservation, and visibly stale or par
 declaring `has_more` with a null `next_cursor_ref`, two nodes sharing a `node_ref` with different `revision_ref`
 values, and a node carrying 1001 `parent_refs` behind `unbounded_hydration=false`.
 
-**Change.** Schema-enforced: `parent_refs` is bounded at 600, the adjacency budget the contract already applies to
-`edges`; and a `current` page declaring `has_more` must carry a non-null `next_cursor_ref`. One negative fixture.
-SCS-017 gains four acceptance criteria covering all four obligations.
+**Change.** Schema-enforced: a `current` page declaring `has_more` must carry a non-null `next_cursor_ref`, and
+`parent_refs` carries a finite per-node bound. One positive and two negative fixtures. SCS-017 gains four acceptance
+criteria covering all four obligations.
+
+**The parent bound is provisional.** The adjudication requires a finite parent-reference policy but reserves the
+number for the owner: "Exact adjacency bound/partial representation needs owner specification and cannot be inferred
+from the 600-edge cap alone", with "Do not impose a one-parent or arbitrary exact parent cap from the probe" in
+`excluded_scope`. The schema enforces a **provisional** bound of 600 `parent_refs` per node so the finite-bound
+obligation is not left unenforced, and SCS-017 says in canon that the number is provisional pending the owner's
+specification and is **not** derived from the 200-node page cap or the 600-edge adjacency cap. The exact bound, and
+how a node with more parents than the bound is represented, are open question `q-001` for Jared. An earlier version of
+this landing stated the bound as following from the edge budget; that derivation was withdrawn on independent review.
 
 **Partially enforced.** The count arithmetic and in-page `node_ref` uniqueness are relational rules JSON Schema
 cannot express. This repository evaluates such rules in `contract_semantic_failures` inside
@@ -93,14 +102,38 @@ conflicted with another thread's direction. Hashes are in `currentness-before-ed
 
 | Check | Result |
 | --- | --- |
-| `pm-new-contracts-verify.py` | pass, 0 findings, 30 pairs, positives 1028 to 1032, negatives 3338 to 3352 |
+| `pm-new-contracts-verify.py` | pass, 0 findings, 30 pairs, positives 1028 to 1033, negatives 3338 to 3353 |
 | `pm-shard-plans.py --check --config Plans/sharding_config.json` | pass, 98 docs, 2676 shards, 0 failures |
 | `pm-plan-index.py validate` | pass, 0 failures, 6643 PlanUnits, 25798 acceptance units |
-| `pm-bootstrap-ledger-validate.py` | fail on three pre-existing governance coverage omissions, 0 warnings, every ledger-internal check passing |
+| `pm-bootstrap-ledger-validate.py` | fail on three pre-existing governance coverage omissions, 0 warnings, every ledger-internal check passing (4 events, 4 atoms, 4 decisions, 4 corrections, 2 questions, 41 PlanUnits) |
 
 The ledger failure is the same class the F001 landing recorded in commit `1eb900ca2b`: neither owner doc is a
 `sharding_config` source on `origin/main`, and this branch changed no `sharding_config`, `Spec_Lock` or plan-graph
 file. Governance reseals belong to the designated Plans agent.
+
+## Open questions for Jared
+
+1. **`q-001` — the exact per-node parent-reference bound for a SourceGraph page, and how a node with more parents than
+   the bound is represented.** The adjudication reserved the number for the owner. This landing enforces a provisional
+   600 so the obligation is not unenforced, and says so in canon. Open.
+2. **`q-002` — a `source_control_contracts` branch in the contract semantic gate**, so F107's count arithmetic and
+   in-page `node_ref` uniqueness become enforced rather than owner obligations. **Answered and authorized** by Jared
+   on 2026-09-16, relayed by the reviewer; the follow-up adds the branch and removes the SCS-017 "unenforced"
+   statement. Agent-relayed authorization, not verifiable from inside this repository.
+
+Both are recorded as ledger question records in
+`Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections/records/questions.jsonl`.
+
+## Independent review
+
+Commit `b83abd9396` was independently reviewed on 2026-09-16 with verdict *fix first*. The review confirmed the four
+corrections in substance, reproduced every number in the table above, and found two blocking problems. Both are fixed
+in the second commit on this branch: the provisional parent bound above, and the F108 evidence attribution in
+`evidence-receipts.json`, which had cited `premium-J0021.json` and `premium-J0019.json` although neither contains F108
+content. The real chain is `final/independent-review.json#/candidates/2` plus the out-of-repository J0026-compare
+captures it records by path and hash. The same commit adds the parent-bound fixtures, the partial-enforcement clause
+in the ledger's `cor-002` and `dec-002`, both question records, and real work-window timestamps in place of the
+earlier placeholders.
 
 ## Claim boundary
 

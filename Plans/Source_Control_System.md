@@ -1077,9 +1077,13 @@ acceptance_criteria:
     `node_ref` is unambiguous within one page. Two nodes on the same page cannot share a `node_ref` while carrying
     different `revision_ref` values.
   - >-
-    Parent-reference expansion is finite. A node declares at most 600 `parent_refs`, the same adjacency budget the page
-    already applies to `edges`, so a bounded page cannot carry unbounded adjacency behind `unbounded_hydration=false`.
-    A parent may legitimately live on another page; presence in the same page is not required.
+    Parent-reference expansion is finite, so a bounded page cannot carry unbounded adjacency behind
+    `unbounded_hydration=false`. A finite bound is required; its exact value, and how a node with more parents than the
+    bound is represented, are reserved for the owner and are not settled here. The schema therefore enforces a
+    provisional bound of at most 600 `parent_refs` per node. That number is provisional pending the owner's
+    specification and is not derived from the 200-node page cap or the 600-edge adjacency cap; the open question is
+    recorded as `q-001` in `Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections`. A parent may
+    legitimately live on another page; presence in the same page is not required.
   - Static schema and fixtures keep `runtime_evidence_claimed=false` and establish no handler, adapter, native Slint behavior, performance result, scenario result, or readiness claim.
 validation_surfaces:
   - Plans/source_control_contracts.schema.json#/$defs/source_graph_projection

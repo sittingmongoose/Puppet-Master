@@ -28,12 +28,22 @@ independently, but accepted a page whose `returned_count` contradicted its node 
 `page_size`, a current page declaring `has_more` with a null `next_cursor_ref`, two nodes sharing a `node_ref` with
 different `revision_ref` values, and a node carrying unbounded `parent_refs` behind `unbounded_hydration=false`.
 
-Change: `parent_refs` is bounded by the page adjacency budget the contract already applies to `edges` (600), and a new
-conditional requires a non-null `next_cursor_ref` on a `current` page declaring `has_more`; one negative fixture is
-added. SCS-017 gains four acceptance criteria covering all four obligations. The count arithmetic and the in-page
-`node_ref` uniqueness rule are relational and JSON Schema cannot express them; they land as owner obligations and are
-recorded in `validation_surfaces` as awaiting a `source_control_contracts` branch in the contract semantic gate, which
-lives under `scripts/` outside this thread's edit scope.
+Change: a new conditional requires a non-null `next_cursor_ref` on a `current` page declaring `has_more`, and
+`parent_refs` carries a finite per-node bound. SCS-017 gains four acceptance criteria covering all four obligations.
+One positive and two negative fixtures are added.
+
+The adjudication requires a finite parent bound but reserves its exact value for the owner: "Exact adjacency
+bound/partial representation needs owner specification and cannot be inferred from the 600-edge cap alone", with
+"Do not impose a one-parent or arbitrary exact parent cap from the probe" in `excluded_scope`. The schema therefore
+enforces a **provisional** bound of 600 `parent_refs` per node, which is not derived from the 200-node page cap or the
+600-edge adjacency cap and is pending the owner's specification of the exact bound and of how a node with more parents
+than the bound is represented. That is open question `q-001` in this ledger. An earlier draft stated the bound as
+following from the edge budget; that derivation was withdrawn on independent review.
+
+The count arithmetic and the in-page `node_ref` uniqueness rule are relational and JSON Schema cannot express them;
+they land as owner obligations and are recorded in `validation_surfaces` as awaiting a `source_control_contracts`
+branch in the contract semantic gate, which lives under `scripts/` outside this thread's edit scope. That branch is
+question `q-002`, which Jared has since authorized.
 
 ## F108 — clone identity before native initialization
 
@@ -90,15 +100,21 @@ correction was dropped as already covered and none conflicted with another threa
 | `reports/jujutsu-research-2026-09-11/continuation3/final/historical-candidate-passages.json` | `b6d5b2f6d1252ddaf5527fc54ed06a5a011403c8c6ddaa68b77232ce099b2d86` |
 | `reports/jujutsu-research-2026-09-11/continuation3/end/restore-readiness-validation.json` | `0cff481c4069a0554e734c6079b3979496ab2a441965bd60b2853fdd0dcac261` |
 | `reports/jujutsu-research-2026-09-11/continuation3/end/adjudication/premium-J0020.json` | `d1d67461c7b239a59164e2edebd34969b2b3c8c0d195c02d943bfb1d01eb8188` |
-| `reports/jujutsu-research-2026-09-11/continuation3/end/adjudication/premium-J0021.json` | `cac2de674560d193bd011a5847ce2f471ecdb979114a35d676eda3a3a1e377e4` |
-| `reports/jujutsu-research-2026-09-11/continuation3/end/adjudication/premium-J0019.json` | `ff28c1c6c5daed067baaaa5429e819833e926cfc151c1123d9f1b92c3b9d4698` |
+| `reports/jujutsu-research-2026-09-11/continuation3/end/adjudication/remaining17-bulk-review.json` | `1f2d5519829bd63357e2accf3c7e375261d10e5ca5a1b31ed07ef01544140efb` |
 | `reports/jujutsu-research-2026-09-11/continuation3/end/evidence-manifest.json` | `79f74fa24511c3b14ae3c1cc2dec250e82497c25e54bee8f0896fdd369d948af` |
 
-The direct research jobs for F107 and F109 are `hybrid/J0017-compare` and `hybrid/J0018-compare`, whose per-job notes
-and schema checks live outside this repository under
+Three of the four corrections have an out-of-repository direct job: F107 is `hybrid/J0017-compare`, F109 is
+`hybrid/J0018-compare`, and F108 is `premium/J0026-compare`. Their per-job notes, probes and source captures are raw
+evidence and live outside this repository under
 `/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/`; the independent review records their
-paths and hashes. Per-finding review pointers are `independent-review.json#/candidates/0` (F106), `/candidates/1`
-(F107), `/candidates/2` (F108) and `/candidates/3` (F109).
+paths and hashes, and F108's chain is restated in the landing bundle's `evidence-receipts.json` under
+`out_of_repository_evidence.f108_chain`. Only F106's direct job, `premium/J0020-compare`, has an in-repository per-job
+review. The one in-repository file that names `J0026-compare` is `end/adjudication/remaining17-bulk-review.json`,
+whose entry records it as not examined within the bounded evaluator allocation; it is listed above as that fact, not
+as support. An earlier draft of this shard and of the bundle receipt wrongly attributed F108 to `premium-J0021.json`
+and `premium-J0019.json`, which contain no F108 content; those citations were removed on independent review.
+Per-finding review pointers are `independent-review.json#/candidates/0` (F106), `/candidates/1` (F107),
+`/candidates/2` (F108) and `/candidates/3` (F109).
 
 Targets: `Plans/Jujutsu_Integration.md#JJI-002`, `#JJI-003`, `#JJI-008`;
 `Plans/Source_Control_System.md#SCS-003`, `#SCS-017`; companion schemas and fixtures. No new PlanUnit.

@@ -24,7 +24,8 @@
   ],
   "dropped_as_already_covered": [],
   "questions_for_jared": [
-    "F107's count arithmetic and in-page node_ref uniqueness need a source_control_contracts branch in the contract semantic gate under scripts/, which is outside this thread's CLAUDE.md edit scope; authorize that as a follow-up or keep them as owner-only obligations?"
+    {"id": "q-001", "status": "open", "question": "What is the exact per-node parent-reference bound for a SourceGraph page, and how is a node with more parents than the bound represented? The adjudication requires a finite bound but reserves the number for the owner and excludes inferring it from the 600-edge cap. This landing enforces a provisional maxItems of 600 on nodes[].parent_refs so the obligation is not unenforced, and SCS-017 states in canon that the number is provisional and not derived from the 200-node or 600-edge caps.", "raised_by": "independent review of commit b83abd9396, finding B1"},
+    {"id": "q-002", "status": "answered", "question": "F107's count arithmetic and in-page node_ref uniqueness need a source_control_contracts branch in the contract semantic gate under scripts/, which was outside this thread's CLAUDE.md edit scope; authorize that as a follow-up or keep them as owner-only obligations?", "answer": "Authorized. Add the source_control_contracts semantic branch so both rules become enforced, and remove the SCS-017 unenforced statement once the gate covers them.", "answer_basis": "Jared's answer of 2026-09-16, relayed by the reviewer and recorded in F110_ANSWER_20260916.md outside this repository; agent-relayed, not verifiable from inside the repository."}
   ],
   "not_landed": {
     "finding_id": "F110",

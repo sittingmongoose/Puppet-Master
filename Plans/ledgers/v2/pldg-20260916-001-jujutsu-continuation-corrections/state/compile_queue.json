@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260916-001-jujutsu-continuation-corrections",
-  "updated_at_utc": "2026-09-16T00:40:00+00:00",
-  "last_event_id": "evt-003",
+  "updated_at_utc": "2026-09-16T19:38:36.233102+00:00",
+  "last_event_id": "evt-004",
   "canonical_plan_targets": [
     "Plans/Jujutsu_Integration.md",
     "Plans/Source_Control_System.md"
@@ -29,7 +29,7 @@
     "plan_index": "pass",
     "configured_shards": "pass",
     "claim_boundary": "Static schema, fixture, shard and index integrity only. No governance seal, runtime certification or readiness admission.",
-    "partial_enforcement": "F107 count arithmetic and in-page node_ref uniqueness are owner obligations without a validator surface until a source_control_contracts semantic-gate branch is authorized.",
+    "partial_enforcement": "F107 count arithmetic and in-page node_ref uniqueness are SCS-017 owner obligations without a validator surface until the authorized source_control_contracts semantic-gate branch exists (q-002). The 600-reference parent bound is enforced but provisional pending the owner's specification (q-001).",
     "governance_coverage_errors": [
       "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
       "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
@@ -129,6 +129,6 @@
       "compile_event_id": "evt-002"
     }
   ],
-  "notes": "Four reviewed corrections compiled and statically checked. F110 remains unapproved. Two F107 relational rules await a contract semantic-gate branch.",
-  "terminal_ledger_event_id": "evt-003"
+  "notes": "Four reviewed corrections compiled and statically checked, then amended under independent review (B1 provisional parent bound, B2 F108 evidence attribution, S1 parent-bound fixtures, S2 partial-enforcement clause, S3 question records, N1 real timestamps). F110 remains unapproved. Open question q-001 is the exact parent bound; q-002, the semantic-gate branch, is answered.",
+  "terminal_ledger_event_id": "evt-004"
 }

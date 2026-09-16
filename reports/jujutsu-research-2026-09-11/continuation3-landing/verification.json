@@ -1,18 +1,31 @@
 {
-  "at": "2026-09-16T18:57:08Z",
-  "status": "PASS_SCOPED_PENDING_INDEPENDENT_BRANCH_REVIEW",
-  "corrections": ["F106", "F107", "F108", "F109"],
-  "not_landed": ["F110"],
-  "compiled_plan_units": ["JJI-002", "JJI-003", "JJI-008", "SCS-003", "SCS-017"],
+  "at": "2026-09-16T19:40:00Z",
+  "status": "PASS_SCOPED_AFTER_INDEPENDENT_REVIEW_PENDING_DELTA_VERIFICATION",
+  "corrections": [
+    "F106",
+    "F107",
+    "F108",
+    "F109"
+  ],
+  "not_landed": [
+    "F110"
+  ],
+  "compiled_plan_units": [
+    "JJI-002",
+    "JJI-003",
+    "JJI-008",
+    "SCS-003",
+    "SCS-017"
+  ],
   "branch": "plans/jj-corrections-20260916",
   "branch_base_commit": "8bcac66937",
   "canonical_outputs": {
     "Plans/Jujutsu_Integration.md": "90814291f47d79cf1035e7ce8ad09b352d39ea7ba38d3be1b504d3bf468124f8",
     "Plans/jujutsu_integration_contracts.schema.json": "2e78d087706de9e53702b6463c267688ea31b3ba4a162a220e5939fb3de4dbaa",
     "Plans/jujutsu_integration_contract_fixtures.json": "2f35bd5db1cbadb8cff1c9f271e3422cb68d0307db0337c16d8954fa32ded0ac",
-    "Plans/Source_Control_System.md": "f401ecf65f866c23bbe23650a487f8ca763b955ea2d908395e54b2ac1853ecf3",
+    "Plans/Source_Control_System.md": "65cd458ff957f707cacd6e9cafc6aac90ff9a6463abee87f7f116fb4700740a5",
     "Plans/source_control_contracts.schema.json": "ad8cea9896eeabbff6d17b419888ba56472290b6d388ad7941fa6b804050e5d9",
-    "Plans/source_control_contract_fixtures.json": "fc4aae1fb89f0cc1e3136e355069f72e9a96dc3c019eeb28f635888e5c4e9c6a"
+    "Plans/source_control_contract_fixtures.json": "81ca0eb4b289c35ca252dda758a944eb9d77e69695d2c0b0bfbd83c70f5ac944"
   },
   "scoped_contracts": {
     "status": "pass",
@@ -23,19 +36,65 @@
       "metaschemas_valid": 30,
       "internal_self_tests": 12,
       "internal_self_tests_passed": 12,
-      "positive_cases": 1032,
-      "positive_cases_valid": 1032,
-      "negative_cases": 3352,
-      "negative_cases_rejected": 3352
+      "positive_cases": 1033,
+      "positive_cases_valid": 1033,
+      "negative_cases": 3353,
+      "negative_cases_rejected": 3353
     },
-    "baseline_before_edits": {"positive_cases": 1028, "negative_cases": 3338},
-    "delta": {"positive_cases": 4, "negative_cases": 14}
+    "baseline_before_edits": {
+      "positive_cases": 1028,
+      "negative_cases": 3338
+    },
+    "delta": {
+      "positive_cases": 5,
+      "negative_cases": 15
+    }
   },
   "fixture_deltas": {
-    "F106": {"positive": ["backup_jj_restore_ready_for_owner_activation_is_internally_consistent"], "negative": ["backup_jj_ready_activation_cannot_coexist_with_blocked_workspace_map", "backup_jj_ready_activation_cannot_coexist_with_blocked_colocation", "backup_jj_ready_activation_cannot_coexist_with_unverified_working_copy"]},
-    "F107": {"positive": [], "negative": ["source_graph_current_page_claiming_more_requires_continuation"]},
-    "F108": {"positive": ["command_request_jujutsu_git_clone_destination_not_initialized", "command_result_jujutsu_clone_not_initialized_destination_cancelled"], "negative": ["command_request_jujutsu_clone_initialized_phase_requires_native_revision", "command_request_jujutsu_preinit_phase_is_clone_only", "command_request_jujutsu_preinit_phase_cannot_claim_a_native_snapshot", "command_request_jujutsu_preinit_phase_cannot_claim_a_native_operation", "command_result_jujutsu_clone_initialized_phase_requires_native_before_revision", "command_result_jujutsu_preinit_clone_cannot_fabricate_a_before_revision"]},
-    "F109": {"positive": ["ssh_credential_lease_binds_known_host_and_disables_forwarding"], "negative": ["https_credential_lease_requires_path_scoping_evidence", "ssh_credential_lease_requires_known_host_receipt", "ssh_credential_lease_requires_forwarding_posture", "ssh_credential_lease_requires_both_trust_fields"]}
+    "F106": {
+      "positive": [
+        "backup_jj_restore_ready_for_owner_activation_is_internally_consistent"
+      ],
+      "negative": [
+        "backup_jj_ready_activation_cannot_coexist_with_blocked_workspace_map",
+        "backup_jj_ready_activation_cannot_coexist_with_blocked_colocation",
+        "backup_jj_ready_activation_cannot_coexist_with_unverified_working_copy"
+      ]
+    },
+    "F107": {
+      "positive": [
+        "git_source_graph_admits_the_provisional_parent_reference_bound"
+      ],
+      "negative": [
+        "source_graph_current_page_claiming_more_requires_continuation",
+        "source_graph_node_exceeds_the_provisional_parent_reference_bound"
+      ]
+    },
+    "F108": {
+      "positive": [
+        "command_request_jujutsu_git_clone_destination_not_initialized",
+        "command_result_jujutsu_clone_not_initialized_destination_cancelled"
+      ],
+      "negative": [
+        "command_request_jujutsu_clone_initialized_phase_requires_native_revision",
+        "command_request_jujutsu_preinit_phase_is_clone_only",
+        "command_request_jujutsu_preinit_phase_cannot_claim_a_native_snapshot",
+        "command_request_jujutsu_preinit_phase_cannot_claim_a_native_operation",
+        "command_result_jujutsu_clone_initialized_phase_requires_native_before_revision",
+        "command_result_jujutsu_preinit_clone_cannot_fabricate_a_before_revision"
+      ]
+    },
+    "F109": {
+      "positive": [
+        "ssh_credential_lease_binds_known_host_and_disables_forwarding"
+      ],
+      "negative": [
+        "https_credential_lease_requires_path_scoping_evidence",
+        "ssh_credential_lease_requires_known_host_receipt",
+        "ssh_credential_lease_requires_forwarding_posture",
+        "ssh_credential_lease_requires_both_trust_fields"
+      ]
+    }
   },
   "configured_shards": {
     "status": "pass",
@@ -72,9 +131,44 @@
     "reason": "Both are relational rules JSON Schema cannot express. The repository evaluates such rules in contract_semantic_failures inside scripts/pm-new-contracts-verify.py, and scripts/ is outside this thread's CLAUDE.md edit scope, so no negative fixture was authored for them. SCS-017 validation_surfaces records the gap.",
     "landed_as_schema_enforced": [
       "a current page declaring has_more carries a non-null next_cursor_ref",
-      "parent_refs is bounded at 600, the page adjacency budget already applied to edges"
-    ]
+      "parent_refs is bounded at a provisional 600 references per node"
+    ],
+    "provisional_parent_bound": {
+      "value": 600,
+      "status": "provisional pending the owner's specification",
+      "not_derived_from": [
+        "the 200-node page cap",
+        "the 600-edge adjacency cap"
+      ],
+      "reason": "independent-review.json#/candidates/1 accepted_scope reserves the exact adjacency bound and the representation of an over-bound node for the owner and excludes inferring it from the 600-edge cap; the bound is enforced so the finite-bound obligation is not left unenforced, and SCS-017 states that it is provisional",
+      "open_question": "q-001",
+      "fixtures": [
+        "git_source_graph_admits_the_provisional_parent_reference_bound",
+        "source_graph_node_exceeds_the_provisional_parent_reference_bound"
+      ]
+    },
+    "semantic_gate_question": {
+      "open_question": "q-002",
+      "status": "answered and authorized by Jared on 2026-09-16, relayed by the reviewer",
+      "effect": "a follow-up adds the source_control_contracts semantic branch and removes the SCS-017 unenforced statement"
+    }
   },
   "no_runtime_or_governance_seal_claim": true,
-  "landing": "Branch pushed and stopped for the reviewer's independent review. Not landed on main."
+  "landing": "Two commits on the branch, pushed. Stopped for the reviewer to verify the delta. Not landed on main.",
+  "independent_review": {
+    "reviewed_commit": "b83abd93962510d3f392445cb118229a34cf0db2",
+    "verdict": "fix first",
+    "blocking_findings_addressed": {
+      "B1": "the 600-reference parent bound is kept mechanically but restated as a provisional owner bound in SCS-017, this bundle and the ledger, and recorded as open question q-001",
+      "B2": "the F108 evidence attribution to premium-J0021.json and premium-J0019.json was withdrawn and replaced by independent-review.json candidate 2 plus the out-of-repository J0026-compare captures; the out-of-repository note now names F108"
+    },
+    "should_fix_addressed": {
+      "S1": "a 600-reference positive and a 601-reference negative fixture now cover the parent bound",
+      "S2": "cor-002 and dec-002 carry the partial-enforcement clause",
+      "S3": "both questions are ledger question records"
+    },
+    "notes_addressed": {
+      "N1": "placeholder ledger timestamps replaced with the real work-window instants"
+    }
+  }
 }

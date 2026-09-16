@@ -10,16 +10,16 @@
     "compile_queue_items": 4,
     "corrections": 4,
     "decisions": 4,
-    "events": 3,
+    "events": 4,
     "plan_units_checked": 41,
-    "questions": 0
+    "questions": 2
   },
   "errors": [
     "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
     "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
     "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']"
   ],
-  "interpretation": "Every ledger-internal check passes with no warnings. The three failures are pre-existing governance coverage omissions of the same kind the F001 landing recorded on 2026-09-11, widened only because this wave touches a second owner doc. Neither Plans/Jujutsu_Integration.md nor Plans/Source_Control_System.md is a sharding_config source on origin/main, and this branch changed neither sharding_config, Spec_Lock nor the plan graph. Governance reseals belong to the designated Plans agent.",
+  "interpretation": "Every ledger-internal check passes with no warnings. The three failures are pre-existing governance coverage omissions of the same kind the F001 landing recorded on 2026-09-11, widened only because this wave touches a second owner doc. Neither Plans/Jujutsu_Integration.md nor Plans/Source_Control_System.md is a sharding_config source on origin/main, and this branch changed neither sharding_config, Spec_Lock nor the plan graph. Governance reseals belong to the designated Plans agent. Counts reflect the second commit: evt-004 records the independent-review response, and q-001 (open, the exact parent bound) and q-002 (answered, the semantic-gate branch) are now ledger question records.",
   "precedent": {
     "ledger_id": "pldg-20260911-001-jujutsu-receipt-correction",
     "commit": "1eb900ca2b",

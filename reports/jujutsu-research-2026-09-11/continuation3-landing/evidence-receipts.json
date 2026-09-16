@@ -1,38 +1,129 @@
 {
   "schema": "pm.jujutsu_landing.evidence_receipts.v1",
-  "recorded_at_utc": "2026-09-16T18:55:00Z",
+  "recorded_at_utc": "2026-09-16T19:40:00Z",
   "claim_boundary": "Static schema, fixture, shard and index integrity only. No runtime, native adapter, security, performance, governance seal or readiness claim.",
   "adjudication_inputs": [
-    {"path": "reports/jujutsu-research-2026-09-11/continuation3/final/comparison.json", "sha256": "c3006253a5c68074109312747feb67130fb6e12d4f82c66132b268487156370b", "use": "finding ids, classifications, propositions and arm credit for F106-F110"},
-    {"path": "reports/jujutsu-research-2026-09-11/continuation3/final/independent-review.json", "sha256": "923df1b300d4de20d29eff414046661590835902074e95a36df3e350161bf28b", "use": "the four accepted candidates with owner basis, accepted and excluded scope, current owner evidence and 32 probe outcomes"},
-    {"path": "reports/jujutsu-research-2026-09-11/continuation3/final/symmetric-adjudication.json", "sha256": "531c6d831890598a99b159ae160aa7bd501d13c2885ef1344f51acaaea74bcc2", "use": "symmetric old-arm review, original candidate credit and rejected expansions"},
-    {"path": "reports/jujutsu-research-2026-09-11/continuation3/final/closing-job-reviews.json", "sha256": "e3c64edd60a6ea7664fc98d1541f649665ef2b681915bf249e50046e6917d5e1", "use": "closing per-job reviews behind the candidate credits"},
-    {"path": "reports/jujutsu-research-2026-09-11/continuation3/final/historical-candidate-passages.json", "sha256": "b6d5b2f6d1252ddaf5527fc54ed06a5a011403c8c6ddaa68b77232ce099b2d86", "use": "historical source passages considered for old-arm credit"},
-    {"path": "reports/jujutsu-research-2026-09-11/continuation3/end/restore-readiness-validation.json", "sha256": "0cff481c4069a0554e734c6079b3979496ab2a441965bd60b2853fdd0dcac261", "use": "F106 reproduction against the frozen schema, with three accepted counterexamples and two negative controls"},
-    {"path": "reports/jujutsu-research-2026-09-11/continuation3/end/adjudication/premium-J0020.json", "sha256": "d1d67461c7b239a59164e2edebd34969b2b3c8c0d195c02d943bfb1d01eb8188", "use": "F106 direct job adjudication"},
-    {"path": "reports/jujutsu-research-2026-09-11/continuation3/end/adjudication/premium-J0021.json", "sha256": "cac2de674560d193bd011a5847ce2f471ecdb979114a35d676eda3a3a1e377e4", "use": "F108 clone-phase adjudication"},
-    {"path": "reports/jujutsu-research-2026-09-11/continuation3/end/adjudication/premium-J0019.json", "sha256": "ff28c1c6c5daed067baaaa5429e819833e926cfc151c1123d9f1b92c3b9d4698", "use": "F108 supporting clone evidence"},
-    {"path": "reports/jujutsu-research-2026-09-11/continuation3/end/evidence-manifest.json", "sha256": "79f74fa24511c3b14ae3c1cc2dec250e82497c25e54bee8f0896fdd369d948af", "use": "continuation 3 evidence manifest"}
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation3/final/comparison.json",
+      "sha256": "c3006253a5c68074109312747feb67130fb6e12d4f82c66132b268487156370b",
+      "use": "finding ids, classifications, propositions and arm credit for F106-F110"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation3/final/independent-review.json",
+      "sha256": "923df1b300d4de20d29eff414046661590835902074e95a36df3e350161bf28b",
+      "use": "the four accepted candidates with owner basis, accepted and excluded scope, current owner evidence and 32 probe outcomes"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation3/final/symmetric-adjudication.json",
+      "sha256": "531c6d831890598a99b159ae160aa7bd501d13c2885ef1344f51acaaea74bcc2",
+      "use": "symmetric old-arm review, original candidate credit and rejected expansions"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation3/final/closing-job-reviews.json",
+      "sha256": "e3c64edd60a6ea7664fc98d1541f649665ef2b681915bf249e50046e6917d5e1",
+      "use": "closing per-job reviews behind the candidate credits"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation3/final/historical-candidate-passages.json",
+      "sha256": "b6d5b2f6d1252ddaf5527fc54ed06a5a011403c8c6ddaa68b77232ce099b2d86",
+      "use": "historical source passages considered for old-arm credit"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation3/end/restore-readiness-validation.json",
+      "sha256": "0cff481c4069a0554e734c6079b3979496ab2a441965bd60b2853fdd0dcac261",
+      "use": "F106 reproduction against the frozen schema, with three accepted counterexamples and two negative controls"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation3/end/adjudication/premium-J0020.json",
+      "sha256": "d1d67461c7b239a59164e2edebd34969b2b3c8c0d195c02d943bfb1d01eb8188",
+      "use": "F106 direct job adjudication"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation3/end/adjudication/remaining17-bulk-review.json",
+      "sha256": "1f2d5519829bd63357e2accf3c7e375261d10e5ca5a1b31ed07ef01544140efb",
+      "use": "the only in-repository file naming F108's direct job, premium/J0026-compare; its entry records that the job was not examined within the bounded evaluator allocation, so it is not support for F108 and is cited only to show that no in-repository per-job review of J0026-compare exists"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation3/end/evidence-manifest.json",
+      "sha256": "79f74fa24511c3b14ae3c1cc2dec250e82497c25e54bee8f0896fdd369d948af",
+      "use": "continuation 3 evidence manifest"
+    }
   ],
   "out_of_repository_evidence": {
-    "note": "The direct research jobs for F107 and F109 are hybrid/J0017-compare and hybrid/J0018-compare. Their per-job notes and schema checks are raw captures and live outside this repository under /mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/. Their paths and hashes are recorded inside final/independent-review.json, which is hashed above; they were not re-hashed here.",
-    "review_pointers": {"F106": "#/candidates/0", "F107": "#/candidates/1", "F108": "#/candidates/2", "F109": "#/candidates/3"}
+    "note": "Three of the four corrections have an out-of-repository direct job. F107 is hybrid/J0017-compare, F109 is hybrid/J0018-compare, and F108 is premium/J0026-compare. Their per-job notes, probes and source captures are raw evidence and live outside this repository under /mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/. Their paths and hashes are recorded inside final/independent-review.json, which is hashed above; they were not re-hashed here. Only F106's direct job, premium/J0020-compare, has an in-repository per-job review. The one in-repository file that names J0026-compare, end/adjudication/remaining17-bulk-review.json, records it as not examined within the bounded evaluator allocation; it is cited above as that fact, not as support.",
+    "review_pointers": {
+      "F106": "#/candidates/0",
+      "F107": "#/candidates/1",
+      "F108": "#/candidates/2",
+      "F109": "#/candidates/3"
+    },
+    "f108_chain": {
+      "basis": "reports/jujutsu-research-2026-09-11/continuation3/final/independent-review.json#/candidates/2",
+      "direct_job": "premium/J0026-compare",
+      "frozen_research_evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0026-compare/notes.md",
+          "sha256": "d7ac1cfc366a47bd05e8faaa4d06bb7fe57083bbb694d283145b9716d8d6590c",
+          "lines": [
+            56,
+            81
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0026-compare/workspace/research-evidence/contract-probes.py",
+          "sha256": "8fb7137ff92dee091d04ac2685908ce9dcd9f152e37622f23c57ed5ff3258112",
+          "lines": [
+            58,
+            72
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0026-compare/workspace/research-evidence/contract-probes.json",
+          "sha256": "e61e57864bf05dc491ed4674ba52921a414a8f01cd1238d5840a6502c529fad1"
+        }
+      ],
+      "frozen_native_phase_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0026-compare/workspace/research-evidence/sources/S00016/text.txt",
+        "sha256": "505b6c62e85fb6bcb50d3d816fad583a020651e8a7860b50932fb849c6f54136",
+        "lines": [
+          175,
+          228
+        ]
+      },
+      "hashes_transcribed_from": "final/independent-review.json; not independently re-hashed by this landing"
+    },
+    "correction": "An earlier version of this receipt attributed F108 to end/adjudication/premium-J0021.json and premium-J0019.json. Neither contains F108 content: J0021-compare credits F001, F007, F008, F056, F074 and F102, and J0019 is a reconcile job crediting F027, F029, F079, F081 and F102. Both citations were removed on independent review."
   },
   "canonical_outputs_after_landing": {
     "Plans/Jujutsu_Integration.md": "90814291f47d79cf1035e7ce8ad09b352d39ea7ba38d3be1b504d3bf468124f8",
     "Plans/jujutsu_integration_contracts.schema.json": "2e78d087706de9e53702b6463c267688ea31b3ba4a162a220e5939fb3de4dbaa",
     "Plans/jujutsu_integration_contract_fixtures.json": "2f35bd5db1cbadb8cff1c9f271e3422cb68d0307db0337c16d8954fa32ded0ac",
-    "Plans/Source_Control_System.md": "f401ecf65f866c23bbe23650a487f8ca763b955ea2d908395e54b2ac1853ecf3",
+    "Plans/Source_Control_System.md": "65cd458ff957f707cacd6e9cafc6aac90ff9a6463abee87f7f116fb4700740a5",
     "Plans/source_control_contracts.schema.json": "ad8cea9896eeabbff6d17b419888ba56472290b6d388ad7941fa6b804050e5d9",
-    "Plans/source_control_contract_fixtures.json": "fc4aae1fb89f0cc1e3136e355069f72e9a96dc3c019eeb28f635888e5c4e9c6a",
-    "Plans/ledgers/v2/ledger_registry.json": "707755c766e1f0e7ad7f7a9dd6f9750188abf77b70d9de50fe87b17448cc6d70"
+    "Plans/source_control_contract_fixtures.json": "81ca0eb4b289c35ca252dda758a944eb9d77e69695d2c0b0bfbd83c70f5ac944",
+    "Plans/ledgers/v2/ledger_registry.json": "573d6a518a892453ffde123057ffdf8f501a343e9ccf8fb7eca1639929ab4af0"
   },
   "validators_run": [
-    {"command": "python3 scripts/pm-new-contracts-verify.py", "unmodified": true, "sha256": "37834af4e03c4326e3d45cb7d892c78595f764ed86475d482cc50ff30837eab6"},
-    {"command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json"},
-    {"command": "python3 scripts/pm-plan-index.py generate"},
-    {"command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"},
-    {"command": "python3 scripts/pm-plan-index.py validate"},
-    {"command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections"}
-  ]
+    {
+      "command": "python3 scripts/pm-new-contracts-verify.py",
+      "unmodified": true,
+      "sha256": "37834af4e03c4326e3d45cb7d892c78595f764ed86475d482cc50ff30837eab6"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py generate"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate"
+    },
+    {
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections"
+    }
+  ],
+  "second_commit_note": "Hashes are those of the second commit on branch plans/jj-corrections-20260916, which applied the independent review of b83abd9396. Plans/Source_Control_System.md, Plans/source_control_contract_fixtures.json and Plans/ledgers/v2/ledger_registry.json changed in that commit; the three Jujutsu files did not."
 }
