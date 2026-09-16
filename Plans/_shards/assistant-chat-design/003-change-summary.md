@@ -2,14 +2,15 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L14-L29
+Source lines: L14-L30
 
-Source SHA256: `a5abf9d987b6a14ad276b58cedc88a0aa0690eda4a905c527fc55c59dce5a9d5`
+Source SHA256: `9a576b87011551fa8a85cb161a649b8725f13324651cd8e951ce3eb21858e3d4`
 
 ---
 
 ## Change Summary
 
+- 2026-09-16: Renamed §5.3 to Git & hosted-forge command boundary and rerouted hosted-repo requests to the universal Forge command families with the provider resolved from the selected repository adapter, per DL-044 and DL-050; `/github` and provider names are provider qualifications of the same command, GitHub Actions and GitHub device-code connect/disconnect remain the provider-specific families, and ACD-017 was renamed to match. SSOT: `Plans/Forge_Integrations.md`, `Plans/UI_Command_Catalog.md`.
 - 2026-02-26: Added media generation and capability introspection requirements (§7): image attachment nuance (all platforms accept image attachments; image *generation* is Cursor-native or Google-key-backed), `capabilities.get` introspection rule, natural-language model override semantics (per-message only), and media-generation invocation model. SSOT: `Plans/Media_Generation_and_Capabilities.md`.
 - 2026-02-25: Remediation alignment with `Plans/GitHub_Integration.md §B.3` — `/actions` and `/actions logs` outputs now require the same run/log summary fields and failure-state parity as the Actions panel.
 - 2026-06-18: Retired fixed Pass 1 / Pass 2 / Pass 3 validation model settings and active process stages in §26. Auditor cycle reports mirror the single Auditor validation loop provider/model resolved from the Auditor Model role; legacy pass_number and pass_name fields are compatibility aliases only.

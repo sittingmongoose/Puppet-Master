@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L685
+Source lines: L13-L709
 
-Source SHA256: `898ace91bc0c822600f2ce4c50304a009bec6edc2b3114acac1fb68487625b6a`
+Source SHA256: `c3007bca628a094e8b80fb9c48f1dced601e0abf53e6b228b4e73371a4837482`
 
 ---
 
@@ -681,3 +681,27 @@ Current selected source segments and controls, original append receipts/dedupe i
 Storage owns the exact policy registration, immutable settlement anchor, native artifact/member custody, holds/reference enumeration and crash-safe disposal. This bounded product answer resolves the completed-detail lifetime prerequisite excluded from DL-045's technical authority. The frozen question/card is `/home/sittingmongoose/PM-Experiments/compaction-detail-owner-card-root-20260912/manifest.json`, SHA-256 `8d6769266be30c7bfd4cab814d2ad04de30881223f397d2afe6521973e992a0e`; the separate answer preserves the seven-day choice rather than selecting the card's immediate-removal recommendation. Concrete schemas, original writer/read/recovery bindings and semantic checks remain required. Quarantine policy, event admission, native execution, overall depth, readiness and governance sealing are not decided here.
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-237, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/Decision_Log.md#DL-045
+
+### DL-050: Hosted-repo requests route by the selected adapter, never by default to GitHub
+
+Decided on 2026-09-16 by Jared.
+
+The question was where the assistant should send a hosted-repository request: to the GitHub command family, as the chat command boundary still said, or to the universal forge commands with the provider taken from the repository the user has selected. It came up because a scoped review of the GitLab plan found the chat boundary still routing every pull request, review, comment, release, pipeline, workflow and hosted-administration request to GitHub, after the wiring rows and the command catalog had already moved to one command per user action with provider differences held in the adapter. A user working on a GitLab project would have had the assistant name and dispatch the wrong service.
+
+The options were:
+
+1. Route hosted-repository requests to the universal forge command families and resolve the provider from the selected repository adapter, keeping provider-specific families only where the forge owner defines no generic equivalent.
+2. Leave the chat boundary pointing at GitHub and add a separate exception for each other provider as it ships.
+3. Keep provider-specific routing everywhere and let every provider own its own chat command family.
+
+The answer is option 1. Hosted-repo requests route by the selected adapter and never default to GitHub. Naming a provider, or typing a provider prefix, qualifies the same universal command instead of selecting a different family; the assistant says which provider it resolved and never quietly substitutes another, and when the named provider is not the selected one it says so and asks or refuses under the disclosure rules already written. The boundary between local Git work and hosted work does not move: the assistant still never reinterprets one as the other, a request that spans both still shows the handoff, and the repository, worktree and compare identity still travel between the two stages. Review wording follows the selected adapter's own review noun, so the same request reads as Pull Request or Merge Request without becoming a different command.
+
+Two families stay provider-specific because the forge owner defines no generic equivalent: GitHub Actions, which that owner explicitly keeps GitHub-native inside the shared automation shell, and the GitHub device-code connect and disconnect commands under the same retained owner. Hosted issue work has no registered command family at all, generic or provider-specific, so the assistant says so rather than inventing a command or pushing the request into reviews, pipelines or repository administration.
+
+This buys one routing rule that is correct for every provider the product plans to support, and it removes a passage that would have made the assistant wrong for every user who is not on GitHub. It costs a rename of the chat command-boundary section and its dispatch constraint, and it obliges the assistant to disclose the provider it resolved on every hosted request. Alongside this answer, the testing canon that still quoted a fixed count of twenty-three authored schema and fixture pairs was corrected to defer to the cardinality the gate's own manifest declares; that correction is a stale-literal repair, not a decision.
+
+This records planning canon only. It enables no runtime behavior, admits no command or event, and seals no governance.
+
+SourceRef: Jared, direction of 2026-09-16.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Forge_Integrations.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitLab_Integration.md, ContractName:Plans/Automated_Testing_System.md

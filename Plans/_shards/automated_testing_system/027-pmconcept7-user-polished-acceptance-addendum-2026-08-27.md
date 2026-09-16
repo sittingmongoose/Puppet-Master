@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L3421-L4049
 
-Source SHA256: `28490147bb124e5570be20c9bbd239b2ff5cea8137461652074b9e33e796257b`
+Source SHA256: `87f617f1ffbe396fd1d125b2bc395290b782ecec92e88f629c211b803de728f6`
 
 ---
 
@@ -330,7 +330,7 @@ unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
-  The centrally invoked validate-new-contracts gate fail-closes the authored 23-pair contract manifest plus one
+  The centrally invoked validate-new-contracts gate fail-closes the authored contract manifest that the gate owns plus one
   shared-integration expansion fixture pack for the
   Settings, Onboarding, Guided Tour, Doctor, retained Egolite requirement closure, Project, Named Plan, Full Thread Runtime, Server, Remote Access,
   Backup/Restore, protected AuthBrowserSession, Browser Program, test capture and motion evidence, source control,
@@ -347,7 +347,7 @@ gui_classification_reason: This unit owns a static contract-validation gate; it 
 depends_on: [ATS-001, SIR-031]
 unblocks: []
 acceptance_criteria:
-  - "python3 scripts/pm-new-contracts-verify.py validates exactly 23 authored schema/fixture pairs plus one shared-integration expansion fixture pack and reports its complete input manifest and counts."
+  - "python3 scripts/pm-new-contracts-verify.py validates every authored schema/fixture pair in its manifest plus one shared-integration expansion fixture pack, fail-closes on the manifest cardinality it declares, and reports its complete input manifest and counts."
   - "The current closed corpus accepts 708 positive fixtures, rejects 2606 negative fixtures, accepts 264 expansion command records, 240 owner-compatibility command records, 28 local records, 28 owner-local aliases, and 33 normalizations, and passes all 12 internal negative tests."
   - "python3 scripts/pm-plans-verify.py run-gates invokes one named validate-new-contracts subcheck and propagates its failures."
   - "Every positive fixture resolves to exactly one explicit or discriminator-selected definition, and every negative is rejected by that same intended definition or its explicitly authored cross-record invariant."
@@ -377,7 +377,7 @@ source_lineage:
   - Plans/Forge_Integrations.md
   - Plans/egolite_retained_requirement_contracts.schema.json
   - Plans/egolite_retained_requirement_contract_fixtures.json
-preserved_exact_tokens: [validate-new-contracts, 23, shared-integration expansion fixture pack, Draft 2020-12, aggregate_plus_record_kind, static_schema_and_fixture_consistency_only]
+preserved_exact_tokens: [validate-new-contracts, shared-integration expansion fixture pack, Draft 2020-12, aggregate_plus_record_kind, static_schema_and_fixture_consistency_only]
 negative_constraints:
   - "Do not add schemas or fixture pairs to the gate through an ambient glob."
   - "Do not weaken a failing invariant merely to make current fixtures pass."

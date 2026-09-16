@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L53-L89
+Source lines: L54-L90
 
-Source SHA256: `a5abf9d987b6a14ad276b58cedc88a0aa0690eda4a905c527fc55c59dce5a9d5`
+Source SHA256: `9a576b87011551fa8a85cb161a649b8725f13324651cd8e951ce3eb21858e3d4`
 
 ---
 
@@ -16,7 +16,7 @@ Source SHA256: `a5abf9d987b6a14ad276b58cedc88a0aa0690eda4a905c527fc55c59dce5a9d5
 4. [Message submission (Steer vs Queue), queued editing, interrupt, and stop](#4-message-submission-steer-vs-queue-queued-editing-interrupt-and-stop)
    - [4.1 Chat footer, queue UI, and files touched -- implementation detail](#41-chat-footer-queue-ui-and-files-touched--implementation-detail)
 5. [Commands (slash commands and custom commands)](#5-commands-slash-commands-and-custom-commands)
-   - [5.3 Git & GitHub command boundary](#53-git--github-command-boundary)
+   - [5.3 Git & hosted-forge command boundary](#53-git--hosted-forge-command-boundary)
 6. [Teach](#6-teach)
 7. [Attachments, Web Search, and Extensibility](#7-attachments-web-search-and-extensibility)
 8. [Plan Mode Depth & Rules](#8-plan-mode-depth--rules)

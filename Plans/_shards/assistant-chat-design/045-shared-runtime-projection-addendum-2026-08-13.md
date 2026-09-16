@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3593-L22202
+Source lines: L3599-L22234
 
-Source SHA256: `a5abf9d987b6a14ad276b58cedc88a0aa0690eda4a905c527fc55c59dce5a9d5`
+Source SHA256: `9a576b87011551fa8a85cb161a649b8725f13324651cd8e951ce3eb21858e3d4`
 
 ---
 
@@ -856,7 +856,7 @@ owner_hints:
   - Plans/Skills_System.md
 ```
 
-### ACD-017 - Git And GitHub Dispatch Boundary
+### ACD-017 - Git And Hosted Forge Dispatch Boundary
 
 ```yaml
 plan_unit_id: ACD-017
@@ -864,15 +864,29 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  /git and local repository requests route to source-control commands. /github
-  and hosted-repo requests route to GitHub commands. Cross-domain flows disclose
-  the boundary and preserve repo, worktree, and compare handoff identity.
+  /git and local repository requests route to source-control commands. /github and hosted-repo
+  requests route to the universal Forge command families, with the provider resolved from the
+  selected repository adapter and never defaulted to GitHub: cmd.forge.review.* for reviews and
+  their threads and versions, cmd.forge.pipeline.* for pipelines and jobs, cmd.forge.release.* for
+  releases and assets, cmd.forge.repository.* for repository administration and policy,
+  cmd.forge.mirror.*, cmd.forge.webhook.*, cmd.forge.runner.*, and cmd.forge.connection.reauthorize
+  with the shared setup commands. A provider prefix or a named provider is a provider qualification
+  of the same universal command; the assistant discloses the resolved provider and never silently
+  substitutes another. Provider-specific families remain only where the Forge owner defines no
+  generic equivalent: cmd.github.actions.* for GitHub Actions, and cmd.github.connect and
+  cmd.github.disconnect for GitHub device-code connection. Hosted issue work has no registered
+  command family. Cross-domain flows disclose the boundary and preserve repo, worktree, and compare
+  handoff identity.
 gui_related: false
 gui_classification_reason: This unit governs routing and source-control boundaries rather than visual presentation.
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - The assistant does not reinterpret Git requests as GitHub requests or GitHub requests as Git requests just because one path appears easier.
+  - The assistant does not reinterpret Git requests as hosted-forge requests or hosted-forge requests as Git requests just because one path appears easier.
+  - Hosted-repo requests resolve the provider from the selected repository adapter and dispatch the universal Forge family the command catalog registers; no hosted-repo request defaults to GitHub.
+  - A provider prefix or named provider qualifies the same universal command, the resolved provider is disclosed, and a provider that is not the selected adapter is stated and asked or refused rather than silently substituted.
+  - cmd.github.pr.create, cmd.source_control.pr.create, and cmd.source_control.pr.merge stay compatibility aliases that normalize to the generic review create and merge commands with provider github, with no second handler, guard, or catalog row.
+  - GitHub Actions and GitHub device-code connect and disconnect remain the only provider-specific hosted families, and no command family is invented for hosted issue work.
   - Cross-domain flows preserve canonical repo/worktree/compare identity fields between local and hosted stages.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -882,22 +896,34 @@ reasoning_tier: standard
 context_scope: assistant_chat_window_001
 implementation_surfaces:
   - Plans/assistant-chat-design.md
+  - Plans/Forge_Integrations.md
   - Plans/GitHub_Integration.md
   - Plans/UI_Command_Catalog.md
 node_compile_hint:
-  mode: git_github_dispatch_boundary
+  mode: git_hosted_forge_dispatch_boundary
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0025
+  - Plans/Decision_Log.md#DL-044
+  - Plans/Decision_Log.md#DL-050
+  - Plans/Forge_Integrations.md#FGI-008
+  - Plans/UI_Command_Catalog.md#UCC-132
 preserved_exact_tokens:
   - "/git ..."
   - "/github ..."
-  - "local compare first, then hosted PR creation"
+  - "local compare first, then hosted review creation"
   - "repo/worktree/compare identity"
+  - "cmd.forge.review.create"
+  - "cmd.forge.review.merge"
+  - "cmd.github.actions.*"
+  - "selected repository adapter"
 negative_constraints:
-  - "The assistant MUST NOT silently reinterpret a Git request as a GitHub request, or vice versa, just because one path appears easier."
+  - "The assistant MUST NOT silently reinterpret a Git request as a hosted-forge request, or vice versa, just because one path appears easier."
+  - "Do not default a hosted-repo request to GitHub, and do not treat a provider prefix or provider name as a separate command family."
+  - "Do not invent a command family for hosted issue work."
 owner_hints:
   - Plans/assistant-chat-design.md
+  - Plans/Forge_Integrations.md
   - Plans/GitHub_Integration.md
 ```
 

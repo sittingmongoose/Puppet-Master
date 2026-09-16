@@ -564,6 +564,7 @@
         "Plans/FileManager.md",
         "Plans/FileSafe.md",
         "Plans/FinalGUISpec.md",
+        "Plans/Forge_Integrations.md",
         "Plans/GitHub_Integration.md",
         "Plans/Goal_Runtime_System.md",
         "Plans/LSPSupport.md",
@@ -618,7 +619,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 25702,
+      "line_count": 25734,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 465,
       "plan_unit_ids": [
@@ -1421,7 +1422,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "a5abf9d987b6a14ad276b58cedc88a0aa0690eda4a905c527fc55c59dce5a9d5",
+      "sha256": "9a576b87011551fa8a85cb161a649b8725f13324651cd8e951ce3eb21858e3d4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 465
@@ -1949,7 +1950,7 @@
         "web_gui_dev_test_authority_leak",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "28490147bb124e5570be20c9bbd239b2ff5cea8137461652074b9e33e796257b",
+      "sha256": "87f617f1ffbe396fd1d125b2bc395290b782ecec92e88f629c211b803de728f6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 53
@@ -5313,9 +5314,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 23,
-        "True": 23
+        "True": 24
       },
-      "heading_count": 98,
+      "heading_count": 100,
       "implementation_surfaces": [
         ".gitignore",
         "Plans/Architecture_Invariants.md",
@@ -5375,9 +5376,9 @@
         "scripts/pm-plans-verify.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 3463,
+      "line_count": 3562,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 46,
+      "plan_unit_count": 47,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5424,6 +5425,7 @@
         "DL-047",
         "DL-048",
         "DL-049",
+        "DL-050",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5432,6 +5434,7 @@
       ],
       "risk_classes": [
         "approval_anchor_evidence_governance_drift",
+        "assistant_hosted_routing_provider_default_drift",
         "blocked_approval_identity_drift",
         "blocked_episode_identity_migration_drift",
         "browser_event_authority_scope_expansion",
@@ -5478,16 +5481,16 @@
         "terminal_research_decision_drift",
         "weak_integration_underclassification"
       ],
-      "sha256": "898ace91bc0c822600f2ce4c50304a009bec6edc2b3114acac1fb68487625b6a",
+      "sha256": "c3007bca628a094e8b80fb9c48f1dced601e0abf53e6b228b4e73371a4837482",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 46
+        "accepted": 47
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 43
+        "requirement": 44
       },
       "validation_surfaces": [
         "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
@@ -5503,6 +5506,7 @@
         "python3 -m unittest tests.test_pm_wiring_vocabulary",
         "python3 scripts/pm-browser-event-admission.py",
         "python3 scripts/pm-event-authority-currentness.py validate",
+        "python3 scripts/pm-new-contracts-verify.py",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
@@ -19565,7 +19569,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-14T04:21:53Z",
+  "generated_at_utc": "2026-09-16T18:45:52Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19574,12 +19578,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3474,
-      "True": 3169
+      "True": 3170
     },
-    "plan_unit_count": 6643,
+    "plan_unit_count": 6644,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6452,
+      "accepted": 6453,
       "retired": 182,
       "superseded": 9
     },
@@ -19646,7 +19650,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5210,
+      "requirement": 5211,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

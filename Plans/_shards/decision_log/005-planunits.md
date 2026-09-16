@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L693-L3435
+Source lines: L717-L3534
 
-Source SHA256: `898ace91bc0c822600f2ce4c50304a009bec6edc2b3114acac1fb68487625b6a`
+Source SHA256: `c3007bca628a094e8b80fb9c48f1dced601e0abf53e6b228b4e73371a4837482`
 
 ---
 
@@ -2627,6 +2627,81 @@ negative_constraints:
   - Do not infer event admission, native runtime proof, depth/readiness clearance or governance sealing.
 owner_hints:
   - Plans/storage-plan.md
+```
+
+### DL-050 - Hosted Repo Requests Route By Selected Adapter
+
+```yaml
+plan_unit_id: DL-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-16 that assistant hosted-repo requests route to the universal Forge
+  command families with the provider resolved from the selected repository adapter, and never
+  default to GitHub. A provider prefix or a named provider is a provider qualification of the same
+  universal command; the assistant discloses the resolved provider, never silently substitutes
+  another, and states the mismatch and asks or refuses when the named provider is not the selected
+  adapter. Provider-specific families remain only where the Forge owner defines no generic
+  equivalent: cmd.github.actions.* for GitHub Actions, and cmd.github.connect and
+  cmd.github.disconnect for GitHub device-code connection. Hosted issue work has no registered
+  command family and none is invented. The Git versus hosted boundary, cross-domain boundary
+  disclosure, and repo/worktree/compare handoff identity are unchanged. Alongside this decision the
+  contract-gate canon in ATS-041 drops its stale authored-pair literal and defers to the manifest
+  cardinality the checker declares.
+gui_related: true
+gui_classification_reason: Governs the provider the assistant names and dispatches for visible hosted-repo requests and its disclosure.
+split_recommended: false
+depends_on: [DL-044, ACD-017]
+unblocks: []
+acceptance_criteria:
+  - Plans/assistant-chat-design.md section 5.3 and ACD-017 route hosted-repo requests to the universal Forge families with the provider resolved from the selected repository adapter and no GitHub default.
+  - The provider-specific hosted families are exactly GitHub Actions and GitHub device-code connect and disconnect, each carried by the retained-owner passage in Plans/Forge_Integrations.md.
+  - A provider prefix or named provider qualifies the same universal command, the resolved provider is disclosed, and a provider that is not the selected adapter is stated and asked or refused rather than silently substituted.
+  - Historical GitHub and Source Control pull-request spellings stay compatibility aliases of the generic review create and merge commands with provider github, with no second handler, guard, or catalog row.
+  - The Git versus hosted boundary, the cross-domain boundary disclosure, and the repo/worktree/compare handoff identity fields survive unchanged.
+  - ATS-041 carries no literal contract-pair count and defers to the cardinality scripts/pm-new-contracts-verify.py declares.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-new-contracts-verify.py
+risk_class: assistant_hosted_routing_provider_default_drift
+reasoning_tier: high
+context_scope: assistant_hosted_repo_routing
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/assistant-chat-design.md
+  - Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: assistant_hosted_routing_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md:DL-050-direction-2026-09-16
+  - Plans/Decision_Log.md#DL-044
+  - Plans/assistant-chat-design.md#ACD-017
+  - Plans/Forge_Integrations.md#FGI-008
+  - Plans/UI_Command_Catalog.md#UCC-132
+  - Plans/GitLab_Integration.md#GLI-005
+  - Plans/Automated_Testing_System.md#ATS-041
+preserved_exact_tokens:
+  - cmd.forge.review.create
+  - cmd.forge.review.merge
+  - cmd.github.pr.create
+  - cmd.github.actions.*
+  - cmd.github.connect
+  - cmd.github.disconnect
+  - selected_repository_adapter
+negative_constraints:
+  - Do not default a hosted-repo request to GitHub or treat a provider prefix or provider name as a separate command family.
+  - Do not invent a hosted issue command family or any other family the command catalog does not register.
+  - Do not weaken the Git versus hosted boundary, the cross-domain disclosure, or the handoff identity fields.
+  - Do not restore a literal authored contract-pair count to ATS-041.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/assistant-chat-design.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired
