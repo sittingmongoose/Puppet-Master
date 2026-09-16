@@ -173,6 +173,9 @@ Of the 64 findings missed, 32 are optional capabilities. That residue is dominat
 
 ## Comparison table
 
+**The current, full comparison table now lives in `../muse13/README.md`** and supersedes the one below. Headline after four new arms: claude 18/110, deepseek41 33/110, muse13 40/110, claude-hicap 46/110, with claude and deepseek41 both proper subsets of muse13 and muse13 a proper subset of claude-hicap.
+
+
 Premium and hybrid rows are continuation 3's own numbers. **Read the cost and duration rows with the
 caveat below.**
 

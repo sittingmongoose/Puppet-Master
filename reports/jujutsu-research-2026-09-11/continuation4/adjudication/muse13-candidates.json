@@ -1,0 +1,146 @@
+{
+  "schema": "jj.continuation4.arm_candidates.v1",
+  "arm": "muse13",
+  "rule": "New propositions are recorded as candidates with evidence. The adjudicator does not add them to the continuation-3 union.",
+  "candidates": [
+    {
+      "candidate_id": "C4M-01",
+      "label": "JJI-008 states the ends of closure completeness but names no decision procedure",
+      "proposed_class": "correction",
+      "arm_label": "J0026-compare L-c0c7178a160f repair",
+      "job": "muse13/J0026-compare",
+      "proposition": "A JJ backup or restore path must transfer and persist dependency objects before publishing any referring head, op-head or bookmark pointer; expand and verify the full operation-to-view-to-commit-to-tree closure for the retained set including non-current, abandoned and rebased objects before reporting complete; reject missing parent files, malformed IDs, self-parents and parent cycles as distinct closure blockers rather than silent skips; materialize restores in dependency-safe order with heads and activation markers last; and activate only after the existing isolated-disposable verification succeeds.",
+      "distinctness": "F079 requires the closure contents and the barrier and fence, and is credited to this arm. This candidate is the missing mechanism: the arm establishes that the Plans 'require the ends ... but name no mechanism - no objects-before-heads publication rule, no operation-to-view-to-commit-to-tree parent-closure expansion with length and missing-file validation, no topological apply order, no missing or cyclic-parent negative cases wired into adapter tests'. claude-hicap reached the same gap independently (its J0027 Gap 1), which strengthens it.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-muse13-20260916-215801/jobs/J0026-compare/workspace/notes.md",
+          "sha256": "0452fd6e82d683bc95a5bccc7e67ce057bd823b436218769696466eae056a28d"
+        }
+      ],
+      "cited_passages": [
+        "Plans/Jujutsu_Integration.md JJI-008:441-495, esp. :464, :466, :467, :468, :470, :482",
+        "Plans/Source_Control_System.md SCS-014:768-832, esp. :792, :793, :795, :809",
+        "Plans/forge_backup_tsnet_acceptance.json:1157",
+        "keanemind/dojjo dojjo-mirror/src/mirror_apply_order.rs, operation_expand.rs @ a0ad17ba"
+      ],
+      "adjudicator_note": "Not added to the union. Independently found by two arms."
+    },
+    {
+      "candidate_id": "C4M-02",
+      "label": "The closure manifest records neither the resolved backend paths nor the environment that resolved them",
+      "proposed_class": "correction",
+      "arm_label": "J0028-compare L-289201b4f4ec repairs 1-3",
+      "job": "muse13/J0028-compare",
+      "proposition": "The closure manifest must record backend-resolved store paths and the environment and inputs that resolve them, including the relevant GIT_* variables or their documented absence and which pointer files were followed; discovery must follow gitfile, commondir and objects/info/alternates chains honouring their distinct bases (alternates relative to the object database, commondir relative to the Git directory) and record each hop's base and target, with unfollowable or out-of-boundary hops surfacing as missing dependencies; and HEAD, index and working-copy material must be captured per workspace while shared commondir content is captured once, with administrative back-pointers rewritten to the disposable boundary.",
+      "distinctness": "F079 requires alternate and shared stores inside the closure and F081 requires an isolated restore; both are credited to this arm. This candidate is the resolution discipline underneath them - that the same relative path resolves differently against the object database than against the Git directory, so a single-base implementation passes today's fixtures while resolving the wrong store. The arm supplies an acceptance check built exactly on that ambiguity.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-muse13-20260916-215801/jobs/J0028-compare/workspace/notes.md",
+          "sha256": "89bc0d71671edc95c6e29694ffd0a24581a46329e01d2e68fc1344ddd9f840a9"
+        }
+      ],
+      "cited_passages": [
+        "Plans/Jujutsu_Integration.md JJI-008:441-506, esp. :465",
+        "Plans/Source_Control_System.md SCS-014:768-832",
+        "Plans/jujutsu_integration_contracts.schema.json:2140-2336",
+        "Plans/source_control_contracts.schema.json:2865-3052",
+        "git-scm.com/docs/gitrepository-layout"
+      ],
+      "adjudicator_note": "Not added to the union. The base-confusion acceptance check is the most falsifiable part."
+    },
+    {
+      "candidate_id": "C4M-03",
+      "label": "No save contract exists for a three-dir or external diff editor touching a JJ workspace",
+      "proposed_class": "optional_capability",
+      "arm_label": "J0022-compare Option A / Option B, J0024-compare P-7dc9",
+      "job": "muse13/J0022-compare",
+      "proposition": "Either (A) fence any external or three-dir diff editor as a canonical command path with discriminated per-path entry types carried end to end, a save-back allowlist restricted to typed resolvable text paths under a no-follow in-tree preflight with expected snapshot, operation and conflict identity plus writer lease, Permissions, FileSafe and capacity checks, excluded bytes preserved by omission, atomic or journaled multi-file application with verified rollback and a partial-failure receipt, terminal reconciliation against post-write snapshot and conflict identity, and an explicit byte policy; or (B) explicitly scope diff.open, open_merge_editor and the Git external-merge-tool preference as read-only or built-in-editor-only for JJ workspaces with a typed disabled reason.",
+      "distinctness": "PARTLY DUPLICATIVE, flagged. Most of Option A restates obligations already in the union and already credited to this arm (F029, F031, F033, F034, F036, F037, F056). What escapes that is the surface-level gap the arm establishes by literal search - no Plan names any external diff or merge tool for JJ, and the one external-merge-tool preference in the corpus is a Git conflict-assistant GUI setting 'with no safety semantics' - plus Option B, which is a genuine second disposition rather than a weaker version of Option A. deepseek41 (C4D-04) and claude-hicap (C4H-01) reached adjacent forms of this gap.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-muse13-20260916-215801/jobs/J0022-compare/workspace/notes.md",
+          "sha256": "65ee541f8040a158a8f89fe30c9995621488b1dba3d5d832a24466fc90c7e891"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-muse13-20260916-215801/jobs/J0024-compare/workspace/notes.md",
+          "sha256": "ab455b724538368e08218cd226b94b02c69ee24715d570089a97ccbbd0bfbcbd"
+        }
+      ],
+      "cited_passages": [
+        "Plans/Jujutsu_Integration.md JJI-002, JJI-003, JJI-005, JJI-007:390-435, section 3.1:253-293, section 3.2-3.3",
+        "Plans/FileSafe.md 11.1.2:1425-1444, 11.1.2b:1482-1508",
+        "Plans/FileManager.md section 2, 2.6:342-352, 2.7:354-360",
+        "Plans/WorktreeGitImprovement.md:451",
+        "Plans/storage-plan.md:1928, 12609-12611",
+        "ilyagr/diffedit3 @ 0ae89095"
+      ],
+      "adjudicator_note": "Not added to the union; the duplication is flagged. Option B is the part no other arm offered."
+    },
+    {
+      "candidate_id": "C4M-04",
+      "label": "Bookmark controls have the hooks for scope disclosure but none of the content",
+      "proposed_class": "correction",
+      "arm_label": "J0026-compare L-444f31e68545 repair",
+      "job": "muse13/J0026-compare",
+      "proposition": "Every JJ bookmark control and confirmation must name its exact remote and action scope in ordinary words: a combined or synced presentation must still disclose which remotes are affected before dispatch; untrack on a combined bookmark must confirm all-remotes while untrack on one unsynced remote confirms that remote; rename on a tracking bookmark must disclose the untrack-first effect; delete-local and forget-remote must use distinct labels and must not share one polymorphic control without proving native semantics; push and fetch must disclose all-remotes versus one-remote; pseudo-remotes and non-fetchable remotes must not appear as ordinary remotes; and unsynced, untracked or absent refs must not be silently folded into a combined chip.",
+      "distinctness": "F059 requires the bookmark state axes and effect previews to be preserved, and is credited to this arm. This candidate is the specific finding that the Plans supply the hooks and none of the content: the arm establishes by literal search that no Plan text carries synced, unsynced, polymorphic, combined-bookmark or combined-chip vocabulary, so 'nothing today forces an ordinary label or confirmation to name the affected remote(s) or to distinguish delete from forget'. claude-hicap reached the schema-shaped form of the same problem (its Defect 2 and 3).",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-muse13-20260916-215801/jobs/J0026-compare/workspace/notes.md",
+          "sha256": "0452fd6e82d683bc95a5bccc7e67ce057bd823b436218769696466eae056a28d"
+        }
+      ],
+      "cited_passages": [
+        "Plans/Jujutsu_Integration.md JJI-001:42-71, JJI-002:73-103, section 3.1:267-272, section 3.3:299-303, JJI-006:212-245, section 4.1:305-310",
+        "Plans/Source_Control_System.md SCS-005:191-224, section 4.2:345-350, SCS-015:843-868, section 5:369-385",
+        "gulbanana/gg doc/DESIGN.md, CHANGELOG.md 0.35.2 @ e9d3bfe"
+      ],
+      "adjudicator_note": "Not added to the union."
+    },
+    {
+      "candidate_id": "C4M-05",
+      "label": "Divergent-change identity and draft-description retention are undefined product choices",
+      "proposed_class": "optional_capability",
+      "arm_label": "J0028-compare proposals A and B",
+      "job": "muse13/J0028-compare",
+      "proposition": "(A) Add divergent and hidden change display with offset-qualified or otherwise disambiguated targeting, bound to immutable commit and operation identity so the qualifier cannot reintroduce aliasing and cannot weaken exact-revision comparison; (B) decide whether a draft description is retained across operations while the selected change identity is unchanged, keyed on a stated identity with explicit invalidation on divergence, rewrite, abandon, quarantine and selection change, and never turning a retained draft into an implicit mutation.",
+      "distinctness": "F006 requires change, commit and operation identities to stay separate and is credited to this arm; F022 asks for explicit convergence of divergent commits and is recorded here as a partial. This candidate is the representational gap: the arm establishes by literal search that no JJ divergent or offset vocabulary exists anywhere in the Plans, so offsets 'would be a new Plan concept, not an existing requirement'. claude-hicap reached the same conclusion structurally (C4H-05) by reading the closed enums rather than by search.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-muse13-20260916-215801/jobs/J0028-compare/workspace/notes.md",
+          "sha256": "89bc0d71671edc95c6e29694ffd0a24581a46329e01d2e68fc1344ddd9f840a9"
+        }
+      ],
+      "cited_passages": [
+        "Plans/Jujutsu_Integration.md JJI-002:73-103, JJI-003:105-143, JJI-006, section 4.1",
+        "Plans/Source_Control_System.md SCS-002:85-117, SCS-005, SCS-017:948-996",
+        "Plans/source_control_contracts.schema.json source_graph_projection:2720-2864",
+        "gulbanana/gg CHANGELOG 0.37.2, 0.41 @ e9d3bfe"
+      ],
+      "adjudicator_note": "Not added to the union."
+    }
+  ],
+  "observations": [
+    {
+      "observation_id": "O4M-01",
+      "label": "muse13's credited set is a strict subset of claude-hicap's and a strict superset of both earlier arms'",
+      "finding": "cross-arm structure",
+      "detail": "claude (18) is a proper subset of muse13 (40); deepseek41 (33) is a proper subset of muse13; muse13 is a proper subset of claude-hicap (46). claude and deepseek41 are NOT comparable with each other (claude alone held F051 against deepseek41). So three of the four new arms nest cleanly, and the four-arm union is exactly claude-hicap's 46 - no arm contributed a finding that claude-hicap missed.",
+      "adjudicator_note": "Recorded. On this union the four review arms differ in depth rather than in kind."
+    },
+    {
+      "observation_id": "O4M-02",
+      "label": "muse13 did NOT make the UNIX_EPOCH error both Claude arms made",
+      "finding": "cross-arm accuracy",
+      "detail": "Both Claude arms concluded that op_store().gc(head, SystemTime::UNIX_EPOCH) prunes everything unreachable from the head; deepseek41 read the implementation and got it right. muse13 does not make the claim at all: its J0026 records only the fact of the call ('runs op_store().gc(keep=[head], UNIX_EPOCH) while deliberately NOT running store().gc()') and draws the narrower conclusion the evidence supports - 'Do not treat sync as ready-made backup' - without asserting a retention direction. J0023 records the same call the same way. Declining to characterise an unread implementation is the correct behaviour here, and it is the third distinct outcome across four arms on one code fact.",
+      "adjudicator_note": "Recorded. No score effect; noted because two arms got this wrong and the discipline that avoided it is worth naming."
+    },
+    {
+      "observation_id": "O4M-03",
+      "label": "A structural loss: the GitButler triple was reconciled but never compared",
+      "finding": "admission-cap coverage",
+      "detail": "J0027-reconcile delivered a full reconciliation of L-732df4469871, L-3c0712b66649 and L-0eb0bdc5ba1a, and its preserved lessons carry F010, F011, F080, F089, F090 and F102. No compare job was ever admitted for that triple - the 12-admission cap ran out after five compare jobs. The credits above therefore rest on reconcile-stage assertions for that lead group, which is why no canon-contract correction came out of it. deepseek41 lost the graph triple's compare the same way.",
+      "adjudicator_note": "Recorded under request-limited coverage."
+    }
+  ]
+}

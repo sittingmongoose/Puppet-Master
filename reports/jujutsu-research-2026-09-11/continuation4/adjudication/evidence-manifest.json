@@ -165,14 +165,14 @@
     "excluded_as_locator_inventory": "workspace/research-evidence/sources/** \u2014 continuation 3 treats source locator inventories as separate from assertion documents"
   },
   "arms_not_yet_scored": [
-    "glm53",
-    "muse13",
-    "union (running as a full arm through OpenRouter)"
+    "union (interrupted 21:57Z, quarantined; clean rerun launched 22:19:33Z on openrouter/stealth/union-alpha as a full arm)",
+    "glm53 (interrupted 21:57Z, quarantined; requeued after union)"
   ],
   "arms_scored": [
     "claude",
     "deepseek41",
-    "claude-hicap"
+    "claude-hicap",
+    "muse13"
   ],
   "deepseek41_run": {
     "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-deepseek41-20260916-202016",
@@ -577,5 +577,112 @@
     "source_sha256": "a42ce0f6208002fc26c5796af00240b7e8b64b9b52957cc64446fc5b2ce610da",
     "significance": "The control's counter-result: the raised ceiling bought 28 findings and did not buy correctness on this point, because the error is a reasoning error rather than a budget one.",
     "effect_on_scores": "none"
+  },
+  "quarantined_runs": {
+    "note": "NOT SCORED. Both stopped on the same FileNotFoundError renaming jobs/<job>/worker-process.json.tmp -> worker-process.json, 27 seconds apart, and are being accounted for and requeued as fresh arms.",
+    "runs": [
+      {
+        "run": "jujutsu-union-20260916-214322",
+        "at": "2026-09-16T21:57:16.744919Z",
+        "job": "J0004-implementation"
+      },
+      {
+        "run": "jujutsu-glm53-20260916-214321",
+        "at": "2026-09-16T21:57:43.481803Z",
+        "job": "J0017-reconcile"
+      }
+    ]
+  },
+  "muse13_run": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-muse13-20260916-215801",
+    "terminal_stop_checked_first": "campaign-terminal.json and monitor-state.json both record 'Stop: admitted_attempt_cap' - a designed gate, not an exception",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/muse13-manifest.json",
+    "manifest_sha256_internal": "c20aa3925d8a04521fe5314ff993b9a861b80c4c02ca6f1b500b9502659991d3",
+    "manifest_file_bytes_sha256": "2763e496eaf3d35ccb460a26befe499f243f659cd4445131bf58ad088efa2aa1",
+    "report": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/muse13-report.json",
+    "files": 11510,
+    "total_bytes": 227493876,
+    "independently_reverified": true,
+    "run_json_sha256": "0cb106036dbdf5c48034a7af09817541e9db50aa68ec3c2c26dcf8e5fb246b3c",
+    "timing_json_sha256": "3e1292cae71a6e97eafbf8806a00e81f1f992d5d9399bfa885d3433dba946152",
+    "progress_json_sha256": "b0c218d65b38ce6c7fbb3f1b013eb55fdaf946cc2bdd2eb0d9aa7e1049b76ed8"
+  },
+  "muse13_assertion_corpus": {
+    "root": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-muse13-20260916-215801/jobs",
+    "documents": 16,
+    "total_bytes": 236309,
+    "files": [
+      {
+        "path": "J0017-reconcile/workspace/notes.md",
+        "sha256": "af6131f4ac0779f5aed6238e8bdf6038776a42503371960f4775011e60116b2e"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/diffedit3-line-endings.md",
+        "sha256": "eeb2f301d5a0c1c3eaedd81da3a22aeb2c75ecf13dd39f0f63e8188c252a2f6d"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/diffedit3-symlink-confinement.md",
+        "sha256": "4a4c666ea269f5345ee90be2356c2691519d3667754a5dc37f213cc749f9f468"
+      },
+      {
+        "path": "J0019-reconcile/workspace/notes.md",
+        "sha256": "96b708f2bb4f3555b41cbc898c727d43f4a528322804591393827ec4977ae567"
+      },
+      {
+        "path": "J0020-reconcile/workspace/notes.md",
+        "sha256": "85d8123711e70e2df166104ddbbed0bf5ba6a83639ac070b3510a9ba8e737aca"
+      },
+      {
+        "path": "J0020-reconcile/workspace/leads/diffedit3-no-edit-save-changes.md",
+        "sha256": "b1623fdd33a2f39a646cda18f1175c1f2d65919112f933ca9c6e4ff49fa86bbb"
+      },
+      {
+        "path": "J0020-reconcile/workspace/leads/diffedit3-symlink-write-through.md",
+        "sha256": "9520aae2e26a8c684e7231225e648823f6fbcd0910b54aebe99701d314bbfc11"
+      },
+      {
+        "path": "J0020-reconcile/workspace/leads/jj-resolve-partial-commit.md",
+        "sha256": "bb575add4ff40c8958b38f8579c7c5900d00465db5881691ddcc532e6fdedd59"
+      },
+      {
+        "path": "J0021-compare/workspace/notes.md",
+        "sha256": "ba362c831c351f046ad487d59dcb75d9c3c2cad773f0dc7d8ba19dfd0df5654a"
+      },
+      {
+        "path": "J0022-compare/workspace/notes.md",
+        "sha256": "65ee541f8040a158a8f89fe30c9995621488b1dba3d5d832a24466fc90c7e891"
+      },
+      {
+        "path": "J0023-reconcile/workspace/notes.md",
+        "sha256": "42da417bb9e2267deb608c8361e6fdac8ad6c2d88c83af79f31d5b0b8491b079"
+      },
+      {
+        "path": "J0024-compare/workspace/notes.md",
+        "sha256": "ab455b724538368e08218cd226b94b02c69ee24715d570089a97ccbbd0bfbcbd"
+      },
+      {
+        "path": "J0025-reconcile/workspace/notes.md",
+        "sha256": "ef66d4abfbf20dd37a4feb8c87ec57c699c3cdfdea0b3c0f9813aa36af67dd2a"
+      },
+      {
+        "path": "J0026-compare/workspace/notes.md",
+        "sha256": "0452fd6e82d683bc95a5bccc7e67ce057bd823b436218769696466eae056a28d"
+      },
+      {
+        "path": "J0027-reconcile/workspace/notes.md",
+        "sha256": "0a081e5093cb585af6ff90d937ac47ba965d024a62d6df0ce0ce50ffdb40f189"
+      },
+      {
+        "path": "J0028-compare/workspace/notes.md",
+        "sha256": "89bc0d71671edc95c6e29694ffd0a24581a46329e01d2e68fc1344ddd9f840a9"
+      }
+    ]
+  },
+  "cross_arm_structure": {
+    "nesting": "claude (18) and deepseek41 (33) are both proper subsets of muse13 (40), which is a proper subset of claude-hicap (46). claude and deepseek41 are not comparable with each other (claude alone held F051 against deepseek41).",
+    "four_arm_union": 46,
+    "equals": "claude-hicap's own credited set",
+    "meaning": "No new arm contributed a finding claude-hicap missed. On this union the four review arms differ in depth rather than in kind.",
+    "unix_epoch_outcomes": "Three distinct outcomes across four arms on one code fact: both Claude arms concluded gc(head, UNIX_EPOCH) prunes everything unreachable (wrong); deepseek41 read lib/src/simple_op_store.rs and got it right; muse13 recorded the call without characterising the retention direction it had not verified."
   }
 }

@@ -230,6 +230,9 @@ partials and 5 out-of-union candidates — a high yield per lead reached.
 
 ## Comparison table
 
+**The current, full comparison table now lives in `../muse13/README.md`** and supersedes the one below. Headline after four new arms: claude 18/110, deepseek41 33/110, muse13 40/110, claude-hicap 46/110, with claude and deepseek41 both proper subsets of muse13 and muse13 a proper subset of claude-hicap.
+
+
 **The current, full comparison table now lives in `../claude-hicap/README.md`** and supersedes the one below. Headline: claude-hicap — the control arm for Arm C's ceiling caveat — scored 46/110 (41.82%) including 3 of 5 corrections, a strict superset of both Arm C (18) and deepseek41 (33).
 
 
