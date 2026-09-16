@@ -64,6 +64,12 @@
       "$ref": "#/$defs/source_graph_parent_expansion_request"
     },
     {
+      "$ref": "#/$defs/repository_object_format_profile"
+    },
+    {
+      "$ref": "#/$defs/new_repository_object_format_selection"
+    },
+    {
       "$ref": "#/$defs/backup_source_closure_record"
     },
     {
@@ -124,6 +130,27 @@
       "uniqueItems": true,
       "items": {
         "$ref": "#/$defs/non_secret_ref"
+      }
+    },
+    "repository_object_format": {
+      "description": "A repository object format. The format a repository is created in is permanent; this enum names formats, it does not certify support for any of them.",
+      "enum": ["sha1", "sha256"]
+    },
+    "object_format_support_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "evidence_ref"],
+      "properties": {
+        "state": {"enum": ["supported", "unsupported", "unknown"]},
+        "evidence_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]}
+      }
+    },
+    "certified_object_format_support": {
+      "description": "Support that current capability evidence certifies: the state is supported and it names the evidence that says so.",
+      "required": ["state", "evidence_ref"],
+      "properties": {
+        "state": {"const": "supported"},
+        "evidence_ref": {"$ref": "#/$defs/non_secret_ref"}
       }
     },
     "scm_backend": {
@@ -3004,6 +3031,144 @@
         {
           "if": {"properties": {"scm_backend": {"const": "jujutsu"}}, "required": ["scm_backend"]},
           "then": {"properties": {"graph_kind": {"const": "jujutsu_change_graph"}}}
+        }
+      ]
+    },
+    "repository_object_format_profile": {
+      "title": "RepositoryObjectFormatProfile",
+      "description": "Owner-owned evidence for one repository object format on one exact Execution Host and Environment: whether the engine, the library, the transport and the hosting provider are certified for it, and therefore whether the setup flow may offer it. A format is selectable only because current capability evidence certifies every one of the four, never by assumption, and unknown never collapses into supported or unsupported. The record certifies no engine version, promises no universal support, and is not runtime proof.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "profile_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "scm_backend",
+        "object_format",
+        "certification_catalog_ref",
+        "official_source_ref",
+        "catalog_currentness",
+        "support",
+        "selectable",
+        "disabled_reason_code",
+        "permanent_once_created",
+        "runtime_evidence_claimed"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.source_control.repository_object_format_profile.v1"},
+        "profile_id": {"$ref": "#/$defs/identity_id"},
+        "execution_host_id": {"$ref": "#/$defs/non_empty_string"},
+        "execution_environment_id": {"$ref": "#/$defs/non_empty_string"},
+        "scm_backend": {"$ref": "#/$defs/scm_backend"},
+        "object_format": {"$ref": "#/$defs/repository_object_format"},
+        "certification_catalog_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "official_source_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "catalog_currentness": {"enum": ["current", "stale", "unavailable"]},
+        "support": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["engine", "library", "transport", "provider"],
+          "properties": {
+            "engine": {"$ref": "#/$defs/object_format_support_evidence"},
+            "library": {"$ref": "#/$defs/object_format_support_evidence"},
+            "transport": {"$ref": "#/$defs/object_format_support_evidence"},
+            "provider": {"$ref": "#/$defs/object_format_support_evidence"}
+          }
+        },
+        "selectable": {"type": "boolean"},
+        "disabled_reason_code": {"type": ["string", "null"], "minLength": 1},
+        "permanent_once_created": {"const": true},
+        "runtime_evidence_claimed": {"const": false}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"selectable": {"const": true}}, "required": ["selectable"]},
+          "then": {
+            "properties": {
+              "catalog_currentness": {"const": "current"},
+              "support": {
+                "properties": {
+                  "engine": {"$ref": "#/$defs/certified_object_format_support"},
+                  "library": {"$ref": "#/$defs/certified_object_format_support"},
+                  "transport": {"$ref": "#/$defs/certified_object_format_support"},
+                  "provider": {"$ref": "#/$defs/certified_object_format_support"}
+                }
+              },
+              "disabled_reason_code": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"selectable": {"const": false}}, "required": ["selectable"]},
+          "then": {"properties": {"disabled_reason_code": {"$ref": "#/$defs/non_empty_string"}}}
+        }
+      ]
+    },
+    "new_repository_object_format_selection": {
+      "title": "NewRepositoryObjectFormatSelection",
+      "description": "The typed extension that carries a chosen object format through the existing Source Control setup flow for a repository being created, and that shows an existing repository the format discovery actually found. The chosen format is never inferred from a display string, a label or the engine default. Confirming requires an acknowledged permanence statement; cancelling records no format at all. The record changes no default, requests no cross-format migration, admits no command or handler, and is not runtime proof.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "selection_id",
+        "setup_session_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "scm_backend",
+        "requested_action",
+        "repository_disposition",
+        "offered_profile_refs",
+        "chosen_object_format",
+        "discovered_object_format",
+        "permanence_acknowledged",
+        "lifecycle_state",
+        "default_object_format_changed",
+        "cross_format_migration_requested",
+        "runtime_evidence_claimed"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.source_control.new_repository_object_format_selection.v1"},
+        "selection_id": {"$ref": "#/$defs/identity_id"},
+        "setup_session_id": {"$ref": "#/$defs/identity_id"},
+        "execution_host_id": {"$ref": "#/$defs/non_empty_string"},
+        "execution_environment_id": {"$ref": "#/$defs/non_empty_string"},
+        "scm_backend": {"$ref": "#/$defs/scm_backend"},
+        "requested_action": {"enum": ["use_jujutsu_here", "use_git_here", "use_existing_git", "none"]},
+        "repository_disposition": {"enum": ["new_repository", "existing_repository"]},
+        "offered_profile_refs": {"$ref": "#/$defs/non_secret_ref_list", "maxItems": 8},
+        "chosen_object_format": {"oneOf": [{"$ref": "#/$defs/repository_object_format"}, {"type": "null"}]},
+        "discovered_object_format": {"oneOf": [{"$ref": "#/$defs/repository_object_format"}, {"type": "null"}]},
+        "permanence_acknowledged": {"type": "boolean"},
+        "lifecycle_state": {"enum": ["offered", "confirmed", "cancelled"]},
+        "default_object_format_changed": {"const": false},
+        "cross_format_migration_requested": {"const": false},
+        "runtime_evidence_claimed": {"const": false}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"lifecycle_state": {"const": "confirmed"}}, "required": ["lifecycle_state"]},
+          "then": {
+            "properties": {
+              "repository_disposition": {"const": "new_repository"},
+              "chosen_object_format": {"$ref": "#/$defs/repository_object_format"},
+              "permanence_acknowledged": {"const": true},
+              "offered_profile_refs": {"minItems": 1}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"lifecycle_state": {"const": "cancelled"}}, "required": ["lifecycle_state"]},
+          "then": {"properties": {"chosen_object_format": {"type": "null"}, "permanence_acknowledged": {"const": false}}}
+        },
+        {
+          "if": {"properties": {"repository_disposition": {"const": "existing_repository"}}, "required": ["repository_disposition"]},
+          "then": {"properties": {"chosen_object_format": {"type": "null"}, "permanence_acknowledged": {"const": false}}}
+        },
+        {
+          "if": {"properties": {"repository_disposition": {"const": "new_repository"}}, "required": ["repository_disposition"]},
+          "then": {"properties": {"discovered_object_format": {"type": "null"}}}
         }
       ]
     },

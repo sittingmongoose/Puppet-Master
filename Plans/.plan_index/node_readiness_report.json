@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15481,
+    "depends_on_edge_count": 15501,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18132,
-    "node_count": 6646,
+    "edge_count": 18155,
+    "node_count": 6649,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2651,
+    "unblocks_edge_count": 2654,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-16T20:27:31Z",
+  "generated_at_utc": "2026-09-16T20:39:48Z",
   "gui_related_units": {
-    "count": 3172,
+    "count": 3173,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -27154,6 +27154,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Source_Control_System.md",
+        "plan_unit_id": "SCS-022",
+        "source_location": {
+          "heading": "SCS-022 - New Repository Object Format Choice In The Setup Flow",
+          "heading_level": 3,
+          "heading_line": 1482,
+          "line": 1484,
+          "path": "Plans/Source_Control_System.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Shared_Integration_Runtime.md",
         "plan_unit_id": "SIR-005",
         "source_location": {
@@ -34916,10 +34927,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6646,
+  "plan_unit_count": 6649,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2102,
+      "high": 2105,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -36873,6 +36884,8 @@
       "notification_wiring_gap": 1,
       "oauth_callback_token_overwrite": 1,
       "oauth_device_code_flow": 1,
+      "object_format_inferred_rather_than_requested": 1,
+      "object_format_offered_without_certified_capability_evidence": 1,
       "offline_cached_blocked_identity_drift": 1,
       "omitted_touch_or_false_whole_command_closure": 1,
       "onboarding_command_lineage_revival": 1,
@@ -37080,6 +37093,7 @@
       "payload_schema": 1,
       "performance": 17,
       "permanent_repository_format_chosen_without_evidence": 1,
+      "permanent_repository_format_chosen_without_evidence_or_consent": 1,
       "permission_approval_gui_cli_delta": 1,
       "permission_approval_scope_redefinition": 1,
       "permission_boundary": 1,
@@ -38727,7 +38741,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6455,
+      "accepted": 6458,
       "retired": 182,
       "superseded": 9
     },
@@ -38774,7 +38788,7 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 76,
+      "integration_contract": 79,
       "interaction_contract": 6,
       "invariant": 4,
       "migration_contract": 2,

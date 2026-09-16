@@ -8876,10 +8876,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 4,
+        "False": 6,
         "True": 16
       },
-      "heading_count": 42,
+      "heading_count": 45,
       "implementation_surfaces": [
         "Plans/Commands_System.md",
         "Plans/FileSafe.md",
@@ -8890,6 +8890,7 @@
         "Plans/Wiring_Matrix.production.json",
         "Plans/jujutsu_integration_contract_fixtures.json",
         "Plans/jujutsu_integration_contracts.schema.json",
+        "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
         "Plans/touch_closure.json",
         "future JJ SourceSnapshotAdapter",
@@ -8898,11 +8899,12 @@
         "future LeaseCoordinator integration",
         "future Runtime Artifacts projections",
         "future Source Control UI",
-        "future qualified owner adapter and typed contract extensions"
+        "future qualified owner adapter and typed contract extensions",
+        "future signed compatibility catalog and qualified owner adapter"
       ],
-      "line_count": 1340,
+      "line_count": 1469,
       "path": "Plans/Jujutsu_Integration.md",
-      "plan_unit_count": 20,
+      "plan_unit_count": 22,
       "plan_unit_ids": [
         "JJI-001",
         "JJI-002",
@@ -8923,7 +8925,9 @@
         "JJI-017",
         "JJI-018",
         "JJI-019",
-        "JJI-020"
+        "JJI-020",
+        "JJI-021",
+        "JJI-022"
       ],
       "reasoning_tiers": [
         "high"
@@ -8944,21 +8948,23 @@
         "jujutsu_ui_or_migration_misrepresentation",
         "managed_rewrite_preview_and_apply_lifecycle",
         "named_checkpoints_and_receipt_based_history_metadata",
+        "object_format_inferred_rather_than_requested",
+        "object_format_offered_without_certified_capability_evidence",
         "private_pm_owned_adapter_service",
         "qualified_native_change_editing_semantics",
         "read_only_and_earlier_state_browsing",
         "verified_group_undo_redo_and_selected_operation_reversal",
         "version_comparison_and_focused_change_evolution"
       ],
-      "sha256": "90814291f47d79cf1035e7ce8ad09b352d39ea7ba38d3be1b504d3bf468124f8",
+      "sha256": "6092fe5c7c8cbb09f7eb6b03b56356eb9c942c1adc7fa33d04c3d6570e91ec68",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 20
+        "accepted": 22
       },
       "title": "Jujutsu Integration",
       "unit_type_counts": {
         "command_binding": 1,
-        "integration_contract": 13,
+        "integration_contract": 15,
         "invariant": 1,
         "owner_boundary": 1,
         "requirement": 3,
@@ -8975,6 +8981,8 @@
         "Plans/jujutsu_integration_contracts.schema.json",
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
+        "Plans/source_control_contracts.schema.json#/$defs/new_repository_object_format_selection",
+        "Plans/source_control_contracts.schema.json#/$defs/repository_object_format_profile",
         "adaptive GUI fixtures",
         "alias normalization tests",
         "colocation migration fixtures",
@@ -8987,6 +8995,7 @@
         "future divergence, independent duplicate identity, redundant/merge parents, ambiguous absorption, changed dirty snapshot, back-out overlap and protected rewrite fixtures",
         "future duplicate hunk, truncated list, invalid byte span, binary/mode/rename selection, multi-select insert-rebase, descendant/cycle and drag-keyboard parity fixtures",
         "future duplicate-name, missing checkpoint, metadata-race, external operation, unknown-time and filtered-pagination fixtures",
+        "future exact-host, catalog-currentness and per-format capability matrices; static prose is not runtime proof",
         "future exact-version positive and negative fixtures; static prose is not runtime proof",
         "future group interleave, partial undo, branching redo invalidation, root/merge selected target, overlapping later edit, cancellation and restart fixtures",
         "future internal session/auth, crash-after-effect, generation mismatch, tool-version and no-consumer-subprocess fixtures",
@@ -8996,6 +9005,7 @@
         "future rebased-parent normalization, multi-parent ambiguity, divergent versions, missing predecessor and stale-page fixtures",
         "future retained-label/missing-object, partial group closure and maintenance-versus-browse fixtures",
         "future scan truncation, marker-target retention, shared-store GC race, backup barrier, cancellation and reclaim-estimate fixtures",
+        "future setup, cancellation and exact-version positive and negative fixtures; static prose is not runtime proof",
         "late mutation quarantine tests",
         "move and resume fixtures",
         "python3 scripts/pm-new-contracts-verify.py",
@@ -16760,9 +16770,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 2,
-        "True": 19
+        "True": 20
       },
-      "heading_count": 50,
+      "heading_count": 52,
       "implementation_surfaces": [
         "Plans/Commands_System.md",
         "Plans/FinalGUISpec.md",
@@ -16782,6 +16792,7 @@
         "future Source Control and workspace admission services",
         "future Source Control checkpoint native handlers",
         "future Source Control manager",
+        "future Source Control setup surface and Slint consumer",
         "future SourceGraph projector and Slint consumer",
         "future SourceSnapshotAdapter and GitJJClosureValidator",
         "future acceptance harness",
@@ -16798,9 +16809,9 @@
         "future source-control facade",
         "future source-control migration"
       ],
-      "line_count": 1474,
+      "line_count": 1545,
       "path": "Plans/Source_Control_System.md",
-      "plan_unit_count": 21,
+      "plan_unit_count": 22,
       "plan_unit_ids": [
         "SCS-001",
         "SCS-002",
@@ -16822,7 +16833,8 @@
         "SCS-018",
         "SCS-019",
         "SCS-020",
-        "SCS-021"
+        "SCS-021",
+        "SCS-022"
       ],
       "reasoning_tiers": [
         "high"
@@ -16838,6 +16850,7 @@
         "local_history_hosting_or_transport_conflation",
         "migration_authority_widening_or_false_readiness",
         "onboarding_local_history_forge_conflation_or_false_account_claim",
+        "permanent_repository_format_chosen_without_evidence_or_consent",
         "sanitized_diagnostic_export_and_optional_technical_log",
         "scm_baseline_absence_or_cross_domain_collision",
         "semantic_flattening_duplicate_external_effect_or_authority_escape",
@@ -16850,15 +16863,15 @@
         "unbounded_graph_hydration_or_source_history_identity_conflation",
         "wrong_environment_or_stale_version_certification"
       ],
-      "sha256": "38d78f86661dedd3e6699e4c30fd4057a269a30cd0d87fa394c8f8f87fcc51c9",
+      "sha256": "31dafbafbd661d0287c22d0316eb661a4d9ed84bb08882645f5e67602fefb4d6",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 21
+        "accepted": 22
       },
       "title": "Source Control System",
       "unit_type_counts": {
         "command_binding": 2,
-        "integration_contract": 11,
+        "integration_contract": 12,
         "owner_boundary": 1,
         "requirement": 6,
         "validation": 1
@@ -16880,6 +16893,8 @@
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
+        "Plans/source_control_contracts.schema.json#/$defs/new_repository_object_format_selection",
+        "Plans/source_control_contracts.schema.json#/$defs/repository_object_format_profile",
         "Plans/source_control_contracts.schema.json#/$defs/source_graph_parent_expansion_request",
         "Plans/source_control_contracts.schema.json#/$defs/source_graph_projection",
         "Plans/touch_closure.json",
@@ -16901,6 +16916,7 @@
         "future clean-host closure, GC race, merge/currentness, remote trust, credential reattachment, unsafe-config, collision/conflict, and rollback tests",
         "future credential-in-argv/URL/error/name, private path/content, bounded-log, cross-repository cache, denied destination and partial export fixtures",
         "future duplicate-text, rename/merge ambiguity, changed range, orphan mark, unsupported attribution, cancellation and no-approval-transfer fixtures",
+        "future exact-host setup, disabled-choice, cancellation and discovered-format tests; static prose is not runtime proof",
         "future exact-version positive and negative fixtures; static prose is not runtime proof",
         "future five-domain conflict positive/negative fixtures",
         "future hidden-priority intersection, bounded invalid revset, stale completion, pin-on-rewrite, missing pin and untracked-file projection fixtures",
@@ -19577,7 +19593,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-16T20:27:30Z",
+  "generated_at_utc": "2026-09-16T20:39:48Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19585,13 +19601,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3474,
-      "True": 3172
+      "False": 3476,
+      "True": 3173
     },
-    "plan_unit_count": 6646,
+    "plan_unit_count": 6649,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6455,
+      "accepted": 6458,
       "retired": 182,
       "superseded": 9
     },
@@ -19638,7 +19654,7 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 76,
+      "integration_contract": 79,
       "interaction_contract": 6,
       "invariant": 4,
       "migration_contract": 2,

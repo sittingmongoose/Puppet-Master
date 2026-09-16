@@ -1338,3 +1338,132 @@ preserved_exact_tokens:
 - Add a separately labeled reverse-selected-operation action
 - Add a clearly labeled earlier-state browsing mode
 ```
+
+## DL-051 Accepted New-Repository Object Format Choice - 2026-09-16
+
+This addendum compiles the DL-051 answer as accepted planning requirements for the Jujutsu-native half of the object-format choice: the typed extension that carries the chosen format, and the owner-owned evidence that decides which formats may be offered. It admits no command, request meaning, handler, event, certified engine version or runtime capability, and the existing Jujutsu request enum remains exactly 31 commands; SCS-018 admission requirements apply. The exact engine, command-line and repository-format qualification requirement is a prerequisite owned by JJI-006, SCS-004 and SCS-015 and is referenced, not restated. Nothing here changes a default object format, authorizes cross-format migration, or claims universal SHA-256 support.
+
+ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/Jujutsu_Integration.md, ContractName:Plans/Contracts_V0.md
+
+### JJI-021 - Typed New Repository Object Format Extension
+
+```yaml
+plan_unit_id: JJI-021
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Jujutsu_Integration.md
+canonical_text: >-
+  The object format a new Jujutsu repository is created with travels in one typed extension of the existing
+  new-repository setup request, `pm.source_control.new_repository_object_format_selection.v1`. The format is an exact
+  enumerated value carried in that record; it is never read back from a display string, a label, a menu caption, an
+  abbreviated identifier or the engine default. The extension binds the setup session and the exact Execution Host and
+  Execution Environment, names the evidence profiles it was offered from, and distinguishes a repository being created
+  from one that already exists. Confirming requires an acknowledged permanence statement, because the format cannot be
+  changed afterwards; cancelling records no format. The extension is an owner contract only: it admits no new Jujutsu
+  command, keeps the request enum at exactly 31 commands, and adds no handler, event or runtime capability.
+gui_related: false
+gui_classification_reason: The unit defines the typed request extension and its identity and lifecycle rules; the visible control belongs to SCS-022.
+depends_on: [JJI-001, JJI-002, JJI-006, SCS-004, SCS-018, JJI-022, DL-051]
+unblocks: [SCS-022]
+acceptance_criteria:
+  - The chosen format is an exact enumerated value in the typed record and is never inferred from a display path, label, caption, abbreviated identifier or engine default.
+  - The record binds the setup session identity and the exact Execution Host and Execution Environment, and names at least one offered profile reference whenever a choice is confirmed.
+  - A confirmed record requires `repository_disposition=new_repository`, a non-null chosen format and `permanence_acknowledged=true`; a cancelled record requires a null chosen format and no acknowledgement.
+  - A repository that already exists carries a discovered format or an explicit null and never a chosen one; a repository being created carries no discovered format.
+  - Both `default_object_format_changed` and `cross_format_migration_requested` are false by construction, and `runtime_evidence_claimed` is false.
+  - The Jujutsu request enum remains exactly 31 commands, and this extension admits no command, handler, event, supported version or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+  - Plans/source_control_contracts.schema.json#/$defs/new_repository_object_format_selection
+  - Plans/source_control_contract_fixtures.json
+  - python3 scripts/pm-new-contracts-verify.py
+  - future setup, cancellation and exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: object_format_inferred_rather_than_requested
+reasoning_tier: high
+context_scope: new_repository_object_format_selection
+implementation_surfaces:
+  - Plans/Jujutsu_Integration.md
+  - Plans/source_control_contracts.schema.json
+  - Plans/source_control_contract_fixtures.json
+  - future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: static_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-051
+  - source_ref:pldg-20260916-002-jujutsu-object-format-picker:atom-object-format-typed-request-110
+  - reports/jujutsu-research-2026-09-11/continuation3/final/comparison.json:c3006253a5c68074109312747feb67130fb6e12d4f82c66132b268487156370b
+preserved_exact_tokens: [object format, sha1, sha256, use_jujutsu_here, new_repository, existing_repository, permanence_acknowledged]
+negative_constraints:
+  - Do not infer the object format from a display string, label, caption, abbreviated identifier or engine default.
+  - Do not add a Jujutsu command, handler, event or request meaning for this extension, and do not grow the 31-command enum.
+  - Do not record a format from a cancelled setup, and do not confirm one without the acknowledged permanence copy.
+  - Do not change a default object format or request cross-format migration through this record.
+owner_hints:
+  - Plans/Jujutsu_Integration.md
+  - Plans/Source_Control_System.md
+  - Plans/Contracts_V0.md
+```
+
+### JJI-022 - Certified Object Format Profiles And Owner Owned Format Evidence
+
+```yaml
+plan_unit_id: JJI-022
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Jujutsu_Integration.md
+canonical_text: >-
+  Whether a repository object format may be offered is decided by owner-owned evidence held in one place,
+  `pm.source_control.repository_object_format_profile.v1`, not restated per surface. One profile covers one format on
+  one exact Execution Host and Execution Environment and carries four independent support states, for the engine, the
+  library, the transport and the hosting provider, each either supported with the evidence that says so, unsupported,
+  or unknown. A format is selectable only when a current capability catalog certifies all four as supported with named
+  evidence; otherwise it is disabled and carries the reason. Unknown is never promoted to supported or demoted to
+  unsupported, a stale or unavailable catalog cannot certify anything, and every profile states that the format is
+  permanent once the repository is created. The profile certifies no engine version and promises no universal SHA-256
+  support; it reports what current evidence shows.
+gui_related: false
+gui_classification_reason: The unit defines owner evidence and certification semantics; the disabled control and its reason text belong to SCS-022.
+depends_on: [JJI-006, SCS-004, SCS-015, SCS-018, DL-051]
+unblocks: [JJI-021, SCS-022]
+acceptance_criteria:
+  - One profile covers exactly one object format on one exact Execution Host and Execution Environment, and names its certification catalog and official source.
+  - Engine, library, transport and provider support are four independent states of supported, unsupported or unknown, and a supported state names the evidence that certifies it.
+  - A selectable profile requires a `current` catalog and all four states supported with named evidence, and carries no disabled reason; a profile that is not selectable carries a non-empty reason code.
+  - Unknown is never reported as supported or unsupported, and a stale or unavailable catalog certifies nothing.
+  - Every profile states that the object format is permanent once the repository is created.
+  - The profile is read from its one owner rather than restated on the setup surface, and the exact engine, command-line and repository-format qualification requirement stays with JJI-006, SCS-004 and SCS-015.
+  - No engine version is certified, no universal SHA-256 support is promised, and no command, handler, event or runtime capability is admitted; SCS-018 admission requirements apply.
+validation_surfaces:
+  - Plans/source_control_contracts.schema.json#/$defs/repository_object_format_profile
+  - Plans/source_control_contract_fixtures.json
+  - python3 scripts/pm-new-contracts-verify.py
+  - future exact-host, catalog-currentness and per-format capability matrices; static prose is not runtime proof
+risk_class: object_format_offered_without_certified_capability_evidence
+reasoning_tier: high
+context_scope: new_repository_object_format_selection
+implementation_surfaces:
+  - Plans/Jujutsu_Integration.md
+  - Plans/source_control_contracts.schema.json
+  - Plans/source_control_contract_fixtures.json
+  - future signed compatibility catalog and qualified owner adapter
+node_compile_hint:
+  mode: static_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-051
+  - source_ref:pldg-20260916-002-jujutsu-object-format-picker:atom-object-format-certified-profiles-110
+  - reports/jujutsu-research-2026-09-11/continuation3/final/comparison.json:c3006253a5c68074109312747feb67130fb6e12d4f82c66132b268487156370b
+preserved_exact_tokens: [object format, supported, unsupported, unknown, sha1, sha256, permanent_once_created]
+negative_constraints:
+  - Do not treat unknown capability evidence as supported or as unsupported.
+  - Do not certify a format from a stale or unavailable capability catalog.
+  - Do not restate format evidence on the setup surface instead of reading the owner profile.
+  - Do not claim that SHA-256 is universally supported by engines, libraries, transports or providers.
+  - Do not certify an engine version from this profile; that stays with the exact-environment qualification owner.
+owner_hints:
+  - Plans/Jujutsu_Integration.md
+  - Plans/Source_Control_System.md
+  - Plans/Shared_Integration_Runtime.md
+```

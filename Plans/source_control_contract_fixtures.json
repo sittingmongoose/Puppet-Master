@@ -2419,6 +2419,174 @@
         "mutation_intent": "none",
         "runtime_evidence_claimed": false
       }
+    },
+{
+      "name": "object_format_profile_is_selectable_only_on_certified_evidence",
+      "definition": "repository_object_format_profile",
+      "value": {
+        "schema_id": "pm.source_control.repository_object_format_profile.v1",
+        "profile_id": "object-format-profile:jujutsu:sha1:host-pm-01:env-native",
+        "execution_host_id": "host-pm-01",
+        "execution_environment_id": "env-native",
+        "scm_backend": "jujutsu",
+        "object_format": "sha1",
+        "certification_catalog_ref": "certification-catalog:source-control:2026-09-16",
+        "official_source_ref": "official-source:jujutsu:pinned-docs:0.44.0",
+        "catalog_currentness": "current",
+        "support": {
+          "engine": {
+            "state": "supported",
+            "evidence_ref": "capability-evidence:jujutsu:engine:sha1"
+          },
+          "library": {
+            "state": "supported",
+            "evidence_ref": "capability-evidence:jujutsu:library:sha1"
+          },
+          "transport": {
+            "state": "supported",
+            "evidence_ref": "capability-evidence:source-control:transport:sha1"
+          },
+          "provider": {
+            "state": "supported",
+            "evidence_ref": "capability-evidence:forge:provider:sha1"
+          }
+        },
+        "selectable": true,
+        "disabled_reason_code": null,
+        "permanent_once_created": true,
+        "runtime_evidence_claimed": false
+      }
+    },
+{
+      "name": "object_format_profile_is_disabled_by_current_capability_evidence",
+      "definition": "repository_object_format_profile",
+      "value": {
+        "schema_id": "pm.source_control.repository_object_format_profile.v1",
+        "profile_id": "object-format-profile:jujutsu:sha256:host-pm-01:env-native",
+        "execution_host_id": "host-pm-01",
+        "execution_environment_id": "env-native",
+        "scm_backend": "jujutsu",
+        "object_format": "sha256",
+        "certification_catalog_ref": "certification-catalog:source-control:2026-09-16",
+        "official_source_ref": "official-source:jujutsu:pinned-docs:0.44.0",
+        "catalog_currentness": "current",
+        "support": {
+          "engine": {
+            "state": "supported",
+            "evidence_ref": "capability-evidence:jujutsu:engine:sha256"
+          },
+          "library": {
+            "state": "supported",
+            "evidence_ref": "capability-evidence:jujutsu:library:sha256"
+          },
+          "transport": {
+            "state": "unknown",
+            "evidence_ref": null
+          },
+          "provider": {
+            "state": "unsupported",
+            "evidence_ref": "capability-evidence:forge:provider:sha256"
+          }
+        },
+        "selectable": false,
+        "disabled_reason_code": "object_format_not_certified_by_current_provider_and_transport_evidence",
+        "permanent_once_created": true,
+        "runtime_evidence_claimed": false
+      }
+    },
+{
+      "name": "new_repository_object_format_choice_is_confirmed_with_permanence_acknowledged",
+      "definition": "new_repository_object_format_selection",
+      "value": {
+        "schema_id": "pm.source_control.new_repository_object_format_selection.v1",
+        "selection_id": "object-format-selection:setup-7741:confirmed",
+        "setup_session_id": "source-control-setup:7741",
+        "execution_host_id": "host-pm-01",
+        "execution_environment_id": "env-native",
+        "scm_backend": "jujutsu",
+        "requested_action": "use_jujutsu_here",
+        "repository_disposition": "new_repository",
+        "offered_profile_refs": [
+          "object-format-profile:jujutsu:sha1:host-pm-01:env-native",
+          "object-format-profile:jujutsu:sha256:host-pm-01:env-native"
+        ],
+        "chosen_object_format": "sha1",
+        "discovered_object_format": null,
+        "permanence_acknowledged": true,
+        "lifecycle_state": "confirmed",
+        "default_object_format_changed": false,
+        "cross_format_migration_requested": false,
+        "runtime_evidence_claimed": false
+      }
+    },
+{
+      "name": "cancelled_object_format_setup_records_no_format",
+      "definition": "new_repository_object_format_selection",
+      "value": {
+        "schema_id": "pm.source_control.new_repository_object_format_selection.v1",
+        "selection_id": "object-format-selection:setup-7742:cancelled",
+        "setup_session_id": "source-control-setup:7742",
+        "execution_host_id": "host-pm-01",
+        "execution_environment_id": "env-native",
+        "scm_backend": "jujutsu",
+        "requested_action": "use_jujutsu_here",
+        "repository_disposition": "new_repository",
+        "offered_profile_refs": [
+          "object-format-profile:jujutsu:sha1:host-pm-01:env-native",
+          "object-format-profile:jujutsu:sha256:host-pm-01:env-native"
+        ],
+        "chosen_object_format": null,
+        "discovered_object_format": null,
+        "permanence_acknowledged": false,
+        "lifecycle_state": "cancelled",
+        "default_object_format_changed": false,
+        "cross_format_migration_requested": false,
+        "runtime_evidence_claimed": false
+      }
+    },
+{
+      "name": "existing_repository_shows_its_discovered_object_format",
+      "definition": "new_repository_object_format_selection",
+      "value": {
+        "schema_id": "pm.source_control.new_repository_object_format_selection.v1",
+        "selection_id": "object-format-selection:setup-7743:existing",
+        "setup_session_id": "source-control-setup:7743",
+        "execution_host_id": "host-pm-01",
+        "execution_environment_id": "env-native",
+        "scm_backend": "jujutsu",
+        "requested_action": "none",
+        "repository_disposition": "existing_repository",
+        "offered_profile_refs": [],
+        "chosen_object_format": null,
+        "discovered_object_format": "sha1",
+        "permanence_acknowledged": false,
+        "lifecycle_state": "offered",
+        "default_object_format_changed": false,
+        "cross_format_migration_requested": false,
+        "runtime_evidence_claimed": false
+      }
+    },
+{
+      "name": "existing_repository_object_format_stays_unknown_until_discovery_produces_one",
+      "definition": "new_repository_object_format_selection",
+      "value": {
+        "schema_id": "pm.source_control.new_repository_object_format_selection.v1",
+        "selection_id": "object-format-selection:setup-7744:existing-undiscovered",
+        "setup_session_id": "source-control-setup:7744",
+        "execution_host_id": "host-pm-01",
+        "execution_environment_id": "env-native",
+        "scm_backend": "jujutsu",
+        "requested_action": "none",
+        "repository_disposition": "existing_repository",
+        "offered_profile_refs": [],
+        "chosen_object_format": null,
+        "discovered_object_format": null,
+        "permanence_acknowledged": false,
+        "lifecycle_state": "offered",
+        "default_object_format_changed": false,
+        "cross_format_migration_requested": false,
+        "runtime_evidence_claimed": false
+      }
     }
   ],
   "invalid": [
@@ -2627,6 +2795,133 @@
         "identity_authority.display_path_authoritative": true
       },
       "expected_error": "RepositoryContext remains identity authority for an expansion request"
+    },
+{
+      "name": "object_format_cannot_be_selectable_with_unknown_transport_evidence",
+      "definition": "repository_object_format_profile",
+      "base_valid": "object_format_profile_is_disabled_by_current_capability_evidence",
+      "patch": {
+        "selectable": true,
+        "disabled_reason_code": null
+      },
+      "expected_error": "a format is offered only when engine, library, transport and provider evidence all certify it"
+    },
+{
+      "name": "object_format_cannot_be_selectable_without_naming_its_evidence",
+      "definition": "repository_object_format_profile",
+      "base_valid": "object_format_profile_is_selectable_only_on_certified_evidence",
+      "patch": {
+        "support.provider.evidence_ref": null
+      },
+      "expected_error": "certified support must name the evidence that certifies it"
+    },
+{
+      "name": "object_format_cannot_be_selectable_from_a_stale_catalog",
+      "definition": "repository_object_format_profile",
+      "base_valid": "object_format_profile_is_selectable_only_on_certified_evidence",
+      "patch": {
+        "catalog_currentness": "stale"
+      },
+      "expected_error": "a stale capability catalog cannot certify an offered format"
+    },
+{
+      "name": "disabled_object_format_requires_a_reason_code",
+      "definition": "repository_object_format_profile",
+      "base_valid": "object_format_profile_is_disabled_by_current_capability_evidence",
+      "patch": {
+        "disabled_reason_code": null
+      },
+      "expected_error": "a disabled format says why it is disabled"
+    },
+{
+      "name": "object_format_profile_never_denies_that_the_format_is_permanent",
+      "definition": "repository_object_format_profile",
+      "base_valid": "object_format_profile_is_selectable_only_on_certified_evidence",
+      "patch": {
+        "permanent_once_created": false
+      },
+      "expected_error": "the object format of a repository is permanent once it is created"
+    },
+{
+      "name": "confirmed_object_format_choice_requires_acknowledged_permanence",
+      "definition": "new_repository_object_format_selection",
+      "base_valid": "new_repository_object_format_choice_is_confirmed_with_permanence_acknowledged",
+      "patch": {
+        "permanence_acknowledged": false
+      },
+      "expected_error": "confirming a permanent format requires the acknowledged permanence copy"
+    },
+{
+      "name": "confirmed_object_format_choice_requires_a_chosen_format",
+      "definition": "new_repository_object_format_selection",
+      "base_valid": "new_repository_object_format_choice_is_confirmed_with_permanence_acknowledged",
+      "patch": {
+        "chosen_object_format": null
+      },
+      "expected_error": "a confirmed selection carries the format it chose"
+    },
+{
+      "name": "confirmed_object_format_choice_requires_an_offered_profile",
+      "definition": "new_repository_object_format_selection",
+      "base_valid": "new_repository_object_format_choice_is_confirmed_with_permanence_acknowledged",
+      "patch": {
+        "offered_profile_refs": []
+      },
+      "expected_error": "a confirmed selection names the evidence profiles it was offered from"
+    },
+{
+      "name": "cancelled_object_format_setup_cannot_leave_a_chosen_format_behind",
+      "definition": "new_repository_object_format_selection",
+      "base_valid": "cancelled_object_format_setup_records_no_format",
+      "patch": {
+        "chosen_object_format": "sha256"
+      },
+      "expected_error": "a cancelled setup records no chosen format"
+    },
+{
+      "name": "existing_repository_cannot_choose_an_object_format",
+      "definition": "new_repository_object_format_selection",
+      "base_valid": "existing_repository_shows_its_discovered_object_format",
+      "patch": {
+        "chosen_object_format": "sha256"
+      },
+      "expected_error": "the format of an existing repository is discovered, never chosen"
+    },
+{
+      "name": "new_repository_cannot_claim_a_discovered_object_format",
+      "definition": "new_repository_object_format_selection",
+      "base_valid": "new_repository_object_format_choice_is_confirmed_with_permanence_acknowledged",
+      "patch": {
+        "discovered_object_format": "sha1"
+      },
+      "expected_error": "a repository that does not exist yet has no discovered format"
+    },
+{
+      "name": "object_format_selection_cannot_claim_a_default_change",
+      "definition": "new_repository_object_format_selection",
+      "base_valid": "new_repository_object_format_choice_is_confirmed_with_permanence_acknowledged",
+      "patch": {
+        "default_object_format_changed": true
+      },
+      "expected_error": "this capability changes no default object format"
+    },
+{
+      "name": "object_format_selection_cannot_request_cross_format_migration",
+      "definition": "new_repository_object_format_selection",
+      "base_valid": "new_repository_object_format_choice_is_confirmed_with_permanence_acknowledged",
+      "patch": {
+        "cross_format_migration_requested": true
+      },
+      "expected_error": "no cross-format migration is authorized"
+    },
+{
+      "name": "object_format_selection_is_not_runtime_evidence",
+      "definition": "new_repository_object_format_selection",
+      "base_valid": "new_repository_object_format_choice_is_confirmed_with_permanence_acknowledged",
+      "patch": {
+        "runtime_evidence_claimed": true
+      },
+      "expected_error": "a static selection fixture does not prove runtime"
     },
     {
       "name": "source_graph_static_fixture_is_not_runtime_evidence",

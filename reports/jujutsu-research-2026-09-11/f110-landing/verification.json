@@ -1,0 +1,196 @@
+{
+  "at": "2026-09-16T20:50:00Z",
+  "status": "COMPILED_STATIC_INTEGRITY_PASS_PENDING_INDEPENDENT_BRANCH_REVIEW",
+  "branch": "plans/jj-f110-20260916",
+  "branch_base_commit": "b0977cd8518145dea45bc242dc5f221b5e62f141",
+  "commits_before_this_bundle": [
+    {
+      "commit": "b10800ba34",
+      "subject": "plans: record the object-format picker and parent-bound answers as DL-051 and DL-052"
+    },
+    {
+      "commit": "227398fbeb",
+      "subject": "plans: enforce the two SCS-017 page relations in the contract semantic gate"
+    },
+    {
+      "commit": "655f7ee2bd",
+      "subject": "plans: set the source graph parent bound to 32 and add the bounded parent expansion"
+    }
+  ],
+  "bundle_commit": "the commit that adds this file; it cannot name its own hash",
+  "decisions_recorded": {
+    "DL-051": {
+      "title": "New repositories may choose their object format, gated by current capability evidence",
+      "finding": "F110",
+      "verbatim_answer": "Add the picker as described, evidence-gated.",
+      "class": "optional capability accepted for planning",
+      "excluded_by_the_proposal_and_not_granted": [
+        "no change to which object format a new repository gets by default",
+        "no cross-format migration of an existing repository",
+        "no promise that SHA-256 is universally supported"
+      ]
+    },
+    "DL-052": {
+      "title": "A source graph page carries at most thirty-two parent references for one node, and the rest are fetched on request",
+      "question": "q-001 in pldg-20260916-001-jujutsu-continuation-corrections",
+      "verbatim_answer": "for the parent referenced bound, lets do 32 then the ability to fetch the rest",
+      "retires": "the provisional bound of 600"
+    },
+    "highest_dl_on_base_commit": "DL-050"
+  },
+  "plan_units_added": {
+    "Plans/Decision_Log.md": [
+      "DL-051",
+      "DL-052"
+    ],
+    "Plans/Source_Control_System.md": [
+      "SCS-022"
+    ],
+    "Plans/Jujutsu_Integration.md": [
+      "JJI-021",
+      "JJI-022"
+    ]
+  },
+  "semantic_gate": {
+    "authorization": "Jared, 2026-09-16, relayed by the reviewer; recorded as q-002 in pldg-20260916-001",
+    "edit": "scripts/pm-new-contracts-verify.py only: two constants, source_control_semantic_failures(), and one routing line in contract_semantic_failures. Nothing else under scripts/ was touched.",
+    "rules_enforced": [
+      {
+        "code": "source_graph_returned_count_not_equal_to_emitted_nodes",
+        "rule": "page.returned_count equals the number of emitted nodes",
+        "fixture": "source_graph_returned_count_must_equal_the_emitted_nodes"
+      },
+      {
+        "code": "source_graph_returned_count_exceeds_page_size",
+        "rule": "page.returned_count does not exceed the requested page.page_size",
+        "fixture": "source_graph_returned_count_must_not_exceed_the_requested_page_size"
+      },
+      {
+        "code": "source_graph_ambiguous_node_ref_in_page",
+        "rule": "two nodes on one page cannot share a node_ref while carrying different revision_ref values",
+        "fixture": "source_graph_node_ref_must_be_unambiguous_within_one_page"
+      }
+    ],
+    "enforcement_is_exactly_the_scs_017_criterion": "The node_ref rule is enforced as SCS-017 states it. Two rows that repeat a node_ref and agree on revision_ref are not rejected, because the owner criterion forbids only the disagreeing case. The gate is therefore not stricter than canon. A test records that boundary explicitly.",
+    "each_negative_fails_for_its_own_rule": "Every semantic negative is structurally valid against the schema and returns exactly its declared rule, so none can pass by being malformed.",
+    "scs_017_statement_removed": "The 'they await a source_control_contracts branch in the existing contract semantic gate and are unenforced until then' sentence is replaced by a statement naming the enforcing branch.",
+    "gate_before": {
+      "status": "pass",
+      "findings": 0,
+      "positive_cases": 1033,
+      "negative_cases": 3353
+    },
+    "gate_after_semantic_branch": {
+      "status": "pass",
+      "findings": 0,
+      "positive_cases": 1033,
+      "negative_cases": 3356
+    }
+  },
+  "parent_bound": {
+    "was": {
+      "value": 600,
+      "status": "provisional, pending the owner"
+    },
+    "now": {
+      "value": 32,
+      "status": "owner bound, DL-052"
+    },
+    "truncation_marker": "nodes[].parent_refs_truncated with nodes[].parent_expansion_cursor_ref; both required, both typed conditionals",
+    "fetch_the_rest": "pm.source_control.source_graph_parent_expansion_request.v1, bounded at 32 per request, admitted only while the projection is current, carrying the same repository, workspace, backend, selected revision and projection identity and the same projection_generation as the page",
+    "renamed_fixtures": {
+      "git_source_graph_admits_the_provisional_parent_reference_bound": "git_source_graph_admits_the_full_parent_reference_bound",
+      "source_graph_node_exceeds_the_provisional_parent_reference_bound": "source_graph_node_cannot_exceed_the_parent_reference_bound"
+    },
+    "q_001": "closed in pldg-20260916-001-jujutsu-continuation-corrections with the answer"
+  },
+  "picker": {
+    "scope": "the proposal's own dependency list and nothing else",
+    "new_records": [
+      "pm.source_control.new_repository_object_format_selection.v1",
+      "pm.source_control.repository_object_format_profile.v1"
+    ],
+    "prerequisite_referenced_not_restated": "exact engine, command-line and repository-format qualification with truthful unsupported states, owned by JJI-006, SCS-004 and SCS-015",
+    "evidence_gating": "a format is selectable only when a current capability catalog certifies engine, library, transport and provider as supported, each naming its evidence; otherwise it is disabled with a reason code, and unknown is never promoted or demoted",
+    "no_command_admission": "no command, handler, event or request meaning is added and the Jujutsu request enum stays at exactly 31; SCS-018 admission still gates anything runnable",
+    "ledger": "pldg-20260916-002-jujutsu-object-format-picker, registered as compiled"
+  },
+  "scoped_contracts": {
+    "status": "pass",
+    "command": "python3 scripts/pm-new-contracts-verify.py",
+    "findings": 0,
+    "counts": {
+      "contract_pairs": 30,
+      "positive_cases": 1041,
+      "positive_cases_valid": 1041,
+      "negative_cases": 3377,
+      "negative_cases_rejected": 3377
+    },
+    "baseline_before_edits": {
+      "positive_cases": 1033,
+      "negative_cases": 3353
+    },
+    "delta": {
+      "positive_cases": 8,
+      "negative_cases": 24
+    }
+  },
+  "configured_shards": {
+    "status": "pass",
+    "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+    "docs_checked": 98,
+    "shards_checked": 2676,
+    "source_count": 98,
+    "failures": []
+  },
+  "plan_index": {
+    "status": "pass",
+    "command": "python3 scripts/pm-plan-index.py validate",
+    "plan_unit_count": 6649,
+    "acceptance_unit_count": 25844,
+    "failures": [],
+    "note": "6646 after the two Decision Log units, 6649 after SCS-022, JJI-021 and JJI-022. An early draft made SCS-022 and JJI-021 depend on each other; the cycle was caught by this validator and broken so the evidence profile unblocks the typed request, which unblocks the setup surface."
+  },
+  "named_tests": {
+    "status": "pass",
+    "command": "python3 -m unittest tests.test_pm_source_control_effects tests.test_pm_source_control_response",
+    "tests": 24,
+    "note": "tests/test_pm_source_control_effects.py is an already-tracked named test file, so no .gitignore exception was needed."
+  },
+  "ledger_validators": {
+    "pldg-20260916-001-jujutsu-continuation-corrections": {
+      "status": "fail",
+      "errors": [
+        "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+        "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+        "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']"
+      ],
+      "note": "identical to this ledger's state before the branch; q-001 is closed with the answer and q-002 is recorded as implemented"
+    },
+    "pldg-20260916-002-jujutsu-object-format-picker": {
+      "status": "fail",
+      "errors": [
+        "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+        "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+        "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']"
+      ],
+      "note": "the same three pre-existing omissions and nothing else"
+    }
+  },
+  "governance_coverage_note": "Neither owner doc is a sharding_config source on main, and neither is covered by Spec_Lock or the plan graph. This branch changed none of those three artifacts. The designated Plans agent owns that coverage and any reseal.",
+  "continuation3_landing_bundle": {
+    "file": "reports/jujutsu-research-2026-09-11/continuation3-landing/verification.json",
+    "change": "landed_commits added beside the reviewed branch and commit; the reviewed hashes are kept and labelled as what was reviewed",
+    "landed": [
+      "fdddacea20",
+      "b0977cd851"
+    ],
+    "reviewed_but_now_deleted_refs": [
+      "plans/jj-corrections-20260916",
+      "b83abd9396"
+    ]
+  },
+  "claim_boundary": "Static schema, fixture, shard, index and ledger integrity only. No governance seal, no runtime or native certification, no engine-version certification, no command admission and no readiness claim.",
+  "no_runtime_or_governance_seal_claim": true,
+  "landing": "Four commits on the branch, pushed. Stopped for the reviewer. Not landed on main."
+}

@@ -1472,3 +1472,74 @@ preserved_exact_tokens:
 - Add explicit sanitized export
 - Add an optional technical log view
 ```
+
+## DL-051 Accepted New-Repository Object Format Choice - 2026-09-16
+
+This addendum compiles the DL-051 answer as accepted planning requirements for the Source Control setup surface. It admits no command, request meaning, handler, event, certified engine version or runtime capability; SCS-018 admission requirements apply. The exact engine, command-line and repository-format qualification requirement is a prerequisite owned by SCS-004 and SCS-015 and is referenced, not restated. Nothing here changes a default object format, authorizes cross-format migration, or claims universal SHA-256 support.
+
+ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Jujutsu_Integration.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+
+### SCS-022 - New Repository Object Format Choice In The Setup Flow
+
+```yaml
+plan_unit_id: SCS-022
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: >-
+  The existing Source Control setup flow offers the object format when a repository is being created and shows the
+  discovered effective format when one already exists. It is one surface on the existing flow, not a separate wizard,
+  and it is bound to the exact Execution Host and Execution Environment the flow already binds. Every offered format
+  comes from an owner-owned format profile, so a choice is enabled or disabled by current capability evidence and
+  never by assumption; an uncertified or not-yet-known format is shown disabled with its reason rather than hidden or
+  silently substituted. The copy states that the object format of a repository is permanent once it is created, and
+  confirming records that the user was shown it. Cancelling or abandoning setup records no chosen format anywhere. An
+  existing repository shows only what discovery found, and says the format is not yet known rather than showing the
+  engine default as though it had been observed.
+gui_related: true
+gui_classification_reason: The unit is a visible setup-flow control, its disabled states and reasons, its discovered-format display and its permanence copy.
+depends_on: [SCS-004, SCS-005, SCS-015, SCS-018, JJI-006, JJI-021, JJI-022, DL-051]
+unblocks: []
+acceptance_criteria:
+  - The choice appears only on the existing Source Control setup flow, for a repository being created, and carries the same exact Execution Host and Execution Environment identity the flow already binds.
+  - Every offered or disabled format is backed by a `pm.source_control.repository_object_format_profile.v1` record; the flow offers no format it has no profile for.
+  - A disabled format shows a reason code from its profile, and an unknown capability state is shown as unknown rather than folded into supported or unsupported.
+  - Confirming a choice requires the acknowledged permanence copy, so `lifecycle_state=confirmed` carries a chosen format, `permanence_acknowledged=true` and at least one offered profile reference.
+  - Cancelling records no chosen format and no acknowledgement, and leaves nothing partially chosen behind.
+  - An existing repository carries a discovered format or an explicit unknown, and never a chosen format.
+  - The record changes no default object format, requests no cross-format migration, and claims no runtime evidence.
+  - Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version, or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+  - Plans/source_control_contracts.schema.json#/$defs/new_repository_object_format_selection
+  - Plans/source_control_contracts.schema.json#/$defs/repository_object_format_profile
+  - Plans/source_control_contract_fixtures.json
+  - python3 scripts/pm-new-contracts-verify.py
+  - future exact-host setup, disabled-choice, cancellation and discovered-format tests; static prose is not runtime proof
+risk_class: permanent_repository_format_chosen_without_evidence_or_consent
+reasoning_tier: high
+context_scope: new_repository_object_format_selection
+implementation_surfaces:
+  - Plans/Source_Control_System.md
+  - Plans/source_control_contracts.schema.json
+  - Plans/source_control_contract_fixtures.json
+  - future Source Control setup surface and Slint consumer
+node_compile_hint:
+  mode: static_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-051
+  - source_ref:pldg-20260916-002-jujutsu-object-format-picker:atom-object-format-setup-surface-110
+  - reports/jujutsu-research-2026-09-11/continuation3/final/comparison.json:c3006253a5c68074109312747feb67130fb6e12d4f82c66132b268487156370b
+preserved_exact_tokens: [object format, discovered effective format, permanent, sha1, sha256, use_jujutsu_here]
+negative_constraints:
+  - Do not offer a format the current capability evidence does not certify, and do not disable one by assumption instead of by evidence.
+  - Do not show the engine default as a discovered format, and do not hide an unknown behind a plausible value.
+  - Do not record a chosen format from a cancelled or abandoned setup.
+  - Do not change a default object format, migrate an existing repository between formats, or claim universal SHA-256 support.
+  - Do not restate the exact engine, command-line and repository-format qualification requirement; it belongs to SCS-004 and SCS-015.
+owner_hints:
+  - Plans/Source_Control_System.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/FinalGUISpec.md
+```

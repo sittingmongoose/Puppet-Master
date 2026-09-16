@@ -1,0 +1,21 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260916-002-jujutsu-object-format-picker",
+  "updated_at_utc": "2026-09-16T20:45:00+00:00",
+  "authority": "Live Plans are canon; this ledger is source lineage only.",
+  "scope": "The accepted optional capability from finding F110: an evidence-gated object-format choice on the existing Source Control setup flow for a repository being created, the discovered effective format for an existing one, a typed new-repository request extension, owner-owned format evidence with certified engine, library, transport and provider profiles, setup and cancellation fixtures, and permanence copy.",
+  "negative_constraints": [
+    "Do not change which object format a new repository gets by default.",
+    "Do not plan or imply cross-format migration of an existing repository.",
+    "Do not claim that SHA-256 is universally supported.",
+    "Do not add a command, handler, event or request meaning, and do not grow the 31-command Jujutsu enum.",
+    "Do not restate the exact engine, command-line and repository-format qualification requirement; it belongs to JJI-006, SCS-004 and SCS-015.",
+    "Do not claim runtime, native adapter, security, performance or readiness evidence from these static contracts.",
+    "Do not change Spec_Lock, evidence bundles, plan graph, auto_decisions, WorkNodes or NodeSeeds."
+  ],
+  "source_refs": [
+    "Plans/ledgers/v2/pldg-20260916-002-jujutsu-object-format-picker/source_shards/authorization.md",
+    "Plans/ledgers/v2/pldg-20260916-002-jujutsu-object-format-picker/source_shards/proposal.md"
+  ],
+  "next_action": "Compiled and statically checked on branch plans/jj-f110-20260916, awaiting the reviewer's independent review before landing. Nothing is admitted for dispatch: the typed extension and the format profiles are owner contracts, and SCS-018 admission still requires central catalog and sole-handler wiring, an explicit event or no-persist disposition, Permissions and FileSafe closure, exact-environment qualification and runtime validation before any of this can run."
+}

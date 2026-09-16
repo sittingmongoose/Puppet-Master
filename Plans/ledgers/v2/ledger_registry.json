@@ -154,6 +154,25 @@
       ]
     },
     {
+      "ledger_id": "pldg-20260916-002-jujutsu-object-format-picker",
+      "title": "Jujutsu new-repository object format picker",
+      "status": "compiled",
+      "phase": "compiled_object_format_picker",
+      "created_at_utc": "2026-09-16T20:35:00+00:00",
+      "last_updated_at_utc": "2026-09-16T20:45:00+00:00",
+      "last_event_id": "evt-002",
+      "canonical_plan_targets": [
+        "Plans/Jujutsu_Integration.md",
+        "Plans/Source_Control_System.md"
+      ],
+      "resume_file": "Plans/ledgers/v2/pldg-20260916-002-jujutsu-object-format-picker/state/handoff.json",
+      "notes": "The accepted optional capability from finding F110, recorded as DL-051, compiled into SCS-022, JJI-021 and JJI-022 with two new typed records and their positive and negative fixtures in the existing Source Control contract pair. Scope is the proposal's own dependency list; the exclusions, a default change, cross-format migration and a universal SHA-256 promise, are negative constraints rather than work. Contracts, configured shards and plan index pass; ledger validation fails only on the same three pre-existing governance coverage omissions. No command admission, governance seal or runtime claim.",
+      "compiled_owner_docs": [
+        "Plans/Jujutsu_Integration.md",
+        "Plans/Source_Control_System.md"
+      ]
+    },
+    {
       "ledger_id": "pldg-20260911-002-jujutsu-decisions",
       "title": "Jujutsu DL-043 decisions",
       "status": "compiled",

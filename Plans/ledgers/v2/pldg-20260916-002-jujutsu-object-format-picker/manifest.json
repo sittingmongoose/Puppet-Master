@@ -1,0 +1,22 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260916-002-jujutsu-object-format-picker",
+  "updated_at_utc": "2026-09-16T20:45:00+00:00",
+  "title": "Jujutsu new-repository object format picker",
+  "status": "compiled",
+  "created_at_utc": "2026-09-16T20:35:00+00:00",
+  "record_counts": {
+    "events": 2,
+    "design_atoms": 3,
+    "decisions": 1,
+    "questions": 0,
+    "blockers": 0,
+    "corrections": 0
+  },
+  "source_refs": [
+    "Plans/ledgers/v2/pldg-20260916-002-jujutsu-object-format-picker/source_shards/authorization.md",
+    "Plans/ledgers/v2/pldg-20260916-002-jujutsu-object-format-picker/source_shards/proposal.md"
+  ],
+  "phase": "compiled_object_format_picker",
+  "last_event_id": "evt-002"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260916-002-jujutsu-object-format-picker",
+  "updated_at_utc": "2026-09-16T20:45:00+00:00",
+  "last_event_id": "evt-002",
+  "canonical_plan_targets": [
+    "Plans/Jujutsu_Integration.md",
+    "Plans/Source_Control_System.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Jujutsu_Integration.md",
+    "Plans/Source_Control_System.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Jujutsu_Integration.md",
+    "Plans/Source_Control_System.md",
+    "Plans/source_control_contracts.schema.json",
+    "Plans/source_control_contract_fixtures.json"
+  ],
+  "governance_status": "not_requested",
+  "latest_audit_ref": "reports/jujutsu-research-2026-09-11/f110-landing/verification.json",
+  "latest_audit_status": "COMPILED_OPTIONAL_CAPABILITY_PENDING_INDEPENDENT_BRANCH_REVIEW",
+  "validation_state": {
+    "ledger_health": "fail_deferred_governance_coverage",
+    "canonical_compile": "compiled_three_accepted_planning_units",
+    "scoped_contracts": "pass",
+    "plan_index": "pass",
+    "configured_shards": "pass",
+    "claim_boundary": "Static schema, fixture, shard and index integrity only. No governance seal, runtime certification, engine-version certification or readiness admission.",
+    "governance_coverage_errors": [
+      "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+      "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+      "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']"
+    ]
+  },
+  "current_phase": "compiled_object_format_picker",
+  "cursor": {
+    "last_event_id": "evt-002",
+    "next_action": "Compiled and statically checked on branch plans/jj-f110-20260916, awaiting the reviewer's independent review before landing. Nothing is admitted for dispatch: the typed extension and the format profiles are owner contracts, and SCS-018 admission still requires central catalog and sole-handler wiring, an explicit event or no-persist disposition, Permissions and FileSafe closure, exact-environment qualification and runtime validation before any of this can run."
+  },
+  "source_refs": [
+    "Plans/ledgers/v2/pldg-20260916-002-jujutsu-object-format-picker/source_shards/authorization.md",
+    "Plans/ledgers/v2/pldg-20260916-002-jujutsu-object-format-picker/source_shards/proposal.md"
+  ],
+  "landing_condition": "Reviewer approval, then fast-forward onto main with regenerated shards and index."
+}

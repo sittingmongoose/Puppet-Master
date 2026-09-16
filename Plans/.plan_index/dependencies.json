@@ -5576,6 +5576,7 @@
     "JJI-015",
     "JJI-016",
     "JJI-019",
+    "JJI-022",
     "SCS-021",
     "SMPFS-169",
     "SMPFS-156",
@@ -5623,6 +5624,7 @@
     "RAS-010",
     "RAS-011",
     "FGI-016",
+    "JJI-021",
     "SMPFS-157",
     "SMPFS-166",
     "PSMERA-018",
@@ -5659,6 +5661,7 @@
     "OSI-176",
     "RAS-015",
     "RAS-012",
+    "SCS-022",
     "WM-057",
     "PP-091",
     "SMPFS-167",
@@ -29691,6 +29694,66 @@
       "edge_type": "depends_on",
       "from": "JJI-020",
       "to": "SCS-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-021",
+      "to": "DL-051"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-021",
+      "to": "JJI-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-021",
+      "to": "JJI-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-021",
+      "to": "JJI-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-021",
+      "to": "JJI-022"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-021",
+      "to": "SCS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-021",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-022",
+      "to": "DL-051"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-022",
+      "to": "JJI-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-022",
+      "to": "SCS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-022",
+      "to": "SCS-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-022",
+      "to": "SCS-018"
     },
     {
       "edge_type": "depends_on",
@@ -55795,6 +55858,46 @@
     {
       "edge_type": "depends_on",
       "from": "SCS-021",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-022",
+      "to": "DL-051"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-022",
+      "to": "JJI-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-022",
+      "to": "JJI-021"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-022",
+      "to": "JJI-022"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-022",
+      "to": "SCS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-022",
+      "to": "SCS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-022",
+      "to": "SCS-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-022",
       "to": "SCS-018"
     },
     {
@@ -93689,6 +93792,21 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "JJI-021",
+      "to": "SCS-022"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "JJI-022",
+      "to": "JJI-021"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "JJI-022",
+      "to": "SCS-022"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "LSPS-110",
       "to": "LSPS-111"
     },
@@ -97313,7 +97431,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-16T20:27:30Z",
+  "generated_at_utc": "2026-09-16T20:39:48Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -150730,6 +150848,40 @@
       "unit_type": "integration_contract"
     },
     {
+      "context_scope": "new_repository_object_format_selection",
+      "gui_related": false,
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "plan_unit_id": "JJI-021",
+      "reasoning_tier": "high",
+      "risk_class": "object_format_inferred_rather_than_requested",
+      "source_location": {
+        "heading": "JJI-021 - Typed New Repository Object Format Extension",
+        "heading_level": 3,
+        "heading_line": 1348,
+        "line": 1350,
+        "path": "Plans/Jujutsu_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "new_repository_object_format_selection",
+      "gui_related": false,
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "plan_unit_id": "JJI-022",
+      "reasoning_tier": "high",
+      "risk_class": "object_format_offered_without_certified_capability_evidence",
+      "source_location": {
+        "heading": "JJI-022 - Certified Object Format Profiles And Owner Owned Format Evidence",
+        "heading_level": 3,
+        "heading_line": 1408,
+        "line": 1410,
+        "path": "Plans/Jujutsu_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/LSPSupport.md",
@@ -188181,6 +188333,23 @@
       "unit_type": "integration_contract"
     },
     {
+      "context_scope": "new_repository_object_format_selection",
+      "gui_related": true,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-022",
+      "reasoning_tier": "high",
+      "risk_class": "permanent_repository_format_chosen_without_evidence_or_consent",
+      "source_location": {
+        "heading": "SCS-022 - New Repository Object Format Choice In The Setup Flow",
+        "heading_level": 3,
+        "heading_line": 1482,
+        "line": 1484,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
       "context_scope": "shared_runtime_owner_boundary",
       "gui_related": false,
       "owner_doc": "Plans/Shared_Integration_Runtime.md",
@@ -210304,12 +210473,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15481,
+    "depends_on_edge_count": 15501,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18132,
-    "node_count": 6646,
+    "edge_count": 18155,
+    "node_count": 6649,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2651,
+    "unblocks_edge_count": 2654,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

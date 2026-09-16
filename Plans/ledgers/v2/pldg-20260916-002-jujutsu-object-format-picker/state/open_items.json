@@ -1,0 +1,17 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260916-002-jujutsu-object-format-picker",
+  "updated_at_utc": "2026-09-16T20:45:00+00:00",
+  "open_questions": [],
+  "deferred_questions": [],
+  "open_blockers": [],
+  "remaining_work": [
+    "Compiled and statically checked on branch plans/jj-f110-20260916, awaiting the reviewer's independent review before landing. Nothing is admitted for dispatch: the typed extension and the format profiles are owner contracts, and SCS-018 admission still requires central catalog and sole-handler wiring, an explicit event or no-persist disposition, Permissions and FileSafe closure, exact-environment qualification and runtime validation before any of this can run."
+  ],
+  "scope_note": "Only the accepted F110 capability and its own dependency list. The parent-reference bound and the contract semantic gate belong to pldg-20260916-001-jujutsu-continuation-corrections, where both questions are now closed.",
+  "deferred_governance_validation_errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']"
+  ]
+}

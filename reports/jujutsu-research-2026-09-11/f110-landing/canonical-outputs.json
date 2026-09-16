@@ -1,0 +1,14 @@
+{
+  "at": "2026-09-16T20:50:00Z",
+  "claim_boundary": "sha256 of the files this branch changed, at the branch tip before the bundle commit",
+  "sha256": {
+    "Plans/Decision_Log.md": "5371ce31278765b943710456c2fe23affcfef111bcef66bab9a79ba075ff4ca0",
+    "Plans/Source_Control_System.md": "31dafbafbd661d0287c22d0316eb661a4d9ed84bb08882645f5e67602fefb4d6",
+    "Plans/Jujutsu_Integration.md": "6092fe5c7c8cbb09f7eb6b03b56356eb9c942c1adc7fa33d04c3d6570e91ec68",
+    "Plans/source_control_contracts.schema.json": "a2e94066b3c58182ef428269976fd3f46ee3c9683b596dfd08b08152d54ab09b",
+    "Plans/source_control_contract_fixtures.json": "2172db7ef140e951f63a1cb556354b1cd03e563efce981212cd2905a213b2ec8",
+    "scripts/pm-new-contracts-verify.py": "0c0f4c004107b8b5b4113c67f6e018bf43a9a7693b2c865cf35c1a80d9523315",
+    "tests/test_pm_source_control_effects.py": "cfd29322b77db0a048107cb04dcb3c0e57caa4dc5c80246df9e442f73bcf82c1",
+    "reports/jujutsu-research-2026-09-11/continuation3-landing/verification.json": "dc71141ee13b320b20c32d304882cb8fa2b33913eacac46cc09591591c66d99e"
+  }
+}

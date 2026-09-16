@@ -18,6 +18,23 @@
     "SCS-017"
   ],
   "branch": "plans/jj-corrections-20260916",
+  "landed_commits": {
+    "note": "The reviewed branch was rebased over two unrelated commits before landing, so the branch name and the reviewed commit above are deleted refs. These are the commits that carry the same work on main. The reviewed hashes are kept as the record of what was reviewed and are not replaced.",
+    "main_commits": [
+      {
+        "commit": "fdddacea20",
+        "subject": "plans: land Jujutsu continuation 3 corrections F106 to F109 with reviewed bundle",
+        "contains": "F106 to F109 and this bundle"
+      },
+      {
+        "commit": "b0977cd851",
+        "subject": "plans: apply independent review of the F106 to F109 landing",
+        "contains": "the review response"
+      }
+    ],
+    "rebased_over": ["c508ae639d", "11d08ce436"],
+    "reviewed_branch_and_commit_are_deleted_refs": true
+  },
   "branch_base_commit": "8bcac66937",
   "canonical_outputs": {
     "Plans/Jujutsu_Integration.md": "90814291f47d79cf1035e7ce8ad09b352d39ea7ba38d3be1b504d3bf468124f8",
