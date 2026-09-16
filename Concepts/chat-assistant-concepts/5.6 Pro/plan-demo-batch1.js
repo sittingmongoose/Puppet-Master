@@ -57,7 +57,7 @@
   c.state.demoOpen=false;c.state.menu=null;c.state.dialog=null;c.state.hover=null;
   c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};
   c.state.capabilities.goal=false;c.state.composer='';window.PM56_RUNTIME.composer.destination=null;
-  active={id,threadId:tid,planId:pid,step:0,initial:clone(blocks),events:[],error:null};
+  active={id,threadId:tid,planId:pid,step:0,initial:clone(template.revisions[1]),events:[],error:null};
   c.switchThread(tid);c.renderApp();
  }
  async function advance(){

@@ -1046,19 +1046,46 @@
   }
   function materializeForPlan(plan){
     const threadId=plan.thread_id,store=threadStore(threadId),mk=itemFactory(threadId),existing=store?.items||[];
+    // New document versions get fresh executable leaves; Retry never comes here.
+    // The list owner retains the retired item/binding history when it replaces
+    // a cancelled version. This is not a second list or a source-group section.
+    const prefix='tp-'+plan.plan_id+(plan.version>1?'-V'+plan.version:'')+'-';
     const mine=existing.filter(t=>t.plan_id===plan.plan_id&&t.plan_version===plan.version&&t.run_id===plan.run_id);
-    const expected=(plan.steps||[]).map(st=>'tp-'+plan.plan_id+'-'+st.id);
+    const expected=(plan.steps||[]).map(st=>prefix+st.id);
     if(mine.length)return mine.length===expected.length&&expected.every(id=>mine.some(t=>t.todo_id===id&&t.plan_hash===plan.plan_hash))?{ok:true,created:0,reused:true,ids:expected}:{ok:false,error:'existing_todo_binding_conflict'};
     if(existing.some(t=>expected.includes(t.todo_id)))return {ok:false,error:'existing_todo_binding_conflict'};
+    const prior=existing.filter(t=>t.plan_id===plan.plan_id),replacement=plan.replace_revision;
+    if(prior.length){
+      const owner=window.PM56_PLANS,record=owner?.get(plan.plan_id),oldRun=replacement&&owner?.runs()[replacement.plan_run_id];
+      if(!replacement||!oldRun||oldRun.state!=='cancelled'||oldRun.plan_id!==plan.plan_id||
+        oldRun.thread_id!==threadId||oldRun.project_id!==plan.project_id||
+        oldRun.plan_version!==replacement.version||oldRun.plan_hash!==replacement.hash||
+        plan.version<=replacement.version||record?.version!==plan.version||record?.status!=='ready'||owner.hash(plan.plan_id)!==plan.plan_hash||
+        prior.some(t=>t.run_id!==oldRun.plan_run_id||t.plan_version!==replacement.version||t.plan_hash!==replacement.hash))
+        return {ok:false,error:'plan_revision_replacement_not_admitted'};
+    }
+    const retained=prior.length?existing.filter(t=>t.plan_id!==plan.plan_id):existing;
     const parentIds=new Set((plan.steps||[]).map(st=>st.parent).filter(Boolean));
-    const items=(plan.steps||[]).map((st,i)=>mk({todo_id:expected[i],display_order:existing.length+i+1,
-      project_id:plan.project_id||PROJECT_ID,parent_todo_id:st.parent?'tp-'+plan.plan_id+'-'+st.parent:null,
-      depends_on:(st.deps||[]).map(d=>'tp-'+plan.plan_id+'-'+d),parallel_group_id:st.parallel_group_id||null,
+    const items=(plan.steps||[]).map((st,i)=>mk({todo_id:expected[i],display_order:retained.length+i+1,
+      project_id:plan.project_id||PROJECT_ID,parent_todo_id:st.parent?prefix+st.parent:null,
+      depends_on:(st.deps||[]).map(d=>prefix+d),parallel_group_id:st.parallel_group_id||null,
       plan_id:plan.plan_id,plan_version:plan.version,plan_hash:plan.plan_hash,plan_step_ids:[st.id],planunit_ids:(plan.unit_mapping?.[st.id]||[]).slice(),
       title:st.title,expected_outcome:parentIds.has(st.id)?null:st.outcome||null,status:'pending',revision:1,transitions:[],
       strict_outcome_contract:true,outcome_owner:plan.workRef?.kind||null,workflow_ref:plan.workRef?.ref||null,run_id:plan.run_id,run_epoch:plan.run_epoch||1}));
     if(!items.length)return {ok:false,error:'no_plan_steps'};
-    return appendMaterialized(threadId,existing,items);
+    if(!prior.length)return appendMaterialized(threadId,existing,items);
+    return window.PM56_TX.run(()=>{
+      const cancellations={};
+      for(const t of prior){
+        const active=itemBindings(threadId,t.todo_id).filter(liveBinding);if(!active.length)continue;
+        const stop=workOwner(t)?.stop?.(t.workflow_ref,active,{kind:'plan_revision',replacement,new_plan_version:plan.version});
+        if(!stop?.ok||!stop.receipt_ref)return {ok:false,error:stop?.error||'revision_work_stop_required'};
+        for(const binding of active)cancellations[binding.binding_id]=stop.receipt_ref;
+      }
+      const result=replaceThreadList(threadId,{items:retained.concat(items)},{mode:'restructure',expected_revision:store.revision||1,cancellations});
+      if(!result.ok)return result;
+      return {ok:true,created:items.length,reused:false,ids:expected,replaced_revision:replacement.version,disposition:result.disposition};
+    });
   }
   function appendMaterialized(threadId,existing,items){
     const check=validateGraph(threadId,{items:existing.concat(items)});if(!check.valid)return {ok:false,error:'invalid_graph',validation:check};

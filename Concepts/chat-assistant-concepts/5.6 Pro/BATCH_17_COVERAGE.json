@@ -1,0 +1,583 @@
+{
+  "schema": "pm.batch17.bounded_coverage.v1",
+  "batch": 17,
+  "pinned_main": "b66529d97e8c90c13b17dcfed52653a80908c543",
+  "html_sha256": "8d0f5293687fe2fd0d87508bbcaedb5253fca1372e39202b7e80588497300d0b",
+  "historical_full_wording_available": false,
+  "formal_audit": false,
+  "user_accepted": false,
+  "scope_count": 24,
+  "rows": [
+    {
+      "requirement_id": "v4:PFAIL-001",
+      "coverage_group": "recovery-labels",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PFAIL-001..002",
+      "bounded_behavior": "Four primary labels; actual failure/quota/pause are secondary truth.",
+      "implementation": [
+        "plans.js",
+        "plan-work-batch17.js"
+      ],
+      "handler_cases": [
+        "quota_secondary_truth",
+        "actual_failed_lookup_and_retry",
+        "safe_stop_preserves_primary_until_new_revision"
+      ],
+      "ordinary_control_evidence": "recovery-* / failed Plan",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "No native/durable lifecycle proof."
+    },
+    {
+      "requirement_id": "v4:PFAIL-002",
+      "coverage_group": "recovery-labels",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PFAIL-001..002",
+      "bounded_behavior": "Four primary labels; actual failure/quota/pause are secondary truth.",
+      "implementation": [
+        "plans.js",
+        "plan-work-batch17.js"
+      ],
+      "handler_cases": [
+        "quota_secondary_truth",
+        "actual_failed_lookup_and_retry",
+        "safe_stop_preserves_primary_until_new_revision"
+      ],
+      "ordinary_control_evidence": "recovery-* / failed Plan",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "No native/durable lifecycle proof."
+    },
+    {
+      "requirement_id": "v4:PFAIL-003",
+      "coverage_group": "recovery-attempts",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PFAIL-003..009",
+      "bounded_behavior": "Grouped current-owner recovery clauses: new attempt under retained run, fail closed without recovery owner, stable outputs/bindings.",
+      "implementation": [
+        "plans.js",
+        "plan-work-batch17.js",
+        "todos.js"
+      ],
+      "handler_cases": [
+        "missing_recovery_owner_is_not_success",
+        "same_binding_resume",
+        "actual_failed_lookup_and_retry",
+        "recovery_rechecks_original_scope_and_permissions",
+        "recovery_respects_scheduler_stop"
+      ],
+      "ordinary_control_evidence": "recovery-* / repair, Retry, exact 9532 output",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "Bounded local calculation; arbitrary side-effect recovery and server restart are not proved."
+    },
+    {
+      "requirement_id": "v4:PFAIL-004",
+      "coverage_group": "recovery-attempts",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PFAIL-003..009",
+      "bounded_behavior": "Grouped current-owner recovery clauses: new attempt under retained run, fail closed without recovery owner, stable outputs/bindings.",
+      "implementation": [
+        "plans.js",
+        "plan-work-batch17.js",
+        "todos.js"
+      ],
+      "handler_cases": [
+        "missing_recovery_owner_is_not_success",
+        "same_binding_resume",
+        "actual_failed_lookup_and_retry",
+        "recovery_rechecks_original_scope_and_permissions",
+        "recovery_respects_scheduler_stop"
+      ],
+      "ordinary_control_evidence": "recovery-* / repair, Retry, exact 9532 output",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "Bounded local calculation; arbitrary side-effect recovery and server restart are not proved."
+    },
+    {
+      "requirement_id": "v4:PFAIL-005",
+      "coverage_group": "recovery-attempts",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PFAIL-003..009",
+      "bounded_behavior": "Grouped current-owner recovery clauses: new attempt under retained run, fail closed without recovery owner, stable outputs/bindings.",
+      "implementation": [
+        "plans.js",
+        "plan-work-batch17.js",
+        "todos.js"
+      ],
+      "handler_cases": [
+        "missing_recovery_owner_is_not_success",
+        "same_binding_resume",
+        "actual_failed_lookup_and_retry",
+        "recovery_rechecks_original_scope_and_permissions",
+        "recovery_respects_scheduler_stop"
+      ],
+      "ordinary_control_evidence": "recovery-* / repair, Retry, exact 9532 output",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "Bounded local calculation; arbitrary side-effect recovery and server restart are not proved."
+    },
+    {
+      "requirement_id": "v4:PFAIL-006",
+      "coverage_group": "cancel-complete",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PFAIL-003..009",
+      "bounded_behavior": "Grouped current-owner cancellation/completion clauses: callbacks fenced; evidence-admitted work required, no fabricated completion.",
+      "implementation": [
+        "plans.js",
+        "plan-work-batch17.js",
+        "todos.js"
+      ],
+      "handler_cases": [
+        "cancel_rejects_old_callback",
+        "wrong_computation_rolls_back_artifacts",
+        "malformed_callback_fails_closed",
+        "actual_failed_lookup_and_retry"
+      ],
+      "ordinary_control_evidence": "recovery-* / completed and revision-* / canceled",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "Not an assertion that these inferred individual ID labels reproduce unavailable historical wording."
+    },
+    {
+      "requirement_id": "v4:PFAIL-007",
+      "coverage_group": "cancel-complete",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PFAIL-003..009",
+      "bounded_behavior": "Grouped current-owner cancellation/completion clauses: callbacks fenced; evidence-admitted work required, no fabricated completion.",
+      "implementation": [
+        "plans.js",
+        "plan-work-batch17.js",
+        "todos.js"
+      ],
+      "handler_cases": [
+        "cancel_rejects_old_callback",
+        "wrong_computation_rolls_back_artifacts",
+        "malformed_callback_fails_closed",
+        "actual_failed_lookup_and_retry"
+      ],
+      "ordinary_control_evidence": "recovery-* / completed and revision-* / canceled",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "Not an assertion that these inferred individual ID labels reproduce unavailable historical wording."
+    },
+    {
+      "requirement_id": "v4:PFAIL-008",
+      "coverage_group": "safe-revision-restart",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PFAIL-003..009",
+      "bounded_behavior": "Safe revision and recovery/currentness; old revision is not hot-swapped beneath admitted work.",
+      "implementation": [
+        "plans.js",
+        "todos.js",
+        "plan-work-batch17.js"
+      ],
+      "handler_cases": [
+        "live_revision_requires_safe_stop",
+        "safe_stop_preserves_primary_until_new_revision",
+        "resume_invalidates_stopped_revision_permission",
+        "stopped_goal_revision_does_not_rebind_old_goal",
+        "revised_failed_run_builds_new_version_atomically",
+        "pause_epoch_is_not_admission_epoch"
+      ],
+      "ordinary_control_evidence": "revision-* plus complete handler cases",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "Actual restart/reconnect from durable storage remains unverified; current-session fencing only."
+    },
+    {
+      "requirement_id": "v4:PFAIL-009",
+      "coverage_group": "safe-revision-restart",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PFAIL-003..009",
+      "bounded_behavior": "Safe revision and recovery/currentness; old revision is not hot-swapped beneath admitted work.",
+      "implementation": [
+        "plans.js",
+        "todos.js",
+        "plan-work-batch17.js"
+      ],
+      "handler_cases": [
+        "live_revision_requires_safe_stop",
+        "safe_stop_preserves_primary_until_new_revision",
+        "resume_invalidates_stopped_revision_permission",
+        "stopped_goal_revision_does_not_rebind_old_goal",
+        "revised_failed_run_builds_new_version_atomically",
+        "pause_epoch_is_not_admission_epoch"
+      ],
+      "ordinary_control_evidence": "revision-* plus complete handler cases",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "Actual restart/reconnect from durable storage remains unverified; current-session fencing only."
+    },
+    {
+      "requirement_id": "v4:PFAIL-010",
+      "coverage_group": "immediate-schedule",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PFAIL-010,PSCHED-005",
+      "bounded_behavior": "Immediate Build invalidates pending exact-version schedules; explicit rebind remains currentness-checked.",
+      "implementation": [
+        "plans.js",
+        "scheduling.js"
+      ],
+      "handler_cases": [
+        "repeated_revision_keeps_schedule_review_current"
+      ],
+      "ordinary_control_evidence": "retained B15/B16 scheduling/admission regressions",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "No server timer or real wall-clock restart proof."
+    },
+    {
+      "requirement_id": "v4:PDET-001",
+      "coverage_group": "details-backends",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PDET-001..003",
+      "bounded_behavior": "Identity/provenance, direct planning and no PlanUnits; existing Deep Plan detail ownership retained.",
+      "implementation": [
+        "plans.js",
+        "artifact-revisions.js"
+      ],
+      "handler_cases": [
+        "exact_artifact_open",
+        "document_shared_immutable_tree"
+      ],
+      "ordinary_control_evidence": "documents-* / Plan Details; retained earlier backend tests",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "B17 demos are Regular Plans; native Deep Plan ledger/PlanUnit provisioning is not established."
+    },
+    {
+      "requirement_id": "v4:PDET-002",
+      "coverage_group": "details-backends",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PDET-001..003",
+      "bounded_behavior": "Identity/provenance, direct planning and no PlanUnits; existing Deep Plan detail ownership retained.",
+      "implementation": [
+        "plans.js",
+        "artifact-revisions.js"
+      ],
+      "handler_cases": [
+        "exact_artifact_open",
+        "document_shared_immutable_tree"
+      ],
+      "ordinary_control_evidence": "documents-* / Plan Details; retained earlier backend tests",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "B17 demos are Regular Plans; native Deep Plan ledger/PlanUnit provisioning is not established."
+    },
+    {
+      "requirement_id": "v4:PDET-003",
+      "coverage_group": "details-backends",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PDET-001..003",
+      "bounded_behavior": "Identity/provenance, direct planning and no PlanUnits; existing Deep Plan detail ownership retained.",
+      "implementation": [
+        "plans.js",
+        "artifact-revisions.js"
+      ],
+      "handler_cases": [
+        "exact_artifact_open",
+        "document_shared_immutable_tree"
+      ],
+      "ordinary_control_evidence": "documents-* / Plan Details; retained earlier backend tests",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "B17 demos are Regular Plans; native Deep Plan ledger/PlanUnit provisioning is not established."
+    },
+    {
+      "requirement_id": "v4:PDET-004",
+      "coverage_group": "immutable-document",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PDET-004..008",
+      "bounded_behavior": "One shared immutable tree, stable blocks, thread-scoped identity, retention references and frozen exact-version embeds.",
+      "implementation": [
+        "plans.js",
+        "artifact-revisions.js"
+      ],
+      "handler_cases": [
+        "document_shared_immutable_tree",
+        "immutable_artifact_collision",
+        "exact_artifact_open",
+        "revision_is_atomic_and_preserves_original",
+        "source_v2_does_not_change_approved_views",
+        "fallback_cycles_and_retention"
+      ],
+      "ordinary_control_evidence": "documents-* / Rich, Markdown, source V2, retained V1; revision-*",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "Reachability exercised locally, not production GC or durable history."
+    },
+    {
+      "requirement_id": "v4:PDET-005",
+      "coverage_group": "immutable-document",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PDET-004..008",
+      "bounded_behavior": "One shared immutable tree, stable blocks, thread-scoped identity, retention references and frozen exact-version embeds.",
+      "implementation": [
+        "plans.js",
+        "artifact-revisions.js"
+      ],
+      "handler_cases": [
+        "document_shared_immutable_tree",
+        "immutable_artifact_collision",
+        "exact_artifact_open",
+        "revision_is_atomic_and_preserves_original",
+        "source_v2_does_not_change_approved_views",
+        "fallback_cycles_and_retention"
+      ],
+      "ordinary_control_evidence": "documents-* / Rich, Markdown, source V2, retained V1; revision-*",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "Reachability exercised locally, not production GC or durable history."
+    },
+    {
+      "requirement_id": "v4:PDET-006",
+      "coverage_group": "immutable-document",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PDET-004..008",
+      "bounded_behavior": "One shared immutable tree, stable blocks, thread-scoped identity, retention references and frozen exact-version embeds.",
+      "implementation": [
+        "plans.js",
+        "artifact-revisions.js"
+      ],
+      "handler_cases": [
+        "document_shared_immutable_tree",
+        "immutable_artifact_collision",
+        "exact_artifact_open",
+        "revision_is_atomic_and_preserves_original",
+        "source_v2_does_not_change_approved_views",
+        "fallback_cycles_and_retention"
+      ],
+      "ordinary_control_evidence": "documents-* / Rich, Markdown, source V2, retained V1; revision-*",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "Reachability exercised locally, not production GC or durable history."
+    },
+    {
+      "requirement_id": "v4:PDET-007",
+      "coverage_group": "immutable-document",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PDET-004..008",
+      "bounded_behavior": "One shared immutable tree, stable blocks, thread-scoped identity, retention references and frozen exact-version embeds.",
+      "implementation": [
+        "plans.js",
+        "artifact-revisions.js"
+      ],
+      "handler_cases": [
+        "document_shared_immutable_tree",
+        "immutable_artifact_collision",
+        "exact_artifact_open",
+        "revision_is_atomic_and_preserves_original",
+        "source_v2_does_not_change_approved_views",
+        "fallback_cycles_and_retention"
+      ],
+      "ordinary_control_evidence": "documents-* / Rich, Markdown, source V2, retained V1; revision-*",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "Reachability exercised locally, not production GC or durable history."
+    },
+    {
+      "requirement_id": "v4:PDET-008",
+      "coverage_group": "immutable-document",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PDET-004..008",
+      "bounded_behavior": "One shared immutable tree, stable blocks, thread-scoped identity, retention references and frozen exact-version embeds.",
+      "implementation": [
+        "plans.js",
+        "artifact-revisions.js"
+      ],
+      "handler_cases": [
+        "document_shared_immutable_tree",
+        "immutable_artifact_collision",
+        "exact_artifact_open",
+        "revision_is_atomic_and_preserves_original",
+        "source_v2_does_not_change_approved_views",
+        "fallback_cycles_and_retention"
+      ],
+      "ordinary_control_evidence": "documents-* / Rich, Markdown, source V2, retained V1; revision-*",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "Reachability exercised locally, not production GC or durable history."
+    },
+    {
+      "requirement_id": "v4:PDET-009",
+      "coverage_group": "shared-renderers",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PDET-009..012",
+      "bounded_behavior": "Shared typed renderers and bounded script-capability/origin sandbox.",
+      "implementation": [
+        "artifact-revisions.js",
+        "artifact-revisions.css",
+        "plans.js"
+      ],
+      "handler_cases": [
+        "untrusted_content_is_text",
+        "graph_renders_actual_edges",
+        "structured_artifact_content_not_blank",
+        "untrusted_artifact_route_is_text"
+      ],
+      "ordinary_control_evidence": "documents-* / graph, table filter, code, checklist, media",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "Mermaid static fallback and registered local table filter, not every future renderer or general script security."
+    },
+    {
+      "requirement_id": "v4:PDET-010",
+      "coverage_group": "shared-renderers",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PDET-009..012",
+      "bounded_behavior": "Shared typed renderers and bounded script-capability/origin sandbox.",
+      "implementation": [
+        "artifact-revisions.js",
+        "artifact-revisions.css",
+        "plans.js"
+      ],
+      "handler_cases": [
+        "untrusted_content_is_text",
+        "graph_renders_actual_edges",
+        "structured_artifact_content_not_blank",
+        "untrusted_artifact_route_is_text"
+      ],
+      "ordinary_control_evidence": "documents-* / graph, table filter, code, checklist, media",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "Mermaid static fallback and registered local table filter, not every future renderer or general script security."
+    },
+    {
+      "requirement_id": "v4:PDET-011",
+      "coverage_group": "pdf-unavailable",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PDET-009..012",
+      "bounded_behavior": "PDF preserves exact static fallbacks, captions and identity; unavailable content is explicit and version-bound re-export is reachable.",
+      "implementation": [
+        "artifact-revisions.js",
+        "plans.js"
+      ],
+      "handler_cases": [
+        "frozen_static_fallback",
+        "frozen_fallback_mismatch_refused",
+        "print_pipeline_is_inert",
+        "source_v2_does_not_change_approved_views",
+        "stale_export_invocation_refused",
+        "unavailable_embed_reexports_exact_plan"
+      ],
+      "ordinary_control_evidence": "documents-* / actual popup PDFs and unavailable embed",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "App opens print intent; harness produces PDF. No silent substitution of latest."
+    },
+    {
+      "requirement_id": "v4:PDET-012",
+      "coverage_group": "pdf-unavailable",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md#PDET-009..012",
+      "bounded_behavior": "PDF preserves exact static fallbacks, captions and identity; unavailable content is explicit and version-bound re-export is reachable.",
+      "implementation": [
+        "artifact-revisions.js",
+        "plans.js"
+      ],
+      "handler_cases": [
+        "frozen_static_fallback",
+        "frozen_fallback_mismatch_refused",
+        "print_pipeline_is_inert",
+        "source_v2_does_not_change_approved_views",
+        "stale_export_invocation_refused",
+        "unavailable_embed_reexports_exact_plan"
+      ],
+      "ordinary_control_evidence": "documents-* / actual popup PDFs and unavailable embed",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "App opens print intent; harness produces PDF. No silent substitution of latest."
+    },
+    {
+      "requirement_id": "v3:APR-036",
+      "coverage_group": "tab-parity",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md and Plans/FileManager.md; retained Batch17 scope row",
+      "bounded_behavior": "Plan title/Details/Expand/Open converge on shared left editor identity, with shared controls at 1440/900/700.",
+      "implementation": [
+        "plans.js",
+        "plans.css",
+        "app.js"
+      ],
+      "handler_cases": [
+        "exact_artifact_open",
+        "stale_export_invocation_refused",
+        "stale_revision_target_refused"
+      ],
+      "ordinary_control_evidence": "all nine ordinary-control scenarios: tab deduplication and zero measured horizontal overflow",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "Real-origin Hub/native editor parity is not proved; complete Final GUI owner read unavailable."
+    },
+    {
+      "requirement_id": "v3:APR-037",
+      "coverage_group": "tab-parity",
+      "wording_basis": "grouped current-owner clauses; historical exact individual wording unavailable",
+      "owner_ref": "Plans/Assistant_Plan_Runtime.md and Plans/FileManager.md; retained Batch17 scope row",
+      "bounded_behavior": "Plan title/Details/Expand/Open converge on shared left editor identity, with shared controls at 1440/900/700.",
+      "implementation": [
+        "plans.js",
+        "plans.css",
+        "app.js"
+      ],
+      "handler_cases": [
+        "exact_artifact_open",
+        "stale_export_invocation_refused",
+        "stale_revision_target_refused"
+      ],
+      "ordinary_control_evidence": "all nine ordinary-control scenarios: tab deduplication and zero measured horizontal overflow",
+      "disposition": "bounded_concept_coverage_with_limitations",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "accepted": false,
+      "limitation": "Real-origin Hub/native editor parity is not proved; complete Final GUI owner read unavailable."
+    }
+  ]
+}

@@ -484,3 +484,9 @@
 .plan-doc .pd-md-with-rail .pd-md-rail{position:absolute;inset:0 auto 0 0;width:18px;border:0;padding:0;display:block;pointer-events:none}
 .plan-doc .pd-md-with-rail .pd-md-mark{position:absolute;left:0;width:18px;min-height:0;height:18px;padding:0;font:500 11px/18px var(--font-ui);text-align:center;transition:color 150ms var(--ease)}
 .plan-doc .pd-md-with-rail .pd-md-pre{min-width:0;max-width:100%;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;margin:0}
+
+/* B17: shared artifact realizations are adjacent to immutable prose. */
+.pd-embed-real{margin:18px 0;border:1px solid var(--border);border-radius:14px;padding:18px;min-width:0;background:var(--surface-2)}
+.pd-embed-real>header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px}.pd-embed-real>header strong{font-size:14px;overflow-wrap:anywhere}.pd-embed-real>header span{font-size:10px;color:var(--muted);white-space:nowrap}
+.pd-embed-caption{font-size:12px;line-height:1.65;color:var(--muted);overflow-wrap:anywhere}.pd-print-ref{overflow-wrap:anywhere}
+@media(max-width:900px){.pd-embed-real{padding:12px}.pd-embed-real>header{flex-wrap:wrap}.pd-embed-real .ar-actions{gap:5px}}

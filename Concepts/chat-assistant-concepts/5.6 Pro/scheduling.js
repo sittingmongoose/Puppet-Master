@@ -930,31 +930,31 @@
      automatically, and the row keeps naming the stale version so the user can
      rebind or recreate it deliberately. */
   function invalidateForPlanRevision(planId, oldVersion, newVersion, newHash) {
-    var out = { invalidated: [], untouched: [] };
-    P().buildSchedules.forEach(function (rec) {
-      if (rec.target_id !== planId) { out.untouched.push(rec.schedule_id); return; }
-      if (['cancelled','canceled','completed'].includes(rec.state)) { out.untouched.push(rec.schedule_id); return; }
-      if (rec.exact_target_version >= newVersion) { out.untouched.push(rec.schedule_id); return; }
-      rec.pendingVersion = newVersion;
-      rec.pendingHash = newHash || demoHash(planId + ':' + newVersion);
-      rec.state = 'invalidated';
-      rec.invalidated_reason = 'Plan ' + planId + ' was revised from V' + rec.exact_target_version +
-        ' to V' + newVersion + ' after this schedule was created. Automatic dispatch is disabled until you rebind.';
-      rec.revision += 1; rec.updatedAt = nowIso();
-      logBuildLine(rec, rec.invalidated_reason);
-      logEvent('execution_window.invalidated', rec.schedule_id, 'target_version_changed', rec.invalidated_reason);
+    const TX=window.PM56_TX;
+    const out = {invalidated:[],untouched:[]};
+    P().buildSchedules.forEach(function(rec){
+      // An invalidated V1 schedule still needs its proposed review target advanced
+      // after V2 -> V3. Its admitted V1 binding remains unchanged until consent.
+      if(rec.target_id!==planId||['cancelled','canceled','completed'].includes(rec.state)||rec.exact_target_version>=newVersion||rec.state==='invalidated'&&Number(rec.pendingVersion||0)>=newVersion){out.untouched.push(rec.schedule_id);return;}
+      const reason='Plan '+planId+' was revised from V'+rec.exact_target_version+' to V'+newVersion+' after this schedule was created. Automatic dispatch is disabled until you rebind.';
+      TX.set(rec,'pendingVersion',newVersion);TX.set(rec,'pendingHash',newHash||demoHash(planId+':'+newVersion));
+      TX.set(rec,'state','invalidated');TX.set(rec,'invalidated_reason',reason);TX.set(rec,'revision',rec.revision+1);TX.set(rec,'updatedAt',nowIso());
+      TX.set(rec,'log',[{at:nowIso(),text:reason},...(rec.log||[])].slice(0,40));
+      const S=P();TX.set(S,'events',[{id:'ev-'+(S.events.length+1)+'-'+Date.now().toString(36),at:nowIso(),type:'execution_window.invalidated',ref:rec.schedule_id,clause:'target_version_changed',detail:reason},...S.events].slice(0,60));
       out.invalidated.push(rec.schedule_id);
     });
-    if (out.invalidated.length) persistNow();
-    return out;
+    if(out.invalidated.length)persistNow();return out;
   }
 
-  function rebindBuild(id) {
+  function rebindBuild(id, expected) {
     var rec = findBuild(id); if (!rec || rec.state !== 'invalidated') return null;
+    // The clicked Use Vn control consents to that version/hash and schedule
+    // revision, not whatever happens to be current when the click arrives.
+    if(!expected||expected.revision!==rec.revision||expected.version!==rec.pendingVersion||expected.hash!==rec.pendingHash)return null;
     var plan=window.PM56_PLANS&&window.PM56_PLANS.get(rec.target_id);
     if(rec.binding_kind==='plan_content_v1'){
-      if(!plan||plan.status!=='ready')return null;
-      rec.exact_target_version=plan.version;rec.exact_target_hash=window.PM56_PLANS.hash(plan.plan_id);
+      if(!plan||plan.status!=='ready'||plan.version!==expected.version||window.PM56_PLANS.hash(plan.plan_id)!==expected.hash)return null;
+      rec.exact_target_version=expected.version;rec.exact_target_hash=expected.hash;
     }else{
       if(rec.pendingVersion!=null)rec.exact_target_version=rec.pendingVersion;
       if(rec.pendingHash)rec.exact_target_hash=rec.pendingHash;
@@ -1237,7 +1237,7 @@
     return '<article class="schedule-item" data-k="build-window-'+id+'"><div class="schedule-item-head"><span class="schedule-item-icon">'+ctx.icon('document',17)+'</span><div class="schedule-item-copy"><strong>'+esc(plan?.title||b.target_id)+'</strong><span>V'+b.exact_target_version+' · '+esc(when)+'</span></div>'+chip(label,BLD_STATE_TONE[b.state]||'idle')+'</div>'+
       (b.state==='invalidated'?'<div class="schedule-attention">'+ctx.icon('warning',13)+'<span>Plan changed to V'+esc(b.pendingVersion)+'. Review before scheduling.</span></div>':'<div class="schedule-item-destination">'+esc(b.dispatchReceipt?(plan?.status==='completed'?'Build completed':'Build started'):(one&&b.runPhase==='idle'?'Waiting for scheduled time':PHASE_LABEL[b.runPhase]||b.runPhase||'Waiting'))+(nextIso&&!one?' · Next '+esc(whenLabel(nextIso,b.timezone)):'')+'</div>')+
       '<div class="schedule-item-controls"><button class="soft-button" data-action="pd-info" data-id="'+esc(b.target_id)+'">Open plan</button>'+
-      (b.state==='invalidated'?'<button class="soft-button" data-action="sched-rebind-build" data-id="'+id+'">Use V'+esc(b.pendingVersion)+'</button>':'')+
+      (b.state==='invalidated'?'<button class="soft-button" data-action="sched-rebind-build" data-id="'+id+'" data-version="'+esc(b.pendingVersion)+'" data-hash="'+esc(b.pendingHash)+'" data-revision="'+b.revision+'">Use V'+esc(b.pendingVersion)+'</button>':'')+
       (b.state==='active'?'<button class="text-button" data-action="sched-edit-build" data-id="'+id+'">Edit window</button>':'')+
       (['active','paused','invalidated'].includes(b.state)?'<button class="text-button danger" data-action="sched-cancel-build" data-id="'+id+'">Cancel</button>':'')+'</div>'+
       '<details class="schedule-details"><summary>Details '+ctx.icon('down',11)+'</summary><div class="sched-details-body">'+(b.binding_kind==='plan_content_v1'&&b.state==='active'?'<p class="schedule-caption">Local clock control only. This page does not run a background scheduling service.</p><button class="soft-button" data-action="sched-advance-window" data-id="'+id+'">Advance local clock to dispatch</button>':'')+facts([
@@ -1667,9 +1667,10 @@
     ctx.toast(ok ? 'Schedule canceled' : 'Could not cancel', ok ? 'No future dispatch.' : 'It may have already completed.');
   };
   ACT['sched-rebind-build'] = function (ctx, btn) {
-    var rec = rebindBuild(btn.dataset.id);
+    var rec = rebindBuild(btn.dataset.id,{version:Number(btn.dataset.version),hash:btn.dataset.hash,revision:Number(btn.dataset.revision)});
     reRender(ctx);
     if (rec) ctx.toast('Schedule updated', 'Bound to V' + rec.exact_target_version + '.');
+    else ctx.toast('Schedule changed', 'Review the current version and choose its Use Vn control again. No schedule was rebound.');
   };
   ACT['sched-simulate-revision'] = function (ctx, btn) {
     var rec = simulateRevision(btn.dataset.id);

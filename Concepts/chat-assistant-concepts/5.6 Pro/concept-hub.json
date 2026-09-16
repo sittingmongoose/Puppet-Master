@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "topic": "chat-assistant-concepts",
+  "model": "5.6 Pro",
+  "presentation": "hybrid",
+  "order": 10,
+  "widthControl": {
+    "enabled": true,
+    "label": "Assistant width",
+    "role": "page",
+    "min": 520,
+    "max": 1920,
+    "step": 10,
+    "default": 1440,
+    "presets": [
+      520,
+      700,
+      900,
+      1440,
+      1920
+    ],
+    "previewWidth": "test"
+  },
+  "workspace": {
+    "title": "Assistant Concept Lab",
+    "path": "index.html",
+    "openPath": "index.html",
+    "controlMode": "internal",
+    "openActions": "both"
+  },
+  "entries": [
+    {
+      "id": "standalone",
+      "title": "Assistant \u2014 cumulative Batch 17",
+      "path": "PM_Chat_Assistant_5.6_Pro_Standalone.html",
+      "openPath": "PM_Chat_Assistant_5.6_Pro_Standalone.html",
+      "controlMode": "internal",
+      "openActions": "both",
+      "tags": [
+        "assistant",
+        "batch-17"
+      ],
+      "order": 10
+    }
+  ]
+}

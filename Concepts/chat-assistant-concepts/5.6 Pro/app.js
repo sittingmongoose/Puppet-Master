@@ -407,7 +407,7 @@
 
   function renderHeader() {
     return `<header class="app-header">
-      <div class="brand"><i class="brand-mark"></i><span>Puppet Master</span><small>Assistant Concept Lab</small></div>
+      <div class="brand"><i class="brand-mark"></i><span>Puppet Master</span><small data-concept-model="5.6 Pro">Assistant Concept Lab · 5.6 Pro</small></div>
       <div class="header-spacer"></div>
       <div class="header-actions">
         <button class="header-chip" data-action="toggle-history" title="Thread history">${icon('history',14)}<span class="optional">Threads</span></button>
@@ -510,6 +510,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<article class="editor-doc"><h1>${esc(agent.name)}</h1><div class="editor-meta"><span class="meta-pill">Read-only child thread</span><span class="meta-pill">${esc(agent.status)}</span><span class="meta-pill">${esc(agent.model)}</span><span class="meta-pill">${esc(agent.elapsed)}</span></div><p><strong>Parent:</strong> ${esc(agent.parent)} · <strong>Current:</strong> ${esc(agent.current)}</p>${agent.blocker?`<div class="event-card danger"><span class="event-icon">${icon('lock',14)}</span><div class="event-copy"><strong>Blocked</strong><p>${esc(agent.blocker)}</p></div></div>`:''}<h2>Live transcript</h2>${agent.messages.map(m=>m.type==='text'?`<div class="system-card" style="margin:8px 0"><div class="system-card-head"><span class="title">${esc(agent.name)}</span><span class="sub">${esc(agent.model)}</span></div><div class="system-card-body">${formatText(m.body)}</div></div>`:`<div class="event-card ${m.type==='blocked'?'danger':''}" style="margin:8px 0"><span class="event-icon">${icon(m.type==='blocked'?'lock':'artifact',14)}</span><div class="event-copy"><strong>${esc(m.title||m.type)}</strong><p>${esc(m.detail||'')}</p></div></div>`).join('')}<p class="chat-meta">This child transcript updates live but has no composer or mutation controls.</p></article>`;
   }
   function renderArtifactEditor(art){
+    if(art.revisions && art.kind!=='plan_document' && window.PM56_ARTIFACTS)return PM56_ARTIFACTS.editor({artifact_id:art.id,artifact_version:Number(art.version),...PM56_ARTIFACTS.scopeOf(art)});
     if(art.kind==='plan'){const owned=window.PM56_PLANS?.editorBody(art.id);if(owned)return owned;}
     /* Assistant-redesign wave: ONE Plan truth, in the header chrome too. This row
        read the legacy artifact record, so the pane's own header said
@@ -3139,7 +3140,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     t.messages.push(admittedMessage);
     const low=raw.toLowerCase();
     if(RTc && RTc.destination && (RTc.destination.kind==='plan-revision'||window.PM56_ROOM?.owns(RTc.destination.refId))){
-      /* Plan owner authors the revision and receipt through the shared commit hook. */
+      /* Plan revisions are normally claimed atomically by their pre-send owner. */
     }
     else if(low.startsWith('/goal')||/create|start|set/.test(low)&&low.includes('goal')){state.capabilities.goal=true;stampActivityCap('goal',true);revealActivityDomain('goal');addReceipt('goal-receipt','Goal Mode started','A durable goal artifact was created. View, edit, pause, resume, stop, clear, and inspect evidence in Activity Detail.');openEditor('goal-artifact');}
     else if(low.startsWith('/deep-plan')||low.includes('deep plan')){state.mode='Deep Plan';state.decision={type:'plan',mode:'review'};t.messages.push({id:uid('plan'),role:'system',type:'plan-card',artifactId:'plan-query',deep:true});openEditor('plan-query');}

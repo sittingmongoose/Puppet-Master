@@ -520,9 +520,63 @@
   /* Resolve the seeds into the same fields admitBuild() writes, so a fixture
      that starts mid-build is indistinguishable from one that got there by
      being built -- one shape, one renderer, no special case in the card. */
+  function publishDocument(r,onlyVersion){
+    const out=window.PM56_TX.run(()=>({ok:true,ref:publishDocumentInner(r,onlyVersion)}));
+    if(!out.ok)throw Error(out.error);return out.ref;
+  }
+  function publishDocumentInner(r,onlyVersion){
+    const A=window.PM56_ARTIFACTS,TX=window.PM56_TX,id='assistant-plan-document:'+r.plan_id;
+    const revisions={...r.revisions},refs={...(r.document_refs||{})};
+    for(const v of (onlyVersion?[onlyVersion]:Object.keys(revisions))){
+      const n=Number(v),ids=new Set();
+      const blocks=revisions[n].map((b,i)=>{const x={...b,block_id:b.block_id||r.plan_id+':block:'+n+':'+i};if(ids.has(x.block_id))throw Error('duplicate_plan_block_id');ids.add(x.block_id);return x;});
+      const q={artifact_id:id,artifact_version:n,project_id:r.project_id||'pm',thread_id:r.thread_id,title:r.title,
+        renderer_kind:'plan_document',plan_id:r.plan_id,blocks,origin:'assistant_plan_owner'};
+      const out=A.publish(q);if(!out.ok)throw Error(out.error);
+      revisions[n]=out.revision.record.blocks;refs[n]={artifact_id:id,artifact_version:n,project_id:q.project_id,thread_id:q.thread_id};
+      A.retain(refs[n],{kind:'assistant_plan',id:r.plan_id});
+      for(const b of blocks.filter(b=>b.t==='plan_embed')){
+        const ref=embedReference(r,b),resolved=A.resolve(ref);
+        if(resolved.ok){
+          const expected=resolved.revision.record.static_fallback_ref||null;
+          if(JSON.stringify(expected)!==JSON.stringify(b.static_fallback_ref||null))TX.fail('frozen_fallback_mismatch');
+          const retained=A.retain(ref,{kind:'plan_revision',id:r.plan_id+'@'+n});if(!retained.ok)TX.fail(retained.error);
+        }
+      }
+    }
+    TX.set(r,'revisions',revisions);TX.set(r,'document_refs',refs);return refs[onlyVersion||r.version];
+  }
+  function embedReference(r,b){return {artifact_id:b.artifact_id,artifact_version:Number(b.artifact_version),project_id:r.project_id||r.approved?.project_id||'pm',thread_id:r.thread_id,renderer_kind:b.renderer_kind};}
+  function renderEmbed(r,b,opts={}){
+    const A=window.PM56_ARTIFACTS,ref=embedReference(r,b),x=A.resolve(ref),state=x.ok?'available':x.error;
+    const content=x.ok?A.render(ref,opts):A.unavailable(ref,state);const visibleState=/data-artifact-state="([^"]+)"/.exec(content)?.[1]||state;
+    const bound=' data-version="'+r.version+'" data-hash="'+esc(hashOf(body(r)))+'"';
+    const actions='<div class="ar-actions"><button class="soft-button" data-action="open-artifact" data-id="'+esc(b.artifact_id)+'" data-version="'+esc(b.artifact_version)+'" data-ref="'+esc(encodeURIComponent(JSON.stringify(ref)))+'">Open exact revision</button>'+ 
+      '<button class="text-button" data-action="pd-embed-info" data-id="'+esc(b.block_id)+'" data-plan="'+esc(r.plan_id)+'"'+bound+'>Details</button>'+ 
+      (visibleState!=='available'?'<button class="text-button" data-action="pd-export" data-id="'+esc(r.plan_id)+'"'+bound+'>Re-export Plan</button>':'')+'</div>';
+    return '<section class="pd-embed-real" data-block-id="'+esc(b.block_id)+'" data-embed-state="'+esc(visibleState)+'" data-artifact-version="'+esc(b.artifact_version)+'">'+
+      '<header><strong>'+esc(b.caption)+'</strong><span>V'+esc(b.artifact_version)+' · '+esc(b.renderer_kind)+'</span></header>'+content+
+      '<p class="pd-embed-caption">'+esc(b.text_summary||'')+'</p>'+ 
+      (opts.print?'<p class="pd-print-ref">'+esc(b.artifact_id)+' @ V'+esc(b.artifact_version)+'</p>':actions)+'</section>';
+  }
+  function printDocument(r){
+    const rendered=body(r).map((b,i)=>{
+      if(b.t==='plan_embed')return renderEmbed(r,b,{print:true});
+      if(b.t==='plan_step')return '<section class="pd-print-step"><h3>'+esc(b.title)+'</h3><p>'+esc(b.text||'')+'</p></section>';
+      return richBlock(b,i,r);
+    }).join('');
+    return '<!doctype html><html><head><meta charset="utf-8"><title>'+esc(r.title)+' · V'+r.version+'</title><style>'+PRINT_CSS+'</style></head><body><article><div class="print-identity">Approved document · '+esc(r.plan_id)+' · V'+r.version+' · '+esc(hashOf(body(r)))+'</div>'+rendered+'</article></body></html>';
+  }
+  const PRINT_CSS='@page{size:A4;margin:18mm}body{font:12px/1.65 system-ui;color:#202938;background:#fff}article{max-width:760px;margin:auto}h1{font-size:26px}h2{font-size:20px;margin-top:24px}h3{font-size:15px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:10px/1.6 monospace;padding:12px;background:#f1f3f6}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{text-align:left;border-bottom:1px solid #bbb;padding:7px;overflow-wrap:anywhere}button,details{display:none}img,video{max-width:100%;max-height:250px}.pd-embed-real{border:1px solid #ccd1da;border-radius:9px;padding:14px;margin:18px 0;break-inside:avoid}.pd-embed-real header span{float:right;font-size:10px}.ar-unavailable{border:1px solid #aaa;padding:10px}.ar-static-note,.pd-print-ref,.print-identity{font-size:10px;color:#566172;overflow-wrap:anywhere}.ar-chart{display:grid;gap:9px}.ar-bar{display:grid;grid-template-columns:120px 1fr 65px;gap:10px}.ar-bar>div{background:#e7e9f0;height:9px}.ar-bar i{display:block;height:9px;background:#7460c8;print-color-adjust:exact}.ar-graph{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.ar-graph>div{padding:12px;border:1px solid #aaa}.ar-graph>div>span{display:block;font-size:10px}.pd-print-step{break-inside:avoid}.ar-graph-svg{width:100%;max-height:230px}.ar-graph-svg rect{fill:#f5f6f8;stroke:#8992a0}.ar-graph-svg text{fill:#202938;font:12px system-ui}.ar-graph-svg path{fill:none;stroke:#687388;stroke-width:1.5}.ar-graph-svg polygon{fill:#687388}.ar-graph-key{font-size:10px}';
+
+  window.PM56_ARTIFACTS.registerRenderer('plan_document',(record,opts)=>{
+    const historical={plan_id:record.plan_id,project_id:record.project_id,thread_id:record.thread_id,title:record.title,version:record.artifact_version,revisions:{[record.artifact_version]:record.blocks},approved:null};
+    return '<div class="pd-rich" data-plan-view="retained">'+record.blocks.map((b,i)=>b.t==='plan_embed'?renderEmbed(historical,b,opts):richBlock(b,i,historical)).join('')+'</div>';
+  });
+
   function hydrate(records){
     Object.keys(records).forEach(function(k){
-      var r=records[k];
+      var r=records[k];publishDocument(r);
       if(r._approvedSeed){
         var b=r.revisions[r.version]||[];
         r.approved = JSON.parse(JSON.stringify(r._approvedSeed));
@@ -564,7 +618,7 @@
      `blockIds(markdown)` must be equal, and PM56_PLANS.projectionParity() below
      returns exactly that comparison.
      ===================================================================== */
-  function blockId(b,i){ return b.plan_step_id || (b.t+'-'+i); }
+  function blockId(b,i){ return b.plan_step_id || b.block_id || (b.t+'-'+i); }
 
   function richBlock(b,i,r){
     var k=' data-block-id="'+esc(blockId(b,i))+'"';
@@ -585,21 +639,17 @@
       case 'code':
         return '<pre class="pd-code"'+k+' data-lang="'+esc(b.lang||'')+'"><code>'+esc(b.text)+'</code></pre>';
       case 'artifact':
-        /* Embedded artifacts open in the NORMAL artifact viewer (§7.2), which
-           app.js already owns as `open-artifact`. This is a route, not a
-           second viewer. */
-        return '<button class="pd-artifact" type="button" data-action="open-artifact" data-id="'+esc(b.id)+'"'+k+'>'+
-          ICON.artifact+'<span class="pd-artifact-copy"><strong>'+esc(b.label)+'</strong>'+
-          '<span>'+esc(b.kind)+' · opens in the artifact viewer</span></span></button>';
+        // Historical blocks lacking a version are not permission to open latest.
+        return window.PM56_ARTIFACTS.unavailable({artifact_id:b.id,artifact_version:b.artifact_version||'unspecified'},'exact_version_required');
       case 'callout':
         return '<div class="pd-callout pd-callout-'+esc(b.tone||'info')+'"'+k+'>'+
           (b.tone==='warning'?ICON.warning:ICON.info)+'<p>'+esc(b.text)+'</p></div>';
       case 'plan_step':
         return richStep(b,i,r,k);
       case 'plan_embed':
-        return richEmbed(b,k);
+        return renderEmbed(r,b);
       default:
-        return '';
+        return '<div class="ar-unavailable"><strong>Unsupported document block · '+esc(b.t)+'</strong><pre>'+esc(JSON.stringify(b,null,2))+'</pre></div>';
     }
   }
 
@@ -615,32 +665,6 @@
     denied:'Reading this artifact requires a permission this project does not hold.',
     unsupported:'No registered renderer claims this artifact kind.'
   };
-  function richEmbed(b,k){
-    var ver = esc(b.artifact_id)+' · '+esc(embedVer(b));
-    if(b.state!=='ok'){
-      return '<div class="pd-embed pd-embed-unavailable pd-embed-'+esc(b.state)+'"'+k+
-        ' data-embed-state="'+esc(b.state)+'" data-artifact-version="'+esc(embedVer(b))+'">'+
-        ICON.warning+
-        '<div class="pd-embed-copy"><strong>'+esc(b.caption)+'</strong>'+
-          '<span class="pd-embed-why">'+esc(b.state)+' — '+esc(EMBED_UNAVAILABLE[b.state]||'unavailable')+'</span>'+
-          '<span class="pd-embed-sum">'+esc(b.text_summary)+'</span>'+
-          '<span class="pd-embed-ver"><code>'+ver+'</code></span></div>'+
-        '<button type="button" class="soft-button pd-act" data-action="pd-embed-info" data-id="'+esc(b.block_id)+'">Details</button>'+
-      '</div>';
-    }
-    var sand = b.sandboxed ? '<span class="pd-embed-sandbox">sandboxed</span>' : '';
-    var fall = b.static_fallback_ref
-      ? '<span class="pd-embed-fallback">PDF: '+esc(b.static_fallback_ref)+'</span>' : '';
-    return '<button type="button" class="pd-embed pd-embed-ok pd-embed-kind-'+esc(b.renderer_kind)+'"'+k+
-      ' data-embed-state="ok" data-embed-kind="'+esc(b.renderer_kind)+'"'+
-      ' data-artifact-version="'+esc(embedVer(b))+'"'+
-      ' data-action="open-artifact" data-id="'+esc(b.artifact_id)+'">'+
-      ICON.artifact+
-      '<span class="pd-embed-copy"><strong>'+esc(b.caption)+'</strong>'+
-        '<span class="pd-embed-sum">'+esc(b.text_summary)+'</span>'+
-        '<span class="pd-embed-ver"><code>'+ver+'</code> · '+esc(b.renderer_kind)+sand+fall+'</span></span>'+
-    '</button>';
-  }
 
   /* A plan step carries an OPTIONAL status gutter while the Plan is Building…
      (§7.2).  The gutter is a projection of build progress; it never mutates one
@@ -718,7 +742,7 @@
                                     (list(b.depends_on).length?' _(after '+list(b.depends_on).join(', ')+')_':'')+
                                     (b.parallel_group_id?' _(parallel: '+b.parallel_group_id+')_':'')+
                                     '\n      '+b.text;
-      default:               return '';
+      default:               return '> Unsupported document block: '+b.t+'\n\n```json\n'+JSON.stringify(b,null,2)+'\n```';
     }
   }
   function toMarkdown(r){
@@ -849,7 +873,8 @@
     if(r.approved){
       if(!run||run.project_id!==project||run.thread_id!==r.thread_id||run.plan_id!==r.plan_id||run.plan_version!==r.version||run.plan_hash!==hash||r.approved.hash!==hash||r.approved.version!==r.version)stale.push('plan_run_identity_mismatch');
       if(run?.required_todo_ids?.some(id=>!byTodo.has(id)))stale.push('required_todo_mapping_missing');
-      if(todos.some(t=>t.run_epoch!==run?.epoch))stale.push('todo_admission_epoch_mismatch');
+      if(todos.some(t=>t.run_epoch!==(run?.admission_epoch??run?.epoch)))stale.push('todo_admission_epoch_mismatch');
+      if(run&&run.epoch!==r.runEpoch)stale.push('run_dispatch_epoch_mismatch');
     }
     for(const s of ss){if(stepById.has(s.plan_step_id))stale.push('duplicate_plan_step');stepById.set(s.plan_step_id,s);
       if(s.parent_step_id){if(!kids.has(s.parent_step_id))kids.set(s.parent_step_id,[]);kids.get(s.parent_step_id).push(s.plan_step_id);}}
@@ -939,6 +964,7 @@
   var ATTENTION = {
     paused:           { line:'Paused',                    tone:'info' },
     quota:            { line:'Waiting for Usage',         tone:'info' },
+    quota_wait:       { line:'Waiting for Usage',         tone:'info' },
     window:           { line:'Outside execution window',  tone:'info' },
     attention:        { line:'Needs attention',           tone:'warning' },
     failed:           { line:'Build failed',              tone:'warning' },
@@ -958,6 +984,65 @@
              currentness_hash:currentnessOf(r) };
   }
 
+  /* Batch 17: recovery is an execution-owner command, not a counter change.
+     This is local concept custody only. Native durable restart is not implied. */
+  function recoverySnapshot(id){
+    const r=rec(id),ctx=EXT.ctx();if(!r)return null;
+    return {plan_id:id,project_id:r.project_id||r.approved?.project_id||'pm',thread_id:r.thread_id,
+      version:r.version,hash:hashOf(body(r)),plan_run_id:r.approved?.plan_run_id||null,
+      epoch:r.runEpoch||0,condition:JSON.stringify(r.attention||null),status:r.status,
+      projection_stale:!!progress(r).stale,work_ref:r.workRef||null,quota_waiting:!!RT.quota?.waiting,scope:window.PM56_GOAL?.scope(r.thread_id),
+      permissions:ctx?.state.permissions,route:ctx?.state.modelId,
+      stop:window.PM56_SCHED?.stopSnapshot()||null};
+  }
+  function recoveryCommand(req){
+    const r=rec(req?.expected?.plan_id),ctx=EXT.ctx(),TX=window.PM56_TX;
+    if(!r||!ctx)return {ok:false,error:'plan_not_found'};
+    const act=req.action,key=req.idempotency_key;
+    if(!key||!req.expected)return {ok:false,error:'invalid_request'};
+    const prior=(r.recoveryReceipts||[]).find(x=>x.idempotency_key===key);
+    if(prior)return prior.request===JSON.stringify(req)?{ok:true,replayed:true,receipt:prior}:{ok:false,error:'conflicting_recovery_replay'};
+    const expected=JSON.stringify(req.expected),current=()=>JSON.stringify(recoverySnapshot(r.plan_id));
+    if(current()!==expected||ctx.thread.id!==r.thread_id)return {ok:false,error:'stale_recovery_request'};
+    const a=attention(r);
+    if(!a||!a.allowed_action_ids.includes(act)||!['resume','retry','recover','reconnect'].includes(act))return {ok:false,error:'recovery_action_not_allowed'};
+    if(progress(r).stale)return {ok:false,error:'stale_plan_progress'};
+    const admittedRun=P().runs[r.approved?.plan_run_id],routeModel=(D.models||[]).find(m=>m.id===admittedRun?.route?.modelId);
+    if(!admittedRun||!routeModel||routeModel.status!=='ready'||routeModel.accountId!==admittedRun.route.accountId)return {ok:false,error:'provider_route_unavailable'};
+    if(JSON.stringify(admittedRun.scope)!==JSON.stringify(window.PM56_GOAL.scope(r.thread_id)))return {ok:false,error:'scope_changed'};
+    if(ctx.state.permissions!==admittedRun.permissions)return {ok:false,error:'permissions_changed'};
+    if(RT.quota?.waiting)return {ok:false,error:'quota_unavailable'};
+    // The scheduler owns stop precedence. A fresh snapshot of a latched stop
+    // is not permission to resume; explicit scheduler Resume must clear it.
+    const schedulingGate=window.PM56_SCHED?.checkEpoch?.(req.expected.stop);
+    if(!schedulingGate?.ok)return {ok:false,error:schedulingGate?.error||'scheduler_owner_unavailable'};
+
+    const g=r.goalBinding&&window.PM56_GOAL.bound(r.plan_id);
+    if(g&&g.status!=='active')return {ok:false,error:'explicit_goal_resume_required'};
+    const owner=r.workRef&&workOwners.get(r.workRef.kind);
+    if(!owner)return {ok:false,error:'execution_owner_required'};
+    if(act!=='resume'&&!owner.recover)return {ok:false,error:'owner_recovery_unavailable'};
+    if(act==='resume'&&r.attention.kind!=='paused'&&!owner.recover)return {ok:false,error:'owner_recovery_unavailable'};
+    return TX.run(()=>{
+      if(current()!==expected)TX.fail('stale_recovery_request');
+      let result;
+      if(owner.recover)result=owner.recover(r.workRef.ref,r,act);
+      else {const state=owner.inspect(r.workRef.ref,r);result=state?.eligible||state?.complete?{ok:true,continued_existing_binding:true}:{ok:false,error:state?.reason||'owner_not_ready'};}
+      if(!result?.ok)TX.fail(result?.error||'owner_recovery_refused');
+      // Returning owner helpers may alter the independent Plan/scope fence.
+      // Rollback is conflict-aware and never overwrites such an intervening edit.
+      if(current()!==expected)TX.fail('recovery_fence_changed');
+      const run=P().runs[r.approved.plan_run_id];if(!run)TX.fail('run_not_found');
+      TX.set(r,'runEpoch',(r.runEpoch||0)+1);TX.set(run,'epoch',r.runEpoch);
+      TX.set(run,'state','running');TX.set(r,'attention',null);TX.set(r,'wait',null);TX.set(r,'revisionStop',null);
+      const receipt={schema:'pm.concept.plan_recovery_receipt.v1',idempotency_key:key,request:JSON.stringify(req),
+        plan_id:r.plan_id,plan_run_id:run.plan_run_id,plan_version:r.version,plan_hash:run.plan_hash,
+        action:act,prior_epoch:req.expected.epoch,committed_epoch:r.runEpoch,owner_result:result,at:new Date().toISOString()};
+      TX.set(r,'recoveryReceipts',(r.recoveryReceipts||[]).concat(receipt));
+      TX.defer(()=>startRunTimer(ctx,r));return {ok:true,receipt};
+    });
+  }
+
   /* =====================================================================
      4. THE BUILD CONTROL
      ---------------------------------------------------------------------
@@ -974,7 +1059,7 @@
 
   function buildControl(r){
     var label = BUILD_LABEL[r.status] || 'Build';
-    var live  = r.status==='ready';
+    var live  = r.status==='ready'&&eligible(r).build;
     var cls   = 'pd-build pd-build-'+esc(r.status);
     /* Terminal states and Building… are the SAME element, disabled. Rendering a
        <span> for them would make it a badge, which §7.3 explicitly rules out. */
@@ -994,7 +1079,7 @@
     var a=attention(r);
     if(!a) return r.wait ? '<span class="pd-wait">'+ICON.info+esc(r.wait)+'</span>' : '';
     var acts=a.allowed_action_ids.map(function(id){
-      return '<button type="button" class="soft-button pd-act pd-attn-act" data-action="pd-attn" data-id="'+esc(r.plan_id)+'" data-value="'+esc(id)+'">'+esc(ATTN_LABEL[id]||id)+'</button>';
+      return '<button type="button" class="soft-button pd-act pd-attn-act" data-action="pd-attn" data-id="'+esc(r.plan_id)+'" data-value="'+esc(id)+'" data-expected="'+esc(encodeURIComponent(JSON.stringify(recoverySnapshot(r.plan_id))))+'">'+esc(ATTN_LABEL[id]||id)+'</button>';
     }).join('');
     var att=a.attempt ? '<span class="pd-attn-attempt">attempt '+esc(a.attempt)+'</span>' : '';
     return '<span class="pd-wait pd-attn pd-attn-'+esc(a.tone)+'" data-condition="'+esc(a.condition_kind)+'">'+
@@ -1292,7 +1377,7 @@
     if(opts.scheduleRef&&stop?.stopped)return {ok:false,error:'manual_stop_latched'};
     return TX.run(()=>{
       const made=todoApi().materializeForPlan({plan_id:r.plan_id,project_id:expected.project_id,thread_id:r.thread_id,version:r.version,plan_hash:expected.hash,run_id:runId,run_epoch:epoch,
-        strict:true,workRef:r.workRef,unit_mapping:Object.fromEntries(steps(body(r)).map(st=>[st.plan_step_id,r.backend==='ledger_bound'?list(r.planunits).filter(u=>u.step===st.plan_step_id).map(u=>u.id):[]])),
+        strict:true,workRef:r.workRef,replace_revision:r.revisionReplacement||null,unit_mapping:Object.fromEntries(steps(body(r)).map(st=>[st.plan_step_id,r.backend==='ledger_bound'?list(r.planunits).filter(u=>u.step===st.plan_step_id).map(u=>u.id):[]])),
         steps:steps(body(r)).map(st=>({id:st.plan_step_id,parent:st.parent_step_id,deps:list(st.depends_on),title:st.title,outcome:st.text,parallel_group_id:st.parallel_group_id}))});
       if(!made?.ok)TX.fail(made?.error||'todo_materialization_refused');
       let error=validateAdmission(ctx,r,expected);if(error)TX.fail(error);
@@ -1308,7 +1393,7 @@
       error=validateAdmission(ctx,r,expected);if(error)TX.fail(error);
       if(opts.scheduleRef&&!window.PM56_SCHED.checkEpoch(stop).ok)TX.fail('stale_stop_epoch');
       const run={schema:'pm.concept.plan_run.v1',plan_run_id:runId,project_id:expected.project_id,thread_id:r.thread_id,plan_id:r.plan_id,plan_version:r.version,plan_hash:expected.hash,
-        epoch,state:'running',topology,scope:{projectId:expected.project_id,threadId:r.thread_id,worktreeId:expected.worktree},route:JSON.parse(JSON.stringify(expected.route)),permissions:expected.permissions,
+        epoch,admission_epoch:epoch,state:'running',topology,scope:{projectId:expected.project_id,threadId:r.thread_id,worktreeId:expected.worktree},route:JSON.parse(JSON.stringify(expected.route)),permissions:expected.permissions,
         required_todo_ids:made.ids.slice(),planunit_bundle_ref:goalResult?.goal.binding.planunit_bundle_ref||null,created_at:new Date().toISOString()};
       const admitted=api.commitRun(r,run);if(!admitted?.ok)TX.fail(admitted?.error||'plan_run_refused');
       if(goalResult){const binding=api.bindRun(r,goalResult.goal,run);if(!binding?.ok)TX.fail(binding?.error||'goal_binding_refused');}
@@ -1335,8 +1420,11 @@
   function runTick(ctx,r){
     if(r.status!=='building'){ stopRun(r); return; }
     var a=todoApi(), moved=null;
+    const gate=r.workRef?inspectGoalPlan(r.plan_id):null;
+    if(gate&&!gate.eligible&&!gate.complete){r.attention=workOwners.get(r.workRef.kind)?.attention?.(r.workRef.ref,r)||{kind:gate.waitKind==='quota'?'quota_wait':'attention',reason:gate.reason||'Execution is not eligible',actions:['details','cancel']};const run=P().runs[r.approved?.plan_run_id];if(run)run.state=r.attention.kind==='quota_wait'?'waiting_quota':r.attention.kind==='window_wait'?'waiting_window':'blocked';stopRun(r);ctx.renderApp();return;}
+
     if(r.workRef&&!r.goalBinding&&inspectGoalPlan(r.plan_id).complete){finalizeGoalRun(r.plan_id);ctx.renderApp();return;}
-    if(r.workRef){moved=workOwners.get(r.workRef.kind)?.advance(r.workRef.ref,r);if(moved?.ok===false){r.attention={kind:'attention',reason:moved.error,actions:['details','cancel']};stopRun(r);ctx.renderApp();return;}}
+    if(r.workRef){moved=workOwners.get(r.workRef.kind)?.advance(r.workRef.ref,r);if(moved?.ok===false){const supplied=workOwners.get(r.workRef.kind)?.attention?.(r.workRef.ref,r);r.attention=supplied||{kind:'attention',reason:moved.error,actions:['details','cancel']};const run=P().runs[r.approved?.plan_run_id];if(run)run.state=r.attention.kind==='failed'?'failed':'blocked';stopRun(r);ctx.renderApp();return;}}
     else {r.attention={kind:'attention',reason:'No actual execution adapter is attached to this Plan in the local concept.',actions:['details','cancel']};stopRun(r);ctx.renderApp();return;}
     r._projRev=(r._projRev||1)+1;
     /* PFAIL-007: Completed requires the completion predicate to hold --
@@ -1425,33 +1513,50 @@
      only writes the destination. */
   function reviseTarget(r){
     return { kind:'plan-revision', label:'Revise Plan · V'+r.version, detail:r.title,
-             refId:r.plan_id, glyph:'document',
+             refId:r.plan_id, glyph:'document',expectedRevision:{thread_id:r.thread_id,version:r.version,hash:hashOf(body(r))},
              placeholder:'Describe what should change. The agent writes V'+(r.version+1)+'.' };
   }
 
   /* A revision is a COMPLETE new structured version authored by the agent. The
      old body stays immutable under its own version key. */
-  function applyRevision(ctx,r,feedback){
-    var prev=body(r), next=prev.slice();
-    next = next.concat([ h('Revision note',3),
-      p('V'+(r.version+1)+' incorporates: '+feedback) ]);
-    r.version = r.version+1;
-    r.revisions[r.version] = next;
-    if(r.discoveryRunId&&r.ledger){r.ledger=JSON.parse(JSON.stringify(r.ledger));r.ledger.plan_version=r.version;r.ledger.entries.push({k:"correction",v:feedback,plan_version:r.version});}
-    r.revisionLog.push({v:r.version, at:new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}), why:feedback});
-    /* A revision invalidates anything bound to the exact old version -- the
-       card's own binding AND every durable build schedule the scheduler holds.
-       Only the first of those was done here, so an ordinary Revise left a live
-       schedule pointing at replaced bytes. */
-    var Sr=window.PM56_SCHED;
-    if(Sr && Sr.invalidateForPlanRevision)
-      r.scheduleRevisionInvalidation = Sr.invalidateForPlanRevision(r.plan_id, r.version-1, r.version, hashOf(next));
-    if(r.schedule && r.schedule.version !== r.version){
-      r.schedule.invalid = true;
-      r.schedule.invalidReason = 'Bound to V'+r.schedule.version+'; the Plan is now V'+r.version+'. Rebind or reschedule explicitly.';
-    }
-    if(r.approved && r.approved.version !== r.version) r.approved = null;
-    return r;
+  function applyRevision(ctx,r,feedback,expected){
+    const TX=window.PM56_TX;
+    return TX.run(()=>{
+      const stopped=r.revisionStop,stoppedRun=stopped&&P().runs[stopped.plan_run_id];
+      const safeStopped=r.status==='building'&&stopped&&stoppedRun?.state==='paused'&&
+        stopped.version===r.version&&stopped.hash===hashOf(body(r))&&stopped.epoch===r.runEpoch;
+      if(r.status!=='ready'&&!safeStopped)TX.fail('safe_stop_required');
+      if(ctx.thread.id!==r.thread_id||expected&&(expected.thread_id!==r.thread_id||expected.version!==r.version||expected.hash!==hashOf(body(r))))TX.fail('stale_plan_revision');
+      if(!String(feedback||'').trim())TX.fail('revision_instruction_required');
+      const oldVersion=r.version,newVersion=oldVersion+1;
+      const next=body(r).concat([h('Revision note',3),p('V'+newVersion+' incorporates: '+feedback)]);
+      // Publish against a detached candidate. A failed revision must not move the
+      // current version, erase approval, invalidate schedules or retain artifacts.
+      const candidate={...r,version:newVersion,revisions:{...r.revisions,[newVersion]:next}};
+      publishDocument(candidate,newVersion);
+      if(safeStopped){
+        // An accepted replacement ends the old exact-version execution. A bound
+        // Goal is cancelled by its existing owner, never rebound silently to V2.
+        const G=window.PM56_GOAL,g=r.goalBinding&&G.bound(r.plan_id);
+        if(g&&!G.cancelled(g)&&g.status!=='completed'){
+          const ended=G.boundTransition(r.plan_id,'cancelled');
+          if(!ended?.ok)TX.fail(ended?.error||'goal_safe_stop_refused');
+        }
+        TX.set(r,'revisionReplacement',{plan_run_id:stopped.plan_run_id,version:stopped.version,hash:stopped.hash});
+        TX.set(r,'runEpoch',(r.runEpoch||0)+1);TX.set(stoppedRun,'epoch',r.runEpoch);
+        TX.set(stoppedRun,'state','cancelled');TX.set(r,'goalBinding',null);
+        TX.set(r,'status','ready');TX.set(r,'current',true);
+        TX.set(r,'attention',null);TX.set(r,'wait',null);TX.set(r,'revisionStop',null);
+      }
+      TX.set(r,'version',newVersion);TX.set(r,'revisions',candidate.revisions);TX.set(r,'document_refs',candidate.document_refs);
+      if(r.discoveryRunId&&r.ledger){const ledger=JSON.parse(JSON.stringify(r.ledger));ledger.plan_version=newVersion;ledger.entries.push({k:'correction',v:feedback,plan_version:newVersion});TX.set(r,'ledger',ledger);}
+      TX.set(r,'revisionLog',r.revisionLog.concat({v:newVersion,at:new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}),why:feedback}));
+      const Sr=window.PM56_SCHED;
+      if(Sr?.invalidateForPlanRevision)TX.set(r,'scheduleRevisionInvalidation',Sr.invalidateForPlanRevision(r.plan_id,oldVersion,newVersion,hashOf(body(r))));
+      if(r.schedule&&r.schedule.version!==newVersion)TX.set(r,'schedule',{...r.schedule,invalid:true,invalidReason:'Bound to V'+r.schedule.version+'; the Plan is now V'+newVersion+'. Rebind or reschedule explicitly.'});
+      if(r.approved&&r.approved.version!==newVersion)TX.set(r,'approved',null);
+      return {ok:true,plan_id:r.plan_id,version:newVersion};
+    });
   }
 
   /* =====================================================================
@@ -1608,7 +1713,7 @@
         '<p class="pd-note">One authority. The markers beside the Rich Text steps, the Markdown rail, the card summary and this list are all this projection — there is no second, GUI-local progress engine, and no status is written into the approved document. A step whose dependency is unmet stays <code>pending</code>; only a genuine blocker makes it <code>blocked</code>.</p>'+
         '<div class="pd-export-row">'+
           '<button type="button" class="soft-button" data-action="pd-proj-stale" data-id="'+esc(r.plan_id)+'">Mark projection stale</button>'+
-          '<button type="button" class="soft-button" data-action="pd-proj-restart" data-id="'+esc(r.plan_id)+'">Rebuild after restart</button>'+
+          '<button type="button" class="soft-button" data-action="pd-proj-restart" data-id="'+esc(r.plan_id)+'">Rebuild progress from owner records</button>'+
         '</div></section>');
     }
 
@@ -1653,19 +1758,20 @@
     if(ems.length){
       rows.push('<section class="pd-sec pd-sec-embeds"><h4>Embedded artifacts</h4>'+
         '<ul class="pd-embeds">'+ems.map(function(x){
-          return '<li data-embed-state="'+esc(x.state)+'"><code>'+esc(x.artifact_id)+'@'+esc(embedVer(x))+'</code>'+
+          const resolved=window.PM56_ARTIFACTS.resolve(embedReference(r,x)),state=resolved.ok?'ok':resolved.error;
+          return '<li data-embed-state="'+esc(state)+'"><code>'+esc(x.artifact_id)+'@'+esc(embedVer(x))+'</code>'+
             '<strong>'+esc(x.renderer_kind)+'</strong><span>'+esc(x.caption)+'</span>'+
-            '<em>'+(x.state==='ok'
+            '<em>'+(state==='ok'
               ? ((x.renderer_kind==='video'||x.renderer_kind==='interactive')
                   ? 'PDF: static fallback '+esc(x.static_fallback_ref||'(none)')+' with caption'
                   : 'PDF: rendered')
-              : esc(x.state)+' — '+esc(EMBED_UNAVAILABLE[x.state]||''))+'</em></li>';
+              : esc(state)+' — '+esc(EMBED_UNAVAILABLE[state]||''))+'</em></li>';
         }).join('')+'</ul>'+
         '<p class="pd-note">Every embed resolves the frozen <code>artifact_version</code>. A later change to any of these artifacts cannot change this approved Plan; an unavailable one renders as an explicit unavailable block rather than being dropped or substituted. Interactive content runs only in the shared sandbox.</p></section>');
     }
-    if(list(r.revisionLog).length){
+    if(Object.keys(r.document_refs||{}).length){
       rows.push('<section class="pd-sec"><h4>Revision history</h4><ul class="pd-revs">'+
-        list(r.revisionLog).map(function(x){ return '<li><strong>V'+x.v+'</strong><span>'+esc(x.at)+'</span><p>'+esc(x.why)+'</p></li>'; }).join('')+
+        Object.keys(r.document_refs).map(v=>list(r.revisionLog).find(x=>x.v===Number(v))||{v:Number(v),at:'',why:'Original retained document'}).map(function(x){ return '<li><strong>V'+x.v+'</strong><button class="text-button" data-action="open-artifact" data-version="'+x.v+'" data-ref="'+esc(encodeURIComponent(JSON.stringify(r.document_refs[x.v])))+'">Open V'+x.v+'</button><span>'+esc(x.at)+'</span><p>'+esc(x.why)+'</p></li>'; }).join('')+
         '</ul><p class="pd-note">Every earlier version stays immutable and readable. There is no <code>superseded</code> status.</p></section>');
     }
     if(r.schedule){
@@ -1760,9 +1866,9 @@
     return dlgShell('export','Export Plan', r.title+' · V'+r.version,
       '<section class="pd-sec"><h4>Plan document</h4>'+
         '<div class="pd-export-row" data-content-kind="plan_document">'+
-          '<button type="button" class="soft-button" data-action="pd-export-do" data-id="'+esc(r.plan_id)+'" data-kind="plan_document" data-format="markdown">Markdown</button>'+
-          '<button type="button" class="soft-button" data-action="pd-export-do" data-id="'+esc(r.plan_id)+'" data-kind="plan_document" data-format="pdf">PDF</button>'+
-          '<button type="button" class="soft-button" data-action="pd-export-do" data-id="'+esc(r.plan_id)+'" data-kind="plan_document" data-format="bundle">Structured bundle</button>'+
+          '<button type="button" class="soft-button" data-action="pd-export-do" data-id="'+esc(r.plan_id)+'" data-version="'+r.version+'" data-hash="'+esc(hashOf(body(r)))+'" data-kind="plan_document" data-format="markdown">Markdown</button>'+
+          '<button type="button" class="soft-button" data-action="pd-export-do" data-id="'+esc(r.plan_id)+'" data-version="'+r.version+'" data-hash="'+esc(hashOf(body(r)))+'" data-kind="plan_document" data-format="pdf">PDF</button>'+
+          '<button type="button" class="soft-button" data-action="pd-export-do" data-id="'+esc(r.plan_id)+'" data-version="'+r.version+'" data-hash="'+esc(hashOf(body(r)))+'" data-kind="plan_document" data-format="bundle">Structured bundle</button>'+
         '</div>'+
         '<p class="pd-note">Markdown and the structured bundle are produced here and handed to the browser as a real download. PDF is produced through the browser print pipeline, which a <code>file://</code> page can open but cannot complete unattended — the receipt records exactly what happened rather than claiming a file was written.</p>'+
         '<p class="pd-note">The Plan document carries no live execution state, and exporting it does not change <code>'+esc(hashOf(body(r)))+'</code>. A video or interactive block exports through its frozen static fallback with its caption; an unavailable block exports as an explicit unavailable block rather than being dropped.</p>'+
@@ -1770,8 +1876,8 @@
       '<section class="pd-sec"><h4>Execution report</h4>'+
         (r.approved
           ? '<div class="pd-export-row" data-content-kind="execution_report">'+
-              '<button type="button" class="soft-button" data-action="pd-export-do" data-id="'+esc(r.plan_id)+'" data-kind="execution_report" data-format="markdown">Markdown</button>'+
-              '<button type="button" class="soft-button" data-action="pd-export-do" data-id="'+esc(r.plan_id)+'" data-kind="execution_report" data-format="bundle">Structured bundle</button>'+
+              '<button type="button" class="soft-button" data-action="pd-export-do" data-id="'+esc(r.plan_id)+'" data-version="'+r.version+'" data-hash="'+esc(hashOf(body(r)))+'" data-kind="execution_report" data-format="markdown">Markdown</button>'+
+              '<button type="button" class="soft-button" data-action="pd-export-do" data-id="'+esc(r.plan_id)+'" data-version="'+r.version+'" data-hash="'+esc(hashOf(body(r)))+'" data-kind="execution_report" data-format="bundle">Structured bundle</button>'+
             '</div>'+
             '<p class="pd-note">A separate versioned artifact — To-Dos, step states, deviations, evidence and a completion summary keyed to <code>'+esc(r.plan_id)+' V'+r.version+'</code> and its run. It states its own currentness and its source Plan hash, and it is not the approved Plan.</p>'
           : '<p class="pd-note">No execution report: this Plan has not been admitted for a build, so there is no run to report on.</p>')+
@@ -1829,31 +1935,19 @@
   /* PDET-011..012: what an export actually did with each embed, so the receipt
      is checkable rather than a claim. */
   function embedExportNotes(r){
-    return body(r).filter(function(b){ return b.t==='plan_embed'; }).map(function(b){
-      return { block_id:b.block_id, artifact:b.artifact_id+'@'+embedVer(b),
-               kind:b.renderer_kind, state:b.state,
-               exported_as: b.state!=='ok' ? ('explicit unavailable block ('+b.state+')')
-                          : (b.renderer_kind==='video'||b.renderer_kind==='interactive')
-                            ? ('static fallback '+(b.static_fallback_ref||'(none)')+' with caption')
-                            : 'rendered' };
+    const A=window.PM56_ARTIFACTS;
+    return body(r).filter(b=>b.t==='plan_embed').map(b=>{
+      const ref=embedReference(r,b),resolved=A.resolve(ref),html=A.render(ref,{print:true}),unavailable=/data-artifact-state="([^"]+)"/.exec(html);
+      return {block_id:b.block_id,artifact:b.artifact_id+'@'+embedVer(b),kind:b.renderer_kind,
+        state:unavailable?.[1]||(resolved.ok?'available':resolved.error),
+        exported_as:unavailable?'explicit unavailable block ('+unavailable[1]+')':['video','interactive'].includes(b.renderer_kind)?'exact retained static fallback with caption':'rendered',
+        static_fallback_ref:resolved.revision?.record.static_fallback_ref||null};
     });
   }
 
   /* Real Blob download, and honest when the browser refuses -- the same
      contract app.js's exportContextJson uses. */
-  function download(name, text, mime){
-    try{
-      var blob=new Blob([text],{type:mime||'text/plain;charset=utf-8'});
-      var url=URL.createObjectURL(blob);
-      var a=document.createElement('a');
-      a.href=url; a.download=name; a.rel='noopener';
-      document.body.appendChild(a); a.click();
-      setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 4000);
-      return 'handed to the browser as '+name;
-    }catch(e){
-      return 'the browser refused the download ('+(e&&e.message||'unknown')+') — no file was written';
-    }
-  }
+  function download(name,text,mime){return window.PM56_ARTIFACTS.deliverText(name,text,mime).result;}
 
   /* =====================================================================
      8. REGISTRATION
@@ -1894,7 +1988,7 @@
       var r=rec(btn.dataset.id); if(!r) return;
       const goal=window.PM56_GOAL.bound(r.plan_id);if(goal&&!window.PM56_GOAL.cancelled(goal)&&goal.status!=='completed'){window.PM56_GOAL.lifecycle(window.PM56_GOAL.capture(goal),'cancel');ctx.renderApp();return;}
       stopRun(r);
-      r.runEpoch=(r.runEpoch||0)+1;if(P().runs[r.approved?.plan_run_id])P().runs[r.approved.plan_run_id].state='canceled';
+      r.runEpoch=(r.runEpoch||0)+1;if(P().runs[r.approved?.plan_run_id]){P().runs[r.approved.plan_run_id].state='cancelled';P().runs[r.approved.plan_run_id].epoch=r.runEpoch;}
       r.status='canceled'; r.current=false;
       r.cancelReason='Canceled from the Plan card at V'+r.version+'.';
       r.scheduleInvalidation=invalidateSchedulesFor(r,'manual_cancel');
@@ -1914,7 +2008,10 @@
       var r=rec(btn.dataset.id); if(!r || r.status!=='building') return;
       window.PM56_GOAL.fenceThread(r.thread_id);r.runEpoch=(r.runEpoch||0)+1;
       stopRun(r);
-      r.attention=null; r.wait=null; r.status='ready'; r.current=true;
+      const stoppedRun=P().runs[r.approved?.plan_run_id];if(stoppedRun){stoppedRun.state='paused';stoppedRun.epoch=r.runEpoch;}
+      r.attention={kind:'paused',reason:'Execution stopped for revision. Submit the new version, or explicitly resume the original run. A rejected revision leaves this version unchanged.',actions:['resume','details','cancel']};
+      r.wait=null;r.current=true;
+      r.revisionStop={plan_run_id:r.approved?.plan_run_id,version:r.version,hash:hashOf(body(r)),epoch:r.runEpoch};
       r.scheduleInvalidation=invalidateSchedulesFor(r,'stop_for_revision');
       RT.composer.destination=reviseTarget(r);
       ctx.renderApp();
@@ -1934,7 +2031,11 @@
       if(window.PM56_SCHED)window.PM56_SCHED.openBuildAt(ctx,r.plan_id,r.version);
       else openDlg(ctx,'at',r.plan_id);
     },
-    'pd-export':     function(ctx,btn){ openDlg(ctx,'export',btn.dataset.id); },
+    'pd-export': function(ctx,btn){
+      const r=rec(btn.dataset.id);if(!r)return;
+      if(btn.dataset.version&&Number(btn.dataset.version)!==r.version||btn.dataset.hash&&btn.dataset.hash!==hashOf(body(r))){ctx.toast('Export changed','The requested Plan version is not current. Its retained artifact is still available in version history; no newer version was substituted.');return;}
+      openDlg(ctx,'export',r.plan_id);
+    },
     'pd-dlg-close':  function(ctx){ ctx.closeDialog(); },
 
     'pd-crew-start': function(ctx,btn){
@@ -1981,6 +2082,9 @@
     'pd-export-do': function(ctx,btn){
       var r=rec(btn.dataset.id); if(!r) return;
       var fmt=btn.dataset.format, kind=btn.dataset.kind||'plan_document';
+      if(!['plan_document','execution_report'].includes(kind)||!['markdown','pdf','bundle'].includes(fmt)||kind==='execution_report'&&(!r.approved||fmt==='pdf')){ctx.toast('Export unavailable','Unsupported export request or no admitted run.');return;}
+      if(btn.dataset.version&&Number(btn.dataset.version)!==r.version||btn.dataset.hash&&btn.dataset.hash!==hashOf(body(r))){ctx.toast('Export changed','Reopen Export for the current Plan version. No file was produced.');return;}
+
       var result, at=new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});
       var hashBefore=hashOf(body(r));
       if(kind==='execution_report'){
@@ -1991,15 +2095,15 @@
           ? download(r.plan_id+'-V'+r.version+'-execution-report.md', reportMarkdown(rep), 'text/markdown;charset=utf-8')
           : download(r.plan_id+'-V'+r.version+'-execution-report.json', JSON.stringify(rep,null,2), 'application/json;charset=utf-8');
         r.exports.push({format:fmt, content_kind:kind, at:at, result:result,
-                        hash_unchanged:hashOf(body(r))===hashBefore});
+                        document_ref:r.document_refs?.[r.version]||null,plan_version:r.version,plan_hash:hashBefore,hash_unchanged:hashOf(body(r))===hashBefore});
         openDlg(ctx,'info',r.plan_id); ctx.renderApp(); return;
       }
       if(fmt==='markdown'){
         result = download(r.plan_id+'-V'+r.version+'.md', toMarkdown(r), 'text/markdown;charset=utf-8');
       } else if(fmt==='bundle'){
         result = download(r.plan_id+'-V'+r.version+'.json', JSON.stringify({
-          plan_id:r.plan_id, version:r.version, hash:hashOf(body(r)), strategy:r.strategy,
-          backend:r.backend, blocks:body(r), planunits:r.planunits||null, demo:true
+          schema:'pm.concept.plan_document_export.v1',plan_id:r.plan_id, version:r.version, hash:hashOf(body(r)), strategy:r.strategy,
+          document_ref:r.document_refs[r.version],backend:r.backend,blocks:body(r),demo:true
         }, null, 2), 'application/json;charset=utf-8');
       } else {
         /* Honest: a file:// page can open the print pipeline but cannot confirm
@@ -2007,8 +2111,7 @@
         var w=null;
         try{ w=window.open('', '_blank'); }catch(e){}
         if(w){
-          w.document.write('<pre style="font:12px ui-monospace,monospace;white-space:pre-wrap;padding:24px">'+
-            toMarkdown(r).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];})+'</pre>');
+          w.document.write(printDocument(r));
           w.document.close();
           try{ w.print(); }catch(e){}
           result='opened the browser print pipeline — whether a PDF was written is the browser’s decision, not this page’s';
@@ -2017,7 +2120,7 @@
         }
       }
       r.exports.push({format:fmt, content_kind:kind, at:at, result:result,
-                      hash_unchanged:hashOf(body(r))===hashBefore,
+                      document_ref:r.document_refs?.[r.version]||null,plan_version:r.version,plan_hash:hashBefore,hash_unchanged:hashOf(body(r))===hashBefore,
                       embeds:embedExportNotes(r)});
       /* Land on Details so the export receipt is immediately readable -- the
          result line is the durable record of what actually happened. */
@@ -2049,37 +2152,26 @@
       if(act==='details'){ openDlg(ctx,'info',r.plan_id); ctx.renderApp(); return; }
       if(act==='cancel'){ ACTIONS['pd-cancel'](ctx,btn); return; }
       if(act==='revise'){ ACTIONS['pd-stop-revise'](ctx,btn); return; }
-      if(act==='retry'){
-        /* PFAIL-003: a NEW attempt under the SAME run. No duplicate PlanRun,
-           and completed side effects are not replayed. */
-        r.attempts=(r.attempts||1)+1;
-        r.attention={ kind:'paused', reason:'Retry attempt '+r.attempts+' admitted under the same PlanRun; completed work was not replayed.',
-                      actions:['resume','cancel','details'], attempt:r.attempts };
-        ctx.renderApp(); return;
+      const g=r.goalBinding&&window.PM56_GOAL.bound(r.plan_id);
+      if(act==='resume'&&g&&g.status!=='active'){
+        const out=window.PM56_GOAL.lifecycle(window.PM56_GOAL.capture(g),'active');
+        if(!out.ok)ctx.toast('Not resumed',out.error);ctx.renderApp();return;
       }
-      if(act==='resume'||act==='recover'||act==='reconnect'){
-        const G=window.PM56_GOAL,g=r.goalBinding&&G.bound(r.plan_id);
-        if(g){
-          if(act!=='resume'&&g.status!=='active'){ctx.toast('Explicit Goal Resume required','Recovery or reconnect does not override your manual stop.');return;}
-          if(act==='resume'&&g.status!=='active'){const out=G.lifecycle(G.capture(g),'active');if(!out.ok)ctx.toast('Not resumed',out.error);ctx.renderApp();return;}
-        }
-        r.attention=null; resumeRun(ctx,r); ctx.renderApp();
-        ctx.toast('Resumed','Continued from durable state; Plan and To-Do identity preserved.');
-        return;
-      }
+      let expected;
+      try{expected=btn.dataset.expected?JSON.parse(decodeURIComponent(btn.dataset.expected)):recoverySnapshot(r.plan_id);}
+      catch(e){ctx.toast('Not resumed','Invalid recovery request.');return;}
+      const out=recoveryCommand({action:act,expected,idempotency_key:r.plan_id+':'+act+':'+expected.epoch+':'+expected.condition});
+      ctx.renderApp();if(!out.ok)ctx.toast('Recovery not admitted',out.error);
+
     },
 
     /* PDET-012: an unavailable embed is inspectable, not silent. */
     'pd-embed-info': function(ctx,btn){
-      var id=btn.dataset.id, found=null, rid;
-      for(rid in P().records){
-        var bs=body(P().records[rid]);
-        for(var i=0;i<bs.length;i++){ if(bs[i].t==='plan_embed' && bs[i].block_id===id){ found={b:bs[i],r:P().records[rid]}; } }
-      }
-      if(!found) return;
-      ctx.toast('Embed '+found.b.state,
-        found.b.artifact_id+'@'+embedVer(found.b)+' — '+(EMBED_UNAVAILABLE[found.b.state]||'available')+
-        ' The approved Plan still names this exact version; no other version was substituted.');
+      const r=rec(btn.dataset.plan),v=Number(btn.dataset.version||r?.version),blocks=r?.revisions[v];
+      const b=blocks?.find(x=>x.t==='plan_embed'&&x.block_id===btn.dataset.id);
+      if(!b||btn.dataset.hash&&btn.dataset.hash!==hashOf(blocks)){ctx.toast('Unavailable','The exact Plan version/block reference is missing or changed.');return;}
+      const ref=embedReference(r,b);ctx.openEditor(window.PM56_ARTIFACTS.route(ref));
+
     },
 
     /* PPROG-012/013: the two projection conditions the correction requires,
@@ -2098,8 +2190,8 @@
       r._projStale=false; r._projSource='durable'; r._projRev=(r._projRev||1)+1;
       var after=progress(r);
       ctx.renderApp();
-      ctx.toast('Rebuilt after restart',
-        'Rebuilt from durable To-Dos and mappings, not a view cache. Currentness '+after.currentness_hash+
+      ctx.toast('Progress rebuilt',
+        'Rebuilt from current session owner records, not a view cache. This does not prove durable restart. Currentness '+after.currentness_hash+
         ' — '+(after.currentness_hash===before.currentness_hash?'identical to pre-restart truth.':'inputs changed while stale.'));
     },
 
@@ -2206,18 +2298,21 @@
      new VERSION rather than editing the current one. composer-state.js owns
      the buffer and the ribbon; this only claims the commit for its own
      destination kind and declines everything else. */
-  if(RT.composer && RT.composer.commitHooks){
-    RT.composer.commitHooks.push(function(ctx,thread,message){
-      var d=RT.composer.destination;
-      if(!d || d.kind!=='plan-revision') return;
-      var r=rec(d.refId); if(!r) return;
-      if(r.status!=='ready') return;
-      var feedback=String((message&&(message.body||message.text))||'').trim();
-      if(!feedback)return;
-      applyRevision(ctx,r,feedback);
-      RT.composer.destination=null;
-      ctx.appendMessage({id:ctx.uid('plan-revision'),role:'system',type:'plan-revision-receipt',
-        plan_id:r.plan_id,title:'Plan revised',detail:'V'+r.version+' · V'+(r.version-1)+' preserved',time:new Date().toISOString()});
+  if(RT.composer && RT.composer.preSendHooks){
+    // Revision admission precedes message/buffer commit. A refusal retains the
+    // user's instructions and attachments; no post-send hook may swallow it.
+    RT.composer.preSendHooks.unshift(function(ctx,thread,raw){
+      const d=RT.composer.destination;if(!d||d.kind!=='plan-revision')return false;
+      const r=rec(d.refId);let out={ok:false,error:'plan_not_found'};
+      if(r&&d.expectedRevision)out=window.PM56_TX.run(()=>{
+        const result=applyRevision(ctx,r,raw,d.expectedRevision);if(!result.ok)window.PM56_TX.fail(result.error);
+        window.PM56_TX.set(thread,'messages',thread.messages.concat(
+          {id:ctx.uid('plan-revision-request'),role:'user',type:'text',body:raw,time:new Date().toISOString()},
+          {id:ctx.uid('plan-revision'),role:'system',type:'plan-revision-receipt',plan_id:r.plan_id,title:'Plan revised',detail:'V'+r.version+' · V'+(r.version-1)+' preserved',time:new Date().toISOString()}));
+        window.PM56_TX.set(RT.composer,'destination',null);return result;
+      });
+      if(!out.ok)ctx.toast('Revision not admitted',out.error+'. Your instructions remain in the composer. Reopen Revise against the current document.');
+      return {claimed:true,preserveComposer:!out.ok};
     });
   }
   if(RT.composer && RT.composer.destinationProviders){
@@ -2285,7 +2380,7 @@
     const units=x.steps.map(step=>({id:'APU-'+id+'-'+step.id,step:step.id,title:step.title,acceptance:[step.acceptance],negative:['No project mutation before an explicit Build.'],deps:step.dependsOn.map(d=>'APU-'+id+'-'+d)}));
     const r=planRec({id,thread:x.threadId,title:x.title,strategy:'Deep: BrainStorm',backend:'ledger_bound',version:1,revisions:{1:JSON.parse(JSON.stringify(x.blocks))},status:'ready',current:true,planunits:units,
       ledger:{id:'apl-'+id,scope:'run',entries:JSON.parse(JSON.stringify(x.ledgerEntries))},sources:[{kind:'brainstorm',ref:x.runId,note:'Frozen recorded exploration '+x.sourceHash}],research:JSON.parse(JSON.stringify(x.sourceRefs))});
-    r.brainstormRunId=x.runId;r.synthesisFingerprint=fingerprint;P().records[id]=r;
+    r.project_id=thread.projectId||'pm';publishDocument(r);r.brainstormRunId=x.runId;r.synthesisFingerprint=fingerprint;P().records[id]=r;
     window.PM56_B16_WORK?.attachBrainstormPlan(r,thread,origin);
     const card={id:'plan-card-'+id,role:'system',type:'plan-card-v2',planId:id},at=thread.messages.findIndex(m=>m.runId===x.runId);
     thread.messages.splice(at<0?thread.messages.length:at+1,0,card);
@@ -2310,7 +2405,7 @@
     const r=planRec({id:x.planId,thread:x.threadId,title:x.title,strategy:x.strategy==='deep_exhaustive'?'Deep · Exhaustive':'Deep · Thorough',backend:'ledger_bound',version:1,revisions:{1:JSON.parse(JSON.stringify(x.blocks))},status:'ready',current:true,planunits:units,
       ledger:{id:'ledger-'+x.runId,scope:'run',plan_version:1,status:'ready',entries:JSON.parse(JSON.stringify(x.ledgerEntries))},sources:[{kind:'discovery',ref:x.runId,note:'Local discovery; no native persistence or live research.'}],research:JSON.parse(JSON.stringify(x.sourceRefs))});
     r.project_id=x.projectId;r.discoveryScope={projectId:x.projectId,worktreeId:x.worktreeId};r.discoveryRunId=x.runId;r.discoveryFingerprint=JSON.stringify(x);r.grillMe=x.grillMe;r.blockers=JSON.parse(JSON.stringify(x.blockers));
-    P().records[x.planId]=r;t.messages.push({id:'plan-card-'+x.planId,role:'system',type:'plan-card-v2',planId:x.planId});
+    publishDocument(r);P().records[x.planId]=r;t.messages.push({id:'plan-card-'+x.planId,role:'system',type:'plan-card-v2',planId:x.planId});
     return {ok:true,planId:x.planId,version:1,hash:hashOf(body(r))};
   }
 
@@ -2328,7 +2423,7 @@
       h('Rollback'),p('Revert the implementation change if verification does not match the selected conclusion.')];
     const record=planRec({id,thread:origin.threadId,title:origin.title+' · Plan',strategy:'Standard',backend:'direct',version:1,revisions:{1:blocks},status:'ready',current:true,
       sources:[{kind:'chat_room',ref:origin.id,message_id:m.id,participant_id:m.senderId,note:m.body}]});
-    record.roomSource={runId:origin.id,messageId:m.id,participantId:m.senderId,messageHash:x.messageHash};P().records[id]=record;
+    record.project_id=thread.projectId||'pm';publishDocument(record);record.roomSource={runId:origin.id,messageId:m.id,participantId:m.senderId,messageHash:x.messageHash};P().records[id]=record;
     window.PM56_B16_WORK?.attachRoomPlan(record,thread,origin,m);
     thread.messages.push({id:'plan-card-'+id,role:'system',type:'plan-card-v2',planId:id});
     return {ok:true,planId:id,reused:false};
@@ -2360,9 +2455,9 @@
     if(currentPlan(t.id))return {ok:false,error:'current_plan_requires_explicit_resolution'};
     const payload=owner.plan(o.workRef.ref);if(!payload?.ok||!payload.steps?.length)return {ok:false,error:'work_plan_not_ready'};
     const id='work-plan-'+o.workRef.ref,prior=rec(id);if(prior)return {ok:true,replayed:true,planId:id};
-    const blocks=[h(payload.title,1),p(payload.objective),...payload.steps.map(st=>({...step(st.id,st.title,st.outcome||'',st.deps||[],st.parallel_group_id),parent_step_id:st.parent||null}))];
+    const blocks=[h(payload.title,1),p(payload.objective),...payload.steps.map(st=>({...step(st.id,st.title,st.outcome||'',st.deps||[],st.parallel_group_id),parent_step_id:st.parent||null})),...(payload.blocks||[])];
     const r=planRec({id,thread:t.id,title:payload.title,strategy:'Standard',backend:'direct',version:1,revisions:{1:blocks},status:'ready',current:true,sources:payload.sourceRefs||[]});
-    r.project_id=t.projectId||'pm';r.workRef=JSON.parse(JSON.stringify(o.workRef));window.PM56_TX.set(P().records,id,r);window.PM56_TX.set(t,'messages',t.messages.concat({id:'plan-card-'+id,role:'system',type:'plan-card-v2',planId:id}));
+    r.project_id=t.projectId||'pm';publishDocument(r);r.workRef=JSON.parse(JSON.stringify(o.workRef));window.PM56_TX.set(P().records,id,r);window.PM56_TX.set(t,'messages',t.messages.concat({id:'plan-card-'+id,role:'system',type:'plan-card-v2',planId:id}));
     return {ok:true,planId:id,version:1,hash:hashOf(body(r))};
   }
   function rebindTodoMapping(id,expected,disposition){
@@ -2392,6 +2487,11 @@
     },
     canResumeGoal:b=>{const r=rec(b.assistant_plan_id);return !r||r.status!=='building'||r.version!==b.plan_version||hashOf(body(r))!==b.plan_hash?{ok:false,error:'bound_plan_not_current'}:{ok:true};},
 
+    recoverySnapshot,recoveryCommand,
+    revise:(id,feedback,expected)=>{const r=rec(id);return r?applyRevision(EXT.ctx(),r,feedback,expected):{ok:false,error:'plan_not_found'};},
+    publishDocument:id=>{const r=rec(id);return r?publishDocument(r):null;},
+    documentRef:(id,v)=>rec(id)?.document_refs?.[v||rec(id)?.version]||null,
+    printDocument:id=>rec(id)?printDocument(rec(id)):null,
     createFromRoom:createFromRoom,
     createFromDiscovery:createFromDiscovery,
     createFromBrainstorm:createFromBrainstorm,
@@ -2449,6 +2549,7 @@
       var r=rec(planId); if(!r||r.status!=='building') return null;
       stopRun(r);
       r.runEpoch=(r.runEpoch||0)+1;
+      const run=P().runs[r.approved?.plan_run_id];if(run){run.state='paused';run.epoch=r.runEpoch;}
       r.attention={ kind:'paused', reason:'Paused at a shared safe boundary. The Build control stays Building….',
                     actions:['resume','cancel','details'] };
       return { paused:true, label:BUILD_LABEL[r.status] };
@@ -2456,16 +2557,19 @@
     boundResume:function(planId){
       var r=rec(planId); if(!r||r.status!=='building') return null;
       const g=r.goalBinding&&window.PM56_GOAL.bound(planId);if(r.goalBinding&&(!g||window.PM56_GOAL.cancelled(g)||g.status!=='active'))return {resumed:false,error:'goal_not_active'};
-      r.attention=null;
+      r.attention=null;r.revisionStop=null;
+      const run=P().runs[r.approved?.plan_run_id];if(run){run.state='running';run.epoch=r.runEpoch;}
       var c=EXT.ctx&&EXT.ctx(); if(c) resumeRun(c,r);
       return { resumed:true, label:BUILD_LABEL[r.status] };
     },
     boundCancel:function(planId, epoch){
       var r=rec(planId); if(!r) return null;
       stopRun(r);
-      r.runEpoch=(r.runEpoch||0)+1;if(P().runs[r.approved?.plan_run_id])P().runs[r.approved.plan_run_id].state='canceled';
-      r.status='canceled'; r.current=false; r.attention=null;
-      r.cancelReason='Cancelled through the bound Goal. The PlanRun and every attempt are fenced at continuation epoch '+epoch+'; no window or Usage reset can resume it.';
+      const TX=window.PM56_TX;
+      TX.set(r,'runEpoch',(r.runEpoch||0)+1);const run=P().runs[r.approved?.plan_run_id];
+      if(run){TX.set(run,'state','cancelled');TX.set(run,'epoch',r.runEpoch);}
+      TX.set(r,'status','canceled');TX.set(r,'current',false);TX.set(r,'attention',null);
+      TX.set(r,'cancelReason','Cancelled through the bound Goal. The PlanRun and every attempt are fenced at continuation epoch '+epoch+'; no window or Usage reset can resume it.');
       /* PSCHED-010 / SMSG-016: association-scoped invalidation. Only THIS
          execution's schedules and quota consent are invalidated. */
       var S=window.PM56_SCHED, fenced={ schedules:0, untouched:0 };

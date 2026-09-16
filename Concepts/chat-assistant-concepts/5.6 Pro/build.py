@@ -29,8 +29,8 @@ MODULES=['command-transaction','activity-panel','activity-bar','goals','context'
          # not grow a branch per feature. composer-state loads FIRST of the new set
          # because attachments, plans, collaboration and browser-capture all read and
          # write the composer destination it owns.
-         'composer-state','attachments','question-budget-protocol','plans','todos','collaboration','bsd-protocol','bsd',
-         'scheduling','browser-capture','assistant-features','delivery-polish','transcript-records','repair-demos','narrow-review','plan-demo-batch1','plan-demo-batch2','review-protocol','review-demo-batch3','brainstorm-protocol','brainstorm-demo-batch4','crew-protocol','crew-demo-batch5','room-protocol','room-demo-batch6','teach-protocol','teach-demo-batch7','memory-protocol','memory-demo-batch8','batch8-polish','debug-protocol','debug-demo-batch9','revert-protocol','revert-demo-batch10','eli5-preferences','eli5-demo-batch11','bsd-demo-batch12','wonderer-protocol','lens-wonderer-batch13','deep-plan-protocol','deep-plan-batch14','goal-work-batch15','todo-work-batch16']
+         'composer-state','attachments','artifact-revisions','question-budget-protocol','plans','todos','collaboration','bsd-protocol','bsd',
+         'scheduling','browser-capture','assistant-features','delivery-polish','transcript-records','repair-demos','narrow-review','plan-demo-batch1','plan-demo-batch2','review-protocol','review-demo-batch3','brainstorm-protocol','brainstorm-demo-batch4','crew-protocol','crew-demo-batch5','room-protocol','room-demo-batch6','teach-protocol','teach-demo-batch7','memory-protocol','memory-demo-batch8','batch8-polish','debug-protocol','debug-demo-batch9','revert-protocol','revert-demo-batch10','eli5-preferences','eli5-demo-batch11','bsd-demo-batch12','wonderer-protocol','lens-wonderer-batch13','deep-plan-protocol','deep-plan-batch14','goal-work-batch15','todo-work-batch16','plan-work-batch17']
 
 def read(name):
     f=root/name
@@ -64,7 +64,7 @@ window.PM56_EXT = window.PM56_EXT || {
 
 data=(join(['data.js','motion.js','variants-a.js','variants-b.js','variants-c.js'])
       + '\n' + EXT_SHIM + '\n'
-      + join([f'{m}.js' for m in MODULES]))
+      + read('plan-media-batch17.js') + '\n' + join([f'{m}.js' for m in MODULES]))
 app=read('app.js')
 boot='''<script>
 window.__PM56_BOOT_OK=false;
