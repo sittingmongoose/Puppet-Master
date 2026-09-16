@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L771-L3724
+Source lines: L796-L3810
 
-Source SHA256: `5371ce31278765b943710456c2fe23affcfef111bcef66bab9a79ba075ff4ca0`
+Source SHA256: `449c8b1ff8af7b33b66a89a724c0721beec8d82f467d62b3cc1292e0eb6153c3`
 
 ---
 
@@ -2835,6 +2835,67 @@ negative_constraints:
   - Do not present thirty-two parents as a complete parent list when the node is truncated.
   - Do not let an expansion request read a stale, partial or unavailable page as if it were current.
   - Do not require every parent of a node to appear in the same page; cross-page ancestry stays legitimate.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+```
+
+### DL-053 - Source Graph Node Reference Unique Within A Page
+
+```yaml
+plan_unit_id: DL-053
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-16, answering whether an exact duplicate node row should be allowed with "Yes,
+  forbid exact duplicates too, fold it in", that a source graph page never emits the same `node_ref`
+  twice. Uniqueness within the page is the rule, not merely the absence of a revision conflict: two rows
+  that share a `node_ref` are rejected whether or not they agree on `revision_ref`, because a repeated
+  reference breaks stable node identity and selection anchoring however alike the rows are. The narrower
+  wording, which forbade only rows sharing a reference while naming different revisions, is retired, and
+  the contract semantic gate rejects both cases under one rule.
+gui_related: true
+gui_classification_reason: The rule governs what the virtualized history-and-graph view may render and whether a selection anchor can identify one row.
+split_recommended: false
+depends_on: [SCS-017, DL-052]
+unblocks: []
+acceptance_criteria:
+  - SCS-017 states that `node_ref` is unique within one page and no longer conditions the rule on differing `revision_ref` values.
+  - The `source_control_contracts` branch of the contract semantic gate reports one rule for both cases, and rejects a page that repeats a `node_ref` whether or not the rows agree.
+  - Negative fixtures cover both a conflicting-revision duplicate and an exact duplicate row, each structurally valid and each failing for that rule.
+  - A page that emits each node once is unaffected, and cross-page repetition of a node between different pages stays legitimate.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds or build tasks are created by this record.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-new-contracts-verify.py
+  - python3 -m unittest tests.test_pm_source_control_effects
+risk_class: repeated_node_reference_breaks_selection_anchoring
+reasoning_tier: high
+context_scope: bounded_source_graph_projection
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+  - Plans/source_control_contract_fixtures.json
+  - scripts/pm-new-contracts-verify.py
+node_compile_hint:
+  mode: owner_rule_refinement_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections:q-003
+  - Plans/Decision_Log.md:DL-053-direction-2026-09-16
+  - Plans/Source_Control_System.md#SCS-017
+preserved_exact_tokens:
+  - Yes, forbid exact duplicates too, fold it in
+  - node_ref
+  - revision_ref
+  - source_graph_duplicate_node_ref_in_page
+negative_constraints:
+  - Do not re-narrow the rule to conflicting `revision_ref` values only.
+  - Do not treat an exact duplicate node row as harmless because its fields agree.
+  - Do not extend the rule across pages; a node may legitimately appear on another page.
 owner_hints:
   - Plans/Decision_Log.md
   - Plans/Source_Control_System.md

@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260916-001-jujutsu-continuation-corrections",
-  "updated_at_utc": "2026-09-16T20:30:00+00:00",
-  "last_event_id": "evt-005",
+  "updated_at_utc": "2026-09-16T20:57:54.523386+00:00",
+  "last_event_id": "evt-006",
   "canonical_plan_targets": [
     "Plans/Jujutsu_Integration.md",
     "Plans/Source_Control_System.md"
@@ -29,7 +29,7 @@
     "plan_index": "pass",
     "configured_shards": "pass",
     "claim_boundary": "Static schema, fixture, shard and index integrity only. No governance seal, runtime certification or readiness admission.",
-    "partial_enforcement": "Closed. The F107 count arithmetic and the in-page node_ref rule are enforced by the source_control_contracts branch of contract_semantic_failures in scripts/pm-new-contracts-verify.py, each with an authored negative fixture. The parent bound is the owner's 32 with a bounded parent-expansion request, recorded as DL-052; the provisional 600 is retired.",
+    "partial_enforcement": "Closed. The F107 count arithmetic and the in-page node_ref rule are enforced by the source_control_contracts branch of contract_semantic_failures in scripts/pm-new-contracts-verify.py. The node_ref rule is the owner's uniqueness rule from q-003 and DL-053, so an exact duplicate row is rejected alongside a conflicting one, with a negative fixture for each. The parent bound is the owner's 32 with a bounded parent-expansion request, recorded as DL-052; the provisional 600 is retired.",
     "governance_coverage_errors": [
       "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
       "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
@@ -130,5 +130,5 @@
     }
   ],
   "notes": "Four reviewed corrections compiled and statically checked, then amended under independent review (B1 provisional parent bound, B2 F108 evidence attribution, S1 parent-bound fixtures, S2 partial-enforcement clause, S3 question records, N1 real timestamps). F110 remains unapproved. Open question q-001 is the exact parent bound; q-002, the semantic-gate branch, is answered.",
-  "terminal_ledger_event_id": "evt-005"
+  "terminal_ledger_event_id": "evt-006"
 }

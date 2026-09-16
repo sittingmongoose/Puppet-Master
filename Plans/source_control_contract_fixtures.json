@@ -2694,12 +2694,34 @@
       "expected_error": "returned_count must not exceed the requested page_size"
     },
     {
-      "name": "source_graph_node_ref_must_be_unambiguous_within_one_page",
+      "name": "source_graph_node_ref_must_be_unique_within_one_page",
       "definition": "source_graph_projection",
       "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
       "patch": {"nodes.1.node_ref": "graph-node:git:alpha:43"},
-      "semantic_rule": "source_graph_ambiguous_node_ref_in_page",
-      "expected_error": "two nodes on one page cannot share a node_ref while carrying different revision_ref values"
+      "semantic_rule": "source_graph_duplicate_node_ref_in_page",
+      "expected_error": "two nodes on one page cannot share a node_ref, whatever their revision_ref values"
+    },
+{
+      "name": "source_graph_cannot_repeat_an_identical_node_row_in_one_page",
+      "definition": "source_graph_projection",
+      "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
+      "patch": {
+        "nodes.1": {
+          "node_ref": "graph-node:git:alpha:43",
+          "revision_ref": "revision:git:alpha:43",
+          "stable_change_ref": null,
+          "parent_refs": [
+            "graph-node:git:alpha:42"
+          ],
+          "parent_refs_truncated": false,
+          "parent_expansion_cursor_ref": null,
+          "label_ref": "label:source-graph:git:alpha:43",
+          "node_state": "normal",
+          "selected": true
+        }
+      },
+      "semantic_rule": "source_graph_duplicate_node_ref_in_page",
+      "expected_error": "a page cannot emit the same node row twice, even when the two rows agree on every field"
     },
 {
       "name": "source_graph_truncated_node_requires_an_expansion_cursor",
@@ -2799,12 +2821,14 @@
 {
       "name": "object_format_cannot_be_selectable_with_unknown_transport_evidence",
       "definition": "repository_object_format_profile",
-      "base_valid": "object_format_profile_is_disabled_by_current_capability_evidence",
+      "base_valid": "object_format_profile_is_selectable_only_on_certified_evidence",
       "patch": {
-        "selectable": true,
-        "disabled_reason_code": null
+        "support.transport": {
+          "state": "unknown",
+          "evidence_ref": null
+        }
       },
-      "expected_error": "a format is offered only when engine, library, transport and provider evidence all certify it"
+      "expected_error": "a format whose transport support is not yet known is not offered, however certified the rest is"
     },
 {
       "name": "object_format_cannot_be_selectable_without_naming_its_evidence",

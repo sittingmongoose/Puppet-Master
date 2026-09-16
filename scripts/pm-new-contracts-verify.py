@@ -1036,21 +1036,20 @@ def source_control_semantic_failures(definition_name: str, value: Any) -> list[s
             ):
                 failures.append("source_graph_returned_count_exceeds_page_size")
 
-    # SCS-017: two nodes on one page cannot share a node_ref while carrying
-    # different revision_ref values, which would make selection anchoring and
-    # stable node identity ambiguous within that page.
-    revision_by_node_ref: dict[str, Any] = {}
+    # SCS-017: node_ref is unique within one page.  Two rows that share a
+    # node_ref break stable node identity and selection anchoring whether or
+    # not they agree on revision_ref, so an exact duplicate row is rejected on
+    # the same rule as a conflicting one.
+    seen_node_refs: set[str] = set()
     for node in nodes:
         if not isinstance(node, dict):
             continue
         node_ref = node.get("node_ref")
         if not isinstance(node_ref, str):
             continue
-        if node_ref in revision_by_node_ref:
-            if revision_by_node_ref[node_ref] != node.get("revision_ref"):
-                failures.append("source_graph_ambiguous_node_ref_in_page")
-        else:
-            revision_by_node_ref[node_ref] = node.get("revision_ref")
+        if node_ref in seen_node_refs:
+            failures.append("source_graph_duplicate_node_ref_in_page")
+        seen_node_refs.add(node_ref)
 
     return sorted(set(failures))
 

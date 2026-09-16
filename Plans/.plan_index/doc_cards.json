@@ -5314,9 +5314,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 23,
-        "True": 26
+        "True": 27
       },
-      "heading_count": 104,
+      "heading_count": 106,
       "implementation_surfaces": [
         ".gitignore",
         "Plans/Architecture_Invariants.md",
@@ -5375,12 +5375,13 @@
         "Plans/storage_value_registry.json",
         "Plans/storage_value_registry.schema.json",
         "Plans/touch_closure.json",
+        "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 3752,
+      "line_count": 3838,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 49,
+      "plan_unit_count": 50,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5430,6 +5431,7 @@
         "DL-050",
         "DL-051",
         "DL-052",
+        "DL-053",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5476,6 +5478,7 @@
         "platform_decision_custody_retention_and_cleanup",
         "provider_runtime_actor_envelope_gap",
         "reopen_revocation_policy_gap",
+        "repeated_node_reference_breaks_selection_anchoring",
         "runtime_identity_actor_conflation",
         "seam_weak_integration_visibility_gap",
         "section_number_canonical_drift",
@@ -5487,16 +5490,16 @@
         "unbounded_or_dishonest_parent_adjacency_in_a_bounded_page",
         "weak_integration_underclassification"
       ],
-      "sha256": "5371ce31278765b943710456c2fe23affcfef111bcef66bab9a79ba075ff4ca0",
+      "sha256": "449c8b1ff8af7b33b66a89a724c0721beec8d82f467d62b3cc1292e0eb6153c3",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 49
+        "accepted": 50
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 46
+        "requirement": 47
       },
       "validation_surfaces": [
         "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
@@ -5509,6 +5512,7 @@
         "exact Case L 76-decision set-equality check",
         "exact supplemental nine-packet set-equality check",
         "exact supplemental three-packet set-equality check",
+        "python3 -m unittest tests.test_pm_source_control_effects",
         "python3 -m unittest tests.test_pm_wiring_vocabulary",
         "python3 scripts/pm-browser-event-admission.py",
         "python3 scripts/pm-event-authority-currentness.py validate",
@@ -16809,7 +16813,7 @@
         "future source-control facade",
         "future source-control migration"
       ],
-      "line_count": 1545,
+      "line_count": 1551,
       "path": "Plans/Source_Control_System.md",
       "plan_unit_count": 22,
       "plan_unit_ids": [
@@ -16863,7 +16867,7 @@
         "unbounded_graph_hydration_or_source_history_identity_conflation",
         "wrong_environment_or_stale_version_certification"
       ],
-      "sha256": "31dafbafbd661d0287c22d0316eb661a4d9ed84bb08882645f5e67602fefb4d6",
+      "sha256": "a074182441210df68e0b7f9efb9899edd8ce77ed9f4b6bde0e797b41e5c411c6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 22
@@ -19593,7 +19597,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-16T20:39:48Z",
+  "generated_at_utc": "2026-09-16T21:04:59Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19602,12 +19606,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3476,
-      "True": 3173
+      "True": 3174
     },
-    "plan_unit_count": 6649,
+    "plan_unit_count": 6650,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6458,
+      "accepted": 6459,
       "retired": 182,
       "superseded": 9
     },
@@ -19674,7 +19678,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5213,
+      "requirement": 5214,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

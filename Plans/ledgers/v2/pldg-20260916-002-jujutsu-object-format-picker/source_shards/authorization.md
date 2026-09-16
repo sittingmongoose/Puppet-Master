@@ -1,7 +1,8 @@
 # Authorization - new-repository object format choice
 
 Owner answer of 2026-09-16, relayed by the reviewer and recorded in
-`/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/F110_ANSWER_20260916.md`.
+`/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/F110_ANSWER_20260916.md`,
+SHA-256 `f2912f5f434f4b594eb6babe786df20f263de0ffb3313f20bf8b28ef992cf72c` as read on 2026-09-16.
 Agent-relayed; it is not verifiable from inside this repository.
 
 Jared's answer, verbatim:

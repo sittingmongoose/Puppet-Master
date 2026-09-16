@@ -1,12 +1,12 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260916-001-jujutsu-continuation-corrections",
-  "updated_at_utc": "2026-09-16T20:30:00+00:00",
+  "updated_at_utc": "2026-09-16T20:57:54.523386+00:00",
   "open_questions": [],
   "deferred_questions": [],
   "open_blockers": [],
   "remaining_work": [
-    "Both questions are closed: q-001 is answered by the owner (32 parent references per node with a bounded fetch-the-rest follow-up, recorded as DL-052) and q-002 is implemented (the source_control_contracts semantic branch now enforces both relational rules). This ledger is compiled and needs nothing further. F110 is accepted separately and is planned in pldg-20260916-002-jujutsu-object-format-picker."
+    "All three questions are closed: q-001 by the owner's parent bound of 32 with a bounded fetch-the-rest follow-up (DL-052), q-002 by the source_control_contracts semantic branch that now enforces both relational rules, and q-003 by the owner's node_ref uniqueness rule (DL-053). This ledger is compiled and needs nothing further. F110 is accepted separately and is planned in pldg-20260916-002-jujutsu-object-format-picker."
   ],
   "scope_note": "F110, the new-repository object-format picker, is an unapproved optional capability and is outside this ledger.",
   "deferred_governance_validation_errors": [
@@ -20,7 +20,7 @@
       "summary": "What is the exact per-node parent-reference bound for a SourceGraph page, and how is a node with more parents than the bound represented?",
       "status": "answered",
       "answer": "A node declares at most 32 parent references in a page. A node with more parents marks its parent list truncated and carries a reference through which the remaining parents are fetched by a bounded follow-up, fenced exactly as page continuation is: same repository, workspace, backend and projection identity, same projection generation, and admitted only while the projection is current. The provisional 600 is retired.",
-      "answered_at_utc": "2026-09-16T20:30:00+00:00",
+      "answered_at_utc": "2026-09-16T20:28:23+00:00",
       "landed_as": [
         "Plans/Decision_Log.md#DL-052",
         "Plans/Source_Control_System.md#SCS-017",
@@ -36,6 +36,19 @@
         "scripts/pm-new-contracts-verify.py",
         "Plans/source_control_contract_fixtures.json",
         "Plans/Source_Control_System.md#SCS-017"
+      ]
+    },
+    {
+      "question_id": "q-003",
+      "summary": "Does the in-page node_ref rule forbid only two rows that share a node_ref while naming different revision_ref values, or is node_ref unique within a page so that an exact duplicate row is rejected too?",
+      "status": "answered",
+      "answer": "Unique within the page. Two rows that share a node_ref are rejected whether or not they agree on revision_ref, so a page never emits the same node row twice. The narrower wording is retired and the contract semantic gate rejects both cases under one rule, source_graph_duplicate_node_ref_in_page.",
+      "answered_at_utc": "2026-09-16T20:57:54.520277+00:00",
+      "landed_as": [
+        "Plans/Decision_Log.md#DL-053",
+        "Plans/Source_Control_System.md#SCS-017",
+        "scripts/pm-new-contracts-verify.py",
+        "Plans/source_control_contract_fixtures.json"
       ]
     }
   ]

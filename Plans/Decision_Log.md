@@ -762,6 +762,31 @@ SourceRef: open question `q-001` in `Plans/ledgers/v2/pldg-20260916-001-jujutsu-
 
 ContractRef: ContractName:Plans/Source_Control_System.md
 
+### DL-053: A source graph page never repeats a node reference, even on two identical rows
+
+Decided on 2026-09-16 by Jared.
+
+The question was whether a page may carry the same node reference twice when the two rows agree on everything, or whether a repeated reference is wrong on its own.
+
+It came up while the two page relations that no schema can express were being wired into the contract gate. The owner rule, as it was written, forbade only the case that was demonstrably ambiguous: two rows sharing a reference while naming different revisions. That left an exact duplicate row permitted, so the gate that enforces the rule would have accepted a page that emits the same node twice.
+
+The options were:
+
+1. Require the node reference to be unique within a page, so an exact duplicate is rejected on the same rule as a conflicting one.
+2. Keep the narrower rule, forbidding only rows that share a reference while disagreeing on the revision they name.
+
+The answer is option 1. In Jared's words: "Yes, forbid exact duplicates too, fold it in."
+
+A page never emits the same node reference twice. A repeated reference breaks stable node identity and selection anchoring however alike the two rows are, because the anchor that survives pagination has no way to say which row it means. The narrower wording is retired, and the gate rule that enforces it now rejects both cases.
+
+This buys a rule that says exactly what it enforces, and it removes the gap that a duplicate row would have slipped through. It costs nothing a correct page was doing, since a page that emits each node once already satisfies it.
+
+This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
+
+SourceRef: question `q-003` in `Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections`; Jared, direction of 2026-09-16.
+
+ContractRef: ContractName:Plans/Source_Control_System.md
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -3595,6 +3620,67 @@ negative_constraints:
   - Do not present thirty-two parents as a complete parent list when the node is truncated.
   - Do not let an expansion request read a stale, partial or unavailable page as if it were current.
   - Do not require every parent of a node to appear in the same page; cross-page ancestry stays legitimate.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+```
+
+### DL-053 - Source Graph Node Reference Unique Within A Page
+
+```yaml
+plan_unit_id: DL-053
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-16, answering whether an exact duplicate node row should be allowed with "Yes,
+  forbid exact duplicates too, fold it in", that a source graph page never emits the same `node_ref`
+  twice. Uniqueness within the page is the rule, not merely the absence of a revision conflict: two rows
+  that share a `node_ref` are rejected whether or not they agree on `revision_ref`, because a repeated
+  reference breaks stable node identity and selection anchoring however alike the rows are. The narrower
+  wording, which forbade only rows sharing a reference while naming different revisions, is retired, and
+  the contract semantic gate rejects both cases under one rule.
+gui_related: true
+gui_classification_reason: The rule governs what the virtualized history-and-graph view may render and whether a selection anchor can identify one row.
+split_recommended: false
+depends_on: [SCS-017, DL-052]
+unblocks: []
+acceptance_criteria:
+  - SCS-017 states that `node_ref` is unique within one page and no longer conditions the rule on differing `revision_ref` values.
+  - The `source_control_contracts` branch of the contract semantic gate reports one rule for both cases, and rejects a page that repeats a `node_ref` whether or not the rows agree.
+  - Negative fixtures cover both a conflicting-revision duplicate and an exact duplicate row, each structurally valid and each failing for that rule.
+  - A page that emits each node once is unaffected, and cross-page repetition of a node between different pages stays legitimate.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds or build tasks are created by this record.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-new-contracts-verify.py
+  - python3 -m unittest tests.test_pm_source_control_effects
+risk_class: repeated_node_reference_breaks_selection_anchoring
+reasoning_tier: high
+context_scope: bounded_source_graph_projection
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+  - Plans/source_control_contract_fixtures.json
+  - scripts/pm-new-contracts-verify.py
+node_compile_hint:
+  mode: owner_rule_refinement_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections:q-003
+  - Plans/Decision_Log.md:DL-053-direction-2026-09-16
+  - Plans/Source_Control_System.md#SCS-017
+preserved_exact_tokens:
+  - Yes, forbid exact duplicates too, fold it in
+  - node_ref
+  - revision_ref
+  - source_graph_duplicate_node_ref_in_page
+negative_constraints:
+  - Do not re-narrow the rule to conflicting `revision_ref` values only.
+  - Do not treat an exact duplicate node row as harmless because its fields agree.
+  - Do not extend the rule across pages; a node may legitimately appear on another page.
 owner_hints:
   - Plans/Decision_Log.md
   - Plans/Source_Control_System.md

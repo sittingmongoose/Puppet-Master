@@ -190,7 +190,7 @@ class SourceGraphPageSemanticTests(unittest.TestCase):
             {
                 "source_graph_returned_count_not_equal_to_emitted_nodes",
                 "source_graph_returned_count_exceeds_page_size",
-                "source_graph_ambiguous_node_ref_in_page",
+                "source_graph_duplicate_node_ref_in_page",
             },
         )
         for case in cases:
@@ -210,11 +210,23 @@ class SourceGraphPageSemanticTests(unittest.TestCase):
                     self.semantic_failures(page),
                 )
 
-    def test_repeated_node_ref_agreeing_on_revision_stays_within_the_owner_rule(self):
+    def test_repeated_node_ref_is_rejected_whether_or_not_the_rows_agree(self):
+        # DL-053: uniqueness is the rule, not merely the absence of a conflict.
+        for agree in (False, True):
+            with self.subTest(rows_agree=agree):
+                page = copy.deepcopy(self.graph)
+                page["nodes"][1]["node_ref"] = page["nodes"][0]["node_ref"]
+                if agree:
+                    page["nodes"][1] = copy.deepcopy(page["nodes"][0])
+                self.assertTrue(self.graph_validator.is_valid(page))
+                self.assertEqual(
+                    self.semantic_failures(page),
+                    ["source_graph_duplicate_node_ref_in_page"],
+                )
+
+    def test_distinct_node_refs_are_untouched_by_the_uniqueness_rule(self):
         page = copy.deepcopy(self.graph)
-        page["nodes"][1]["node_ref"] = page["nodes"][0]["node_ref"]
-        page["nodes"][1]["revision_ref"] = page["nodes"][0]["revision_ref"]
-        self.assertTrue(self.graph_validator.is_valid(page))
+        self.assertNotEqual(page["nodes"][0]["node_ref"], page["nodes"][1]["node_ref"])
         self.assertEqual(self.semantic_failures(page), [])
 
     def test_branch_is_scoped_to_the_source_graph_projection(self):

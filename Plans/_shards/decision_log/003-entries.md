@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L763
+Source lines: L13-L788
 
-Source SHA256: `5371ce31278765b943710456c2fe23affcfef111bcef66bab9a79ba075ff4ca0`
+Source SHA256: `449c8b1ff8af7b33b66a89a724c0721beec8d82f467d62b3cc1292e0eb6153c3`
 
 ---
 
@@ -757,5 +757,30 @@ This buys a page whose per-node adjacency is small enough to lay out and render 
 This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
 
 SourceRef: open question `q-001` in `Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections`; `reports/jujutsu-research-2026-09-11/continuation3-landing/verification.json`; Jared, direction of 2026-09-16.
+
+ContractRef: ContractName:Plans/Source_Control_System.md
+
+### DL-053: A source graph page never repeats a node reference, even on two identical rows
+
+Decided on 2026-09-16 by Jared.
+
+The question was whether a page may carry the same node reference twice when the two rows agree on everything, or whether a repeated reference is wrong on its own.
+
+It came up while the two page relations that no schema can express were being wired into the contract gate. The owner rule, as it was written, forbade only the case that was demonstrably ambiguous: two rows sharing a reference while naming different revisions. That left an exact duplicate row permitted, so the gate that enforces the rule would have accepted a page that emits the same node twice.
+
+The options were:
+
+1. Require the node reference to be unique within a page, so an exact duplicate is rejected on the same rule as a conflicting one.
+2. Keep the narrower rule, forbidding only rows that share a reference while disagreeing on the revision they name.
+
+The answer is option 1. In Jared's words: "Yes, forbid exact duplicates too, fold it in."
+
+A page never emits the same node reference twice. A repeated reference breaks stable node identity and selection anchoring however alike the two rows are, because the anchor that survives pagination has no way to say which row it means. The narrower wording is retired, and the gate rule that enforces it now rejects both cases.
+
+This buys a rule that says exactly what it enforces, and it removes the gap that a duplicate row would have slipped through. It costs nothing a correct page was doing, since a page that emits each node once already satisfies it.
+
+This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
+
+SourceRef: question `q-003` in `Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections`; Jared, direction of 2026-09-16.
 
 ContractRef: ContractName:Plans/Source_Control_System.md

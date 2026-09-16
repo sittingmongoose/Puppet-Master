@@ -1053,8 +1053,9 @@ canonical_text: >-
   Jujutsu renders stable change identity, current commit identity, rewrites, abandonment, and conflicts without a
   fake staging model. SourceGraph is source history only: Jujutsu operation history and Backup history remain
   separate owner projections and routes. Repository identity comes from RepositoryContext, never display paths or
-  shared commits. Pages are capped at 200 nodes, hydration remains bounded, selection anchors survive pagination,
-  and stale or partial pages remain visibly stale or partial. The projection introduces no mutation command,
+  shared commits. Pages are capped at 200 nodes, hydration remains bounded, `node_ref` is unique within a page,
+  selection anchors survive pagination, and stale or partial pages remain visibly stale or partial. The projection
+  introduces no mutation command,
   handler, persistence owner, domain event, repository-identity inference, or runtime/native evidence claim.
 gui_related: true
 gui_classification_reason: The typed projection is the reusable model for the virtualized Source Control history-and-graph view.
@@ -1074,8 +1075,10 @@ acceptance_criteria:
     `page.next_cursor_ref` is a non-null reference. Unavailable, partial, and stale pages keep their existing owner
     semantics and are not generalized into this rule.
   - >-
-    `node_ref` is unambiguous within one page. Two nodes on the same page cannot share a `node_ref` while carrying
-    different `revision_ref` values.
+    `node_ref` is unique within one page, the owner rule set in DL-053. Two nodes on the same page cannot share a
+    `node_ref`, whether or not they carry the same `revision_ref`; a page never emits the same node row twice. A
+    repeated reference breaks stable node identity and selection anchoring however alike the two rows are, so an
+    exact duplicate is rejected on the same rule as a conflicting one.
   - >-
     Parent-reference expansion is finite, so a bounded page cannot carry unbounded adjacency behind
     `unbounded_hydration=false`. A node declares at most 32 `parent_refs` in one page, the owner bound set in DL-052.
@@ -1114,13 +1117,16 @@ source_lineage:
   - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/semantic_gap_plan_rerun/semantic_gap_plan.json
   - source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-source-graph-page-consistency-107
   - source_ref:pldg-20260916-001-jujutsu-continuation-corrections:q-001
+  - source_ref:pldg-20260916-001-jujutsu-continuation-corrections:q-003
   - Plans/Decision_Log.md#DL-052
+  - Plans/Decision_Log.md#DL-053
 preserved_exact_tokens: [SourceGraph, RepositoryContext, git_commit_graph, jujutsu_change_graph, source history, operation history, Backup history, parent_refs_truncated, parent_expansion_cursor_ref]
 negative_constraints:
   - Do not infer repository, workspace, Host, Environment, remote, account, or authority from graph focus, display path, labels, or shared commit objects.
   - Do not merge Jujutsu operation history or Backup history into SourceGraph or invent a cross-owner undo/restore action.
   - Do not eagerly hydrate an unbounded history, lose selection identity between pages, or paint stale/partial data as current.
   - Do not present a truncated parent list as complete, expand a page that is not current, or change the 32-reference bound without a new owner decision.
+  - Do not emit two rows with the same `node_ref` in one page, and do not treat an exact duplicate row as harmless because its fields agree.
   - Do not add a SourceGraph command, handler, state owner, EventRecord family, persistence authority, or runtime/native proof from this static closure.
 ```
 
