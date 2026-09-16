@@ -167,12 +167,12 @@
   "arms_not_yet_scored": [
     "glm53",
     "muse13",
-    "union",
-    "claude-hicap (running)"
+    "union (running as a full arm through OpenRouter)"
   ],
   "arms_scored": [
     "claude",
-    "deepseek41"
+    "deepseek41",
+    "claude-hicap"
   ],
   "deepseek41_run": {
     "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-deepseek41-20260916-202016",
@@ -279,5 +279,303 @@
     "source_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-deepseek41-20260916-202016/cache/v3/repos/jj-vcs--jj/lib/src/simple_op_store.rs",
     "source_sha256": "a42ce0f6208002fc26c5796af00240b7e8b64b9b52957cc64446fc5b2ce610da",
     "effect": "Arm C's F079 and F004 credits stand on independent Plans citations. Arm C's lead dojjo-sync-complete-prunes-operation-history.md is materially false. Arm C candidate C4C-05 loses one of two external legs and survives on the other."
+  },
+  "claude_hicap_run": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937",
+    "role": "control arm for Arm C's response-ceiling caveat; same model and inputs, limits raised to 160 responses / 3600 s / $20 per job, $150 cap",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/claude-hicap-manifest.json",
+    "manifest_sha256_internal": "ebf8612dd5953cbf8f4da9fa6b6b5b11a89e4015cc907c26d0afc553b0eafbb5",
+    "manifest_file_bytes_sha256": "feefc4c94ccec49890db58d57ccd0d350d35d2bd0fabc33936760f670f16b983",
+    "report": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/claude-hicap-report.json",
+    "files": 8098,
+    "total_bytes": 228660085,
+    "independently_reverified": true,
+    "reverification_note": "Recomputed the internal digest from the 8,098 rows and independently re-hashed the whole tree; both match.",
+    "nothing_was_bound": "all 12 jobs terminal_reason completed, result_is_error false; responses 37-110 of 160, elapsed 685.6-1070.1 s of 3600, cost $4.0991-$12.1166 of $20, money_stop_reason null",
+    "run_json_sha256": "917c8a0ddb918ed9a57690cb4a83686163d226bd187ad3bb79b396003663b3cc",
+    "timing_json_sha256": "b5171fcf0b3bc7d3a56efe4fb6a4991a006f3ac685f8908fc13cda6d9cef5cb1",
+    "progress_json_sha256": "ab015f83e695eeb702393bdfbde06371f592596596528a35027d771df69d1de3"
+  },
+  "claude_hicap_assertion_corpus": {
+    "root": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs",
+    "documents": 64,
+    "total_bytes": 836145,
+    "files": [
+      {
+        "path": "J0017-reconcile/workspace/notes.md",
+        "sha256": "36536d23bd4b3e415ea2b515c8cc7336793a1f1b0d9d4cebc110c3da1110f653"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/diffedit3-exec-bit-on-create.md",
+        "sha256": "9dc28f258416fe4695cce61e6047042534a4ad7eb14411eca2898f4898b5d0d6"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/diffedit3-line-endings.md",
+        "sha256": "e8b21f59a2d375bff2c85b7ba6a1e90815a354b1edeee0985b25dd1b00022494"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/diffedit3-symlink-confinement.md",
+        "sha256": "8e795868f453abcfce384f87848d7dd4e4b5706d3a5894eda358db36f98182f1"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/diffedit3-type-collision-rows.md",
+        "sha256": "4e285862c97c96a464858586f626cb88eb917546e8ecdc5800f550c7bc62fa6d"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/native-interactive-symlinks.md",
+        "sha256": "027a7d10ab5ee543ba7d20d98b7dc4c7c8520ed23d0e86b7bbb4cb2b9b47511d"
+      },
+      {
+        "path": "J0018-reconcile/workspace/notes.md",
+        "sha256": "916abea44511e485ed96443338d9747a1ee91fc474fe89ab18fb06559033b051"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/diffedit3-no-disconnect-detection.md",
+        "sha256": "e9ea82e83d94b8ee9b9c154d36cc24896e09b95ab2a36564e34c1d429a50a419"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/diffedit3-stale-tab-port-reuse.md",
+        "sha256": "948ed668e90f6c5f8c022d2917a0f419be9a80b754e4634fd43aa635af831397"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/jj-collapses-tool-exit-codes.md",
+        "sha256": "ee68b72708fcdbb8accbd479d4e43c2b7b17a06b979e12bdae875e9b77c0eb23"
+      },
+      {
+        "path": "J0019-reconcile/workspace/notes.md",
+        "sha256": "1a1084cf371b220667a284dbcef51a53b1c2a81eef8554b260458ea7f42b5091"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/L-2c6f81ab34de.md",
+        "sha256": "98b63e83cb34c2639a7020745d9142a6654c1c5e58769620cf8863e455ae8f14"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/L-5a48c2d9163f.md",
+        "sha256": "120cba4e5e3754e790dc293acf336ec868cca1c7e8e67bd4b9a973dd99ea86b0"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/L-7b2e10c4d5a9.md",
+        "sha256": "a1591ee5af82451cc0d63d9e9c7bd9f388219dbec2b89d9f2e64ba4a5c62195d"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/L-9d31e7f0b825.md",
+        "sha256": "784bc795d7c65929ebebaf0d988991a0ce539fd473007aa5b531d881211681f5"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/L-e0f4b76a9c12.md",
+        "sha256": "ca11445e580445634a48d2b7c4ca9f04c59a90ca9ddec9ef31431a0e41feabe6"
+      },
+      {
+        "path": "J0020-compare/workspace/notes.md",
+        "sha256": "32fd04c196f91210f1b35be08b30f3512d1d372c7bbc43f45c376db2978fb926"
+      },
+      {
+        "path": "J0020-compare/workspace/leads/L-3d77b0c95e41.md",
+        "sha256": "4af4fa7c713108a95fb0af5506a3bf167470242ccacc772deeed35a76cfd8479"
+      },
+      {
+        "path": "J0020-compare/workspace/leads/L-6a1d4c07e8f2.md",
+        "sha256": "d2c53d9b300061d26670dbdea15e532b8eda903de408629ba53f9d340c1cdddb"
+      },
+      {
+        "path": "J0020-compare/workspace/leads/L-b2c5e90a7134.md",
+        "sha256": "4bf40733b211e7acc0c43f9fe5e93cfd0f89361df22d1b62620a113ce768254e"
+      },
+      {
+        "path": "J0021-compare/workspace/notes.md",
+        "sha256": "f53c3f429ef480f6c6841a441ee2a4e8e2dcd70b07440cfb8c6ef1e97b875f87"
+      },
+      {
+        "path": "J0021-compare/workspace/leads/external-editor-delegation-fence.md",
+        "sha256": "5d51e29c748bc41541f221f5963098a4c3ca4b1ab94255c590c865310702635b"
+      },
+      {
+        "path": "J0021-compare/workspace/leads/jj-conflict-byte-identity-check.md",
+        "sha256": "809926f87e5f629fce2ff0c1ef36f20608cf0dc67ca2a1e98ae35471fe49706f"
+      },
+      {
+        "path": "J0021-compare/workspace/leads/jj-partial-change-selection-model.md",
+        "sha256": "ee64301d1751236a6cee5b8a50d7b80102b5d32a8bdb4768494797aa20ea96c0"
+      },
+      {
+        "path": "J0021-compare/workspace/leads/source-control-file-state-vocabulary.md",
+        "sha256": "5a5b015eebe87889a59d2bccad99027d89dac217d33e80fc4e61e2b6e2ddfd9f"
+      },
+      {
+        "path": "J0022-compare/workspace/notes.md",
+        "sha256": "4fb81c977a313f44a2d3e63b48f70885c3985c1aa0e000dd04cadb696efd0425"
+      },
+      {
+        "path": "J0022-compare/workspace/leads/helper-tool-exit-status-is-not-a-result.md",
+        "sha256": "ed9b07d311053fc725f414b082eb457aa1a46279089651b5a546cfe7740bd2a8"
+      },
+      {
+        "path": "J0022-compare/workspace/leads/jj-split-forces-interactive-diff-editor.md",
+        "sha256": "f2e51a0ae54ad7b8447f0c8d3d58eb67b1c03428f2b3fd3a8b529bd7c4a3bd59"
+      },
+      {
+        "path": "J0022-compare/workspace/leads/jji005-conflict-resolution-has-no-command.md",
+        "sha256": "cfadffa0be79409b9eadb92369a249f287577899eefd16b7abb3fe423c2ba56f"
+      },
+      {
+        "path": "J0023-reconcile/workspace/notes.md",
+        "sha256": "2efd0902ea121f0fe5ce5efff210801bb44d3c859cec2d189f3307998b0b36c1"
+      },
+      {
+        "path": "J0023-reconcile/workspace/leads/L-3f9c21d4a87e.md",
+        "sha256": "9e483c8cdef3b739b0934ef340e0f5ec17131549f13db018ab8792b0b263c92b"
+      },
+      {
+        "path": "J0023-reconcile/workspace/leads/L-5d2a96f31c84.md",
+        "sha256": "5c0658ea4b481f3a9c49427dfcb0c2d41332c8796f0b7bdf1e6ff689ac15043a"
+      },
+      {
+        "path": "J0023-reconcile/workspace/leads/L-8b47e0d5c619.md",
+        "sha256": "abda020fc724c586c23b93b4e67c64e9b72ef5cca345b642e3ff3ab8ba7fbafa"
+      },
+      {
+        "path": "J0024-reconcile/workspace/notes.md",
+        "sha256": "e8f5264ae4a93548a97e6dd8b60024bb1ddfd4383ca523ea05550a8a686c3b9f"
+      },
+      {
+        "path": "J0024-reconcile/workspace/leads/gg-log-missing-commits-issue-137.md",
+        "sha256": "d0cf91acc0f92f04d3f33116b25afa3d64ca391218e43b8d23045456386e2ce7"
+      },
+      {
+        "path": "J0024-reconcile/workspace/leads/gg-no-cross-window-writer-lease.md",
+        "sha256": "0ee03a41ac0ac39d8951a57ce57204ca7349de59b47ad10df559e74e19e92cd2"
+      },
+      {
+        "path": "J0024-reconcile/workspace/leads/gg-page-boundary-overshoot.md",
+        "sha256": "5066eb2dea54ced44d1a79352b225cea813049696ab47ec6ad0d8b0cc0bdf585"
+      },
+      {
+        "path": "J0024-reconcile/workspace/leads/gg-visual-row-vs-stream-item-counter.md",
+        "sha256": "f2ceadb2585eed3a0eb5d382a2bc3c0a759e4c6e46fa6f13a9d938d79eb6d209"
+      },
+      {
+        "path": "J0024-reconcile/workspace/leads/git-format-version-extensions-gate.md",
+        "sha256": "222162a94af4c760713ca9322ee25e75ba27fb30fd6604fd53cb4dc65ec25fdc"
+      },
+      {
+        "path": "J0024-reconcile/workspace/leads/jj-shallow-state-changes-parent-graph.md",
+        "sha256": "85fe8732f43e22bef0692c262154f48fd65e4a2e63032f218c1f30e9fa569389"
+      },
+      {
+        "path": "J0024-reconcile/workspace/leads/jj-workspace-store-path-pointers.md",
+        "sha256": "4c12dd727d3bdd8fe78941653aac061fe85da00a329e948cbf0e7051a1dd1dda"
+      },
+      {
+        "path": "J0025-reconcile/workspace/notes.md",
+        "sha256": "a1415a568871d1d5c8993a6c40d589c3dc3e492dde2f2353ca64e06089d5f5c3"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/fix-pr-text-is-not-shipped-behaviour.md",
+        "sha256": "3921b2096bb50e4fbe17e9cb031422129f52db597ca17450bf61df1d5cab3b08"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/hydration-is-a-fallible-operation.md",
+        "sha256": "19efe59e18f7b9bab4585dc504b4aa6da991c98eb2abbb3ca96b96bff122759a"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/silent-missing-safe-point.md",
+        "sha256": "74cf5a968d4b86167cef0d1c609cfb4f91e7ccb06141a3bce1a033083c4f9e03"
+      },
+      {
+        "path": "J0026-compare/workspace/notes.md",
+        "sha256": "e5aa396df91b9926fc62a1697627c82c17c4f0e0ab4265accf986dbc284ab5a6"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/git-format-version-gate-in-restore-path.md",
+        "sha256": "e895dc0033445e645f9a27e09220355ebbc9c7b7cd575d27995c9d463d14e286"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/jj-divergent-change-unrepresentable.md",
+        "sha256": "dd73adc0ec207e8ac6f36039656622f11f601c028229269efa308ee8d3229773"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/jj-indirect-and-missing-edges-unrepresentable.md",
+        "sha256": "1c7a487f18f27a2f6f5f6efcf6feb6aaa80afbb1db41fcecc54d25ef1db1a9f5"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/jj-lock-free-forked-operation-undetected.md",
+        "sha256": "c83528f772a7043fe26bfea96112f706c71ea6eee74cb19689031cca7d574816"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/jj-shallow-state-absent-from-closure.md",
+        "sha256": "7ba25af14551a1cdbb47546c9229ed93c170ba35e69bac7c1facaed5c6b39c00"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/jj-workspace-store-self-repair.md",
+        "sha256": "bce9e023594a9ef2ba64783abb93a9e0d7dca1dded6298674a3099616fa51981"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/jujutsu-revision-id-shape-unconstrained.md",
+        "sha256": "3dc3c375d3b668f60b1788adad8e8956b3e9fa60bdb7843e8f77ad3d59144acb"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/restore-drill-reachability-independence.md",
+        "sha256": "c73e5aed12cd150eab783ce40289d6c54562ce453a037bb19217e0cd38ac425c"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/scs-017-error-vs-end-of-history.md",
+        "sha256": "017d1949a9b6d0f0569ab79466568a29588290358ed9a35404253978ee8bd6e0"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/scs-017-page-counts-unconstrained.md",
+        "sha256": "f3947f154b08481e0b47fa7f9a9a5ae78cbfa6edd6bdffc38dab1972663659ac"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/source-graph-continuation-request-unowned.md",
+        "sha256": "431054af12ec78db85d280f532b0bc7901baee64e48ab72191b0b457c9eded23"
+      },
+      {
+        "path": "J0027-compare/workspace/notes.md",
+        "sha256": "d5bbdd9879508bb2cfbc9fb679cdb82031976ebb5441e5771c516e97877c47ec"
+      },
+      {
+        "path": "J0027-compare/workspace/leads/L-2e84f0ab6d17.md",
+        "sha256": "ac86e04bea07e5aeb085e905eaf95789616312b21174cc6f880c9532b68426e2"
+      },
+      {
+        "path": "J0027-compare/workspace/leads/L-7b31c9e05a44.md",
+        "sha256": "c8b97badd8fa0d0047b3280b9b809d531c273126db94d85a95a09929a2029725"
+      },
+      {
+        "path": "J0028-compare/workspace/notes.md",
+        "sha256": "0346af633f51de6d5d08d49d57baf9695d961a03976a20a34b3968240207ee02"
+      },
+      {
+        "path": "J0028-compare/workspace/leads/authorized-hydration-capability.md",
+        "sha256": "e3fbe59b42fb186d43d2a7899c7ba50f094470e4e132fc86076d2e256998f873"
+      },
+      {
+        "path": "J0028-compare/workspace/leads/isolation-means-repository-not-network.md",
+        "sha256": "da98e0746f15c7d03ebb621dc861d63b48aedbff185c0dc4fa480ba2248ee7cb"
+      },
+      {
+        "path": "J0028-compare/workspace/leads/no-entry-versus-entry-not-written.md",
+        "sha256": "d25b8d569a6c6b6c71dec3017cfe694541723bb6e28a4ae53c0c5a8c7582baa6"
+      }
+    ]
+  },
+  "runner_corrections_read": {
+    "corrections_json": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/corrections.json",
+      "sha256": "4a25eb36bfd62611b6ecfcc284c866a9c6c2edd65efe0a3e122e94be595459dc"
+    },
+    "runtime_identity_json": {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/runtime-identity.json",
+      "sha256": "f8e5f9505842132bcef1db97fec03ceb23fadda8a058dd5f0efe61223aaf03da"
+    },
+    "effect": "C1 corrects the adjudicator: the deepseek41 'stale selector' is the frozen continuation-3 cost-policy block describing the hybrid arm's model, copied into every arm's budget. C2 resolves the omp runtime version as an in-place binary replacement. C3 explains 41 responses against a 40 ceiling as a post-response boundary. The deepseek41 files are amended; no score changed."
+  },
+  "cross_arm_verification_2": {
+    "claim": "claude-hicap repeats Arm C's UNIX_EPOCH garbage-collection error while quoting the correct implementation predicate.",
+    "adjudicator_verification": "Read the whole gc implementation in this arm's own cache at lines 285-357: reachable entries continue; unreachable entries go to remove_file_if_not_new, which KEEPS when mtime > keep_newer. With keep_newer = UNIX_EPOCH nothing is removed. Both Claude arms are wrong; deepseek41 is right.",
+    "source_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/cache/v3/repos/jj-vcs--jj/lib/src/simple_op_store.rs",
+    "source_sha256": "a42ce0f6208002fc26c5796af00240b7e8b64b9b52957cc64446fc5b2ce610da",
+    "significance": "The control's counter-result: the raised ceiling bought 28 findings and did not buy correctness on this point, because the error is a reasoning error rather than a budget one.",
+    "effect_on_scores": "none"
   }
 }

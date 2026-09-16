@@ -10,7 +10,8 @@
     "manifest_file_bytes_sha256": "b07dae8a565233e449b0fc7d2ff246b3bc5266dae8823dd13d4e47f39eb2389a",
     "files": 7015,
     "total_bytes": 351090321,
-    "verification": "Recomputed the internal digest from the 7,015 rows and independently re-hashed the whole tree with the run's own algorithm on 2026-09-16; both match. Frozen tree unaltered since 2026-09-16T20:40:43Z."
+    "verification": "Recomputed the internal digest from the 7,015 rows and independently re-hashed the whole tree with the run's own algorithm on 2026-09-16; both match. Frozen tree unaltered since 2026-09-16T20:40:43Z.",
+    "runner_brief_discrepancy_resolution": "RESOLVED by the runner's arm-outputs/corrections.json (C1, C2), read while scoring claude-hicap. The 'stale selector' is the frozen continuation-3 cost-policy block describing the HYBRID arm's model, copied into every arm's budget - not a deepseek41 field; my flag overstated it. The runtime version difference is an in-place binary replacement at the same path: 18.1.13 at 18:49Z, 18.2.2 afterwards; deepseek41 ran against 18.2.2. Neither affects the score."
   },
   "review_model": {
     "model": "opencode-go/deepseek-v4.1-flash",
@@ -48,7 +49,8 @@
       "every budget_truncated job sits at 40 or 41 native responses while both completed jobs sit at 39 and 24"
     ],
     "conclusion": "All 10 budget_truncated outcomes are response-ceiling truncations. No job was money-truncated.",
-    "off_by_one": "7 of the 10 ceiling-bound jobs recorded 41 responses against a 40 ceiling: the adapter registers a response that already happened and then denies the next one."
+    "off_by_one": "7 of the 10 ceiling-bound jobs recorded 41 responses against a 40 ceiling: the adapter registers a response that already happened and then denies the next one.",
+    "off_by_one_resolved": "corrections.json C3: the ceiling is enforced after a response, so one further request can already be in flight. Read the limit as 'at most 40 admitted responses, with at most one more already dispatched'. Accounting stayed consistent (41 receipts == 41 durable count, 0 unresolved)."
   },
   "job_table": [
     {

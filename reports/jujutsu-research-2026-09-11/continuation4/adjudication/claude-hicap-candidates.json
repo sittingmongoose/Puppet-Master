@@ -1,0 +1,165 @@
+{
+  "schema": "jj.continuation4.arm_candidates.v1",
+  "arm": "claude-hicap",
+  "rule": "New propositions are recorded as candidates with evidence. The adjudicator does not add them to the continuation-3 union.",
+  "candidates": [
+    {
+      "candidate_id": "C4H-01",
+      "label": "cmd.jujutsu.change.split has no expressible non-interactive execution",
+      "proposed_class": "correction",
+      "arm_label": "J0022-compare R1",
+      "job": "claude-hicap/J0022-compare",
+      "proposition": "cmd.jujutsu.change.split is canonical, bound to a sole future handler and wired across the catalog, yet the frozen command_target can only name a change_id, and a native `jj split` with no path arguments always launches a diff editor - by default a crossterm terminal UI a Slint workbench cannot host. command_target must gain a closed change_content_selection {selection_kind: whole_change|explicit_paths, repo_relative_paths, interactive_editor: prohibited}, split must require explicit paths, a disabled reason interactive_editor_session_required must exist, and section 3.3 must state that no canonical Jujutsu command may reach an adapter invocation that can start an interactive diff or merge editor.",
+      "distinctness": "F028 asks for machine-readable partial-change specifications exposed to agents and scripts, and is credited to this arm. This is the prior structural defect: the owner requires a command whose only expressible native execution is an interactive editor session that the same owner 'never describes, never blocks, and gives no typed result for'. It is a contradiction inside the frozen inventory, not a capability request.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0022-compare/workspace/notes.md",
+          "sha256": "4fb81c977a313f44a2d3e63b48f70885c3985c1aa0e000dd04cadb696efd0425"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0022-compare/workspace/leads/jj-split-forces-interactive-diff-editor.md",
+          "sha256": "f2e51a0ae54ad7b8447f0c8d3d58eb67b1c03428f2b3fd3a8b529bd7c4a3bd59"
+        }
+      ],
+      "cited_passages": [
+        "Plans/Jujutsu_Integration.md:262, :365, :390-435, :255-287, :299-303",
+        "Plans/jujutsu_integration_contracts.schema.json:451-572, :1055-1115, :120-145, :220-227, :283-311",
+        "Plans/Commands_System.md:5525",
+        "Plans/UI_Command_Catalog.md:12067",
+        "Plans/Wiring_Matrix.production.json:36459-36511",
+        "jj-vcs/jj cli/src/config/merge_tools.toml, docs/config.md:1185-1196"
+      ],
+      "adjudicator_note": "Not added to the union. The strongest of this arm's candidates: a canonical command with no admissible execution path."
+    },
+    {
+      "candidate_id": "C4H-02",
+      "label": "An unpinned JJ read authors an operation, so capture and drill can mutate what they observe",
+      "proposed_class": "correction",
+      "arm_label": "J0020-compare L-39a5001283f3 repair",
+      "job": "claude-hicap/J0020-compare",
+      "proposition": "Every JJ read issued by capture, restore verification and inspection must be pinned to an exact operation id and to ignore-working-copy (or RepoLoader::load_at(op), never load_at_head()); divergence must be probed and recorded without being resolved, with every head in operation_head_refs and a distinct divergent closure state; Backup never reconciles; and the verification receipt records the disposable copy's op-head set before and after and asserts equality, with a verification-authored operation a typed failure.",
+      "distinctness": "F002 states that nominal reads have effects that must be classified and fenced, and is credited to this arm. This candidate is the specific machine-contract consequence: every PM clause about not manufacturing state names a snapshot, nothing requires a read to be operation-pinned, and all five fixtures carrying operation_head_refs hold exactly one head, so the contract is never exercised against divergence. The arm shows an unpinned read can change op_heads/heads/ even without true divergence, which makes the acceptance check a sharp discriminator.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "32fd04c196f91210f1b35be08b30f3512d1d372c7bbc43f45c376db2978fb926"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0019-reconcile/workspace/leads/L-2c6f81ab34de.md",
+          "sha256": "98b63e83cb34c2639a7020745d9142a6654c1c5e58769620cf8863e455ae8f14"
+        }
+      ],
+      "cited_passages": [
+        "Plans/Jujutsu_Integration.md:467, :468, :501, :502, :450",
+        "Plans/jujutsu_integration_contracts.schema.json:2372, :2719, :2431-2437",
+        "Plans/jujutsu_integration_contract_fixtures.json:2801-2803, 2856-2858, 2911-2913, 2968-2970, 3017-3019",
+        "Plans/Backup_Restore_System.md:952",
+        "jj-vcs/jj lib/src/op_heads_store.rs:146-161, lib/src/repo.rs:715-744, cli/src/cli_util.rs:796-822, :848, :1331-1375, cli/tests/test_concurrent_operations.rs:28-94"
+      ],
+      "adjudicator_note": "Not added to the union."
+    },
+    {
+      "candidate_id": "C4H-03",
+      "label": "allowed_action_ids has no floor, so a blocked repository can admit no recovery action",
+      "proposed_class": "correction",
+      "arm_label": "J0028-compare R5",
+      "job": "claude-hicap/J0028-compare",
+      "proposition": "availability_payload.allowed_action_ids carries no conditional of any kind, so an empty array validates for state blocked with disabled_reason_code repository_quarantined. Under Contracts_V0.md:508 recovery actions 'are admitted only when the current blocked episode exposes the corresponding ordered actions', so an empty set means no recovery action is admitted at all. A conditional must require, for the quarantine and staleness reason codes, at least cmd.jujutsu.operation.log and .show, and these must be servable from the operation store alone - without a current working-copy snapshot, a valid writer lease, or a healthy status projection.",
+      "distinctness": "F010 requires native and sidecar state to stay independently observable across partial failure and is credited to this arm. F072 requires one catalog with authoritative eligibility and is also credited. This candidate is the specific unbound field: the arm read all three allOf branches of availability_payload and established that none constrains allowed_action_ids, and that the one shipped availability fixture sets no precedent for the case where the status projection is itself broken.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0028-compare/workspace/notes.md",
+          "sha256": "0346af633f51de6d5d08d49d57baf9695d961a03976a20a34b3968240207ee02"
+        }
+      ],
+      "cited_passages": [
+        "Plans/jujutsu_integration_contracts.schema.json:176-186, :220-227, :232-312, :337-344",
+        "Plans/jujutsu_integration_contract_fixtures.json:2747-2780",
+        "Plans/Jujutsu_Integration.md:166, :224-225, :303, :339",
+        "Plans/Contracts_V0.md:508, :510",
+        "Plans/Orchestrator_Page.md:237",
+        "Plans/storage-plan.md:143"
+      ],
+      "adjudicator_note": "Not added to the union."
+    },
+    {
+      "candidate_id": "C4H-04",
+      "label": "bookmark.track and bookmark.untrack are classified as transport mutations requiring a credential lease",
+      "proposed_class": "correction",
+      "arm_label": "J0027-compare Defect 1",
+      "job": "claude-hicap/J0027-compare",
+      "proposition": "The schema places cmd.jujutsu.bookmark.track and .untrack in the same conditional as git.clone/fetch/push, narrowing credential_lease_ref to a non-null ref and pinning command_class to transport_mutation, while the frozen fixture sets permission.scope to local_mutation - internally inconsistent. Native untrack and track are purely local view transactions with no remote call and no credential use. Both commands must move to command_class local_mutation with credential_lease_ref null, keeping the writer lease, FileSafe decision, permission snapshot, expected-revision fence and currentness.",
+      "distinctness": "Not in the union. F038 concerns credential architecture and custody and F109 concerns transport credential evidence fields; neither says a purely local command is misclassified as transport. The arm shows the user-visible consequence: without a credential lease a user cannot form a schema-valid untrack request at all, and the availability model would surface credential_lease_missing for an operation that never touches a network - against the product's own promise that a person can keep local history without an online service.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0027-compare/workspace/notes.md",
+          "sha256": "d5bbdd9879508bb2cfbc9fb679cdb82031976ebb5441e5771c516e97877c47ec"
+        }
+      ],
+      "cited_passages": [
+        "Plans/jujutsu_integration_contracts.schema.json:1116-1143, :907-916, :1055-1115, :128",
+        "Plans/jujutsu_integration_contract_fixtures.json:1453, :1467, :1471",
+        "Plans/Jujutsu_Integration.md:9, :128",
+        "jj-vcs/jj cli/src/commands/bookmark/untrack.rs:33-39, :76-146; track.rs:38-42, :74-107"
+      ],
+      "adjudicator_note": "Not added to the union. The most concretely falsifiable of the four: an internal inconsistency between a schema branch and its own shipped fixture."
+    },
+    {
+      "candidate_id": "C4H-05",
+      "label": "A divergent change has no representable state anywhere in the corpus",
+      "proposed_class": "correction",
+      "arm_label": "J0026-compare L-2e0dc4dec29d Repair 2",
+      "job": "claude-hicap/J0026-compare",
+      "proposition": "A divergent change - multiple visible commits sharing one change ID - is a first-class, user-visible jj state arising from ordinary multi-actor use, and the word appears nowhere in any source-control, Jujutsu or GUI context in the Plans. node_state, the GUI graph_states prefix list and the JJ error/disabled-reason enums are all closed without it. Add divergent to node_state and graph_states, add a change_divergent_ambiguous_target reason code, and reject before effect any command whose change target resolves to more than one visible commit unless the request carries the exact commit_id.",
+      "distinctness": "F006 requires change and commit identity to stay separate and is credited to this arm; F022 asks for explicit convergence of divergent commits and is recorded as a partial. This candidate is neither: it is that the state cannot be named, shown or refused at all, established by reading the closed enums that would have had to contain it rather than by literal search.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0026-compare/workspace/notes.md",
+          "sha256": "e5aa396df91b9926fc62a1697627c82c17c4f0e0ab4265accf986dbc284ab5a6"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0026-compare/workspace/leads/jj-divergent-change-unrepresentable.md",
+          "sha256": "dd73adc0ec207e8ac6f36039656622f11f601c028229269efa308ee8d3229773"
+        }
+      ],
+      "cited_passages": [
+        "Plans/source_control_contracts.schema.json:2789, :292-326",
+        "Plans/final_gui_interaction_contracts.schema.json:603",
+        "Plans/jujutsu_integration_contracts.schema.json:120-175, :775-793",
+        "Plans/Jujutsu_Integration.md:233",
+        "jj-vcs/jj docs/guides/divergence.md:5-13, :35-46; CHANGELOG.md:986"
+      ],
+      "adjudicator_note": "Not added to the union."
+    }
+  ],
+  "observations": [
+    {
+      "observation_id": "O4H-01",
+      "label": "The higher ceiling did NOT fix the UNIX_EPOCH error - and this arm made it while holding the correct source",
+      "finding": "affects Arm C and claude-hicap supporting text; not their scores",
+      "detail": "claude-hicap repeats the error deepseek41 caught in Arm C, and repeats it from a stronger position. J0019 correction 2 quotes the correct predicate - 'The implementation removes any file whose mtime is not greater than keep_newer' (lib/src/simple_op_store.rs:286-299) - and then concludes 'Passing UNIX_EPOCH therefore disables the concurrency grace window entirely ... every operation and view not reachable from the freshly-resolved head is destroyed server-side immediately.' J0023 and its lead L-3f9c21d4a87e state the same predicate ('mtime > keep_newer ? keep : remove') and the same wrong conclusion. I read the whole gc implementation in this arm's own cache (cache/v3/repos/jj-vcs--jj/lib/src/simple_op_store.rs, sha256 a42ce0f6208002fc26c5796af00240b7e8b64b9b52957cc64446fc5b2ce610da, lines 285-357): reachable entries continue, unreachable entries go to remove_file_if_not_new, which KEEPS when mtime > keep_newer. With keep_newer = UNIX_EPOCH every file's mtime is greater, so nothing is removed at all. Both Claude arms are wrong in the same direction; deepseek41 is right. Arm C never read the implementation and cited the docs.rs trait page; claude-hicap read the implementation, quoted it correctly, and drew the opposite conclusion two sentences later.",
+      "adjudicator_note": "This is the control's counter-result. The raised ceiling bought a large coverage gain and did not buy correctness on this point, because the error is a reasoning error rather than a budget one. Effect on score: none - F079, F004 and F082 rest on independent Plans citations in both arms. The arm did correctly establish the comparative framing (jj's own util gc defaults to now minus 14 days and refuses to run from a non-head operation), so only the absolute direction is wrong."
+    },
+    {
+      "observation_id": "O4H-02",
+      "label": "Every lead group Arm C lost to the response ceiling now reaches delivery",
+      "finding": "the control question",
+      "detail": "Arm C admitted 11 distinct leads and produced assertions for 9 at reconcile and 3 at compare. claude-hicap admitted all 11 plus 3 more, and produced a notes.md for all 14 at reconcile and all 14 at compare, with no duplicated attempts. Specifically: L-80244e477912 (Arm C J0017 and J0021, both empty) delivered by hicap J0017 and J0021; L-7dc9a6726cf9 (Arm C J0018 and J0020, both empty) delivered by hicap J0018 and J0022; the graph triple (Arm C J0023 reconcile and J0028 compare, both empty) delivered by hicap J0024 and J0026; the dojjo triple's second compare attempt (Arm C J0024, empty) is not needed because hicap needed only one; and the bookmark triple's compare (Arm C J0027, empty) delivered by hicap J0027. No job in this arm was bound by responses, time or budget.",
+      "adjudicator_note": "Recorded."
+    },
+    {
+      "observation_id": "O4H-03",
+      "label": "On the leads both Claude arms completed, the higher-cap assertions differ in kind, not only in volume",
+      "finding": "the control question",
+      "detail": "Both arms reconciled and compared the dojjo triple (L-4f94a6cc2232, L-c89be7ac8a66, L-39a5001283f3). Arm C's J0026-compare produced five repairs about the backup receipt surface: verification depth, machine-local store entries, in-store pointer rebinding, a present-but-unloadable metadata blocker class, and gc-fence covered paths. claude-hicap's J0020-compare on the same three leads produced a different and largely disjoint set: refs/jj/keep and the extras table as named closure axes (with the consequence that a heads-only capture loses every abandoned and rewritten commit to the first git gc), fetch-versus-push ref coverage symmetry, per-workspace working-copy state as a closure axis (with the consequence that the first ordinary jj command in a restored workspace manufactures the snapshot JJI-008 forbids), and operation-pinned reads. Only the gc-fence topic overlaps, and hicap's treatment there is different: Arm C asked what held_during_capture covered, hicap asked what the fence means at all and then found the sharper adjacent result that an unpinned read authors an operation. The two arms also both read the three graph leads at reconcile; Arm C's J0025 stopped at the external defects while hicap's J0024 plus J0026 carried them into three named SourceGraph contract repairs, which is what earns F107.",
+      "adjudicator_note": "Recorded. The difference is not that the same analysis ran longer; it is that reaching the compare stage changes what kind of proposition the arm can state."
+    },
+    {
+      "observation_id": "O4H-04",
+      "label": "Runner corrections to my earlier flags, read and accepted",
+      "finding": "corrects my own deepseek41 adjudication",
+      "detail": "arm-outputs/corrections.json and runtime-identity.json answer the two discrepancies I raised while scoring deepseek41. C1: the 'stale selector' I flagged is not a deepseek41 field - it is the frozen continuation-3 cost-policy block bound.deepseek_metadata describing the HYBRID arm's research model, copied into every arm's budget including both claude arms. My deepseek41 note overstated it and is corrected. C2: the omp runtime genuinely self-reported 18.1.13 when the union attempt ran at 18:49Z and 18.2.2 after the binary was updated in place at the same path, so the brief's figure was correct when written and went stale; per-arm job records are authoritative and deepseek41 ran against 18.2.2. C3 answers my open question about 41 responses against a 40 ceiling: it is the kill window of a post-response boundary, not an off-by-one, and the accounting stayed consistent.",
+      "adjudicator_note": "Accepted. The deepseek41 files are amended for C1 and C2."
+    }
+  ]
+}

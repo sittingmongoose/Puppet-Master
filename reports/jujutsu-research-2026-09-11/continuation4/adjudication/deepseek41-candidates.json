@@ -123,6 +123,27 @@
       "finding": "request-limited coverage",
       "detail": "J0021-reconcile section 8 tabulates three independent directions it extracted, including leads/native-interactive-symlinks.md. Only two lead files exist on disk (diffedit3-line-endings.md, diffedit3-symlink-confinement.md). The third was never written; the job ended budget_truncated at 40 responses. A concrete instance of the ceiling removing a deliverable the job had already decided on.",
       "adjudicator_note": "Recorded under request-limited coverage."
+    },
+    {
+      "observation_id": "O4D-05",
+      "label": "CORRECTION TO MY OWN FLAG: the deepseek41 'stale selector' was not a deepseek41 field",
+      "finding": "corrects observation recorded in deepseek41-scoring.json and README",
+      "detail": "I flagged protocol/arm-budgets/deepseek41.json bound.deepseek_metadata.selector = opencode-go/deepseek-v4-flash as a stale per-arm label. The runner's arm-outputs/corrections.json item C1 establishes it is not a per-arm field at all: it is the frozen continuation-3 cost-policy block describing the HYBRID arm's research model, and every continuation-4 arm's budget copies the whole cost policy into `bound`, including both claude arms. The per-arm selectors live under cost_policy.json continuation4_arms and are correct. My flag overstated it; the route deepseek41 actually called (opencode-go/deepseek-v4.1-flash) was never in doubt and is confirmed by all 470 receipts and by each job's adapter argv.",
+      "adjudicator_note": "Recorded against myself. No effect on deepseek41's score."
+    },
+    {
+      "observation_id": "O4D-06",
+      "label": "The omp runtime version discrepancy resolves to an in-place binary replacement",
+      "finding": "refines observation in deepseek41-scoring.json",
+      "detail": "corrections.json item C2 and runtime-identity.json establish that ~/.local/bin/omp resolves to a directory named omp-18.1.12-linux-x64 (a directory name, not a version) whose binary self-reported omp/18.1.13 (sha 3be5a308...) when the union attempt ran at 18:49Z and self-reports omp/18.2.2 (sha 77c3520a...) after being updated in place. The brief's '18.1.13' was correct when written and went stale. Both deepseek41 attempts ran against 18.2.2, which is what its own job records say and what I reported.",
+      "adjudicator_note": "Recorded. No effect on the score."
+    },
+    {
+      "observation_id": "O4D-07",
+      "label": "The 41-against-40 response count is a post-response boundary, not an off-by-one",
+      "finding": "answers the open question in deepseek41-scoring.json budget_truncated_caveat.off_by_one",
+      "detail": "corrections.json item C3: the ceiling is enforced after a response, so oh-my-pi can already have dispatched one more request before the adapter kills it. The journal sequence for J0018 shows response_recorded -> next_request_denied(model_request_limit) -> response_recorded 0.2 s later -> next_request_denied -> job_end_accounting, and the durable request_count of 41 equals 41 receipts with 0 unresolved. The limit reads as 'at most 40 admitted responses, with at most one further response already in flight'.",
+      "adjudicator_note": "Accepted; my characterisation was right that the accounting is consistent, and this gives the mechanism."
     }
   ]
 }

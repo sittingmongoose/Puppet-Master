@@ -1,0 +1,695 @@
+{
+  "schema": "jj.continuation4.arm_scoring.v1",
+  "arm": "claude-hicap",
+  "role": "CONTROL ARM for Arm C's response-ceiling caveat: same model, same premium artifacts and starting state, raised limits",
+  "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm; shares a model family with the reviewed model",
+  "run": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/claude-hicap-manifest.json",
+    "manifest_sha256_internal": "ebf8612dd5953cbf8f4da9fa6b6b5b11a89e4015cc907c26d0afc553b0eafbb5",
+    "manifest_file_bytes_sha256": "feefc4c94ccec49890db58d57ccd0d350d35d2bd0fabc33936760f670f16b983",
+    "files": 8098,
+    "total_bytes": 228660085,
+    "verification": "Recomputed the internal digest from the 8,098 rows and independently re-hashed the whole tree; both match. Frozen tree unaltered since 2026-09-16T21:41:42Z."
+  },
+  "review_model": {
+    "model": "claude-opus-5",
+    "effort": "xhigh",
+    "transport": "Claude Code CLI 2.1.226",
+    "binary_sha256": "4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555",
+    "per_job_ceiling_responses": 160,
+    "per_job_timeout_seconds": 3600,
+    "per_job_budget_usd": 20,
+    "workers": 3,
+    "admissions": 12,
+    "arm_cap_usd": 150
+  },
+  "nothing_was_bound": {
+    "verified": true,
+    "evidence": "All 12 jobs carry runtime_status completed with raw-claude terminal_reason 'completed' and result_is_error false. Responses 37-110 of 160 (mean 66.7), elapsed 685.6-1070.1 s of 3600, per-job CLI cost $4.0991-$12.1166 of $20, timing.json money_stop_reason null.",
+    "headroom": "the busiest job used 69% of the response ceiling, 30% of the time budget and 61% of the per-job money budget"
+  },
+  "job_table": [
+    {
+      "job": "J0017-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished on its own (terminal_reason=completed, result_is_error=False)",
+      "elapsed_seconds": 934.739,
+      "native_responses": 66,
+      "receipts": 66,
+      "native_num_turns": 82,
+      "cli_reported_usd": 6.105811999999999,
+      "headroom": {
+        "responses": "66/160",
+        "seconds": "934.7/3600",
+        "usd": "6.1058/20"
+      },
+      "assigned_lead_ids": [
+        "L-80244e477912"
+      ],
+      "receipted_lead_deliveries": [
+        "L-80244e477912"
+      ],
+      "notes_present": true,
+      "notes_sha256": "36536d23bd4b3e415ea2b515c8cc7336793a1f1b0d9d4cebc110c3da1110f653",
+      "authored_lead_documents": [
+        "diffedit3-exec-bit-on-create.md",
+        "diffedit3-line-endings.md",
+        "diffedit3-symlink-confinement.md",
+        "diffedit3-type-collision-rows.md",
+        "native-interactive-symlinks.md"
+      ],
+      "source_locator_receipts": 68
+    },
+    {
+      "job": "J0018-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished on its own (terminal_reason=completed, result_is_error=False)",
+      "elapsed_seconds": 1011.652,
+      "native_responses": 58,
+      "receipts": 58,
+      "native_num_turns": 80,
+      "cli_reported_usd": 6.337947,
+      "headroom": {
+        "responses": "58/160",
+        "seconds": "1011.7/3600",
+        "usd": "6.3379/20"
+      },
+      "assigned_lead_ids": [
+        "L-7dc9a6726cf9"
+      ],
+      "receipted_lead_deliveries": [
+        "L-7dc9a6726cf9"
+      ],
+      "notes_present": true,
+      "notes_sha256": "916abea44511e485ed96443338d9747a1ee91fc474fe89ab18fb06559033b051",
+      "authored_lead_documents": [
+        "diffedit3-no-disconnect-detection.md",
+        "diffedit3-stale-tab-port-reuse.md",
+        "jj-collapses-tool-exit-codes.md"
+      ],
+      "source_locator_receipts": 65
+    },
+    {
+      "job": "J0019-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished on its own (terminal_reason=completed, result_is_error=False)",
+      "elapsed_seconds": 845.7,
+      "native_responses": 65,
+      "receipts": 65,
+      "native_num_turns": 73,
+      "cli_reported_usd": 5.536195500000001,
+      "headroom": {
+        "responses": "65/160",
+        "seconds": "845.7/3600",
+        "usd": "5.5362/20"
+      },
+      "assigned_lead_ids": [
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66",
+        "L-39a5001283f3"
+      ],
+      "receipted_lead_deliveries": [
+        "L-39a5001283f3",
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66"
+      ],
+      "notes_present": true,
+      "notes_sha256": "1a1084cf371b220667a284dbcef51a53b1c2a81eef8554b260458ea7f42b5091",
+      "authored_lead_documents": [
+        "L-2c6f81ab34de.md",
+        "L-5a48c2d9163f.md",
+        "L-7b2e10c4d5a9.md",
+        "L-9d31e7f0b825.md",
+        "L-e0f4b76a9c12.md"
+      ],
+      "source_locator_receipts": 61
+    },
+    {
+      "job": "J0020-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished on its own (terminal_reason=completed, result_is_error=False)",
+      "elapsed_seconds": 1070.128,
+      "native_responses": 88,
+      "receipts": 88,
+      "native_num_turns": 93,
+      "cli_reported_usd": 9.267769999999999,
+      "headroom": {
+        "responses": "88/160",
+        "seconds": "1070.1/3600",
+        "usd": "9.2678/20"
+      },
+      "assigned_lead_ids": [
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66",
+        "L-39a5001283f3"
+      ],
+      "receipted_lead_deliveries": [
+        "L-39a5001283f3",
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66"
+      ],
+      "notes_present": true,
+      "notes_sha256": "32fd04c196f91210f1b35be08b30f3512d1d372c7bbc43f45c376db2978fb926",
+      "authored_lead_documents": [
+        "L-3d77b0c95e41.md",
+        "L-6a1d4c07e8f2.md",
+        "L-b2c5e90a7134.md"
+      ],
+      "source_locator_receipts": 85
+    },
+    {
+      "job": "J0021-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished on its own (terminal_reason=completed, result_is_error=False)",
+      "elapsed_seconds": 820.746,
+      "native_responses": 54,
+      "receipts": 54,
+      "native_num_turns": 60,
+      "cli_reported_usd": 6.2949835,
+      "headroom": {
+        "responses": "54/160",
+        "seconds": "820.7/3600",
+        "usd": "6.2950/20"
+      },
+      "assigned_lead_ids": [
+        "L-80244e477912"
+      ],
+      "receipted_lead_deliveries": [
+        "L-80244e477912"
+      ],
+      "notes_present": true,
+      "notes_sha256": "f53c3f429ef480f6c6841a441ee2a4e8e2dcd70b07440cfb8c6ef1e97b875f87",
+      "authored_lead_documents": [
+        "external-editor-delegation-fence.md",
+        "jj-conflict-byte-identity-check.md",
+        "jj-partial-change-selection-model.md",
+        "source-control-file-state-vocabulary.md"
+      ],
+      "source_locator_receipts": 70
+    },
+    {
+      "job": "J0022-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished on its own (terminal_reason=completed, result_is_error=False)",
+      "elapsed_seconds": 757.772,
+      "native_responses": 78,
+      "receipts": 78,
+      "native_num_turns": 92,
+      "cli_reported_usd": 8.7059685,
+      "headroom": {
+        "responses": "78/160",
+        "seconds": "757.8/3600",
+        "usd": "8.7060/20"
+      },
+      "assigned_lead_ids": [
+        "L-7dc9a6726cf9"
+      ],
+      "receipted_lead_deliveries": [
+        "L-7dc9a6726cf9"
+      ],
+      "notes_present": true,
+      "notes_sha256": "4fb81c977a313f44a2d3e63b48f70885c3985c1aa0e000dd04cadb696efd0425",
+      "authored_lead_documents": [
+        "helper-tool-exit-status-is-not-a-result.md",
+        "jj-split-forces-interactive-diff-editor.md",
+        "jji005-conflict-resolution-has-no-command.md"
+      ],
+      "source_locator_receipts": 101
+    },
+    {
+      "job": "J0023-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished on its own (terminal_reason=completed, result_is_error=False)",
+      "elapsed_seconds": 808.25,
+      "native_responses": 37,
+      "receipts": 37,
+      "native_num_turns": 62,
+      "cli_reported_usd": 4.715019,
+      "headroom": {
+        "responses": "37/160",
+        "seconds": "808.2/3600",
+        "usd": "4.7150/20"
+      },
+      "assigned_lead_ids": [
+        "L-c0c7178a160f",
+        "L-444f31e68545",
+        "L-0793ad1e2a78"
+      ],
+      "receipted_lead_deliveries": [
+        "L-0793ad1e2a78",
+        "L-444f31e68545",
+        "L-c0c7178a160f"
+      ],
+      "notes_present": true,
+      "notes_sha256": "2efd0902ea121f0fe5ce5efff210801bb44d3c859cec2d189f3307998b0b36c1",
+      "authored_lead_documents": [
+        "L-3f9c21d4a87e.md",
+        "L-5d2a96f31c84.md",
+        "L-8b47e0d5c619.md"
+      ],
+      "source_locator_receipts": 54
+    },
+    {
+      "job": "J0024-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished on its own (terminal_reason=completed, result_is_error=False)",
+      "elapsed_seconds": 685.642,
+      "native_responses": 53,
+      "receipts": 53,
+      "native_num_turns": 64,
+      "cli_reported_usd": 4.099065,
+      "headroom": {
+        "responses": "53/160",
+        "seconds": "685.6/3600",
+        "usd": "4.0991/20"
+      },
+      "assigned_lead_ids": [
+        "L-ad68a4ac94ad",
+        "L-2e0dc4dec29d",
+        "L-289201b4f4ec"
+      ],
+      "receipted_lead_deliveries": [
+        "L-289201b4f4ec",
+        "L-2e0dc4dec29d",
+        "L-ad68a4ac94ad"
+      ],
+      "notes_present": true,
+      "notes_sha256": "e8f5264ae4a93548a97e6dd8b60024bb1ddfd4383ca523ea05550a8a686c3b9f",
+      "authored_lead_documents": [
+        "gg-log-missing-commits-issue-137.md",
+        "gg-no-cross-window-writer-lease.md",
+        "gg-page-boundary-overshoot.md",
+        "gg-visual-row-vs-stream-item-counter.md",
+        "git-format-version-extensions-gate.md",
+        "jj-shallow-state-changes-parent-graph.md",
+        "jj-workspace-store-path-pointers.md"
+      ],
+      "source_locator_receipts": 48
+    },
+    {
+      "job": "J0025-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished on its own (terminal_reason=completed, result_is_error=False)",
+      "elapsed_seconds": 711.073,
+      "native_responses": 55,
+      "receipts": 55,
+      "native_num_turns": 66,
+      "cli_reported_usd": 4.1889340000000015,
+      "headroom": {
+        "responses": "55/160",
+        "seconds": "711.1/3600",
+        "usd": "4.1889/20"
+      },
+      "assigned_lead_ids": [
+        "L-732df4469871",
+        "L-3c0712b66649",
+        "L-0eb0bdc5ba1a"
+      ],
+      "receipted_lead_deliveries": [
+        "L-0eb0bdc5ba1a",
+        "L-3c0712b66649",
+        "L-732df4469871"
+      ],
+      "notes_present": true,
+      "notes_sha256": "a1415a568871d1d5c8993a6c40d589c3dc3e492dde2f2353ca64e06089d5f5c3",
+      "authored_lead_documents": [
+        "fix-pr-text-is-not-shipped-behaviour.md",
+        "hydration-is-a-fallible-operation.md",
+        "silent-missing-safe-point.md"
+      ],
+      "source_locator_receipts": 30
+    },
+    {
+      "job": "J0026-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished on its own (terminal_reason=completed, result_is_error=False)",
+      "elapsed_seconds": 1054.666,
+      "native_responses": 110,
+      "receipts": 110,
+      "native_num_turns": 114,
+      "cli_reported_usd": 12.116632,
+      "headroom": {
+        "responses": "110/160",
+        "seconds": "1054.7/3600",
+        "usd": "12.1166/20"
+      },
+      "assigned_lead_ids": [
+        "L-ad68a4ac94ad",
+        "L-2e0dc4dec29d",
+        "L-289201b4f4ec"
+      ],
+      "receipted_lead_deliveries": [
+        "L-289201b4f4ec",
+        "L-2e0dc4dec29d",
+        "L-ad68a4ac94ad"
+      ],
+      "notes_present": true,
+      "notes_sha256": "e5aa396df91b9926fc62a1697627c82c17c4f0e0ab4265accf986dbc284ab5a6",
+      "authored_lead_documents": [
+        "git-format-version-gate-in-restore-path.md",
+        "jj-divergent-change-unrepresentable.md",
+        "jj-indirect-and-missing-edges-unrepresentable.md",
+        "jj-lock-free-forked-operation-undetected.md",
+        "jj-shallow-state-absent-from-closure.md",
+        "jj-workspace-store-self-repair.md",
+        "jujutsu-revision-id-shape-unconstrained.md",
+        "restore-drill-reachability-independence.md",
+        "scs-017-error-vs-end-of-history.md",
+        "scs-017-page-counts-unconstrained.md",
+        "source-graph-continuation-request-unowned.md"
+      ],
+      "source_locator_receipts": 106
+    },
+    {
+      "job": "J0027-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished on its own (terminal_reason=completed, result_is_error=False)",
+      "elapsed_seconds": 819.631,
+      "native_responses": 78,
+      "receipts": 78,
+      "native_num_turns": 81,
+      "cli_reported_usd": 8.3967885,
+      "headroom": {
+        "responses": "78/160",
+        "seconds": "819.6/3600",
+        "usd": "8.3968/20"
+      },
+      "assigned_lead_ids": [
+        "L-c0c7178a160f",
+        "L-444f31e68545",
+        "L-0793ad1e2a78"
+      ],
+      "receipted_lead_deliveries": [
+        "L-0793ad1e2a78",
+        "L-444f31e68545",
+        "L-c0c7178a160f"
+      ],
+      "notes_present": true,
+      "notes_sha256": "d5bbdd9879508bb2cfbc9fb679cdb82031976ebb5441e5771c516e97877c47ec",
+      "authored_lead_documents": [
+        "L-2e84f0ab6d17.md",
+        "L-7b31c9e05a44.md"
+      ],
+      "source_locator_receipts": 91
+    },
+    {
+      "job": "J0028-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished on its own (terminal_reason=completed, result_is_error=False)",
+      "elapsed_seconds": 739.327,
+      "native_responses": 58,
+      "receipts": 58,
+      "native_num_turns": 67,
+      "cli_reported_usd": 6.751261,
+      "headroom": {
+        "responses": "58/160",
+        "seconds": "739.3/3600",
+        "usd": "6.7513/20"
+      },
+      "assigned_lead_ids": [
+        "L-732df4469871",
+        "L-3c0712b66649",
+        "L-0eb0bdc5ba1a"
+      ],
+      "receipted_lead_deliveries": [
+        "L-0eb0bdc5ba1a",
+        "L-3c0712b66649",
+        "L-732df4469871"
+      ],
+      "notes_present": true,
+      "notes_sha256": "0346af633f51de6d5d08d49d57baf9695d961a03976a20a34b3968240207ee02",
+      "authored_lead_documents": [
+        "authorized-hydration-capability.md",
+        "isolation-means-repository-not-network.md",
+        "no-entry-versus-entry-not-written.md"
+      ],
+      "source_locator_receipts": 62
+    }
+  ],
+  "stage_timing": {
+    "reconcile": {
+      "wall_seconds": 2635.631161928177,
+      "summed_job_seconds": 4997.0560000000005,
+      "average_concurrency": 1.895961799277047
+    },
+    "compare": {
+      "wall_seconds": 2682.602861881256,
+      "summed_job_seconds": 5262.2699999999995,
+      "average_concurrency": 1.9616284149900869
+    },
+    "arm_wall_seconds": 3535.1918652057648,
+    "summed_terminal_job_seconds": 10259.326000000001,
+    "average_concurrency": 2.9020563497486043
+  },
+  "cost": {
+    "captured_upper_usd": 82.51637600000002,
+    "cli_reported_usd": 82.516376,
+    "unresolved_charge_usd": 0.0,
+    "job_end_reconciled_jobs": 12,
+    "job_end_unresolved_jobs": 0,
+    "cap_usd": 150,
+    "usd_per_credited_finding": 1.7938,
+    "COMPARABILITY": "This arm's cost and duration are NOT comparable with the goal-2 arms (premium, hybrid) or with the other continuation-4 arms. It ran under a deliberately different budget regime - 160 responses, 3600 s and $20 per job against a $150 cap - chosen to remove the binding constraint rather than to measure one. Only the OUTPUTS are comparable."
+  },
+  "leads": {
+    "input_leads": 88,
+    "authored_lead_documents": 52,
+    "total_leads_at_terminal": 140,
+    "stage_counts": {
+      "discovered": 126,
+      "studied": 0,
+      "reconciled": 0,
+      "comparison_delivered": 14
+    },
+    "note": "the lead set grew from 88 to 140 as review jobs ingested new leads; 126 remain at 'discovered', 14 reached comparison_delivered and 0 sit at 'reconciled' because every reconciled lead was promoted"
+  },
+  "recall": {
+    "expanded_union_denominator": 110,
+    "credited": [
+      "F001",
+      "F002",
+      "F004",
+      "F006",
+      "F007",
+      "F008",
+      "F010",
+      "F011",
+      "F028",
+      "F029",
+      "F030",
+      "F031",
+      "F032",
+      "F033",
+      "F034",
+      "F035",
+      "F036",
+      "F037",
+      "F043",
+      "F044",
+      "F050",
+      "F051",
+      "F053",
+      "F056",
+      "F059",
+      "F061",
+      "F062",
+      "F066",
+      "F072",
+      "F073",
+      "F074",
+      "F079",
+      "F080",
+      "F081",
+      "F082",
+      "F083",
+      "F084",
+      "F087",
+      "F088",
+      "F089",
+      "F090",
+      "F092",
+      "F094",
+      "F102",
+      "F106",
+      "F107"
+    ],
+    "count": 46,
+    "recall_percent": 41.82,
+    "by_class": {
+      "correction": "3/5",
+      "optional_capability": "4/36",
+      "product_choice": "3/6",
+      "unsupported_or_rejected": "36/63"
+    },
+    "fixed_original_105_count": 44,
+    "fixed_original_105_recall_percent": 41.9,
+    "corrections_credited": [
+      "F001",
+      "F106",
+      "F107"
+    ],
+    "corrections_missed": [
+      "F108",
+      "F109"
+    ]
+  },
+  "control_result": {
+    "arm_c_credited": 18,
+    "claude_hicap_credited": 46,
+    "gained_over_arm_c": [
+      "F001",
+      "F002",
+      "F007",
+      "F008",
+      "F011",
+      "F028",
+      "F029",
+      "F031",
+      "F032",
+      "F033",
+      "F034",
+      "F035",
+      "F036",
+      "F037",
+      "F043",
+      "F044",
+      "F053",
+      "F056",
+      "F073",
+      "F074",
+      "F083",
+      "F087",
+      "F088",
+      "F089",
+      "F090",
+      "F094",
+      "F106",
+      "F107"
+    ],
+    "gained_count": 28,
+    "lost_relative_to_arm_c": [],
+    "relationship": "claude-hicap is a STRICT SUPERSET of Arm C (18) and of deepseek41 (33). It gained 28 findings over Arm C and lost none; it adds 13 over deepseek41 and loses none. The union of all three new arms equals claude-hicap's own set.",
+    "arm_c_turn_capped_jobs_now_reaching_delivery": "All of them. Arm C had 11 request_limit_reached jobs of which 8 delivered nothing; those 8 held L-80244e477912 (twice), L-7dc9a6726cf9 (twice), the graph triple at reconcile and at compare, the dojjo triple's duplicate compare, and the bookmark triple's compare. In claude-hicap every one of those lead groups produced a notes.md at both stages, with no duplicated attempts.",
+    "still_missed": {
+      "count": 64,
+      "by_class": {
+        "optional_capability": 32,
+        "unsupported_or_rejected": 27,
+        "product_choice": 3,
+        "correction": 2
+      },
+      "reading": "The residue is dominated by optional capabilities (32 of 36 missed). Those are largely hybrid-only proposals arising from leads this arm was never given - the arm admitted 14 of 88 input leads."
+    },
+    "substance_on_shared_leads": "See observation O4H-03: on the dojjo triple, which both Claude arms reconciled and compared, the two arms' repairs are largely disjoint rather than one being a longer version of the other. The higher-cap arm reached different propositions, not merely more of the same ones.",
+    "counter_result": "See observation O4H-01. The raised ceiling did not fix the UNIX_EPOCH garbage-collection error that deepseek41 caught in Arm C; claude-hicap made the same error while quoting the correct implementation predicate. Coverage improved; correctness on that point did not."
+  },
+  "coverage_vs_other_arms": {
+    "premium_expanded": 78,
+    "hybrid_expanded": 90,
+    "claude": 18,
+    "deepseek41": 33,
+    "claude_hicap": 46,
+    "shared_with_premium": 44,
+    "shared_with_hybrid": 35,
+    "shared_with_both": 33,
+    "premium_only": [
+      "F001",
+      "F008",
+      "F031",
+      "F032",
+      "F033",
+      "F034",
+      "F036",
+      "F053",
+      "F084",
+      "F090",
+      "F106"
+    ],
+    "hybrid_only": [
+      "F073",
+      "F083"
+    ],
+    "unique_to_arm": [],
+    "held_by_premium_missed": 34,
+    "held_by_hybrid_missed": 55,
+    "held_by_both_others_missed": 25,
+    "vs_deepseek41": {
+      "shared": 33,
+      "hicap_adds": [
+        "F001",
+        "F028",
+        "F043",
+        "F044",
+        "F051",
+        "F073",
+        "F083",
+        "F087",
+        "F088",
+        "F090",
+        "F094",
+        "F106",
+        "F107"
+      ],
+      "deepseek41_only": []
+    },
+    "interpretation": "Still nothing unique to the arm: all 46 sit inside premium or hybrid. But it is the first new arm to reach hybrid-only findings (F073, F083) and the first to credit any correction at all."
+  },
+  "request_limited_coverage": {
+    "jobs_bound_by_anything": 0,
+    "note": "There is no request-limited coverage to report for this arm. That is the point of it."
+  },
+  "reached_delivery_fraction": {
+    "input_leads": 88,
+    "distinct_leads_admitted_to_a_reconcile_job": 14,
+    "with_a_saved_reconcile_assertion": 14,
+    "distinct_leads_admitted_to_a_compare_job": 14,
+    "with_a_saved_comparison": 14,
+    "reconcile_rate": "14/14 = 100%",
+    "compare_rate": "14/14 = 100%",
+    "of_the_88_input_leads": {
+      "reached_a_saved_reconcile_assertion": "14/88 = 15.9%",
+      "reached_a_saved_comparison": "14/88 = 15.9%"
+    },
+    "comparison": "Arm C reached a comparison for 3 of 88 input leads (3.4%) and deepseek41 for 4 of 88 (4.5%); claude-hicap reached one for 14 of 88 (15.9%), a 4.7x improvement on Arm C. Every lead it admitted completed both stages."
+  },
+  "assertion_corpus": {
+    "documents": 64,
+    "notes": 12,
+    "lead_documents": 52,
+    "total_bytes": 836145,
+    "jobs_with_assertions": "12 of 12",
+    "excluded_as_not_arm_authored": [
+      "workspace/handoff.md",
+      "workspace/navigation.md",
+      "workspace/brief.md",
+      "workspace/assignment.md",
+      "workspace/sources.md",
+      "workspace/tool-help.md",
+      "workspace/research.py"
+    ],
+    "excluded_as_locator_inventory": "workspace/research-evidence/sources/**",
+    "note": "4.6x Arm C's 18-document, ~180 KB corpus"
+  },
+  "limits": [
+    "One frozen case; a same-input review replacement bounded by the premium arm's research artifacts.",
+    "The adjudicator is an Opus 5 agent and the reviewed model is claude-opus-5; adjudicator and reviewed model share a family. Every credit names its assertion and cited passage.",
+    "Recall is against the adjudicated continuation-3 union, not an external exhaustive truth set.",
+    "'Unsupported or already-covered' is a union class, not a false-positive rate.",
+    "COST AND DURATION ARE NOT COMPARABLE with goal 2's arms or with the other continuation-4 arms; this arm ran under a different budget regime by design. Only outputs are comparable.",
+    "The arm admitted 14 of 88 input leads, so the 64 findings it missed are dominated by leads it was never given, not by leads it judged wrongly.",
+    "Observation O4H-01 records a factual error this arm shares with Arm C; it does not affect the score."
+  ]
+}

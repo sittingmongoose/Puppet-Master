@@ -230,6 +230,9 @@ partials and 5 out-of-union candidates — a high yield per lead reached.
 
 ## Comparison table
 
+**The current, full comparison table now lives in `../claude-hicap/README.md`** and supersedes the one below. Headline: claude-hicap — the control arm for Arm C's ceiling caveat — scored 46/110 (41.82%) including 3 of 5 corrections, a strict superset of both Arm C (18) and deepseek41 (33).
+
+
 Premium and hybrid rows are continuation 3's own numbers, read from
 `continuation3/final/README.md` and `continuation3/end/README.md`; denominators are unchanged.
 

@@ -40,9 +40,17 @@ and then denies the next one.
 
 1. `raw-omp/run.json` records the runtime as the `omp-18.1.12-linux-x64` binary (sha256 `77c3520a…`)
    self-reporting version **`omp/18.2.2`**. The brief said oh-my-pi 18.1.13.
-2. `protocol/arm-budgets/deepseek41.json` carries a stale selector in `bound.deepseek_metadata`:
-   `opencode-go/deepseek-v4-flash` (no `.1`), while all 470 receipts record `deepseek-v4.1-flash`, which is
-   the selector the brief names and the one actually called.
+2. `protocol/arm-budgets/deepseek41.json` carries `bound.deepseek_metadata.selector =
+   opencode-go/deepseek-v4-flash` (no `.1`), while all 470 receipts record `deepseek-v4.1-flash`.
+
+**Both resolved by the runner, and the first one corrects me.** `arm-outputs/corrections.json` (read while
+scoring claude-hicap) establishes that (2) is **not a deepseek41 field**: it is the frozen continuation-3
+cost-policy block describing the *hybrid* arm's research model, copied into every arm's budget including
+both Claude arms. My flag overstated it; the route actually called was never in doubt. And (1) is an
+in-place binary replacement at the same path — the runtime self-reported 18.1.13 at 18:49Z and 18.2.2
+afterwards, so the brief was correct when written and went stale. deepseek41 ran against 18.2.2. Neither
+affects the score. The 41-against-40 response count is likewise resolved: the ceiling is enforced *after* a
+response, so one further request can already be in flight.
 
 ## Assertion corpus — 19 documents across 8 of 12 jobs
 
@@ -215,6 +223,9 @@ reached the stage where a canon proposition is stated, against Arm C's 3 of 88 �
 job is where 8 of the 16 findings over Arm C come from.
 
 ## Comparison table
+
+**The current, full comparison table now lives in `../claude-hicap/README.md`** and supersedes the one below. Headline: claude-hicap — the control arm for Arm C's ceiling caveat — scored 46/110 (41.82%) including 3 of 5 corrections, a strict superset of both Arm C (18) and deepseek41 (33).
+
 
 Premium and hybrid rows are continuation 3's own numbers from `continuation3/final/README.md` and
 `continuation3/end/README.md`; denominators unchanged.
