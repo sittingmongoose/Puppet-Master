@@ -146,6 +146,32 @@ C4C-02 is the strongest: it identifies a route to a false complete-recovery badg
 text permits, and grounds it in the BKP-006/BKP-007 lineage packet, which stated the clean-host condition
 that current owner text reduced to a future test surface.
 
+## Amendment after scoring deepseek41 — a verified error in Arm C's supporting text
+
+Arm C asserted, in J0019, J0022 and J0026 and in two of its lead documents, that
+`op_store().gc(head, SystemTime::UNIX_EPOCH)` "preserves nothing by recency", and therefore that the dojjo
+server mirror "retains only operations and views reachable from the single resolved head" after every sync.
+
+That is backwards. jj's `lib/src/simple_op_store.rs:285-298` keeps a file when `mtime > keep_newer` and
+removes it otherwise, so with `keep_newer = UNIX_EPOCH` **nothing is removed**. I read the source directly.
+deepseek41's J0025 got this right and Arm C did not; Arm C cited only the docs.rs trait documentation, while
+deepseek41 read the implementation.
+
+Consequences, all recorded in the JSON files:
+
+- **The F079 and F004 credits stand.** Both rest on Arm C's independent Plans citations, not on this claim.
+- **Arm C's lead `dojjo-sync-complete-prunes-operation-history.md` is materially false.** Its central claim
+  — that a dojjo mirror "is a current-state replica, never an operation-history archive" — does not hold.
+- **Candidate C4C-05 loses one of its two external legs** and survives on the other (the per-instance
+  `FsDojoUploadStore` io_lock that does not coordinate across concurrent HTTP requests, plus the `file://`
+  remote path that bypasses the smart-HTTP lock entirely). The covered-writer-path proposition itself does
+  not depend on the GC claim.
+
+A second, softer cross-arm note: Arm C described GG's drag hints as typed target previews and explicitly
+flagged its own open question of whether the hint appears at the drop target or only at the source.
+deepseek41 answered it from code — source-side only, no post-mutation preview. Not a contradiction, a
+resolution; both arms keep F066.
+
 ## Shared versus unique coverage
 
 | | Count |
@@ -206,6 +232,10 @@ partials and 5 out-of-union candidates — a high yield per lead reached.
 
 Premium and hybrid rows are continuation 3's own numbers, read from
 `continuation3/final/README.md` and `continuation3/end/README.md`; denominators are unchanged.
+
+**The deepseek41 column is now filled in; the full, current comparison table lives in
+`../deepseek41/README.md` and supersedes the one below for every arm scored after Arm C.** Headline:
+deepseek41 scored 33/110 (30.00%) for $0.531509 — 16 findings Arm C missed, 1 (`F051`) that only Arm C has.
 
 | Measure | Premium | Hybrid | **Claude (Arm C)** | deepseek41 | glm53 | muse13 | union |
 |---|---:|---:|---:|---:|---:|---:|---:|

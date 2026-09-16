@@ -557,5 +557,22 @@
     "Unsupported/rejected is a union class, not a false-positive rate.",
     "11 of 12 jobs were request-limited; request-limited coverage and the reached-delivery fraction are reported separately so a reader can separate 'did not get there' from 'got there and missed'.",
     "Cost is a captured upper valuation equal to the CLI-reported subscription-equivalent, not a cash invoice."
+  ],
+  "adjudicator_amendments": [
+    {
+      "at": "2026-09-16",
+      "found_by": "deepseek41/J0025-reconcile; verified by the adjudicator against jj lib/src/simple_op_store.rs:285-298",
+      "finding": "Arm C asserted that op_store().gc(head, SystemTime::UNIX_EPOCH) preserves nothing by recency and that the dojjo mirror therefore retains only the current head's closure after every sync. That is backwards: the implementation keeps a file when mtime > keep_newer, so UNIX_EPOCH preserves everything.",
+      "appears_in": [
+        "jobs/J0019-reconcile/workspace/notes.md (L-39a5001283f3 correction 1)",
+        "jobs/J0019-reconcile/workspace/leads/dojjo-op-store-gc-unix-epoch-and-lock-gap.md",
+        "jobs/J0022-reconcile/workspace/notes.md (L-c0c7178a160f conflicting evidence 2)",
+        "jobs/J0022-reconcile/workspace/leads/dojjo-sync-complete-prunes-operation-history.md (materially false; its central claim is that the mirror is never an operation-history archive)",
+        "jobs/J0026-compare/workspace/notes.md (covered-3 under L-39a5001283f3)",
+        "jobs/J0026-compare/workspace/leads/pm-gc-fence-held-does-not-state-coverage.md"
+      ],
+      "effect_on_score": "None. F079 and F004 rest on independent Plans citations. Candidate C4C-05 loses one of two external legs and survives on the other.",
+      "note": "Arm C cited only the docs.rs trait documentation for jj-lib 0.38.0; deepseek41 read the filesystem implementation."
+    }
   ]
 }

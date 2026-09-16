@@ -24,7 +24,8 @@
           "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0019-reconcile/workspace/leads/dojjo-op-store-gc-unix-epoch-and-lock-gap.md",
           "sha256": "c0cf000f2adb55ddfb0b922d9285421544c4480239ccf634b40101c3d87cc1ad"
         }
-      ]
+      ],
+      "adjudicator_amendment": "AMENDED 2026-09-16 after scoring deepseek41: Arm C's supporting text for this finding contains a verified factual error. Arm C asserted in J0019, J0022 and J0026 that op_store().gc(head, SystemTime::UNIX_EPOCH) 'preserves nothing by recency' and that the dojjo mirror therefore keeps only what is reachable from the resolved head. jj's lib/src/simple_op_store.rs:285-298 keeps a file when mtime > keep_newer and removes it otherwise, so with keep_newer = UNIX_EPOCH nothing is removed. The adjudicator read that source directly. deepseek41 (J0025 item 2) got this right. THE CREDIT STANDS: it rests on Arm C's independent Plans citations, not on the UNIX_EPOCH claim. Arm C's lead dojjo-sync-complete-prunes-operation-history.md is materially false."
     },
     {
       "finding_id": "F006",
@@ -225,7 +226,8 @@
           "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0022-reconcile/workspace/leads/dojjo-sync-complete-prunes-operation-history.md",
           "sha256": "7c11e0db99b4ebae2e55a786bdb01cfadb5fb5a06ae0b803e0d8aab90695ddad"
         }
-      ]
+      ],
+      "adjudicator_amendment": "AMENDED 2026-09-16 after scoring deepseek41: Arm C's supporting text for this finding contains a verified factual error. Arm C asserted in J0019, J0022 and J0026 that op_store().gc(head, SystemTime::UNIX_EPOCH) 'preserves nothing by recency' and that the dojjo mirror therefore keeps only what is reachable from the resolved head. jj's lib/src/simple_op_store.rs:285-298 keeps a file when mtime > keep_newer and removes it otherwise, so with keep_newer = UNIX_EPOCH nothing is removed. The adjudicator read that source directly. deepseek41 (J0025 item 2) got this right. THE CREDIT STANDS: it rests on Arm C's independent Plans citations, not on the UNIX_EPOCH claim. Arm C's lead dojjo-sync-complete-prunes-operation-history.md is materially false."
     },
     {
       "finding_id": "F080",
@@ -440,6 +442,14 @@
       "title": "Hosting, transport and local history remain separate",
       "classification": "unsupported_or_rejected",
       "reason": "J0026 quotes JJI-008's 'a text op log, Git push, mirror clone, Git bundle, current bookmarks, or remote availability alone cannot satisfy it'. Separation of forge accounts, PR/CI caches and remote transport from local Jujutsu identity and authority is not asserted."
+    }
+  ],
+  "amendments": [
+    {
+      "at": "2026-09-16",
+      "scope": "F079, F004 supporting text",
+      "summary": "Arm C's UNIX_EPOCH garbage-collection claim is wrong; verified against jj lib/src/simple_op_store.rs:285-298 by the adjudicator. Credits stand on independent grounds. Arm C's lead dojjo-sync-complete-prunes-operation-history.md (sha256 7c11e0db99b4ebae2e55a786bdb01cfadb5fb5a06ae0b803e0d8aab90695ddad) is materially false.",
+      "found_by": "deepseek41/J0025-reconcile, independently verified by the adjudicator"
     }
   ]
 }

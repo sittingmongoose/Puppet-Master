@@ -147,7 +147,14 @@
         "Plans/jujutsu_integration_contracts.schema.json:2183-2190, 2371",
         "docs.rs/jj-lib/0.38.0 OpStore::gc (keep_newer)"
       ],
-      "adjudicator_note": "Not added to the union."
+      "adjudicator_note": "Not added to the union. AMENDED 2026-09-16: one of the two external legs of this candidate is unsound. Arm C's claim that dojjo 'opts out of the documented mitigation by passing UNIX_EPOCH' is wrong - jj's lib/src/simple_op_store.rs:285-298 removes a file only when mtime <= keep_newer, so UNIX_EPOCH removes nothing. Verified by the adjudicator against the source; deepseek41/J0025 found it. The candidate SURVIVES on its other leg, which is unaffected: the per-instance FsDojoUploadStore io_lock that does not coordinate across concurrent HTTP requests, and the file:// remote path that bypasses the smart-HTTP handler and its lock entirely. The covered-writer-path proposition does not depend on the GC claim."
+    }
+  ],
+  "amendments": [
+    {
+      "at": "2026-09-16",
+      "scope": "C4C-05",
+      "summary": "One supporting leg (the UNIX_EPOCH GC claim) is factually wrong; the candidate survives on the lock-coverage leg."
     }
   ]
 }
