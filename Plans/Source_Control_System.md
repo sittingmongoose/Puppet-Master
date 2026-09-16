@@ -140,6 +140,11 @@ unblocks: [SCS-005, JJI-003, JJI-004]
 acceptance_criteria:
   - Lease loss or stale generation blocks mutation before effect.
   - Credential leases contain only non-secret refs and expire or revoke independently of account records.
+  - >-
+    A credential lease carries the transport evidence its transport requires, as a present field rather than an optional
+    one. HTTPS requires `use_http_path`, and SSH requires both `known_hosts_receipt_ref` and `forwarding_disabled`. The
+    existing true and non-empty constraints are unchanged, opposite-transport fields stay optional, and a non-empty
+    known-host reference is evidence that a decision was recorded, not proof that its referent still resolves.
   - Accepted async commands point to ObservableWork; terminal receipts carry before/after native revisions and event refs.
   - Command scopes preserve exact Project/Home Server/Host/Environment/Source Location/repository/backend/workspace/revision/currentness/lease/credential identities as applicable, while path/focus/newest/remote text and generic provider fields cannot satisfy identity.
   - Read-only and pre-repository commands do not inherit mutation-only writer or transport requirements; command-specific requirements are selected only by the exact command_id discriminator.
@@ -154,7 +159,7 @@ reasoning_tier: high
 context_scope: source_control_mutation_authority
 implementation_surfaces: [Plans/source_control_contracts.schema.json, future command handlers, future credential broker adapter]
 node_compile_hint: {mode: source_control_command_and_lease_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:SCM-008..009, source_ref:egolite-register:CT-01..02]
+source_lineage: [source_ref:egolite-register:SCM-008..009, source_ref:egolite-register:CT-01..02, source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-credential-lease-transport-evidence-109]
 preserved_exact_tokens: [writer lease, generation, epoch, git-credential-puppet-master, credential.useHttpPath=true, pm-ssh, pm-ssh-agent-bridge, ObservableWork, effect_unknown]
 negative_constraints: [Do not prompt for ambient credentials., Do not persist private keys or tokens., Do not treat expiry as cleanup proof., Do not retry an effect-unknown mutation automatically.]
 owner_hints: [Plans/Source_Control_System.md, Plans/Shared_Integration_Runtime.md, Plans/Permissions_System.md, Plans/FileSafe.md]
@@ -336,6 +341,8 @@ The event envelope is owned by `Plans/Contracts_V0.md`; persistence and replay a
 ### 3.3 Credential transport contract
 
 HTTPS invokes the exact helper identity `git-credential-puppet-master` through process-scoped configuration with `credential.useHttpPath=true` and terminal prompting suppressed. SSH invokes exact `pm-ssh`; private keys remain broker-held and each request binds identity, host, repository, known-host decision, no-forwarding posture, operation, lease, and receipt. Optional `pm-ssh-agent-bridge` is ephemeral and operation-scoped.
+
+The neutral credential lease records that binding rather than assuming it. An HTTPS lease requires `use_http_path`, and an SSH lease requires both `known_hosts_receipt_ref` and `forwarding_disabled`; an omitted field is not an unconstrained field. The existing true/non-empty value constraints are unchanged, the opposite transport's fields stay optional, and this adds no broker, raw askpass path, secret-bearing field, persisted record, or ambient fallback.
 
 Broker IPC is an ACL/SID/process/lease-validated Windows named pipe or owner-only peer/lease-validated Unix socket. It is not public ingress. Tokens, private keys, passwords, cookies, raw agent sockets, and credential-bearing environment variables never enter Project files, source-control records, logs, chat, prompts, events, ordinary receipts, or artifacts.
 
@@ -1058,6 +1065,21 @@ acceptance_criteria:
   - Git pages use `git_commit_graph`, null stable-change references, and parent/merge edges; Jujutsu pages use `jujutsu_change_graph` and require a stable change reference for every node.
   - Jujutsu operation history, source history, and Backup history are explicitly separate, and graph navigation never dispatches a restore, undo, source mutation, or publication.
   - RepositoryContext remains identity authority; display paths and shared commits are explicitly non-authoritative.
+  - >-
+    A page is internally consistent, not merely within its per-field bounds. `page.returned_count` equals the number of
+    emitted nodes, that count does not exceed the requested `page.page_size`, and `page.page_size` does not exceed the
+    200-node cap.
+  - >-
+    A page whose `currentness.state` is `current` and whose `page.has_more` is true carries a usable continuation, so
+    `page.next_cursor_ref` is a non-null reference. Unavailable, partial, and stale pages keep their existing owner
+    semantics and are not generalized into this rule.
+  - >-
+    `node_ref` is unambiguous within one page. Two nodes on the same page cannot share a `node_ref` while carrying
+    different `revision_ref` values.
+  - >-
+    Parent-reference expansion is finite. A node declares at most 600 `parent_refs`, the same adjacency budget the page
+    already applies to `edges`, so a bounded page cannot carry unbounded adjacency behind `unbounded_hydration=false`.
+    A parent may legitimately live on another page; presence in the same page is not required.
   - Static schema and fixtures keep `runtime_evidence_claimed=false` and establish no handler, adapter, native Slint behavior, performance result, scenario result, or readiness claim.
 validation_surfaces:
   - Plans/source_control_contracts.schema.json#/$defs/source_graph_projection
@@ -1065,6 +1087,11 @@ validation_surfaces:
   - Plans/final_gui_interaction_contracts.schema.json#/$defs/post_integration_dry_component_reconciliation
   - Plans/final_gui_interaction_contract_fixtures.json
   - python3 scripts/pm-new-contracts-verify.py
+  - >-
+    The continuation rule and the 600-reference parent bound are enforced by
+    `Plans/source_control_contracts.schema.json`. The count/page-size arithmetic and the in-page `node_ref`
+    uniqueness rule are relational obligations that JSON Schema cannot express; they await a
+    `source_control_contracts` branch in the existing contract semantic gate and are unenforced until then.
   - future native pagination, stale-page, anchor-preservation, large-graph, Git/Jujutsu parity, accessibility, and frame-pacing tests
 risk_class: unbounded_graph_hydration_or_source_history_identity_conflation
 reasoning_tier: high
@@ -1074,6 +1101,7 @@ node_compile_hint: {mode: static_owner_contract_only, create_worknodes: false, c
 source_lineage:
   - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/machine/dry_components.json:17-26
   - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/semantic_gap_plan_rerun/semantic_gap_plan.json
+  - source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-source-graph-page-consistency-107
 preserved_exact_tokens: [SourceGraph, RepositoryContext, git_commit_graph, jujutsu_change_graph, source history, operation history, Backup history]
 negative_constraints:
   - Do not infer repository, workspace, Host, Environment, remote, account, or authority from graph focus, display path, labels, or shared commit objects.

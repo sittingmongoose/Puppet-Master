@@ -8894,7 +8894,7 @@
         "future Source Control UI",
         "future qualified owner adapter and typed contract extensions"
       ],
-      "line_count": 1318,
+      "line_count": 1340,
       "path": "Plans/Jujutsu_Integration.md",
       "plan_unit_count": 20,
       "plan_unit_ids": [
@@ -8944,7 +8944,7 @@
         "verified_group_undo_redo_and_selected_operation_reversal",
         "version_comparison_and_focused_change_evolution"
       ],
-      "sha256": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a",
+      "sha256": "90814291f47d79cf1035e7ce8ad09b352d39ea7ba38d3be1b504d3bf468124f8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 20
@@ -16792,7 +16792,7 @@
         "future source-control facade",
         "future source-control migration"
       ],
-      "line_count": 1432,
+      "line_count": 1460,
       "path": "Plans/Source_Control_System.md",
       "plan_unit_count": 21,
       "plan_unit_ids": [
@@ -16844,7 +16844,7 @@
         "unbounded_graph_hydration_or_source_history_identity_conflation",
         "wrong_environment_or_stale_version_certification"
       ],
-      "sha256": "7695846ddacdedf0f3a81f99830269dd7931e1719d78d19feb532ab90c1b080c",
+      "sha256": "f401ecf65f866c23bbe23650a487f8ca763b955ea2d908395e54b2ac1853ecf3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 21
@@ -16877,6 +16877,7 @@
         "Plans/source_control_contracts.schema.json#/$defs/source_graph_projection",
         "Plans/touch_closure.json",
         "Settings search and route dedupe fixtures",
+        "The continuation rule and the 600-reference parent bound are enforced by `Plans/source_control_contracts.schema.json`. The count/page-size arithmetic and the in-page `node_ref` uniqueness rule are relational obligations that JSON Schema cannot express; they await a `source_control_contracts` branch in the existing contract semantic gate and are unenforced until then.",
         "Windows and WSL separation tests",
         "and agent-policy fixtures",
         "and migration fixtures",
@@ -19569,7 +19570,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-16T18:57:21Z",
+  "generated_at_utc": "2026-09-16T19:55:11Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

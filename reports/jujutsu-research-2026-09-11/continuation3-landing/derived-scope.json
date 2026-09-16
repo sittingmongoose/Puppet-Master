@@ -1,0 +1,30 @@
+{
+  "schema": "pm.jujutsu_landing.derived_scope.v1",
+  "recorded_at_utc": "2026-09-16T18:57:00Z",
+  "rule": "Regeneration is deterministic. Files for documents this branch did not edit must not change.",
+  "source_files_edited": [
+    "Plans/Jujutsu_Integration.md",
+    "Plans/Source_Control_System.md",
+    "Plans/jujutsu_integration_contracts.schema.json",
+    "Plans/jujutsu_integration_contract_fixtures.json",
+    "Plans/source_control_contracts.schema.json",
+    "Plans/source_control_contract_fixtures.json",
+    "Plans/ledgers/v2/ledger_registry.json"
+  ],
+  "new_files": [
+    "Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections/",
+    "reports/jujutsu-research-2026-09-11/continuation3-landing/"
+  ],
+  "derived_files_changed": [
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/node_readiness_report.json"
+  ],
+  "shards_changed": [],
+  "shards_note": "Plans/Jujutsu_Integration.md and Plans/Source_Control_System.md are not listed as sharding_config sources, which is the same pre-existing governance coverage gap the F001 landing recorded. Shard generation therefore produced no shard change, and the configured shard check still passes across 98 docs and 2676 shards.",
+  "foreign_document_changes": "none",
+  "verification": "Every plan_unit_id that changed in the index belongs to Plans/Jujutsu_Integration.md or Plans/Source_Control_System.md. For units this branch did not edit, the only changed field is source_doc_sha256, which is the containing document's new hash."
+}

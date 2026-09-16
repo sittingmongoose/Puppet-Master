@@ -1,0 +1,29 @@
+{
+  "schema": "pm.jujutsu_landing.ledger_final.v1",
+  "ledger_id": "pldg-20260916-001-jujutsu-continuation-corrections",
+  "registered_in": "Plans/ledgers/v2/ledger_registry.json",
+  "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections",
+  "status": "fail",
+  "warnings": [],
+  "summary": {
+    "atoms": 4,
+    "compile_queue_items": 4,
+    "corrections": 4,
+    "decisions": 4,
+    "events": 3,
+    "plan_units_checked": 41,
+    "questions": 0
+  },
+  "errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']"
+  ],
+  "interpretation": "Every ledger-internal check passes with no warnings. The three failures are pre-existing governance coverage omissions of the same kind the F001 landing recorded on 2026-09-11, widened only because this wave touches a second owner doc. Neither Plans/Jujutsu_Integration.md nor Plans/Source_Control_System.md is a sharding_config source on origin/main, and this branch changed neither sharding_config, Spec_Lock nor the plan graph. Governance reseals belong to the designated Plans agent.",
+  "precedent": {
+    "ledger_id": "pldg-20260911-001-jujutsu-receipt-correction",
+    "commit": "1eb900ca2b",
+    "status": "fail",
+    "errors_were": "the same three coverage omissions, naming Plans/Jujutsu_Integration.md only"
+  }
+}

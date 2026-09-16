@@ -1,0 +1,80 @@
+{
+  "at": "2026-09-16T18:57:08Z",
+  "status": "PASS_SCOPED_PENDING_INDEPENDENT_BRANCH_REVIEW",
+  "corrections": ["F106", "F107", "F108", "F109"],
+  "not_landed": ["F110"],
+  "compiled_plan_units": ["JJI-002", "JJI-003", "JJI-008", "SCS-003", "SCS-017"],
+  "branch": "plans/jj-corrections-20260916",
+  "branch_base_commit": "8bcac66937",
+  "canonical_outputs": {
+    "Plans/Jujutsu_Integration.md": "90814291f47d79cf1035e7ce8ad09b352d39ea7ba38d3be1b504d3bf468124f8",
+    "Plans/jujutsu_integration_contracts.schema.json": "2e78d087706de9e53702b6463c267688ea31b3ba4a162a220e5939fb3de4dbaa",
+    "Plans/jujutsu_integration_contract_fixtures.json": "2f35bd5db1cbadb8cff1c9f271e3422cb68d0307db0337c16d8954fa32ded0ac",
+    "Plans/Source_Control_System.md": "f401ecf65f866c23bbe23650a487f8ca763b955ea2d908395e54b2ac1853ecf3",
+    "Plans/source_control_contracts.schema.json": "ad8cea9896eeabbff6d17b419888ba56472290b6d388ad7941fa6b804050e5d9",
+    "Plans/source_control_contract_fixtures.json": "fc4aae1fb89f0cc1e3136e355069f72e9a96dc3c019eeb28f635888e5c4e9c6a"
+  },
+  "scoped_contracts": {
+    "status": "pass",
+    "command": "python3 scripts/pm-new-contracts-verify.py",
+    "findings": 0,
+    "counts": {
+      "contract_pairs": 30,
+      "metaschemas_valid": 30,
+      "internal_self_tests": 12,
+      "internal_self_tests_passed": 12,
+      "positive_cases": 1032,
+      "positive_cases_valid": 1032,
+      "negative_cases": 3352,
+      "negative_cases_rejected": 3352
+    },
+    "baseline_before_edits": {"positive_cases": 1028, "negative_cases": 3338},
+    "delta": {"positive_cases": 4, "negative_cases": 14}
+  },
+  "fixture_deltas": {
+    "F106": {"positive": ["backup_jj_restore_ready_for_owner_activation_is_internally_consistent"], "negative": ["backup_jj_ready_activation_cannot_coexist_with_blocked_workspace_map", "backup_jj_ready_activation_cannot_coexist_with_blocked_colocation", "backup_jj_ready_activation_cannot_coexist_with_unverified_working_copy"]},
+    "F107": {"positive": [], "negative": ["source_graph_current_page_claiming_more_requires_continuation"]},
+    "F108": {"positive": ["command_request_jujutsu_git_clone_destination_not_initialized", "command_result_jujutsu_clone_not_initialized_destination_cancelled"], "negative": ["command_request_jujutsu_clone_initialized_phase_requires_native_revision", "command_request_jujutsu_preinit_phase_is_clone_only", "command_request_jujutsu_preinit_phase_cannot_claim_a_native_snapshot", "command_request_jujutsu_preinit_phase_cannot_claim_a_native_operation", "command_result_jujutsu_clone_initialized_phase_requires_native_before_revision", "command_result_jujutsu_preinit_clone_cannot_fabricate_a_before_revision"]},
+    "F109": {"positive": ["ssh_credential_lease_binds_known_host_and_disables_forwarding"], "negative": ["https_credential_lease_requires_path_scoping_evidence", "ssh_credential_lease_requires_known_host_receipt", "ssh_credential_lease_requires_forwarding_posture", "ssh_credential_lease_requires_both_trust_fields"]}
+  },
+  "configured_shards": {
+    "status": "pass",
+    "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+    "docs_checked": 98,
+    "shards_checked": 2676,
+    "source_count": 98,
+    "failures": []
+  },
+  "plan_index": {
+    "status": "pass",
+    "command": "python3 scripts/pm-plan-index.py validate",
+    "generated_at_utc": "2026-09-16T18:57:08Z",
+    "schema_id": "pm.plan_index.validation_report.v1",
+    "failures": [],
+    "summary": {
+      "acceptance_unit_count": 25798,
+      "coverage_status": "pass",
+      "node_readiness_status": "blocked_runtime_certification_incomplete",
+      "plan_unit_count": 6643
+    }
+  },
+  "ledger_validator": {
+    "ledger_id": "pldg-20260916-001-jujutsu-continuation-corrections",
+    "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections",
+    "status": "see ledger-final.json"
+  },
+  "partial_enforcement": {
+    "finding_id": "F107",
+    "landed_as_owner_obligation_only": [
+      "page.returned_count equals the emitted node count and does not exceed page.page_size or the 200-node cap",
+      "node_ref is unambiguous within one page"
+    ],
+    "reason": "Both are relational rules JSON Schema cannot express. The repository evaluates such rules in contract_semantic_failures inside scripts/pm-new-contracts-verify.py, and scripts/ is outside this thread's CLAUDE.md edit scope, so no negative fixture was authored for them. SCS-017 validation_surfaces records the gap.",
+    "landed_as_schema_enforced": [
+      "a current page declaring has_more carries a non-null next_cursor_ref",
+      "parent_refs is bounded at 600, the page adjacency budget already applied to edges"
+    ]
+  },
+  "no_runtime_or_governance_seal_claim": true,
+  "landing": "Branch pushed and stopped for the reviewer's independent review. Not landed on main."
+}

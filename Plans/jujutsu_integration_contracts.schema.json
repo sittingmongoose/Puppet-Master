@@ -448,6 +448,60 @@
       },
       "additionalProperties": false
     },
+    "currentness_fence_uninitialized_destination": {
+      "description": "The same Host/Environment/adapter/catalog fence, for the clone phase in which native initialization has not created the destination repository yet. Native snapshot and operation identity do not exist in that phase and are null rather than fabricated.",
+      "type": "object",
+      "required": [
+        "execution_host_id",
+        "execution_environment_id",
+        "adapter_ref",
+        "adapter_version",
+        "certification_catalog_ref",
+        "catalog_generation",
+        "catalog_currentness",
+        "snapshot_id",
+        "expected_operation_id",
+        "checked_at_utc"
+      ],
+      "properties": {
+        "execution_host_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "adapter_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "adapter_version": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "certification_catalog_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "catalog_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "catalog_currentness": {
+          "enum": [
+            "current",
+            "stale",
+            "unavailable"
+          ]
+        },
+        "snapshot_id": {
+          "type": "null"
+        },
+        "expected_operation_id": {
+          "type": "null"
+        },
+        "checked_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
     "command_target": {
       "type": "object",
       "required": [
@@ -878,8 +932,22 @@
         "scm_backend": {
           "const": "jujutsu"
         },
+        "native_state_phase": {
+          "description": "Absent means the ordinary initialized-repository phase. destination_not_initialized is admitted only for cmd.jujutsu.git.clone, before native initialization creates the destination repository.",
+          "enum": [
+            "initialized",
+            "destination_not_initialized"
+          ]
+        },
         "expected_revision": {
-          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/jujutsu_revision"
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/jujutsu_revision"
+            }
+          ]
         },
         "command_class": {
           "enum": [
@@ -892,7 +960,14 @@
           ]
         },
         "currentness": {
-          "$ref": "#/$defs/currentness_fence"
+          "oneOf": [
+            {
+              "$ref": "#/$defs/currentness_fence"
+            },
+            {
+              "$ref": "#/$defs/currentness_fence_uninitialized_destination"
+            }
+          ]
         },
         "writer_lease_ref": {
           "oneOf": [
@@ -971,6 +1046,41 @@
         }
       },
       "allOf": [
+        {
+          "if": {
+            "properties": {
+              "native_state_phase": {
+                "const": "destination_not_initialized"
+              }
+            },
+            "required": [
+              "native_state_phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.jujutsu.git.clone"
+              },
+              "expected_revision": {
+                "type": "null"
+              },
+              "currentness": {
+                "$ref": "#/$defs/currentness_fence_uninitialized_destination"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "expected_revision": {
+                "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/jujutsu_revision"
+              },
+              "currentness": {
+                "$ref": "#/$defs/currentness_fence"
+              }
+            }
+          }
+        },
         {
           "if": {
             "properties": {"command_id": {"const": "cmd.jujutsu.git.clone"}},
@@ -1819,8 +1929,22 @@
         "repository_context_ref": {
           "$ref": "#/$defs/non_secret_ref"
         },
+        "native_state_phase": {
+          "description": "Absent means the ordinary initialized-repository phase. destination_not_initialized is admitted only for cmd.jujutsu.git.clone, where no native before-state existed at the destination.",
+          "enum": [
+            "initialized",
+            "destination_not_initialized"
+          ]
+        },
         "before_revision": {
-          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/jujutsu_revision"
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/jujutsu_revision"
+            }
+          ]
         },
         "after_revision": {
           "oneOf": [
@@ -1887,7 +2011,14 @@
           "uniqueItems": true
         },
         "currentness": {
-          "$ref": "#/$defs/currentness_fence"
+          "oneOf": [
+            {
+              "$ref": "#/$defs/currentness_fence"
+            },
+            {
+              "$ref": "#/$defs/currentness_fence_uninitialized_destination"
+            }
+          ]
         },
         "return_context": {
           "$ref": "#/$defs/return_context"
@@ -1897,6 +2028,41 @@
         }
       },
       "allOf": [
+        {
+          "if": {
+            "properties": {
+              "native_state_phase": {
+                "const": "destination_not_initialized"
+              }
+            },
+            "required": [
+              "native_state_phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.jujutsu.git.clone"
+              },
+              "before_revision": {
+                "type": "null"
+              },
+              "currentness": {
+                "$ref": "#/$defs/currentness_fence_uninitialized_destination"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "before_revision": {
+                "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/jujutsu_revision"
+              },
+              "currentness": {
+                "$ref": "#/$defs/currentness_fence"
+              }
+            }
+          }
+        },
         {
           "if": {
             "properties": {
@@ -2660,6 +2826,40 @@
               },
               "activation_config_disposition": {
                 "const": "sanitized_inactive"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "ready_for_owner_activation"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "workspace_map_result": {
+                "enum": [
+                  "verified",
+                  "remap_required"
+                ]
+              },
+              "colocation_activation_disposition": {
+                "enum": [
+                  "restored_colocated_single_writer",
+                  "owner_rebind_non_colocated_required"
+                ]
+              },
+              "working_copy_relation": {
+                "enum": [
+                  "matches_latest_snapshot",
+                  "dirty_files_preserved_separately"
+                ]
               }
             }
           }

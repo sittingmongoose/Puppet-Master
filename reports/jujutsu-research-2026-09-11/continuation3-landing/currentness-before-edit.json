@@ -1,0 +1,34 @@
+{
+  "schema": "pm.jujutsu_landing.currentness.v1",
+  "checked_at_utc": "2026-09-16T18:30:00Z",
+  "branch": "plans/jj-corrections-20260916",
+  "branch_base_commit": "8bcac66937",
+  "research_snapshot_commit": "bc7569b3f5",
+  "independent_review_head": "6a6c24bfa78e7283acafa42faae42aea6fd93da2",
+  "method": "Re-read every cited passage in the current worktree and hashed each cited canon file, then compared against the hashes the 2026-09-13 independent review recorded for its frozen reviewed-repository copy.",
+  "result": "All six cited canon files and the repository validator are byte-identical to the frozen review snapshot. No cited passage moved, so no correction is already covered by current canon and none conflicts with a direction another thread took.",
+  "files": [
+    {"path": "Plans/Jujutsu_Integration.md", "sha256_now": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a", "sha256_frozen_review": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a", "identical": true},
+    {"path": "Plans/jujutsu_integration_contracts.schema.json", "sha256_now": "de5570c37d5f502f2d6f3e511d322a117e9e958600aebf3d7a0d14ee9f7f4711", "sha256_frozen_review": "de5570c37d5f502f2d6f3e511d322a117e9e958600aebf3d7a0d14ee9f7f4711", "identical": true},
+    {"path": "Plans/jujutsu_integration_contract_fixtures.json", "sha256_now": "4beb3d1a8a340555a01b395ed0eda88566594a9dc8d214aaee8dc5d789354868", "sha256_frozen_review": "4beb3d1a8a340555a01b395ed0eda88566594a9dc8d214aaee8dc5d789354868", "identical": true},
+    {"path": "Plans/Source_Control_System.md", "sha256_now": "7695846ddacdedf0f3a81f99830269dd7931e1719d78d19feb532ab90c1b080c", "sha256_frozen_review": "7695846ddacdedf0f3a81f99830269dd7931e1719d78d19feb532ab90c1b080c", "identical": true},
+    {"path": "Plans/source_control_contracts.schema.json", "sha256_now": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a", "sha256_frozen_review": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a", "identical": true},
+    {"path": "Plans/source_control_contract_fixtures.json", "sha256_now": "2c53e4f9d331a326db8cd320f48fbad07a275444e09e1e114c3b7e859f823642", "sha256_frozen_review": "2c53e4f9d331a326db8cd320f48fbad07a275444e09e1e114c3b7e859f823642", "identical": true},
+    {"path": "scripts/pm-new-contracts-verify.py", "sha256_now": "37834af4e03c4326e3d45cb7d892c78595f764ed86475d482cc50ff30837eab6", "sha256_frozen_review": "37834af4e03c4326e3d45cb7d892c78595f764ed86475d482cc50ff30837eab6", "identical": true}
+  ],
+  "passages_reconfirmed": [
+    {"finding_id": "F106", "owner": "Plans/Jujutsu_Integration.md#JJI-008", "passage": "Colocation is not inferred after restore ... or blocks as a dual-writer/identity collision; a blocked/conflicted result cannot be promoted to successful Backup activation.", "schema_gap": "backup_jj_restore_verification_receipt readiness conditional constrained five fields and omitted workspace_map_result, colocation_activation_disposition and working_copy_relation.", "still_present_before_edit": true},
+    {"finding_id": "F107", "owner": "Plans/Source_Control_System.md#SCS-017", "passage": "Pages are capped at 200 nodes, hydration remains bounded, selection anchors survive pagination, and stale or partial pages remain visibly stale or partial.", "schema_gap": "source_graph_projection enforced per-field caps only; no count/continuation/identity relation and no parent_refs bound.", "still_present_before_edit": true},
+    {"finding_id": "F108", "owner": "Plans/Jujutsu_Integration.md#JJI-002 and #JJI-003 with section 3.1", "passage": "A JJ revision fence carries change_id, immutable commit_id, operation_id, workspace_id and bookmarks ... snapshot and workspace identity cannot be synthesized; cmd.jujutsu.git.clone preserves the Jujutsu operation/snapshot/currentness fence and destination Source Location.", "schema_gap": "command_request.expected_revision, currentness.snapshot_id, currentness.expected_operation_id and command_result.before_revision were unconditionally native, with no phase-discriminated absent-native-state branch.", "still_present_before_edit": true},
+    {"finding_id": "F109", "owner": "Plans/Source_Control_System.md section 3.3 and #SCS-003", "passage": "HTTPS invokes the exact helper identity git-credential-puppet-master ... with credential.useHttpPath=true ... SSH invokes exact pm-ssh; each request binds identity, host, repository, known-host decision, no-forwarding posture, operation, lease, and receipt.", "schema_gap": "credential_lease transport branches constrained use_http_path, known_hosts_receipt_ref and forwarding_disabled only when present; neither the common required list nor either branch required them.", "still_present_before_edit": true}
+  ],
+  "dropped_as_already_covered": [],
+  "questions_for_jared": [
+    "F107's count arithmetic and in-page node_ref uniqueness need a source_control_contracts branch in the contract semantic gate under scripts/, which is outside this thread's CLAUDE.md edit scope; authorize that as a follow-up or keep them as owner-only obligations?"
+  ],
+  "not_landed": {
+    "finding_id": "F110",
+    "classification": "optional_capability",
+    "reason": "New-repository object-format selection is an unapproved optional capability awaiting Jared's answer."
+  }
+}

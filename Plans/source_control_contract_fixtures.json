@@ -222,6 +222,27 @@
       }
     },
     {
+      "name": "ssh_credential_lease_binds_known_host_and_disables_forwarding",
+      "definition": "credential_lease",
+      "value": {
+        "schema_id": "pm.source_control.credential_lease.v1",
+        "credential_lease_id": "credential-lease:2",
+        "credential_ref": "credential:scm:forgejo:account-2",
+        "transport": "ssh",
+        "repo_id": "repo:beta",
+        "host_identity": "git.example.org",
+        "operation_id": "operation:fetch:2",
+        "goal_run_id": "goal-run:2",
+        "issued_at_utc": "2026-08-31T12:00:00Z",
+        "expires_at_utc": "2026-08-31T12:05:00Z",
+        "revocation_state": "active",
+        "prompt_suppressed": true,
+        "use_http_path": null,
+        "known_hosts_receipt_ref": "known-hosts-receipt:git.example.org:1",
+        "forwarding_disabled": true
+      }
+    },
+    {
       "name": "jj_setup_is_host_environment_specific",
       "definition": "setup_state",
       "value": {
@@ -2092,6 +2113,15 @@
       "expected_error": "Backup history remains owner-separated"
     },
     {
+      "name": "source_graph_current_page_claiming_more_requires_continuation",
+      "definition": "source_graph_projection",
+      "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
+      "patch": {
+        "page.next_cursor_ref": null
+      },
+      "expected_error": "a current page declaring has_more must carry a usable continuation cursor"
+    },
+    {
       "name": "source_graph_static_fixture_is_not_runtime_evidence",
       "definition": "source_graph_projection",
       "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
@@ -2173,6 +2203,43 @@
         "scm_backend": "git"
       },
       "expected_error": "Jujutsu source layouts retain Jujutsu backend identity"
+    },
+    {
+      "name": "https_credential_lease_requires_path_scoping_evidence",
+      "definition": "credential_lease",
+      "base_valid": "https_credential_lease_is_promptless_and_path_scoped",
+      "remove": [
+        "use_http_path"
+      ],
+      "expected_error": "an HTTPS credential lease must carry its use_http_path evidence"
+    },
+    {
+      "name": "ssh_credential_lease_requires_known_host_receipt",
+      "definition": "credential_lease",
+      "base_valid": "ssh_credential_lease_binds_known_host_and_disables_forwarding",
+      "remove": [
+        "known_hosts_receipt_ref"
+      ],
+      "expected_error": "an SSH credential lease must carry its known-host decision receipt"
+    },
+    {
+      "name": "ssh_credential_lease_requires_forwarding_posture",
+      "definition": "credential_lease",
+      "base_valid": "ssh_credential_lease_binds_known_host_and_disables_forwarding",
+      "remove": [
+        "forwarding_disabled"
+      ],
+      "expected_error": "an SSH credential lease must carry its no-forwarding posture"
+    },
+    {
+      "name": "ssh_credential_lease_requires_both_trust_fields",
+      "definition": "credential_lease",
+      "base_valid": "ssh_credential_lease_binds_known_host_and_disables_forwarding",
+      "remove": [
+        "known_hosts_receipt_ref",
+        "forwarding_disabled"
+      ],
+      "expected_error": "an SSH credential lease omitting both trust fields is not admissible"
     },
     {
       "name": "backup_restore_verified_credential_requires_fresh_lease_ref",

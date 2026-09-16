@@ -1,0 +1,17 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260916-001-jujutsu-continuation-corrections",
+  "updated_at_utc": "2026-09-16T00:40:00+00:00",
+  "open_questions": [],
+  "deferred_questions": [],
+  "open_blockers": [],
+  "remaining_work": [
+    "Await the reviewer's independent review of branch plans/jj-corrections-20260916, then land on main. F110 stays unapproved. The two unexpressible F107 relational rules need Jared to authorize a source_control_contracts branch in the contract semantic gate under scripts/."
+  ],
+  "scope_note": "F110, the new-repository object-format picker, is an unapproved optional capability and is outside this ledger.",
+  "deferred_governance_validation_errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']"
+  ]
+}

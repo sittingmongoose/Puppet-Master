@@ -2275,6 +2275,81 @@
       }
     },
     {
+      "name": "command_request_jujutsu_git_clone_destination_not_initialized",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.jujutsu.command_request.v1",
+        "command_id": "cmd.jujutsu.git.clone",
+        "command_instance_id": "command:jj:clone:preinit:28",
+        "idempotency_key": "idempotency:jj:clone:preinit:28",
+        "repository_context_ref": "repository-context:jj:clone:preinit:28",
+        "scm_backend": "jujutsu",
+        "native_state_phase": "destination_not_initialized",
+        "expected_revision": null,
+        "command_class": "transport_mutation",
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": null,
+          "expected_operation_id": null,
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "writer_lease_ref": "lease:jj:clone:preinit:28",
+        "credential_lease_ref": "credential-lease:jj:clone:preinit:28",
+        "permission": {
+          "permission_snapshot_ref": "permission:jj:clone:preinit:28",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "preflight_revision": "preflight:jj:clone:preinit:28",
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "file_safe_decision_ref": "filesafe:decision:clone:preinit:28",
+        "confirmation": null,
+        "target": {
+          "target_kind": "transport",
+          "change_id": null,
+          "bookmark_name": null,
+          "destination_bookmark_name": null,
+          "workspace_id": null,
+          "workspace_snapshot_id": null,
+          "operation_id": null,
+          "source_revision": null,
+          "destination_revision": null,
+          "remote_identity": "remote:jj:clone:preinit:28",
+          "destination_source_location_ref": "source-location:jj:clone:preinit:28",
+          "colocation_profile_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "interop_gate": null,
+        "observable_work_id": "observable-work:jj:clone:preinit:28",
+        "return_context": {
+          "surface_id": "product_onboarding",
+          "route_ref": "route:onboarding:first_project",
+          "focus_id": "onboarding.first_project.jj_project",
+          "invocation_token": "return:jujutsu:clone:preinit:28",
+          "caller_context_ref": "onboarding-return:first-project:jj:preinit:28",
+          "expected_caller_revision": 5,
+          "continuation_generation": 2
+        },
+        "requested_at_utc": "2026-08-31T20:00:00Z"
+      }
+    },
+    {
       "name": "command_request_jujutsu_git_fetch",
       "definition": "command_request",
       "value": {
@@ -2779,6 +2854,72 @@
       }
     },
     {
+      "name": "command_result_jujutsu_clone_not_initialized_destination_cancelled",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.jujutsu.command_result.v1",
+        "command_id": "cmd.jujutsu.git.clone",
+        "command_instance_id": "command:jj:clone:preinit:28",
+        "operation_id": "operation:jj:clone:preinit:28",
+        "outcome": "cancelled",
+        "repository_context_ref": "repository-context:jj:clone:preinit:28",
+        "native_state_phase": "destination_not_initialized",
+        "before_revision": null,
+        "after_revision": null,
+        "affected_identities": {
+          "change_ids": [],
+          "commit_ids": [],
+          "bookmark_names": [],
+          "workspace_ids": [],
+          "operation_ids": [],
+          "conflict_refs": []
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T20:10:28Z"
+        },
+        "error": {
+          "code": "operation_cancelled",
+          "message": "Jujutsu clone was cancelled before the destination repository was initialized; cleanup completed.",
+          "retry_disposition": "after_revalidation",
+          "effect_state": "known_not_applied",
+          "recovery_action_ids": [],
+          "detail_ref": "diagnostic:jj:clone-preinit-cancelled:28"
+        },
+        "observable_work_id": "observable-work:jj:clone:preinit:28",
+        "receipt_ref": "receipt:jj:clone-preinit-cleanup:28",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:current",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": null,
+          "expected_operation_id": null,
+          "checked_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "return_context": {
+          "surface_id": "product_onboarding",
+          "route_ref": "route:onboarding:first_project",
+          "focus_id": "onboarding.first_project.jj_project",
+          "invocation_token": "return:jujutsu:clone:preinit:28",
+          "caller_context_ref": "onboarding-return:first-project:jj:preinit:28",
+          "expected_caller_revision": 5,
+          "continuation_generation": 2
+        },
+        "completed_at_utc": "2026-08-31T20:10:28Z"
+      }
+    },
+    {
       "name": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",
       "definition": "backup_jj_closure_record",
       "value": {
@@ -3044,6 +3185,56 @@
         "expected_event_types": [],
         "outcome": "blocked_conflict",
         "recorded_at_utc": "2026-09-01T14:35:00Z"
+      }
+    },
+    {
+      "name": "backup_jj_restore_ready_for_owner_activation_is_internally_consistent",
+      "definition": "backup_jj_restore_verification_receipt",
+      "value": {
+        "schema_id": "pm.jujutsu.backup_restore_verification_receipt.v1",
+        "verification_receipt_id": "jj-restore-verification:gamma:ready",
+        "source_closure_ref": "jj-closure:colocated:gamma:22",
+        "restore_run_ref": "restore-run:project-gamma:as-new:1",
+        "restore_preview_ref": "restore-preview:project-gamma:as-new:1",
+        "isolated_repository_context_ref": "repository-context:jj:project-gamma:isolated",
+        "layout_profile": "colocated",
+        "verified_revision": {
+          "kind": "jujutsu",
+          "change_id": "change:gamma:restored",
+          "commit_id": "commit:gamma:restored:22",
+          "operation_id": "jj-op:gamma:restored:22",
+          "workspace_id": "jj-workspace:gamma:isolated",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "operation_head_refs": [
+          "operation-head:gamma:restored:22"
+        ],
+        "selected_historical_operation_id": "jj-op:gamma:7",
+        "historical_operation_result": "verified_on_disposable_copy",
+        "object_closure_result": "complete",
+        "workspace_map_result": "verified",
+        "working_copy_relation": "dirty_files_preserved_separately",
+        "colocation_activation_disposition": "restored_colocated_single_writer",
+        "conflict_refs": [],
+        "collision_refs": [],
+        "activation_config_disposition": "sanitized_inactive",
+        "credential_resolution": "not_required",
+        "credential_resolution_ref": null,
+        "remote_validation_receipt_ref": null,
+        "repository_forge_binding_ref": null,
+        "automation_binding_ref": null,
+        "owner_route_refs": [
+          "route:cmd.backup.browse",
+          "route:cmd.jujutsu.operation.show"
+        ],
+        "isolated_verification": true,
+        "hook_execution_performed": false,
+        "remote_write_performed": false,
+        "expected_event_types": [],
+        "outcome": "ready_for_owner_activation",
+        "recorded_at_utc": "2026-09-01T14:40:00Z"
       }
     },
     {
@@ -3458,6 +3649,33 @@
       "expected_error": "activation readiness requires historical operation verification on the disposable copy"
     },
     {
+      "name": "backup_jj_ready_activation_cannot_coexist_with_blocked_workspace_map",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_restore_ready_for_owner_activation_is_internally_consistent",
+      "patch": {
+        "workspace_map_result": "collision_blocked"
+      },
+      "expected_error": "activation readiness cannot coexist with a collision-blocked workspace map"
+    },
+    {
+      "name": "backup_jj_ready_activation_cannot_coexist_with_blocked_colocation",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_restore_ready_for_owner_activation_is_internally_consistent",
+      "patch": {
+        "colocation_activation_disposition": "blocked_dual_writer_or_identity_collision"
+      },
+      "expected_error": "activation readiness cannot coexist with a blocked dual-writer or identity collision"
+    },
+    {
+      "name": "backup_jj_ready_activation_cannot_coexist_with_unverified_working_copy",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_restore_ready_for_owner_activation_is_internally_consistent",
+      "patch": {
+        "working_copy_relation": "unverified"
+      },
+      "expected_error": "activation readiness requires a verified captured working-copy relationship"
+    },
+    {
       "name": "backup_jj_restore_verification_cannot_push_remote",
       "definition": "backup_jj_restore_verification_receipt",
       "base_valid": "backup_jj_isolated_restore_verifies_historical_operation_and_requires_sign_in",
@@ -3747,6 +3965,42 @@
       "expected_error": "Product Onboarding clone requires exact return context"
     },
     {
+      "name": "command_request_jujutsu_clone_initialized_phase_requires_native_revision",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_git_clone",
+      "patch": {
+        "expected_revision": null
+      },
+      "expected_error": "an initialized-repository request still requires the exact native expected revision"
+    },
+    {
+      "name": "command_request_jujutsu_preinit_phase_is_clone_only",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_git_clone_destination_not_initialized",
+      "patch": {
+        "command_id": "cmd.jujutsu.git.fetch"
+      },
+      "expected_error": "the destination_not_initialized phase is admitted only for cmd.jujutsu.git.clone"
+    },
+    {
+      "name": "command_request_jujutsu_preinit_phase_cannot_claim_a_native_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_git_clone_destination_not_initialized",
+      "patch": {
+        "currentness.snapshot_id": "snapshot:jj:clone:preinit:28"
+      },
+      "expected_error": "an uninitialized destination has no native snapshot identity to report"
+    },
+    {
+      "name": "command_request_jujutsu_preinit_phase_cannot_claim_a_native_operation",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_git_clone_destination_not_initialized",
+      "patch": {
+        "currentness.expected_operation_id": "op-expected-preinit-28"
+      },
+      "expected_error": "an uninitialized destination has no native operation identity to report"
+    },
+    {
       "name": "source_control_git_clone_is_not_a_jujutsu_command",
       "definition": "command_request",
       "base_valid": "command_request_jujutsu_git_clone",
@@ -3940,6 +4194,31 @@
         "currentness"
       ],
       "expected_error": "clone result preserves exact currentness fence"
+    },
+    {
+      "name": "command_result_jujutsu_clone_initialized_phase_requires_native_before_revision",
+      "definition": "command_result",
+      "base_valid": "command_result_jujutsu_clone_cancelled_after_cleanup",
+      "patch": {
+        "before_revision": null
+      },
+      "expected_error": "an initialized-repository result still requires the exact native before revision"
+    },
+    {
+      "name": "command_result_jujutsu_preinit_clone_cannot_fabricate_a_before_revision",
+      "definition": "command_result",
+      "base_valid": "command_result_jujutsu_clone_not_initialized_destination_cancelled",
+      "patch": {
+        "before_revision": {
+          "kind": "jujutsu",
+          "change_id": "change-before-clone-preinit-28",
+          "commit_id": "commit-before-clone-preinit-28",
+          "operation_id": "op-before-clone-preinit-28",
+          "workspace_id": "ws-clone-preinit-28",
+          "bookmarks": []
+        }
+      },
+      "expected_error": "a destination that native initialization has not created has no before revision to report"
     },
     {
       "name": "command_result_jujutsu_clone_requires_exact_return_focus",

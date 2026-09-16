@@ -1,0 +1,22 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260916-001-jujutsu-continuation-corrections",
+  "updated_at_utc": "2026-09-16T00:40:00+00:00",
+  "status": "fail_deferred_governance_coverage",
+  "summary": {
+    "events": 3,
+    "design_atoms": 4,
+    "decisions": 4,
+    "open_questions": 0,
+    "deferred_questions": 0,
+    "open_blockers": 0,
+    "compile_queue_items": 4
+  },
+  "notes": "All ledger-internal checks pass with no warnings: 3 events, 4 design atoms, 4 decisions, 4 corrections, 4 compiled compile-queue items and 41 PlanUnits checked. The validator fails only on three pre-existing governance coverage omissions. Neither owner doc is a sharding_config source on origin/main and this branch did not change sharding_config, Spec_Lock or the plan graph; the designated Plans agent owns that coverage and any reseal. Static compile integrity passes. No governance seal, runtime certification or readiness admission.",
+  "validator_status": "fail",
+  "errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']"
+  ]
+}

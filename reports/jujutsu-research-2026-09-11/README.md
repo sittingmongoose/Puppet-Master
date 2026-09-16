@@ -1,6 +1,6 @@
 # Jujutsu research result
 
-[Completed continuation adjudication](continuation3/final/README.md) covers all 22 terminal deliveries and preserves the original comparison. The expanded union contains 110 findings: premium supports 78 and hybrid 90. Four newly identified static contract corrections remain unrepaired; the object-format picker is an unapproved optional capability. Runtime and budget limits remain explicit.
+[Completed continuation adjudication](continuation3/final/README.md) covers all 22 terminal deliveries and preserves the original comparison. The expanded union contains 110 findings: premium supports 78 and hybrid 90. Those four newly identified static contract corrections are now repaired in canon by the [continuation 3 correction landing](continuation3-landing/README.md); the object-format picker remains an unapproved optional capability. Runtime and budget limits remain explicit.
 
 [Deliverable 5](d5/README.md) preserves all 44 answers, their accepted/conditional/declined dispositions, and 42 independently reviewed owner PlanUnits. [The answered companion](d5/answered-companion.json) supersedes the original unanswered decision packet as the answer record; the original packet remains historical.
 

@@ -1,0 +1,18 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260916-001-jujutsu-continuation-corrections",
+  "updated_at_utc": "2026-09-16T00:40:00+00:00",
+  "authority": "Live Plans are canon; this ledger is source lineage only.",
+  "scope": "Four adjudicated corrections to existing promises from Jujutsu continuation 3: F106 restore readiness consistency, F107 SourceGraph page consistency and adjacency bounds, F108 clone identity before native initialization, F109 required transport credential evidence.",
+  "negative_constraints": [
+    "Do not land F110 or decide any optional capability.",
+    "Do not claim runtime, native adapter, security, performance or readiness evidence from these static contracts.",
+    "Do not change Spec_Lock, evidence bundles, plan graph, auto_decisions, WorkNodes or NodeSeeds.",
+    "Do not edit the contract semantic gate or any other script from this ledger."
+  ],
+  "source_refs": [
+    "Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections/source_shards/authorization.md",
+    "Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections/source_shards/findings.md"
+  ],
+  "next_action": "Await the reviewer's independent review of branch plans/jj-corrections-20260916, then land on main. F110 stays unapproved. The two unexpressible F107 relational rules need Jared to authorize a source_control_contracts branch in the contract semantic gate under scripts/."
+}

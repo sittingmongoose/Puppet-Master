@@ -1,0 +1,134 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260916-001-jujutsu-continuation-corrections",
+  "updated_at_utc": "2026-09-16T00:40:00+00:00",
+  "last_event_id": "evt-003",
+  "canonical_plan_targets": [
+    "Plans/Jujutsu_Integration.md",
+    "Plans/Source_Control_System.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Jujutsu_Integration.md",
+    "Plans/Source_Control_System.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Jujutsu_Integration.md",
+    "Plans/Source_Control_System.md",
+    "Plans/jujutsu_integration_contracts.schema.json",
+    "Plans/jujutsu_integration_contract_fixtures.json",
+    "Plans/source_control_contracts.schema.json",
+    "Plans/source_control_contract_fixtures.json"
+  ],
+  "governance_status": "not_requested",
+  "latest_audit_ref": "reports/jujutsu-research-2026-09-11/continuation3-landing/verification.json",
+  "latest_audit_status": "COMPILED_CORRECTION_INTEGRITY_PASS_PENDING_INDEPENDENT_BRANCH_REVIEW",
+  "validation_state": {
+    "ledger_health": "fail_deferred_governance_coverage",
+    "canonical_compile": "applied_four_independently_reviewed_corrections",
+    "scoped_contracts": "pass",
+    "plan_index": "pass",
+    "configured_shards": "pass",
+    "claim_boundary": "Static schema, fixture, shard and index integrity only. No governance seal, runtime certification or readiness admission.",
+    "partial_enforcement": "F107 count arithmetic and in-page node_ref uniqueness are owner obligations without a validator surface until a source_control_contracts semantic-gate branch is authorized.",
+    "governance_coverage_errors": [
+      "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+      "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+      "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']"
+    ]
+  },
+  "status": "compiled_jujutsu_continuation_corrections",
+  "items": [
+    {
+      "queue_id": "queue-001",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-jj-restore-readiness-consistency-106"
+      ],
+      "target_doc": "Plans/Jujutsu_Integration.md",
+      "target_docs": [
+        "Plans/Jujutsu_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "JJI-008"
+      ],
+      "compiled_plan_unit_ids": [
+        "JJI-008"
+      ],
+      "companion_outputs": [
+        "Plans/jujutsu_integration_contracts.schema.json",
+        "Plans/jujutsu_integration_contract_fixtures.json"
+      ],
+      "compile_event_id": "evt-002"
+    },
+    {
+      "queue_id": "queue-002",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-source-graph-page-consistency-107"
+      ],
+      "target_doc": "Plans/Source_Control_System.md",
+      "target_docs": [
+        "Plans/Source_Control_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "SCS-017"
+      ],
+      "compiled_plan_unit_ids": [
+        "SCS-017"
+      ],
+      "companion_outputs": [
+        "Plans/source_control_contracts.schema.json",
+        "Plans/source_control_contract_fixtures.json"
+      ],
+      "compile_event_id": "evt-002"
+    },
+    {
+      "queue_id": "queue-003",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-clone-preinit-native-identity-108"
+      ],
+      "target_doc": "Plans/Jujutsu_Integration.md",
+      "target_docs": [
+        "Plans/Jujutsu_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "JJI-002",
+        "JJI-003"
+      ],
+      "compiled_plan_unit_ids": [
+        "JJI-002",
+        "JJI-003"
+      ],
+      "companion_outputs": [
+        "Plans/jujutsu_integration_contracts.schema.json",
+        "Plans/jujutsu_integration_contract_fixtures.json"
+      ],
+      "compile_event_id": "evt-002"
+    },
+    {
+      "queue_id": "queue-004",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-credential-lease-transport-evidence-109"
+      ],
+      "target_doc": "Plans/Source_Control_System.md",
+      "target_docs": [
+        "Plans/Source_Control_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "SCS-003"
+      ],
+      "compiled_plan_unit_ids": [
+        "SCS-003"
+      ],
+      "companion_outputs": [
+        "Plans/source_control_contracts.schema.json",
+        "Plans/source_control_contract_fixtures.json"
+      ],
+      "compile_event_id": "evt-002"
+    }
+  ],
+  "notes": "Four reviewed corrections compiled and statically checked. F110 remains unapproved. Two F107 relational rules await a contract semantic-gate branch.",
+  "terminal_ledger_event_id": "evt-003"
+}

@@ -135,6 +135,25 @@
       ]
     },
     {
+      "ledger_id": "pldg-20260916-001-jujutsu-continuation-corrections",
+      "title": "Jujutsu continuation 3 correction wave",
+      "status": "compiled",
+      "phase": "compiled_jujutsu_continuation_corrections",
+      "created_at_utc": "2026-09-16T00:00:00+00:00",
+      "last_updated_at_utc": "2026-09-16T00:40:00+00:00",
+      "last_event_id": "evt-003",
+      "canonical_plan_targets": [
+        "Plans/Jujutsu_Integration.md",
+        "Plans/Source_Control_System.md"
+      ],
+      "resume_file": "Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections/state/handoff.json",
+      "notes": "F106, F107, F108 and F109 compiled into JJI-002, JJI-003, JJI-008, SCS-003 and SCS-017 with their existing schemas and fixtures. Every cited passage was byte-identical to the frozen review snapshot, so none was dropped as already covered. Contracts, configured shards and plan index pass. Two F107 relational rules land as owner obligations only, because the contract semantic gate lives under scripts/, outside this thread's edit scope. F110 remains an unapproved optional capability. No packet disposition, governance seal or runtime claim.",
+      "compiled_owner_docs": [
+        "Plans/Jujutsu_Integration.md",
+        "Plans/Source_Control_System.md"
+      ]
+    },
+    {
       "ledger_id": "pldg-20260911-002-jujutsu-decisions",
       "title": "Jujutsu DL-043 decisions",
       "status": "compiled",

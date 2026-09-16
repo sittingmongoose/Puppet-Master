@@ -89,6 +89,12 @@ unblocks: [JJI-003, JJI-004, JJI-005]
 acceptance_criteria:
   - Every JJ mutation compares the expected operation and immutable commit identity.
   - Snapshot and workspace identity cannot be synthesized from a filesystem path.
+  - >-
+    A destination repository that native initialization has not created yet carries no native change, commit, operation
+    or snapshot identity. That phase is declared explicitly through `native_state_phase=destination_not_initialized`
+    rather than satisfied with a fabricated identity, it is admitted only for `cmd.jujutsu.git.clone`, and it cannot
+    claim a native snapshot or operation it does not have. Every fence after initialization carries exact observed
+    native state.
   - Move/resume checkpoints carry the exact operation and workspace reconstruction evidence.
 validation_surfaces: [JJ repository context fixtures, stale operation tests, move and resume fixtures]
 risk_class: jj_revision_or_workspace_aliasing
@@ -96,8 +102,8 @@ reasoning_tier: high
 context_scope: jujutsu_native_identity
 implementation_surfaces: [Plans/source_control_contracts.schema.json, future JJ adapter]
 node_compile_hint: {mode: jujutsu_native_revision_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:SCM-001..003, source_ref:egolite-register:SCM-006..007]
-preserved_exact_tokens: [change_id, commit_id, operation_id, workspace_id, bookmarks, snapshot]
+source_lineage: [source_ref:egolite-register:SCM-001..003, source_ref:egolite-register:SCM-006..007, source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-clone-preinit-native-identity-108]
+preserved_exact_tokens: [change_id, commit_id, operation_id, workspace_id, bookmarks, snapshot, native_state_phase, destination_not_initialized]
 negative_constraints: [Do not use a Git index as JJ state., Do not call a mutable change ID an immutable revision., Do not infer a workspace from the focused directory.]
 owner_hints: [Plans/Jujutsu_Integration.md]
 ```
@@ -130,6 +136,13 @@ acceptance_criteria:
   - >-
     `cmd.jujutsu.git.clone` preserves a current JJ adapter/catalog fence and exact caller
     route/focus/continuation context through success or cancellation, and never normalizes to the ordinary Git clone.
+  - >-
+    `cmd.jujutsu.git.clone` may declare `native_state_phase=destination_not_initialized` while native initialization has
+    not created the destination repository. That phase, and only that phase, admits a null `expected_revision`, a null
+    `currentness.snapshot_id`, a null `currentness.expected_operation_id`, and a null `before_revision`; it is refused for
+    every other command, it cannot report a native snapshot or operation it does not have, and it waives no
+    Host/Environment, catalog, lease, Permissions, FileSafe, idempotency or caller-context fence. Outside that phase the
+    native preconditions stay exactly as they are.
   - A typed import/export command remains rejected before effect when its effective capability is false; it does not fall through to Git mutation or implicit reconciliation.
 validation_surfaces: [Plans/jujutsu_integration_contracts.schema.json, Plans/jujutsu_integration_contract_fixtures.json, alias normalization tests, future ObservableWork terminal tests]
 risk_class: duplicate_dispatch_or_unfenced_jj_mutation
@@ -137,8 +150,8 @@ reasoning_tier: high
 context_scope: jujutsu_commands
 implementation_surfaces: [Plans/jujutsu_integration_contracts.schema.json, Plans/jujutsu_integration_contract_fixtures.json, Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Wiring_Matrix.production.json, future JJ adapter]
 node_compile_hint: {mode: jujutsu_command_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:TS-03, source_ref:egolite-register:CT-01, source_ref:pldg-20260911-001-jujutsu-receipt-correction:atom-jj-terminal-receipt-001]
-preserved_exact_tokens: [cmd.jujutsu.*, cmd.jj.*, ObservableWork, before operation ID, after operation ID]
+source_lineage: [source_ref:egolite-register:TS-03, source_ref:egolite-register:CT-01, source_ref:pldg-20260911-001-jujutsu-receipt-correction:atom-jj-terminal-receipt-001, source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-clone-preinit-native-identity-108]
+preserved_exact_tokens: [cmd.jujutsu.*, cmd.jj.*, ObservableWork, before operation ID, after operation ID, native_state_phase, destination_not_initialized]
 negative_constraints: [Do not register cmd.jj.* as a primary command., Do not scrape terminal prose for state., Do not retry an unknown effect.]
 owner_hints: [Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Shared_Integration_Runtime.md]
 ```
@@ -291,6 +304,8 @@ cmd.jujutsu.git.export
 
 `cmd.jujutsu.git.clone` is the Jujutsu-native clone entrypoint even though its transport consumes a Git remote. It remains `scm_backend=jujutsu`, preserves the Jujutsu operation/snapshot/currentness fence, destination Source Location, writer and credential leases, Permissions/FileSafe decisions, `ObservableWork`, and before/after operation identities. When Product Onboarding invokes it, the request carries one closed caller context and the terminal success or cancellation result echoes the exact surface, route, focus, invocation token, caller-context ref, expected caller revision, and continuation generation. Caller close or navigation does not cancel the operation. A successful receipt may feed `cmd.project.add_existing {registration_kind=jujutsu_clone}`; cancellation proves cleanup and creates no Project row.
 
+Clone is also the one admitted phase in which the destination repository does not exist natively yet. Before native initialization creates it there is no native revision, snapshot or operation to fence against, so the request and its terminal result declare `native_state_phase=destination_not_initialized` and carry a null `expected_revision`, null `currentness.snapshot_id`, null `currentness.expected_operation_id`, and null `before_revision` instead of reserved-looking placeholders. That phase is admitted only for `cmd.jujutsu.git.clone`, and it cannot claim a native snapshot or operation it does not have. The destination Source Location, Host/Environment, adapter and catalog fence, writer and credential leases, Permissions and FileSafe decisions, idempotency, `ObservableWork`, and the exact caller return context are unchanged and still required, and everything observed after initialization, including a successful `after_revision`, remains exact native state.
+
 The separate ordinary Git command is `cmd.source_control.repository.clone {scm_backend=git}`. Neither command is an alias of the other, and no generic `cmd.project.clone`, `cmd.git.clone`, or `cmd.scm.clone` is admitted.
 
 ### 3.2 JJ receipt extension
@@ -301,7 +316,7 @@ JJ receipts extend the common operation receipt with adapter-owned facts referen
 
 The command request enum is exactly the 31 IDs in §3.1. Family-level conditionals require change, bookmark, workspace, operation, transport, or repository targets without repeating 31 object definitions. Reads and navigation carry no writer, credential, FileSafe, confirmation, or interop authority. Mutations require a current catalog, writer lease, FileSafe decision, permission snapshot, exact expected Jujutsu revision, and target identity. Transport requires a bounded credential lease. Destructive/recovery operations require target-bound confirmation. `git.import` and `git.export` additionally require the exact certified-adapter/live-probe gate, `implicit_reconciliation_allowed=false`, and `fallback_mutation=none`; a blocked capability is represented by typed availability/result records and cannot validate as a dispatch-admitted request.
 
-Results distinguish `accepted`, `succeeded`, `blocked`, `failed`, `cancelled`, `recovery_required`, and `effect_unknown`. Acceptance requires `ObservableWork` and may retain a null `receipt_ref`. Every established `command_result` attempt with terminal outcome `succeeded`, `blocked`, `failed`, `cancelled`, `recovery_required`, or `effect_unknown` requires a `receipt_ref` satisfying the existing `non_secret_ref` contract. This obligation does not apply to `command_availability` or pre-attempt `command_error_record` rejection, whose nullable command identity remains unchanged. The common receipt preserves attempt evidence independently of native operation-log publication; it does not require a new native operation or invent before/after native identities. Successful mutation still requires an after revision; `effect_unknown` requires a typed error, null after revision, and `after_reconciliation` retry disposition. Clone results additionally preserve the admitted currentness fence and exact caller return context. Availability uses a closed disabled-reason vocabulary and allowed recovery command IDs. No schema field assigns a persisted event, event family, native handler symbol, direct subprocess, or runtime certification. Those remain central Event Authority, command-owner, adapter, persistence, and evidence work.
+Results distinguish `accepted`, `succeeded`, `blocked`, `failed`, `cancelled`, `recovery_required`, and `effect_unknown`. Acceptance requires `ObservableWork` and may retain a null `receipt_ref`. Every established `command_result` attempt with terminal outcome `succeeded`, `blocked`, `failed`, `cancelled`, `recovery_required`, or `effect_unknown` requires a `receipt_ref` satisfying the existing `non_secret_ref` contract. This obligation does not apply to `command_availability` or pre-attempt `command_error_record` rejection, whose nullable command identity remains unchanged. The common receipt preserves attempt evidence independently of native operation-log publication; it does not require a new native operation or invent before/after native identities. Successful mutation still requires an after revision; `effect_unknown` requires a typed error, null after revision, and `after_reconciliation` retry disposition. Clone results additionally preserve the admitted currentness fence and exact caller return context, and a clone result carrying `native_state_phase=destination_not_initialized` reports a null `before_revision` because no native before-state existed at the destination; it still returns an exact `after_revision` when it succeeds. Availability uses a closed disabled-reason vocabulary and allowed recovery command IDs. No schema field assigns a persisted event, event family, native handler symbol, direct subprocess, or runtime certification. Those remain central Event Authority, command-owner, adapter, persistence, and evidence work.
 
 ## 4. Integration Surfaces
 
@@ -469,6 +484,12 @@ acceptance_criteria:
   - Restore verification is isolated, read-only against the original, version-compatible, and ignore-working-copy where required; a disposable restored copy can list operations, inspect views, and restore the selected historical operation with object verification.
   - Colocation is not inferred after restore. Activation either proves one restored colocated JJ writer, explicitly rebinds as non-colocated through the owner, or blocks as a dual-writer/identity collision.
   - JJ conflicts, filesystem/path collisions, missing object closure, stale target state, and operation mismatch remain distinct receipt refs. A blocked/conflicted result cannot be promoted to successful Backup activation or auto-selected newest operation.
+  - >-
+    A restore verification receipt reporting `ready_for_owner_activation` stays consistent with the blockers it also
+    reports. Readiness is rejected when `workspace_map_result` is `collision_blocked`, when
+    `colocation_activation_disposition` is `blocked_dual_writer_or_identity_collision`, or when `working_copy_relation`
+    is `unverified`. `verified_read_only` keeps its existing conditions unchanged, and an explicit
+    `owner_rebind_non_colocated_required` disposition remains a valid readiness path.
   - Ordinary restore does not activate hooks, aliases, credential helpers, filters, unsafe includes, URL user-info, extraHeaders, SSH material, forge credentials, or provider profiles. Non-secret restored refs and a separately authorized portable envelope remain pending owner validation and a fresh credential lease.
   - Operation History pivots only to existing `cmd.backup.browse`, `cmd.backup.file.compare`, and Project Backup routes; isolated operation inspection/restore uses existing `cmd.jujutsu.operation.show` and `cmd.jujutsu.operation.restore`; neutral rebind/status/remote validation uses Source Control; Forge/AutomationBinding remains Forge-owned. The exact 31-command JJ inventory is unchanged.
   - Machine records require `expected_event_types=[]`; schema and fixture success remains event-silent, handler_unavailable/static, and not runtime, native adapter, clean-host recovery, security, visual, or readiness proof.
@@ -496,6 +517,7 @@ source_lineage:
   - Plans/Backup_Restore_System.md#BRS-014
   - Plans/Source_Control_System.md#SCS-014
   - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.3
+  - source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-jj-restore-readiness-consistency-106
 preserved_exact_tokens: [colocated, non-colocated, shared multi-workspace, operation heads, repository views, conflicts, abandoned, rebased, capture barrier, GC fence, ignore-working-copy, "expected_event_types=[]"]
 negative_constraints:
   - Do not treat op-log text, a Git push, mirror clone, Git bundle, current bookmark, or reachable forge as complete JJ recovery.

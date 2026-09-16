@@ -509,6 +509,9 @@
             }
           },
           "then": {
+            "required": [
+              "use_http_path"
+            ],
             "properties": {
               "use_http_path": {
                 "const": true
@@ -525,6 +528,10 @@
             }
           },
           "then": {
+            "required": [
+              "known_hosts_receipt_ref",
+              "forwarding_disabled"
+            ],
             "properties": {
               "known_hosts_receipt_ref": {
                 "$ref": "#/$defs/non_empty_string"
@@ -2827,7 +2834,7 @@
               "node_ref": {"$ref": "#/$defs/non_secret_ref"},
               "revision_ref": {"$ref": "#/$defs/non_secret_ref"},
               "stable_change_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
-              "parent_refs": {"$ref": "#/$defs/non_secret_ref_list"},
+              "parent_refs": {"$ref": "#/$defs/non_secret_ref_list", "maxItems": 600},
               "label_ref": {"$ref": "#/$defs/non_secret_ref"},
               "node_state": {"enum": ["normal", "rewritten", "abandoned", "conflicted"]},
               "selected": {"type": "boolean"}
@@ -2884,6 +2891,16 @@
         "runtime_evidence_claimed": {"const": false}
       },
       "allOf": [
+        {
+          "if": {
+            "properties": {
+              "currentness": {"properties": {"state": {"const": "current"}}, "required": ["state"]},
+              "page": {"properties": {"has_more": {"const": true}}, "required": ["has_more"]}
+            },
+            "required": ["currentness", "page"]
+          },
+          "then": {"properties": {"page": {"properties": {"next_cursor_ref": {"$ref": "#/$defs/non_secret_ref"}}}}}
+        },
         {
           "if": {"properties": {"scm_backend": {"const": "git"}}, "required": ["scm_backend"]},
           "then": {
