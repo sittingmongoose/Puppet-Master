@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260916-001-jujutsu-continuation-corrections",
-  "updated_at_utc": "2026-09-16T20:57:54.523386+00:00",
+  "updated_at_utc": "2026-09-16T21:28:30.843675+00:00",
   "authority": "Live Plans are canon; this ledger is source lineage only.",
   "scope": "Four adjudicated corrections to existing promises from Jujutsu continuation 3: F106 restore readiness consistency, F107 SourceGraph page consistency and adjacency bounds, F108 clone identity before native initialization, F109 required transport credential evidence.",
   "negative_constraints": [
@@ -10,11 +10,12 @@
     "Do not change Spec_Lock, evidence bundles, plan graph, auto_decisions, WorkNodes or NodeSeeds.",
     "Do not edit the contract semantic gate or any other script from this ledger.",
     "Do not reinstate the provisional 600-reference parent bound; the owner's bound is 32 with a bounded parent-expansion follow-up, recorded as DL-052.",
-    "Do not re-narrow the in-page node_ref rule to conflicting revision_ref values only; the owner's rule is uniqueness, recorded as DL-053."
+    "Do not re-narrow the in-page node_ref rule to conflicting revision_ref values only; the owner's rule is uniqueness, recorded as DL-053.",
+    "Do not permit early truncation of a parent list, and do not drop any field of the page's currentness from an expansion request; the owner's rules are DL-054."
   ],
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections/source_shards/authorization.md",
     "Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections/source_shards/findings.md"
   ],
-  "next_action": "All three questions are closed: q-001 by the owner's parent bound of 32 with a bounded fetch-the-rest follow-up (DL-052), q-002 by the source_control_contracts semantic branch that now enforces both relational rules, and q-003 by the owner's node_ref uniqueness rule (DL-053). This ledger is compiled and needs nothing further. F110 is accepted separately and is planned in pldg-20260916-002-jujutsu-object-format-picker."
+  "next_action": "All five questions are closed: q-001 by the owner's parent bound of 32 with a bounded fetch-the-rest follow-up (DL-052), q-002 by the source_control_contracts semantic branch that enforces both relational rules, q-003 by the owner's node_ref uniqueness rule (DL-053), and q-004 and q-005 by the owner's no-early-truncation rule and the echoed currentness on the expansion request (DL-054). This ledger is compiled and needs nothing further. F110 is accepted separately and is planned in pldg-20260916-002-jujutsu-object-format-picker."
 }

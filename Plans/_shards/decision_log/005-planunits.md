@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L796-L3810
+Source lines: L818-L3900
 
-Source SHA256: `449c8b1ff8af7b33b66a89a724c0721beec8d82f467d62b3cc1292e0eb6153c3`
+Source SHA256: `3c13bc9e447dd512e09b5438edf36ecf1a6ad4b0a68c9c1c2866357856b9bb8d`
 
 ---
 
@@ -2896,6 +2896,74 @@ negative_constraints:
   - Do not re-narrow the rule to conflicting `revision_ref` values only.
   - Do not treat an exact duplicate node row as harmless because its fields agree.
   - Do not extend the rule across pages; a node may legitimately appear on another page.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+```
+
+### DL-054 - Parent List Truncates Only At The Bound And Expansion Echoes Currentness
+
+```yaml
+plan_unit_id: DL-054
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered two review questions about the source graph parent-expansion contract on 2026-09-16
+  with "1. no 2. yes 3. ok". A producer may not truncate a node's parent list before it holds all
+  thirty-two references, so `parent_refs_truncated=true` always accompanies a full list and a shorter
+  list always means the node has no further parents; the schema already enforced this and SCS-017 now
+  states it. The parent-expansion request's `projection_currentness` echoes the page's `currentness`
+  field for field, gaining the page's `expires_at_utc` as a required field that keeps the page's
+  nullable shape, so the freshness horizon is readable from the request alone and the claim that the
+  request is fenced exactly as page continuation is becomes literally true. The third answer accepts a
+  whitespace-only re-indentation of the fixture entries this work added.
+gui_related: true
+gui_classification_reason: Both rules govern what the virtualized history-and-graph view may show about an incomplete parent list and how fresh the data behind an expansion is.
+split_recommended: false
+depends_on: [DL-052, SCS-017]
+unblocks: []
+acceptance_criteria:
+  - SCS-017 states that a parent list is truncated only once it holds all 32 references, so early truncation is not permitted and a short list means the node has no further parents.
+  - The parent-expansion request requires `expires_at_utc` in `projection_currentness`, with the same nullable timestamp shape the page's `currentness` uses, and the request's currentness is field-for-field identical to the page's.
+  - A positive fixture carries the echoed horizon and matches the page it expands; a negative fixture omitting it is rejected.
+  - No schema change was needed for the first answer, because the truncation conditional already required a truncated node to carry the full bound.
+  - The fixture re-indentation changes whitespace only and the file parses to an identical document.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds or build tasks are created by this record.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-new-contracts-verify.py
+  - python3 -m unittest tests.test_pm_source_control_effects
+risk_class: incomplete_parent_list_or_unreadable_expansion_freshness
+reasoning_tier: high
+context_scope: bounded_source_graph_projection
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+  - Plans/source_control_contracts.schema.json
+  - Plans/source_control_contract_fixtures.json
+node_compile_hint:
+  mode: owner_rule_refinement_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections:q-004
+  - Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections:q-005
+  - Plans/Decision_Log.md:DL-054-direction-2026-09-16
+  - Plans/Decision_Log.md#DL-052
+  - Plans/Source_Control_System.md#SCS-017
+preserved_exact_tokens:
+  - 1. no 2. yes 3. ok
+  - parent_refs_truncated
+  - projection_currentness
+  - expires_at_utc
+  - observed_at_utc
+negative_constraints:
+  - Do not permit a producer to truncate a parent list before it holds all 32 references.
+  - Do not drop any field of the page's currentness from an expansion request, and do not give the request a currentness shape the page does not have.
+  - Do not read a short parent list as possibly incomplete; only the truncation marker means there is more.
+  - Do not treat the re-indentation as a content change; the fixture document is identical.
 owner_hints:
   - Plans/Decision_Log.md
   - Plans/Source_Control_System.md

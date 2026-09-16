@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L788
+Source lines: L13-L810
 
-Source SHA256: `449c8b1ff8af7b33b66a89a724c0721beec8d82f467d62b3cc1292e0eb6153c3`
+Source SHA256: `3c13bc9e447dd512e09b5438edf36ecf1a6ad4b0a68c9c1c2866357856b9bb8d`
 
 ---
 
@@ -782,5 +782,27 @@ This buys a rule that says exactly what it enforces, and it removes the gap that
 This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
 
 SourceRef: question `q-003` in `Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections`; Jared, direction of 2026-09-16.
+
+ContractRef: ContractName:Plans/Source_Control_System.md
+
+### DL-054: A parent list is truncated only at the bound, and an expansion request carries the page's freshness horizon
+
+Decided on 2026-09-16 by Jared, answering two questions raised by the independent review of the parent-expansion contract.
+
+The first question was whether a producer may truncate a node's parent list before it holds all thirty-two references. The contract already required a truncated node to be exactly full, which was one step past the words of the original answer: that answer set the bound and required a way to fetch the rest, and said nothing about truncating early for a producer's own reasons.
+
+The second question was whether the fetch-the-rest request should carry the page's expiry instant. Both the owner document and the decision that introduced the request say it is fenced exactly as page continuation is, but the request repeated only the page's state, generation and observation instant, leaving out the expiry the page itself declares. A consumer holding only the request could not tell whether that freshness window had already passed.
+
+Jared's answer to both, and to a cosmetic indentation repair offered alongside them, verbatim: "1. no 2. yes 3. ok"
+
+So a producer may not truncate early. Truncation is reached, never chosen: a node carries thirty-two parent references and marks itself truncated, or it carries fewer and has no more parents. A short list is therefore a complete list, which is what a reader already assumes. The contract already worked this way, so nothing about it changes; the rule is now stated where it can be read rather than only inferred from a bound.
+
+And the request now echoes the page's currentness field for field, including the expiry instant, so the freshness horizon is readable from the request alone and nothing has to be inferred about the page it came from. With that field added, the claim that the request is fenced exactly as page continuation is became literally true rather than nearly true.
+
+This buys two sentences that say what the contract does, and one field that closes the gap between a promise and its shape. It costs one more required field on a request that already carried three, and it removes a freedom no producer had asked for.
+
+This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
+
+SourceRef: questions `q-004` and `q-005` in `Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections`; `/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/F110_ANSWER_20260916.md`, SHA-256 `e532c325d07d8da100a6b6ef16398dee1a475e39dfd12b77d881c5e2c40978b4` as read on 2026-09-16; Jared, direction of 2026-09-16.
 
 ContractRef: ContractName:Plans/Source_Control_System.md

@@ -1,0 +1,130 @@
+{
+  "at": "2026-09-16T21:30:00Z",
+  "status": "COMPILED_STATIC_INTEGRITY_PASS_PENDING_REVIEW",
+  "branch": "plans/jj-graph-followup-20260916",
+  "branch_base_commit": "a76f22a2f90fc0ab8035bf517e214ec6a2ee3a57",
+  "bundle_commit": "the single commit on this branch; it cannot name its own hash",
+  "decision_recorded": {
+    "DL-054": {
+      "title": "A parent list is truncated only at the bound, and an expansion request carries the page's freshness horizon",
+      "questions": [
+        "q-004",
+        "q-005"
+      ],
+      "verbatim_answer": "1. no 2. yes 3. ok",
+      "highest_dl_on_base_commit": "DL-053",
+      "answer_source": {
+        "path": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/F110_ANSWER_20260916.md",
+        "sha256": "e532c325d07d8da100a6b6ef16398dee1a475e39dfd12b77d881c5e2c40978b4",
+        "read_on": "2026-09-16",
+        "relay": "agent-relayed by the reviewer; not verifiable from inside this repository"
+      }
+    }
+  },
+  "answer_1_no_early_truncation": {
+    "schema_change": "none required",
+    "reason": "the truncation conditional already requires a node with parent_refs_truncated true to carry minItems 32, so early truncation was already unrepresentable",
+    "canon_change": "SCS-017's parent criterion now states the rule plainly and a negative constraint forbids early truncation",
+    "existing_negative_that_already_proved_it": "source_graph_truncated_node_must_carry_the_full_parent_reference_bound"
+  },
+  "answer_2_echo_expires_at_utc": {
+    "schema_change": "projection_currentness of source_graph_parent_expansion_request requires expires_at_utc, typed as the page's own nullable timestamp",
+    "parity": "the request's projection_currentness is now field for field identical to the page's currentness: state, projection_generation, observed_at_utc, expires_at_utc",
+    "positive": "git_source_graph_parent_expansion_is_fenced_like_page_continuation now carries expires_at_utc 2026-09-02T16:05:00Z, equal to the page it expands",
+    "negative": {
+      "name": "source_graph_parent_expansion_must_echo_the_pages_freshness_horizon",
+      "mechanism": "removes projection_currentness.expires_at_utc from the positive",
+      "failing_schema_path": "properties/projection_currentness/required"
+    },
+    "canon_change": "SCS-017's expansion criterion names the four echoed fields, making 'fenced exactly as page continuation is' literally true"
+  },
+  "answer_3_indentation": {
+    "entries_reindented": 30,
+    "change": "whitespace only: the opening brace of each entry moves from column 0 to column 4",
+    "proof": [
+      "git diff -w reports no change",
+      "the file grew by exactly 120 bytes, four spaces times thirty",
+      "json.loads before and after compare equal, asserted before writing"
+    ],
+    "note": "the review counted 29; the thirtieth is the exact-duplicate fixture added in the fifth commit of the previous branch, after the review snapshot"
+  },
+  "deliberately_unchanged": {
+    "DL-052": "its prose enumerates identity, generation and the currentness rule and never claimed the expiry instant, so it was not false before and is not made truer now; DL-054 records the refinement and the landed entry is left alone",
+    "scripts": "not in the diff; the semantic branch is untouched",
+    "tests": "not in the diff; the tests cover the semantic branch, which did not change"
+  },
+  "scoped_contracts": {
+    "status": "pass",
+    "command": "python3 scripts/pm-new-contracts-verify.py",
+    "findings": 0,
+    "counts": {
+      "contract_pairs": 30,
+      "positive_cases": 1041,
+      "positive_cases_valid": 1041,
+      "negative_cases": 3379,
+      "negative_cases_rejected": 3379
+    },
+    "baseline_before_this_branch": {
+      "positive_cases": 1041,
+      "negative_cases": 3378
+    },
+    "delta": {
+      "positive_cases": 0,
+      "negative_cases": 1
+    }
+  },
+  "configured_shards": {
+    "status": "pass",
+    "docs_checked": 98,
+    "shards_checked": 2676,
+    "failures": []
+  },
+  "plan_index": {
+    "status": "pass",
+    "plan_unit_count": 6651,
+    "acceptance_unit_count": 25855,
+    "failures": [],
+    "note": "6650 before, 6651 after DL-054"
+  },
+  "named_tests": {
+    "status": "pass",
+    "tests": 25
+  },
+  "ledger_validators": {
+    "pldg-20260916-001-jujutsu-continuation-corrections": {
+      "status": "fail",
+      "errors": [
+        "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+        "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+        "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']"
+      ],
+      "warnings": 0,
+      "summary": {
+        "events": 7,
+        "questions": 5
+      },
+      "note": "q-004 and q-005 recorded as answered with event evt-007; all five of this ledger's questions are now closed"
+    },
+    "pldg-20260916-002-jujutsu-object-format-picker": {
+      "status": "fail",
+      "errors": [
+        "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+        "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+        "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']"
+      ],
+      "warnings": 0,
+      "note": "unchanged by this branch"
+    }
+  },
+  "governance_coverage_note": "the same three pre-existing omissions as every prior branch in this line; this branch changed no sharding_config, Spec_Lock or plan_graph artifact",
+  "canonical_outputs_sha256": {
+    "Plans/Decision_Log.md": "3c13bc9e447dd512e09b5438edf36ecf1a6ad4b0a68c9c1c2866357856b9bb8d",
+    "Plans/Source_Control_System.md": "d04c4a05f985269bb5f1a2d91884f032c65d34a3f907097e449ea515b5dccd26",
+    "Plans/source_control_contracts.schema.json": "fb4b0812dafdbbf2063a80299e7805e114c9cafc9bd43bc20726d3ccd25c2523",
+    "Plans/source_control_contract_fixtures.json": "8f8ba18c83734d1bb709e28626729189557c0323654ea3ce500928a8de9be418"
+  },
+  "canonical_outputs_claim_boundary": "sha256 of every source file this branch changed, read from the working tree after the last edit to each; the commit that records this file changes none of them again",
+  "claim_boundary": "Static schema, fixture, shard, index and ledger integrity only. No governance seal, no runtime or native certification, no command admission, no readiness claim.",
+  "no_runtime_or_governance_seal_claim": true,
+  "landing": "One commit on the branch, pushed. Stopped for review. Not landed on main."
+}

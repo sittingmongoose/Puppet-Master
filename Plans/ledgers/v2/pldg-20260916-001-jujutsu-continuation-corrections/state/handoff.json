@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260916-001-jujutsu-continuation-corrections",
-  "updated_at_utc": "2026-09-16T20:57:54.523386+00:00",
-  "last_event_id": "evt-006",
+  "updated_at_utc": "2026-09-16T21:28:30.843675+00:00",
+  "last_event_id": "evt-007",
   "canonical_plan_targets": [
     "Plans/Jujutsu_Integration.md",
     "Plans/Source_Control_System.md"
@@ -29,7 +29,7 @@
     "plan_index": "pass",
     "configured_shards": "pass",
     "claim_boundary": "Static schema, fixture, shard and index integrity only. No governance seal, runtime certification or readiness admission.",
-    "partial_enforcement": "Closed. The F107 count arithmetic and the in-page node_ref rule are enforced by the source_control_contracts branch of contract_semantic_failures in scripts/pm-new-contracts-verify.py. The node_ref rule is the owner's uniqueness rule from q-003 and DL-053, so an exact duplicate row is rejected alongside a conflicting one, with a negative fixture for each. The parent bound is the owner's 32 with a bounded parent-expansion request, recorded as DL-052; the provisional 600 is retired.",
+    "partial_enforcement": "Closed. The F107 count arithmetic and the in-page node_ref rule are enforced by the source_control_contracts branch of contract_semantic_failures in scripts/pm-new-contracts-verify.py, the node_ref rule being the owner's uniqueness rule from q-003 and DL-053, with a negative fixture for a conflicting and an exact duplicate. The parent bound is the owner's 32 with a bounded parent-expansion request, recorded as DL-052; the provisional 600 is retired. Under q-004 and q-005 and DL-054 a parent list truncates only at the bound and the expansion request echoes the page's currentness field for field.",
     "governance_coverage_errors": [
       "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
       "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
@@ -38,8 +38,8 @@
   },
   "current_phase": "compiled_jujutsu_continuation_corrections",
   "cursor": {
-    "last_event_id": "evt-006",
-    "next_action": "All three questions are closed: q-001 by the owner's parent bound of 32 with a bounded fetch-the-rest follow-up (DL-052), q-002 by the source_control_contracts semantic branch that now enforces both relational rules, and q-003 by the owner's node_ref uniqueness rule (DL-053). This ledger is compiled and needs nothing further. F110 is accepted separately and is planned in pldg-20260916-002-jujutsu-object-format-picker."
+    "last_event_id": "evt-007",
+    "next_action": "All five questions are closed: q-001 by the owner's parent bound of 32 with a bounded fetch-the-rest follow-up (DL-052), q-002 by the source_control_contracts semantic branch that enforces both relational rules, q-003 by the owner's node_ref uniqueness rule (DL-053), and q-004 and q-005 by the owner's no-early-truncation rule and the echoed currentness on the expansion request (DL-054). This ledger is compiled and needs nothing further. F110 is accepted separately and is planned in pldg-20260916-002-jujutsu-object-format-picker."
   },
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections/source_shards/authorization.md",

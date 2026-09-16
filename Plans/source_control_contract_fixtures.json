@@ -2279,7 +2279,7 @@
         "runtime_evidence_claimed": false
       }
     },
-{
+    {
       "name": "git_source_graph_marks_a_node_whose_parents_exceed_the_bound_as_truncated",
       "definition": "source_graph_projection",
       "value": {
@@ -2390,7 +2390,7 @@
         "runtime_evidence_claimed": false
       }
     },
-{
+    {
       "name": "git_source_graph_parent_expansion_is_fenced_like_page_continuation",
       "definition": "source_graph_parent_expansion_request",
       "value": {
@@ -2409,7 +2409,8 @@
         "projection_currentness": {
           "state": "current",
           "projection_generation": 91,
-          "observed_at_utc": "2026-09-02T16:00:00Z"
+          "observed_at_utc": "2026-09-02T16:00:00Z",
+          "expires_at_utc": "2026-09-02T16:05:00Z"
         },
         "identity_authority": {
           "repository_context_authoritative": true,
@@ -2420,7 +2421,7 @@
         "runtime_evidence_claimed": false
       }
     },
-{
+    {
       "name": "object_format_profile_is_selectable_only_on_certified_evidence",
       "definition": "repository_object_format_profile",
       "value": {
@@ -2457,7 +2458,7 @@
         "runtime_evidence_claimed": false
       }
     },
-{
+    {
       "name": "object_format_profile_is_disabled_by_current_capability_evidence",
       "definition": "repository_object_format_profile",
       "value": {
@@ -2494,7 +2495,7 @@
         "runtime_evidence_claimed": false
       }
     },
-{
+    {
       "name": "new_repository_object_format_choice_is_confirmed_with_permanence_acknowledged",
       "definition": "new_repository_object_format_selection",
       "value": {
@@ -2519,7 +2520,7 @@
         "runtime_evidence_claimed": false
       }
     },
-{
+    {
       "name": "cancelled_object_format_setup_records_no_format",
       "definition": "new_repository_object_format_selection",
       "value": {
@@ -2544,7 +2545,7 @@
         "runtime_evidence_claimed": false
       }
     },
-{
+    {
       "name": "existing_repository_shows_its_discovered_object_format",
       "definition": "new_repository_object_format_selection",
       "value": {
@@ -2566,7 +2567,7 @@
         "runtime_evidence_claimed": false
       }
     },
-{
+    {
       "name": "existing_repository_object_format_stays_unknown_until_discovery_produces_one",
       "definition": "new_repository_object_format_selection",
       "value": {
@@ -2701,7 +2702,7 @@
       "semantic_rule": "source_graph_duplicate_node_ref_in_page",
       "expected_error": "two nodes on one page cannot share a node_ref, whatever their revision_ref values"
     },
-{
+    {
       "name": "source_graph_cannot_repeat_an_identical_node_row_in_one_page",
       "definition": "source_graph_projection",
       "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
@@ -2723,7 +2724,7 @@
       "semantic_rule": "source_graph_duplicate_node_ref_in_page",
       "expected_error": "a page cannot emit the same node row twice, even when the two rows agree on every field"
     },
-{
+    {
       "name": "source_graph_truncated_node_requires_an_expansion_cursor",
       "definition": "source_graph_projection",
       "base_valid": "git_source_graph_marks_a_node_whose_parents_exceed_the_bound_as_truncated",
@@ -2732,7 +2733,7 @@
       },
       "expected_error": "a truncated parent list must carry the reference that fetches the rest"
     },
-{
+    {
       "name": "source_graph_truncated_node_must_carry_the_full_parent_reference_bound",
       "definition": "source_graph_projection",
       "base_valid": "git_source_graph_marks_a_node_whose_parents_exceed_the_bound_as_truncated",
@@ -2773,7 +2774,7 @@
       },
       "expected_error": "a node is truncated only once it has declared the full thirty-two parent references"
     },
-{
+    {
       "name": "source_graph_untruncated_node_cannot_carry_an_expansion_cursor",
       "definition": "source_graph_projection",
       "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
@@ -2782,7 +2783,7 @@
       },
       "expected_error": "a node with nothing left to fetch cannot offer an expansion reference"
     },
-{
+    {
       "name": "source_graph_parent_expansion_requires_the_pages_expansion_cursor",
       "definition": "source_graph_parent_expansion_request",
       "base_valid": "git_source_graph_parent_expansion_is_fenced_like_page_continuation",
@@ -2791,7 +2792,7 @@
       },
       "expected_error": "parent expansion requires the expansion reference the page issued"
     },
-{
+    {
       "name": "source_graph_parent_expansion_cannot_exceed_the_parent_reference_bound",
       "definition": "source_graph_parent_expansion_request",
       "base_valid": "git_source_graph_parent_expansion_is_fenced_like_page_continuation",
@@ -2800,7 +2801,7 @@
       },
       "expected_error": "one expansion request cannot ask for more than thirty-two parent references"
     },
-{
+    {
       "name": "source_graph_parent_expansion_requires_a_current_projection",
       "definition": "source_graph_parent_expansion_request",
       "base_valid": "git_source_graph_parent_expansion_is_fenced_like_page_continuation",
@@ -2809,7 +2810,16 @@
       },
       "expected_error": "a stale or superseded page cannot be expanded as though it were current"
     },
-{
+    {
+      "name": "source_graph_parent_expansion_must_echo_the_pages_freshness_horizon",
+      "definition": "source_graph_parent_expansion_request",
+      "base_valid": "git_source_graph_parent_expansion_is_fenced_like_page_continuation",
+      "remove": [
+        "projection_currentness.expires_at_utc"
+      ],
+      "expected_error": "an expansion request carries the page's expires_at_utc, so the freshness horizon is visible from the request alone"
+    },
+    {
       "name": "source_graph_parent_expansion_never_claims_display_path_authority",
       "definition": "source_graph_parent_expansion_request",
       "base_valid": "git_source_graph_parent_expansion_is_fenced_like_page_continuation",
@@ -2818,7 +2828,7 @@
       },
       "expected_error": "RepositoryContext remains identity authority for an expansion request"
     },
-{
+    {
       "name": "object_format_cannot_be_selectable_with_unknown_transport_evidence",
       "definition": "repository_object_format_profile",
       "base_valid": "object_format_profile_is_selectable_only_on_certified_evidence",
@@ -2830,7 +2840,7 @@
       },
       "expected_error": "a format whose transport support is not yet known is not offered, however certified the rest is"
     },
-{
+    {
       "name": "object_format_cannot_be_selectable_without_naming_its_evidence",
       "definition": "repository_object_format_profile",
       "base_valid": "object_format_profile_is_selectable_only_on_certified_evidence",
@@ -2839,7 +2849,7 @@
       },
       "expected_error": "certified support must name the evidence that certifies it"
     },
-{
+    {
       "name": "object_format_cannot_be_selectable_from_a_stale_catalog",
       "definition": "repository_object_format_profile",
       "base_valid": "object_format_profile_is_selectable_only_on_certified_evidence",
@@ -2848,7 +2858,7 @@
       },
       "expected_error": "a stale capability catalog cannot certify an offered format"
     },
-{
+    {
       "name": "disabled_object_format_requires_a_reason_code",
       "definition": "repository_object_format_profile",
       "base_valid": "object_format_profile_is_disabled_by_current_capability_evidence",
@@ -2857,7 +2867,7 @@
       },
       "expected_error": "a disabled format says why it is disabled"
     },
-{
+    {
       "name": "object_format_profile_never_denies_that_the_format_is_permanent",
       "definition": "repository_object_format_profile",
       "base_valid": "object_format_profile_is_selectable_only_on_certified_evidence",
@@ -2866,7 +2876,7 @@
       },
       "expected_error": "the object format of a repository is permanent once it is created"
     },
-{
+    {
       "name": "confirmed_object_format_choice_requires_acknowledged_permanence",
       "definition": "new_repository_object_format_selection",
       "base_valid": "new_repository_object_format_choice_is_confirmed_with_permanence_acknowledged",
@@ -2875,7 +2885,7 @@
       },
       "expected_error": "confirming a permanent format requires the acknowledged permanence copy"
     },
-{
+    {
       "name": "confirmed_object_format_choice_requires_a_chosen_format",
       "definition": "new_repository_object_format_selection",
       "base_valid": "new_repository_object_format_choice_is_confirmed_with_permanence_acknowledged",
@@ -2884,7 +2894,7 @@
       },
       "expected_error": "a confirmed selection carries the format it chose"
     },
-{
+    {
       "name": "confirmed_object_format_choice_requires_an_offered_profile",
       "definition": "new_repository_object_format_selection",
       "base_valid": "new_repository_object_format_choice_is_confirmed_with_permanence_acknowledged",
@@ -2893,7 +2903,7 @@
       },
       "expected_error": "a confirmed selection names the evidence profiles it was offered from"
     },
-{
+    {
       "name": "cancelled_object_format_setup_cannot_leave_a_chosen_format_behind",
       "definition": "new_repository_object_format_selection",
       "base_valid": "cancelled_object_format_setup_records_no_format",
@@ -2902,7 +2912,7 @@
       },
       "expected_error": "a cancelled setup records no chosen format"
     },
-{
+    {
       "name": "existing_repository_cannot_choose_an_object_format",
       "definition": "new_repository_object_format_selection",
       "base_valid": "existing_repository_shows_its_discovered_object_format",
@@ -2911,7 +2921,7 @@
       },
       "expected_error": "the format of an existing repository is discovered, never chosen"
     },
-{
+    {
       "name": "new_repository_cannot_claim_a_discovered_object_format",
       "definition": "new_repository_object_format_selection",
       "base_valid": "new_repository_object_format_choice_is_confirmed_with_permanence_acknowledged",
@@ -2920,7 +2930,7 @@
       },
       "expected_error": "a repository that does not exist yet has no discovered format"
     },
-{
+    {
       "name": "object_format_selection_cannot_claim_a_default_change",
       "definition": "new_repository_object_format_selection",
       "base_valid": "new_repository_object_format_choice_is_confirmed_with_permanence_acknowledged",
@@ -2929,7 +2939,7 @@
       },
       "expected_error": "this capability changes no default object format"
     },
-{
+    {
       "name": "object_format_selection_cannot_request_cross_format_migration",
       "definition": "new_repository_object_format_selection",
       "base_valid": "new_repository_object_format_choice_is_confirmed_with_permanence_acknowledged",
@@ -2938,7 +2948,7 @@
       },
       "expected_error": "no cross-format migration is authorized"
     },
-{
+    {
       "name": "object_format_selection_is_not_runtime_evidence",
       "definition": "new_repository_object_format_selection",
       "base_valid": "new_repository_object_format_choice_is_confirmed_with_permanence_acknowledged",

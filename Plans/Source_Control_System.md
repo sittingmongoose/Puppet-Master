@@ -1083,15 +1083,20 @@ acceptance_criteria:
     Parent-reference expansion is finite, so a bounded page cannot carry unbounded adjacency behind
     `unbounded_hydration=false`. A node declares at most 32 `parent_refs` in one page, the owner bound set in DL-052.
     A node with more parents sets `parent_refs_truncated=true`, carries the full 32 references, and carries a non-null
-    `parent_expansion_cursor_ref`; a node that is not truncated carries a null one. A parent may legitimately live on
-    another page; presence in the same page is not required.
+    `parent_expansion_cursor_ref`; a node that is not truncated carries a null one. Truncation is only reached, never
+    chosen early: a producer may not truncate a parent list before it holds all 32, the owner rule set in DL-054, so
+    `parent_refs_truncated=true` always accompanies a full list and a short list always means the node has no more
+    parents. A parent may legitimately live on another page; presence in the same page is not required.
   - >-
     The remaining parents of a truncated node are fetched by
     `pm.source_control.source_graph_parent_expansion_request.v1`, a bounded read fenced exactly as page continuation
     is. It carries the same RepositoryContext, repository, workspace, backend, selected revision and projection
-    identity as the page that truncated the node, the same `projection_generation`, and the page's own
-    `parent_expansion_cursor_ref`; it is admitted only while that projection is `current`, asks for at most 32
-    references at a time, and claims no mutation, no repository-identity authority and no runtime evidence.
+    identity as the page that truncated the node, and the page's own `parent_expansion_cursor_ref`. Its
+    `projection_currentness` echoes the page's `currentness` field for field, `state`, `projection_generation`,
+    `observed_at_utc` and `expires_at_utc`, the owner rule set in DL-054, so the freshness horizon is readable from
+    the request alone and nothing about the page's currentness has to be inferred. It is admitted only while that
+    projection is `current`, asks for at most 32 references at a time, and claims no mutation, no repository-identity
+    authority and no runtime evidence.
   - Static schema and fixtures keep `runtime_evidence_claimed=false` and establish no handler, adapter, native Slint behavior, performance result, scenario result, or readiness claim.
 validation_surfaces:
   - Plans/source_control_contracts.schema.json#/$defs/source_graph_projection
@@ -1118,14 +1123,18 @@ source_lineage:
   - source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-source-graph-page-consistency-107
   - source_ref:pldg-20260916-001-jujutsu-continuation-corrections:q-001
   - source_ref:pldg-20260916-001-jujutsu-continuation-corrections:q-003
+  - source_ref:pldg-20260916-001-jujutsu-continuation-corrections:q-004
+  - source_ref:pldg-20260916-001-jujutsu-continuation-corrections:q-005
   - Plans/Decision_Log.md#DL-052
   - Plans/Decision_Log.md#DL-053
+  - Plans/Decision_Log.md#DL-054
 preserved_exact_tokens: [SourceGraph, RepositoryContext, git_commit_graph, jujutsu_change_graph, source history, operation history, Backup history, parent_refs_truncated, parent_expansion_cursor_ref]
 negative_constraints:
   - Do not infer repository, workspace, Host, Environment, remote, account, or authority from graph focus, display path, labels, or shared commit objects.
   - Do not merge Jujutsu operation history or Backup history into SourceGraph or invent a cross-owner undo/restore action.
   - Do not eagerly hydrate an unbounded history, lose selection identity between pages, or paint stale/partial data as current.
   - Do not present a truncated parent list as complete, expand a page that is not current, or change the 32-reference bound without a new owner decision.
+  - Do not truncate a parent list before it holds all 32 references, and do not send an expansion request that omits any field of the page's currentness.
   - Do not emit two rows with the same `node_ref` in one page, and do not treat an exact duplicate row as harmless because its fields agree.
   - Do not add a SourceGraph command, handler, state owner, EventRecord family, persistence authority, or runtime/native proof from this static closure.
 ```

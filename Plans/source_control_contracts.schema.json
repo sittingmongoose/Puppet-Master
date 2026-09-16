@@ -3001,13 +3001,15 @@
         "parent_expansion_cursor_ref": {"$ref": "#/$defs/non_secret_ref"},
         "requested_count": {"type": "integer", "minimum": 1, "maximum": 32},
         "projection_currentness": {
+          "description": "The page's own currentness, echoed field for field so the freshness horizon is visible from the request alone. Only a current page may be expanded, so state is pinned; expires_at_utc keeps the page's nullable shape because a page may declare no horizon.",
           "type": "object",
           "additionalProperties": false,
-          "required": ["state", "projection_generation", "observed_at_utc"],
+          "required": ["state", "projection_generation", "observed_at_utc", "expires_at_utc"],
           "properties": {
             "state": {"const": "current"},
             "projection_generation": {"type": "integer", "minimum": 0},
-            "observed_at_utc": {"$ref": "#/$defs/timestamp"}
+            "observed_at_utc": {"$ref": "#/$defs/timestamp"},
+            "expires_at_utc": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]}
           }
         },
         "identity_authority": {

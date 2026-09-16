@@ -140,14 +140,14 @@
       "status": "compiled",
       "phase": "compiled_jujutsu_continuation_corrections",
       "created_at_utc": "2026-09-16T18:31:00.505431+00:00",
-      "last_updated_at_utc": "2026-09-16T20:57:54.523386+00:00",
-      "last_event_id": "evt-006",
+      "last_updated_at_utc": "2026-09-16T21:28:30.843675+00:00",
+      "last_event_id": "evt-007",
       "canonical_plan_targets": [
         "Plans/Jujutsu_Integration.md",
         "Plans/Source_Control_System.md"
       ],
       "resume_file": "Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections/state/handoff.json",
-      "notes": "F106, F107, F108 and F109 compiled into JJI-002, JJI-003, JJI-008, SCS-003 and SCS-017 with their existing schemas and fixtures. Every cited passage was byte-identical to the frozen review snapshot, so none was dropped as already covered. Contracts, configured shards and plan index pass. Amended under independent review of commit b83abd9396: the F108 evidence attribution was corrected and both open questions were recorded. Landed on main as fdddacea20 and b0977cd851. All three questions are now closed: q-001 answered by the owner's parent bound of 32 with a bounded fetch-the-rest follow-up (DL-052), q-002 implemented by the source_control_contracts semantic branch, and q-003, which refines F107, answered by the owner's node_ref uniqueness rule (DL-053). F110 is accepted as DL-051 and is planned in pldg-20260916-002-jujutsu-object-format-picker. No packet disposition, governance seal or runtime claim.",
+      "notes": "F106, F107, F108 and F109 compiled into JJI-002, JJI-003, JJI-008, SCS-003 and SCS-017 with their existing schemas and fixtures. Every cited passage was byte-identical to the frozen review snapshot, so none was dropped as already covered. Contracts, configured shards and plan index pass. Amended under independent review of commit b83abd9396: the F108 evidence attribution was corrected and both open questions were recorded. Landed on main as fdddacea20 and b0977cd851. All five questions are now closed: q-001 answered by the owner's parent bound of 32 with a bounded fetch-the-rest follow-up (DL-052), q-002 implemented by the source_control_contracts semantic branch, q-003 answered by the owner's node_ref uniqueness rule (DL-053), and q-004 and q-005, raised by the independent review of the F110 branch, answered by the no-early-truncation rule and the echoed expansion currentness (DL-054). F110 is accepted as DL-051 and is planned in pldg-20260916-002-jujutsu-object-format-picker. No packet disposition, governance seal or runtime claim.",
       "compiled_owner_docs": [
         "Plans/Jujutsu_Integration.md",
         "Plans/Source_Control_System.md"
@@ -1546,5 +1546,5 @@
       "updated_at_utc": "2026-07-04T00:47:25Z"
     }
   ],
-  "updated_at_utc": "2026-09-16T21:03:15.680623+00:00"
+  "updated_at_utc": "2026-09-16T21:28:30.843675+00:00"
 }
