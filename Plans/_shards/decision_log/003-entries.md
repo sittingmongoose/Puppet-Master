@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L13-L709
 
-Source SHA256: `c3007bca628a094e8b80fb9c48f1dced601e0abf53e6b228b4e73371a4837482`
+Source SHA256: `f6eb13338ae0129fd8e98dcc61c4baf5653338a5db2c8c2a9d8e61228c844dc1`
 
 ---
 
@@ -698,7 +698,7 @@ The answer is option 1. Hosted-repo requests route by the selected adapter and n
 
 Two families stay provider-specific because the forge owner defines no generic equivalent: GitHub Actions, which that owner explicitly keeps GitHub-native inside the shared automation shell, and the GitHub device-code connect and disconnect commands under the same retained owner. Hosted issue work has no registered command family at all, generic or provider-specific, so the assistant says so rather than inventing a command or pushing the request into reviews, pipelines or repository administration.
 
-This buys one routing rule that is correct for every provider the product plans to support, and it removes a passage that would have made the assistant wrong for every user who is not on GitHub. It costs a rename of the chat command-boundary section and its dispatch constraint, and it obliges the assistant to disclose the provider it resolved on every hosted request. Alongside this answer, the testing canon that still quoted a fixed count of twenty-three authored schema and fixture pairs was corrected to defer to the cardinality the gate's own manifest declares; that correction is a stale-literal repair, not a decision.
+This buys one routing rule that is correct for every provider the product plans to support, and it removes a passage that would have made the assistant wrong for every user who is not on GitHub. It costs a rename of the chat command-boundary section and its dispatch constraint, and it obliges the assistant to disclose the provider it resolved on every hosted request. Alongside this answer, the testing canon that still quoted a fixed count of twenty-three authored schema and fixture pairs, and a fixed census of the fixture corpus, was corrected to defer to the cardinality and counts the gate itself reports; that correction is a stale-literal repair, not a decision.
 
 This records planning canon only. It enables no runtime behavior, admits no command or event, and seals no governance.
 

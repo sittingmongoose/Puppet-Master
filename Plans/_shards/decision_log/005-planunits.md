@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L717-L3534
 
-Source SHA256: `c3007bca628a094e8b80fb9c48f1dced601e0abf53e6b228b4e73371a4837482`
+Source SHA256: `f6eb13338ae0129fd8e98dcc61c4baf5653338a5db2c8c2a9d8e61228c844dc1`
 
 ---
 
@@ -2647,8 +2647,8 @@ canonical_text: >-
   cmd.github.disconnect for GitHub device-code connection. Hosted issue work has no registered
   command family and none is invented. The Git versus hosted boundary, cross-domain boundary
   disclosure, and repo/worktree/compare handoff identity are unchanged. Alongside this decision the
-  contract-gate canon in ATS-041 drops its stale authored-pair literal and defers to the manifest
-  cardinality the checker declares.
+  contract-gate canon in ATS-041 drops its stale authored-pair and corpus-census literals and defers
+  to the cardinality and counts the checker reports.
 gui_related: true
 gui_classification_reason: Governs the provider the assistant names and dispatches for visible hosted-repo requests and its disclosure.
 split_recommended: false
@@ -2660,7 +2660,7 @@ acceptance_criteria:
   - A provider prefix or named provider qualifies the same universal command, the resolved provider is disclosed, and a provider that is not the selected adapter is stated and asked or refused rather than silently substituted.
   - Historical GitHub and Source Control pull-request spellings stay compatibility aliases of the generic review create and merge commands with provider github, with no second handler, guard, or catalog row.
   - The Git versus hosted boundary, the cross-domain boundary disclosure, and the repo/worktree/compare handoff identity fields survive unchanged.
-  - ATS-041 carries no literal contract-pair count and defers to the cardinality scripts/pm-new-contracts-verify.py declares.
+  - ATS-041 carries no literal contract-pair count or corpus census and defers to the cardinality and counts scripts/pm-new-contracts-verify.py reports.
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -2698,7 +2698,7 @@ negative_constraints:
   - Do not default a hosted-repo request to GitHub or treat a provider prefix or provider name as a separate command family.
   - Do not invent a hosted issue command family or any other family the command catalog does not register.
   - Do not weaken the Git versus hosted boundary, the cross-domain disclosure, or the handoff identity fields.
-  - Do not restore a literal authored contract-pair count to ATS-041.
+  - Do not restore a literal authored contract-pair count or corpus census to ATS-041.
 owner_hints:
   - Plans/Decision_Log.md
   - Plans/assistant-chat-design.md

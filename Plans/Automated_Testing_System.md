@@ -3758,7 +3758,7 @@ depends_on: [ATS-001, SIR-031]
 unblocks: []
 acceptance_criteria:
   - "python3 scripts/pm-new-contracts-verify.py validates every authored schema/fixture pair in its manifest plus one shared-integration expansion fixture pack, fail-closes on the manifest cardinality it declares, and reports its complete input manifest and counts."
-  - "The current closed corpus accepts 708 positive fixtures, rejects 2606 negative fixtures, accepts 264 expansion command records, 240 owner-compatibility command records, 28 local records, 28 owner-local aliases, and 33 normalizations, and passes all 12 internal negative tests."
+  - "On every run the gate reports its positive, negative, expansion command, owner-compatibility command, local, owner-local alias, normalization, and internal self-test counts, and the current closed corpus passes all of them; those counts are read from the report and are not carried as literals in canon."
   - "python3 scripts/pm-plans-verify.py run-gates invokes one named validate-new-contracts subcheck and propagates its failures."
   - "Every positive fixture resolves to exactly one explicit or discriminator-selected definition, and every negative is rejected by that same intended definition or its explicitly authored cross-record invariant."
   - "Unknown definitions, malformed negative recipes, fixture-pack IDs in runtime records, stale owner identities, duplicate runtime record identities, undocumented aggregate schema identities, and mixed local schema hosts fail closed."
