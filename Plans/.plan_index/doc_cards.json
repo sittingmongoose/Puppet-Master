@@ -16798,7 +16798,7 @@
         "future source-control facade",
         "future source-control migration"
       ],
-      "line_count": 1464,
+      "line_count": 1465,
       "path": "Plans/Source_Control_System.md",
       "plan_unit_count": 21,
       "plan_unit_ids": [
@@ -16850,7 +16850,7 @@
         "unbounded_graph_hydration_or_source_history_identity_conflation",
         "wrong_environment_or_stale_version_certification"
       ],
-      "sha256": "65cd458ff957f707cacd6e9cafc6aac90ff9a6463abee87f7f116fb4700740a5",
+      "sha256": "bfe7df44bc17561c301d1a229ff30debc176e290b66806ede827fa9cf637627f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 21
@@ -16883,7 +16883,7 @@
         "Plans/source_control_contracts.schema.json#/$defs/source_graph_projection",
         "Plans/touch_closure.json",
         "Settings search and route dedupe fixtures",
-        "The continuation rule and the 600-reference parent bound are enforced by `Plans/source_control_contracts.schema.json`. The count/page-size arithmetic and the in-page `node_ref` uniqueness rule are relational obligations that JSON Schema cannot express; they await a `source_control_contracts` branch in the existing contract semantic gate and are unenforced until then.",
+        "The continuation rule and the parent-reference bound are enforced by `Plans/source_control_contracts.schema.json`. The count/page-size arithmetic and the in-page `node_ref` rule are relational obligations that JSON Schema cannot express; they are enforced by the `source_control_contracts` branch of `contract_semantic_failures` in `scripts/pm-new-contracts-verify.py`, with one authored negative fixture per rule.",
         "Windows and WSL separation tests",
         "and agent-policy fixtures",
         "and migration fixtures",
@@ -19576,7 +19576,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-16T20:11:23Z",
+  "generated_at_utc": "2026-09-16T20:18:40Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

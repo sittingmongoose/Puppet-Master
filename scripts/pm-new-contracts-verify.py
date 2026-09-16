@@ -71,6 +71,8 @@ EXPECTED_CONTRACT_PAIR_COUNT = 30
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
 EGOLITE_SCHEMA_REL = "Plans/egolite_retained_requirement_contracts.schema.json"
+SOURCE_CONTROL_SCHEMA_REL = "Plans/source_control_contracts.schema.json"
+SOURCE_GRAPH_SCHEMA_ID = "pm.source_control.source_graph_projection.v1"
 
 # These reviewed pairs use a command-oriented fixture protocol.  Support is
 # deliberately path-bound; another pack cannot opt in by imitating field names.
@@ -1000,6 +1002,59 @@ def egolite_semantic_failures(definition_name: str, value: Any) -> list[str]:
     return sorted(set(failures))
 
 
+def source_control_semantic_failures(definition_name: str, value: Any) -> list[str]:
+    """Evaluate the SCS-017 page relations JSON Schema cannot express.
+
+    Both rules are within-page relations between sibling fields, so no ambient
+    file, network, or runtime state is consulted.  A page that satisfies every
+    per-field bound can still be internally inconsistent; that is what this
+    checks and all that it claims.
+    """
+
+    if not isinstance(value, dict):
+        return []
+    if definition_name != "source_graph_projection" and value.get("schema_id") != SOURCE_GRAPH_SCHEMA_ID:
+        return []
+
+    failures: list[str] = []
+    nodes = value.get("nodes")
+    page = value.get("page")
+    if not isinstance(nodes, list):
+        return []
+
+    if isinstance(page, dict):
+        returned_count = page.get("returned_count")
+        page_size = page.get("page_size")
+        if isinstance(returned_count, int) and not isinstance(returned_count, bool):
+            # The emitted node count is the page's own claim about itself.
+            if returned_count != len(nodes):
+                failures.append("source_graph_returned_count_not_equal_to_emitted_nodes")
+            if (
+                isinstance(page_size, int)
+                and not isinstance(page_size, bool)
+                and returned_count > page_size
+            ):
+                failures.append("source_graph_returned_count_exceeds_page_size")
+
+    # SCS-017: two nodes on one page cannot share a node_ref while carrying
+    # different revision_ref values, which would make selection anchoring and
+    # stable node identity ambiguous within that page.
+    revision_by_node_ref: dict[str, Any] = {}
+    for node in nodes:
+        if not isinstance(node, dict):
+            continue
+        node_ref = node.get("node_ref")
+        if not isinstance(node_ref, str):
+            continue
+        if node_ref in revision_by_node_ref:
+            if revision_by_node_ref[node_ref] != node.get("revision_ref"):
+                failures.append("source_graph_ambiguous_node_ref_in_page")
+        else:
+            revision_by_node_ref[node_ref] = node.get("revision_ref")
+
+    return sorted(set(failures))
+
+
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
     if schema_rel in {"Plans/testing_session_command_contracts.schema.json", "Plans/artifact_recording_command_contracts.schema.json"}:
         return evidence_command_semantic_failures(definition_name, value)
@@ -1033,6 +1088,8 @@ def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any
         return server_remote_semantic_failures(definition_name, value)
     if schema_rel == EGOLITE_SCHEMA_REL:
         return egolite_semantic_failures(definition_name, value)
+    if schema_rel == SOURCE_CONTROL_SCHEMA_REL:
+        return source_control_semantic_failures(definition_name, value)
     return []
 
 

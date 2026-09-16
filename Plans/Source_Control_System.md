@@ -1092,10 +1092,11 @@ validation_surfaces:
   - Plans/final_gui_interaction_contract_fixtures.json
   - python3 scripts/pm-new-contracts-verify.py
   - >-
-    The continuation rule and the 600-reference parent bound are enforced by
+    The continuation rule and the parent-reference bound are enforced by
     `Plans/source_control_contracts.schema.json`. The count/page-size arithmetic and the in-page `node_ref`
-    uniqueness rule are relational obligations that JSON Schema cannot express; they await a
-    `source_control_contracts` branch in the existing contract semantic gate and are unenforced until then.
+    rule are relational obligations that JSON Schema cannot express; they are enforced by the
+    `source_control_contracts` branch of `contract_semantic_failures` in
+    `scripts/pm-new-contracts-verify.py`, with one authored negative fixture per rule.
   - future native pagination, stale-page, anchor-preservation, large-graph, Git/Jujutsu parity, accessibility, and frame-pacing tests
 risk_class: unbounded_graph_hydration_or_source_history_identity_conflation
 reasoning_tier: high

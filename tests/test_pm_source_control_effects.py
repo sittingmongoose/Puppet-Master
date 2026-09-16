@@ -1,6 +1,7 @@
 """Owner-schema effect consistency, not native execution or recovery proof."""
 
 import copy
+import importlib.util
 import json
 from pathlib import Path
 import unittest
@@ -133,6 +134,116 @@ class SourceControlEffectContractTests(unittest.TestCase):
                 error.update(error_code="stale_revision", effect_state="no_effect", retry_allowed=True,
                              safe_next_actions=["refresh", "retry"])
                 self.validators["error"].validate(error)
+
+
+def load_gate_module():
+    spec = importlib.util.spec_from_file_location(
+        "pm_new_contracts_verify", ROOT / "scripts/pm-new-contracts-verify.py"
+    )
+    if spec is None or spec.loader is None:
+        raise RuntimeError("unable to load scripts/pm-new-contracts-verify.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+class SourceGraphPageSemanticTests(unittest.TestCase):
+    """SCS-017 within-page relations; static fixture consistency only."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.gate = load_gate_module()
+        cls.schema = json.loads((ROOT / "Plans/source_control_contracts.schema.json").read_text())
+        cls.fixtures = json.loads((ROOT / "Plans/source_control_contract_fixtures.json").read_text())
+        cls.positives = {
+            case["name"]: case.get("value", case.get("record", case.get("instance")))
+            for case in cls.fixtures["valid"]
+        }
+        cls.graph = cls.positives["git_source_graph_is_bounded_identity_safe_and_virtualized"]
+        cls.graph_validator = Draft202012Validator(
+            {
+                "$schema": cls.schema["$schema"],
+                "$id": cls.schema["$id"],
+                "$defs": cls.schema["$defs"],
+                "$ref": "#/$defs/source_graph_projection",
+            },
+            format_checker=FormatChecker(),
+        )
+
+    def semantic_failures(self, value, definition="source_graph_projection"):
+        return self.gate.contract_semantic_failures(
+            self.gate.SOURCE_CONTROL_SCHEMA_REL, definition, value
+        )
+
+    def test_every_authored_source_control_positive_is_semantically_clean(self):
+        for case in self.fixtures["valid"]:
+            with self.subTest(case=case["name"]):
+                value = case.get("value", case.get("record", case.get("instance")))
+                self.assertEqual(
+                    self.semantic_failures(value, case.get("definition", "<root>")), []
+                )
+
+    def test_authored_semantic_negatives_are_structural_positives_rejected_for_their_rule(self):
+        cases = [case for case in self.fixtures["invalid"] if "semantic_rule" in case]
+        self.assertEqual(
+            {case["semantic_rule"] for case in cases},
+            {
+                "source_graph_returned_count_not_equal_to_emitted_nodes",
+                "source_graph_returned_count_exceeds_page_size",
+                "source_graph_ambiguous_node_ref_in_page",
+            },
+        )
+        for case in cases:
+            with self.subTest(case=case["name"]):
+                value = self.gate.materialize_invalid(case, self.positives)
+                self.graph_validator.validate(value)
+                self.assertEqual(self.semantic_failures(value), [case["semantic_rule"]])
+
+    def test_returned_count_mismatch_is_rejected_in_both_directions(self):
+        for returned_count in (1, 3):
+            with self.subTest(returned_count=returned_count):
+                page = copy.deepcopy(self.graph)
+                page["page"]["returned_count"] = returned_count
+                self.assertTrue(self.graph_validator.is_valid(page))
+                self.assertIn(
+                    "source_graph_returned_count_not_equal_to_emitted_nodes",
+                    self.semantic_failures(page),
+                )
+
+    def test_repeated_node_ref_agreeing_on_revision_stays_within_the_owner_rule(self):
+        page = copy.deepcopy(self.graph)
+        page["nodes"][1]["node_ref"] = page["nodes"][0]["node_ref"]
+        page["nodes"][1]["revision_ref"] = page["nodes"][0]["revision_ref"]
+        self.assertTrue(self.graph_validator.is_valid(page))
+        self.assertEqual(self.semantic_failures(page), [])
+
+    def test_branch_is_scoped_to_the_source_graph_projection(self):
+        inconsistent = {
+            "schema_id": "pm.source_control.source_graph_projection.v1",
+            "page": {"returned_count": 9, "page_size": 1},
+            "nodes": [],
+        }
+        # The same shape is evaluated under this owner schema and ignored elsewhere.
+        self.assertEqual(
+            self.semantic_failures(inconsistent),
+            [
+                "source_graph_returned_count_exceeds_page_size",
+                "source_graph_returned_count_not_equal_to_emitted_nodes",
+            ],
+        )
+        self.assertEqual(
+            self.gate.contract_semantic_failures(
+                "Plans/jujutsu_integration_contracts.schema.json",
+                "source_graph_projection",
+                inconsistent,
+            ),
+            [],
+        )
+        # A non-graph record of this owner schema is not a page and is left alone.
+        request = self.positives["source_control_command_request_01_backend_detect"]
+        self.assertEqual(
+            self.semantic_failures(request, "source_control_command_request"), []
+        )
 
 
 if __name__ == "__main__":

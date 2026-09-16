@@ -2408,6 +2408,30 @@
       "expected_error": "a current page declaring has_more must carry a usable continuation cursor"
     },
     {
+      "name": "source_graph_returned_count_must_equal_the_emitted_nodes",
+      "definition": "source_graph_projection",
+      "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
+      "patch": {"page.returned_count": 3},
+      "semantic_rule": "source_graph_returned_count_not_equal_to_emitted_nodes",
+      "expected_error": "returned_count must equal the number of nodes the page actually emitted"
+    },
+    {
+      "name": "source_graph_returned_count_must_not_exceed_the_requested_page_size",
+      "definition": "source_graph_projection",
+      "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
+      "patch": {"page.page_size": 1},
+      "semantic_rule": "source_graph_returned_count_exceeds_page_size",
+      "expected_error": "returned_count must not exceed the requested page_size"
+    },
+    {
+      "name": "source_graph_node_ref_must_be_unambiguous_within_one_page",
+      "definition": "source_graph_projection",
+      "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
+      "patch": {"nodes.1.node_ref": "graph-node:git:alpha:43"},
+      "semantic_rule": "source_graph_ambiguous_node_ref_in_page",
+      "expected_error": "two nodes on one page cannot share a node_ref while carrying different revision_ref values"
+    },
+    {
       "name": "source_graph_static_fixture_is_not_runtime_evidence",
       "definition": "source_graph_projection",
       "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
