@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L717-L3534
+Source lines: L771-L3724
 
-Source SHA256: `f6eb13338ae0129fd8e98dcc61c4baf5653338a5db2c8c2a9d8e61228c844dc1`
+Source SHA256: `5371ce31278765b943710456c2fe23affcfef111bcef66bab9a79ba075ff4ca0`
 
 ---
 
@@ -2702,6 +2702,142 @@ negative_constraints:
 owner_hints:
   - Plans/Decision_Log.md
   - Plans/assistant-chat-design.md
+```
+
+### DL-051 - New Repository Object Format Picker Evidence Gated
+
+```yaml
+plan_unit_id: DL-051
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-16, answering research finding F110 with "Add the picker as
+  described, evidence-gated", that the existing Source Control setup flow offers a choice of
+  object format when a new Jujutsu repository is created, shows the discovered effective format
+  for repositories that already exist, and disables any choice that current capability evidence
+  does not certify. The accepted scope is the proposal's own dependency list: a typed
+  new-repository request extension carrying the chosen format, owner-owned format evidence read
+  from one place, certified engine, library, transport and provider profiles per format, setup
+  and cancellation fixtures, and copy stating that the format is permanent. Exact engine,
+  command-line and repository-format qualification with truthful unsupported states is an
+  existing prerequisite, not part of this acceptance. The answer changes no default, authorizes
+  no cross-format migration, and promises no universal SHA-256 support.
+gui_related: true
+gui_classification_reason: The accepted capability is a visible setup-flow control, its disabled states, its discovered-format display and its permanence copy.
+split_recommended: false
+depends_on: [DL-043, SCS-004, SCS-015, JJI-006]
+unblocks: []
+acceptance_criteria:
+  - The choice appears only in the existing Source Control setup flow for a repository being created, and an existing repository shows its discovered effective format with an explicit unknown state rather than a default or a guess.
+  - The chosen format travels in a typed new-repository request extension and is never inferred from a display string, a label, or the engine default.
+  - Format evidence has one owner and is read from there; per-format engine, library, transport and provider profiles are certified, and an offered choice is disabled by current capability evidence rather than by assumption.
+  - Setup and cancellation both carry fixtures, and a cancelled or abandoned setup leaves no chosen format recorded anywhere.
+  - The copy states that the object format of a repository is permanent once it is created.
+  - No default object format changes, no cross-format migration of an existing repository is planned, and no universal SHA-256 support is claimed.
+  - No command, request meaning, handler, event, certified engine version, or runtime capability is admitted by this record, and no WorkNodes, NodeSeeds or build tasks are created.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-new-contracts-verify.py
+risk_class: permanent_repository_format_chosen_without_evidence
+reasoning_tier: high
+context_scope: new_repository_object_format_selection
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+  - Plans/Jujutsu_Integration.md
+node_compile_hint:
+  mode: optional_capability_acceptance_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/jujutsu-research-2026-09-11/continuation3/final/comparison.json:c3006253a5c68074109312747feb67130fb6e12d4f82c66132b268487156370b
+  - /mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0028-compare/notes.md:469c95597f5d7d498d549b6dd319f98996a354e88a05d771ca17b719a52d9bfe
+  - Plans/Decision_Log.md:DL-051-direction-2026-09-16
+  - Plans/ledgers/v2/pldg-20260916-002-jujutsu-object-format-picker
+preserved_exact_tokens:
+  - Add the picker as described, evidence-gated.
+  - object format
+  - discovered effective format
+  - SHA-1
+  - SHA-256
+negative_constraints:
+  - Do not change which object format a new repository gets by default.
+  - Do not plan or imply migration of an existing repository from one object format to another.
+  - Do not claim that SHA-256 is universally supported by engines, libraries, transports or providers.
+  - Do not offer a format choice that current capability evidence does not certify, and do not disable one by assumption instead of by evidence.
+  - Do not restate the exact engine, command-line and repository-format qualification requirement; reference its owner.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+  - Plans/Jujutsu_Integration.md
+```
+
+### DL-052 - Source Graph Parent Reference Bound Thirty Two With Fetch The Rest
+
+```yaml
+plan_unit_id: DL-052
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-16, answering the open parent-bound question with "for the parent
+  referenced bound, lets do 32 then the ability to fetch the rest", that a node in a source graph
+  page declares at most thirty-two parent references. A node with more parents marks its parent
+  list truncated and carries a reference through which the remaining parents are fetched by a
+  bounded follow-up request. That request is fenced exactly as page continuation is: same
+  repository, workspace, backend and projection identity, same projection generation, and the
+  same currentness rule, so a stale or superseded page cannot be expanded as current. A node that
+  is not truncated carries no expansion reference. The provisional bound of six hundred is
+  retired.
+gui_related: true
+gui_classification_reason: The bound and its truncation marker govern what the virtualized history-and-graph view can render and how honestly it shows an incomplete parent list.
+split_recommended: false
+depends_on: [SCS-017]
+unblocks: []
+acceptance_criteria:
+  - A source graph node carries at most thirty-two parent references in one page, and the schema enforces that bound.
+  - A node whose parents exceed the bound marks its parent list truncated and carries a non-null expansion reference; a node that is not truncated carries none.
+  - The bounded fetch-the-rest request binds the same repository, workspace, backend and projection identity and the same projection generation as the page it came from, and is admitted only for a current page, exactly as page continuation is.
+  - The retired provisional bound of six hundred appears nowhere as a current value, and the bound is not presented as derived from the 200-node page cap or the 600-edge adjacency cap.
+  - Positive and negative fixtures cover the bound, the truncation marker and the expansion request.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds or build tasks are created by this record.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-new-contracts-verify.py
+risk_class: unbounded_or_dishonest_parent_adjacency_in_a_bounded_page
+reasoning_tier: high
+context_scope: bounded_source_graph_projection
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+  - Plans/source_control_contracts.schema.json
+  - Plans/source_control_contract_fixtures.json
+node_compile_hint:
+  mode: owner_bound_specification_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections:q-001
+  - reports/jujutsu-research-2026-09-11/continuation3-landing/verification.json
+  - Plans/Decision_Log.md:DL-052-direction-2026-09-16
+  - Plans/Source_Control_System.md#SCS-017
+preserved_exact_tokens:
+  - for the parent referenced bound, lets do 32 then the ability to fetch the rest
+  - parent_refs
+  - parent_refs_truncated
+  - parent_expansion_cursor_ref
+  - next_cursor_ref
+negative_constraints:
+  - Do not raise, lower or reinstate the parent bound without a new owner decision.
+  - Do not present thirty-two parents as a complete parent list when the node is truncated.
+  - Do not let an expansion request read a stale, partial or unavailable page as if it were current.
+  - Do not require every parent of a node to appear in the same page; cross-page ancestry stays legitimate.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

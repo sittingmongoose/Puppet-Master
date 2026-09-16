@@ -708,6 +708,60 @@ SourceRef: Jared, direction of 2026-09-16.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Forge_Integrations.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitLab_Integration.md, ContractName:Plans/Automated_Testing_System.md
 
+### DL-051: New repositories may choose their object format, gated by current capability evidence
+
+Decided on 2026-09-16 by Jared.
+
+The question was whether Puppet Master should let a user choose the object format when it creates a new Jujutsu repository, or keep creating repositories in whatever format the engine defaults to and only report the result afterwards.
+
+It came up because the third continuation of the Jujutsu research read the pinned native documentation and reported that the format a repository is created in is permanent, that engines, libraries, transports and hosting providers differ in which formats they can read, and that a user who wants stronger object hashing has no way to ask for it at the one moment it can be chosen. The same research separately required exact engine, command-line and repository-format qualification with truthful unsupported states. That requirement is already canon and is a prerequisite for this choice, not part of it.
+
+The options were:
+
+1. Offer the format choice in the existing Source Control setup flow when a new repository is created, show the discovered effective format for repositories that already exist, and disable any choice that current capability evidence does not certify.
+2. Keep the current creation behaviour and record only the effective format afterwards, which is the lower-scope alternative the research itself named.
+3. Offer the choice without evidence gating and let the user discover later which of their tools, transports or providers cannot read the repository.
+
+The answer is option 1. In Jared's words: "Add the picker as described, evidence-gated."
+
+The choice carries the dependencies the proposal itself listed. The new-repository request is typed and carries the chosen format, so the format is never inferred from a display string or a default. Format evidence is owned in one place and read from there, rather than restated on each surface. Each format has certified engine, library, transport and provider profiles, so an offered choice is disabled because current capability evidence says it is unsupported or not yet known, never because someone assumed it. Setup and cancellation both have fixtures, so an abandoned setup leaves no half-chosen format behind. The copy states plainly that the format cannot be changed afterwards. A repository that already exists shows the format that was discovered, and says so when discovery has not produced one, rather than showing a guess or the default.
+
+This buys a deliberate choice at the only moment it can be made, and a truthful account of what each format costs the user's own tools. It costs a longer setup flow and a support matrix the product then has to keep certified; SHA-1 remains the more widely compatible format according to the pinned native documentation.
+
+Three things the proposal excluded, and this answer does not grant: no change to which format a new repository gets by default, no migration of an existing repository from one format to another, and no promise that SHA-256 is universally supported.
+
+This records planning canon only. It enables no runtime behaviour, admits no command, request meaning or event, certifies no engine version, and seals no governance.
+
+SourceRef: `reports/jujutsu-research-2026-09-11/continuation3/final/comparison.json`, finding F110, SHA-256 `c3006253a5c68074109312747feb67130fb6e12d4f82c66132b268487156370b`; `/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0028-compare/notes.md` lines 91 to 95, SHA-256 `469c95597f5d7d498d549b6dd319f98996a354e88a05d771ca17b719a52d9bfe`; Jared, direction of 2026-09-16.
+
+ContractRef: ContractName:Plans/Source_Control_System.md, ContractName:Plans/Jujutsu_Integration.md
+
+### DL-052: A source graph page carries at most thirty-two parent references for one node, and the rest are fetched on request
+
+Decided on 2026-09-16 by Jared.
+
+The question was the exact number of parent references one node may declare inside a single source graph page, and how a node with more parents than that is represented.
+
+It came up because the correction that landed the finite-bound obligation could not invent the number. The adjudication required the bound to be finite, so that a bounded page cannot drag unbounded adjacency behind it, but reserved the exact value and the representation of an over-bound node for the owner. The landing enforced a provisional six hundred so the obligation was not left unenforced, stated in the owner document that the number was provisional and derived from nothing, and recorded the open question against the correction ledger.
+
+The options were:
+
+1. A small per-node bound, with an explicit way to fetch the remaining parents on request.
+2. A large per-node bound chosen to hold every realistic node in one page, needing no follow-up.
+3. No per-node bound at all, leaving only the page-wide edge cap to hold adjacency down.
+
+The answer is option 1. In Jared's words: "for the parent referenced bound, lets do 32 then the ability to fetch the rest."
+
+A node declares at most thirty-two parent references in a page. A node with more parents marks its parent list as truncated and carries a reference through which the remaining parents are fetched, one bounded request at a time. That follow-up answers to the same fences as page continuation: the same repository, workspace, backend and projection identity, the same projection generation, and the same currentness rule, so a stale or superseded page cannot be expanded as though it were current. A node that is not truncated carries no such reference and nothing left to fetch. The provisional six hundred is retired.
+
+This buys a page whose per-node adjacency is small enough to lay out and render without a hidden cost, while keeping every parent reachable. It costs a second bounded request path and its fences, and the view must show truncation honestly rather than presenting thirty-two parents as all of them.
+
+This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
+
+SourceRef: open question `q-001` in `Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections`; `reports/jujutsu-research-2026-09-11/continuation3-landing/verification.json`; Jared, direction of 2026-09-16.
+
+ContractRef: ContractName:Plans/Source_Control_System.md
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -3408,6 +3462,142 @@ negative_constraints:
 owner_hints:
   - Plans/Decision_Log.md
   - Plans/assistant-chat-design.md
+```
+
+### DL-051 - New Repository Object Format Picker Evidence Gated
+
+```yaml
+plan_unit_id: DL-051
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-16, answering research finding F110 with "Add the picker as
+  described, evidence-gated", that the existing Source Control setup flow offers a choice of
+  object format when a new Jujutsu repository is created, shows the discovered effective format
+  for repositories that already exist, and disables any choice that current capability evidence
+  does not certify. The accepted scope is the proposal's own dependency list: a typed
+  new-repository request extension carrying the chosen format, owner-owned format evidence read
+  from one place, certified engine, library, transport and provider profiles per format, setup
+  and cancellation fixtures, and copy stating that the format is permanent. Exact engine,
+  command-line and repository-format qualification with truthful unsupported states is an
+  existing prerequisite, not part of this acceptance. The answer changes no default, authorizes
+  no cross-format migration, and promises no universal SHA-256 support.
+gui_related: true
+gui_classification_reason: The accepted capability is a visible setup-flow control, its disabled states, its discovered-format display and its permanence copy.
+split_recommended: false
+depends_on: [DL-043, SCS-004, SCS-015, JJI-006]
+unblocks: []
+acceptance_criteria:
+  - The choice appears only in the existing Source Control setup flow for a repository being created, and an existing repository shows its discovered effective format with an explicit unknown state rather than a default or a guess.
+  - The chosen format travels in a typed new-repository request extension and is never inferred from a display string, a label, or the engine default.
+  - Format evidence has one owner and is read from there; per-format engine, library, transport and provider profiles are certified, and an offered choice is disabled by current capability evidence rather than by assumption.
+  - Setup and cancellation both carry fixtures, and a cancelled or abandoned setup leaves no chosen format recorded anywhere.
+  - The copy states that the object format of a repository is permanent once it is created.
+  - No default object format changes, no cross-format migration of an existing repository is planned, and no universal SHA-256 support is claimed.
+  - No command, request meaning, handler, event, certified engine version, or runtime capability is admitted by this record, and no WorkNodes, NodeSeeds or build tasks are created.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-new-contracts-verify.py
+risk_class: permanent_repository_format_chosen_without_evidence
+reasoning_tier: high
+context_scope: new_repository_object_format_selection
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+  - Plans/Jujutsu_Integration.md
+node_compile_hint:
+  mode: optional_capability_acceptance_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/jujutsu-research-2026-09-11/continuation3/final/comparison.json:c3006253a5c68074109312747feb67130fb6e12d4f82c66132b268487156370b
+  - /mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0028-compare/notes.md:469c95597f5d7d498d549b6dd319f98996a354e88a05d771ca17b719a52d9bfe
+  - Plans/Decision_Log.md:DL-051-direction-2026-09-16
+  - Plans/ledgers/v2/pldg-20260916-002-jujutsu-object-format-picker
+preserved_exact_tokens:
+  - Add the picker as described, evidence-gated.
+  - object format
+  - discovered effective format
+  - SHA-1
+  - SHA-256
+negative_constraints:
+  - Do not change which object format a new repository gets by default.
+  - Do not plan or imply migration of an existing repository from one object format to another.
+  - Do not claim that SHA-256 is universally supported by engines, libraries, transports or providers.
+  - Do not offer a format choice that current capability evidence does not certify, and do not disable one by assumption instead of by evidence.
+  - Do not restate the exact engine, command-line and repository-format qualification requirement; reference its owner.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+  - Plans/Jujutsu_Integration.md
+```
+
+### DL-052 - Source Graph Parent Reference Bound Thirty Two With Fetch The Rest
+
+```yaml
+plan_unit_id: DL-052
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-16, answering the open parent-bound question with "for the parent
+  referenced bound, lets do 32 then the ability to fetch the rest", that a node in a source graph
+  page declares at most thirty-two parent references. A node with more parents marks its parent
+  list truncated and carries a reference through which the remaining parents are fetched by a
+  bounded follow-up request. That request is fenced exactly as page continuation is: same
+  repository, workspace, backend and projection identity, same projection generation, and the
+  same currentness rule, so a stale or superseded page cannot be expanded as current. A node that
+  is not truncated carries no expansion reference. The provisional bound of six hundred is
+  retired.
+gui_related: true
+gui_classification_reason: The bound and its truncation marker govern what the virtualized history-and-graph view can render and how honestly it shows an incomplete parent list.
+split_recommended: false
+depends_on: [SCS-017]
+unblocks: []
+acceptance_criteria:
+  - A source graph node carries at most thirty-two parent references in one page, and the schema enforces that bound.
+  - A node whose parents exceed the bound marks its parent list truncated and carries a non-null expansion reference; a node that is not truncated carries none.
+  - The bounded fetch-the-rest request binds the same repository, workspace, backend and projection identity and the same projection generation as the page it came from, and is admitted only for a current page, exactly as page continuation is.
+  - The retired provisional bound of six hundred appears nowhere as a current value, and the bound is not presented as derived from the 200-node page cap or the 600-edge adjacency cap.
+  - Positive and negative fixtures cover the bound, the truncation marker and the expansion request.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds or build tasks are created by this record.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-new-contracts-verify.py
+risk_class: unbounded_or_dishonest_parent_adjacency_in_a_bounded_page
+reasoning_tier: high
+context_scope: bounded_source_graph_projection
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+  - Plans/source_control_contracts.schema.json
+  - Plans/source_control_contract_fixtures.json
+node_compile_hint:
+  mode: owner_bound_specification_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections:q-001
+  - reports/jujutsu-research-2026-09-11/continuation3-landing/verification.json
+  - Plans/Decision_Log.md:DL-052-direction-2026-09-16
+  - Plans/Source_Control_System.md#SCS-017
+preserved_exact_tokens:
+  - for the parent referenced bound, lets do 32 then the ability to fetch the rest
+  - parent_refs
+  - parent_refs_truncated
+  - parent_expansion_cursor_ref
+  - next_cursor_ref
+negative_constraints:
+  - Do not raise, lower or reinstate the parent bound without a new owner decision.
+  - Do not present thirty-two parents as a complete parent list when the node is truncated.
+  - Do not let an expansion request read a stale, partial or unavailable page as if it were current.
+  - Do not require every parent of a node to appear in the same page; cross-page ancestry stays legitimate.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

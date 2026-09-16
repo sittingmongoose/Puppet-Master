@@ -5314,9 +5314,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 23,
-        "True": 24
+        "True": 26
       },
-      "heading_count": 100,
+      "heading_count": 104,
       "implementation_surfaces": [
         ".gitignore",
         "Plans/Architecture_Invariants.md",
@@ -5369,6 +5369,8 @@
         "Plans/human-in-the-loop.md",
         "Plans/newtools.md",
         "Plans/orchestrator-subagent-integration.md",
+        "Plans/source_control_contract_fixtures.json",
+        "Plans/source_control_contracts.schema.json",
         "Plans/storage-plan.md",
         "Plans/storage_value_registry.json",
         "Plans/storage_value_registry.schema.json",
@@ -5376,9 +5378,9 @@
         "scripts/pm-plans-verify.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 3562,
+      "line_count": 3752,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 47,
+      "plan_unit_count": 49,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5426,6 +5428,8 @@
         "DL-048",
         "DL-049",
         "DL-050",
+        "DL-051",
+        "DL-052",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5468,6 +5472,7 @@
         "migration_lineage",
         "navigation_primitive_boundary_drift",
         "orchestration_model_drift",
+        "permanent_repository_format_chosen_without_evidence",
         "platform_decision_custody_retention_and_cleanup",
         "provider_runtime_actor_envelope_gap",
         "reopen_revocation_policy_gap",
@@ -5479,18 +5484,19 @@
         "terminal_input_protection_scope_bypass",
         "terminal_lock_persistence_identity_confusion",
         "terminal_research_decision_drift",
+        "unbounded_or_dishonest_parent_adjacency_in_a_bounded_page",
         "weak_integration_underclassification"
       ],
-      "sha256": "f6eb13338ae0129fd8e98dcc61c4baf5653338a5db2c8c2a9d8e61228c844dc1",
+      "sha256": "5371ce31278765b943710456c2fe23affcfef111bcef66bab9a79ba075ff4ca0",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 47
+        "accepted": 49
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 44
+        "requirement": 46
       },
       "validation_surfaces": [
         "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
@@ -19570,7 +19576,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-16T19:55:53Z",
+  "generated_at_utc": "2026-09-16T20:11:23Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19579,12 +19585,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3474,
-      "True": 3170
+      "True": 3172
     },
-    "plan_unit_count": 6644,
+    "plan_unit_count": 6646,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6453,
+      "accepted": 6455,
       "retired": 182,
       "superseded": 9
     },
@@ -19651,7 +19657,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5211,
+      "requirement": 5213,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

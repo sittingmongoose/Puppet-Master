@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L709
+Source lines: L13-L763
 
-Source SHA256: `f6eb13338ae0129fd8e98dcc61c4baf5653338a5db2c8c2a9d8e61228c844dc1`
+Source SHA256: `5371ce31278765b943710456c2fe23affcfef111bcef66bab9a79ba075ff4ca0`
 
 ---
 
@@ -705,3 +705,57 @@ This records planning canon only. It enables no runtime behavior, admits no comm
 SourceRef: Jared, direction of 2026-09-16.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Forge_Integrations.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitLab_Integration.md, ContractName:Plans/Automated_Testing_System.md
+
+### DL-051: New repositories may choose their object format, gated by current capability evidence
+
+Decided on 2026-09-16 by Jared.
+
+The question was whether Puppet Master should let a user choose the object format when it creates a new Jujutsu repository, or keep creating repositories in whatever format the engine defaults to and only report the result afterwards.
+
+It came up because the third continuation of the Jujutsu research read the pinned native documentation and reported that the format a repository is created in is permanent, that engines, libraries, transports and hosting providers differ in which formats they can read, and that a user who wants stronger object hashing has no way to ask for it at the one moment it can be chosen. The same research separately required exact engine, command-line and repository-format qualification with truthful unsupported states. That requirement is already canon and is a prerequisite for this choice, not part of it.
+
+The options were:
+
+1. Offer the format choice in the existing Source Control setup flow when a new repository is created, show the discovered effective format for repositories that already exist, and disable any choice that current capability evidence does not certify.
+2. Keep the current creation behaviour and record only the effective format afterwards, which is the lower-scope alternative the research itself named.
+3. Offer the choice without evidence gating and let the user discover later which of their tools, transports or providers cannot read the repository.
+
+The answer is option 1. In Jared's words: "Add the picker as described, evidence-gated."
+
+The choice carries the dependencies the proposal itself listed. The new-repository request is typed and carries the chosen format, so the format is never inferred from a display string or a default. Format evidence is owned in one place and read from there, rather than restated on each surface. Each format has certified engine, library, transport and provider profiles, so an offered choice is disabled because current capability evidence says it is unsupported or not yet known, never because someone assumed it. Setup and cancellation both have fixtures, so an abandoned setup leaves no half-chosen format behind. The copy states plainly that the format cannot be changed afterwards. A repository that already exists shows the format that was discovered, and says so when discovery has not produced one, rather than showing a guess or the default.
+
+This buys a deliberate choice at the only moment it can be made, and a truthful account of what each format costs the user's own tools. It costs a longer setup flow and a support matrix the product then has to keep certified; SHA-1 remains the more widely compatible format according to the pinned native documentation.
+
+Three things the proposal excluded, and this answer does not grant: no change to which format a new repository gets by default, no migration of an existing repository from one format to another, and no promise that SHA-256 is universally supported.
+
+This records planning canon only. It enables no runtime behaviour, admits no command, request meaning or event, certifies no engine version, and seals no governance.
+
+SourceRef: `reports/jujutsu-research-2026-09-11/continuation3/final/comparison.json`, finding F110, SHA-256 `c3006253a5c68074109312747feb67130fb6e12d4f82c66132b268487156370b`; `/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0028-compare/notes.md` lines 91 to 95, SHA-256 `469c95597f5d7d498d549b6dd319f98996a354e88a05d771ca17b719a52d9bfe`; Jared, direction of 2026-09-16.
+
+ContractRef: ContractName:Plans/Source_Control_System.md, ContractName:Plans/Jujutsu_Integration.md
+
+### DL-052: A source graph page carries at most thirty-two parent references for one node, and the rest are fetched on request
+
+Decided on 2026-09-16 by Jared.
+
+The question was the exact number of parent references one node may declare inside a single source graph page, and how a node with more parents than that is represented.
+
+It came up because the correction that landed the finite-bound obligation could not invent the number. The adjudication required the bound to be finite, so that a bounded page cannot drag unbounded adjacency behind it, but reserved the exact value and the representation of an over-bound node for the owner. The landing enforced a provisional six hundred so the obligation was not left unenforced, stated in the owner document that the number was provisional and derived from nothing, and recorded the open question against the correction ledger.
+
+The options were:
+
+1. A small per-node bound, with an explicit way to fetch the remaining parents on request.
+2. A large per-node bound chosen to hold every realistic node in one page, needing no follow-up.
+3. No per-node bound at all, leaving only the page-wide edge cap to hold adjacency down.
+
+The answer is option 1. In Jared's words: "for the parent referenced bound, lets do 32 then the ability to fetch the rest."
+
+A node declares at most thirty-two parent references in a page. A node with more parents marks its parent list as truncated and carries a reference through which the remaining parents are fetched, one bounded request at a time. That follow-up answers to the same fences as page continuation: the same repository, workspace, backend and projection identity, the same projection generation, and the same currentness rule, so a stale or superseded page cannot be expanded as though it were current. A node that is not truncated carries no such reference and nothing left to fetch. The provisional six hundred is retired.
+
+This buys a page whose per-node adjacency is small enough to lay out and render without a hidden cost, while keeping every parent reachable. It costs a second bounded request path and its fences, and the view must show truncation honestly rather than presenting thirty-two parents as all of them.
+
+This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
+
+SourceRef: open question `q-001` in `Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections`; `reports/jujutsu-research-2026-09-11/continuation3-landing/verification.json`; Jared, direction of 2026-09-16.
+
+ContractRef: ContractName:Plans/Source_Control_System.md
