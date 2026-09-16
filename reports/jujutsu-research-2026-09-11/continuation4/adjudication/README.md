@@ -7,9 +7,12 @@ against the adjudicated 110-finding union from continuation 3, using continuatio
 am an Opus 5 agent. Every credit below names the delivered assertion and the passage it cites, so the
 judgement can be re-checked against the artifacts rather than taken on my word.
 
-Arms deepseek41, glm53, muse13 and union are **not scored here** — deepseek41 launched at 20:02:55Z and was
-still running when this adjudication started; glm53, muse13 and union had not started. They will be scored
-on resume.
+Arms deepseek41, glm53, muse13 and union are **not scored here**. At the time of writing deepseek41 is
+live (its 20:02:55Z attempt was archived for an accounting defect and it relaunched at 20:20:22Z as
+`jujutsu-deepseek41-20260916-202016`); glm53, muse13 and union have not started. A **`claude-hicap`** arm
+is also queued — the same model with a raised response ceiling. That arm is the direct control for this
+adjudication's main caveat: Arm C's recall is dominated by the 40-response ceiling, not by judgement, and
+`claude-hicap` is what will separate the two. All of these will be scored on resume.
 
 ## What I read, by path and hash
 
@@ -246,5 +249,6 @@ unresolved charges and every job reconciled at job end.
 5. 11 of 12 jobs were request-limited. Request-limited coverage and the reached-delivery fraction are
    reported separately; unperformed work remains unknown, never a negative finding.
 6. Cost is a captured upper valuation equal to the CLI-reported subscription-equivalent, not a cash invoice.
-7. deepseek41, glm53, muse13 and union are unscored; the comparison table's right-hand columns stay empty
-   until they are.
+7. deepseek41, glm53, muse13, union and the queued `claude-hicap` are unscored; the comparison table's
+   right-hand columns stay empty until they are. `claude-hicap` matters most: without it, "Claude Opus 5
+   scores 16.36%" cannot be separated from "Claude Opus 5 was cut off after 40 responses in 11 of 12 jobs".
