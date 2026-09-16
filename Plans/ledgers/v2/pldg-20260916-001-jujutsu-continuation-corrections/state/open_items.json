@@ -1,26 +1,42 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260916-001-jujutsu-continuation-corrections",
-  "updated_at_utc": "2026-09-16T19:38:36.233102+00:00",
-  "open_questions": [
-    {
-      "question_id": "q-001",
-      "summary": "What is the exact per-node parent-reference bound for a SourceGraph page, and how is a node with more parents than the bound represented?",
-      "status": "open",
-      "raised_by": "independent review of commit b83abd9396, finding B1, 2026-09-16",
-      "provisional_state": "Plans/source_control_contracts.schema.json enforces a provisional maxItems of 600 on nodes[].parent_refs, and SCS-017 states that the number is provisional pending the owner's specification and is not derived from the 200-node page cap or the 600-edge adjacency cap.",
-      "blocks_landing": false
-    }
-  ],
+  "updated_at_utc": "2026-09-16T20:30:00+00:00",
+  "open_questions": [],
   "deferred_questions": [],
   "open_blockers": [],
   "remaining_work": [
-    "Await the reviewer's verification of the second commit, then land on main. Open question q-001, the exact parent-reference bound and the representation of an over-bound node, is for Jared. Question q-002, the contract semantic-gate branch, is answered and authorized and belongs to the follow-up that adds the source_control_contracts branch and removes the SCS-017 unenforced statement. F110 stays outside this ledger."
+    "Both questions are closed: q-001 is answered by the owner (32 parent references per node with a bounded fetch-the-rest follow-up, recorded as DL-052) and q-002 is implemented (the source_control_contracts semantic branch now enforces both relational rules). This ledger is compiled and needs nothing further. F110 is accepted separately and is planned in pldg-20260916-002-jujutsu-object-format-picker."
   ],
   "scope_note": "F110, the new-repository object-format picker, is an unapproved optional capability and is outside this ledger.",
   "deferred_governance_validation_errors": [
     "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
     "governance coverage targets missing from Spec_Lock coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
     "governance coverage targets missing from plan_graph coverage: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']"
+  ],
+  "answered_questions": [
+    {
+      "question_id": "q-001",
+      "summary": "What is the exact per-node parent-reference bound for a SourceGraph page, and how is a node with more parents than the bound represented?",
+      "status": "answered",
+      "answer": "A node declares at most 32 parent references in a page. A node with more parents marks its parent list truncated and carries a reference through which the remaining parents are fetched by a bounded follow-up, fenced exactly as page continuation is: same repository, workspace, backend and projection identity, same projection generation, and admitted only while the projection is current. The provisional 600 is retired.",
+      "answered_at_utc": "2026-09-16T20:30:00+00:00",
+      "landed_as": [
+        "Plans/Decision_Log.md#DL-052",
+        "Plans/Source_Control_System.md#SCS-017",
+        "Plans/source_control_contracts.schema.json#/$defs/source_graph_parent_expansion_request"
+      ]
+    },
+    {
+      "question_id": "q-002",
+      "summary": "Should a source_control_contracts branch be added to the contract semantic gate so F107's two relational rules become enforced, or should they stay SCS-017 owner obligations?",
+      "status": "answered_and_implemented",
+      "answered_at_utc": "2026-09-16T19:38:36.233102+00:00",
+      "landed_as": [
+        "scripts/pm-new-contracts-verify.py",
+        "Plans/source_control_contract_fixtures.json",
+        "Plans/Source_Control_System.md#SCS-017"
+      ]
+    }
   ]
 }

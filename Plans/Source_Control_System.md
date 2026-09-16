@@ -1078,15 +1078,21 @@ acceptance_criteria:
     different `revision_ref` values.
   - >-
     Parent-reference expansion is finite, so a bounded page cannot carry unbounded adjacency behind
-    `unbounded_hydration=false`. A finite bound is required; its exact value, and how a node with more parents than the
-    bound is represented, are reserved for the owner and are not settled here. The schema therefore enforces a
-    provisional bound of at most 600 `parent_refs` per node. That number is provisional pending the owner's
-    specification and is not derived from the 200-node page cap or the 600-edge adjacency cap; the open question is
-    recorded as `q-001` in `Plans/ledgers/v2/pldg-20260916-001-jujutsu-continuation-corrections`. A parent may
-    legitimately live on another page; presence in the same page is not required.
+    `unbounded_hydration=false`. A node declares at most 32 `parent_refs` in one page, the owner bound set in DL-052.
+    A node with more parents sets `parent_refs_truncated=true`, carries the full 32 references, and carries a non-null
+    `parent_expansion_cursor_ref`; a node that is not truncated carries a null one. A parent may legitimately live on
+    another page; presence in the same page is not required.
+  - >-
+    The remaining parents of a truncated node are fetched by
+    `pm.source_control.source_graph_parent_expansion_request.v1`, a bounded read fenced exactly as page continuation
+    is. It carries the same RepositoryContext, repository, workspace, backend, selected revision and projection
+    identity as the page that truncated the node, the same `projection_generation`, and the page's own
+    `parent_expansion_cursor_ref`; it is admitted only while that projection is `current`, asks for at most 32
+    references at a time, and claims no mutation, no repository-identity authority and no runtime evidence.
   - Static schema and fixtures keep `runtime_evidence_claimed=false` and establish no handler, adapter, native Slint behavior, performance result, scenario result, or readiness claim.
 validation_surfaces:
   - Plans/source_control_contracts.schema.json#/$defs/source_graph_projection
+  - Plans/source_control_contracts.schema.json#/$defs/source_graph_parent_expansion_request
   - Plans/source_control_contract_fixtures.json
   - Plans/final_gui_interaction_contracts.schema.json#/$defs/post_integration_dry_component_reconciliation
   - Plans/final_gui_interaction_contract_fixtures.json
@@ -1107,11 +1113,14 @@ source_lineage:
   - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/machine/dry_components.json:17-26
   - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/semantic_gap_plan_rerun/semantic_gap_plan.json
   - source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-source-graph-page-consistency-107
-preserved_exact_tokens: [SourceGraph, RepositoryContext, git_commit_graph, jujutsu_change_graph, source history, operation history, Backup history]
+  - source_ref:pldg-20260916-001-jujutsu-continuation-corrections:q-001
+  - Plans/Decision_Log.md#DL-052
+preserved_exact_tokens: [SourceGraph, RepositoryContext, git_commit_graph, jujutsu_change_graph, source history, operation history, Backup history, parent_refs_truncated, parent_expansion_cursor_ref]
 negative_constraints:
   - Do not infer repository, workspace, Host, Environment, remote, account, or authority from graph focus, display path, labels, or shared commit objects.
   - Do not merge Jujutsu operation history or Backup history into SourceGraph or invent a cross-owner undo/restore action.
   - Do not eagerly hydrate an unbounded history, lose selection identity between pages, or paint stale/partial data as current.
+  - Do not present a truncated parent list as complete, expand a page that is not current, or change the 32-reference bound without a new owner decision.
   - Do not add a SourceGraph command, handler, state owner, EventRecord family, persistence authority, or runtime/native proof from this static closure.
 ```
 

@@ -61,6 +61,9 @@
       "$ref": "#/$defs/source_graph_projection"
     },
     {
+      "$ref": "#/$defs/source_graph_parent_expansion_request"
+    },
+    {
       "$ref": "#/$defs/backup_source_closure_record"
     },
     {
@@ -2829,16 +2832,28 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["node_ref", "revision_ref", "stable_change_ref", "parent_refs", "label_ref", "node_state", "selected"],
+            "required": ["node_ref", "revision_ref", "stable_change_ref", "parent_refs", "parent_refs_truncated", "parent_expansion_cursor_ref", "label_ref", "node_state", "selected"],
             "properties": {
               "node_ref": {"$ref": "#/$defs/non_secret_ref"},
               "revision_ref": {"$ref": "#/$defs/non_secret_ref"},
               "stable_change_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
-              "parent_refs": {"$ref": "#/$defs/non_secret_ref_list", "maxItems": 600},
+              "parent_refs": {"$ref": "#/$defs/non_secret_ref_list", "maxItems": 32},
+              "parent_refs_truncated": {"type": "boolean"},
+              "parent_expansion_cursor_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
               "label_ref": {"$ref": "#/$defs/non_secret_ref"},
               "node_state": {"enum": ["normal", "rewritten", "abandoned", "conflicted"]},
               "selected": {"type": "boolean"}
-            }
+            },
+            "allOf": [
+              {
+                "if": {"properties": {"parent_refs_truncated": {"const": true}}, "required": ["parent_refs_truncated"]},
+                "then": {"properties": {"parent_refs": {"minItems": 32}, "parent_expansion_cursor_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+              },
+              {
+                "if": {"properties": {"parent_refs_truncated": {"const": false}}, "required": ["parent_refs_truncated"]},
+                "then": {"properties": {"parent_expansion_cursor_ref": {"type": "null"}}}
+              }
+            ]
           }
         },
         "edges": {
@@ -2919,6 +2934,76 @@
               "nodes": {"items": {"properties": {"stable_change_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
             }
           }
+        }
+      ]
+    },
+    "source_graph_parent_expansion_request": {
+      "title": "SourceGraphParentExpansionRequest",
+      "description": "A bounded follow-up that fetches the parent references one SourceGraph page truncated for one node. It carries the same repository, workspace, backend and projection identity as that page, the same projection generation, and the same current-page rule as page continuation. It is not a mutation, a command admission, a repository-identity authority, or runtime proof.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "request_id",
+        "projection_id",
+        "repository_context_ref",
+        "repo_id",
+        "workspace_id",
+        "scm_backend",
+        "selected_revision_ref",
+        "graph_kind",
+        "node_ref",
+        "parent_expansion_cursor_ref",
+        "requested_count",
+        "projection_currentness",
+        "identity_authority",
+        "mutation_intent",
+        "runtime_evidence_claimed"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.source_control.source_graph_parent_expansion_request.v1"},
+        "request_id": {"$ref": "#/$defs/identity_id"},
+        "projection_id": {"$ref": "#/$defs/identity_id"},
+        "repository_context_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "repo_id": {"$ref": "#/$defs/identity_id"},
+        "workspace_id": {"$ref": "#/$defs/identity_id"},
+        "scm_backend": {"$ref": "#/$defs/scm_backend"},
+        "selected_revision_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "graph_kind": {"enum": ["git_commit_graph", "jujutsu_change_graph"]},
+        "node_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "parent_expansion_cursor_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "requested_count": {"type": "integer", "minimum": 1, "maximum": 32},
+        "projection_currentness": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "projection_generation", "observed_at_utc"],
+          "properties": {
+            "state": {"const": "current"},
+            "projection_generation": {"type": "integer", "minimum": 0},
+            "observed_at_utc": {"$ref": "#/$defs/timestamp"}
+          }
+        },
+        "identity_authority": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["repository_context_authoritative", "display_path_authoritative", "shared_commit_authoritative"],
+          "properties": {
+            "repository_context_authoritative": {"const": true},
+            "display_path_authoritative": {"const": false},
+            "shared_commit_authoritative": {"const": false}
+          }
+        },
+        "mutation_intent": {"const": "none"},
+        "runtime_evidence_claimed": {"const": false}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"scm_backend": {"const": "git"}}, "required": ["scm_backend"]},
+          "then": {"properties": {"graph_kind": {"const": "git_commit_graph"}}}
+        },
+        {
+          "if": {"properties": {"scm_backend": {"const": "jujutsu"}}, "required": ["scm_backend"]},
+          "then": {"properties": {"graph_kind": {"const": "jujutsu_change_graph"}}}
         }
       ]
     },

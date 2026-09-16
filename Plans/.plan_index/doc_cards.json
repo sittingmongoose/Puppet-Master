@@ -16798,7 +16798,7 @@
         "future source-control facade",
         "future source-control migration"
       ],
-      "line_count": 1465,
+      "line_count": 1474,
       "path": "Plans/Source_Control_System.md",
       "plan_unit_count": 21,
       "plan_unit_ids": [
@@ -16850,7 +16850,7 @@
         "unbounded_graph_hydration_or_source_history_identity_conflation",
         "wrong_environment_or_stale_version_certification"
       ],
-      "sha256": "bfe7df44bc17561c301d1a229ff30debc176e290b66806ede827fa9cf637627f",
+      "sha256": "38d78f86661dedd3e6699e4c30fd4057a269a30cd0d87fa394c8f8f87fcc51c9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 21
@@ -16880,6 +16880,7 @@
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
+        "Plans/source_control_contracts.schema.json#/$defs/source_graph_parent_expansion_request",
         "Plans/source_control_contracts.schema.json#/$defs/source_graph_projection",
         "Plans/touch_closure.json",
         "Settings search and route dedupe fixtures",
@@ -19576,7 +19577,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-16T20:18:40Z",
+  "generated_at_utc": "2026-09-16T20:27:30Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
