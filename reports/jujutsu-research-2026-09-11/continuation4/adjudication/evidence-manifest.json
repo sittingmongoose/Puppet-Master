@@ -1,0 +1,67 @@
+{
+  "schema": "jj.continuation4.adjudication.evidence_manifest.v1",
+  "label": "Arm C (Claude Opus 5) adjudication bundle — evidence pointers and hashes",
+  "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm",
+  "created_at_utc": "2026-09-16T20:22:00Z",
+  "note": "Raw captures stay outside this repository per AGENTS.md. Evidence is cited by path plus SHA-256.",
+  "arm_run": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/arm-c-manifest.json",
+    "manifest_sha256_internal": "a0d3b38cb37ee3dfa47ec5ac878ce903f0ff15a0166d51c235af82613c01dd39",
+    "manifest_file_bytes_sha256": "bda960668eda9c08b2d1c0a2c2e6831694f1b744da7bc76011f46b588fdf2f59",
+    "files": 6234,
+    "total_bytes": 167320784,
+    "independently_reverified": true,
+    "reverification_note": "Re-hashed the whole tree with the run's own hash_manifest.py algorithm on 2026-09-16; 6234 files, digest a0d3b38c... matched. The runner's reported hash is the manifest's internal manifest_sha256 over the sorted file rows, not the manifest file's own bytes."
+  },
+  "adjudication_source": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/adjudication/claude",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/adjudication/claude-manifest.json",
+    "manifest_sha256_internal": "138424216690b85865ddd4d7227796ca24ec33c1c65a80204226c2d1bbe55a62",
+    "progress_log": "adjudication/claude/PROGRESS.md (kept out of this bundle; it is a working log, not a result)"
+  },
+  "union_and_method": [
+    {"path": "reports/jujutsu-research-2026-09-11/continuation3/final/comparison.json", "sha256": "c3006253a5c68074109312747feb67130fb6e12d4f82c66132b268487156370b"},
+    {"path": "reports/jujutsu-research-2026-09-11/continuation3/final/closing-job-reviews.json", "sha256": "e3c64edd60a6ea7664fc98d1541f649665ef2b681915bf249e50046e6917d5e1"},
+    {"path": "reports/jujutsu-research-2026-09-11/continuation3/final/symmetric-adjudication.json", "sha256": "531c6d831890598a99b159ae160aa7bd501d13c2885ef1344f51acaaea74bcc2"},
+    {"path": "reports/jujutsu-research-2026-09-11/continuation3/final/independent-review.json", "sha256": "923df1b300d4de20d29eff414046661590835902074e95a36df3e350161bf28b"},
+    {"path": "reports/jujutsu-research-2026-09-11/continuation3/final/job-coverage.json", "sha256": "8a9a264ab287c8f22546a953e24d9703d2621bc6e1b0df0137ad4286367831fa"},
+    {"path": "reports/jujutsu-research-2026-09-11/continuation3/final/README.md", "sha256": "fb775eb0f26ded27d835d8ecface357a3f1ab8a65adc612da5685bfd1e446e53"},
+    {"path": "reports/jujutsu-research-2026-09-11/continuation3/end/README.md", "sha256": "6356d64f8f6c6e64248aacf34795f62463fc36250e0ceeec045d2b04c262bc67"},
+    {"path": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/BRIEF_ADJUDICATE_NEW_ARMS_20260916.md", "sha256": "352942fec6ac5671c953c33ed466936b78b3f16797fa2ddf553a2007f0b4aa81"},
+    {"path": "AGENTS.md", "sha256": "778ee8e5b13c4e6011e5b1de1bb0889638ddd43a5d7b30ee45b6e951bf9d697f"}
+  ],
+  "arm_run_state_read": [
+    {"path": "runs/jujutsu-claude-20260916b/run.json", "sha256": "8a6632de52ae9554e67816f8a91c63422c77f82771354fc1288829556500101b"},
+    {"path": "runs/jujutsu-claude-20260916b/timing.json", "sha256": "78235f5006c4558acaa3f9be5382443a433aec1a9c2a2866242c3e4e52d94b66"},
+    {"path": "runs/jujutsu-claude-20260916b/progress.json", "sha256": "7895190214ff9145dbf343b93f7c1bceda1c5dc5277fd11cb2456ec911614de4"},
+    {"path": "continuation4/PROGRESS.md (runner's log)", "sha256": "868969215f231260c3d77acc231d4c3b95150e3d4eddbd3c70ddced166d97dbf"}
+  ],
+  "assertion_corpus": {
+    "root": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs",
+    "documents": 18,
+    "files": [
+      {"path": "J0019-reconcile/workspace/notes.md", "sha256": "2ff85492dd1742a6b82163fa2295c058c4adfdbb2706e923f709594037b9172b"},
+      {"path": "J0019-reconcile/workspace/leads/dojjo-create-verification-is-local-side-only.md", "sha256": "928f554149c4c5d8685851343168f85ba815fe862ef431ef0c8f545bcb8877dd"},
+      {"path": "J0019-reconcile/workspace/leads/dojjo-git-transport-need-computed-not-honored.md", "sha256": "b33b087f5324dde222b260772b454287bc89d14a7e65d5d7243c5623aff0bef0"},
+      {"path": "J0019-reconcile/workspace/leads/dojjo-op-store-gc-unix-epoch-and-lock-gap.md", "sha256": "c0cf000f2adb55ddfb0b922d9285421544c4480239ccf634b40101c3d87cc1ad"},
+      {"path": "J0019-reconcile/workspace/leads/dojjo-setup-manufactures-native-operations.md", "sha256": "e041c847638129d3e2fd088b710d98d7080295fd506b7f083ba5c8fcced0543a"},
+      {"path": "J0019-reconcile/workspace/leads/dojjo-workspace-name-uniqueness-is-local-precheck.md", "sha256": "7b3e0f3e2f51ed9b1671cf2e8642e6287c42ad59d5a3596cc16c222cbaa89e87"},
+      {"path": "J0019-reconcile/workspace/leads/git-fsck-connectivity-only-rationale.md", "sha256": "826f4ad11fc3c4e9c7aefd9936cc5f2164d22b332857f1a8de54876755dccd62"},
+      {"path": "J0022-reconcile/workspace/notes.md", "sha256": "8763c8457e5637cafb2fde67bb6881f7d091cadd1ee8c5fcb6fdf4e1a43b5750"},
+      {"path": "J0022-reconcile/workspace/leads/bookmark-verb-vocabulary-delete-forget-rename.md", "sha256": "b3d4b9f1a1732715d3202f4ac197003bdd36622b3adfd5ba8c1ebb32c4eb1dcb"},
+      {"path": "J0022-reconcile/workspace/leads/direct-manipulation-target-resolution-bugs.md", "sha256": "edf1f48f843cdd7eda1d2f6663f10ffc9fc08a6afcd84f6f57298d637ae264b5"},
+      {"path": "J0022-reconcile/workspace/leads/dojjo-sync-complete-prunes-operation-history.md", "sha256": "7c11e0db99b4ebae2e55a786bdb01cfadb5fb5a06ae0b803e0d8aab90695ddad"},
+      {"path": "J0025-reconcile/workspace/notes.md", "sha256": "d03c593639d2d7a134b532ef71edcef21fb0f877fc445b4fe499491259a34dba"},
+      {"path": "J0026-compare/workspace/notes.md", "sha256": "eca15bac6cb2d2d0d830c62287bb69b995b2197761c1d7237cb51148d93e92b2"},
+      {"path": "J0026-compare/workspace/leads/pm-gc-fence-held-does-not-state-coverage.md", "sha256": "dc302a4eb282257dcc9d97546180f80d36490ed70b34f2aa8fb1757294c6509d"},
+      {"path": "J0026-compare/workspace/leads/pm-jj-isolated-drill-must-rebind-store-pointers.md", "sha256": "ba3330c47a0981ac4c7eb1eb5b58854282112320e4d15ada6c72a19b570a3ab5"},
+      {"path": "J0026-compare/workspace/leads/pm-jj-machine-local-store-entries-unclassified.md", "sha256": "dab6c73e05e87cb97a0c1f3cd920290d69172f242d9367164eff93ea2a6cdc7d"},
+      {"path": "J0026-compare/workspace/leads/pm-jj-restore-object-verification-depth-unstated.md", "sha256": "fbbf91951173bb339429a27499ec14498e378ad5a2341a6b26314fefb1d17c1b"},
+      {"path": "J0026-compare/workspace/leads/pm-jj-unloadable-metadata-has-no-blocker-class.md", "sha256": "1b6d1d993382cb5d0c8226c6717e7bffff7b43d9e70de7835f03a58ecf459080"}
+    ],
+    "excluded_as_not_arm_authored": ["workspace/navigation.md", "workspace/handoff.md", "workspace/brief.md", "workspace/assignment.md", "workspace/sources.md", "workspace/tool-help.md", "workspace/research.py"],
+    "excluded_as_locator_inventory": "workspace/research-evidence/sources/** — continuation 3 treats source locator inventories as separate from assertion documents"
+  },
+  "arms_not_yet_scored": ["deepseek41", "glm53", "muse13", "union"]
+}
