@@ -884,6 +884,19 @@
      13. PUBLIC SURFACE (harnesses assert against this, not the DOM)
      ===================================================================== */
   window.PM56_COMPOSER_STATE = {
+    captureForSchedule:function(ctx,tid){
+      const b=JSON.parse(JSON.stringify(bufferFor(tid)));if(ctx.state.selectedThread===tid){b.text=ctx.state.composer;b.destination=C.destination||null;}
+      return {threadId:tid,buffer:b};
+    },
+    matchesScheduleCapture:function(ctx,capture){return !!capture&&JSON.stringify(window.PM56_COMPOSER_STATE.captureForSchedule(ctx,capture.threadId))===JSON.stringify(capture);},
+    consumeScheduled:function(ctx,capture){
+      const api=window.PM56_COMPOSER_STATE,TX=window.PM56_TX;
+      if(!api.matchesScheduleCapture(ctx,capture))return {ok:false,error:'composer_changed'};
+      const tid=capture.threadId,b=bufferFor(tid);
+      for(const [k,v] of Object.entries({text:'',attachments:[],browser_context_refs:[],destination:null,cursor_position:null,workflow_config:null,held_request:null,revision:(b.revision||0)+1,updated_at:nowIso()}))TX.set(b,k,v);
+      if(ctx.state.selectedThread===tid){TX.set(ctx.state,'composer','');TX.set(C,'destination',null);}
+      if(ctx.state.drafts)TX.set(ctx.state.drafts,tid,'');TX.defer(flush);return {ok:true};
+    },
     version: 1,
     runtime: C,
     quota: function () { return RT.quota; },

@@ -11202,6 +11202,8 @@ button.qs-spine-slot.is-current::after{
 .bsd12-advice .bsd12-actions {margin-top:7px;}
 @media(max-width:740px){.bsd12-grid{grid-template-columns:1fr}.bsd12-dialog{width:calc(100vw - 20px)}.bsd12-footer>*{min-width:0}.bsd12-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
+/* Pure time arithmetic has no UI styles. */
+
 /* scheduling.css — feature module styles.  OWNER: Plans/Scheduling_and_Quota_Resume.md
  * (Assistant-redesign wave, 2026-09-03).
  *
@@ -12775,6 +12777,34 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 
 /* Batch 17 consumes existing theme, sheet, button and Plan motion tokens. */
 .b17-workspace{padding:28px;max-width:960px;margin:auto;min-width:0}.b17-workspace header small{font-size:10px;letter-spacing:.14em;color:var(--muted)}.b17-workspace h1{font-size:28px;line-height:1.2;margin:12px 0}.b17-workspace h2{font-size:15px;line-height:1.5;margin:0 0 8px}.b17-workspace p{font-size:13px;line-height:1.65;color:var(--muted);overflow-wrap:anywhere}.b17-actions{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.b17-resource,.b17-outputs>section,.b17-workspace>section,.b17-workspace>details{padding:18px;border:1px solid var(--line);border-radius:14px;margin:16px 0;background:var(--panel)}.b17-outputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.b17-outputs>section{margin:0}.b17-work-link{display:flex;gap:12px;align-items:center;padding:14px 16px;min-width:0}.b17-work-link>div{flex:1;min-width:0}.b17-work-link span{display:block;font-size:12px;color:var(--muted);margin-top:4px}.b17-work-link strong{font-size:13px}.b17-guide{margin:8px 0 0;padding:12px 16px;border:1px solid var(--line);border-radius:12px;line-height:1.5}.b17-guide strong{display:block;font-size:12px}.b17-guide span{font-size:11px;color:var(--muted)}.b17-attempt-list p{display:grid;grid-template-columns:1fr auto;gap:6px}.b17-attempt-list code{grid-column:1/-1;font:10px/1.5 monospace;overflow-wrap:anywhere}.b17-local-note{font-size:11px!important}.b17-workspace summary{cursor:pointer}.b17-workspace .soft-button{height:auto;min-height:32px;white-space:normal;text-align:left}@media(max-width:900px){.b17-workspace{padding:18px}.b17-workspace h1{font-size:24px}.b17-outputs{grid-template-columns:1fr}.b17-work-link{flex-wrap:wrap}.b17-work-link .soft-button{margin-left:26px}}
+
+/* Batch18 uses the shared theme, cards, controls and protected motion. */
+.b18-guide{margin:8px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:12px;min-width:0}
+.b18-guide-title{display:flex;flex-wrap:wrap;align-items:center;gap:5px 14px;justify-content:space-between}
+.b18-guide-title small,.b18-guide p{color:var(--text-muted);line-height:1.5}
+.b18-guide p{margin:7px 0}.b18-clock summary{cursor:pointer;font-weight:600;padding:5px 0}
+.b18-controls{display:flex;flex-wrap:wrap;gap:7px;padding-top:7px}.b18-controls button{font-size:11px;min-height:30px;white-space:normal}
+.b18-clock-state{flex-basis:100%;display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;color:var(--text-muted)}
+.b18-decision{padding-top:5px;overflow-wrap:anywhere}.b18-result{border:1px solid var(--line);border-radius:12px;padding:16px;line-height:1.5}.b18-result>strong{font-size:22px}
+.sched-card-route{font-size:11px;color:var(--text-muted);overflow-wrap:anywhere}
+.sched-card-sent,.sched-card-canceled,.sched-card-expired,.sched-card-failed{background:transparent;box-shadow:none}
+.sched-card-sent .sched-card-head,.sched-card-canceled .sched-card-head,.sched-card-expired .sched-card-head{opacity:.85}
+.sched-tabs{flex-wrap:wrap}.sched-tab{white-space:normal;min-width:0;flex:1 1 40%;text-align:left}
+.b18-filter-row{display:flex;gap:8px;align-items:center;padding:10px 16px}.b18-filter-row input{flex:1;min-width:0}.b18-filter-row select{max-width:140px}
+.b18-filter-row input,.b18-filter-row select{font:inherit;font-size:12px;color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:7px 9px}
+@media(max-width:800px){.b18-guide{padding:9px 11px}.b18-guide-title{display:block}.b18-guide-title small{display:block;margin-top:4px}.sched-tabs .sched-tab{font-size:11px}.b18-filter-row{padding:8px 12px}}
+.b18-manager-filter{display:grid;grid-template-columns:minmax(140px,1fr) minmax(120px,.7fr) minmax(120px,.7fr);gap:12px;padding:12px 20px;border-bottom:1px solid var(--line)}
+.b18-manager-filter label{display:flex;flex-direction:column;gap:6px;font-size:11px;color:var(--muted);min-width:0}
+.b18-manager-filter input,.b18-manager-filter select{width:100%;min-width:0;font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--text)}
+.b18-time-resolution{font-size:11px;color:var(--muted);line-height:1.5;overflow-wrap:anywhere}
+.sched-dialog--manage .sched-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:10px 16px}
+.sched-dialog--manage .sched-tab{white-space:normal;text-align:left;min-height:32px}
+.b18-guide small{white-space:normal}
+@media(max-width:760px){.b18-manager-filter{grid-template-columns:1fr 1fr;padding:10px 16px}.b18-manager-filter label:first-child{grid-column:1/-1}}
+.composer:has(.b18-guide) .b17-guide{display:none}
+.b18-guide{--text-muted:var(--muted);--surface:var(--panel)}
+.b18-guide details[open] .b18-controls{max-height:180px;overflow:auto;padding-bottom:5px}
+.schedule-item-copy span,.plan-schedule-line small,.sched-card-time{overflow-wrap:anywhere;white-space:normal}
 
 /* composer.css — in-field composer chrome, selector collapse, follow-up queue.
  *
@@ -27208,6 +27238,19 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
      13. PUBLIC SURFACE (harnesses assert against this, not the DOM)
      ===================================================================== */
   window.PM56_COMPOSER_STATE = {
+    captureForSchedule:function(ctx,tid){
+      const b=JSON.parse(JSON.stringify(bufferFor(tid)));if(ctx.state.selectedThread===tid){b.text=ctx.state.composer;b.destination=C.destination||null;}
+      return {threadId:tid,buffer:b};
+    },
+    matchesScheduleCapture:function(ctx,capture){return !!capture&&JSON.stringify(window.PM56_COMPOSER_STATE.captureForSchedule(ctx,capture.threadId))===JSON.stringify(capture);},
+    consumeScheduled:function(ctx,capture){
+      const api=window.PM56_COMPOSER_STATE,TX=window.PM56_TX;
+      if(!api.matchesScheduleCapture(ctx,capture))return {ok:false,error:'composer_changed'};
+      const tid=capture.threadId,b=bufferFor(tid);
+      for(const [k,v] of Object.entries({text:'',attachments:[],browser_context_refs:[],destination:null,cursor_position:null,workflow_config:null,held_request:null,revision:(b.revision||0)+1,updated_at:nowIso()}))TX.set(b,k,v);
+      if(ctx.state.selectedThread===tid){TX.set(ctx.state,'composer','');TX.set(C,'destination',null);}
+      if(ctx.state.drafts)TX.set(ctx.state.drafts,tid,'');TX.defer(flush);return {ok:true};
+    },
     version: 1,
     runtime: C,
     quota: function () { return RT.quota; },
@@ -29963,7 +30006,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     var base=ATTENTION[k]; if(!base) return null;
     return { schema:'pm.assistant_plan.execution_attention_projection.v1',
              plan_run_id:r.approved?.plan_run_id||null,
-             condition_kind:k, line:base.line, tone:base.tone,
+             condition_kind:k, line:k==='window'&&r.attention.reason?.startsWith('Wind-down')?'Paused at window wind-down':base.line, tone:base.tone,
              reason:r.attention.reason,
              allowed_action_ids:list(r.attention.actions),
              attempt:r.attention.attempt||null,
@@ -30407,7 +30450,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     if(r.status!=='building'){ stopRun(r); return; }
     var a=todoApi(), moved=null;
     const gate=r.workRef?inspectGoalPlan(r.plan_id):null;
-    if(gate&&!gate.eligible&&!gate.complete){r.attention=workOwners.get(r.workRef.kind)?.attention?.(r.workRef.ref,r)||{kind:gate.waitKind==='quota'?'quota_wait':'attention',reason:gate.reason||'Execution is not eligible',actions:['details','cancel']};const run=P().runs[r.approved?.plan_run_id];if(run)run.state=r.attention.kind==='quota_wait'?'waiting_quota':r.attention.kind==='window_wait'?'waiting_window':'blocked';stopRun(r);ctx.renderApp();return;}
+    if(gate&&!gate.eligible&&!gate.complete){r.attention=workOwners.get(r.workRef.kind)?.attention?.(r.workRef.ref,r)||{kind:gate.waitKind==='quota'?'quota_wait':gate.waitKind==='window'?'window':'attention',reason:gate.reason||'Execution is not eligible',actions:['details','cancel']};const run=P().runs[r.approved?.plan_run_id];if(run)run.state=r.attention.kind==='quota_wait'?'waiting_quota':r.attention.kind==='window'?'waiting_window':'blocked';stopRun(r);ctx.renderApp();return;}
 
     if(r.workRef&&!r.goalBinding&&inspectGoalPlan(r.plan_id).complete){finalizeGoalRun(r.plan_id);ctx.renderApp();return;}
     if(r.workRef){moved=workOwners.get(r.workRef.kind)?.advance(r.workRef.ref,r);if(moved?.ok===false){const supplied=workOwners.get(r.workRef.kind)?.attention?.(r.workRef.ref,r);r.attention=supplied||{kind:'attention',reason:moved.error,actions:['details','cancel']};const run=P().runs[r.approved?.plan_run_id];if(run)run.state=r.attention.kind==='failed'?'failed':'blocked';stopRun(r);ctx.renderApp();return;}}
@@ -31424,6 +31467,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     const c=EXT.ctx(),model=(D.models||[]).find(m=>m.id===run.route.modelId);
     if(c.state.permissions!==run.permissions||!model||model.status!=='ready'||model.accountId!==run.route.accountId)return fail('Permission or provider route changed');
     if(RT.quota?.waiting)return fail('Waiting for Usage','quota');
+    const windowGate=window.PM56_SCHED?.workEligibility?.(id);if(windowGate&&!windowGate.ok)return fail(windowGate.detail||windowGate.error,'window');
     if(r.attention)return fail(r.attention.reason);
     if(!r.workRef||!workOwners.has(r.workRef.kind))return fail('No actual execution adapter is attached to this Plan in the local concept.');
     const work=workOwners.get(r.workRef.kind).inspect(r.workRef.ref,r),todos=todoApi().outcomeSummary(r.thread_id,run.required_todo_ids);
@@ -31530,6 +31574,18 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     grillExtension:function(){ return QGRILL; },
     embeds:function(id){ var r=rec(id); return r?body(r).filter(function(b){return b.t==='plan_embed';}):null; },
     openDetails:openPlanEditor,
+    // Window state is decided by Scheduling; Plan owns safe pause/resume.
+    pauseForWindow:function(id,binding,reason,kind='window'){
+      const r=rec(id);if(!r||r.status!=='building'||r.approved?.plan_run_id!==binding.plan_run_id||r.version!==binding.version||hashOf(body(r))!==binding.hash)return {ok:false,error:'stale_window_binding'};
+      if(r.attention&&!['window','quota_wait'].includes(r.attention.kind))return {ok:false,error:'owner_attention_blocks_window_pause'};
+      window.PM56_PLANS.boundPause(id);r.attention={kind,reason,actions:['details','cancel']};const run=P().runs[binding.plan_run_id];run.state=kind==='quota_wait'?'waiting_quota':'waiting_window';
+      return {ok:true,paused:true,run_epoch:r.runEpoch};
+    },
+    resumeFromWindow:function(id,binding){
+      const r=rec(id);if(!r||r.status!=='building'||r.approved?.plan_run_id!==binding.plan_run_id||r.version!==binding.version||hashOf(body(r))!==binding.hash||!['window','quota_wait'].includes(r.attention?.kind))return {ok:false,error:'stale_window_binding'};
+      const gate=window.PM56_SCHED.workEligibility(id);if(!gate.ok)return gate;if(RT.quota?.waiting)return {ok:false,error:'quota_unavailable'};
+      const out=window.PM56_PLANS.boundResume(id);return {...out,ok:!!out?.resumed};
+    },
     /* PGOAL-007/008: goals.js drives these; the Plan owner applies them. */
     boundPause:function(planId){
       var r=rec(planId); if(!r||r.status!=='building') return null;
@@ -35463,6 +35519,58 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
  window.PM56_BSD={engine,identity,refresh,view,policy:()=>view().policy,state:()=>label(view().assignment,view().mode),snapshot:id=>engine.snapshot(id||E.ctx().thread.id),held:()=>view().assignment?.findings.filter(f=>f.status==='held')||[],emitted:()=>view().assignment?.findings.filter(f=>f.status==='emitted')||[],restore:()=>{engine.clear();refresh();}};
 })();
 
+/* Pure calendar arithmetic consumed by the existing Scheduling owner.
+ * No schedule records, timers, dispatch, or status writer live here.
+ * Host Intl timezone data is used; this is not a bundled timezone database. */
+(function(root){
+'use strict';
+const minute=60000,day=86400000,formatters=new Map();
+function formatter(zone){if(typeof zone!=='string'||!/^[A-Za-z][A-Za-z0-9_+./-]*$/.test(zone))return null;try{if(!formatters.has(zone))formatters.set(zone,new Intl.DateTimeFormat('en-GB',{timeZone:zone,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}));return formatters.get(zone);}catch(e){return null;}}
+function parts(zone,at){const f=formatter(zone);if(!f||!Number.isFinite(at))return null;const p={};for(const x of f.formatToParts(new Date(at)))if(x.type!=='literal')p[x.type]=Number(x.value);return {y:p.year,mo:p.month,d:p.day,h:p.hour===24?0:p.hour,mi:p.minute,s:p.second};}
+const wall=p=>Date.UTC(p.y,p.mo-1,p.d,p.h,p.mi,p.s||0);
+function valid(p){if(!p||![p.y,p.mo,p.d,p.h,p.mi].every(Number.isSafeInteger)||p.y<1900||p.y>9998||p.h<0||p.h>23||p.mi<0||p.mi>59)return false;const d=new Date(Date.UTC(p.y,p.mo-1,p.d));return d.getUTCFullYear()===p.y&&d.getUTCMonth()+1===p.mo&&d.getUTCDate()===p.d;}
+function parse(date,time){const a=/^(\d{4})-(\d{2})-(\d{2})$/.exec(date||''),b=/^(\d{2}):(\d{2})$/.exec(time||'');const p=a&&b?{y:+a[1],mo:+a[2],d:+a[3],h:+b[1],mi:+b[2]}:null;return valid(p)?p:null;}
+function resolve(zone,p){
+ if(!formatter(zone))return {ok:false,error:'invalid_timezone'};
+ if(!valid(p))return {ok:false,error:'invalid_local_time'};
+ const target=wall(p),offsets=new Set(),samples=[];
+ for(let t=target-3*day;t<=target+3*day;t+=6*3600000){const off=wall(parts(zone,t))-t;offsets.add(off);samples.push([t,off]);}
+ const hits=[...offsets].map(o=>target-o).filter(t=>wall(parts(zone,t))===target).sort((a,b)=>a-b);
+ if(hits.length)return {ok:true,at:hits[0],kind:hits.length>1?'fold_first':'exact',occurrences:hits.length,requested:p,effective:parts(zone,hits[0])};
+ // A gap resolves at the first valid instant AFTER the gap, not requested
+ // minute plus a guessed hour. Also handles non-hour jumps and skipped dates.
+ for(let i=1;i<samples.length;i++){
+  let [hi,after]=samples[i],[lo,before]=samples[i-1];if(after<=before)continue;
+  while(hi-lo>minute){const mid=Math.floor((lo+hi)/2/minute)*minute;if(wall(parts(zone,mid))-mid===before)lo=mid;else hi=mid;}
+  const edge=Math.ceil(hi/minute)*minute,left=wall(parts(zone,edge-minute))+minute,right=wall(parts(zone,edge));
+  if(left<=target&&target<right)return {ok:true,at:edge,kind:'gap_forward',occurrences:0,requested:p,effective:parts(zone,edge)};
+ }
+ return {ok:false,error:'local_time_unresolvable'};
+}
+function shift(p,n){const d=new Date(Date.UTC(p.y,p.mo-1,p.d+n,12));return {...p,y:d.getUTCFullYear(),mo:d.getUTCMonth()+1,d:d.getUTCDate()};}
+const weekday=p=>new Date(Date.UTC(p.y,p.mo-1,p.d,12)).getUTCDay();
+function next(zone,days,hh,mi,after){
+ if(!Array.isArray(days)||!days.length||days.some(d=>!Number.isInteger(d)||d<0||d>6))return null;
+ const p=parts(zone,after);if(!p)return null;
+ for(let n=0;n<=8;n++){const d={...shift(p,n),h:hh,mi,s:0};if(!days.includes(weekday(d)))continue;const r=resolve(zone,d);if(r.ok&&r.at>after)return r.at;}
+ return null;
+}
+function windowAt(rec,at){
+ const p=parts(rec.timezone,at),start=parse('2000-01-01',rec.local_start),end=parse('2000-01-01',rec.local_pause);
+ if(!p||!start||!end||!Array.isArray(rec.days_of_week))return {ok:false,error:'invalid_window'};
+ const wraps=end.h*60+end.mi<=start.h*60+start.mi;
+ for(let n=-1;n<=0;n++){
+  const d=shift(p,n);if(!rec.days_of_week.includes(weekday(d)))continue;
+  const a=resolve(rec.timezone,{...d,h:start.h,mi:start.mi,s:0}),z=resolve(rec.timezone,{...shift(d,wraps?1:0),h:end.h,mi:end.mi,s:0});
+  if(!a.ok||!z.ok||z.at<=a.at)continue;
+  if(at>=a.at&&at<z.at){const wind=Math.max(a.at,z.at-Math.max(0,Number(rec.wind_down_seconds)||0)*1000);return {ok:true,open:true,phase:at>=wind?'winding_down':'open',start:a.at,end:z.at,wind_down_at:wind,resolution:a.kind,pause_resolution:z.kind};}
+ }
+ return {ok:true,open:false,phase:'closed',next:next(rec.timezone,rec.days_of_week,start.h,start.mi,at)};
+}
+const api=Object.freeze({parts,parse,resolve,next,windowAt,shift,weekday});
+root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
+})(typeof window==='undefined'?globalThis:window);
+
 /* scheduling.js — feature module.  OWNER: Plans/Scheduling_and_Quota_Resume.md
  * (Assistant-redesign wave, 2026-09-03).  Covers packet 01_IMPLEMENTATION_SPEC
  * §15 (Scheduling, execution windows, and quota resume) and 04_GUI_IMPACTS §15
@@ -35651,15 +35759,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
   /* Local wall-clock (y, 1-based month, d, h, mi) in `iana` -> UTC ms. Two
      refinement passes so a wall time that sits right at a DST boundary still
      resolves against the correct side's offset. */
-  function tzToUTC(iana, y, mo, d, h, mi) {
-    var guess = Date.UTC(y, mo - 1, d, h, mi, 0);
-    var off1 = tzOffset(iana, guess); if (off1 == null) return guess;
-    var utc1 = guess - off1 * 60000;
-    var off2 = tzOffset(iana, utc1);
-    var utc2 = guess - off2 * 60000;
-    var off3 = tzOffset(iana, utc2);
-    return guess - off3 * 60000;
-  }
+  function tzToUTC(iana,y,mo,d,h,mi){const r=PM56_SCHEDULE_TIME.resolve(iana,{y,mo,d,h,mi});return r.ok?r.at:NaN;}
   var TRANS_CACHE = {};
   function tzTransitions(iana, year) {
     var key = iana + ':' + year;
@@ -35690,16 +35790,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
   /* Next UTC instant matching `hh:mi` local wall time on one of `days`
      (0=Sun..6=Sat), strictly after `fromMs`. Scans nine candidate local dates,
      which always covers a full week even when today's slot already passed. */
-  function nextOccurrenceUTC(iana, days, hh, mi, fromMs) {
-    for (var add = 0; add <= 8; add++) {
-      var probe = fromMs + add * 86400000;
-      var parts = tzParts(iana, probe); if (!parts) return null;
-      if (days.indexOf(parts.weekday) < 0) continue;
-      var cand = tzToUTC(iana, parts.y, parts.mo, parts.d, hh, mi);
-      if (cand > fromMs) return cand;
-    }
-    return null;
-  }
+  function nextOccurrenceUTC(iana,days,hh,mi,fromMs){return PM56_SCHEDULE_TIME.next(iana,days,hh,mi,fromMs);}
   /* Plain-language DST summary for the CURRENT calendar year in `iana`. Never
      hides a transition: a no-DST zone says so; a zone with one says which
      local clock time jumps or repeats, computed for real rather than assumed
@@ -35766,7 +35857,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
      strings that were already public in their own fixtures.
      ===================================================================== */
   /* Local view/draft state only — never domain truth, never persisted. */
-  var ui = { msgDraft: null, editingMsgId: null, buildDraft: null, buildDraftPlanId: null, buildDraftVersion: null, manageTab: 'messages' };
+  var ui = { msgDraft: null, editingMsgId: null, buildDraft: null, buildDraftPlanId: null, buildDraftVersion: null, manageTab: 'messages', managerFilters:{} };
 
   var STORE_KEY = 'pm56-scheduling.v1';
   var store = {
@@ -36202,104 +36293,192 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     return { ok: true, clause: null, detail: 'Eligible.' };
   }
 
+  /* Batch 18: session-local implementations of the existing scheduling
+     owner commands. Native persistence/timers/providers are not claimed. */
+  const messageReceivers=new Map(),messageDestinations=new Map();
+  const copy=x=>JSON.parse(JSON.stringify(x));
+  const identical=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+  const frozen=x=>window.PM56_ARTIFACTS.freeze(copy(x));
+  function msgBinding(m){return {thread_id:m.thread_id,project_id:m.project_id,text:m.text,destination_ref:m.destination_ref,attachment_refs:m.attachment_refs,requested_runtime:m.requested_runtime,scope_snapshot:m.scope_snapshot,permission_snapshot:m.permission_snapshot,scheduled_at_utc:m.scheduled_at_utc,timezone:m.timezone,local_wall_time:m.local_wall_time,missed_policy:m.missed_policy,grace_seconds:m.grace_seconds};}
+  function msgCurrent(m){return window.PM56_ARTIFACTS.key({binding:msgBinding(m),revision:m.revision,state:m.state,dispatchedMessageId:m.dispatchedMessageId});}
+  function captureMessage(id){const m=findMessage(id);return m?{id,revision:m.revision,currentness:msgCurrent(m)}:null;}
+  const msgError=(error,detail)=>({ok:false,error,clause:error,detail:detail||error.replaceAll('_',' ')});
+  function scopeMessage(tid){const t=threadByIdRaw(tid);return !t||t.archived||t.deleted?null:window.PM56_GOAL.scope(tid);}
+  function resolveScheduledAttachments(items,scope){
+    const out=[];
+    for(const a of items||[]){
+      const ref=a.snapshot_ref||a.artifact_ref||(a.artifact_id?{artifact_id:a.artifact_id,artifact_version:a.artifact_version,project_id:a.project_id||scope.projectId,thread_id:a.thread_id||scope.threadId}:null);
+      if(!ref||ref.thread_id!==scope.threadId||ref.project_id!==scope.projectId)return msgError('attachment_snapshot_required','An attachment has no exact retained revision in this thread. Keep it in the composer until it can be frozen.');
+      const resolved=window.PM56_ARTIFACTS.resolve(ref,{document:true});
+      if(!resolved.ok)return msgError('attachment_'+resolved.error,'The exact attachment revision is unavailable; no newer bytes were substituted.');
+      if(a.content_hash&&a.content_hash!==resolved.revision.content_key)return msgError('attachment_hash_changed');
+      out.push({id:a.id||ref.artifact_id,name:attachmentLabel(a),kind:a.kind||'file',artifact_id:ref.artifact_id,artifact_version:ref.artifact_version,content_hash:resolved.revision.content_key,folder_manifest_hash:a.folder_manifest_hash||null,snapshot_ref:copy(ref),availability:'available',state:'ready'});
+    }
+    return {ok:true,items:out};
+  }
+  function prepareMessage(ctx,d){
+    if(!d||typeof d.text!=='string'||!d.text.trim()||d.text.length>8000)return msgError('invalid_message_text');
+    const wall=PM56_SCHEDULE_TIME.parse(d.date,d.time),time=PM56_SCHEDULE_TIME.resolve(d.timezone,wall);
+    if(!time.ok)return time;
+    if(time.at<=Date.now())return msgError('time_not_future');
+    if(!['hold','next_available','cancel_after_grace'].includes(d.missed))return msgError('invalid_missed_policy');
+    if(!Number.isFinite(Number(d.grace))||Number(d.grace)<1||Number(d.grace)>1440)return msgError('invalid_grace');
+    const scope=scopeMessage(d.threadId);if(!scope)return msgError('target_not_found');
+    if(d.sourceScope&&!identical(d.sourceScope,scope))return msgError('scope_changed');
+    if(d.browser_context_refs?.length)return msgError('live_browser_context_not_schedulable','Freeze browser context as an attachment first. No future live selector is scheduled.');
+    if(d.workflow_config||d.held_request)return msgError('workflow_configuration_requires_its_owner');
+    const destination=copy(d.destination||{kind:'assistant',thread_id:d.threadId,label:threadByIdRaw(d.threadId).title});
+    if(destination.kind!=='assistant'&&!messageDestinations.has(destination.kind))return msgError('destination_owner_unavailable','This destination cannot accept a frozen scheduled message. Nothing was redirected to the Assistant.');
+    if(destination.kind==='assistant'&&destination.thread_id&&destination.thread_id!==d.threadId)return msgError('destination_scope_mismatch');
+    if(destination.unresolvable)return msgError('route_unavailable');
+    if(destination.kind!=='assistant'){const check=messageDestinations.get(destination.kind).validate(destination,scope);if(!check?.ok)return msgError(check?.error||'destination_unavailable');}
+    const m=modelById(d.modelId);if(!m||m.status!=='ready')return msgError('route_unavailable','The selected model or account is unavailable. No fallback was chosen.');
+    const attachments=resolveScheduledAttachments(d.attachments,scope);if(!attachments.ok)return attachments;
+    return {ok:true,binding:{thread_id:d.threadId,project_id:scope.projectId,text:d.text,destination_ref:destination,attachment_refs:attachments.items,
+      requested_runtime:{modelId:m.id,modelName:m.name,provider:m.provider,accountId:m.accountId,account:m.account,resolver_policy:'frozen_at_commit'},
+      scope_snapshot:scope,permission_snapshot:ctx.state.permissions,scheduled_at_utc:new Date(time.at).toISOString(),timezone:d.timezone,local_wall_time:d.time,
+      missed_policy:d.missed,grace_seconds:Math.round(Number(d.grace)*60)},time};
+  }
+  function saveMessage(ctx,d,editingId){
+    const prepared=prepareMessage(ctx,d);if(!prepared.ok)return prepared;
+    const old=editingId&&findMessage(editingId),requestKey=d.requestKey;
+    if(!requestKey)return msgError('idempotency_key_required');
+    const fingerprint=JSON.stringify(prepared.binding),previous=(P().messageRequests||{})[requestKey];
+    if(previous)return previous.fingerprint===fingerprint?{ok:true,replayed:true,record:findMessage(previous.id)}:msgError('idempotency_conflict');
+    if(editingId&&(!old||!messageProjection(old).can_edit))return msgError('dispatch_already_started');
+    if(editingId&&(d.expectedRevision!==old.revision||d.expectedCurrentness!==msgCurrent(old)))return msgError('stale_schedule_revision');
+    if(!editingId&&(!d.sourceBuffer||!window.PM56_COMPOSER_STATE.matchesScheduleCapture(ctx,d.sourceBuffer)))return msgError('composer_changed','The composer changed while this form was open. Reopen Schedule Message; your current text and attachments are intact.');
+    const id=editingId||ctx.uid('sm'),TX=window.PM56_TX;
+    return TX.run(()=>{
+      const record={...(old||{}),...prepared.binding,binding_kind:'scheduled_message_v2',scheduled_dispatch_id:id,revision:old?old.revision+1:1,state:'scheduled',
+        idempotencyKey:old?.idempotencyKey||id,heldReason:null,failureReason:null,createdAt:old?.createdAt||nowIso(),updatedAt:nowIso(),
+        dispatchedMessageId:null,dispatchedAt:null,dispatch_attempts:old?.dispatch_attempts||[],history:(old?.history||[]).concat(old?[{revision:old.revision,snapshot:copy(msgBinding(old)),state:old.state,at:old.updatedAt}]:[]),
+        user_stop_epoch:P().stopEpoch,scheduled_resolution:prepared.time.kind,session_only:true};
+      record.snapshot_key=window.PM56_ARTIFACTS.key(msgBinding(record));
+      record.attachment_refs=frozen(record.attachment_refs);record.destination_ref=frozen(record.destination_ref);record.requested_runtime=frozen(record.requested_runtime);record.scope_snapshot=frozen(record.scope_snapshot);
+      for(const a of record.attachment_refs){const r=PM56_ARTIFACTS.retain(a.snapshot_ref,{kind:'scheduled_message',id});if(!r.ok)TX.fail(r.error);}
+      // Revalidate after returning owner helpers, before the final local writes.
+      if(!scopeMessage(record.thread_id)||!identical(scopeMessage(record.thread_id),record.scope_snapshot))TX.fail('scope_changed');
+      if(editingId&&(findMessage(editingId)!==old||d.expectedRevision!==old.revision||d.expectedCurrentness!==msgCurrent(old)))TX.fail('stale_schedule_revision');
+      const cleared=!editingId?PM56_COMPOSER_STATE.consumeScheduled(ctx,d.sourceBuffer):{ok:true};if(!cleared.ok)TX.fail(cleared.error);
+      if(old){for(const [k,v] of Object.entries(record))TX.set(old,k,v);}else{
+        TX.set(P(),'scheduledMessages',P().scheduledMessages.concat(record));
+        ctx.appendMessage({id:'sched-card-'+id,role:'system',type:'sched-message',scheduleId:id,time:record.createdAt},threadByIdRaw(record.thread_id));
+      }
+      TX.set(P(),'messageRequests',{...(P().messageRequests||{}),[requestKey]:{id,fingerprint}});
+      TX.set(P(),'events',[{id:'event-'+id+'-r'+record.revision,at:nowIso(),type:old?'scheduled_dispatch.updated':'scheduled_dispatch.created',ref:id,clause:null,detail:'Exact session-local snapshot committed; no message has been dispatched.'},...P().events]);
+      persistNow();return {ok:true,record:old||record,replayed:false};
+    });
+  }
+  function cancelMessageExact(id,expected){
+    const m=findMessage(id);if(!m)return msgError('schedule_not_found');
+    if(!expected||expected.revision!==m.revision||expected.currentness!==msgCurrent(m))return msgError('stale_schedule_revision');
+    if(!messageProjection(m).can_cancel)return msgError('dispatch_already_started');
+    const TX=PM56_TX;return TX.run(()=>{TX.set(m,'state','canceled');TX.set(m,'revision',m.revision+1);TX.set(m,'cancelReason','Canceled by explicit user action; the snapshot and attempts remain in history.');TX.set(m,'updatedAt',nowIso());persistNow();return {ok:true,id};});
+  }
+  function messageTicket(id,atMs=Date.now()){
+    const m=findMessage(id);return !m?msgError('schedule_not_found'):{ok:true,ticket:{...captureMessage(id),at:atMs,stop_epoch:P().stopEpoch,attempt_id:id+':r'+m.revision+':a'+((m.dispatch_attempts||[]).length+1)}};
+  }
+  function messageEligibility(m,ticket){
+    if(!Number.isFinite(ticket.at))return msgError('invalid_dispatch_time');
+    const gate=evaluateEligibility('message',m,ticket.stop_epoch);if(!gate.ok)return msgError(gate.clause,gate.detail);
+    if(m.binding_kind!=='scheduled_message_v2')return msgError('legacy_snapshot_requires_review','This historical fixture has no complete frozen snapshot. Edit it before dispatch.');
+    if(window.PM56_ARTIFACTS.key(msgBinding(m))!==m.snapshot_key)return msgError('snapshot_changed');
+    if(!identical(scopeMessage(m.thread_id),m.scope_snapshot))return msgError('scope_changed');
+    const c=EXT.ctx();if(c.state.permissions!==m.permission_snapshot)return msgError('permission_snapshot_changed');
+    if(ticket.at<Date.parse(m.scheduled_at_utc))return msgError('not_due','The scheduled time has not arrived. Nothing was sent early.');
+    const model=modelById(m.requested_runtime.modelId),route=m.requested_runtime;
+    if(!model||model.status!=='ready'||model.provider!==route.provider||model.accountId!==route.accountId)return msgError('route_unavailable','The frozen model/account is unavailable. No fallback was selected.');
+    const refs=resolveScheduledAttachments(m.attachment_refs,m.scope_snapshot);if(!refs.ok)return refs;
+    if(m.destination_ref?.kind!=='assistant'){
+      const owner=messageDestinations.get(m.destination_ref?.kind);if(!owner)return msgError('destination_owner_unavailable');
+      const resolved=owner.validate(m.destination_ref,m.scope_snapshot);if(!resolved?.ok)return msgError(resolved?.error||'destination_unavailable');
+    }
+    if(RT.quota?.waiting)return msgError('quota_unavailable','Usage is unavailable; the scheduled message is held.');
+    const late=ticket.at-Date.parse(m.scheduled_at_utc);
+    if(late>m.grace_seconds*1000&&m.missed_policy==='cancel_after_grace')return msgError('grace_expired','The grace period expired. This message will not be sent.');
+    if(late>m.grace_seconds*1000&&m.missed_policy==='hold')return msgError('missed_time_held','The send time was missed. Review and reschedule; no backlog burst is sent.');
+    return {ok:true};
+  }
+  function deliverMessage(ticket){
+    if(!ticket||!ticket.id||!ticket.attempt_id)return msgError('invalid_dispatch_ticket');
+    const m=findMessage(ticket.id);if(!m)return msgError('schedule_not_found');
+    const prior=(m.dispatch_attempts||[]).find(a=>a.attempt_id===ticket.attempt_id);
+    if(prior){if(prior.ticket_key!==PM56_ARTIFACTS.key(ticket))return msgError('idempotency_conflict');return {...copy(prior.result),duplicate:true};}
+    if(m.state==='sent'||m.state==='dispatched')return {ok:true,duplicate:true,message_id:m.dispatchedMessageId,receipt:m.dispatch_receipt};
+    if(ticket.revision!==m.revision||ticket.currentness!==msgCurrent(m))return msgError('stale_schedule_revision');
+    if(!messageProjection(m).can_edit)return msgError('dispatch_already_started');
+    let eligible=messageEligibility(m,ticket);
+    if(eligible.error==='not_due'||eligible.error==='invalid_dispatch_time')return eligible;
+    const TX=PM56_TX;
+    if(!eligible.ok)return TX.run(()=>{
+      const result={...eligible,held:eligible.error!=='grace_expired',expired:eligible.error==='grace_expired',message_id:null};
+      TX.set(m,'state',result.expired?'expired':'held');TX.set(m,result.expired?'expiredReason':'heldReason',eligible.detail);
+      TX.set(m,'dispatch_attempts',(m.dispatch_attempts||[]).concat({attempt_id:ticket.attempt_id,ticket_key:PM56_ARTIFACTS.key(ticket),at:new Date(ticket.at).toISOString(),result}));TX.set(m,'updatedAt',nowIso());persistNow();
+      return {ok:true,heldResult:result};
+    }).heldResult||eligible;
+    const delivered=TX.run(()=>{
+      const th=threadByIdRaw(m.thread_id),id='sent-'+m.scheduled_dispatch_id+':r'+m.revision;
+      const message={id,role:'user',type:'text',body:m.text,time:new Date(ticket.at).toISOString(),viaSchedule:true,isolatedSubmission:true,scheduledDispatchId:m.scheduled_dispatch_id,
+        attachments:copy(m.attachment_refs),destination:copy(m.destination_ref),requested_runtime:copy(m.requested_runtime),effective_runtime:copy(m.requested_runtime)};
+      // All fail-capable resolution happens BEFORE visible publication. The
+      // existing transcript append is transaction-aware; no intermediate render.
+      eligible=messageEligibility(m,ticket);if(!eligible.ok)TX.fail(eligible.error);
+      if(ticket.revision!==m.revision||ticket.currentness!==msgCurrent(m))TX.fail('stale_schedule_revision');
+      if(m.destination_ref.kind!=='assistant'){
+        const result=messageDestinations.get(m.destination_ref.kind).deliver(message,m.destination_ref);if(!result?.ok)TX.fail(result?.error||'destination_delivery_failed');
+      }else ctxAppend(th,message);
+      eligible=messageEligibility(m,ticket);if(!eligible.ok)TX.fail(eligible.error);
+      if(ticket.currentness!==msgCurrent(m))TX.fail('stale_schedule_revision');
+      if(P().stopped||ticket.stop_epoch!==P().stopEpoch)TX.fail('manual_stop_latched');
+      const receipt={schedule_id:m.scheduled_dispatch_id,revision:m.revision,attempt_id:ticket.attempt_id,message_id:id,at:message.time,requested_runtime:copy(m.requested_runtime),effective_runtime:copy(m.requested_runtime),snapshot_key:m.snapshot_key,session_only:true};
+      const result={ok:true,dispatched:true,message_id:id,receipt};
+      TX.set(m,'state','sent');TX.set(m,'dispatchedMessageId',id);TX.set(m,'dispatchedAt',message.time);TX.set(m,'dispatch_receipt',receipt);TX.set(m,'heldReason',null);TX.set(m,'updatedAt',nowIso());
+      TX.set(m,'dispatch_attempts',(m.dispatch_attempts||[]).concat({attempt_id:ticket.attempt_id,ticket_key:PM56_ARTIFACTS.key(ticket),at:message.time,result}));
+      persistNow();TX.defer(()=>messageReceivers.get(m.thread_id)?.(message,receipt));return result;
+    });
+    if(!delivered.ok&&findMessage(ticket.id)===m&&m.revision===ticket.revision&&['scheduled','held','failed'].includes(m.state)){
+      // Preserve the failed attempt AFTER the delivery transaction rolls back.
+      // A separately cancelled/edited record is never overwritten by this result.
+      TX.run(()=>{TX.set(m,'state','failed');TX.set(m,'failureReason',delivered.error||'delivery_failed');TX.set(m,'dispatch_attempts',(m.dispatch_attempts||[]).concat({attempt_id:ticket.attempt_id,ticket_key:PM56_ARTIFACTS.key(ticket),at:new Date(ticket.at).toISOString(),result:copy(delivered)}));persistNow();return {ok:true};});
+    }
+    return delivered;
+  }
+  function ctxAppend(thread,message){return EXT.ctx().appendMessage(message,thread);}
+  function dispatchMessageAt(id,at,expected){const decision=expected?.attempt_id?{ok:true,ticket:expected}:messageTicket(id,at);return decision.ok?deliverMessage(decision.ticket):decision;}
+
   /* =====================================================================
      5. SCHEDULED MESSAGES — SQR-002. Freeze, revalidate, dispatch or hold.
      ===================================================================== */
   function defaultMsgDraft(ctx) {
-    var tid = ctx.state.selectedThread;
-    var buf = (RT.composer && RT.composer.bufferFor) ? RT.composer.bufferFor(tid) : null;
-    var soon = new Date(Date.now() + 2 * 3600000);
-    return {
-      threadId: tid,
-      text: (buf && buf.text) ? buf.text : '',
-      attachments: (buf && buf.attachments) ? buf.attachments.slice() : [],
-      destination: (RT.composer && RT.composer.destination) ? RT.composer.destination : null,
-      modelId: ctx.state.model,
-      date: soon.getFullYear() + '-' + pad2(soon.getMonth() + 1) + '-' + pad2(soon.getDate()),
-      time: pad2(soon.getHours()) + ':' + pad2(soon.getMinutes()),
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone||'America/New_York', missed: 'hold', grace: 30
-    };
+    const tid=ctx.state.selectedThread,source=PM56_COMPOSER_STATE.captureForSchedule(ctx,tid),zone=Intl.DateTimeFormat().resolvedOptions().timeZone||'UTC';
+    const local=PM56_SCHEDULE_TIME.parts(zone,Date.now()+2*3600000);
+    return {threadId:tid,text:source.buffer.text,attachments:copy(source.buffer.attachments),browser_context_refs:copy(source.buffer.browser_context_refs||[]),
+      destination:copy(source.buffer.destination),workflow_config:source.buffer.workflow_config,held_request:source.buffer.held_request,
+      sourceScope:scopeMessage(tid),sourceBuffer:source,requestKey:ctx.uid('schedule-request'),modelId:ctx.state.model,
+      date:local.y+'-'+pad2(local.mo)+'-'+pad2(local.d),time:pad2(local.h)+':'+pad2(local.mi),timezone:zone,missed:'hold',grace:30};
   }
   function loadMessageForEdit(rec) {
-    var local=tzParts(rec.timezone||'America/New_York', Date.parse(rec.scheduled_at_utc));
-    return {
-      threadId: rec.thread_id, text: rec.text, attachments: (rec.attachment_refs||[]).map(a=>({...a})), destination: rec.destination_ref,
-      modelId: (rec.requested_runtime && rec.requested_runtime.modelId) || 'sonnet46',
-      date: local ? local.y+'-'+pad2(local.mo)+'-'+pad2(local.d) : '', time: rec.local_wall_time || '22:00',
-      timezone: rec.timezone || 'America/Chicago', missed: rec.missed_policy || 'hold',
-      grace: rec.grace_seconds ? Math.round(rec.grace_seconds / 60) : 30
-    };
+    const local=PM56_SCHEDULE_TIME.parts(rec.timezone,Date.parse(rec.scheduled_at_utc));
+    return {threadId:rec.thread_id,text:rec.text,attachments:copy(rec.attachment_refs||[]),destination:copy(rec.destination_ref),browser_context_refs:[],
+      sourceScope:rec.scope_snapshot||scopeMessage(rec.thread_id),requestKey:EXT.ctx().uid('schedule-update'),expectedRevision:rec.revision,expectedCurrentness:msgCurrent(rec),
+      modelId:rec.requested_runtime?.modelId,date:local.y+'-'+pad2(local.mo)+'-'+pad2(local.d),time:rec.local_wall_time,timezone:rec.timezone,missed:rec.missed_policy,grace:rec.grace_seconds/60};
   }
   function commitMessage(ctx) {
-    var d = ui.msgDraft; if (!d) return null;
-    var text = String(d.text || '').trim();
-    if (!text) return null;
-    var th = threadByIdRaw(d.threadId);
-    var dt = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d.date || '');
-    var hhmm = parseHHMM(d.time);
-    var scheduledMs = dt ? tzToUTC(d.timezone, Number(dt[1]), Number(dt[2]), Number(dt[3]), hhmm.h, hhmm.m) : Date.now();
-    var id = ctx.uid('sm');
-    var graceMinutes = clamp(d.grace, 1, 1440);
-    var rec = {
-      scheduled_dispatch_id: id, project_id: 'pm', thread_id: d.threadId,
-      destination_ref: d.destination ? { kind: d.destination.kind, label: d.destination.label, detail: d.destination.detail, unresolvable: false } : null,
-      text: text,
-      attachment_refs: (d.attachments || []).map(function (a) { return { name: attachmentLabel(a), kind: a.kind || 'file', demo: !!a.demo }; }),
-      requested_runtime: (function () { var m = modelById(d.modelId); return m ? { modelId: m.id, modelName: m.name, provider: m.provider, account: m.account } : null; })(),
-      scheduled_at_utc: new Date(scheduledMs).toISOString(), timezone: d.timezone, local_wall_time: d.time,
-      missed_policy: d.missed, grace_seconds: Math.round(graceMinutes) * 60,
-      state: 'scheduled', expected_thread_currentness: th ? th.messages.length : 0, revision: 1,
-      idempotencyKey: id, heldReason: null, dispatchedMessageId: null, dispatchedAt: null,
-      createdAt: nowIso(), updatedAt: nowIso()
-    };
-    P().scheduledMessages.unshift(rec);
-    logEvent('scheduled_dispatch.created', id, null, 'Scheduled for ' + to12h(d.time) + ' ' + tzLabel(d.timezone) + ' on ' + d.date + '.');
-    persistNow();
-    return rec;
+    const out=saveMessage(ctx,ui.msgDraft,ui.editingMsgId);
+    if(!out.ok){if(ui.msgDraft)ui.msgDraft.error=out.detail||out.error;ctx.renderOverlays();return null;}
+    return out.record;
   }
-  function cancelMessage(id) {
-    var rec = findMessage(id); if (!rec || !messageProjection(rec).can_edit) return false;
-    rec.state = 'canceled'; rec.updatedAt = nowIso();
-    logEvent('scheduled_dispatch.cancelled', id, null, 'Cancelled by the user. The snapshot is retained for audit and will never dispatch.');
-    persistNow();
-    return true;
-  }
-  function dispatchMessage(ctx, id) {
-    var rec = findMessage(id); if (!rec) return null;
-    if (['dispatched','sent'].includes(rec.state)) {
-      logEvent('scheduled_dispatch.dispatched', id, null, 'Duplicate fire suppressed by idempotency key "' + rec.idempotencyKey + '"; original result returned unchanged.');
-      persistNow();
-      return { duplicate: true, rec: rec };
-    }
-    if(!['scheduled','held','failed'].includes(rec.state))return {refused:true,rec:rec,reason:'This schedule is '+(SM_STATE[rec.state]?.label||rec.state)+'.'};
-    var epoch = P().stopEpoch;
-    var elig = evaluateEligibility('message', rec, epoch);
-    if (!elig.ok) {
-      rec.state = 'held'; rec.heldReason = elig.detail; rec.updatedAt = nowIso();
-      logEvent('scheduled_dispatch.held', id, elig.clause, elig.detail);
-      persistNow();
-      return { held: true, rec: rec, reason: elig.detail };
-    }
-    var th = threadByIdRaw(rec.thread_id) || ctx.thread;
-    var msg = { id: ctx.uid('sched-sent'), role: 'user', type: 'text', body: rec.text, time: nowIso(), viaSchedule: true, scheduledDispatchId: id };
-    ctx.appendMessage(msg, th);
-    rec.state = 'sent'; rec.dispatchedMessageId = msg.id; rec.dispatchedAt = nowIso(); rec.updatedAt = rec.dispatchedAt;
-    logEvent('scheduled_dispatch.dispatched', id, null, 'Delivered the exact frozen text, attachments and destination into ' + (th ? th.title : rec.thread_id) + '.');
-    persistNow();
-    return { dispatched: true, rec: rec, thread: th };
-  }
+  function cancelMessage(id,expected) { return cancelMessageExact(id,expected||captureMessage(id)).ok; }
+  function dispatchMessage(ctx,id) { const m=findMessage(id);if(!m)return null;
+    const out=dispatchMessageAt(id,Date.now());return {...out,rec:m,thread:threadByIdRaw(m.thread_id),refused:!out.ok&&!out.held,reason:out.detail||out.error}; }
 
-  /* =====================================================================
-     6. BUILD SCHEDULES (Build At…) — SQR-003 / SQR-004. Exact-version bind,
-     revision invalidation, recurring windows with wind-down, idempotent
-     occurrence admission.
-     ===================================================================== */
   function defaultBuildDraft(planId, version) {
     var plan=window.PM56_PLANS&&window.PM56_PLANS.get(planId);
     return {
       contentHash:plan?window.PM56_PLANS.hash(planId):null,
       expected:plan?window.PM56_PLANS.admissionSnapshot(planId):null,executionTopology:'agent',
-      planId: planId, version: version, kind: 'recurring_window',
+      requestKey:EXT.ctx().uid('build-schedule-request'),planId: planId, version: version, kind: 'recurring_window',
       date: new Date(Date.now()+86400000).toISOString().slice(0,10), time: '22:00', startTime: '22:00', pauseTime: '02:00',
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone||'America/New_York', days: [1, 2, 3, 4, 5],
       windDown: 10, autoResumeNext: true, missed: 'hold'
@@ -36307,6 +36486,16 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
   }
   function commitBuild(ctx) {
     var d = ui.buildDraft; if (!d) return null;
+    if(!d.requestKey){d.error='Missing schedule request identity.';return null;}
+    const requestBinding=PM56_ARTIFACTS.key({planId:d.planId,version:d.version,hash:d.contentHash,expected:d.expected,kind:d.kind,date:d.date,time:d.time,start:d.startTime,pause:d.pauseTime,timezone:d.timezone,days:d.days,wind:d.windDown,auto:d.autoResumeNext,missed:d.missed,topology:d.executionTopology,editing:ui.editingBuildId||null});
+    const prior=P().buildRequests?.[d.requestKey];
+    if(prior){if(prior.binding!==requestBinding){d.error='idempotency_conflict';return null;}return findBuild(prior.id);}
+    if(ui.editingBuildId){const old=findBuild(ui.editingBuildId);if(!old||old.revision!==d.expectedRevision||buildCurrent(old)!==d.expectedCurrentness||old.state!=='active'){d.error='stale_schedule_revision';return null;}}
+    if(!['one_time','recurring_window'].includes(d.kind)||!['hold','next_available','cancel_after_grace'].includes(d.missed)||typeof d.autoResumeNext!=='boolean'||!Number.isFinite(Number(d.windDown))||Number(d.windDown)<0||Number(d.windDown)>180){d.error='invalid_schedule_configuration';return null;}
+    if(d.kind==='one_time'){const invalid=validateWall(d.date,d.time,d.timezone);if(invalid){d.error=invalid;return null;}}
+    const badWindow=d.kind==='recurring_window'&&(!PM56_SCHEDULE_TIME.parse('2000-01-01',d.startTime)||!PM56_SCHEDULE_TIME.parse('2000-01-01',d.pauseTime)||d.startTime===d.pauseTime||!PM56_SCHEDULE_TIME.parts(d.timezone,Date.now())||!Array.isArray(d.days)||!d.days.length||d.days.some(x=>!Number.isInteger(x)||x<0||x>6));
+    if(badWindow){d.error='Choose valid window times, weekdays and IANA timezone.';ctx.renderOverlays();return null;}
+    if(ui.editingBuildId&&findBuild(ui.editingBuildId)?.dispatchReceipt){d.error='Dispatch already started; this frozen schedule cannot be edited.';ctx.renderOverlays();return null;}
     var plan=window.PM56_PLANS&&window.PM56_PLANS.get(d.planId);
     if(!plan||plan.status!=='ready'||plan.version!==d.version||window.PM56_PLANS.hash(d.planId)!==d.contentHash){
       d.error='Plan changed. Close this form and schedule the current version.';ctx.renderOverlays();return null;
@@ -36340,7 +36529,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       local_pause: oneTime ? null : d.pauseTime,
       days_of_week: oneTime ? [] : d.days.slice(),
       wind_down_seconds: Math.round(clamp(d.windDown, 0, 180)) * 60,
-      missed_policy: d.missed, auto_resume_next_window: !!d.autoResumeNext,
+      grace_seconds:1800,missed_policy: d.missed, auto_resume_next_window: !!d.autoResumeNext,
       state: 'active', revision: 1, invalidated_reason: null, pendingVersion: null, pendingHash: null,
       runPhase: 'idle', demoClockIso: nowIso(), lastOccurrenceStart: null, occurrencesFired: [],
       scheduled_at_utc: scheduledUtc,
@@ -36348,24 +36537,23 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       createdAt: nowIso(), updatedAt: nowIso()
     };
     if(!oneTime)rec.next_occurrence_at=new Date(computeNextOccurrence(rec,Date.now())).toISOString();
-    if (existing) {
-      // Edit the existing owner record atomically: no temporary schedule or
-      // orphan creation event and no loss of already admitted occurrence IDs.
-      var retained={createdAt:existing.createdAt,revision:existing.revision+1,
-        occurrencesFired:existing.occurrencesFired.slice(),log:existing.log.slice(),dispatchReceipt:existing.dispatchReceipt,
-        runPhase:existing.runPhase,lastOccurrenceStart:existing.lastOccurrenceStart};
-      Object.assign(existing,rec,retained);rec=existing;
-      logBuildLine(rec,'Window updated.');
-      logEvent('execution_window.updated',id,null,'Schedule updated.');
-    } else {
-      P().buildSchedules.unshift(rec);
-      logEvent('execution_window.created', id, null, 'Bound to ' + d.planId + ' V' + d.version + ' (hash ' + hash + ').');
-    }
-    persistNow();
-    return rec;
+    const TX=PM56_TX,oldCurrent=existing?buildCurrent(existing):null;
+    const result=TX.run(()=>{
+      if(existing&&buildCurrent(existing)!==oldCurrent)TX.fail('stale_schedule_revision');
+      if(!identical(window.PM56_PLANS.admissionSnapshot(d.planId),currentSnapshot))TX.fail('scope_changed');
+      if(existing){
+        const retained={createdAt:existing.createdAt,revision:existing.revision+1,occurrencesFired:existing.occurrencesFired.slice(),log:existing.log.concat({at:nowIso(),text:'Window updated under exact expected revision.'}),dispatchReceipt:existing.dispatchReceipt,runPhase:existing.runPhase,lastOccurrenceStart:existing.lastOccurrenceStart};
+        for(const [k,v] of Object.entries({...rec,...retained}))TX.set(existing,k,v);rec=existing;
+      }else TX.set(P(),'buildSchedules',[rec,...P().buildSchedules]);
+      TX.set(P(),'buildRequests',{...(P().buildRequests||{}),[d.requestKey]:{id:rec.schedule_id,binding:requestBinding}});
+      TX.set(P(),'events',[{id:'ev-'+id+'-r'+rec.revision,at:nowIso(),type:existing?'execution_window.updated':'execution_window.created',ref:id,clause:null,detail:'Session-local exact Plan schedule; no work admitted.'},...P().events].slice(0,60));
+      persistNow();return {ok:true,record:rec};
+    });
+    if(!result.ok){d.error=result.error;ctx.renderOverlays();return null;}return result.record;
   }
-  function cancelBuild(id) {
-    var rec = findBuild(id); if (!rec || rec.state === 'completed') return false;
+  function cancelBuild(id,expected) {
+    var rec = findBuild(id);
+    if(expected&&(!rec||expected.revision!==rec.revision||expected.currentness!==buildCurrent(rec)))return false; if (!rec || rec.state === 'completed') return false;
     if(rec.state==='canceled')return true;
     rec.state = 'canceled'; rec.revision++; rec.updatedAt = nowIso();
     logBuildLine(rec, 'Cancelled by the user. Any already-admitted work continues under its own owner — cancelling a window is not a Stop.');
@@ -36437,7 +36625,8 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     var rows=buildsForTarget(planId).filter(function(b){return b.binding_kind==='plan_content_v1';});
     if(!rows.length)return '';
     var b=rows[0],label=b.state==='invalidated'?'Schedule needs update':b.state==='canceled'?'Schedule canceled':b.dispatchReceipt?(window.PM56_PLANS.get(planId)?.status==='completed'?'Scheduled build completed':'Scheduled build started'):'Build scheduled';
-    var suffix=b.state==='invalidated'?'V'+b.exact_target_version+' → V'+b.pendingVersion:'V'+b.exact_target_version+' · '+whenLabel(b.scheduled_at_utc,b.timezone);
+    var suffix=b.state==='invalidated'?'V'+b.exact_target_version+' → V'+b.pendingVersion:'V'+b.exact_target_version+' · '+(b.schedule_kind==='recurring_window'?daysSummary(b.days_of_week)+' '+to12h(b.local_start)+'–'+to12h(b.local_pause)+' · '+b.timezone:whenLabel(b.scheduled_at_utc,b.timezone));
+    const a=window.PM56_PLANS.attention(planId);if(a&&b.dispatchReceipt)label=a.line;
     return '<div class="plan-schedule-line" data-plan-schedule="'+esc(b.schedule_id)+'"><span><strong>'+label+'</strong><small>'+esc(suffix)+'</small></span><button class="text-button" data-action="sched-open-plan-record" data-id="'+esc(b.schedule_id)+'">'+(b.state==='invalidated'?'Review':'Details')+'</button></div>';
   }
 
@@ -36454,9 +36643,16 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     const captured=epochAtDecision??b.user_stop_epoch??P().stopEpoch;
     const eligible=evaluateEligibility('build',b,captured);if(!eligible.ok)return fail(eligible.clause,eligible.detail);
     if(b.state!=='active')return fail('schedule_not_active');
+    if(b.topology_snapshot?.execution_topology!==b.execution_topology)return fail('topology_snapshot_changed');
     if(b.binding_kind!=='plan_content_v1'||!['one_time','recurring_window'].includes(b.schedule_kind)||!['agent','goal_driven'].includes(b.execution_topology))return fail('unsupported_demo_schedule');
     const due=b.schedule_kind==='one_time'?Date.parse(b.scheduled_at_utc):Date.parse(b.next_occurrence_at||b.createdAt);
     if(!Number.isFinite(atMs)||!Number.isFinite(due)||atMs<due)return fail('window_not_open');
+    const calendar=buildWindow(b,atMs);
+    if(b.schedule_kind==='recurring_window'&&(!calendar.ok||!calendar.open||calendar.phase==='winding_down')){b.held_reason='Outside an admissible execution window; no run was created.';persistNow();return fail('window_inactive',b.held_reason);}
+    if(b.schedule_kind==='one_time'&&atMs-due>(b.grace_seconds||1800)*1000&&b.missed_policy!=='next_available'){
+      b.held_reason=b.missed_policy==='cancel_after_grace'?'The scheduled build expired after grace.':'The start time was missed. Review this schedule.';
+      if(b.missed_policy==='cancel_after_grace'){b.state='expired';b.revision++;}persistNow();return fail(b.state==='expired'?'grace_expired':'missed_time_held',b.held_reason);
+    }
     const plan=api.get(b.target_id),thread=threadByIdRaw(b.thread_id);
     if(!plan||!thread||thread.archived||plan.thread_id!==b.thread_id)return fail('target_not_found');
     if(plan.version!==b.exact_target_version||api.hash(plan.plan_id)!==b.exact_target_hash){
@@ -36468,7 +36664,8 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     if(!model||model.accountId!==runtime.accountId||model.status!=='ready'||model.provider!==runtime.provider)return fail('route_unavailable');
     if(c.state.worktree!==b.worktree_snapshot)return fail('worktree_snapshot_changed');
     if(c.state.permissions!==b.permission_snapshot)return fail('permission_snapshot_changed');
-    if(RT.quota?.waiting)return fail('quota_unavailable');
+    if(RT.quota?.waiting){b.held_reason='Usage unavailable; no run has been admitted.';persistNow();return fail('quota_unavailable',b.held_reason);}
+    const originalRoute=buildRoute(b);if(!originalRoute.ok){b.held_reason=originalRoute.detail;persistNow();return fail(originalRoute.error,originalRoute.detail);}
     const frozen=JSON.stringify(b),revision=b.revision;
     const out=TX.run(()=>{
       const result=api.admitScheduled(b);if(!result.ok)TX.fail(result.error||result.clause||'plan_admission_refused');
@@ -36476,13 +36673,86 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       if(!evaluateEligibility('build',b,captured).ok)TX.fail('stale_stop_epoch');
       const occurrence=new Date(due).toISOString(),receipt={schedule_id:b.schedule_id,plan_id:b.target_id,version:b.exact_target_version,hash:b.exact_target_hash,occurrence,at:new Date(atMs).toISOString(),concept:true,
         execution_topology:b.execution_topology,plan_run_id:result.plan_run_id,goal_id:result.goal_id||null};
-      for(const [k,v] of Object.entries({lastOccurrenceStart:occurrence,occurrencesFired:b.occurrencesFired.concat(occurrence),dispatchReceipt:receipt,
+      for(const [k,v] of Object.entries({clock_ms:atMs,held_reason:null,lastOccurrenceStart:occurrence,occurrencesFired:b.occurrencesFired.concat(occurrence),dispatchReceipt:receipt,
         state:b.schedule_kind==='one_time'?'completed':'active',runPhase:'admitted',runtime_created:true,plan_run_id:result.plan_run_id,goal_id:result.goal_id||null,revision:b.revision+1,updatedAt:nowIso(),
         log:[{at:nowIso(),text:'Admitted through the shared Plan command. Duplicate delivery returns the original run and Goal.'},...b.log]}))TX.set(b,k,v);
       TX.set(P(),'events',[{id:'ev-'+id+'-dispatch',at:nowIso(),type:'scheduled_dispatch.dispatched',ref:id,clause:null,detail:'V'+b.exact_target_version+' admitted with its frozen topology.'},...P().events].slice(0,60));
       persistNow();TX.defer(()=>c.renderApp());return {ok:true,duplicate:false,receipt};
     });
     return {...out,clause:out.error||null};
+  }
+
+  /* Existing Scheduling owner: calendar-qualified window decisions. Explicit
+     local clock input demonstrates timer delivery; it is not a timer service. */
+  function buildWindow(rec,at){return rec.schedule_kind==='recurring_window'?PM56_SCHEDULE_TIME.windowAt(rec,at):{ok:true,open:at>=Date.parse(rec.scheduled_at_utc),phase:'open',start:Date.parse(rec.scheduled_at_utc)};}
+  function buildCurrent(rec){return PM56_ARTIFACTS.key({id:rec.schedule_id,revision:rec.revision,target:rec.target_id,version:rec.exact_target_version,hash:rec.exact_target_hash,topology:rec.execution_topology,topology_snapshot:rec.topology_snapshot,kind:rec.schedule_kind,at:rec.scheduled_at_utc,wind:rec.wind_down_seconds,auto:rec.auto_resume_next_window,missed:rec.missed_policy,grace:rec.grace_seconds,timezone:rec.timezone,start:rec.local_start,pause:rec.local_pause,days:rec.days_of_week,route:rec.runtime_snapshot,scope:rec.owner_worktree_snapshot,permissions:rec.permission_snapshot,state:rec.state});}
+  function captureBuild(id){const b=findBuild(id);return b?{id,revision:b.revision,currentness:buildCurrent(b),epoch:P().stopEpoch}:null;}
+  function buildRoute(rec){const c=EXT.ctx(),r=PM56_PLANS.get(rec.target_id),scope=PM56_GOAL.scope(rec.thread_id),model=modelById(rec.runtime_snapshot?.modelId);
+    if(!r||!scope||r.thread_id!==rec.thread_id||scope.projectId!==rec.project_id)return msgError('target_not_found');
+    if(r.version!==rec.exact_target_version||PM56_PLANS.hash(r.plan_id)!==rec.exact_target_hash)return msgError('target_version_changed');
+    if(scope.worktreeId!==rec.owner_worktree_snapshot||c.state.worktree!==rec.worktree_snapshot)return msgError('worktree_snapshot_changed');
+    if(c.state.permissions!==rec.permission_snapshot)return msgError('permission_snapshot_changed');
+    if(!model||model.status!=='ready'||model.provider!==rec.runtime_snapshot.provider||model.accountId!==rec.runtime_snapshot.accountId)return msgError('route_unavailable');
+    return {ok:true};
+  }
+  function workEligibility(planId){
+    const plan=PM56_PLANS.get(planId),run=plan?.approved?.plan_run_id;
+    const schedules=P().buildSchedules.filter(b=>b.binding_kind==='plan_content_v1'&&b.target_id===planId&&b.plan_run_id===run&&b.state==='active'&&b.schedule_kind==='recurring_window');
+    if(!schedules.length)return {ok:true};
+    const stop=window.PM56_SCHED.checkEpoch({epoch:P().stopEpoch});if(!stop.ok)return stop;
+    for(const b of schedules){const valid=buildRoute(b);if(!valid.ok)return valid;
+      const w=buildWindow(b,Number.isFinite(b.clock_ms)?b.clock_ms:Date.now());if(!w.ok||!w.open)return msgError('window_inactive','Outside execution window. The same unfinished PlanRun is retained.');
+      if(w.phase==='winding_down'){
+        const running=PM56_TODOS.get(b.thread_id).some(t=>t.run_id===run&&t.status==='in_progress');
+        if(!running)return msgError('window_wind_down','Wind-down reached a safe boundary. No new work is admitted.');
+      }
+    }
+    return {ok:true};
+  }
+  function quotaConsentFor(b){return P().quotaConsents.find(c=>c.run_id===b.plan_run_id&&c.provider_id===b.runtime_snapshot.provider&&c.account_id===b.runtime_snapshot.accountId&&c.enabled&&c.state==='active'&&c.user_stop_epoch===P().stopEpoch);}
+  function setPlanQuotaConsent(planId,enabled){
+    const p=PM56_PLANS.get(planId),b=P().buildSchedules.find(x=>x.target_id===planId&&x.plan_run_id===p?.approved?.plan_run_id&&x.state==='active');
+    if(!b||p?.status!=='building')return msgError('target_not_found');
+    const id='quota-plan:'+b.plan_run_id,old=P().quotaConsents.find(c=>c.consent_id===id),q=RT.quota||{};
+    const row={consent_id:id,association_id:planId,schedule_id:b.schedule_id,run_id:b.plan_run_id,provider_id:b.runtime_snapshot.provider,account_id:b.runtime_snapshot.accountId,
+      enabled:!!enabled,state:enabled?'active':'revoked',reset_time:q.resetAt||null,reset_truth:String(q.resetSource||'unknown').replaceAll(' ','_'),confidence:null,user_stop_epoch:P().stopEpoch,created_at:old?.created_at||nowIso(),updated_at:nowIso()};
+    if(old)Object.assign(old,row);else P().quotaConsents.push(row);persistNow();return {ok:true,consent:copy(old||row)};
+  }
+  function windowTick(id,at,expected){
+    const b=findBuild(id);if(!b||!Number.isFinite(at))return msgError('invalid_window_tick');
+    if(expected&&(expected.revision!==b.revision||expected.currentness!==buildCurrent(b)||expected.epoch!==P().stopEpoch))return msgError('stale_window_decision');
+    if(Number.isFinite(b.clock_ms)&&at<b.clock_ms)return msgError('clock_rewind_refused');
+    if(!b.dispatchReceipt)return dispatchBuildAt(id,at,b.revision,expected?.epoch??b.user_stop_epoch);
+    const p=PM56_PLANS.get(b.target_id);
+    if(p?.status==='completed'){if(b.state==='active'){b.state='completed';b.runPhase='completed';b.revision++;persistNow();}return {ok:true,completed:true,plan_run_id:b.plan_run_id};}
+    if(p?.status!=='building'||p.approved?.plan_run_id!==b.plan_run_id||!['active','paused'].includes(b.state))return msgError('run_no_longer_active');
+    const stop=PM56_SCHED.checkEpoch({epoch:expected?.epoch??b.user_stop_epoch});if(!stop.ok)return stop;
+    const route=buildRoute(b);if(!route.ok){b.held_reason=route.detail;persistNow();return route;}
+    const w=buildWindow(b,at);if(!w.ok)return w;
+    b.clock_ms=at;b.demoClockIso=new Date(at).toISOString();b.last_window_decision={at:b.demoClockIso,phase:w.phase,start:w.start||null,end:w.end||null};
+    const inFlight=PM56_TODOS.get(b.thread_id).some(t=>t.run_id===b.plan_run_id&&t.status==='in_progress');
+    if(!w.open||w.phase==='winding_down'&&!inFlight){
+      if(p.attention&& !['window','quota_wait'].includes(p.attention.kind)){persistNow();return msgError('owner_attention_blocks_window_resume');}
+      if(b.pause_kind==='quota')b.quota_resume_required=true;
+      if(p.attention?.kind!=='window')PM56_PLANS.pauseForWindow(b.target_id,{plan_run_id:b.plan_run_id,version:b.exact_target_version,hash:b.exact_target_hash},!w.open?'Outside execution window':'Wind-down reached a safe boundary');
+      b.window_pause=true;b.pause_kind='window';b.runPhase='paused_safe';b.held_reason=null;logBuildLine(b,'Window paused the existing run at a session-local safe boundary; completed outputs and work bindings retained.');persistNow();return {ok:true,paused:true,plan_run_id:b.plan_run_id,window:w};
+    }
+    if(w.phase==='winding_down'){b.runPhase='winding_down';persistNow();return {ok:true,winding_down:true,atomic_operation_may_finish:true,window:w};}
+    if(RT.quota?.waiting){
+      if(!p.attention||['window','quota_wait'].includes(p.attention.kind))PM56_PLANS.pauseForWindow(b.target_id,{plan_run_id:b.plan_run_id,version:b.exact_target_version,hash:b.exact_target_hash},'Waiting for Usage','quota_wait');
+      b.pause_kind='quota';b.quota_resume_required=true;b.window_pause=true;b.held_reason='Usage remains unavailable. Window and Usage eligibility must both pass.';persistNow();return msgError('quota_unavailable',b.held_reason);
+    }
+    if(p.attention){
+      if(!['window','quota_wait'].includes(p.attention.kind)||!b.window_pause)return msgError('manual_pause_or_owner_block');
+      if(!b.auto_resume_next_window)return msgError('window_resume_not_authorized');
+      if((b.quota_resume_required||b.pause_kind==='quota')&&!quotaConsentFor(b))return msgError('quota_resume_consent_required');
+      const resumed=PM56_PLANS.resumeFromWindow(b.target_id,{plan_run_id:b.plan_run_id,version:b.exact_target_version,hash:b.exact_target_hash});
+      if(!resumed.ok)return resumed;
+      b.window_pause=false;b.pause_kind=null;b.quota_resume_required=false;b.runPhase='admitted';b.held_reason=null;b.lastOccurrenceStart=new Date(w.start).toISOString();
+      if(!b.occurrencesFired.includes(b.lastOccurrenceStart))b.occurrencesFired.push(b.lastOccurrenceStart);
+      logBuildLine(b,'Resumed the SAME PlanRun in this eligible window. No completed operation was repeated.');persistNow();return {ok:true,resumed:true,plan_run_id:b.plan_run_id,window:w};
+    }
+    b.runPhase='admitted';b.held_reason=null;persistNow();return {ok:true,already_running:true,plan_run_id:b.plan_run_id,window:w};
   }
 
   function computeNextOccurrence(rec, fromMs) {
@@ -36500,21 +36770,10 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       return {refused:!dispatched.ok,duplicate:!!dispatched.duplicate,detail:dispatched.detail||dispatched.clause||'Scheduled build started.'};
     }
     if(rec.binding_kind==='plan_content_v1'&&rec.dispatchReceipt){
-      const plan=window.PM56_PLANS.get(rec.target_id),g=rec.goal_id&&window.PM56_GOAL.byId(rec.goal_id);
-      if(rec.schedule_kind==='one_time')return {refused:false,duplicate:true,detail:'The original dispatch receipt is retained.'};
-      if(rec.state!=='active'||!evaluateEligibility('build',rec,rec.user_stop_epoch).ok)return {refused:true,detail:'Schedule or manual-stop latch prevents this window.'};
-      if(plan?.status==='completed'){rec.state='completed';persistNow();return {refused:false,detail:'The single admitted run completed; no duplicate build.'};}
-      if(plan?.status!=='building'||g&&window.PM56_GOAL.cancelled(g))return {refused:true,detail:'The bound run has ended.'};
-      if(g&&g.status!=='active')return {refused:true,detail:'A user-paused or blocked Goal is not resumed by an execution window.'};
-      if(rec.runPhase==='admitted'){
-        window.PM56_PLANS.boundPause(rec.target_id);rec.runPhase='paused_safe';rec.log.unshift({at:nowIso(),text:'Local window closed at a safe boundary. No duplicate run was created.'});
-      }else{
-        if(!rec.auto_resume_next_window)return {refused:true,detail:'Resume next window was not authorized.'};
-        const out=window.PM56_PLANS.canResumeGoal({assistant_plan_id:rec.target_id,plan_version:rec.exact_target_version,plan_hash:rec.exact_target_hash});
-        if(!out.ok)return {refused:true,detail:out.error};
-        window.PM56_PLANS.boundResume(rec.target_id);rec.runPhase='admitted';rec.log.unshift({at:nowIso(),text:'Local next window resumed the original run.'});
-      }
-      persistNow();return {refused:false,detail:'Advanced one local execution-window boundary for the existing run.'};
+      const at=Number.isFinite(rec.clock_ms)?rec.clock_ms:Date.now(),w=buildWindow(rec,at);
+      const next=w.open?w.end:w.next;
+      if(!Number.isFinite(next))return {refused:true,detail:'No further eligible boundary.'};
+      const out=windowTick(id,next,captureBuild(id));return {...out,refused:!out.ok,detail:out.detail||out.error||'Calendar boundary evaluated for the same PlanRun.'};
     }
     if (rec.state !== 'active') return { refused: true, detail: 'This schedule is ' + rec.state + '; nothing to advance.' };
     var epoch = P().stopEpoch;
@@ -36571,6 +36830,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
   }
   function fireDuplicateOccurrence(id) {
     var rec = findBuild(id); if (!rec || !rec.lastOccurrenceStart) return null;
+    if(rec.binding_kind==='plan_content_v1'){const out=dispatchBuildAt(id,Date.parse(rec.lastOccurrenceStart),rec.revision,rec.user_stop_epoch);return out.ok&&out.duplicate?rec:null;}
     logBuildLine(rec, 'Duplicate timer fire simulated for occurrence ' + rec.lastOccurrenceStart + ' → suppressed by idempotency key "' + idempotencyKey(rec) + '"; original result returned.');
     logEvent('scheduled_dispatch.dispatched', id, null, 'Duplicate fire suppressed; original result returned for occurrence ' + rec.lastOccurrenceStart + '.');
     persistNow();
@@ -36642,16 +36902,14 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
   function zoneName(zone){ return String(zone||'UTC').split('/').pop().replace(/_/g,' '); }
   function whenLabel(iso,zone){
     if(!iso||!Number.isFinite(Date.parse(iso)))return 'Time not set';
-    try{return new Intl.DateTimeFormat('en-US',{timeZone:zone||'UTC',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}).format(new Date(iso));}catch(e){return iso;}
+    try{return new Intl.DateTimeFormat('en-US',{timeZone:zone||'UTC',year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}).format(new Date(iso));}catch(e){return iso;}
   }
   function destinationLabel(m){var t=threadByIdRaw(m.thread_id);return m.destination_ref?.label||t?.title||m.thread_id||'This thread';}
   function facts(rows){return '<dl class="sched-facts">'+rows.filter(r=>r[1]!=null&&r[1]!=='').map(r=>'<div><dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd></div>').join('')+'</dl>';}
-  function messageActions(ctx,m){
-    var p=messageProjection(m),id=esc(m.scheduled_dispatch_id);
-    return (p.can_edit?'<button class="soft-button" data-action="sched-edit-message" data-id="'+id+'">Edit</button>':'')+
-      (['scheduled','held','failed'].includes(m.state)?'<button class="text-button" data-action="sched-dispatch-message" data-id="'+id+'">Send now</button>':'')+
-      (p.can_cancel?'<button class="text-button danger" data-action="sched-cancel-message" data-id="'+id+'">Cancel</button>':'')+
-      (m.dispatchedMessageId?'<button class="soft-button" data-action="sched-open-sent" data-id="'+id+'">Open sent message</button>':'');
+  function messageActions(ctx,m){const pr=messageProjection(m),id=esc(m.scheduled_dispatch_id),token=' data-revision="'+m.revision+'" data-currentness="'+esc(msgCurrent(m))+'"';
+    return (pr.can_edit?'<button class="soft-button" data-action="sched-edit-message" data-id="'+id+'"'+token+'>Edit</button>':'')+
+      (pr.can_cancel?'<button class="text-button danger" data-action="sched-card-cancel" data-id="'+id+'"'+token+'>Cancel</button>':'')+
+      (pr.dispatched_message_id?'<button class="text-button" data-action="sched-open-sent" data-id="'+id+'">Open message</button>':'');
   }
   function attentionLabel(record){
     var reason=record.heldReason||record.failureReason||record.expiredReason||'';
@@ -36671,21 +36929,13 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       '<details class="sched-audit"><summary>Record & history</summary>'+facts([['Schedule ID',m.scheduled_dispatch_id],['UTC time',m.scheduled_at_utc],['Idempotency key',m.idempotencyKey],['Created',m.createdAt],['Updated',m.updatedAt]])+
       (attachments.length?'<pre>'+esc(JSON.stringify(attachments,null,2))+'</pre>':'')+'</details></div>';
   }
-  function validateWall(date,time,zone){
-    var match=/^(\d{4})-(\d{2})-(\d{2})$/.exec(date||'');
-    if(!match||!/^([01]\d|2[0-3]):[0-5]\d$/.test(time||''))return 'Choose a valid date and time.';
-    var h=parseHHMM(time),ms=tzToUTC(zone,+match[1],+match[2],+match[3],h.h,h.m),t=tzParts(zone,ms);
-    if(!t||t.y!==+match[1]||t.mo!==+match[2]||t.d!==+match[3]||t.h!==h.h||t.mi!==h.m)return 'This local time does not exist in the selected timezone.';
-    if(ms<=Date.now())return 'Choose a time in the future.';
-    return '';
-  }
-
+  function validateWall(date,time,zone){const r=PM56_SCHEDULE_TIME.resolve(zone,PM56_SCHEDULE_TIME.parse(date,time));return !r.ok?'Choose a valid date, time and IANA timezone.':r.at<=Date.now()?'Choose a time in the future.':'';}
 
   function renderMessageRow(ctx,m){
     var label=SM_STATE[m.state]?.label||MSG_STATE_LABEL[m.state]||m.state,tone=MSG_STATE_TONE[m.state]||'idle';
     var why=m.heldReason||m.failureReason||m.expiredReason;
     return '<article class="schedule-item" data-k="schedule-'+esc(m.scheduled_dispatch_id)+'" data-schedule-id="'+esc(m.scheduled_dispatch_id)+'">'+
-      '<div class="schedule-item-head"><span class="schedule-item-icon">'+ctx.icon('history',17)+'</span><div class="schedule-item-copy"><strong>'+esc(String(m.text||'Untitled message'))+'</strong><span>'+esc(whenLabel(m.scheduled_at_utc,m.timezone))+'</span></div>'+chip(label,tone)+'</div>'+
+      '<div class="schedule-item-head"><span class="schedule-item-icon">'+ctx.icon('history',17)+'</span><div class="schedule-item-copy"><strong>'+esc(String(m.text||'Untitled message'))+'</strong><span>'+esc(whenLabel(m.scheduled_at_utc,m.timezone)+' · '+m.timezone)+'</span></div>'+chip(label,tone)+'</div>'+
       '<div class="schedule-item-destination">'+ctx.icon('chat',12)+esc(destinationLabel(m))+'</div>'+
       (why&&['held','failed','expired'].includes(m.state)?'<div class="schedule-attention">'+ctx.icon('warning',13)+'<span>'+esc(attentionLabel(m))+'</span></div>':'')+
       '<div class="schedule-item-controls">'+messageActions(ctx,m)+'</div>'+
@@ -36697,21 +36947,22 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     var plan=window.PM56_PLANS?.get(b.target_id),id=esc(b.schedule_id),label=BLD_STATE_LABEL[b.state]||b.state;
     var one=b.schedule_kind==='one_time';
     var when=one?whenLabel(b.scheduled_at_utc,b.timezone):daysSummary(b.days_of_week)+' · '+to12h(b.local_start)+'–'+to12h(b.local_pause)+' · '+zoneName(b.timezone);
-    var next= b.state==='active'?(one?Date.parse(b.scheduled_at_utc):computeNextOccurrence(b,Date.now())):null;
+    var next= b.state==='active'?(one?Date.parse(b.scheduled_at_utc):computeNextOccurrence(b,b.clock_ms??Date.now())):null;
     var nextIso=typeof next==='number'?new Date(next).toISOString():next?.startMs?new Date(next.startMs).toISOString():null;
     return '<article class="schedule-item" data-k="build-window-'+id+'"><div class="schedule-item-head"><span class="schedule-item-icon">'+ctx.icon('document',17)+'</span><div class="schedule-item-copy"><strong>'+esc(plan?.title||b.target_id)+'</strong><span>V'+b.exact_target_version+' · '+esc(when)+'</span></div>'+chip(label,BLD_STATE_TONE[b.state]||'idle')+'</div>'+
       (b.state==='invalidated'?'<div class="schedule-attention">'+ctx.icon('warning',13)+'<span>Plan changed to V'+esc(b.pendingVersion)+'. Review before scheduling.</span></div>':'<div class="schedule-item-destination">'+esc(b.dispatchReceipt?(plan?.status==='completed'?'Build completed':'Build started'):(one&&b.runPhase==='idle'?'Waiting for scheduled time':PHASE_LABEL[b.runPhase]||b.runPhase||'Waiting'))+(nextIso&&!one?' · Next '+esc(whenLabel(nextIso,b.timezone)):'')+'</div>')+
-      '<div class="schedule-item-controls"><button class="soft-button" data-action="pd-info" data-id="'+esc(b.target_id)+'">Open plan</button>'+
+      (b.held_reason?'<div class="schedule-attention">'+esc(b.held_reason)+'</div>':'')+'<div class="schedule-item-controls"><button class="soft-button" data-action="pd-info" data-id="'+esc(b.target_id)+'">Open plan</button>'+
       (b.state==='invalidated'?'<button class="soft-button" data-action="sched-rebind-build" data-id="'+id+'" data-version="'+esc(b.pendingVersion)+'" data-hash="'+esc(b.pendingHash)+'" data-revision="'+b.revision+'">Use V'+esc(b.pendingVersion)+'</button>':'')+
-      (b.state==='active'?'<button class="text-button" data-action="sched-edit-build" data-id="'+id+'">Edit window</button>':'')+
-      (['active','paused','invalidated'].includes(b.state)?'<button class="text-button danger" data-action="sched-cancel-build" data-id="'+id+'">Cancel</button>':'')+'</div>'+
-      '<details class="schedule-details"><summary>Details '+ctx.icon('down',11)+'</summary><div class="sched-details-body">'+(b.binding_kind==='plan_content_v1'&&b.state==='active'?'<p class="schedule-caption">Local clock control only. This page does not run a background scheduling service.</p><button class="soft-button" data-action="sched-advance-window" data-id="'+id+'">Advance local clock to dispatch</button>':'')+facts([
+      (b.state==='active'&&!b.dispatchReceipt?'<button class="text-button" data-action="sched-edit-build" data-id="'+id+'">Edit window</button>':'')+
+      (['active','paused','invalidated'].includes(b.state)?'<button class="text-button danger" data-action="sched-cancel-build" data-id="'+id+'" data-revision="'+b.revision+'" data-currentness="'+esc(buildCurrent(b))+'">Cancel</button>':'')+'</div>'+
+      '<details class="schedule-details"><summary>Details '+ctx.icon('down',11)+'</summary><div class="sched-details-body">'+(b.binding_kind==='plan_content_v1'&&b.state==='active'?'<p class="schedule-caption">Local clock control only. This page does not run a background scheduling service.</p><button class="soft-button" data-action="sched-advance-window" data-id="'+id+'">Evaluate next local boundary</button>':'')+facts([
         ['Timezone',b.timezone],['Wind-down',b.wind_down_seconds/60+' min'],['Resume next window',b.auto_resume_next_window?'On':'Off'],['If missed',b.missed_policy],['Exact plan version','V'+b.exact_target_version],['Revision',b.revision]
       ])+'<details class="sched-audit"><summary>Record & history</summary>'+facts([['Schedule ID',b.schedule_id],['Bound hash (demo)',b.exact_target_hash],['Idempotency key',idempotencyKey(b)]])+
       (b.log||[]).map(l=>'<p><time>'+esc(fmtClock(l.at))+'</time> '+esc(l.text)+'</p>').join('')+'</details></div></details></article>';
   }
 
 
+  function wallResolution(date,time,zone){const r=PM56_SCHEDULE_TIME.resolve(zone,PM56_SCHEDULE_TIME.parse(date,time));if(!r.ok)return '';return '<p class="b18-time-resolution">'+esc(r.kind==='gap_forward'?'Clock change: first valid local instant after the gap.':r.kind==='fold_first'?'Repeated local time: first occurrence only.':'Exact local time.')+' '+esc(new Date(r.at).toISOString())+' · '+esc(zone)+'</p>';}
   function renderMessageDialog(ctx){
     var d=ui.msgDraft||(ui.msgDraft=defaultMsgDraft(ctx)),editing=ui.editingMsgId,th=threadByIdRaw(d.threadId),text=String(d.text||'');
     var tzOpts=TZ_OPTIONS.map(t=>'<option value="'+esc(t.id)+'" '+(t.id===d.timezone?'selected':'')+'>'+esc(zoneName(t.id))+'</option>').join('');
@@ -36721,7 +36972,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       '<label class="sched-field"><span>Message</span><textarea class="sched-text" data-sched-input="msg-text" rows="4" maxlength="8000" placeholder="What should be sent?">'+esc(text)+'</textarea></label>'+
       (d.attachments?.length?'<div class="sched-attached">'+d.attachments.map(a=>'<span>'+ctx.icon('attach',12)+esc(attachmentLabel(a))+'</span>').join('')+'</div>':'')+
       '<div class="schedule-when"><h3>Send on</h3><div class="sched-field-grid"><label class="sched-field"><span>Date</span><input type="date" data-sched-input="msg-date" value="'+esc(d.date)+'"></label><label class="sched-field"><span>Time</span><input type="time" data-sched-input="msg-time" value="'+esc(d.time)+'"></label><label class="sched-field schedule-zone"><span>Timezone</span><select data-sched-input="msg-tz">'+tzOpts+'</select></label></div></div>'+
-      '<label class="sched-field"><span>Model & account</span>'+window.PM56_PICKERS.modelButton('sched-pick-model','schedule-model',d.modelId)+'</label>'+
+      wallResolution(d.date,d.time,d.timezone)+'<label class="sched-field"><span>Model & account</span>'+window.PM56_PICKERS.modelButton('sched-pick-model','schedule-model',d.modelId)+'</label>'+
       '<details class="schedule-details"><summary>If the send time is missed '+ctx.icon('down',11)+'</summary><div class="sched-field-grid"><label class="sched-field"><span>Action</span><select data-sched-input="msg-missed">'+[['hold','Hold for me'],['next_available','Send when available'],['cancel_after_grace','Cancel after grace']].map(([v,l])=>'<option value="'+v+'" '+(d.missed===v?'selected':'')+'>'+l+'</option>').join('')+'</select></label>'+(d.missed==='cancel_after_grace'?'<label class="sched-field"><span>Grace · minutes</span><input type="number" min="1" max="1440" data-sched-input="msg-grace" value="'+d.grace+'"></label>':'')+'</div></details>'+
       '<div class="sched-form-error" role="alert">'+esc(d.error||'')+'</div></div><div class="schedule-form-foot"><button class="text-button" data-action="sched-open-manage">All schedules</button><span class="spacer"></span><button class="soft-button" data-action="sched-close-dialog">Cancel</button><button class="primary-button" data-action="sched-create-message" '+(!text.trim()||text.length>8000?'disabled':'')+'>'+(editing?'Save changes':'Schedule message')+'</button></div></section>';
   }
@@ -36740,7 +36991,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     if(!TZ_OPTIONS.some(t=>t.id===d.timezone))zones='<option selected value="'+esc(d.timezone)+'">'+esc(zoneName(d.timezone))+'</option>'+zones;
     return '<section class="dialog sched-dialog sched-dialog--build" role="dialog" aria-modal="true" aria-label="Build At"><div class="drawer-head">'+ctx.icon('document',16)+'<strong>'+(ui.editingBuildId?'Edit build window':'Schedule a build')+'</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div><div class="dialog-body">'+
       '<div class="schedule-plan-target"><strong>'+esc(plan?.title||d.planId)+'</strong><span>V'+esc(d.version)+' · Fixed version</span></div>'+
-      '<label class="sched-field"><span>Execution</span><select data-sched-input="build-topology"><option value="agent" '+(d.executionTopology!=='goal_driven'?'selected':'')+'>Build normally</option><option value="goal_driven" '+(d.executionTopology==='goal_driven'?'selected':'')+'>Build as Goal</option></select></label>'+(d.executionTopology==='goal_driven'?'<p class="schedule-caption">The Goal is created only when this exact build is admitted.</p>':'')+
+      (one?wallResolution(d.date,d.time,d.timezone):'')+'<label class="sched-field"><span>Execution</span><select data-sched-input="build-topology"><option value="agent" '+(d.executionTopology!=='goal_driven'?'selected':'')+'>Build normally</option><option value="goal_driven" '+(d.executionTopology==='goal_driven'?'selected':'')+'>Build as Goal</option><option value="crew" disabled>Build with Crew · atomic schedule adapter unavailable</option></select></label>'+(d.executionTopology==='goal_driven'?'<p class="schedule-caption">The Goal is created only when this exact build is admitted.</p>':'')+
       '<div class="schedule-kind">'+[['one_time','Once'],['recurring_window','Recurring window']].map(([v,l])=>'<button class="soft-button '+(d.kind===v?'active':'')+'" data-action="sched-set-build-kind" data-value="'+v+'">'+l+'</button>').join('')+'</div>'+
       '<div class="sched-field-grid">'+(one?'<label class="sched-field"><span>Date</span><input type="date" data-sched-input="build-date" value="'+esc(d.date)+'"></label><label class="sched-field"><span>Start</span><input type="time" data-sched-input="build-time" value="'+esc(d.time)+'"></label>':'<label class="sched-field"><span>Start</span><input type="time" data-sched-input="build-start" value="'+esc(d.startTime)+'"></label><label class="sched-field"><span>Pause</span><input type="time" data-sched-input="build-pause" value="'+esc(d.pauseTime)+'"></label>')+
       '<label class="sched-field schedule-zone"><span>Timezone</span><select data-sched-input="build-tz">'+zones+'</select></label></div>'+
@@ -36780,22 +37031,27 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
   function renderPersistenceFooter(ctx){return '<div class="schedule-footer"><span title="This HTML demonstrates schedules; no background dispatch service runs here.">Concept · local records</span><span title="'+(ui.persistenceAvailable===false?'Browser storage unavailable. Changes last for this session.':'')+'">'+(ui.persistenceAvailable===false?'Session only':P().lastSavedAt?'Saved '+esc(fmtClock(P().lastSavedAt)):'')+'</span></div>';}
 
 
+  function managerFilter(tab){return (ui.managerFilters||(ui.managerFilters={}))[tab]||((ui.managerFilters)[tab]={status:'all',query:'',sort:'time_asc'});}
+  function visibleSchedules(rows,tab){const f=managerFilter(tab),q=f.query.toLowerCase();return rows.filter(r=>{
+    const state=r.state==='scheduled'?'active':r.state==='sent'||r.state==='dispatched'?'completed':r.state==='held'||r.state==='invalidated'?'held':r.state==='cancelled'?'canceled':r.runPhase==='paused_safe'?'paused':r.state;
+    return (f.status==='all'||state===f.status)&&(!q||[r.text,r.target_id,r.destination_ref?.label,r.timezone,PM56_PLANS.get(r.target_id)?.title].filter(Boolean).join(' ').toLowerCase().includes(q));
+  }).sort((a,b)=>{const n=(Date.parse(a.scheduled_at_utc||a.next_occurrence_at||a.createdAt)||0)-(Date.parse(b.scheduled_at_utc||b.next_occurrence_at||b.createdAt)||0);return (f.sort==='time_desc'?-n:n)||String(a.scheduled_dispatch_id||a.schedule_id).localeCompare(String(b.scheduled_dispatch_id||b.schedule_id));});}
+  function managerToolbar(tab,focused){const f=managerFilter(tab);return '<div class="b18-manager-filter"><label>Search<input data-sched-input="manager-query" value="'+esc(f.query)+'" placeholder="Text, destination or timezone"></label><label>Status<select data-sched-input="manager-status">'+[['all','All'],['active','Active'],['paused','Paused'],['held','Held / needs review'],['completed','Completed / sent'],['failed','Failed'],['expired','Expired'],['canceled','Canceled']].map(([v,l])=>'<option value="'+v+'" '+(f.status===v?'selected':'')+'>'+l+'</option>').join('')+'</select></label><label>Order<select data-sched-input="manager-sort"><option value="time_asc" '+(f.sort==='time_asc'?'selected':'')+'>Earliest first</option><option value="time_desc" '+(f.sort==='time_desc'?'selected':'')+'>Latest first</option></select></label></div>'+(focused?'<button class="text-button" data-action="sched-show-all-builds">All build windows</button>':'');}
   function renderManageDialog(ctx){
     var S=P(),tab=ui.manageTab||'messages';if(tab==='precedence')tab='quota';
-    var focused=tab==='builds'&&!!findBuild(ui.focusBuild);
-    var active=S.scheduledMessages.filter(m=>['scheduled','held','failed'].includes(m.state)),attention=active.filter(m=>m.state!=='scheduled'),upcoming=active.filter(m=>m.state==='scheduled').sort((a,b)=>Date.parse(a.scheduled_at_utc)-Date.parse(b.scheduled_at_utc)),past=S.scheduledMessages.filter(m=>!active.includes(m));
-    var tabs=[['messages','Messages',active.length],['builds','Build windows',S.buildSchedules.filter(b=>['active','paused','invalidated'].includes(b.state)).length],['quota','Resume & safety',null],['events','Activity',null]];
+    const focused=tab==='builds'&&!!findBuild(ui.focusBuild),allActive=S.scheduledMessages.filter(m=>['scheduled','held','failed'].includes(m.state));
+    const msgs=visibleSchedules(S.scheduledMessages,'messages'),active=msgs.filter(m=>['scheduled','held'].includes(m.state)),attention=active.filter(m=>m.state==='held'),upcoming=active.filter(m=>m.state==='scheduled'),past=msgs.filter(m=>!active.includes(m));
+    const tabs=[['messages','Scheduled Messages'],['builds','Execution & Build Windows'],['quota','Resume & Safety Policy'],['events','Events & Automation']];
     function section(label,rows){return rows.length?'<section class="schedule-list-section"><h3>'+label+' <span>'+rows.length+'</span></h3>'+rows.map(m=>renderMessageRow(ctx,m)).join('')+'</section>':'';}
     var content='';
-    if(tab==='messages')content=section('Needs attention',attention)+section('Upcoming',upcoming)+(past.length?'<details class="schedule-history" '+(past.some(m=>m.scheduled_dispatch_id===ui.focusSchedule)?'open':'')+'><summary>History <span>'+past.length+'</span></summary>'+past.map(m=>renderMessageRow(ctx,m)).join('')+'</details>':'')+(!S.scheduledMessages.length?'<div class="schedule-empty">'+ctx.icon('history',28)+'<strong>No scheduled messages</strong><button class="soft-button" data-action="sched-open-message">Schedule a message</button></div>':'');
-    else if(tab==='builds')content='<section class="schedule-list-section"><h3>Build windows</h3>'+(S.buildSchedules.length?S.buildSchedules.filter(b=>!ui.focusBuild||b.schedule_id===ui.focusBuild).map(b=>renderBuildRow(ctx,b)).join(''):'<div class="schedule-empty"><strong>No build windows</strong><span>Use Build At from a plan.</span></div>')+'</section>';
+    if(tab==='messages')content=section('Needs attention',attention)+section('Upcoming',upcoming)+(past.length?'<details class="schedule-history" '+(managerFilter(tab).status!=='all'||past.some(m=>m.scheduled_dispatch_id===ui.focusSchedule)?'open':'')+'><summary>History <span>'+past.length+'</span></summary>'+past.map(m=>renderMessageRow(ctx,m)).join('')+'</details>':'')+(!msgs.length?'<div class="schedule-empty">'+ctx.icon('history',28)+'<strong>No matching scheduled messages</strong><span>Create a message schedule from the Assistant wand.</span></div>':'');
+    else if(tab==='builds'){const rows=visibleSchedules(S.buildSchedules.filter(b=>!ui.focusBuild||b.schedule_id===ui.focusBuild),'builds');content='<section class="schedule-list-section"><h3>Execution &amp; build windows</h3>'+(rows.length?rows.map(b=>renderBuildRow(ctx,b)).join(''):'<div class="schedule-empty"><strong>No matching windows</strong><span>Use Build At from a Plan.</span></div>')+'</section>';}
     else if(tab==='quota')content=renderPrecedenceSection()+renderQuotaSection();
-    else content=renderEventLog();
+    else content='<p class="schedule-caption">Session event history. Native webhook and automation services are not running in this concept.</p>'+renderEventLog();
     return '<section class="dialog sched-dialog sched-dialog--manage'+(focused?' sched-dialog--focused':'')+'" role="dialog" aria-modal="true" aria-label="Scheduled and Automations"><div class="drawer-head"><strong>'+(focused?'Build schedule':'Scheduled &amp; automations')+'</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div>'+
-      '<div class="schedule-overview"><div><strong>'+active.length+'</strong><span>pending messages</span></div><div><strong>'+S.buildSchedules.filter(b=>b.state==='active').length+'</strong><span>active windows</span></div><div class="schedule-overview-state">'+chip(S.stopped?'Automations paused':attention.length?attention.length+' need attention':'No blockers',S.stopped||attention.length?'attention':'done')+'</div></div>'+
-      '<div class="sched-tabs">'+tabs.map(([v,l,n])=>'<button class="text-button sched-tab '+(v===tab?'active':'')+'" data-action="sched-manage-tab" data-tab="'+v+'">'+l+(n!==null?'<span>'+n+'</span>':'')+'</button>').join('')+'</div>'+
-      '<div class="schedule-list-toolbar">'+(tab==='messages'?'<button class="soft-button" data-action="sched-open-message">'+ctx.icon('plus',12)+' Schedule message</button>':tab==='builds'&&ui.focusBuild?'<button class="text-button" data-action="sched-show-all-builds">All build windows</button>':'')+'<span class="spacer"></span><span>'+(focused?'Selected plan':'All threads')+'</span></div>'+
-      '<div class="dialog-body">'+content+'</div>'+renderPersistenceFooter(ctx)+(window.PM56_SCHEDULE_DEMOS?window.PM56_SCHEDULE_DEMOS.dialogGuide(ctx):'')+'</section>';
+      '<div class="schedule-overview"><div><strong>'+allActive.length+'</strong><span>pending messages</span></div><div><strong>'+S.buildSchedules.filter(b=>b.state==='active').length+'</strong><span>active windows</span></div><div class="schedule-overview-state">'+chip(S.stopped?'Automations paused':allActive.some(m=>m.state==='held')?'Needs attention':'No blockers',S.stopped?'attention':'idle')+'</div></div>'+
+      '<div class="sched-tabs" role="tablist">'+tabs.map(([v,l])=>'<button role="tab" aria-selected="'+(v===tab)+'" class="text-button sched-tab '+(v===tab?'active':'')+'" data-action="sched-manage-tab" data-tab="'+v+'">'+l+'</button>').join('')+'</div>'+
+      (['messages','builds'].includes(tab)?managerToolbar(tab,focused):'')+'<div class="dialog-body">'+content+'</div>'+renderPersistenceFooter(ctx)+(window.PM56_SCHEDULE_DEMOS?window.PM56_SCHEDULE_DEMOS.dialogGuide(ctx):'')+'</section>';
   }
 
   EXT.slot('wandRows', function (ctx) {
@@ -36888,7 +37144,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       cancel_available:['scheduled','held','failed'].indexOf(rec.state)>=0,
       can_edit:['scheduled','held','failed'].indexOf(rec.state)>=0,
       can_cancel:['scheduled','held','failed'].indexOf(rec.state)>=0,
-      currentness_hash:demoHash(rec.scheduled_dispatch_id+':'+rec.revision+':'+rec.state)
+      currentness_hash:msgCurrent(rec)
     };
   }
 
@@ -36912,11 +37168,11 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     var why=pr.held_reason||pr.failure_reason||pr.expired_reason;
     return '<article class="sched-card sched-card-'+esc(m.state)+'" data-k="sched-card-'+id+'" data-schedule-id="'+id+'" data-schedule-state="'+esc(m.state)+'"><div class="sched-card-head"><span class="sched-kind">'+ctx.icon('history',14)+' Scheduled message</span>'+chip(st.label,st.tone)+'</div>'+
       '<p class="sched-card-preview">'+esc(pr.text_preview)+(m.text.length>120?'…':'')+'</p>'+
-      '<div class="sched-card-time">'+esc(whenLabel(m.scheduled_at_utc,m.timezone))+(pr.attachment_count?' · '+pr.attachment_count+' attached':'')+'</div>'+
+      '<div class="sched-card-route">'+esc(destinationLabel(m))+' · '+esc(m.requested_runtime?.modelName||'Default')+'</div><div class="sched-card-time">'+esc(whenLabel(m.scheduled_at_utc,m.timezone)+' · '+m.timezone)+(pr.attachment_count?' · '+pr.attachment_count+' attached':'')+'</div>'+
       (why&&['held','failed','expired'].includes(m.state)?'<div class="schedule-attention">'+ctx.icon('warning',12)+'<span>'+esc(attentionLabel(m))+'</span></div>':'')+
       '<div class="sched-card-foot"><button class="text-button" data-action="sched-card-details" data-id="'+id+'" aria-expanded="'+open+'">'+(open?'Less':'Details')+'</button>'+
       (pr.can_edit?'<button class="text-button" data-action="sched-card-edit" data-id="'+id+'">Edit</button>':'')+(pr.dispatched_message_id?'<button class="text-button" data-action="sched-open-sent" data-id="'+id+'">Open message</button>':'')+'</div>'+
-      (open?messageDetails(ctx,m)+'<div class="sched-card-foot">'+(pr.can_cancel?'<button class="text-button danger" data-action="sched-card-cancel" data-id="'+id+'">Cancel schedule</button>':'')+'<button class="text-button" data-action="sched-focus-record" data-id="'+id+'">All schedules</button></div>':'')+'</article>';
+      (open?messageDetails(ctx,m)+'<div class="sched-card-foot">'+(pr.can_cancel?'<button class="text-button danger" data-action="sched-card-cancel" data-id="'+id+'" data-revision="'+m.revision+'" data-currentness="'+esc(msgCurrent(m))+'">Cancel schedule</button>':'')+'<button class="text-button" data-action="sched-focus-record" data-id="'+id+'">All schedules</button></div>':'')+'</article>';
   }
 
   EXT.slot('transcriptMessage', function (ctx) {
@@ -36977,19 +37233,9 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     ctx.openDialog({ type:'sched-message' });
     return true;
   });
-  EXT.action('sched-card-cancel', function(ctx,btn){
-    var rec=smById(btn.dataset.id); if(!rec) return true;
-    var pr=messageProjection(rec);
-    if(!pr.can_cancel){ ctx.toast('Refused','Nothing to cancel in the '+pr.state_label+' state.'); return true; }
-    var before=P().scheduledMessages.filter(function(x){ return x.thread_id===rec.thread_id && x.state==='scheduled'; }).length;
-    rec.state='canceled'; rec.revision++; rec.updatedAt=new Date().toISOString();
-    rec.cancelReason='Cancelled from the thread card. The immutable audit record is preserved.';
-    persistNow();
-    var after=P().scheduledMessages.filter(function(x){ return x.thread_id===rec.thread_id && x.state==='scheduled'; }).length;
-    ctx.renderApp();
-    ctx.toast('Schedule cancelled','Exactly one schedule changed: '+before+' → '+after+
-      ' still Scheduled in this thread. The cancelled record stays in history.');
-    return true;
+  EXT.action('sched-card-cancel',function(ctx,btn){const id=btn.dataset.id,m=findMessage(id);if(!m)return true;
+    const token=btn.dataset.revision?{id,revision:Number(btn.dataset.revision),currentness:btn.dataset.currentness}:m.binding_kind==='scheduled_message_v2'?null:captureMessage(id);
+    const out=cancelMessageExact(id,token);ctx.renderApp();ctx.toast(out.ok?'Schedule canceled':'Cancel refused',out.ok?'Only this schedule was canceled. History is retained.':out.detail);return true;
   });
 
   /* PSCHED-010 / SMSG-016 / PGOAL-008: association-scoped invalidation. Only
@@ -37005,7 +37251,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       TX.set(b,'invalidated_reason',why);TX.set(b,'invalidReason',why);TX.set(b,'updatedAt',nowIso());TX.set(b,'log',[{at:nowIso(),text:'Invalidated: '+why},...(b.log||[])].slice(0,40));out.schedules++;
     }
     for(const c of P().quotaConsents||[]){if((c.association_id===assoc.plan_id||c.target_id===assoc.plan_id)&&c.state!=='revoked'){
-      TX.set(c,'state','revoked');TX.set(c,'revokedReason','Bound execution cancelled.');out.consents++;
+      TX.set(c,'state','revoked');TX.set(c,'enabled',false);TX.set(c,'revokedReason','Bound execution cancelled.');out.consents++;
     }}
     out.untouched=P().scheduledMessages.filter(m=>['scheduled','held'].includes(m.state)).length;persistNow();return out;
   }
@@ -37051,34 +37297,10 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     ui.msgDraft = null; ui.editingMsgId = null; ui.buildDraft = null;ui.editingBuildId=null;
     ctx.closeDialog();
   };
-  ACT['sched-create-message'] = function (ctx) {
-    var draft=ui.msgDraft;if(!draft)return;
-    var err=validateWall(draft.date,draft.time,draft.timezone);
-    if(!String(draft.text||'').trim()||draft.text.length>8000)err='Enter a message of 1–8,000 characters.';
-    if(err){draft.error=err;ctx.renderOverlays();return;}draft.error='';
-    if (ui.editingMsgId) {
-      var rec = findMessage(ui.editingMsgId);
-      if (!rec || !messageProjection(rec).can_edit) { ctx.toast('Cannot update', 'This schedule already dispatched; updates are refused once dispatch has started.'); return; }
-      var d = ui.msgDraft, text = String(d.text || '').trim();
-      if (!text) return;
-      var dt = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d.date || ''), hhmm = parseHHMM(d.time);
-      var ms = dt ? tzToUTC(d.timezone, Number(dt[1]), Number(dt[2]), Number(dt[3]), hhmm.h, hhmm.m) : Date.now();
-      rec.text = text; rec.scheduled_at_utc = new Date(ms).toISOString(); rec.timezone = d.timezone; rec.local_wall_time = d.time;
-      rec.missed_policy = d.missed; rec.grace_seconds = Math.round(clamp(d.grace, 1, 1440)) * 60;
-      var m2 = modelById(d.modelId); if (m2) rec.requested_runtime = { modelId: m2.id, modelName: m2.name, provider: m2.provider, account: m2.account };
-      rec.revision += 1; rec.state = 'scheduled'; rec.heldReason = null; rec.updatedAt = nowIso();
-      logEvent('scheduled_dispatch.updated', rec.scheduled_dispatch_id, null, 'Rebound under revision ' + rec.revision + '.');
-      persistNow();
-      ui.editingMsgId = null;ui.msgDraft=null;ui.focusSchedule=rec.scheduled_dispatch_id;ui.manageTab='messages';
-      ctx.openDialog({type:'sched-manage'});ctx.renderApp();
-      ctx.toast('Schedule updated', 'Revision ' + rec.revision + ' recorded.');
-      return;
-    }
-    var rec2 = commitMessage(ctx);
-    if (!rec2) { ctx.toast('Nothing scheduled', 'Message text is required.'); return; }
-    if(!ctx.state.threads.find(t=>t.id===rec2.thread_id)?.messages.some(m=>m.scheduleId===rec2.scheduled_dispatch_id)){ctx.appendMessage({id:'sched-card-'+rec2.scheduled_dispatch_id,role:'system',type:'sched-message',scheduleId:rec2.scheduled_dispatch_id,time:rec2.createdAt},threadByIdRaw(rec2.thread_id));}
-    ui.msgDraft=null;ui.focusSchedule=rec2.scheduled_dispatch_id;ui.manageTab='messages';ctx.openDialog({type:'sched-manage'});ctx.renderApp();
-    ctx.toast('Message scheduled', 'Frozen for ' + to12h(rec2.local_wall_time) + ' ' + tzLabel(rec2.timezone) + '. It revalidates its destination and route immediately before dispatch.');
+  ACT['sched-create-message'] = function(ctx){
+    if(!ui.msgDraft)return;const editing=!!ui.editingMsgId,rec=commitMessage(ctx);if(!rec)return;
+    ui.msgDraft=null;ui.editingMsgId=null;ui.focusSchedule=rec.scheduled_dispatch_id;ui.manageTab='messages';
+    ctx.openDialog({type:'sched-manage'});ctx.renderApp();ctx.toast(editing?'Schedule updated':'Message scheduled','Exact session-local snapshot recorded. No provider or background timer has started.');
   };
   ACT['sched-cancel-message'] = function (ctx, btn) {
     var ok = cancelMessage(btn.dataset.id);
@@ -37106,10 +37328,10 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     reRender(ctx);
   };
   ACT['sched-edit-build']=function(ctx,btn){
-    var b=findBuild(btn.dataset.id);if(!b||b.state!=='active')return;
+    var b=findBuild(btn.dataset.id);if(!b||b.state!=='active'||b.dispatchReceipt)return;
     ui.editingBuildId=b.schedule_id;
-    var local=tzParts(b.timezone,Date.parse(b.scheduled_at_utc));
-    ui.buildDraft={executionTopology:b.execution_topology||'agent',expected:window.PM56_PLANS.admissionSnapshot(b.target_id),planId:b.target_id,version:b.exact_target_version,contentHash:b.exact_target_hash,expectedRevision:b.revision,kind:b.schedule_kind,date:local?local.y+'-'+pad2(local.mo)+'-'+pad2(local.d):'',time:b.local_start,startTime:b.local_start,pauseTime:b.local_pause||'02:00',timezone:b.timezone,days:b.days_of_week.slice(),windDown:b.wind_down_seconds/60,autoResumeNext:b.auto_resume_next_window,missed:b.missed_policy};
+    var local=tzParts(b.timezone,Date.parse(b.scheduled_at_utc||b.next_occurrence_at));
+    ui.buildDraft={requestKey:ctx.uid('build-schedule-update'),expectedCurrentness:buildCurrent(b),executionTopology:b.execution_topology||'agent',expected:window.PM56_PLANS.admissionSnapshot(b.target_id),planId:b.target_id,version:b.exact_target_version,contentHash:b.exact_target_hash,expectedRevision:b.revision,kind:b.schedule_kind,date:local?local.y+'-'+pad2(local.mo)+'-'+pad2(local.d):'',time:b.local_start,startTime:b.local_start,pauseTime:b.local_pause||'02:00',timezone:b.timezone,days:b.days_of_week.slice(),windDown:b.wind_down_seconds/60,autoResumeNext:b.auto_resume_next_window,missed:b.missed_policy};
     ctx.openDialog({type:'sched-build-at',planId:b.target_id,version:b.exact_target_version});
   };
   ACT['sched-create-build'] = function (ctx, btn) {
@@ -37127,7 +37349,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       : ('Recurring ' + to12h(rec.local_start) + '–' + to12h(rec.local_pause) + ' ' + tzLabel(rec.timezone) + ', ' + daysSummary(rec.days_of_week) + '.'));
   };
   ACT['sched-cancel-build'] = function (ctx, btn) {
-    var ok = cancelBuild(btn.dataset.id);
+    var ok = cancelBuild(btn.dataset.id,{revision:Number(btn.dataset.revision),currentness:btn.dataset.currentness});
     reRender(ctx);
     ctx.toast(ok ? 'Schedule canceled' : 'Could not cancel', ok ? 'No future dispatch.' : 'It may have already completed.');
   };
@@ -37225,6 +37447,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     var k = t.getAttribute('data-sched-input'); if (!k) return;
     var ctx = EXT.ctx && EXT.ctx(); if (!ctx) return;
     var md = ui.msgDraft, bd = ui.buildDraft;
+    if(k.startsWith('manager-')){const f=managerFilter(ui.manageTab);f[k==='manager-query'?'query':k==='manager-status'?'status':'sort']=t.value;ctx.renderOverlays();return;}
     if (k === 'msg-text' && md) md.text = t.value;
     else if (k === 'msg-date' && md) md.date = t.value;
     else if (k === 'msg-time' && md) md.time = t.value;
@@ -37255,6 +37478,15 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
 
   window.PM56_SCHED = {
     openBuildAt: openBuildAt,
+    captureBuild,windowTick,workEligibility,setPlanQuotaConsent,buildWindow,
+    buildDraft:defaultBuildDraft,editBuildDraft:id=>{const b=findBuild(id);if(!b)return null;ACT['sched-edit-build'](EXT.ctx(),{dataset:{id}});return copy(ui.buildDraft);},
+    saveBuild:(draft,id)=>{const before=ui.buildDraft,edit=ui.editingBuildId;ui.buildDraft=draft;ui.editingBuildId=id||null;try{const r=commitBuild(EXT.ctx());return r?{ok:true,record:r}:msgError(draft.error||'build_schedule_refused');}finally{ui.buildDraft=before;ui.editingBuildId=edit;}},
+    cancelBuildExact:(id,expected)=>cancelBuild(id,expected),
+    captureMessage,saveMessage:(draft,editingId)=>saveMessage(EXT.ctx(),draft,editingId),prepareMessage:(draft)=>prepareMessage(EXT.ctx(),draft),
+    messageDraft:()=>defaultMsgDraft(EXT.ctx()),editMessageDraft:id=>findMessage(id)?loadMessageForEdit(findMessage(id)):null,
+    cancelMessageExact,messageTicket,deliverMessage,dispatchMessageAt,
+    registerMessageReceiver:(threadId,receiver)=>{if(messageReceivers.has(threadId))throw Error('duplicate_schedule_receiver');messageReceivers.set(threadId,receiver);},
+    registerMessageDestination:(kind,owner)=>{if(kind==='assistant'||messageDestinations.has(kind)||!owner?.validate||!owner?.deliver)throw Error('invalid_destination_owner');messageDestinations.set(kind,owner);},
     latchStop:(reason)=>{latchStop(reason);persistNow();},
     stopSnapshot:()=>({epoch:P().stopEpoch,stopped:P().stopped}),
     checkEpoch:token=>token?.epoch!==P().stopEpoch?{ok:false,error:"stale_stop_epoch"}:P().stopped?{ok:false,error:"manual_stop_latched"}:{ok:true},
@@ -43331,6 +43563,83 @@ E.action('b17-source-v2',(ctx,b)=>{const r=get(b.dataset.work);if(!r)return true
 const gallery=PM56_REPAIR_DEMOS,old=gallery.gallery;gallery.gallery=ctx=>'<section class="demo-section"><h3>Plan recovery & document views · Batch 17</h3><div class="demo-section-body">'+Object.entries(flows).map(([flow,f])=>'<button class="demo-trigger" data-action="b17-start" data-flow="'+flow+'"><strong>'+ctx.esc(f.title)+'</strong><small>'+ctx.esc(f.description)+'</small></button>').join('')+'</div></section>'+old(ctx);
 window.PM56_B17_WORK={snapshot:()=>{const s=store.sessions[E.ctx()?.thread.id];return s?clone(get(s.workId)):null;},inspect,advance,recover,acceptResult,compute,records:()=>store.records,start:(flow)=>start(E.ctx(),flow)};
 })();
+
+/* Batch18 gallery adapters. Local fixtures/clock observations only; all schedule,
+ * Plan, To-Do and artifact mutations go through their existing owners. */
+(function(){
+'use strict';
+const E=PM56_EXT,S=PM56_SCHED,C=PM56_COMPOSER_STATE,A=PM56_ARTIFACTS,P=PM56_PLANS,R=PM56_RUNTIME;
+const sessions=new Map();let sequence=0;
+const clone=x=>JSON.parse(JSON.stringify(x));
+function current(){return sessions.get(E.ctx()?.thread.id);}
+function record(r){if(!r)return null;return S.list().messages.filter(m=>m.thread_id===r.threadId).at(-1);}
+function build(r){if(!r)return null;return S.list().builds.find(b=>b.thread_id===r.threadId&&b.binding_kind==='plan_content_v1');}
+function source(r,version=1){return {artifact_id:r.id+':input',artifact_version:version,project_id:r.projectId,thread_id:r.threadId};}
+function publish(r,version){return A.publish({...source(r,version),renderer_kind:'json',title:'Supplied values · V'+version,payload:{values:version===1?[3,7,11]:[999]}});}
+function start(ctx,flow){
+ if(!['messages','windows'].includes(flow))return;
+ let t,r;
+ if(flow==='windows'){
+   PM56_B17_WORK.start('recovery');const w=PM56_B17_WORK.snapshot();ctx=E.ctx();t=ctx.thread;
+   E._actions['b17-reconnect'](ctx,{dataset:{work:w.id}});
+   t.title='One build, across two windows';r={id:'b18-window-'+(++sequence),flow,threadId:t.id,projectId:t.projectId,workId:w.id};
+ }else{
+   const n=++sequence;t=clone(ctx.state.threads.find(t=>t.id==='query'));Object.assign(t,{id:'batch18-message-'+n,title:'Send the version you scheduled',messages:[],projectId:'concept:b18:'+n,worktreeId:'concept:b18:'+n,archived:false,pinned:false,goalId:null,status:'ready'});ctx.state.threads.push(t);
+   r={id:t.id,flow,threadId:t.id,projectId:t.projectId,outputs:[],publishedV2:false};
+   Object.assign(ctx.state,{historyMode:'closed',menu:null,dialog:null,hover:null,editorTabs:[],activeEditor:null,editorRevealed:false,demoOpen:false});ctx.state.activity.open=false;
+   ctx.switchThread(t.id);ctx=E.ctx();ctx.state.mode='Agent';ctx.state.composer='Add the values in the attached V1 document. Keep the scheduled input unchanged.';
+   publish(r,1);const b=C.bufferFor(t.id);b.text=ctx.state.composer;b.attachments=[{id:r.id+':attachment',name:'values.json',kind:'file',state:'ready',snapshot_ref:source(r)}];
+   R.composer.destination=null;b.destination=null;
+   S.registerMessageReceiver(t.id,(message,receipt)=>{
+     const exact=A.resolve(message.attachments[0].snapshot_ref),values=exact?.revision?.record.payload.values;
+     if(!exact.ok||!Array.isArray(values)||values.some(x=>!Number.isSafeInteger(x)))return;
+     const sum=values.reduce((a,b)=>a+b,0),ref={artifact_id:receipt.message_id+':result',artifact_version:1,project_id:r.projectId,thread_id:r.threadId};
+     const out=A.publish({...ref,title:'Exact scheduled-input result',renderer_kind:'json',payload:{values,sum,input_ref:message.attachments[0].snapshot_ref,input_hash:message.attachments[0].content_hash,schedule_id:receipt.schedule_id,dispatched_message_id:message.id,local_calculation:true}});
+     if(out.ok){r.outputs.push(ref);E.ctx().appendMessage({id:receipt.message_id+':answer',role:'assistant',type:'b18-result',ref,sum},E.ctx().state.threads.find(t=>t.id===r.threadId));}
+   });
+ }
+ sessions.set(t.id,r);R.quota.waiting=false;ctx.renderApp();
+}
+function button(action,label,extra=''){return '<button class="soft-button" data-action="'+action+'" '+extra+'>'+label+'</button>';}
+function artifactButton(ref,label){return button('open-artifact',label,'data-version="'+ref.artifact_version+'" data-ref="'+encodeURIComponent(JSON.stringify(ref))+'"');}
+function controls(ctx,r){
+ const m=record(r),b=build(r);let html='';
+ if(r.flow==='messages')html=artifactButton(source(r),'Inspect supplied V1')+button('b18-source-v2',r.publishedV2?'V2 published':'Publish newer V2',r.publishedV2?'disabled':'')+
+   (m?button('b18-message-due','Evaluate scheduled time')+button('b18-message-repeat','Replay delivery')+button('b18-toggle-input',r.missing?'Restore retained V1':'Disconnect retained V1'):'');
+ else if(b){const at=b.clock_ms??Date.parse(b.next_occurrence_at||b.scheduled_at_utc),w=S.buildWindow(b,at);
+   html=button('b18-window-open','Evaluate window opening')+button('b18-window-wind','Move to wind-down')+button('b18-window-close','Move to pause time')+button('b18-window-next','Next eligible window')+
+     button('b18-quota','Simulate Usage '+(R.quota.waiting?'available':'unavailable'))+button('b18-consent','Allow Usage resume for this run')+
+     button('b18-plan','Open Plan');
+   html+='<div class="b18-clock-state"><span>Clock: '+ctx.esc(new Date(at).toISOString())+'</span><span>'+ctx.esc(b.held_reason||b.runPhase||'Waiting')+'</span></div>';
+ }
+ return html;
+}
+E.slot('composerBelow',ctx=>{
+ const r=sessions.get(ctx.thread.id);if(!r)return '';const m=record(r),b=build(r);
+ const hint=r.flow==='messages'?(!m?'Open the wand → Schedule Message. Nothing is scheduled by this preparation.':'Publish V2, then evaluate the scheduled time. The message still reads V1. Disconnect V1 to try a Held result.'):(!b?'Send the prepared Plan request, then use More → Build At. Do not Build Now.':'Let the first output finish, move to wind-down, then the next window. The original run and completed output must survive.');
+ return '<section class="b18-guide" data-b18-flow="'+r.flow+'"><div class="b18-guide-title"><strong>Batch 18 · '+(r.flow==='messages'?'Exact scheduled messages':'Recurring execution windows')+'</strong><small>Explicit local clock · no background service</small></div><p>'+ctx.esc(hint)+'</p><details class="b18-clock" '+(r.clockOpen?'open':'')+'><summary>Local clock &amp; input controls</summary><div class="b18-controls">'+controls(ctx,r)+'</div>'+(r.last?'<p class="b18-decision" role="status">'+ctx.esc(r.last)+'</p>':'')+'</details></section>';
+});
+E.slot('transcriptMessage',ctx=>{const m=ctx.m||ctx.message;return m?.type==='b18-result'?'<article class="b18-result"><strong>Sum: '+ctx.esc(m.sum)+'</strong><p>Calculated from the exact scheduled attachment. This is a local calculation, not a provider response.</p>'+artifactButton(m.ref,'Inspect result and source identity')+'</article>':'';});
+function outcome(r,out){r.last=out.ok?out.duplicate?'Original receipt returned; no duplicate delivery.':out.completed?'The existing run is complete. No new run was started.':out.resumed?'The same unfinished PlanRun resumed.':out.paused?'The original run paused at a safe boundary.':out.winding_down?'Wind-down: the bounded operation may finish, but no new work is admitted.':'Clock evaluated through the shared scheduler.':out.detail||out.error||'Refused';E.ctx().renderApp();}
+document.addEventListener('toggle',event=>{const el=event.target;if(el.matches?.('.b18-clock')&&el.isConnected){const r=current();if(r)r.clockOpen=el.open;}},true);
+E.action('b18-start',(ctx,b)=>{start(ctx,b.dataset.flow);return true;});
+E.action('b18-source-v2',ctx=>{const r=current();if(!r||r.flow!=='messages')return;const out=publish(r,2);if(out.ok)r.publishedV2=true;outcome(r,out);});
+E.action('b18-toggle-input',ctx=>{const r=current();if(!r)return;r.missing=!r.missing;const a=PM56_DATA.artifacts.find(a=>a.id===source(r).artifact_id);a.revisionAvailability={1:r.missing?'missing':'available'};r.last=r.missing?'V1 disconnected in this local fixture. No newer revision may replace it.':'The same V1 is available again.';ctx.renderApp();});
+E.action('b18-message-due',ctx=>{const r=current(),m=r&&record(r);if(!m)return;const d=S.messageTicket(m.scheduled_dispatch_id,Date.parse(m.scheduled_at_utc));r.ticket=d.ticket;outcome(r,S.deliverMessage(d.ticket));});
+E.action('b18-message-repeat',ctx=>{const r=current();if(r?.ticket)outcome(r,S.deliverMessage(r.ticket));});
+function tick(ctx,kind){const r=current(),b=r&&build(r);if(!b)return;const at=b.clock_ms??Date.parse(b.next_occurrence_at||b.scheduled_at_utc),w=S.buildWindow(b,at);let next=at;
+ if(kind==='wind')next=w.wind_down_at;else if(kind==='close')next=w.end;else if(kind==='next'){const start=PM56_SCHEDULE_TIME.parse('2000-01-01',b.local_start);next=PM56_SCHEDULE_TIME.next(b.timezone,b.days_of_week,start.h,start.mi,(w.end||at)+1);}
+ if(!Number.isFinite(next)){outcome(r,{ok:false,error:'No matching boundary at this clock position.'});return;}
+ outcome(r,S.windowTick(b.schedule_id,next,S.captureBuild(b.schedule_id)));
+}
+for(const [action,kind] of [['b18-window-open','open'],['b18-window-wind','wind'],['b18-window-close','close'],['b18-window-next','next']])E.action(action,ctx=>tick(ctx,kind));
+E.action('b18-plan',ctx=>{const b=build(current());if(b)P.openDetails(ctx,b.target_id);});
+E.action('b18-quota',ctx=>{const r=current(),b=r&&build(r);if(!b)return;R.quota.waiting=!R.quota.waiting;R.quota.resetSource='user supplied';R.quota.resetAt=null;outcome(r,S.windowTick(b.schedule_id,b.clock_ms,S.captureBuild(b.schedule_id)));});
+E.action('b18-consent',ctx=>{const r=current(),b=r&&build(r);if(b)outcome(r,S.setPlanQuotaConsent(b.target_id,true));});
+const gallery=PM56_REPAIR_DEMOS,prior=gallery.gallery;
+gallery.gallery=ctx=>'<section class="demo-section"><h3>Scheduled messages &amp; windows · Batch 18</h3><div class="demo-section-body"><button class="demo-trigger" data-action="b18-start" data-flow="messages"><strong>Send the version you scheduled</strong><small>Freeze a message and V1 attachment. Hold when unavailable; never substitute V2.</small></button><button class="demo-trigger" data-action="b18-start" data-flow="windows"><strong>One build, across two windows</strong><small>Pause real local work at a safe boundary and resume the same run.</small></button></div></section>'+prior(ctx);
+window.PM56_B18={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=current();return r?{...clone(r),message:record(r)?clone(record(r)):null,build:build(r)?clone(build(r)):null}:null;}};
+})();
 </script>
   <script>(() => {
   'use strict';
@@ -46295,7 +46604,11 @@ recommended path                  migration 0043 + rollback</div></div></section
      so a sent message landed 2787px below the fold and stayed there --
      inView:false for 3s and elementFromPoint over its box returning null. */
   function scrollTranscriptToEnd(instant=false){ scrollToEnd('transcript',instant); }
-  function appendMessage(msg,thread=activeThread()){thread.messages.push(msg);thread.updated='now';renderApp();scrollTranscriptToEnd();}
+  function appendMessage(msg,thread=activeThread()){
+    const TX=window.PM56_TX;
+    if(TX?.isActive()){TX.append(thread,'messages',msg);TX.set(thread,'updated','now');TX.defer(()=>{renderApp();scrollTranscriptToEnd();});return msg;}
+    thread.messages.push(msg);thread.updated='now';renderApp();scrollTranscriptToEnd();return msg;
+  }
 
   function startWorking(reset=false,rec=state.work){
     if(reset||rec.completed){

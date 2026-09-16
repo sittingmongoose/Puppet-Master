@@ -1,0 +1,24 @@
+{
+  "schema": "pm.concept.batch_checkpoint.v1",
+  "batch": 18,
+  "title": "Scheduled messages and recurring windows",
+  "state": "DELIVERY_CANDIDATE_WITH_OPEN_COVERAGE",
+  "upstream_main": "f9effd40420e496647a3af6cb2902de1ea08b9d7",
+  "html_sha256": "4608b63a85ac39dd4ad339848ba885e2281c1241f99be02a936d824fb93ba47a",
+  "native_verified": false,
+  "formal_audit": false,
+  "accepted": false,
+  "next_batch_started": false,
+  "verification_record": "Separate delivery VERIFICATION_REPORT.md and DELIVERY_RECEIPT.json; not inferred from checkpoint state",
+  "open_concept_capabilities": [
+    "atomic scheduled Crew owner adapter",
+    "collaborative scheduled-message destination adapter",
+    "general file/folder retained snapshot provisioning"
+  ],
+  "open_platform_proof": [
+    "durable server timers and restart",
+    "native print dialog carried from B17",
+    "real providers and native runtime"
+  ],
+  "scope_census": 47
+}

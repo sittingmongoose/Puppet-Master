@@ -1,0 +1,24 @@
+const assert=require('node:assert/strict');const T=require('../../scheduling-time.js');let count=0;
+function check(name,fn){fn();console.log('PASS '+name);count++;}
+const at=(z,d,t)=>T.resolve(z,T.parse(d,t));
+check('NY gap first valid minute',()=>{const r=at('America/New_York','2027-03-14','02:30');assert.equal(r.kind,'gap_forward');assert.equal(new Date(r.at).toISOString(),'2027-03-14T07:00:00.000Z');});
+check('NY fold first occurrence',()=>{const r=at('America/New_York','2026-11-01','01:30');assert.equal(r.kind,'fold_first');assert.equal(new Date(r.at).toISOString(),'2026-11-01T05:30:00.000Z');});
+check('London gap',()=>assert.equal(new Date(at('Europe/London','2027-03-28','01:20').at).toISOString(),'2027-03-28T01:00:00.000Z'));
+check('Sydney southern fold',()=>assert.equal(at('Australia/Sydney','2027-04-04','02:20').kind,'fold_first'));
+check('Lord Howe half-hour gap',()=>{const r=at('Australia/Lord_Howe','2026-10-04','02:10');assert.equal(r.kind,'gap_forward');assert.equal(r.effective.h,2);assert.equal(r.effective.mi,30);});
+check('Kolkata exact quarter-independent offset',()=>assert.equal(new Date(at('Asia/Kolkata','2027-03-14','02:30').at).toISOString(),'2027-03-13T21:00:00.000Z'));
+check('invalid zone refuses',()=>assert.equal(at('Mars/Crater','2027-03-14','02:30').ok,false));
+check('invalid calendar refuses',()=>assert.equal(at('UTC','2027-02-30','02:30').ok,false));
+check('invalid clock refuses',()=>assert.equal(at('UTC','2027-02-28','25:00').ok,false));
+check('fold occurrence is not repeated',()=>assert.equal(new Date(T.next('America/New_York',[0],1,30,Date.parse('2026-11-01T05:31Z'))).toISOString(),'2026-11-08T06:30:00.000Z'));
+const rec={timezone:'America/New_York',local_start:'22:00',local_pause:'02:00',days_of_week:[1,2,3,4,5],wind_down_seconds:600};
+check('overnight Friday belongs to start day',()=>assert.equal(T.windowAt(rec,Date.parse('2026-09-19T05:30Z')).open,true));
+check('Saturday evening excluded',()=>assert.equal(T.windowAt(rec,Date.parse('2026-09-20T03:00Z')).open,false));
+check('wind-down distinct from pause',()=>assert.equal(T.windowAt(rec,Date.parse('2026-09-19T05:55Z')).phase,'winding_down'));
+check('pause boundary exclusive',()=>assert.equal(T.windowAt(rec,Date.parse('2026-09-19T06:00Z')).open,false));
+check('positive fixed offset is not an IANA name',()=>assert.equal(at('+03:00','2027-05-10','22:00').error,'invalid_timezone'));
+check('negative fixed offset is not an IANA name',()=>assert.equal(at('-05:00','2027-05-10','22:00').error,'invalid_timezone'));
+check('missing timezone does not silently use host default',()=>assert.equal(at(undefined,'2027-05-10','22:00').error,'invalid_timezone'));
+check('empty timezone refuses',()=>assert.equal(at('','2027-05-10','22:00').error,'invalid_timezone'));
+check('named Etc timezone remains valid',()=>assert.equal(at('Etc/GMT+3','2027-05-10','22:00').ok,true));
+console.log(JSON.stringify({status:'pass',checks:count}));

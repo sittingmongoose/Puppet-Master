@@ -977,7 +977,7 @@
     var base=ATTENTION[k]; if(!base) return null;
     return { schema:'pm.assistant_plan.execution_attention_projection.v1',
              plan_run_id:r.approved?.plan_run_id||null,
-             condition_kind:k, line:base.line, tone:base.tone,
+             condition_kind:k, line:k==='window'&&r.attention.reason?.startsWith('Wind-down')?'Paused at window wind-down':base.line, tone:base.tone,
              reason:r.attention.reason,
              allowed_action_ids:list(r.attention.actions),
              attempt:r.attention.attempt||null,
@@ -1421,7 +1421,7 @@
     if(r.status!=='building'){ stopRun(r); return; }
     var a=todoApi(), moved=null;
     const gate=r.workRef?inspectGoalPlan(r.plan_id):null;
-    if(gate&&!gate.eligible&&!gate.complete){r.attention=workOwners.get(r.workRef.kind)?.attention?.(r.workRef.ref,r)||{kind:gate.waitKind==='quota'?'quota_wait':'attention',reason:gate.reason||'Execution is not eligible',actions:['details','cancel']};const run=P().runs[r.approved?.plan_run_id];if(run)run.state=r.attention.kind==='quota_wait'?'waiting_quota':r.attention.kind==='window_wait'?'waiting_window':'blocked';stopRun(r);ctx.renderApp();return;}
+    if(gate&&!gate.eligible&&!gate.complete){r.attention=workOwners.get(r.workRef.kind)?.attention?.(r.workRef.ref,r)||{kind:gate.waitKind==='quota'?'quota_wait':gate.waitKind==='window'?'window':'attention',reason:gate.reason||'Execution is not eligible',actions:['details','cancel']};const run=P().runs[r.approved?.plan_run_id];if(run)run.state=r.attention.kind==='quota_wait'?'waiting_quota':r.attention.kind==='window'?'waiting_window':'blocked';stopRun(r);ctx.renderApp();return;}
 
     if(r.workRef&&!r.goalBinding&&inspectGoalPlan(r.plan_id).complete){finalizeGoalRun(r.plan_id);ctx.renderApp();return;}
     if(r.workRef){moved=workOwners.get(r.workRef.kind)?.advance(r.workRef.ref,r);if(moved?.ok===false){const supplied=workOwners.get(r.workRef.kind)?.attention?.(r.workRef.ref,r);r.attention=supplied||{kind:'attention',reason:moved.error,actions:['details','cancel']};const run=P().runs[r.approved?.plan_run_id];if(run)run.state=r.attention.kind==='failed'?'failed':'blocked';stopRun(r);ctx.renderApp();return;}}
@@ -2438,6 +2438,7 @@
     const c=EXT.ctx(),model=(D.models||[]).find(m=>m.id===run.route.modelId);
     if(c.state.permissions!==run.permissions||!model||model.status!=='ready'||model.accountId!==run.route.accountId)return fail('Permission or provider route changed');
     if(RT.quota?.waiting)return fail('Waiting for Usage','quota');
+    const windowGate=window.PM56_SCHED?.workEligibility?.(id);if(windowGate&&!windowGate.ok)return fail(windowGate.detail||windowGate.error,'window');
     if(r.attention)return fail(r.attention.reason);
     if(!r.workRef||!workOwners.has(r.workRef.kind))return fail('No actual execution adapter is attached to this Plan in the local concept.');
     const work=workOwners.get(r.workRef.kind).inspect(r.workRef.ref,r),todos=todoApi().outcomeSummary(r.thread_id,run.required_todo_ids);
@@ -2544,6 +2545,18 @@
     grillExtension:function(){ return QGRILL; },
     embeds:function(id){ var r=rec(id); return r?body(r).filter(function(b){return b.t==='plan_embed';}):null; },
     openDetails:openPlanEditor,
+    // Window state is decided by Scheduling; Plan owns safe pause/resume.
+    pauseForWindow:function(id,binding,reason,kind='window'){
+      const r=rec(id);if(!r||r.status!=='building'||r.approved?.plan_run_id!==binding.plan_run_id||r.version!==binding.version||hashOf(body(r))!==binding.hash)return {ok:false,error:'stale_window_binding'};
+      if(r.attention&&!['window','quota_wait'].includes(r.attention.kind))return {ok:false,error:'owner_attention_blocks_window_pause'};
+      window.PM56_PLANS.boundPause(id);r.attention={kind,reason,actions:['details','cancel']};const run=P().runs[binding.plan_run_id];run.state=kind==='quota_wait'?'waiting_quota':'waiting_window';
+      return {ok:true,paused:true,run_epoch:r.runEpoch};
+    },
+    resumeFromWindow:function(id,binding){
+      const r=rec(id);if(!r||r.status!=='building'||r.approved?.plan_run_id!==binding.plan_run_id||r.version!==binding.version||hashOf(body(r))!==binding.hash||!['window','quota_wait'].includes(r.attention?.kind))return {ok:false,error:'stale_window_binding'};
+      const gate=window.PM56_SCHED.workEligibility(id);if(!gate.ok)return gate;if(RT.quota?.waiting)return {ok:false,error:'quota_unavailable'};
+      const out=window.PM56_PLANS.boundResume(id);return {...out,ok:!!out?.resumed};
+    },
     /* PGOAL-007/008: goals.js drives these; the Plan owner applies them. */
     boundPause:function(planId){
       var r=rec(planId); if(!r||r.status!=='building') return null;

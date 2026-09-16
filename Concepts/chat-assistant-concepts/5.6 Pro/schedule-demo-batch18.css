@@ -1,0 +1,27 @@
+/* Batch18 uses the shared theme, cards, controls and protected motion. */
+.b18-guide{margin:8px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:12px;min-width:0}
+.b18-guide-title{display:flex;flex-wrap:wrap;align-items:center;gap:5px 14px;justify-content:space-between}
+.b18-guide-title small,.b18-guide p{color:var(--text-muted);line-height:1.5}
+.b18-guide p{margin:7px 0}.b18-clock summary{cursor:pointer;font-weight:600;padding:5px 0}
+.b18-controls{display:flex;flex-wrap:wrap;gap:7px;padding-top:7px}.b18-controls button{font-size:11px;min-height:30px;white-space:normal}
+.b18-clock-state{flex-basis:100%;display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;color:var(--text-muted)}
+.b18-decision{padding-top:5px;overflow-wrap:anywhere}.b18-result{border:1px solid var(--line);border-radius:12px;padding:16px;line-height:1.5}.b18-result>strong{font-size:22px}
+.sched-card-route{font-size:11px;color:var(--text-muted);overflow-wrap:anywhere}
+.sched-card-sent,.sched-card-canceled,.sched-card-expired,.sched-card-failed{background:transparent;box-shadow:none}
+.sched-card-sent .sched-card-head,.sched-card-canceled .sched-card-head,.sched-card-expired .sched-card-head{opacity:.85}
+.sched-tabs{flex-wrap:wrap}.sched-tab{white-space:normal;min-width:0;flex:1 1 40%;text-align:left}
+.b18-filter-row{display:flex;gap:8px;align-items:center;padding:10px 16px}.b18-filter-row input{flex:1;min-width:0}.b18-filter-row select{max-width:140px}
+.b18-filter-row input,.b18-filter-row select{font:inherit;font-size:12px;color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:7px 9px}
+@media(max-width:800px){.b18-guide{padding:9px 11px}.b18-guide-title{display:block}.b18-guide-title small{display:block;margin-top:4px}.sched-tabs .sched-tab{font-size:11px}.b18-filter-row{padding:8px 12px}}
+.b18-manager-filter{display:grid;grid-template-columns:minmax(140px,1fr) minmax(120px,.7fr) minmax(120px,.7fr);gap:12px;padding:12px 20px;border-bottom:1px solid var(--line)}
+.b18-manager-filter label{display:flex;flex-direction:column;gap:6px;font-size:11px;color:var(--muted);min-width:0}
+.b18-manager-filter input,.b18-manager-filter select{width:100%;min-width:0;font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--text)}
+.b18-time-resolution{font-size:11px;color:var(--muted);line-height:1.5;overflow-wrap:anywhere}
+.sched-dialog--manage .sched-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:10px 16px}
+.sched-dialog--manage .sched-tab{white-space:normal;text-align:left;min-height:32px}
+.b18-guide small{white-space:normal}
+@media(max-width:760px){.b18-manager-filter{grid-template-columns:1fr 1fr;padding:10px 16px}.b18-manager-filter label:first-child{grid-column:1/-1}}
+.composer:has(.b18-guide) .b17-guide{display:none}
+.b18-guide{--text-muted:var(--muted);--surface:var(--panel)}
+.b18-guide details[open] .b18-controls{max-height:180px;overflow:auto;padding-bottom:5px}
+.schedule-item-copy span,.plan-schedule-line small,.sched-card-time{overflow-wrap:anywhere;white-space:normal}

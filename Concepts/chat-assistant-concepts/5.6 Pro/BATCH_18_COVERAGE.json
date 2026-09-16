@@ -1,0 +1,826 @@
+{
+  "schema": "pm.batch18.bounded_coverage.v1",
+  "batch": 18,
+  "pinned_main": "f9effd40420e496647a3af6cb2902de1ea08b9d7",
+  "html_sha256": "4608b63a85ac39dd4ad339848ba885e2281c1241f99be02a936d824fb93ba47a",
+  "original_historical_full_wording_available": false,
+  "scope_count": 47,
+  "formal_audit": false,
+  "user_accepted": false,
+  "rows": [
+    {
+      "requirement_id": "v2:SCHED-001",
+      "group": "scheduling-baseline",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#Scheduling_and_Quota_Resume sections 1,3,4,5",
+      "handler_cases": [
+        "window_first_admission_calendar",
+        "window_inflight_winddown",
+        "window_manual_stop_wins",
+        "window_quota_and_window_conjunction",
+        "future_delivery_and_replay"
+      ],
+      "ordinary_control_evidence": "messages-* and windows-* plus time.cjs",
+      "disposition": "partial_bounded_integration",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Existing scheduling baseline extended, no server timers, restart or full original clause closure."
+    },
+    {
+      "requirement_id": "v2:SCHED-002",
+      "group": "scheduling-baseline",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#Scheduling_and_Quota_Resume sections 1,3,4,5",
+      "handler_cases": [
+        "window_first_admission_calendar",
+        "window_inflight_winddown",
+        "window_manual_stop_wins",
+        "window_quota_and_window_conjunction",
+        "future_delivery_and_replay"
+      ],
+      "ordinary_control_evidence": "messages-* and windows-* plus time.cjs",
+      "disposition": "partial_bounded_integration",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Existing scheduling baseline extended, no server timers, restart or full original clause closure."
+    },
+    {
+      "requirement_id": "v2:SCHED-003",
+      "group": "scheduling-baseline",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#Scheduling_and_Quota_Resume sections 1,3,4,5",
+      "handler_cases": [
+        "window_first_admission_calendar",
+        "window_inflight_winddown",
+        "window_manual_stop_wins",
+        "window_quota_and_window_conjunction",
+        "future_delivery_and_replay"
+      ],
+      "ordinary_control_evidence": "messages-* and windows-* plus time.cjs",
+      "disposition": "partial_bounded_integration",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Existing scheduling baseline extended, no server timers, restart or full original clause closure."
+    },
+    {
+      "requirement_id": "v2:SCHED-004",
+      "group": "scheduling-baseline",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#Scheduling_and_Quota_Resume sections 1,3,4,5",
+      "handler_cases": [
+        "window_first_admission_calendar",
+        "window_inflight_winddown",
+        "window_manual_stop_wins",
+        "window_quota_and_window_conjunction",
+        "future_delivery_and_replay"
+      ],
+      "ordinary_control_evidence": "messages-* and windows-* plus time.cjs",
+      "disposition": "partial_bounded_integration",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Existing scheduling baseline extended, no server timers, restart or full original clause closure."
+    },
+    {
+      "requirement_id": "v2:SCHED-005",
+      "group": "scheduling-baseline",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#Scheduling_and_Quota_Resume sections 1,3,4,5",
+      "handler_cases": [
+        "window_first_admission_calendar",
+        "window_inflight_winddown",
+        "window_manual_stop_wins",
+        "window_quota_and_window_conjunction",
+        "future_delivery_and_replay"
+      ],
+      "ordinary_control_evidence": "messages-* and windows-* plus time.cjs",
+      "disposition": "partial_bounded_integration",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Existing scheduling baseline extended, no server timers, restart or full original clause closure."
+    },
+    {
+      "requirement_id": "v2:SCHED-006",
+      "group": "scheduling-baseline",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#Scheduling_and_Quota_Resume sections 1,3,4,5",
+      "handler_cases": [
+        "window_first_admission_calendar",
+        "window_inflight_winddown",
+        "window_manual_stop_wins",
+        "window_quota_and_window_conjunction",
+        "future_delivery_and_replay"
+      ],
+      "ordinary_control_evidence": "messages-* and windows-* plus time.cjs",
+      "disposition": "partial_bounded_integration",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Existing scheduling baseline extended, no server timers, restart or full original clause closure."
+    },
+    {
+      "requirement_id": "v2:SCHED-007",
+      "group": "scheduling-baseline",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#Scheduling_and_Quota_Resume sections 1,3,4,5",
+      "handler_cases": [
+        "window_first_admission_calendar",
+        "window_inflight_winddown",
+        "window_manual_stop_wins",
+        "window_quota_and_window_conjunction",
+        "future_delivery_and_replay"
+      ],
+      "ordinary_control_evidence": "messages-* and windows-* plus time.cjs",
+      "disposition": "partial_bounded_integration",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Existing scheduling baseline extended, no server timers, restart or full original clause closure."
+    },
+    {
+      "requirement_id": "v2:SCHED-008",
+      "group": "scheduling-baseline",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#Scheduling_and_Quota_Resume sections 1,3,4,5",
+      "handler_cases": [
+        "window_first_admission_calendar",
+        "window_inflight_winddown",
+        "window_manual_stop_wins",
+        "window_quota_and_window_conjunction",
+        "future_delivery_and_replay"
+      ],
+      "ordinary_control_evidence": "messages-* and windows-* plus time.cjs",
+      "disposition": "partial_bounded_integration",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Existing scheduling baseline extended, no server timers, restart or full original clause closure."
+    },
+    {
+      "requirement_id": "v2:SCHED-009",
+      "group": "scheduling-baseline",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#Scheduling_and_Quota_Resume sections 1,3,4,5",
+      "handler_cases": [
+        "window_first_admission_calendar",
+        "window_inflight_winddown",
+        "window_manual_stop_wins",
+        "window_quota_and_window_conjunction",
+        "future_delivery_and_replay"
+      ],
+      "ordinary_control_evidence": "messages-* and windows-* plus time.cjs",
+      "disposition": "partial_bounded_integration",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Existing scheduling baseline extended, no server timers, restart or full original clause closure."
+    },
+    {
+      "requirement_id": "v2:SCHED-010",
+      "group": "scheduling-baseline",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#Scheduling_and_Quota_Resume sections 1,3,4,5",
+      "handler_cases": [
+        "window_first_admission_calendar",
+        "window_inflight_winddown",
+        "window_manual_stop_wins",
+        "window_quota_and_window_conjunction",
+        "future_delivery_and_replay"
+      ],
+      "ordinary_control_evidence": "messages-* and windows-* plus time.cjs",
+      "disposition": "partial_bounded_integration",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Existing scheduling baseline extended, no server timers, restart or full original clause closure."
+    },
+    {
+      "requirement_id": "v2:SCHED-011",
+      "group": "scheduling-baseline",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#Scheduling_and_Quota_Resume sections 1,3,4,5",
+      "handler_cases": [
+        "window_first_admission_calendar",
+        "window_inflight_winddown",
+        "window_manual_stop_wins",
+        "window_quota_and_window_conjunction",
+        "future_delivery_and_replay"
+      ],
+      "ordinary_control_evidence": "messages-* and windows-* plus time.cjs",
+      "disposition": "partial_bounded_integration",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Existing scheduling baseline extended, no server timers, restart or full original clause closure."
+    },
+    {
+      "requirement_id": "v2:SCHED-012",
+      "group": "scheduling-baseline",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#Scheduling_and_Quota_Resume sections 1,3,4,5",
+      "handler_cases": [
+        "window_first_admission_calendar",
+        "window_inflight_winddown",
+        "window_manual_stop_wins",
+        "window_quota_and_window_conjunction",
+        "future_delivery_and_replay"
+      ],
+      "ordinary_control_evidence": "messages-* and windows-* plus time.cjs",
+      "disposition": "partial_bounded_integration",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Existing scheduling baseline extended, no server timers, restart or full original clause closure."
+    },
+    {
+      "requirement_id": "v3:APR-019",
+      "group": "manager-atomicity",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SQR-009..010",
+      "handler_cases": [
+        "stale_edit_and_cancel",
+        "window_stale_edit_and_cancel"
+      ],
+      "ordinary_control_evidence": "messages-* and windows-*",
+      "disposition": "partial_concept_surface",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Message and window filters implemented; Events & Automation explicitly no native service."
+    },
+    {
+      "requirement_id": "v3:APR-027",
+      "group": "manager-atomicity",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SQR-009..010",
+      "handler_cases": [
+        "stale_edit_and_cancel",
+        "window_stale_edit_and_cancel"
+      ],
+      "ordinary_control_evidence": "messages-* and windows-*",
+      "disposition": "partial_concept_surface",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Message and window filters implemented; Events & Automation explicitly no native service."
+    },
+    {
+      "requirement_id": "v4:SMSG-001",
+      "group": "message-surfaces",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-001..003",
+      "handler_cases": [
+        "exact_text_and_composer_commit",
+        "future_delivery_and_replay"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "demonstrated_session_local",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "No durable creation/history proof."
+    },
+    {
+      "requirement_id": "v4:SMSG-002",
+      "group": "message-surfaces",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-001..003",
+      "handler_cases": [
+        "exact_text_and_composer_commit",
+        "future_delivery_and_replay"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "demonstrated_session_local",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "No durable creation/history proof."
+    },
+    {
+      "requirement_id": "v4:SMSG-003",
+      "group": "message-surfaces",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-001..003",
+      "handler_cases": [
+        "exact_text_and_composer_commit",
+        "future_delivery_and_replay"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "demonstrated_session_local",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "No durable creation/history proof."
+    },
+    {
+      "requirement_id": "v4:SMSG-004",
+      "group": "message-atomicity",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-004..006",
+      "handler_cases": [
+        "composer_changed_during_modal",
+        "failed_retention_rolls_back",
+        "stale_edit_and_cancel",
+        "failed_delivery_retains_attempt",
+        "changed_route_during_publication_rolls_back"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "demonstrated_session_local",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "No native storage transaction or restart."
+    },
+    {
+      "requirement_id": "v4:SMSG-005",
+      "group": "message-atomicity",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-004..006",
+      "handler_cases": [
+        "composer_changed_during_modal",
+        "failed_retention_rolls_back",
+        "stale_edit_and_cancel",
+        "failed_delivery_retains_attempt",
+        "changed_route_during_publication_rolls_back"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "demonstrated_session_local",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "No native storage transaction or restart."
+    },
+    {
+      "requirement_id": "v4:SMSG-006",
+      "group": "message-atomicity",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-004..006",
+      "handler_cases": [
+        "composer_changed_during_modal",
+        "failed_retention_rolls_back",
+        "stale_edit_and_cancel",
+        "failed_delivery_retains_attempt",
+        "changed_route_during_publication_rolls_back"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "demonstrated_session_local",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "No native storage transaction or restart."
+    },
+    {
+      "requirement_id": "v4:SMSG-007",
+      "group": "message-snapshots",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-007..011",
+      "handler_cases": [
+        "exact_artifact_version",
+        "unavailable_attachment_holds",
+        "unknown_destination_preserves_source",
+        "live_browser_context_refuses",
+        "explicit_route_unavailable"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "partial_capability_gated",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Immutable artifact V1 exercised. General file/folder snapshot provisioning and collaborative delivery adapters unavailable; live browser refs refuse."
+    },
+    {
+      "requirement_id": "v4:SMSG-008",
+      "group": "message-snapshots",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-007..011",
+      "handler_cases": [
+        "exact_artifact_version",
+        "unavailable_attachment_holds",
+        "unknown_destination_preserves_source",
+        "live_browser_context_refuses",
+        "explicit_route_unavailable"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "partial_capability_gated",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Immutable artifact V1 exercised. General file/folder snapshot provisioning and collaborative delivery adapters unavailable; live browser refs refuse."
+    },
+    {
+      "requirement_id": "v4:SMSG-009",
+      "group": "message-snapshots",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-007..011",
+      "handler_cases": [
+        "exact_artifact_version",
+        "unavailable_attachment_holds",
+        "unknown_destination_preserves_source",
+        "live_browser_context_refuses",
+        "explicit_route_unavailable"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "partial_capability_gated",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Immutable artifact V1 exercised. General file/folder snapshot provisioning and collaborative delivery adapters unavailable; live browser refs refuse."
+    },
+    {
+      "requirement_id": "v4:SMSG-010",
+      "group": "message-snapshots",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-007..011",
+      "handler_cases": [
+        "exact_artifact_version",
+        "unavailable_attachment_holds",
+        "unknown_destination_preserves_source",
+        "live_browser_context_refuses",
+        "explicit_route_unavailable"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "partial_capability_gated",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Immutable artifact V1 exercised. General file/folder snapshot provisioning and collaborative delivery adapters unavailable; live browser refs refuse."
+    },
+    {
+      "requirement_id": "v4:SMSG-011",
+      "group": "message-snapshots",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-007..011",
+      "handler_cases": [
+        "exact_artifact_version",
+        "unavailable_attachment_holds",
+        "unknown_destination_preserves_source",
+        "live_browser_context_refuses",
+        "explicit_route_unavailable"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "partial_capability_gated",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Immutable artifact V1 exercised. General file/folder snapshot provisioning and collaborative delivery adapters unavailable; live browser refs refuse."
+    },
+    {
+      "requirement_id": "v4:SMSG-012",
+      "group": "message-history",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-012..018",
+      "handler_cases": [
+        "sent_is_immutable",
+        "same_time_same_text_independent",
+        "missed_policy_hold",
+        "missed_policy_expire",
+        "missed_policy_next_available"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "partial_session_history",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Session history and clock evaluation only, no server restart/search durability."
+    },
+    {
+      "requirement_id": "v4:SMSG-013",
+      "group": "message-history",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-012..018",
+      "handler_cases": [
+        "sent_is_immutable",
+        "same_time_same_text_independent",
+        "missed_policy_hold",
+        "missed_policy_expire",
+        "missed_policy_next_available"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "partial_session_history",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Session history and clock evaluation only, no server restart/search durability."
+    },
+    {
+      "requirement_id": "v4:SMSG-014",
+      "group": "message-history",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-012..018",
+      "handler_cases": [
+        "sent_is_immutable",
+        "same_time_same_text_independent",
+        "missed_policy_hold",
+        "missed_policy_expire",
+        "missed_policy_next_available"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "partial_session_history",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Session history and clock evaluation only, no server restart/search durability."
+    },
+    {
+      "requirement_id": "v4:SMSG-015",
+      "group": "message-history",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-012..018",
+      "handler_cases": [
+        "sent_is_immutable",
+        "same_time_same_text_independent",
+        "missed_policy_hold",
+        "missed_policy_expire",
+        "missed_policy_next_available"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "partial_session_history",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Session history and clock evaluation only, no server restart/search durability."
+    },
+    {
+      "requirement_id": "v4:SMSG-016",
+      "group": "message-history",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-012..018",
+      "handler_cases": [
+        "sent_is_immutable",
+        "same_time_same_text_independent",
+        "missed_policy_hold",
+        "missed_policy_expire",
+        "missed_policy_next_available"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "partial_session_history",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Session history and clock evaluation only, no server restart/search durability."
+    },
+    {
+      "requirement_id": "v4:SMSG-017",
+      "group": "message-history",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-012..018",
+      "handler_cases": [
+        "sent_is_immutable",
+        "same_time_same_text_independent",
+        "missed_policy_hold",
+        "missed_policy_expire",
+        "missed_policy_next_available"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "partial_session_history",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Session history and clock evaluation only, no server restart/search durability."
+    },
+    {
+      "requirement_id": "v4:SMSG-018",
+      "group": "message-history",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SMSG-012..018",
+      "handler_cases": [
+        "sent_is_immutable",
+        "same_time_same_text_independent",
+        "missed_policy_hold",
+        "missed_policy_expire",
+        "missed_policy_next_available"
+      ],
+      "ordinary_control_evidence": "messages-*",
+      "disposition": "partial_session_history",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Session history and clock evaluation only, no server restart/search durability."
+    },
+    {
+      "requirement_id": "v3:APR-043",
+      "group": "manager-atomicity",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#SQR-009..010",
+      "handler_cases": [
+        "stale_edit_and_cancel",
+        "window_stale_edit_and_cancel"
+      ],
+      "ordinary_control_evidence": "messages-* and windows-*",
+      "disposition": "partial_concept_surface",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Message and window filters implemented; Events & Automation explicitly no native service."
+    },
+    {
+      "requirement_id": "v4:PSCHED-001",
+      "group": "frozen-topology",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#PSCHED-001..003, PSCHED-013",
+      "handler_cases": [
+        "window_goal_created_only_at_dispatch",
+        "window_topology_mismatch_refuses",
+        "window_unknown_crew_owner_refuses"
+      ],
+      "ordinary_control_evidence": "windows-*",
+      "disposition": "partial_owner_unavailable",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Agent/Goal admission exercised. Atomic scheduled Crew adapter missing and correctly refused, not implemented."
+    },
+    {
+      "requirement_id": "v4:PSCHED-002",
+      "group": "frozen-topology",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#PSCHED-001..003, PSCHED-013",
+      "handler_cases": [
+        "window_goal_created_only_at_dispatch",
+        "window_topology_mismatch_refuses",
+        "window_unknown_crew_owner_refuses"
+      ],
+      "ordinary_control_evidence": "windows-*",
+      "disposition": "partial_owner_unavailable",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Agent/Goal admission exercised. Atomic scheduled Crew adapter missing and correctly refused, not implemented."
+    },
+    {
+      "requirement_id": "v4:PSCHED-003",
+      "group": "frozen-topology",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#PSCHED-001..003, PSCHED-013",
+      "handler_cases": [
+        "window_goal_created_only_at_dispatch",
+        "window_topology_mismatch_refuses",
+        "window_unknown_crew_owner_refuses"
+      ],
+      "ordinary_control_evidence": "windows-*",
+      "disposition": "partial_owner_unavailable",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Agent/Goal admission exercised. Atomic scheduled Crew adapter missing and correctly refused, not implemented."
+    },
+    {
+      "requirement_id": "v4:PSCHED-004",
+      "group": "eligibility",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#PSCHED-004, PSCHED-007..008",
+      "handler_cases": [
+        "window_route_and_scope_revalidation",
+        "window_quota_and_window_conjunction",
+        "window_manual_stop_wins"
+      ],
+      "ordinary_control_evidence": "windows-*",
+      "disposition": "demonstrated_session_local",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "No real provider quota/timer or native permissions proof."
+    },
+    {
+      "requirement_id": "v4:PSCHED-005",
+      "group": "window-mutation-recurrence",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#PSCHED-005..006, PSCHED-009..012, PSCHED-014",
+      "handler_cases": [
+        "window_stale_edit_and_cancel",
+        "window_create_and_dispatch_idempotency",
+        "window_pause_resume_same_run",
+        "window_cancel_does_not_stop_run",
+        "window_invalid_command_payload_is_atomic"
+      ],
+      "ordinary_control_evidence": "windows-*",
+      "disposition": "demonstrated_session_local",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "One bounded local calculation; no durable server timer/restart or arbitrary side-effect recovery."
+    },
+    {
+      "requirement_id": "v4:PSCHED-006",
+      "group": "window-mutation-recurrence",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#PSCHED-005..006, PSCHED-009..012, PSCHED-014",
+      "handler_cases": [
+        "window_stale_edit_and_cancel",
+        "window_create_and_dispatch_idempotency",
+        "window_pause_resume_same_run",
+        "window_cancel_does_not_stop_run",
+        "window_invalid_command_payload_is_atomic"
+      ],
+      "ordinary_control_evidence": "windows-*",
+      "disposition": "demonstrated_session_local",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "One bounded local calculation; no durable server timer/restart or arbitrary side-effect recovery."
+    },
+    {
+      "requirement_id": "v4:PSCHED-007",
+      "group": "eligibility",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#PSCHED-004, PSCHED-007..008",
+      "handler_cases": [
+        "window_route_and_scope_revalidation",
+        "window_quota_and_window_conjunction",
+        "window_manual_stop_wins"
+      ],
+      "ordinary_control_evidence": "windows-*",
+      "disposition": "demonstrated_session_local",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "No real provider quota/timer or native permissions proof."
+    },
+    {
+      "requirement_id": "v4:PSCHED-008",
+      "group": "eligibility",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#PSCHED-004, PSCHED-007..008",
+      "handler_cases": [
+        "window_route_and_scope_revalidation",
+        "window_quota_and_window_conjunction",
+        "window_manual_stop_wins"
+      ],
+      "ordinary_control_evidence": "windows-*",
+      "disposition": "demonstrated_session_local",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "No real provider quota/timer or native permissions proof."
+    },
+    {
+      "requirement_id": "v4:PSCHED-009",
+      "group": "window-mutation-recurrence",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#PSCHED-005..006, PSCHED-009..012, PSCHED-014",
+      "handler_cases": [
+        "window_stale_edit_and_cancel",
+        "window_create_and_dispatch_idempotency",
+        "window_pause_resume_same_run",
+        "window_cancel_does_not_stop_run",
+        "window_invalid_command_payload_is_atomic"
+      ],
+      "ordinary_control_evidence": "windows-*",
+      "disposition": "demonstrated_session_local",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "One bounded local calculation; no durable server timer/restart or arbitrary side-effect recovery."
+    },
+    {
+      "requirement_id": "v4:PSCHED-010",
+      "group": "window-mutation-recurrence",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#PSCHED-005..006, PSCHED-009..012, PSCHED-014",
+      "handler_cases": [
+        "window_stale_edit_and_cancel",
+        "window_create_and_dispatch_idempotency",
+        "window_pause_resume_same_run",
+        "window_cancel_does_not_stop_run",
+        "window_invalid_command_payload_is_atomic"
+      ],
+      "ordinary_control_evidence": "windows-*",
+      "disposition": "demonstrated_session_local",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "One bounded local calculation; no durable server timer/restart or arbitrary side-effect recovery."
+    },
+    {
+      "requirement_id": "v4:PSCHED-011",
+      "group": "window-mutation-recurrence",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#PSCHED-005..006, PSCHED-009..012, PSCHED-014",
+      "handler_cases": [
+        "window_stale_edit_and_cancel",
+        "window_create_and_dispatch_idempotency",
+        "window_pause_resume_same_run",
+        "window_cancel_does_not_stop_run",
+        "window_invalid_command_payload_is_atomic"
+      ],
+      "ordinary_control_evidence": "windows-*",
+      "disposition": "demonstrated_session_local",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "One bounded local calculation; no durable server timer/restart or arbitrary side-effect recovery."
+    },
+    {
+      "requirement_id": "v4:PSCHED-012",
+      "group": "window-mutation-recurrence",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#PSCHED-005..006, PSCHED-009..012, PSCHED-014",
+      "handler_cases": [
+        "window_stale_edit_and_cancel",
+        "window_create_and_dispatch_idempotency",
+        "window_pause_resume_same_run",
+        "window_cancel_does_not_stop_run",
+        "window_invalid_command_payload_is_atomic"
+      ],
+      "ordinary_control_evidence": "windows-*",
+      "disposition": "demonstrated_session_local",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "One bounded local calculation; no durable server timer/restart or arbitrary side-effect recovery."
+    },
+    {
+      "requirement_id": "v4:PSCHED-013",
+      "group": "frozen-topology",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#PSCHED-001..003, PSCHED-013",
+      "handler_cases": [
+        "window_goal_created_only_at_dispatch",
+        "window_topology_mismatch_refuses",
+        "window_unknown_crew_owner_refuses"
+      ],
+      "ordinary_control_evidence": "windows-*",
+      "disposition": "partial_owner_unavailable",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "Agent/Goal admission exercised. Atomic scheduled Crew adapter missing and correctly refused, not implemented."
+    },
+    {
+      "requirement_id": "v4:PSCHED-014",
+      "group": "window-mutation-recurrence",
+      "wording_basis": "Grouped current owner, not an invented per-ID historical quotation",
+      "owner_ref": "Plans/Scheduling_and_Quota_Resume.md#PSCHED-005..006, PSCHED-009..012, PSCHED-014",
+      "handler_cases": [
+        "window_stale_edit_and_cancel",
+        "window_create_and_dispatch_idempotency",
+        "window_pause_resume_same_run",
+        "window_cancel_does_not_stop_run",
+        "window_invalid_command_payload_is_atomic"
+      ],
+      "ordinary_control_evidence": "windows-*",
+      "disposition": "demonstrated_session_local",
+      "full_original_clause_closed": false,
+      "native_verified": false,
+      "limitations": "One bounded local calculation; no durable server timer/restart or arbitrary side-effect recovery."
+    }
+  ]
+}

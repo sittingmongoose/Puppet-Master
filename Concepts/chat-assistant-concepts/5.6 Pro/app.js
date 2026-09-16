@@ -2960,7 +2960,11 @@ recommended path                  migration 0043 + rollback</div></div></section
      so a sent message landed 2787px below the fold and stayed there --
      inView:false for 3s and elementFromPoint over its box returning null. */
   function scrollTranscriptToEnd(instant=false){ scrollToEnd('transcript',instant); }
-  function appendMessage(msg,thread=activeThread()){thread.messages.push(msg);thread.updated='now';renderApp();scrollTranscriptToEnd();}
+  function appendMessage(msg,thread=activeThread()){
+    const TX=window.PM56_TX;
+    if(TX?.isActive()){TX.append(thread,'messages',msg);TX.set(thread,'updated','now');TX.defer(()=>{renderApp();scrollTranscriptToEnd();});return msg;}
+    thread.messages.push(msg);thread.updated='now';renderApp();scrollTranscriptToEnd();return msg;
+  }
 
   function startWorking(reset=false,rec=state.work){
     if(reset||rec.completed){
