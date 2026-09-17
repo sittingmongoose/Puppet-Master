@@ -6,7 +6,7 @@
         "False": 32,
         "True": 36
       },
-      "heading_count": 121,
+      "heading_count": 122,
       "implementation_surfaces": [
         "Plans/.audits/_semantic_closure_registry.jsonl",
         "Plans/.audits/audit-*/audit_scope_manifest.jsonl",
@@ -74,7 +74,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 5974,
+      "line_count": 5988,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "e906d41d81be22e83ff389e494884e8250668eac7f12dbe0789d8f66ebbd1e11",
+      "sha256": "f64fadcc2548f34619f1bbbf06c476b9a21967fa29110062077e316591172d36",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -6193,6 +6193,77 @@
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
         "zero-usage aborted turn is not model replay content."
+      ]
+    },
+    {
+      "all_planunits_have_gui_related": true,
+      "gui_related_counts": {
+        "False": 13,
+        "True": 1
+      },
+      "heading_count": 34,
+      "implementation_surfaces": [
+        "Plans/Decision_Log.md",
+        "Plans/External_Research.md",
+        "Plans/Planning_Ledger_System.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/Settings_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/external_research_contracts.schema.json",
+        "Plans/usage-feature.md"
+      ],
+      "line_count": 790,
+      "path": "Plans/External_Research.md",
+      "plan_unit_count": 14,
+      "plan_unit_ids": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "reasoning_tiers": [
+        "high",
+        "medium"
+      ],
+      "risk_classes": [
+        "adjudication_untruthfulness",
+        "budget_accounting_defect",
+        "decision_review_flow_drift",
+        "finding_classification_drift",
+        "latency_target_drift",
+        "limit_misreporting",
+        "owner_drift",
+        "process_drift",
+        "provenance_defect",
+        "research_input_leakage",
+        "review_configuration_drift",
+        "unapproved_scope_expansion",
+        "unreviewed_canon_change"
+      ],
+      "sha256": "0efc0400c5f9ff17112c8c0345e26d4fe4b22895f8c62b4debfc0bb727973f4c",
+      "source_preserving_unit_ids": [],
+      "status_counts": {
+        "accepted": 14
+      },
+      "title": "External Research",
+      "unit_type_counts": {
+        "requirement": 14
+      },
+      "validation_surfaces": [
+        "python3 scripts/pm-bootstrap-ledger-validate.py",
+        "python3 scripts/pm-new-contracts-verify.py",
+        "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
       ]
     },
     {
@@ -19635,21 +19706,21 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-17T11:20:25Z",
+  "generated_at_utc": "2026-09-17T11:48:58Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
-    "doc_count": 95,
-    "docs_with_plan_units": 95,
+    "doc_count": 96,
+    "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3479,
-      "True": 3177
+      "False": 3492,
+      "True": 3178
     },
-    "plan_unit_count": 6656,
+    "plan_unit_count": 6670,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6465,
+      "accepted": 6479,
       "retired": 182,
       "superseded": 9
     },
@@ -19716,7 +19787,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5219,
+      "requirement": 5233,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

@@ -3236,6 +3236,7 @@
     "PDS-010",
     "PDS-012",
     "BPM-001",
+    "ERS-001",
     "F3-387",
     "PDS-006",
     "PDS-007",
@@ -3390,6 +3391,7 @@
     "SP-001",
     "BPM-002",
     "BPM-006",
+    "ERS-002",
     "F3-389",
     "PDS-013",
     "PNC-001",
@@ -3532,6 +3534,8 @@
     "PG-061",
     "PG-048",
     "BPM-007",
+    "ERS-003",
+    "ERS-008",
     "0PI-065",
     "0PI-066",
     "ACD-432",
@@ -4163,6 +4167,8 @@
     "OSI-134",
     "OSI-135",
     "PG-049",
+    "ERS-004",
+    "ERS-009",
     "CRAU-090",
     "CV-303",
     "CBP-026",
@@ -4346,6 +4352,9 @@
     "OSI-245",
     "OSI-123",
     "PG-050",
+    "ERS-005",
+    "ERS-006",
+    "ERS-010",
     "CV-304",
     "MI-040",
     "PNC-004",
@@ -4534,6 +4543,9 @@
     "OSI-124",
     "OSI-141",
     "PG-051",
+    "ERS-007",
+    "ERS-011",
+    "ERS-013",
     "F2-194",
     "UCC-105",
     "MI-042",
@@ -4717,6 +4729,8 @@
     "OSI-142",
     "PG-052",
     "PG-053",
+    "ERS-012",
+    "ERS-014",
     "UCC-136",
     "BPM-009",
     "PLS-011",
@@ -24471,6 +24485,121 @@
       "edge_type": "depends_on",
       "from": "EP-121",
       "to": "EP-120"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-001",
+      "to": "DL-036"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-001",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-002",
+      "to": "ERS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-003",
+      "to": "ERS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-004",
+      "to": "ERS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-004",
+      "to": "ERS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-005",
+      "to": "DL-036"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-005",
+      "to": "ERS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-006",
+      "to": "ERS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-007",
+      "to": "ERS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-007",
+      "to": "ERS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-007",
+      "to": "ERS-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-008",
+      "to": "ERS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-009",
+      "to": "ERS-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-010",
+      "to": "ERS-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-011",
+      "to": "ERS-010"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-012",
+      "to": "ERS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-012",
+      "to": "ERS-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-012",
+      "to": "ERS-011"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-013",
+      "to": "ERS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-013",
+      "to": "ERS-010"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-014",
+      "to": "ERS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-014",
+      "to": "ERS-013"
     },
     {
       "edge_type": "depends_on",
@@ -92979,6 +93108,166 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "ERS-001",
+      "to": "ERS-002"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-001",
+      "to": "ERS-003"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-001",
+      "to": "ERS-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-001",
+      "to": "ERS-005"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-001",
+      "to": "ERS-006"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-001",
+      "to": "ERS-007"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-001",
+      "to": "ERS-008"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-001",
+      "to": "ERS-009"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-001",
+      "to": "ERS-010"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-001",
+      "to": "ERS-011"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-001",
+      "to": "ERS-012"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-001",
+      "to": "ERS-013"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-001",
+      "to": "ERS-014"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-002",
+      "to": "ERS-003"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-002",
+      "to": "ERS-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-002",
+      "to": "ERS-012"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-003",
+      "to": "ERS-004"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-003",
+      "to": "ERS-013"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-003",
+      "to": "ERS-014"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-004",
+      "to": "ERS-005"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-004",
+      "to": "ERS-006"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-004",
+      "to": "ERS-007"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-004",
+      "to": "ERS-013"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-005",
+      "to": "ERS-007"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-006",
+      "to": "ERS-007"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-008",
+      "to": "ERS-009"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-009",
+      "to": "ERS-010"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-009",
+      "to": "ERS-012"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-010",
+      "to": "ERS-011"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-010",
+      "to": "ERS-013"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-011",
+      "to": "ERS-012"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ERS-013",
+      "to": "ERS-014"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "F-067",
       "to": "F3-387"
     },
@@ -97518,7 +97807,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-17T11:20:25Z",
+  "generated_at_utc": "2026-09-17T11:48:58Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -97530,8 +97819,8 @@
       "source_location": {
         "heading": "0PI-001 - Plans Index Retired Source-Preserving Bridge",
         "heading_level": 3,
-        "heading_line": 887,
-        "line": 889,
+        "heading_line": 901,
+        "line": 903,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97547,8 +97836,8 @@
       "source_location": {
         "heading": "0PI-002 - Index Authority And Compliance",
         "heading_level": 3,
-        "heading_line": 1002,
-        "line": 1004,
+        "heading_line": 1016,
+        "line": 1018,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97564,8 +97853,8 @@
       "source_location": {
         "heading": "0PI-003 - Change Summary And Index Role",
         "heading_level": 3,
-        "heading_line": 1050,
-        "line": 1052,
+        "heading_line": 1064,
+        "line": 1066,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97581,8 +97870,8 @@
       "source_location": {
         "heading": "0PI-004 - Anti Drift Reading Order",
         "heading_level": 3,
-        "heading_line": 1101,
-        "line": 1103,
+        "heading_line": 1115,
+        "line": 1117,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97598,8 +97887,8 @@
       "source_location": {
         "heading": "0PI-005 - Owner Map Guard And Initial Seams",
         "heading_level": 3,
-        "heading_line": 1156,
-        "line": 1158,
+        "heading_line": 1170,
+        "line": 1172,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97615,8 +97904,8 @@
       "source_location": {
         "heading": "0PI-006 - Owner Map Routing And Stale Consumer Seams",
         "heading_level": 3,
-        "heading_line": 1205,
-        "line": 1207,
+        "heading_line": 1219,
+        "line": 1221,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97632,8 +97921,8 @@
       "source_location": {
         "heading": "0PI-007 - Owner Map Runtime File Storage Seams",
         "heading_level": 3,
-        "heading_line": 1256,
-        "line": 1258,
+        "heading_line": 1270,
+        "line": 1272,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97649,8 +97938,8 @@
       "source_location": {
         "heading": "0PI-008 - Owner Map GUI Widget Usage Final Pass Seams",
         "heading_level": 3,
-        "heading_line": 1307,
-        "line": 1309,
+        "heading_line": 1321,
+        "line": 1323,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97666,8 +97955,8 @@
       "source_location": {
         "heading": "0PI-009 - Rewrite Agent Loop Architecture Baseline",
         "heading_level": 3,
-        "heading_line": 1360,
-        "line": 1362,
+        "heading_line": 1374,
+        "line": 1376,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97683,8 +97972,8 @@
       "source_location": {
         "heading": "0PI-010 - Rewrite UI Auth Account Carry Through",
         "heading_level": 3,
-        "heading_line": 1411,
-        "line": 1413,
+        "heading_line": 1425,
+        "line": 1427,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97700,8 +97989,8 @@
       "source_location": {
         "heading": "0PI-011 - Provider Account Owner Split",
         "heading_level": 3,
-        "heading_line": 1471,
-        "line": 1473,
+        "heading_line": 1485,
+        "line": 1487,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97717,8 +98006,8 @@
       "source_location": {
         "heading": "0PI-012 - PM Planning And Node Readiness Owner Split",
         "heading_level": 3,
-        "heading_line": 1522,
-        "line": 1524,
+        "heading_line": 1536,
+        "line": 1538,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97734,8 +98023,8 @@
       "source_location": {
         "heading": "0PI-013 - Instant Grep Live Canon Map",
         "heading_level": 3,
-        "heading_line": 1574,
-        "line": 1576,
+        "heading_line": 1588,
+        "line": 1590,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97751,8 +98040,8 @@
       "source_location": {
         "heading": "0PI-014 - Instant Grep Owner Split",
         "heading_level": 3,
-        "heading_line": 1623,
-        "line": 1625,
+        "heading_line": 1637,
+        "line": 1639,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97768,8 +98057,8 @@
       "source_location": {
         "heading": "0PI-015 - Browser Owner Split",
         "heading_level": 3,
-        "heading_line": 1672,
-        "line": 1674,
+        "heading_line": 1686,
+        "line": 1688,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97785,8 +98074,8 @@
       "source_location": {
         "heading": "0PI-016 - Browser Stale Cleanup And Consumer Map",
         "heading_level": 3,
-        "heading_line": 1725,
-        "line": 1727,
+        "heading_line": 1739,
+        "line": 1741,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97802,8 +98091,8 @@
       "source_location": {
         "heading": "0PI-017 - Slash Chat SSOT Boundary",
         "heading_level": 3,
-        "heading_line": 1777,
-        "line": 1779,
+        "heading_line": 1791,
+        "line": 1793,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97819,8 +98108,8 @@
       "source_location": {
         "heading": "0PI-018 - Slash Chat Scope And Drift Risks",
         "heading_level": 3,
-        "heading_line": 1828,
-        "line": 1830,
+        "heading_line": 1842,
+        "line": 1844,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97836,8 +98125,8 @@
       "source_location": {
         "heading": "0PI-019 - Artifact HITL Tool Owner Split",
         "heading_level": 3,
-        "heading_line": 1880,
-        "line": 1882,
+        "heading_line": 1894,
+        "line": 1896,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97853,8 +98142,8 @@
       "source_location": {
         "heading": "0PI-020 - Approval Compatibility Boundary",
         "heading_level": 3,
-        "heading_line": 1931,
-        "line": 1933,
+        "heading_line": 1945,
+        "line": 1947,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97870,8 +98159,8 @@
       "source_location": {
         "heading": "0PI-021 - Terminal Ownership Map",
         "heading_level": 3,
-        "heading_line": 1980,
-        "line": 1982,
+        "heading_line": 1994,
+        "line": 1996,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97887,8 +98176,8 @@
       "source_location": {
         "heading": "0PI-022 - File Manager Editor Owner Posture",
         "heading_level": 3,
-        "heading_line": 2033,
-        "line": 2035,
+        "heading_line": 2047,
+        "line": 2049,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97904,8 +98193,8 @@
       "source_location": {
         "heading": "0PI-023 - File Manager Editor Packetization Gates",
         "heading_level": 3,
-        "heading_line": 2083,
-        "line": 2085,
+        "heading_line": 2097,
+        "line": 2099,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97921,8 +98210,8 @@
       "source_location": {
         "heading": "0PI-024 - GUI Worktree And Source Control Handoff",
         "heading_level": 3,
-        "heading_line": 2136,
-        "line": 2138,
+        "heading_line": 2150,
+        "line": 2152,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97938,8 +98227,8 @@
       "source_location": {
         "heading": "0PI-025 - Debug Ownership And Packet Coupling",
         "heading_level": 3,
-        "heading_line": 2189,
-        "line": 2191,
+        "heading_line": 2203,
+        "line": 2205,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97955,8 +98244,8 @@
       "source_location": {
         "heading": "0PI-026 - Plan Map Table Core UX Owners",
         "heading_level": 3,
-        "heading_line": 2243,
-        "line": 2245,
+        "heading_line": 2257,
+        "line": 2259,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97972,8 +98261,8 @@
       "source_location": {
         "heading": "0PI-027 - Plan Map Table Planning Runtime Artifacts",
         "heading_level": 3,
-        "heading_line": 2295,
-        "line": 2297,
+        "heading_line": 2309,
+        "line": 2311,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -97989,8 +98278,8 @@
       "source_location": {
         "heading": "0PI-028 - Plan Map Table Widgets Config Media Wiring",
         "heading_level": 3,
-        "heading_line": 2354,
-        "line": 2356,
+        "heading_line": 2368,
+        "line": 2370,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98006,8 +98295,8 @@
       "source_location": {
         "heading": "0PI-029 - Instant Grep Sparse N Gram Owner Split",
         "heading_level": 3,
-        "heading_line": 2415,
-        "line": 2417,
+        "heading_line": 2429,
+        "line": 2431,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98023,8 +98312,8 @@
       "source_location": {
         "heading": "0PI-030 - Cross-Cutting Backend Duplication Hotspots",
         "heading_level": 3,
-        "heading_line": 2467,
-        "line": 2469,
+        "heading_line": 2481,
+        "line": 2483,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98040,8 +98329,8 @@
       "source_location": {
         "heading": "0PI-031 - Context Lens UI Hotspot",
         "heading_level": 3,
-        "heading_line": 2524,
-        "line": 2526,
+        "heading_line": 2538,
+        "line": 2540,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98057,8 +98346,8 @@
       "source_location": {
         "heading": "0PI-032 - Rewrite-Era Owner Guidance",
         "heading_level": 3,
-        "heading_line": 2573,
-        "line": 2575,
+        "heading_line": 2587,
+        "line": 2589,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98074,8 +98363,8 @@
       "source_location": {
         "heading": "0PI-033 - Shard Governance Boundaries",
         "heading_level": 3,
-        "heading_line": 2624,
-        "line": 2626,
+        "heading_line": 2638,
+        "line": 2640,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98091,8 +98380,8 @@
       "source_location": {
         "heading": "0PI-034 - Shard Index Routing Table",
         "heading_level": 3,
-        "heading_line": 2681,
-        "line": 2683,
+        "heading_line": 2695,
+        "line": 2697,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98108,8 +98397,8 @@
       "source_location": {
         "heading": "0PI-035 - Containers Registry Unraid Owner Scope",
         "heading_level": 3,
-        "heading_line": 2737,
-        "line": 2739,
+        "heading_line": 2751,
+        "line": 2753,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98125,8 +98414,8 @@
       "source_location": {
         "heading": "0PI-036 - Docker Manager Auth UX Routing",
         "heading_level": 3,
-        "heading_line": 2791,
-        "line": 2793,
+        "heading_line": 2805,
+        "line": 2807,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98142,8 +98431,8 @@
       "source_location": {
         "heading": "0PI-037 - Runtime Packet Owner Routing",
         "heading_level": 3,
-        "heading_line": 2841,
-        "line": 2843,
+        "heading_line": 2855,
+        "line": 2857,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98159,8 +98448,8 @@
       "source_location": {
         "heading": "0PI-038 - Runtime Rendering And Blocked UX",
         "heading_level": 3,
-        "heading_line": 2897,
-        "line": 2899,
+        "heading_line": 2911,
+        "line": 2913,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98176,8 +98465,8 @@
       "source_location": {
         "heading": "0PI-039 - Source Control Actions Docker Owner Split",
         "heading_level": 3,
-        "heading_line": 2951,
-        "line": 2953,
+        "heading_line": 2965,
+        "line": 2967,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98193,8 +98482,8 @@
       "source_location": {
         "heading": "0PI-040 - Visible Source-Control Surface Routing",
         "heading_level": 3,
-        "heading_line": 3007,
-        "line": 3009,
+        "heading_line": 3021,
+        "line": 3023,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98210,8 +98499,8 @@
       "source_location": {
         "heading": "0PI-041 - Retired Git Alias And Stale-Canon Risk",
         "heading_level": 3,
-        "heading_line": 3071,
-        "line": 3073,
+        "heading_line": 3085,
+        "line": 3087,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98227,8 +98516,8 @@
       "source_location": {
         "heading": "0PI-042 - Web Firecrawl Owner Set",
         "heading_level": 3,
-        "heading_line": 3126,
-        "line": 3128,
+        "heading_line": 3140,
+        "line": 3142,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98244,8 +98533,8 @@
       "source_location": {
         "heading": "0PI-043 - Firecrawl Consumer Deference And Anchors",
         "heading_level": 3,
-        "heading_line": 3197,
-        "line": 3199,
+        "heading_line": 3211,
+        "line": 3213,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98261,8 +98550,8 @@
       "source_location": {
         "heading": "0PI-044 - Firecrawl Obligation Routing",
         "heading_level": 3,
-        "heading_line": 3269,
-        "line": 3271,
+        "heading_line": 3283,
+        "line": 3285,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98278,8 +98567,8 @@
       "source_location": {
         "heading": "0PI-045 - Slash And Provider Drift Guards",
         "heading_level": 3,
-        "heading_line": 3341,
-        "line": 3343,
+        "heading_line": 3355,
+        "line": 3357,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98295,8 +98584,8 @@
       "source_location": {
         "heading": "0PI-046 - Firecrawl Packet-Conflict Reset Scope",
         "heading_level": 3,
-        "heading_line": 3407,
-        "line": 3409,
+        "heading_line": 3421,
+        "line": 3423,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98312,8 +98601,8 @@
       "source_location": {
         "heading": "0PI-047 - Reset Operation Constraints",
         "heading_level": 3,
-        "heading_line": 3471,
-        "line": 3473,
+        "heading_line": 3485,
+        "line": 3487,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98329,8 +98618,8 @@
       "source_location": {
         "heading": "0PI-048 - Legacy Fidelity Traceability",
         "heading_level": 3,
-        "heading_line": 3543,
-        "line": 3545,
+        "heading_line": 3557,
+        "line": 3559,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98346,8 +98635,8 @@
       "source_location": {
         "heading": "0PI-049 - Additional Fidelity And Webmap Guard",
         "heading_level": 3,
-        "heading_line": 3616,
-        "line": 3618,
+        "heading_line": 3630,
+        "line": 3632,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98363,8 +98652,8 @@
       "source_location": {
         "heading": "0PI-050 - A2A OpenCode Packet Boundary",
         "heading_level": 3,
-        "heading_line": 3688,
-        "line": 3690,
+        "heading_line": 3702,
+        "line": 3704,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98380,8 +98669,8 @@
       "source_location": {
         "heading": "0PI-051 - A2A Impacted-Doc Taxonomy",
         "heading_level": 3,
-        "heading_line": 3749,
-        "line": 3751,
+        "heading_line": 3763,
+        "line": 3765,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98397,8 +98686,8 @@
       "source_location": {
         "heading": "0PI-052 - A2A Cleanup And Final Narrowing",
         "heading_level": 3,
-        "heading_line": 3824,
-        "line": 3826,
+        "heading_line": 3838,
+        "line": 3840,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98414,8 +98703,8 @@
       "source_location": {
         "heading": "0PI-053 - A2A Evidence And Anchor Exactness",
         "heading_level": 3,
-        "heading_line": 3892,
-        "line": 3894,
+        "heading_line": 3906,
+        "line": 3908,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98431,8 +98720,8 @@
       "source_location": {
         "heading": "0PI-054 - Standardization Owner Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 3970,
-        "line": 3972,
+        "heading_line": 3984,
+        "line": 3986,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98448,8 +98737,8 @@
       "source_location": {
         "heading": "0PI-055 - Goal Runtime System Owner Map",
         "heading_level": 3,
-        "heading_line": 4022,
-        "line": 4024,
+        "heading_line": 4036,
+        "line": 4038,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98465,8 +98754,8 @@
       "source_location": {
         "heading": "0PI-056 - Orchestrator Goal Runtime Flow Owner Map",
         "heading_level": 3,
-        "heading_line": 4111,
-        "line": 4113,
+        "heading_line": 4125,
+        "line": 4127,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98482,8 +98771,8 @@
       "source_location": {
         "heading": "0PI-057 - Semantic Audit Closure Owner Map",
         "heading_level": 3,
-        "heading_line": 4246,
-        "line": 4248,
+        "heading_line": 4260,
+        "line": 4262,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98499,8 +98788,8 @@
       "source_location": {
         "heading": "0PI-058 - Plans-To-Code Handoff Owner Map",
         "heading_level": 3,
-        "heading_line": 4335,
-        "line": 4337,
+        "heading_line": 4349,
+        "line": 4351,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98516,8 +98805,8 @@
       "source_location": {
         "heading": "0PI-059 - PRD Builder And Planning Wizard Owner Map",
         "heading_level": 3,
-        "heading_line": 4456,
-        "line": 4458,
+        "heading_line": 4470,
+        "line": 4472,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98533,8 +98822,8 @@
       "source_location": {
         "heading": "Native Discovery Owner Map (2026-06-22)",
         "heading_level": 3,
-        "heading_line": 4557,
-        "line": 4568,
+        "heading_line": 4571,
+        "line": 4582,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98550,8 +98839,8 @@
       "source_location": {
         "heading": "0PI-061 - Provider Updates Owner Map And Retired Gemini CLI Anchor",
         "heading_level": 3,
-        "heading_line": 4650,
-        "line": 4652,
+        "heading_line": 4664,
+        "line": 4666,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98567,8 +98856,8 @@
       "source_location": {
         "heading": "0PI-062 - Miscellaneous History Vision Bridge Teach Owner Map",
         "heading_level": 3,
-        "heading_line": 4730,
-        "line": 4732,
+        "heading_line": 4744,
+        "line": 4746,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98584,8 +98873,8 @@
       "source_location": {
         "heading": "0PI-063 - Miscellaneous Feature Intake Compile Owner Map",
         "heading_level": 3,
-        "heading_line": 4939,
-        "line": 4941,
+        "heading_line": 4953,
+        "line": 4955,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98601,8 +98890,8 @@
       "source_location": {
         "heading": "0PI-064 - Free Models Compile Owner Map",
         "heading_level": 3,
-        "heading_line": 5023,
-        "line": 5025,
+        "heading_line": 5037,
+        "line": 5039,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98618,8 +98907,8 @@
       "source_location": {
         "heading": "0PI-065 - Containerized Hosts Compile Owner Map",
         "heading_level": 3,
-        "heading_line": 5086,
-        "line": 5088,
+        "heading_line": 5100,
+        "line": 5102,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98635,8 +98924,8 @@
       "source_location": {
         "heading": "0PI-066 - 0PI-066",
         "heading_level": 3,
-        "heading_line": 5183,
-        "line": 5185,
+        "heading_line": 5197,
+        "line": 5199,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98652,8 +98941,8 @@
       "source_location": {
         "heading": "0PI-067 - Shared Integration Runtime Owner Routing",
         "heading_level": 3,
-        "heading_line": 5430,
-        "line": 5432,
+        "heading_line": 5444,
+        "line": 5446,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98669,8 +98958,8 @@
       "source_location": {
         "heading": "0PI-068 - 203-Command Touch Closure Owner And Machine-Registry Map",
         "heading_level": 3,
-        "heading_line": 5485,
-        "line": 5487,
+        "heading_line": 5499,
+        "line": 5501,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -130805,6 +131094,244 @@
       },
       "status": "accepted",
       "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "external_research",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-001",
+      "reasoning_tier": "high",
+      "risk_class": "owner_drift",
+      "source_location": {
+        "heading": "ERS-001 - External Research Ownership And Authority",
+        "heading_level": 3,
+        "heading_line": 76,
+        "line": 78,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "external_research",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-002",
+      "reasoning_tier": "high",
+      "risk_class": "process_drift",
+      "source_location": {
+        "heading": "ERS-002 - Pipeline Stages And Their Order",
+        "heading_level": 3,
+        "heading_line": 121,
+        "line": 123,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "external_research",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-003",
+      "reasoning_tier": "high",
+      "risk_class": "research_input_leakage",
+      "source_location": {
+        "heading": "ERS-003 - Research Inputs And The Decision Leakage Boundary",
+        "heading_level": 3,
+        "heading_line": 164,
+        "line": 166,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "external_research",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-004",
+      "reasoning_tier": "high",
+      "risk_class": "finding_classification_drift",
+      "source_location": {
+        "heading": "ERS-004 - Finding Classes And The Adjudicated Union",
+        "heading_level": 3,
+        "heading_line": 206,
+        "line": 208,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "external_research",
+      "gui_related": true,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-005",
+      "reasoning_tier": "high",
+      "risk_class": "decision_review_flow_drift",
+      "source_location": {
+        "heading": "ERS-005 - Findings Reach The User As Decision Packets",
+        "heading_level": 3,
+        "heading_line": 248,
+        "line": 250,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "external_research",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-006",
+      "reasoning_tier": "high",
+      "risk_class": "unreviewed_canon_change",
+      "source_location": {
+        "heading": "ERS-006 - Correction Landing Under Standing Repair Authorization",
+        "heading_level": 3,
+        "heading_line": 292,
+        "line": 294,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "external_research",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-007",
+      "reasoning_tier": "high",
+      "risk_class": "unapproved_scope_expansion",
+      "source_location": {
+        "heading": "ERS-007 - Capabilities And Product Choices Wait For The User",
+        "heading_level": 3,
+        "heading_line": 336,
+        "line": 338,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "external_research",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-008",
+      "reasoning_tier": "high",
+      "risk_class": "budget_accounting_defect",
+      "source_location": {
+        "heading": "ERS-008 - Research Budget Accounting",
+        "heading_level": 3,
+        "heading_line": 379,
+        "line": 381,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "external_research",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-009",
+      "reasoning_tier": "high",
+      "risk_class": "limit_misreporting",
+      "source_location": {
+        "heading": "ERS-009 - The Limits The User Sets On A Research Topic",
+        "heading_level": 3,
+        "heading_line": 424,
+        "line": 426,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "external_research",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-010",
+      "reasoning_tier": "high",
+      "risk_class": "review_configuration_drift",
+      "source_location": {
+        "heading": "ERS-010 - Review Configuration And The Turn Budget",
+        "heading_level": 3,
+        "heading_line": 467,
+        "line": 469,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "external_research",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-011",
+      "reasoning_tier": "medium",
+      "risk_class": "review_configuration_drift",
+      "source_location": {
+        "heading": "ERS-011 - Optional Cheap Breadth Stage",
+        "heading_level": 3,
+        "heading_line": 510,
+        "line": 512,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "external_research",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-012",
+      "reasoning_tier": "medium",
+      "risk_class": "latency_target_drift",
+      "source_location": {
+        "heading": "ERS-012 - Latency Target, Per-Stage Reporting And Concurrency",
+        "heading_level": 3,
+        "heading_line": 551,
+        "line": 553,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "external_research",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-013",
+      "reasoning_tier": "high",
+      "risk_class": "adjudication_untruthfulness",
+      "source_location": {
+        "heading": "ERS-013 - Adjudication Truthfulness",
+        "heading_level": 3,
+        "heading_line": 593,
+        "line": 595,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "external_research",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-014",
+      "reasoning_tier": "high",
+      "risk_class": "provenance_defect",
+      "source_location": {
+        "heading": "ERS-014 - Run Provenance",
+        "heading_level": 3,
+        "heading_line": 637,
+        "line": 639,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "plan_standardization",
@@ -210679,12 +211206,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15517,
+    "depends_on_edge_count": 15540,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18171,
-    "node_count": 6656,
+    "edge_count": 18226,
+    "node_count": 6670,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2654,
+    "unblocks_edge_count": 2686,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

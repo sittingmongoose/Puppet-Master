@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L268-L616
+Source lines: L271-L629
 
-Source SHA256: `e906d41d81be22e83ff389e494884e8250668eac7f12dbe0789d8f66ebbd1e11`
+Source SHA256: `f64fadcc2548f34619f1bbbf06c476b9a21967fa29110062077e316591172d36`
 
 ---
 
@@ -32,6 +32,16 @@ Packet `PM-WNC-2026-09-05-v1` (work item `wnc-20260905`) uses this owner split:
 - `Plans/Automated_Testing_System.md` / `ATS-046` owns the static contract-fixture validation family (`validate-working-notebook-contracts`). Static validation only: runtime, recovery, security, visual, and performance proof remains NOT_RUN; no WorkNodes, NodeSeeds, executable queues, or readiness unlocks.
 
 ContractRef: ContractName:Plans/Working_Notebook.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md, ContractName:Plans/Automated_Testing_System.md
+
+### External Research Capability Map (2026-09-17)
+
+The external research capability uses this owner split:
+- `Plans/External_Research.md` (`ERS-001`..`ERS-014`) owns external research semantics: the five research stages `discovery | implementation | history | reconcile | compare` and their admitted input classes `frozen_plans_snapshot | product_brief | arm_artifact`, the decision-leakage boundary, the four finding classes and the adjudicated union with its candidate discipline, the packet content behind each decision card, the correction landing path and the wait for capabilities and product choices, budget accounting and the four user-set limits, review configuration and the optional breadth stage, the per-topic latency target with per-stage reporting, adjudication truthfulness, and run provenance.
+- `Plans/Decision_Log.md` (`DL-036`, `DL-043`) owns the decision behaviour and the recorded dispositions; `Plans/assistant-chat-design.md` (`ACD-467`) owns the packet artifact, the one-at-a-time decision cards and the four responses; `Plans/Planning_Ledger_System.md` (`PLS-023`) owns the landing ledger for a research wave; `Plans/Settings_System.md` (`SSYS-037`) owns the Project-scoped research limit values and their inventory rows.
+- Consumers keep their own surfaces and gates: `Plans/Planning_Wizard.md` (placement in a planning run and Approve And Build), `Plans/usage-feature.md` (research spend inside overall usage), `Plans/Models_System.md` and `Plans/CLI_Bridged_Providers.md` (review-model selection and honest unsupported states), `Plans/FileSafe.md` and `Plans/Permissions_System.md` (redaction and restriction propagation), `Plans/storage-plan.md` (persistence and retention), `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md` and `Plans/UI_Wiring_Rules.md` (visible status, commands and wiring). Subject-matter owners are recipients of findings, never edited by this owner.
+- `Plans/Automated_Testing_System.md` / `ATS-054` owns the static contract-fixture validation family, registered as a pack pair in the closed `CONTRACT_PAIRS` manifest of `scripts/pm-new-contracts-verify.py` and validated by the `validate-new-contracts` subcheck. Static validation only: runtime, provider, recovery, security, visual and performance proof remains NOT_RUN; no WorkNodes, NodeSeeds, executable queues or readiness unlocks.
+
+ContractRef: ContractName:Plans/External_Research.md, ContractName:Plans/Decision_Log.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Settings_System.md, ContractName:Plans/Automated_Testing_System.md
 
 ### PM Semantic Audit Closure Map (2026-06-17)
 
