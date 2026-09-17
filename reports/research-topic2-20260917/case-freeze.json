@@ -1,0 +1,52 @@
+{
+  "case_name": "azure-devops-frozen-20260917",
+  "topic": "Azure DevOps Integration (Plans/Azure_DevOps_Integration.md)",
+  "frozen_the_way_bc7569b3f5_was_frozen": {
+    "plans_snapshot_commit": "a6162b559b502278458a56e95c5c0891c3e2a505",
+    "snapshot_is_origin_main": true,
+    "plans_clean_at_capture": "git status --porcelain -- Plans/ was empty in the shared checkout at capture.",
+    "product_brief_sha256": "a69e129dfb6e39ea6577739bd4a912599d70e70064c3e9d566ac33e5f1af74ae",
+    "owner_passages_entering_at_reconcile": 200
+  },
+  "product_brief": {
+    "words": 1263,
+    "limit": 1500,
+    "written_from": "the owner document's stated purpose and the user-facing behaviour it promises",
+    "excludes": "no plan text, no PlanUnit ids, no cmd.* command identities, no ContractRef/schema_id markers, no acceptance criteria. Scanned and clean.",
+    "sha256": "a69e129dfb6e39ea6577739bd4a912599d70e70064c3e9d566ac33e5f1af74ae",
+    "note": "brief.md and external/product-brief.md are the same bytes, as in the Jujutsu case."
+  },
+  "corpus": {
+    "files": 200,
+    "markdown": 43,
+    "json": 157,
+    "shape": "The same corpus SHAPE the Jujutsu case froze (199 files, 43 .md), so the two topics stay comparable, with every Jujutsu artifact removed and the current Azure/forge artifacts present.",
+    "jujutsu_artifacts_removed": [
+      "Plans/Jujutsu_Integration.md",
+      "Plans/jujutsu_integration_contract_fixtures.json",
+      "Plans/jujutsu_integration_contracts.schema.json"
+    ],
+    "azure_and_forge_artifacts_present": [
+      "Plans/Azure_DevOps_Integration.md",
+      "Plans/Forge_Integrations.md",
+      "Plans/azure_devops_integration_fixtures.json",
+      "Plans/forge_backup_tsnet_acceptance.json",
+      "Plans/forge_backup_tsnet_acceptance.schema.json",
+      "Plans/forge_integration_contract_fixtures.json",
+      "Plans/forge_integration_contracts.schema.json"
+    ],
+    "every_file_carries": "git blob id + sha256 in source-provenance.json; zero unresolved blobs."
+  },
+  "hashes": {
+    "case_tree_sha256": "0aabcb80a77c9f94704aef9003d444d3f3e00b3f860a7b7297fb2b787c71112b",
+    "brief_md": "a69e129dfb6e39ea6577739bd4a912599d70e70064c3e9d566ac33e5f1af74ae",
+    "navigation_md": "3b9a6215db90848915cde20a5118bf3f78649d4f0b6549c08b6a6401826f84e3",
+    "plans_manifest_json": "81ea1621b9187c973d51c7be2efd0082ddfe57a9d66db788b904b0712f684d57",
+    "source_provenance_json": "efadbae42211a0bd0c2ea676dcab3df9fc48b2e4ceb5e691986dd4967e57c637"
+  },
+  "identical_in_both_campaign_directories": {
+    "arm_s": "0aabcb80a77c9f94704aef9003d444d3f3e00b3f860a7b7297fb2b787c71112b",
+    "arm_h2": "0aabcb80a77c9f94704aef9003d444d3f3e00b3f860a7b7297fb2b787c71112b"
+  },
+  "worker_inputs": "Discovery and study workers receive the product brief only. The frozen owner passages enter at reconcile and compare. Nothing from any other arm, and no Jujutsu material at all."
+}

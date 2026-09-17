@@ -1,0 +1,147 @@
+{
+  "method": {
+    "corpus": "The 95 owner .md documents under Plans/, counted from Plans/.plan_index/plan_units.jsonl (6,653 PlanUnits) and Plans/.plan_index/acceptance_units.jsonl (25,872 acceptance units) at snapshot a6162b559b502278458a56e95c5c0891c3e2a505.",
+    "corpus_median_acceptance_units_per_plan_unit": 3.948,
+    "fixture_metric_note": "Two fixture metrics were computed because the choice moves the ranking and neither is obviously the intended one. METRIC 1 counts references to a document's own PlanUnit ids (ADO-001 and the like) across every Plans/*fixture*.json. METRIC 2 counts fixture cases in the fixture files attributable to the document, whether its own file or a file that names it. The corpus median of fixtures per PlanUnit is 0 under metric 1 (52 of 95 documents have none) and 0.132 under metric 2, so the fixture axis is normalized by the MEAN, the median being degenerate. Both metrics and both rankings are recorded below; the selection is justified on facts that hold under both.",
+    "rule": "Brief BRIEF_TOPIC2_20260917.md: (a) a product surface with a real external body of knowledge to research, (b) not the subject of a research campaign, excluding Terminal, Jujutsu Integration, Source Control, the Section 15 and event-authority material, and anything named in reports/, (c) thin: rank by fixtures and acceptance units per PlanUnit against the corpus median.",
+    "reading_of_b": "\"Anything named in reports/\" is read as \"named as the SUBJECT of a campaign recorded in reports/\". Read literally as \"the string appears anywhere under reports/\", criterion (b) disqualifies all 95 owner documents, because reports/jujutsu-research-2026-09-11/d5/reference-backlink-scan.json names 97 distinct .md files and reports/shard_report.json names 894 - both blanket inventory sweeps. That reading makes the brief impossible, so it is not the intended one. Each candidate was instead tested against the two bodies the brief names explicitly (the Section 15 sources and the event-authority material) and against whether any campaign was about it."
+  },
+  "selected": {
+    "doc": "Plans/Azure_DevOps_Integration.md",
+    "plan_units": 5,
+    "acceptance_units": 15,
+    "acceptance_units_per_plan_unit": 3.0,
+    "ratio_to_corpus_median": 0.76,
+    "fixture_refs_to_own_unit_ids": 0,
+    "fixture_cases_attributable": 3,
+    "fixture_files": [
+      "azure_devops_integration_fixtures.json"
+    ],
+    "bytes": 15967,
+    "unit_ids": "ADO-001..ADO-005",
+    "why_a": "Azure DevOps REST API 7.x; the Services (cloud) versus Server (on-premises) split; Entra ID, PAT and SSH auth and their scopes; the pull-request threads/votes/iterations model; branch policies and status checks; Azure Pipelines and builds; Service Hooks delivery, dedupe and replay; and Azure DevOps Server version and licensing gating. None of that body of knowledge is already extracted into the corpus.",
+    "why_b": "ZERO mentions in the Section 15 sources and ZERO in the event-authority material - the two bodies the brief excludes by name. Its only reports/ mentions are one blanket corpus list (jujutsu-research-2026-09-11/d1/selection.json, 69 documents) and packet-gap-closure-20260910/provider-fixture-gate-20260911.json, a validator-bookkeeping fix whose own claim_boundary reads \"Static fixture enrollment and validator bookkeeping only. No provider API, authentication, signature verification, network, Browser, native handler, visual, runtime, or readiness proof.\" No campaign was ever about this document.",
+    "why_c": "3.000 acceptance units per PlanUnit is 0.760x the corpus median of 3.948 - the thinnest of any document satisfying (a) and (b) on the acceptance-unit axis, the axis both fixture metrics agree on. On the fixture axis it is empty where it counts: NO fixture file anywhere contains an ADO-00N reference, so no acceptance fixture is written against its five units. Its three attributable \"cases\" are provider-profile rows enrolled under the SHARED forge schema by the 2026-09-11 bookkeeping fix above, not fixtures authored for ADO-001..005.",
+    "why_genre": "It is the same kind of document as Jujutsu Integration, goal 2's topic: a small third-party-integration owner doc (5 PlanUnits / 15 acceptance units / 16 KB against Jujutsu's 22 / 123 / 108 KB). \"Run the way goal 2 ran the first\" needs the two topics to be comparable."
+  },
+  "runners_up": [
+    {
+      "doc": "Plans/Bitbucket_Integration.md",
+      "plan_units": 5,
+      "acceptance_units": 15,
+      "acceptance_units_per_plan_unit": 3.0,
+      "ratio_to_corpus_median": 0.76,
+      "fixture_refs_to_own_unit_ids": 0,
+      "fixture_cases_attributable": 3,
+      "fixture_files": [
+        "bitbucket_integration_fixtures.json"
+      ],
+      "bytes": 15853,
+      "rank": 1,
+      "satisfies_a": true,
+      "satisfies_b": true,
+      "external_knowledge": "Bitbucket Cloud REST API 2.0 versus Data Center REST API, workspace versus project hierarchy, OAuth / app passwords / PAT / SSH, the PR approval and build-status model, Bitbucket Pipelines (bitbucket-pipelines.yml), webhook signing and replay, Data Center licensing tiers.",
+      "why_not_selected": "Tied with the selection on every thinness number. Lost the substance tie-break: a narrower external surface than Azure DevOps's Services/Server split with its signed version gating."
+    },
+    {
+      "doc": "Plans/GitLab_Integration.md",
+      "plan_units": 5,
+      "acceptance_units": 15,
+      "acceptance_units_per_plan_unit": 3.0,
+      "ratio_to_corpus_median": 0.76,
+      "fixture_refs_to_own_unit_ids": 0,
+      "fixture_cases_attributable": 4,
+      "fixture_files": [
+        "gitlab_integration_fixtures.json"
+      ],
+      "bytes": 16062,
+      "rank": 2,
+      "satisfies_a": true,
+      "satisfies_b": true,
+      "external_knowledge": "GitLab REST API v4 and GraphQL, merge-request versions/discussions/approval rules, GitLab CI/CD pipelines and jobs, OAuth/PAT/SSH scopes, Free/Premium/Ultimate tiers, GitLab Dedicated versus self-managed.",
+      "why_not_selected": "Same thinness as the selection on the acceptance-unit axis but the thickest of the three forge documents on the fixture axis (4 attributable cases against 3)."
+    },
+    {
+      "doc": "Plans/Provider_OpenCode.md",
+      "plan_units": 51,
+      "acceptance_units": 156,
+      "acceptance_units_per_plan_unit": 3.059,
+      "ratio_to_corpus_median": 0.775,
+      "fixture_refs_to_own_unit_ids": 0,
+      "fixture_cases_attributable": 0,
+      "fixture_files": [],
+      "bytes": 186571,
+      "rank": 3,
+      "satisfies_a": true,
+      "satisfies_b": true,
+      "external_knowledge": "OpenCode server docs, its OpenAPI 3.1 REST surface and SSE event stream, the /provider/auth OAuth callback, OPENCODE_CONFIG_DIR, the anomalyco/opencode repository.",
+      "why_not_selected": "Thinner than the selection on the composite (0.775x median, zero fixtures of any kind), and only two event-authority CANDIDATE-list mentions, so (b) is clean. Rejected on the purpose of the experiment: OpenCode's external body of knowledge is ALREADY deeply extracted into this corpus (Plans/OpenCode_Deep_Extraction.md, Plans/OpenCode_Coverage_Matrix.md), so a discovery arm would rediscover what Plans already holds - a poor test of whether the process generalizes to a new topic."
+    },
+    {
+      "doc": "Plans/Formatters_System.md",
+      "plan_units": 15,
+      "acceptance_units": 60,
+      "acceptance_units_per_plan_unit": 4.0,
+      "ratio_to_corpus_median": 1.013,
+      "fixture_refs_to_own_unit_ids": 0,
+      "fixture_cases_attributable": 0,
+      "fixture_files": [
+        "settings_system_contract_fixtures.json"
+      ],
+      "bytes": 50790,
+      "rank": 4,
+      "satisfies_a": true,
+      "satisfies_b": "weak",
+      "external_knowledge": "A roster of about twenty-one real external binaries and their detection and config conventions: prettier, biome, rustfmt, gofmt, ruff, shfmt, clang-format, dart, mix, zig, ktlint, rubocop, standardrb, pint, ocamlformat, nixfmt, ormolu, terraform fmt, latexindent, gleam, cljfmt.",
+      "why_not_selected": "Fails (c): at 4.000 acceptance units per PlanUnit it sits at 1.013x the corpus median, i.e. exactly AT the median rather than thin. Also eight substantive event-authority mentions."
+    },
+    {
+      "doc": "Plans/Tools.md",
+      "plan_units": 184,
+      "acceptance_units": 509,
+      "acceptance_units_per_plan_unit": 2.766,
+      "ratio_to_corpus_median": 0.701,
+      "fixture_refs_to_own_unit_ids": 4,
+      "fixture_cases_attributable": 28,
+      "fixture_files": [
+        "settings_system_contract_fixtures.json",
+        "working_notebook_contract_fixtures.json"
+      ],
+      "bytes": 642612,
+      "rank": 5,
+      "satisfies_a": true,
+      "satisfies_b": false,
+      "external_knowledge": "OpenCode tools and permissions docs, the Model Context Protocol specification, the Firecrawl API, Exa / Tavily / DuckDuckGo search providers, LSP and DAP, VS Code extension parity baselines.",
+      "why_not_selected": "It is the THINNEST document in the corpus that satisfies (a) - 2.766 acceptance units per PlanUnit, 0.701x the median - and it would have been the selection but for (b). It is named in 12 files across BOTH bodies the brief excludes by name: the Section 15 sources (d5-section15-reference-2026-09-09/source/june11-Section15.md, .../july04-Section15.md, .../reviews/mechanical-census.json) and the event-authority applied material (event-authority-20260911/step-09-root-application.json, .../step-08-09-binding-authority-approval.json and seven more). Tools.md content IS part of that excluded material."
+    }
+  ],
+  "also_considered": [
+    {
+      "doc": "Plans/Decision_Policy.md",
+      "plan_units": 63,
+      "acceptance_units": 126,
+      "acceptance_units_per_plan_unit": 2.0,
+      "ratio_to_corpus_median": 0.507,
+      "fixture_refs_to_own_unit_ids": 0,
+      "fixture_cases_attributable": 0,
+      "fixture_files": [],
+      "bytes": 150749,
+      "verdict": "Thinnest document in the whole corpus at 2.000 acceptance units per PlanUnit (0.507x median), but FAILS (a): pure internal governance and ambiguity-precedence policy, with no third-party API, wire protocol, file format or competing product for a researcher to go read about."
+    },
+    {
+      "doc": "Plans/Personas.md",
+      "plan_units": 56,
+      "acceptance_units": 169,
+      "acceptance_units_per_plan_unit": 3.018,
+      "ratio_to_corpus_median": 0.764,
+      "fixture_refs_to_own_unit_ids": 0,
+      "fixture_cases_attributable": 0,
+      "fixture_files": [
+        "settings_system_contract_fixtures.json",
+        "web_agent_policy_fixtures.json"
+      ],
+      "bytes": 170056,
+      "verdict": "3.018 per PlanUnit (0.764x median) and zero own fixtures, but excluded by (b) on the same two bodies as Tools.md (Section 15 sources plus event-authority root application, 10 files), and only a weak (a): the external surface is OpenCode's Agent.Info schema and Claude Code's reusable agents, with everything else PM-internal."
+    }
+  ]
+}
