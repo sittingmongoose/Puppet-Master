@@ -162,6 +162,12 @@ CLI-reported, of the $150 cap.
 | **Arm B**, cheap breadth then strong compare | 160 | **32** (delivery positions 1–32) | $108.86 | 5 508.9 s over two stages |
 | **T80**, claude-hicap at a lower ceiling | 80 | **11** | $76.45 | 6 259.7 s |
 
+A24 (claude-hicap's ceilings with 24 admissions instead of 12) and T320 (a 320-response ceiling at 7 200 s)
+are the remaining sweep arms. A24's first attempt is archived unscored: it launched 102 seconds after
+topic-2's arm resumed, so two Opus arms were admitting, and the shape-3 pin placed 13 seconds later then
+lost the race described below — 21 of its 24 jobs are `cli_error` from the account session limit and one
+lead reached a comparison. `a24-attempts.json` records it.
+
 Arm B's gain is structural rather than clever: because Muse had already reconciled, **all twelve** of Opus 5's
 admissions bought comparisons, where Arm P spent six of its twelve on reconciliation and claude-hicap spent
 six as well. Arm P's prioritization did what it was built to do — the admissions landed on exactly the
@@ -226,18 +232,30 @@ week out, waiting could never have cleared it. The rule is now: **gate on the fi
 threshold that genuinely blocked work that morning, at 0.82); `isUsingOverage` always holds. It is one
 function shared by the probe and the sentinel, checked against six cases.
 
-**The admission hold went through three shapes**, and the first two each cost an arm:
+**The admission hold went through four shapes**, and the first three each cost an arm:
 
 | Shape | Sizing | What it did |
 |---|---|---|
-| 1 | headroom at that instant | Leaked one admission per settlement — `committed` counts a live job's full allowance and swaps it for the job's much smaller actual spend at job end, reopening room. This let b-compare attempt 1 burn all 12 admissions on rate-limited jobs. |
-| 2 | the whole cap | Stopped admissions, but pushed `committed` *above* the cap, so `request_boundary` denied live jobs their next request too. This truncated three of T80 attempt 1's jobs. |
-| 3 | **exactly `cap − committed`, maintained** | `reserve` denies (`cap + allowance > cap`) while `request_boundary` passes (`cap > cap` is false), and re-pinning after each settlement closes the shape-1 leak. |
+| 1 | headroom at that instant | Leaked one admission per settlement — `committed` counts a live job's full allowance and swaps it for the job's much smaller actual spend at job end, reopening room. **b-compare attempt 1** burned all 12 admissions on rate-limited jobs. |
+| 2 | the whole cap | Stopped admissions, but pushed `committed` *above* the cap, so `request_boundary` denied live jobs their next request too. Truncated three of **T80 attempt 1**'s jobs. |
+| 3 | exactly `cap − committed`, re-pinned on a 3 s timer | Correct at the instant of each write and wrong a moment later. **A24 attempt 1** proved it: the maintainer re-pinned 18 times and held `committed` at exactly $300.00 every time, and the arm still took all 24 admissions through windows of $0.27 to $7.78 left open between re-pins by jobs dying in ~7 s and settling at $0. |
+| 4 | **`strict`: sized to survive every live allowance evaporating at once** | Race-free. Admissions stop with certainty; live jobs are truncated at their next request boundary, cleanly. |
 
 `Meter.observe` is reporting-only, so `committed` is constant while jobs run and moves only when one
-settles — which is why the pin must be maintained rather than written once. Five tests cover this, including
-both historical failures as explicit regressions and the residual case below, and the live-job assertions
-drive `request_boundary` directly, because a stub that only slept could never fail on a truncation defect.
+settles — which is why shape 3 needed a timer at all, and why the timer could not win: the campaign loops
+every 0.5 s.
+
+**The two goals are genuinely exclusive**, so shape 4 is a choice rather than a fix. To keep denying after
+every live job settles at $0, the pin must exceed `cap − allowance − (committed_base − live_allowances)`;
+to leave live jobs runnable it must not exceed `cap − committed_base`. Both hold only when the sum of the
+live jobs' allowances is smaller than *one* new admission's allowance, which is never true at three
+workers. A sentinel exists to stop, and the measured price of each failure settles it: truncation cost T80
+attempt 1 part of one job's output, while the leak cost A24 attempt 1 all 24 of its admissions. The at-cap
+pin remains available as `--mode maintain` for cases where finishing the live work matters more.
+
+Six tests cover this, including all three historical failures as explicit regressions, and every live-job
+assertion drives `request_boundary` directly, because a stub that only slept could never fail on a
+truncation defect.
 
 **Residual case, reported rather than fixed:** a job settling *above* its allowance can push `committed`
 past the cap by itself, after which a still-live job is denied its next request. The pin is zero-sized by

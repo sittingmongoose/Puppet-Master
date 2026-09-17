@@ -1,0 +1,27 @@
+{
+  "note": "A24's first attempt is archived unscored. Its value is diagnostic: it is the evidence that an at-cap admission pin loses a race it cannot win by polling.",
+  "attempts": [
+    {
+      "arm": "a24",
+      "attempt": 1,
+      "scored": false,
+      "run_directory": "runs/jujutsu-a24-20260917-210055",
+      "run_left_in_place": true,
+      "output_manifest_sha256": "361192cb59dbf0674468f2947b88c1076b82b1dcff4aa401e2d8293903820285",
+      "output_file_count": 5842,
+      "launched_at": "2026-09-17T21:01:07Z",
+      "terminal_at": "2026-09-17T21:28:08Z",
+      "stop_reason": "Stop: admitted_attempt_cap",
+      "admissions_used": 24,
+      "admissions_authorized": 24,
+      "captured_upper_usd": 24.13493550000001,
+      "job_status_counts": {
+        "completed": 3,
+        "cli_error": 21
+      },
+      "comparisons_delivered": 1,
+      "why_archived": "Two independent faults, neither of them the arm's. (1) It launched 102 s after topic-2 H2-review resumed, so two Opus arms were admitting; I pinned it 13 s in. (2) The pin did not hold: the account session limit killed job after job in about 7 s each, and every $0 settlement reopened headroom between the maintainer's 3 s re-pins, so the campaign admitted through those windows and spent all 24 admissions. 21 of 24 jobs are cli_error.",
+      "what_it_proved": "The at-cap pin loses a race it cannot win by polling: the maintainer re-pinned 18 times, held committed at exactly $300.00 every time, and admissions still passed through windows of $0.27 to $7.78. That is why hold_admissions gained a race-free `strict` mode."
+    }
+  ]
+}
