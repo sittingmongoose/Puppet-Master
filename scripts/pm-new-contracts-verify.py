@@ -14,6 +14,7 @@ import re
 import sys
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -73,6 +74,23 @@ EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.jso
 EGOLITE_SCHEMA_REL = "Plans/egolite_retained_requirement_contracts.schema.json"
 SOURCE_CONTROL_SCHEMA_REL = "Plans/source_control_contracts.schema.json"
 SOURCE_GRAPH_SCHEMA_ID = "pm.source_control.source_graph_projection.v1"
+JUJUTSU_SCHEMA_REL = "Plans/jujutsu_integration_contracts.schema.json"
+
+# JJI-008 names the layouts and the pointer chain each one implies.  The
+# closure and the drill both resolve the same chain, so the requirement is a
+# property of the layout, not of which record carries it.
+JUJUTSU_LAYOUT_REQUIRED_POINTER_KINDS = {
+    "colocated": frozenset({"jj_repo_pointer", "store_git_target", "git_commondir"}),
+    "non_colocated": frozenset({"jj_repo_pointer", "store_git_target"}),
+    "shared_multi_workspace": frozenset(
+        {"jj_repo_pointer", "store_git_target", "git_commondir", "workspace_gitdir_link"}
+    ),
+}
+
+# JJI-008: dependency objects are persisted before any referring head is
+# published, and activation markers are written last.
+JUJUTSU_DEPENDENCY_MATERIALIZATION_STEPS = frozenset({"dependency_objects", "workspace_files"})
+JUJUTSU_HEAD_MATERIALIZATION_STEPS = frozenset({"operation_heads", "activation_markers"})
 
 # These reviewed pairs use a command-oriented fixture protocol.  Support is
 # deliberately path-bound; another pack cannot opt in by imitating field names.
@@ -1054,6 +1072,129 @@ def source_control_semantic_failures(definition_name: str, value: Any) -> list[s
     return sorted(set(failures))
 
 
+@lru_cache(maxsize=1)
+def jujutsu_admitted_action_ids() -> frozenset[str]:
+    """The identifiers a Jujutsu availability record may offer as recovery.
+
+    Read from the owner schema itself rather than restated here: the canonical
+    command enum plus the owner routes JJI-008 already declares.  A floor that
+    offered an identifier outside both would point at a command that does not
+    exist.
+    """
+
+    schema = load_json(ROOT / JUJUTSU_SCHEMA_REL)
+    defs = schema.get("$defs")
+    admitted: set[str] = set()
+    if isinstance(defs, dict):
+        command_id = defs.get("command_id")
+        if isinstance(command_id, dict):
+            enum = command_id.get("enum")
+            if isinstance(enum, list):
+                admitted.update(value for value in enum if isinstance(value, str))
+        for definition in defs.values():
+            if not isinstance(definition, dict):
+                continue
+            routes = definition.get("x-puppet-master-owner-routes")
+            if not isinstance(routes, dict):
+                continue
+            for route_ids in routes.values():
+                if isinstance(route_ids, list):
+                    admitted.update(value for value in route_ids if isinstance(value, str))
+    return frozenset(admitted)
+
+
+def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
+    """Evaluate the four JJI-008 and JJI-006 relations JSON Schema cannot express.
+
+    Every rule is a relation between sibling fields of one record, so no
+    ambient file, network, or runtime state is consulted beyond the owner
+    schema's own closed vocabularies.  A record that satisfies every per-field
+    bound can still be internally inconsistent; that is what this checks and
+    all that it claims.  Authorized for exactly these four rules.
+    """
+
+    if not isinstance(value, dict):
+        return []
+
+    failures: list[str] = []
+
+    # JJI-008: the pointer chain a layout implies is resolved in full, and each
+    # kind's hops are a complete 0..n-1 sequence.  A chain that stops early
+    # resolves against whatever the process inherited.
+    if definition_name in {"backup_jj_closure_record", "backup_jj_restore_verification_receipt"}:
+        resolutions = value.get("pointer_resolutions")
+        layout = value.get("layout_profile")
+        if isinstance(resolutions, list) and isinstance(layout, str):
+            required = JUJUTSU_LAYOUT_REQUIRED_POINTER_KINDS.get(layout)
+            hops: dict[str, list[int]] = {}
+            present: set[str] = set()
+            for resolution in resolutions:
+                if not isinstance(resolution, dict):
+                    continue
+                kind = resolution.get("pointer_kind")
+                if not isinstance(kind, str):
+                    continue
+                present.add(kind)
+                index = resolution.get("hop_index")
+                if isinstance(index, int) and not isinstance(index, bool):
+                    hops.setdefault(kind, []).append(index)
+            if required is not None and not required.issubset(present):
+                failures.append("jujutsu_pointer_resolution_incomplete_for_layout")
+            for kind, indices in hops.items():
+                if sorted(indices) != list(range(len(indices))):
+                    failures.append("jujutsu_pointer_resolution_incomplete_for_layout")
+                    break
+
+    # JJI-008: a read-only verification observes the operation heads it was
+    # given and authors none, so the two recorded sets are equal.
+    if definition_name == "backup_jj_restore_verification_receipt":
+        before_refs = value.get("operation_head_refs")
+        after_refs = value.get("operation_heads_after_refs")
+        if isinstance(before_refs, list) and isinstance(after_refs, list):
+            before_set = {ref for ref in before_refs if isinstance(ref, str)}
+            after_set = {ref for ref in after_refs if isinstance(ref, str)}
+            if before_set != after_set:
+                failures.append("jujutsu_operation_heads_changed_during_read_only_verification")
+
+    # JJI-008: dependency objects are persisted before any referring head is
+    # published, and activation markers are last.
+    if definition_name == "backup_jj_closure_record":
+        expansion = value.get("closure_expansion")
+        if isinstance(expansion, dict):
+            order = expansion.get("materialization_order")
+            if isinstance(order, list):
+                steps = [step for step in order if isinstance(step, str)]
+                head_positions = [
+                    position
+                    for position, step in enumerate(steps)
+                    if step in JUJUTSU_HEAD_MATERIALIZATION_STEPS
+                ]
+                dependency_positions = [
+                    position
+                    for position, step in enumerate(steps)
+                    if step in JUJUTSU_DEPENDENCY_MATERIALIZATION_STEPS
+                ]
+                if head_positions and dependency_positions and min(head_positions) < max(dependency_positions):
+                    failures.append("jujutsu_closure_publishes_a_head_before_its_dependencies")
+                elif "activation_markers" in steps and steps[-1] != "activation_markers":
+                    failures.append("jujutsu_closure_publishes_a_head_before_its_dependencies")
+
+    # JJI-006: a recovery floor points at commands that exist.  The admitted set
+    # is the owner schema's own canonical enum plus its declared owner routes.
+    if definition_name == "command_availability":
+        availability = value.get("availability")
+        if isinstance(availability, dict):
+            action_ids = availability.get("allowed_action_ids")
+            if isinstance(action_ids, list):
+                admitted = jujutsu_admitted_action_ids()
+                for action_id in action_ids:
+                    if isinstance(action_id, str) and action_id not in admitted:
+                        failures.append("jujutsu_recovery_action_not_in_canonical_inventory")
+                        break
+
+    return sorted(set(failures))
+
+
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
     if schema_rel in {"Plans/testing_session_command_contracts.schema.json", "Plans/artifact_recording_command_contracts.schema.json"}:
         return evidence_command_semantic_failures(definition_name, value)
@@ -1089,6 +1230,8 @@ def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any
         return egolite_semantic_failures(definition_name, value)
     if schema_rel == SOURCE_CONTROL_SCHEMA_REL:
         return source_control_semantic_failures(definition_name, value)
+    if schema_rel == JUJUTSU_SCHEMA_REL:
+        return jujutsu_semantic_failures(definition_name, value)
     return []
 
 

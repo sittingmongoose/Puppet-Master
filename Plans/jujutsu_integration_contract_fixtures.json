@@ -4416,6 +4416,57 @@
       "expected_error": "the expansion blockers are exactly missing parent, malformed id, self parent and parent cycle"
     },
     {
+      "name": "backup_jj_colocated_layout_resolves_its_whole_pointer_chain",
+      "definition": "backup_jj_closure_record",
+      "base_valid": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",
+      "remove": [
+        "pointer_resolutions.2"
+      ],
+      "semantic_rule": "jujutsu_pointer_resolution_incomplete_for_layout",
+      "expected_error": "a colocated closure that never resolved its Git commondir resolved against whatever the process inherited"
+    },
+    {
+      "name": "backup_jj_read_only_verification_leaves_the_operation_heads_alone",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_restore_ready_for_owner_activation_is_internally_consistent",
+      "patch": {
+        "operation_heads_after_refs": [
+          "operation-head:jj:restore:authored-by-verification"
+        ]
+      },
+      "semantic_rule": "jujutsu_operation_heads_changed_during_read_only_verification",
+      "expected_error": "the operation-head set after a read-only verification equals the set before it"
+    },
+    {
+      "name": "backup_jj_closure_persists_dependencies_before_it_publishes_a_head",
+      "definition": "backup_jj_closure_record",
+      "base_valid": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",
+      "patch": {
+        "closure_expansion.materialization_order": [
+          "operation_heads",
+          "dependency_objects",
+          "workspace_files",
+          "activation_markers"
+        ]
+      },
+      "semantic_rule": "jujutsu_closure_publishes_a_head_before_its_dependencies",
+      "expected_error": "publishing an operation head before its dependency objects leaves a pointer to an object that is not there"
+    },
+    {
+      "name": "command_availability_recovery_floor_names_commands_that_exist",
+      "definition": "command_availability",
+      "base_valid": "command_availability_quarantined_repository_keeps_the_operation_log_floor",
+      "patch": {
+        "availability.allowed_action_ids": [
+          "cmd.jujutsu.operation.log",
+          "cmd.jujutsu.operation.show",
+          "cmd.jujutsu.change.converge"
+        ]
+      },
+      "semantic_rule": "jujutsu_recovery_action_not_in_canonical_inventory",
+      "expected_error": "a recovery action outside the canonical inventory and the declared owner routes points at no command"
+    },
+    {
       "name": "command_availability_divergence_reason_code_is_exact",
       "definition": "command_availability",
       "base_valid": "command_availability_change_target_is_divergent_and_ambiguous",

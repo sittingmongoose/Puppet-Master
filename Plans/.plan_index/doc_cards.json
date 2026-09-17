@@ -8925,7 +8925,7 @@
         "future qualified owner adapter and typed contract extensions",
         "future signed compatibility catalog and qualified owner adapter"
       ],
-      "line_count": 1571,
+      "line_count": 1593,
       "path": "Plans/Jujutsu_Integration.md",
       "plan_unit_count": 22,
       "plan_unit_ids": [
@@ -8979,7 +8979,7 @@
         "verified_group_undo_redo_and_selected_operation_reversal",
         "version_comparison_and_focused_change_evolution"
       ],
-      "sha256": "4a9c7854e67b019b21c255d3050e41c24b24f048a8d090969d7c3e0292a9e20c",
+      "sha256": "4381793ee70f895c578e5dd8da1e3186ea1ceb5406c7ac4d67cf066007162d82",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 22
@@ -8995,6 +8995,7 @@
       },
       "validation_surfaces": [
         "FileSafe complement tests",
+        "Four relations here are not expressible in JSON Schema and are enforced by the `jujutsu_integration_contracts` branch of `contract_semantic_failures` in `scripts/pm-new-contracts-verify.py`, with one authored negative fixture each: the pointer chain a layout implies is resolved in full with no gap in a kind's hops, the operation-head set after a read-only verification equals the set before it, dependency objects are materialized before any referring head with activation markers last, and every recovery action identifier comes from the canonical inventory or a declared owner route. Regression coverage is `tests/test_pm_jujutsu_closure_semantics.py`.",
         "Git compatibility preflight fixtures",
         "JJ repository context fixtures",
         "JJ setup fixtures",
@@ -9004,8 +9005,11 @@
         "Plans/jujutsu_integration_contracts.schema.json",
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
+        "Plans/source_control_contracts.schema.json#/$defs/jj_effective_capability_snapshot",
         "Plans/source_control_contracts.schema.json#/$defs/new_repository_object_format_selection",
         "Plans/source_control_contracts.schema.json#/$defs/repository_object_format_profile",
+        "The recovery-action floor is enforced by `Plans/jujutsu_integration_contracts.schema.json`; that every admitted identifier exists is a relational rule enforced by the `jujutsu_integration_contracts` branch of `contract_semantic_failures` in `scripts/pm-new-contracts-verify.py`. That the floor commands are servable from the operation store alone is an owner obligation with no validator surface, recorded as an open question in `pldg-20260917-001-jujutsu-continuation4-corrections`.",
+        "Two obligations in this unit have no validator surface and are recorded as open questions in `pldg-20260917-001-jujutsu-continuation4-corrections`: the enumerated list of machine-local and ephemeral store entries for a pinned JJ version, and the adapter's complete declared native effect scope per invocation.",
         "adaptive GUI fixtures",
         "alias normalization tests",
         "colocation migration fixtures",
@@ -19616,7 +19620,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-17T05:11:01Z",
+  "generated_at_utc": "2026-09-17T05:17:11Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

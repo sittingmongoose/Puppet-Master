@@ -243,9 +243,20 @@ class SourceGraphPageSemanticTests(unittest.TestCase):
                 "source_graph_returned_count_not_equal_to_emitted_nodes",
             ],
         )
+        # The Jujutsu owner schema now has its own semantic branch, so scoping is
+        # proved by the branch declining a definition that is not its own rather
+        # than by the whole schema path returning nothing.
         self.assertEqual(
             self.gate.contract_semantic_failures(
                 "Plans/jujutsu_integration_contracts.schema.json",
+                "source_graph_projection",
+                inconsistent,
+            ),
+            [],
+        )
+        self.assertEqual(
+            self.gate.contract_semantic_failures(
+                "Plans/doctor_contracts.schema.json",
                 "source_graph_projection",
                 inconsistent,
             ),

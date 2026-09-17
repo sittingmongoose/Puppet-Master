@@ -293,7 +293,18 @@ acceptance_criteria:
     `admitted` leaves no row `unknown`, an unsupported, unreleased, untested, stale or mismatched combination cannot
     borrow another row's mutation admission, and certifying a root layout certifies no child layout. The snapshot's
     existing top-level `adapter_version` is the compatibility alias of `toolchain_identity.adapter_version`.
-validation_surfaces: [JJ setup fixtures, adaptive GUI fixtures, colocation migration fixtures, compatibility matrix]
+validation_surfaces:
+  - JJ setup fixtures
+  - adaptive GUI fixtures
+  - colocation migration fixtures
+  - compatibility matrix
+  - Plans/source_control_contracts.schema.json#/$defs/jj_effective_capability_snapshot
+  - >-
+    The recovery-action floor is enforced by `Plans/jujutsu_integration_contracts.schema.json`; that every admitted
+    identifier exists is a relational rule enforced by the `jujutsu_integration_contracts` branch of
+    `contract_semantic_failures` in `scripts/pm-new-contracts-verify.py`. That the floor commands are servable from the
+    operation store alone is an owner obligation with no validator surface, recorded as an open question in
+    `pldg-20260917-001-jujutsu-continuation4-corrections`.
 risk_class: jujutsu_ui_or_migration_misrepresentation
 reasoning_tier: high
 context_scope: jujutsu_setup_gui_migration
@@ -602,6 +613,17 @@ validation_surfaces:
   - Plans/backup_restore_system_contracts.schema.json
   - Plans/backup_restore_system_contract_fixtures.json
   - python3 scripts/pm-new-contracts-verify.py
+  - >-
+    Four relations here are not expressible in JSON Schema and are enforced by the `jujutsu_integration_contracts`
+    branch of `contract_semantic_failures` in `scripts/pm-new-contracts-verify.py`, with one authored negative fixture
+    each: the pointer chain a layout implies is resolved in full with no gap in a kind's hops, the operation-head set
+    after a read-only verification equals the set before it, dependency objects are materialized before any referring
+    head with activation markers last, and every recovery action identifier comes from the canonical inventory or a
+    declared owner route. Regression coverage is `tests/test_pm_jujutsu_closure_semantics.py`.
+  - >-
+    Two obligations in this unit have no validator surface and are recorded as open questions in
+    `pldg-20260917-001-jujutsu-continuation4-corrections`: the enumerated list of machine-local and ephemeral store
+    entries for a pinned JJ version, and the adapter's complete declared native effect scope per invocation.
   - future colocated/non-colocated/shared-workspace clean-host restore, GC race, historical-operation, unsafe-config, collision/conflict, and no-hidden-snapshot tests
 risk_class: incomplete_jj_operation_recovery_or_restore_dual_writer
 reasoning_tier: high
