@@ -1,0 +1,22 @@
+{
+  "errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Decision_Log.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Decision_Log.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']"
+  ],
+  "ledger_id": "pldg-20260917-001-jujutsu-continuation4-corrections",
+  "schema_id": "pm.bootstrap_ledger_validator_report.v1",
+  "status": "fail",
+  "summary": {
+    "atoms": 13,
+    "compile_queue_items": 14,
+    "corrections": 13,
+    "decisions": 13,
+    "events": 5,
+    "plan_units_checked": 99,
+    "questions": 10
+  },
+  "warnings": [],
+  "generated_at_utc": "2026-09-17T05:37:48Z",
+  "interpretation": "The three errors are the pre-existing governance coverage omissions for the owner documents this wave edits. The F106 to F109 landing recorded the same class for the two Jujutsu documents; Plans/Decision_Log.md joins the Spec_Lock and plan_graph lines because it is a canonical target of this ledger. They are not caused by this wave and no other validation error is reported: every structural, count, cursor, atom, queue, PlanUnit and registry check passes."
+}

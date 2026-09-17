@@ -1,0 +1,22 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260917-001-jujutsu-continuation4-corrections",
+  "updated_at_utc": "2026-09-17T05:33:57.681182+00:00",
+  "title": "Jujutsu continuation 4 correction wave",
+  "status": "compiled",
+  "created_at_utc": "2026-09-17T05:33:57.681182+00:00",
+  "record_counts": {
+    "events": 5,
+    "design_atoms": 13,
+    "decisions": 13,
+    "questions": 10,
+    "blockers": 0,
+    "corrections": 13
+  },
+  "source_refs": [
+    "Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections/source_shards/authorization.md",
+    "Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections/source_shards/findings.md"
+  ],
+  "phase": "compiled_jujutsu_continuation4_corrections",
+  "last_event_id": "evt-005"
+}

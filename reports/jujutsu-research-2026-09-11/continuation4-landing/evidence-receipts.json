@@ -1,0 +1,105 @@
+{
+  "schema": "jj.continuation4.evidence_receipts.v1",
+  "generated_at_utc": "2026-09-17T05:37:09Z",
+  "claim_boundary": "Every `use` field says what the named file actually supports, not what it is about. A file that only mentions a subject is recorded as that fact, not as support.",
+  "in_repository": [
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/adjudication/consolidated-candidates.json",
+      "sha256": "f09790f1e3b83a3675043741707ebbdc50d4c10e01bea7fdfe9fc38bbe40879c",
+      "use": "The 27 continuation-4 candidates with their classifications, cited passages and continuation-3 rejection checks. Supports which nineteen were correction-shaped and which five were already flagged.",
+      "in_repository": true
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/adjudication/README.md",
+      "sha256": "c07c545ddc4588b65ba95a28868a46a30406fc3d70439f55050c27ac51d46d87",
+      "use": "The bundle's ranking order, which set the order the Part 1 adjudication worked in, and the cross-arm factual verifications V1 and V2. V1 is what withdrew the UNIX_EPOCH leg of record 9.",
+      "in_repository": true
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/adjudication/arm-c-candidates.json",
+      "sha256": "86294630038f6222a3325cb949fdbbcb86c1c92618d7ba42e040740eceac471f",
+      "use": "Assertions, cited passages and evidence hashes for C4C-01, C4C-02, C4C-03 and C4C-05, and the amendment that withdraws one supporting leg of C4C-05.",
+      "in_repository": true
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/adjudication/claude-hicap-candidates.json",
+      "sha256": "65a1824175a93230ebe25b038546c8cd512b053396dfec8b763dff7bd189beef",
+      "use": "Assertions, cited passages and evidence hashes for C4H-01 through C4H-05.",
+      "in_repository": true
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/adjudication/deepseek41-candidates.json",
+      "sha256": "a06310c4e63eabe7b983312074bf3474f5d75282947d6dd842062a303d52fa16",
+      "use": "Assertions, cited passages and evidence hashes for C4D-01, C4D-02 and C4D-03. C4D-02 and C4D-03 were not landed.",
+      "in_repository": true
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/adjudication/muse13-candidates.json",
+      "sha256": "88b773f3f2d9921ff7931b0c6bf9042e75b27c001c37cca8708dd022a743576e",
+      "use": "Assertions, cited passages and evidence hashes for C4M-01, C4M-02 and C4M-04. C4M-04 was reclassified and answered as DL-057.",
+      "in_repository": true
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/adjudication/union-candidates.json",
+      "sha256": "85baf934a26b55b283a385b5542e76101a66e51a401ca23ad91b916da1132357",
+      "use": "Assertions, cited passages and evidence hashes for C4U-01 and C4U-02.",
+      "in_repository": true
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/adjudication/glm53-candidates.json",
+      "sha256": "11081996ff57303993779677e4b83cc51c7723d8a343986cb19c3e9d5388f442",
+      "use": "Assertions, cited passages and evidence hashes for C4G-01 and C4G-03. C4G-03 was reclassified and deferred under DL-056.",
+      "in_repository": true
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/adjudication/SHA256SUMS",
+      "sha256": "fdbb5b0c8affa9940642c26f894245e78fb88dc608ae5ef2c6a8b1081e1c1791",
+      "use": "The bundle-side hash record the twenty-three run-state evidence files were checked against.",
+      "in_repository": true
+    }
+  ],
+  "out_of_repository": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/c4-candidates-20260917/ADJUDICATION_PART1.md",
+      "sha256": "d6b09e549eb9c2cfb4b226d19fd2fbe381ac4255ee117d8ef55d7cd5e1d59b16",
+      "use": "The Part 1 adjudication record: one verdict per candidate with the promise, the contradiction, the currentness check on current main and the corrected line references. It is the direct source for every promise and contradiction paragraph in this wave's commits and in the ledger's findings shard.",
+      "in_repository": false
+    },
+    {
+      "path": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/C4_CANDIDATE_ANSWERS_20260917.md",
+      "sha256": "544654e50051d8ea99c835b2989d48d1e64fdf040a8e934d6ac6d16226305608",
+      "use": "Jared's seven shape answers, verbatim. Supports DL-058 and questions q-001 through q-005. Agent-relayed; not verifiable from inside this repository.",
+      "in_repository": false
+    },
+    {
+      "path": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/C4_DECISION_CARDS_20260917.html",
+      "sha256": "af57d582f87f6cdce135377af3d5fc844f25b5914f72b44860ce4431af1028d1",
+      "use": "The two decision cards with Jared's answers shown. Supports DL-056, DL-057 and questions q-006 and q-007. Agent-relayed; not verifiable from inside this repository.",
+      "in_repository": false
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/",
+      "sha256": null,
+      "use": "The twenty-three per-arm notes and lead files the nineteen candidates cite. Each one supports exactly the candidate whose evidence list names it; the per-arm candidate files above carry the individual paths and hashes. All twenty-three were re-hashed during Part 1 with zero mismatches. These are raw run state and are not committed here.",
+      "in_repository": false
+    }
+  ],
+  "not_support": [
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/adjudication/cross-arm.json",
+      "use": "Cross-arm scoring and overlap. Read for context; no correction in this wave rests on it."
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/adjudication/evidence-manifest.json",
+      "use": "The continuation-4 run's own evidence manifest. Not read as support for any promise or contradiction here."
+    }
+  ],
+  "withdrawn": [
+    {
+      "claim": "jj op-store GC called with SystemTime::UNIX_EPOCH preserves nothing by recency.",
+      "raised_in": "Arm C, as one supporting leg of C4C-05.",
+      "withdrawn_because": "remove_file_if_not_new keeps a file when its mtime is newer than keep_newer, so UNIX_EPOCH removes nothing. deepseek41 caught it against jj lib/src/simple_op_store.rs and the adjudication bundle amended Arm C's records.",
+      "effect": "Record 9 stands on its lock-coverage leg alone. No commit message, acceptance criterion, ledger record or receipt in this wave cites the withdrawn claim."
+    }
+  ]
+}

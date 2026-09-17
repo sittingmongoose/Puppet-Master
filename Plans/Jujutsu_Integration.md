@@ -187,7 +187,7 @@ reasoning_tier: high
 context_scope: jujutsu_commands
 implementation_surfaces: [Plans/jujutsu_integration_contracts.schema.json, Plans/jujutsu_integration_contract_fixtures.json, Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Wiring_Matrix.production.json, future JJ adapter]
 node_compile_hint: {mode: jujutsu_command_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:TS-03, source_ref:egolite-register:CT-01, source_ref:pldg-20260911-001-jujutsu-receipt-correction:atom-jj-terminal-receipt-001, source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-clone-preinit-native-identity-108]
+source_lineage: [source_ref:egolite-register:TS-03, source_ref:egolite-register:CT-01, source_ref:pldg-20260911-001-jujutsu-receipt-correction:atom-jj-terminal-receipt-001, source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-clone-preinit-native-identity-108, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-divergent-change-representable-c4-02, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-read-proven-non-mutating-c4-05, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-no-interactive-editor-session-c4-08, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-recovery-action-floor-c4-09, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-bookmark-tracking-is-local-c4-10, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-bookmark-disclosure-dl057]
 preserved_exact_tokens: [cmd.jujutsu.*, cmd.jj.*, ObservableWork, before operation ID, after operation ID, native_state_phase, destination_not_initialized]
 negative_constraints: [Do not register cmd.jj.* as a primary command., Do not scrape terminal prose for state., Do not retry an unknown effect.]
 owner_hints: [Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Shared_Integration_Runtime.md]
@@ -310,7 +310,7 @@ reasoning_tier: high
 context_scope: jujutsu_setup_gui_migration
 implementation_surfaces: [Plans/Settings_System.md, Plans/FinalGUISpec.md, future Source Control UI]
 node_compile_hint: {mode: jujutsu_setup_gui_migration_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:SCM-003, source_ref:egolite-register:UI-01]
+source_lineage: [source_ref:egolite-register:SCM-003, source_ref:egolite-register:UI-01, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-native-toolchain-identity-c4-03, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-recovery-action-floor-c4-09]
 preserved_exact_tokens: [Install Jujutsu, Use Jujutsu here, Bookmarks, Operation Log, Ready with limits, Needs attention]
 negative_constraints: [Do not install or mutate silently., Do not show Git-only staging or stash., Do not promote Preview certification without current evidence.]
 owner_hints: [Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Settings_System.md]
@@ -642,6 +642,11 @@ source_lineage:
   - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.3
   - source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-jj-restore-readiness-consistency-106
   - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-restore-object-verification-depth-c4-01
+  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-native-toolchain-identity-c4-03
+  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-store-pointer-resolution-c4-04
+  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-read-proven-non-mutating-c4-05
+  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-store-entry-disposition-c4-06
+  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-closure-decision-procedure-c4-11
 preserved_exact_tokens: [colocated, non-colocated, shared multi-workspace, operation heads, repository views, conflicts, abandoned, rebased, capture barrier, GC fence, ignore-working-copy, object verification, object_verification_depth, full_data_read_passed, "expected_event_types=[]"]
 negative_constraints:
   - Do not treat op-log text, a Git push, mirror clone, Git bundle, current bookmark, or reachable forge as complete JJ recovery.

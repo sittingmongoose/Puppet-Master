@@ -1,0 +1,71 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260917-001-jujutsu-continuation4-corrections",
+  "updated_at_utc": "2026-09-17T05:33:57.681182+00:00",
+  "last_event_id": "evt-005",
+  "canonical_plan_targets": [
+    "Plans/Decision_Log.md",
+    "Plans/Jujutsu_Integration.md",
+    "Plans/Source_Control_System.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Decision_Log.md",
+    "Plans/Jujutsu_Integration.md",
+    "Plans/Source_Control_System.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Decision_Log.md",
+    "Plans/Jujutsu_Integration.md",
+    "Plans/Source_Control_System.md",
+    "Plans/backup_restore_system_contracts.schema.json",
+    "Plans/final_gui_interaction_contract_fixtures.json",
+    "Plans/final_gui_interaction_contracts.schema.json",
+    "Plans/jujutsu_integration_contract_fixtures.json",
+    "Plans/jujutsu_integration_contracts.schema.json",
+    "Plans/source_control_contract_fixtures.json",
+    "Plans/source_control_contracts.schema.json"
+  ],
+  "governance_status": "not_requested",
+  "latest_audit_ref": "reports/jujutsu-research-2026-09-11/continuation4-landing/verification.json",
+  "latest_audit_status": "COMPILED_CORRECTION_INTEGRITY_PASS_PENDING_INDEPENDENT_BRANCH_REVIEW",
+  "validation_state": {
+    "ledger_health": "fail_deferred_governance_coverage",
+    "canonical_compile": "applied_thirteen_adjudicated_corrections_and_three_owner_decisions",
+    "scoped_contracts": "pass",
+    "plan_index": "pass",
+    "configured_shards": "pass",
+    "semantic_gate_tests": "pass",
+    "claim_boundary": "Static schema, fixture, shard, index and semantic-gate integrity only. No governance seal, runtime certification or readiness admission.",
+    "partial_enforcement": "Three obligations have no validator surface and are recorded as open questions q-008, q-009 and q-010 rather than implied by the contracts.",
+    "governance_coverage_errors": [
+      "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+      "governance coverage targets missing from Spec_Lock coverage: ['Plans/Decision_Log.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+      "governance coverage targets missing from plan_graph coverage: ['Plans/Decision_Log.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']"
+    ]
+  },
+  "phase": "compiled_jujutsu_continuation4_corrections",
+  "accepted_decisions_count": 13,
+  "design_atoms_total": 13,
+  "ready_for_plan_compile_atoms": 0,
+  "candidate_atoms_count": 0,
+  "open_questions_count": 3,
+  "deferred_questions_count": 0,
+  "open_blockers_count": 0,
+  "compiled_plan_unit_ids": [
+    "DL-056",
+    "DL-057",
+    "DL-058",
+    "JJI-003",
+    "JJI-006",
+    "JJI-008",
+    "SCS-005",
+    "SCS-014",
+    "SCS-015",
+    "SCS-017"
+  ],
+  "cursor": {
+    "last_event_id": "evt-005",
+    "next_action": "Thirteen corrections and three owner decisions are compiled. Three questions stay open and none blocks landing: q-008 the enumerated machine-local and ephemeral store entry list for a pinned JJ version, q-009 the adapter's complete declared native effect scope per invocation, and q-010 whether the recovery floor commands are servable from the operation store alone. The branch stops for independent review before landing on main."
+  },
+  "landing_condition": "Reviewer approval, then fast-forward onto main with regenerated shards and index."
+}

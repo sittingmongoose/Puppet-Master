@@ -210,6 +210,27 @@
         "Plans/Wiring_Matrix.md",
         "Plans/storage-plan.md"
       ]
+    },
+    {
+      "ledger_id": "pldg-20260917-001-jujutsu-continuation4-corrections",
+      "title": "Jujutsu continuation 4 correction wave",
+      "status": "compiled",
+      "phase": "compiled_jujutsu_continuation4_corrections",
+      "created_at_utc": "2026-09-17T05:33:57.681182+00:00",
+      "last_updated_at_utc": "2026-09-17T05:33:57.681182+00:00",
+      "last_event_id": "evt-005",
+      "canonical_plan_targets": [
+        "Plans/Decision_Log.md",
+        "Plans/Jujutsu_Integration.md",
+        "Plans/Source_Control_System.md"
+      ],
+      "resume_file": "Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections/state/handoff.json",
+      "notes": "Thirteen adjudicated corrections from continuation 4 of the Jujutsu research, merged from nineteen correction-shaped candidates across six review arms, compiled into JJI-003, JJI-006, JJI-008, SCS-005, SCS-014, SCS-015 and SCS-017 with their existing schemas and fixtures. Every cited passage was re-read on current main first and the drifted line numbers were re-verified; F106 to F109 and DL-051 to DL-054 covered none of the thirteen. Jared's seven shape answers are DL-058 and the two product-choice cards are DL-056 and DL-057. The contract semantic gate gains the jujutsu_integration_contracts branch with exactly four relational rules under that authorization, with tests/test_pm_jujutsu_closure_semantics.py; no other file under scripts/ changed. Contracts, configured shards, plan index and both semantic-gate test modules pass. Three questions stay open and none blocks landing: q-008 the enumerated machine-local store entry list, q-009 the adapter's declared native effect scope, and q-010 whether the recovery floor commands are servable from the operation store alone. Candidate C4D-02 stays rejected as inside continuation 3's marker-only conflict rejection, C4D-03 is covered by existing canon, and C4D-04, C4M-03, C4G-02 and C4G-03 are deferred under DL-056 rather than declined. Not yet landed on main; the branch stops for independent review. No packet disposition, governance seal or runtime claim.",
+      "compiled_owner_docs": [
+        "Plans/Decision_Log.md",
+        "Plans/Jujutsu_Integration.md",
+        "Plans/Source_Control_System.md"
+      ]
     }
   ],
   "paused_ledgers": [],
@@ -1546,5 +1567,5 @@
       "updated_at_utc": "2026-07-04T00:47:25Z"
     }
   ],
-  "updated_at_utc": "2026-09-16T21:28:30.843675+00:00"
+  "updated_at_utc": "2026-09-17T05:33:57.681182+00:00"
 }

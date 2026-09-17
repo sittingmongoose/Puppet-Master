@@ -1,0 +1,22 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260917-001-jujutsu-continuation4-corrections",
+  "updated_at_utc": "2026-09-17T05:33:57.681182+00:00",
+  "status": "fail_deferred_governance_coverage",
+  "summary": {
+    "events": 5,
+    "design_atoms": 13,
+    "decisions": 13,
+    "open_questions": 3,
+    "deferred_questions": 0,
+    "open_blockers": 0,
+    "compile_queue_items": 14
+  },
+  "notes": "The three errors are the pre-existing governance coverage omissions for the two Jujutsu owner documents, identical to the ones the F106 to F109 landing recorded. They are not caused by this wave.",
+  "validator_status": "fail",
+  "errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Decision_Log.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Decision_Log.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']"
+  ]
+}

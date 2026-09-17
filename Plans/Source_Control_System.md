@@ -245,7 +245,7 @@ reasoning_tier: high
 context_scope: source_control_gui_and_settings
 implementation_surfaces: [Plans/Settings_System.md, Plans/FinalGUISpec.md, future Source Control Slint components]
 node_compile_hint: {mode: adaptive_source_control_projection, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:UI-01, source_ref:egolite-register:UI-03]
+source_lineage: [source_ref:egolite-register:UI-01, source_ref:egolite-register:UI-03, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-bookmark-disclosure-dl057]
 preserved_exact_tokens: [Changes, Workspaces, History, Git Branches, JJ Bookmarks, Review Versions, Threads, current checks, Source of Truth, Mirror Health, repository_automation, "Actions & Pipelines", github_actions, Diagnostics and Receipts]
 negative_constraints: [Do not create a panel per forge or backend., Do not show staging or stash for JJ., Do not expose underscore enums or raw IDs in ordinary UI.]
 owner_hints: [Plans/Source_Control_System.md, Plans/Settings_System.md, Plans/FinalGUISpec.md]
@@ -933,6 +933,7 @@ source_lineage:
   - Plans/Backup_Restore_System.md#BRS-006
   - Plans/Backup_Restore_System.md#BRS-014
   - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.3
+  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-gc-fence-coverage-c4-07
 preserved_exact_tokens: [BackupManifest, BackupRepositoryBinding, capture barrier, GC fence, RestoreRun, Restore as New, Sign-in Required, External Reattachment Required, RepositoryForgeBinding, AutomationBinding, "expected_event_types=[]"]
 negative_constraints:
   - Do not move BackupManifest, RestoreRun, activation, rollback, credential custody, Forge adapters, or AutomationBinding into Source Control.
@@ -997,6 +998,7 @@ source_lineage:
   - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:23-29
   - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:31-37
   - source_ref:corrected-slice:machine__requirements.json__part-003__lines-000401-000620.txt:57-108
+  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-conflict-surface-scope-dl056
 preserved_exact_tokens: [ready, not_configured, auth_required, permission_denied, policy_blocked, protected, unsupported, adapter_missing, external_only, temporarily_unavailable, stale, unknown, current @, change ID, commit ID, outcome_unknown]
 negative_constraints:
   - Do not turn unavailable or unknown checks into zero failed checks or unsupported.
@@ -1161,6 +1163,7 @@ source_lineage:
   - Plans/Decision_Log.md#DL-052
   - Plans/Decision_Log.md#DL-053
   - Plans/Decision_Log.md#DL-054
+  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-divergent-change-representable-c4-02
 preserved_exact_tokens: [SourceGraph, RepositoryContext, git_commit_graph, jujutsu_change_graph, source history, operation history, Backup history, parent_refs_truncated, parent_expansion_cursor_ref]
 negative_constraints:
   - Do not infer repository, workspace, Host, Environment, remote, account, or authority from graph focus, display path, labels, or shared commit objects.

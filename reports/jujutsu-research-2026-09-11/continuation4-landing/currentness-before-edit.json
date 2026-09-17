@@ -1,0 +1,100 @@
+{
+  "schema": "jj.continuation4.currentness_before_edit.v1",
+  "generated_at_utc": "2026-09-17T05:36:38Z",
+  "base_commit": "a6162b559b502278458a56e95c5c0891c3e2a505",
+  "method": "Every passage the nineteen correction-shaped candidates cite was re-read on main at a6162b559b before any edit, and every cited line number was re-checked individually. Seventeen of forty-six had drifted since the frozen adjudication snapshot; none of the cited text had changed.",
+  "files": [
+    {
+      "path": "Plans/Jujutsu_Integration.md",
+      "sha256_at_base": "6092fe5c7c8cbb09f7eb6b03b56356eb9c942c1adc7fa33d04c3d6570e91ec68",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/Source_Control_System.md",
+      "sha256_at_base": "d04c4a05f985269bb5f1a2d91884f032c65d34a3f907097e449ea515b5dccd26",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/Decision_Log.md",
+      "sha256_at_base": "a386cfe3da2297d6132cee6531321d1fd2dbc709180eb4c26fe543a8102e11ba",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/jujutsu_integration_contracts.schema.json",
+      "sha256_at_base": "2e78d087706de9e53702b6463c267688ea31b3ba4a162a220e5939fb3de4dbaa",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/jujutsu_integration_contract_fixtures.json",
+      "sha256_at_base": "2f35bd5db1cbadb8cff1c9f271e3422cb68d0307db0337c16d8954fa32ded0ac",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/source_control_contracts.schema.json",
+      "sha256_at_base": "fb4b0812dafdbbf2063a80299e7805e114c9cafc9bd43bc20726d3ccd25c2523",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/source_control_contract_fixtures.json",
+      "sha256_at_base": "8f8ba18c83734d1bb709e28626729189557c0323654ea3ce500928a8de9be418",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/backup_restore_system_contracts.schema.json",
+      "sha256_at_base": "acf770a78283becb973169b1e80c24f4bf808df90780c48ca71b38c20f62e09a",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/final_gui_interaction_contracts.schema.json",
+      "sha256_at_base": "05264bd70f570b8f1f9a0457119321471d2e1db25b19cda3a25892d41dde0fba",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/final_gui_interaction_contract_fixtures.json",
+      "sha256_at_base": "696407e9f3216db1aa6f7f7ecbc7b54f99902966b4596dbfed13d42bffffa828",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "sha256_at_base": "4fb0eb751c66b8565aa82e5407a97b67c6efb582c9206cbc47ee5f538ed504a6",
+      "edited_by_this_branch": false
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "sha256_at_base": "f51aafa68444acedecad08f0c3964b2786b822377c25745d01bf96f31ef0f9a1",
+      "edited_by_this_branch": false
+    },
+    {
+      "path": "Plans/Backup_Restore_System.md",
+      "sha256_at_base": "42c7a278a65355e1b686b993723e9f93c098db6d2a88c53f763816707043f043",
+      "edited_by_this_branch": false
+    },
+    {
+      "path": "Plans/forge_backup_tsnet_acceptance.json",
+      "sha256_at_base": "b447098646a0e5de002da2e95d290511b7f47a259ee168df3b287dcecbdbbe0c",
+      "edited_by_this_branch": false
+    }
+  ],
+  "drifted_line_references": {
+    "checked": 46,
+    "drifted": 17,
+    "text_changed": 0,
+    "cause": "F106 added an eighth JJI-008 criterion, DL-052 to DL-054 added fields to the source graph node, and the continuation-3 Source Control passage moved from line 308 to 313."
+  },
+  "coverage_check": {
+    "against": [
+      "F106",
+      "F107",
+      "F108",
+      "F109",
+      "DL-051",
+      "DL-052",
+      "DL-053",
+      "DL-054"
+    ],
+    "covered_candidates": [
+      "C4D-03 by Plans/Source_Control_System.md:313, adjudicated in Part 1 and not landed"
+    ],
+    "result": "None of the thirteen landed corrections was covered; none was dropped as already covered."
+  }
+}

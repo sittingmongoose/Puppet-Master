@@ -1,0 +1,163 @@
+{
+  "schema": "jj.continuation4.landing_verification.v1",
+  "generated_at_utc": "2026-09-17T05:37:32Z",
+  "branch": "plans/c4-corrections-20260917",
+  "base": "a6162b559b502278458a56e95c5c0891c3e2a505",
+  "status": "COMPILED_CORRECTION_INTEGRITY_PASS_PENDING_INDEPENDENT_BRANCH_REVIEW",
+  "landed_on_main": false,
+  "commits": [
+    {
+      "sha": "b3fe7745fd18e1f57d5191ed434a1b3daa75ddf4",
+      "subject": "plans: define the depth of JJ restore object verification"
+    },
+    {
+      "sha": "4ba76cce97c53efd78b9aba39adaa660edc8fbae",
+      "subject": "plans: make a divergent Jujutsu change representable and refusable"
+    },
+    {
+      "sha": "f4707fcca051fe73f220373e5e77fced4083be05",
+      "subject": "plans: bind one native toolchain identity and give the certification a matrix"
+    },
+    {
+      "sha": "49bfe7970009d7963be1f0ae34c37718c4662a0f",
+      "subject": "plans: resolve, record and bound the JJ store location pointers"
+    },
+    {
+      "sha": "e1d68f7db49f6b9b4411fb97d600c825c23c88fa",
+      "subject": "plans: prove a JJ read non-mutating instead of declaring it"
+    },
+    {
+      "sha": "251b4da0a58079aac5834f4baa0e3d69de38117f",
+      "subject": "plans: classify every native store entry and say what the GC fence covered"
+    },
+    {
+      "sha": "fe651a1032f7a06ee81b32007a7b23081a91ea0e",
+      "subject": "plans: block an unhostable split, floor the recovery set, make bookmark tracking local"
+    },
+    {
+      "sha": "c8471bb92282d89597bc93a85002ae4e08c4458a",
+      "subject": "plans: give JJ closure completeness a decision procedure"
+    },
+    {
+      "sha": "0e857f435e432132635453a7e76ba62eb7fe5650",
+      "subject": "gate: enforce the four JJ relations JSON Schema cannot express"
+    },
+    {
+      "sha": "53fa84cc5e10379cd3d227d3acee8beb8430a64a",
+      "subject": "plans: record the continuation-4 answers as DL-056, DL-057 and DL-058"
+    }
+  ],
+  "corrections_landed": 13,
+  "candidates_merged_into_them": 15,
+  "owner_decisions_landed": [
+    "DL-056",
+    "DL-057",
+    "DL-058"
+  ],
+  "plan_units_edited": [
+    "JJI-003",
+    "JJI-006",
+    "JJI-008",
+    "SCS-005",
+    "SCS-014",
+    "SCS-015",
+    "SCS-017"
+  ],
+  "plan_units_created": [
+    "DL-056",
+    "DL-057",
+    "DL-058"
+  ],
+  "checks": {
+    "contracts": {
+      "command": "python3 scripts/pm-new-contracts-verify.py",
+      "before": {
+        "status": "pass",
+        "findings": 0,
+        "positive": 1041,
+        "negative": 3379
+      },
+      "after": {
+        "status": "pass",
+        "findings": 0,
+        "positive": 1047,
+        "negative": 3420
+      }
+    },
+    "configured_shards": {
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+      "result": "pass",
+      "failures": 0
+    },
+    "semantic_gate_tests": {
+      "command": "python3 -m unittest tests.test_pm_jujutsu_closure_semantics",
+      "result": "pass",
+      "tests": 13
+    },
+    "existing_gate_tests": {
+      "command": "python3 -m unittest tests.test_pm_source_control_effects",
+      "result": "pass",
+      "tests": 13
+    }
+  },
+  "semantic_gate": {
+    "branch": "jujutsu_integration_contracts",
+    "rules": [
+      "jujutsu_pointer_resolution_incomplete_for_layout",
+      "jujutsu_operation_heads_changed_during_read_only_verification",
+      "jujutsu_closure_publishes_a_head_before_its_dependencies",
+      "jujutsu_recovery_action_not_in_canonical_inventory"
+    ],
+    "authorization": "DL-058, answer 5. Exactly these four rules; no other change under scripts/.",
+    "scripts_files_changed": [
+      "scripts/pm-new-contracts-verify.py"
+    ]
+  },
+  "unenforced_obligations": [
+    {
+      "obligation": "The enumerated machine-local and ephemeral store entry list for a pinned JJ version.",
+      "question": "q-008"
+    },
+    {
+      "obligation": "The adapter's complete declared native effect scope per invocation.",
+      "question": "q-009"
+    },
+    {
+      "obligation": "Whether the recovery floor commands are servable from the operation store alone.",
+      "question": "q-010"
+    }
+  ],
+  "not_landed": {
+    "covered": [
+      {
+        "candidate": "C4D-03",
+        "by": "Plans/Source_Control_System.md:313"
+      }
+    ],
+    "rejected": [
+      {
+        "candidate": "C4D-02",
+        "reason": "Inside continuation 3's rejection 'Marker-only conflict command is a JJ owner defect'."
+      }
+    ],
+    "deferred_under_DL-056": [
+      "C4D-04",
+      "C4M-03",
+      "C4G-02",
+      "C4G-03"
+    ],
+    "flagged_before_this_wave": [
+      "C4C-04",
+      "C4D-04",
+      "C4M-03",
+      "C4U-05",
+      "C4G-02"
+    ],
+    "non_correction_not_adjudicated_here": [
+      "C4M-05",
+      "C4U-03",
+      "C4U-04"
+    ]
+  },
+  "claim_boundary": "Static schema, fixture, shard, index and semantic-gate integrity only. No governance seal, runtime certification, native adapter, security, performance or readiness claim."
+}

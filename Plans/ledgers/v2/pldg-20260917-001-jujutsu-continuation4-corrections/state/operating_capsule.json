@@ -1,0 +1,22 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260917-001-jujutsu-continuation4-corrections",
+  "updated_at_utc": "2026-09-17T05:33:57.681182+00:00",
+  "authority": "Live Plans are canon; this ledger is source lineage only.",
+  "scope": "Thirteen adjudicated corrections from continuation 4 of the Jujutsu research, merged from nineteen correction-shaped candidates across six review arms, plus the two product-choice decisions the same adjudication raised and Jared answered as DL-056 and DL-057.",
+  "negative_constraints": [
+    "Do not add a fifth Jujutsu semantic rule or any other change under scripts/ under this authorization.",
+    "Do not claim runtime, native adapter, security, performance or readiness evidence from these static contracts.",
+    "Do not change Spec_Lock, evidence bundles, plan graph, auto_decisions, WorkNodes or NodeSeeds.",
+    "Do not reopen C4D-02; it stays rejected as inside continuation 3's marker-only conflict rejection, and DL-056 scopes the Jujutsu side as a product decision rather than reopening it.",
+    "Do not record the deferred diff and merge editor save-surface candidates C4D-04, C4M-03, C4G-02 and C4G-03 as declined; DL-056 defers them.",
+    "Do not cite the withdrawn UNIX_EPOCH op-store GC claim as support for the GC fence coverage rule.",
+    "Do not invent the enumerated machine-local store entry list before the source audit recorded as q-008 is done.",
+    "Do not insert divergent into graph_states at a position that shifts an existing frozen value."
+  ],
+  "source_refs": [
+    "Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections/source_shards/authorization.md",
+    "Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections/source_shards/findings.md"
+  ],
+  "next_action": "Thirteen corrections and three owner decisions are compiled. Three questions stay open and none blocks landing: q-008 the enumerated machine-local and ephemeral store entry list for a pinned JJ version, q-009 the adapter's complete declared native effect scope per invocation, and q-010 whether the recovery floor commands are servable from the operation store alone. The branch stops for independent review before landing on main."
+}

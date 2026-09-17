@@ -1,0 +1,30 @@
+{
+  "schema": "jj.continuation4.derived_scope.v1",
+  "generated_at_utc": "2026-09-17T05:36:38Z",
+  "regeneration": [
+    "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+    "python3 scripts/pm-plan-index.py generate"
+  ],
+  "policy": "Derived files were regenerated and committed in the same commit as the source edit that caused them.",
+  "shards_touched": {
+    "note": "Plans/Jujutsu_Integration.md and Plans/Source_Control_System.md are not in sharding_config sources, so they produce no shards. Plans/Decision_Log.md is, and its shard set regenerated with the DL-056, DL-057 and DL-058 commit.",
+    "paths": [
+      "Plans/_shards/decision_log/"
+    ]
+  },
+  "plan_index_touched": [
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/node_readiness_report.json",
+    "Plans/.plan_index/plan_units.jsonl"
+  ],
+  "not_touched": [
+    "Plans/Spec_Lock.json",
+    "Plans/.evidence/**",
+    "Plans/auto_decisions.jsonl",
+    "Plans/plan_graph.json",
+    "Plans/.plan_migration/**"
+  ]
+}
