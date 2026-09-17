@@ -1,0 +1,72 @@
+{
+  "note": "Every continuation-4 freeze in order. A run pins the protocol file hashes it validated against, so protocol-fingerprints.json proves which generation each arm ran.",
+  "generations": [
+    {
+      "freeze_sha256": "968aac0eecd4fa448a0eccfc91c185c93500f6b3be91a5b50d23a7809adf899e",
+      "landed": "2026-09-16T18:48Z",
+      "fingerprint": "6b0ef7b97162081b",
+      "contains": "Claude adapter, claude scheduler branch, per-arm policies (claude, union), zero-tariff omp boundary for union-alpha, claude and union pricing.",
+      "arms": [
+        "union attempt 1 (aborted, provider outage)",
+        "claude attempt 1 (aborted, adapter defect)"
+      ]
+    },
+    {
+      "freeze_sha256": "18fe177b8da49fa47a6db0557d596e636241711aa7e42dfa41ef29f9faadc70d",
+      "landed": "2026-09-16T19:28Z",
+      "fingerprint": "0401998ac3125045",
+      "contains": "Claude adapter counts distinct response ids (was stream blocks) and drives the durable Meter; the three priced oh-my-pi arms with a bounded-tariff boundary; collect_omp_job_usage so oh-my-pi jobs reconcile.",
+      "arms": [
+        "claude (Arm C)"
+      ]
+    },
+    {
+      "freeze_sha256": "eef0e685f28d166aa64520a24fee406365f597952645afc5aaeb74e1f9a716f3",
+      "landed": "2026-09-16T20:02Z",
+      "fingerprint": "6e438a01668ec4c9",
+      "contains": "OpenRouter route admitted for the union arm; the boundary check verifies the route a run will actually call.",
+      "arms": [
+        "deepseek41 attempt 1 (aborted, accounting defect)"
+      ]
+    },
+    {
+      "freeze_sha256": "5f5e0c27a9811b94a7d9aba0bc2e5855edb54c51cc09627106ee8179f1fb5e72",
+      "landed": "2026-09-16T20:18Z",
+      "fingerprint": null,
+      "contains": "claude-hicap arm with authorized higher per-job ceilings.",
+      "arms": [],
+      "note": "Superseded minutes later; no run ever used it."
+    },
+    {
+      "freeze_sha256": "fad9e93b9e61ec5b165b6de0aed0cba63145f217343a2fca67217862be9a557a",
+      "landed": "2026-09-16T20:19Z",
+      "fingerprint": "ff6b49f2519e6aec",
+      "contains": "record_response: a post-response boundary always counts the response that already happened and only denies the next one; the claude ceiling check asks for the arm's authorized ceilings.",
+      "arms": [
+        "deepseek41 (rerun)",
+        "claude-hicap"
+      ]
+    },
+    {
+      "freeze_sha256": "1440ca6c96460e591a334decf00132b915cd9b373fd7c9c91a0153f153e99475",
+      "landed": "2026-09-16T21:40Z",
+      "fingerprint": "e77238fbea761a01",
+      "contains": "Adapters read the installed runtime's version and binary hash instead of declaring a hardcoded version; gate proofs carry it and the boundary check compares the hash; cost_policy label deepseek_metadata renamed hybrid_arm_deepseek_metadata.",
+      "arms": [
+        "muse13",
+        "union attempt 2 (aborted, worker-record race)",
+        "glm53 attempt 1 (aborted, same race)"
+      ]
+    },
+    {
+      "freeze_sha256": "53f8fac98b02e8f2c191e076c8460222e728589b7fb367bfd5c3a0899f9df970",
+      "landed": "2026-09-17T00:1xZ",
+      "fingerprint": "d4aa6f95cd22f33f",
+      "contains": "put() writes through a temp name unique to the writing process and call, with its own cleanup on failure, plus test_worker_record_races.py running two stub campaigns concurrently (one case proves the old shared temp name still loses the rename).",
+      "arms": [
+        "union",
+        "glm53"
+      ]
+    }
+  ]
+}

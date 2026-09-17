@@ -1,0 +1,258 @@
+{
+  "arm": "claude",
+  "run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b",
+  "stop_reason": "Stop: admitted_attempt_cap",
+  "campaign_terminal": {
+    "at": "2026-09-16T20:00:39.893662+00:00",
+    "stop_reason": "Stop: admitted_attempt_cap",
+    "partial": true,
+    "pending_intake_preserved": true
+  },
+  "route": null,
+  "limits": {
+    "new_admissions": 12,
+    "workers": 3,
+    "job_seconds": 2400,
+    "max_model_requests": null,
+    "job_budget_usd": null,
+    "arm_seconds": 14400,
+    "batch_chars": 10000,
+    "batch_max_leads": 3
+  },
+  "stage_timing": {
+    "discovery": {
+      "wall_seconds": 0,
+      "summed_job_seconds": 0,
+      "average_concurrency": null
+    },
+    "implementation": {
+      "wall_seconds": 0,
+      "summed_job_seconds": 0,
+      "average_concurrency": null
+    },
+    "history": {
+      "wall_seconds": 0,
+      "summed_job_seconds": 0,
+      "average_concurrency": null
+    },
+    "reconcile": {
+      "wall_seconds": 1386.1762328147888,
+      "summed_job_seconds": 3181.055,
+      "average_concurrency": 2.294841683687294
+    },
+    "compare": {
+      "wall_seconds": 1215.9205470085144,
+      "summed_job_seconds": 1707.8690000000001,
+      "average_concurrency": 1.404589308242063
+    }
+  },
+  "arm_wall_seconds": 1867.9612114429474,
+  "summed_job_seconds": 4888.924,
+  "average_concurrency": 2.617251348716949,
+  "processing_seconds": 1868.0398044586182,
+  "job_status_counts": {
+    "request_limit_reached": 11,
+    "completed": 1
+  },
+  "bound_by_counts": {
+    "responses": 11,
+    "finished": 1
+  },
+  "jobs": [
+    {
+      "job": "J0017-reconcile",
+      "phase": "reconcile",
+      "status": "request_limit_reached",
+      "bound_by": "responses",
+      "elapsed_s": 410.1,
+      "requests": 40,
+      "receipts": 40,
+      "reconciled": true,
+      "captured_usd": 2.7858,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": "aborted_streaming"
+    },
+    {
+      "job": "J0018-reconcile",
+      "phase": "reconcile",
+      "status": "request_limit_reached",
+      "bound_by": "responses",
+      "elapsed_s": 326.2,
+      "requests": 40,
+      "receipts": 40,
+      "reconciled": true,
+      "captured_usd": 2.71,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": "aborted_tools"
+    },
+    {
+      "job": "J0019-reconcile",
+      "phase": "reconcile",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 641.0,
+      "requests": 38,
+      "receipts": 38,
+      "reconciled": true,
+      "captured_usd": 4.0172,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "runtime_terminal_reason": "completed"
+    },
+    {
+      "job": "J0020-reconcile",
+      "phase": "reconcile",
+      "status": "request_limit_reached",
+      "bound_by": "responses",
+      "elapsed_s": 291.9,
+      "requests": 40,
+      "receipts": 40,
+      "reconciled": true,
+      "captured_usd": 2.2984,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": "aborted_streaming"
+    },
+    {
+      "job": "J0021-reconcile",
+      "phase": "reconcile",
+      "status": "request_limit_reached",
+      "bound_by": "responses",
+      "elapsed_s": 212.7,
+      "requests": 40,
+      "receipts": 40,
+      "reconciled": true,
+      "captured_usd": 1.9805,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": "aborted_streaming"
+    },
+    {
+      "job": "J0022-reconcile",
+      "phase": "reconcile",
+      "status": "request_limit_reached",
+      "bound_by": "responses",
+      "elapsed_s": 542.9,
+      "requests": 40,
+      "receipts": 40,
+      "reconciled": true,
+      "captured_usd": 3.3231,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "runtime_terminal_reason": "aborted_streaming"
+    },
+    {
+      "job": "J0023-reconcile",
+      "phase": "reconcile",
+      "status": "request_limit_reached",
+      "bound_by": "responses",
+      "elapsed_s": 295.6,
+      "requests": 40,
+      "receipts": 40,
+      "reconciled": true,
+      "captured_usd": 2.4288,
+      "leads": 3,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": "aborted_streaming"
+    },
+    {
+      "job": "J0024-compare",
+      "phase": "compare",
+      "status": "request_limit_reached",
+      "bound_by": "responses",
+      "elapsed_s": 318.1,
+      "requests": 40,
+      "receipts": 40,
+      "reconciled": true,
+      "captured_usd": 2.815,
+      "leads": 3,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": "aborted_streaming"
+    },
+    {
+      "job": "J0025-reconcile",
+      "phase": "reconcile",
+      "status": "request_limit_reached",
+      "bound_by": "responses",
+      "elapsed_s": 460.7,
+      "requests": 40,
+      "receipts": 40,
+      "reconciled": true,
+      "captured_usd": 2.8392,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "runtime_terminal_reason": "aborted_streaming"
+    },
+    {
+      "job": "J0026-compare",
+      "phase": "compare",
+      "status": "request_limit_reached",
+      "bound_by": "responses",
+      "elapsed_s": 892.8,
+      "requests": 40,
+      "receipts": 40,
+      "reconciled": true,
+      "captured_usd": 4.9468,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "runtime_terminal_reason": "aborted_streaming"
+    },
+    {
+      "job": "J0027-compare",
+      "phase": "compare",
+      "status": "request_limit_reached",
+      "bound_by": "responses",
+      "elapsed_s": 238.9,
+      "requests": 40,
+      "receipts": 40,
+      "reconciled": true,
+      "captured_usd": 3.2431,
+      "leads": 3,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": "aborted_streaming"
+    },
+    {
+      "job": "J0028-compare",
+      "phase": "compare",
+      "status": "request_limit_reached",
+      "bound_by": "responses",
+      "elapsed_s": 258.0,
+      "requests": 40,
+      "receipts": 40,
+      "reconciled": true,
+      "captured_usd": 2.7362,
+      "leads": 3,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": "aborted_streaming"
+    }
+  ],
+  "captured_upper_usd": 36.12404350000002,
+  "cap_usd": 100,
+  "runtime_reported_cost_usd": 36.124,
+  "unresolved_charge_usd": 0.0,
+  "job_end_reconciled": 12,
+  "job_count": 12,
+  "lead_stage_counts": {
+    "discovered": 93,
+    "studied": 0,
+    "reconciled": 6,
+    "comparison_delivered": 3
+  },
+  "pending_reconcile_leads": 93,
+  "pending_compare_leads": 99,
+  "note": "Counts and limits only. No output was adjudicated."
+}

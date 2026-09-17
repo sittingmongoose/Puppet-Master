@@ -1,0 +1,61 @@
+{
+  "captured_at": "2026-09-16T20:50Z",
+  "installed_now": {
+    "omp": {
+      "invoked_as": "/home/sittingmongoose/.local/bin/omp",
+      "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
+      "self_reported_version": "omp/18.2.2",
+      "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72",
+      "note": "The directory name says omp-18.1.12-linux-x64; the binary self-reports omp/18.2.2. The directory name is not the version."
+    },
+    "claude": {
+      "invoked_as": "/home/sittingmongoose/.local/bin/claude",
+      "binary": "/home/sittingmongoose/.local/share/claude/versions/2.1.226",
+      "self_reported_version": "2.1.226 (Claude Code)",
+      "sha256": "4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555"
+    }
+  },
+  "per_arm_from_job_records": {
+    "claude (Arm C)": [
+      {
+        "binary": "/home/sittingmongoose/.local/share/claude/versions/2.1.226",
+        "self_reported_version": "2.1.226 (Claude Code)",
+        "sha256": "4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555",
+        "jobs": 12
+      }
+    ],
+    "claude-hicap": [
+      {
+        "binary": "/home/sittingmongoose/.local/share/claude/versions/2.1.226",
+        "self_reported_version": "2.1.226 (Claude Code)",
+        "sha256": "4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555",
+        "jobs": 6
+      }
+    ],
+    "deepseek41 (rerun)": [
+      {
+        "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
+        "self_reported_version": "omp/18.2.2",
+        "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72",
+        "jobs": 12
+      }
+    ],
+    "deepseek41 (attempt 1)": [
+      {
+        "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
+        "self_reported_version": "omp/18.2.2",
+        "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72",
+        "jobs": 10
+      }
+    ],
+    "union (attempt 1)": [
+      {
+        "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
+        "self_reported_version": "omp/18.1.13",
+        "sha256": "3be5a308cc91e6f6bba148175fbe651d3583ff6d32ae221cb931dc08a64e1f39",
+        "jobs": 1
+      }
+    ]
+  },
+  "correction": "Earlier notes recorded the oh-my-pi runtime as 18.1.13, which was its self-reported version when this session started. The binary has since been updated in place at the same path; every job record carries the version and hash that job actually ran against, and those per-arm rows are authoritative."
+}

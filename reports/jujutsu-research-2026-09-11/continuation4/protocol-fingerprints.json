@@ -1,0 +1,115 @@
+{
+  "note": "Each run pins the protocol file hashes it validated against; runs sharing a fingerprint ran identical code.",
+  "key_files": [
+    "discovery_to_plan.py",
+    "cost_watch.py",
+    "bounded_campaign.py",
+    "adapters/claude_native.py",
+    "adapters/omp_native.py",
+    "native_receipts.py"
+  ],
+  "runs": {
+    "claude (Arm C)": {
+      "protocol_fingerprint": "0401998ac3125045",
+      "discovery_to_plan": "92971fa08881",
+      "cost_watch": "e670ecefb760",
+      "claude_native": "9d87491c907d",
+      "omp_native": "7d4f0a264648"
+    },
+    "claude-hicap": {
+      "protocol_fingerprint": "ff6b49f2519e6aec",
+      "discovery_to_plan": "272e9c5f5bb2",
+      "cost_watch": "965329d22dd3",
+      "claude_native": "fe405587b64e",
+      "omp_native": "5ea4cf7195bb"
+    },
+    "deepseek41": {
+      "protocol_fingerprint": "ff6b49f2519e6aec",
+      "discovery_to_plan": "272e9c5f5bb2",
+      "cost_watch": "965329d22dd3",
+      "claude_native": "fe405587b64e",
+      "omp_native": "5ea4cf7195bb"
+    },
+    "muse13": {
+      "protocol_fingerprint": "e77238fbea761a01",
+      "discovery_to_plan": "272e9c5f5bb2",
+      "cost_watch": "965329d22dd3",
+      "claude_native": "7dbafa653e76",
+      "omp_native": "55489f0316d6"
+    },
+    "union": {
+      "protocol_fingerprint": "d4aa6f95cd22f33f",
+      "discovery_to_plan": "7b3df6a00936",
+      "cost_watch": "965329d22dd3",
+      "claude_native": "7dbafa653e76",
+      "omp_native": "55489f0316d6"
+    },
+    "glm53": {
+      "protocol_fingerprint": "d4aa6f95cd22f33f",
+      "discovery_to_plan": "7b3df6a00936",
+      "cost_watch": "965329d22dd3",
+      "claude_native": "7dbafa653e76",
+      "omp_native": "55489f0316d6"
+    },
+    "claude attempt 1 (aborted)": {
+      "protocol_fingerprint": "6b0ef7b97162081b",
+      "discovery_to_plan": "92971fa08881",
+      "cost_watch": "a3e91bcfbe90",
+      "claude_native": "d1e76bce3f71",
+      "omp_native": "e2c9bc0e9fe6"
+    },
+    "deepseek41 attempt 1 (aborted)": {
+      "protocol_fingerprint": "6e438a01668ec4c9",
+      "discovery_to_plan": "92971fa08881",
+      "cost_watch": "f193ce214fca",
+      "claude_native": "9d87491c907d",
+      "omp_native": "91e636091f9a"
+    },
+    "union attempt 1 (aborted)": {
+      "protocol_fingerprint": "6b0ef7b97162081b",
+      "discovery_to_plan": "92971fa08881",
+      "cost_watch": "a3e91bcfbe90",
+      "claude_native": "d1e76bce3f71",
+      "omp_native": "e2c9bc0e9fe6"
+    },
+    "union attempt 2 (aborted)": {
+      "protocol_fingerprint": "e77238fbea761a01",
+      "discovery_to_plan": "272e9c5f5bb2",
+      "cost_watch": "965329d22dd3",
+      "claude_native": "7dbafa653e76",
+      "omp_native": "55489f0316d6"
+    },
+    "glm53 attempt 1 (aborted)": {
+      "protocol_fingerprint": "e77238fbea761a01",
+      "discovery_to_plan": "272e9c5f5bb2",
+      "cost_watch": "965329d22dd3",
+      "claude_native": "7dbafa653e76",
+      "omp_native": "55489f0316d6"
+    }
+  },
+  "groups": {
+    "0401998ac3125045": [
+      "claude (Arm C)"
+    ],
+    "ff6b49f2519e6aec": [
+      "claude-hicap",
+      "deepseek41"
+    ],
+    "e77238fbea761a01": [
+      "muse13",
+      "union attempt 2 (aborted)",
+      "glm53 attempt 1 (aborted)"
+    ],
+    "d4aa6f95cd22f33f": [
+      "union",
+      "glm53"
+    ],
+    "6b0ef7b97162081b": [
+      "claude attempt 1 (aborted)",
+      "union attempt 1 (aborted)"
+    ],
+    "6e438a01668ec4c9": [
+      "deepseek41 attempt 1 (aborted)"
+    ]
+  }
+}

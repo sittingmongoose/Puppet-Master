@@ -1,0 +1,67 @@
+{
+  "note": "SHA-256 manifests of every frozen output tree. Raw workspaces stay under ~/PM-Experiments/jujutsu-followup-20260911/continuation4/; nothing raw is in this repository.",
+  "arms": {
+    "claude (Arm C)": {
+      "path": "runs/jujutsu-claude-20260916b",
+      "manifest": "arm-outputs/arm-c-manifest.json",
+      "manifest_sha256": "a0d3b38cb37ee3dfa47ec5ac878ce903f0ff15a0166d51c235af82613c01dd39",
+      "files": 6234
+    },
+    "claude-hicap": {
+      "path": "runs/jujutsu-claude-hicap-20260916-203937",
+      "manifest": "arm-outputs/claude-hicap-manifest.json",
+      "manifest_sha256": "ebf8612dd5953cbf8f4da9fa6b6b5b11a89e4015cc907c26d0afc553b0eafbb5",
+      "files": 8098
+    },
+    "deepseek41": {
+      "path": "runs/jujutsu-deepseek41-20260916-202016",
+      "manifest": "arm-outputs/deepseek41-manifest.json",
+      "manifest_sha256": "de1811511814da303a8116ce53dbc260ec11144acc1054023b86dccc76206558",
+      "files": 7015
+    },
+    "muse13": {
+      "path": "runs/jujutsu-muse13-20260916-215801",
+      "manifest": "arm-outputs/muse13-manifest.json",
+      "manifest_sha256": "c20aa3925d8a04521fe5314ff993b9a861b80c4c02ca6f1b500b9502659991d3",
+      "files": 11510
+    },
+    "union": {
+      "path": "runs/jujutsu-union-20260916-221929",
+      "manifest": "arm-outputs/union-manifest.json",
+      "manifest_sha256": "2e8ada3ff095c4fd544daee0311e17cc78503b166a43db4331693495d205f5d8",
+      "files": 7894
+    },
+    "glm53": {
+      "path": "runs/jujutsu-glm53-20260917-000655",
+      "manifest": "arm-outputs/glm53-manifest.json",
+      "manifest_sha256": "e2d003ea0eb895d403cd42a28c2416f13ade5d81ee8d1a358ca2031d6a5b1931",
+      "files": 5758
+    }
+  },
+  "aborted_attempts_preserved_not_scored": {
+    "union attempt 1 (Union Alpha 500s on both opencode routes)": {
+      "path": "arm-history/aborted-attempt-1",
+      "manifest_sha256": "116c843eab4436722e667e7225176ab50fa3b9247f97995d63db3fa92fee9257"
+    },
+    "claude attempt 1 (adapter counted stream blocks as responses)": {
+      "path": "arm-history/claude-attempt-1",
+      "manifest_sha256": "b206e7b40902e5632820f31df50154128acf516ea6c7843f3122b2910e74e04d"
+    },
+    "deepseek41 attempt 1 (post-response boundary miscounted its own denial)": {
+      "path": "arm-history/deepseek41-attempt-1",
+      "manifest_sha256": "e4604ae24847660fbe44c8940b58b283e71f34794ef77e77079f2f900770ee6d"
+    },
+    "union attempt 2 (worker-record temp path race)": {
+      "path": "arm-history/union-aborted-20260916-2157",
+      "manifest_sha256": "1d49e27091d60890916e2039381463211adc2859d4eb69797184440fe1226837"
+    },
+    "glm53 attempt 1 (same race)": {
+      "path": "arm-history/glm53-aborted-20260916-2157",
+      "manifest_sha256": "995a922a279a683c58c880d53676b5a61c4574b71b195453781a06e337fd5b37"
+    }
+  },
+  "qualification": {
+    "path": "qualification",
+    "manifest_sha256": "f98474591ca02762341223c7369ac84a3a9a5f511494e84d891c84b7d7a91e12"
+  }
+}

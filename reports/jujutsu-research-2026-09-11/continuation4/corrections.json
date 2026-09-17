@@ -1,0 +1,43 @@
+{
+  "recorded_at": "2026-09-16T20:52Z",
+  "principle": "Corrections are recorded additively. No frozen run directory, receipt or native record was edited.",
+  "items": [
+    {
+      "id": "C1-deepseek41-selector-label",
+      "raised_by": "adjudicator while scoring deepseek41",
+      "claim": "protocol/arm-budgets/deepseek41.json carries a stale selector label deepseek-v4-flash while all 470 receipts record opencode-go/deepseek-v4.1-flash",
+      "finding": "Confirmed as a label, but it is not a per-arm field. The only occurrence is bound.deepseek_metadata.selector, which is the frozen continuation-3 cost policy block describing the HYBRID arm's research model (opencode-go/deepseek-v4-flash). Every arm's budget copies the whole cost policy into `bound`, so every continuation-4 arm carries it, including the claude arms.",
+      "this_arm_route_is": "opencode-go/deepseek-v4.1-flash",
+      "evidence": {
+        "run_json": "runs/jujutsu-deepseek41-20260916-202016/run.json premium",
+        "launch_gate": "arm-history/deepseek41-attempt-1/launch-gate-deepseek41.json route.selector and the current launch-gate-deepseek41.json",
+        "native_usage_rows": "470 of 470 rows across jobs/*/raw-omp/usage.json record provider opencode-go, model deepseek-v4.1-flash",
+        "adapter_argv": "each jobs/*/raw-omp/run.json argv contains --model opencode-go/deepseek-v4.1-flash"
+      },
+      "correction": "cost_policy.json renames the legacy block to hybrid_arm_deepseek_metadata and states what it applies to; cost_policy.json already carries the correct per-arm selectors under continuation4_arms. The rename is a protocol change and lands at the next idle window with a new freeze hash. Arm budgets already written keep their bytes; this record is the correction of the label for the bundle.",
+      "effect_on_results": "none"
+    },
+    {
+      "id": "C2-omp-runtime-version",
+      "raised_by": "adjudicator",
+      "claim": "the oh-my-pi runtime is the omp-18.1.12-linux-x64 binary self-reporting omp/18.2.2, not 18.1.13",
+      "finding": "Confirmed, with a date boundary. ~/.local/bin/omp is a symlink to /mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64 - a directory name, not a version. That binary self-reported omp/18.1.13 (sha 3be5a308cc91e6f6bba148175fbe651d3583ff6d32ae221cb931dc08a64e1f39) when the union attempt ran at 18:49Z, and self-reports omp/18.2.2 (sha 77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72) since Jared updated it in place; both deepseek41 attempts ran against 18.2.2.",
+      "correction": "arm-outputs/runtime-identity.json records invoked path, resolved binary, self-reported version and sha256 both as installed now and as each arm's own job records report them; the per-arm rows are authoritative because each job hashes the binary it actually ran. The adapters' hardcoded verified_runtime_version becomes a live reading (version plus binary hash) at the next idle window, so a runtime that changes between the gate and the campaign fails closed instead of being recorded falsely.",
+      "effect_on_results": "none; no arm ran against a runtime other than the one its own job records name"
+    },
+    {
+      "id": "C3-41-responses-against-a-40-ceiling",
+      "raised_by": "adjudicator",
+      "question": "is 41 responses on a 40 ceiling the pre-fix counting or a remaining off-by-one in record_response",
+      "answer": "Neither: it is the kill window of a post-response boundary, and the accounting is consistent.",
+      "evidence": {
+        "journal_sequence_J0018": "response_recorded ... next_request_denied(model_request_limit) -> response_recorded 0.2 s later -> next_request_denied -> job_end_accounting",
+        "post_fix_consistency": "durable request_count 41 equals receipts 41 in that job, and every one of the 12 jobs reconciled with 0 unresolved",
+        "pre_fix_contrast": "in attempt 1 the same shape produced receipts 41 against a durable count of 40, which failed reconciliation; that was the defect record_response fixed"
+      },
+      "meaning": "The ceiling is enforced after a response, so oh-my-pi can already have dispatched one more request before the adapter kills it. The limit should be read as \"at most 40 admitted responses, with at most one further response already in flight\", not as a hard 40.",
+      "cost_effect": "immaterial here: the arm captured $0.5315 against a $50 cap",
+      "effect_on_results": "none"
+    }
+  ]
+}
