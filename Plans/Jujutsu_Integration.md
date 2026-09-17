@@ -524,6 +524,17 @@ acceptance_criteria:
     host before it reports a result: `historical_operation_result` is `verified_on_disposable_copy` only when
     `toolchain_compatibility` is `verified_compatible`, and a mismatched or unknown version is the typed blocker
     `blocked_version_incompatible` rather than a silent pass.
+  - >-
+    Store location pointers are resolved, recorded and bounded. The closure records every in-store pointer it followed -
+    the `.jj/repo` pointer, the store's Git target, `objects/info/alternates`, the Git `commondir`, and each linked
+    workspace `gitdir` link - with the base each hop resolved against, because the bases differ: an alternates entry
+    resolves against the object database and a `commondir` entry against the Git directory, so a single-base
+    implementation resolves the wrong store while satisfying every other field. The closure also records the environment
+    that resolved them, naming the relevant `GIT_*` values as non-secret references or their explicit absence, never raw
+    machine paths. Before any native command runs in the disposable copy the drill resolves the same pointers again and
+    records where each resolved; a pointer resolving outside the isolation boundary is never followed, and
+    `isolated_verification` is admissible only when every pointer resolved inside it. An unfollowable or out-of-boundary
+    hop surfaces through the existing missing-dependency and blocking receipt refs.
   - Ordinary restore does not activate hooks, aliases, credential helpers, filters, unsafe includes, URL user-info, extraHeaders, SSH material, forge credentials, or provider profiles. Non-secret restored refs and a separately authorized portable envelope remain pending owner validation and a fresh credential lease.
   - Operation History pivots only to existing `cmd.backup.browse`, `cmd.backup.file.compare`, and Project Backup routes; isolated operation inspection/restore uses existing `cmd.jujutsu.operation.show` and `cmd.jujutsu.operation.restore`; neutral rebind/status/remote validation uses Source Control; Forge/AutomationBinding remains Forge-owned. The exact 31-command JJ inventory is unchanged.
   - Machine records require `expected_event_types=[]`; schema and fixture success remains event-silent, handler_unavailable/static, and not runtime, native adapter, clean-host recovery, security, visual, or readiness proof.

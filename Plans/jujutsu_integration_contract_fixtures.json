@@ -2979,6 +2979,39 @@
           "official_source_ref": "official-source:jj:0.44.0",
           "recorded_at_utc": "2026-08-31T20:00:00Z"
         },
+        "pointer_resolutions": [
+          {
+            "pointer_kind": "jj_repo_pointer",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:jj:alpha:repo",
+            "resolution_base": "native_store_root",
+            "resolved_target_ref": "store-path:jj:alpha:repo",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "store_git_target",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:jj:alpha:git-target",
+            "resolution_base": "native_store_root",
+            "resolved_target_ref": "store-path:git:alpha:common",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "git_commondir",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:git:alpha:commondir",
+            "resolution_base": "git_directory",
+            "resolved_target_ref": "store-path:git:alpha:common",
+            "resolved_inside_boundary": true
+          }
+        ],
+        "resolution_environment": {
+          "git_dir_ref": "store-path:git:alpha:dir",
+          "git_common_dir_ref": "store-path:git:alpha:common",
+          "git_object_directory_ref": "store-path:git:alpha:objects",
+          "git_alternate_object_directories_refs": [],
+          "observed_at_utc": "2026-08-31T20:00:00Z"
+        },
         "layout_profile": "colocated",
         "captured_revision": {
           "kind": "jujutsu",
@@ -3051,6 +3084,31 @@
           "official_source_ref": "official-source:jj:0.44.0",
           "recorded_at_utc": "2026-08-31T20:00:00Z"
         },
+        "pointer_resolutions": [
+          {
+            "pointer_kind": "jj_repo_pointer",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:jj:beta:repo",
+            "resolution_base": "native_store_root",
+            "resolved_target_ref": "store-path:jj:beta:repo",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "store_git_target",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:jj:beta:git-target",
+            "resolution_base": "native_store_root",
+            "resolved_target_ref": "store-path:jj:beta:backing",
+            "resolved_inside_boundary": true
+          }
+        ],
+        "resolution_environment": {
+          "git_dir_ref": null,
+          "git_common_dir_ref": null,
+          "git_object_directory_ref": null,
+          "git_alternate_object_directories_refs": [],
+          "observed_at_utc": "2026-08-31T20:00:00Z"
+        },
         "layout_profile": "non_colocated",
         "captured_revision": {
           "kind": "jujutsu",
@@ -3117,6 +3175,63 @@
           "catalog_generation": 4,
           "official_source_ref": "official-source:jj:0.44.0",
           "recorded_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "pointer_resolutions": [
+          {
+            "pointer_kind": "jj_repo_pointer",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:jj:gamma:repo",
+            "resolution_base": "native_store_root",
+            "resolved_target_ref": "store-path:jj:gamma:repo",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "store_git_target",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:jj:gamma:git-target",
+            "resolution_base": "native_store_root",
+            "resolved_target_ref": "store-path:git:gamma:common",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "git_commondir",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:git:gamma:commondir",
+            "resolution_base": "git_directory",
+            "resolved_target_ref": "store-path:git:gamma:common",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "objects_info_alternates",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:git:gamma:alternates",
+            "resolution_base": "object_database",
+            "resolved_target_ref": "store-path:git:gamma:alternate",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "workspace_gitdir_link",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:jj:gamma:ws-main",
+            "resolution_base": "workspace_root",
+            "resolved_target_ref": "store-path:jj:gamma:ws-main",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "workspace_gitdir_link",
+            "hop_index": 1,
+            "declared_target_ref": "store-pointer:jj:gamma:ws-aux",
+            "resolution_base": "workspace_root",
+            "resolved_target_ref": "store-path:jj:gamma:ws-aux",
+            "resolved_inside_boundary": true
+          }
+        ],
+        "resolution_environment": {
+          "git_dir_ref": "store-path:git:gamma:dir",
+          "git_common_dir_ref": "store-path:git:gamma:common",
+          "git_object_directory_ref": "store-path:git:gamma:objects",
+          "git_alternate_object_directories_refs": ["store-path:git:gamma:alternate"],
+          "observed_at_utc": "2026-08-31T20:00:00Z"
         },
         "layout_profile": "shared_multi_workspace",
         "captured_revision": {
@@ -3192,6 +3307,32 @@
           "recorded_at_utc": "2026-08-31T20:00:00Z"
         },
         "toolchain_compatibility": "verified_compatible",
+        "pointer_resolutions": [
+          {
+            "pointer_kind": "jj_repo_pointer",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:jj:drill:repo",
+            "resolution_base": "native_store_root",
+            "resolved_target_ref": "drill-path:jj:drill:repo",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "store_git_target",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:jj:drill:git-target",
+            "resolution_base": "native_store_root",
+            "resolved_target_ref": "drill-path:git:drill:common",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "git_commondir",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:git:drill:commondir",
+            "resolution_base": "git_directory",
+            "resolved_target_ref": "drill-path:git:drill:common",
+            "resolved_inside_boundary": true
+          }
+        ],
         "layout_profile": "colocated",
         "verified_revision": {
           "kind": "jujutsu",
@@ -3260,6 +3401,32 @@
           "recorded_at_utc": "2026-08-31T20:00:00Z"
         },
         "toolchain_compatibility": "verified_compatible",
+        "pointer_resolutions": [
+          {
+            "pointer_kind": "jj_repo_pointer",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:jj:drill2:repo",
+            "resolution_base": "native_store_root",
+            "resolved_target_ref": "drill-path:jj:drill2:repo",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "store_git_target",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:jj:drill2:git-target",
+            "resolution_base": "native_store_root",
+            "resolved_target_ref": "drill-path:git:drill2:common",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "git_commondir",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:git:drill2:commondir",
+            "resolution_base": "git_directory",
+            "resolved_target_ref": "drill-path:git:drill2:common",
+            "resolved_inside_boundary": true
+          }
+        ],
         "layout_profile": "non_colocated",
         "verified_revision": {
           "kind": "jujutsu",
@@ -3328,6 +3495,32 @@
           "recorded_at_utc": "2026-08-31T20:00:00Z"
         },
         "toolchain_compatibility": "verified_compatible",
+        "pointer_resolutions": [
+          {
+            "pointer_kind": "jj_repo_pointer",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:jj:drill3:repo",
+            "resolution_base": "native_store_root",
+            "resolved_target_ref": "drill-path:jj:drill3:repo",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "store_git_target",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:jj:drill3:git-target",
+            "resolution_base": "native_store_root",
+            "resolved_target_ref": "drill-path:git:drill3:common",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "git_commondir",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:git:drill3:commondir",
+            "resolution_base": "git_directory",
+            "resolved_target_ref": "drill-path:git:drill3:common",
+            "resolved_inside_boundary": true
+          }
+        ],
         "layout_profile": "colocated",
         "verified_revision": {
           "kind": "jujutsu",
@@ -3860,6 +4053,42 @@
         "toolchain_identity"
       ],
       "expected_error": "a closure that binds no toolchain identity cannot be checked for version compatibility at restore"
+    },
+    {
+      "name": "backup_jj_isolated_drill_rejects_a_pointer_resolving_outside_the_boundary",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_restore_ready_for_owner_activation_is_internally_consistent",
+      "patch": {
+        "pointer_resolutions.1.resolved_inside_boundary": false
+      },
+      "expected_error": "a drill claiming isolation cannot follow a store pointer that resolved outside the boundary"
+    },
+    {
+      "name": "backup_jj_alternates_resolve_against_the_object_database",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_restore_ready_for_owner_activation_is_internally_consistent",
+      "patch": {
+        "pointer_resolutions.2.pointer_kind": "objects_info_alternates"
+      },
+      "expected_error": "objects/info/alternates resolves against the object database, never the Git directory"
+    },
+    {
+      "name": "backup_jj_commondir_resolves_against_the_git_directory",
+      "definition": "backup_jj_closure_record",
+      "base_valid": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",
+      "patch": {
+        "pointer_resolutions.2.resolution_base": "object_database"
+      },
+      "expected_error": "commondir resolves against the Git directory, never the object database"
+    },
+    {
+      "name": "backup_jj_closure_must_record_the_environment_that_resolved_it",
+      "definition": "backup_jj_closure_record",
+      "base_valid": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",
+      "remove": [
+        "resolution_environment"
+      ],
+      "expected_error": "a closure that does not record the resolving environment cannot be re-resolved or audited"
     },
     {
       "name": "command_availability_divergence_reason_code_is_exact",
