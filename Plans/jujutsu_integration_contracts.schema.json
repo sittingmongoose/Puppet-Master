@@ -2318,6 +2318,27 @@
       },
       "additionalProperties": false
     },
+    "native_read_pinning": {
+      "title": "JujutsuNativeReadPinning",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "load_mode",
+        "pinned_operation_id",
+        "ignore_working_copy"
+      ],
+      "properties": {
+        "load_mode": {
+          "const": "pinned_operation"
+        },
+        "pinned_operation_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "ignore_working_copy": {
+          "const": true
+        }
+      }
+    },
     "store_pointer_resolution": {
       "title": "JujutsuStorePointerResolution",
       "type": "object",
@@ -2467,6 +2488,7 @@
         "backup_manifest_ref",
         "repository_context_ref",
         "toolchain_identity",
+        "read_pinning",
         "pointer_resolutions",
         "resolution_environment",
         "layout_profile",
@@ -2508,6 +2530,9 @@
         },
         "toolchain_identity": {
           "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/native_toolchain_identity"
+        },
+        "read_pinning": {
+          "$ref": "#/$defs/native_read_pinning"
         },
         "pointer_resolutions": {
           "type": "array",
@@ -2735,6 +2760,9 @@
         "isolated_repository_context_ref",
         "toolchain_identity",
         "toolchain_compatibility",
+        "read_pinning",
+        "operation_heads_after_refs",
+        "verification_authored_operation",
         "pointer_resolutions",
         "layout_profile",
         "verified_revision",
@@ -2790,6 +2818,20 @@
             "incompatible_version",
             "unknown_version"
           ]
+        },
+        "read_pinning": {
+          "$ref": "#/$defs/native_read_pinning"
+        },
+        "operation_heads_after_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        "verification_authored_operation": {
+          "const": false
         },
         "pointer_resolutions": {
           "type": "array",

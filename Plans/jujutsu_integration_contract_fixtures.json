@@ -2979,6 +2979,11 @@
           "official_source_ref": "official-source:jj:0.44.0",
           "recorded_at_utc": "2026-08-31T20:00:00Z"
         },
+        "read_pinning": {
+          "load_mode": "pinned_operation",
+          "pinned_operation_id": "op-captured-alpha",
+          "ignore_working_copy": true
+        },
         "pointer_resolutions": [
           {
             "pointer_kind": "jj_repo_pointer",
@@ -3084,6 +3089,11 @@
           "official_source_ref": "official-source:jj:0.44.0",
           "recorded_at_utc": "2026-08-31T20:00:00Z"
         },
+        "read_pinning": {
+          "load_mode": "pinned_operation",
+          "pinned_operation_id": "op-captured-beta",
+          "ignore_working_copy": true
+        },
         "pointer_resolutions": [
           {
             "pointer_kind": "jj_repo_pointer",
@@ -3175,6 +3185,11 @@
           "catalog_generation": 4,
           "official_source_ref": "official-source:jj:0.44.0",
           "recorded_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "read_pinning": {
+          "load_mode": "pinned_operation",
+          "pinned_operation_id": "op-captured-gamma",
+          "ignore_working_copy": true
         },
         "pointer_resolutions": [
           {
@@ -3307,6 +3322,15 @@
           "recorded_at_utc": "2026-08-31T20:00:00Z"
         },
         "toolchain_compatibility": "verified_compatible",
+        "read_pinning": {
+          "load_mode": "pinned_operation",
+          "pinned_operation_id": "op-drill-1",
+          "ignore_working_copy": true
+        },
+        "operation_heads_after_refs": [
+          "operation-head:alpha:restored:41"
+        ],
+        "verification_authored_operation": false,
         "pointer_resolutions": [
           {
             "pointer_kind": "jj_repo_pointer",
@@ -3401,6 +3425,15 @@
           "recorded_at_utc": "2026-08-31T20:00:00Z"
         },
         "toolchain_compatibility": "verified_compatible",
+        "read_pinning": {
+          "load_mode": "pinned_operation",
+          "pinned_operation_id": "op-drill-2",
+          "ignore_working_copy": true
+        },
+        "operation_heads_after_refs": [
+          "operation-head:beta:restored:18"
+        ],
+        "verification_authored_operation": false,
         "pointer_resolutions": [
           {
             "pointer_kind": "jj_repo_pointer",
@@ -3495,6 +3528,15 @@
           "recorded_at_utc": "2026-08-31T20:00:00Z"
         },
         "toolchain_compatibility": "verified_compatible",
+        "read_pinning": {
+          "load_mode": "pinned_operation",
+          "pinned_operation_id": "op-drill-3",
+          "ignore_working_copy": true
+        },
+        "operation_heads_after_refs": [
+          "operation-head:gamma:restored:22"
+        ],
+        "verification_authored_operation": false,
         "pointer_resolutions": [
           {
             "pointer_kind": "jj_repo_pointer",
@@ -4089,6 +4131,33 @@
         "resolution_environment"
       ],
       "expected_error": "a closure that does not record the resolving environment cannot be re-resolved or audited"
+    },
+    {
+      "name": "backup_jj_capture_read_must_be_pinned_to_an_exact_operation",
+      "definition": "backup_jj_closure_record",
+      "base_valid": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",
+      "patch": {
+        "read_pinning.load_mode": "head"
+      },
+      "expected_error": "a capture read loaded at head is not pinned and can author an operation while it observes"
+    },
+    {
+      "name": "backup_jj_drill_read_must_ignore_the_working_copy",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_restore_ready_for_owner_activation_is_internally_consistent",
+      "patch": {
+        "read_pinning.ignore_working_copy": false
+      },
+      "expected_error": "a drill read that snapshots the working copy manufactures the state it is verifying"
+    },
+    {
+      "name": "backup_jj_verification_cannot_author_an_operation",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_restore_ready_for_owner_activation_is_internally_consistent",
+      "patch": {
+        "verification_authored_operation": true
+      },
+      "expected_error": "an operation authored by verification is a typed failure, not an admissible side effect"
     },
     {
       "name": "command_availability_divergence_reason_code_is_exact",

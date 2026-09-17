@@ -140,6 +140,14 @@ acceptance_criteria:
     obligation: no command in the inventory resolves the divergence, picks a commit for the caller, or falls back to the
     newest one.
   - >-
+    A read-class command is never satisfied by a default mutating native invocation. Reads and navigation keep their
+    null writer, credential, FileSafe, confirmation and interop authority, and the adapter reaches them through an
+    observation path proven not to snapshot the working copy, import or export Git state, update a Git index, ref or
+    HEAD, or refresh a stale workspace. When that path cannot serve the request the command returns its existing typed
+    stale, blocked or degraded result rather than mutating to make the answer available, and a successful process exit
+    or a no-op message is diagnostic only. Declaring the adapter's complete native effect scope for each invocation is
+    an owner obligation with no validator surface in this landing; it is recorded in the ledger as an open question.
+  - >-
     `cmd.jujutsu.git.clone` preserves a current JJ adapter/catalog fence and exact caller
     route/focus/continuation context through success or cancellation, and never normalizes to the ordinary Git clone.
   - >-
@@ -535,6 +543,13 @@ acceptance_criteria:
     records where each resolved; a pointer resolving outside the isolation boundary is never followed, and
     `isolated_verification` is admissible only when every pointer resolved inside it. An unfollowable or out-of-boundary
     hop surfaces through the existing missing-dependency and blocking receipt refs.
+  - >-
+    A read is proven non-mutating, not declared non-mutating. Every native read a capture or a drill issues is pinned to
+    an exact operation and to an ignore-working-copy mode, recorded as `read_pinning` with `load_mode`
+    `pinned_operation`, never loaded at head. The drill receipt records the disposable copy's operation-head set before
+    and after verification and the two sets are equal; an operation authored by verification is the typed failure
+    `verification_authored_operation`, not an admissible side effect. Divergence encountered during a read is recorded
+    with every head, and never resolved: Backup reconciles nothing.
   - Ordinary restore does not activate hooks, aliases, credential helpers, filters, unsafe includes, URL user-info, extraHeaders, SSH material, forge credentials, or provider profiles. Non-secret restored refs and a separately authorized portable envelope remain pending owner validation and a fresh credential lease.
   - Operation History pivots only to existing `cmd.backup.browse`, `cmd.backup.file.compare`, and Project Backup routes; isolated operation inspection/restore uses existing `cmd.jujutsu.operation.show` and `cmd.jujutsu.operation.restore`; neutral rebind/status/remote validation uses Source Control; Forge/AutomationBinding remains Forge-owned. The exact 31-command JJ inventory is unchanged.
   - Machine records require `expected_event_types=[]`; schema and fixture success remains event-silent, handler_unavailable/static, and not runtime, native adapter, clean-host recovery, security, visual, or readiness proof.
