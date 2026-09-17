@@ -203,8 +203,9 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/Jujutsu_Integration.md
 canonical_text: >-
-  When an active .jj store is verified in a colocated repository, Jujutsu is the sole mutation authority by
-  default. Read-only Git inspection may remain available. Any Git mutation requires an explicit compatibility
+  When an active .jj store is verified in a colocated repository there is exactly one mutation authority, and it
+  is JJ by default. A read-only Git inspection path may remain available. Any Git mutation requires an explicit
+  compatibility
   preflight, the same current source-control writer lease, exact pre-mutation JJ operation ID, mutation scope,
   Git expected revision, an explicit separately certified reconciliation path, exact post-mutation JJ operation ID
   and terminal receipt. `jj git import` or `jj git export` is never assumed as reconciliation. In a colocated 0.44.0

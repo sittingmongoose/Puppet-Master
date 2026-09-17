@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-001-jujutsu-continuation4-corrections",
-  "updated_at_utc": "2026-09-17T11:14:00.676032+00:00",
-  "last_event_id": "evt-006",
+  "updated_at_utc": "2026-09-17T21:40:00+00:00",
+  "last_event_id": "evt-007",
   "canonical_plan_targets": [
     "Plans/Decision_Log.md",
     "Plans/Jujutsu_Integration.md",
@@ -26,11 +26,11 @@
     "Plans/source_control_contracts.schema.json"
   ],
   "governance_status": "not_requested",
-  "latest_audit_ref": "reports/jujutsu-research-2026-09-11/continuation4-landing/verification.json",
-  "latest_audit_status": "COMPILED_CORRECTION_INTEGRITY_PASS_PENDING_INDEPENDENT_BRANCH_REVIEW",
+  "latest_audit_ref": "reports/compile-repair-20260917/",
+  "latest_audit_status": "COMPILE_WITNESS_AND_BLIND_REVIEW_REPAIR_APPLIED_PENDING_INDEPENDENT_REVIEW",
   "validation_state": {
     "ledger_health": "fail_deferred_governance_coverage",
-    "canonical_compile": "applied_thirteen_adjudicated_corrections_and_three_owner_decisions",
+    "canonical_compile": "applied_thirteen_adjudicated_corrections_and_three_owner_decisions_then_repaired_against_the_compile_witness_and_two_blind_reviews",
     "scoped_contracts": "pass",
     "plan_index": "pass",
     "configured_shards": "pass",
@@ -139,13 +139,16 @@
       ],
       "target_doc": "Plans/Jujutsu_Integration.md",
       "target_docs": [
-        "Plans/Jujutsu_Integration.md"
+        "Plans/Jujutsu_Integration.md",
+        "Plans/Source_Control_System.md"
       ],
       "target_plan_unit_ids": [
-        "JJI-008"
+        "JJI-008",
+        "SCS-014"
       ],
       "compiled_plan_unit_ids": [
-        "JJI-008"
+        "JJI-008",
+        "SCS-014"
       ],
       "companion_outputs": [
         "Plans/backup_restore_system_contracts.schema.json",
@@ -195,13 +198,16 @@
       ],
       "target_doc": "Plans/Jujutsu_Integration.md",
       "target_docs": [
-        "Plans/Jujutsu_Integration.md"
+        "Plans/Jujutsu_Integration.md",
+        "Plans/Source_Control_System.md"
       ],
       "target_plan_unit_ids": [
-        "JJI-008"
+        "JJI-008",
+        "SCS-014"
       ],
       "compiled_plan_unit_ids": [
-        "JJI-008"
+        "JJI-008",
+        "SCS-014"
       ],
       "companion_outputs": [
         "Plans/backup_restore_system_contracts.schema.json",
@@ -222,12 +228,15 @@
       ],
       "target_doc": "Plans/Source_Control_System.md",
       "target_docs": [
+        "Plans/Jujutsu_Integration.md",
         "Plans/Source_Control_System.md"
       ],
       "target_plan_unit_ids": [
+        "JJI-004",
         "SCS-014"
       ],
       "compiled_plan_unit_ids": [
+        "JJI-004",
         "SCS-014"
       ],
       "companion_outputs": [
@@ -249,13 +258,16 @@
       ],
       "target_doc": "Plans/Jujutsu_Integration.md",
       "target_docs": [
-        "Plans/Jujutsu_Integration.md"
+        "Plans/Jujutsu_Integration.md",
+        "Plans/Source_Control_System.md"
       ],
       "target_plan_unit_ids": [
-        "JJI-003"
+        "JJI-003",
+        "SCS-015"
       ],
       "compiled_plan_unit_ids": [
-        "JJI-003"
+        "JJI-003",
+        "SCS-015"
       ],
       "companion_outputs": [
         "Plans/backup_restore_system_contracts.schema.json",
@@ -332,13 +344,16 @@
       ],
       "target_doc": "Plans/Jujutsu_Integration.md",
       "target_docs": [
-        "Plans/Jujutsu_Integration.md"
+        "Plans/Jujutsu_Integration.md",
+        "Plans/Source_Control_System.md"
       ],
       "target_plan_unit_ids": [
-        "JJI-008"
+        "JJI-008",
+        "SCS-014"
       ],
       "compiled_plan_unit_ids": [
-        "JJI-008"
+        "JJI-008",
+        "SCS-014"
       ],
       "companion_outputs": [
         "Plans/backup_restore_system_contracts.schema.json",
@@ -446,6 +461,6 @@
       "compile_event_id": "evt-002"
     }
   ],
-  "notes": "Thirteen corrections and three owner decisions are compiled. Three questions stay open and none blocks landing: q-008 the enumerated machine-local and ephemeral store entry list for a pinned JJ version, q-009 the adapter's complete declared native effect scope per invocation, and q-010 whether the recovery floor commands are servable from the operation store alone. The branch stops for independent review before landing on main.",
-  "terminal_ledger_event_id": "evt-006"
+  "notes": "Thirteen corrections and three owner decisions are compiled. Three questions stay open and none blocks landing: q-008 the enumerated machine-local and ephemeral store entry list for a pinned JJ version, q-009 the adapter's complete declared native effect scope per invocation, and q-010 whether the recovery floor commands are servable from the operation store alone. The branch stops for independent review before landing on main. Repaired on 2026-09-17 under evt-007: the five findings records that named a unit the queue never targeted now target it and the unit carries the obligation, every exact atom token reaches its owner unit’s prose and registry, and the orphaned preserved_exact_tokens entries are gone. Two further questions are open, q-011 and q-012, and neither blocks landing.",
+  "terminal_ledger_event_id": "evt-007"
 }
