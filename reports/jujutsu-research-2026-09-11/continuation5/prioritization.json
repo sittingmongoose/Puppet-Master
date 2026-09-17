@@ -1,0 +1,24 @@
+{
+  "job": "prioritization/J0001-prioritize-20260917-043645",
+  "model": "muse-code/muse-spark-1.3-contributor",
+  "effort": "xhigh",
+  "adapter": "omp",
+  "runtime": "omp/18.2.2 sha 77c3520ab8ef8318...",
+  "limits": {
+    "max_model_requests": 40,
+    "job_seconds": 2400,
+    "arm_cap_usd": 50
+  },
+  "runtime_status": "completed",
+  "elapsed_seconds": 97.313,
+  "model_responses": 14,
+  "receipts": 14,
+  "accounting_complete": true,
+  "unresolved_charge_usd": 0.0,
+  "captured_upper_usd": 0.011961098,
+  "leads_ranked": 88,
+  "leads_total": 88,
+  "rejected_lines": 0,
+  "manifest": "arm-outputs/p-rank-manifest.json",
+  "manifest_sha256": "9ef19ee20e5d2cb62295fec0250172d06389c408798c9d15d7d5e08cbc573126"
+}

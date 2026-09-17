@@ -1,0 +1,470 @@
+{
+  "note": "Muse Spark's prioritization of the 88 frozen leads, and the order Arm P's scheduler admitted them in. Arm P's 12 admissions reached a comparison for exactly ranks 1-16, with no gaps.",
+  "prioritization_job": "prioritization/J0001-prioritize-20260917-043645",
+  "report": "workspace/ranking.md",
+  "report_sha256": "78d7151a08f67a5191e19577ae44d5df4c3c6ccdfc2fc5cb6b303594e234e270",
+  "model": "muse-code/muse-spark-1.3-contributor at effort xhigh via oh-my-pi omp/18.2.2",
+  "inputs": "the 88 frozen lead bodies and the frozen product brief, nothing else",
+  "parsed": 88,
+  "rejected_lines": [],
+  "reached_a_comparison": [
+    "L-21de7aceefe8",
+    "L-4634dafd85af",
+    "L-a87239280738",
+    "L-3016429f1ffd",
+    "L-f8ff85550285",
+    "L-6028298d8855",
+    "L-772b9a7a0dbf",
+    "L-62e705862167",
+    "L-289201b4f4ec",
+    "L-732df4469871",
+    "L-c16f21f72e55",
+    "L-f0795b00764c",
+    "L-6ab2467deb87",
+    "L-2ccd857addc8",
+    "L-4af7ce1cedec",
+    "L-aa07eee74517"
+  ],
+  "ranking": [
+    {
+      "id": "L-21de7aceefe8",
+      "reason": "Extra-table head-loss fix #9648 is absent in 0.44 plus silent remove_head errors, directly threatening operation recovery and capture.",
+      "stated_rank": 1
+    },
+    {
+      "id": "L-4634dafd85af",
+      "reason": "GC roots, refs/jj/keep retention and op-store TOCTOU define the missing GC fence around historical-operation restore.",
+      "stated_rank": 2
+    },
+    {
+      "id": "L-a87239280738",
+      "reason": "Exact 0.44 import/export no-op versus race plus HEAD and cache-tree regressions pins the colocation certification matrix.",
+      "stated_rank": 3
+    },
+    {
+      "id": "L-3016429f1ffd",
+      "reason": "Native concurrency merges competing ops and --at-op forks, so neither implements the brief's stale-revision rejection or writer lease.",
+      "stated_rank": 4
+    },
+    {
+      "id": "L-f8ff85550285",
+      "reason": "Publish-before-checkout with stale working copies and Git HEAD lag makes every cancellation an unknown-effect reconciliation case.",
+      "stated_rank": 5
+    },
+    {
+      "id": "L-6028298d8855",
+      "reason": "Multi-store operation/view/head/index/extra plus shared-workspace links sets the full backup closure bookmarks-only copies miss.",
+      "stated_rank": 6
+    },
+    {
+      "id": "L-772b9a7a0dbf",
+      "reason": "SecureConfig IDs, migration and symlinks let a restored copy reconnect to live user config unless the drill sanitizes them.",
+      "stated_rank": 7
+    },
+    {
+      "id": "L-62e705862167",
+      "reason": "Auto-track limits, ignores and size caps let commands succeed while omitting files, breaking success-equals-capture assumptions.",
+      "stated_rank": 8
+    },
+    {
+      "id": "L-289201b4f4ec",
+      "reason": "Alternates, commondir, split indexes and back-pointers let Git-backed closure escape both workspace and repository directories.",
+      "stated_rank": 9
+    },
+    {
+      "id": "L-732df4469871",
+      "reason": "Promisor and partial-clone objects make clean fsck and reads hydrate over the network, falsifying offline restore proof.",
+      "stated_rank": 10
+    },
+    {
+      "id": "L-c16f21f72e55",
+      "reason": "An admitted output name writing through a symlink can corrupt files outside the temp tree with no race required.",
+      "stated_rank": 11
+    },
+    {
+      "id": "L-f0795b00764c",
+      "reason": "Multi-file resolve commits earlier files before returning a later partial-resolution error, so nonzero exit is not no-mutation.",
+      "stated_rank": 12
+    },
+    {
+      "id": "L-6ab2467deb87",
+      "reason": "N-sided conflicts, marker styles and CR/CRLF bytes plus a fix absent in 0.44 require proving conflict identity, not clean files.",
+      "stated_rank": 13
+    },
+    {
+      "id": "L-2ccd857addc8",
+      "reason": "Operation attributes with a write/publish split and loadable-but-unpublished ops correlate work without giving idempotency or lease proof.",
+      "stated_rank": 14
+    },
+    {
+      "id": "L-4af7ce1cedec",
+      "reason": "Bad refs/jj/keep with filtered and partial clones blocks fetch and GC, separating retention failure from corruption.",
+      "stated_rank": 15
+    },
+    {
+      "id": "L-aa07eee74517",
+      "reason": "Graph priority evaluated outside historical visibility panics on one-row pages in 0.44 and is fixed only afterward.",
+      "stated_rank": 16
+    },
+    {
+      "id": "L-68f1f74918fa",
+      "reason": "Push defaults, auto-tracking, remote selection and dry-run snapshotting force an exact ref set and outcome disclosure.",
+      "stated_rank": 17
+    },
+    {
+      "id": "L-a35ea8f8a42c",
+      "reason": "Undo, revert-one-operation and restore-a-view diverge on parents, Git refs and remote tracking, needing distinct labels and previews.",
+      "stated_rank": 18
+    },
+    {
+      "id": "L-c6261d72d4d5",
+      "reason": "Unmerged LFS handling means preserved pointer blobs never establish hydrated-object closure for eligibility or backup.",
+      "stated_rank": 19
+    },
+    {
+      "id": "L-231d8f561300",
+      "reason": "Gitlinks and proposed submodule storage never promise recursive child operation identity on parent restore.",
+      "stated_rank": 20
+    },
+    {
+      "id": "L-403e2eb271bc",
+      "reason": "Crash-damaged views, operations and objects plus 0.44 persist without directory-entry sync make corruption a distinct recovery state.",
+      "stated_rank": 21
+    },
+    {
+      "id": "L-2ab768f8fe5e",
+      "reason": "No-edit save can normalize line endings, resurrect deletions as empty files and drop symlink and mode handling into the native tree.",
+      "stated_rank": 22
+    },
+    {
+      "id": "L-53bb97673a1d",
+      "reason": "A left-admitted relative path with an output symlink lets save truncate an outside target without unlink or no-follow checks.",
+      "stated_rank": 23
+    },
+    {
+      "id": "L-09a659a5a6f3",
+      "reason": "The open fetch and import race with background snapshots can diverge changes and conflict bookmarks with no shipped fix.",
+      "stated_rank": 24
+    },
+    {
+      "id": "L-34a96f087e91",
+      "reason": "Shared-store reads with automatic reconcile and jittered retry can cascade operation-log growth without a writer lease.",
+      "stated_rank": 25
+    },
+    {
+      "id": "L-21a2bb4fec38",
+      "reason": "Pinned native reads mixed with live untracked scans plus a memo-key slip combine two snapshot generations in one projection.",
+      "stated_rank": 26
+    },
+    {
+      "id": "L-80244e477912",
+      "reason": "Empty versus missing versus type states, post-read size checks and sequential non-atomic saves need typed diff models and preflight.",
+      "stated_rank": 27
+    },
+    {
+      "id": "L-629c38cc9cb3",
+      "reason": "Open native interactive selection turns symlinks into regular files or wrong modes, separating link identity from target text.",
+      "stated_rank": 28
+    },
+    {
+      "id": "L-e9ec230d009b",
+      "reason": "A stale, conflicted and renamed hunk guard checking both rendered sides plus native state models the required split and squash admission.",
+      "stated_rank": 29
+    },
+    {
+      "id": "L-bcabaae59ce7",
+      "reason": "Content-hash hunk IDs without repo, revision and operation binding plus unchecked listing reads invite stale or empty applies.",
+      "stated_rank": 30
+    },
+    {
+      "id": "L-201f547c6246",
+      "reason": "Untouched CRLF and CR files rewritten to LF through default CodeMirror joining makes save a byte-changing mutation.",
+      "stated_rank": 31
+    },
+    {
+      "id": "L-2d95cb1c4cf9",
+      "reason": "The same CRLF normalization path confirmed via pinned bundle and dependency sources needs byte preservation for unchanged rows.",
+      "stated_rank": 32
+    },
+    {
+      "id": "L-b4d7619f8161",
+      "reason": "Merge-URI misrouting, empty-for-missing confusion and overlapping editable-diff saves caused blank editors and overwrites.",
+      "stated_rank": 33
+    },
+    {
+      "id": "L-5ecac36d9640",
+      "reason": "Operation merging and diff helpers persist unpublished objects, so fixed-head inspection is not write-free.",
+      "stated_rank": 34
+    },
+    {
+      "id": "L-a1f6c79b9a08",
+      "reason": "Unintegrated operations still write objects and operations, so they cannot serve as side-effect-free preview or capture.",
+      "stated_rank": 35
+    },
+    {
+      "id": "L-0eb0bdc5ba1a",
+      "reason": "Refs and metadata advancing before the workspace commit leaves status and oplog restore failing from inconsistent state.",
+      "stated_rank": 36
+    },
+    {
+      "id": "L-00e1f9ce469f",
+      "reason": "Watcher reconnect, ignore-negation loss and permanent op-watcher failure make events hints rather than authoritative freshness.",
+      "stated_rank": 37
+    },
+    {
+      "id": "L-91141f16e0c3",
+      "reason": "An explicit queued and optimistic lifecycle with retargeted rewrites proves dispatch-ran is not success and retarget is not admission.",
+      "stated_rank": 38
+    },
+    {
+      "id": "L-6fea72bca3ad",
+      "reason": "Remembered remote positions, multi-remote tracking and conflicted bookmark targets forbid treating a name as one branch.",
+      "stated_rank": 39
+    },
+    {
+      "id": "L-37f190f6fb37",
+      "reason": "Divergent-version Keep with tip-only comparison and ignored losing-side bookmarks silently cascades bookmark meaning.",
+      "stated_rank": 40
+    },
+    {
+      "id": "L-c012b99fc03a",
+      "reason": "Commit-keyed caches with await-gap navigation races and SHA-256-only assumptions need operation-scoped invalidation.",
+      "stated_rank": 41
+    },
+    {
+      "id": "L-88df222adfaf",
+      "reason": "Native conflict queries with N-way fallback and snapshot marker-style discipline beat marker-regex resolution.",
+      "stated_rank": 42
+    },
+    {
+      "id": "L-2e0dc4dec29d",
+      "reason": "Paged sessions with change-offset fallback and working-copy exceptions need stronger expected-revision binding than prefixes.",
+      "stated_rank": 43
+    },
+    {
+      "id": "L-ad68a4ac94ad",
+      "reason": "Lane state, lookahead pagination and swallowed stream errors risk lost or duplicated commits across interruptions.",
+      "stated_rank": 44
+    },
+    {
+      "id": "L-1a81c025c133",
+      "reason": "NDJSON progress with commit-before-execution, a snapshot-pause watchdog and 12-char IDs leaves terminal-outcome receipts gapped.",
+      "stated_rank": 45
+    },
+    {
+      "id": "L-689048221e5c",
+      "reason": "Operation rows hiding failed view and commit reads plus first-parent undo flatten recovery and merge semantics.",
+      "stated_rank": 46
+    },
+    {
+      "id": "L-dc11b69871ee",
+      "reason": "Commit-before-checkout with missing before-operation plus divergent prefix resolving to the first commit weakens mutation receipts.",
+      "stated_rank": 47
+    },
+    {
+      "id": "L-bdd85d894bf7",
+      "reason": "First-parent trees, empty-for-conflict bytes and legacy-wins config loading flatten states the adapter must preserve.",
+      "stated_rank": 48
+    },
+    {
+      "id": "L-7fc4c8de53ef",
+      "reason": "Kill-and-reject cancel without process-tree confirmation plus surfaced partial-export warnings separates intent from remote outcome.",
+      "stated_rank": 49
+    },
+    {
+      "id": "L-bb26697551cd",
+      "reason": "Exiting the resolve subprocess before user edits turns later saves into fresh mutations needing new authority checks.",
+      "stated_rank": 50
+    },
+    {
+      "id": "L-3e328f150be6",
+      "reason": "PID-registry process-group cancellation with SIGKILL escalation still requires native before-and-after verification of effects.",
+      "stated_rank": 51
+    },
+    {
+      "id": "L-bed440a0194e",
+      "reason": "Structural check versus read-data check plus exit-3 incomplete snapshots separates stored bytes from proven restore.",
+      "stated_rank": 52
+    },
+    {
+      "id": "L-800ea3bdca74",
+      "reason": "Resumable upload reusing indexes is not resumption of one frozen capture, with platform-dependent unchanged detection.",
+      "stated_rank": 53
+    },
+    {
+      "id": "L-f27a42fd3b4c",
+      "reason": "Global name lookup stranding heads in duplicate stacks shows correct graphs can hide broken snapshot metadata.",
+      "stated_rank": 54
+    },
+    {
+      "id": "L-3c0712b66649",
+      "reason": "A before-action timeline with archive-excluded removals bounds unlimited-undo claims and recovery scope disclosure.",
+      "stated_rank": 55
+    },
+    {
+      "id": "L-4f94a6cc2232",
+      "reason": "Git transport supplementing a file mirror cannot replace operation, view and extra closure or dirty files despite fsck probing.",
+      "stated_rank": 56
+    },
+    {
+      "id": "L-c0c7178a160f",
+      "reason": "Dependency-ordered apply with parent-closure validation is necessary but not sufficient for fenced, crash-safe activation.",
+      "stated_rank": 57
+    },
+    {
+      "id": "L-39a5001283f3",
+      "reason": "Server-side normalization loading head and merging extras is a publication mutation, not transport-only replication.",
+      "stated_rank": 58
+    },
+    {
+      "id": "L-c89be7ac8a66",
+      "reason": "Rehomed stores with progress journals and frozen sentinel names separate machine-local state from replicable closure.",
+      "stated_rank": 59
+    },
+    {
+      "id": "L-a479adf5c634",
+      "reason": "Removed refresh serialization plus cursor-on-wrong-revision and empty-revset selection bugs tie correctness to command ownership.",
+      "stated_rank": 60
+    },
+    {
+      "id": "L-6d1f611b0ff1",
+      "reason": "Dot-jj repo indirection resolution, multi-root dedupe and poll-versus-Watchman snapshot ownership govern stale refresh.",
+      "stated_rank": 61
+    },
+    {
+      "id": "L-be11c4021bcc",
+      "reason": "Merged refresh reasons with snapshot-triggering reads plus auth-detached scheduling risk queue deadlocks.",
+      "stated_rank": 62
+    },
+    {
+      "id": "L-444f31e68545",
+      "reason": "Combined local and remote bookmark chips with untrack, rename and delete scope differences create action-scope ambiguity.",
+      "stated_rank": 63
+    },
+    {
+      "id": "L-74d9d8b172d3",
+      "reason": "Clone cleanup covers only init and fetch stages, leaving preset and checkout failures plus kills with residual directories.",
+      "stated_rank": 64
+    },
+    {
+      "id": "L-78bd00277eb9",
+      "reason": "User template overrides corrupting parsing plus message-substring immutability checks demand forced templates and capability probes.",
+      "stated_rank": 65
+    },
+    {
+      "id": "L-03bddc3281d3",
+      "reason": "Repo-located execution with cross-tab stale dots and SSH sidecar limits separates host scope from workspace events.",
+      "stated_rank": 66
+    },
+    {
+      "id": "L-55fc3564ea0d",
+      "reason": "Global Git import and export lock contention and unmerged worktree adoption proposals separate native locks from the workbench lease.",
+      "stated_rank": 67
+    },
+    {
+      "id": "L-a2ab9a454e58",
+      "reason": "Object-hash algorithm, forge support and SHA-256 signature paths make format an environment capability, not an ID string.",
+      "stated_rank": 68
+    },
+    {
+      "id": "L-28f7a36f8557",
+      "reason": "Predecessor-ordered evolution with parent-normalized diffs offers a rewrite view distinct from ancestry and operation log.",
+      "stated_rank": 69
+    },
+    {
+      "id": "L-7dc9a6726cf9",
+      "reason": "A loopback server with timed-mutex saves and separate save and exit lifecycle gives tool readiness gaps, not lease or completion proof.",
+      "stated_rank": 70
+    },
+    {
+      "id": "L-937ac57a9f2b",
+      "reason": "Paired-line selection confusion with requested preview, inversion and navigation work leaves accept and abort semantics underspecified.",
+      "stated_rank": 71
+    },
+    {
+      "id": "L-edc200a119f5",
+      "reason": "Per-subprocess askpass keys with peer verification and done-channel races model credential-lease scoping for SSH only.",
+      "stated_rank": 72
+    },
+    {
+      "id": "L-0793ad1e2a78",
+      "reason": "Direct-manipulation graph edits with split-rebase-squash semantics plus drag and menu regressions need target previews and keyboard parity.",
+      "stated_rank": 73
+    },
+    {
+      "id": "L-6dd0efd9acdc",
+      "reason": "A competing-Git warning plus version-dependent tag push behavior does not certify colocation or fallback writes.",
+      "stated_rank": 74
+    },
+    {
+      "id": "L-71b5784eb925",
+      "reason": "Branded display IDs and path spellings help labels but offset-based selection still needs operation-pinned binding.",
+      "stated_rank": 75
+    },
+    {
+      "id": "L-2af0aefc10d5",
+      "reason": "The Windows link-versus-target identity fix is already in 0.44, leaving only adapter test coverage for harder link shapes.",
+      "stated_rank": 76
+    },
+    {
+      "id": "L-aa8c1461d43a",
+      "reason": "Shared Rust diff and review layers with rewrite-surviving marks raise anchor reconciliation questions without storage evidence.",
+      "stated_rank": 77
+    },
+    {
+      "id": "L-3aaef1ce9eb7",
+      "reason": "A per-root repository cache with per-connection context and unaudited token reuse is architecture only, with no authority proof.",
+      "stated_rank": 78
+    },
+    {
+      "id": "L-e456a501a075",
+      "reason": "Context-aware previews and one intent catalog cover routing and views without lease or idempotency evidence.",
+      "stated_rank": 79
+    },
+    {
+      "id": "L-922c5e230f5f",
+      "reason": "Command-log transparency is useful, but version-drift and key-contrast reports are distribution and theming issues.",
+      "stated_rank": 80
+    },
+    {
+      "id": "L-3aa83a161ada",
+      "reason": "Document-shell menus, short-lived caches and dropped stderr warnings are usability gaps, not contract corrections.",
+      "stated_rank": 81
+    },
+    {
+      "id": "L-be2b2fe15192",
+      "reason": "IDE copy-ID distinction with colocated, multi-root and rename exclusions scopes setup labels without implementation evidence.",
+      "stated_rank": 82
+    },
+    {
+      "id": "L-d13e44f554a5",
+      "reason": "Bundled-setup marketing plus separate push and request authentication leaves runtime certification unproven.",
+      "stated_rank": 83
+    },
+    {
+      "id": "L-e605258629f1",
+      "reason": "Closed-source AI workspaces with gh flows and pending downloads give no verifiable identity or authority claims.",
+      "stated_rank": 84
+    },
+    {
+      "id": "L-a888dbe90442",
+      "reason": "Declared aggregate intake with no established finding offers no specific contract claim to check.",
+      "stated_rank": 85
+    },
+    {
+      "id": "L-362bdde3a16e",
+      "reason": "Declared aggregate intake with no established finding offers no specific contract claim to check.",
+      "stated_rank": 86
+    },
+    {
+      "id": "L-8eb461a3b2a0",
+      "reason": "Declared aggregate intake with no established finding offers no specific contract claim to check.",
+      "stated_rank": 87
+    },
+    {
+      "id": "L-e983294c2a02",
+      "reason": "Declared aggregate intake with no established finding offers no specific contract claim to check.",
+      "stated_rank": 88
+    }
+  ]
+}

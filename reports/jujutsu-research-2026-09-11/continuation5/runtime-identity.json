@@ -1,0 +1,94 @@
+{
+  "generated_at": "2026-09-17T11:05:16Z",
+  "method": "Runtime identity and protocol fingerprints for every continuation-5 run.\n\nRuntime identity is taken from each job's OWN record: every adapter hashes and\nversion-checks the binary it is about to run and writes that into raw-*/run.json. The\ninstalled_now block is a live reading taken when this script runs, so a runtime that\nchanged mid-phase shows up as a disagreement instead of being papered over.\n\nThe protocol fingerprint is the first 16 hex characters of\nsha256(json.dumps({file: sha256}, sort_keys=True)) over the key protocol files as the\nrun itself recorded them in run.json['protocol_sha256']. Runs sharing a fingerprint ran\nidentical code; nothing here is asserted from memory.",
+  "key_files": [
+    "discovery_to_plan.py",
+    "cost_watch.py",
+    "bounded_campaign.py",
+    "adapters/claude_native.py",
+    "adapters/omp_native.py",
+    "native_receipts.py"
+  ],
+  "installed_now": {
+    "omp": {
+      "invoked_as": "/home/sittingmongoose/.local/bin/omp",
+      "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
+      "self_reported_version": "omp/18.2.2",
+      "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72"
+    },
+    "claude": {
+      "invoked_as": "/home/sittingmongoose/.local/bin/claude",
+      "binary": "/home/sittingmongoose/.local/share/claude/versions/2.1.226",
+      "self_reported_version": "2.1.226 (Claude Code)",
+      "sha256": "4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555"
+    }
+  },
+  "runs": [
+    {
+      "run": "jujutsu-p-depth-20260917-043853",
+      "arm": "p-depth",
+      "route": {
+        "adapter": "claude",
+        "model": "opus",
+        "effort": "max"
+      },
+      "protocol_fingerprint": "a4a37af787d975b5",
+      "protocol_key_file_sha256": {
+        "discovery_to_plan.py": "7b3df6a00936",
+        "cost_watch.py": "bf4e7a509e03",
+        "bounded_campaign.py": "921591c22039",
+        "adapters/claude_native.py": "7dbafa653e76",
+        "adapters/omp_native.py": "55489f0316d6",
+        "native_receipts.py": "87bf4f2337d2"
+      },
+      "jobs_with_native_records": 12,
+      "runtimes": [
+        {
+          "adapter": "claude",
+          "binary": "/home/sittingmongoose/.local/share/claude/versions/2.1.226",
+          "sha256": "4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555",
+          "version": "2.1.226 (Claude Code)",
+          "jobs": [
+            "J0017-reconcile",
+            "J0018-reconcile",
+            "J0019-reconcile",
+            "J0020-compare",
+            "J0021-compare",
+            "J0022-compare",
+            "J0023-reconcile",
+            "J0024-reconcile",
+            "J0025-reconcile",
+            "J0026-compare",
+            "J0027-compare",
+            "J0028-compare"
+          ],
+          "job_count": 12
+        }
+      ]
+    },
+    {
+      "run": "J0001-prioritize-20260917-043645",
+      "arm": "p-rank (standalone job, not a campaign)",
+      "route": {
+        "adapter": "omp",
+        "model": "muse-code/muse-spark-1.3-contributor",
+        "effort": "xhigh"
+      },
+      "protocol_fingerprint": null,
+      "protocol_key_file_sha256": {},
+      "jobs_with_native_records": 1,
+      "runtimes": [
+        {
+          "adapter": "omp",
+          "version": "omp/18.2.2",
+          "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72",
+          "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
+          "jobs": [
+            "J0001-prioritize-20260917-043645"
+          ],
+          "job_count": 1
+        }
+      ]
+    }
+  ]
+}

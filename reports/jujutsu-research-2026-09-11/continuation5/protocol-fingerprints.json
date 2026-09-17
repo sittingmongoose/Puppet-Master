@@ -1,0 +1,23 @@
+{
+  "note": "Each run pins the protocol file hashes it validated against; runs sharing a fingerprint ran identical code. Formula: first 16 hex characters of sha256(json.dumps({file: sha256}, sort_keys=True)) over the key files as run.json recorded them.",
+  "key_files": [
+    "discovery_to_plan.py",
+    "cost_watch.py",
+    "bounded_campaign.py",
+    "adapters/claude_native.py",
+    "adapters/omp_native.py",
+    "native_receipts.py"
+  ],
+  "runs": {
+    "p-depth": {
+      "run": "jujutsu-p-depth-20260917-043853",
+      "protocol_fingerprint": "a4a37af787d975b5",
+      "discovery_to_plan": "7b3df6a00936",
+      "cost_watch": "bf4e7a509e03",
+      "bounded_campaign": "921591c22039",
+      "claude_native": "7dbafa653e76",
+      "omp_native": "55489f0316d6",
+      "native_receipts": "87bf4f2337d2"
+    }
+  }
+}
