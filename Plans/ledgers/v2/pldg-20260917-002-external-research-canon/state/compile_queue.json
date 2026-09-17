@@ -1,0 +1,183 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260917-002-external-research-canon",
+  "updated_at_utc": "2026-09-17T05:35:00+00:00",
+  "last_event_id": "evt-006",
+  "canonical_plan_targets": [
+    "Plans/Automated_Testing_System.md",
+    "Plans/External_Research.md",
+    "Plans/Planning_Ledger_System.md",
+    "Plans/Settings_System.md",
+    "Plans/assistant-chat-design.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Automated_Testing_System.md",
+    "Plans/External_Research.md",
+    "Plans/Planning_Ledger_System.md",
+    "Plans/Settings_System.md",
+    "Plans/assistant-chat-design.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/00-plans-index.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/External_Research.md",
+    "Plans/Planning_Ledger_System.md",
+    "Plans/Settings_System.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/external_research_contract_fixtures.json",
+    "Plans/external_research_contracts.schema.json",
+    "Plans/sharding_config.json",
+    "scripts/pm-new-contracts-verify.py"
+  ],
+  "governance_status": "not_requested",
+  "latest_audit_ref": "reports/external-research-canon-20260917/verification.json",
+  "latest_audit_status": "COMPILED_RESEARCH_CANON_STATIC_INTEGRITY_PASS_PENDING_INDEPENDENT_BRANCH_REVIEW",
+  "validation_state": {
+    "ledger_health": "fail_deferred_governance_coverage",
+    "canonical_compile": "compiled_one_new_owner_document_one_contract_family_and_three_consumer_references",
+    "scoped_contracts": "pass",
+    "plan_index": "pass",
+    "configured_shards": "pass",
+    "claim_boundary": "Static schema, fixture, shard and index integrity only. No research job, adjudication, packet delivery, budget denial or provenance check is executed; no governance seal, runtime certification or readiness admission.",
+    "continuation5_disposition": "Continuation 5 had not reported. ERS-010 and ERS-012 carry continuation 4's measured figures with their run named, and continuation 5's results are open questions q-001 and q-002 rather than placeholders in canon text.",
+    "governance_coverage_errors": [
+      "governance coverage targets missing from sharding_config sources: ['Plans/Settings_System.md']",
+      "governance coverage targets missing from Spec_Lock coverage: ['Plans/External_Research.md', 'Plans/Settings_System.md']",
+      "governance coverage targets missing from plan_graph coverage: ['Plans/External_Research.md', 'Plans/Settings_System.md']"
+    ]
+  },
+  "status": "compiled_external_research_canon",
+  "terminal_ledger_event_id": "evt-006",
+  "items": [
+    {
+      "queue_id": "queue-001",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-external-research-owner-canon"
+      ],
+      "target_doc": "Plans/External_Research.md",
+      "target_docs": [
+        "Plans/External_Research.md"
+      ],
+      "target_plan_unit_ids": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "compiled_plan_unit_ids": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "companion_outputs": [
+        "Plans/external_research_contracts.schema.json",
+        "Plans/external_research_contract_fixtures.json",
+        "Plans/sharding_config.json",
+        "Plans/00-plans-index.md"
+      ],
+      "compile_event_id": "evt-002"
+    },
+    {
+      "queue_id": "queue-002",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-external-research-contract-family"
+      ],
+      "target_doc": "Plans/Automated_Testing_System.md",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "ATS-054"
+      ],
+      "compiled_plan_unit_ids": [
+        "ATS-054"
+      ],
+      "companion_outputs": [
+        "Plans/external_research_contracts.schema.json",
+        "Plans/external_research_contract_fixtures.json",
+        "scripts/pm-new-contracts-verify.py"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-003",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-research-packet-chat-consumer"
+      ],
+      "target_doc": "Plans/assistant-chat-design.md",
+      "target_docs": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "target_plan_unit_ids": [
+        "ACD-467"
+      ],
+      "compiled_plan_unit_ids": [
+        "ACD-467"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-004"
+    },
+    {
+      "queue_id": "queue-004",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-research-landing-ledger-consumer"
+      ],
+      "target_doc": "Plans/Planning_Ledger_System.md",
+      "target_docs": [
+        "Plans/Planning_Ledger_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "PLS-023"
+      ],
+      "compiled_plan_unit_ids": [
+        "PLS-023"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-004"
+    },
+    {
+      "queue_id": "queue-005",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-research-limit-values-settings"
+      ],
+      "target_doc": "Plans/Settings_System.md",
+      "target_docs": [
+        "Plans/Settings_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "SSYS-037"
+      ],
+      "compiled_plan_unit_ids": [
+        "SSYS-037"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-004"
+    }
+  ]
+}

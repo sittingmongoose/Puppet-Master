@@ -1,0 +1,136 @@
+{
+  "schema_id": "pm.external_research_canon.verification.v1",
+  "generated_at_utc": "2026-09-17T05:35:00+00:00",
+  "branch": "plans/goal3-research-20260917",
+  "base_commit": "a6162b559b0c2dbe4b7e94a2b6eb7f9a54b3b2f2",
+  "agent": "Opus 5 (claude-opus-5[1m])",
+  "claim_boundary": "Static schema, fixture, shard and index integrity only. No runtime, native adapter, provider, recovery, security, performance, visual, governance seal or readiness claim. No WorkNodes, NodeSeeds, executable queues or readiness unlocks.",
+  "checks": [
+    {
+      "check": "validate-new-contracts",
+      "command": "python3 scripts/pm-new-contracts-verify.py",
+      "status": "pass",
+      "findings": 0,
+      "counts": {
+        "contract_pairs": 31,
+        "positive_cases": 1053,
+        "positive_cases_valid": 1053,
+        "negative_cases": 3409,
+        "negative_cases_rejected": 3409,
+        "metaschemas_valid": 31
+      }
+    },
+    {
+      "check": "configured-shards",
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+      "status": "pass",
+      "docs_checked": 99,
+      "shards_checked": 2690,
+      "failures": 0
+    },
+    {
+      "check": "plan-index-validate",
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "status": "pass",
+      "failures": 0,
+      "summary": {
+        "acceptance_unit_count": 25947,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 6671
+      }
+    },
+    {
+      "check": "bootstrap-ledger-validate",
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260917-002-external-research-canon",
+      "status": "fail",
+      "summary": {
+        "atoms": 5,
+        "compile_queue_items": 5,
+        "corrections": 0,
+        "decisions": 5,
+        "events": 6,
+        "plan_units_checked": 662,
+        "questions": 4
+      },
+      "errors": [
+        "governance coverage targets missing from sharding_config sources: ['Plans/Settings_System.md']",
+        "governance coverage targets missing from Spec_Lock coverage: ['Plans/External_Research.md', 'Plans/Settings_System.md']",
+        "governance coverage targets missing from plan_graph coverage: ['Plans/External_Research.md', 'Plans/Settings_System.md']"
+      ],
+      "warnings": [],
+      "error_disposition": "All three are governance coverage omissions in Spec_Lock, plan_graph and sharding_config. Plans/External_Research.md was added to sharding_config sources by this branch; Spec_Lock and plan_graph are reseal artifacts owned by the designated Plans agent, and Plans/Settings_System.md was already outside all three on origin/main. Recorded as ledger question q-003. Every ledger-internal check passes with no warnings."
+    }
+  ],
+  "units_added": {
+    "Plans/External_Research.md": [
+      "ERS-001",
+      "ERS-002",
+      "ERS-003",
+      "ERS-004",
+      "ERS-005",
+      "ERS-006",
+      "ERS-007",
+      "ERS-008",
+      "ERS-009",
+      "ERS-010",
+      "ERS-011",
+      "ERS-012",
+      "ERS-013",
+      "ERS-014"
+    ],
+    "Plans/Automated_Testing_System.md": [
+      "ATS-054"
+    ],
+    "Plans/assistant-chat-design.md": [
+      "ACD-467"
+    ],
+    "Plans/Planning_Ledger_System.md": [
+      "PLS-023"
+    ],
+    "Plans/Settings_System.md": [
+      "SSYS-037"
+    ]
+  },
+  "contracts": {
+    "schema": "Plans/external_research_contracts.schema.json",
+    "fixtures": "Plans/external_research_contract_fixtures.json",
+    "record_families": [
+      "research_job_record",
+      "research_finding_record",
+      "research_decision_packet",
+      "research_decision_card",
+      "research_budget_receipt",
+      "research_run_manifest"
+    ],
+    "positive_fixtures": 12,
+    "negative_fixtures": 30,
+    "negatives_by_family": {
+      "research_job_record": 6,
+      "research_finding_record": 7,
+      "research_decision_packet": 3,
+      "research_decision_card": 5,
+      "research_budget_receipt": 4,
+      "research_run_manifest": 5
+    },
+    "gate_registration": {
+      "file": "scripts/pm-new-contracts-verify.py",
+      "change": "pair appended to the closed CONTRACT_PAIRS manifest and EXPECTED_CONTRACT_PAIR_COUNT raised from 30 to 31",
+      "scope": "registration only; no semantics branch added and no other pack's behaviour changed"
+    }
+  },
+  "ledger": {
+    "ledger_id": "pldg-20260917-002-external-research-canon",
+    "registered_in": "Plans/ledgers/v2/ledger_registry.json",
+    "bucket": "compiled_ledgers",
+    "events": 6,
+    "design_atoms": 5,
+    "decisions": 5,
+    "corrections": 0,
+    "questions": 4,
+    "blockers": 0,
+    "compile_queue_items": 5
+  },
+  "continuation5_disposition": "Continuation 5 had not reported when this wave ran. ERS-010 and ERS-012 carry continuation 4's measured figures with their run named; continuation 5's results are open ledger questions q-001 and q-002, not placeholders in canon text.",
+  "disjointness": "This branch edits none of Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Backup_Restore_System.md, Plans/final_gui_interaction_contracts.schema.json or their fixtures, which branch plans/c4-corrections-20260917 held concurrently. The consumer reference that belongs in those owners is ledger question q-004."
+}

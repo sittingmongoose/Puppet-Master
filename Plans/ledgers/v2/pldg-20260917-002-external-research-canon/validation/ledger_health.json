@@ -1,0 +1,22 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260917-002-external-research-canon",
+  "updated_at_utc": "2026-09-17T05:35:00+00:00",
+  "status": "fail_deferred_governance_coverage",
+  "summary": {
+    "events": 6,
+    "design_atoms": 5,
+    "decisions": 5,
+    "open_questions": 4,
+    "deferred_questions": 0,
+    "open_blockers": 0,
+    "compile_queue_items": 5
+  },
+  "notes": "Every ledger-internal check passes: 6 events, 5 design atoms, 5 decisions, 0 corrections, 5 compiled compile-queue items, 4 open questions and 18 compiled PlanUnits. The validator fails only on three governance-coverage omissions, recorded as q-003. Plans/External_Research.md was added to sharding_config sources by this branch as a new owner document's registration requires; Spec_Lock and plan_graph coverage are reseal artifacts owned by the designated Plans agent, and Plans/Settings_System.md was already outside all three on origin/main. Static compile integrity passes. No governance seal, runtime certification or readiness admission.",
+  "validator_status": "fail",
+  "errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Settings_System.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/External_Research.md', 'Plans/Settings_System.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/External_Research.md', 'Plans/Settings_System.md']"
+  ]
+}

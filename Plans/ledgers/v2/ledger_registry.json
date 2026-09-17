@@ -231,6 +231,31 @@
         "Plans/Jujutsu_Integration.md",
         "Plans/Source_Control_System.md"
       ]
+    },
+    {
+      "canonical_plan_targets": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/External_Research.md",
+        "Plans/Planning_Ledger_System.md",
+        "Plans/Settings_System.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/External_Research.md",
+        "Plans/Planning_Ledger_System.md",
+        "Plans/Settings_System.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "created_at_utc": "2026-09-17T05:00:40+00:00",
+      "last_event_id": "evt-006",
+      "last_updated_at_utc": "2026-09-17T05:35:00+00:00",
+      "ledger_id": "pldg-20260917-002-external-research-canon",
+      "notes": "External research made product canon: ERS-001 to ERS-014 in a new owner document, a six-record static contract family with 12 positive and 30 negative fixtures registered in the closed contracts pack list, and consumer references ACD-467, PLS-023 and SSYS-037. Four questions stay open, including continuation 5's unreported review-configuration and latency results. Configured shards and plan index pass; three governance coverage omissions remain for the designated Plans agent. No seal or runtime implementation.",
+      "phase": "compiled_external_research_canon",
+      "resume_file": "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/state/handoff.json",
+      "status": "compiled",
+      "title": "External research capability as product canon"
     }
   ],
   "paused_ledgers": [],

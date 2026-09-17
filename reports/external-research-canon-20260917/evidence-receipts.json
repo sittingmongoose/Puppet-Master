@@ -1,0 +1,140 @@
+{
+  "schema_id": "pm.external_research_canon.evidence_receipts.v1",
+  "generated_at_utc": "2026-09-17T05:35:00+00:00",
+  "note": "Every measured figure carried into Plans/External_Research.md comes from one of these sources. Paths marked in_repository false are experiment records outside this repository, kept there per the repository's evidence rules.",
+  "sources": [
+    {
+      "path": "reports/jujutsu-research-2026-09-11/README.md",
+      "sha256": "f5b76807ca163bfe31cabeb41ff401f23f7f9118ff3ad671d55c59bd98668c27",
+      "read_at_utc": "2026-09-17",
+      "in_repository": true,
+      "what_it_establishes": "campaign result index and the 110-finding union"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation3/final/README.md",
+      "sha256": "fb775eb0f26ded27d835d8ecface357a3f1ab8a65adc612da5685bfd1e446e53",
+      "read_at_utc": "2026-09-17",
+      "in_repository": true,
+      "what_it_establishes": "finding classes, class totals, the five union additions, unsupported-or-covered is not a false-positive rate"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation3/gate/README.md",
+      "sha256": "7b7dba73a1892ab920ec69b6e25a0a2c127780a03a6418d5ae1e014589a03b75",
+      "read_at_utc": "2026-09-17",
+      "in_repository": true,
+      "what_it_establishes": "admission against captured usage plus allowances plus unresolved charges; DL-043 and D5 outside research inputs"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation3/gate/cost-policy.json",
+      "sha256": "d096dac1ddd552aa1cfa026981151b2162c73070307ec4083beb90812edf1247",
+      "read_at_utc": "2026-09-17",
+      "in_repository": true,
+      "what_it_establishes": "cold allowance, two-job average, job-end native valuation, retained unresolved charge, 40 responses and 2400 seconds per job, lifetime caps"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation3-landing/README.md",
+      "sha256": "29dbe5b397a76fd60f37916d6662841a28980358333c326cb4919423886eba95",
+      "read_at_utc": "2026-09-17",
+      "in_repository": true,
+      "what_it_establishes": "the correction landing path: currentness re-check, independent review, ledger, owner obligations without a contract surface"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/README.md",
+      "sha256": "cd82616315cb33466cfe5716c287bc6630d705b96011ccee02ab922c00461475",
+      "read_at_utc": "2026-09-17",
+      "in_repository": true,
+      "what_it_establishes": "per-arm stage timing, wall, summed job time, average concurrency, job status and bound_by, cost, the four accounting defects"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/adjudication/README.md",
+      "sha256": "c07c545ddc4588b65ba95a28868a46a30406fc3d70439f55050c27ac51d46d87",
+      "read_at_utc": "2026-09-17",
+      "in_repository": true,
+      "what_it_establishes": "review-arm recall at 40 and 160 responses, the proper-subset result, admissions as the bound, candidate discipline, same-family disclosure, source-verified code fact"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/adjudication/cross-arm.json",
+      "sha256": "04c6667ac9bd788fdc2a673f4b7b512682ecad1ddeeff017c3fce65f06d5318b",
+      "read_at_utc": "2026-09-17",
+      "in_repository": true,
+      "what_it_establishes": "recall, nesting, unions and the seven cross-arm factual verifications"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/adjudication/consolidated-candidates.json",
+      "sha256": "f09790f1e3b83a3675043741707ebbdc50d4c10e01bea7fdfe9fc38bbe40879c",
+      "read_at_utc": "2026-09-17",
+      "in_repository": true,
+      "what_it_establishes": "the 27 out-of-union candidates with classification and rejection checks"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/corrections.json",
+      "sha256": "65791bf0123199a97097e1dbdd2a08ef6f246e236fd13ad08d7753d855c2d1ec",
+      "read_at_utc": "2026-09-17",
+      "in_repository": true,
+      "what_it_establishes": "stream-block response counting, the post-response boundary defect, the shared temp-file name, the hardcoded runtime version, the 41-against-40 reading"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/freeze-history.json",
+      "sha256": "d58711ac3fbf0f621429e5076ab22fed125ed37232367d54904ef311711a7143",
+      "read_at_utc": "2026-09-17",
+      "in_repository": true,
+      "what_it_establishes": "protocol freezes in order and which arms ran under each"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/runtime-identity.json",
+      "sha256": "4263d70d78206e0b082619dd6a7e1f35311b1a399151d17684ccd71cf377f186",
+      "read_at_utc": "2026-09-17",
+      "in_repository": true,
+      "what_it_establishes": "binary path, self-reported version and hash per arm"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/output-manifests.json",
+      "sha256": "ddd20a45398aeff7176a460b6a042d6cbf13a22c00f42dcb7f536a7e8ed1d429",
+      "read_at_utc": "2026-09-17",
+      "in_repository": true,
+      "what_it_establishes": "frozen output tree manifests and the quiesce-before-hashing rule"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation4/protocol-fingerprints.json",
+      "sha256": "cd23bfaaf68d34110c79dff936f367e5d89028c7c8df4b6105eef478b229ab52",
+      "read_at_utc": "2026-09-17",
+      "in_repository": true,
+      "what_it_establishes": "per-run pinned protocol hashes and the recomputable fingerprint"
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/d5/README.md",
+      "sha256": "28aca2dee2fee3cddd9f5df423c25aca44936b477e7465e9391621a882b275ea",
+      "read_at_utc": "2026-09-17",
+      "in_repository": true,
+      "what_it_establishes": "the 44 preserved answers and their dispositions"
+    },
+    {
+      "path": "Plans/Decision_Log.md",
+      "sha256": "a386cfe3da2297d6132cee6531321d1fd2dbc709180eb4c26fe543a8102e11ba",
+      "read_at_utc": "2026-09-17",
+      "in_repository": true,
+      "what_it_establishes": "DL-036 packet flow; DL-043's note that the one correction landed under the existing repair authorization"
+    },
+    {
+      "path": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/BRIEF_GOAL3_RESEARCH_CANON_20260917.md",
+      "sha256": "15f8004b938040ee34bf0c02ce600c18f098e713a7315ad0ac092bf88d006169",
+      "read_at_utc": "2026-09-17",
+      "in_repository": false,
+      "what_it_establishes": "the goal 3 authorization and the 60-to-75-minute product target"
+    },
+    {
+      "path": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/REVIEW_ADJUDICATION_20260916.md",
+      "sha256": "8a7358bcd7883c6d6f93a986a488f3504ac36e1716e960bdf7690b88f29d10ac",
+      "read_at_utc": "2026-09-17",
+      "in_repository": false,
+      "what_it_establishes": "the independent review that withdrew three credits and added one; the reviewer-independence rule"
+    },
+    {
+      "path": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/DECISIONS_PLAIN_20260909.md",
+      "sha256": "98c7c005b490904a33f1ec0ec88c6402db48f33ec7ce0cb82ee3d01cf87e7847",
+      "read_at_utc": "2026-09-17",
+      "in_repository": false,
+      "what_it_establishes": "the plain-language decision form behind DL-036"
+    }
+  ]
+}
