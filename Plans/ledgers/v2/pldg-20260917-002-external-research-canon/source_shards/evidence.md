@@ -30,7 +30,7 @@ Specific figures carried into canon, each with the unit that carries it:
   its control at 160 responses finished all 12 using 37 to 110 responses per job and reached 45, and the capped
   arm's set is a proper subset of the control's.
 - `ERS-011`: three cheap review arms reached 34, 36 and 40 of 110 for $0.5315, $0.8195 and $0.1644 captured,
-  against $82.5164 for the uncapped strong arm's 45; the cheapest held three findings no other review arm reached.
+  against $82.5164 for the uncapped strong arm's 45; the $0.8195 arm held three findings no other review arm reached.
 - `ERS-012`: the full five-stage pipeline ran 6,378.3 s wall at average concurrency 2.620, with discovery 595.1 s,
   implementation 1,889.2 s, history 2,079.6 s, reconcile 3,699.3 s and compare 658.3 s; review-only arms ran
   between 668.7 s and 3,535.2 s. The 60-to-75-minute per-topic target with two to four agents is the product

@@ -81,8 +81,8 @@ section 8.
   canon takes from this that the turn budget must be sized to finish, that a turn-capped arm's recall is never
   quoted as a model result, and that admissions are the reported bound.
 - **Breadth (`ERS-011`).** Three cheap review arms reached 34, 36 and 40 of 110 for $0.5315, $0.8195 and $0.1644
-  of captured usage against $82.5164 for the uncapped strong arm's 45, and the cheapest held three findings no
-  other review arm reached. The canon takes from this that a breadth stage is worth offering and that it is
+  of captured usage against $82.5164 for the uncapped strong arm's 45, and one of the three, the $0.8195 arm,
+  held three findings no other review arm reached. The canon takes from this that a breadth stage is worth offering and that it is
   additive, never a replacement.
 - **Latency (`ERS-012`).** The full five-stage pipeline ran 6,378.3 seconds of wall time — 1 hour 46 minutes —
   at an average concurrency of 2.620, with discovery 595.1 s, implementation 1,889.2 s, history 2,079.6 s,
