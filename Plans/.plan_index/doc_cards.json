@@ -2687,10 +2687,11 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 8
+        "False": 9
       },
-      "heading_count": 16,
+      "heading_count": 18,
       "implementation_surfaces": [
+        ".claude/CLAUDE.md",
         "AGENTS.md",
         "Plans/*.md",
         "Plans/.evidence",
@@ -2703,6 +2704,7 @@
         "Plans/_shards",
         "Plans/auto_decisions.jsonl",
         "Plans/bootstrap",
+        "Plans/bootstrap/Bootstrap_Design_Brief.md",
         "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
         "Plans/bootstrap/Codex_Prompts.md",
         "Plans/ledgers/v2",
@@ -2710,9 +2712,9 @@
         "Plans/plan_graph.json",
         "future migration inventory"
       ],
-      "line_count": 396,
+      "line_count": 527,
       "path": "Plans/Bootstrap_Planning_Migration.md",
-      "plan_unit_count": 8,
+      "plan_unit_count": 9,
       "plan_unit_ids": [
         "BPM-001",
         "BPM-002",
@@ -2721,7 +2723,8 @@
         "BPM-005",
         "BPM-006",
         "BPM-007",
-        "BPM-008"
+        "BPM-008",
+        "BPM-009"
       ],
       "reasoning_tiers": [
         "high",
@@ -2733,18 +2736,19 @@
         "governance_artifact_staleness",
         "initial_compile",
         "owner_drift",
+        "repository_gate_placement_drift",
         "stale_architecture_revival",
         "thread_restart_continuity",
         "workflow_continuity"
       ],
-      "sha256": "d8fb28074b82828d9c400f66cc85c303aea28448e4bb556bcba6bb566008eea1",
+      "sha256": "b33dbaa881ff0f86a17fc0f03a2df9321b4f7eeb3c50e20713f45cff554ae746",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 8
+        "accepted": 9
       },
       "title": "Bootstrap Planning Migration",
       "unit_type_counts": {
-        "constraint": 3,
+        "constraint": 4,
         "decision": 1,
         "requirement": 4
       },
@@ -2754,6 +2758,7 @@
         "Goal prompt templates in Plans/bootstrap/Codex_Prompts.md.",
         "Heading/body span inventory.",
         "Ledger workflow smoke test: python3 scripts/pm-plans-verify.py validate-bootstrap-ledgers includes active, compiled, sealed, and historical pldg-* ledgers by default.",
+        "Manual AGENTS.md and .claude/CLAUDE.md landing-procedure review.",
         "Manual AGENTS.md review.",
         "Manual plan review.",
         "Original hash inventory.",
@@ -2765,8 +2770,11 @@
         "Validators after pilot and each batch.",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm-plan-migration.py validate --run-dir <the run named in Plans/.plan_migration/current_run.json>",
+        "python3 scripts/pm-plans-verify.py audit-governance",
         "python3 scripts/pm-plans-verify.py run-gates",
-        "python3 scripts/pm-shard-plans.py --check"
+        "python3 scripts/pm-shard-plans.py --check",
+        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
       ]
     },
     {
@@ -5313,15 +5321,18 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 23,
+        "False": 24,
         "True": 28
       },
-      "heading_count": 108,
+      "heading_count": 110,
       "implementation_surfaces": [
+        ".claude/CLAUDE.md",
         ".gitignore",
+        "AGENTS.md",
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
         "Plans/Backup_Restore_System.md",
+        "Plans/Bootstrap_Planning_Migration.md",
         "Plans/Commands_System.md",
         "Plans/Contracts_V0.md",
         "Plans/Crosswalk.md",
@@ -5362,6 +5373,9 @@
         "Plans/Wiring_Matrix.schema.json",
         "Plans/WorktreeGitImprovement.md",
         "Plans/assistant-chat-design.md",
+        "Plans/bootstrap/Bootstrap_Design_Brief.md",
+        "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
+        "Plans/bootstrap/Codex_Prompts.md",
         "Plans/event_family_registry.json",
         "Plans/event_family_registry.schema.json",
         "Plans/event_record.schema.json",
@@ -5379,9 +5393,9 @@
         "scripts/pm-plans-verify.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 3928,
+      "line_count": 4038,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 51,
+      "plan_unit_count": 52,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5433,6 +5447,7 @@
         "DL-052",
         "DL-053",
         "DL-054",
+        "DL-055",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5482,6 +5497,7 @@
         "reopen_revocation_policy_gap",
         "repeated_node_reference_breaks_selection_anchoring",
         "runtime_identity_actor_conflation",
+        "seal_claim_overreach_or_unrun_repository_gates",
         "seam_weak_integration_visibility_gap",
         "section_number_canonical_drift",
         "source_control_orchestrator_boundary_drift",
@@ -5492,16 +5508,16 @@
         "unbounded_or_dishonest_parent_adjacency_in_a_bounded_page",
         "weak_integration_underclassification"
       ],
-      "sha256": "3c13bc9e447dd512e09b5438edf36ecf1a6ad4b0a68c9c1c2866357856b9bb8d",
+      "sha256": "d7f54fcbbcf799e5040663466e7c571907e8f4133241daeefb1eec8daf0e6ece",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 51
+        "accepted": 52
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 48
+        "requirement": 49
       },
       "validation_surfaces": [
         "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
@@ -5509,6 +5525,7 @@
         "Exact approval/card SHA-256 and response preservation",
         "Exact response SHA-256 and scope-name comparison",
         "Exact response-byte preservation and source SHA-256 checks",
+        "Manual AGENTS.md and .claude/CLAUDE.md landing-procedure review.",
         "Owner/consumer source-to-decision review",
         "PlanUnit YAML parse and identifier-uniqueness check",
         "exact Case L 76-decision set-equality check",
@@ -19599,7 +19616,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-16T21:29:18Z",
+  "generated_at_utc": "2026-09-17T01:53:08Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19607,13 +19624,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3476,
+      "False": 3478,
       "True": 3175
     },
-    "plan_unit_count": 6651,
+    "plan_unit_count": 6653,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6460,
+      "accepted": 6462,
       "retired": 182,
       "superseded": 9
     },
@@ -19639,7 +19656,7 @@
       "compatibility_contract": 1,
       "compatibility_disposition": 137,
       "compatibility_note": 2,
-      "constraint": 626,
+      "constraint": 627,
       "consumer_alignment": 1,
       "consumer_contract": 1,
       "consumer_requirement": 1,
@@ -19680,7 +19697,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5215,
+      "requirement": 5216,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

@@ -151,10 +151,18 @@ Tasks:
 2. Regenerate generated shards/evidence/plan graph artifacts using repo scripts.
 3. Refresh Spec_Lock only after docs and generated indexes are stable.
 4. Append/update governance decision artifacts if required by existing repo policy.
-5. Run full governance gates:
-   - python3 scripts/pm-plans-verify.py run-gates
+5. Run the plan-layer validators:
    - python3 scripts/pm-shard-plans.py --check
-6. Produce final certification with changed files, validators, blockers, and unresolved risks.
+   - python3 scripts/pm-plan-index.py validate
+   - python3 scripts/pm-plans-verify.py verify-spec-lock
+   - python3 scripts/pm-plans-verify.py validate-plan-graph
+   - python3 scripts/pm-plans-verify.py validate-evidence
+   Do not run run-gates, audit-governance, the migration snapshot, or the migration validate here.
+   Those four are repository-wide and run at landing on main and nightly.
+6. Produce final certification with changed files, validators, blockers, and unresolved risks. Label
+   the seal record seal_profile plan_layer, name those four as omitted_operations, and record
+   full_repository_qualified false and repository_gates_status not_run_in_this_seal. Claim no result
+   for an operation this seal did not run.
 
 Do not change product prose except small governance-reference fixes required by validators. If a validator cannot be repaired safely, stop and report exact blockers.
 ```

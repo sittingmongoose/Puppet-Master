@@ -809,6 +809,36 @@ SourceRef: questions `q-004` and `q-005` in `Plans/ledgers/v2/pldg-20260916-001-
 
 ContractRef: ContractName:Plans/Source_Control_System.md
 
+### DL-055: A plan-layer seal is a production seal, and the repository-wide gates run at landing
+
+Decided on 2026-09-17 by Jared.
+
+The question was what a per-plan governance seal should run. It could run the whole profile, four of whose operations validate the entire repository rather than the plan being sealed, or it could run only the operations that act on that plan and leave the repository-wide four to the moment a branch lands and to a nightly schedule.
+
+It came up because the seal of one small plan was measured spending 80 to 85 percent of its script time in those four operations: about 22 of the 27 minutes a seal took on the clean run of 2026-09-10. They read the whole corpus, they fail on this repository for reasons that have nothing to do with the plan being sealed, and a change to a single plan cannot be what they are checking. The fifteen operations that do act on the plan take about two to three minutes between them. The reduced profile had already been shown to be the exact subset of the full one, with every retained operation running the same validator with the same arguments, and the seals produced under the full profile were already recording that they did not qualify the repository. So the claim a seal of this kind makes is not new; it stops running work it never claimed.
+
+The options were:
+
+1. Run the plan-layer profile for every per-plan seal, and run the four repository-wide operations when a branch lands on main and on a nightly schedule.
+2. Keep the full profile in every seal and accept the time.
+3. Run the full profile for the first seal of a new plan and the plan-layer profile for amendments.
+
+The answer is option 1. Plan-layer seals are fine for production; the repository-wide gates run at landing.
+
+A per-plan seal therefore runs fifteen operations: it registers owners, generates and validates the plan index, generates readiness, generates and validates the audit status, generates and checks shards, synchronizes shard evidence, refreshes Spec Lock, validates the final index, checks the readiness projection, verifies Spec Lock, validates the plan graph, and validates evidence. It omits the two aggregate gate runs and the two migration-snapshot operations. Nothing about the retained operations changes: each runs the same validator with the same arguments and the same scope it ran before, so this removes work rather than weakening it.
+
+What makes that safe is the label the seal record carries, not the decision. A plan-layer seal record names its profile, names the four operations it did not run, records that the repository is not qualified by it, and records that the repository gates were not run in it. A seal like that cannot be read as a full-profile seal, and it claims no result for anything it skipped. A plan-layer seal never claims repository qualification.
+
+The four omitted operations run when a branch lands on main and on a nightly schedule. At landing they run in the shared checkout after the fast-forward and the shard check, and they cost about twelve minutes there. A landing is refused when a failure names a file the landing branch touches, and that failure is fixed on the branch; when every failure names files the branch does not touch, the landing proceeds and the failures are reported. That is the rule the shard check already follows, applied to the same moment. The nightly run covers the repository whether or not anything landed, so repository qualification never depends on somebody having pushed a branch.
+
+This buys a per-plan seal in the order of twenty minutes instead of forty, and a seal cost that scales with the change instead of with the repository. It costs a seal record that has to say what it did not run, four operations that must actually run at landing and on a schedule rather than being assumed, and a landing that is refused when they fail on files the branch touches.
+
+This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
+
+SourceRef: `/home/sittingmongoose/PM-Experiments/harness-latency-20260916/D2_PLAN_LAYER_SEAL_DECISION_BRIEF.md`, SHA-256 `36be3a9a620f74b4754484844d3a8dfc645ed4df7821cc0ef62d4ac7696dbb36` as read on 2026-09-17; `/home/sittingmongoose/PM-Experiments/harness-latency-20260916/reports/C_ARCHIVE_TEST_REPORT.md`, SHA-256 `923f43cfa7487f7bca537c6db84068c529d9b0ca701acc6d97f1f3c7ac0f1234`; Jared, direction of 2026-09-17.
+
+ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -3774,6 +3804,86 @@ negative_constraints:
 owner_hints:
   - Plans/Decision_Log.md
   - Plans/Source_Control_System.md
+```
+
+### DL-055 - Plan Layer Seal Is A Production Seal With Repository Gates At Landing
+
+```yaml
+plan_unit_id: DL-055
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-17 that a plan-layer seal is a production seal and that the
+  repository-wide gates run at landing. A per-plan governance seal runs the fifteen plan-layer
+  operations register_owners, index_generate, index_validate, readiness_generate,
+  audit_status_generate, audit_status_validate, shards_generate, shards_check, shard_evidence_sync,
+  spec_lock_refresh, final_index_validate, readiness_projection_check, spec_lock_verify,
+  plan_graph_validate, and evidence_validate, and omits the four repository-wide operations
+  run_gates, audit_governance, migration_snapshot, and migration_validate. The seal record carries
+  seal_profile plan_layer, omitted_operations naming exactly those four, full_repository_qualified
+  false, and repository_gates_status not_run_in_this_seal, so a plan-layer seal never claims
+  repository qualification and reports no outcome for an operation it did not run. Every retained
+  operation runs the same validator with the same arguments and scope as before. The four omitted
+  operations run when a branch lands on main, in the shared checkout after the fast-forward and the
+  shard check at a measured cost of about twelve minutes, and on a nightly schedule; a landing is
+  refused when a failure names a file the branch touches, and proceeds with the failures reported
+  when every failure names files the branch does not touch.
+gui_related: false
+gui_classification_reason: Seal profile composition and repository gate placement are planning governance timing, not GUI behavior.
+split_recommended: false
+depends_on: [BPM-005, BPM-009]
+unblocks: []
+acceptance_criteria:
+  - BPM-005 states the fifteen plan-layer operations, the four omitted operations, the labelled seal record, that a plan-layer seal never claims repository qualification, and that every retained operation runs unchanged.
+  - BPM-009 places run_gates, audit_governance, migration_snapshot, and migration_validate at landing on main and on a nightly schedule, with the landing refusal and reporting rule and the measured cost.
+  - The landing procedure in AGENTS.md and .claude/CLAUDE.md carries the repository-wide gates as one step after the fast-forward and the shard check, and states the measured cost.
+  - The bootstrap seal prose no longer says that a per-plan seal runs the full gate set, and no passage in Plans says a seal qualifies the repository.
+  - No validator, validator argument, or validator scope changes for any retained operation.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds, executable queues, or build tasks are created by this record.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - Manual AGENTS.md and .claude/CLAUDE.md landing-procedure review.
+risk_class: seal_claim_overreach_or_unrun_repository_gates
+reasoning_tier: high
+context_scope: repo_governance
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Bootstrap_Planning_Migration.md
+  - Plans/bootstrap/Bootstrap_Planning_Workflow.md
+  - Plans/bootstrap/Bootstrap_Design_Brief.md
+  - Plans/bootstrap/Codex_Prompts.md
+  - AGENTS.md
+  - .claude/CLAUDE.md
+node_compile_hint:
+  mode: governance_seal_profile_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md:DL-055-direction-2026-09-17
+  - Plans/Bootstrap_Planning_Migration.md#BPM-005
+  - Plans/Bootstrap_Planning_Migration.md#BPM-009
+preserved_exact_tokens:
+  - plan_layer
+  - seal_profile
+  - omitted_operations
+  - full_repository_qualified
+  - repository_gates_status
+  - not_run_in_this_seal
+  - run_gates
+  - audit_governance
+  - migration_snapshot
+  - migration_validate
+negative_constraints:
+  - Do not read a plan-layer seal as a full-profile seal or as evidence that the repository-wide gates passed.
+  - Do not run the four repository-wide operations inside a per-plan seal in order to satisfy the landing rule.
+  - Do not weaken, reorder, or narrow the scope of any operation the plan-layer profile retains.
+  - Do not land a branch whose own files fail a repository-wide gate, and do not fix another thread's files to make one pass.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Bootstrap_Planning_Migration.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

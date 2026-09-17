@@ -124,4 +124,4 @@ Do not create:
 
 ## Governance seal
 
-Spec Lock and governance artifacts are updated only after canonical docs and generated indexes stop changing. The seal phase may regenerate shards, evidence, plan graph artifacts, decision logs, and `Plans/Spec_Lock.json`, then run full gates.
+Spec Lock and governance artifacts are updated only after canonical docs and generated indexes stop changing. The seal phase may regenerate shards, evidence, plan graph artifacts, decision logs, and `Plans/Spec_Lock.json`, then run the plan-layer validators. A per-plan seal does not run the four repository-wide operations `run_gates`, `audit_governance`, `migration_snapshot`, and `migration_validate`; those run at landing on `main` and nightly, and the seal record names them as omitted and carries `full_repository_qualified: false`. `Plans/Bootstrap_Planning_Migration.md` BPM-005 and BPM-009 own the profile and its placement.

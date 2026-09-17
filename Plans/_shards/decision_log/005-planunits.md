@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L818-L3900
+Source lines: L848-L4010
 
-Source SHA256: `3c13bc9e447dd512e09b5438edf36ecf1a6ad4b0a68c9c1c2866357856b9bb8d`
+Source SHA256: `d7f54fcbbcf799e5040663466e7c571907e8f4133241daeefb1eec8daf0e6ece`
 
 ---
 
@@ -2967,6 +2967,86 @@ negative_constraints:
 owner_hints:
   - Plans/Decision_Log.md
   - Plans/Source_Control_System.md
+```
+
+### DL-055 - Plan Layer Seal Is A Production Seal With Repository Gates At Landing
+
+```yaml
+plan_unit_id: DL-055
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-17 that a plan-layer seal is a production seal and that the
+  repository-wide gates run at landing. A per-plan governance seal runs the fifteen plan-layer
+  operations register_owners, index_generate, index_validate, readiness_generate,
+  audit_status_generate, audit_status_validate, shards_generate, shards_check, shard_evidence_sync,
+  spec_lock_refresh, final_index_validate, readiness_projection_check, spec_lock_verify,
+  plan_graph_validate, and evidence_validate, and omits the four repository-wide operations
+  run_gates, audit_governance, migration_snapshot, and migration_validate. The seal record carries
+  seal_profile plan_layer, omitted_operations naming exactly those four, full_repository_qualified
+  false, and repository_gates_status not_run_in_this_seal, so a plan-layer seal never claims
+  repository qualification and reports no outcome for an operation it did not run. Every retained
+  operation runs the same validator with the same arguments and scope as before. The four omitted
+  operations run when a branch lands on main, in the shared checkout after the fast-forward and the
+  shard check at a measured cost of about twelve minutes, and on a nightly schedule; a landing is
+  refused when a failure names a file the branch touches, and proceeds with the failures reported
+  when every failure names files the branch does not touch.
+gui_related: false
+gui_classification_reason: Seal profile composition and repository gate placement are planning governance timing, not GUI behavior.
+split_recommended: false
+depends_on: [BPM-005, BPM-009]
+unblocks: []
+acceptance_criteria:
+  - BPM-005 states the fifteen plan-layer operations, the four omitted operations, the labelled seal record, that a plan-layer seal never claims repository qualification, and that every retained operation runs unchanged.
+  - BPM-009 places run_gates, audit_governance, migration_snapshot, and migration_validate at landing on main and on a nightly schedule, with the landing refusal and reporting rule and the measured cost.
+  - The landing procedure in AGENTS.md and .claude/CLAUDE.md carries the repository-wide gates as one step after the fast-forward and the shard check, and states the measured cost.
+  - The bootstrap seal prose no longer says that a per-plan seal runs the full gate set, and no passage in Plans says a seal qualifies the repository.
+  - No validator, validator argument, or validator scope changes for any retained operation.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds, executable queues, or build tasks are created by this record.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - Manual AGENTS.md and .claude/CLAUDE.md landing-procedure review.
+risk_class: seal_claim_overreach_or_unrun_repository_gates
+reasoning_tier: high
+context_scope: repo_governance
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Bootstrap_Planning_Migration.md
+  - Plans/bootstrap/Bootstrap_Planning_Workflow.md
+  - Plans/bootstrap/Bootstrap_Design_Brief.md
+  - Plans/bootstrap/Codex_Prompts.md
+  - AGENTS.md
+  - .claude/CLAUDE.md
+node_compile_hint:
+  mode: governance_seal_profile_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md:DL-055-direction-2026-09-17
+  - Plans/Bootstrap_Planning_Migration.md#BPM-005
+  - Plans/Bootstrap_Planning_Migration.md#BPM-009
+preserved_exact_tokens:
+  - plan_layer
+  - seal_profile
+  - omitted_operations
+  - full_repository_qualified
+  - repository_gates_status
+  - not_run_in_this_seal
+  - run_gates
+  - audit_governance
+  - migration_snapshot
+  - migration_validate
+negative_constraints:
+  - Do not read a plan-layer seal as a full-profile seal or as evidence that the repository-wide gates passed.
+  - Do not run the four repository-wide operations inside a per-plan seal in order to satisfy the landing rule.
+  - Do not weaken, reorder, or narrow the scope of any operation the plan-layer profile retains.
+  - Do not land a branch whose own files fail a repository-wide gate, and do not fix another thread's files to make one pass.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Bootstrap_Planning_Migration.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

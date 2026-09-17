@@ -184,6 +184,10 @@ ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Pl
 
 Run only after docs and generated indexes are stable. Then regenerate governance artifacts, refresh Spec Lock, run plan/shard validators, and certify changed files/blockers/risks.
 
+A per-plan seal runs the plan-layer profile only: `register_owners`, `index_generate`, `index_validate`, `readiness_generate`, `audit_status_generate`, `audit_status_validate`, `shards_generate`, `shards_check`, `shard_evidence_sync`, `spec_lock_refresh`, `final_index_validate`, `readiness_projection_check`, `spec_lock_verify`, `plan_graph_validate`, and `evidence_validate`. It omits the four repository-wide operations `run_gates`, `audit_governance`, `migration_snapshot`, and `migration_validate`, which run at landing on `main` and on a nightly schedule instead. Every retained operation runs the same validator with the same arguments and scope as before.
+
+The seal record says so: `seal_profile: plan_layer`, `omitted_operations` naming exactly those four, `full_repository_qualified: false`, and `repository_gates_status: not_run_in_this_seal`. A plan-layer seal is a production seal because it states what it did not run; it never claims repository qualification. `Plans/Bootstrap_Planning_Migration.md` BPM-005 and BPM-009 own this contract and the landing/nightly placement.
+
 ## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
 
 Ledger-to-Plans compile phases that exceed atom, owner-doc, or document-size thresholds must use bounded read-only subagents with assignment/result evidence. The parent/controller remains the only canonical writer. The compile phase writes live Plans docs and allowed `Plans/.plan_index/**` outputs only; it does not run the finished-product `Approve And Build` runtime, launch Plan Compile, create WorkNodes, create NodeSeeds, create executable queues, launch GoalRuns, edit implementation files, or update Spec Lock, shards, evidence, plan_graph, or auto_decisions.

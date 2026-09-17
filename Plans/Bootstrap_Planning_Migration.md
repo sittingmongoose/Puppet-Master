@@ -172,7 +172,22 @@ plan_unit_id: BPM-005
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Bootstrap_Planning_Migration.md
-canonical_text: Spec Lock, generated shards, evidence bundles, plan graph, and governance locks are refreshed only during an explicit governance seal phase after canonical docs and generated indexes stop changing.
+canonical_text: >-
+  Spec Lock, generated shards, evidence bundles, plan graph, and governance locks are refreshed only
+  during an explicit governance seal phase after canonical docs and generated indexes stop changing.
+  A per-plan seal runs the plan-layer profile, which is the fifteen operations register_owners,
+  index_generate, index_validate, readiness_generate, audit_status_generate, audit_status_validate,
+  shards_generate, shards_check, shard_evidence_sync, spec_lock_refresh, final_index_validate,
+  readiness_projection_check, spec_lock_verify, plan_graph_validate, and evidence_validate. The four
+  repository-wide operations run_gates, audit_governance, migration_snapshot, and migration_validate
+  are omitted from a per-plan seal and run at landing and on a nightly schedule instead. Every
+  plan-layer seal record is labelled with seal_profile plan_layer, omitted_operations naming exactly
+  those four, full_repository_qualified false, and repository_gates_status not_run_in_this_seal. A
+  plan-layer seal is a production seal because it states what it did not run; it never claims
+  repository qualification and never reports a result for an operation it did not run. The plan-layer
+  profile is the exact subset of the full profile: every retained operation runs the same validator
+  with the same arguments and the same scope it ran under the full profile, so no validator is
+  weakened, reordered, or narrowed.
 gui_related: false
 gui_classification_reason: Governance seal timing is not GUI implementation work.
 depends_on: [BPM-003, BPM-004, PDS-006, PNC-004]
@@ -180,6 +195,10 @@ unblocks: []
 acceptance_criteria:
   - Ordinary ledger writing, plan drafting, plan conversion batches, and PlanUnit indexing do not update Spec Lock or generated governance artifacts.
   - The seal phase runs only after doc/index churn stops.
+  - A per-plan governance seal runs exactly the fifteen plan-layer operations and omits run_gates, audit_governance, migration_snapshot, and migration_validate.
+  - Every plan-layer seal record carries seal_profile plan_layer, the four omitted operation names, full_repository_qualified false, and repository_gates_status not_run_in_this_seal.
+  - No plan-layer seal record, report, or certification claims repository qualification or reports an outcome for an operation it did not run.
+  - Every operation the plan-layer profile retains runs the same validator, with the same arguments and scope, that it ran under the full profile.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
   - python3 scripts/pm-shard-plans.py --check
@@ -187,7 +206,7 @@ validation_surfaces:
 risk_class: governance_artifact_staleness
 reasoning_tier: standard
 context_scope: repo_governance
-implementation_surfaces: [Plans/Spec_Lock.json, Plans/_shards, Plans/.evidence, Plans/plan_graph.json, Plans/auto_decisions.jsonl]
+implementation_surfaces: [Plans/Spec_Lock.json, Plans/_shards, Plans/.evidence, Plans/plan_graph.json, Plans/auto_decisions.jsonl, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/bootstrap/Bootstrap_Design_Brief.md, Plans/bootstrap/Codex_Prompts.md]
 node_compile_hint: {mode: seal_phase_only, create_worknodes: false}
 source_lineage:
   - pldg-20260610-001-ledger-plan-system:atom-0027
@@ -196,10 +215,14 @@ source_lineage:
   - pldg-20260610-001-ledger-plan-system:dec-0010
   - source_ref:chat:design-discussion
   - source_ref:chat:user-node-readiness-correction
-preserved_exact_tokens: ["Plans/Spec_Lock.json", "Plans/_shards/**", "Plans/.evidence/**", "Plans/plan_graph.json", "PlanUnit index", "node-readiness report", "Do not create WorkNodes"]
+  - Plans/Decision_Log.md#DL-055
+preserved_exact_tokens: ["Plans/Spec_Lock.json", "Plans/_shards/**", "Plans/.evidence/**", "Plans/plan_graph.json", "PlanUnit index", "node-readiness report", "Do not create WorkNodes", "plan_layer", "seal_profile", "omitted_operations", "full_repository_qualified", "repository_gates_status", "not_run_in_this_seal", "run_gates", "audit_governance", "migration_snapshot", "migration_validate"]
 negative_constraints:
   - Do not update Spec Lock during ordinary ledger writing, plan drafting, or plan conversion batches.
   - Do not create WorkNodes or executable build tasks during PlanUnit indexing.
+  - Do not read a plan-layer seal as a full-profile seal or as evidence that the repository-wide gates passed.
+  - Do not weaken, reorder, or narrow the scope of any operation the plan-layer profile retains.
+  - Do not omit the profile label, the omitted operation names, or the repository-gate status from a plan-layer seal record.
 owner_hints: [Plans/Bootstrap_Planning_Migration.md, Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md]
 ```
 
@@ -394,3 +417,111 @@ This owner note closes or dispositions non-runtime rows from `Plans/.audits/fabl
 - `registry_line 343` (explicitly_deferred; source line 1158; `sfk-dfcc395f84654bcabdfbe6aa`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] whole doc vs Planning_Wizard.md's later ledger addenda: describes an AGENTS.md/Codex-thread workflow that appears superseded by more detailed, differently-worded later addenda not marked stale/retired.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
+
+## Plan-Layer Seal Profile And Landing Gates Addendum - 2026-09-17
+
+This addendum records the seal profile a per-plan governance seal runs and where the repository-wide
+gates run instead. It changes no validator, creates no WorkNodes, NodeSeeds, executable queues, final
+node manifests, implementation files, production build tasks, or generated governance artifacts, and
+it seals nothing by itself.
+
+A per-plan governance seal runs the plan-layer profile: `register_owners`, `index_generate`,
+`index_validate`, `readiness_generate`, `audit_status_generate`, `audit_status_validate`,
+`shards_generate`, `shards_check`, `shard_evidence_sync`, `spec_lock_refresh`,
+`final_index_validate`, `readiness_projection_check`, `spec_lock_verify`, `plan_graph_validate`, and
+`evidence_validate`. Those fifteen operations act on the plan being sealed and on the artifacts
+derived from it, and they take about two to three minutes between them.
+
+Four operations are omitted: `run_gates`, `audit_governance`, `migration_snapshot`, and
+`migration_validate`. They read the whole corpus rather than the plan, they were measured taking 80
+to 85 percent of a seal's script time -- about 22 of 27 minutes on the clean run of 2026-09-10 -- and
+a change to one plan cannot be what they are checking. The plan-layer profile is the exact subset of
+the full profile: every operation it retains runs the same validator with the same arguments and the
+same scope, so the reduction removes work rather than weakening it.
+
+A plan-layer seal is a production seal because its record says what it did not run. Every such record
+carries `seal_profile: plan_layer`, `omitted_operations` naming exactly those four,
+`full_repository_qualified: false`, and `repository_gates_status: not_run_in_this_seal`. A plan-layer
+seal therefore never claims repository qualification, and nothing may read it as a full-profile seal
+or as evidence that the repository-wide gates passed.
+
+The four omitted operations run when a branch lands on `main` and on a nightly schedule. At landing
+they run in the shared checkout after the fast-forward and the shard check, and they cost about
+twelve minutes there. They fail on this repository today for reasons that belong to no single plan,
+which is why the landing rule turns on whose files a failure names rather than on the gate passing
+outright. A landing is refused when a failure names a file the landing branch touches, and that
+failure is fixed on the branch; when every failure names files the branch does not touch, the landing
+proceeds and the failures are reported, which is the rule the shard check already follows. The
+nightly run covers the repository whether or not anything landed, so repository qualification never
+depends on a branch having been pushed. `AGENTS.md` and `.claude/CLAUDE.md` carry this step in their
+landing procedure.
+
+### BPM-009 - Repository-Wide Gates Run At Landing And Nightly
+
+```yaml
+plan_unit_id: BPM-009
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Bootstrap_Planning_Migration.md
+canonical_text: >-
+  The four repository-wide operations run_gates, audit_governance, migration_snapshot, and
+  migration_validate run when a branch lands on main and on a nightly schedule, not inside a per-plan
+  governance seal. At landing they run in the shared checkout after the fast-forward and the shard
+  check and cost about twelve minutes there. A landing is refused when a repository-wide failure
+  names a file the landing branch touches, and that failure is fixed on the branch; when every
+  failure names files the branch does not touch, the landing proceeds and the failures are reported,
+  which is the rule the shard check already follows. The nightly run covers the repository whether or
+  not anything landed, so repository qualification never depends on a branch having been pushed.
+  AGENTS.md and .claude/CLAUDE.md carry this step in their landing procedure with the measured cost
+  stated.
+gui_related: false
+gui_classification_reason: Gate placement in the landing and nightly repository procedures is governance timing, not GUI behavior.
+split_recommended: false
+depends_on: [BPM-005]
+unblocks: []
+acceptance_criteria:
+  - The landing procedure in AGENTS.md and .claude/CLAUDE.md names run-gates, audit-governance, the migration snapshot, and the migration validate as one step after the fast-forward and the shard check, and states the measured cost of about twelve minutes.
+  - A repository-wide failure that names a file the landing branch touches stops the landing and is fixed on the branch.
+  - A repository-wide failure that names only files the landing branch does not touch does not stop the landing; main is pushed and the failures are reported, exactly as the shard-check rule reads.
+  - The same four operations run on a nightly schedule against main, independently of whether anything landed.
+  - No per-plan seal is required to run them, and no seal record claims their outcome.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-plans-verify.py audit-governance
+  - "python3 scripts/pm-plan-migration.py validate --run-dir <the run named in Plans/.plan_migration/current_run.json>"
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - Manual AGENTS.md and .claude/CLAUDE.md landing-procedure review.
+risk_class: repository_gate_placement_drift
+reasoning_tier: standard
+context_scope: repo_governance
+implementation_surfaces:
+  - AGENTS.md
+  - .claude/CLAUDE.md
+  - Plans/Bootstrap_Planning_Migration.md
+node_compile_hint:
+  mode: landing_gate_placement
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-055
+  - Plans/Bootstrap_Planning_Migration.md#BPM-005
+preserved_exact_tokens:
+  - run_gates
+  - audit_governance
+  - migration_snapshot
+  - migration_validate
+  - "git merge --ff-only"
+  - AGENTS.md
+  - .claude/CLAUDE.md
+negative_constraints:
+  - Do not run the four repository-wide operations inside a per-plan seal in order to satisfy this rule.
+  - Do not land a branch whose own files fail a repository-wide gate.
+  - Do not repair or commit another thread's files to make a repository-wide gate pass at landing.
+  - Do not treat the nightly run as a substitute for the landing run, or the landing run as a substitute for the nightly one.
+owner_hints:
+  - Plans/Bootstrap_Planning_Migration.md
+  - Plans/bootstrap/Bootstrap_Planning_Workflow.md
+```
+
+ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/Planning_Ledger_System.md
