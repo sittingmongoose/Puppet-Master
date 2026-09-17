@@ -1376,7 +1376,7 @@
             "main"
           ]
         },
-        "command_class": "transport_mutation",
+        "command_class": "local_mutation",
         "currentness": {
           "execution_host_id": "host:local",
           "execution_environment_id": "environment:native",
@@ -1390,7 +1390,7 @@
           "checked_at_utc": "2026-08-31T20:00:00Z"
         },
         "writer_lease_ref": "lease:jj:16",
-        "credential_lease_ref": "credential-lease:jj:16",
+        "credential_lease_ref": null,
         "permission": {
           "permission_snapshot_ref": "permission:jj:16",
           "decision": "allow",
@@ -1450,7 +1450,7 @@
             "main"
           ]
         },
-        "command_class": "transport_mutation",
+        "command_class": "local_mutation",
         "currentness": {
           "execution_host_id": "host:local",
           "execution_environment_id": "environment:native",
@@ -1464,7 +1464,7 @@
           "checked_at_utc": "2026-08-31T20:00:00Z"
         },
         "writer_lease_ref": "lease:jj:17",
-        "credential_lease_ref": "credential-lease:jj:17",
+        "credential_lease_ref": null,
         "permission": {
           "permission_snapshot_ref": "permission:jj:17",
           "decision": "allow",
@@ -2890,6 +2890,78 @@
       }
     },
     {
+      "name": "command_availability_split_blocks_on_an_interactive_editor_session",
+      "definition": "command_availability",
+      "value": {
+        "schema_id": "pm.jujutsu.command_availability.v1",
+        "command_id": "cmd.jujutsu.change.split",
+        "repository_context_ref": "repository-context:jj:main",
+        "availability": {
+          "requested": true,
+          "effective": false,
+          "state": "blocked",
+          "reason_codes": [
+            "interactive_editor_session_required"
+          ],
+          "disabled_reason_code": "interactive_editor_session_required",
+          "allowed_action_ids": [
+            "cmd.jujutsu.operation.log",
+            "cmd.jujutsu.operation.show"
+          ],
+          "evaluated_at_utc": "2026-08-31T20:12:00Z"
+        },
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:0.44.0",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:generation-4",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:blocked",
+          "expected_operation_id": "op-expected-blocked",
+          "checked_at_utc": "2026-08-31T20:12:00Z"
+        },
+        "recorded_at_utc": "2026-08-31T20:12:00Z"
+      }
+    },
+    {
+      "name": "command_availability_quarantined_repository_keeps_the_operation_log_floor",
+      "definition": "command_availability",
+      "value": {
+        "schema_id": "pm.jujutsu.command_availability.v1",
+        "command_id": "cmd.jujutsu.status.refresh",
+        "repository_context_ref": "repository-context:jj:main",
+        "availability": {
+          "requested": true,
+          "effective": false,
+          "state": "blocked",
+          "reason_codes": [
+            "repository_quarantined"
+          ],
+          "disabled_reason_code": "repository_quarantined",
+          "allowed_action_ids": [
+            "cmd.jujutsu.operation.log",
+            "cmd.jujutsu.operation.show"
+          ],
+          "evaluated_at_utc": "2026-08-31T20:12:00Z"
+        },
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:0.44.0",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:generation-4",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:blocked",
+          "expected_operation_id": "op-expected-blocked",
+          "checked_at_utc": "2026-08-31T20:12:00Z"
+        },
+        "recorded_at_utc": "2026-08-31T20:12:00Z"
+      }
+    },
+    {
       "name": "command_result_jujutsu_clone_not_initialized_destination_cancelled",
       "definition": "command_result",
       "value": {
@@ -4234,6 +4306,42 @@
         "store_entry_classifications.2.source_trace_ref": null
       },
       "expected_error": "a classification with no source trace is a filename guess, not a version-pinned classification"
+    },
+    {
+      "name": "command_availability_quarantine_cannot_admit_an_empty_recovery_set",
+      "definition": "command_availability",
+      "base_valid": "command_availability_quarantined_repository_keeps_the_operation_log_floor",
+      "patch": {
+        "availability.allowed_action_ids": []
+      },
+      "expected_error": "a quarantined repository that admits no recovery action leaves the person with nothing to do"
+    },
+    {
+      "name": "command_availability_quarantine_floor_keeps_operation_show",
+      "definition": "command_availability",
+      "base_valid": "command_availability_quarantined_repository_keeps_the_operation_log_floor",
+      "patch": {
+        "availability.allowed_action_ids": ["cmd.jujutsu.operation.log"]
+      },
+      "expected_error": "the recovery floor is both operation log and operation show, not either one"
+    },
+    {
+      "name": "command_request_bookmark_track_is_local_and_takes_no_credential_lease",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_bookmark_track",
+      "patch": {
+        "credential_lease_ref": "credential-lease:jj:16"
+      },
+      "expected_error": "tracking a bookmark is a local view transaction and never consumes a credential lease"
+    },
+    {
+      "name": "command_request_bookmark_untrack_is_not_a_transport_mutation",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_bookmark_untrack",
+      "patch": {
+        "command_class": "transport_mutation"
+      },
+      "expected_error": "untracking a bookmark makes no remote call, so it is a local mutation"
     },
     {
       "name": "command_availability_divergence_reason_code_is_exact",

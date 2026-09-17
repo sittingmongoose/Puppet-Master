@@ -148,6 +148,29 @@ acceptance_criteria:
     or a no-op message is diagnostic only. Declaring the adapter's complete native effect scope for each invocation is
     an owner obligation with no validator surface in this landing; it is recorded in the ledger as an open question.
   - >-
+    No canonical Jujutsu command reaches an adapter invocation that can start an interactive diff or merge editor. The
+    inventory's own case is `cmd.jujutsu.change.split`, whose only schema-expressible target is a change id while the
+    native command with no path arguments opens an editor the workbench cannot host, so the command would be nominally
+    available and unable to complete. Where an invocation would need such a session the command is disabled before
+    effect with `interactive_editor_session_required` rather than dispatched. Making split executable needs a
+    content-selection vocabulary on the command target, which is an optional capability outside this correction and is
+    not landed here.
+  - >-
+    A blocked repository always admits a way to look. When availability is `unavailable` or `blocked` for
+    `repository_quarantined`, `catalog_stale`, `revision_stale` or `operation_stale`, `allowed_action_ids` contains at
+    least `cmd.jujutsu.operation.log` and `cmd.jujutsu.operation.show`, so an empty recovery set is not admissible for
+    the states that most need one. Every identifier in `allowed_action_ids` is drawn from the canonical inventory. That
+    these two remain servable from the operation store alone, without a current working-copy snapshot, a valid writer
+    lease or a healthy status projection, is an owner obligation with no validator surface here and is recorded in the
+    ledger as an open question.
+  - >-
+    `cmd.jujutsu.bookmark.track` and `cmd.jujutsu.bookmark.untrack` are local mutations. They are view transactions over
+    the repository's own tracking state, they make no remote call, and they take a null `credential_lease_ref` with
+    `command_class` `local_mutation`. They keep the writer lease, FileSafe decision, permission snapshot,
+    expected-revision fence, currentness and the exact remote identity they name, because naming a remote is not
+    contacting one. Classifying them as transport contradicted the shipped fixtures, which already recorded a
+    `local_mutation` permission scope, and would have made a purely local operation unavailable offline.
+  - >-
     `cmd.jujutsu.git.clone` preserves a current JJ adapter/catalog fence and exact caller
     route/focus/continuation context through success or cancellation, and never normalizes to the ordinary Git clone.
   - >-

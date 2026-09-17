@@ -141,7 +141,8 @@
         "exact_live_probe_missing",
         "invalid_target_identity",
         "effect_unknown_reconciliation_required",
-        "change_divergent_ambiguous_target"
+        "change_divergent_ambiguous_target",
+        "interactive_editor_session_required"
       ]
     },
     "error_code": {
@@ -169,6 +170,7 @@
         "invalid_target_identity",
         "effect_unknown_reconciliation_required",
         "change_divergent_ambiguous_target",
+        "interactive_editor_session_required",
         "adapter_failed",
         "operation_cancelled",
         "cleanup_unproven",
@@ -232,6 +234,48 @@
         }
       },
       "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "unavailable",
+                  "blocked"
+                ]
+              },
+              "disabled_reason_code": {
+                "enum": [
+                  "repository_quarantined",
+                  "catalog_stale",
+                  "revision_stale",
+                  "operation_stale"
+                ]
+              }
+            },
+            "required": [
+              "state",
+              "disabled_reason_code"
+            ]
+          },
+          "then": {
+            "properties": {
+              "allowed_action_ids": {
+                "allOf": [
+                  {
+                    "contains": {
+                      "const": "cmd.jujutsu.operation.log"
+                    }
+                  },
+                  {
+                    "contains": {
+                      "const": "cmd.jujutsu.operation.show"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
         {
           "if": {
             "properties": {
@@ -1231,7 +1275,30 @@
               "command_id": {
                 "enum": [
                   "cmd.jujutsu.bookmark.track",
-                  "cmd.jujutsu.bookmark.untrack",
+                  "cmd.jujutsu.bookmark.untrack"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "credential_lease_ref": {
+                "type": "null"
+              },
+              "command_class": {
+                "const": "local_mutation"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
                   "cmd.jujutsu.git.clone",
                   "cmd.jujutsu.git.fetch",
                   "cmd.jujutsu.git.push"
