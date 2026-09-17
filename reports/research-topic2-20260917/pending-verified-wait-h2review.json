@@ -1,0 +1,26 @@
+{
+  "status": "PREPARED, NOT APPLIED - needs Jared's verification, as the first wait did",
+  "arm": "h2-review",
+  "why_needed": "The 18:35Z probe GATE PASSED (status allowed, five_hour resets 2026-09-17T20:50:00Z), but the resume was refused by the arm's own processing clock: Stop: continuation_elapsed_cap. The clock has run since 12:18:50Z while the arm did nothing, because it was crashed by my retired drain at 12:19:06Z and then held by instruction.",
+  "interval": {
+    "start": 1789647530.099087,
+    "start_utc": "2026-09-17T12:18:50Z",
+    "start_basis": "exact completion of the last model request dispatched inside this arm (J0017-compare)",
+    "end": "set at application",
+    "length_hours_now": 6.299,
+    "verified_no_requests_inside": true,
+    "requests_found_inside": [],
+    "reason": "Arm killed by drain_arm.py at 12:19:06Z (see CORRECTION-drain-killed-campaigns.json), then held by coordinator instruction pending the 18:30Z five-hour reset. No model request was dispatched inside this arm in the interval.",
+    "evidence_ref": "PROGRESS.md sections \"MAJOR CORRECTION - MY DRAIN KILLED EVERY CAMPAIGN\", \"ADMISSION HOLD PORTED\", \"H2 REVIEW HALF NOT RESUMED\"; logs/h2review-orchestrator.log (gate probe + the continuation_elapsed_cap refusal); arm-h2/logs/campaign-*.log"
+  },
+  "effect": {
+    "arm_seconds_cap": 14400,
+    "processing_now_h": 6.51,
+    "over_by_h": 2.51,
+    "processing_after_exclusion_h": 0.21,
+    "headroom_after_exclusion_h": 3.79,
+    "would_unblock": true
+  },
+  "note": "This is the SECOND such wait for this arm. Its first wait (6.56 h) is already recorded. Applying a second one is a further relaxation of the same governance cap and is Jared's call, not mine.",
+  "also": "h2-review has 1 of 2 restarts left, so it can be resumed exactly ONCE more."
+}
