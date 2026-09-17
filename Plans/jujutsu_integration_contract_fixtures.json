@@ -2964,6 +2964,21 @@
         "source_closure_ref": "source-closure:jj:colocated:alpha:41",
         "backup_manifest_ref": "backup-manifest:project-alpha:41",
         "repository_context_ref": "repository-context:jj:project-alpha",
+        "toolchain_identity": {
+          "schema_id": "pm.source_control.native_toolchain_identity.v1",
+          "jj_executable_version": "0.44.0",
+          "jj_build_ref": "jj-build:0.44.0-release",
+          "adapter_version": "0.44.0",
+          "git_version": "2.55.0",
+          "repository_format_generation": "jj-store-format:2",
+          "minimum_readable_format_generation": "jj-store-format:2",
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "official_source_ref": "official-source:jj:0.44.0",
+          "recorded_at_utc": "2026-08-31T20:00:00Z"
+        },
         "layout_profile": "colocated",
         "captured_revision": {
           "kind": "jujutsu",
@@ -3021,6 +3036,21 @@
         "source_closure_ref": "source-closure:jj:non-colocated:beta:18",
         "backup_manifest_ref": "backup-manifest:project-beta:18",
         "repository_context_ref": "repository-context:jj:project-beta",
+        "toolchain_identity": {
+          "schema_id": "pm.source_control.native_toolchain_identity.v1",
+          "jj_executable_version": "0.44.0",
+          "jj_build_ref": "jj-build:0.44.0-release",
+          "adapter_version": "0.44.0",
+          "git_version": null,
+          "repository_format_generation": "jj-store-format:2",
+          "minimum_readable_format_generation": "jj-store-format:2",
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "official_source_ref": "official-source:jj:0.44.0",
+          "recorded_at_utc": "2026-08-31T20:00:00Z"
+        },
         "layout_profile": "non_colocated",
         "captured_revision": {
           "kind": "jujutsu",
@@ -3073,6 +3103,21 @@
         "source_closure_ref": "source-closure:jj:shared:gamma:9",
         "backup_manifest_ref": "backup-manifest:project-gamma:9",
         "repository_context_ref": "repository-context:jj:project-gamma",
+        "toolchain_identity": {
+          "schema_id": "pm.source_control.native_toolchain_identity.v1",
+          "jj_executable_version": "0.44.0",
+          "jj_build_ref": "jj-build:0.44.0-release",
+          "adapter_version": "0.44.0",
+          "git_version": "2.55.0",
+          "repository_format_generation": "jj-store-format:2",
+          "minimum_readable_format_generation": "jj-store-format:2",
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "official_source_ref": "official-source:jj:0.44.0",
+          "recorded_at_utc": "2026-08-31T20:00:00Z"
+        },
         "layout_profile": "shared_multi_workspace",
         "captured_revision": {
           "kind": "jujutsu",
@@ -3131,6 +3176,22 @@
         "restore_run_ref": "restore-run:project-alpha:as-new:1",
         "restore_preview_ref": "restore-preview:project-alpha:as-new:1",
         "isolated_repository_context_ref": "repository-context:jj:project-alpha:isolated",
+        "toolchain_identity": {
+          "schema_id": "pm.source_control.native_toolchain_identity.v1",
+          "jj_executable_version": "0.44.0",
+          "jj_build_ref": "jj-build:0.44.0-release",
+          "adapter_version": "0.44.0",
+          "git_version": "2.55.0",
+          "repository_format_generation": "jj-store-format:2",
+          "minimum_readable_format_generation": "jj-store-format:2",
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "official_source_ref": "official-source:jj:0.44.0",
+          "recorded_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "toolchain_compatibility": "verified_compatible",
         "layout_profile": "colocated",
         "verified_revision": {
           "kind": "jujutsu",
@@ -3183,6 +3244,22 @@
         "restore_run_ref": "restore-run:project-beta:in-place:1",
         "restore_preview_ref": "restore-preview:project-beta:in-place:1",
         "isolated_repository_context_ref": "repository-context:jj:project-beta:isolated",
+        "toolchain_identity": {
+          "schema_id": "pm.source_control.native_toolchain_identity.v1",
+          "jj_executable_version": "0.44.0",
+          "jj_build_ref": "jj-build:0.44.0-release",
+          "adapter_version": "0.44.0",
+          "git_version": "2.55.0",
+          "repository_format_generation": "jj-store-format:2",
+          "minimum_readable_format_generation": "jj-store-format:2",
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "official_source_ref": "official-source:jj:0.44.0",
+          "recorded_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "toolchain_compatibility": "verified_compatible",
         "layout_profile": "non_colocated",
         "verified_revision": {
           "kind": "jujutsu",
@@ -3235,6 +3312,22 @@
         "restore_run_ref": "restore-run:project-gamma:as-new:1",
         "restore_preview_ref": "restore-preview:project-gamma:as-new:1",
         "isolated_repository_context_ref": "repository-context:jj:project-gamma:isolated",
+        "toolchain_identity": {
+          "schema_id": "pm.source_control.native_toolchain_identity.v1",
+          "jj_executable_version": "0.44.0",
+          "jj_build_ref": "jj-build:0.44.0-release",
+          "adapter_version": "0.44.0",
+          "git_version": "2.55.0",
+          "repository_format_generation": "jj-store-format:2",
+          "minimum_readable_format_generation": "jj-store-format:2",
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "official_source_ref": "official-source:jj:0.44.0",
+          "recorded_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "toolchain_compatibility": "verified_compatible",
         "layout_profile": "colocated",
         "verified_revision": {
           "kind": "jujutsu",
@@ -3740,6 +3833,33 @@
         "object_verification_depth": "not_run"
       },
       "expected_error": "a complete object closure cannot be reported when object verification did not run"
+    },
+    {
+      "name": "backup_jj_verified_drill_rejects_an_unknown_toolchain_version",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_restore_ready_for_owner_activation_is_internally_consistent",
+      "patch": {
+        "toolchain_compatibility": "unknown_version"
+      },
+      "expected_error": "a drill cannot report a verified historical operation when the toolchain version is unknown"
+    },
+    {
+      "name": "backup_jj_verified_drill_rejects_an_incompatible_toolchain_version",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_restore_ready_for_owner_activation_is_internally_consistent",
+      "patch": {
+        "toolchain_compatibility": "incompatible_version"
+      },
+      "expected_error": "a drill cannot report a verified historical operation across an incompatible toolchain version"
+    },
+    {
+      "name": "backup_jj_closure_must_bind_the_toolchain_that_produced_it",
+      "definition": "backup_jj_closure_record",
+      "base_valid": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",
+      "remove": [
+        "toolchain_identity"
+      ],
+      "expected_error": "a closure that binds no toolchain identity cannot be checked for version compatibility at restore"
     },
     {
       "name": "command_availability_divergence_reason_code_is_exact",

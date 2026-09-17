@@ -845,12 +845,153 @@
       },
       "additionalProperties": false
     },
+    "native_toolchain_identity": {
+      "title": "NativeToolchainIdentity",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "jj_executable_version",
+        "jj_build_ref",
+        "adapter_version",
+        "git_version",
+        "repository_format_generation",
+        "minimum_readable_format_generation",
+        "execution_host_id",
+        "execution_environment_id",
+        "certification_catalog_ref",
+        "catalog_generation",
+        "official_source_ref",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.native_toolchain_identity.v1"
+        },
+        "jj_executable_version": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "jj_build_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "adapter_version": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "git_version": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          ]
+        },
+        "repository_format_generation": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "minimum_readable_format_generation": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/identity_id"
+        },
+        "certification_catalog_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "catalog_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "official_source_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "recorded_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "jj_certified_scenario": {
+      "title": "JujutsuCertifiedScenario",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scenario",
+        "support",
+        "evidence_ref"
+      ],
+      "properties": {
+        "scenario": {
+          "enum": [
+            "non_mutating_observation",
+            "ordinary_snapshot_synchronization",
+            "explicit_import",
+            "explicit_export",
+            "stale_workspace_refresh",
+            "external_git_compatibility",
+            "workspace_creation",
+            "workspace_removal",
+            "approved_conversion_path"
+          ]
+        },
+        "support": {
+          "enum": [
+            "supported",
+            "unsupported",
+            "unknown"
+          ]
+        },
+        "evidence_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "support": {
+                "const": "supported"
+              }
+            },
+            "required": [
+              "support"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        }
+      ]
+    },
     "jj_effective_capability_snapshot": {
       "type": "object",
       "required": [
         "schema_id",
         "scm_backend",
         "adapter_version",
+        "toolchain_identity",
+        "certified_scenarios",
         "repository_profile",
         "certification_catalog_ref",
         "official_source_ref",
@@ -873,6 +1014,17 @@
         },
         "adapter_version": {
           "$ref": "#/$defs/non_empty_string"
+        },
+        "toolchain_identity": {
+          "$ref": "#/$defs/native_toolchain_identity"
+        },
+        "certified_scenarios": {
+          "type": "array",
+          "minItems": 9,
+          "maxItems": 9,
+          "items": {
+            "$ref": "#/$defs/jj_certified_scenario"
+          }
         },
         "repository_profile": {
           "enum": [
@@ -960,6 +1112,34 @@
         }
       },
       "allOf": [
+        {
+          "if": {
+            "properties": {
+              "disposition": {
+                "const": "admitted"
+              }
+            },
+            "required": [
+              "disposition"
+            ]
+          },
+          "then": {
+            "properties": {
+              "certified_scenarios": {
+                "items": {
+                  "properties": {
+                    "support": {
+                      "enum": [
+                        "supported",
+                        "unsupported"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         {
           "if": {
             "properties": {

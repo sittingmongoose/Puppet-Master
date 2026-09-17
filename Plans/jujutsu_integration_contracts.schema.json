@@ -2327,6 +2327,7 @@
         "source_closure_ref",
         "backup_manifest_ref",
         "repository_context_ref",
+        "toolchain_identity",
         "layout_profile",
         "captured_revision",
         "operation_head_refs",
@@ -2363,6 +2364,9 @@
         },
         "repository_context_ref": {
           "$ref": "#/$defs/non_secret_ref"
+        },
+        "toolchain_identity": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/native_toolchain_identity"
         },
         "layout_profile": {
           "enum": [
@@ -2578,6 +2582,8 @@
         "restore_run_ref",
         "restore_preview_ref",
         "isolated_repository_context_ref",
+        "toolchain_identity",
+        "toolchain_compatibility",
         "layout_profile",
         "verified_revision",
         "operation_head_refs",
@@ -2623,6 +2629,16 @@
         "isolated_repository_context_ref": {
           "$ref": "#/$defs/non_secret_ref"
         },
+        "toolchain_identity": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/native_toolchain_identity"
+        },
+        "toolchain_compatibility": {
+          "enum": [
+            "verified_compatible",
+            "incompatible_version",
+            "unknown_version"
+          ]
+        },
         "layout_profile": {
           "enum": [
             "colocated",
@@ -2649,6 +2665,7 @@
             "verified_on_disposable_copy",
             "blocked_missing_closure",
             "blocked_operation_mismatch",
+            "blocked_version_incompatible",
             "failed"
           ]
         },
@@ -2783,6 +2800,25 @@
         }
       },
       "allOf": [
+        {
+          "if": {
+            "properties": {
+              "historical_operation_result": {
+                "const": "verified_on_disposable_copy"
+              }
+            },
+            "required": [
+              "historical_operation_result"
+            ]
+          },
+          "then": {
+            "properties": {
+              "toolchain_compatibility": {
+                "const": "verified_compatible"
+              }
+            }
+          }
+        },
         {
           "if": {
             "properties": {

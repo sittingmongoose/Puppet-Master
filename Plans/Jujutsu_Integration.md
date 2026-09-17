@@ -252,6 +252,16 @@ acceptance_criteria:
   - Setup and migration preserve exact Host/Environment and current catalog evidence.
   - Unsupported object formats, versions, helpers, or colocation states degrade reads and fail mutations closed.
   - A disabled colocated import/export capability remains visible with the upstream-race reason and no fallback action.
+  - >-
+    "Current certification evidence" has content. The effective-capability snapshot carries the same
+    `toolchain_identity` block the closure records carry, and a `certified_scenarios` matrix of exactly nine rows -
+    non-mutating observation, ordinary snapshot synchronization, explicit import, explicit export, stale-workspace
+    refresh, external-Git compatibility, workspace creation, workspace removal, and any approved conversion path -
+    each reported `supported`, `unsupported` or `unknown`, and each `supported` row naming the evidence that certifies
+    it. `unknown` is never promoted to supported or demoted to unsupported. A snapshot whose `disposition` is
+    `admitted` leaves no row `unknown`, an unsupported, unreleased, untested, stale or mismatched combination cannot
+    borrow another row's mutation admission, and certifying a root layout certifies no child layout. The snapshot's
+    existing top-level `adapter_version` is the compatibility alias of `toolchain_identity.adapter_version`.
 validation_surfaces: [JJ setup fixtures, adaptive GUI fixtures, colocation migration fixtures, compatibility matrix]
 risk_class: jujutsu_ui_or_migration_misrepresentation
 reasoning_tier: high
@@ -505,6 +515,15 @@ acceptance_criteria:
     byte-flipped blob under matching refs are both detected; the byte-flipped blob is the discriminating case, because a
     connectivity-only verifier passes it. The verification runs once on the disposable restored copy before activation,
     never on the original and never while the capture barrier is held.
+  - >-
+    "Version-compatible" is bound rather than asserted. The closure record and the restore verification receipt each
+    carry one `toolchain_identity` block naming the exact jj executable version and build, the Puppet Master adapter
+    version, the Git version or its explicit absence, the store-format generation the closure was written in and the
+    minimum generation required to read it, the exact Execution Host and Environment, and the certification catalog and
+    official source the identity came from. Restore verification compares the closure's identity against the verifying
+    host before it reports a result: `historical_operation_result` is `verified_on_disposable_copy` only when
+    `toolchain_compatibility` is `verified_compatible`, and a mismatched or unknown version is the typed blocker
+    `blocked_version_incompatible` rather than a silent pass.
   - Ordinary restore does not activate hooks, aliases, credential helpers, filters, unsafe includes, URL user-info, extraHeaders, SSH material, forge credentials, or provider profiles. Non-secret restored refs and a separately authorized portable envelope remain pending owner validation and a fresh credential lease.
   - Operation History pivots only to existing `cmd.backup.browse`, `cmd.backup.file.compare`, and Project Backup routes; isolated operation inspection/restore uses existing `cmd.jujutsu.operation.show` and `cmd.jujutsu.operation.restore`; neutral rebind/status/remote validation uses Source Control; Forge/AutomationBinding remains Forge-owned. The exact 31-command JJ inventory is unchanged.
   - Machine records require `expected_event_types=[]`; schema and fixture success remains event-silent, handler_unavailable/static, and not runtime, native adapter, clean-host recovery, security, visual, or readiness proof.

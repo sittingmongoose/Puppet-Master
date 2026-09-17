@@ -268,6 +268,68 @@
         "schema_id": "pm.source_control.jj_effective_capability_snapshot.v1",
         "scm_backend": "jujutsu",
         "adapter_version": "0.44.0",
+        "toolchain_identity": {
+          "schema_id": "pm.source_control.native_toolchain_identity.v1",
+          "jj_executable_version": "0.44.0",
+          "jj_build_ref": "jj-build:0.44.0-release",
+          "adapter_version": "0.44.0",
+          "git_version": "2.55.0",
+          "repository_format_generation": "jj-store-format:2",
+          "minimum_readable_format_generation": "jj-store-format:2",
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "certification_catalog_ref": "catalog:scm-certification:generation-4",
+          "catalog_generation": 4,
+          "official_source_ref": "official:jujutsu:release:0.44.0",
+          "recorded_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "certified_scenarios": [
+          {
+            "scenario": "non_mutating_observation",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:non_mutating_observation"
+          },
+          {
+            "scenario": "ordinary_snapshot_synchronization",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:ordinary_snapshot_synchronization"
+          },
+          {
+            "scenario": "explicit_import",
+            "support": "unsupported",
+            "evidence_ref": "evidence:jj:0.44.0:upstream-race"
+          },
+          {
+            "scenario": "explicit_export",
+            "support": "unsupported",
+            "evidence_ref": "evidence:jj:0.44.0:upstream-race"
+          },
+          {
+            "scenario": "stale_workspace_refresh",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:stale_workspace_refresh"
+          },
+          {
+            "scenario": "external_git_compatibility",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:external_git_compatibility"
+          },
+          {
+            "scenario": "workspace_creation",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:workspace_creation"
+          },
+          {
+            "scenario": "workspace_removal",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:workspace_removal"
+          },
+          {
+            "scenario": "approved_conversion_path",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:approved_conversion_path"
+          }
+        ],
         "repository_profile": "colocated",
         "certification_catalog_ref": "catalog:scm-certification:generation-4",
         "official_source_ref": "official:jujutsu:release:0.44.0",
@@ -284,6 +346,95 @@
         "exact_live_probe_ref": null,
         "disposition": "blocked",
         "disabled_reason_code": "jj_0_44_colocated_import_export_disabled_upstream_race",
+        "implicit_reconciliation_allowed": false,
+        "fallback_mutation": "none"
+      }
+    },
+    {
+      "name": "jj_admitted_capability_requires_every_certified_scenario_to_be_settled",
+      "definition": "jj_effective_capability_snapshot",
+      "value": {
+        "schema_id": "pm.source_control.jj_effective_capability_snapshot.v1",
+        "scm_backend": "jujutsu",
+        "adapter_version": "0.44.0",
+        "toolchain_identity": {
+          "schema_id": "pm.source_control.native_toolchain_identity.v1",
+          "jj_executable_version": "0.44.0",
+          "jj_build_ref": "jj-build:0.44.0-release",
+          "adapter_version": "0.44.0",
+          "git_version": "2.55.0",
+          "repository_format_generation": "jj-store-format:2",
+          "minimum_readable_format_generation": "jj-store-format:2",
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "certification_catalog_ref": "catalog:scm-certification:generation-4",
+          "catalog_generation": 4,
+          "official_source_ref": "official:jujutsu:release:0.44.0",
+          "recorded_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "certified_scenarios": [
+          {
+            "scenario": "non_mutating_observation",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:non_mutating_observation"
+          },
+          {
+            "scenario": "ordinary_snapshot_synchronization",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:ordinary_snapshot_synchronization"
+          },
+          {
+            "scenario": "explicit_import",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:explicit_import"
+          },
+          {
+            "scenario": "explicit_export",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:explicit_export"
+          },
+          {
+            "scenario": "stale_workspace_refresh",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:stale_workspace_refresh"
+          },
+          {
+            "scenario": "external_git_compatibility",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:external_git_compatibility"
+          },
+          {
+            "scenario": "workspace_creation",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:workspace_creation"
+          },
+          {
+            "scenario": "workspace_removal",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:workspace_removal"
+          },
+          {
+            "scenario": "approved_conversion_path",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:approved_conversion_path"
+          }
+        ],
+        "repository_profile": "standalone",
+        "certification_catalog_ref": "catalog:scm-certification:generation-4",
+        "official_source_ref": "official:jujutsu:release:0.44.0",
+        "catalog_currentness": "current",
+        "requested_capabilities": {
+          "git_import": false,
+          "git_export": false
+        },
+        "effective_capabilities": {
+          "git_import": false,
+          "git_export": false
+        },
+        "certified_adapter_gate_ref": "gate:jj:0.44.0:standalone",
+        "exact_live_probe_ref": "probe:jj:0.44.0:standalone",
+        "disposition": "admitted",
+        "disabled_reason_code": null,
         "implicit_reconciliation_allowed": false,
         "fallback_mutation": "none"
       }
@@ -2783,6 +2934,33 @@
       "expected_error": "divergence is Jujutsu-only; a Git page keeps normal or conflicted node states"
     },
     {
+      "name": "jj_admitted_capability_cannot_leave_a_scenario_unknown",
+      "definition": "jj_effective_capability_snapshot",
+      "base_valid": "jj_admitted_capability_requires_every_certified_scenario_to_be_settled",
+      "patch": {
+        "certified_scenarios.4.support": "unknown"
+      },
+      "expected_error": "an admitted capability cannot rest on a certification scenario whose support is still unknown"
+    },
+    {
+      "name": "jj_supported_scenario_must_name_its_evidence",
+      "definition": "jj_effective_capability_snapshot",
+      "base_valid": "jj_admitted_capability_requires_every_certified_scenario_to_be_settled",
+      "patch": {
+        "certified_scenarios.0.evidence_ref": null
+      },
+      "expected_error": "a scenario reported supported must name the evidence that certifies it"
+    },
+    {
+      "name": "jj_certification_matrix_must_carry_every_scenario",
+      "definition": "jj_effective_capability_snapshot",
+      "base_valid": "jj_admitted_capability_requires_every_certified_scenario_to_be_settled",
+      "remove": [
+        "certified_scenarios.8"
+      ],
+      "expected_error": "the certification matrix is nine scenarios; a root certification cannot borrow a missing row"
+    },
+    {
       "name": "source_graph_cannot_repeat_an_identical_node_row_in_one_page",
       "definition": "source_graph_projection",
       "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
@@ -3219,6 +3397,68 @@
         "schema_id": "pm.source_control.jj_effective_capability_snapshot.v1",
         "scm_backend": "jujutsu",
         "adapter_version": "0.44.0",
+        "toolchain_identity": {
+          "schema_id": "pm.source_control.native_toolchain_identity.v1",
+          "jj_executable_version": "0.44.0",
+          "jj_build_ref": "jj-build:0.44.0-release",
+          "adapter_version": "0.44.0",
+          "git_version": "2.55.0",
+          "repository_format_generation": "jj-store-format:2",
+          "minimum_readable_format_generation": "jj-store-format:2",
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "certification_catalog_ref": "catalog:scm-certification:generation-4",
+          "catalog_generation": 4,
+          "official_source_ref": "official:jujutsu:release:0.44.0",
+          "recorded_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "certified_scenarios": [
+          {
+            "scenario": "non_mutating_observation",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:non_mutating_observation"
+          },
+          {
+            "scenario": "ordinary_snapshot_synchronization",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:ordinary_snapshot_synchronization"
+          },
+          {
+            "scenario": "explicit_import",
+            "support": "unsupported",
+            "evidence_ref": "evidence:jj:0.44.0:upstream-race"
+          },
+          {
+            "scenario": "explicit_export",
+            "support": "unsupported",
+            "evidence_ref": "evidence:jj:0.44.0:upstream-race"
+          },
+          {
+            "scenario": "stale_workspace_refresh",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:stale_workspace_refresh"
+          },
+          {
+            "scenario": "external_git_compatibility",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:external_git_compatibility"
+          },
+          {
+            "scenario": "workspace_creation",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:workspace_creation"
+          },
+          {
+            "scenario": "workspace_removal",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:workspace_removal"
+          },
+          {
+            "scenario": "approved_conversion_path",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:approved_conversion_path"
+          }
+        ],
         "repository_profile": "colocated",
         "certification_catalog_ref": "catalog:scm-certification:generation-4",
         "official_source_ref": "official:jujutsu:release:0.44.0",
@@ -3247,6 +3487,68 @@
         "schema_id": "pm.source_control.jj_effective_capability_snapshot.v1",
         "scm_backend": "jujutsu",
         "adapter_version": "0.44.0",
+        "toolchain_identity": {
+          "schema_id": "pm.source_control.native_toolchain_identity.v1",
+          "jj_executable_version": "0.44.0",
+          "jj_build_ref": "jj-build:0.44.0-release",
+          "adapter_version": "0.44.0",
+          "git_version": "2.55.0",
+          "repository_format_generation": "jj-store-format:2",
+          "minimum_readable_format_generation": "jj-store-format:2",
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "certification_catalog_ref": "catalog:scm-certification:generation-4",
+          "catalog_generation": 4,
+          "official_source_ref": "official:jujutsu:release:0.44.0",
+          "recorded_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "certified_scenarios": [
+          {
+            "scenario": "non_mutating_observation",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:non_mutating_observation"
+          },
+          {
+            "scenario": "ordinary_snapshot_synchronization",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:ordinary_snapshot_synchronization"
+          },
+          {
+            "scenario": "explicit_import",
+            "support": "unsupported",
+            "evidence_ref": "evidence:jj:0.44.0:upstream-race"
+          },
+          {
+            "scenario": "explicit_export",
+            "support": "unsupported",
+            "evidence_ref": "evidence:jj:0.44.0:upstream-race"
+          },
+          {
+            "scenario": "stale_workspace_refresh",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:stale_workspace_refresh"
+          },
+          {
+            "scenario": "external_git_compatibility",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:external_git_compatibility"
+          },
+          {
+            "scenario": "workspace_creation",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:workspace_creation"
+          },
+          {
+            "scenario": "workspace_removal",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:workspace_removal"
+          },
+          {
+            "scenario": "approved_conversion_path",
+            "support": "supported",
+            "evidence_ref": "evidence:jj:0.44.0:approved_conversion_path"
+          }
+        ],
         "repository_profile": "colocated",
         "certification_catalog_ref": "catalog:scm-certification:generation-4",
         "official_source_ref": "official:jujutsu:release:0.44.0",
