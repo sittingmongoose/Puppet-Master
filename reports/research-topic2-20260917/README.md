@@ -167,6 +167,35 @@ Two honest residues remain rather than being tidied away:
 | h2-review | 2 of 3 | 2 | {'discovered': 32, 'studied': 0, 'reconciled': 0, 'comparison_delivered': 0} | 32 | 32 |
 
 
+### Resume attempt at 12:05Z — the gate passed, the arms' own clocks blocked them
+
+The seven-day window reset at 12:00Z as expected and the 12:05Z probe was clean: `status: "allowed"`, no
+warning on any window. **Neither arm resumed anyway.** Both campaigns died about two seconds after launch with
+`Stop: continuation_elapsed_cap`.
+
+`Budget.processing_seconds()` is wall-clock since the arm started, minus only intervals recorded in
+`verified_human_waits`. Those clocks ran through the outage although nothing executed:
+
+| Arm | Started | `arm_seconds` | Processing now | Over by |
+|---|---|---|---|---|
+| s-full | 05:15:37Z | 21,600 s (6.0 h) | 24,650 s (6.85 h) | 0.85 h |
+| h2-review | 05:32:39Z | 14,400 s (4.0 h) | 23,627 s (6.56 h) | 2.56 h |
+
+Neither arm has any `verified_human_waits` recorded. The last real model request was **05:44:22Z**
+(s-full J0002-implementation); everything after it is close-out bookkeeping, so **6.37 hours of that clock is
+outage, not work**. The restart budget itself is untouched — 0 of 2 used on both arms.
+
+The protocol's designed remedy is `verified_human_waits`, which `processing_seconds()` subtracts. Applying it
+would put s-full at 0.48 h of its 6 h clock and h2-review at 0.20 h of its 4 h clock. It is **prepared and not
+applied** — see `pending-verified-wait.json` — because it relaxes a governance cap by editing durable state and
+the field asserts that a human verified the interval.
+
+Two orchestration defects of mine were found and fixed here, both of which made a dead campaign look finished:
+`resume_arm.py` launched detached and reported success without checking the campaign survived, and the
+orchestrator treated "no terminal file and no process" as a terminal — together producing a false
+`CHAIN COMPLETE` for two arms that never ran a job. That line is corrected in `PROGRESS.md` and the arm
+figures above are unchanged by it, since no work occurred.
+
 ### Frozen outputs
 
 | Arm | Run | Manifest sha256 | Files |

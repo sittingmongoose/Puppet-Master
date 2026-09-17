@@ -1,0 +1,43 @@
+{
+  "status": "PREPARED, NOT APPLIED \u2014 needs coordinator authorization",
+  "what_it_would_do": "Append one interval to each arm's budget[\"verified_human_waits\"]. Budget.processing_seconds() subtracts verified intervals, so each arm's clock would exclude the outage and stop raising continuation_elapsed_cap. It relaxes a governance cap by editing durable state, which is why it is prepared rather than applied.",
+  "why_it_is_legitimate": "The arms executed nothing between 2026-09-17T05:44:22Z (the last real model request, s-full J0002-implementation) and now. The clock measured an outage, not work: the Opus session limit killed the runner, and the coordinator then ordered a hold until the 12:00Z reset. arm_seconds is intended to bound how long an arm may spend WORKING.",
+  "why_I_did_not_apply_it": "The field is named verified_human_waits and requires verified=true plus an evidence_ref, i.e. an assertion that a human verified the interval. Writing that on my own authority would be me certifying my own outage and relaxing my own cap.",
+  "interval": {
+    "start": 1789623862.0,
+    "start_utc": "2026-09-17T05:44:22Z",
+    "end": null,
+    "end_utc": "set to the moment of application",
+    "length_hours_now": 6.387,
+    "verified": true,
+    "evidence_ref": "PROGRESS.md 2026-09-17 sections \"SESSION RESUMED after an Opus session-limit termination\" and \"12:05Z GATE OPENED, BUT BOTH RESUMES FAILED\"; logs/orchestrator.log; arm-s/logs/campaign-topic2-s-full-20260917-051531-resume.log (the Stop traceback); the 11:05Z and 12:05Z CLI probes",
+    "reason": "Opus session-limit termination of the runner, then a coordinator-ordered hold until the seven-day window reset at 12:00Z. No model request was dispatched in this interval."
+  },
+  "effect_per_arm": {
+    "s-full": {
+      "continuation_started_at_utc": "2026-09-17T05:15:37Z",
+      "arm_seconds_cap": 21600,
+      "processing_now_s": 24718,
+      "processing_now_h": 6.87,
+      "processing_after_exclusion_s": 1725,
+      "processing_after_exclusion_h": 0.48,
+      "headroom_after_exclusion_s": 19875,
+      "headroom_after_exclusion_h": 5.52,
+      "would_unblock": true,
+      "interval_start_is_after_arm_start": true
+    },
+    "h2-review": {
+      "continuation_started_at_utc": "2026-09-17T05:32:39Z",
+      "arm_seconds_cap": 14400,
+      "processing_now_s": 23695,
+      "processing_now_h": 6.58,
+      "processing_after_exclusion_s": 703,
+      "processing_after_exclusion_h": 0.2,
+      "headroom_after_exclusion_s": 13697,
+      "headroom_after_exclusion_h": 3.8,
+      "would_unblock": true,
+      "interval_start_is_after_arm_start": true
+    }
+  },
+  "constraint_check": "Budget.processing_seconds() requires continuation_started_at <= start <= end <= now for every interval, and raises invalid_verified_human_wait otherwise."
+}
