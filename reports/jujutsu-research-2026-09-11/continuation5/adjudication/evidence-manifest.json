@@ -1,11 +1,11 @@
 {
   "schema": "jj.continuation5.adjudication.evidence_manifest.v1",
-  "label": "Continuation 5 adjudication bundle - Arms P and B, evidence pointers and hashes",
+  "label": "Continuation 5 adjudication bundle - Arms P, B and T80, evidence pointers and hashes",
   "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm",
   "note": "Raw captures stay outside this repository per AGENTS.md. Evidence is cited by path plus SHA-256.",
   "runner_bundle_cross_reference": {
     "branch": "research/continuation5-20260917",
-    "commit": "eda0c92821 (Arm P) / 2a0a15078d (Arm B)",
+    "commit": "eda0c92821 (Arm P) / 2a0a15078d (Arm B) / 5b519ce413 (T80)",
     "path": "reports/jujutsu-research-2026-09-11/continuation5/",
     "policy": "Referenced by path, never duplicated. This bundle carries only the adjudication layer.",
     "figures_checked": "every runner figure I checked was already correct; no corrections were needed"
@@ -304,7 +304,19 @@
   },
   "arms_scored": [
     "p-depth",
-    "b-breadth-compare"
+    "b-breadth-compare",
+    {
+      "arm": "t80",
+      "kind": "turn-budget control below claude-hicap: same model, effort, artifacts, starting state, frozen order, 12 admissions, 3 workers and $20 per job; ONE variable, an 80-response ceiling instead of 160",
+      "credited": 26,
+      "recall_percent": 23.64,
+      "files": [
+        "t80-README.md",
+        "t80-findings.json",
+        "t80-candidates.json",
+        "t80-scoring.json"
+      ]
+    }
   ],
   "b_compare_attempt2_run": {
     "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734",
@@ -678,5 +690,317 @@
     "reached_by_no_arm": 48,
     "progression": "continuation-4 six-arm 57 -> with Arm P 59 -> with Arm B 62",
     "verdict": "Splitting cheap breadth from expensive depth beats prioritizing depth by 7 findings, and both lose to simply running the expensive model over the frozen order by 6 and 13."
+  },
+  "t80_run": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/arm-outputs/t80-manifest.json",
+    "manifest_file_sha256": "a5659fc5c8b79627af3f221c31161f8cd6424b5a4ffda859221f2a6575436ea7",
+    "manifest_sha256_internal": "b5498edb9f39ef4e444a109362c6233d1e1e7af0b5021436c9679facc33c448b",
+    "files": 13222,
+    "total_bytes": 289535671,
+    "verified_three_ways": "row recompute, the runner's quoted value, and an independent tree re-hash - all agree, zero differing files",
+    "terminal_stop": "Stop: admitted_attempt_cap (campaign-terminal.json), confirmed a designed gate before scoring",
+    "run_json_sha256": "f9397ec2f4d30bbeb51e0417d4ac06d57c8db876a11e719af3c19977179aa657",
+    "timing_json_sha256": "a3bc9b4bd6954e7f28970c6e3c5d3cd6c293edd4f774784180d12c8715d98b61",
+    "progress_json_sha256": "b48e1fc548f284c25fbcf138a0da2edf60aaae656b05b43508b5181447964653",
+    "campaign_terminal_sha256": "1e4c0f2eef79bf918e5b6eb521d4b6bb3aa3461c5085683e95d8ef275c56a372",
+    "monitor_state_sha256": "928a896718800000bd462805f7f837b16951bd3305a31108200b4dc6e3b1d94f",
+    "priced_usage_final_sha256": "a60cc3fc2a7e264f4835fe7cfae0bb28aedf1c577a0e3366afbf318e43e36801",
+    "runner_report_sha256": "2cbf0fd73d254dac0c138cf7bc08a7b0917630aee7af2e24218c997c78fd16ad",
+    "input_equivalence_checked": "J0017-J0025 carry lead sets IDENTICAL to claude-hicap's; the three compare groups are the same, paired to different job numbers because reconcile completion order differed. This is what makes the ceiling comparison one-variable."
+  },
+  "t80_attempt1_excluded": {
+    "archive_directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/arm-history/t80-attempt-1",
+    "archive_directory_manifest_sha256_internal": "472b5e5eaa9905ac991ca9c7f2b3fd8235fce2d5a81fb32493da4252c1a5ec4e",
+    "archive_manifest_file_sha256": "f9735db1a3c1acf1b3041bcba4af7bb821b09b584c6825d5aeb064e29a856365",
+    "archived_run_tree_output_manifest_sha256_internal": "7b8c1ad07552c8e54082352525b39efe294a86fc8a3bb2d142cb2732c3503d97",
+    "note": "The coordinator quoted 472b5e5eaa..., which is the ARCHIVE DIRECTORY's manifest; the archived run tree's own output manifest is 7b8c1ad075.... Two different objects, both recorded so the attempt boundary is unambiguous.",
+    "why": "Cut by an earlier sentinel rule that fired on a seven-day allowed_warning at 0.25 utilization while the five-hour window was clean and spend was $36.68 of $150. Not money, not an arm limit. The rule has since been corrected."
+  },
+  "t80_assertion_corpus": {
+    "root": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs",
+    "documents": 48,
+    "total_bytes": 600360,
+    "composition": "11 notes.md and 37 authored lead documents from the arm's own jobs J0017-J0028. J0028-compare wrote nothing.",
+    "excluded": "Jobs J0001-J0016 are the INHERITED FROZEN PREMIUM jobs carried into the run tree, not arm output; no credit cites them. Also excluded as inputs: handoff.md, navigation.md, brief.md, assignment.md, sources.md, tool-help.md, research.py; and workspace/research-evidence/sources/** as locator inventories.",
+    "files": [
+      {
+        "path": "J0017-reconcile/workspace/notes.md",
+        "sha256": "cec7bc8da4743d62a87c285f0722d42392c38c32b88ad40e79e0d82ab16acfb1"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/diffedit3-line-endings.md",
+        "sha256": "8b7e8fe949dfe6fad07b80612b5a4fcefd2fb7bfd07342c1d02b0f6377eff82d"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/diffedit3-symlink-confinement.md",
+        "sha256": "6e1c6b38aabc04ecfc268ba4c51ebefcd0770ee6b7ca905dd8d108cd8f902d31"
+      },
+      {
+        "path": "J0018-reconcile/workspace/notes.md",
+        "sha256": "8c108e70c3f632ecdab29da54c289bf4f1372d20852ce0764b4745918d782bfd"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/diffedit3-eol-and-deletion-fidelity.md",
+        "sha256": "634009a5cd21beb9e634c9e953305f2cd0ebcfae8c9eac7281f159b242cfb1eb"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/diffedit3-lifecycle-signals.md",
+        "sha256": "0431c759370e9eefee905d2ba6368c1d8dced84889b4867251d5a281b4611e77"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/diffedit3-symlink-write-through.md",
+        "sha256": "0810f09f729869a483112ec923969ea9d0ca5f46c2c06f17dbee51ce4d61419f"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/jj-resolve-partial-resolution.md",
+        "sha256": "db10857bb6f1c6123081077718da15baedc3299a43ba74e914093184bf3be9ed"
+      },
+      {
+        "path": "J0019-reconcile/workspace/notes.md",
+        "sha256": "7407b6f81d20e8e4ddcf73e5b9f42064a2ff8b760f02b5ba3d048c4125c13894"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/destructive-heal-before-transport.md",
+        "sha256": "e89fbae45849a08feceab4a5dcf0ad1e1f2ce6346f0f6438265f9f4e079901f0"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/jj038-stacked-table-head-marker-loss.md",
+        "sha256": "9313f625496ff77688a70a8947293cd4d736a404aacfe194378d67906ee3a215"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/manifest-prune-replicates-deletion.md",
+        "sha256": "d3fd320f97263fb0b231accb73565baf68f10bed9d64c61126cd828ee9bee8d8"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/on-disk-format-coupling-and-manufactured-state.md",
+        "sha256": "6e0d7144e736db6c8d8b459fddf5c10b4d6de116224884c33cf49995a504f949"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/op-store-gc-keep-newer-fence.md",
+        "sha256": "9c5b12b33580527745abe66e2db5057f61742f98dbc1147ff3e46dc80255d9d5"
+      },
+      {
+        "path": "J0020-compare/workspace/notes.md",
+        "sha256": "630ca9dbe0cf3ba6d186c29bfd2a6e9fe148a01b66d5038469e986131ddf1e5d"
+      },
+      {
+        "path": "J0020-compare/workspace/leads/jj-extra-table-head-loss-0440.md",
+        "sha256": "151ea8a78e9cf79fb014307c38feec95a7a385a0b931c93575ed98487ff45521"
+      },
+      {
+        "path": "J0020-compare/workspace/leads/jj-gc-fence-has-no-native-suspend.md",
+        "sha256": "5a2f80ae8dcfcba7d371854f032bcead9eb6efe48d20235a3fd3e627dd3129f5"
+      },
+      {
+        "path": "J0020-compare/workspace/leads/jj-object-verification-level.md",
+        "sha256": "9e5e44bbe308d3237e978b538c4ce0fff074dcf85b9e011480aa5311fb199d72"
+      },
+      {
+        "path": "J0020-compare/workspace/leads/jj-on-disk-format-profile.md",
+        "sha256": "b5d02f118dd3885a75d3003b07b9252f711172a1d513ed7aee1bb126c9084082"
+      },
+      {
+        "path": "J0020-compare/workspace/leads/jj-read-path-writes-operations.md",
+        "sha256": "40349b907e0f93ea121132fe64e6f6aaa9d525e64d4bd8d331ee6723ccc56614"
+      },
+      {
+        "path": "J0021-compare/workspace/notes.md",
+        "sha256": "f618060e7000972eef120213ddba45cea744658f5f9c82cb68607b379c74372f"
+      },
+      {
+        "path": "J0021-compare/workspace/leads/external-merge-tool-envelope.md",
+        "sha256": "fff3a8b7e985e4b0241d0c25dd0902b4bf3680ebef92c2be26f25a2469aa75f1"
+      },
+      {
+        "path": "J0021-compare/workspace/leads/marker-based-conflict-resolution-vs-jj.md",
+        "sha256": "803fb16a6248a5cfb42fa0ebdfffdbe2eeb2c75d2a2388e87891086c87119db1"
+      },
+      {
+        "path": "J0021-compare/workspace/leads/no-typed-file-change-model.md",
+        "sha256": "f2de1a598c9f3a73e3cb562c60bc5a6dc52c456bc242b329b689201c03e9f02a"
+      },
+      {
+        "path": "J0022-compare/workspace/notes.md",
+        "sha256": "b1228f497ee2b2e8e358fb8a03172eb95e5e7a8e952493ad07120a33df3bd596"
+      },
+      {
+        "path": "J0022-compare/workspace/leads/jj-conflict-resolution-route-missing.md",
+        "sha256": "4707e98e6ec4cb77a6b63d3695f78855520b19cdd06b2e51873feff40711cbf2"
+      },
+      {
+        "path": "J0022-compare/workspace/leads/jj-external-tool-surface-absent.md",
+        "sha256": "e2cc0055a025607b2a09e82402ccb57485bf22c600563b8605b692b007fce93a"
+      },
+      {
+        "path": "J0022-compare/workspace/leads/jj-failed-outcome-missing-after-operation.md",
+        "sha256": "0914bb969c0265be207ed8baa55b91eedca8b8d7ca191a23cde2888b0f3f1717"
+      },
+      {
+        "path": "J0022-compare/workspace/leads/jj-read-command-must-not-invoke-editing-tool.md",
+        "sha256": "4276fce671df06c783025f6efe73acf08fd406f0d61864cc8b49cdef769a73e3"
+      },
+      {
+        "path": "J0023-reconcile/workspace/notes.md",
+        "sha256": "bd8a327b776dee3446207a3b9b602345047e2d16f649c94e615d477233ceb830"
+      },
+      {
+        "path": "J0023-reconcile/workspace/leads/L-2f5b9c41d803-menu-enablement-duplication.md",
+        "sha256": "f80851ed56eaa509ec9380b7cf04508cb0c38284fc355280156b1f6971c99b06"
+      },
+      {
+        "path": "J0023-reconcile/workspace/leads/L-5e8a1fd7b904-replication-is-not-backup.md",
+        "sha256": "02055048d1eca87280fdc489b7888d60d76c8c68ec19aa31c14d5f1b6fc72220"
+      },
+      {
+        "path": "J0023-reconcile/workspace/leads/L-7d41ae90b6c2-eligibility-execution-mismatch.md",
+        "sha256": "740b1e157721830207953e4507079304cea0c18eefbaee00b9a40bc9306eb6ef"
+      },
+      {
+        "path": "J0023-reconcile/workspace/leads/L-93c6d20e5f17-visible-graph-as-correctness-input.md",
+        "sha256": "6a3dfa8f7a67ae869c79f2c2e0f81d114757e69d920cd4e5eeef5ed7794e6a9e"
+      },
+      {
+        "path": "J0024-reconcile/workspace/notes.md",
+        "sha256": "470142fafa554cd2a90c85913bf46922ef2e8c487bb248ff1b118e2fcbb58520"
+      },
+      {
+        "path": "J0024-reconcile/workspace/leads/gg-immutable-revset-unwrap-panics-query-worker.md",
+        "sha256": "c3806f447af5fabfc05f0f03f2d8c3625b5ebf13be398131c0505a20aece04c4"
+      },
+      {
+        "path": "J0024-reconcile/workspace/leads/gg-window-identity-truncated-path-hash.md",
+        "sha256": "bdb589a4f3b8f1d85cfe62b8def115433b528a257f598f7b4a9e5eb433a57072"
+      },
+      {
+        "path": "J0024-reconcile/workspace/leads/jj-shallow-backing-store-silent-truncation.md",
+        "sha256": "b3e42ad575dc726526b9f9d0230c8ac0bf4a840d73b905b7f65c73e45ef817a8"
+      },
+      {
+        "path": "J0025-reconcile/workspace/notes.md",
+        "sha256": "42ee03e445f6cf3f12dff82a82aa70d724d20b4a9b83079739188aaac9008b40"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/L-09d7eae0cb1a.md",
+        "sha256": "4ca5eeb5a00e08e5667d754b3018a6c41157e72e097d389a445567339fc2faa0"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/L-2e67f492925f.md",
+        "sha256": "ca4b0844f3fc179172c6dc4079e5464207f37d816d48ade0f81e060f14db4b95"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/L-51187d36144a.md",
+        "sha256": "271a54a7e82aa5db3fc152e6970db38e223e5afc81f21d593497a0de8896ce50"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/L-5f8ec0f9322f.md",
+        "sha256": "0b31ffac3b4974ada6c07e71dd297f10efff8a5b366a6fa58860619ec66d127c"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/L-64d41103d304.md",
+        "sha256": "373d77093ec71c7a4a9e4c46bf4c9ae4cfdfe6edad9564ad17528b2dc45804f5"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/L-76e55d4f6cf1.md",
+        "sha256": "359e179f412809f6c04518ff90f90ee00758701758611513d1653d47ee8a15eb"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/L-d0e92547d7ef.md",
+        "sha256": "c9f3e8a2e0fc8f76cc398852c9be9660c7153682b44a7372d4f3d5acdb38e53c"
+      },
+      {
+        "path": "J0026-compare/workspace/notes.md",
+        "sha256": "5ef2b80fbfcf02cd45b114cda810286a4586736c3b7a36c360ce52c60d30493f"
+      },
+      {
+        "path": "J0027-compare/workspace/notes.md",
+        "sha256": "4f17bd0fc5b9d55c1552ce307dcea57cfa9a6ba1a37272121ef2aee8a53c1d62"
+      }
+    ]
+  },
+  "adjudication_source_t80": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/adjudication/t80",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/adjudication/t80-manifest.json",
+    "manifest_sha256_internal": "ba091eb34df666d00dc516b69d8d57a837aa68ed9a31c771a702f676f6d503fd"
+  },
+  "code_fact_verification_t80": {
+    "rule": "Standing continuation-5 addition: every code-fact assertion is verified against the pinned source in the arm's own cache before credit, recorded with source lines.",
+    "pinned_source": "jj-lib 0.44.0 in the run's cache",
+    "verified": [
+      "V-T1 op_heads_store.rs resolve_op_heads lines 146-151: the branch commented '// Return without creating a merge operation' STILL calls op_heads_store.update_op_heads(&ancestor_op_heads, op_head.id()), and that marker write precedes the resolver call at line 155. UPHELD.",
+      "V-T2 OpHeadsStore::update_op_heads doc: 'Remove the old op heads and add the new one.' UPHELD.",
+      "V-T3 lib/src/stacked_table.rs:352-375 save_in serializes, hashes with Blake2b512, uses the hex digest as the file name and calls persist_content_addressed_temp_file - segment names ARE content hashes. UPHELD.",
+      "V-P1 and V-P5 re-checked from the Arm P adjudication: the unconditional tables[1..] removal loop and save_table's parent_table.name != table.name guard, both at v0.44.0."
+    ]
+  },
+  "four_arm_headline": {
+    "table": "Published in t80-README.md",
+    "credited_of_110": {
+      "claude_hicap": 45,
+      "arm_p": 32,
+      "arm_b": 39,
+      "t80": 26
+    },
+    "t80_vs_claude_hicap": {
+      "gained": [
+        "F068"
+      ],
+      "lost_count": 20,
+      "net": -19
+    },
+    "t80_vs_arm_p": {
+      "net": -6
+    },
+    "t80_vs_arm_b": {
+      "net": -13
+    },
+    "decomposition_of_the_20_lost_against_claude_hicap": {
+      "attributable_to_the_80_turn_ceiling": {
+        "count": 2,
+        "ids": [
+          "F092",
+          "F094"
+        ]
+      },
+      "attributable_to_the_3600s_job_time_limit": {
+        "count": 8,
+        "ids": [
+          "F050",
+          "F051",
+          "F059",
+          "F062",
+          "F066",
+          "F072",
+          "F087",
+          "F088"
+        ]
+      },
+      "capped_but_confounded_with_variance": {
+        "count": 2,
+        "ids": [
+          "F032",
+          "F043"
+        ]
+      },
+      "lost_from_jobs_that_hit_no_limit_at_all": {
+        "count": 8,
+        "ids": [
+          "F028",
+          "F037",
+          "F044",
+          "F053",
+          "F074",
+          "F083",
+          "F090",
+          "F106"
+        ]
+      }
+    },
+    "marginal_value_of_80_to_160_turns": "About 2 findings on this workload, and only for the minority of jobs that want more than 80 turns (1 of 12 here).",
+    "the_variance_floor": "Eight union findings separate two runs of the same model at the same effort on identical inputs with NO limit involved - four times what the ceiling cost. It is a floor on how much of any arm-to-arm difference in this campaign can be read as a real effect, and it applies retrospectively: Arm B's 6-finding deficit against claude-hicap sits inside this band.",
+    "capped_is_not_empty": "All three ceiling-cut documents end cleanly and produced 7 of the arm's 26 credits, including F068 - the only finding T80 reaches that claude-hicap did not. Only the timed-out job produced nothing.",
+    "nine_arm_union": 62,
+    "reached_by_no_arm": 48,
+    "t80_adds_to_the_union": 0
   }
 }
