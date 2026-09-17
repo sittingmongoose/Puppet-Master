@@ -237,7 +237,8 @@ acceptance_criteria:
     control. Pseudo-remotes and non-fetchable remotes are not presented as ordinary remotes, and an unsynced, untracked
     or absent reference is never folded silently into a combined chip. This adds no command: forget-remote stays out of
     the frozen Jujutsu inventory, and the disclosure is carried by the confirmation record the existing commands
-    already require.
+    already require, in its `disclosed_remote_scope` field - `no_remote`, `one_remote` or `all_remotes` - and its
+    `disclosed_remote_identity_refs` list.
   - The source-control manager is the unique operational destination; browser-scm remains a non-owning dependency summary.
 validation_surfaces: [source_control_projection fixtures, future Slint panel fixtures, Settings search and route dedupe fixtures]
 risk_class: gui_backend_or_owner_misrepresentation
@@ -246,7 +247,7 @@ context_scope: source_control_gui_and_settings
 implementation_surfaces: [Plans/Settings_System.md, Plans/FinalGUISpec.md, future Source Control Slint components]
 node_compile_hint: {mode: adaptive_source_control_projection, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:egolite-register:UI-01, source_ref:egolite-register:UI-03, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-bookmark-disclosure-dl057]
-preserved_exact_tokens: [Changes, Workspaces, History, Git Branches, JJ Bookmarks, Review Versions, Threads, current checks, Source of Truth, Mirror Health, repository_automation, "Actions & Pipelines", github_actions, Diagnostics and Receipts]
+preserved_exact_tokens: [Changes, Workspaces, History, Git Branches, JJ Bookmarks, Review Versions, Threads, current checks, Source of Truth, Mirror Health, repository_automation, "Actions & Pipelines", github_actions, Diagnostics and Receipts, synced, unsynced, tracked per remote, combined, absent, disclosed_remote_scope, disclosed_remote_identity_refs]
 negative_constraints: [Do not create a panel per forge or backend., Do not show staging or stash for JJ., Do not expose underscore enums or raw IDs in ordinary UI.]
 owner_hints: [Plans/Source_Control_System.md, Plans/Settings_System.md, Plans/FinalGUISpec.md]
 ```
@@ -877,9 +878,10 @@ unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Source_Control_System.md
 canonical_text: >-
-  Source Control supplies Backup with backend-native source-closure truth and capture-barrier/GC-fence evidence;
+  Source Control supplies Backup with backend-native source-closure truth, capture barrier evidence and GC fence
+  evidence;
   Backup Restore remains owner of bytes, manifests, RestoreRun, staging, activation, and rollback. Every restored
-  repository is verified in an isolated boundary before activation. Restore-as-new creates a new Project/repository
+  repository is verified in an isolated boundary before activation. Restore as New creates a new Project/repository
   binding while preserving an external repository identity only as non-authoritative lineage until explicit owner
   rebind and remote validation. In-place or selective restore never performs an implicit byte merge: it binds an exact
   target revision and recovery point, delegates backend-native merge/reconciliation, and records collision/conflict
@@ -896,12 +898,30 @@ acceptance_criteria:
   - A source-inclusive capture binds one BackupManifest/BackupRepositoryBinding reference, exact RepositoryContext/native revision, source layout, capture barrier, GC/prune/rewrite fence, workspace/dependency closure, dirty/approved-untracked/LFS/submodule/alternate/shared-store state, missing dependencies, and a source-closure receipt.
   - Complete source closure rejects a lost barrier/fence or any missing dependency; partial/blocked truth never receives a complete Git/JJ history badge and the prior complete recovery point remains selectable.
   - >-
-    A held fence states what it covered, not only that it held. `gc_fence_outcome` `held_during_capture` enumerates the
-    writer paths the fence covered - the native JJ process, a colocated Git writer, and any registered external or
-    automation path - each reported `covered`, `uncovered` or `unknown`, and each covered path naming the evidence that
-    it was covered. A fence claim that enumerates no path is rejected. Where coverage cannot be asserted for a known
+    A held fence states what it covered, not only that it held. `gc_fence_outcome` `held_during_capture` carries
+    `gc_fence_covered_paths`, which enumerates the writer paths the fence covered - the native JJ process
+    (`native_jj_process`), a colocated Git writer (`colocated_git`), and any registered external or automation path
+    (`registered_external_automation`) - each reported `covered`, `uncovered` or `unknown`, and each covered path naming
+    the evidence that it was covered. A fence claim that enumerates no path is rejected. Where coverage cannot be asserted for a known
     path the closure is `partial` with that path named, because a fence held truthfully over one writer while another
     was never covered is a true sentence about an incomplete capture.
+  - >-
+    The isolated boundary this unit requires before activation is a resolved boundary, not an asserted one. Where the
+    backend is Jujutsu, verification admits `isolated_verification` only when every store location pointer the capture
+    followed was resolved again inside the boundary and recorded `resolved_inside_boundary` true, under JJI-008's
+    `store_pointer_resolution` rule. A pointer that resolves outside the boundary is never followed and surfaces
+    through the existing missing-dependency and blocking receipt refs rather than through a silently narrower closure.
+  - >-
+    Sanitization reaches inside the native store tree, not only the configuration surface. A restored repository
+    activates no entry classified `machine_local` or `ephemeral` under JJI-008's store-entry disposition rule, so a
+    restored copy carries no other machine's store identity, and an `unrecognized` entry makes the capture `partial`
+    with the entry named rather than complete.
+  - >-
+    Complete source closure has a decision procedure behind it, not only an end state. Where the backend is Jujutsu,
+    the completeness this unit rejects a missing dependency against is decided by JJI-008's `closure_expansion` - its
+    verified stages, its four typed blockers and its dependency-safe `materialization_order` - so complete here and
+    complete in the native closure record mean the same thing, and a closure carrying any typed blocker never receives
+    a complete history badge.
   - Restore-as-new allocates new PM Project/repository/workspace identity; copied external forge identity is lineage only until Source Control plus the Forge owner revalidate and explicitly bind it, and automation_binding_ref is independently absent or Forge-resolved.
   - In-place/selective restore binds the immutable Backup snapshot/capture set, current target RepositoryContext/revision, verified recovery point, merge preview/currentness, and backend-native terminal receipt; collision, conflict, stale target, or effect-unknown state blocks activation or routes to exact owner recovery.
   - Remote validation distinguishes not requested, offline/unverified, identity verified but credentials missing, bounded fetch/read verified, write capability checked without write, identity mismatch, and trust/currentness blocked; it never emits a push/publish or treats a successful process exit as remote truth.
@@ -934,7 +954,10 @@ source_lineage:
   - Plans/Backup_Restore_System.md#BRS-014
   - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.3
   - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-gc-fence-coverage-c4-07
-preserved_exact_tokens: [BackupManifest, BackupRepositoryBinding, capture barrier, GC fence, RestoreRun, Restore as New, Sign-in Required, External Reattachment Required, RepositoryForgeBinding, AutomationBinding, "expected_event_types=[]"]
+  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-store-pointer-resolution-c4-04
+  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-store-entry-disposition-c4-06
+  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-closure-decision-procedure-c4-11
+preserved_exact_tokens: [BackupManifest, BackupRepositoryBinding, capture barrier, GC fence, RestoreRun, Restore as New, Sign-in Required, External Reattachment Required, RepositoryForgeBinding, AutomationBinding, gc_fence_outcome, held_during_capture, gc_fence_covered_paths, native_jj_process, colocated_git, registered_external_automation, isolated_verification, store_pointer_resolution, resolved_inside_boundary, machine_local, ephemeral, unrecognized, closure_expansion, materialization_order, "expected_event_types=[]"]
 negative_constraints:
   - Do not move BackupManifest, RestoreRun, activation, rollback, credential custody, Forge adapters, or AutomationBinding into Source Control.
   - Do not activate restored credentials, hooks, helpers, filters, unsafe includes, extraHeaders, URL user-info, or configuration from ordinary source-history backup.
@@ -966,8 +989,9 @@ canonical_text: >-
   and never duplicates a push to Cursor Origin and its mapped GitHub authority. Git preserves index/HEAD,
   staged/unstaged, commit, stash, branch/upstream, and worktree semantics. Jujutsu preserves current @, stable
   change ID, current commit ID, describe/new/edit/split/squash/abandon, bookmarks/tracking, conflicts,
-  workspaces, and operation history without a fake stage area or hidden Git commit/stash. Colocated Git/JJ
-  coordinates locks and imports/exports, and backend adoption is an explicit previewed migration.
+  workspaces, and operation history without a fake stage area or hidden Git commit/stash. Preserving a native
+  semantic here is a statement about the backend's meaning, not a promise that a canonical command dispatches it.
+  Colocated Git/JJ coordinates locks and imports/exports, and backend adoption is an explicit previewed migration.
 gui_related: true
 gui_classification_reason: Capability states, remediation, remote previews, and backend-native actions directly determine visible controls and labels.
 depends_on: [SCS-002, SCS-003, SCS-004, SCS-013, FGI-012]
@@ -982,10 +1006,19 @@ acceptance_criteria:
     The owner rule set in DL-056: on a Jujutsu workspace the diff-open, merge-editor-open and Git external-merge-tool
     preference surfaces are read-only or built-in-editor-only, so no external tool is handed a Jujutsu workspace to
     write into. A control disabled by that scoping carries the typed reason `conflict_surface_read_only_on_jujutsu`
-    rather than appearing unavailable without explanation. The save-back contract for a Jujutsu conflict is deferred
+    rather than appearing unavailable without explanation, and its safe next action is the value the existing closed
+    vocabulary already has, `inspect`; no new safe-next-action value is introduced. The save-back contract for a
+    Jujutsu conflict is deferred
     until the built-in editor's save path is designed, and until then nothing writes conflict content back through
     these surfaces.
   - Partial fan-out identifies exactly which ref reached each target; shared commits never establish repository identity and an Origin mirror never triggers duplicate automatic publication.
+  - >-
+    Split is preserved as a Jujutsu semantic and is not dispatchable today, and canon says both. The canonical command
+    `cmd.jujutsu.change.split` expresses only a change id, while the native command with no path arguments opens an
+    interactive editor the workbench cannot host, so JJI-003 disables it before effect with
+    `interactive_editor_session_required`. The preserved-semantics sentence in this unit is therefore read as
+    expressible-but-not-dispatchable for split until a content-selection vocabulary is landed, which is an optional
+    capability outside this correction.
   - Paired Git/Jujutsu fixtures retain engine-specific labels, commands, graph selection, and operation-history meaning; Jujutsu undo remains distinct from commit history and Backup restore.
 validation_surfaces: [Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, future capability revision, remote fan-out, Git/JJ parity, and migration fixtures]
 risk_class: stale_capability_cross_target_publication_or_backend_semantic_loss
@@ -999,7 +1032,8 @@ source_lineage:
   - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:31-37
   - source_ref:corrected-slice:machine__requirements.json__part-003__lines-000401-000620.txt:57-108
   - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-conflict-surface-scope-dl056
-preserved_exact_tokens: [ready, not_configured, auth_required, permission_denied, policy_blocked, protected, unsupported, adapter_missing, external_only, temporarily_unavailable, stale, unknown, current @, change ID, commit ID, outcome_unknown]
+  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-no-interactive-editor-session-c4-08
+preserved_exact_tokens: [ready, not_configured, auth_required, permission_denied, policy_blocked, protected, unsupported, adapter_missing, external_only, temporarily_unavailable, stale, unknown, current @, change ID, commit ID, merge_editor_available, conflict_surface_read_only_on_jujutsu, inspect, cmd.jujutsu.change.split, interactive_editor_session_required]
 negative_constraints:
   - Do not turn unavailable or unknown checks into zero failed checks or unsupported.
   - Do not infer a remote, account, forge, or repository from focus, current branch, display path, remote name, or shared commit objects.
@@ -1129,8 +1163,10 @@ acceptance_criteria:
   - >-
     A divergent change is representable. More than one visible commit may carry one stable change reference, which is
     ordinary Jujutsu state rather than an error, and a node in that condition reports `node_state` `divergent` instead
-    of being mislabelled `normal` or dropped from the page. The `divergent` state is Jujutsu-only: a Git page keeps its
-    existing `normal` or `conflicted` node states. Divergence is reported, never resolved here; the projection
+    of being mislabelled `normal` or dropped from the page. The surface's Jujutsu `graph_states` list carries
+    `divergent` appended after the states it already froze, so the projection's node state and the surface's state
+    vocabulary name the same thing and no existing frozen position shifts. The `divergent` state is Jujutsu-only: a Git
+    page keeps its existing `normal` or `conflicted` node states. Divergence is reported, never resolved here; the projection
     introduces no convergence command and SCS-017 continues to introduce no mutation command at all.
   - Static schema and fixtures keep `runtime_evidence_claimed=false` and establish no handler, adapter, native Slint behavior, performance result, scenario result, or readiness claim.
 validation_surfaces:
@@ -1164,7 +1200,7 @@ source_lineage:
   - Plans/Decision_Log.md#DL-053
   - Plans/Decision_Log.md#DL-054
   - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-divergent-change-representable-c4-02
-preserved_exact_tokens: [SourceGraph, RepositoryContext, git_commit_graph, jujutsu_change_graph, source history, operation history, Backup history, parent_refs_truncated, parent_expansion_cursor_ref]
+preserved_exact_tokens: [SourceGraph, RepositoryContext, git_commit_graph, jujutsu_change_graph, source history, operation history, Backup history, parent_refs_truncated, parent_expansion_cursor_ref, node_state, divergent, graph_states]
 negative_constraints:
   - Do not infer repository, workspace, Host, Environment, remote, account, or authority from graph focus, display path, labels, or shared commit objects.
   - Do not merge Jujutsu operation history or Backup history into SourceGraph or invent a cross-owner undo/restore action.

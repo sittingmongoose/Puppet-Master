@@ -117,7 +117,8 @@ status: accepted
 owner_doc: Plans/Jujutsu_Integration.md
 canonical_text: >-
   JJ actions use canonical cmd.jujutsu.* identities. Every mutation consumes RepositoryContext, expected JJ
-  revision, writer lease, Permissions, FileSafe and idempotency, and emits before/after operation identities.
+  revision, writer lease, Permissions, FileSafe and idempotency, and emits the before operation ID and the
+  after operation ID.
   Multi-step workspace, rebase, typed import/export, fetch/push and recovery actions expose ObservableWork rather
   than local timers or terminal prose. Colocated import/export dispatch additionally requires its exact effective
   capability to be true under the current certified adapter gate. The Jujutsu owner schema supplies one closed,
@@ -189,7 +190,7 @@ context_scope: jujutsu_commands
 implementation_surfaces: [Plans/jujutsu_integration_contracts.schema.json, Plans/jujutsu_integration_contract_fixtures.json, Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Wiring_Matrix.production.json, future JJ adapter]
 node_compile_hint: {mode: jujutsu_command_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:egolite-register:TS-03, source_ref:egolite-register:CT-01, source_ref:pldg-20260911-001-jujutsu-receipt-correction:atom-jj-terminal-receipt-001, source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-clone-preinit-native-identity-108, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-divergent-change-representable-c4-02, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-read-proven-non-mutating-c4-05, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-no-interactive-editor-session-c4-08, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-recovery-action-floor-c4-09, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-bookmark-tracking-is-local-c4-10, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-bookmark-disclosure-dl057]
-preserved_exact_tokens: [cmd.jujutsu.*, cmd.jj.*, ObservableWork, before operation ID, after operation ID, native_state_phase, destination_not_initialized]
+preserved_exact_tokens: [cmd.jujutsu.*, cmd.jj.*, ObservableWork, before operation ID, after operation ID, native_state_phase, destination_not_initialized, divergent, change_divergent_ambiguous_target, commit_id, interactive_editor_session_required, cmd.jujutsu.change.split, allowed_action_ids, repository_quarantined, cmd.jujutsu.operation.log, cmd.jujutsu.operation.show, cmd.jujutsu.bookmark.track, cmd.jujutsu.bookmark.untrack, local_mutation, credential_lease_ref]
 negative_constraints: [Do not register cmd.jj.* as a primary command., Do not scrape terminal prose for state., Do not retry an unknown effect.]
 owner_hints: [Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Shared_Integration_Runtime.md]
 ```
@@ -217,14 +218,21 @@ acceptance_criteria:
   - Git mutation without compatible preflight and pre/post JJ operation IDs is blocked before effect.
   - Late mutation, failed import/export, or operation mismatch enters quarantine and preserves evidence.
   - Unsupported or uncertified import/export blocks reconciliation and never triggers a fallback mutation.
+  - >-
+    A colocated Git writer is a named writer path under the capture GC fence, not an assumed one. When a source-
+    inclusive capture holds the fence over a colocated workspace, the `colocated_git` writer path appears in the Source
+    Control owner's `gc_fence_covered_paths` enumeration with its own coverage and evidence, exactly as
+    `native_jj_process` and `registered_external_automation` do. A capture that leaves the colocated Git writer
+    `uncovered` or `unknown` is `partial`, never complete, because an uncovered second writer is the same dual-writer
+    exposure this unit blocks everywhere else.
 validation_surfaces: [colocation writer race tests, Git compatibility preflight fixtures, late mutation quarantine tests]
 risk_class: colocated_dual_writer_corruption
 reasoning_tier: high
 context_scope: jujutsu_git_colocation
 implementation_surfaces: [future JJ and Git adapters, future LeaseCoordinator integration]
 node_compile_hint: {mode: colocated_single_mutation_authority, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:SCM-006..007]
-preserved_exact_tokens: [.jj, one mutation authority, JJ by default, read-only Git, pre/post JJ operation IDs, quarantine]
+source_lineage: [source_ref:egolite-register:SCM-006..007, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-gc-fence-coverage-c4-07]
+preserved_exact_tokens: [.jj, one mutation authority, JJ by default, read-only Git, pre/post JJ operation IDs, quarantine, gc_fence_covered_paths, colocated_git]
 negative_constraints: [Do not allow concurrent JJ and Git mutation., Do not treat Git import/export as implicit., Do not reassign a quarantined workspace.]
 owner_hints: [Plans/Jujutsu_Integration.md, Plans/WorktreeGitImprovement.md, Plans/Source_Control_System.md]
 ```
@@ -285,8 +293,20 @@ acceptance_criteria:
   - Unsupported object formats, versions, helpers, or colocation states degrade reads and fail mutations closed.
   - A disabled colocated import/export capability remains visible with the upstream-race reason and no fallback action.
   - >-
+    A setup or repository row that reports a blocked state still offers the recovery-action floor. Where setup reports
+    `repository_quarantined`, or a stale catalog, revision or operation state, the row's `allowed_action_ids` contains
+    at least `cmd.jujutsu.operation.log` and `cmd.jujutsu.operation.show`, the same floor JJI-003 sets for command
+    availability, and every identifier it admits exists in the canonical inventory. An empty recovery set is not an
+    admissible projection of a blocked repository.
+  - >-
+    The setup surface uses its exact registered strings rather than Jujutsu-private wording. The setup actions are
+    `Install Jujutsu` and `Use Jujutsu here`, the JJ sections are `Bookmarks` and `Operation Log`, and a setup row
+    reports the shared source-control setup status vocabulary, in which `Ready with limits` and `Needs attention` are
+    the two partial states this unit's limits and blockers project onto.
+  - >-
     "Current certification evidence" has content. The effective-capability snapshot carries the same
-    `toolchain_identity` block the closure records carry, and a `certified_scenarios` matrix of exactly nine rows -
+    `toolchain_identity` block the closure records carry - the one shared `native_toolchain_identity` definition Source
+    Control owns - and a `certified_scenarios` matrix of exactly nine rows -
     non-mutating observation, ordinary snapshot synchronization, explicit import, explicit export, stale-workspace
     refresh, external-Git compatibility, workspace creation, workspace removal, and any approved conversion path -
     each reported `supported`, `unsupported` or `unknown`, and each `supported` row naming the evidence that certifies
@@ -312,7 +332,7 @@ context_scope: jujutsu_setup_gui_migration
 implementation_surfaces: [Plans/Settings_System.md, Plans/FinalGUISpec.md, future Source Control UI]
 node_compile_hint: {mode: jujutsu_setup_gui_migration_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:egolite-register:SCM-003, source_ref:egolite-register:UI-01, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-native-toolchain-identity-c4-03, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-recovery-action-floor-c4-09]
-preserved_exact_tokens: [Install Jujutsu, Use Jujutsu here, Bookmarks, Operation Log, Ready with limits, Needs attention]
+preserved_exact_tokens: [Install Jujutsu, Use Jujutsu here, Bookmarks, Operation Log, Ready with limits, Needs attention, native_toolchain_identity, toolchain_identity, certified_scenarios, allowed_action_ids, repository_quarantined, cmd.jujutsu.operation.log, cmd.jujutsu.operation.show]
 negative_constraints: [Do not install or mutate silently., Do not show Git-only staging or stash., Do not promote Preview certification without current evidence.]
 owner_hints: [Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Settings_System.md]
 ```
@@ -522,7 +542,8 @@ status: accepted
 owner_doc: Plans/Jujutsu_Integration.md
 canonical_text: >-
   A source-inclusive JJ backup records the retained operation/object closure for the exact discovered layout:
-  colocated, non-colocated, or shared multi-workspace. The closure includes operation heads/store, referenced views,
+  colocated, non-colocated, or shared multi-workspace. The closure includes operation heads/store, referenced
+  repository views,
   commits/trees/conflicts, non-current abandoned/rebased objects needed by retained operations, underlying Git/common/
   alternate/shared stores when present, workspace maps and captured dirty files, under one capture barrier and GC/prune/
   rewrite fence. Restore verification runs on a clean isolated disposable repository, uses read modes that do not create
@@ -540,7 +561,7 @@ acceptance_criteria:
   - Non-colocated closure preserves the JJ operation/object store and every explicitly mapped backing/alternate store without assuming a colocated Git checkout; shared multi-workspace closure preserves stable workspace/source mappings while foreign absolute paths remain non-authoritative.
   - Complete closure includes operation heads/views, commits/trees/conflicts, retained non-current/abandoned/rebased objects, current workspace files, and required dependency stores; a text op log, Git push, mirror clone, Git bundle, current bookmarks, or remote availability alone cannot satisfy it.
   - Capture cannot manufacture a JJ snapshot/commit/operation to align dirty files with the last recorded operation; the closure and restore receipt disclose the captured-files relationship separately.
-  - Restore verification is isolated, read-only against the original, version-compatible, and ignore-working-copy where required; a disposable restored copy can list operations, inspect views, and restore the selected historical operation with object verification.
+  - Restore verification is isolated, read-only against the original, version-compatible, and ignore-working-copy on every read rather than only where required; a disposable restored copy can list operations, inspect views, and restore the selected historical operation with object verification.
   - Colocation is not inferred after restore. Activation either proves one restored colocated JJ writer, explicitly rebinds as non-colocated through the owner, or blocks as a dual-writer/identity collision.
   - JJ conflicts, filesystem/path collisions, missing object closure, stale target state, and operation mismatch remain distinct receipt refs. A blocked/conflicted result cannot be promoted to successful Backup activation or auto-selected newest operation.
   - >-
@@ -560,49 +581,55 @@ acceptance_criteria:
     never on the original and never while the capture barrier is held.
   - >-
     "Version-compatible" is bound rather than asserted. The closure record and the restore verification receipt each
-    carry one `toolchain_identity` block naming the exact jj executable version and build, the Puppet Master adapter
-    version, the Git version or its explicit absence, the store-format generation the closure was written in and the
-    minimum generation required to read it, the exact Execution Host and Environment, and the certification catalog and
-    official source the identity came from. Restore verification compares the closure's identity against the verifying
+    carry one `toolchain_identity` block, which is the single shared `native_toolchain_identity` definition Source
+    Control owns as `pm.source_control.native_toolchain_identity.v1`, naming the exact jj executable version and build,
+    the Puppet Master adapter version, the Git version or its explicit absence, the store-format generation the closure
+    was written in and the minimum generation required to read it, the exact Execution Host and Environment, and the
+    certification catalog and official source the identity came from. Restore verification compares the closure's identity against the verifying
     host before it reports a result: `historical_operation_result` is `verified_on_disposable_copy` only when
     `toolchain_compatibility` is `verified_compatible`, and a mismatched or unknown version is the typed blocker
     `blocked_version_incompatible` rather than a silent pass.
   - >-
-    Store location pointers are resolved, recorded and bounded. The closure records every in-store pointer it followed -
-    the `.jj/repo` pointer, the store's Git target, `objects/info/alternates`, the Git `commondir`, and each linked
-    workspace `gitdir` link - with the base each hop resolved against, because the bases differ: an alternates entry
-    resolves against the object database and a `commondir` entry against the Git directory, so a single-base
-    implementation resolves the wrong store while satisfying every other field. The closure also records the environment
-    that resolved them, naming the relevant `GIT_*` values as non-secret references or their explicit absence, never raw
-    machine paths. Before any native command runs in the disposable copy the drill resolves the same pointers again and
-    records where each resolved; a pointer resolving outside the isolation boundary is never followed, and
-    `isolated_verification` is admissible only when every pointer resolved inside it. An unfollowable or out-of-boundary
-    hop surfaces through the existing missing-dependency and blocking receipt refs.
+    Store location pointers are resolved, recorded and bounded. The closure records every in-store pointer it followed
+    as one `store_pointer_resolution` hop - the `.jj/repo` pointer (`jj_repo_pointer`), the store's Git target
+    (`store_git_target`), `objects/info/alternates` (`objects_info_alternates`), the Git `commondir` (`git_commondir`),
+    and each linked workspace `gitdir` link (`workspace_gitdir_link`) - with the base each hop resolved against, because
+    the bases differ: an alternates entry resolves against the object database and a `commondir` entry against the Git
+    directory, so a single-base implementation resolves the wrong store while satisfying every other field. The closure
+    also records the environment that resolved them, naming the relevant `GIT_*` values as non-secret references or
+    their explicit absence, never raw machine paths. Before any native command runs in the disposable copy the drill
+    resolves the same pointers again and records where each resolved; a pointer resolving outside the isolation boundary
+    is never followed, and `isolated_verification` is admissible only when every hop records
+    `resolved_inside_boundary` true. An unfollowable or out-of-boundary hop surfaces through the existing
+    missing-dependency and blocking receipt refs.
   - >-
     A read is proven non-mutating, not declared non-mutating. Every native read a capture or a drill issues is pinned to
     an exact operation and to an ignore-working-copy mode, recorded as `read_pinning` with `load_mode`
-    `pinned_operation`, never loaded at head. The drill receipt records the disposable copy's operation-head set before
+    `pinned_operation` and `ignore_working_copy` true, never loaded at head. The drill receipt records the disposable copy's operation-head set before
     and after verification and the two sets are equal; an operation authored by verification is the typed failure
     `verification_authored_operation`, not an admissible side effect. Divergence encountered during a read is recorded
     with every head, and never resolved: Backup reconciles nothing.
   - >-
     Every entry inside the native store tree has a stated disposition. Each is classified against the pinned JJ version
-    as native history, machine-local, ephemeral or unrecognized, and each classification names the source trace that
-    establishes it; a filename pattern such as `*.lock` is never a classification. Machine-local and ephemeral entries
-    are captured as bytes and never restored as active state, so a restored copy carries no other machine's store
-    identity. An unrecognized entry inside the store tree yields `partial` with the entry named, never `complete`. The
+    as `native_history`, `machine_local`, `ephemeral` or `unrecognized`, and each classification names the source trace
+    that establishes it; a filename pattern such as `*.lock` is never a classification. Machine-local and ephemeral
+    entries are captured as bytes and carry `restored_as_active_state` false, so a restored copy carries no other
+    machine's store identity. An unrecognized entry inside the store tree yields `partial` with the entry named, never
+    `complete`, and is never restored as active state either. The
     enumerated list of entries for a given JJ version is an owner audit of native internals that this landing does not
     perform; it is recorded as open question `q-008` in `pldg-20260917-001-jujutsu-continuation4-corrections`, and a
     version change invalidates the list until it is re-audited.
   - >-
-    Completeness has a decision procedure, not only a definition. The closure expands the retained set through every
-    stage - operation to view, view to commit, commit to tree, and the retained non-current, abandoned and rebased
-    objects - and records which stages it verified. A missing parent, a malformed identifier, a self-parent and a parent
-    cycle are four distinct closure blockers, each naming the object, never a silent skip; a closure carrying any of
-    them is not `complete`. Dependency objects are transferred and persisted before any head, operation head or bookmark
-    pointer that refers to them is published, and a restore materializes in the same dependency-safe order with
-    operation heads and activation markers last, so an interrupted transfer never leaves a pointer to an object that is
-    not there. Activation still waits for the isolated disposable verification.
+    Completeness has a decision procedure, not only a definition. The closure records a `closure_expansion` that
+    expands the retained set through every stage - `operation_to_view`, `view_to_commit`, `commit_to_tree`, and the
+    retained non-current, abandoned and rebased objects (`retained_non_current_objects`) - and records which stages it
+    verified. A `missing_parent`, a `malformed_id`, a `self_parent` and a `parent_cycle` are four distinct closure
+    blockers, each naming the object, never a silent skip; a closure carrying any of them is not `complete`. Dependency
+    objects are transferred and persisted before any head, operation head or bookmark pointer that refers to them is
+    published, and a restore materializes in the same dependency-safe `materialization_order`, with
+    `dependency_objects` before any referring pointer and `operation_heads` and `activation_markers` last, so an
+    interrupted transfer never leaves a pointer to an object that is not there. Activation still waits for the isolated
+    disposable verification.
   - Ordinary restore does not activate hooks, aliases, credential helpers, filters, unsafe includes, URL user-info, extraHeaders, SSH material, forge credentials, or provider profiles. Non-secret restored refs and a separately authorized portable envelope remain pending owner validation and a fresh credential lease.
   - Operation History pivots only to existing `cmd.backup.browse`, `cmd.backup.file.compare`, and Project Backup routes; isolated operation inspection/restore uses existing `cmd.jujutsu.operation.show` and `cmd.jujutsu.operation.restore`; neutral rebind/status/remote validation uses Source Control; Forge/AutomationBinding remains Forge-owned. The exact 31-command JJ inventory is unchanged.
   - Machine records require `expected_event_types=[]`; schema and fixture success remains event-silent, handler_unavailable/static, and not runtime, native adapter, clean-host recovery, security, visual, or readiness proof.
@@ -649,7 +676,7 @@ source_lineage:
   - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-read-proven-non-mutating-c4-05
   - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-store-entry-disposition-c4-06
   - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-closure-decision-procedure-c4-11
-preserved_exact_tokens: [colocated, non-colocated, shared multi-workspace, operation heads, repository views, conflicts, abandoned, rebased, capture barrier, GC fence, ignore-working-copy, object verification, object_verification_depth, full_data_read_passed, "expected_event_types=[]"]
+preserved_exact_tokens: [colocated, non-colocated, shared multi-workspace, operation heads, repository views, conflicts, abandoned, rebased, capture barrier, GC fence, ignore-working-copy, ignore_working_copy, object verification, object_verification_depth, integrity_verification_level, full_data_read_passed, native_toolchain_identity, toolchain_compatibility, blocked_version_incompatible, store_pointer_resolution, objects_info_alternates, git_commondir, resolved_inside_boundary, read_pinning, pinned_operation, verification_authored_operation, native_history, machine_local, ephemeral, unrecognized, restored_as_active_state, closure_expansion, materialization_order, missing_parent, malformed_id, self_parent, parent_cycle, "expected_event_types=[]"]
 negative_constraints:
   - Do not treat op-log text, a Git push, mirror clone, Git bundle, current bookmark, or reachable forge as complete JJ recovery.
   - Do not run verification or historical operation restore on the original active repository.
