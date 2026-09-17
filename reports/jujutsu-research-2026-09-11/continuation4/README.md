@@ -151,9 +151,11 @@ native usage rows), and why some jobs record 41 responses against a 40 ceiling (
 response, so at most one further response can already be in flight: read the limit as "at most 40
 admitted, one may already be on the wire").
 
-**Codex remains fail-closed in continuation 4.** The proof is `protocol/native-boundary-proof.json`,
-mirrored into every launch gate as `native_boundary_proofs.codex` with a `receipt_path` and
-`receipt_sha256`. Editing the meter and the collector invalidated it: a live call to
+**Codex remains fail-closed in continuation 4.** The proof is `protocol/native-boundary-proof.json`.
+No continuation-4 launch gate carries a `native_boundary_proofs.codex` entry — every gate here records
+`claude` or `omp` only — and the proof file as it stands has neither `receipt_path` nor `receipt_sha256`;
+those fields lived in continuation 3's gate. Supplying them is part of re-proving, not something already in
+place. Editing the meter and the collector invalidated the proof: a live call to
 `codex_native.native_boundary_capability()` now fails on exactly two comparisons, `meter_sha256` and
 `collector_sha256`, so the adapter reports `available: false` and every campaign refuses to launch.
 
@@ -169,13 +171,18 @@ Re-proving it is not a hash refresh. To run a Codex arm again:
 3. Obtain a **fresh independent review** of that capture and of the changed meter and collector, and record
    it in the proof's `independent_review` block.
 4. Write the new `protocol/native-boundary-proof.json` with the recomputed `adapter_sha256`, `proxy_sha256`,
-   `meter_sha256`, `collector_sha256` and `runtime_sha256`, then record that file's path and SHA-256 in the
-   arm's launch gate.
+   `meter_sha256`, `collector_sha256` and `runtime_sha256`.
+5. Give that new proof a `receipt_path` and `receipt_sha256` pointing at the fresh transport-gate capture
+   from step 2, and mirror the proof into the arm's launch gate as `native_boundary_proofs.codex` with the
+   proof's own path and SHA-256 — `bounded_campaign.verify_native_boundary` reads the receipt from the gate
+   entry (lines 443-444) and stops the launch if the file is missing or its hash disagrees.
 
-The adapter's `valid` predicate has **fifteen** conditions, not five hashes: the five hashes above, plus
-`protocol_version == 4`, `live_receipts_required is False`, `usage_reconciliation == 'job_end_native_records'`,
-`live_campaign_allowed is True`, `runtime_version` equal to the installed binary's, `independently_reviewed
-is True`, `all_dispatch_routes_verified is True`, `denied_before_dispatch is True`, `max_model_requests == 40`,
+The adapter's `valid` predicate (`adapters/codex_native.py` lines 59-73) has **sixteen** conjuncts, not five
+hashes: the five hashes above, plus `protocol_version == 4`, `live_receipts_required is False`,
+`usage_reconciliation == 'job_end_native_records'`, `live_campaign_allowed is True`, `runtime_version ==
+'0.153.4'` — a hardcoded pin to that one Codex release, stricter than "whatever is installed", so a newer
+binary fails the predicate until the pin itself is revisited — `independently_reviewed is True`,
+`all_dispatch_routes_verified is True`, `denied_before_dispatch is True`, `max_model_requests == 40`,
 `max_job_seconds == 2400` and `admitted_phases == ['reconcile', 'compare']`. On top of that,
 `bounded_campaign.verify_native_boundary` requires the receipt file to exist with a matching hash and its
 evidence's `proxy_sha256` and `runtime_sha256` to agree with the installed proxy and runtime. The three
