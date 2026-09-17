@@ -158,7 +158,8 @@ Tasks:
    - python3 scripts/pm-plans-verify.py validate-plan-graph
    - python3 scripts/pm-plans-verify.py validate-evidence
    Do not run run-gates, audit-governance, the migration snapshot, or the migration validate here.
-   Those four are repository-wide and run at landing on main and nightly.
+   Those four are repository-wide: the first three run at landing on main and nightly, and the
+   migration snapshot runs nightly in a worktree.
 6. Produce final certification with changed files, validators, blockers, and unresolved risks. Label
    the seal record seal_profile plan_layer, name those four as omitted_operations, and record
    full_repository_qualified false and repository_gates_status not_run_in_this_seal. Claim no result

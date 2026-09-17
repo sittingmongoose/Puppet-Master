@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L13-L840
 
-Source SHA256: `d7f54fcbbcf799e5040663466e7c571907e8f4133241daeefb1eec8daf0e6ece`
+Source SHA256: `32f87298e6fe4d773294cab054c8fd76b3bee915d0e6c704bd70fc8cad0cb7c1`
 
 ---
 
@@ -817,7 +817,7 @@ It came up because the seal of one small plan was measured spending 80 to 85 per
 
 The options were:
 
-1. Run the plan-layer profile for every per-plan seal, and run the four repository-wide operations when a branch lands on main and on a nightly schedule.
+1. Run the plan-layer profile for every per-plan seal, and run the repository-wide checks when a branch lands on main, with the migration snapshot and the same checks on a nightly schedule.
 2. Keep the full profile in every seal and accept the time.
 3. Run the full profile for the first seal of a new plan and the plan-layer profile for amendments.
 
@@ -827,9 +827,9 @@ A per-plan seal therefore runs fifteen operations: it registers owners, generate
 
 What makes that safe is the label the seal record carries, not the decision. A plan-layer seal record names its profile, names the four operations it did not run, records that the repository is not qualified by it, and records that the repository gates were not run in it. A seal like that cannot be read as a full-profile seal, and it claims no result for anything it skipped. A plan-layer seal never claims repository qualification.
 
-The four omitted operations run when a branch lands on main and on a nightly schedule. At landing they run in the shared checkout after the fast-forward and the shard check, and they cost about twelve minutes there. A landing is refused when a failure names a file the landing branch touches, and that failure is fixed on the branch; when every failure names files the branch does not touch, the landing proceeds and the failures are reported. That is the rule the shard check already follows, applied to the same moment. The nightly run covers the repository whether or not anything landed, so repository qualification never depends on somebody having pushed a branch.
+Three of the four omitted operations, the gate run, the governance audit and the migration validate, run when a branch lands on main and on a nightly schedule. At landing they run in the shared checkout after the fast-forward and the shard check, and they cost about ten minutes there. The migration snapshot creates a new tracked run directory, so it never runs in the shared checkout at landing; it runs nightly, in a worktree, by the designated Plans agent. A landing is refused when a failure names a file the landing branch touches, and that failure is fixed on the branch; when every failure names files the branch does not touch, the landing proceeds and the failures are reported. That is the rule the shard check already follows, applied to the same moment. The nightly run covers the repository whether or not anything landed, so repository qualification never depends on somebody having pushed a branch.
 
-This buys a per-plan seal in the order of twenty minutes instead of forty, and a seal cost that scales with the change instead of with the repository. It costs a seal record that has to say what it did not run, four operations that must actually run at landing and on a schedule rather than being assumed, and a landing that is refused when they fail on files the branch touches.
+This buys a per-plan seal in the order of twenty minutes instead of forty, and a seal cost that scales with the change instead of with the repository. It costs a seal record that has to say what it did not run, three checks that must actually run at landing and four operations on a schedule rather than being assumed, and a landing that is refused when they fail on files the branch touches.
 
 This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
 

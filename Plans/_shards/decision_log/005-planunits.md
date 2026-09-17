@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L848-L4010
+Source lines: L848-L4012
 
-Source SHA256: `d7f54fcbbcf799e5040663466e7c571907e8f4133241daeefb1eec8daf0e6ece`
+Source SHA256: `32f87298e6fe4d773294cab054c8fd76b3bee915d0e6c704bd70fc8cad0cb7c1`
 
 ---
 
@@ -2987,9 +2987,11 @@ canonical_text: >-
   seal_profile plan_layer, omitted_operations naming exactly those four, full_repository_qualified
   false, and repository_gates_status not_run_in_this_seal, so a plan-layer seal never claims
   repository qualification and reports no outcome for an operation it did not run. Every retained
-  operation runs the same validator with the same arguments and scope as before. The four omitted
-  operations run when a branch lands on main, in the shared checkout after the fast-forward and the
-  shard check at a measured cost of about twelve minutes, and on a nightly schedule; a landing is
+  operation runs the same validator with the same arguments and scope as before. Three of the four omitted
+  operations, run_gates, audit_governance, and migration_validate, run when a branch lands on main,
+  in the shared checkout after the fast-forward and the shard check at a measured cost of about ten
+  minutes, and on a nightly schedule; migration_snapshot runs only nightly, in a worktree, by the
+  designated Plans agent, because it creates a new tracked run directory; a landing is
   refused when a failure names a file the branch touches, and proceeds with the failures reported
   when every failure names files the branch does not touch.
 gui_related: false
@@ -2999,7 +3001,7 @@ depends_on: [BPM-005, BPM-009]
 unblocks: []
 acceptance_criteria:
   - BPM-005 states the fifteen plan-layer operations, the four omitted operations, the labelled seal record, that a plan-layer seal never claims repository qualification, and that every retained operation runs unchanged.
-  - BPM-009 places run_gates, audit_governance, migration_snapshot, and migration_validate at landing on main and on a nightly schedule, with the landing refusal and reporting rule and the measured cost.
+  - BPM-009 places run_gates, audit_governance, and migration_validate at landing on main and all four, including migration_snapshot in a worktree, on a nightly schedule, with the landing refusal and reporting rule and the measured cost.
   - The landing procedure in AGENTS.md and .claude/CLAUDE.md carries the repository-wide gates as one step after the fast-forward and the shard check, and states the measured cost.
   - The bootstrap seal prose no longer says that a per-plan seal runs the full gate set, and no passage in Plans says a seal qualifies the repository.
   - No validator, validator argument, or validator scope changes for any retained operation.

@@ -445,9 +445,11 @@ carries `seal_profile: plan_layer`, `omitted_operations` naming exactly those fo
 seal therefore never claims repository qualification, and nothing may read it as a full-profile seal
 or as evidence that the repository-wide gates passed.
 
-The four omitted operations run when a branch lands on `main` and on a nightly schedule. At landing
-they run in the shared checkout after the fast-forward and the shard check, and they cost about
-twelve minutes there. They fail on this repository today for reasons that belong to no single plan,
+Three of the four omitted operations, `run_gates`, `audit_governance` and `migration_validate`, run
+when a branch lands on `main` and on a nightly schedule. At landing they run in the shared checkout
+after the fast-forward and the shard check, and they cost about ten minutes there. `migration_snapshot`
+creates a new tracked run directory, so it never runs in the shared checkout at landing; it runs on
+the nightly schedule in a worktree by the designated Plans agent. They fail on this repository today for reasons that belong to no single plan,
 which is why the landing rule turns on whose files a failure names rather than on the gate passing
 outright. A landing is refused when a failure names a file the landing branch touches, and that
 failure is fixed on the branch; when every failure names files the branch does not touch, the landing
@@ -464,10 +466,12 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Bootstrap_Planning_Migration.md
 canonical_text: >-
-  The four repository-wide operations run_gates, audit_governance, migration_snapshot, and
-  migration_validate run when a branch lands on main and on a nightly schedule, not inside a per-plan
-  governance seal. At landing they run in the shared checkout after the fast-forward and the shard
-  check and cost about twelve minutes there. A landing is refused when a repository-wide failure
+  The repository-wide operations run_gates, audit_governance, and migration_validate run when a
+  branch lands on main and on a nightly schedule, not inside a per-plan governance seal; the
+  migration_snapshot creates a new tracked run directory, so it runs only on the nightly schedule, in
+  a worktree, by the designated Plans agent, never in the shared checkout at landing. At landing the
+  three checks run in the shared checkout after the fast-forward and the shard check and cost about
+  ten minutes there. A landing is refused when a repository-wide failure
   names a file the landing branch touches, and that failure is fixed on the branch; when every
   failure names files the branch does not touch, the landing proceeds and the failures are reported,
   which is the rule the shard check already follows. The nightly run covers the repository whether or
@@ -480,10 +484,10 @@ split_recommended: false
 depends_on: [BPM-005]
 unblocks: []
 acceptance_criteria:
-  - The landing procedure in AGENTS.md and .claude/CLAUDE.md names run-gates, audit-governance, the migration snapshot, and the migration validate as one step after the fast-forward and the shard check, and states the measured cost of about twelve minutes.
+  - The landing procedure in AGENTS.md and .claude/CLAUDE.md names run-gates, audit-governance, and the migration validate as one step after the fast-forward and the shard check, states the measured cost of about ten minutes, and keeps the migration snapshot out of the shared checkout.
   - A repository-wide failure that names a file the landing branch touches stops the landing and is fixed on the branch.
   - A repository-wide failure that names only files the landing branch does not touch does not stop the landing; main is pushed and the failures are reported, exactly as the shard-check rule reads.
-  - The same four operations run on a nightly schedule against main, independently of whether anything landed.
+  - All four operations, including the migration snapshot taken in a worktree by the designated Plans agent, run on a nightly schedule against main, independently of whether anything landed.
   - No per-plan seal is required to run them, and no seal record claims their outcome.
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
 validation_surfaces:
