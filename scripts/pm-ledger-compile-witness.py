@@ -40,8 +40,12 @@ def load_jsonl(path: Path) -> list[dict]:
     return rows
 
 
+PLAN_UNIT_ID = re.compile(r"^\s*plan_unit_id:\s*([A-Z][A-Za-z0-9]*-\d+)\s*$")
+
+
 def units_in(text: str) -> dict[str, dict]:
-    """First block per unit id: heading line through the line before the next heading."""
+    """First block per unit id. A unit is either a '## ID - title' heading through the line before the next heading,
+    or, for units that carry no heading of their own, the fenced block that declares its plan_unit_id."""
     lines = text.splitlines()
     out: dict[str, dict] = {}
     i = 0
@@ -56,6 +60,18 @@ def units_in(text: str) -> dict[str, dict]:
         block = "\n".join(lines[i:j]).rstrip()
         out.setdefault(m.group(2), {"line_start": i + 1, "line_end": j, "text": block})
         i = j
+    i = 0
+    while i < len(lines):
+        if not lines[i].strip().startswith("```"):
+            i += 1
+            continue
+        k = i + 1
+        while k < len(lines) and not lines[k].strip().startswith("```"):
+            k += 1
+        ids = [mm.group(1) for mm in (PLAN_UNIT_ID.match(l) for l in lines[i + 1:k]) if mm]
+        if ids and ids[0] not in out:
+            out[ids[0]] = {"line_start": i + 1, "line_end": min(k + 1, len(lines)), "text": "\n".join(lines[i:k + 1]).rstrip()}
+        i = k + 1
     return out
 
 

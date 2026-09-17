@@ -42,6 +42,15 @@ canonical_text: >-
   Unchanged unit with no tokens from this wave.
 preserved_exact_tokens: [gamma]
 ```
+
+## Addendum
+
+```yaml
+plan_unit_id: DEM-003
+canonical_text: >-
+  A unit appended without a heading of its own; it names `epsilon_field`.
+preserved_exact_tokens: [epsilon_field]
+```
 """
 
 
@@ -115,6 +124,17 @@ class WitnessTests(unittest.TestCase):
         by_token = {r["token"]: r for r in report["witness_exact_tokens"]}
         self.assertEqual(by_token["alpha_field"]["units_with_token_in_prose"], ["DEM-001"])
         self.assertEqual(by_token["gamma"]["units_with_token_in_prose"], ["DEM-002"])
+
+    def test_heading_less_unit_is_found_by_plan_unit_id(self):
+        found = self.mod.units_in(DOC)
+        self.assertIn("DEM-003", found)
+        self.assertIn("epsilon_field", found["DEM-003"]["text"])
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            ledger = write_ledger(root, targets_for_atom=["DEM-003"], tokens=["epsilon_field"],
+                                  repairs_sentence="Repairs DEM-003. Change: none needed.")
+            report = self.mod.run(root, ledger, None)
+        self.assertEqual(report["status"], "pass")
 
     def test_registry_parsing_handles_quoted_inline_list(self):
         self.assertEqual(self.mod.registry('preserved_exact_tokens: [a, "b c", \'d\']\n'), ["a", "b c", "d"])
