@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L4830-L4894
 
-Source SHA256: `a12932a412288b0186f3bf88b2330ac35617d43b334e9618036282822abeb3ee`
+Source SHA256: `fdde4cd293e507e554c493ca5504e7de991626cfb31fa379f47622f0b9bc130f`
 
 ---
 
@@ -63,7 +63,7 @@ source_lineage:
   - Plans/External_Research.md:ERS-001
   - reports/jujutsu-research-2026-09-11/continuation4/adjudication/README.md
   - reports/jujutsu-research-2026-09-11/continuation3/gate/cost-policy.json
-preserved_exact_tokens: ["validate-new-contracts", "NOT_RUN", "static schema and fixture evidence only"]
+preserved_exact_tokens: ["validate-new-contracts", "CONTRACT_PAIRS", "NOT_RUN", "30 negative fixtures", "static schema and fixture evidence only"]
 negative_constraints:
   - Do not infer runtime, provider, recovery, security, visual or performance results from fixture validation.
   - Do not add schemas or fixture pairs to the gate through an ambient glob.

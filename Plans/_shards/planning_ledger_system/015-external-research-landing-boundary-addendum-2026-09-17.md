@@ -4,7 +4,7 @@ Source: `Plans/Planning_Ledger_System.md`
 
 Source lines: L1410-L1449
 
-Source SHA256: `489240b5746d19d2778fe8f8f2282483710638965e24c760893a0fb28314d8cf`
+Source SHA256: `136a1da57287a59c98aee9b55b76c9944bd266fa51117943adb13b2f29343fc9`
 
 ---
 
@@ -17,7 +17,7 @@ plan_unit_id: PLS-023
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Ledger_System.md
-canonical_text: An external research wave that changes canon is landed through a registered v2 ledger carrying its corrections, design atoms, decisions, questions with their answer bases, and the compile queue naming the owner PlanUnits produced. Research bundles and run manifests remain published where they were produced and are cited by path and SHA-256 rather than copied into the ledger. The ledger records the landing; it does not authorize it, because a correction still requires its currentness re-check and independent review and a capability or product choice still requires the user's recorded answer.
+canonical_text: An external research wave that changes canon is landed through a registered v2 ledger carrying its corrections, design atoms, decisions, questions with their answer bases, and the compile queue naming the owner PlanUnits produced. Research bundles and run manifests remain published where they were produced and are cited by path and SHA-256 rather than copied into the ledger. The ledger records the landing; it does not authorize it, because a correction lands under the standing repair authorization only after its currentness re-check and independent review, and a capability or product choice lands only after the user's recorded answer.
 gui_related: false
 gui_classification_reason: Ledger landing boundaries are planning-governance behavior, not GUI work.
 split_recommended: false
@@ -39,7 +39,7 @@ node_compile_hint: {mode: governance_spec, create_worknodes: false, create_nodes
 source_lineage:
   - Plans/External_Research.md:ERS-006
   - reports/jujutsu-research-2026-09-11/continuation3-landing/README.md
-preserved_exact_tokens: ["standing repair authorization", "currentness", "independent review"]
+preserved_exact_tokens: ["standing repair authorization", "currentness", "independent review", "ledger question record"]
 negative_constraints:
   - Do not treat a ledger record as the authorization for a canon change.
   - Do not copy a research bundle into the ledger as canonical prose.

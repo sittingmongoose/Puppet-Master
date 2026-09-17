@@ -25772,7 +25772,7 @@ node_compile_hint: {mode: consumer_disposition, create_worknodes: false, create_
 source_lineage:
   - Plans/Decision_Log.md:DL-036
   - Plans/External_Research.md:ERS-005
-preserved_exact_tokens: ["Approve", "Deny", "Deny with changes", "Ask a question"]
+preserved_exact_tokens: ["Approve", "Deny", "Deny with changes", "Ask a question", "text labels"]
 negative_constraints:
   - Do not add, remove or reorder a response for research packets.
   - Do not present a correction-class finding as a decision card.

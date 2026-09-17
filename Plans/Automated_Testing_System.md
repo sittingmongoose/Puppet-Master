@@ -4882,7 +4882,7 @@ source_lineage:
   - Plans/External_Research.md:ERS-001
   - reports/jujutsu-research-2026-09-11/continuation4/adjudication/README.md
   - reports/jujutsu-research-2026-09-11/continuation3/gate/cost-policy.json
-preserved_exact_tokens: ["validate-new-contracts", "NOT_RUN", "static schema and fixture evidence only"]
+preserved_exact_tokens: ["validate-new-contracts", "CONTRACT_PAIRS", "NOT_RUN", "30 negative fixtures", "static schema and fixture evidence only"]
 negative_constraints:
   - Do not infer runtime, provider, recovery, security, visual or performance results from fixture validation.
   - Do not add schemas or fixture pairs to the gate through an ambient glob.

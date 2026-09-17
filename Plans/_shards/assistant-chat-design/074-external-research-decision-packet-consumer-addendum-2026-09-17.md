@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L25736-L25784
 
-Source SHA256: `c3b84300b2eb7a23d933d79d1b3b0bf348e2ca394340eec84cfb4a9c8c9cc791`
+Source SHA256: `017878d9df4c34b40e5c640e6b9d69ebf24687a6d63e2f10b7c962c239166871`
 
 ---
 
@@ -47,7 +47,7 @@ node_compile_hint: {mode: consumer_disposition, create_worknodes: false, create_
 source_lineage:
   - Plans/Decision_Log.md:DL-036
   - Plans/External_Research.md:ERS-005
-preserved_exact_tokens: ["Approve", "Deny", "Deny with changes", "Ask a question"]
+preserved_exact_tokens: ["Approve", "Deny", "Deny with changes", "Ask a question", "text labels"]
 negative_constraints:
   - Do not add, remove or reorder a response for research packets.
   - Do not present a correction-class finding as a decision card.
