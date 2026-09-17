@@ -81,6 +81,22 @@ residues are consequences of that tool, not evidence about the provider.
 
 Captured cost, response counts and receipts are unaffected — they come from the adapters' own records.
 
+**All four crashes were drain-induced. The session limit killed the runner sessions only.**
+
+| Arm | Run | Drain applied | Campaign dead | Gap |
+|---|---|---|---|---|
+| s-full | original | 05:44:27Z | 05:44:30Z | 3 s |
+| h2-review | original | 05:43:19Z | 05:43:21Z | 2 s |
+| s-full | resume | 12:23:28Z | 12:23:32Z | 4 s |
+| h2-review | resume | 12:19:05Z | 12:19:06Z | 1 s |
+
+The continuation-5 runner hit the identical guard at about 06:00Z the same day and built the working
+mechanism. It is now ported here: one named non-terminal reservation consumes the remaining headroom so
+`Meter.reserve` denies admissions while live jobs finish, and `cap_usd` is never written. Every cap-lowering
+path is removed. Two test files prove it, each with a negative control that reproduces the crash — including
+an end-to-end run of a real `bounded_campaign` with a job held live across the hold, which ends on
+`Stop: insufficient_priced_usage_headroom` with its terminal file written and its live job settled.
+
 | Arm | Outcome | Admissions used | Captured | Authorized cap |
 |---|---|---|---|---|
 | **S** (Opus 5, effort max, all stages) | killed by drain, closed out | 7 of 20 | $18.69 | $250 |

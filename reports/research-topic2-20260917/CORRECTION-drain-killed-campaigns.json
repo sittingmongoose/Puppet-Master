@@ -50,5 +50,40 @@
     "Arm wall-clock times for the two Opus arms span the outage and are not meaningful: s-full shows 7h08m wall against 36m25s of summed job time (concurrency 0.085). Use the summed job time."
   ],
   "unaffected": "closeout_arm.py is correct and unaffected: it RESTORES the authorized cap before relaunching, which is exactly why it works. The h2-research arm never had a drain applied and reached its designed terminal normally.",
-  "correct_mechanism_for_next_time": "To stop admissions without killing the campaign, the cap must not be changed while the campaign holds the meter. The protocol's own clean stop is the allowance gate; it cancels live workers but preserves every receipt and writes the terminal record. A true drain would need a protocol change that the campaign itself consults, not an external edit to a guarded journal."
+  "correct_mechanism_for_next_time": "To stop admissions without killing the campaign, the cap must not be changed while the campaign holds the meter. The protocol's own clean stop is the allowance gate; it cancels live workers but preserves every receipt and writes the terminal record. A true drain would need a protocol change that the campaign itself consults, not an external edit to a guarded journal.",
+  "all_four_crashes_were_drain_induced": true,
+  "session_limit_scope": "The Opus session limit killed the RUNNER SESSIONS only. It did not kill any campaign. Every campaign died from drain_arm.py lowering a live journal's cap_usd, 1-4 seconds after the drain, as the table shows.",
+  "independently_hit_by": "The continuation-5 runner hit the identical Meter identity guard at about 06:00Z on 2026-09-17 and built the working mechanism, hold_admissions.py. Two runners reached the same guard independently on the same day.",
+  "remediation": {
+    "ported": "continuation5/hold_admissions.py -> topic2/hold_admissions.py, adapted only so the Meter class is resolved from the protocol that OWNS the journal (topic 2 has two campaign directories with separate protocol copies).",
+    "mechanism": "Meter(journal) with cap=None skips the identity assertion, so the journal can be edited while a live campaign holds it. One named non-terminal reservation, HOLD-admission-sentinel, consumes the remaining headroom; Meter.reserve then denies further admissions while live jobs finish, and the campaign ends on the designed Stop(insufficient_priced_usage_headroom). cap_usd is never written. --release removes it.",
+    "cap_lowering_paths_removed": [
+      "drain_arm.py rewritten as a hold wrapper; the retired implementation kept as evidence at arm-history/drain_arm.py.RETIRED",
+      "rate_limit_sentinel.py places the hold, and its idempotency test now asks whether the hold is PRESENT rather than using a path substring or a historical cap_reductions field - two proxies that each let an admitting arm through while reporting success",
+      "h2-research journal restored from cap 0.154507 to the authorized $50 (the lowering had been applied after that arm already reached its terminal, so it never affected the run); observed cost unchanged"
+    ],
+    "tests": {
+      "test_admission_hold.py": "6 tests at the exact crash site (Meter.terminal, bounded_campaign line 605): hold denies admission while the live job stays live and then settles normally; cap never modified; hold is zero spend and records an admission_hold_placed event; release restores admissions; double hold refuses. CONTROL: the retired cap-lowering raises ValueError there and is not a Stop.",
+      "test_hold_stub_campaign.py": "End to end: a REAL bounded_campaign in an isolated sandbox copy of the protocol with only the worker stubbed, holding a job live across the hold. WITH THE HOLD: no crash, Stop(insufficient_priced_usage_headroom), campaign-terminal.json written, live job settled, nothing left live, cap unchanged at 250, no further admission. CONTROL: ValueError(Arm monetary identity changed), no terminal file, live job left unsettled - exactly what happened to all four real campaigns. 8 of 8 assertions pass."
+    }
+  },
+  "state_on_hold": {
+    "no_opus_admissions_until": "the coordinator gives a time when Jared's other threads are quiet",
+    "s-full": {
+      "admitted": 7,
+      "cap": 20,
+      "remaining_admissions": 13,
+      "restarts_used": 1,
+      "restarts_max": 2
+    },
+    "h2-review": {
+      "admitted": 6,
+      "cap": 12,
+      "remaining_admissions": 6,
+      "restarts_used": 1,
+      "restarts_max": 2
+    },
+    "h2-research": "complete at its designed terminal; never drained",
+    "holds_in_place_now": "none; no campaign is running"
+  }
 }
