@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-17T11:05:16Z",
+  "generated_at": "2026-09-17T13:33:49Z",
   "method": "Runtime identity and protocol fingerprints for every continuation-5 run.\n\nRuntime identity is taken from each job's OWN record: every adapter hashes and\nversion-checks the binary it is about to run and writes that into raw-*/run.json. The\ninstalled_now block is a live reading taken when this script runs, so a runtime that\nchanged mid-phase shows up as a disagreement instead of being papered over.\n\nThe protocol fingerprint is the first 16 hex characters of\nsha256(json.dumps({file: sha256}, sort_keys=True)) over the key protocol files as the\nrun itself recorded them in run.json['protocol_sha256']. Runs sharing a fingerprint ran\nidentical code; nothing here is asserted from memory.",
   "key_files": [
     "discovery_to_plan.py",
@@ -61,6 +61,108 @@
             "J0026-compare",
             "J0027-compare",
             "J0028-compare"
+          ],
+          "job_count": 12
+        }
+      ]
+    },
+    {
+      "run": "jujutsu-b-breadth-20260917-120521",
+      "arm": "b-breadth",
+      "route": {
+        "adapter": "omp",
+        "model": "muse-code/muse-spark-1.3-contributor",
+        "effort": "xhigh"
+      },
+      "protocol_fingerprint": "26b8419edb275cfd",
+      "protocol_key_file_sha256": {
+        "discovery_to_plan.py": "7b3df6a00936",
+        "cost_watch.py": "ce03a0ba1570",
+        "bounded_campaign.py": "dae03021f1b9",
+        "adapters/claude_native.py": "359c944f90ab",
+        "adapters/omp_native.py": "55489f0316d6",
+        "native_receipts.py": "87bf4f2337d2"
+      },
+      "jobs_with_native_records": 30,
+      "runtimes": [
+        {
+          "adapter": "omp",
+          "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
+          "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72",
+          "version": "omp/18.2.2",
+          "jobs": [
+            "J0017-reconcile",
+            "J0018-reconcile",
+            "J0019-reconcile",
+            "J0020-reconcile",
+            "J0021-reconcile",
+            "J0022-reconcile",
+            "J0023-reconcile",
+            "J0024-reconcile",
+            "J0025-reconcile",
+            "J0026-reconcile",
+            "J0027-reconcile",
+            "J0028-reconcile",
+            "J0029-reconcile",
+            "J0030-reconcile",
+            "J0031-reconcile",
+            "J0032-reconcile",
+            "J0033-reconcile",
+            "J0034-reconcile",
+            "J0035-reconcile",
+            "J0036-reconcile",
+            "J0037-reconcile",
+            "J0038-reconcile",
+            "J0039-reconcile",
+            "J0040-reconcile",
+            "J0041-reconcile",
+            "J0042-reconcile",
+            "J0043-reconcile",
+            "J0044-reconcile",
+            "J0045-reconcile",
+            "J0046-reconcile"
+          ],
+          "job_count": 30
+        }
+      ]
+    },
+    {
+      "run": "jujutsu-b-compare-20260917-123157",
+      "arm": "b-compare",
+      "route": {
+        "adapter": "claude",
+        "model": "opus",
+        "effort": "max"
+      },
+      "protocol_fingerprint": "26b8419edb275cfd",
+      "protocol_key_file_sha256": {
+        "discovery_to_plan.py": "7b3df6a00936",
+        "cost_watch.py": "ce03a0ba1570",
+        "bounded_campaign.py": "dae03021f1b9",
+        "adapters/claude_native.py": "359c944f90ab",
+        "adapters/omp_native.py": "55489f0316d6",
+        "native_receipts.py": "87bf4f2337d2"
+      },
+      "jobs_with_native_records": 12,
+      "runtimes": [
+        {
+          "adapter": "claude",
+          "binary": "/home/sittingmongoose/.local/share/claude/versions/2.1.226",
+          "sha256": "4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555",
+          "version": "2.1.226 (Claude Code)",
+          "jobs": [
+            "J0047-compare",
+            "J0048-compare",
+            "J0049-compare",
+            "J0050-compare",
+            "J0051-compare",
+            "J0052-compare",
+            "J0053-compare",
+            "J0054-compare",
+            "J0055-compare",
+            "J0056-compare",
+            "J0057-compare",
+            "J0058-compare"
           ],
           "job_count": 12
         }

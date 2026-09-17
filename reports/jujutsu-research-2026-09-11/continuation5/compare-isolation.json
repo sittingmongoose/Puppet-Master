@@ -1,0 +1,27 @@
+{
+  "run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-123157",
+  "checked_at": "2026-09-17T12:32:04.317053+00:00",
+  "expected_reconcile_model": "muse-code/muse-spark-1.3-contributor",
+  "leads": 100,
+  "reconcile_ready_leads": 54,
+  "cheap_reconcile_jobs": 30,
+  "premium_reconcile_jobs_present": [
+    "J0005-reconcile",
+    "J0006-reconcile",
+    "J0007-reconcile",
+    "J0008-reconcile",
+    "J0009-reconcile",
+    "J0010-reconcile",
+    "J0011-reconcile",
+    "J0012-reconcile",
+    "J0013-reconcile",
+    "J0014-reconcile",
+    "J0015-reconcile",
+    "J0016-reconcile"
+  ],
+  "premium_reconcile_jobs_with_any_delivery": [],
+  "compare_eligible_leads_depending_on_a_premium_reconcile": [],
+  "violations": [],
+  "pass": true,
+  "meaning": "Compare admission requires a delivered reconcile. Every delivered reconcile in this tree is the cheap arm's own; every premium reconcile job present delivered nothing and therefore cannot be a compare dependency."
+}

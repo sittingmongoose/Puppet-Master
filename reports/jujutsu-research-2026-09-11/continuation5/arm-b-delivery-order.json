@@ -1,0 +1,335 @@
+{
+  "note": "Muse Spark's delivery order for Arm B's compare stage: the order b-breadth actually delivered reconciled leads in (job terminal time, then position in that job's delivery receipt). Arm B's compare stage admitted in this order.",
+  "source_run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-breadth-20260917-120521",
+  "method": "Delivery order of the reconcile stage of jujutsu-b-breadth-20260917-120521: job terminal time, then position inside that job's delivery receipt",
+  "generated_at": "2026-09-17T12:31:46.794435+00:00",
+  "delivered": 54,
+  "total_leads_in_source": 100,
+  "rejected": [],
+  "order": [
+    {
+      "id": "L-39a5001283f3",
+      "reason": "delivered by J0019-reconcile at 2026-09-17T12:08:20.828627+00:00",
+      "delivered_by": "J0019-reconcile",
+      "delivered_at": "2026-09-17T12:08:20.828627+00:00"
+    },
+    {
+      "id": "L-4f94a6cc2232",
+      "reason": "delivered by J0019-reconcile at 2026-09-17T12:08:20.828627+00:00",
+      "delivered_by": "J0019-reconcile",
+      "delivered_at": "2026-09-17T12:08:20.828627+00:00"
+    },
+    {
+      "id": "L-c89be7ac8a66",
+      "reason": "delivered by J0019-reconcile at 2026-09-17T12:08:20.828627+00:00",
+      "delivered_by": "J0019-reconcile",
+      "delivered_at": "2026-09-17T12:08:20.828627+00:00"
+    },
+    {
+      "id": "L-7dc9a6726cf9",
+      "reason": "delivered by J0018-reconcile at 2026-09-17T12:08:42.121679+00:00",
+      "delivered_by": "J0018-reconcile",
+      "delivered_at": "2026-09-17T12:08:42.121679+00:00"
+    },
+    {
+      "id": "L-80244e477912",
+      "reason": "delivered by J0017-reconcile at 2026-09-17T12:08:45.931724+00:00",
+      "delivered_by": "J0017-reconcile",
+      "delivered_at": "2026-09-17T12:08:45.931724+00:00"
+    },
+    {
+      "id": "L-0793ad1e2a78",
+      "reason": "delivered by J0020-reconcile at 2026-09-17T12:10:25.175763+00:00",
+      "delivered_by": "J0020-reconcile",
+      "delivered_at": "2026-09-17T12:10:25.175763+00:00"
+    },
+    {
+      "id": "L-444f31e68545",
+      "reason": "delivered by J0020-reconcile at 2026-09-17T12:10:25.175763+00:00",
+      "delivered_by": "J0020-reconcile",
+      "delivered_at": "2026-09-17T12:10:25.175763+00:00"
+    },
+    {
+      "id": "L-c0c7178a160f",
+      "reason": "delivered by J0020-reconcile at 2026-09-17T12:10:25.175763+00:00",
+      "delivered_by": "J0020-reconcile",
+      "delivered_at": "2026-09-17T12:10:25.175763+00:00"
+    },
+    {
+      "id": "L-289201b4f4ec",
+      "reason": "delivered by J0021-reconcile at 2026-09-17T12:11:06.061625+00:00",
+      "delivered_by": "J0021-reconcile",
+      "delivered_at": "2026-09-17T12:11:06.061625+00:00"
+    },
+    {
+      "id": "L-2e0dc4dec29d",
+      "reason": "delivered by J0021-reconcile at 2026-09-17T12:11:06.061625+00:00",
+      "delivered_by": "J0021-reconcile",
+      "delivered_at": "2026-09-17T12:11:06.061625+00:00"
+    },
+    {
+      "id": "L-ad68a4ac94ad",
+      "reason": "delivered by J0021-reconcile at 2026-09-17T12:11:06.061625+00:00",
+      "delivered_by": "J0021-reconcile",
+      "delivered_at": "2026-09-17T12:11:06.061625+00:00"
+    },
+    {
+      "id": "L-0eb0bdc5ba1a",
+      "reason": "delivered by J0022-reconcile at 2026-09-17T12:11:28.858642+00:00",
+      "delivered_by": "J0022-reconcile",
+      "delivered_at": "2026-09-17T12:11:28.858642+00:00"
+    },
+    {
+      "id": "L-3c0712b66649",
+      "reason": "delivered by J0022-reconcile at 2026-09-17T12:11:28.858642+00:00",
+      "delivered_by": "J0022-reconcile",
+      "delivered_at": "2026-09-17T12:11:28.858642+00:00"
+    },
+    {
+      "id": "L-732df4469871",
+      "reason": "delivered by J0022-reconcile at 2026-09-17T12:11:28.858642+00:00",
+      "delivered_by": "J0022-reconcile",
+      "delivered_at": "2026-09-17T12:11:28.858642+00:00"
+    },
+    {
+      "id": "L-3e328f150be6",
+      "reason": "delivered by J0023-reconcile at 2026-09-17T12:13:14.528785+00:00",
+      "delivered_by": "J0023-reconcile",
+      "delivered_at": "2026-09-17T12:13:14.528785+00:00"
+    },
+    {
+      "id": "L-937ac57a9f2b",
+      "reason": "delivered by J0023-reconcile at 2026-09-17T12:13:14.528785+00:00",
+      "delivered_by": "J0023-reconcile",
+      "delivered_at": "2026-09-17T12:13:14.528785+00:00"
+    },
+    {
+      "id": "L-f27a42fd3b4c",
+      "reason": "delivered by J0023-reconcile at 2026-09-17T12:13:14.528785+00:00",
+      "delivered_by": "J0023-reconcile",
+      "delivered_at": "2026-09-17T12:13:14.528785+00:00"
+    },
+    {
+      "id": "L-6028298d8855",
+      "reason": "delivered by J0024-reconcile at 2026-09-17T12:13:34.724062+00:00",
+      "delivered_by": "J0024-reconcile",
+      "delivered_at": "2026-09-17T12:13:34.724062+00:00"
+    },
+    {
+      "id": "L-aa8c1461d43a",
+      "reason": "delivered by J0024-reconcile at 2026-09-17T12:13:34.724062+00:00",
+      "delivered_by": "J0024-reconcile",
+      "delivered_at": "2026-09-17T12:13:34.724062+00:00"
+    },
+    {
+      "id": "L-e9ec230d009b",
+      "reason": "delivered by J0024-reconcile at 2026-09-17T12:13:34.724062+00:00",
+      "delivered_by": "J0024-reconcile",
+      "delivered_at": "2026-09-17T12:13:34.724062+00:00"
+    },
+    {
+      "id": "L-28f7a36f8557",
+      "reason": "delivered by J0025-reconcile at 2026-09-17T12:15:00.504705+00:00",
+      "delivered_by": "J0025-reconcile",
+      "delivered_at": "2026-09-17T12:15:00.504705+00:00"
+    },
+    {
+      "id": "L-6fea72bca3ad",
+      "reason": "delivered by J0025-reconcile at 2026-09-17T12:15:00.504705+00:00",
+      "delivered_by": "J0025-reconcile",
+      "delivered_at": "2026-09-17T12:15:00.504705+00:00"
+    },
+    {
+      "id": "L-74d9d8b172d3",
+      "reason": "delivered by J0025-reconcile at 2026-09-17T12:15:00.504705+00:00",
+      "delivered_by": "J0025-reconcile",
+      "delivered_at": "2026-09-17T12:15:00.504705+00:00"
+    },
+    {
+      "id": "L-09a659a5a6f3",
+      "reason": "delivered by J0027-reconcile at 2026-09-17T12:15:28.599644+00:00",
+      "delivered_by": "J0027-reconcile",
+      "delivered_at": "2026-09-17T12:15:28.599644+00:00"
+    },
+    {
+      "id": "L-4634dafd85af",
+      "reason": "delivered by J0027-reconcile at 2026-09-17T12:15:28.599644+00:00",
+      "delivered_by": "J0027-reconcile",
+      "delivered_at": "2026-09-17T12:15:28.599644+00:00"
+    },
+    {
+      "id": "L-a2ab9a454e58",
+      "reason": "delivered by J0027-reconcile at 2026-09-17T12:15:28.599644+00:00",
+      "delivered_by": "J0027-reconcile",
+      "delivered_at": "2026-09-17T12:15:28.599644+00:00"
+    },
+    {
+      "id": "L-21de7aceefe8",
+      "reason": "delivered by J0029-reconcile at 2026-09-17T12:17:18.551112+00:00",
+      "delivered_by": "J0029-reconcile",
+      "delivered_at": "2026-09-17T12:17:18.551112+00:00"
+    },
+    {
+      "id": "L-403e2eb271bc",
+      "reason": "delivered by J0029-reconcile at 2026-09-17T12:17:18.551112+00:00",
+      "delivered_by": "J0029-reconcile",
+      "delivered_at": "2026-09-17T12:17:18.551112+00:00"
+    },
+    {
+      "id": "L-6ab2467deb87",
+      "reason": "delivered by J0029-reconcile at 2026-09-17T12:17:18.551112+00:00",
+      "delivered_by": "J0029-reconcile",
+      "delivered_at": "2026-09-17T12:17:18.551112+00:00"
+    },
+    {
+      "id": "L-2ccd857addc8",
+      "reason": "delivered by J0033-reconcile at 2026-09-17T12:19:57.545309+00:00",
+      "delivered_by": "J0033-reconcile",
+      "delivered_at": "2026-09-17T12:19:57.545309+00:00"
+    },
+    {
+      "id": "L-3016429f1ffd",
+      "reason": "delivered by J0033-reconcile at 2026-09-17T12:19:57.545309+00:00",
+      "delivered_by": "J0033-reconcile",
+      "delivered_at": "2026-09-17T12:19:57.545309+00:00"
+    },
+    {
+      "id": "L-4af7ce1cedec",
+      "reason": "delivered by J0033-reconcile at 2026-09-17T12:19:57.545309+00:00",
+      "delivered_by": "J0033-reconcile",
+      "delivered_at": "2026-09-17T12:19:57.545309+00:00"
+    },
+    {
+      "id": "L-5ecac36d9640",
+      "reason": "delivered by J0034-reconcile at 2026-09-17T12:21:39.113516+00:00",
+      "delivered_by": "J0034-reconcile",
+      "delivered_at": "2026-09-17T12:21:39.113516+00:00"
+    },
+    {
+      "id": "L-68f1f74918fa",
+      "reason": "delivered by J0034-reconcile at 2026-09-17T12:21:39.113516+00:00",
+      "delivered_by": "J0034-reconcile",
+      "delivered_at": "2026-09-17T12:21:39.113516+00:00"
+    },
+    {
+      "id": "L-a35ea8f8a42c",
+      "reason": "delivered by J0034-reconcile at 2026-09-17T12:21:39.113516+00:00",
+      "delivered_by": "J0034-reconcile",
+      "delivered_at": "2026-09-17T12:21:39.113516+00:00"
+    },
+    {
+      "id": "L-62e705862167",
+      "reason": "delivered by J0035-reconcile at 2026-09-17T12:21:50.752977+00:00",
+      "delivered_by": "J0035-reconcile",
+      "delivered_at": "2026-09-17T12:21:50.752977+00:00"
+    },
+    {
+      "id": "L-772b9a7a0dbf",
+      "reason": "delivered by J0035-reconcile at 2026-09-17T12:21:50.752977+00:00",
+      "delivered_by": "J0035-reconcile",
+      "delivered_at": "2026-09-17T12:21:50.752977+00:00"
+    },
+    {
+      "id": "L-f8ff85550285",
+      "reason": "delivered by J0036-reconcile at 2026-09-17T12:22:20.832404+00:00",
+      "delivered_by": "J0036-reconcile",
+      "delivered_at": "2026-09-17T12:22:20.832404+00:00"
+    },
+    {
+      "id": "L-231d8f561300",
+      "reason": "delivered by J0037-reconcile at 2026-09-17T12:24:01.932273+00:00",
+      "delivered_by": "J0037-reconcile",
+      "delivered_at": "2026-09-17T12:24:01.932273+00:00"
+    },
+    {
+      "id": "L-a1f6c79b9a08",
+      "reason": "delivered by J0037-reconcile at 2026-09-17T12:24:01.932273+00:00",
+      "delivered_by": "J0037-reconcile",
+      "delivered_at": "2026-09-17T12:24:01.932273+00:00"
+    },
+    {
+      "id": "L-2af0aefc10d5",
+      "reason": "delivered by J0039-reconcile at 2026-09-17T12:24:42.073453+00:00",
+      "delivered_by": "J0039-reconcile",
+      "delivered_at": "2026-09-17T12:24:42.073453+00:00"
+    },
+    {
+      "id": "L-55fc3564ea0d",
+      "reason": "delivered by J0039-reconcile at 2026-09-17T12:24:42.073453+00:00",
+      "delivered_by": "J0039-reconcile",
+      "delivered_at": "2026-09-17T12:24:42.073453+00:00"
+    },
+    {
+      "id": "L-a87239280738",
+      "reason": "delivered by J0038-reconcile at 2026-09-17T12:24:54.970826+00:00",
+      "delivered_by": "J0038-reconcile",
+      "delivered_at": "2026-09-17T12:24:54.970826+00:00"
+    },
+    {
+      "id": "L-e456a501a075",
+      "reason": "delivered by J0040-reconcile at 2026-09-17T12:26:24.840264+00:00",
+      "delivered_by": "J0040-reconcile",
+      "delivered_at": "2026-09-17T12:26:24.840264+00:00"
+    },
+    {
+      "id": "L-e605258629f1",
+      "reason": "delivered by J0040-reconcile at 2026-09-17T12:26:24.840264+00:00",
+      "delivered_by": "J0040-reconcile",
+      "delivered_at": "2026-09-17T12:26:24.840264+00:00"
+    },
+    {
+      "id": "L-b4d7619f8161",
+      "reason": "delivered by J0042-reconcile at 2026-09-17T12:28:00.794135+00:00",
+      "delivered_by": "J0042-reconcile",
+      "delivered_at": "2026-09-17T12:28:00.794135+00:00"
+    },
+    {
+      "id": "L-be11c4021bcc",
+      "reason": "delivered by J0042-reconcile at 2026-09-17T12:28:00.794135+00:00",
+      "delivered_by": "J0042-reconcile",
+      "delivered_at": "2026-09-17T12:28:00.794135+00:00"
+    },
+    {
+      "id": "L-00e1f9ce469f",
+      "reason": "delivered by J0043-reconcile at 2026-09-17T12:29:08.061763+00:00",
+      "delivered_by": "J0043-reconcile",
+      "delivered_at": "2026-09-17T12:29:08.061763+00:00"
+    },
+    {
+      "id": "L-6dd0efd9acdc",
+      "reason": "delivered by J0043-reconcile at 2026-09-17T12:29:08.061763+00:00",
+      "delivered_by": "J0043-reconcile",
+      "delivered_at": "2026-09-17T12:29:08.061763+00:00"
+    },
+    {
+      "id": "L-7fc4c8de53ef",
+      "reason": "delivered by J0045-reconcile at 2026-09-17T12:30:32.964325+00:00",
+      "delivered_by": "J0045-reconcile",
+      "delivered_at": "2026-09-17T12:30:32.964325+00:00"
+    },
+    {
+      "id": "L-bb26697551cd",
+      "reason": "delivered by J0045-reconcile at 2026-09-17T12:30:32.964325+00:00",
+      "delivered_by": "J0045-reconcile",
+      "delivered_at": "2026-09-17T12:30:32.964325+00:00"
+    },
+    {
+      "id": "L-21a2bb4fec38",
+      "reason": "delivered by J0046-reconcile at 2026-09-17T12:30:57.373347+00:00",
+      "delivered_by": "J0046-reconcile",
+      "delivered_at": "2026-09-17T12:30:57.373347+00:00"
+    },
+    {
+      "id": "L-34a96f087e91",
+      "reason": "delivered by J0046-reconcile at 2026-09-17T12:30:57.373347+00:00",
+      "delivered_by": "J0046-reconcile",
+      "delivered_at": "2026-09-17T12:30:57.373347+00:00"
+    },
+    {
+      "id": "L-71b5784eb925",
+      "reason": "delivered by J0046-reconcile at 2026-09-17T12:30:57.373347+00:00",
+      "delivered_by": "J0046-reconcile",
+      "delivered_at": "2026-09-17T12:30:57.373347+00:00"
+    }
+  ]
+}
