@@ -566,11 +566,13 @@
   "runner_corrections_read": {
     "corrections_json": {
       "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/corrections.json",
-      "sha256": "4a25eb36bfd62611b6ecfcc284c866a9c6c2edd65efe0a3e122e94be595459dc"
+      "sha256": "4a25eb36bfd62611b6ecfcc284c866a9c6c2edd65efe0a3e122e94be595459dc",
+      "superseded_note": "Read at the sha256 recorded here and superseded since: the runner's commit 0eb6efd270, 'reports: fix the continuation 4 bundle's provenance layer after review', regenerated this file, which now hashes 65791bf0123199a97097e1dbdd2a08ef6f246e236fd13ad08d7753d855c2d1ec."
     },
     "runtime_identity_json": {
       "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/runtime-identity.json",
-      "sha256": "f8e5f9505842132bcef1db97fec03ceb23fadda8a058dd5f0efe61223aaf03da"
+      "sha256": "f8e5f9505842132bcef1db97fec03ceb23fadda8a058dd5f0efe61223aaf03da",
+      "superseded_note": "Read at the sha256 recorded here and superseded since: the runner's commit 0eb6efd270, 'reports: fix the continuation 4 bundle's provenance layer after review', regenerated this file, which now hashes 4263d70d78206e0b082619dd6a7e1f35311b1a399151d17684ccd71cf377f186."
     },
     "effect": "C1 corrects the adjudicator: the deepseek41 'stale selector' is the frozen continuation-3 cost-policy block describing the hybrid arm's model, copied into every arm's budget. C2 resolves the omp runtime version as an in-place binary replacement. C3 explains 41 responses against a 40 ceiling as a post-response boundary. The deepseek41 files are amended; no score changed."
   },
