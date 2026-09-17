@@ -1,0 +1,66 @@
+{
+  "schema_id": "pm.compile_repair_verification.v1",
+  "run": "compile-repair-20260917",
+  "branch": "plans/compile-repair-20260917",
+  "base_revision": "4f5eda0d18a9deff2349b03ae573f0ffd706ed61",
+  "claim_boundary": "Static text, schema, fixture, shard, index and ledger-validator integrity only. No governance seal, runtime certification or readiness admission. No schema or fixture semantics were changed.",
+  "witness": {
+    "pldg-20260917-001-jujutsu-continuation4-corrections": {
+      "before": {
+        "item_tokens": 56,
+        "named_but_not_targeted": 5,
+        "named_but_unchanged_since_base": 17,
+        "records": 11,
+        "records_firing": 10,
+        "registry_entries_absent_already_at_base": 10,
+        "registry_entries_absent_from_text": 10,
+        "tokens_missing_from_prose": 22,
+        "tokens_missing_from_registry": 53,
+        "tokens_only_in_companion_outputs": 22,
+        "units_with_registry_entries_absent_from_text": 5
+      },
+      "after": {
+        "item_tokens": 56,
+        "named_but_not_targeted": 0,
+        "named_but_unchanged_since_base": 0,
+        "records": 11,
+        "records_firing": 0,
+        "registry_entries_absent_already_at_base": 0,
+        "registry_entries_absent_from_text": 0,
+        "tokens_missing_from_prose": 0,
+        "tokens_missing_from_registry": 0,
+        "tokens_only_in_companion_outputs": 0,
+        "units_with_registry_entries_absent_from_text": 0
+      }
+    },
+    "pldg-20260917-002-external-research-canon": {
+      "before": {
+        "item_tokens": 34,
+        "named_but_not_targeted": 0,
+        "named_but_unchanged_since_base": 0,
+        "records": 0,
+        "records_firing": 0,
+        "registry_entries_absent_already_at_base": 16,
+        "registry_entries_absent_from_text": 16,
+        "tokens_missing_from_prose": 0,
+        "tokens_missing_from_registry": 4,
+        "tokens_only_in_companion_outputs": 0,
+        "units_with_registry_entries_absent_from_text": 9
+      },
+      "after": {
+        "item_tokens": 34,
+        "named_but_not_targeted": 0,
+        "named_but_unchanged_since_base": 0,
+        "records": 0,
+        "records_firing": 0,
+        "registry_entries_absent_already_at_base": 16,
+        "registry_entries_absent_from_text": 16,
+        "tokens_missing_from_prose": 0,
+        "tokens_missing_from_registry": 4,
+        "tokens_only_in_companion_outputs": 0,
+        "units_with_registry_entries_absent_from_text": 9
+      }
+    }
+  },
+  "status": "in_progress"
+}

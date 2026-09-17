@@ -1,18 +1,18 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-001-jujutsu-continuation4-corrections",
-  "updated_at_utc": "2026-09-17T11:14:00.676032+00:00",
+  "updated_at_utc": "2026-09-17T21:40:00+00:00",
   "status": "fail_deferred_governance_coverage",
   "summary": {
-    "events": 6,
+    "events": 7,
     "design_atoms": 13,
     "decisions": 13,
-    "open_questions": 3,
+    "open_questions": 5,
     "deferred_questions": 0,
     "open_blockers": 0,
     "compile_queue_items": 14
   },
-  "notes": "The three errors are the pre-existing governance coverage omissions for the two Jujutsu owner documents, identical to the ones the F106 to F109 landing recorded. They are not caused by this wave.",
+  "notes": "The three errors are the pre-existing governance coverage omissions for the two Jujutsu owner documents, identical to the ones the F106 to F109 landing recorded. They are not caused by this wave. The compile repair of 2026-09-17 (evt-007) leaves these three errors unchanged; scripts/pm-ledger-compile-witness.py exits 0 on this ledger after it.",
   "validator_status": "fail",
   "errors": [
     "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",

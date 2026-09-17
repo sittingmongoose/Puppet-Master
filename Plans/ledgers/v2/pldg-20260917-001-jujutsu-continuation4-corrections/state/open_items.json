@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-001-jujutsu-continuation4-corrections",
-  "updated_at_utc": "2026-09-17T11:14:00.676032+00:00",
+  "updated_at_utc": "2026-09-17T21:40:00+00:00",
   "open_questions": [
     {
       "question_id": "q-008",
@@ -25,6 +25,22 @@
       "status": "open",
       "raised_by": "continuation-4 correction landing, 2026-09-17",
       "provisional_state": "JJI-006 requires both in the allowed action set for the quarantine and staleness reason codes, and the semantic gate checks that every admitted identifier exists. Whether they can actually be served when the status projection is itself broken is an adapter property that static contracts cannot establish; the floor is only useful if the answer is yes.",
+      "blocks_landing": false
+    },
+    {
+      "question_id": "q-011",
+      "summary": "Should the effective-capability snapshot carry a recovery-action floor field of its own, or keep projecting the floor JJI-003 sets on command availability?",
+      "status": "open",
+      "raised_by": "continuation-4 compile repair, 2026-09-17",
+      "provisional_state": "`allowed_action_ids` exists only on `availability_payload`, which JJI-003 owns. JJI-006 states that it renders that set as a blocked row's recovery actions and never renders an empty one. Adding a floor field to `jj_effective_capability_snapshot` would be a schema change and is not made here.",
+      "blocks_landing": false
+    },
+    {
+      "question_id": "q-012",
+      "summary": "Should the shared version block carry one name end to end, renaming the toolchain_identity property to native_toolchain_identity?",
+      "status": "open",
+      "raised_by": "continuation-4 compile repair, 2026-09-17",
+      "provisional_state": "Canon now names both the shared `native_toolchain_identity` definition and the `toolchain_identity` property that carries it, so no reader has to guess which is meant. Collapsing the two names would rename a property in two schemas and every fixture, which is a schema change and is not made here.",
       "blocks_landing": false
     }
   ],

@@ -294,11 +294,14 @@ acceptance_criteria:
   - Unsupported object formats, versions, helpers, or colocation states degrade reads and fail mutations closed.
   - A disabled colocated import/export capability remains visible with the upstream-race reason and no fallback action.
   - >-
-    A setup or repository row that reports a blocked state still offers the recovery-action floor. Where setup reports
-    `repository_quarantined`, or a stale catalog, revision or operation state, the row's `allowed_action_ids` contains
-    at least `cmd.jujutsu.operation.log` and `cmd.jujutsu.operation.show`, the same floor JJI-003 sets for command
-    availability, and every identifier it admits exists in the canonical inventory. An empty recovery set is not an
-    admissible projection of a blocked repository.
+    A setup or repository row that reports a blocked state still offers the recovery-action floor, which is why this
+    unit carries the floor's lineage. The floor itself is set on command availability by JJI-003: where availability is
+    `unavailable` or `blocked` for `repository_quarantined`, `catalog_stale`, `revision_stale` or `operation_stale`,
+    `allowed_action_ids` contains at least `cmd.jujutsu.operation.log` and `cmd.jujutsu.operation.show` and every
+    identifier it admits exists in the canonical inventory. This unit renders that set as the blocked row's recovery
+    actions and never renders a blocked row with an empty recovery set. Whether the effective-capability snapshot
+    should carry a recovery-action floor field of its own rather than projecting JJI-003's is open question `q-011` in
+    `pldg-20260917-001-jujutsu-continuation4-corrections`.
   - >-
     The setup surface uses its exact registered strings rather than Jujutsu-private wording. The setup actions are
     `Install Jujutsu` and `Use Jujutsu here`, the JJ sections are `Bookmarks` and `Operation Log`, and a setup row

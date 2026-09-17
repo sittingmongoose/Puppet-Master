@@ -1,0 +1,1164 @@
+{
+  "base": "origin/main",
+  "documents": [
+    "Plans/Decision_Log.md",
+    "Plans/Jujutsu_Integration.md",
+    "Plans/Source_Control_System.md"
+  ],
+  "ledger_id": "pldg-20260917-001-jujutsu-continuation4-corrections",
+  "schema_id": "pm.ledger_compile_witness.v1",
+  "status": "findings",
+  "summary": {
+    "item_tokens": 56,
+    "named_but_not_targeted": 5,
+    "named_but_unchanged_since_base": 17,
+    "records": 11,
+    "records_firing": 10,
+    "registry_entries_absent_already_at_base": 10,
+    "registry_entries_absent_from_text": 10,
+    "tokens_missing_from_prose": 22,
+    "tokens_missing_from_registry": 53,
+    "tokens_only_in_companion_outputs": 22,
+    "units_with_registry_entries_absent_from_text": 5
+  },
+  "witness_exact_tokens": [
+    {
+      "atom": "atom-jj-restore-object-verification-depth-c4-01",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-001",
+      "token": "object verification",
+      "units_with_token_in_prose": [
+        "JJI-008"
+      ],
+      "units_with_token_in_registry": [
+        "JJI-008"
+      ]
+    },
+    {
+      "atom": "atom-jj-restore-object-verification-depth-c4-01",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-001",
+      "token": "object_verification_depth",
+      "units_with_token_in_prose": [
+        "JJI-008"
+      ],
+      "units_with_token_in_registry": [
+        "JJI-008"
+      ]
+    },
+    {
+      "atom": "atom-jj-restore-object-verification-depth-c4-01",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-001",
+      "token": "integrity_verification_level",
+      "units_with_token_in_prose": [
+        "JJI-008"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-restore-object-verification-depth-c4-01",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-001",
+      "token": "full_data_read_passed",
+      "units_with_token_in_prose": [
+        "JJI-008"
+      ],
+      "units_with_token_in_registry": [
+        "JJI-008"
+      ]
+    },
+    {
+      "atom": "atom-jj-divergent-change-representable-c4-02",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003",
+        "SCS-017"
+      ],
+      "queue_id": "queue-002",
+      "token": "divergent",
+      "units_with_token_in_prose": [
+        "JJI-003",
+        "SCS-017"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-divergent-change-representable-c4-02",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003",
+        "SCS-017"
+      ],
+      "queue_id": "queue-002",
+      "token": "change_divergent_ambiguous_target",
+      "units_with_token_in_prose": [
+        "JJI-003"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-divergent-change-representable-c4-02",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003",
+        "SCS-017"
+      ],
+      "queue_id": "queue-002",
+      "token": "node_state",
+      "units_with_token_in_prose": [
+        "SCS-017"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-divergent-change-representable-c4-02",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-003",
+        "SCS-017"
+      ],
+      "queue_id": "queue-002",
+      "token": "graph_states",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-native-toolchain-identity-c4-03",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-006",
+        "JJI-008"
+      ],
+      "queue_id": "queue-003",
+      "token": "native_toolchain_identity",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-native-toolchain-identity-c4-03",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-006",
+        "JJI-008"
+      ],
+      "queue_id": "queue-003",
+      "token": "toolchain_compatibility",
+      "units_with_token_in_prose": [
+        "JJI-008"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-native-toolchain-identity-c4-03",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-006",
+        "JJI-008"
+      ],
+      "queue_id": "queue-003",
+      "token": "blocked_version_incompatible",
+      "units_with_token_in_prose": [
+        "JJI-008"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-native-toolchain-identity-c4-03",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-006",
+        "JJI-008"
+      ],
+      "queue_id": "queue-003",
+      "token": "certified_scenarios",
+      "units_with_token_in_prose": [
+        "JJI-006"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-store-pointer-resolution-c4-04",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-004",
+      "token": "store_pointer_resolution",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-store-pointer-resolution-c4-04",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-004",
+      "token": "objects_info_alternates",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-store-pointer-resolution-c4-04",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-004",
+      "token": "git_commondir",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-store-pointer-resolution-c4-04",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-004",
+      "token": "resolved_inside_boundary",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-read-proven-non-mutating-c4-05",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003",
+        "JJI-008"
+      ],
+      "queue_id": "queue-005",
+      "token": "read_pinning",
+      "units_with_token_in_prose": [
+        "JJI-008"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-read-proven-non-mutating-c4-05",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003",
+        "JJI-008"
+      ],
+      "queue_id": "queue-005",
+      "token": "pinned_operation",
+      "units_with_token_in_prose": [
+        "JJI-008"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-read-proven-non-mutating-c4-05",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-003",
+        "JJI-008"
+      ],
+      "queue_id": "queue-005",
+      "token": "ignore_working_copy",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-read-proven-non-mutating-c4-05",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003",
+        "JJI-008"
+      ],
+      "queue_id": "queue-005",
+      "token": "verification_authored_operation",
+      "units_with_token_in_prose": [
+        "JJI-008"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-store-entry-disposition-c4-06",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-006",
+      "token": "native_history",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-store-entry-disposition-c4-06",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-006",
+      "token": "machine_local",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-store-entry-disposition-c4-06",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-006",
+      "token": "ephemeral",
+      "units_with_token_in_prose": [
+        "JJI-008"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-store-entry-disposition-c4-06",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-006",
+      "token": "unrecognized",
+      "units_with_token_in_prose": [
+        "JJI-008"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-store-entry-disposition-c4-06",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-006",
+      "token": "restored_as_active_state",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-gc-fence-coverage-c4-07",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "SCS-014"
+      ],
+      "queue_id": "queue-007",
+      "token": "gc_fence_outcome",
+      "units_with_token_in_prose": [
+        "SCS-014"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-gc-fence-coverage-c4-07",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "SCS-014"
+      ],
+      "queue_id": "queue-007",
+      "token": "held_during_capture",
+      "units_with_token_in_prose": [
+        "SCS-014"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-gc-fence-coverage-c4-07",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "SCS-014"
+      ],
+      "queue_id": "queue-007",
+      "token": "native_jj_process",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-gc-fence-coverage-c4-07",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "SCS-014"
+      ],
+      "queue_id": "queue-007",
+      "token": "colocated_git",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-gc-fence-coverage-c4-07",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "SCS-014"
+      ],
+      "queue_id": "queue-007",
+      "token": "registered_external_automation",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-no-interactive-editor-session-c4-08",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003"
+      ],
+      "queue_id": "queue-008",
+      "token": "interactive_editor_session_required",
+      "units_with_token_in_prose": [
+        "JJI-003"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-no-interactive-editor-session-c4-08",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003"
+      ],
+      "queue_id": "queue-008",
+      "token": "cmd.jujutsu.change.split",
+      "units_with_token_in_prose": [
+        "JJI-003"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-recovery-action-floor-c4-09",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003",
+        "JJI-006"
+      ],
+      "queue_id": "queue-009",
+      "token": "allowed_action_ids",
+      "units_with_token_in_prose": [
+        "JJI-003"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-recovery-action-floor-c4-09",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003",
+        "JJI-006"
+      ],
+      "queue_id": "queue-009",
+      "token": "repository_quarantined",
+      "units_with_token_in_prose": [
+        "JJI-003"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-recovery-action-floor-c4-09",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003",
+        "JJI-006"
+      ],
+      "queue_id": "queue-009",
+      "token": "cmd.jujutsu.operation.log",
+      "units_with_token_in_prose": [
+        "JJI-003"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-recovery-action-floor-c4-09",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003",
+        "JJI-006"
+      ],
+      "queue_id": "queue-009",
+      "token": "cmd.jujutsu.operation.show",
+      "units_with_token_in_prose": [
+        "JJI-003"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-bookmark-tracking-is-local-c4-10",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003"
+      ],
+      "queue_id": "queue-010",
+      "token": "cmd.jujutsu.bookmark.track",
+      "units_with_token_in_prose": [
+        "JJI-003"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-bookmark-tracking-is-local-c4-10",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003"
+      ],
+      "queue_id": "queue-010",
+      "token": "cmd.jujutsu.bookmark.untrack",
+      "units_with_token_in_prose": [
+        "JJI-003"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-bookmark-tracking-is-local-c4-10",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003"
+      ],
+      "queue_id": "queue-010",
+      "token": "local_mutation",
+      "units_with_token_in_prose": [
+        "JJI-003"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-bookmark-tracking-is-local-c4-10",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003"
+      ],
+      "queue_id": "queue-010",
+      "token": "credential_lease_ref",
+      "units_with_token_in_prose": [
+        "JJI-003"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-closure-decision-procedure-c4-11",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-011",
+      "token": "closure_expansion",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-closure-decision-procedure-c4-11",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-011",
+      "token": "materialization_order",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-closure-decision-procedure-c4-11",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-011",
+      "token": "missing_parent",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-closure-decision-procedure-c4-11",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-011",
+      "token": "malformed_id",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-closure-decision-procedure-c4-11",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-011",
+      "token": "self_parent",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-closure-decision-procedure-c4-11",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-008"
+      ],
+      "queue_id": "queue-011",
+      "token": "parent_cycle",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-conflict-surface-scope-dl056",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "SCS-015"
+      ],
+      "queue_id": "queue-012",
+      "token": "merge_editor_available",
+      "units_with_token_in_prose": [
+        "SCS-015"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-conflict-surface-scope-dl056",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "SCS-015"
+      ],
+      "queue_id": "queue-012",
+      "token": "conflict_surface_read_only_on_jujutsu",
+      "units_with_token_in_prose": [
+        "SCS-015"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-conflict-surface-scope-dl056",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "SCS-015"
+      ],
+      "queue_id": "queue-012",
+      "token": "inspect",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-bookmark-disclosure-dl057",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003",
+        "SCS-005"
+      ],
+      "queue_id": "queue-013",
+      "token": "synced",
+      "units_with_token_in_prose": [
+        "SCS-005"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-bookmark-disclosure-dl057",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003",
+        "SCS-005"
+      ],
+      "queue_id": "queue-013",
+      "token": "unsynced",
+      "units_with_token_in_prose": [
+        "SCS-005"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-bookmark-disclosure-dl057",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003",
+        "SCS-005"
+      ],
+      "queue_id": "queue-013",
+      "token": "tracked per remote",
+      "units_with_token_in_prose": [
+        "SCS-005"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-bookmark-disclosure-dl057",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003",
+        "SCS-005"
+      ],
+      "queue_id": "queue-013",
+      "token": "combined",
+      "units_with_token_in_prose": [
+        "SCS-005"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-bookmark-disclosure-dl057",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "JJI-003",
+        "SCS-005"
+      ],
+      "queue_id": "queue-013",
+      "token": "absent",
+      "units_with_token_in_prose": [
+        "SCS-005"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-bookmark-disclosure-dl057",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-003",
+        "SCS-005"
+      ],
+      "queue_id": "queue-013",
+      "token": "disclosed_remote_scope",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-jj-bookmark-disclosure-dl057",
+      "fires": true,
+      "in_companion_outputs_only": true,
+      "owner_units": [
+        "JJI-003",
+        "SCS-005"
+      ],
+      "queue_id": "queue-013",
+      "token": "disclosed_remote_identity_refs",
+      "units_with_token_in_prose": [],
+      "units_with_token_in_registry": []
+    }
+  ],
+  "witness_registry_hygiene": [
+    {
+      "absent_already_at_base": [
+        "repository views"
+      ],
+      "entries_absent_from_unit_text": [
+        "repository views"
+      ],
+      "fires": true,
+      "registry_entries": 15,
+      "unit": "JJI-008"
+    },
+    {
+      "absent_already_at_base": [
+        "after operation ID",
+        "before operation ID"
+      ],
+      "entries_absent_from_unit_text": [
+        "before operation ID",
+        "after operation ID"
+      ],
+      "fires": true,
+      "registry_entries": 7,
+      "unit": "JJI-003"
+    },
+    {
+      "absent_already_at_base": [],
+      "entries_absent_from_unit_text": [],
+      "fires": false,
+      "registry_entries": 9,
+      "unit": "SCS-017"
+    },
+    {
+      "absent_already_at_base": [
+        "Install Jujutsu",
+        "Needs attention",
+        "Ready with limits",
+        "Use Jujutsu here"
+      ],
+      "entries_absent_from_unit_text": [
+        "Install Jujutsu",
+        "Use Jujutsu here",
+        "Ready with limits",
+        "Needs attention"
+      ],
+      "fires": true,
+      "registry_entries": 6,
+      "unit": "JJI-006"
+    },
+    {
+      "absent_already_at_base": [
+        "GC fence",
+        "Restore as New"
+      ],
+      "entries_absent_from_unit_text": [
+        "GC fence",
+        "Restore as New"
+      ],
+      "fires": true,
+      "registry_entries": 11,
+      "unit": "SCS-014"
+    },
+    {
+      "absent_already_at_base": [
+        "outcome_unknown"
+      ],
+      "entries_absent_from_unit_text": [
+        "outcome_unknown"
+      ],
+      "fires": true,
+      "registry_entries": 16,
+      "unit": "SCS-015"
+    },
+    {
+      "absent_already_at_base": [],
+      "entries_absent_from_unit_text": [],
+      "fires": false,
+      "registry_entries": 14,
+      "unit": "SCS-005"
+    }
+  ],
+  "witness_repairs_vs_targets": [
+    {
+      "atoms": [
+        "atom-jj-restore-object-verification-depth-c4-01"
+      ],
+      "candidate_ids": [
+        "C4C-01",
+        "C4G-01"
+      ],
+      "fires": true,
+      "named_but_not_targeted": [],
+      "named_but_unchanged_since_base": [
+        "JJI-008"
+      ],
+      "named_documents": [
+        "Jujutsu_Integration"
+      ],
+      "named_units": [
+        "JJI-008"
+      ],
+      "queue_targets": [
+        "DL-058",
+        "JJI-008"
+      ],
+      "record": "Record 1 \u2014 restore object verification depth (C4C-01, claude; C4G-01, glm53)",
+      "unmatched_record": false
+    },
+    {
+      "atoms": [
+        "atom-jj-divergent-change-representable-c4-02"
+      ],
+      "candidate_ids": [
+        "C4H-05"
+      ],
+      "fires": true,
+      "named_but_not_targeted": [],
+      "named_but_unchanged_since_base": [
+        "JJI-003",
+        "SCS-017"
+      ],
+      "named_documents": [],
+      "named_units": [
+        "JJI-003",
+        "SCS-017"
+      ],
+      "queue_targets": [
+        "DL-058",
+        "JJI-003",
+        "SCS-017"
+      ],
+      "record": "Record 2 \u2014 divergent change representability (C4H-05, claude-hicap; muse13 concurring)",
+      "unmatched_record": false
+    },
+    {
+      "atoms": [
+        "atom-jj-native-toolchain-identity-c4-03"
+      ],
+      "candidate_ids": [
+        "C4D-01",
+        "C4U-02"
+      ],
+      "fires": true,
+      "named_but_not_targeted": [],
+      "named_but_unchanged_since_base": [
+        "JJI-006",
+        "JJI-008"
+      ],
+      "named_documents": [],
+      "named_units": [
+        "JJI-006",
+        "JJI-008"
+      ],
+      "queue_targets": [
+        "DL-058",
+        "JJI-006",
+        "JJI-008"
+      ],
+      "record": "Records 3 and 6 \u2014 native toolchain identity and the certification matrix (C4D-01, deepseek41; C4U-02, union)",
+      "unmatched_record": false
+    },
+    {
+      "atoms": [
+        "atom-jj-store-pointer-resolution-c4-04"
+      ],
+      "candidate_ids": [
+        "C4C-02",
+        "C4M-02"
+      ],
+      "fires": true,
+      "named_but_not_targeted": [
+        "SCS-014"
+      ],
+      "named_but_unchanged_since_base": [
+        "JJI-008",
+        "SCS-014"
+      ],
+      "named_documents": [],
+      "named_units": [
+        "JJI-008",
+        "SCS-014"
+      ],
+      "queue_targets": [
+        "DL-058",
+        "JJI-008"
+      ],
+      "record": "Records 4 and 5 \u2014 store pointer resolution (C4M-02, muse13; C4C-02, claude)",
+      "unmatched_record": false
+    },
+    {
+      "atoms": [
+        "atom-jj-read-proven-non-mutating-c4-05"
+      ],
+      "candidate_ids": [
+        "C4H-02",
+        "C4U-01"
+      ],
+      "fires": true,
+      "named_but_not_targeted": [],
+      "named_but_unchanged_since_base": [
+        "JJI-008"
+      ],
+      "named_documents": [],
+      "named_units": [
+        "JJI-008"
+      ],
+      "queue_targets": [
+        "DL-058",
+        "JJI-003",
+        "JJI-008"
+      ],
+      "record": "Record 7 \u2014 a read is proven non-mutating (C4H-02, claude-hicap; C4U-01, union)",
+      "unmatched_record": false
+    },
+    {
+      "atoms": [
+        "atom-jj-store-entry-disposition-c4-06"
+      ],
+      "candidate_ids": [
+        "C4C-03"
+      ],
+      "fires": true,
+      "named_but_not_targeted": [
+        "SCS-014"
+      ],
+      "named_but_unchanged_since_base": [
+        "JJI-008",
+        "SCS-014"
+      ],
+      "named_documents": [],
+      "named_units": [
+        "JJI-008",
+        "SCS-014"
+      ],
+      "queue_targets": [
+        "DL-058",
+        "JJI-008"
+      ],
+      "record": "Record 8 \u2014 machine-local store entries (C4C-03, claude)",
+      "unmatched_record": false
+    },
+    {
+      "atoms": [
+        "atom-jj-gc-fence-coverage-c4-07"
+      ],
+      "candidate_ids": [
+        "C4C-05"
+      ],
+      "fires": true,
+      "named_but_not_targeted": [
+        "JJI-004"
+      ],
+      "named_but_unchanged_since_base": [
+        "JJI-004",
+        "SCS-014"
+      ],
+      "named_documents": [],
+      "named_units": [
+        "JJI-004",
+        "SCS-014"
+      ],
+      "queue_targets": [
+        "DL-058",
+        "SCS-014"
+      ],
+      "record": "Record 9 \u2014 GC fence coverage (C4C-05, claude)",
+      "unmatched_record": false
+    },
+    {
+      "atoms": [
+        "atom-jj-no-interactive-editor-session-c4-08"
+      ],
+      "candidate_ids": [
+        "C4H-01"
+      ],
+      "fires": true,
+      "named_but_not_targeted": [
+        "SCS-015"
+      ],
+      "named_but_unchanged_since_base": [
+        "JJI-003",
+        "SCS-015"
+      ],
+      "named_documents": [],
+      "named_units": [
+        "JJI-003",
+        "SCS-015"
+      ],
+      "queue_targets": [
+        "DL-058",
+        "JJI-003"
+      ],
+      "record": "Record 10 \u2014 no canonical command reaches an interactive editor (C4H-01, claude-hicap)",
+      "unmatched_record": false
+    },
+    {
+      "atoms": [
+        "atom-jj-recovery-action-floor-c4-09"
+      ],
+      "candidate_ids": [
+        "C4H-03"
+      ],
+      "fires": true,
+      "named_but_not_targeted": [],
+      "named_but_unchanged_since_base": [
+        "JJI-006"
+      ],
+      "named_documents": [
+        "Contracts_V0"
+      ],
+      "named_units": [
+        "JJI-006"
+      ],
+      "queue_targets": [
+        "DL-058",
+        "JJI-003",
+        "JJI-006"
+      ],
+      "record": "Record 11 \u2014 the recovery action floor (C4H-03, claude-hicap)",
+      "unmatched_record": false
+    },
+    {
+      "atoms": [
+        "atom-jj-bookmark-tracking-is-local-c4-10"
+      ],
+      "candidate_ids": [
+        "C4H-04"
+      ],
+      "fires": false,
+      "named_but_not_targeted": [],
+      "named_but_unchanged_since_base": [],
+      "named_documents": [],
+      "named_units": [],
+      "queue_targets": [
+        "DL-058",
+        "JJI-003"
+      ],
+      "record": "Record 12 \u2014 bookmark tracking is local (C4H-04, claude-hicap)",
+      "unmatched_record": false
+    },
+    {
+      "atoms": [
+        "atom-jj-closure-decision-procedure-c4-11"
+      ],
+      "candidate_ids": [
+        "C4M-01"
+      ],
+      "fires": true,
+      "named_but_not_targeted": [
+        "SCS-014"
+      ],
+      "named_but_unchanged_since_base": [
+        "JJI-008",
+        "SCS-014"
+      ],
+      "named_documents": [],
+      "named_units": [
+        "JJI-008",
+        "SCS-014"
+      ],
+      "queue_targets": [
+        "DL-058",
+        "JJI-008"
+      ],
+      "record": "Record 13 \u2014 closure completeness has a decision procedure (C4M-01, muse13)",
+      "unmatched_record": false
+    }
+  ]
+}
