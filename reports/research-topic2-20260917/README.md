@@ -70,72 +70,122 @@ are. Each arm's launch gate records this as `limits_differ_from_goal2`.
 
 Targets this is measured against: **75 minutes per review stage** and **3 hours for a whole pipeline**.
 
-## Status
+## Status — FINAL for this window. Both Opus arms are INTERRUPTED, not complete.
 
-**Arm H2 research half COMPLETE** 2026-09-17T05:28:38Z on the designed gate `Stop: admitted_attempt_cap`.
-**Arm H2 review half launched** 05:32:39Z on `claude-opus-5` at effort max. **Arm S still running** (discovery).
+| Arm | Outcome | Admissions used | Captured | Pending leads |
+|---|---|---|---|---|
+| **S** (Opus 5, effort max, all stages) | **INTERRUPTED** | 4 of 20 | $14.90 of $250 | 22 reconcile, 22 compare |
+| **H2 research** (Muse Spark) | **COMPLETE**, `Stop: admitted_attempt_cap` | 12 of 12 | $0.15 of $50 | — |
+| **H2 review** (Opus 5, effort max) | **INTERRUPTED** | 3 of 12 | $7.18 of $150 | 32 reconcile, 32 compare |
+
+Only Arm H2's cheap research half ran to a designed terminal. **Neither Opus arm finished**, so this topic does
+not yet support the blind union and per-arm recall the brief asks for: Arm S delivered one completed discovery
+job and no reviews, and Arm H2's review half delivered three interrupted reconciles. The pending-lead counts
+above are the honest measure of what is missing.
+
+### What interrupted them
+
+Two separate events, in order.
+
+1. **05:43Z — the five-hour window.** The CLI began reporting `status: "allowed_warning"` with
+   `utilization: 0.90` (then 0.91). Admissions were stopped on both live arms by the drain described below;
+   live jobs were left running. Details and the full typed record are in `rate-limit-event.json`.
+2. **Some time after 05:50Z — the Opus session limit killed the runner**, and both campaigns died with it.
+   Their monitors survived and heartbeat the same frozen snapshot for about five hours. Six jobs were left
+   orphaned: two with a shutdown-path receipt, four still marked `admitted` with no terminal receipt at all.
+
+At **11:05:36Z** the CLI answered a probe normally (`is_error: false`), but the typed record had changed shape:
+`{"status": "allowed_warning", "rateLimitType": "seven_day", "utilization": 0.82, "surpassedThreshold": 0.75,
+"resetsAt": 1789646400}` — i.e. **2026-09-17T12:00:00Z**. The five-hour window had reset and was no longer the
+constraint; a **seven-day** window past its 0.75 warning threshold had become one. Under the standing rule —
+stop admissions at the first `allowed_warning`, whatever the utilization — **admissions were not resumed**, and
+the 12:00Z deadline pointed the same way independently, since Arm S's remaining 16 admissions could not
+complete in the 54 minutes available.
+
+### Close-out, which bought nothing and settled what it could
+
+Each interrupted campaign was relaunched **without** `--restart`. `bounded_campaign` runs
+`recover_interrupted()` at line 527 and raises `Stop('Existing campaign requires explicit restart')` at line
+529, so every orphaned job received its terminal receipt and **no admission and no model request occurred**.
+All six are now terminal.
+
+Two honest residues remain rather than being tidied away:
+
+- **$36.00 unresolved on each Opus arm.** Jobs killed mid-flight never got their adapter's final `usage.json`,
+  so completeness cannot be proven and each retains its $12 cold-allowance liability. Receipts equal requests
+  in every one of them, so no usage is missing — only the proof of final settlement. Continuation 4's union arm
+  recorded the same shape.
+- **No `campaign-terminal.json` for either Opus arm.** A campaign killed with its process never reaches the
+  `finally` block that writes one, and the close-out stops at line 529, which is outside that `try`. The arms
+  are frozen and reported as INTERRUPTED rather than inventing the artifact.
 
 ### Per-stage wall time against the targets
 
 | Arm | Stage | Wall | Summed job time | Avg concurrency | Target | Against target |
 |---|---|---|---|---|---|---|
+| s-full | discovery | 24m 24s | 24m 23s | 0.999 | — | — |
+| s-full | implementation | 4m 00s | 7m 59s | 1.998 | — | — |
+| s-full | history | 4m 00s | 4m 00s | 1.0 | — | — |
+| **s-full** | **arm total** | **28m 50s** | **24m 23s** | **0.846** | **3 h** | **0.16x (under)** |
 | h2-research | discovery | 2m 55s | 2m 54s | 0.997 | — | — |
 | h2-research | implementation | 9m 25s | 12m 23s | 1.316 | — | — |
 | h2-research | history | 8m 11s | 12m 50s | 1.568 | — | — |
 | **h2-research** | **arm total** | **12m 52s** | **28m 08s** | **2.185** | **3 h** | **0.07x (under)** |
+| h2-review | reconcile | 10m 30s | 31m 29s | 2.999 | 75 min | 0.14x (under) |
+| **h2-review** | **arm total** | **10m 40s** | **0m 00s** | **0.0** | **3 h** | **0.06x (under)** |
 
 ### Job status and what bound each job
 
 | Arm | Jobs | Statuses | Bound by | Reconciled | Unresolved |
 |---|---|---|---|---|---|
+| s-full | 4 | completed 1, interrupted 2, null 1 | **finished** 1, **interrupted** 2, **null** 1 | 1 of 4 | $36.00 |
 | h2-research | 12 | budget_truncated 10, completed 2 | **finished** 2, **responses** 10 | 12 of 12 | $0.00 |
+| h2-review | 3 | interrupted 3 | **interrupted** 3 | 0 of 3 | $36.00 |
 
 ### Cost
 
 | Arm | Captured upper | Cap | Runtime-reported | Per-job range |
 |---|---|---|---|---|
+| s-full | $14.8987 | $250 | $12.0466 | $0.8160–$12.0466 |
 | h2-research | $0.1545 | $50 | $0.0000 | $0.0074–$0.0228 |
+| h2-review | $7.1788 | $150 | $0.0000 | $2.0835–$2.6263 |
 
 ### Responses and duration against the per-job ceilings
 
 | Arm | Responses per job | Ceiling | Longest job | Ceiling | Dearest job | Budget |
 |---|---|---|---|---|---|---|
+| s-full | 26–105 (mean 48.2) | 160 | 1463.2s | 3600s | $12.05 | $20 |
 | h2-research | 33–41 (mean 39.7) | 40 | 177.5s | 2400s | $0.02 | $— |
+| h2-review | 42–53 (mean 47.0) | 160 | 630.7s | 3600s | $2.63 | $20 |
 
 ### Delivery counts (counts only, nothing adjudicated)
 
 | Arm | Jobs writing notes.md | Lead deliveries | Lead stage counts | Pending reconcile | Pending compare |
 |---|---|---|---|---|---|
+| s-full | 2 of 4 | 0 | {'discovered': 22, 'studied': 0, 'reconciled': 0, 'comparison_delivered': 0} | 22 | 22 |
 | h2-research | 6 of 12 | 2 | {'discovered': 32, 'studied': 0, 'reconciled': 0, 'comparison_delivered': 0} | 32 | 32 |
+| h2-review | 2 of 3 | 2 | {'discovered': 32, 'studied': 0, 'reconciled': 0, 'comparison_delivered': 0} | 32 | 32 |
 
 
-Arm H2's research half used all 12 admissions in **12m 52s**, 0.07x the 3-hour pipeline target, and produced
-32 leads. Ten of its twelve jobs were bound by the **40-response ceiling**, not by money: it spent $0.1545 of
-its $50 cap. Note that the omp adapter labels a response-ceiling stop `budget_truncated`, because the stop is
-delivered by the durable Meter denying the next response; the meter records `model_request_limit` for those
-jobs and the bound-by column resolves them to **responses**. All twelve reconciled with receipts equal to
-requests and $0.00 unresolved.
+### Frozen outputs
 
-### Account condition that governs tonight
+| Arm | Run | Manifest sha256 | Files |
+|---|---|---|---|
+| s-full | `arm-s/runs/topic2-s-full-20260917-051531` | `4b14ae0eb765ef81bbef49ad1c74d814f07fd2b9635834a7c0869a94fbd5162e` | 5,928 |
+| h2-research | `arm-h2/runs/topic2-h2-research-20260917-051541` | `c1e7a066c8f21d3561d64020eeb87f0e737495fd02b380fe4796789d1ff2481c` | 8,214 |
+| h2-review | `arm-h2/runs/topic2-h2-review-20260917-053231` | `076f894af6d52939802fe02863c482c59d797a76f8ef70404216ec83c4891239` | 5,723 |
 
-The Claude CLI emits typed `rate_limit_event` records. Every one seen so far — 40 records across this topic and
-the two earlier continuations — reports `status: "allowed"`, on a `five_hour` window resetting
-**2026-09-17T08:30:00Z**, with `overageStatus: "rejected"` and `overageDisabledReason: "out_of_credits"`. The
-account therefore has **no overage to fall back on**: when the five-hour window is exhausted, requests are
-blocked rather than billed. With other threads sharing this account, that window — not the $250 and $150 arm
-caps — is the binding constraint.
+Every freeze was verified with the monitor stopped first and an explicit assertion that no file in the run is
+newer than its manifest.
 
-A sentinel reads those typed records every 20 seconds and, on `status != "allowed"` or `isUsingOverage`, stops
-both arms *admitting* while letting live jobs finish, by lowering the durable Meter's cap to its committed
-total so every further reservation fails and the campaign ends on the designed
-`Stop(insufficient_priced_usage_headroom)`. The allowance gate is deliberately **not** used for this: it raises
-at the top of the scheduler loop and cancels live workers.
+### Runtime identity
 
-**A measurement gap is recorded rather than approximated.** A utilization threshold cannot be evaluated: no
-utilization field exists. All 40 records carry exactly six fields — `status`, `resetsAt`, `rateLimitType`,
-`overageStatus`, `overageDisabledReason`, `isUsingOverage` — and the CLI exposes utilization nowhere else
-(`claude --help` has no usage or quota command; `auth status` returns only identity and subscription fields).
-The sentinel enforces the typed conditions exactly and asserts nothing about a percentage it cannot see.
+`claude-opus-5` via Claude Code CLI **2.1.226**, binary sha
+`4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555`, effort **max**, on Arm S and Arm H2's review
+half. `muse-code/muse-spark-1.3-contributor` at xhigh via oh-my-pi **18.2.2**, binary sha
+`77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72`, on Arm H2's research half. Each figure is
+read from the job's own record, and the gate compares the binary hash live, so a runtime that changed between
+gate and campaign fails closed. Per-arm detail in `arm-reports/<arm>-identity.json`.
 
 ## Protocol
 

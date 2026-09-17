@@ -1,0 +1,61 @@
+{
+  "generated_at": "2026-09-17T11:08:53Z",
+  "method": "Runtime identity and protocol fingerprints for every continuation-5 run.\n\nRuntime identity is taken from each job's OWN record: every adapter hashes and\nversion-checks the binary it is about to run and writes that into raw-*/run.json. The\ninstalled_now block is a live reading taken when this script runs, so a runtime that\nchanged mid-phase shows up as a disagreement instead of being papered over.\n\nThe protocol fingerprint is the first 16 hex characters of\nsha256(json.dumps({file: sha256}, sort_keys=True)) over the key protocol files as the\nrun itself recorded them in run.json['protocol_sha256']. Runs sharing a fingerprint ran\nidentical code; nothing here is asserted from memory.",
+  "key_files": [
+    "discovery_to_plan.py",
+    "cost_watch.py",
+    "bounded_campaign.py",
+    "adapters/claude_native.py",
+    "adapters/omp_native.py",
+    "native_receipts.py"
+  ],
+  "installed_now": {
+    "omp": {
+      "invoked_as": "/home/sittingmongoose/.local/bin/omp",
+      "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
+      "self_reported_version": "omp/18.2.2",
+      "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72"
+    },
+    "claude": {
+      "invoked_as": "/home/sittingmongoose/.local/bin/claude",
+      "binary": "/home/sittingmongoose/.local/share/claude/versions/2.1.226",
+      "self_reported_version": "2.1.226 (Claude Code)",
+      "sha256": "4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555"
+    }
+  },
+  "runs": [
+    {
+      "run": "topic2-h2-review-20260917-053231",
+      "arm": "h2-review",
+      "route": {
+        "adapter": "claude",
+        "model": "opus",
+        "effort": "max"
+      },
+      "protocol_fingerprint": "e59e71488db37fb5",
+      "protocol_key_file_sha256": {
+        "discovery_to_plan.py": "7b3df6a00936",
+        "cost_watch.py": "324b9735f58e",
+        "bounded_campaign.py": "e92a0b12698d",
+        "adapters/claude_native.py": "7dbafa653e76",
+        "adapters/omp_native.py": "55489f0316d6",
+        "native_receipts.py": "87bf4f2337d2"
+      },
+      "jobs_with_native_records": 3,
+      "runtimes": [
+        {
+          "adapter": "claude",
+          "binary": "/home/sittingmongoose/.local/share/claude/versions/2.1.226",
+          "sha256": "4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555",
+          "version": "2.1.226 (Claude Code)",
+          "jobs": [
+            "J0013-reconcile",
+            "J0014-reconcile",
+            "J0015-reconcile"
+          ],
+          "job_count": 3
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "preflight_passed": true,
+  "d1_committed_pushed_reported": true,
+  "route": {
+    "arm": "s-full",
+    "selector": "opus",
+    "effort": "max",
+    "adapter": "claude"
+  },
+  "limits": {
+    "admissions": 20,
+    "workers": 3,
+    "max_model_requests_per_job": 160,
+    "job_seconds": 3600,
+    "job_budget_usd": 20,
+    "arm_captured_cap_usd": 250,
+    "arm_seconds": 21600,
+    "batch_chars": 10000,
+    "batch_max_leads": 3
+  },
+  "limits_differ_from_goal2": {
+    "max_model_requests_per_job": {
+      "goal2": 40,
+      "this_arm": 160
+    },
+    "job_seconds": {
+      "goal2": 2400,
+      "this_arm": 3600
+    },
+    "job_budget_usd": {
+      "goal2": 12,
+      "this_arm": 20
+    }
+  },
+  "limits_note": "Topic 2 Arm S, strong throughout. Opus 5 at effort max on every stage from discovery. Authorized per-job ceilings above goal 2 (40 responses, 2400 s, $12): 160 responses, 3600 s, $20 per job, $250 arm cap; 20 admissions with 9 reserved for review, three workers, frozen batching. Cost and per-job duration are NOT comparable with goal 2 arms; only the outputs are.",
+  "d1_report_sha256": "fd4cadc918b73075a2d11c5d8a2170f6b8fec1c2c3ea5795fbef576d3f198114",
+  "freeze_sha256": "2ba0b1923779a315b05d13784b71ea2e8ba9f0a81aaeb409d0daf137b3f743a2",
+  "cost_control": {
+    "mode": "monitored_priced_usage",
+    "pricing_basis": "preserved_2026-09-08",
+    "astra_service_tier": "default",
+    "deepseek_valuation": "peak_tariff_upper_bound_includes_auxiliary_receipts_conservatively",
+    "semantics": "Admission and every native request check captured usage plus live stage allowances plus terminal unresolved charges against the unchanged arm cap. Stage average after two terminal same-arm stage jobs with reconciled native usage, otherwise12. Live usage is reporting only. Job-end native records determine captured valuation; an unreconciled terminal job retains12 separately as unresolved liability. Estimates are not billed cash or a mathematical spend bound.",
+    "version": 4,
+    "meter": "captured_plus_live_plus_terminal_unresolved_job_end_v4",
+    "lifetime_captured_caps_usd": {
+      "premium": 250,
+      "hybrid": 100,
+      "claude": 100,
+      "union": 100
+    },
+    "cold_stage_allowance_usd": 12,
+    "minimum_fully_reconciled_jobs_for_average": 2,
+    "allowance_scope": "same_arm_and_same_stage_per_job_average",
+    "max_model_requests_per_job": 40,
+    "max_seconds_per_job": 2400,
+    "cancellation_boundary": "before_every_native_model_request for the codex transport gate; after every native response and before the next request for the claude and zero-tariff omp adapters",
+    "truncated_runtime_status": "budget_truncated",
+    "historical_state": "immutable_import_preserving_captured_totals_and_all_original_jobs_receipts_reservations_admissions_retries_results",
+    "unresolved_usage": "Every new v4 terminal job without complete native accounting retains12 USD unresolved charge, separate from captured usage; counts against cap indefinitely. Prior baseline unknowns remain visible with unchanged historical valuation.",
+    "legacy_response_reservations": {
+      "astra_usd": 35.85,
+      "deepseek_usd": 0.94688,
+      "status": "historical_read_only_not_used_for_v2_admission"
+    },
+    "continuation4_arms": {
+      "claude": {
+        "adapter": "claude",
+        "model": "opus",
+        "effort": "xhigh",
+        "runtime": "Claude Code CLI 2.1.226 headless (claude -p)",
+        "captured_cap_usd": 100,
+        "cost_source": "CLI-reported total_cost_usd per job, floored by the preserved first-party Opus 5 tariff applied to captured tokens",
+        "tariff_usd_per_mtok": {
+          "input": 5.0,
+          "output": 25.0,
+          "cache_read": 0.5,
+          "cache_write": 6.25
+        },
+        "request_ceiling": "adapter counts native assistant responses on the CLI stream and terminates at 40; CLI --max-budget-usd 12 per job",
+        "cold_stage_allowance_usd": 12
+      },
+      "union": {
+        "adapter": "omp",
+        "model": "opencode-go/union-alpha",
+        "effort": "high",
+        "runtime": "oh-my-pi 18.1.13 interactive /goal",
+        "captured_cap_usd": 100,
+        "cost_source": "opencode catalogue tariff captured 2026-09-16 (omp models find union-alpha --json): every category 0",
+        "tariff_usd_per_mtok": {
+          "input": 0.0,
+          "output": 0.0,
+          "cacheRead": 0.0,
+          "cacheWrite": 0.0
+        },
+        "request_ceiling": "adapter counts native model_usage records and terminates at 40; no pre-dispatch monetary gate is required at a zero tariff",
+        "cold_stage_allowance_usd": 1
+      }
+    },
+    "hybrid_arm_deepseek_metadata": {
+      "context_window": 1000000,
+      "max_output_tokens": 384000,
+      "selector": "opencode-go/deepseek-v4-flash",
+      "source_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol-preparation/monitored-repair/deepseek-models.json",
+      "source_sha256": "43897d8cc810ef5d1738511c5bab5bec2b0ae38ba03acc365faab286b2036bdb",
+      "applies_to": "continuation 3 hybrid arm research model; not the continuation 4 arms. Per-arm selectors are under continuation4_arms."
+    }
+  },
+  "native_boundary_verified": true,
+  "native_boundary_proofs": {
+    "claude": {
+      "adapter_sha256": "7dbafa653e767233600e874e7c5334f3e1409fc600059ca4a5f4a905ee8c2dbf",
+      "declared_boundary": "native_boundary_available",
+      "runtime": {
+        "invoked_as": "/home/sittingmongoose/.local/bin/claude",
+        "binary": "/home/sittingmongoose/.local/share/claude/versions/2.1.226",
+        "self_reported_version": "2.1.226 (Claude Code)",
+        "sha256": "4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555"
+      },
+      "max_model_requests": 160,
+      "verified_runtime_version": "2.1.226 (Claude Code)",
+      "capability": {
+        "adapter": "claude",
+        "protocol_version": 1,
+        "available": true,
+        "live_launch_allowed": true,
+        "status": "native_boundary_available",
+        "max_model_requests": 160,
+        "max_job_seconds": 3600,
+        "default_ceilings": {
+          "max_model_requests": 40,
+          "max_job_seconds": 2400
+        },
+        "runtime": {
+          "invoked_as": "/home/sittingmongoose/.local/bin/claude",
+          "binary": "/home/sittingmongoose/.local/share/claude/versions/2.1.226",
+          "self_reported_version": "2.1.226 (Claude Code)",
+          "sha256": "4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555"
+        },
+        "verified_runtime_version": "2.1.226 (Claude Code)",
+        "boundary": "Native assistant messages are counted on the CLI's own stream; the process is terminated before the next request when the ceiling is reached. The CLI's --max-budget-usd stops the run inside the runtime, below any HTTP retry loop.",
+        "reactive_usage_cancellation_is_hard_limit": false,
+        "unproven_routes": [
+          "http_retries_inside_one_request"
+        ],
+        "known_limits": "A retry of one in-flight request is not separately counted; the monetary ceiling is the CLI's, not a per-attempt gate."
+      }
+    }
+  },
+  "live_receipts_required": false,
+  "usage_reconciliation": "job_end_native_records",
+  "codex_status": "fail-closed in continuation 4: editing cost_watch.py and native_receipts.py invalidated the recorded transport-gate proof, so codex_native reports available=false. A codex arm needs the proof re-recorded against the new meter and collector hashes before it can launch.",
+  "recorded_at": "2026-09-17T05:15:34.000727+00:00",
+  "recorded_selector": "opus"
+}

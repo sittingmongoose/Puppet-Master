@@ -1,0 +1,116 @@
+{
+  "arm": "h2-review",
+  "run": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231",
+  "stop_reason": null,
+  "campaign_terminal": {},
+  "route": null,
+  "limits": {
+    "new_admissions": 12,
+    "workers": 3,
+    "job_seconds": 3600,
+    "max_model_requests": 160,
+    "job_budget_usd": 20,
+    "arm_seconds": 14400,
+    "batch_chars": 10000,
+    "batch_max_leads": 3
+  },
+  "stage_timing": {
+    "discovery": {
+      "wall_seconds": 0,
+      "summed_job_seconds": 0,
+      "average_concurrency": null
+    },
+    "implementation": {
+      "wall_seconds": 0,
+      "summed_job_seconds": 0,
+      "average_concurrency": null
+    },
+    "history": {
+      "wall_seconds": 0,
+      "summed_job_seconds": 0,
+      "average_concurrency": null
+    },
+    "reconcile": {
+      "wall_seconds": 629.898916721344,
+      "summed_job_seconds": 1889.1031999588013,
+      "average_concurrency": 2.999057705626293
+    },
+    "compare": {
+      "wall_seconds": 0,
+      "summed_job_seconds": 0,
+      "average_concurrency": null
+    }
+  },
+  "arm_wall_seconds": 640.1590662002563,
+  "summed_job_seconds": 0,
+  "average_concurrency": 0.0,
+  "processing_seconds": 640.1737563610077,
+  "job_status_counts": {
+    "interrupted": 3
+  },
+  "bound_by_counts": {
+    "interrupted": 3
+  },
+  "jobs": [
+    {
+      "job": "J0013-reconcile",
+      "phase": "reconcile",
+      "status": "interrupted",
+      "bound_by": "interrupted",
+      "elapsed_s": 630.7,
+      "requests": 53,
+      "receipts": 53,
+      "reconciled": false,
+      "captured_usd": 2.6263,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": null
+    },
+    {
+      "job": "J0014-reconcile",
+      "phase": "reconcile",
+      "status": "interrupted",
+      "bound_by": "interrupted",
+      "elapsed_s": 630.5,
+      "requests": 42,
+      "receipts": 42,
+      "reconciled": false,
+      "captured_usd": 2.469,
+      "leads": 1,
+      "lead_deliveries": 1,
+      "notes_present": true,
+      "runtime_terminal_reason": null
+    },
+    {
+      "job": "J0015-reconcile",
+      "phase": "reconcile",
+      "status": "interrupted",
+      "bound_by": "interrupted",
+      "elapsed_s": 630.2,
+      "requests": 46,
+      "receipts": 46,
+      "reconciled": false,
+      "captured_usd": 2.0835,
+      "leads": 1,
+      "lead_deliveries": 1,
+      "notes_present": true,
+      "runtime_terminal_reason": null
+    }
+  ],
+  "captured_upper_usd": 7.1788385,
+  "cap_usd": 150.0,
+  "runtime_reported_cost_usd": 0.0,
+  "unresolved_charge_usd": 36.0,
+  "job_end_reconciled": 0,
+  "job_count": 3,
+  "lead_stage_counts": {
+    "discovered": 32,
+    "studied": 0,
+    "reconciled": 0,
+    "comparison_delivered": 0
+  },
+  "pending_reconcile_leads": 32,
+  "pending_compare_leads": 32,
+  "note": "Counts and limits only. No output was adjudicated."
+}
