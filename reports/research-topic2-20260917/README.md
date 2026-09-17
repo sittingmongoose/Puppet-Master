@@ -70,58 +70,51 @@ are. Each arm's launch gate records this as `limits_differ_from_goal2`.
 
 Targets this is measured against: **75 minutes per review stage** and **3 hours for a whole pipeline**.
 
-## Status — FINAL. Read `CORRECTION-drain-killed-campaigns.json` first.
+## Status — Arm S COMPLETE. Arm H2's review half held at a window warning.
 
-**A correction supersedes earlier versions of this file.** Every campaign this topic ran was killed by my own
-`drain_arm.py`, not by the Claude session limit. Lowering a live meter's `cap_usd` trips
-`Meter.locked()`'s identity guard, and the resulting `ValueError` escapes the campaign's `finally` block, so
-the campaign dies inside its own cleanup: no `campaign-terminal.json`, live jobs unreconciled. Four campaigns,
-four crashes, each within 1–4 seconds of a drain. The absent terminal files and the $72-per-arm unresolved
-residues are consequences of that tool, not evidence about the provider.
+**Arm S reached its designed terminal** `Stop: admitted_attempt_cap` at 2026-09-17T16:14:46Z, using all 20
+admissions. It is the first Opus arm in this topic to finish, and the first to produce review output.
 
-Captured cost, response counts and receipts are unaffected — they come from the adapters' own records.
-
-**All four crashes were drain-induced. The session limit killed the runner sessions only.**
-
-| Arm | Run | Drain applied | Campaign dead | Gap |
+| Arm | Outcome | Admissions | Captured / cap | Reviews delivered |
 |---|---|---|---|---|
-| s-full | original | 05:44:27Z | 05:44:30Z | 3 s |
-| h2-review | original | 05:43:19Z | 05:43:21Z | 2 s |
-| s-full | resume | 12:23:28Z | 12:23:32Z | 4 s |
-| h2-review | resume | 12:19:05Z | 12:19:06Z | 1 s |
+| **S** (Opus 5, effort max, all stages) | **COMPLETE**, `admitted_attempt_cap` | 20 of 20 | $111.63 / $250 | 3 reconciled, 3 compared |
+| **H2 research** (Muse Spark) | **COMPLETE**, `admitted_attempt_cap` | 12 of 12 | $0.15 / $50 | — |
+| **H2 review** (Opus 5, effort max) | **HELD** — 6 of 12 admissions and 1 restart still in hand | 6 of 12 | $8.15 / $150 | none completed |
 
-The continuation-5 runner hit the identical guard at about 06:00Z the same day and built the working
-mechanism. It is now ported here: one named non-terminal reservation consumes the remaining headroom so
-`Meter.reserve` denies admissions while live jobs finish, and `cap_usd` is never written. Every cap-lowering
-path is removed. Two test files prove it, each with a negative control that reproduces the crash — including
-an end-to-end run of a real `bounded_campaign` with a job held live across the hold, which ends on
-`Stop: insufficient_priced_usage_headroom` with its terminal file written and its live job settled.
+### Both review stages came in under the 75-minute target
 
-| Arm | Outcome | Admissions used | Captured | Authorized cap |
-|---|---|---|---|---|
-| **S** (Opus 5, effort max, all stages) | killed by drain, closed out | 7 of 20 | $18.69 | $250 |
-| **H2 research** (Muse Spark) | **COMPLETE**, `Stop: admitted_attempt_cap` | 12 of 12 | $0.15 | $50 |
-| **H2 review** (Opus 5, effort max) | killed by drain, closed out | 6 of 12 | $8.15 | $150 |
+`reconcile` wall **50m 46s** (0.68× target, concurrency 1.822) and `compare` wall **21m 43s** (0.29× target,
+concurrency 2.331). Nothing hit a ceiling: responses per job 25–107 against the 160 ceiling, longest job
+1463 s of 3600 s, dearest job $12.05 of the $20 per-job budget.
 
-**Only Arm H2's cheap research half reached a designed terminal, and it is the only arm never drained.**
-Neither Opus arm produced usable review output, so this topic still does not support the blind union and
-per-arm recall the brief asks for.
+The arm-total wall of 10h 59m against the 3-hour pipeline target is **not** a meaningful figure — it spans the
+~6.5 h outage and the operator holds. **Summed job time is 4h 26m 47s** at average concurrency 0.405; that is
+the honest number for this arm. The live run after the 14:50Z resume took 84 minutes.
 
-Arm S did real work across two sessions: one completed discovery (105 responses, 23 leads) plus five study
-jobs. Arm H2's review half reached compare before dying. Both are frozen with manifests.
+Of Arm S's 20 jobs, 14 completed and 6 did not — and all six are the jobs the retired drain crashed earlier
+in the day. Every job admitted after the resume completed. The $72.00 unresolved is the same six jobs.
 
-The two Opus arms ran under a **verified wait** authorized by Jared on 2026-09-17 (relayed by the
-coordinator), excluding 6.56 h of outage from their processing clocks so they could resume; the interval was
-pinned to the exact completion time of the last in-arm model request and verified to contain none.
+### Why Arm H2's review half is held
+
+The typed probe at 16:16:00Z returned `{"status": "allowed_warning", "rateLimitType": "five_hour",
+"utilization": 0.9, "resetsAt": 1789669800}` — **reset 2026-09-17T18:30:00Z**. The standing rule is to stop at
+the first `allowed_warning` on any window, so nothing was activated and no clock started. The same window read
+`allowed` with no utilization field 86 minutes earlier; Arm S's 20 admissions and $111.63 are what moved it,
+which is the expected trade rather than a surprise.
+
+No hold was placed: a hold denies admissions on a *live* campaign, and nothing is running. Arm S stopped on its
+own designed gate.
 
 ### Per-stage wall time against the targets
 
 | Arm | Stage | Wall | Summed job time | Avg concurrency | Target | Against target |
 |---|---|---|---|---|---|---|
 | s-full | discovery | 24m 24s | 24m 23s | 0.999 | — | — |
-| s-full | implementation | 6h 43m 01s | 19m 01s | 0.047 | — | — |
-| s-full | history | 6h 43m 01s | 9m 31s | 0.024 | — | — |
-| **s-full** | **arm total** | **7h 07m 51s** | **36m 25s** | **0.085** | **3 h** | **2.38x (OVER)** |
+| s-full | implementation | 9h 43m 31s | 52m 24s | 0.09 | — | — |
+| s-full | history | 9h 29m 53s | 46m 53s | 0.082 | — | — |
+| s-full | reconcile | 50m 46s | 1h 32m 30s | 1.822 | 75 min | 0.68x (under) |
+| s-full | compare | 21m 43s | 50m 37s | 2.331 | 75 min | 0.29x (under) |
+| **s-full** | **arm total** | **10h 59m 10s** | **4h 26m 47s** | **0.405** | **3 h** | **3.66x (OVER)** |
 | h2-research | discovery | 2m 55s | 2m 54s | 0.997 | — | — |
 | h2-research | implementation | 9m 25s | 12m 23s | 1.316 | — | — |
 | h2-research | history | 8m 11s | 12m 50s | 1.568 | — | — |
@@ -134,7 +127,7 @@ pinned to the exact completion time of the last in-arm model request and verifie
 
 | Arm | Jobs | Statuses | Bound by | Reconciled | Unresolved |
 |---|---|---|---|---|---|
-| s-full | 7 | completed 1, interrupted 5, null 1 | **finished** 1, **interrupted** 5, **null** 1 | 1 of 7 | $72.00 |
+| s-full | 20 | completed 14, interrupted 5, null 1 | **finished** 14, **interrupted** 5, **null** 1 | 14 of 20 | $72.00 |
 | h2-research | 12 | budget_truncated 10, completed 2 | **finished** 2, **responses** 10 | 12 of 12 | $0.00 |
 | h2-review | 6 | interrupted 6 | **interrupted** 6 | 0 of 6 | $72.00 |
 
@@ -142,7 +135,7 @@ pinned to the exact completion time of the last in-arm model request and verifie
 
 | Arm | Captured upper | Cap | Runtime-reported | Per-job range |
 |---|---|---|---|---|
-| s-full | $18.6861 | $250 | $12.0466 | $0.8160–$12.0466 |
+| s-full | $111.6301 | $250 | $104.9907 | $0.8160–$12.0466 |
 | h2-research | $0.1545 | $50 | $0.0000 | $0.0074–$0.0228 |
 | h2-review | $8.1547 | $150 | $0.0000 | $0.1622–$2.6263 |
 
@@ -150,7 +143,7 @@ pinned to the exact completion time of the last in-arm model request and verifie
 
 | Arm | Responses per job | Ceiling | Longest job | Ceiling | Dearest job | Budget |
 |---|---|---|---|---|---|---|
-| s-full | 25–105 (mean 42.9) | 160 | 1463.2s | 3600s | $12.05 | $20 |
+| s-full | 25–107 (mean 60.3) | 160 | 1463.2s | 3600s | $12.05 | $20 |
 | h2-research | 33–41 (mean 39.7) | 40 | 177.5s | 2400s | $0.02 | $— |
 | h2-review | 6–53 (mean 27.2) | 160 | 630.7s | 3600s | $2.63 | $20 |
 
@@ -158,7 +151,7 @@ pinned to the exact completion time of the last in-arm model request and verifie
 
 | Arm | Jobs writing notes.md | Lead deliveries | Lead stage counts | Pending reconcile | Pending compare |
 |---|---|---|---|---|---|
-| s-full | 3 of 7 | 0 | {'discovered': 23, 'studied': 0, 'reconciled': 0, 'comparison_delivered': 0} | 23 | 23 |
+| s-full | 16 of 20 | 13 | {'discovered': 115, 'studied': 0, 'reconciled': 3, 'comparison_delivered': 3} | 115 | 118 |
 | h2-research | 6 of 12 | 2 | {'discovered': 32, 'studied': 0, 'reconciled': 0, 'comparison_delivered': 0} | 32 | 32 |
 | h2-review | 2 of 6 | 2 | {'discovered': 39, 'studied': 0, 'reconciled': 2, 'comparison_delivered': 0} | 39 | 41 |
 
@@ -167,17 +160,20 @@ pinned to the exact completion time of the last in-arm model request and verifie
 
 | Arm | Run | Manifest sha256 | Files |
 |---|---|---|---|
-| s-full | `arm-s/runs/topic2-s-full-20260917-051531` | `34bfd198d68493b7fa72e586a92efaa98f6e58edb2bf3da6c30f5715511f06c2` | 6,452 |
+| s-full | `arm-s/runs/topic2-s-full-20260917-051531` | `4bfc2dcfb6b08f402dbcc48daf94b9172d38d5b5f33970cdb3a2476348e2c3b1` | 14,089 |
 | h2-research | `arm-h2/runs/topic2-h2-research-20260917-051541` | `c1e7a066c8f21d3561d64020eeb87f0e737495fd02b380fe4796789d1ff2481c` | 8,214 |
 | h2-review | `arm-h2/runs/topic2-h2-review-20260917-053231` | `8504c2bea091baa1b6ffd311ddc4da64a31207a42b3e23c3bd4ec1e6bcf5ffda` | 5,817 |
 
-Attempt-1 archives with their own manifests are under each arm's `arm-history/`.
+Each freeze was taken with the arm's monitor stopped first and verified with an explicit assertion that no file
+in the run is newer than its manifest. Attempt-1 archives with their own manifests are under each arm's
+`arm-history/`.
 
 ### Runtime identity
 
 `claude-opus-5` via Claude Code CLI **2.1.226** (sha `4e9bec1177ce9690…`) at effort **max** on Arm S and Arm
 H2's review half; `muse-code/muse-spark-1.3-contributor` at xhigh via oh-my-pi **18.2.2**
-(sha `77c3520ab8ef8318…`) on Arm H2's research half. Each read from the job's own record.
+(sha `77c3520ab8ef8318…`) on Arm H2's research half. Protocol fingerprint `e59e71488db37fb5`. Each value read
+from the job's own record.
 
 ## Protocol
 
