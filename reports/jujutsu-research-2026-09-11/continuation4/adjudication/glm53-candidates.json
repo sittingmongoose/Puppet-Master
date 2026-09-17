@@ -1,0 +1,133 @@
+{
+  "schema": "jj.continuation4.arm_candidates.v1",
+  "arm": "glm53",
+  "rule": "New propositions are recorded as candidates with evidence, the passage cited, my classification and whether continuation 3 already rejected them. The adjudicator does not add them to the union.",
+  "continuation3_rejected_expansions_checked_against": [
+    {
+      "proposal": "Marker-only conflict command is a JJ owner defect",
+      "reason": "Frozen Source Control line 308 scopes legacy commands to Git absent explicit normalization; same finding withdrawn from P21/P26."
+    },
+    {
+      "proposal": "Add mutating status.refresh branch as a required correction",
+      "reason": "F002 already fixes read effects and denial; a new writer-bearing branch would change that authority."
+    },
+    {
+      "proposal": "Reopen generic in-operation credential prompting",
+      "reason": "F038 already adjudicated prompt-suppressed owner helpers and foreground/background policy. H18 acknowledges unreviewed external auth-owner dependencies."
+    },
+    {
+      "proposal": "Corruption taxonomy, extras detector, clone stage details and arbitrary conflict editor",
+      "reason": "Refinements/alternatives under existing F082/F086/F056 and their scope boundaries, not additional demonstrated product obligations."
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_id": "C4G-01",
+      "label": "\"Object verification\" has no defined depth, and a connectivity-only verifier would pass a corrupt-blob closure",
+      "arm_label": "J0028-compare, L-4f94a6cc2232 concrete repair",
+      "job": "glm53/J0028-compare",
+      "my_classification": "correction",
+      "assertion": "JJI-008's restore acceptance says the drill must 'restore the selected historical operation with object verification', and the consumer acceptance rows repeat the phrase, but no Plan, schema or fixture defines what object verification must detect; a plan-search for fsck and connectivity returns no matches. The proposed replacement: 'full object-store integrity verification - commits, trees, and blob contents are read and checked (Git fsck default-class semantics); a connectivity-only check cannot satisfy this, and agreement of refs, bookmarks, or operation-log text alone cannot pass verification', plus a named negative family 'restore-time integrity with torn/missing objects under matching refs', mirrored into the consumer acceptance rows. Acceptance checks: a torn-pack negative, a byte-flipped-blob negative (named 'the discriminating test' because a connectivity-only verifier passes it), an intact positive, and all three across colocated, non-colocated and shared/multi-workspace fixtures. Bounded by running it once on the disposable restored copy before activation, never on the original and never while holding the capture barrier.",
+      "passage_cited": [
+        "Plans/Jujutsu_Integration.md:468 (JJI-008 acceptance, 'with object verification'), :482 (validation surfaces), :470 (distinct blocking receipt refs), :501 (no verification on the original)",
+        "Plans/forge_backup_tsnet_acceptance.json:1158 and :4841 (consumer acceptance rows repeating the phrase), :2334 (the three layout fixtures), :3087 ('GC coordinated; missing objects explicitly partial, not complete')",
+        "Plans/Source_Control_System.md:793; Plans/Backup_Restore_System.md:982",
+        "git-fsck(1) fetched 2026-09-17: --connectivity-only 'check[s] only the connectivity of reachable objects ... avoiding reading blobs entirely ... Corruption in blob objects will not be detected at all'",
+        "keanemind/dojjo @ a0ad17ba client/src/git_sync.rs and client/src/sync.rs: refs agreeing via ls-remote while the local object store is torn, caught only by full git fsck and healed by git fetch --refetch after deleting objects/, refs/ and packed-refs"
+      ],
+      "continuation3_already_rejected": "NO. Continuation 3's rejected expansions were the marker-only conflict command, a mutating status.refresh branch as a required correction, generic in-operation credential prompting, and the refinement cluster under F082/F086/F056. None is this. It is worth noting that continuation 3's own F106 is a correction in exactly this area - the restore-readiness contract admitting ready_for_owner_activation under blocked conditions - so this candidate is a second, independent defect in the same JJI-008 restore-verification family, found from a different direction (an undefined term rather than an unconstrained field).",
+      "distinctness": "F081 is credited to this arm and requires verifying destination bytes, complete native object interpretation and an isolated historical-operation restore before activation. This candidate is narrower and sharper: it says the existing Plans phrase that carries that obligation is undefined, that the cheapest reading of it (connectivity) is the one a implementer would pick, and that a single byte-flipped blob is the test that separates the two readings. It is a concrete repair to existing text with a discriminating fixture, which is the shape of F106-F109 rather than of F081.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-glm53-20260917-000655/jobs/J0028-compare/workspace/notes.md",
+          "sha256": "a3c552d2cdf0576552c7fd0bfdd16e59970d417ac94ae43b3fd2360ebe1bf96c"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-glm53-20260917-000655/jobs/J0020-reconcile/workspace/notes.md",
+          "sha256": "322feff26998d94a832a0a22bb51a7a0d8e8adf3950ab98689fe6f667e9f8c87"
+        }
+      ],
+      "adjudicator_note": "Not added to the union. The strongest candidate produced by any continuation-4 review arm, and the only one I would put in front of the Plans owners on its own."
+    },
+    {
+      "candidate_id": "C4G-02",
+      "label": "A typed per-file save vocabulary, or an explicit decision to keep JJ conflict resolution terminal-native",
+      "arm_label": "J0022-compare proposal",
+      "job": "glm53/J0022-compare",
+      "my_classification": "product choice",
+      "assertion": "The corpus owns every governing principle the diffedit3 bug class violates, but the surface where the class lives - an interactive JJ conflict/merge-editor save pipeline - has no owner, command or schema: the 31-command JJ inventory contains no conflict-editing command and JJI-008 pins it unchanged, the only merge-editor command rows are Git adapter commands, and no schema models a per-file editor save state. The proposal is a typed per-file save entry referencing the FileSafe manifest vocabulary rather than duplicating it - 'text | deleted | missing | binary | unsupported{reason} | symlink{target} | mode_change{from,to}' plus backend conflict_id and expected snapshot/operation identity per file, where 'saving deleted performs deletion; missing is a scan fact, never a write instruction - the empty-vs-deleted conflation is structurally impossible' - with save validation bound to session/repository/snapshot identity, bounded preflight reads, stage-then-commit or journaled rollback, byte-identical unchanged files and a FileSafe safe point before mutation. The alternative the arm states with equal weight is an explicit owner decision to keep conflict resolution terminal-native and say so, or an upstream-first path that fixes diffedit3 and leaves the corpus untouched.",
+      "passage_cited": [
+        "Plans/Jujutsu_Integration.md:255-287 (the closed 31-command inventory), :472 (JJI-008 'The exact 31-command JJ inventory is unchanged'), JJI-005:180-210 including :191, :199 and :208, JJI-002:80-103, JJI-003:105-143 and section 3.3:299-303, section 4.1:309, section 6:327",
+        "Plans/FileSafe.md:1494, :1497, :1500, :1490, :14223 (typed path entries and fail-closed preflight)",
+        "Plans/FileManager.md:349 (preserve line endings on save), :252, :263, :351-352, :359, :530",
+        "Plans/Backup_Restore_System.md:1049, :223; Plans/forge_backup_tsnet_acceptance.json:1576 (stage-and-verify, atomically activate or an explicit journaled rollback)",
+        "Plans/Source_Control_System.md:295 (Git conflict commands stay Git adapter commands); Plans/UI_Command_Catalog.md:549-551, :559; Plans/storage-plan.md:1928",
+        "Plans/jujutsu_integration_contracts.schema.json:138, :164 (conflict_state_unresolved as a coarse workspace-level code); Plans/runtime_artifact_code_diff.schema.json:153-161",
+        "ilyagr/diffedit3 @ 0ae89095: types.rs:5-19 and :80-105, merge_state.ts:37-44, :40, :239-242, :419-432, main.ts:75/90, fs.rs:24-52, :99-133, :378-421, local_server.rs:18, :74-105"
+      ],
+      "continuation3_already_rejected": "PARTIALLY, and I am flagging it. Continuation 3 rejected 'Conflict command with marker-only resolution' and rejected the cluster 'Corruption taxonomy, extras detector, clone stage details and arbitrary conflict editor' as 'Refinements/alternatives under existing F082/F086/F056 and their scope boundaries, not additional demonstrated product obligations.' This proposal is explicitly NOT marker-only - it keeps typed backend conflict state and says so - but it is a conflict-editor surface, which is the rejected cluster's subject. The genuinely new part is the typed save-entry vocabulary and the structural argument that missing must never be a write instruction; the surface itself I would expect to be declined on continuation 3's reasoning.",
+      "distinctness": "F029, F030, F031, F033, F034, F035, F036, F037, F053 and F056 are all credited to this arm and are the individual obligations. This candidate is the single contract that would make them decidable at one boundary, plus the owner-adjudication question about the closed inventory. In kind it is the same move claude-hicap made from the schema side (its Defect 5) and the union arm made for graph gestures (C4U-03): the frozen shape cannot express the operands, so the gestures are different operations rather than a different picture.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-glm53-20260917-000655/jobs/J0022-compare/workspace/notes.md",
+          "sha256": "ba2348746d5f48a6d2bb410825bb1884521ec616b04573af6696f20ed3121233"
+        }
+      ],
+      "adjudicator_note": "Not added to the union, and flagged as probably inside continuation 3's rejected conflict-editor class."
+    },
+    {
+      "candidate_id": "C4G-03",
+      "label": "merge_editor_available is referenced as a command condition and defined by no owner",
+      "arm_label": "J0024-compare, recorded as a note",
+      "job": "glm53/J0024-compare",
+      "my_classification": "correction",
+      "assertion": "cmd.source_control.open_merge_editor carries the condition 'conflict_file_selected && merge_editor_available', but merge_editor_available is a single occurrence in the whole corpus and no owner defines it - it is an in-product structured-editor availability flag with no contract behind it. If an external-tool proposal is ever approved, the Git-side 'open external merge tool preference' plus this flag would need explicit backend and tool scoping. The arm records it as a note rather than a repair on the stated ground that 'the Plans make no false claim today'.",
+      "passage_cited": [
+        "Plans/UI_Command_Catalog.md:549 (the condition), with plan-search establishing the single occurrence",
+        "Plans/Source_Control_System.md:451 (conflict assistant settings including the open-external-merge-tool preference), W-036 at :2815-2871",
+        "Plans/storage-plan.md:1927-1928 and :12605-12612 (the preference is persisted; these commands 'record resolution events and blocked-state handoff outcomes, not conflict content')"
+      ],
+      "continuation3_already_rejected": "NO. It is not among continuation 3's four rejected expansions, and no union finding covers an undefined command-condition flag. It is closest in kind to F073 (nominal capability flags are not production evidence), which is credited to this arm, but F073 is about not counting such a flag as evidence, whereas this names a specific flag that gates a shipped command row and has no definition.",
+      "distinctness": "Small and cheap to check, and the arm's own restraint in classifying it is correct: an undefined condition is not yet a false claim. Recorded because it is the kind of defect that becomes load-bearing exactly when the surface it gates is built.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-glm53-20260917-000655/jobs/J0024-compare/workspace/notes.md",
+          "sha256": "eb9f7c56029b9672c4dfde790cae156a2609f20dd42e912f03b6784bc97333d2"
+        }
+      ],
+      "adjudicator_note": "Not added to the union."
+    }
+  ],
+  "observations": [
+    {
+      "observation_id": "O4G-01",
+      "label": "glm53 breaks the four-arm result: claude-hicap is no longer the review-arm ceiling",
+      "detail": "After four arms the structure was a clean chain - claude (18) and deepseek41 (33) both proper subsets of muse13 (40), muse13 a proper subset of claude-hicap (46) - and the four-arm review union was exactly claude-hicap's own 46, so no arm had contributed anything claude-hicap missed. glm53 ends that. It holds four findings no other review arm reached (F068 drafts survive refresh, F069 immutable content caches, F085 capture generation differs from upload resume, F086 clone completion and cleanup) and is therefore NOT a subset of claude-hicap. The five-arm review union rises from 46 (41.82%) to 50 (45.45%), and the six-arm union to 59 (53.64%). The revised reading: the review arms differ in depth AND, at the margin, in kind.",
+      "adjudicator_note": "This supersedes the cross_arm_structure statement recorded in the bundle after muse13."
+    },
+    {
+      "observation_id": "O4G-02",
+      "label": "The UNIX_EPOCH garbage-collection fact now has five distinct outcomes across six arms",
+      "detail": "One code fact - jj's op_store().gc(head, SystemTime::UNIX_EPOCH) as called by Dojjo's sync server - separated the arms cleanly. (1) Arm C asserted that it prunes everything unreachable, which is wrong: lib/src/simple_op_store.rs:285-357's remove_file_if_not_new KEEPS a file when mtime > keep_newer, so with keep_newer = UNIX_EPOCH nothing is removed. (2) claude-hicap repeated the same error while quoting the correct predicate. (3) deepseek41 read simple_op_store.rs and got it right; it is the arm that caught Arm C. (4) muse13 recorded the call without characterising the retention direction it had not verified. (5) glm53 did BOTH, in different jobs, and the difference is instructive: J0020 preserved the correct framing it inherited ('op-store GC with UNIX_EPOCH, no aggressive retention cutoff'), while J0023 inferred the wrong direction - 'prunes op-store data unreachable from the single resolved op head with zero time grace' - and then quarantined its own inference in the same document: 'Exact op_store::gc reachability/grace semantics are inferred from the call shape ([op_id], UNIX_EPOCH) and code comments, not verified against pinned jj source. Flagged uncertain; verify against jj simple_op_store before reusing the claim.' It named the exact file deepseek41 read and I verified. An error correctly labelled as an unverified inference, with the verification step written down, is not the same failure as an error asserted as fact.",
+      "adjudicator_note": "Recorded as the sharpest calibration result in the experiment."
+    },
+    {
+      "observation_id": "O4G-03",
+      "label": "The retry policy recovered every lead the response ceiling truncated",
+      "detail": "Seven of twelve jobs hit the 40-response ceiling, but three of the twelve admissions were second attempts of truncated logical jobs (J0019 -> J0020, J0018 -> J0021, J0025 -> J0028), and every one of those retries delivered where the first attempt had not. J0018 and J0019 and J0025 wrote nothing; J0021, J0020 and J0028 between them carry 12 of the 37 credits, including the whole Dojjo family and the jj-resolve partial-resolution lead. No lead was lost to truncation. The cost is that the 12-admission budget bought only nine distinct logical jobs.",
+      "adjudicator_note": "Recorded; it is why this arm's recall survived a worse truncation rate than any arm except Arm C."
+    },
+    {
+      "observation_id": "O4G-04",
+      "label": "The arm had F107's evidence and never routed it",
+      "detail": "J0026 confirmed three real defects in GG's paged graph - a swallowed mid-query revset error delivered as end-of-history, visual rows counted against the page boundary, and a resume skip that silently drops one commit per previously counted visual row - plus the finding that page continuation is bound only to the revset string with no operation, snapshot or config identity retained. Those are the external form of three of F107's four clauses. But J0026 was a reconcile job under an external-only assignment and no compare job in this arm took a graph lead, so the defect was never stated against the SourceGraph contract. This is the same shape as the union arm's diffedit3 miss: the finding was in hand and the pipeline never carried it to the surface where it would have counted.",
+      "adjudicator_note": "Recorded as a partial, not a credit."
+    },
+    {
+      "observation_id": "O4G-05",
+      "label": "The manifest raced the monitor's final write; one file of 5,758 differs and it is not an arm output",
+      "detail": "The runner's quoted internal digest e2d003ea... verifies exactly against the manifest's 5,758 sorted rows. An independent re-hash of the tree gives 7b1385c3... instead, and the whole difference is one file: monitor-state.json, 592 bytes in the manifest and 769 bytes now. The manifest was frozen at 2026-09-17T01:02:04Z and the scheduler's monitor wrote its final heartbeat at 01:02:08Z, four seconds later, adding the terminal block. Every other file is byte-identical, including every assertion document, every job record, run.json, timing.json, progress.json, priced-usage-final.json and campaign-terminal.json - so the designed-stop evidence rests on frozen bytes. The other three arms I checked (muse13, union, claude-hicap) froze after their monitor's last write and show no difference. Worth fixing in the freeze procedure: quiesce the monitor before hashing.",
+      "adjudicator_note": "Investigated before scoring; benign, and reported rather than passed over."
+    }
+  ]
+}

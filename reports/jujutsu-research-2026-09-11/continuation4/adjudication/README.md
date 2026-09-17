@@ -1,292 +1,303 @@
-# Arm C (Claude Opus 5 review) — adjudication against the continuation-3 union
+# Continuation 4 — adjudication of six Jujutsu arms against the continuation-3 union
 
-I am an Opus 5 agent acting as adjudicator. I ran no arm. This scores the Claude arm's frozen outputs
-against the adjudicated 110-finding union from continuation 3, using continuation 3's own crediting rules.
+**I am an Opus 5 agent** (`claude-opus-5[1m]`) acting as adjudicator. **I ran no arm.** This bundle
+scores six frozen arms against the adjudicated **110-finding union** from continuation 3, using
+continuation 3's own crediting rules: a finding is credited only when a **delivered assertion states
+the same proposition, cited to a passage**. Partial matches are recorded separately. Propositions
+outside the union are recorded as candidates with evidence and are **never added to the union** —
+that is not the adjudicator's authority.
 
-**Adjudicator/subject family overlap is a stated bias caveat**: the reviewed model is `claude-opus-5` and I
-am an Opus 5 agent. Every credit below names the delivered assertion and the passage it cites, so the
-judgement can be re-checked against the artifacts rather than taken on my word.
+**What ran, under which limits, on which code, at what cost, and what stopped each job is the
+runner's bundle, not this one.** It is on branch `research/continuation4-20260917`, commit
+`2bd36e1881`, at `reports/jujutsu-research-2026-09-11/continuation4/` — `README.md` for the arm
+table, timing, job-status, cost and delivery counts; `arm-reports/<arm>.json` for per-job rows with
+`bound_by`; `output-manifests.json`, `freeze-history.json`, `protocol-fingerprints.json`,
+`runtime-identity.json` and `corrections.json`. **Nothing in those tables is reproduced here.** Where
+I verified a runner figure and found it wrong, it is in "Cross-arm factual verifications" below.
 
-Arms deepseek41, glm53, muse13 and union are **not scored here**. At the time of writing deepseek41 is
-live (its 20:02:55Z attempt was archived for an accounting defect and it relaunched at 20:20:22Z as
-`jujutsu-deepseek41-20260916-202016`); glm53, muse13 and union have not started. A **`claude-hicap`** arm
-is also queued — the same model with a raised response ceiling. That arm is the direct control for this
-adjudication's main caveat: Arm C's recall is dominated by the 40-response ceiling, not by judgement, and
-`claude-hicap` is what will separate the two. All of these will be scored on resume.
+## Method
 
-## What I read, by path and hash
+For every arm I verified the manifest and rebuilt the job table from durable state myself, never from
+the runner's summary; confirmed the terminal stop was a designed gate before scoring; read every
+delivered assertion the arm produced; and reported request-limited coverage and the reached-delivery
+fraction separately, so a reader can tell "did not get there" from "got there and missed". The
+assertion corpus is `workspace/notes.md` plus `workspace/leads/*.md` only — never handoffs, briefs,
+navigation or the source-locator inventories, which are acquisition receipts rather than assertions.
+Budget-limited **saved** assertions count when supported, per continuation 3.
 
-Union and method (all under `/mnt/Cursor/PuppetMaster/reports/jujutsu-research-2026-09-11/continuation3/`):
+## Two comparisons, kept separate
 
-| File | SHA-256 |
-|---|---|
-| `final/comparison.json` | `c3006253a5c68074109312747feb67130fb6e12d4f82c66132b268487156370b` |
-| `final/closing-job-reviews.json` | `e3c64edd60a6ea7664fc98d1541f649665ef2b681915bf249e50046e6917d5e1` |
-| `final/symmetric-adjudication.json` | `531c6d831890598a99b159ae160aa7bd501d13c2885ef1344f51acaaea74bcc2` |
-| `final/independent-review.json` | `923df1b300d4de20d29eff414046661590835902074e95a36df3e350161bf28b` |
-| `final/job-coverage.json` | `8a9a264ab287c8f22546a953e24d9703d2621bc6e1b0df0137ad4286367831fa` |
-| `final/README.md` | `fb775eb0f26ded27d835d8ecface357a3f1ab8a65adc612da5685bfd1e446e53` |
-| `end/README.md` | `6356d64f8f6c6e64248aacf34795f62463fc36250e0ceeec045d2b04c262bc67` |
+A review replacement and a full arm answer different questions, and ranking them against each other
+would read a ceiling as a judgement.
 
-Also read:
+**Review arms** — `claude`, `deepseek41`, `muse13`, `glm53`, `claude-hicap` — replaced the review
+model over the premium arm's frozen discovery, study and history artifacts, from an identical
+starting state. **Their recall is bounded by what those artifacts contain.**
 
-| File | SHA-256 |
-|---|---|
-| `…/process-pilot-20260908/BRIEF_ADJUDICATE_NEW_ARMS_20260916.md` | `352942fec6ac5671c953c33ed466936b78b3f16797fa2ddf553a2007f0b4aa81` |
-| `/mnt/Cursor/PuppetMaster/AGENTS.md` | `778ee8e5b13c4e6011e5b1de1bb0889638ddd43a5d7b30ee45b6e951bf9d697f` |
-| `continuation4/PROGRESS.md` (runner's log) | `868969215f231260c3d77acc231d4c3b95150e3d4eddbd3c70ddced166d97dbf` |
-| `runs/jujutsu-claude-20260916b/run.json` | `8a6632de52ae9554e67816f8a91c63422c77f82771354fc1288829556500101b` |
-| `runs/jujutsu-claude-20260916b/timing.json` | `78235f5006c4558acaa3f9be5382443a433aec1a9c2a2866242c3e4e52d94b66` |
-| `runs/jujutsu-claude-20260916b/progress.json` | `7895190214ff9145dbf343b93f7c1bceda1c5dc5277fd11cb2456ec911614de4` |
+**Full-pipeline arms** — `premium`, `hybrid`, `union` — ran from discovery on the frozen case
+`bc7569b3f5`. The `union` arm's recall is **not** bounded by any other arm's artifacts. Premium and
+hybrid accumulated over two campaigns; the union arm ran all five stages in one 106-minute run.
 
-Arm C's 18 delivered assertion documents, all under
-`~/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/`:
+### Review arms — recall on the fixed 110-finding union
 
-| Document | SHA-256 |
-|---|---|
-| `J0019-reconcile/workspace/notes.md` | `2ff85492dd1742a6b82163fa2295c058c4adfdbb2706e923f709594037b9172b` |
-| `J0019-reconcile/workspace/leads/dojjo-create-verification-is-local-side-only.md` | `928f554149c4c5d8685851343168f85ba815fe862ef431ef0c8f545bcb8877dd` |
-| `J0019-reconcile/workspace/leads/dojjo-git-transport-need-computed-not-honored.md` | `b33b087f5324dde222b260772b454287bc89d14a7e65d5d7243c5623aff0bef0` |
-| `J0019-reconcile/workspace/leads/dojjo-op-store-gc-unix-epoch-and-lock-gap.md` | `c0cf000f2adb55ddfb0b922d9285421544c4480239ccf634b40101c3d87cc1ad` |
-| `J0019-reconcile/workspace/leads/dojjo-setup-manufactures-native-operations.md` | `e041c847638129d3e2fd088b710d98d7080295fd506b7f083ba5c8fcced0543a` |
-| `J0019-reconcile/workspace/leads/dojjo-workspace-name-uniqueness-is-local-precheck.md` | `7b3e0f3e2f51ed9b1671cf2e8642e6287c42ad59d5a3596cc16c222cbaa89e87` |
-| `J0019-reconcile/workspace/leads/git-fsck-connectivity-only-rationale.md` | `826f4ad11fc3c4e9c7aefd9936cc5f2164d22b332857f1a8de54876755dccd62` |
-| `J0022-reconcile/workspace/notes.md` | `8763c8457e5637cafb2fde67bb6881f7d091cadd1ee8c5fcb6fdf4e1a43b5750` |
-| `J0022-reconcile/workspace/leads/bookmark-verb-vocabulary-delete-forget-rename.md` | `b3d4b9f1a1732715d3202f4ac197003bdd36622b3adfd5ba8c1ebb32c4eb1dcb` |
-| `J0022-reconcile/workspace/leads/direct-manipulation-target-resolution-bugs.md` | `edf1f48f843cdd7eda1d2f6663f10ffc9fc08a6afcd84f6f57298d637ae264b5` |
-| `J0022-reconcile/workspace/leads/dojjo-sync-complete-prunes-operation-history.md` | `7c11e0db99b4ebae2e55a786bdb01cfadb5fb5a06ae0b803e0d8aab90695ddad` |
-| `J0025-reconcile/workspace/notes.md` | `d03c593639d2d7a134b532ef71edcef21fb0f877fc445b4fe499491259a34dba` |
-| `J0026-compare/workspace/notes.md` | `eca15bac6cb2d2d0d830c62287bb69b995b2197761c1d7237cb51148d93e92b2` |
-| `J0026-compare/workspace/leads/pm-gc-fence-held-does-not-state-coverage.md` | `dc302a4eb282257dcc9d97546180f80d36490ed70b34f2aa8fb1757294c6509d` |
-| `J0026-compare/workspace/leads/pm-jj-isolated-drill-must-rebind-store-pointers.md` | `ba3330c47a0981ac4c7eb1eb5b58854282112320e4d15ada6c72a19b570a3ab5` |
-| `J0026-compare/workspace/leads/pm-jj-machine-local-store-entries-unclassified.md` | `dab6c73e05e87cb97a0c1f3cd920290d69172f242d9367164eff93ea2a6cdc7d` |
-| `J0026-compare/workspace/leads/pm-jj-restore-object-verification-depth-unstated.md` | `fbbf91951173bb339429a27499ec14498e378ad5a2341a6b26314fefb1d17c1b` |
-| `J0026-compare/workspace/leads/pm-jj-unloadable-metadata-has-no-blocker-class.md` | `1b6d1d993382cb5d0c8226c6717e7bffff7b43d9e70de7835f03a58ecf459080` |
+| Arm | Model, effort | /110 | corr /5 | cap /36 | prod /6 | unsup /63 | Jobs bound | Jobs with a saved assertion |
+|---|---|---:|---:|---:|---:|---:|---|---:|
+| `claude` (Arm C) | claude-opus-5 xhigh | 18 (16.36%) | 0 | 1 | 0 | 17 | 11 of 12 on responses | 4/12 |
+| `deepseek41` | deepseek-v4.1-flash max | 33 (30.00%) | 0 | 2 | 1 | 30 | 10 of 12 on responses | 8/12 |
+| `glm53` | glm-5.3-flash max | 37 (33.64%) | 0 | 2 | 0 | 35 | 7 of 12 on responses | 8/12 |
+| `muse13` | muse-spark-1.3 xhigh | 40 (36.36%) | 1 | 3 | 1 | 35 | 2 of 12 on responses | 11/12 |
+| `claude-hicap` | claude-opus-5 xhigh, 160-response ceiling | **46 (41.82%)** | 3 | 4 | 3 | 36 | **none** | 12/12 |
 
-## Verification of the arm's durable state
+Cost and duration are comparable among `claude`, `deepseek41`, `glm53` and `muse13` — identical
+per-job limits. **`claude-hicap`'s are not comparable with any of them**: it ran under an authorized
+higher ceiling. Only its outputs are.
 
-The runner reported manifest SHA-256 `a0d3b38cb37ee3dfa47ec5ac878ce903f0ff15a0166d51c235af82613c01dd39`
-for `arm-outputs/arm-c-manifest.json`. That value is the manifest's **internal** `manifest_sha256` field — a
-digest over the sorted file rows — not the manifest file's own bytes (those hash to
-`bda960668eda9c08b2d1c0a2c2e6831694f1b744da7bc76011f46b588fdf2f59`). Both check out:
+### Full-pipeline arms
 
-- Recomputing `manifest_sha256` from the 6,234 rows reproduces `a0d3b38c…` exactly.
-- Independently re-hashing the whole run tree with the run's own algorithm (`hash_manifest.py`) on
-  2026-09-16 yields 6,234 files, 167,320,784 bytes and the same digest `a0d3b38c…`. The frozen tree is
-  unaltered since the 2026-09-16T20:02:24Z freeze.
+| Arm | Model, effort | /110 | corr /5 | cap /36 | prod /6 | unsup /63 | Stages |
+|---|---|---:|---:|---:|---:|---:|---|
+| `premium` | gpt-6-astra xhigh | 78 (70.91%) | 4 | 20 | 3 | 51 | five, over two campaigns |
+| `hybrid` | deepseek-v4-flash | 90 (81.82%) | 2 | 30 | 5 | 53 | five, over two campaigns |
+| `union` | stealth/union-alpha high | 43 (39.09%) | 0 | 7 | 0 | 36 | **five, in one run** |
 
-The job table was rebuilt from `jobs/*/outcome.json`, `jobs/*/job.json`, `jobs/*/delivery.json`,
-`jobs/*/native-job-end-accounting.json` and `jobs/*/raw-claude/claude-usage.json`, not from the runner's
-summary. Every figure the runner reported reproduced: 12 jobs — 8 reconcile (J0017, J0018, J0019, J0020,
-J0021, J0022, J0023, J0025) and 4 compare (J0024, J0026, J0027, J0028) — 11 `request_limit_reached` and 1 `completed`
-(J0019, 38 responses, 641.0 s), 478 responses with receipts equal to responses in all 12, reconcile wall
-1386.18 s, compare wall 1215.92 s, arm wall 1867.96 s, summed 4888.92 s, average concurrency 2.6173,
-captured $36.124045, and notes.md from exactly 4 of 12. `J0001`–`J0016` carry no `raw-claude/` and are the
-inherited premium upstream artifacts.
+The union arm's recall **by stage** — 12 at discovery, 0 at implementation, 0 at history, 10 at
+reconcile, 21 at compare — against premium's 73 research-stage plus 5 late and hybrid's 86 plus 4.
+Premium and hybrid earned ~95% of their coverage in the research stages across 88 and 91 leads over
+two campaigns; the union arm earned 72% of its coverage in reconcile and compare from **8 admitted
+leads**. Its cost ($0 at a zero tariff) is not comparable with anything. Detail in
+`union-README.md`.
 
-## Credited findings — 18 of 110 (16.36%)
+## What the six arms did and did not establish
 
-Crediting rule applied, from continuation 3: a job is credited only when a **delivered assertion states the
-same proposition, cited to a passage**. Topic contact is not credit; source locator inventories
-(`research-evidence/sources/**`) are not assertion documents.
+**No arm extended the union.** Six arms — five review replacements and one full arm on the same case
+— produced **zero** propositions I could credit as a union finding outside premium ∪ hybrid. That
+includes the union arm, which is the one thing in this experiment that could have changed the union:
+all 43 of its credits sit inside premium ∪ hybrid. A different research model **redistributed**
+coverage; it did not extend it.
 
-| Class | Credited | Denominator |
+**Reachability did change.**
+
+| Set | Findings | % of 110 |
 |---|---:|---:|
-| Correction | 0 | 5 |
-| Optional capability | 1 | 36 |
-| Product choice | 0 | 6 |
-| Unsupported or already-covered | 17 | 63 |
-| **Total** | **18** | **110** |
+| Four-arm review union (before glm53) | 46 | 41.82 |
+| **Five-arm review union** | **50** | **45.45** |
+| Union arm alone | 43 | 39.09 |
+| **Six-arm union** | **59** | **53.64** |
+| Reached by no arm | 51 | 46.36 |
 
-On continuation 3's fixed original-105 denominator the figure is the same 18 — **18/105 (17.14%)** — because
-none of the five new findings F106–F110 was credited.
+The union arm adds **11** findings no review arm reached: F005 (Expected operation is not native compare-and-swap), F015 (Operation history navigation), F019 (Stale workspace recovery), F024 (Interdiff), F025 (Change evolution view), F038 (Credential architecture and custody already chosen), F052 (Git HEAD and index health are separate), F057 (Exact-profile conflict byte regression), F065 (Revset assistance).
 
-**Corrections (0/5).** F001, F106, F107, F108, F109 all missed. F107 is the notable one and it is a request
-ceiling loss, not a judgement loss — see below.
+`glm53` adds **4** no other review arm reached: F068 (Description drafts survive refresh), F069 (Immutable content caches and async selection), F085 (Capture generation differs from upload resume), F086 (Clone completion and cleanup).
 
-**Optional capability (1/36).** `F066` direct graph manipulation — J0022-reconcile.
+The review arms hold **14** the union arm misses: F001 (Terminal attempts always have receipts), F032 (Edited text line-ending policy), F033 (External editor path confinement), F034 (Partial external editor writes), F036 (External editor stale sessions), F037 (Bound reads before allocating), F044 (Adapter implementation shape), F053 (Windows links and native file types), F074 (Process execution follows owner environment), F083 (Backup derived indexes), F085 (Capture generation differs from upload resume), F086 (Clone completion and cleanup), F089 (Partial clone and LFS/submodule eligibility), F090 (Authorized incomplete-object materialization), F106 (Restore readiness consistency), F107 (Graph page consistency and adjacency bounds). Seven of those fourteen are one lead family —
+diffedit3 and external editors — which the union arm's own discovery found as lead 23 and never
+routed to a study or compare job within 20 admissions.
 
-**Unsupported or already-covered (17/63).** `F004` `F006` `F010` `F030` `F050` `F051` `F059` `F061` `F062`
-`F072` `F079` `F080` `F081` `F082` `F084` `F092` `F102`.
+## Nesting, recomputed with glm53
 
-Per-finding basis, crediting job and evidence hashes are in `arm-c-findings.json`. Highlights:
+Proper subsets:
 
-- **F061** (graph bounds, continuity, isolation) — J0025 asserts all four clauses with line-exact citations,
-  including that GG's page bound is an equality test a phantom missing-edge row can straddle so "the loop
-  runs to stream exhaustion", and that "continuation identity is not bound to anything".
-- **F081** (backup existence is not verified recovery) — all three clauses asserted across J0026's R1 and R3,
-  J0019's create-verification lead and J0025's alternates finding.
-- **F079** (complete retained native backup closure) — J0026 quotes the closure requirement in full and the
-  failing substitutes; J0022 asserts the mirror is "a current-head closure, not a retained-history closure".
-- **F059** (push targets and bookmark effects) — J0022 proves GG's rename leaves the old name's tracked
-  remote with an absent local ref so the next push deletes it, and that a local Delete is logged as "forget".
+- `claude` (18) ⊂ `glm53` (37), ⊂ `muse13` (40), ⊂ `union` (43), ⊂ `claude-hicap` (46)
+- `deepseek41` (33) ⊂ `muse13` (40), ⊂ `claude-hicap` (46)
+- `muse13` (40) ⊂ `claude-hicap` (46)
 
-## Partial matches — 13, recorded not credited
+Not comparable: `claude` vs `deepseek41`; `deepseek41` vs `glm53`; `deepseek41` vs `union`; `muse13`
+vs `glm53`; `muse13` vs `union`; `claude-hicap` vs `glm53`; `claude-hicap` vs `union`; `union` vs
+`glm53`.
 
-`F001` `F002` `F007` `F011` `F029` `F069` `F074` `F083` `F087` `F088` `F089` `F094` `F097`.
-Each with its reason in `arm-c-findings.json`. Examples: F088's merge-parent-drop regression is cited as
-evidence but the obligation the arm draws is about target resolution; F074 has the scrubbed-Git-environment
-clause but not signing/filters/hooks/tools routing; F089 has shallow and alternates but not
-promisor/LFS/submodule.
+**glm53 changed this result.** After four arms the review set was a clean chain ending at
+`claude-hicap`, and the four-arm review union was **exactly claude-hicap's own 46** — no arm had
+contributed anything it missed. glm53 holds F068, F069, F085 and F086, which no other review arm
+reached, so **claude-hicap is no longer the review-arm ceiling** and the review arms differ in depth
+**and, at the margin, in kind.**
 
-## Candidates outside the union — 5, all from J0026-compare
+**Arm C is the floor, and that is a ceiling artefact, not a judgement.** Its 18 findings are a proper
+subset of every other arm's — the only arm in the experiment contained by all five others. Eleven of
+its twelve jobs stopped at the 40-response ceiling, and its own control proves the point:
+`claude-hicap`, identical in inputs, model, effort, admissions, workers and batching, finished all
+twelve jobs and scored 46. **Arm C's 16.36% must never be quoted as a model result.**
 
-Recorded with evidence, **not added to the union**. Full text, distinctness and cited passages in
-`arm-c-candidates.json`.
+## Out-of-union candidates — 27 across six arms
 
-| ID | Proposition (abbreviated) | Evidence SHA-256 |
-|---|---|---|
-| C4C-01 (R1/P1) | The JJ restore-verification receipt must state the verification depth behind `object_closure_result`, by reference to the Backup owner's existing `integrity_verification_level`; a reachability-only pass cannot yield `complete`. | `fbbf91951173bb339429a27499ec14498e378ad5a2341a6b26314fefb1d17c1b` |
-| C4C-02 (R3) | The isolated drill must resolve and record every in-store location pointer before any native command runs; a pointer resolving outside the boundary is a typed blocker, rebound with the rebinding recorded or blocking — never followed. | `ba3330c47a0981ac4c7eb1eb5b58854282112320e4d15ada6c72a19b570a3ab5` |
-| C4C-03 (R2) | Machine-local and ephemeral entries inside `.jj/repo` need an enumerated, source-traced, version-pinned classification — captured but non-authoritative — never a `*.lock` filename pattern. | `dab6c73e05e87cb97a0c1f3cd920290d69172f242d9367164eff93ea2a6cdc7d` |
-| C4C-04 (R4) | The drill blocker taxonomy needs a class for metadata that is present-but-unloadable, separate from missing object closure. **Adjudicator flag:** this falls inside continuation 3's already-rejected expansion "Corruption taxonomy, extras detector … refinements under existing F082/F086/F056". | `1b6d1d993382cb5d0c8226c6717e7bffff7b43d9e70de7835f03a58ecf459080` |
-| C4C-05 (R5) | `gc_fence_outcome: held_during_capture` must enumerate the writer paths the fence covered; a claim with an empty covered-path list is rejected. | `dc302a4eb282257dcc9d97546180f80d36490ed70b34f2aa8fb1757294c6509d` |
+Full detail in `consolidated-candidates.json` and in each arm's `<arm>-candidates.json`. **None is
+added to the union.** Each carries the assertion, the passages it cites, my classification and an
+explicit check against continuation 3's four rejected expansions: the marker-only conflict command; a
+mutating `status.refresh` branch as a required correction; generic in-operation credential prompting;
+and the refinement cluster under F082/F086/F056.
 
-C4C-02 is the strongest: it identifies a route to a false complete-recovery badge that the current owner
-text permits, and grounds it in the BKP-006/BKP-007 lineage packet, which stated the clean-host condition
-that current owner text reduced to a future test surface.
+By classification: **20 corrections, 5 capabilities, 2 product choices.** Five are flagged as sitting
+inside a continuation-3 rejection: `C4C-04`, `C4D-04`, `C4M-03`, `C4U-05`, `C4G-02`.
 
-## Amendment after scoring deepseek41 — a verified error in Arm C's supporting text
+### Where arms converged independently
 
-Arm C asserted, in J0019, J0022 and J0026 and in two of its lead documents, that
-`op_store().gc(head, SystemTime::UNIX_EPOCH)` "preserves nothing by recency", and therefore that the dojjo
-server mirror "retains only operations and views reachable from the single resolved head" after every sync.
+### Restore-drill object verification has no defined depth
 
-That is backwards. jj's `lib/src/simple_op_store.rs:285-298` keeps a file when `mtime > keep_newer` and
-removes it otherwise, so with `keep_newer = UNIX_EPOCH` **nothing is removed**. I read the source directly.
-deepseek41's J0025 got this right and Arm C did not; Arm C cited only the docs.rs trait documentation, while
-deepseek41 read the implementation.
+**C4C-01, C4G-01** — claude, glm53. My classification: **correction**.
 
-Consequences, all recorded in the JSON files:
+THE STRONGEST CONVERGENCE IN THE EXPERIMENT. Two arms with different models reached the same defect from opposite directions and never saw each other's work. Arm C came from the receipt side - object_closure_result: complete is admissible whatever depth produced it, and the Backup owner already has an integrity_verification_level enum to reference. glm53 came from the semantics side - git-fsck(1)'s --connectivity-only 'will detect corruption in commits and trees, but not do any semantic checks ... Corruption in blob objects will not be detected at all' - plus field evidence from Dojjo, where refs agreed via ls-remote while the object store was torn and only a full fsck caught it. glm53 supplies the discriminating fixture: a byte-flipped blob under matching refs. Neither was rejected by continuation 3, and continuation 3's own F106 is a correction in the same JJI-008 restore family.
 
-- **The F079 and F004 credits stand.** Both rest on Arm C's independent Plans citations, not on this claim.
-- **Arm C's lead `dojjo-sync-complete-prunes-operation-history.md` is materially false.** Its central claim
-  — that a dojjo mirror "is a current-state replica, never an operation-history archive" — does not hold.
-- **Candidate C4C-05 loses one of its two external legs** and survives on the other (the per-instance
-  `FsDojoUploadStore` io_lock that does not coordinate across concurrent HTTP requests, plus the `file://`
-  remote path that bypasses the smart-HTTP lock entirely). The covered-writer-path proposition itself does
-  not depend on the GC claim.
+*The one candidate from continuation 4 I would put in front of the Plans owners on its own.*
 
-A second, softer cross-arm note: Arm C described GG's drag hints as typed target previews and explicitly
-flagged its own open question of whether the hint appears at the drop target or only at the source.
-deepseek41 answered it from code — source-side only, no post-mutation preview. Not a contradiction, a
-resolution; both arms keep F066.
+### No owner-level save contract for a diff/compare or merge-editor surface
 
-## Shared versus unique coverage
+**C4D-04, C4M-03, C4G-02** — deepseek41, muse13, glm53. My classification: **product choice**.
 
-| | Count |
-|---|---:|
-| Claude ∩ premium | 18 (all of them) |
-| Claude ∩ hybrid | 17 |
-| Claude ∩ both | 17 |
-| Claude ∩ premium only | 1 (`F084`) |
-| Claude ∩ hybrid only | 0 |
-| **Unique to Claude** | **0** |
-| Held by premium, missed by Claude | 60 |
-| Held by hybrid, missed by Claude | 73 |
-| Held by **both** others, missed by Claude | 41 |
+Three arms independently. Each proposes a typed per-path save vocabulary in place of a string map, and each states the alternative of an explicit decision to keep conflict resolution terminal-native. FLAGGED FOR ALL THREE: this is the surface of continuation 3's rejected cluster 'Corruption taxonomy, extras detector, clone stage details and arbitrary conflict editor', and much of each proposal restates union obligations (F029, F031, F033, F034, F036, F037, F056) already credited to the arm that raised it. The genuinely new part, common to all three, is that 'missing' must never be admissible as a write instruction.
 
-Every finding the Claude arm earned is a subset of premium's coverage. The arm added nothing to the union's
-covered set. That is the expected shape for a same-input review replacement that delivered 4 of 12 jobs.
+*Record; expect it to be declined on continuation 3's reasoning unless the owners decide to open the surface.*
 
-## Request-limited coverage, and what "did not get there" costs
+### A divergent change has no representable state
 
-11 of 12 jobs ended `request_limit_reached` at the 40-response ceiling; 1 completed. **No job was
-budget-truncated** — the $12-per-job Meter boundary never fired, so every truncation here is the response
-ceiling, not money.
+**C4H-05, C4M-05** — claude-hicap, muse13. My classification: **correction (hicap) / product choice (muse13 half A)**.
 
-Eight jobs produced **zero** delivered assertions: J0017, J0018, J0020, J0021, J0023 (reconcile) and J0024,
-J0027, J0028 (compare). Their entire output is 28–40 source locator receipts plus a 16–55 byte truncated
-last assistant turn. Three named losses:
+Two arms. claude-hicap establishes that the word appears nowhere in any source-control, Jujutsu or GUI context in the Plans and that node_state, the GUI graph_states prefix list and the JJ error and disabled-reason enums are all closed without it; muse13 frames the same gap as a product choice about offset-qualified targeting. F006 (identity separation) is credited to both and F022 (explicit convergence) is a union capability neither earned. Neither was rejected.
 
-1. **J0028-compare held exactly the three graph leads** (`L-ad68a4ac94ad`, `L-2e0dc4dec29d`,
-   `L-289201b4f4ec`) whose comparison against Plans produced **F107** in both premium and hybrid. The arm
-   *did* deliver their reconcile evidence — J0025, credited under F061, F030, F092, F006 and F081, and
-   materially stronger on the pagination defects than the parent notes it reconciled. The compare that
-   would state the SourceGraph contract defect died at the ceiling with nothing saved. F107 was in reach.
-2. **J0027-compare held the bookmark and direct-manipulation leads** whose reconcile assertions were
-   credited under F059, F062, F066 and F079. Their comparison against canon was never delivered.
-3. **`L-80244e477912` (diffedit3 file-type and partial-write limits) and `L-7dc9a6726cf9` each got two
-   reconcile attempts** — J0017/J0021 and J0018/J0020 — and delivered nothing from any of the four. That
-   lead family is the source of premium-unique F031/F033/F034/F036 in continuation 3.
+*A real representability gap; cheap to check against the closed enums.*
 
-## Reached-delivery fraction
+### The closure and certification records bind no version, environment or resolved path
 
-| Measure | Value |
+**C4D-01, C4M-02, C4C-02, C4U-02** — deepseek41, muse13, claude, union. My classification: **correction**.
+
+Four arms, three of them review arms bounded by the same artifacts and one the full arm. deepseek41 binds the JJ tool and store-format version; muse13 binds the resolving environment and the pointer chains with their distinct bases (alternates relative to the object database, commondir relative to $GIT_DIR); Arm C binds the drill-time resolution of in-store pointers inside the isolation boundary; the union arm binds a nine-row certification scenario matrix. F050 is the behavioural rule and is credited to five of six arms; none of these is in the union.
+
+*The largest agreed gap by arm count. Worth one consolidated owner question rather than four.*
+
+### Reads must be pinned rather than granted write authority
+
+**C4H-02, C4U-01** — claude-hicap, union. My classification: **correction**.
+
+Both arms land on the same side of a boundary continuation 3 settled by REJECTING an expansion. Continuation 3 declined to 'add a mutating status.refresh branch as a required correction' because F002 already fixes read effects and a writer-bearing branch would change that authority. claude-hicap requires every capture and drill read to be pinned to an exact operation with ignore-working-copy and never load_at_head(); the union arm requires a proven non-mutating observation path with typed stale results and states that 'blanket addition of writer leases to all reads would change the existing contract unnecessarily'. Independent convergence on an already-adjudicated boundary is the best evidence in this experiment that the 110-finding union is well drawn.
+
+*No union change; record as confirmation.*
+
+### All 27
+
+| ID | Arm | Class | Label | Inside a continuation-3 rejection? |
+|---|---|---|---|---|
+| `C4C-01` | claude | correction | JJ restore drill object verification has no stated depth | no |
+| `C4C-02` | claude | correction | Isolated drill must resolve and rebind in-store location pointers | no |
+| `C4C-03` | claude | correction | Machine-local and ephemeral native store entries have no stated disposition | no |
+| `C4C-04` | claude | correction | No blocker class for present-but-unloadable native metadata | **inside a rejection** |
+| `C4C-05` | claude | correction | gc_fence_outcome held_during_capture does not state what the fence covered | no |
+| `C4D-01` | deepseek41 | correction | No record binds the JJ tool/format version a closure requires | no |
+| `C4D-02` | deepseek41 | correction | mark_conflict_resolved's text-based precondition can contradict JJI-005 | no |
+| `C4D-03` | deepseek41 | correction | The JJ command inventory has no conflict-resolution entry, so the Conflict-assistant commands have no JJ-scoped preconditions | no |
+| `C4D-04` | deepseek41 | capability | No save contract exists for a diff/compare or merge-editor surface | **inside a rejection** |
+| `C4H-01` | claude-hicap | correction | cmd.jujutsu.change.split has no expressible non-interactive execution | no |
+| `C4H-02` | claude-hicap | correction | An unpinned JJ read authors an operation, so capture and drill can mutate what they observe | no |
+| `C4H-03` | claude-hicap | correction | allowed_action_ids has no floor, so a blocked repository can admit no recovery action | no |
+| `C4H-04` | claude-hicap | correction | bookmark.track and bookmark.untrack are classified as transport mutations requiring a credential lease | no |
+| `C4H-05` | claude-hicap | correction | A divergent change has no representable state anywhere in the corpus | no |
+| `C4M-01` | muse13 | correction | JJI-008 states the ends of closure completeness but names no decision procedure | no |
+| `C4M-02` | muse13 | correction | The closure manifest records neither the resolved backend paths nor the environment that resolved them | no |
+| `C4M-03` | muse13 | capability | No save contract exists for a three-dir or external diff editor touching a JJ workspace | **inside a rejection** |
+| `C4M-04` | muse13 | correction | Bookmark controls have the hooks for scope disclosure but none of the content | no |
+| `C4M-05` | muse13 | capability | Divergent-change identity and draft-description retention are undefined product choices | no |
+| `C4U-01` | union | correction | A read-class PM command must not be implemented by a default mutating jj invocation | no |
+| `C4U-02` | union | correction | The certification references have no scenario matrix behind them | no |
+| `C4U-03` | union | product choice | Graph gestures are a distinct operation vocabulary, not pictures of the existing scalar target | no |
+| `C4U-04` | union | capability | Contextual source, evolution and operation inspection with assisted revset entry | no |
+| `C4U-05` | union | capability | Conflict presentation must not replace a real change with a deletion-shaped surrogate | **inside a rejection** |
+| `C4G-01` | glm53 | correction | "Object verification" has no defined depth, and a connectivity-only verifier would pass a corrupt-blob closure | no |
+| `C4G-02` | glm53 | product choice | A typed per-file save vocabulary, or an explicit decision to keep JJ conflict resolution terminal-native | **inside a rejection** |
+| `C4G-03` | glm53 | correction | merge_editor_available is referenced as a command condition and defined by no owner | no |
+
+## Cross-arm factual verifications
+
+Checks I ran against primary sources, not against the arms' claims about each other.
+
+### V1 — jj op-store garbage collection with SystemTime::UNIX_EPOCH
+
+**Ground truth.** jj lib/src/simple_op_store.rs:285-357. remove_file_if_not_new KEEPS a file when mtime > keep_newer and removes it otherwise, so with keep_newer = UNIX_EPOCH every real file's mtime is greater and NOTHING is removed. I read the source directly.
+
+**Outcome by arm.**
+
+- **claude** — WRONG, asserted as fact: gc(head, UNIX_EPOCH) 'preserves nothing by recency', therefore the dojjo server prunes everything unreachable.
+- **claude-hicap** — WRONG, and it quoted the correct predicate while drawing the opposite conclusion - the control's counter-result.
+- **deepseek41** — RIGHT. It read simple_op_store.rs and caught Arm C. This is why Arm C's four adjudication files were amended.
+- **muse13** — NEUTRAL. Recorded the call without characterising a retention direction it had not verified.
+- **union** — NOT REACHED. The lead family never entered a study or compare job.
+- **glm53** — BOTH, in different jobs. J0020 preserved the correct framing it inherited ('op-store GC with UNIX_EPOCH, no aggressive retention cutoff'); J0023 inferred the wrong direction and then quarantined its own inference in the same document - 'inferred from the call shape ... not verified against pinned jj source. Flagged uncertain; verify against jj simple_op_store before reusing the claim' - naming the exact file deepseek41 read.
+
+**Conclusion.** Five distinct outcomes on one code fact. An error labelled as an unverified inference with the verification step written down is not the same failure as an error asserted as fact.
+
+### V2 — The deepseek-v4-flash selector appearing in every arm's budget file
+
+**Ground truth.** It is continuation 3's frozen hybrid-arm cost-policy block copied into every arm's budget, not a per-arm selector. Each arm's real route is in its own run.json, its gate, its adapter argv and its native usage rows. The runner documented this as corrections.json item C1.
+
+**Outcome.** I OVERSTATED IT against deepseek41 and amended that arm's README, scoring and candidates against myself. The same stale-block class recurs for other arms: protocol/arm-budgets/union.json still names opencode-go/union-alpha and oh-my-pi 18.1.13 where run.json names openrouter/stealth/union-alpha and the binary reports omp/18.2.2; protocol/arm-budgets/glm53.json has no glm53 block at all and no glm53 row in lifetime_captured_caps_usd.
+
+**Conclusion.** run.json is the selector of record for every arm. The budget file is not.
+
+### V3 — Jobs recording 41 native responses against a 40-response ceiling
+
+**Ground truth.** The boundary runs after a response, so at most one further response can already be in flight. The runner documented it as corrections.json item C3.
+
+**Outcome.** Observed in muse13 (J0020, one job) and glm53 (five of twelve jobs). Not an accounting defect.
+
+**Conclusion.** Read the limit as 'at most 40 admitted, one may already be on the wire'.
+
+### V4 — union: how many jobs saved notes.md
+
+**Ground truth.** 19 of 20, not 18. J0018-reconcile (6,336 bytes plus 8 lead documents) and J0020-reconcile (8,790 bytes) both timed out and still saved notes.md; only J0019-reconcile produced nothing.
+
+**Outcome.** The runner's bundle at commit 2bd36e1881 still reports 18 of 20. Those two documents carry 12 of the union arm's 43 credits, so taking the reported figure would have dropped real credit.
+
+**Conclusion.** Corrected in union-scoring.json; the runner's own count is the one to amend.
+
+### V5 — union: the 12-to-39 response range and the $3 unresolved
+
+**Ground truth.** The three timeout jobs have no raw-omp/usage.json at all, so their native receipt count is zero while the durable meter recorded 27, 12 and 13. 484 native receipts across the 17 completed jobs (22-39 each) plus 52 durable-metered requests never receipted = 536 attempted.
+
+**Outcome.** The runner's bundle now states 536 in total, which matches. The per-job range is 22-39 for jobs that receipted at all.
+
+**Conclusion.** The $1 each retained by the three killed jobs is exactly the missing_retained_usage_records and durable_meter_request_count_mismatch pair.
+
+### V6 — glm53: the frozen manifest raced the monitor's final write
+
+**Ground truth.** The runner's internal digest e2d003ea... verifies exactly against the manifest's 5,758 rows. An independent tree re-hash gives 7b1385c3... and the entire difference is one file: monitor-state.json, 592 bytes in the manifest and 769 bytes now. The manifest froze at 01:02:04Z; the monitor wrote its final heartbeat at 01:02:08Z.
+
+**Outcome.** Benign. Every assertion document, every job record, run.json, timing.json, progress.json, priced-usage-final.json and campaign-terminal.json are byte-identical to the manifest, so the designed-stop evidence rests on frozen bytes. muse13, union and claude-hicap show no such difference.
+
+**Conclusion.** Worth fixing in the freeze procedure: quiesce the monitor before hashing. No effect on scoring.
+
+### V7 — Arm C's ceiling caveat, tested by its own control
+
+**Ground truth.** Arm C stopped 11 of 12 jobs at the 40-response ceiling. claude-hicap ran the same inputs, model, effort, admissions, workers and batching at 160 responses per job and finished all 12, using 37-110 responses per job; 11 of those 12 used more than 40.
+
+**Outcome.** 18 to 46 of 110. The ceiling, not judgement, produced Arm C's figure - and Arm C's set is a proper subset of claude-hicap's.
+
+**Conclusion.** Arm C's 16.36% must never be quoted as a model result. Its cost and duration are not comparable with claude-hicap's either.
+
+## Files
+
+| File | Contents |
 |---|---|
-| Input leads (premium's frozen state) | 88 |
-| Distinct leads admitted to a reconcile job | 11 |
-| …that reached a delivered reconcile assertion | **9 of 11 (81.8%)** |
-| Distinct leads admitted to a compare job | 9 |
-| …that reached a delivered comparison | **3 of 9 (33.3%)** |
-| Of the 88 input leads: reached a delivered reconcile assertion | 9/88 (10.2%) |
-| Of the 88 input leads: reached a delivered comparison | 3/88 (3.4%) |
+| `README.md` | This six-arm index |
+| `claude-README.md`, `deepseek41-README.md`, `glm53-README.md`, `muse13-README.md`, `claude-hicap-README.md`, `union-README.md` | Per-arm adjudications |
+| `arm-c-*.json`, `deepseek41-*.json`, `glm53-*.json`, `muse13-*.json`, `claude-hicap-*.json`, `union-*.json` | Per-arm findings, candidates and scoring |
+| `consolidated-candidates.json` | All 27 out-of-union candidates with classification and rejection checks |
+| `cross-arm.json` | Recall, nesting, unions, and the seven factual verifications |
+| `evidence-manifest.json` | Every run, manifest and assertion document by path and SHA-256 |
+| `SHA256SUMS` | Hashes of every file in this bundle |
 
-This is the number that separates "did not get there" from "got there and missed". Only 3 of 88 input leads
-ever reached the compare stage where a canon proposition is stated, and 18 credited findings came out of
-that 3.4% plus the 9 reconcile deliveries. Arm C's 16.36% recall is dominated by leads it never reached.
-On the 3 leads that completed the full reconcile→compare path, the arm produced 18 credited findings, 13
-partials and 5 out-of-union candidates — a high yield per lead reached.
-
-## Comparison table
-
-**The current, full comparison table now lives in `union-README.md` (source: `adjudication/union/README.md`)** and supersedes the one below. The `union` arm is the first continuation-4 arm that is NOT a review replacement: it ran the full pipeline from discovery on the frozen case, so its recall is not bounded by the premium arm's artifacts and it belongs beside premium and hybrid, not beside the review arms. It scored 43/110 (39.09%), added 11 findings no review arm reached, and contributed ZERO findings unique to itself — every credit sits inside premium union hybrid. Five-arm union 57/110 (51.82%).
-
-**The current, full comparison table now lives in `../muse13/README.md`** and supersedes the one below. Headline after four new arms: claude 18/110, deepseek41 33/110, muse13 40/110, claude-hicap 46/110, with claude and deepseek41 both proper subsets of muse13 and muse13 a proper subset of claude-hicap.
-
-
-**The current, full comparison table now lives in `../claude-hicap/README.md`** and supersedes the one below. Headline: claude-hicap — the control arm for Arm C's ceiling caveat — scored 46/110 (41.82%) including 3 of 5 corrections, a strict superset of both Arm C (18) and deepseek41 (33).
-
-
-Premium and hybrid rows are continuation 3's own numbers, read from
-`continuation3/final/README.md` and `continuation3/end/README.md`; denominators are unchanged.
-
-**The deepseek41 column is now filled in; the full, current comparison table lives in
-`../deepseek41/README.md` and supersedes the one below for every arm scored after Arm C.** Headline:
-deepseek41 scored 33/110 (30.00%) for $0.531509 — 16 findings Arm C missed, 1 (`F051`) that only Arm C has.
-
-| Measure | Premium | Hybrid | **Claude (Arm C)** | deepseek41 | glm53 | muse13 | union |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| Review model | gpt-6-astra xhigh | gpt-6-astra xhigh | **claude-opus-5 xhigh (CLI 2.1.226)** | pending | pending | pending | pending |
-| Inputs | own arm | own arm | **premium's frozen artifacts** | pending | pending | pending | pending |
-| Recall / expanded 110 | 78 (70.91%) | 90 (81.82%) | **18 (16.36%)** | – | – | – | – |
-| Recall / fixed original 105 | 74 (70.48%) | 88 (83.81%) | **18 (17.14%)** | – | – | – | – |
-| Corrections / 5 | 4 | 2 | **0** | – | – | – | – |
-| Optional capabilities / 36 | 20 | 30 | **1** | – | – | – | – |
-| Product choices / 6 | 3 | 5 | **0** | – | – | – | – |
-| Unsupported or already-covered / 63 | 51 | 53 | **17** | – | – | – | – |
-| Unique to the arm (3-arm basis) | 20 | 32 | **0** | – | – | – | – |
-| New admissions | 12/12 | 10/12 | **12/12** | – | – | – | – |
-| Completed / request-limited / interrupted | 7 / 5 / 0 | 2 / 5 / 3 | **1 / 11 / 0** | – | – | – | – |
-| Jobs with a delivered assertion | 12/12 | 10/10 | **4/12** | – | – | – | – |
-| Reconcile wall (min) | 48.186 | 42.341 | **23.103** | – | – | – | – |
-| Compare wall (min) | 53.615 | 27.546 | **20.265** | – | – | – | – |
-| Arm wall (min) | 66.346 | 42.343 | **31.133** | – | – | – | – |
-| Summed job time (min) | 185.362 | 126.294 | **81.482** | – | – | – | – |
-| Average concurrency | 2.794 | 2.983 | **2.617** | – | – | – | – |
-| Continuation increment captured | $81.583790 | $70.126680 | **$36.124043** | – | – | – | – |
-| Lifetime captured / cap | $121.923954 / $250 | $73.723142 / $100 | **$36.124043 / $100** | – | – | – | – |
-| New unresolved charges | $24.00 | $36.00 | **$0.00** | – | – | – | – |
-| Job-end reconciled / unresolved | 10 / 2 | 7 / 3 | **12 / 0** | – | – | – | – |
-
-**Read the cost row carefully.** Premium's and hybrid's lifetime figures bought a whole arm including
-discovery, study and history; Arm C's $36.12 bought 12 review jobs over artifacts it inherited for free. The
-like-for-like comparison is the continuation-increment row: **$36.12 for 12 Claude jobs against $81.58 for
-12 premium jobs and $70.13 for 10 hybrid jobs**, i.e. the cheapest and fastest of the three review
-increments, with the lowest recall and with clean accounting — the only arm of the three with zero
-unresolved charges and every job reconciled at job end.
+Per-arm adjudication sources, each with its own hash manifest, are under
+`~/PM-Experiments/jujutsu-followup-20260911/continuation4/adjudication/<arm>/`. Raw run workspaces
+stay outside this repository per AGENTS.md; everything is cited by path plus SHA-256.
 
 ## Limits
 
-1. One frozen case; a same-input review replacement. Recall is bounded by the premium arm's research
-   artifacts, which Arm C did not extend.
-2. The adjudicator is an Opus 5 agent and the reviewed model is `claude-opus-5`; adjudicator and reviewed
-   model share a family. Every credit names its assertion and cited passage so it can be re-checked.
-3. Recall is against the adjudicated continuation-3 union, not an external exhaustive truth set.
-4. "Unsupported or already-covered" is a union class, not a false-positive rate.
-5. 11 of 12 jobs were request-limited. Request-limited coverage and the reached-delivery fraction are
-   reported separately; unperformed work remains unknown, never a negative finding.
-6. Cost is a captured upper valuation equal to the CLI-reported subscription-equivalent, not a cash invoice.
-7. deepseek41, glm53, muse13, union and the queued `claude-hicap` are unscored; the comparison table's
-   right-hand columns stay empty until they are. `claude-hicap` matters most: without it, "Claude Opus 5
-   scores 16.36%" cannot be separated from "Claude Opus 5 was cut off after 40 responses in 11 of 12 jobs".
+1. One frozen case. This does not establish a general model ranking.
+2. Recall is measured against continuation 3's adjudicated union, which was itself built from premium
+   and hybrid output. **Every arm could only score inside it.** "No arm extended the union" means no
+   arm produced a proposition I judged a distinct, supported union finding outside it — not that no
+   such proposition could exist. The 27 candidates are where that judgement can be re-examined.
+3. "Unsupported or already-covered" is a union class, not a false-positive rate. It includes
+   propositions the Plans already own.
+4. The adjudicator is an Opus 5 agent and two reviewed arms ran `claude-opus-5`. Every credit names
+   its assertion and the passage it cites so the judgement can be re-checked against the artifacts
+   rather than taken on my word — and the one place it mattered, the UNIX_EPOCH garbage-collection
+   fact, both Claude arms got wrong and I recorded it (V1).
+5. Request-limited coverage and reached-delivery fractions are reported per arm. Unperformed work is
+   unknown, never a negative finding.
+6. **Nothing here is landed.** This branch is pushed for review only.

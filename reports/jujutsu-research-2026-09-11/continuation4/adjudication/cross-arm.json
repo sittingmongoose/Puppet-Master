@@ -1,0 +1,313 @@
+{
+  "schema": "jj.continuation4.cross_arm.v1",
+  "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm",
+  "two_comparisons_kept_separate": {
+    "review_arms": {
+      "members": [
+        "claude",
+        "deepseek41",
+        "muse13",
+        "glm53",
+        "claude-hicap"
+      ],
+      "inputs": "the premium arm's frozen discovery, study and history artifacts, identical starting state",
+      "bound": "recall is bounded by what those artifacts contain",
+      "union": 50,
+      "union_percent": 45.45
+    },
+    "full_pipeline_arms": {
+      "members": [
+        "premium",
+        "hybrid",
+        "union"
+      ],
+      "inputs": "the frozen case bc7569b3f5 from discovery",
+      "bound": "not bounded by any other arm's artifacts",
+      "note": "premium and hybrid accumulated over two campaigns (goal 2 for the research stages, continuation 3 for reconcile and compare); union ran all five stages in one 106-minute run"
+    },
+    "why": "A review replacement and a full arm answer different questions. Ranking them against each other would read a ceiling as a judgement."
+  },
+  "recall": {
+    "claude": {
+      "count": 18,
+      "percent": 16.36
+    },
+    "deepseek41": {
+      "count": 33,
+      "percent": 30.0
+    },
+    "claude-hicap": {
+      "count": 46,
+      "percent": 41.82
+    },
+    "muse13": {
+      "count": 40,
+      "percent": 36.36
+    },
+    "union": {
+      "count": 43,
+      "percent": 39.09
+    },
+    "glm53": {
+      "count": 37,
+      "percent": 33.64
+    },
+    "premium": {
+      "count": 78,
+      "percent": 70.91
+    },
+    "hybrid": {
+      "count": 90,
+      "percent": 81.82
+    }
+  },
+  "nesting": {
+    "proper_subsets": [
+      "claude (18) subset of glm53 (37)",
+      "claude (18) subset of muse13 (40)",
+      "claude (18) subset of union (43)",
+      "claude (18) subset of claude-hicap (46)",
+      "deepseek41 (33) subset of muse13 (40)",
+      "deepseek41 (33) subset of claude-hicap (46)",
+      "muse13 (40) subset of claude-hicap (46)"
+    ],
+    "not_comparable": {
+      "claude vs deepseek41": {
+        "claude_only": 1,
+        "deepseek41_only": 16
+      },
+      "deepseek41 vs glm53": {
+        "deepseek41_only": 4,
+        "glm53_only": 8
+      },
+      "deepseek41 vs union": {
+        "deepseek41_only": 8,
+        "union_only": 18
+      },
+      "muse13 vs glm53": {
+        "muse13_only": 7,
+        "glm53_only": 4
+      },
+      "muse13 vs union": {
+        "muse13_only": 10,
+        "union_only": 13
+      },
+      "claude-hicap vs glm53": {
+        "claude-hicap_only": 13,
+        "glm53_only": 4
+      },
+      "claude-hicap vs union": {
+        "claude-hicap_only": 14,
+        "union_only": 11
+      },
+      "union vs glm53": {
+        "union_only": 14,
+        "glm53_only": 8
+      }
+    },
+    "result_changed_by_glm53": "After four arms the review set was a clean chain ending at claude-hicap, and the four-arm review union was exactly claude-hicap's own 46 - no arm had contributed anything it missed. glm53 holds F068, F069, F085 and F086, which no other review arm reached, so claude-hicap is NO LONGER the review-arm ceiling and the review arms differ in depth AND, at the margin, in kind.",
+    "claude_is_the_floor": "Arm C's 18 findings are a proper subset of all four other review arms and of the union arm - the only arm in the experiment that is contained by every other arm. That is a ceiling artefact, not a judgement: 11 of its 12 jobs stopped at the 40-response ceiling, and claude-hicap proves it, finishing all 12 on the same inputs and model at 46."
+  },
+  "unions": {
+    "four_arm_review_union_before_glm53": 46,
+    "five_arm_review_union": 50,
+    "five_arm_review_union_percent": 45.45,
+    "six_arm_union": 59,
+    "six_arm_union_percent": 53.64,
+    "union_arm_adds_over_all_review_arms": [
+      "F005",
+      "F015",
+      "F019",
+      "F024",
+      "F025",
+      "F038",
+      "F052",
+      "F057",
+      "F065"
+    ],
+    "glm53_adds_over_the_other_review_arms": [
+      "F068",
+      "F069",
+      "F085",
+      "F086"
+    ],
+    "held_by_review_arms_and_missed_by_the_union_arm": [
+      "F001",
+      "F032",
+      "F033",
+      "F034",
+      "F036",
+      "F037",
+      "F044",
+      "F053",
+      "F074",
+      "F083",
+      "F085",
+      "F086",
+      "F089",
+      "F090",
+      "F106",
+      "F107"
+    ],
+    "findings_no_arm_reached": [
+      "F003",
+      "F009",
+      "F012",
+      "F013",
+      "F014",
+      "F016",
+      "F017",
+      "F018",
+      "F020",
+      "F021",
+      "F022",
+      "F023",
+      "F026",
+      "F027",
+      "F039",
+      "F040",
+      "F041",
+      "F042",
+      "F045",
+      "F046",
+      "F047",
+      "F048",
+      "F049",
+      "F054",
+      "F055",
+      "F058",
+      "F060",
+      "F063",
+      "F064",
+      "F067",
+      "F070",
+      "F071",
+      "F075",
+      "F076",
+      "F077",
+      "F078",
+      "F091",
+      "F093",
+      "F095",
+      "F096",
+      "F097",
+      "F098",
+      "F099",
+      "F100",
+      "F101",
+      "F103",
+      "F104",
+      "F105",
+      "F108",
+      "F109",
+      "F110"
+    ],
+    "count_no_arm_reached": 51
+  },
+  "against_the_full_pipeline_arms": {
+    "no_arm_produced_a_finding_outside_premium_union_hybrid": true,
+    "detail": {
+      "claude": {
+        "in_premium": 18,
+        "in_hybrid": 17,
+        "outside_both": []
+      },
+      "deepseek41": {
+        "in_premium": 33,
+        "in_hybrid": 25,
+        "outside_both": []
+      },
+      "claude-hicap": {
+        "in_premium": 44,
+        "in_hybrid": 35,
+        "outside_both": []
+      },
+      "muse13": {
+        "in_premium": 39,
+        "in_hybrid": 31,
+        "outside_both": []
+      },
+      "union": {
+        "in_premium": 42,
+        "in_hybrid": 38,
+        "outside_both": []
+      },
+      "glm53": {
+        "in_premium": 36,
+        "in_hybrid": 29,
+        "outside_both": []
+      }
+    },
+    "reading": "Six arms, five review replacements and one full arm on the same case, produced ZERO propositions I could credit as a union finding outside premium union hybrid. The 110-finding union was not extended by any of them. What changed is reachability: the six-arm union is 59 of 110, up from the 46 four arms reached."
+  },
+  "factual_verifications": [
+    {
+      "id": "V1",
+      "subject": "jj op-store garbage collection with SystemTime::UNIX_EPOCH",
+      "ground_truth": "jj lib/src/simple_op_store.rs:285-357. remove_file_if_not_new KEEPS a file when mtime > keep_newer and removes it otherwise, so with keep_newer = UNIX_EPOCH every real file's mtime is greater and NOTHING is removed. I read the source directly.",
+      "outcomes": {
+        "claude": "WRONG, asserted as fact: gc(head, UNIX_EPOCH) 'preserves nothing by recency', therefore the dojjo server prunes everything unreachable.",
+        "claude-hicap": "WRONG, and it quoted the correct predicate while drawing the opposite conclusion - the control's counter-result.",
+        "deepseek41": "RIGHT. It read simple_op_store.rs and caught Arm C. This is why Arm C's four adjudication files were amended.",
+        "muse13": "NEUTRAL. Recorded the call without characterising a retention direction it had not verified.",
+        "union": "NOT REACHED. The lead family never entered a study or compare job.",
+        "glm53": "BOTH, in different jobs. J0020 preserved the correct framing it inherited ('op-store GC with UNIX_EPOCH, no aggressive retention cutoff'); J0023 inferred the wrong direction and then quarantined its own inference in the same document - 'inferred from the call shape ... not verified against pinned jj source. Flagged uncertain; verify against jj simple_op_store before reusing the claim' - naming the exact file deepseek41 read."
+      },
+      "conclusion": "Five distinct outcomes on one code fact. An error labelled as an unverified inference with the verification step written down is not the same failure as an error asserted as fact."
+    },
+    {
+      "id": "V2",
+      "subject": "The deepseek-v4-flash selector appearing in every arm's budget file",
+      "ground_truth": "It is continuation 3's frozen hybrid-arm cost-policy block copied into every arm's budget, not a per-arm selector. Each arm's real route is in its own run.json, its gate, its adapter argv and its native usage rows. The runner documented this as corrections.json item C1.",
+      "outcome": "I OVERSTATED IT against deepseek41 and amended that arm's README, scoring and candidates against myself. The same stale-block class recurs for other arms: protocol/arm-budgets/union.json still names opencode-go/union-alpha and oh-my-pi 18.1.13 where run.json names openrouter/stealth/union-alpha and the binary reports omp/18.2.2; protocol/arm-budgets/glm53.json has no glm53 block at all and no glm53 row in lifetime_captured_caps_usd.",
+      "conclusion": "run.json is the selector of record for every arm. The budget file is not."
+    },
+    {
+      "id": "V3",
+      "subject": "Jobs recording 41 native responses against a 40-response ceiling",
+      "ground_truth": "The boundary runs after a response, so at most one further response can already be in flight. The runner documented it as corrections.json item C3.",
+      "outcome": "Observed in muse13 (J0020, one job) and glm53 (five of twelve jobs). Not an accounting defect.",
+      "conclusion": "Read the limit as 'at most 40 admitted, one may already be on the wire'."
+    },
+    {
+      "id": "V4",
+      "subject": "union: how many jobs saved notes.md",
+      "ground_truth": "19 of 20, not 18. J0018-reconcile (6,336 bytes plus 8 lead documents) and J0020-reconcile (8,790 bytes) both timed out and still saved notes.md; only J0019-reconcile produced nothing.",
+      "outcome": "The runner's bundle at commit 2bd36e1881 still reports 18 of 20. Those two documents carry 12 of the union arm's 43 credits, so taking the reported figure would have dropped real credit.",
+      "conclusion": "Corrected in union-scoring.json; the runner's own count is the one to amend."
+    },
+    {
+      "id": "V5",
+      "subject": "union: the 12-to-39 response range and the $3 unresolved",
+      "ground_truth": "The three timeout jobs have no raw-omp/usage.json at all, so their native receipt count is zero while the durable meter recorded 27, 12 and 13. 484 native receipts across the 17 completed jobs (22-39 each) plus 52 durable-metered requests never receipted = 536 attempted.",
+      "outcome": "The runner's bundle now states 536 in total, which matches. The per-job range is 22-39 for jobs that receipted at all.",
+      "conclusion": "The $1 each retained by the three killed jobs is exactly the missing_retained_usage_records and durable_meter_request_count_mismatch pair."
+    },
+    {
+      "id": "V6",
+      "subject": "glm53: the frozen manifest raced the monitor's final write",
+      "ground_truth": "The runner's internal digest e2d003ea... verifies exactly against the manifest's 5,758 rows. An independent tree re-hash gives 7b1385c3... and the entire difference is one file: monitor-state.json, 592 bytes in the manifest and 769 bytes now. The manifest froze at 01:02:04Z; the monitor wrote its final heartbeat at 01:02:08Z.",
+      "outcome": "Benign. Every assertion document, every job record, run.json, timing.json, progress.json, priced-usage-final.json and campaign-terminal.json are byte-identical to the manifest, so the designed-stop evidence rests on frozen bytes. muse13, union and claude-hicap show no such difference.",
+      "conclusion": "Worth fixing in the freeze procedure: quiesce the monitor before hashing. No effect on scoring."
+    },
+    {
+      "id": "V7",
+      "subject": "Arm C's ceiling caveat, tested by its own control",
+      "ground_truth": "Arm C stopped 11 of 12 jobs at the 40-response ceiling. claude-hicap ran the same inputs, model, effort, admissions, workers and batching at 160 responses per job and finished all 12, using 37-110 responses per job; 11 of those 12 used more than 40.",
+      "outcome": "18 to 46 of 110. The ceiling, not judgement, produced Arm C's figure - and Arm C's set is a proper subset of claude-hicap's.",
+      "conclusion": "Arm C's 16.36% must never be quoted as a model result. Its cost and duration are not comparable with claude-hicap's either."
+    }
+  ],
+  "manifest_verification": {
+    "method": "For every arm I recomputed the manifest's internal digest from its own sorted file rows AND re-hashed the whole output tree independently with the run's own hash_manifest.py algorithm.",
+    "subtlety": "The figure the runner quotes is the manifest's INTERNAL manifest_sha256, a digest over the sorted file rows - not the manifest file's own bytes. Both are recorded per arm in the scoring files.",
+    "results": {
+      "claude": "match",
+      "deepseek41": "match",
+      "claude-hicap": "match",
+      "muse13": "match",
+      "union": "match",
+      "glm53": "rows match exactly; tree re-hash differs by one non-output file (see V6)"
+    }
+  }
+}

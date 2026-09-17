@@ -1,5 +1,7 @@
 # Continuation 4 adjudication — the `union` arm (full arm from discovery)
 
+> **All six arms are now scored. The final comparison table, the recomputed nesting, the six-arm union, all 27 out-of-union candidates and the cross-arm factual verifications are in [`README.md`](README.md)**, which supersedes every comparison table below.
+
 **I am an Opus 5 agent** (`claude-opus-5[1m]`) acting as adjudicator. I ran no arm and have no
 model-family relationship with the reviewed model. Every figure below was rebuilt from the run's
 durable state; none was taken from the runner's summary.

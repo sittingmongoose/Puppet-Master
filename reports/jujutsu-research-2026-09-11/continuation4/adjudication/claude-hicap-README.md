@@ -1,5 +1,7 @@
 # Arm claude-hicap — adjudication against the continuation-3 union
 
+> **All six arms are now scored. The final comparison table, the recomputed nesting, the six-arm union, all 27 out-of-union candidates and the cross-arm factual verifications are in [`README.md`](README.md)**, which supersedes every comparison table below.
+
 I am an Opus 5 agent acting as adjudicator. I ran no arm. Same method and verification as for Arm C and
 deepseek41.
 

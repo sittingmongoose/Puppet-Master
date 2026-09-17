@@ -1,6 +1,6 @@
 {
   "schema": "jj.continuation4.adjudication.evidence_manifest.v1",
-  "label": "Arm C (Claude Opus 5) adjudication bundle \u2014 evidence pointers and hashes",
+  "label": "Continuation 4 adjudication bundle - six arms, evidence pointers and hashes",
   "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm",
   "created_at_utc": "2026-09-16T20:22:00Z",
   "note": "Raw captures stay outside this repository per AGENTS.md. Evidence is cited by path plus SHA-256.",
@@ -164,15 +164,14 @@
     ],
     "excluded_as_locator_inventory": "workspace/research-evidence/sources/** \u2014 continuation 3 treats source locator inventories as separate from assertion documents"
   },
-  "arms_not_yet_scored": [
-    "glm53 (interrupted 21:57Z and quarantined; running now as the last arm, requeued fresh)"
-  ],
+  "arms_not_yet_scored": [],
   "arms_scored": [
     "claude",
     "deepseek41",
     "claude-hicap",
     "muse13",
-    "union"
+    "union",
+    "glm53"
   ],
   "deepseek41_run": {
     "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-deepseek41-20260916-202016",
@@ -679,11 +678,14 @@
     ]
   },
   "cross_arm_structure": {
-    "nesting": "claude (18) and deepseek41 (33) are both proper subsets of muse13 (40), which is a proper subset of claude-hicap (46). claude and deepseek41 are not comparable with each other (claude alone held F051 against deepseek41).",
-    "four_arm_union": 46,
-    "equals": "claude-hicap's own credited set",
-    "meaning": "No new arm contributed a finding claude-hicap missed. On this union the four review arms differ in depth rather than in kind.",
-    "unix_epoch_outcomes": "Three distinct outcomes across four arms on one code fact: both Claude arms concluded gc(head, UNIX_EPOCH) prunes everything unreachable (wrong); deepseek41 read lib/src/simple_op_store.rs and got it right; muse13 recorded the call without characterising the retention direction it had not verified."
+    "SUPERSEDES": "the four-arm statement recorded after muse13, which said the four-arm union equalled claude-hicap's own set",
+    "proper_subsets": "claude (18) is a proper subset of glm53 (37), muse13 (40), union (43) and claude-hicap (46); deepseek41 (33) of muse13 and claude-hicap; muse13 of claude-hicap.",
+    "claude_hicap_is_no_longer_the_ceiling": "glm53 holds F068, F069, F085 and F086, which no other review arm reached, so it is not a subset of claude-hicap.",
+    "five_arm_review_union": 50,
+    "six_arm_union": 59,
+    "six_arm_union_percent": 53.64,
+    "no_arm_extended_the_union": "Six arms produced zero credited findings outside premium union hybrid, the union arm included.",
+    "findings_no_arm_reached": 51
   },
   "union_run": {
     "arm_kind": "FULL ARM FROM DISCOVERY - not a review replacement. Its recall is NOT bounded by the premium arm's artifacts, so it is comparable with premium and hybrid on the full pipeline and not with the four review arms.",
@@ -1227,5 +1229,136 @@
     "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/adjudication/union-manifest.json",
     "manifest_sha256_internal": "51768ce02e26497339cc988430c40b7344590196d65847a52fafe3247c01d4e0",
     "progress_log": "adjudication/union/PROGRESS.md (kept out of this bundle; it is a working log, not a result)"
+  },
+  "status": "COMPLETE. All six continuation-4 arms are scored.",
+  "runner_bundle_cross_reference": {
+    "branch": "research/continuation4-20260917",
+    "commit": "2bd36e1881",
+    "path": "reports/jujutsu-research-2026-09-11/continuation4/",
+    "contains": "arm table, stage timing, job status with bound_by, cost, delivery counts, freeze history, protocol fingerprints, output manifests, runtime identity and the runner's corrections",
+    "policy": "Referenced by path, never duplicated here. This bundle carries only the adjudication layer.",
+    "figures_I_verified_and_found_wrong": [
+      "union notes.md count: the runner reports 18 of 20; durable state shows 19 (see cross-arm.json V4)"
+    ]
+  },
+  "glm53_run": {
+    "arm_kind": "same-input review replacement over the premium arm's frozen artifacts, identical starting state to Arm C",
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-glm53-20260917-000655",
+    "terminal_stop_checked_first": "campaign-terminal.json, monitor-state.json and protocol/arm-budgets/glm53.json all record 'Stop: admitted_attempt_cap'; the budget file adds stop_kind 'limit_or_gate'. Designed, not the FileNotFoundError that quarantined the 21:57Z attempt.",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/glm53-manifest.json",
+    "manifest_sha256_internal": "e2d003ea0eb895d403cd42a28c2416f13ade5d81ee8d1a358ca2031d6a5b1931",
+    "manifest_file_bytes_sha256": "1901695d71d0a2f9ada51bcaaff23020d982303ec658734b4a779be3077f225d",
+    "report": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/glm53-report.json",
+    "files": 5758,
+    "total_bytes": 345923877,
+    "independently_reverified": "rows match exactly; the tree re-hash differs by ONE non-output file",
+    "one_file_differs": {
+      "path": "monitor-state.json",
+      "manifest_bytes": 592,
+      "current_bytes": 769,
+      "manifest_sha256": "92e5464e768849350ffce241045fdad2aec72199687985269bb3edbb3d1c8fc0",
+      "current_sha256": "32359f996b96254234ec1b0ae11703a8cee1cf57060b29bc31cb44b3b0cb5b34",
+      "cause": "the manifest froze at 2026-09-17T01:02:04Z and the scheduler's monitor wrote its final heartbeat at 01:02:08Z",
+      "verified_unaffected": "every assertion document, every job record, run.json, timing.json, progress.json, priced-usage-final.json, campaign-terminal.json",
+      "effect_on_scoring": "none"
+    },
+    "run_json_sha256": "7110f857c81f5f951e61905950a7047815cf2e4bf99675436015e5826cb2f016",
+    "timing_json_sha256": "64158c99e15e816aec624165618ceebe5c88eda3043dcdc0909c50f42f2686ae",
+    "progress_json_sha256": "e770cbe6b234a362a632f75f3ed9ea867d4cc44d67bf55e1211d76e9f0a3822b",
+    "priced_usage_final_sha256": "1fa9f4d2cdb53eafe562f529d051583645ab2cd087d20ffd79c8f1f3c8261ed0",
+    "campaign_terminal_sha256": "6ed6a8319b5244ec81623cbc88340b5ace793ad1815a9e57cb6c80ec872cb6f4",
+    "selector_of_record": "run.json premium = {adapter: omp, model: zai/glm-5.3-flash, effort: max}. protocol/arm-budgets/glm53.json has no continuation4_arms.glm53 block and no glm53 row in lifetime_captured_caps_usd - the frozen cost-policy block does not describe this arm at all."
+  },
+  "glm53_assertion_corpus": {
+    "root": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-glm53-20260917-000655/jobs",
+    "documents": 12,
+    "total_bytes": 151276,
+    "composition": "8 notes.md and 4 authored lead documents",
+    "files": [
+      {
+        "path": "J0017-reconcile/workspace/notes.md",
+        "sha256": "9b5b33e2a48eb6c54a334ad1d362f9344770cfb332b9a4bca78abc47f064284a"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/native-interactive-symlink-type-loss.md",
+        "sha256": "d107f37a4eb8fff005f57f4ecc7ede532375a51257f968370a6d1fdfff27f17a"
+      },
+      {
+        "path": "J0020-reconcile/workspace/notes.md",
+        "sha256": "322feff26998d94a832a0a22bb51a7a0d8e8adf3950ab98689fe6f667e9f8c87"
+      },
+      {
+        "path": "J0021-reconcile/workspace/notes.md",
+        "sha256": "5228b0856f16069dd410480348f019c1c24e676c7259a34c6a98edd2a7d3b73c"
+      },
+      {
+        "path": "J0021-reconcile/workspace/leads/diffedit3-file-fidelity.md",
+        "sha256": "312e4a1ebcb333545dd826519d43068bd94cdaecfebe98aa8b0c5205c582087c"
+      },
+      {
+        "path": "J0021-reconcile/workspace/leads/diffedit3-symlink-write.md",
+        "sha256": "1502404aa2e5bd3e1004146234d74f61517bd87608881dd013f94b78fe16568b"
+      },
+      {
+        "path": "J0021-reconcile/workspace/leads/jj-resolve-partial-resolution.md",
+        "sha256": "46cc35860bc9ac6bf33b97dd686b5a40adfc706e3ece138ef8c94dfc4b42f953"
+      },
+      {
+        "path": "J0022-compare/workspace/notes.md",
+        "sha256": "ba2348746d5f48a6d2bb410825bb1884521ec616b04573af6696f20ed3121233"
+      },
+      {
+        "path": "J0023-reconcile/workspace/notes.md",
+        "sha256": "46ad1d2cff9e15adb58baf4ca6f491464cb04fee46facef3028c705cfbd37da3"
+      },
+      {
+        "path": "J0024-compare/workspace/notes.md",
+        "sha256": "eb9f7c56029b9672c4dfde790cae156a2609f20dd42e912f03b6784bc97333d2"
+      },
+      {
+        "path": "J0026-reconcile/workspace/notes.md",
+        "sha256": "4781641ee55b5847ba8cdde98c92c07bdd4da8b4ab5376f150c2c8b3a539b727"
+      },
+      {
+        "path": "J0028-compare/workspace/notes.md",
+        "sha256": "a3c552d2cdf0576552c7fd0bfdd16e59970d417ac94ae43b3fd2360ebe1bf96c"
+      }
+    ]
+  },
+  "adjudication_source_glm53": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/adjudication/glm53",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/adjudication/glm53-manifest.json",
+    "manifest_sha256_internal": "f93b8538a0c0fc03325c12b9a1226be284d04e2f7f149bee97388b33437b1f92",
+    "progress_log": "adjudication/glm53/PROGRESS.md (kept out of this bundle; a working log, not a result)"
+  },
+  "consolidated_candidates": {
+    "file": "consolidated-candidates.json",
+    "total": 27,
+    "by_classification": {
+      "correction": 20,
+      "capability": 5,
+      "product_choice": 2
+    },
+    "flagged_inside_a_continuation3_rejection": [
+      "C4C-04",
+      "C4D-04",
+      "C4M-03",
+      "C4U-05",
+      "C4G-02"
+    ],
+    "strongest": "C4C-01 and C4G-01 are the same defect reached independently by Arm C and glm53 from opposite directions: JJI-008's 'object verification' has no defined depth, and a connectivity-only verifier would pass a closure with a corrupt blob."
+  },
+  "cross_arm_verifications": {
+    "file": "cross-arm.json",
+    "count": 7,
+    "subjects": [
+      "jj op-store GC with UNIX_EPOCH (five distinct outcomes across six arms)",
+      "the stale deepseek-v4-flash selector in every arm's budget, and my own overstatement of it",
+      "41 responses against a 40 ceiling",
+      "union's notes.md count (19, not the reported 18)",
+      "union's 536 attempted requests and the $3 unresolved",
+      "glm53's manifest racing the monitor's final write",
+      "Arm C's ceiling caveat tested by claude-hicap"
+    ]
   }
 }

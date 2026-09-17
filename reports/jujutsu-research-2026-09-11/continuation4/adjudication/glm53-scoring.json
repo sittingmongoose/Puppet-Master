@@ -1,0 +1,690 @@
+{
+  "schema": "jj.continuation4.arm_scoring.v1",
+  "arm": "glm53",
+  "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm; no model-family relationship with the reviewed model",
+  "run": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-glm53-20260917-000655",
+    "terminal_stop_checked_first": "CONFIRMED DESIGNED BEFORE SCORING, three ways: campaign-terminal.json, monitor-state.json and protocol/arm-budgets/glm53.json all record 'Stop: admitted_attempt_cap', the budget file adding stop_kind 'limit_or_gate'. Not an exception, and not the FileNotFoundError that quarantined the 21:57Z glm53 attempt.",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/glm53-manifest.json",
+    "manifest_sha256_internal": "e2d003ea0eb895d403cd42a28c2416f13ade5d81ee8d1a358ca2031d6a5b1931",
+    "manifest_file_bytes_sha256": "1901695d71d0a2f9ada51bcaaff23020d982303ec658734b4a779be3077f225d",
+    "files": 5758,
+    "total_bytes": 345923877,
+    "verification": "The runner's quoted internal digest verifies exactly against the manifest's 5,758 sorted rows. An independent tree re-hash gives 7b1385c3a463bc4480d309a19f82a973425b319be8f225a2fbb6e4efc05a777b instead, and the entire difference is ONE file.",
+    "one_file_differs": {
+      "path": "monitor-state.json",
+      "manifest_bytes": 592,
+      "current_bytes": 769,
+      "manifest_sha256": "92e5464e768849350ffce241045fdad2aec72199687985269bb3edbb3d1c8fc0",
+      "current_sha256": "32359f996b96254234ec1b0ae11703a8cee1cf57060b29bc31cb44b3b0cb5b34",
+      "explanation": "The manifest froze at 2026-09-17T01:02:04Z; the scheduler's monitor wrote its final heartbeat at 01:02:08Z, four seconds later, adding the stop_reason and terminal block. It is the monitor's own state file, not an arm output.",
+      "verified_unaffected": [
+        "every one of the 12 assertion documents",
+        "every job record under jobs/**",
+        "run.json",
+        "timing.json",
+        "progress.json",
+        "priced-usage-final.json",
+        "campaign-terminal.json"
+      ],
+      "comparison": "muse13, union and claude-hicap all froze after their monitor's last write and show no such difference. Recommendation: quiesce the monitor before hashing.",
+      "effect_on_scoring": "none"
+    }
+  },
+  "review_model": {
+    "model": "zai/glm-5.3-flash",
+    "effort": "max",
+    "transport": "oh-my-pi 18.2.2",
+    "per_job_ceiling_responses": 40,
+    "per_job_budget_usd": null,
+    "per_job_timeout_seconds": 2400,
+    "workers": 3,
+    "admissions": 12,
+    "arm_cap_usd": 50,
+    "arm_seconds": 14400,
+    "selector_of_record": "run.json premium = {adapter: omp, model: zai/glm-5.3-flash, effort: max}. As for every review arm, run.json researcher still names the ORIGINAL premium research model (codex/gpt-6-astra xhigh) that produced the frozen artifacts; the continuation replaces the reviewer, not the researcher. protocol/arm-budgets/glm53.json has no continuation4_arms.glm53 block and no glm53 entry in lifetime_captured_caps_usd - the frozen cost-policy block does not describe this arm at all, the same stale-block class the runner documented for deepseek41."
+  },
+  "inputs": {
+    "description": "the premium arm's frozen discovery, study and history artifacts, same starting state as Arm C",
+    "input_leads": 88,
+    "child_leads_authored_by_this_arm": 4,
+    "registry_at_terminal": 92,
+    "bound": "Same-input replacement of the review model; recall is bounded by what the premium arm's research artifacts contain. NOT comparable with the union arm, which ran the full pipeline from discovery.",
+    "inputs_note": "run.json continuation.inputs_note: 'Read-only byte copies of the source arm's leads and job artifacts, exactly the state the premium continuation started from. Review models differ; inputs do not.'"
+  },
+  "budget_truncated_caveat": {
+    "runner_caveat": "the oh-my-pi adapter labels any meter denial budget_truncated, including a plain response ceiling",
+    "independently_verified": true,
+    "evidence": [
+      "protocol/arm-budgets/glm53.json has no per-job money ceiling (policy.glm53_usd: 50 is the arm cap) and no glm53 row in lifetime_captured_caps_usd",
+      "captured $0.819490 against a $50 arm cap; the largest single job is $0.093601",
+      "timing.json money_stop_reason: null; priced-usage-final.json stop_reason: null; unresolved_charge_usd 0.0",
+      "all seven budget_truncated jobs sit at 40 or 41 native receipts against a 40 ceiling; the five completed jobs sit at 24-31",
+      "all 12 jobs record native-job-end-accounting complete: true with zero gaps"
+    ],
+    "conclusion": "All seven budget_truncated outcomes are response-ceiling truncations. No job was money-truncated and no job was time-truncated; the 2,400 s wall was never reached (longest job 1,106 s).",
+    "off_by_one": "Five jobs recorded 41 receipts against a 40 ceiling - the post-response boundary the runner documented in corrections.json item C3, the same off-by-one muse13's J0020 showed."
+  },
+  "runner_figures_checked": {
+    "all_confirmed": true,
+    "checked": [
+      "12 jobs, 7 reconcile and 5 compare - confirmed",
+      "7 bound by the response ceiling, 5 finished - confirmed (truncated J0017 J0018 J0019 J0020 J0021 J0025 J0027; finished J0022 J0023 J0024 J0026 J0028)",
+      "24 to 41 requests per job - confirmed from native-job-end-accounting receipts",
+      "reconcile wall 3,183 s, compare wall 2,425 s, arm wall 3,250 s, summed 9,340 s, concurrency 2.87 - confirmed from timing.json",
+      "captured $0.82, all 12 reconciled, $0 unresolved - confirmed from priced-usage-final.json",
+      "8 of 12 wrote notes.md - confirmed (J0017 J0020 J0021 J0022 J0023 J0024 J0026 J0028)",
+      "16 lead deliveries - confirmed by summing delivery.json lead_ids across the 8 delivering jobs"
+    ],
+    "note": "This is the first continuation-4 arm for which every runner figure I checked was already correct. Arm C, deepseek41, muse13 and union each needed at least one correction."
+  },
+  "retry_structure": {
+    "logical_jobs": 9,
+    "admissions_spent": 12,
+    "second_attempts": 3,
+    "pairs": [
+      {
+        "first": "J0018-reconcile",
+        "retry": "J0021-reconcile",
+        "first_delivered": false,
+        "retry_delivered": true
+      },
+      {
+        "first": "J0019-reconcile",
+        "retry": "J0020-reconcile",
+        "first_delivered": false,
+        "retry_delivered": true
+      },
+      {
+        "first": "J0025-compare",
+        "retry": "J0028-compare",
+        "first_delivered": false,
+        "retry_delivered": true
+      }
+    ],
+    "result": "Every retry delivered where its first attempt had not. No lead was lost to truncation. The cost is that 12 admissions bought 9 distinct logical jobs.",
+    "credits_carried_by_retries": 12
+  },
+  "job_table": [
+    {
+      "job": "J0017-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "budget_truncated",
+      "bound_by": "response_ceiling_40",
+      "elapsed_seconds": 819.819,
+      "native_receipts": 41,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "attempt": 1,
+      "retry_of": null,
+      "assigned_lead_ids": [
+        "L-80244e477912"
+      ],
+      "receipted_lead_deliveries": [
+        "L-80244e477912"
+      ],
+      "notes_present": true,
+      "notes_bytes": 13668,
+      "notes_sha256": "9b5b33e2a48eb6c54a334ad1d362f9344770cfb332b9a4bca78abc47f064284a",
+      "authored_lead_documents": [
+        "native-interactive-symlink-type-loss.md"
+      ],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": [
+        "F030",
+        "F031",
+        "F033",
+        "F034",
+        "F037",
+        "F053",
+        "F102"
+      ]
+    },
+    {
+      "job": "J0018-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "budget_truncated",
+      "bound_by": "response_ceiling_40",
+      "elapsed_seconds": 672.6,
+      "native_receipts": 41,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "attempt": 1,
+      "retry_of": null,
+      "assigned_lead_ids": [
+        "L-7dc9a6726cf9"
+      ],
+      "receipted_lead_deliveries": [],
+      "notes_present": false,
+      "notes_bytes": 0,
+      "notes_sha256": null,
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": false,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0019-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "budget_truncated",
+      "bound_by": "response_ceiling_40",
+      "elapsed_seconds": 642.362,
+      "native_receipts": 41,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "attempt": 1,
+      "retry_of": null,
+      "assigned_lead_ids": [
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66",
+        "L-39a5001283f3"
+      ],
+      "receipted_lead_deliveries": [],
+      "notes_present": false,
+      "notes_bytes": 0,
+      "notes_sha256": null,
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": false,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0020-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "budget_truncated",
+      "bound_by": "response_ceiling_40",
+      "elapsed_seconds": 1106.073,
+      "native_receipts": 41,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "attempt": 2,
+      "retry_of": "J0019-reconcile",
+      "assigned_lead_ids": [
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66",
+        "L-39a5001283f3"
+      ],
+      "receipted_lead_deliveries": [
+        "L-39a5001283f3",
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66"
+      ],
+      "notes_present": true,
+      "notes_bytes": 20028,
+      "notes_sha256": "322feff26998d94a832a0a22bb51a7a0d8e8adf3950ab98689fe6f667e9f8c87",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": [
+        "F073",
+        "F082",
+        "F085",
+        "F086"
+      ]
+    },
+    {
+      "job": "J0021-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "budget_truncated",
+      "bound_by": "response_ceiling_40",
+      "elapsed_seconds": 907.68,
+      "native_receipts": 41,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "attempt": 2,
+      "retry_of": "J0018-reconcile",
+      "assigned_lead_ids": [
+        "L-7dc9a6726cf9"
+      ],
+      "receipted_lead_deliveries": [
+        "L-7dc9a6726cf9"
+      ],
+      "notes_present": true,
+      "notes_bytes": 12454,
+      "notes_sha256": "5228b0856f16069dd410480348f019c1c24e676c7259a34c6a98edd2a7d3b73c",
+      "authored_lead_documents": [
+        "diffedit3-file-fidelity.md",
+        "diffedit3-symlink-write.md",
+        "jj-resolve-partial-resolution.md"
+      ],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": [
+        "F007",
+        "F008"
+      ]
+    },
+    {
+      "job": "J0022-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 697.751,
+      "native_receipts": 29,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "attempt": 1,
+      "retry_of": null,
+      "assigned_lead_ids": [
+        "L-80244e477912"
+      ],
+      "receipted_lead_deliveries": [
+        "L-80244e477912"
+      ],
+      "notes_present": true,
+      "notes_bytes": 17105,
+      "notes_sha256": "ba2348746d5f48a6d2bb410825bb1884521ec616b04573af6696f20ed3121233",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": [
+        "F029",
+        "F036",
+        "F056"
+      ]
+    },
+    {
+      "job": "J0023-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 747.324,
+      "native_receipts": 27,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "attempt": 1,
+      "retry_of": null,
+      "assigned_lead_ids": [
+        "L-c0c7178a160f",
+        "L-444f31e68545",
+        "L-0793ad1e2a78"
+      ],
+      "receipted_lead_deliveries": [
+        "L-0793ad1e2a78",
+        "L-444f31e68545",
+        "L-c0c7178a160f"
+      ],
+      "notes_present": true,
+      "notes_bytes": 18804,
+      "notes_sha256": "46ad1d2cff9e15adb58baf4ca6f491464cb04fee46facef3028c705cfbd37da3",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": [
+        "F010",
+        "F059",
+        "F062",
+        "F066",
+        "F088"
+      ]
+    },
+    {
+      "job": "J0024-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 667.619,
+      "native_receipts": 31,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "attempt": 1,
+      "retry_of": null,
+      "assigned_lead_ids": [
+        "L-7dc9a6726cf9"
+      ],
+      "receipted_lead_deliveries": [
+        "L-7dc9a6726cf9"
+      ],
+      "notes_present": true,
+      "notes_bytes": 18610,
+      "notes_sha256": "eb9f7c56029b9672c4dfde790cae156a2609f20dd42e912f03b6784bc97333d2",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": [
+        "F035",
+        "F043",
+        "F072",
+        "F074"
+      ]
+    },
+    {
+      "job": "J0025-compare",
+      "phase": "compare",
+      "runtime_status": "budget_truncated",
+      "bound_by": "response_ceiling_40",
+      "elapsed_seconds": 727.11,
+      "native_receipts": 40,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "attempt": 1,
+      "retry_of": null,
+      "assigned_lead_ids": [
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66",
+        "L-39a5001283f3"
+      ],
+      "receipted_lead_deliveries": [],
+      "notes_present": false,
+      "notes_bytes": 0,
+      "notes_sha256": null,
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": false,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0026-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 928.684,
+      "native_receipts": 30,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "attempt": 1,
+      "retry_of": null,
+      "assigned_lead_ids": [
+        "L-ad68a4ac94ad",
+        "L-2e0dc4dec29d",
+        "L-289201b4f4ec"
+      ],
+      "receipted_lead_deliveries": [
+        "L-289201b4f4ec",
+        "L-2e0dc4dec29d",
+        "L-ad68a4ac94ad"
+      ],
+      "notes_present": true,
+      "notes_bytes": 15648,
+      "notes_sha256": "4781641ee55b5847ba8cdde98c92c07bdd4da8b4ab5376f150c2c8b3a539b727",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": [
+        "F004",
+        "F006",
+        "F061",
+        "F068",
+        "F069",
+        "F092"
+      ]
+    },
+    {
+      "job": "J0027-compare",
+      "phase": "compare",
+      "runtime_status": "budget_truncated",
+      "bound_by": "response_ceiling_40",
+      "elapsed_seconds": 660.615,
+      "native_receipts": 40,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "attempt": 1,
+      "retry_of": null,
+      "assigned_lead_ids": [
+        "L-c0c7178a160f",
+        "L-444f31e68545",
+        "L-0793ad1e2a78"
+      ],
+      "receipted_lead_deliveries": [],
+      "notes_present": false,
+      "notes_bytes": 0,
+      "notes_sha256": null,
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": false,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0028-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 762.5,
+      "native_receipts": 24,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "attempt": 2,
+      "retry_of": "J0025-compare",
+      "assigned_lead_ids": [
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66",
+        "L-39a5001283f3"
+      ],
+      "receipted_lead_deliveries": [
+        "L-39a5001283f3",
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66"
+      ],
+      "notes_present": true,
+      "notes_bytes": 22170,
+      "notes_sha256": "a3c552d2cdf0576552c7fd0bfdd16e59970d417ac94ae43b3fd2360ebe1bf96c",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": [
+        "F050",
+        "F051",
+        "F079",
+        "F080",
+        "F081",
+        "F084"
+      ]
+    }
+  ],
+  "stage_timing": {
+    "discovery": {
+      "wall_seconds": 0,
+      "summed_job_seconds": 0,
+      "average_concurrency": null
+    },
+    "implementation": {
+      "wall_seconds": 0,
+      "summed_job_seconds": 0,
+      "average_concurrency": null
+    },
+    "history": {
+      "wall_seconds": 0,
+      "summed_job_seconds": 0,
+      "average_concurrency": null
+    },
+    "reconcile": {
+      "wall_seconds": 3183.0032782554626,
+      "summed_job_seconds": 5824.5419999999995,
+      "average_concurrency": 1.8298887845294047
+    },
+    "compare": {
+      "wall_seconds": 2425.2658665180206,
+      "summed_job_seconds": 3515.5950000000003,
+      "average_concurrency": 1.4495709722115442
+    }
+  },
+  "arm_timing": {
+    "arm_cumulative_wall_seconds": 3250.1855549812317,
+    "summed_terminal_job_seconds": 9340.137,
+    "average_concurrency": 2.873724235739499
+  },
+  "cost": {
+    "captured_upper_usd": 0.8194901699999998,
+    "basis": "priced from 404 native receipts at the preserved 2026-09-08 tariff basis",
+    "unresolved_charge_usd": 0.0,
+    "job_end_reconciled_jobs": 12,
+    "job_end_unresolved_jobs": 0,
+    "cap_usd": 50,
+    "usd_per_credited_finding": 0.0221,
+    "comparability": "Per-job limits match Arm C, deepseek41 and muse13 (40 responses, 2,400 s), so cost and duration are comparable with those three. NOT comparable with claude-hicap (authorized higher ceiling) or with the union arm (zero tariff, full pipeline)."
+  },
+  "leads": {
+    "input_leads": 88,
+    "distinct_leads_admitted_to_a_reconcile_job": 11,
+    "with_a_saved_reconcile_assertion": 11,
+    "distinct_leads_admitted_to_a_compare_job": 8,
+    "with_a_saved_comparison": 5,
+    "child_leads_authored": 4,
+    "not_delivered_at_compare": [
+      "L-c0c7178a160f",
+      "L-444f31e68545",
+      "L-0793ad1e2a78"
+    ],
+    "note": "The three leads that reached compare without a delivery are J0027-compare's, which truncated at 40 responses with 81 source-locator receipts and no notes.md. Their reconcile work (J0023) is scored and carries 5 credits."
+  },
+  "recall": {
+    "expanded_union_denominator": 110,
+    "credited": [
+      "F004",
+      "F006",
+      "F007",
+      "F008",
+      "F010",
+      "F029",
+      "F030",
+      "F031",
+      "F033",
+      "F034",
+      "F035",
+      "F036",
+      "F037",
+      "F043",
+      "F050",
+      "F051",
+      "F053",
+      "F056",
+      "F059",
+      "F061",
+      "F062",
+      "F066",
+      "F068",
+      "F069",
+      "F072",
+      "F073",
+      "F074",
+      "F079",
+      "F080",
+      "F081",
+      "F082",
+      "F084",
+      "F085",
+      "F086",
+      "F088",
+      "F092",
+      "F102"
+    ],
+    "count": 37,
+    "recall_percent": 33.64,
+    "by_class": {
+      "correction": "0/5",
+      "optional_capability": "2/36",
+      "product_choice": "0/6",
+      "unsupported_or_rejected": "35/63"
+    },
+    "fixed_original_105_count": 37,
+    "fixed_original_105_recall_percent": 35.24,
+    "corrections_credited": [],
+    "corrections_missed": [
+      "F001",
+      "F106",
+      "F107",
+      "F108",
+      "F109"
+    ],
+    "partials": [
+      "F001",
+      "F005",
+      "F009",
+      "F032",
+      "F038",
+      "F052",
+      "F087",
+      "F089",
+      "F094",
+      "F107"
+    ],
+    "by_stage": {
+      "reconcile": 24,
+      "compare": 13,
+      "reading": "Unusually reconcile-weighted: 24 of 37 credits are first earned in a reconcile job. That is the opposite shape from the union arm (10 reconcile, 21 compare) and reflects that three of this arm's five compare jobs took Dojjo and diffedit3 leads whose reconcile work had already stated the propositions."
+    }
+  },
+  "request_limited_coverage": {
+    "jobs_bound_by_the_response_ceiling": 7,
+    "jobs_that_finished": 5,
+    "money_truncated_jobs": 0,
+    "time_truncated_jobs": 0,
+    "jobs_with_any_assertion_document": 8,
+    "jobs_with_none": [
+      "J0018-reconcile",
+      "J0019-reconcile",
+      "J0025-compare",
+      "J0027-compare"
+    ],
+    "zero_assertion_output": "J0019 and J0025 and J0027 spent their budget on source-locator acquisition (7, 34 and 81 receipts under research-evidence/sources/) and wrote no assertion; J0018 wrote nothing at all.",
+    "recovered_by_retry": "J0018, J0019 and J0025 were all retried and all three retries delivered. J0027 was NOT retried - the admission cap was reached - so its three leads (L-c0c7178a160f, L-444f31e68545, L-0793ad1e2a78) are the only ones that reached compare without a comparison. Their reconcile assertions are scored.",
+    "named_structural_loss": "F107. J0026 confirmed the paged-graph defects that are F107's external form, and no compare job ever took a graph lead, so the contract defect was never stated."
+  },
+  "reached_delivery_fraction": {
+    "input_leads": 88,
+    "distinct_leads_admitted_to_a_reconcile_job": 11,
+    "with_a_saved_reconcile_assertion": 11,
+    "reconcile_rate": "11/11 = 100%",
+    "distinct_leads_admitted_to_a_compare_job": 8,
+    "with_a_saved_comparison": 5,
+    "compare_rate": "5/8 = 62.5%",
+    "of_the_88_input_leads": {
+      "reached_a_saved_reconcile_assertion": "11/88 = 12.5%",
+      "reached_a_saved_comparison": "5/88 = 5.7%"
+    },
+    "jobs": "8/12 jobs produced a saved assertion (66.7%); 8/12 produced a receipted delivery",
+    "reading": "Every lead that reached reconciliation was reconciled. The compare shortfall is one truncated job that the admission cap left un-retried, not a judgement failure."
+  },
+  "assertion_corpus": {
+    "documents": 12,
+    "total_bytes": 151276,
+    "composition": "8 notes.md (J0017, J0020, J0021, J0022, J0023, J0024, J0026, J0028) and 4 authored lead documents (1 from J0017, 3 from J0021)",
+    "included": "workspace/notes.md and workspace/leads/*.md only",
+    "excluded_as_inputs": [
+      "handoff.md",
+      "navigation.md",
+      "brief.md",
+      "assignment.md",
+      "sources.md",
+      "tool-help.md",
+      "research.py"
+    ],
+    "excluded_as_locator_inventories": [
+      "workspace/research-evidence/sources/**"
+    ]
+  },
+  "coverage_vs_other_arms": {
+    "premium": {
+      "total": 78,
+      "shared": 36,
+      "this_arm_only": [
+        "F073"
+      ],
+      "premium_only": 42
+    },
+    "hybrid": {
+      "total": 90,
+      "shared": 29,
+      "this_arm_only": [
+        "F008",
+        "F031",
+        "F033",
+        "F034",
+        "F036",
+        "F053",
+        "F084",
+        "F085"
+      ],
+      "hybrid_only": 61
+    },
+    "unique_to_this_arm_against_premium_and_hybrid": [],
+    "adds_over_the_other_four_review_arms": [
+      "F068",
+      "F069",
+      "F085",
+      "F086"
+    ],
+    "five_arm_review_union": 50,
+    "five_arm_review_union_percent": 45.45,
+    "six_arm_union": 59,
+    "six_arm_union_percent": 53.64,
+    "structural_result": "claude-hicap is no longer the review-arm ceiling. glm53 is not a subset of it."
+  },
+  "limits": [
+    "One frozen case; a same-input review replacement. Recall is bounded by the premium arm's research artifacts.",
+    "Recall is against the adjudicated continuation-3 union, not an external exhaustive truth set.",
+    "'Unsupported or already-covered' is a union class, not a false-positive rate.",
+    "7 of 12 jobs were request-limited; request-limited coverage and the reached-delivery fraction are reported separately. Unperformed work remains unknown, never a negative finding.",
+    "Cost is a captured upper valuation at the preserved tariff basis, not a cash invoice.",
+    "One file of the frozen tree (monitor-state.json, the scheduler's heartbeat) was rewritten four seconds after the freeze. No arm output is affected; it is reported rather than passed over."
+  ]
+}

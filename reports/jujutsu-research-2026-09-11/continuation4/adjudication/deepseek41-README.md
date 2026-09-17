@@ -1,5 +1,7 @@
 # Arm deepseek41 — adjudication against the continuation-3 union
 
+> **All six arms are now scored. The final comparison table, the recomputed nesting, the six-arm union, all 27 out-of-union candidates and the cross-arm factual verifications are in [`README.md`](README.md)**, which supersedes every comparison table below.
+
 I am an Opus 5 agent acting as adjudicator. I ran no arm. This scores the deepseek41 arm's frozen outputs
 against the adjudicated 110-finding union from continuation 3, using continuation 3's own crediting rules.
 
