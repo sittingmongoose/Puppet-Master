@@ -2037,6 +2037,23 @@
         "barrier_outcome": "held_during_capture",
         "gc_prune_rewrite_fence_ref": "gc-fence:source:alpha:41",
         "gc_fence_outcome": "held_during_capture",
+        "gc_fence_covered_paths": [
+          {
+            "writer_path_kind": "native_jj_process",
+            "coverage": "covered",
+            "evidence_ref": "fence-evidence:jj:alpha:native"
+          },
+          {
+            "writer_path_kind": "colocated_git",
+            "coverage": "covered",
+            "evidence_ref": "fence-evidence:git:alpha:colocated"
+          },
+          {
+            "writer_path_kind": "registered_external_automation",
+            "coverage": "covered",
+            "evidence_ref": "fence-evidence:automation:alpha:none-registered"
+          }
+        ],
         "filesystem_capture_ref": "filesystem-capture:source:alpha:41",
         "dirty_tracked_ref": "dirty-tracked:source:alpha:41",
         "approved_untracked_ref": "approved-untracked:source:alpha:41",
@@ -2959,6 +2976,44 @@
         "certified_scenarios.8"
       ],
       "expected_error": "the certification matrix is nine scenarios; a root certification cannot borrow a missing row"
+    },
+    {
+      "name": "backup_source_complete_closure_rejects_an_uncovered_writer_path",
+      "definition": "backup_source_closure_record",
+      "base_valid": "backup_source_closure_colocated_jj_complete_with_gc_fence",
+      "patch": {
+        "gc_fence_covered_paths.1.coverage": "uncovered",
+        "gc_fence_covered_paths.1.evidence_ref": null
+      },
+      "expected_error": "a fence that left a colocated Git writer path uncovered cannot support a complete closure"
+    },
+    {
+      "name": "backup_source_complete_closure_rejects_an_unknown_writer_path",
+      "definition": "backup_source_closure_record",
+      "base_valid": "backup_source_closure_colocated_jj_complete_with_gc_fence",
+      "patch": {
+        "gc_fence_covered_paths.2.coverage": "unknown",
+        "gc_fence_covered_paths.2.evidence_ref": null
+      },
+      "expected_error": "coverage that cannot be asserted for a known writer path makes the closure partial, not complete"
+    },
+    {
+      "name": "backup_source_covered_writer_path_must_name_its_evidence",
+      "definition": "backup_source_closure_record",
+      "base_valid": "backup_source_closure_colocated_jj_complete_with_gc_fence",
+      "patch": {
+        "gc_fence_covered_paths.0.evidence_ref": null
+      },
+      "expected_error": "a writer path reported covered must name the evidence that the fence covered it"
+    },
+    {
+      "name": "backup_source_fence_claim_must_enumerate_the_paths_it_covered",
+      "definition": "backup_source_closure_record",
+      "base_valid": "backup_source_closure_colocated_jj_complete_with_gc_fence",
+      "remove": [
+        "gc_fence_covered_paths"
+      ],
+      "expected_error": "a held fence that enumerates no writer path states that it held, not what it covered"
     },
     {
       "name": "source_graph_cannot_repeat_an_identical_node_row_in_one_page",

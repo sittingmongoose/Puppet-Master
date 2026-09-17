@@ -550,6 +550,15 @@ acceptance_criteria:
     and after verification and the two sets are equal; an operation authored by verification is the typed failure
     `verification_authored_operation`, not an admissible side effect. Divergence encountered during a read is recorded
     with every head, and never resolved: Backup reconciles nothing.
+  - >-
+    Every entry inside the native store tree has a stated disposition. Each is classified against the pinned JJ version
+    as native history, machine-local, ephemeral or unrecognized, and each classification names the source trace that
+    establishes it; a filename pattern such as `*.lock` is never a classification. Machine-local and ephemeral entries
+    are captured as bytes and never restored as active state, so a restored copy carries no other machine's store
+    identity. An unrecognized entry inside the store tree yields `partial` with the entry named, never `complete`. The
+    enumerated list of entries for a given JJ version is an owner audit of native internals that this landing does not
+    perform; it is recorded in the ledger as an open question, and a version change invalidates the list until it is
+    re-audited.
   - Ordinary restore does not activate hooks, aliases, credential helpers, filters, unsafe includes, URL user-info, extraHeaders, SSH material, forge credentials, or provider profiles. Non-secret restored refs and a separately authorized portable envelope remain pending owner validation and a fresh credential lease.
   - Operation History pivots only to existing `cmd.backup.browse`, `cmd.backup.file.compare`, and Project Backup routes; isolated operation inspection/restore uses existing `cmd.jujutsu.operation.show` and `cmd.jujutsu.operation.restore`; neutral rebind/status/remote validation uses Source Control; Forge/AutomationBinding remains Forge-owned. The exact 31-command JJ inventory is unchanged.
   - Machine records require `expected_event_types=[]`; schema and fixture success remains event-silent, handler_unavailable/static, and not runtime, native adapter, clean-host recovery, security, visual, or readiness proof.

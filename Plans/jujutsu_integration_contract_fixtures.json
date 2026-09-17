@@ -2979,6 +2979,26 @@
           "official_source_ref": "official-source:jj:0.44.0",
           "recorded_at_utc": "2026-08-31T20:00:00Z"
         },
+        "store_entry_classifications": [
+          {
+            "entry_ref": "store-entry:jj:alpha:op-store",
+            "classification": "native_history",
+            "source_trace_ref": "source-trace:jj:0.44.0:op-store",
+            "restored_as_active_state": true
+          },
+          {
+            "entry_ref": "store-entry:jj:alpha:working-copy-lock",
+            "classification": "machine_local",
+            "source_trace_ref": "source-trace:jj:0.44.0:working-copy-lock",
+            "restored_as_active_state": false
+          },
+          {
+            "entry_ref": "store-entry:jj:alpha:op-heads-lock",
+            "classification": "ephemeral",
+            "source_trace_ref": "source-trace:jj:0.44.0:op-heads-lock",
+            "restored_as_active_state": false
+          }
+        ],
         "read_pinning": {
           "load_mode": "pinned_operation",
           "pinned_operation_id": "op-captured-alpha",
@@ -3089,6 +3109,20 @@
           "official_source_ref": "official-source:jj:0.44.0",
           "recorded_at_utc": "2026-08-31T20:00:00Z"
         },
+        "store_entry_classifications": [
+          {
+            "entry_ref": "store-entry:jj:beta:op-store",
+            "classification": "native_history",
+            "source_trace_ref": "source-trace:jj:0.44.0:op-store",
+            "restored_as_active_state": true
+          },
+          {
+            "entry_ref": "store-entry:jj:beta:store-id",
+            "classification": "machine_local",
+            "source_trace_ref": "source-trace:jj:0.44.0:store-id",
+            "restored_as_active_state": false
+          }
+        ],
         "read_pinning": {
           "load_mode": "pinned_operation",
           "pinned_operation_id": "op-captured-beta",
@@ -3186,6 +3220,20 @@
           "official_source_ref": "official-source:jj:0.44.0",
           "recorded_at_utc": "2026-08-31T20:00:00Z"
         },
+        "store_entry_classifications": [
+          {
+            "entry_ref": "store-entry:jj:gamma:op-store",
+            "classification": "native_history",
+            "source_trace_ref": "source-trace:jj:0.44.0:op-store",
+            "restored_as_active_state": true
+          },
+          {
+            "entry_ref": "store-entry:jj:gamma:working-copy-lock",
+            "classification": "machine_local",
+            "source_trace_ref": "source-trace:jj:0.44.0:working-copy-lock",
+            "restored_as_active_state": false
+          }
+        ],
         "read_pinning": {
           "load_mode": "pinned_operation",
           "pinned_operation_id": "op-captured-gamma",
@@ -4158,6 +4206,34 @@
         "verification_authored_operation": true
       },
       "expected_error": "an operation authored by verification is a typed failure, not an admissible side effect"
+    },
+    {
+      "name": "backup_jj_complete_closure_rejects_an_unrecognized_store_entry",
+      "definition": "backup_jj_closure_record",
+      "base_valid": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",
+      "patch": {
+        "store_entry_classifications.1.classification": "unrecognized",
+        "store_entry_classifications.1.source_trace_ref": null
+      },
+      "expected_error": "an unrecognized entry inside the store tree yields partial with a named ref, never complete"
+    },
+    {
+      "name": "backup_jj_machine_local_entry_is_never_restored_as_active_state",
+      "definition": "backup_jj_closure_record",
+      "base_valid": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",
+      "patch": {
+        "store_entry_classifications.1.restored_as_active_state": true
+      },
+      "expected_error": "a machine-local entry is captured as bytes and never restored as active state"
+    },
+    {
+      "name": "backup_jj_store_entry_classification_must_be_source_traced",
+      "definition": "backup_jj_closure_record",
+      "base_valid": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",
+      "patch": {
+        "store_entry_classifications.2.source_trace_ref": null
+      },
+      "expected_error": "a classification with no source trace is a filename guess, not a version-pinned classification"
     },
     {
       "name": "command_availability_divergence_reason_code_is_exact",

@@ -885,6 +885,13 @@ unblocks: []
 acceptance_criteria:
   - A source-inclusive capture binds one BackupManifest/BackupRepositoryBinding reference, exact RepositoryContext/native revision, source layout, capture barrier, GC/prune/rewrite fence, workspace/dependency closure, dirty/approved-untracked/LFS/submodule/alternate/shared-store state, missing dependencies, and a source-closure receipt.
   - Complete source closure rejects a lost barrier/fence or any missing dependency; partial/blocked truth never receives a complete Git/JJ history badge and the prior complete recovery point remains selectable.
+  - >-
+    A held fence states what it covered, not only that it held. `gc_fence_outcome` `held_during_capture` enumerates the
+    writer paths the fence covered - the native JJ process, a colocated Git writer, and any registered external or
+    automation path - each reported `covered`, `uncovered` or `unknown`, and each covered path naming the evidence that
+    it was covered. A fence claim that enumerates no path is rejected. Where coverage cannot be asserted for a known
+    path the closure is `partial` with that path named, because a fence held truthfully over one writer while another
+    was never covered is a true sentence about an incomplete capture.
   - Restore-as-new allocates new PM Project/repository/workspace identity; copied external forge identity is lineage only until Source Control plus the Forge owner revalidate and explicitly bind it, and automation_binding_ref is independently absent or Forge-resolved.
   - In-place/selective restore binds the immutable Backup snapshot/capture set, current target RepositoryContext/revision, verified recovery point, merge preview/currentness, and backend-native terminal receipt; collision, conflict, stale target, or effect-unknown state blocks activation or routes to exact owner recovery.
   - Remote validation distinguishes not requested, offline/unverified, identity verified but credentials missing, bounded fetch/read verified, write capability checked without write, identity mismatch, and trust/currentness blocked; it never emits a push/publish or treats a successful process exit as remote truth.
