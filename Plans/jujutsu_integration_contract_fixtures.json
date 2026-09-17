@@ -897,7 +897,9 @@
           "confirmed_at_utc": "2026-08-31T20:00:00Z",
           "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-          "expected_revision_ref": "revision:jj:10"
+          "expected_revision_ref": "revision:jj:10",
+          "disclosed_remote_scope": "no_remote",
+          "disclosed_remote_identity_refs": []
         },
         "target": {
           "target_kind": "change",
@@ -996,7 +998,9 @@
           "confirmed_at_utc": "2026-08-31T20:00:00Z",
           "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-          "expected_revision_ref": "revision:jj:11"
+          "expected_revision_ref": "revision:jj:11",
+          "disclosed_remote_scope": "no_remote",
+          "disclosed_remote_identity_refs": []
         },
         "target": {
           "target_kind": "change",
@@ -1326,7 +1330,9 @@
           "confirmed_at_utc": "2026-08-31T20:00:00Z",
           "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-          "expected_revision_ref": "revision:jj:15"
+          "expected_revision_ref": "revision:jj:15",
+          "disclosed_remote_scope": "no_remote",
+          "disclosed_remote_identity_refs": []
         },
         "target": {
           "target_kind": "bookmark",
@@ -1851,7 +1857,9 @@
           "confirmed_at_utc": "2026-08-31T20:00:00Z",
           "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-          "expected_revision_ref": "revision:jj:22"
+          "expected_revision_ref": "revision:jj:22",
+          "disclosed_remote_scope": "no_remote",
+          "disclosed_remote_identity_refs": []
         },
         "target": {
           "target_kind": "workspace",
@@ -2080,7 +2088,9 @@
           "confirmed_at_utc": "2026-08-31T20:00:00Z",
           "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-          "expected_revision_ref": "revision:jj:25"
+          "expected_revision_ref": "revision:jj:25",
+          "disclosed_remote_scope": "no_remote",
+          "disclosed_remote_identity_refs": []
         },
         "target": {
           "target_kind": "operation",
@@ -2161,7 +2171,9 @@
           "confirmed_at_utc": "2026-08-31T20:00:00Z",
           "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-          "expected_revision_ref": "revision:jj:26"
+          "expected_revision_ref": "revision:jj:26",
+          "disclosed_remote_scope": "no_remote",
+          "disclosed_remote_identity_refs": []
         },
         "target": {
           "target_kind": "operation",
@@ -2474,7 +2486,9 @@
           "confirmed_at_utc": "2026-08-31T20:00:00Z",
           "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-          "expected_revision_ref": "revision:jj:29"
+          "expected_revision_ref": "revision:jj:29",
+          "disclosed_remote_scope": "one_remote",
+          "disclosed_remote_identity_refs": ["remote-identity:jj:origin"]
         },
         "target": {
           "target_kind": "transport",
@@ -2555,7 +2569,9 @@
           "confirmed_at_utc": "2026-08-31T20:00:00Z",
           "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-          "expected_revision_ref": "revision:jj:30"
+          "expected_revision_ref": "revision:jj:30",
+          "disclosed_remote_scope": "no_remote",
+          "disclosed_remote_identity_refs": []
         },
         "target": {
           "target_kind": "transport",
@@ -2646,7 +2662,9 @@
           "confirmed_at_utc": "2026-08-31T20:00:00Z",
           "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-          "expected_revision_ref": "revision:jj:31"
+          "expected_revision_ref": "revision:jj:31",
+          "disclosed_remote_scope": "no_remote",
+          "disclosed_remote_identity_refs": []
         },
         "target": {
           "target_kind": "transport",
@@ -4465,6 +4483,33 @@
       },
       "semantic_rule": "jujutsu_recovery_action_not_in_canonical_inventory",
       "expected_error": "a recovery action outside the canonical inventory and the declared owner routes points at no command"
+    },
+    {
+      "name": "command_request_all_remotes_confirmation_names_every_remote",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_bookmark_delete",
+      "patch": {
+        "confirmation.disclosed_remote_scope": "all_remotes"
+      },
+      "expected_error": "an all-remotes confirmation names the remotes it affects and cannot disclose none"
+    },
+    {
+      "name": "command_request_one_remote_confirmation_names_exactly_one",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_git_push",
+      "patch": {
+        "confirmation.disclosed_remote_identity_refs": ["remote-identity:jj:origin", "remote-identity:jj:mirror"]
+      },
+      "expected_error": "a one-remote confirmation names exactly the one remote it affects"
+    },
+    {
+      "name": "command_request_no_remote_confirmation_discloses_no_remote",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_change_abandon",
+      "patch": {
+        "confirmation.disclosed_remote_identity_refs": ["remote-identity:jj:origin"]
+      },
+      "expected_error": "a confirmation with no remote scope cannot name a remote it does not affect"
     },
     {
       "name": "command_availability_divergence_reason_code_is_exact",

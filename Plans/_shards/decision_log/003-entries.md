@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L840
+Source lines: L13-L932
 
-Source SHA256: `a386cfe3da2297d6132cee6531321d1fd2dbc709180eb4c26fe543a8102e11ba`
+Source SHA256: `4c4963e63b84487d85682a2af68e8504daffe9061880ccd51f5ed9ee964b2d87`
 
 ---
 
@@ -836,3 +836,95 @@ This records planning canon only. It enables no runtime behaviour, admits no com
 SourceRef: `/home/sittingmongoose/PM-Experiments/harness-latency-20260916/D2_PLAN_LAYER_SEAL_DECISION_BRIEF.md`, SHA-256 `36be3a9a620f74b4754484844d3a8dfc645ed4df7821cc0ef62d4ac7696dbb36` as read on 2026-09-17; `/home/sittingmongoose/PM-Experiments/harness-latency-20260916/reports/C_ARCHIVE_TEST_REPORT.md`, SHA-256 `923f43cfa7487f7bca537c6db84068c529d9b0ca701acc6d97f1f3c7ac0f1234`; Jared, direction of 2026-09-17.
 
 ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+
+### DL-056: Conflict and merge editors are read-only or built-in on a Jujutsu workspace
+
+Decided on 2026-09-17 by Jared, answering a decision card raised by the continuation-4 candidate adjudication.
+
+The question was what Puppet Master should do about conflict and merge editing on a Jujutsu workspace. Three continuation-4 review arms independently proposed a typed per-path save vocabulary for a diff, compare or merge editor, and each of the three also offered the alternative of deciding explicitly to keep Jujutsu conflict resolution terminal-native. A fourth candidate noticed that `merge_editor_available`, the flag that gates the Open Merge Editor row in the command catalog, occurs exactly once in the whole corpus and is defined by no owner at all.
+
+It came up because these four are the only continuation-4 candidates that are not corrections. Nothing in canon is false today: the Git conflict commands are scoped to Git adapter commands, the Jujutsu inventory deliberately contains no conflict-resolution command, and a flag with no definition on a command with no handler makes no claim. But the moment anyone builds that surface, an undefined availability flag and an undefined save contract both become load-bearing, and the arms agreed on the one thing that must never be true: that "missing" is an admissible write instruction.
+
+The options were:
+
+1. Scope diff open, merge-editor open and the Git external-merge-tool preference as read-only or built-in-editor-only on a Jujutsu workspace, define `merge_editor_available` in its owner, and give a control disabled by that scoping a typed reason. Defer the save-back contract until the built-in editor's save path is designed.
+2. Open the surface now with a typed per-path save vocabulary, as the three arms proposed.
+3. Decline, and state that Jujutsu conflict resolution stays terminal-native.
+
+The answer is option 1.
+
+So `merge_editor_available` now means exactly one thing, owned by Source Control: Puppet Master's own built-in structured merge editor is present and usable for the selected conflicted file on this Host and Environment. It says nothing about any external tool, and the Git preference that opens an external tool never sets it. On a Jujutsu workspace the diff-open, merge-editor-open and external-tool preference surfaces are read-only or built-in-editor-only, so no external tool is handed a Jujutsu workspace to write into. A control disabled by that scoping carries `conflict_surface_read_only_on_jujutsu` rather than going quiet, and its safe next action is the one the existing closed vocabulary already has: inspect.
+
+The save-back contract is deferred, not declined, and the four candidates that raised it are recorded as deferred under this decision rather than rejected. When the built-in editor's save path is designed, the typed per-path vocabulary the three arms converged on is the starting point, and the rule they all reached — that a missing entry is never a write instruction — is what it has to satisfy.
+
+Nothing changes on the Git-adapter side. The four conflict-assistant rows remain Git adapter commands under the rule Source Control already states, and no command enters or leaves the frozen Jujutsu inventory.
+
+This buys a defined flag, a bounded surface and a truthful disabled state, in exchange for saying out loud that Jujutsu conflict editing is not available yet rather than leaving it ambiguous.
+
+This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
+
+SourceRef: question `q-006` in `Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections`; `/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/C4_DECISION_CARDS_20260917.html`, SHA-256 `af57d582f87f6cdce135377af3d5fc844f25b5914f72b44860ce4431af1028d1` as read on 2026-09-17; Jared, direction of 2026-09-17, verbatim "Do you recommendations for the choices." Agent-relayed, not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Source_Control_System.md, ContractName:Plans/UI_Command_Catalog.md
+
+### DL-057: A bookmark control says which remotes it touches before it touches them
+
+Decided on 2026-09-17 by Jared, answering the second decision card raised by the continuation-4 candidate adjudication.
+
+The question was whether Puppet Master should commit to a disclosure standard for Jujutsu bookmark controls. A continuation-4 arm established by literal search that no Plan text carries the words synced, unsynced, polymorphic, combined bookmark or combined chip, so the Plans supply the hooks for scope disclosure and none of the content: nothing forces an ordinary label or confirmation to name the remotes it affects, or to keep deleting a local bookmark distinct from forgetting a remote one.
+
+It came up as a product choice rather than a correction. No canon promise is false without it: Source Control already promises Jujutsu sections use Bookmarks and never Branches, destructive actions already require a target-bound confirmation, and the contracts already require track and untrack to name an exact remote identity, so an all-remotes untrack is not even representable. What is missing is the wording a person reads before they press the button, and the guarantee that two different destructive actions do not share one control.
+
+The options were:
+
+1. Accept it as a disclosure requirement on the Source Control owner, with the confirmation rules carried by the command catalog and the confirmation record.
+2. Leave it to whoever builds the panel.
+3. Decline, on the ground that no promise is broken today.
+
+The answer is option 1.
+
+So the bookmark state vocabulary is exactly `synced`, `unsynced`, `tracked per remote`, `combined` and `absent`. Every control and confirmation names the remotes it affects before dispatch. Untrack on a combined bookmark confirms every remote by name; untrack on one unsynced remote confirms that remote. Rename on a tracking bookmark discloses that it untracks first. Push and fetch say whether they reach all remotes or one. Delete-local and forget-remote never share one control. Pseudo-remotes and non-fetchable remotes are not shown as ordinary remotes, and an unsynced, untracked or absent reference is never folded silently into a combined chip.
+
+The disclosure is carried where a confirmation already is. Every Jujutsu confirmation now records the remote scope it disclosed and the exact remote identities it named, and the three scopes constrain the list: no remote names none, one remote names exactly one, all remotes names at least one. A confirmation that claims to affect every remote while naming none is rejected.
+
+This adds no command. `forget-remote` stays out of the frozen thirty-one-command Jujutsu inventory, and this decision creates no route to add it.
+
+This buys wording a person can act on and a confirmation record that proves what they were told, in exchange for three required fields on a record that already carried six.
+
+This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
+
+SourceRef: question `q-007` in `Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections`; `/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/C4_DECISION_CARDS_20260917.html`, SHA-256 `af57d582f87f6cdce135377af3d5fc844f25b5914f72b44860ce4431af1028d1` as read on 2026-09-17; Jared, direction of 2026-09-17, verbatim "Do you recommendations for the choices." Agent-relayed, not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Source_Control_System.md, ContractName:Plans/UI_Command_Catalog.md
+
+### DL-058: The seven shapes the continuation-4 corrections take
+
+Decided on 2026-09-17 by Jared, answering seven questions the continuation-4 candidate adjudication raised before any canon was edited.
+
+The question behind all seven was the same: the adjudication had found thirteen genuine corrections, and several of them could be repaired in more than one way. A correction repairs an existing promise and adds nothing, so where the repair had a cheap form and a falsifiable form, or an owner-obligation form and a schema form, the choice was the owner's rather than the adjudicator's.
+
+The seven, and what each one settles:
+
+First, verification depth. The restore drill promised object verification and nothing defined it, so a reachability-only pass satisfied the words. The rule could go in the owner document alone, or in the owner document plus a depth field on the receipt. The answer is both, with the field referencing the Backup owner's existing `integrity_verification_level` vocabulary, so a fixture can fail on it.
+
+Second, divergent changes. A change with more than one visible commit could be named nowhere. The frozen list of graph states could be extended or left alone, and the refusal could reuse the existing `invalid_target_identity` code, which no owner defines, or get its own. The answer is to extend the list, appended so every existing position is preserved, and to mint `change_divergent_ambiguous_target`.
+
+Third, version identity. Two candidates wanted the same thing from different records: one wanted the closure to bind the tool and store-format version it requires, the other wanted the certification reference to have content. The answer is one shared version-identity block serving both, on the pattern the object-format profile already set.
+
+Fourth, machine-local store entries. The repair has three obligations that can land now and one enumerated list that needs an audit of Jujutsu's internals that nobody has done. The answer is to land the three and carry the list as an open question, so the obligation is stated without pretending the list exists.
+
+Fifth, the relational rules. Four of the repairs turn on relations JSON Schema cannot express. They could land as owner obligations with no validator, or the contract semantic gate could be extended. The answer authorizes the gate for exactly those four rules and for nothing else under `scripts/`.
+
+Sixth, the two product choices. `merge_editor_available` belongs with the deferred merge-editor cluster rather than on its own, and the bookmark disclosure question is its own decision. Both are recorded here and answered in full as DL-056 and DL-057.
+
+Seventh, one rejected candidate. A candidate about the marker-based gate on Mark Conflict Resolved was read by the bundle adjudicator as distinct from a continuation-3 rejection and by this adjudication as the same thing, since the rows it names are Git adapter commands. The answer confirms it stays rejected.
+
+Jared's answer to all seven, verbatim: "I agree with all 7 of your recommendations. You can do all the next steps."
+
+What this buys is thirteen repairs that each fail a fixture when they are violated, rather than thirteen paragraphs that read well. What it costs is four new relational rules in a script that had two, a schema that carries more identity than it did, and two obligations that are written down as unenforced and tracked as questions rather than quietly implied.
+
+This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
+
+SourceRef: questions `q-001` through `q-005` in `Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections`; `/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/C4_CANDIDATE_ANSWERS_20260917.md`, SHA-256 `544654e50051d8ea99c835b2989d48d1e64fdf040a8e934d6ac6d16226305608` as read on 2026-09-17; `~/PM-Experiments/c4-candidates-20260917/ADJUDICATION_PART1.md`; Jared, direction of 2026-09-17. Agent-relayed, not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Jujutsu_Integration.md, ContractName:Plans/Source_Control_System.md

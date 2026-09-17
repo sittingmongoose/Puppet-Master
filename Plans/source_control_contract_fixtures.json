@@ -1315,6 +1315,31 @@
       }
     },
     {
+      "name": "source_control_conflict_surface_is_read_only_on_a_jujutsu_workspace",
+      "definition": "source_control_command_disabled_reason",
+      "value": {
+        "schema_id": "pm.source_control.command_disabled_reason.v1",
+        "scope": {
+          "command_id": "cmd.source_control.backend.select",
+          "lineage": {
+            "project_id": "project:cmd",
+            "project_home_server_id": "server:cmd",
+            "execution_host_id": "host:cmd",
+            "execution_environment_id": "environment:cmd",
+            "source_location_id": "source:cmd",
+            "topology_generation": 9
+          },
+          "scm_backend": "jujutsu"
+        },
+        "reason_code": "conflict_surface_read_only_on_jujutsu",
+        "blocking_ref": "conflict-surface:jujutsu:read-only",
+        "safe_next_actions": [
+          "inspect"
+        ],
+        "observed_at_utc": "2026-08-31T14:12:00Z"
+      }
+    },
+    {
       "name": "source_control_command_availability_keeps_disabled_reason",
       "definition": "source_control_command_availability",
       "value": {
@@ -3014,6 +3039,15 @@
         "gc_fence_covered_paths"
       ],
       "expected_error": "a held fence that enumerates no writer path states that it held, not what it covered"
+    },
+    {
+      "name": "source_control_conflict_surface_reason_code_is_exact",
+      "definition": "source_control_command_disabled_reason",
+      "base_valid": "source_control_conflict_surface_is_read_only_on_a_jujutsu_workspace",
+      "patch": {
+        "reason_code": "conflict_surface_read_only"
+      },
+      "expected_error": "the Jujutsu conflict-surface reason code is exactly conflict_surface_read_only_on_jujutsu"
     },
     {
       "name": "source_graph_cannot_repeat_an_identical_node_row_in_one_page",

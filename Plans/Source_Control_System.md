@@ -228,6 +228,16 @@ acceptance_criteria:
   - No backend or forge receives a dedicated Activity Bar panel.
   - Git and JJ fixtures expose only compatible sections and provider-native PR or MR wording.
   - Source Control may link to the selected automation binding but does not render a second pipeline shell or infer automation from the repository host.
+  - >-
+    Bookmark controls disclose their scope in ordinary words, the owner rule set in DL-057. The bookmark state
+    vocabulary is exactly `synced`, `unsynced`, `tracked per remote`, `combined` and `absent`. Every control and
+    confirmation names the remotes it affects before dispatch: untrack on a combined bookmark confirms every remote by
+    name, untrack on one unsynced remote confirms that remote, rename on a tracking bookmark discloses that it untracks
+    first, and push and fetch say whether they reach all remotes or one. Delete-local and forget-remote never share one
+    control. Pseudo-remotes and non-fetchable remotes are not presented as ordinary remotes, and an unsynced, untracked
+    or absent reference is never folded silently into a combined chip. This adds no command: forget-remote stays out of
+    the frozen Jujutsu inventory, and the disclosure is carried by the confirmation record the existing commands
+    already require.
   - The source-control manager is the unique operational destination; browser-scm remains a non-owning dependency summary.
 validation_surfaces: [source_control_projection fixtures, future Slint panel fixtures, Settings search and route dedupe fixtures]
 risk_class: gui_backend_or_owner_misrepresentation
@@ -964,6 +974,16 @@ unblocks: [SCS-016, F3-529]
 acceptance_criteria:
   - A stale or invalid capability revision produces a typed recoverable failure at dispatch rather than a cached authorization.
   - Pending operations retain their captured Project, account, repository, remote, and revision when active selection changes.
+  - >-
+    `merge_editor_available` is owned here and means exactly one thing: Puppet Master's own built-in structured merge
+    editor is present and usable for the selected conflicted file on this Host and Environment. It is not a statement
+    about any external merge tool, and the Git conflict-assistant preference that opens an external tool never sets it.
+    The owner rule set in DL-056: on a Jujutsu workspace the diff-open, merge-editor-open and Git external-merge-tool
+    preference surfaces are read-only or built-in-editor-only, so no external tool is handed a Jujutsu workspace to
+    write into. A control disabled by that scoping carries the typed reason `conflict_surface_read_only_on_jujutsu`
+    rather than appearing unavailable without explanation. The save-back contract for a Jujutsu conflict is deferred
+    until the built-in editor's save path is designed, and until then nothing writes conflict content back through
+    these surfaces.
   - Partial fan-out identifies exactly which ref reached each target; shared commits never establish repository identity and an Origin mirror never triggers duplicate automatic publication.
   - Paired Git/Jujutsu fixtures retain engine-specific labels, commands, graph selection, and operation-history meaning; Jujutsu undo remains distinct from commit history and Backup restore.
 validation_surfaces: [Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, future capability revision, remote fan-out, Git/JJ parity, and migration fixtures]

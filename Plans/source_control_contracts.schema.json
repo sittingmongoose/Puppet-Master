@@ -2747,7 +2747,8 @@
             "checkpoint_invalid",
             "checkpoint_mismatch",
             "filesafe_denied",
-            "topology_stale"
+            "topology_stale",
+            "conflict_surface_read_only_on_jujutsu"
           ]
         },
         "blocking_ref": {

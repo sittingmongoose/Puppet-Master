@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L848-L4013
+Source lines: L941-L4335
 
-Source SHA256: `a386cfe3da2297d6132cee6531321d1fd2dbc709180eb4c26fe543a8102e11ba`
+Source SHA256: `4c4963e63b84487d85682a2af68e8504daffe9061880ccd51f5ed9ee964b2d87`
 
 ---
 
@@ -3050,6 +3050,235 @@ negative_constraints:
 owner_hints:
   - Plans/Decision_Log.md
   - Plans/Bootstrap_Planning_Migration.md
+```
+
+### DL-056 - Conflict And Merge Editors Are Read Only Or Built In On A Jujutsu Workspace
+
+```yaml
+plan_unit_id: DL-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered the continuation-4 conflict and merge editor decision card on 2026-09-17 by taking the
+  recommendation, verbatim "Do you recommendations for the choices." `merge_editor_available` is owned by
+  Source Control and means that Puppet Master's own built-in structured merge editor is present and usable for
+  the selected conflicted file on this exact Host and Environment; it makes no claim about any external tool,
+  and the Git conflict-assistant preference that opens an external tool never sets it. On a Jujutsu workspace
+  the diff-open, merge-editor-open and Git external-merge-tool preference surfaces are read-only or
+  built-in-editor-only, and a control disabled by that scoping carries the typed reason
+  `conflict_surface_read_only_on_jujutsu`. The save-back contract for a Jujutsu conflict is deferred until the
+  built-in editor's save path is designed. Candidates C4D-04, C4M-03, C4G-02 and C4G-03 are recorded as
+  deferred under this decision, not declined; the rule they converged on, that a missing entry is never a write
+  instruction, is what the deferred contract must satisfy. Nothing on the Git-adapter side changes and no
+  command enters or leaves the frozen Jujutsu inventory.
+gui_related: true
+gui_classification_reason: The decision determines which conflict and merge controls a person sees enabled on a Jujutsu workspace and what a disabled one says.
+split_recommended: false
+depends_on: [SCS-015, JJI-005]
+unblocks: []
+acceptance_criteria:
+  - SCS-015 defines `merge_editor_available` as the built-in structured merge editor's availability for the selected file on the exact Host and Environment, and states that no external-tool preference sets it.
+  - SCS-015 scopes diff open, merge-editor open and the Git external-merge-tool preference as read-only or built-in-editor-only on a Jujutsu workspace.
+  - '`source_control_command_disabled_reason.reason_code` admits `conflict_surface_read_only_on_jujutsu`, with a positive fixture carrying it and a negative fixture rejecting a near-miss code.'
+  - The safe next action for that disabled state comes from the existing closed vocabulary and is `inspect`; no new safe-next-action value is introduced.
+  - The save-back contract is deferred and the four cluster candidates are recorded as deferred rather than declined.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds or build tasks are created by this record.
+validation_surfaces:
+  - Plans/source_control_contracts.schema.json#/$defs/source_control_command_disabled_reason
+  - Plans/source_control_contract_fixtures.json
+  - python3 scripts/pm-new-contracts-verify.py
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: undefined_merge_editor_availability_or_unsafe_external_write_to_a_jujutsu_workspace
+reasoning_tier: high
+context_scope: source_control_conflict_and_merge_surfaces
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+  - Plans/source_control_contracts.schema.json
+  - Plans/source_control_contract_fixtures.json
+node_compile_hint:
+  mode: owner_product_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections:q-006
+  - Plans/Decision_Log.md:DL-056-direction-2026-09-17
+  - Plans/Source_Control_System.md#SCS-015
+preserved_exact_tokens:
+  - Do you recommendations for the choices.
+  - merge_editor_available
+  - conflict_surface_read_only_on_jujutsu
+  - inspect
+negative_constraints:
+  - Do not let any external merge tool write into a Jujutsu workspace through these surfaces.
+  - Do not treat `merge_editor_available` as a statement about an external tool.
+  - Do not record the deferred save-back candidates as declined.
+  - Do not add a conflict-resolution command to the frozen Jujutsu inventory under this decision.
+  - Do not change the Git-adapter scoping of the existing conflict-assistant rows.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### DL-057 - A Bookmark Control Says Which Remotes It Touches Before It Touches Them
+
+```yaml
+plan_unit_id: DL-057
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered the continuation-4 bookmark control decision card on 2026-09-17 by taking the recommendation,
+  verbatim "Do you recommendations for the choices." Source Control owns a bookmark state vocabulary of exactly
+  `synced`, `unsynced`, `tracked per remote`, `combined` and `absent`. Every bookmark control and confirmation
+  names the remotes it affects before dispatch: untrack on a combined bookmark confirms every remote by name,
+  untrack on one unsynced remote confirms that remote, rename on a tracking bookmark discloses that it untracks
+  first, and push and fetch say whether they reach all remotes or one. Delete-local and forget-remote never
+  share one control. Pseudo-remotes and non-fetchable remotes are not presented as ordinary remotes, and an
+  unsynced, untracked or absent reference is never folded silently into a combined chip. The Jujutsu
+  confirmation record carries the disclosed remote scope and the exact remote identities it named. This adds no
+  command and `forget-remote` stays out of the frozen thirty-one-command inventory.
+gui_related: true
+gui_classification_reason: The decision determines the words on every bookmark control and confirmation and which remotes a person is told about before dispatch.
+split_recommended: false
+depends_on: [SCS-005, JJI-003]
+unblocks: []
+acceptance_criteria:
+  - SCS-005 states the five-value bookmark state vocabulary and the disclosure rules for untrack, rename, delete, forget, push and fetch.
+  - >-
+    The Jujutsu `confirmation` record requires `disclosed_remote_scope` and `disclosed_remote_identity_refs`, and
+    the scope constrains the list. `no_remote` names none, `one_remote` names exactly one, and `all_remotes` names at
+    least one.
+  - Every shipped confirmation fixture carries the disclosure, and three negatives reject an all-remotes confirmation naming none, a one-remote confirmation naming two, and a no-remote confirmation naming one.
+  - No command is added; `forget-remote` is not admitted to the frozen inventory by this record.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds or build tasks are created by this record.
+validation_surfaces:
+  - Plans/jujutsu_integration_contracts.schema.json#/$defs/confirmation
+  - Plans/jujutsu_integration_contract_fixtures.json
+  - python3 scripts/pm-new-contracts-verify.py
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: undisclosed_remote_scope_on_a_destructive_bookmark_action
+reasoning_tier: high
+context_scope: source_control_bookmark_presentation_and_confirmation
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+  - Plans/jujutsu_integration_contracts.schema.json
+  - Plans/jujutsu_integration_contract_fixtures.json
+node_compile_hint:
+  mode: owner_product_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections:q-007
+  - Plans/Decision_Log.md:DL-057-direction-2026-09-17
+  - Plans/Source_Control_System.md#SCS-005
+preserved_exact_tokens:
+  - Do you recommendations for the choices.
+  - synced
+  - unsynced
+  - tracked per remote
+  - combined
+  - absent
+  - disclosed_remote_scope
+  - disclosed_remote_identity_refs
+negative_constraints:
+  - Do not present a bookmark control without naming the remotes it affects.
+  - Do not share one control between delete-local and forget-remote.
+  - Do not fold an unsynced, untracked or absent reference into a combined chip.
+  - Do not show a pseudo-remote or a non-fetchable remote as an ordinary remote.
+  - Do not add `forget-remote` or any other command to the frozen Jujutsu inventory under this decision.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### DL-058 - The Seven Shapes The Continuation 4 Corrections Take
+
+```yaml
+plan_unit_id: DL-058
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered the seven shape questions the continuation-4 candidate adjudication raised on 2026-09-17,
+  verbatim "I agree with all 7 of your recommendations. You can do all the next steps." Restore verification
+  depth lands as a JJI-008 rule plus an `object_verification_depth` field on the receipt referencing the Backup
+  owner's existing `integrity_verification_level` enum. Divergence lands by appending `divergent` to the frozen
+  `graph_states` list, which preserves every existing position, and by minting
+  `change_divergent_ambiguous_target` rather than reusing the undefined `invalid_target_identity`. Version
+  identity lands as one shared block serving both the closure records and the certification profile, on
+  JJI-022's pattern. The machine-local store entry repair lands as three obligations with the enumerated entry
+  list carried as an open ledger question. The `jujutsu_integration_contracts` branch of the contract semantic
+  gate is authorized for exactly four relational rules and for nothing else under `scripts/`. The two product
+  choices are answered separately as DL-056 and DL-057. Candidate C4D-02 stays rejected as inside continuation
+  3's marker-only conflict rejection.
+gui_related: false
+gui_classification_reason: The record settles the machine-contract and validator shape of thirteen corrections; the user-visible halves are carried by DL-056, DL-057 and the owner units the corrections edit.
+split_recommended: false
+depends_on: [JJI-003, JJI-006, JJI-008, SCS-014, SCS-017]
+unblocks: []
+acceptance_criteria:
+  - Verification depth lands as both a JJI-008 acceptance criterion and a receipt field referencing the Backup owner's `integrity_verification_level` enum, so it is falsifiable by a fixture.
+  - '`divergent` is appended to `graph_states` rather than inserted, so every existing frozen position is preserved, and `change_divergent_ambiguous_target` is minted rather than reusing an undefined code.'
+  - One `native_toolchain_identity` block serves the closure record, the restore receipt and the effective-capability snapshot.
+  - The machine-local entry repair lands three obligations and records the enumerated entry list as an open ledger question rather than inventing it.
+  - The semantic gate carries exactly four Jujutsu rules, each with one authored negative fixture, and no other file under `scripts/` is changed by this wave.
+  - The two product choices are recorded as DL-056 and DL-057, and candidate C4D-02 remains rejected.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds or build tasks are created by this record.
+validation_surfaces:
+  - python3 scripts/pm-new-contracts-verify.py
+  - python3 -m unittest tests.test_pm_jujutsu_closure_semantics
+  - python3 -m unittest tests.test_pm_source_control_effects
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: correction_landed_in_a_shape_its_owner_did_not_choose
+reasoning_tier: high
+context_scope: jujutsu_continuation4_correction_wave
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/Source_Control_System.md
+  - Plans/jujutsu_integration_contracts.schema.json
+  - Plans/source_control_contracts.schema.json
+  - Plans/backup_restore_system_contracts.schema.json
+  - Plans/final_gui_interaction_contracts.schema.json
+  - scripts/pm-new-contracts-verify.py
+node_compile_hint:
+  mode: owner_rule_refinement_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections:q-001
+  - Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections:q-002
+  - Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections:q-003
+  - Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections:q-004
+  - Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections:q-005
+  - Plans/Decision_Log.md:DL-058-direction-2026-09-17
+  - Plans/Decision_Log.md#DL-056
+  - Plans/Decision_Log.md#DL-057
+preserved_exact_tokens:
+  - I agree with all 7 of your recommendations. You can do all the next steps.
+  - object_verification_depth
+  - integrity_verification_level
+  - change_divergent_ambiguous_target
+  - native_toolchain_identity
+  - jujutsu_integration_contracts
+negative_constraints:
+  - Do not add a fifth Jujutsu semantic rule or any other change under scripts/ under this authorization.
+  - Do not insert `divergent` into `graph_states` at a position that shifts an existing frozen value.
+  - Do not invent the enumerated machine-local entry list before the source audit is done.
+  - Do not reopen C4D-02 as a correction.
+  - Do not claim runtime, native adapter, security, performance or readiness evidence from these static contracts.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/Source_Control_System.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired
