@@ -1,0 +1,21 @@
+{
+  "recorded_at_utc": "2026-09-17T19:14:19Z",
+  "gating_rule": {
+    "change": "The launch probe and the sentinel gate on the FIVE-HOUR window only. The seven-day window is informational unless its utilization is at or above 0.75, in which case hold.",
+    "reason": "After the 12:00Z weekly reset the seven-day window reports allowed_warning at utilization 0.25 - a pacing signal, not exhaustion. Under the previous \"first allowed_warning on ANY window\" rule it is indistinguishable from a real five-hour exhaustion, and it cut the continuation-5 sweep.",
+    "seven_day_reset": "2026-09-24T12:00:00Z",
+    "note": "The old rule was correct when written: the 05:43Z and 12:22Z warnings WERE five-hour exhaustion at utilization 0.90. It became wrong only once a fresh weekly window began emitting low-utilization pacing warnings."
+  },
+  "hold_sizing": {
+    "reported_defect": "The continuation-5 runner reported that the whole-cap hold denies the next request of LIVE jobs too, because Meter.request_boundary (cost_watch line 226) uses the same committed-over-cap test as admission. Confirmed here: the live job gets stop_reason captured_plus_live_cap and its runtime_status is rewritten to budget_truncated.",
+    "my_test_was_inadequate": "test_hold_stub_campaign.py asserted that a held campaign's live job \"settled and kept its record\" and passed, but its stub worker only slept and wrote an outcome - it never called request_boundary, the one path that truncates a live job. A test that cannot fail on the defect it covers is not evidence.",
+    "suggested_remedy_does_not_work": "The suggested sizing (cap - committed - live jobs' remaining per-job budgets) was implemented first and failed its own test: with one live job it sizes the hold at $218 of a $238 headroom, leaving committed at $230 against a $250 cap, so a new $12 admission still fits and the hold denies nothing.",
+    "why": "Its premise - that a live job's spending raises committed - is not true of this Meter. committed = observed_upper_usd + reserved + unresolved, and observed_upper_usd is incremented ONLY AT JOB END (cost_watch line 448); a live job's allowance sits in `reserved` unchanged. Measured: committed stayed at exactly 12.0000 across five request_boundary calls on a live job.",
+    "correct_sizing": "Exactly the headroom. request_boundary denies a live job at committed > cap and reserve denies a new job at committed + allowance_new > cap, so committed must land in (cap - allowance_new, cap]. A hold of the full headroom lands it at cap: live jobs keep running, new admissions are denied. Not headroom + $1 (lands above cap, truncates), not headroom minus live budgets (lands too low to deny).",
+    "second_order_case": "committed can still rise if a job settles ABOVE its allowance at job end (~$12 allowance against a $20 per-job budget), which could then deny a request to a job still live. That happens only at a job end; it is recorded in the tool output rather than engineered around."
+  },
+  "tests": {
+    "test_hold_spares_live_jobs.py": "7 tests, all passing, driving Meter.request_boundary directly. Proves the whole-cap hold truncates a live job; that the corrected hold lets a live job continue across ten further requests while denying new admissions; that committed does not move during a live job; that the cap is never written; and that the tool reports the case where it cannot do both.",
+    "regressions": "test_admission_hold.py 6/6 and test_hold_stub_campaign.py 8/8 still pass."
+  }
+}
