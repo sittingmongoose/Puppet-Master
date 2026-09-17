@@ -125,10 +125,14 @@ canon.
 
 | Check | Result |
 | --- | --- |
-| `pm-new-contracts-verify.py` | pass, 0 findings, 31 pairs, 1053 positives valid, 3409 negatives rejected |
+| `pm-new-contracts-verify.py` | pass, 0 findings, 31 pairs, 1059 positives valid, 3451 negatives rejected |
 | `pm-shard-plans.py --check --config Plans/sharding_config.json` | pass, 99 docs, 2690 shards, 0 failures |
-| `pm-plan-index.py validate` | pass, 0 failures, 6671 PlanUnits, 25947 acceptance units, coverage pass |
+| `pm-plan-index.py validate` | pass, 0 failures, 6674 PlanUnits, 25981 acceptance units, coverage pass |
 | `pm-bootstrap-ledger-validate.py` | fail on three governance coverage omissions and nothing else, 0 warnings, every ledger-internal check passing (6 events, 5 atoms, 5 decisions, 0 corrections, 5 compile-queue items, 4 open questions, 662 PlanUnits checked) |
+
+All four figures are from the `land2` tip on base `61bea7aabc`. The contract totals rose from 1053 positives
+and 3409 negatives on `land1` because the continuation-4 corrections landed fixtures into the Jujutsu and
+Source Control packs on the base; this branch's own contribution is unchanged at 12 positives and 30 negatives.
 
 The ledger failure is the same class the F106 to F109 landing recorded in
 `reports/jujutsu-research-2026-09-11/continuation3-landing/README.md`, but two of the three errors name a

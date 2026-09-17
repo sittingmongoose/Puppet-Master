@@ -13,12 +13,13 @@
       "findings": 0,
       "counts": {
         "contract_pairs": 31,
-        "positive_cases": 1053,
-        "positive_cases_valid": 1053,
-        "negative_cases": 3409,
-        "negative_cases_rejected": 3409,
+        "positive_cases": 1059,
+        "positive_cases_valid": 1059,
+        "negative_cases": 3451,
+        "negative_cases_rejected": 3451,
         "metaschemas_valid": 31
-      }
+      },
+      "note": "Positive and negative totals rose from 1053/3409 on land1 to 1059/3451 here because the continuation-4 corrections landed fixtures into the Jujutsu and Source Control packs on the base. This branch's own contribution is unchanged at 12 positives and 30 negatives."
     },
     {
       "check": "configured-shards",
@@ -34,10 +35,10 @@
       "status": "pass",
       "failures": 0,
       "summary": {
-        "acceptance_unit_count": 25947,
+        "acceptance_unit_count": 25981,
         "coverage_status": "pass",
         "node_readiness_status": "blocked_runtime_certification_incomplete",
-        "plan_unit_count": 6671
+        "plan_unit_count": 6674
       }
     },
     {
@@ -209,5 +210,6 @@
       "entries_dropped": 0
     },
     "no_source_file_other_than_the_registry_conflicted": true
-  }
+  },
+  "checks_run_on": "plans/goal3-research-20260917-land2 tip, base 61bea7aabc787c9d214e6c6d042ec3269a7c8536"
 }
