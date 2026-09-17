@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-002-external-research-canon",
-  "updated_at_utc": "2026-09-17T06:05:00+00:00",
-  "last_event_id": "evt-006",
+  "updated_at_utc": "2026-09-17T22:10:00+00:00",
+  "last_event_id": "evt-007",
   "canonical_plan_targets": [
     "Plans/Automated_Testing_System.md",
     "Plans/External_Research.md",
@@ -30,11 +30,11 @@
     "scripts/pm-new-contracts-verify.py"
   ],
   "governance_status": "not_requested",
-  "latest_audit_ref": "reports/external-research-canon-20260917/verification.json",
-  "latest_audit_status": "COMPILED_RESEARCH_CANON_STATIC_INTEGRITY_PASS_PENDING_INDEPENDENT_BRANCH_REVIEW",
+  "latest_audit_ref": "reports/compile-repair-20260917/verification.json",
+  "latest_audit_status": "COMPILE_WITNESS_PASS_AND_BLIND_REVIEW_REPAIR_APPLIED_PENDING_INDEPENDENT_REVIEW",
   "validation_state": {
     "ledger_health": "fail_deferred_governance_coverage",
-    "canonical_compile": "compiled_one_new_owner_document_one_contract_family_and_three_consumer_references",
+    "canonical_compile": "compiled_one_new_owner_document_one_contract_family_and_three_consumer_references_then_repaired_against_the_compile_witness_and_two_blind_reviews",
     "scoped_contracts": "pass",
     "plan_index": "pass",
     "configured_shards": "pass",
@@ -44,10 +44,11 @@
       "governance coverage targets missing from sharding_config sources: ['Plans/Settings_System.md']",
       "governance coverage targets missing from Spec_Lock coverage: ['Plans/External_Research.md', 'Plans/Settings_System.md']",
       "governance coverage targets missing from plan_graph coverage: ['Plans/External_Research.md', 'Plans/Settings_System.md']"
-    ]
+    ],
+    "compile_witness": "pass_all_three_witnesses"
   },
   "status": "compiled_external_research_canon",
-  "terminal_ledger_event_id": "evt-006",
+  "terminal_ledger_event_id": "evt-007",
   "items": [
     {
       "queue_id": "queue-001",
