@@ -173,6 +173,8 @@ Of the 64 findings missed, 32 are optional capabilities. That residue is dominat
 
 ## Comparison table
 
+**The current, full comparison table now lives in `union-README.md` (source: `adjudication/union/README.md`)** and supersedes the one below. The `union` arm is the first continuation-4 arm that is NOT a review replacement: it ran the full pipeline from discovery on the frozen case, so its recall is not bounded by the premium arm's artifacts and it belongs beside premium and hybrid, not beside the review arms. It scored 43/110 (39.09%), added 11 findings no review arm reached, and contributed ZERO findings unique to itself — every credit sits inside premium union hybrid. Five-arm union 57/110 (51.82%).
+
 **The current, full comparison table now lives in `../muse13/README.md`** and supersedes the one below. Headline after four new arms: claude 18/110, deepseek41 33/110, muse13 40/110, claude-hicap 46/110, with claude and deepseek41 both proper subsets of muse13 and muse13 a proper subset of claude-hicap.
 
 

@@ -123,6 +123,8 @@ deepseek41 lost the graph triple's compare the same way.
 
 ## Comparison table
 
+**The current, full comparison table now lives in `union-README.md` (source: `adjudication/union/README.md`)** and supersedes the one below. The `union` arm is the first continuation-4 arm that is NOT a review replacement: it ran the full pipeline from discovery on the frozen case, so its recall is not bounded by the premium arm's artifacts and it belongs beside premium and hybrid, not beside the review arms. It scored 43/110 (39.09%), added 11 findings no review arm reached, and contributed ZERO findings unique to itself — every credit sits inside premium union hybrid. Five-arm union 57/110 (51.82%).
+
 Premium and hybrid rows are continuation 3's own numbers.
 
 | Measure | Premium | Hybrid | Claude (Arm C) | deepseek41 | **muse13** | claude-hicap | union | glm53 |

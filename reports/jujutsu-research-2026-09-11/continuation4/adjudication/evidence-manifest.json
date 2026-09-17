@@ -165,14 +165,14 @@
     "excluded_as_locator_inventory": "workspace/research-evidence/sources/** \u2014 continuation 3 treats source locator inventories as separate from assertion documents"
   },
   "arms_not_yet_scored": [
-    "union (interrupted 21:57Z, quarantined; clean rerun launched 22:19:33Z on openrouter/stealth/union-alpha as a full arm)",
-    "glm53 (interrupted 21:57Z, quarantined; requeued after union)"
+    "glm53 (interrupted 21:57Z and quarantined; running now as the last arm, requeued fresh)"
   ],
   "arms_scored": [
     "claude",
     "deepseek41",
     "claude-hicap",
-    "muse13"
+    "muse13",
+    "union"
   ],
   "deepseek41_run": {
     "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-deepseek41-20260916-202016",
@@ -684,5 +684,548 @@
     "equals": "claude-hicap's own credited set",
     "meaning": "No new arm contributed a finding claude-hicap missed. On this union the four review arms differ in depth rather than in kind.",
     "unix_epoch_outcomes": "Three distinct outcomes across four arms on one code fact: both Claude arms concluded gc(head, UNIX_EPOCH) prunes everything unreachable (wrong); deepseek41 read lib/src/simple_op_store.rs and got it right; muse13 recorded the call without characterising the retention direction it had not verified."
+  },
+  "union_run": {
+    "arm_kind": "FULL ARM FROM DISCOVERY - not a review replacement. Its recall is NOT bounded by the premium arm's artifacts, so it is comparable with premium and hybrid on the full pipeline and not with the four review arms.",
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-union-20260916-221929",
+    "terminal_stop_checked_first": "run.json stop_reason 'Stop: admitted_attempt_cap', stop_kind 'limit_or_gate'; campaign-terminal.json and monitor-state.json agree. A designed gate, not an exception - the material difference from the quarantined 21:57Z attempt.",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/union-manifest.json",
+    "manifest_sha256_internal": "2e8ada3ff095c4fd544daee0311e17cc78503b166a43db4331693495d205f5d8",
+    "manifest_file_bytes_sha256": "77d2059a34f267191af5e73ccdb2b2a9c6aa0d2f9bf59513e15fd4eefe5dd1da",
+    "report": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/union-report.json",
+    "files": 7894,
+    "total_bytes": 363829324,
+    "independently_reverified": true,
+    "input_manifest_sha256": "11a497945fa57bb5ea062b67289f258af1f89eb9bcb475e7f6b1f9f692c8272a",
+    "brief_sha256": "d94193bb97a1465b00cdfd7352e11422bb217f673bb7d00790884289e1203de1",
+    "navigation_sha256": "0eb77a4d431853fca5057fd00ed79827cca224b1bb2cce684a4ab170d8c2e195",
+    "run_json_sha256": "ebcd90460f4450d6ce5da0b57f7deba3f454c24bf103e9f0f13c46e12542b4be",
+    "timing_json_sha256": "b15b7dc4df73ae41ee395e62fdfc3b60c7460a2d6d54d6bc01ad865e2f169aaf",
+    "progress_json_sha256": "8680a452aa76005b0e343454e5094c687a6ad4380b7e98ddde37e85c8c48b2ec",
+    "priced_usage_final_sha256": "8f560f57da4f1f7ebe2aa979656b603dec0512d14540fcbdfcfcd60ad0b494f6",
+    "selector_of_record": "run.json researcher = openrouter/stealth/union-alpha at effort high; oh-my-pi reports omp/18.2.2. protocol/arm-budgets/union.json continuation4_arms.union still names opencode-go/union-alpha and oh-my-pi 18.1.13 - the frozen cost-policy copy, the same stale-selector class the runner documented for deepseek41."
+  },
+  "union_assertion_corpus": {
+    "root": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-union-20260916-221929/jobs",
+    "documents": 114,
+    "total_bytes": 488422,
+    "composition": "19 notes.md (one per job except J0019-reconcile) and 95 lead documents",
+    "files": [
+      {
+        "path": "J0001-discovery/workspace/notes.md",
+        "sha256": "652c1811fe6a5890102b2e23e0c677909d2216955ef89cc1f07606070470ba8f"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/01-colocation-version-boundaries.md",
+        "sha256": "6810c4cc2c9819a0aa5ce31f3fad9d17da57d9d24da0023ddfe40edf3eb0da9d"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/02-gg-direct-manipulation.md",
+        "sha256": "d2401f75cbb5cb7f742985784fab6e8795e452ef279d16cf261469e372877e76"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/03-jjui-contextual-history.md",
+        "sha256": "ed146c40da195743e47a5f040bbfaa8d75d9914ed247ec5fc3fb08c21f8d999d"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/04-native-concurrency-is-not-authority.md",
+        "sha256": "2fd1302410e9f46f17e1a8e962d874832e64cf0f41b585f0470101e2ccf02c0f"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/05-native-backup-closure.md",
+        "sha256": "339c14b70617fddc569d542e0ddbc59b9f50d80d05043af723b1bc99dcad964c"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/06-conflicts-are-not-marker-text.md",
+        "sha256": "81c626045f3ebebdd2d3c059c664966269154f0b7ab92faf7d11e6fde7fa0d15"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/07-gg-selection-and-window-scoping.md",
+        "sha256": "60564135e0497c413f5621eafb35a6999ed04976a768d3885eda3f51874268d0"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/08-gg-bookmark-state-axes.md",
+        "sha256": "ae1d82e2d500ff8dc4849f302b7e099b88466af93ab0054ce84c8116a03a8627"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/09-bounded-graph-streaming.md",
+        "sha256": "ea477ebdb66b54d923c9f74aa62d63f32e3dbc370e18cf4bb018bd6f29da3826"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/10-recovery-ui-scope-comparison.md",
+        "sha256": "e9e0f1c53b3b2db42b753be0a90234ad6d8ac2c7b89947c8a4be49388fbcad08"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/11-sapling-local-graph-and-queue.md",
+        "sha256": "a871a9c83caffb69e6cac279aa4e7488b3aa39b172c35f6fc45500af4ed50009"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/12-editor-native-jj-integration.md",
+        "sha256": "84a3667699576369f4f33ee7742c7e90e0cc720313ca98f1620deb8b3b55532c"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/13-jj-stack-change-linked-review.md",
+        "sha256": "401ad686c7edd2c2b82c5aa9e18f195091b63c9579a4e9198cc8b60f73682bc8"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/14-colocated-cache-tree-fix.md",
+        "sha256": "214836b37593e9cc75d0198ac9348abd0dfd770fea7115069a61f725bbccbe3e"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/15-import-export-noop-is-not-safety.md",
+        "sha256": "f630be1fed15953ba76a2c3fa98432b2158da8b3c5b1c2f97e7f19d56ef9a07f"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/16-editor-rename-copy-restore.md",
+        "sha256": "8e6fdfe0de0289b639ef67377130930838ff0a513b154491a061a961ed009362"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/17-editor-temporary-tree-lifetime.md",
+        "sha256": "50da91030192a3b4aa0b5766a5f45ef14da799f5429b330b18a00916f9e21f1a"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/18-editor-path-and-discovery-identity.md",
+        "sha256": "35d6ec11fd059aad9d1ba3df22a4d92afa6d789b6ec430713cb57217e170d0e1"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/19-background-read-and-snapshot-ownership.md",
+        "sha256": "6819fe0e0a708f4a3ca7d90170ed11137b3b4fa1a2e9281546963d62dcc1bbd4"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/20-authentication-is-a-work-state.md",
+        "sha256": "4d45294bf414217dd28d71ef1736c01e9512966b2a17d7870313096cf47bfb78"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/21-restored-config-remains-inactive.md",
+        "sha256": "3a5adfca446932f92bac00d243be8fde8f1967e2fd5a9e3f1eeb141db09214db"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/22-comparison-bound-hunk-selection.md",
+        "sha256": "077cdcb1f2d34be2129b6cb43be445fed512c1d118c6b905c5c4142c87f621aa"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/23-diffedit3-three-pane-and-save-semantics.md",
+        "sha256": "ddad726c01a7a89fc8461c378eff07454fed9edffbb6260918e700887c313139"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/24-native-undo-is-not-selected-op-revert.md",
+        "sha256": "66fc06e055e3ad6936061e449220caa2fe1b25cb1f7d5d30f8126d2c692f52a5"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/25-jj-view-forge-enrichment-and-editable-diffs.md",
+        "sha256": "798837576085268c92dd2263eb77994872a632247cbb5c39377b9460c80f7f76"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/26-native-workflow-release-directions.md",
+        "sha256": "7f697f8617cf0956ab12ea603c38779fc00869f03dbf9bb284dfed9ac50f0f9d"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/27-deferred-adjacent-products.md",
+        "sha256": "6c67dceead518ee996c05d79a6bb5e42581966ff95c8a59d86b6cab12288dc46"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/28-stale-workspace-git-head.md",
+        "sha256": "756786faa69ddec76b5da0a93cf68329110e83f07cd5f466161ea1e212ae4d49"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/29-client-command-ownership-architecture.md",
+        "sha256": "d91e843136b662d7ec44e325bb536e7e6bd19b6ab82b11b096fab235e7752ddd"
+      },
+      {
+        "path": "J0001-discovery/workspace/leads/30-jjui-review-and-targeted-push.md",
+        "sha256": "f269f884a0c621254f2e385f8d8a41564db095120c641d49e8ae20d3701214fc"
+      },
+      {
+        "path": "J0002-implementation/workspace/notes.md",
+        "sha256": "36b96f2dd213c0e9c4fb1c9b82c468ec0d4a8b0797b560ef06da75b1f69fdeab"
+      },
+      {
+        "path": "J0002-implementation/workspace/leads/01-head-reset-warning-success.md",
+        "sha256": "bff08c98457c65df3fcbdbdb8877b5ddc3bf1ec73fe0960baba274dd32ad4839"
+      },
+      {
+        "path": "J0002-implementation/workspace/leads/02-colocation-lifecycle-partial-effects.md",
+        "sha256": "7b744557fe185534ff519d7659ecb0dfd9b894695d5dd6bbc206a6ac675d97a4"
+      },
+      {
+        "path": "J0002-implementation/workspace/leads/03-git-index-is-lossy-conflict-view.md",
+        "sha256": "febb7c8668ef255b3fd81c0cae72ee9d80b1aeb5d2b6c308b4135b0a2a85c117"
+      },
+      {
+        "path": "J0002-implementation/workspace/leads/04-existing-corruption-and-latent-cache.md",
+        "sha256": "d1c996c2d626a8f031798231ef42fceb3cad112973235bd49e288aa64c3f64f5"
+      },
+      {
+        "path": "J0003-history/workspace/notes.md",
+        "sha256": "c3e83aede17408357c7be19c3fc9571534b076e952e033786cf4acb9b6a7af7c"
+      },
+      {
+        "path": "J0003-history/workspace/leads/noncolocated-reference-cleanup.md",
+        "sha256": "1978146d144a5624785508cc9e8bc3d9cef8dc125aa9e515e230b720851da9ac"
+      },
+      {
+        "path": "J0003-history/workspace/leads/windows-colocation-lifetimes.md",
+        "sha256": "4d7d05a47809505020bb3a9f22d789154110530354f81ea707adeaf458b54acf"
+      },
+      {
+        "path": "J0003-history/workspace/leads/worktree-cleanup-partial-outcomes.md",
+        "sha256": "6f0d500db782c146b0df25dfc5a807dc6675fb239cb36805a921f55b53388be8"
+      },
+      {
+        "path": "J0004-implementation/workspace/notes.md",
+        "sha256": "c1b0262a7e3ba9b341562f1cd2496c72e89e8875eccc5aef8f1e046a90d0649f"
+      },
+      {
+        "path": "J0004-implementation/workspace/leads/external-tool-result-lifetime.md",
+        "sha256": "75c32f61f66f75cd3a66c9502ab5902f8e752dc5c29266e90010b78b5121a1a1"
+      },
+      {
+        "path": "J0004-implementation/workspace/leads/hunk-byte-fidelity.md",
+        "sha256": "b2352ca257c17e8fb8024dd0e174356efc64b2986bdaf344039e3b27074665b5"
+      },
+      {
+        "path": "J0004-implementation/workspace/leads/mutation-outcome-and-recovery.md",
+        "sha256": "61dfacae099a573159faf81e2f2e70e6f62b7ebe0e367fa7ff1893dacfddab06"
+      },
+      {
+        "path": "J0004-implementation/workspace/leads/web-client-state-isolation.md",
+        "sha256": "01dfaae542759ab658632b90242dff936731ec4b704e21d589180aa9f8a7ded1"
+      },
+      {
+        "path": "J0005-history/workspace/notes.md",
+        "sha256": "ca6fcd8bc6effc34f2c0e4c4519ff05537534ca542c4cad664d2fa42396a41aa"
+      },
+      {
+        "path": "J0005-history/workspace/leads/gg-conflict-rendering.md",
+        "sha256": "5c4afef8b0ae3e69c04daf39f46bad7de159704427f3f54e51ac9397e4af55ff"
+      },
+      {
+        "path": "J0005-history/workspace/leads/gg-external-resolution-freshness.md",
+        "sha256": "10e2c80a588fde2751e062036381e5da9bdedda13ccecb0185b7824de1d51d1d"
+      },
+      {
+        "path": "J0005-history/workspace/leads/gg-immutability-after-bookmark-move.md",
+        "sha256": "cd45e3445fe88eaa8d67bf94afcb2891f8f3951a9da4f99cb233378044f0d6a5"
+      },
+      {
+        "path": "J0006-implementation/workspace/notes.md",
+        "sha256": "f073f9f5d5058abdeb09a55e4e4cd9475af213c944bf306b46630dcb2bc103af"
+      },
+      {
+        "path": "J0006-implementation/workspace/leads/evolog-split-partial-effect.md",
+        "sha256": "6434e8e3900effa0335b6e27e29d9526f677eb71a61fe2723da295d565e4bccd"
+      },
+      {
+        "path": "J0006-implementation/workspace/leads/operation-id-display-contract.md",
+        "sha256": "1672bc0798d1b79f7fd33641586f3032503a2b947619aae481871fcde709582a"
+      },
+      {
+        "path": "J0006-implementation/workspace/leads/preview-invalidation.md",
+        "sha256": "a63877d07d5bb37d556f74c2a92686299c50e3bc08cecadc09f0ff0b4491cf90"
+      },
+      {
+        "path": "J0006-implementation/workspace/leads/stream-lifecycle.md",
+        "sha256": "597e5d9b730683fc486c145512a843778c5ec078b2e4f68e9c17acadc053502e"
+      },
+      {
+        "path": "J0007-history/workspace/notes.md",
+        "sha256": "fe020a5a562d8da335d379b3f9855de27c5e497cedeb85f0db863af74d30f383"
+      },
+      {
+        "path": "J0007-history/workspace/leads/evolog-split-partial-outcome.md",
+        "sha256": "3a9454a72ca99dbaf1238fd549b2dcf8386dddeffe14bc98e2cd370ad88930d3"
+      },
+      {
+        "path": "J0007-history/workspace/leads/oplog-parser-identity-boundary.md",
+        "sha256": "5e84191544bc60eab7e2f21b98fa44f6561b90a8406e481987929572a7eecc0e"
+      },
+      {
+        "path": "J0007-history/workspace/leads/split-selection-order-ownership.md",
+        "sha256": "f84f55d5573896f11640dee6dc906d6706e7c76ae2cef6d1a0e759d06ec130d0"
+      },
+      {
+        "path": "J0007-history/workspace/leads/stream-lifecycle-before-first-output.md",
+        "sha256": "b8af45ff6d55da8ded5a1cde7367f7bca61720c44c6224a4b2e6b341356a7f97"
+      },
+      {
+        "path": "J0007-history/workspace/leads/undo-confirmation-target-drift.md",
+        "sha256": "fe4b7a075a51daff951899f5473bf870bb2caa3658eef83e5e863d91bd9df11b"
+      },
+      {
+        "path": "J0008-implementation/workspace/notes.md",
+        "sha256": "d838afb2942b37b63dd078a79d42c9378454bdb9f47b653419e11cdafa2e0f5c"
+      },
+      {
+        "path": "J0008-implementation/workspace/leads/observation-can-publish.md",
+        "sha256": "bfbbe35420de372386d8cd2b402e63c970ad40c729798f24abfee5997f7e19c4"
+      },
+      {
+        "path": "J0008-implementation/workspace/leads/operation-history-is-not-permanent-audit.md",
+        "sha256": "fe25f218d0d4d72a28a63e01e2b793f42978a40d038a75c6a862aef3aa982c5b"
+      },
+      {
+        "path": "J0008-implementation/workspace/leads/operation-publication-is-not-command-completion.md",
+        "sha256": "6c9e38ab133caab29ea76d58c9a5a6e93271a322355d4e41cd9fc5672543b9ca"
+      },
+      {
+        "path": "J0009-history/workspace/notes.md",
+        "sha256": "5997895ca191ed4120d1a60080c4449e24cd6e34a011b59080d1d02a38c70cd2"
+      },
+      {
+        "path": "J0009-history/workspace/leads/extra-table-head-cleanup.md",
+        "sha256": "695862dc977e4a230ea19c8bce410c3fcdb22274a9956a6bbcbf0c352fed1bf7"
+      },
+      {
+        "path": "J0009-history/workspace/leads/nonintegration-is-not-dry-run.md",
+        "sha256": "56dc6e4a7853552b65470452f5c8f3a77be0bbd455a94e1829c7dfc7234d58b5"
+      },
+      {
+        "path": "J0009-history/workspace/leads/operation-merge-determinism.md",
+        "sha256": "325d4ecab34ee17f8324b26595c20fabd2596dfb895dd1334f3662c314aa175b"
+      },
+      {
+        "path": "J0009-history/workspace/leads/root-parent-reconciliation.md",
+        "sha256": "4d8b4aa938bec1372fb6024dfde88e1077459866c6c3c2fb80adf3299bc974e5"
+      },
+      {
+        "path": "J0010-implementation/workspace/notes.md",
+        "sha256": "0b71c5673a33a913cbebf3144ffd488ccef2b7edfff78dbac160833e1a5c198b"
+      },
+      {
+        "path": "J0010-implementation/workspace/leads/external-source-payloads.md",
+        "sha256": "d42bad55c240edd190f4a5e29c62ddb3933079f87798d1cc37649c60ecd1991f"
+      },
+      {
+        "path": "J0010-implementation/workspace/leads/metadata-fidelity.md",
+        "sha256": "a958727cf67a7f85f0e1c302ac15a47f93189e6261ac8d9ddf8a179d308ceb9c"
+      },
+      {
+        "path": "J0010-implementation/workspace/leads/restore-cache-fidelity.md",
+        "sha256": "796d4b125804cb3c8a391a958173e8a98565e93725ae7ad565f05dc91bf938a3"
+      },
+      {
+        "path": "J0011-history/workspace/notes.md",
+        "sha256": "00c05e288eed4ffb5967e3e7e5e4c0320f7622143c5d928d125e2e7425a44a1c"
+      },
+      {
+        "path": "J0011-history/workspace/leads/archive-sidecars.md",
+        "sha256": "fd7317a15de109185ea9414506a8937a89b871d170140801c39ef5ddf5e7a7ca"
+      },
+      {
+        "path": "J0011-history/workspace/leads/colocated-cache-tree.md",
+        "sha256": "f51f25c25479c8b4184d143752e0f8107b49de4a66a8bfb2cd682b5a4550352b"
+      },
+      {
+        "path": "J0011-history/workspace/leads/external-config.md",
+        "sha256": "ff15910fc9b58c644dc8deb25621fa4319d346e5bd0fdadb108697d7076115df"
+      },
+      {
+        "path": "J0011-history/workspace/leads/extras-head-loss.md",
+        "sha256": "abd1a8aa933d04a21bd6a01ae4260a2d3b2c64b2acc16ec857edbb5354249643"
+      },
+      {
+        "path": "J0012-reconcile/workspace/notes.md",
+        "sha256": "02e03e480bb208b5d01b68519263db97e12a05b4385d59e9cdf2195120c770b7"
+      },
+      {
+        "path": "J0012-reconcile/workspace/leads/colocation-lifecycle-and-pruning.md",
+        "sha256": "36b5b666f248f1a50fb75e915d4164eb685122638d5a6a9dd64ea4b1455e1c5b"
+      },
+      {
+        "path": "J0012-reconcile/workspace/leads/existing-corruption-and-latent-cache.md",
+        "sha256": "1fd06cae9ed01b57bb64b9e1c920de81deaf5a678d1b68c712f1a28f03d547d5"
+      },
+      {
+        "path": "J0012-reconcile/workspace/leads/git-index-conflict-limits.md",
+        "sha256": "cda6f8184a518f161bb2f69cfd0dae90e36ab5274b587069f9a148f230de098d"
+      },
+      {
+        "path": "J0012-reconcile/workspace/leads/head-reset-reconciliation.md",
+        "sha256": "b328af53ed1dc34af1cbe195cf600a4ca208cb789ec31a9a9ed653a8bacf1d69"
+      },
+      {
+        "path": "J0012-reconcile/workspace/leads/noncolocated-reference-cleanup.md",
+        "sha256": "baf0cf9b1b1d46b3bd420edd1d0b9351f535986462dbba16f2c4080866d23b3a"
+      },
+      {
+        "path": "J0012-reconcile/workspace/leads/windows-colocation-lifetimes.md",
+        "sha256": "b32cc0ce3d60a6a18c0fffb8e33d8f20d5e0d885814be88a64877ba5ea40693d"
+      },
+      {
+        "path": "J0013-reconcile/workspace/notes.md",
+        "sha256": "f21b71a85b616b7411915427f6c183a54bcd071f99c500a23096e344ac12594a"
+      },
+      {
+        "path": "J0013-reconcile/workspace/leads/gg-conflict-presentation.md",
+        "sha256": "6238eafdfc9b1db43b3a0f2f3bfac1a51e2c8a76c21fe8efc447dc21a529e3d4"
+      },
+      {
+        "path": "J0013-reconcile/workspace/leads/gg-editor-result-ownership.md",
+        "sha256": "16d6a711cb4f658305b294b3bbe856a86913d12709e469f7aedd68f2933a981f"
+      },
+      {
+        "path": "J0013-reconcile/workspace/leads/gg-graph-generation-and-completeness.md",
+        "sha256": "31d7cc7f15fb4d30570c83a20ebf6f9bb5ab6effc815c2967cfe48e45384baba"
+      },
+      {
+        "path": "J0013-reconcile/workspace/leads/gg-hunk-byte-and-tree-fidelity.md",
+        "sha256": "69b67d8fe5e59281d728cb119a6a634d21f3259ab69877891e4ea7e68859458d"
+      },
+      {
+        "path": "J0013-reconcile/workspace/leads/gg-mutation-outcome-and-recovery.md",
+        "sha256": "aeaf448adba95fca5a668eec29b1dd235aca328bd444e9a480bf3e7bfff8922a"
+      },
+      {
+        "path": "J0013-reconcile/workspace/leads/gg-native-and-long-distance-interactions.md",
+        "sha256": "af7006e001b06e7ca69d9bda0fb080dc935e0c30a28b01927cd38b8b3d25e188"
+      },
+      {
+        "path": "J0013-reconcile/workspace/leads/gg-web-session-ownership.md",
+        "sha256": "e665aa07b8019cf97ca46562b4252c7cdddb6fa5c1b457f0cdbf355aa76e119d"
+      },
+      {
+        "path": "J0014-reconcile/workspace/notes.md",
+        "sha256": "4e94c69a44c183b7c817539d8fc73dcd9c1435d03238e95fbece059bc4875d24"
+      },
+      {
+        "path": "J0014-reconcile/workspace/leads/command-and-credential-ownership.md",
+        "sha256": "b95bbdace937ce4f4844be9ec9d7b14e1aab57ae608e602413468e95f972ab22"
+      },
+      {
+        "path": "J0014-reconcile/workspace/leads/evolog-split-partial-outcome.md",
+        "sha256": "0b42bce0941633ace1f02bc20145da60719b7e086abf64d03b266483da1f1464"
+      },
+      {
+        "path": "J0014-reconcile/workspace/leads/operation-identity.md",
+        "sha256": "723366d3abf52207a80e18715d9eb95e9b66cc4c71dbb93768163a2c7934847b"
+      },
+      {
+        "path": "J0014-reconcile/workspace/leads/preview-invalidation.md",
+        "sha256": "20a4f43832810340a689579bd18b83819947337a41efd9cd5139bd8d10c5ed48"
+      },
+      {
+        "path": "J0014-reconcile/workspace/leads/split-editor-ownership.md",
+        "sha256": "4cdaec972c89954d8cbdae1eff9347bfd1e387337b085c7a8261030fa4fcdc67"
+      },
+      {
+        "path": "J0014-reconcile/workspace/leads/stream-lifecycle.md",
+        "sha256": "dea187eba371416a252fe2d56c04e51c62ca7c611de614fb8f8b401d42ad2c9b"
+      },
+      {
+        "path": "J0014-reconcile/workspace/leads/undo-confirmation-drift.md",
+        "sha256": "7a51000ddd045e83acf43f129eceb9d9e2647bfe307efc365eb425676d8089de"
+      },
+      {
+        "path": "J0015-compare/workspace/notes.md",
+        "sha256": "586eb7e18796524ef850e90b22bde8404ed8f18b8045c71741e7d148711d89ac"
+      },
+      {
+        "path": "J0016-compare/workspace/notes.md",
+        "sha256": "ebbe0efde329cf0253c1de6b2080429613e91928c2e2f210c1b6fea2fd8b1cd6"
+      },
+      {
+        "path": "J0017-compare/workspace/notes.md",
+        "sha256": "9a80ee86cdbb4b34ac8d7db126e161e13bd3c43fbab25dca9d3c7754d5cd54e8"
+      },
+      {
+        "path": "J0018-reconcile/workspace/notes.md",
+        "sha256": "dd6bc3c3dd076460b390855c7f7d0479cbcdb4b9668f0fabcd099aa1988987a6"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/external-import-and-workspace-races.md",
+        "sha256": "6a482470e8d3d52fc9a654e63d92681e90ec74f3094ddb8e040586d2b2fa9721"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/extra-table-head-cleanup.md",
+        "sha256": "362f18e7d0129ec9a0f191d81be7cd008d120e6bbeea2e9fa3ec8549c8694773"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/nonintegration-is-not-dry-run.md",
+        "sha256": "a64dec23a0ea035ce5ec90e4e7718a5d0bc90a9fe951722a39dea8800f36bf96"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/observation-can-publish.md",
+        "sha256": "12cb3aedf4224ede4a6e12c6075cb67f7247b8f46e66120e117f61336bc28c8a"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/operation-history-is-not-permanent-audit.md",
+        "sha256": "e40cdf9dd2149ff0b9cdf323787a250e6e4d1ef9de3d6f0d540f9107e091c3c0"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/operation-merge-determinism.md",
+        "sha256": "9ae3da047f3662648d63bb6fc6b72245b1b4c1d59bf674815ce8b35c39e61ee6"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/operation-publication-is-not-command-completion.md",
+        "sha256": "f7bdcb0dde45faae8a3330aa178676b5140916a7b35b85f8c19d3bf3efb43ef7"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/root-parent-reconciliation.md",
+        "sha256": "f8f71f424e246ddcd4a4d3385d950b9c80c6ca76477ded935e5f270981ace73b"
+      },
+      {
+        "path": "J0020-reconcile/workspace/notes.md",
+        "sha256": "29673c60dfbd3b2867a38b77f9934b81f4f786dcfbe22b33d6f67c0538fd510f"
+      }
+    ]
+  },
+  "union_runner_figure_corrections": [
+    "The runner reported 18 of 20 jobs writing notes.md; durable state shows 19. J0018-reconcile and J0020-reconcile both timed out and still saved notes.md (6,336 and 8,790 bytes; J0018 also wrote 8 lead documents). Only J0019-reconcile produced nothing. Those saved documents carry 12 of the 43 credits.",
+    "The reported '12 to 39 responses per job' reconciles only through the durable meter: the three timeout jobs have no raw-omp/usage.json, so their native receipt count is zero while the durable meter recorded 27, 12 and 13. 484 native receipts across the 17 completed jobs (22-39 each) plus 52 durable-metered requests never receipted = 536 attempted, which is why each timeout job retains $1 unresolved (gaps missing_retained_usage_records and durable_meter_request_count_mismatch)."
+  ],
+  "five_arm_structure": {
+    "review_arm_nesting": "claude (18) is a proper subset of muse13 (40) and of claude-hicap (46); deepseek41 (33) is a proper subset of both; muse13 is a proper subset of claude-hicap. Four-arm review union = 46 = claude-hicap's own set.",
+    "union_arm_position": "claude (18) is also a proper subset of union (43), but union is comparable with none of the review arms by containment: it holds 11 findings all four miss (F005 F015 F019 F024 F025 F038 F052 F057 F065 F068 F069) and misses 14 they hold (F001 F032 F033 F034 F036 F037 F044 F053 F074 F083 F089 F090 F106 F107).",
+    "five_arm_union": 57,
+    "five_arm_union_percent": 51.82,
+    "the_union_question": "A different research model, given the same frozen case and the whole pipeline, produced ZERO findings outside premium union hybrid. It redistributed coverage rather than extending it. Seven of its 14 misses against the review arms are one lead family - diffedit3 and external editors - which its own discovery found (lead 23) and never routed to a study or compare job within 20 admissions.",
+    "independent_convergence": "Continuation 3 rejected 'add a mutating status.refresh branch as a required correction' because F002 already fixes read effects and a writer-bearing branch would change that authority. The union arm, with no sight of continuation 3, reached the same boundary from the opposite direction in J0015 R1: it keeps the read branch's null authority, states that 'blanket addition of writer leases to all reads would change the existing contract unnecessarily', and instead demands a proven non-mutating observation path with typed stale results."
+  },
+  "union_by_stage": {
+    "definition": "stage of first credited support - the earliest stage whose delivered assertion states the proposition and cites a passage",
+    "union": {
+      "discovery": 12,
+      "implementation": 0,
+      "history": 0,
+      "reconcile": 10,
+      "compare": 21,
+      "total": 43
+    },
+    "premium": {
+      "research_stages": 73,
+      "reconcile": 0,
+      "compare": 5,
+      "total": 78
+    },
+    "hybrid": {
+      "research_stages": 86,
+      "reconcile": 2,
+      "compare": 2,
+      "total": 90
+    },
+    "method": "premium and hybrid research-stage credit is comparison.json original_arms membership (the goal-2 run admitted only discovery, implementation and history); their late credit is continuation_credit, which names the continuation-3 reconcile or compare job.",
+    "notable": "The union arm's implementation and history stages produced zero first credits across 10 of its 20 admissions and 5,325 summed job-seconds. Their 47 documents supply the passage-level evidence that reconcile and compare then cite, but added no union finding of their own."
+  },
+  "union_time_truncated": {
+    "truncated_jobs": [
+      "J0018-reconcile",
+      "J0019-reconcile",
+      "J0020-reconcile"
+    ],
+    "bound": "2,400 s per-job wall (elapsed 2400.590, 2400.604, 2400.372 s). No job was request-limited or money-limited; receipts per completed job run 22-39 against a 40 ceiling.",
+    "credits_primary_from_truncated_jobs": 12,
+    "credits_resting_on_truncated_output_alone": [
+      "F008",
+      "F057",
+      "F082"
+    ],
+    "recall_excluding_truncated_output": "40/110 = 36.36%",
+    "only_true_blank": "J0019-reconcile. Lead L-e3903531cf7b completed implementation and history and lost its reconciliation entirely, so it never reached comparison."
+  },
+  "adjudication_source_union": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/adjudication/union",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/adjudication/union-manifest.json",
+    "manifest_sha256_internal": "51768ce02e26497339cc988430c40b7344590196d65847a52fafe3247c01d4e0",
+    "progress_log": "adjudication/union/PROGRESS.md (kept out of this bundle; it is a working log, not a result)"
   }
 }
