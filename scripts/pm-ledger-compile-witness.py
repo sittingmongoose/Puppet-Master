@@ -100,7 +100,10 @@ def run(root: Path, ledger_dir: Path, base: str | None) -> dict:
     corrections = load_jsonl(ledger_dir / "records" / "corrections.jsonl")
     findings_path = ledger_dir / "source_shards" / "findings.md"
     findings_md = findings_path.read_text(encoding="utf-8") if findings_path.exists() else ""
-    docs = sorted(set(queue.get("canonical_plan_targets", [])) | set(queue.get("compiled_owner_docs", [])))
+    docs = set(queue.get("canonical_plan_targets", [])) | set(queue.get("compiled_owner_docs", []))
+    for it in queue.get("items", []):
+        docs |= set(it.get("target_docs", []) or ([it["target_doc"]] if it.get("target_doc") else []))
+    docs = sorted(d for d in docs if d.endswith(".md"))
     units: dict[str, dict] = {}
     unit_doc: dict[str, str] = {}
     for d in docs:
