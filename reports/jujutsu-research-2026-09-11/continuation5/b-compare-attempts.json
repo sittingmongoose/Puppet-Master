@@ -1,0 +1,42 @@
+{
+  "note": "Arm B's compare stage ran twice. Attempt 1 was destroyed by the account's shared five-hour rate limit and is archived, preserved and manifested but NOT scored. Attempt 2 is the scored result. Nothing was discarded; the archive keeps attempt 1's budget, meter, gate, report, isolation proof and output manifest, and its run tree stays at its original path so every published hash stays valid.",
+  "attempts": [
+    {
+      "attempt": 1,
+      "scored": false,
+      "run": "runs/jujutsu-b-compare-20260917-123157",
+      "launched_at": "2026-09-17T12:32:08Z",
+      "terminal_at": "2026-09-17T12:37:02Z",
+      "stop_reason": "Stop: admitted_attempt_cap",
+      "admissions_used": 12,
+      "comparisons_delivered": 0,
+      "captured_upper_usd": 6.29826225,
+      "bound_by": {
+        "error": 11,
+        "budget": 1
+      },
+      "cause": "11 of 12 jobs died on the CLI text \"You've hit your session limit - resets 1:30pm (UTC)\"",
+      "output_manifest_sha256": "5b340f3ae1bd7d165f7383b29c7d3663d41f779fa192d38352140c1fb1196f77",
+      "output_file_count": 9210,
+      "archive": "arm-history/b-compare-attempt-1/",
+      "archive_manifest_sha256": "64ab6e39183df3f1f3bc328a9e3f34fea6854cd636ea68976d00f25880ed0d78"
+    },
+    {
+      "attempt": 2,
+      "scored": true,
+      "run": "runs/jujutsu-b-compare-20260917-133734",
+      "launched_at": "2026-09-17T13:37:45Z",
+      "terminal_at": "2026-09-17T14:44:07Z",
+      "stop_reason": "Stop: admitted_attempt_cap",
+      "admissions_used": 12,
+      "comparisons_delivered": 32,
+      "captured_upper_usd": 102.1967,
+      "bound_by": {
+        "finished": 12
+      },
+      "output_manifest_sha256": "17b32556b5d3491e526a2a84384ad048030a856f84d643e01305502149e550e0",
+      "output_file_count": 20012,
+      "launch_gated_on": "arm-outputs/rate-limit-before-b-compare-attempt2.json (typed probe in its own step: status allowed, no utilization field, isUsingOverage false)"
+    }
+  ]
+}

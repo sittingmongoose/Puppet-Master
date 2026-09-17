@@ -95,7 +95,7 @@ Cost: captured upper **$85.5011** = CLI-reported $85.5011, of the $150 cap; $3.8
 them, which is the mechanism this arm was built to test. 12 of 12 jobs wrote `notes.md`; 32 lead deliveries
 were receipted; the lead set grew from 88 to 129 as review jobs ingested new leads.
 
-## Arm B — cheap breadth then strong compare (breadth complete; compare destroyed by the account rate limit)
+## Arm B — cheap breadth then strong compare (complete)
 
 | Stage | Model | Runtime | Limits |
 |---|---|---|---|
@@ -119,47 +119,55 @@ leads; 34 were never reached. 54 lead deliveries were receipted and the lead set
 ceiling is the finding: at three leads per batch, 30 admissions cannot cover 88 leads once retries and
 oversized single-lead batches are counted.
 
-### Compare — terminal with zero comparisons
+### Compare — attempt 1 destroyed by the account rate limit, attempt 2 is the result
 
 The compare stage read **only** Muse's reconcile outputs. That is verified, not asserted, in
-`compare-isolation.json`: all 54 reconcile-ready leads depend on one of the 30 Muse reconcile jobs; the 12
-premium reconcile jobs `J0005`–`J0016` are still present in the tree but delivered **nothing** in the frozen
-premium run, so none of them can be a compare dependency and no compare-eligible lead names one. The check
-ran *before* activation, so a tree that failed it would never have become an arm.
+`compare-isolation.json`, and the check runs *before* activation, so a tree that failed it would never
+become an arm: all 54 reconcile-ready leads depend on one of the 30 Muse reconcile jobs, and the 12 premium
+reconcile jobs `J0005`–`J0016` are present in the tree but delivered **nothing** in the frozen premium run,
+so none of them can be a compare dependency and no compare-eligible lead names one.
 
-It then ran into the account's shared five-hour limit. 12 admissions, wall 294.0 s, summed 586.1 s,
-concurrency 2.000. bound_by: **error 11, budget 1**. Eleven jobs died on the literal CLI text
-"You've hit your session limit · resets 1:30pm (UTC)", nine of them within 6.6–7.9 s on one response each;
-the twelfth aborted streaming after one response. Two jobs had reached 37 and 32 responses before the limit
-bit. **Zero leads reached a comparison, and no job wrote `notes.md`.** Captured $6.2983 of the $150 cap; all
-12 jobs still reconciled with receipts equal to requests and $0.00 unresolved.
+**Attempt 1** (12:32:08 Z → 12:37:02 Z) ran straight into the account's shared five-hour limit. 12
+admissions, bound_by **error 11, budget 1**; eleven jobs died on the literal CLI text "You've hit your
+session limit · resets 1:30pm (UTC)", nine within 6.6–7.9 s on one response each. **Zero comparisons, no
+notes written**, $6.2983 captured. It is archived, preserved and manifested, and **not scored**; the two
+mistakes that let it start and keep admitting are described under *Rate limits* below. `b-compare-attempts.json`
+records both attempts side by side.
 
-Arm B therefore has a complete breadth stage and **no compare result**, and its compare arm has spent all 12
-of its admissions.
+**Attempt 2** (13:37:45 Z → 14:44:07 Z, `Stop: admitted_attempt_cap`) is the scored result. It was relaunched
+per continuation 4's precedent for an arm destroyed by an external fault — archive the attempt, reset the arm
+state, regrant the full 12 admissions — from the same b-breadth run in the same 54-lead delivery order, with
+the launch gated on a typed probe taken in its own separate step.
 
-### The rate-limit stop, and why it did not save the arm
+| Stage | Jobs | Wall s | Summed job s | Avg concurrency |
+|---|---|---|---|---|
+| compare | 12 | 3 973.8 | 11 286.4 | 2.840 |
+| **arm** | **12** | **3 981.3** | **11 286.4** | **2.835** |
 
-The stop rule is: on a typed `rate_limit_event` whose status is anything other than `allowed`, or whose
-`isUsingOverage` is true, stop admitting without cancelling live workers. Two mistakes made it ineffective,
-both recorded in full in the run notes:
+**66 min 21 s, inside the 75-minute target with 8 min 39 s to spare.** bound_by: **finished 12 of 12**.
+Nothing hit a response, time, budget or rate limit; every typed event during the run stayed `allowed` and the
+watcher ended on "campaign terminal" without ever needing to hold. Responses per job 56–86 (mean 72.8) against
+the 160 ceiling; longest job 1 300.7 s of 3 600; dearest $10.21 of $20. All 12 reconciled, receipts equal
+requests, $0.00 unresolved. 12 of 12 wrote `notes.md`; 32 lead deliveries receipted. Captured **$102.1967** =
+CLI-reported, of the $150 cap.
 
-1. The pre-launch probe and the launch ran in one command instead of the launch being gated on the probe, so
-   the campaign started four seconds *after* a `status: allowed_warning`, `utilization: 0.96` record was
-   already in hand. Gated, this arm would never have started.
-2. The admission hold was sized to the monetary headroom *at that instant*. `committed()` counts a live
-   job's full allowance and replaces it with the job's actual spend once it goes terminal; the rate-limited
-   jobs died in seconds for about nothing, so headroom reopened within a minute and the scheduler admitted
-   nine more times until it hit its own 12-admission cap. The hold is now sized to the whole cap, so
-   committed stays above it however the live jobs settle.
+**32 of the 88 leads reached a comparison — exactly Muse delivery-order positions 1 through 32, no gaps.**
 
-The independent watcher (`rate_watch.py`) did fire correctly on the same typed event and found the hold
-already placed. The hold was released once the arm was terminal, so the frozen journal is the accounting the
-arm itself produced; the journal hashes before and after are in the run notes.
+## What the three arms cost, and what they reached
 
-Typed events only, throughout: a text search for "429" or "rate limit" matches this research corpus itself.
-The readings are preserved in `rate-limit-before-arm-b.json` (12:05 Z, `allowed`),
-`rate-limit-before-b-compare.json` (12:32 Z, `allowed_warning`, 0.96) and `rate-limit-after-b-compare.json`
-(12:39 Z, `allowed`, window resetting 18:30 Z).
+| Arm | Leads compared, of 88 | Cost | Arm wall |
+|---|---|---|---|
+| `claude-hicap` (continuation-4 baseline, frozen order) | 14 | $82.52 | 3 535.2 s |
+| **Arm P**, prioritized depth | **16** (ranks 1–16) | $85.51 | 4 193.3 s |
+| **Arm B**, cheap breadth then strong compare | **32** (delivery positions 1–32) | $108.86 | 5 508.9 s over two stages |
+
+Arm B's gain is structural rather than clever: because Muse had already reconciled, **all twelve** of Opus 5's
+admissions bought comparisons, where Arm P spent six of its twelve on reconciliation and claude-hicap spent
+six as well. Arm P's prioritization did what it was built to do — the admissions landed on exactly the
+top-ranked leads — but choosing *better* leads inside the same budget moved recall from 14 to 16, while moving
+the cheap half of the work to a cheap model moved it to 32. Arm B's totals are not a free lunch: it cost 32%
+more than Arm P and its two stages together exceed the 75-minute target, though each stage on its own is
+inside it. None of these outputs has been adjudicated, so this table is reach, not quality.
 
 ## Rate limits
 
@@ -204,6 +212,7 @@ verifiable rather than asserted. `runtime-identity.json` is taken from each job'
 | `arm-reports/b-compare.json` | Arm B compare stage, same per-job detail |
 | `arm-b-delivery-order.json` | The order b-breadth delivered its 54 reconciled leads in, which the compare stage admitted in |
 | `compare-isolation.json` | The pre-activation proof that the compare stage can only depend on Muse's reconcile deliveries |
+| `b-compare-attempts.json` | Both compare attempts side by side: what each reached, cost and stopped on, and where attempt 1 is archived |
 | `arm-p-ranking.json` | The full 88-lead prioritization ranking with every reason, and which leads reached a comparison |
 | `prioritization.json` | The prioritization job's own limits, result, receipts and cost |
 | `output-manifests.json` | Every frozen output tree, by SHA-256 file manifest and manifest digest |
@@ -213,12 +222,6 @@ verifiable rather than asserted. `runtime-identity.json` is taken from each job'
 | `rate-limit-at-arm-p-terminal.json` | The typed rate-limit event at Arm P's terminal |
 
 ## Still to run
-
-Arm B's compare stage needs a decision: it cannot resume, because it spent all 12 admissions on
-rate-limited jobs and stopped at `admitted_attempt_cap`. The continuation-4 precedent for an arm destroyed
-by an external fault — Union attempt 1's provider outage, the Claude arm's adapter defect, deepseek41's
-accounting defect — was to archive the attempt with its manifest and relaunch the arm with a full grant,
-discarding nothing. That is a fresh grant of about $85, so it is not taken unilaterally.
 
 The sweep arms T80, A24 and T320 are patched in, gate-verified and held until the coordinator confirms the
 window. Their limits, and how each differs from goal 2, are recorded in each arm policy's `limits_note`.
