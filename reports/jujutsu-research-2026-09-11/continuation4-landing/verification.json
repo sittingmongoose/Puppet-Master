@@ -1,6 +1,6 @@
 {
   "schema": "jj.continuation4.landing_verification.v1",
-  "generated_at_utc": "2026-09-17T05:37:32Z",
+  "generated_at_utc": "2026-09-17T05:43:57Z",
   "branch": "plans/c4-corrections-20260917",
   "base": "a6162b559b502278458a56e95c5c0891c3e2a505",
   "status": "COMPILED_CORRECTION_INTEGRITY_PASS_PENDING_INDEPENDENT_BRANCH_REVIEW",
@@ -45,6 +45,10 @@
     {
       "sha": "53fa84cc5e10379cd3d227d3acee8beb8430a64a",
       "subject": "plans: record the continuation-4 answers as DL-056, DL-057 and DL-058"
+    },
+    {
+      "sha": "ff8dc4eed893d56b50f11b3479705c82cc5af46a",
+      "subject": "plans: register the continuation-4 correction ledger and its landing bundle"
     }
   ],
   "corrections_landed": 13,
@@ -98,6 +102,35 @@
       "command": "python3 -m unittest tests.test_pm_source_control_effects",
       "result": "pass",
       "tests": 13
+    },
+    "plan_index": {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "result": "pass",
+      "plan_unit_count": 6656,
+      "coverage_status": "pass",
+      "note": "node_readiness_status stays blocked_runtime_certification_incomplete, which is the repository's standing state and is not caused by this wave."
+    },
+    "ledger_per_ledger": {
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections",
+      "result": "fail",
+      "errors": 3,
+      "error_class": "pre-existing governance coverage omissions for the owner documents this wave edits",
+      "summary": {
+        "atoms": 13,
+        "compile_queue_items": 14,
+        "corrections": 13,
+        "decisions": 13,
+        "events": 5,
+        "plan_units_checked": 99,
+        "questions": 10
+      }
+    },
+    "ledger_wrapper": {
+      "command": "python3 scripts/pm-plans-verify.py validate-bootstrap-ledgers --ledger-id pldg-20260917-001-jujutsu-continuation4-corrections",
+      "result": "fail",
+      "failures": 1,
+      "errors": 3,
+      "error_class": "the same three"
     }
   },
   "semantic_gate": {
@@ -159,5 +192,6 @@
       "C4U-04"
     ]
   },
-  "claim_boundary": "Static schema, fixture, shard, index and semantic-gate integrity only. No governance seal, runtime certification, native adapter, security, performance or readiness claim."
+  "claim_boundary": "Static schema, fixture, shard, index and semantic-gate integrity only. No governance seal, runtime certification, native adapter, security, performance or readiness claim.",
+  "reseal_request": "This wave edits Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md and Plans/Decision_Log.md, so Spec Lock hashes, owner and artifact evidence hashes and the readiness report are stale for those documents until the designated Plans agent reseals. That staleness is the expected consequence of editing canon and does not stop a landing."
 }
