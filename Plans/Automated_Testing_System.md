@@ -4853,7 +4853,7 @@ canonical_text: >-
   billed amount, and that a run manifest cannot declare a runtime version, hash a tree with live
   telemetry, record a freeze after the jobs it governed, or publish a malformed freeze timestamp.
   The pair is registered in the closed CONTRACT_PAIRS manifest of scripts/pm-new-contracts-verify.py,
-  whose authored cardinality that script owns and reports, and runs as the named subcheck
+  which owns and reports that manifest's authored cardinality, and runs as the named subcheck
   validate-new-contracts in pm-plans-verify.py run-gates and audit-governance. Retaining or
   validating a fixture never means executing it: this is static schema and fixture evidence only,
   and native handler, provider, recovery, security, visual and performance proof remains NOT_RUN.

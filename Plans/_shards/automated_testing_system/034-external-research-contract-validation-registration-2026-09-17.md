@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L4830-L4894
 
-Source SHA256: `513c7eaac21b0117b26c0a32ae8e88c0181f36fd6a277f179433f4f951f66a54`
+Source SHA256: `a12932a412288b0186f3bf88b2330ac35617d43b334e9618036282822abeb3ee`
 
 ---
 
@@ -34,7 +34,7 @@ canonical_text: >-
   billed amount, and that a run manifest cannot declare a runtime version, hash a tree with live
   telemetry, record a freeze after the jobs it governed, or publish a malformed freeze timestamp.
   The pair is registered in the closed CONTRACT_PAIRS manifest of scripts/pm-new-contracts-verify.py,
-  whose authored cardinality that script owns and reports, and runs as the named subcheck
+  which owns and reports that manifest's authored cardinality, and runs as the named subcheck
   validate-new-contracts in pm-plans-verify.py run-gates and audit-governance. Retaining or
   validating a fixture never means executing it: this is static schema and fixture evidence only,
   and native handler, provider, recovery, security, visual and performance proof remains NOT_RUN.

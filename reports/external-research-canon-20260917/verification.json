@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.external_research_canon.verification.v1",
-  "generated_at_utc": "2026-09-17T06:20:00+00:00",
-  "branch": "plans/goal3-research-20260917-land1",
-  "base_commit": "2a929055012e948e53c3884da1a9f0dd80deecc1",
+  "generated_at_utc": "2026-09-17T11:40:00+00:00",
+  "branch": "plans/goal3-research-20260917-land2",
+  "base_commit": "61bea7aabc787c9d214e6c6d042ec3269a7c8536",
   "agent": "Opus 5 (claude-opus-5[1m])",
   "claim_boundary": "Static schema, fixture, shard and index integrity only. No runtime, native adapter, provider, recovery, security, performance, visual, governance seal or readiness claim. No WorkNodes, NodeSeeds, executable queues or readiness unlocks.",
   "checks": [
@@ -173,16 +173,41 @@
       "S6": "the scripts edit is three changed lines, two added and one removed, not two",
       "N1": "two of the three ledger-validator errors name a document this branch created; stated in the README and in this file's error_disposition",
       "N2": "the REVIEW_ADJUDICATION_20260916.md lineage row is labelled a 2026-09-17 read-time snapshot of a file that is appended to"
+    },
+    "delta_verdict": {
+      "reviewed": [
+        "80a71a0bfb",
+        "f8056b31c8"
+      ],
+      "verdict": "land",
+      "copy_edit_applied": "in ATS-054 and External_Research.md section 5, 'whose authored cardinality that script owns and reports' and 'whose cardinality that script owns and reports' are now 'which owns and reports that manifest's authored cardinality', so the sentence parses and ATS-054 keeps its parallel with 'and runs as the named subcheck'"
     }
   },
   "rebase": {
     "original_base": "a6162b559b502278458a56e95c5c0891c3e2a505",
-    "rebased_onto": "2a929055012e948e53c3884da1a9f0dd80deecc1",
+    "first_rebase": {
+      "branch": "plans/goal3-research-20260917-land1",
+      "onto": "2a929055012e948e53c3884da1a9f0dd80deecc1",
+      "conflicts": "derived files only; plans/c4-corrections-20260917 had not landed, so no registry conflict"
+    },
+    "second_rebase": {
+      "branch": "plans/goal3-research-20260917-land2",
+      "onto": "61bea7aabc787c9d214e6c6d042ec3269a7c8536",
+      "conflicts": "Plans/ledgers/v2/ledger_registry.json on both hunks, plus derived Plans/.plan_index/* files"
+    },
     "review_branch": "plans/goal3-research-20260917",
-    "clean_on_every_source_file": true,
-    "conflicts": "Plans/_shards/00-plans-index/*, Plans/_shards/automated_testing_system/* and Plans/.plan_index/* only; every one resolved by regenerating with scripts/pm-shard-plans.py and scripts/pm-plan-index.py, never by merging. After the rebase a fresh regeneration reproduces the tip byte for byte apart from the generator's generated_at_utc stamps.",
-    "c4_corrections_landed_at_rebase_time": false,
-    "registry_conflict_status": "did not materialize; plans/c4-corrections-20260917 had not landed when this rebase ran. It must be resolved on the next rebase, after that branch lands: keep both compiled_ledgers entries, pldg-20260917-001-jujutsu-continuation4-corrections and pldg-20260917-002-external-research-canon, and the later updated_at_utc, 2026-09-17T11:14:00.676032+00:00 over 2026-09-17T06:05:00+00:00.",
-    "holding": "Pushed and held. Not to be landed until the coordinator says go; the corrections branch lands first."
+    "derived_file_policy": "every derived conflict resolved by regenerating with scripts/pm-shard-plans.py and scripts/pm-plan-index.py, never by merging",
+    "registry_resolution": {
+      "rule": "keep both compiled_ledgers entries and the later updated_at_utc",
+      "entries_kept": [
+        "pldg-20260917-001-jujutsu-continuation4-corrections",
+        "pldg-20260917-002-external-research-canon"
+      ],
+      "updated_at_utc_kept": "2026-09-17T11:14:00.676032+00:00",
+      "updated_at_utc_discarded": "2026-09-17T06:05:00+00:00",
+      "total_ledger_entries_after_merge": 27,
+      "entries_dropped": 0
+    },
+    "no_source_file_other_than_the_registry_conflicted": true
   }
 }
