@@ -14,9 +14,12 @@
     "named_but_unchanged_since_base": 1,
     "records": 11,
     "records_firing": 5,
+    "registry_entries_absent_already_at_base": 10,
+    "registry_entries_absent_from_text": 10,
     "tokens_missing_from_prose": 22,
     "tokens_missing_from_registry": 53,
-    "tokens_only_in_companion_outputs": 22
+    "tokens_only_in_companion_outputs": 22,
+    "units_with_registry_entries_absent_from_text": 5
   },
   "witness_exact_tokens": [
     {
@@ -788,6 +791,87 @@
       "token": "disclosed_remote_identity_refs",
       "units_with_token_in_prose": [],
       "units_with_token_in_registry": []
+    }
+  ],
+  "witness_registry_hygiene": [
+    {
+      "absent_already_at_base": [
+        "repository views"
+      ],
+      "entries_absent_from_unit_text": [
+        "repository views"
+      ],
+      "fires": true,
+      "registry_entries": 15,
+      "unit": "JJI-008"
+    },
+    {
+      "absent_already_at_base": [
+        "after operation ID",
+        "before operation ID"
+      ],
+      "entries_absent_from_unit_text": [
+        "before operation ID",
+        "after operation ID"
+      ],
+      "fires": true,
+      "registry_entries": 7,
+      "unit": "JJI-003"
+    },
+    {
+      "absent_already_at_base": [],
+      "entries_absent_from_unit_text": [],
+      "fires": false,
+      "registry_entries": 9,
+      "unit": "SCS-017"
+    },
+    {
+      "absent_already_at_base": [
+        "Install Jujutsu",
+        "Needs attention",
+        "Ready with limits",
+        "Use Jujutsu here"
+      ],
+      "entries_absent_from_unit_text": [
+        "Install Jujutsu",
+        "Use Jujutsu here",
+        "Ready with limits",
+        "Needs attention"
+      ],
+      "fires": true,
+      "registry_entries": 6,
+      "unit": "JJI-006"
+    },
+    {
+      "absent_already_at_base": [
+        "GC fence",
+        "Restore as New"
+      ],
+      "entries_absent_from_unit_text": [
+        "GC fence",
+        "Restore as New"
+      ],
+      "fires": true,
+      "registry_entries": 11,
+      "unit": "SCS-014"
+    },
+    {
+      "absent_already_at_base": [
+        "outcome_unknown"
+      ],
+      "entries_absent_from_unit_text": [
+        "outcome_unknown"
+      ],
+      "fires": true,
+      "registry_entries": 16,
+      "unit": "SCS-015"
+    },
+    {
+      "absent_already_at_base": [],
+      "entries_absent_from_unit_text": [],
+      "fires": false,
+      "registry_entries": 14,
+      "unit": "SCS-005"
     }
   ],
   "witness_repairs_vs_targets": [

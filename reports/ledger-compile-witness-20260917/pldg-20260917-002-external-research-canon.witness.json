@@ -1,0 +1,978 @@
+{
+  "base": "a6162b559b",
+  "documents": [
+    "Plans/Automated_Testing_System.md",
+    "Plans/External_Research.md",
+    "Plans/Planning_Ledger_System.md",
+    "Plans/Settings_System.md",
+    "Plans/assistant-chat-design.md"
+  ],
+  "ledger_id": "pldg-20260917-002-external-research-canon",
+  "schema_id": "pm.ledger_compile_witness.v1",
+  "status": "findings",
+  "summary": {
+    "item_tokens": 34,
+    "named_but_not_targeted": 0,
+    "named_but_unchanged_since_base": 0,
+    "records": 0,
+    "records_firing": 0,
+    "registry_entries_absent_already_at_base": 0,
+    "registry_entries_absent_from_text": 16,
+    "tokens_missing_from_prose": 0,
+    "tokens_missing_from_registry": 4,
+    "tokens_only_in_companion_outputs": 0,
+    "units_with_registry_entries_absent_from_text": 9
+  },
+  "witness_exact_tokens": [
+    {
+      "atom": "atom-external-research-owner-canon",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "queue_id": "queue-001",
+      "token": "discovery",
+      "units_with_token_in_prose": [
+        "ERS-002",
+        "ERS-003",
+        "ERS-012"
+      ],
+      "units_with_token_in_registry": [
+        "ERS-002"
+      ]
+    },
+    {
+      "atom": "atom-external-research-owner-canon",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "queue_id": "queue-001",
+      "token": "implementation",
+      "units_with_token_in_prose": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "units_with_token_in_registry": [
+        "ERS-002"
+      ]
+    },
+    {
+      "atom": "atom-external-research-owner-canon",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "queue_id": "queue-001",
+      "token": "history",
+      "units_with_token_in_prose": [
+        "ERS-002",
+        "ERS-012",
+        "ERS-014"
+      ],
+      "units_with_token_in_registry": [
+        "ERS-002"
+      ]
+    },
+    {
+      "atom": "atom-external-research-owner-canon",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "queue_id": "queue-001",
+      "token": "reconcile",
+      "units_with_token_in_prose": [
+        "ERS-002",
+        "ERS-008",
+        "ERS-012"
+      ],
+      "units_with_token_in_registry": [
+        "ERS-002"
+      ]
+    },
+    {
+      "atom": "atom-external-research-owner-canon",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "queue_id": "queue-001",
+      "token": "compare",
+      "units_with_token_in_prose": [
+        "ERS-002",
+        "ERS-008",
+        "ERS-010",
+        "ERS-012",
+        "ERS-014"
+      ],
+      "units_with_token_in_registry": [
+        "ERS-002"
+      ]
+    },
+    {
+      "atom": "atom-external-research-owner-canon",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "queue_id": "queue-001",
+      "token": "correction",
+      "units_with_token_in_prose": [
+        "ERS-001",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-008",
+        "ERS-009"
+      ],
+      "units_with_token_in_registry": [
+        "ERS-001",
+        "ERS-004"
+      ]
+    },
+    {
+      "atom": "atom-external-research-owner-canon",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "queue_id": "queue-001",
+      "token": "capability",
+      "units_with_token_in_prose": [
+        "ERS-001",
+        "ERS-004",
+        "ERS-005",
+        "ERS-007",
+        "ERS-014"
+      ],
+      "units_with_token_in_registry": [
+        "ERS-001",
+        "ERS-004"
+      ]
+    },
+    {
+      "atom": "atom-external-research-owner-canon",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "queue_id": "queue-001",
+      "token": "product choice",
+      "units_with_token_in_prose": [
+        "ERS-001",
+        "ERS-004",
+        "ERS-007"
+      ],
+      "units_with_token_in_registry": [
+        "ERS-001",
+        "ERS-004"
+      ]
+    },
+    {
+      "atom": "atom-external-research-owner-canon",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "queue_id": "queue-001",
+      "token": "unsupported or already-covered",
+      "units_with_token_in_prose": [
+        "ERS-004"
+      ],
+      "units_with_token_in_registry": [
+        "ERS-004"
+      ]
+    },
+    {
+      "atom": "atom-external-research-owner-canon",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "queue_id": "queue-001",
+      "token": "standing repair authorization",
+      "units_with_token_in_prose": [
+        "ERS-006"
+      ],
+      "units_with_token_in_registry": [
+        "ERS-006"
+      ]
+    },
+    {
+      "atom": "atom-external-research-owner-canon",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "queue_id": "queue-001",
+      "token": "captured usage",
+      "units_with_token_in_prose": [
+        "ERS-008",
+        "ERS-011"
+      ],
+      "units_with_token_in_registry": [
+        "ERS-008"
+      ]
+    },
+    {
+      "atom": "atom-external-research-owner-canon",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "queue_id": "queue-001",
+      "token": "unresolved",
+      "units_with_token_in_prose": [
+        "ERS-008",
+        "ERS-009"
+      ],
+      "units_with_token_in_registry": [
+        "ERS-008"
+      ]
+    },
+    {
+      "atom": "atom-external-research-owner-canon",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "queue_id": "queue-001",
+      "token": "turn budget",
+      "units_with_token_in_prose": [
+        "ERS-010"
+      ],
+      "units_with_token_in_registry": [
+        "ERS-010"
+      ]
+    },
+    {
+      "atom": "atom-external-research-owner-canon",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "queue_id": "queue-001",
+      "token": "admissions",
+      "units_with_token_in_prose": [
+        "ERS-010"
+      ],
+      "units_with_token_in_registry": [
+        "ERS-010"
+      ]
+    },
+    {
+      "atom": "atom-external-research-owner-canon",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "queue_id": "queue-001",
+      "token": "protocol fingerprint",
+      "units_with_token_in_prose": [
+        "ERS-014"
+      ],
+      "units_with_token_in_registry": [
+        "ERS-014"
+      ]
+    },
+    {
+      "atom": "atom-external-research-owner-canon",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "queue_id": "queue-001",
+      "token": "runtime identity",
+      "units_with_token_in_prose": [
+        "ERS-014"
+      ],
+      "units_with_token_in_registry": [
+        "ERS-014"
+      ]
+    },
+    {
+      "atom": "atom-external-research-owner-canon",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ERS-001",
+        "ERS-002",
+        "ERS-003",
+        "ERS-004",
+        "ERS-005",
+        "ERS-006",
+        "ERS-007",
+        "ERS-008",
+        "ERS-009",
+        "ERS-010",
+        "ERS-011",
+        "ERS-012",
+        "ERS-013",
+        "ERS-014"
+      ],
+      "queue_id": "queue-001",
+      "token": "quiesce",
+      "units_with_token_in_prose": [
+        "ERS-014"
+      ],
+      "units_with_token_in_registry": [
+        "ERS-014"
+      ]
+    },
+    {
+      "atom": "atom-external-research-contract-family",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ATS-054"
+      ],
+      "queue_id": "queue-002",
+      "token": "validate-new-contracts",
+      "units_with_token_in_prose": [
+        "ATS-054"
+      ],
+      "units_with_token_in_registry": [
+        "ATS-054"
+      ]
+    },
+    {
+      "atom": "atom-external-research-contract-family",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ATS-054"
+      ],
+      "queue_id": "queue-002",
+      "token": "CONTRACT_PAIRS",
+      "units_with_token_in_prose": [
+        "ATS-054"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-external-research-contract-family",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ATS-054"
+      ],
+      "queue_id": "queue-002",
+      "token": "NOT_RUN",
+      "units_with_token_in_prose": [
+        "ATS-054"
+      ],
+      "units_with_token_in_registry": [
+        "ATS-054"
+      ]
+    },
+    {
+      "atom": "atom-external-research-contract-family",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ATS-054"
+      ],
+      "queue_id": "queue-002",
+      "token": "30 negative fixtures",
+      "units_with_token_in_prose": [
+        "ATS-054"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-research-packet-chat-consumer",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ACD-467"
+      ],
+      "queue_id": "queue-003",
+      "token": "Approve",
+      "units_with_token_in_prose": [
+        "ACD-467"
+      ],
+      "units_with_token_in_registry": [
+        "ACD-467"
+      ]
+    },
+    {
+      "atom": "atom-research-packet-chat-consumer",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ACD-467"
+      ],
+      "queue_id": "queue-003",
+      "token": "Deny",
+      "units_with_token_in_prose": [
+        "ACD-467"
+      ],
+      "units_with_token_in_registry": [
+        "ACD-467"
+      ]
+    },
+    {
+      "atom": "atom-research-packet-chat-consumer",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ACD-467"
+      ],
+      "queue_id": "queue-003",
+      "token": "Deny with changes",
+      "units_with_token_in_prose": [
+        "ACD-467"
+      ],
+      "units_with_token_in_registry": [
+        "ACD-467"
+      ]
+    },
+    {
+      "atom": "atom-research-packet-chat-consumer",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ACD-467"
+      ],
+      "queue_id": "queue-003",
+      "token": "Ask a question",
+      "units_with_token_in_prose": [
+        "ACD-467"
+      ],
+      "units_with_token_in_registry": [
+        "ACD-467"
+      ]
+    },
+    {
+      "atom": "atom-research-packet-chat-consumer",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "ACD-467"
+      ],
+      "queue_id": "queue-003",
+      "token": "text labels",
+      "units_with_token_in_prose": [
+        "ACD-467"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-research-landing-ledger-consumer",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "PLS-023"
+      ],
+      "queue_id": "queue-004",
+      "token": "standing repair authorization",
+      "units_with_token_in_prose": [
+        "PLS-023"
+      ],
+      "units_with_token_in_registry": [
+        "PLS-023"
+      ]
+    },
+    {
+      "atom": "atom-research-landing-ledger-consumer",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "PLS-023"
+      ],
+      "queue_id": "queue-004",
+      "token": "currentness",
+      "units_with_token_in_prose": [
+        "PLS-023"
+      ],
+      "units_with_token_in_registry": [
+        "PLS-023"
+      ]
+    },
+    {
+      "atom": "atom-research-landing-ledger-consumer",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "PLS-023"
+      ],
+      "queue_id": "queue-004",
+      "token": "independent review",
+      "units_with_token_in_prose": [
+        "PLS-023"
+      ],
+      "units_with_token_in_registry": [
+        "PLS-023"
+      ]
+    },
+    {
+      "atom": "atom-research-landing-ledger-consumer",
+      "fires": true,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "PLS-023"
+      ],
+      "queue_id": "queue-004",
+      "token": "ledger question record",
+      "units_with_token_in_prose": [
+        "PLS-023"
+      ],
+      "units_with_token_in_registry": []
+    },
+    {
+      "atom": "atom-research-limit-values-settings",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "SSYS-037"
+      ],
+      "queue_id": "queue-005",
+      "token": "per-topic cost cap",
+      "units_with_token_in_prose": [
+        "SSYS-037"
+      ],
+      "units_with_token_in_registry": [
+        "SSYS-037"
+      ]
+    },
+    {
+      "atom": "atom-research-limit-values-settings",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "SSYS-037"
+      ],
+      "queue_id": "queue-005",
+      "token": "per-job",
+      "units_with_token_in_prose": [
+        "SSYS-037"
+      ],
+      "units_with_token_in_registry": [
+        "SSYS-037"
+      ]
+    },
+    {
+      "atom": "atom-research-limit-values-settings",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "SSYS-037"
+      ],
+      "queue_id": "queue-005",
+      "token": "lifetime cap",
+      "units_with_token_in_prose": [
+        "SSYS-037"
+      ],
+      "units_with_token_in_registry": [
+        "SSYS-037"
+      ]
+    },
+    {
+      "atom": "atom-research-limit-values-settings",
+      "fires": false,
+      "in_companion_outputs_only": false,
+      "owner_units": [
+        "SSYS-037"
+      ],
+      "queue_id": "queue-005",
+      "token": "unresolved usage",
+      "units_with_token_in_prose": [
+        "SSYS-037"
+      ],
+      "units_with_token_in_registry": [
+        "SSYS-037"
+      ]
+    }
+  ],
+  "witness_registry_hygiene": [
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [],
+      "fires": false,
+      "registry_entries": 6,
+      "unit": "ERS-001"
+    },
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [
+        "reconcile",
+        "compare"
+      ],
+      "fires": true,
+      "registry_entries": 7,
+      "unit": "ERS-002"
+    },
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [],
+      "fires": false,
+      "registry_entries": 4,
+      "unit": "ERS-003"
+    },
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [
+        "unsupported or already-covered"
+      ],
+      "fires": true,
+      "registry_entries": 6,
+      "unit": "ERS-004"
+    },
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [
+        "Approve",
+        "Deny",
+        "Deny with changes",
+        "Ask a question"
+      ],
+      "fires": true,
+      "registry_entries": 4,
+      "unit": "ERS-005"
+    },
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [],
+      "fires": false,
+      "registry_entries": 4,
+      "unit": "ERS-006"
+    },
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [
+        "accepted for planning",
+        "unapproved optional capability"
+      ],
+      "fires": true,
+      "registry_entries": 3,
+      "unit": "ERS-007"
+    },
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [
+        "native records"
+      ],
+      "fires": true,
+      "registry_entries": 5,
+      "unit": "ERS-008"
+    },
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [
+        "bound_by"
+      ],
+      "fires": true,
+      "registry_entries": 4,
+      "unit": "ERS-009"
+    },
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [],
+      "fires": false,
+      "registry_entries": 5,
+      "unit": "ERS-010"
+    },
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [],
+      "fires": false,
+      "registry_entries": 3,
+      "unit": "ERS-011"
+    },
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [],
+      "fires": false,
+      "registry_entries": 4,
+      "unit": "ERS-012"
+    },
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [
+        "same family"
+      ],
+      "fires": true,
+      "registry_entries": 5,
+      "unit": "ERS-013"
+    },
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [
+        "protocol fingerprint",
+        "runtime identity",
+        "output manifest"
+      ],
+      "fires": true,
+      "registry_entries": 4,
+      "unit": "ERS-014"
+    },
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [],
+      "fires": false,
+      "registry_entries": 3,
+      "unit": "ATS-054"
+    },
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [],
+      "fires": false,
+      "registry_entries": 4,
+      "unit": "ACD-467"
+    },
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [
+        "standing repair authorization"
+      ],
+      "fires": true,
+      "registry_entries": 3,
+      "unit": "PLS-023"
+    },
+    {
+      "absent_already_at_base": null,
+      "entries_absent_from_unit_text": [],
+      "fires": false,
+      "registry_entries": 4,
+      "unit": "SSYS-037"
+    }
+  ],
+  "witness_repairs_vs_targets": []
+}

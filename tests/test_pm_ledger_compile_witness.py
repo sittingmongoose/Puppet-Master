@@ -39,7 +39,7 @@ preserved_exact_tokens: [alpha_field, "beta_state"]
 ```yaml
 plan_unit_id: DEM-002
 canonical_text: >-
-  Unchanged unit with no tokens from this wave.
+  Unchanged unit whose only registered token is `gamma`.
 preserved_exact_tokens: [gamma]
 ```
 
@@ -135,6 +135,18 @@ class WitnessTests(unittest.TestCase):
                                   repairs_sentence="Repairs DEM-003. Change: none needed.")
             report = self.mod.run(root, ledger, None)
         self.assertEqual(report["status"], "pass")
+
+    def test_registry_entry_absent_from_unit_text_fires(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            ledger = write_ledger(root, targets_for_atom=["DEM-002"], tokens=["gamma"],
+                                  repairs_sentence="Repairs DEM-002. Change: none.")
+            (root / "Plans" / "Demo.md").write_text(DOC.replace("preserved_exact_tokens: [gamma]", "preserved_exact_tokens: [gamma, orphan_token]"), encoding="utf-8")
+            report = self.mod.run(root, ledger, None)
+        self.assertEqual(report["status"], "findings")
+        w3 = {r["unit"]: r for r in report["witness_registry_hygiene"]}
+        self.assertEqual(w3["DEM-002"]["entries_absent_from_unit_text"], ["orphan_token"])
+        self.assertEqual(report["summary"]["registry_entries_absent_from_text"], 1)
 
     def test_registry_parsing_handles_quoted_inline_list(self):
         self.assertEqual(self.mod.registry('preserved_exact_tokens: [a, "b c", \'d\']\n'), ["a", "b c", "d"])
