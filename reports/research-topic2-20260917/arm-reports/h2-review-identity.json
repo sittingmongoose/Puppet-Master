@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-17T11:08:53Z",
+  "generated_at": "2026-09-17T12:26:23Z",
   "method": "Runtime identity and protocol fingerprints for every continuation-5 run.\n\nRuntime identity is taken from each job's OWN record: every adapter hashes and\nversion-checks the binary it is about to run and writes that into raw-*/run.json. The\ninstalled_now block is a live reading taken when this script runs, so a runtime that\nchanged mid-phase shows up as a disagreement instead of being papered over.\n\nThe protocol fingerprint is the first 16 hex characters of\nsha256(json.dumps({file: sha256}, sort_keys=True)) over the key protocol files as the\nrun itself recorded them in run.json['protocol_sha256']. Runs sharing a fingerprint ran\nidentical code; nothing here is asserted from memory.",
   "key_files": [
     "discovery_to_plan.py",
@@ -41,7 +41,7 @@
         "adapters/omp_native.py": "55489f0316d6",
         "native_receipts.py": "87bf4f2337d2"
       },
-      "jobs_with_native_records": 3,
+      "jobs_with_native_records": 6,
       "runtimes": [
         {
           "adapter": "claude",
@@ -51,9 +51,12 @@
           "jobs": [
             "J0013-reconcile",
             "J0014-reconcile",
-            "J0015-reconcile"
+            "J0015-reconcile",
+            "J0016-compare",
+            "J0017-compare",
+            "J0018-reconcile"
           ],
-          "job_count": 3
+          "job_count": 6
         }
       ]
     }

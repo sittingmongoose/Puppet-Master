@@ -1,0 +1,54 @@
+{
+  "title": "CORRECTION: drain_arm.py killed every campaign this topic ran. The Claude session limit did not.",
+  "recorded_at_utc": "2026-09-17T12:27:16Z",
+  "supersedes": [
+    "The statement in earlier versions of this README and in the arm reports that the campaigns died because the Opus session limit killed the runner.",
+    "The statement in drain_arm.py, in PROGRESS.md and in every interim report that a drain leaves live jobs untouched and ends the campaign on Stop(insufficient_priced_usage_headroom)."
+  ],
+  "mechanism": "cost_watch.Meter.locked() validates state[\"cap_usd\"] == self.cap on EVERY access. A running campaign holds a Meter built with self.cap = POLICY[arm+\"_usd\"] (250 or 150). Lowering cap_usd in the file makes the campaign's next meter access raise ValueError(\"Arm monetary identity changed\"). That is not a Stop, so it propagates out of the finally block at bounded_campaign line 605 (meter.terminal(job.name, outcome)): the campaign dies inside its own cleanup, writes no campaign-terminal.json, and leaves its live jobs unreconciled.",
+  "evidence": "All four campaign logs end in the identical traceback, each within four seconds of a drain:",
+  "timing": [
+    {
+      "arm": "s-full",
+      "run": "original",
+      "drain_utc": "2026-09-17T05:44:27Z",
+      "campaign_dead_utc": "2026-09-17T05:44:30Z",
+      "gap_s": 3
+    },
+    {
+      "arm": "h2-review",
+      "run": "original",
+      "drain_utc": "2026-09-17T05:43:19Z",
+      "campaign_dead_utc": "2026-09-17T05:43:21Z",
+      "gap_s": 2
+    },
+    {
+      "arm": "s-full",
+      "run": "resume",
+      "drain_utc": "2026-09-17T12:23:28Z",
+      "campaign_dead_utc": "2026-09-17T12:23:32Z",
+      "gap_s": 4
+    },
+    {
+      "arm": "h2-review",
+      "run": "resume",
+      "drain_utc": "2026-09-17T12:19:05Z",
+      "campaign_dead_utc": "2026-09-17T12:19:06Z",
+      "gap_s": 1
+    }
+  ],
+  "what_I_got_wrong": [
+    "I read Meter.reserve(), saw it re-reads cap_usd from the file under a lock, and concluded lowering the cap would gracefully deny future reservations while live jobs finished. I never checked locked()'s identity guard, which makes any external cap change fatal to a running campaign.",
+    "I asserted that post-condition repeatedly and never verified it once.",
+    "I accepted and repeated the account that the Claude session limit killed the campaigns. It terminated the runner session; the campaigns were already dead from my drain minutes earlier.",
+    "The drain was STRICTLY WORSE than the allowance gate I rejected for cancelling live workers. The allowance gate raises a Stop at the loop head, so the finally block RUNS: every live job gets a terminal receipt, the meter reconciles, and campaign-terminal.json is written. My drain skipped all of it. I replaced a clean stop that cancels jobs with a crash that cancels jobs AND loses their accounting, and reported it as the gentler option."
+  ],
+  "consequences_for_the_figures": [
+    "The absent campaign-terminal.json on every Opus run is caused by drain_arm.py, not by the provider or the session limit.",
+    "The $72-per-arm unresolved residues are caused by drain_arm.py. They are not evidence about the Claude session limit.",
+    "Captured cost, response counts, receipts and per-job usage are UNAFFECTED: they come from the adapters' own records, which were written before each crash and verified receipt-equals-request where a job completed.",
+    "Arm wall-clock times for the two Opus arms span the outage and are not meaningful: s-full shows 7h08m wall against 36m25s of summed job time (concurrency 0.085). Use the summed job time."
+  ],
+  "unaffected": "closeout_arm.py is correct and unaffected: it RESTORES the authorized cap before relaunching, which is exactly why it works. The h2-research arm never had a drain applied and reached its designed terminal normally.",
+  "correct_mechanism_for_next_time": "To stop admissions without killing the campaign, the cap must not be changed while the campaign holds the meter. The protocol's own clean stop is the allowance gate; it cancels live workers but preserves every receipt and writes the terminal record. A true drain would need a protocol change that the campaign itself consults, not an external edit to a guarded journal."
+}

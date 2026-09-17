@@ -21,14 +21,14 @@
       "average_concurrency": 0.9992836294444151
     },
     "implementation": {
-      "wall_seconds": 239.9382517337799,
-      "summed_job_seconds": 479.48004508018494,
-      "average_concurrency": 1.9983476649324978
+      "wall_seconds": 24180.771114826202,
+      "summed_job_seconds": 1141.0616674423218,
+      "average_concurrency": 0.047188803947724026
     },
     "history": {
-      "wall_seconds": 239.74002242088318,
-      "summed_job_seconds": 239.7400233745575,
-      "average_concurrency": 1.000000003977952
+      "wall_seconds": 24180.57288479805,
+      "summed_job_seconds": 570.5224283409118,
+      "average_concurrency": 0.02359424778970354
     },
     "reconcile": {
       "wall_seconds": 0,
@@ -41,18 +41,18 @@
       "average_concurrency": null
     }
   },
-  "arm_wall_seconds": 1730.3389439582825,
-  "summed_job_seconds": 1463.228,
-  "average_concurrency": 0.8456308546421283,
-  "processing_seconds": 1730.3859205245972,
+  "arm_wall_seconds": 25671.171805620193,
+  "summed_job_seconds": 2185.3328777771,
+  "average_concurrency": 0.08512789732873295,
+  "processing_seconds": 2059.02498960495,
   "job_status_counts": {
     "completed": 1,
-    "interrupted": 2,
+    "interrupted": 5,
     "null": 1
   },
   "bound_by_counts": {
     "finished": 1,
-    "interrupted": 2,
+    "interrupted": 5,
     "null": 1
   },
   "jobs": [
@@ -115,21 +115,66 @@
       "lead_deliveries": 0,
       "notes_present": false,
       "runtime_terminal_reason": null
+    },
+    {
+      "job": "J0005-implementation",
+      "phase": "implementation",
+      "status": "interrupted",
+      "bound_by": "interrupted",
+      "elapsed_s": 330.8,
+      "requests": 44,
+      "receipts": 44,
+      "reconciled": false,
+      "captured_usd": 1.3816,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": null
+    },
+    {
+      "job": "J0006-history",
+      "phase": "history",
+      "status": "interrupted",
+      "bound_by": "interrupted",
+      "elapsed_s": 331.5,
+      "requests": 25,
+      "receipts": 26,
+      "reconciled": false,
+      "captured_usd": 1.0787,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": true,
+      "runtime_terminal_reason": null
+    },
+    {
+      "job": "J0007-implementation",
+      "phase": "implementation",
+      "status": "interrupted",
+      "bound_by": "interrupted",
+      "elapsed_s": 331.4,
+      "requests": 38,
+      "receipts": 38,
+      "reconciled": false,
+      "captured_usd": 1.3271,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": null
     }
   ],
-  "captured_upper_usd": 14.898667749999996,
+  "captured_upper_usd": 18.686088249999994,
   "cap_usd": 250.0,
   "runtime_reported_cost_usd": 12.0466,
-  "unresolved_charge_usd": 36.0,
+  "unresolved_charge_usd": 72.0,
   "job_end_reconciled": 1,
-  "job_count": 4,
+  "job_count": 7,
   "lead_stage_counts": {
-    "discovered": 22,
+    "discovered": 23,
     "studied": 0,
     "reconciled": 0,
     "comparison_delivered": 0
   },
-  "pending_reconcile_leads": 22,
-  "pending_compare_leads": 22,
+  "pending_reconcile_leads": 23,
+  "pending_compare_leads": 23,
   "note": "Counts and limits only. No output was adjudicated."
 }
