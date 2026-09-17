@@ -5460,12 +5460,15 @@ The retained Settings, Onboarding/Doctor, Full Thread Performance,
 Server-First/WAN/Backup, and Egolite/Browser/SCM packet wave now routes its final
 203 previously unbound primary commands through eleven existing domain owners and
 four central consumer/dispatch owners. Together with the earlier reconciled set,
-the machine Touch Closure inventory contains 401 primary command rows: 400 are
-actionable with static production-intent wiring and exactly one sole future-handler
-identity; `cmd.artifacts.open_panel` remains the one explicitly blocked false
-inventory token and has no production row. The same registry contains 51
-normalization-only aliases, 101 typed local UI actions, and 7 presentation rows,
-for 560 rows across 87 profiles and 1041 production-intent wiring entries.
+every primary command row in the machine Touch Closure inventory is actionable
+with static production-intent wiring and exactly one sole future-handler
+identity except `cmd.artifacts.open_panel`, which remains the one explicitly
+blocked false inventory token and has no production row. The same registry also
+carries normalization-only aliases, typed local UI actions, and presentation
+rows. The exact primary-command, alias, local-action, presentation, row,
+profile, exclusion, and production-intent denominators are the ones
+`scripts/pm-touch-closure-verify.py` resolves and reports; this map defers to
+that report and carries no literal census.
 
 Domain-owner routes are `Plans/Backup_Restore_System.md`,
 `Plans/Forge_Integrations.md`, `Plans/Jujutsu_Integration.md`,
@@ -5489,12 +5492,15 @@ owner_doc: Plans/00-plans-index.md
 canonical_text: >-
   The final 203-command packet closure routes through eleven named domain owners
   and four central consumer/dispatch owners while touch_closure.json remains a
-  machine crosswalk rather than a new owner. The resolved inventory freezes 401
-  primary commands, of which 400 are actionable with production-intent wiring and
-  exactly one sole future handler and one is explicitly blocked without wiring;
-  51 aliases, 101 typed local UI actions, and 7 presentation rows complete the
-  560-row, 87-profile registry over 1041 production-intent entries. Dedicated
-  server-gap and Touch Closure validators fail closed on drift. Every row remains
+  machine crosswalk rather than a new owner. In the resolved inventory every
+  primary command is actionable with production-intent wiring and exactly one
+  sole future handler except the one explicitly blocked without wiring; aliases,
+  typed local UI actions, and presentation rows complete the registry over its
+  production-intent entries. The primary-command, alias, local-action,
+  presentation, row, profile, exclusion, and production-intent denominators are
+  the ones scripts/pm-touch-closure-verify.py resolves and reports, and this map
+  carries no literal census.
+  Dedicated server-gap and Touch Closure validators fail closed on drift. Every row remains
   static planning/contract evidence until independently implemented and verified.
 gui_related: true
 gui_classification_reason: The map routes every intended Settings, Onboarding, Doctor, PMConcept7, owner-workspace, palette, API, and headless consumer without taking presentation ownership.
@@ -5504,7 +5510,7 @@ unblocks: []
 acceptance_criteria:
   - "All eleven domain-owner documents and all four central owner documents are explicitly indexed and dependency-closed."
   - "Plans/Multi-Account_Connection_Spec.md is an explicit indexed owner path rather than an implicit command-row reference."
-  - "The exact 401/400/1 primary-command denominator, 51 aliases, 101 local actions, 7 presentation rows, 560 rows, 87 profiles, and 1041 production entries is preserved."
+  - "The primary-command, alias, local-action, presentation-row, total-row, profile, and production-intent denominators are read from the report scripts/pm-touch-closure-verify.py emits; exactly one primary command is blocked and every other one is actionable, and no literal census is carried in canon."
   - "Every actionable primary command has exactly one production-intent route and one sole future-handler identity; the blocked token has neither."
   - "Both dedicated validators are standalone and named in run-gates and audit-governance."
   - "No static target, schema, fixture, registry, concept simulation, or browser result is represented as native runtime or Slint certification."
@@ -5544,11 +5550,12 @@ source_lineage:
   - Plans/Automated_Testing_System.md#ats-042---touch-and-server-command-gap-aggregate-gates
   - Plans/server_command_gap_adjudication.json
   - Plans/touch_closure.json
-preserved_exact_tokens: [Plans/Multi-Account_Connection_Spec.md, cmd.artifacts.open_panel, 401, 400, 1, 51, 101, 7, 560, 87, 1041]
+preserved_exact_tokens: [Plans/Multi-Account_Connection_Spec.md, cmd.artifacts.open_panel]
 negative_constraints:
   - "Do not create a new aggregate runtime owner from this cross-document map."
   - "Do not wire the blocked false-inventory token or normalization-only aliases as peers."
   - "Do not infer native implementation, runtime success, readiness, or Slint certification from static closure."
+  - "Do not restore a literal Touch Closure census to this map; the denominators belong to scripts/pm-touch-closure-verify.py."
 owner_hints: [Plans/00-plans-index.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/UI_Wiring_Rules.md]
 ```
 

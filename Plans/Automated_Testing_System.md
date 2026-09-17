@@ -3823,7 +3823,7 @@ acceptance_criteria:
   - "python3 scripts/pm-plans-verify.py validate-touch-closure normalizes valid=true to aggregate status=pass and fail-closes every other result."
   - "run-gates and audit-governance each report both checks under distinct names with the standard per-subcheck timeout."
   - "The server check resolves 168 schema-bearing plus 3 rejected rows and runs all 11 negative self-tests; both unresolved reference counts remain zero."
-  - "The Touch check freezes 560 rows, 87 profiles, 55 excluded tokens, 51 alias bindings, and 1041 production-intent entries; all 400 actionable primary commands have wiring and one handler identity while the one blocked primary command has none."
+  - "The Touch check resolves and reports its own row, profile, excluded-token, alias-binding, and production-intent denominators and fail-closes on drift against them; every actionable primary command has wiring and one handler identity while the one blocked primary command has none, and those counts are read from the report rather than carried as literals in canon."
   - "A passing static gate is not promoted into native runtime, browser, visual, motion, accessibility, performance, recovery, security, readiness, or Slint evidence."
 validation_surfaces:
   - python3 scripts/pm-server-command-gap-verify.py --json
@@ -3853,6 +3853,7 @@ negative_constraints:
   - "Do not fold either dedicated check into validate-wiring-matrix or validate-new-contracts."
   - "Do not accept a killed, timed-out, empty, malformed, or nonzero validator process as a pass."
   - "Do not claim runtime or readiness from static governance closure."
+  - "Do not restore a literal Touch Closure census to this gate registration; the denominators belong to scripts/pm-touch-closure-verify.py."
 owner_hints: [Plans/Automated_Testing_System.md, Plans/Commands_System.md, Plans/Wiring_Matrix.md, Plans/DRY_Rules.md]
 ```
 

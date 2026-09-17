@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L1645-L1712
+Source lines: L1645-L1715
 
-Source SHA256: `6e99ff106d241920a037e7d6a5e75260a5191d6314f8dfc6a8b77edab992be2e`
+Source SHA256: `8889e96ae81ceb783074dc6a6ea35c847dab8a4f24415cfb84ce485348e374e3`
 
 ---
 
@@ -21,7 +21,9 @@ canonical_text: >-
   shared_integration_runtime_expansion_contracts.schema.json remains the single
   DRY state-machine source for the server-gap expansion. Its fixtures close 44
   canonical command records, 14 typed local UI-action records, 44 disabled-reason
-  records, and 33 pre-dispatch compatibility normalizations. Existing owner schemas
+  records, and the pre-dispatch compatibility normalizations the sidecar carries,
+  whose count scripts/pm-new-contracts-verify.py reports as its expansion alias
+  record count rather than canon freezing a literal. Existing owner schemas
   expose 40 command compatibility records and all 14 local-action aliases through
   narrow external $ref composition; they do not copy the shared state machines or
   transfer domain ownership to Shared Integration Runtime. Local actions are
@@ -35,7 +37,7 @@ split_recommended: false
 depends_on: [SIR-028, SIR-030, RAS-013, SMPFS-157]
 unblocks: [CV-326, ATS-042, 0PI-068]
 acceptance_criteria:
-  - "The expansion fixture pack contains exactly 44 command cases, 14 typed local UI actions, 44 disabled-reason records, and 33 alias normalizations."
+  - "The expansion fixture pack contains exactly 44 command cases, 14 typed local UI actions, 44 disabled-reason records, and the alias normalizations scripts/pm-new-contracts-verify.py reports as its expansion alias record count; SIR-033 owns the sidecar's approved-alias and total-row denominators and canon carries no literal alias count here."
   - "Owner compatibility validation accepts exactly 240 command records and 28 owner-local records while retaining the expansion sidecar as the sole shared state-machine source."
   - "All 168 schema-bearing adjudication rows resolve and the 3 rejected rows remain action-free; unresolved local and other proposed schema references both equal zero."
   - "Local actions cannot install, authenticate, browse protected content, access files, dispatch providers, persist state, emit domain events, or claim a domain handler."
@@ -74,5 +76,6 @@ negative_constraints:
   - "Do not promote a typed local UI action into a domain command, handler, event, persistence write, or capability grant."
   - "Do not let agents, adapters, capture, recording, inspection, export, replay, or restore cross the protected-auth boundary."
   - "Do not claim native implementation, network behavior, security certification, or readiness from schema and fixture closure."
+  - "Do not restore a literal alias-normalization count here; that cardinality belongs to SIR-033 and to what scripts/pm-new-contracts-verify.py reports."
 owner_hints: [Plans/Shared_Integration_Runtime.md, Plans/Remote_Access_System.md, Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Commands_System.md]
 ```

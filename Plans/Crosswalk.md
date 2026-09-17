@@ -3390,7 +3390,7 @@ acceptance_criteria:
   - "Every actionable command row points to Commands System, exactly one owner handler identity, one typed owner contract, and every intended GUI consumer."
   - "Every typed local UI action remains owner-local and is not promoted into a domain command or production handler."
   - "Aliases normalize to exact canonical targets without peer production rows or peer handlers."
-  - "The matrix preserves the exact resolved denominator of 560 rows: 401 primary commands, 51 aliases, 101 typed local UI actions, and 7 presentation behaviors; 400 primary commands are actionable and one is explicitly blocked."
+  - "The matrix preserves the exact resolved denominator that scripts/pm-touch-closure-verify.py reports, partitioned into primary commands, aliases, typed local UI actions, and presentation behaviors, with exactly one primary command explicitly blocked and every other one actionable; canon defers to that report and carries no literal count."
   - "Static crosswalk closure is never reported as native runtime, visual, motion, accessibility, performance, recovery, security, readiness, or Slint evidence."
 validation_surfaces:
   - python3 scripts/pm-touch-closure-verify.py --json
@@ -3420,6 +3420,7 @@ negative_constraints:
   - "Do not make Touch Closure a runtime owner, schema owner, event authority, or evidence authority."
   - "Do not infer a native handler or production implementation from a future-handler or production-intent row."
   - "Do not invent a GUI control merely to make reverse coverage appear complete."
+  - "Do not restore a literal resolved denominator to this boundary; the counts belong to scripts/pm-touch-closure-verify.py."
 owner_hints: [Plans/Crosswalk.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/UI_Wiring_Rules.md]
 ```
 
