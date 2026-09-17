@@ -1,0 +1,50 @@
+{
+  "note": "T80 ran twice. Attempt 1 was cut by the EARLIER rate-limit rule - a seven-day allowed_warning at 0.25 utilization while the five-hour window was clean and spend was $36.68 of a $150 cap - not by money and not by any arm limit. Attempt 2 ran under the corrected rule and is the scored result. Nothing was discarded.",
+  "attempts": [
+    {
+      "attempt": 1,
+      "scored": false,
+      "run": "runs/jujutsu-t80-20260917-183819",
+      "launched_at": "2026-09-17T18:38:36Z",
+      "terminal_at": "2026-09-17T19:06:19Z",
+      "stop_reason": "Stop: insufficient_priced_usage_headroom",
+      "admissions_used": 7,
+      "admissions_authorized": 12,
+      "comparisons_delivered": 5,
+      "captured_upper_usd": 36.6835,
+      "bound_by": {
+        "finished": 3,
+        "responses": 1,
+        "budget": 3
+      },
+      "budget_rows_were": "the old whole-cap hold truncating live jobs, not a monetary limit",
+      "output_manifest_sha256": "7b8c1ad07552c8e54082352525b39efe294a86fc8a3bb2d142cb2732c3503d97",
+      "output_file_count": 5947,
+      "archive": "arm-history/t80-attempt-1/",
+      "archive_manifest_sha256": "472b5e5eaa9905ac991ca9c7f2b3fd8235fce2d5a81fb32493da4252c1a5ec4e",
+      "preserved_finding": "J0017-reconcile hit the 80-response ceiling exactly; the other six ran 19-69."
+    },
+    {
+      "attempt": 2,
+      "scored": true,
+      "run": "runs/jujutsu-t80-20260917-191342",
+      "launched_at": "2026-09-17T19:13:54Z",
+      "terminal_at": "2026-09-17T20:58:14Z",
+      "stop_reason": "Stop: admitted_attempt_cap",
+      "admissions_used": 12,
+      "admissions_authorized": 12,
+      "comparisons_delivered": 11,
+      "captured_upper_usd": 76.4527,
+      "unresolved_charge_usd": 12.0,
+      "bound_by": {
+        "finished": 8,
+        "responses": 3,
+        "time": 1
+      },
+      "sentinel": "never fired; no hold was ever placed, so every limit recorded is a real one",
+      "output_manifest_sha256": "b5498edb9f39ef4e444a109362c6233d1e1e7af0b5021436c9679facc33c448b",
+      "output_file_count": 13222,
+      "launch_gated_on": "rate-limit-before-t80-attempt2.json (seven-day 0.28, informational under the new rule)"
+    }
+  ]
+}
