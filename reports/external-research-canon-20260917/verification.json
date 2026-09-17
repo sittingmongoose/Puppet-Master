@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.external_research_canon.verification.v1",
-  "generated_at_utc": "2026-09-17T06:05:00+00:00",
-  "branch": "plans/goal3-research-20260917",
-  "base_commit": "a6162b559b502278458a56e95c5c0891c3e2a505",
+  "generated_at_utc": "2026-09-17T06:20:00+00:00",
+  "branch": "plans/goal3-research-20260917-land1",
+  "base_commit": "2a929055012e948e53c3884da1a9f0dd80deecc1",
   "agent": "Opus 5 (claude-opus-5[1m])",
   "claim_boundary": "Static schema, fixture, shard and index integrity only. No runtime, native adapter, provider, recovery, security, performance, visual, governance seal or readiness claim. No WorkNodes, NodeSeeds, executable queues or readiness unlocks.",
   "checks": [
@@ -174,5 +174,15 @@
       "N1": "two of the three ledger-validator errors name a document this branch created; stated in the README and in this file's error_disposition",
       "N2": "the REVIEW_ADJUDICATION_20260916.md lineage row is labelled a 2026-09-17 read-time snapshot of a file that is appended to"
     }
+  },
+  "rebase": {
+    "original_base": "a6162b559b502278458a56e95c5c0891c3e2a505",
+    "rebased_onto": "2a929055012e948e53c3884da1a9f0dd80deecc1",
+    "review_branch": "plans/goal3-research-20260917",
+    "clean_on_every_source_file": true,
+    "conflicts": "Plans/_shards/00-plans-index/*, Plans/_shards/automated_testing_system/* and Plans/.plan_index/* only; every one resolved by regenerating with scripts/pm-shard-plans.py and scripts/pm-plan-index.py, never by merging. After the rebase a fresh regeneration reproduces the tip byte for byte apart from the generator's generated_at_utc stamps.",
+    "c4_corrections_landed_at_rebase_time": false,
+    "registry_conflict_status": "did not materialize; plans/c4-corrections-20260917 had not landed when this rebase ran. It must be resolved on the next rebase, after that branch lands: keep both compiled_ledgers entries, pldg-20260917-001-jujutsu-continuation4-corrections and pldg-20260917-002-external-research-canon, and the later updated_at_utc, 2026-09-17T11:14:00.676032+00:00 over 2026-09-17T06:05:00+00:00.",
+    "holding": "Pushed and held. Not to be landed until the coordinator says go; the corrections branch lands first."
   }
 }

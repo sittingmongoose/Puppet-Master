@@ -1,7 +1,11 @@
 # External research as product canon — goal 3 (2026-09-17)
 
-Branch `plans/goal3-research-20260917`, based on `a6162b559b`. Nothing here is landed on `main`; the branch
-stops for an independent review. `verification.json` is the machine record, `evidence-receipts.json` names
+Branch `plans/goal3-research-20260917-land1`, rebased onto `main` at `2a92905501`; the review branch
+`plans/goal3-research-20260917` (original base `a6162b559b`) carries the same content one rebase behind.
+Nothing here is landed on `main`. The independent review at
+`/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/REVIEW_GOAL3_20260917.md`
+returned *fix first* with six should-fix items and nothing blocking; all six and both notes are applied, and
+the branch now holds for the coordinator's go. `verification.json` is the machine record, `evidence-receipts.json` names
 every source by path and SHA-256, and `canonical-outputs.json` carries the SHA-256 of every file the branch
 changed. This bundle is a result record, not canon.
 
@@ -166,8 +170,15 @@ common base `a6162b559b`:
 | `scripts/pm-new-contracts-verify.py` | This branch appends one `CONTRACT_PAIRS` tuple and raises the count; the other adds a Jujutsu semantics branch and touches neither `CONTRACT_PAIRS` nor `EXPECTED_CONTRACT_PAIR_COUNT` | Composable, different hunks. No count collision |
 | `Plans/ledgers/v2/ledger_registry.json` | Both append a new ledger object at the same insertion point and both rewrite the same trailing `updated_at_utc` | **A guaranteed conflict on both hunks for whichever branch lands second.** Keep both ledger entries and the later `updated_at_utc`; take nothing else from either side |
 
-The corrections branch lands first, so this branch resolves the registry conflict on rebase. Naming it here so
-it is expected rather than discovered.
+At the time of this rebase `origin/main` was `2a92905501` and `plans/c4-corrections-20260917` had **not**
+landed, so the registry conflict did not materialize and this rebase was clean on every source file: only the
+derived `Plans/_shards/00-plans-index/*`, `Plans/_shards/automated_testing_system/*` and `Plans/.plan_index/*`
+files conflicted, and every one was resolved by regeneration rather than by merging. When the corrections
+branch lands first, this branch must be rebased again and the registry conflict resolved then. The two entries
+are `pldg-20260917-001-jujutsu-continuation4-corrections` from that branch and
+`pldg-20260917-002-external-research-canon` from this one; both belong in `compiled_ledgers`, and the surviving
+`updated_at_utc` is the later of the two, which is that branch's `2026-09-17T11:14:00.676032+00:00` against this
+branch's `2026-09-17T06:05:00+00:00`.
 
 ## Claim boundary
 
