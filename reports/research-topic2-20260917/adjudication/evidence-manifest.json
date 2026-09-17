@@ -1,0 +1,1101 @@
+{
+  "schema": "pm.topic2.adjudication.evidence_manifest.v1",
+  "label": "Topic 2 (Plans/Azure_DevOps_Integration.md) adjudication bundle - Arm S and H2, evidence pointers and hashes",
+  "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm",
+  "note": "Raw captures stay outside this repository per AGENTS.md. Evidence is cited by path plus SHA-256.",
+  "runner_bundle_cross_reference": {
+    "branch": "research/topic2-20260917",
+    "commit": "4742fc84fb",
+    "policy": "Referenced by path, never duplicated. This bundle carries only the adjudication layer."
+  },
+  "owner_text_scored_against": {
+    "file": "Plans/Azure_DevOps_Integration.md",
+    "branch": "origin/main",
+    "commit": "4f5eda0d18",
+    "sha256": "3ae59c0217219175051418df0482663b247888cc65db087f942158ca5887cc2d",
+    "lines": 219
+  },
+  "frozen_case": {
+    "name": "azure-devops-frozen-20260917",
+    "plans_snapshot_commit": "a6162b559b502278458a56e95c5c0891c3e2a505",
+    "case_tree_sha256": "0aabcb80a77c9f94704aef9003d444d3f3e00b3f860a7b7297fb2b787c71112b",
+    "product_brief_sha256": "a69e129dfb6e39ea6577739bd4a912599d70e70064c3e9d566ac33e5f1af74ae",
+    "owner_passages_entering_at_reconcile": "200 files (43 .md + 157 .json)"
+  },
+  "runs": {
+    "arm_s": {
+      "directory": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531",
+      "manifest": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/arm-outputs/s-full-manifest.json",
+      "manifest_sha256_internal": "4bfc2dcfb6b08f402dbcc48daf94b9172d38d5b5f33970cdb3a2476348e2c3b1",
+      "files": 14089,
+      "total_bytes": 270987234,
+      "verified_three_ways": "rows recomputed, runner's quoted value matched, independent tree re-hash - zero differing files",
+      "terminal_stop": "Stop: admitted_attempt_cap at 2026-09-17T16:14:46Z"
+    },
+    "h2_research": {
+      "directory": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-research-20260917-051541",
+      "manifest": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/arm-outputs/h2-research-manifest.json",
+      "manifest_sha256_internal": "c1e7a066c8f21d3561d64020eeb87f0e737495fd02b380fe4796789d1ff2481c",
+      "files": 8214,
+      "total_bytes": 159622500,
+      "verified_three_ways": "zero differing files",
+      "terminal_stop": "Stop: admitted_attempt_cap at 2026-09-17T05:28:38Z"
+    },
+    "h2_review": {
+      "directory": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231",
+      "manifest": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/arm-outputs/h2-review-manifest.json",
+      "manifest_sha256_internal": "88da881acae5f2835c6f2be6b9fc1b16750e605bf48eb58e41bb1ecb490a9649",
+      "files": 7458,
+      "total_bytes": 152649463,
+      "verified_three_ways": "zero differing files",
+      "terminal_stop": "Stop: admitted_attempt_cap at 2026-09-17T21:25:13Z",
+      "carry_across_from_h2_research": "2,563 of 2,724 files byte-identical; the 161 absent are raw-omp transcripts and session files only. No workspace assertion document differs."
+    }
+  },
+  "the_five_documents_the_union_rests_on": [
+    {
+      "arm": "arm_s",
+      "job": "J0015-compare",
+      "lead": "L-a00b97bb867d",
+      "subject": "PR iterations as the review-revision object",
+      "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+    },
+    {
+      "arm": "arm_s",
+      "job": "J0016-compare",
+      "lead": "L-f16cd9d780b4",
+      "subject": "branch-policy scope resolution and the merge path",
+      "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+    },
+    {
+      "arm": "arm_s",
+      "job": "J0017-compare",
+      "lead": "L-45d24dbea574",
+      "subject": "policy evaluations, project GUID and status vocabulary",
+      "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+    },
+    {
+      "arm": "h2",
+      "job": "J0019-compare",
+      "lead": "L-b24fe52c31a4",
+      "subject": "the deprecated Azure Repos VS Code extension: TFVC, auth, instance trust",
+      "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+    },
+    {
+      "arm": "h2",
+      "job": "J0020-compare",
+      "lead": "L-6671e3e4c9ef",
+      "subject": "branch policies, evaluations and status checks",
+      "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+    }
+  ],
+  "structural_fact": "Union propositions can only come from compare-stage documents. All 11 reconcile notes and all 13 research notes across the three runs are external technical studies and NOT ONE contains the literal string 'Plans/'. Five of 44 model jobs produced a Plans comparison.",
+  "assertion_corpus": {
+    "rule": "workspace/notes.md and workspace/leads/*.md only. Excluded as inputs: handoff.md, navigation.md, brief.md, assignment.md, sources.md, tool-help.md, research.py. Excluded as locator inventories: workspace/research-evidence/sources/** (used by me for verification, never as an assertion).",
+    "arm_s": {
+      "root": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs",
+      "documents": 130,
+      "total_bytes": 1032792,
+      "files": [
+        {
+          "path": "J0001-discovery/workspace/notes.md",
+          "bytes": 15412,
+          "sha256": "68fc64374268d4f145273a01cfc18d18f04bdf90b686c01b8b8ef1aa15c6fc14"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L001-policy-scope-specificity.md",
+          "bytes": 3578,
+          "sha256": "4fee279221d76c93d97aa8216773631f886326ef79c4eef817e33bc245e9a907"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L002-policy-evaluations-artifactid-projectid.md",
+          "bytes": 3833,
+          "sha256": "fdc05736ba0c78ebaf8587a51bf8a5f5ec9e4eaee6d0989606b16288e83d9582"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L003-pr-iterations.md",
+          "bytes": 4592,
+          "sha256": "67d465dd8122595d7c8d71d5fde3fb96b343d303ce6222fc3f255364351bab16"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L004-service-hooks-delivery-semantics.md",
+          "bytes": 8043,
+          "sha256": "110f2f247f4d9224b2971083a24edf27142d6d495b6e2d0738697a47777a235e"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L005-rate-limits-throttle-as-latency.md",
+          "bytes": 4469,
+          "sha256": "4baa070b429d195cf5c8c7c1b9241f989681a0111b1d54d96bed5b8b3be73989"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L006-capability-discovery-options-apis-area.md",
+          "bytes": 7112,
+          "sha256": "a9116450281608e772886631cda2fa4cf8afd456542de91aba1aacd8ec562afc"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L007-auth-org-scoped-authority-discovery.md",
+          "bytes": 7703,
+          "sha256": "20a5c357df230e94e3d149ebc165806699779f93415d2f6f1bb54b28eed56605"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L008-builds-vs-pipelines-two-models.md",
+          "bytes": 6658,
+          "sha256": "b4be525ad3d5e2922ca06389e360aebf5fadfd0cf20000273be55ade756054c2"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L009-renovate-azure-platform-module.md",
+          "bytes": 6599,
+          "sha256": "ee15734bb7655496b68ba0ba72b8dcfe9f2cf79ab3beb5b91204a51c4837fd77"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L010-cloud-vs-onprem-detection-and-work-items.md",
+          "bytes": 6546,
+          "sha256": "c73c70194aa8c096d705956d5e19f043527f4fe10d0628cd9b2b51fb8485cbc0"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L011-gitbutler-rust-forge-abstraction.md",
+          "bytes": 6723,
+          "sha256": "750cb8d6fa464fcf135a0713c625f6c9b1d02c021d2f7ebeeda36c21b84fcf73"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L012-votes-carry-over-by-default-and-carry-no-iteration.md",
+          "bytes": 11904,
+          "sha256": "4aa76948d72f0ee245276c7bf77e374aaaf507453ec6145e25154b331dacb064"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L013-comment-tracking-and-legacy-prs.md",
+          "bytes": 3717,
+          "sha256": "ba7eb82f6c371a4ad821b6c6595e841fbab63dc8d465bbc6ca74bb9bf18f288f"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L014-kinds-of-no-taxonomy.md",
+          "bytes": 5674,
+          "sha256": "904e02b872d35d0f8f30ac43e947df5a75aa16c36017d73dc218f0337436093f"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L015-url-and-org-identity-field-failures.md",
+          "bytes": 5675,
+          "sha256": "7805503714dee3f3d7ebab11ba86ffc3da628466a2a2a0aae75c48d00572c552"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L016-rust-client-azure-devops-rust-api.md",
+          "bytes": 4539,
+          "sha256": "2d4a3d4934a3a1c1f95d004aa05b7d058cf70f7a3bc271fe7bbf5ddc7ba1193c"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L017-pr-status-iteration-scoped.md",
+          "bytes": 4193,
+          "sha256": "57227e6aefd4d2893a441353eaf09fe0c80f5d5a17620c85fda80a7acaef5772"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L018-microsoft-mcp-server-scope-limits.md",
+          "bytes": 4650,
+          "sha256": "52d0b0d343aeb85d485cbb7229514499ce3e1931a739aaef7f8f8b95de2aa7a8"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L019-gerrit-outdated-votes-reference-design.md",
+          "bytes": 5374,
+          "sha256": "15714e7a1a10ecb6ba54d290b3d03675e8dd45f2289dcd56a8bedf664dc35fd2"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L020-notifications-query-gap-recovery.md",
+          "bytes": 4586,
+          "sha256": "df0c878e1098a4cb7fd4bf63ff0785a2cc42f38682a83525e49d378ac02a286c"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/L021-desktop-client-graveyard.md",
+          "bytes": 6653,
+          "sha256": "3c99afdc26b3499a9033c3291845177b3f3ed4d84c4ab2010ba7bc80c9b3bb8c"
+        },
+        {
+          "path": "J0002-implementation/workspace/notes.md",
+          "bytes": 10426,
+          "sha256": "10a160fe48251b0a1b06539dd5aae1dcfcee02d58f9ea76685bd0e22e2c3cb64"
+        },
+        {
+          "path": "J0006-history/workspace/notes.md",
+          "bytes": 8129,
+          "sha256": "8ddb9bf53c8d50a062f64ca78150556062c81dac263ad5bfdddd7a5cf82f4cc7"
+        },
+        {
+          "path": "J0008-history/workspace/notes.md",
+          "bytes": 27460,
+          "sha256": "c97c8485d7f851d7e4dfe889741e4be5c69470303a82d00dbb292c11f9f3a2c0"
+        },
+        {
+          "path": "J0008-history/workspace/leads/LH01-api-version-is-per-endpoint-host-data.md",
+          "bytes": 5279,
+          "sha256": "2d70062b6b30794d240a5c70c604164ef431f68a2a9f490bd17c4f19504a574e"
+        },
+        {
+          "path": "J0008-history/workspace/leads/LH02-project-identity-omission-pattern.md",
+          "bytes": 5099,
+          "sha256": "b695d1fd33518af320ddd812225b7be9d0fe1f8d34c600afbe8fefbdf872d7c2"
+        },
+        {
+          "path": "J0008-history/workspace/leads/LH03-policy-type-display-name-as-key.md",
+          "bytes": 3234,
+          "sha256": "617e2574d7aff3064f4e63d9f2c04c98710cb533105e0e395ef58af795537f0a"
+        },
+        {
+          "path": "J0008-history/workspace/leads/LH04-rust-client-strictness-on-a-preview-endpoint.md",
+          "bytes": 3164,
+          "sha256": "e69586b0a05874955e5f6b9bf98f10602eb95831518e7c8ca6ba4f7761d08d37"
+        },
+        {
+          "path": "J0008-history/workspace/leads/LH05-policy-requeue-is-a-distinct-retry-verb.md",
+          "bytes": 3510,
+          "sha256": "5003af56706525b84064443839c0b17460a423f0e023a748b9d1da8d50c27e0f"
+        },
+        {
+          "path": "J0008-history/workspace/leads/LH06-mergeability-is-a-join-not-a-field.md",
+          "bytes": 3543,
+          "sha256": "80c81efb3662504bf07577602b51173880c274e287a6b7e4ddce885a49f2649d"
+        },
+        {
+          "path": "J0008-history/workspace/leads/LH07-policy-settings-expose-the-reset-and-requeue-rules.md",
+          "bytes": 3770,
+          "sha256": "9185c8febc20dc759cea5cfaa7f1c1603a13b2e26c3f48b850c67c35cd0ebe46"
+        },
+        {
+          "path": "J0008-history/workspace/leads/LH08-onprem-availability-of-policy-evaluations-unresolved.md",
+          "bytes": 3149,
+          "sha256": "7b67ba9cb5bc7a9f740c1657bd6f7828e27963fa660739b88f3a4840bbf1e4e4"
+        },
+        {
+          "path": "J0009-implementation/workspace/notes.md",
+          "bytes": 23224,
+          "sha256": "c697e45441528b8e7a3aa559e10d1e624116d5dcfb02ede04bef4b0c17de0fb2"
+        },
+        {
+          "path": "J0009-implementation/workspace/leads/L-events-do-not-name-the-iteration.md",
+          "bytes": 2091,
+          "sha256": "72bb266af7d9b58e3706577947e1bdfc44c20b853710f4ac26096be57f250fac"
+        },
+        {
+          "path": "J0009-implementation/workspace/leads/L-isreapprove-and-per-iteration-vote-accounting.md",
+          "bytes": 2108,
+          "sha256": "9f0506eaa26d9d977742770eadb0189b43994bfad9bb7c305ae3c09621cc1605"
+        },
+        {
+          "path": "J0009-implementation/workspace/leads/L-iterationreason-composite-values.md",
+          "bytes": 1640,
+          "sha256": "91565af096130168dd5acc118d2cdb67795b9997109071614d09f3337bedbf03"
+        },
+        {
+          "path": "J0009-implementation/workspace/leads/L-onprem-route-availability-for-iterations.md",
+          "bytes": 2600,
+          "sha256": "a6ca530e9745c596ac6c0a761b3e31d5084f490f422c0eba42041c75dd612d9a"
+        },
+        {
+          "path": "J0009-implementation/workspace/leads/L-policy-evaluation-context-contents.md",
+          "bytes": 1988,
+          "sha256": "fc12b42327898345c6c151222b9837cd09682dadcd8b00d2df11bf1515abe264"
+        },
+        {
+          "path": "J0009-implementation/workspace/leads/L-pull-requests-without-iteration-support.md",
+          "bytes": 1783,
+          "sha256": "1635817583c9d1e5a2bb8d2954bc1081cc50418cd62bbe9185ee0d02f335f637"
+        },
+        {
+          "path": "J0009-implementation/workspace/leads/L-status-policy-reset-conditions.md",
+          "bytes": 2452,
+          "sha256": "174ae04872eebff0d39656be7c3b4577f5ca9c4ff11ad4cde7a82bbc69e5d76d"
+        },
+        {
+          "path": "J0009-implementation/workspace/leads/L-target-branch-movement-vs-iterations.md",
+          "bytes": 1838,
+          "sha256": "daccead6c5883fd7237fe09e6727526b7240e0d43d4309bba8d06385e96ea68a"
+        },
+        {
+          "path": "J0009-implementation/workspace/leads/L-unknown-reason-collapses-to-push.md",
+          "bytes": 1585,
+          "sha256": "95a1f1edcd31d3955bf65bc55f7d28dd407b455dfb11236ec0dc77c2f68e8c42"
+        },
+        {
+          "path": "J0009-implementation/workspace/leads/L-vote-reset-on-retarget-resolveconflicts.md",
+          "bytes": 2564,
+          "sha256": "61496bf0e05488f6b04d5965d44f4881d8c39c3c188a80b8b8529632abf2c3d7"
+        },
+        {
+          "path": "J0010-history/workspace/notes.md",
+          "bytes": 40922,
+          "sha256": "eb005785272705a830c0ce0a4098fbb2ad9d2fc4e3ab086ee40f2c1f532559a0"
+        },
+        {
+          "path": "J0010-history/workspace/leads/check-staleness-is-policy-configuration.md",
+          "bytes": 2607,
+          "sha256": "0606859d8ee34ae8f17357cee29ee25d24ba9ba1b9cdac964e5df2b7f4f3419a"
+        },
+        {
+          "path": "J0010-history/workspace/leads/comment-position-is-query-dependent.md",
+          "bytes": 2162,
+          "sha256": "f46e12789f34bc705d6c38e2b6d71cd26eb5ae8210883df99e77deabdad0aa62"
+        },
+        {
+          "path": "J0010-history/workspace/leads/legacy-pull-requests-no-iteration-support.md",
+          "bytes": 2572,
+          "sha256": "6b80efbfc920c04ad91414c4c360038246f99483e0a4c917cbe55ab4932a056f"
+        },
+        {
+          "path": "J0010-history/workspace/leads/paged-lists-truncate-differently.md",
+          "bytes": 2346,
+          "sha256": "ac4bb825c46add401f795321526b31010e90454be578ce4192dfff1637037793"
+        },
+        {
+          "path": "J0010-history/workspace/leads/pr-webhook-events-carry-no-iteration.md",
+          "bytes": 2288,
+          "sha256": "695bfff16c4aa31b82ee98193bfeefcc065f93c12ef25289b17524f78b06f019"
+        },
+        {
+          "path": "J0010-history/workspace/leads/silent-no-op-writes-in-git-rest-api.md",
+          "bytes": 1890,
+          "sha256": "ac50449666d52a1b58d1f8e68e8e6c303b92f5beb498c71f72ddb3d49f376480"
+        },
+        {
+          "path": "J0011-implementation/workspace/notes.md",
+          "bytes": 32232,
+          "sha256": "dd26cffb2a1185cf1b0dc3ea296f057fe1b68e55f1e8dfbc06030facb2860728"
+        },
+        {
+          "path": "J0011-implementation/workspace/leads/minimal-payload-and-session-token.md",
+          "bytes": 3863,
+          "sha256": "8e9d47ae6bb0943d34440da8317ddb262689c12748339128a3178decf8fa2120"
+        },
+        {
+          "path": "J0011-implementation/workspace/leads/no-event-for-policy-or-status-changes.md",
+          "bytes": 3294,
+          "sha256": "867f114abafe175e759c58db5849a90ecffce7e929a5ccc3bd123f622c5191ed"
+        },
+        {
+          "path": "J0011-implementation/workspace/leads/no-modified-since-for-pull-requests.md",
+          "bytes": 2584,
+          "sha256": "232dac67bb9c2c2104057fd7803fba9d47fb12c4e534994a9c4c70c824262139"
+        },
+        {
+          "path": "J0011-implementation/workspace/leads/notification-id-semantics.md",
+          "bytes": 4590,
+          "sha256": "585dbe4a459486d0f5fc2967e9a0cbf522352aad0b08cb9f5808210bdca7aaa1"
+        },
+        {
+          "path": "J0011-implementation/workspace/leads/notification-retention-window.md",
+          "bytes": 2892,
+          "sha256": "0658bb169705f56683513d8eca015abea002d20c31855c66a6cb2fbf49094cb1"
+        },
+        {
+          "path": "J0011-implementation/workspace/leads/onprem-service-hooks-parity.md",
+          "bytes": 3837,
+          "sha256": "8c3adf2a40858d916f39eabb509bc2c0d7c8cfeda0d4bb7a173970c661b7488c"
+        },
+        {
+          "path": "J0011-implementation/workspace/leads/queue-consumers-as-desktop-transport.md",
+          "bytes": 5374,
+          "sha256": "576208ef65e6662448834aceaba28b43037679803ca819d5ae20e69c11a66858"
+        },
+        {
+          "path": "J0011-implementation/workspace/leads/receiver-status-code-is-destructive.md",
+          "bytes": 2488,
+          "sha256": "41c2954b09eb15d23b763bb9aa2d5db053e57343259752f9b12184daf525d0f3"
+        },
+        {
+          "path": "J0011-implementation/workspace/leads/service-hooks-capability-discovery.md",
+          "bytes": 3747,
+          "sha256": "0cf616764b1f0e63d9275f8aac2d59d2b2bfbc120f12ba939a4191a32b85a52b"
+        },
+        {
+          "path": "J0011-implementation/workspace/leads/service-hooks-permission-conflict.md",
+          "bytes": 3178,
+          "sha256": "4818d52ec35672654f76fa0f0d538790ded1180b23d9224fe40014915898e4d4"
+        },
+        {
+          "path": "J0011-implementation/workspace/leads/signalr-realtime-pr-events.md",
+          "bytes": 4162,
+          "sha256": "4c6b64e41f6a9a57053e5e548d7f9ce49f43709cacb04073a0c5acf97746fe7e"
+        },
+        {
+          "path": "J0011-implementation/workspace/leads/subscription-identity-is-org-scoped-and-owner-bound.md",
+          "bytes": 4052,
+          "sha256": "dd9962a0dcc4d1dfc93ef2585aa423438744113b1a11eb1bd001e9e7cc7a8eb9"
+        },
+        {
+          "path": "J0011-implementation/workspace/leads/subscription-state-granularity.md",
+          "bytes": 2817,
+          "sha256": "747a296bc542d1b6c551c77767bac62a4061f417952a870c0c1180a7a0b0f25f"
+        },
+        {
+          "path": "J0012-reconcile/workspace/notes.md",
+          "bytes": 28123,
+          "sha256": "2f7bcc596782aef4d22a25818c795253c0d677f733648e3391696882377bf95e"
+        },
+        {
+          "path": "J0012-reconcile/workspace/leads/L-branch-policy-api-surface.md",
+          "bytes": 3472,
+          "sha256": "b4d9da4ee2bbd9f67f2e086999a92c3543044e4106725e4bc1310a6e50ea29bd"
+        },
+        {
+          "path": "J0012-reconcile/workspace/leads/L-policy-bypass-completion.md",
+          "bytes": 3531,
+          "sha256": "9a955d7abf8e7440b45cb45a5f388b8b4023894a29cde4a139f227947923d3a3"
+        },
+        {
+          "path": "J0012-reconcile/workspace/leads/L-policy-list-pagination.md",
+          "bytes": 2611,
+          "sha256": "3a2fb9b76a1e11d60130a17d6066e6ffc8af0eb13b8e9e9aa1c81c1457e1dfc0"
+        },
+        {
+          "path": "J0012-reconcile/workspace/leads/L-project-identity-name-vs-guid.md",
+          "bytes": 2553,
+          "sha256": "243a5c4e3b7287732885ffdd5762cff42e13cceff6fd423663f073e8c3859e8a"
+        },
+        {
+          "path": "J0013-reconcile/workspace/notes.md",
+          "bytes": 46705,
+          "sha256": "56c9ed4a9f71055706d0d0a2dc924d6634092d93d186e7f098a94f34c22a9002"
+        },
+        {
+          "path": "J0013-reconcile/workspace/leads/LN01-api-version-is-per-endpoint-not-per-product.md",
+          "bytes": 5493,
+          "sha256": "acc80c5c8b24a193e64abc30fbfa63fd67aad23538e6eced9a590aa8dc2779b9"
+        },
+        {
+          "path": "J0013-reconcile/workspace/leads/LN02-status-checks-are-also-a-policy-type.md",
+          "bytes": 4951,
+          "sha256": "78cb4012804f8c66bd0f6ed3fa8aa2d58de58039735bce348828b05fce2e2221"
+        },
+        {
+          "path": "J0013-reconcile/workspace/leads/LN03-optional-means-two-different-things.md",
+          "bytes": 5198,
+          "sha256": "1509dd9945725abffdead4f77d164c96cd41fe6070f822cd374dea0697991e28"
+        },
+        {
+          "path": "J0013-reconcile/workspace/leads/LN04-policy-scope-is-unordered-and-nullable.md",
+          "bytes": 5007,
+          "sha256": "740c5e286cae40f73498fce28cf27f3711a534c35a905fd943d0457cc22d8474"
+        },
+        {
+          "path": "J0013-reconcile/workspace/leads/LN05-capability-facts-that-are-documented.md",
+          "bytes": 5170,
+          "sha256": "2bef554eebc61b0c327cd36ccd10126e8ca79b53f69a59dd2d00264fc62551a4"
+        },
+        {
+          "path": "J0013-reconcile/workspace/leads/LN06-target-branch-expiry-has-three-modes.md",
+          "bytes": 5734,
+          "sha256": "3c32244453f804e1334c8e0c77205dec17be470984bb4e734fb9fd7334224ec5"
+        },
+        {
+          "path": "J0013-reconcile/workspace/leads/LN07-preview-deactivation-is-a-twelve-week-fuse.md",
+          "bytes": 5168,
+          "sha256": "1a0d0e346a40dd54a26b8556dd76f352462fcf5f9286d88a4c7d84c966d2a1d0"
+        },
+        {
+          "path": "J0014-reconcile/workspace/notes.md",
+          "bytes": 44961,
+          "sha256": "b918b9a265e59bfc16c76d61b9152a485a6d441b123a8416f6c9e1f22976c46e"
+        },
+        {
+          "path": "J0014-reconcile/workspace/leads/check-staleness-is-policy-configuration.md",
+          "bytes": 4494,
+          "sha256": "6271d038f8804d6c70b672d8f867ae5374c565ef83ea98025d7b2198c2efc435"
+        },
+        {
+          "path": "J0014-reconcile/workspace/leads/group-vote-rollup.md",
+          "bytes": 3068,
+          "sha256": "bccb1be3b22b622271c851c571e55c3c6a0af9066be4987c150a38af5feee5bc"
+        },
+        {
+          "path": "J0014-reconcile/workspace/leads/iteration-identity-absent-from-first-party-change-listing.md",
+          "bytes": 5408,
+          "sha256": "bca8de97ac353798864a1f246a5dfb81a2f78f946afa3d8e6d739177432a4e48"
+        },
+        {
+          "path": "J0014-reconcile/workspace/leads/legacy-pull-requests-no-iteration-support.md",
+          "bytes": 3724,
+          "sha256": "871d55b953c6d4a983084767f69a1cfb95e26c352720e1eb5a6ff5eae1cd58ed"
+        },
+        {
+          "path": "J0014-reconcile/workspace/leads/paged-lists-truncate-differently.md",
+          "bytes": 4164,
+          "sha256": "7b4d1a79adc3f9f0bfeadeede34d23e7c8c43c0cc6bddbab61e53b6f406cc1d8"
+        },
+        {
+          "path": "J0014-reconcile/workspace/leads/pr-webhook-events-carry-no-iteration.md",
+          "bytes": 3743,
+          "sha256": "6c7f7b139f4dd84c2d647405a7aa80226f59993b27b0744291fed1d934f373ee"
+        },
+        {
+          "path": "J0014-reconcile/workspace/leads/silent-no-op-writes-in-git-rest-api.md",
+          "bytes": 3939,
+          "sha256": "319d2272e4744463ab2af5bed9522daa8a95f88422657e0d5598a5121b180f92"
+        },
+        {
+          "path": "J0014-reconcile/workspace/leads/supports-iterations-query-vs-body.md",
+          "bytes": 3973,
+          "sha256": "390a180b555d621e56503ffdb5b4f49720aed57c8dce3107d1c84cde21d45aca"
+        },
+        {
+          "path": "J0014-reconcile/workspace/leads/target-branch-movement-vs-iterations.md",
+          "bytes": 3937,
+          "sha256": "2553e6238ec15048890a8836849340044ca848bd56961383865b5ca79b580508"
+        },
+        {
+          "path": "J0014-reconcile/workspace/leads/thread-anchors-are-independently-absent.md",
+          "bytes": 5397,
+          "sha256": "d5abcafeb971c4b6a0be6dfd3bef19f1b7192007f94ad69b0fe25683c2b785d7"
+        },
+        {
+          "path": "J0015-compare/workspace/notes.md",
+          "bytes": 51745,
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        },
+        {
+          "path": "J0015-compare/workspace/leads/azure-profile-missing-review-versions-capability.md",
+          "bytes": 4142,
+          "sha256": "f68141a378dde0dee96b0b76cc3fda72a4ed1c5285c26ac1a332040cfc61da82"
+        },
+        {
+          "path": "J0015-compare/workspace/leads/azure-review-fixtures-do-not-exist.md",
+          "bytes": 3851,
+          "sha256": "a08e1faaa3a60872ad6383d04aa5d8c885483728fe88dbabd37486715b169f89"
+        },
+        {
+          "path": "J0015-compare/workspace/leads/capability-granularity-mismatch-binding-vs-review.md",
+          "bytes": 4577,
+          "sha256": "198da2faa16155c0a0ba32c23efad1c0df5ab6572cf3989ac531749110a64376"
+        },
+        {
+          "path": "J0015-compare/workspace/leads/review-votes-have-no-typed-shape.md",
+          "bytes": 4691,
+          "sha256": "d97f75d198f903c4786dd500f6eca9d404fb3664af2b8a9e50bc3a86069d4b60"
+        },
+        {
+          "path": "J0015-compare/workspace/leads/revision-identity-vs-completeness.md",
+          "bytes": 4364,
+          "sha256": "4498387ba1fd00fa8c248f7dacef14a35effc83803bcccef9fc1a4d4243c04d4"
+        },
+        {
+          "path": "J0015-compare/workspace/leads/thread-anchor-pair-vs-single-ref.md",
+          "bytes": 6672,
+          "sha256": "e21fd05dae520a689cfe004a3c4b7b53870c369f8138d94753f36d0a0884c720"
+        },
+        {
+          "path": "J0016-compare/workspace/notes.md",
+          "bytes": 58927,
+          "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+        },
+        {
+          "path": "J0016-compare/workspace/leads/L-check-item-typed-shape.md",
+          "bytes": 4263,
+          "sha256": "5cb4056bea2d29fae7cb7f54cb34ababddc64ac49a15a343fb098178a9cea1c6"
+        },
+        {
+          "path": "J0016-compare/workspace/leads/L-merge-strategy-omission.md",
+          "bytes": 5109,
+          "sha256": "3669bdf37ba26e14c8977c0f76f613d6ba824c6648d07b69460381592dfb7733"
+        },
+        {
+          "path": "J0016-compare/workspace/leads/L-policy-scope-missing-unreachable.md",
+          "bytes": 4575,
+          "sha256": "2a2e5de6925e935735d0615407be3630631cedd3c66edece406144f8902584ec"
+        },
+        {
+          "path": "J0016-compare/workspace/leads/L-preview-api-on-self-run-server.md",
+          "bytes": 3952,
+          "sha256": "f725fc7993159be9a0c3ec5740d698a6e31fcd712cd07568ec7c77eb3f54bfef"
+        },
+        {
+          "path": "J0016-compare/workspace/leads/L-review-head-oid-unenforceable.md",
+          "bytes": 4744,
+          "sha256": "f26d0cecf670cb193c72bf882ef419f2cba15f619785765c09ccd96cf0ee9761"
+        },
+        {
+          "path": "J0017-compare/workspace/notes.md",
+          "bytes": 58939,
+          "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+        },
+        {
+          "path": "J0018-reconcile/workspace/notes.md",
+          "bytes": 39641,
+          "sha256": "c43905129bbd7eed0d1ea5ceed6b3cc2c37d0052014d84bc18010d2ee58c08c4"
+        },
+        {
+          "path": "J0018-reconcile/workspace/leads/minimal-payload-and-session-token.md",
+          "bytes": 4991,
+          "sha256": "fc8e770a3f4b58548c0237883fb02472561c77c4614066013d6b2ad2843bfb07"
+        },
+        {
+          "path": "J0018-reconcile/workspace/leads/no-event-for-policy-or-status-changes.md",
+          "bytes": 5371,
+          "sha256": "2d95b396ef5b72669fc19326206a37c0b7df1e3a9d353ec02e28aaacdaa466c4"
+        },
+        {
+          "path": "J0018-reconcile/workspace/leads/no-modified-since-for-pull-requests.md",
+          "bytes": 4186,
+          "sha256": "cb1a54b87e9fbf349f840e662184cb0283da236b3bbd4b871d234a119f2381c6"
+        },
+        {
+          "path": "J0018-reconcile/workspace/leads/notification-retention-window.md",
+          "bytes": 5186,
+          "sha256": "8d1673b0e176fd3836e4b40f1bc21bcb295fbfdce8780a28de9c6eae0de2f6a7"
+        },
+        {
+          "path": "J0018-reconcile/workspace/leads/onprem-service-hooks-parity.md",
+          "bytes": 4588,
+          "sha256": "61a8a1086ff5636293ac708bbebb66d24f0c6cd5cd7332a921b9d83da2e58619"
+        },
+        {
+          "path": "J0018-reconcile/workspace/leads/queue-consumers-as-desktop-transport.md",
+          "bytes": 8020,
+          "sha256": "67cd17560578d1f725a9dec3caa7d37a1b4f4b556fcd45c5345c5ae3a75a53a4"
+        },
+        {
+          "path": "J0018-reconcile/workspace/leads/receiver-status-code-is-destructive.md",
+          "bytes": 5007,
+          "sha256": "06185bceb74dc64cfd054983267b9a38b59a2dcd07e4525e4360a0fdefae0173"
+        },
+        {
+          "path": "J0018-reconcile/workspace/leads/reviewer-vote-reset-is-a-first-class-concept.md",
+          "bytes": 5636,
+          "sha256": "55d7ec7bb5d02a40ff738ec207c002bd135f5f69dd6ea525d18f96739c115210"
+        },
+        {
+          "path": "J0018-reconcile/workspace/leads/service-hooks-capability-discovery.md",
+          "bytes": 4578,
+          "sha256": "fe69a0a4cedc55ba0a56a31fa45659aafea573f21116efc05d2c0530dd41a0dd"
+        },
+        {
+          "path": "J0018-reconcile/workspace/leads/service-hooks-namespace-is-internal.md",
+          "bytes": 5290,
+          "sha256": "952204951a84635392938c99b1b7da0e315e9a53d7132f0a7c107c68c3a4d140"
+        },
+        {
+          "path": "J0018-reconcile/workspace/leads/signalr-realtime-pr-events.md",
+          "bytes": 5535,
+          "sha256": "c3c5dcc38f70783b8e3d4cc85bfbb64582781f8762a13bb82aa24facf7a614ad"
+        },
+        {
+          "path": "J0018-reconcile/workspace/leads/subscription-identity-is-org-scoped-and-owner-bound.md",
+          "bytes": 4928,
+          "sha256": "b3307a9617bff75ece2f4c8db646aaca7a1d72a249ff252caa1de5551a99cabe"
+        },
+        {
+          "path": "J0018-reconcile/workspace/leads/subscription-state-granularity.md",
+          "bytes": 3595,
+          "sha256": "30fdc669f3df850c53852ba19fb69c509dd897eb5cbae7c351d1d9abef6285e0"
+        },
+        {
+          "path": "J0018-reconcile/workspace/leads/webhook-envelope-has-no-published-contract.md",
+          "bytes": 9722,
+          "sha256": "072063158820158b34285713815b965be438d9910d0969680b6769a7eabd57ef"
+        },
+        {
+          "path": "J0019-reconcile/workspace/notes.md",
+          "bytes": 21692,
+          "sha256": "dcbb5a8757dbd0c14491ace37378c8693ae97b8c4a64f4ae889c6c487286798d"
+        },
+        {
+          "path": "J0019-reconcile/workspace/leads/git-layer-limits-are-distinct-refusals.md",
+          "bytes": 3982,
+          "sha256": "be8bf4f063869df93a90827c4f269f193ea661cf44f2e26858c3e8eb2c2b18eb"
+        },
+        {
+          "path": "J0019-reconcile/workspace/leads/onprem-throttling-contract-unknown.md",
+          "bytes": 3456,
+          "sha256": "b628f1da936891ab948fca7ab4d7168193f82429c3d396ffe122c2391a37f0a8"
+        },
+        {
+          "path": "J0019-reconcile/workspace/leads/poll-cadence-is-a-consumption-budget.md",
+          "bytes": 4116,
+          "sha256": "b559465ffa92cbb86835d330d228611a08d1d03d6af908d3fb0d2581a2d257cb"
+        },
+        {
+          "path": "J0019-reconcile/workspace/leads/query-and-workitem-service-limits.md",
+          "bytes": 3246,
+          "sha256": "373ce7166d21a8fa4702976faf451bced23d274d6513c73efa3424f07cc2133f"
+        },
+        {
+          "path": "J0019-reconcile/workspace/leads/rust-sdk-defines-ratelimit-headers-but-ignores-them.md",
+          "bytes": 3474,
+          "sha256": "18832c092ff24868ff5be99f5abcc2436723ffaef654d5e1857e413892605f48"
+        },
+        {
+          "path": "J0019-reconcile/workspace/leads/throttle-observability-is-admin-gated.md",
+          "bytes": 3771,
+          "sha256": "8920435b82a1363452a93bdffe40d1abf24988a3466e6881bc3177514ef1ba67"
+        },
+        {
+          "path": "J0020-reconcile/workspace/notes.md",
+          "bytes": 34490,
+          "sha256": "362e887ef50051835cbe2a64314d91a5caf0da5845db1450d2b1061fa260dd12"
+        },
+        {
+          "path": "J0020-reconcile/workspace/leads/L-J0020-01-resource-area-multi-host-base-urls.md",
+          "bytes": 3890,
+          "sha256": "caa70ac63cef1d7cd043ad39c97f0472c1e2c99646fc33ea52eb530a3d99afa5"
+        },
+        {
+          "path": "J0020-reconcile/workspace/leads/L-J0020-02-preview-only-resources-in-ga-generations.md",
+          "bytes": 2888,
+          "sha256": "d7dbd128950a499ffaca02ff6d362ff3ad3432736d80db0ae5e6097600db490d"
+        },
+        {
+          "path": "J0020-reconcile/workspace/leads/L-J0020-03-official-version-tables-disagree.md",
+          "bytes": 4362,
+          "sha256": "a10fcbf9d3895dcf25ec8ef33661d86fd8bc65f3b419f48a56ed97a24dcb1c54"
+        },
+        {
+          "path": "J0020-reconcile/workspace/leads/L-J0020-04-route-values-silently-dropped.md",
+          "bytes": 3310,
+          "sha256": "a45d468764dc88934d5e3ed03a0100ef1c543dea20834831d511322aff3f02bf"
+        }
+      ]
+    },
+    "h2_research": {
+      "root": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-research-20260917-051541/jobs",
+      "documents": 32,
+      "total_bytes": 90705,
+      "files": [
+        {
+          "path": "J0001-discovery/workspace/leads/auth-pat-entra-ssh.md",
+          "bytes": 1706,
+          "sha256": "de1cff533109f7cc3aac0c5633997779d351d9c70c27e9be06d888b45ccbcf3c"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/azure-repos-vscode-official.md",
+          "bytes": 1757,
+          "sha256": "3c4c16fb10a184a81bcf2385f6447d498c8aafc7db3ba1fcc41415f2778b90da"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/branch-policies-status-checks.md",
+          "bytes": 1348,
+          "sha256": "282af5cdd91c6359e005abb8506a1259df48bebe2ac53c892f68b7cca488423b"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/community-azdo-pr-extension.md",
+          "bytes": 1825,
+          "sha256": "aa43fb93d1b82ef7da972ade31b60d446db3ddad59f2562138cf93a01776d459"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/gitkraken-azure-integration.md",
+          "bytes": 1551,
+          "sha256": "2da92d4789c1df922348b9bdaf92d6f1bc8e06dd4cdc8af5543422cc9f19d110"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/jetbrains-azure-pr-review.md",
+          "bytes": 1345,
+          "sha256": "ba74fb0db93bcf3e11acb8013697fa6dae573549af753e0dc385dff39175228b"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/official-sdks-node-python.md",
+          "bytes": 1643,
+          "sha256": "729380a26cd9a37af10f75a21535bbe3b6b095467b9ad546983ff558c946e9b0"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/pr-iterations-votes-staleness.md",
+          "bytes": 1720,
+          "sha256": "be2c56b8eb3f3006bae0e10fc6364a13e90f595df1f6df8e71d515c83f1fae6a"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/rate-limits-error-taxonomy.md",
+          "bytes": 1518,
+          "sha256": "b096e999e0b9b7c98ef9fc32dba8f6c6a2597478324b37885eca60c622161018"
+        },
+        {
+          "path": "J0001-discovery/workspace/leads/service-hooks-webhooks.md",
+          "bytes": 1488,
+          "sha256": "bcf7f2f996f1027cd6c805c306f69bac7994bd2106c7da4dd57fc1009e0a98fa"
+        },
+        {
+          "path": "J0004-implementation/workspace/notes.md",
+          "bytes": 10793,
+          "sha256": "a17d27b8d520bc7daca66eef22ddc976b2e820e3d8c9e64854806691306b610f"
+        },
+        {
+          "path": "J0004-implementation/workspace/leads/browse-pr-wrong-url-534.md",
+          "bytes": 1084,
+          "sha256": "b531987c2344919ad20a11f5717a6a48a837ff38ef46cb4f3a892371b50e5ac0"
+        },
+        {
+          "path": "J0004-implementation/workspace/leads/device-flow-pat-scopes.md",
+          "bytes": 771,
+          "sha256": "a55deace54250a84a5a0459acf76b6be39ad58a7e62e9b6ce510d59b02f89f29"
+        },
+        {
+          "path": "J0004-implementation/workspace/leads/successor-in-editor-review.md",
+          "bytes": 969,
+          "sha256": "54c9ca358626f53d426393b403803ee427ebef8a4c239c2c5e2ed776a7b4ab61"
+        },
+        {
+          "path": "J0006-implementation/workspace/notes.md",
+          "bytes": 10916,
+          "sha256": "2a69ca14282188fd68e8187aa53289c8ad02ab6907fec0883a04fea88c37d8c5"
+        },
+        {
+          "path": "J0006-implementation/workspace/leads/browse-pr-wrong-url-534.md",
+          "bytes": 1703,
+          "sha256": "e69ac6e2dca78bb4ec9737b179004ba875dfb81eb292ef87d9835681740ca258"
+        },
+        {
+          "path": "J0006-implementation/workspace/leads/device-flow-pat-scopes.md",
+          "bytes": 744,
+          "sha256": "e9dff85fd2c413cdc1eaf67117b973f692e354278b38be5386c732357d6d615a"
+        },
+        {
+          "path": "J0006-implementation/workspace/leads/successor-in-editor-review.md",
+          "bytes": 1352,
+          "sha256": "93ac67a3405b20f638fa717573224a01ac27541e2e4bec8c6f7416cf4631935b"
+        },
+        {
+          "path": "J0007-history/workspace/notes.md",
+          "bytes": 8706,
+          "sha256": "8b33aa29d03bdd1d3285cada462f414cdac33aeec4077121058644ba624de0df"
+        },
+        {
+          "path": "J0009-implementation/workspace/notes.md",
+          "bytes": 8040,
+          "sha256": "8266e76fd9f93e941a9cfdb063953667a66e572558b8d36a8c2e28e3792bb80b"
+        },
+        {
+          "path": "J0009-implementation/workspace/leads/iteration-staleness.md",
+          "bytes": 745,
+          "sha256": "54e7690e078a171e75486215f49942d4705164b90ce8f89b72640c30f0cee1d1"
+        },
+        {
+          "path": "J0009-implementation/workspace/leads/merge-semantics.md",
+          "bytes": 586,
+          "sha256": "33713f18d97305f0f66276c3e21138db30a9b07c424e5e40b851d0f1f56ff313"
+        },
+        {
+          "path": "J0009-implementation/workspace/leads/policy-settings.md",
+          "bytes": 706,
+          "sha256": "2927a198a40d5b0d29b23e7609a4458b809de12f6c7bb0c0c1fcc99db6e6ee74"
+        },
+        {
+          "path": "J0010-history/workspace/notes.md",
+          "bytes": 9883,
+          "sha256": "d63d92de146ebaee798a8f910573c72f44bf1c35ade0e14f3c887f07891ce3fa"
+        },
+        {
+          "path": "J0010-history/workspace/leads/pat-in-settings-removal.md",
+          "bytes": 1004,
+          "sha256": "2e10cac8380511a69e6bfb204e8e532c7b80b6879b8d2904a8160d5504dd77e0"
+        },
+        {
+          "path": "J0010-history/workspace/leads/tfs-permission-overreach.md",
+          "bytes": 1087,
+          "sha256": "d3581ba97508095135e1108d43ec41f146d6bc443d03a2f80c391cf63f2c53c6"
+        },
+        {
+          "path": "J0010-history/workspace/leads/tls-verification-bypass.md",
+          "bytes": 1167,
+          "sha256": "da2a0d29d5b778355aa8e64fc6824d4d19dc84ba3df41d0a553c92141091a9a7"
+        },
+        {
+          "path": "J0012-implementation/workspace/notes.md",
+          "bytes": 11662,
+          "sha256": "09715d71351fb8190968a3962726aa26e8e1ba2af30846471de13e103ce6e695"
+        },
+        {
+          "path": "J0012-implementation/workspace/leads/event-delivery.md",
+          "bytes": 637,
+          "sha256": "eff0e6e9ac3a8753e2fa628147b354113f137524fc2ace0b7fc932e70372503a"
+        },
+        {
+          "path": "J0012-implementation/workspace/leads/identity-inference.md",
+          "bytes": 785,
+          "sha256": "ba1fee7ff01a42e9297acff00ed919ec078392f6586a23d4d56e4dd2fb9e872f"
+        },
+        {
+          "path": "J0012-implementation/workspace/leads/server-version-negotiation.md",
+          "bytes": 761,
+          "sha256": "ed35658333ab735173161d05d8edb7cef44dc28acfe452179e5943dfffbc8e42"
+        },
+        {
+          "path": "J0012-implementation/workspace/leads/stale-thread-marking.md",
+          "bytes": 703,
+          "sha256": "645d0ba0a53f9807e304a0e3d0e67d056cc5a72ea0e3ea7a235e278c3af053ad"
+        }
+      ]
+    },
+    "h2_review": {
+      "root": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs",
+      "documents": 28,
+      "total_bytes": 296234,
+      "note": "J0013-J0024 only; J0001-J0012 are the byte-identical h2-research carry-across and are counted once, under h2_research.",
+      "files": [
+        {
+          "path": "J0014-reconcile/workspace/notes.md",
+          "bytes": 22471,
+          "sha256": "3eacb1d3e6e6ae2dd80285e6b203f26c3cd2a0a5938703b512f7ec17c31105b0"
+        },
+        {
+          "path": "J0014-reconcile/workspace/leads/browse-pr-wrong-url-534.md",
+          "bytes": 3319,
+          "sha256": "d33c06e294eb6dc7ae763402626fe37fb6ba8dd135a4eeb5e2afdfbcfabc2065"
+        },
+        {
+          "path": "J0014-reconcile/workspace/leads/device-flow-pat-scopes.md",
+          "bytes": 2692,
+          "sha256": "3c843f9874ec9bbf31a6521f490b28021217798ba18920915eba029263a31493"
+        },
+        {
+          "path": "J0014-reconcile/workspace/leads/successor-in-editor-review.md",
+          "bytes": 3140,
+          "sha256": "87b4e12a11bf489aa2628dce83bec02ce0b8033557f9c920b9c79e5185a178bc"
+        },
+        {
+          "path": "J0014-reconcile/workspace/leads/tfs-permission-overreach.md",
+          "bytes": 3768,
+          "sha256": "c23d1834e1d4e3700c06faacb82cbd2bdc309a5992911d6fa3631ee8d9ef9d12"
+        },
+        {
+          "path": "J0015-reconcile/workspace/notes.md",
+          "bytes": 23288,
+          "sha256": "1d1cf72041e986552129cad7798f1962a0f409a5749b55ffd58e6a3aca1c413b"
+        },
+        {
+          "path": "J0015-reconcile/workspace/leads/cloud-vs-server-doc-scope.md",
+          "bytes": 2610,
+          "sha256": "0ae12febf7ed2e86d387926beb67c59ce04b951773ef5dfe63eff1a08518cf2f"
+        },
+        {
+          "path": "J0015-reconcile/workspace/leads/iteration-staleness.md",
+          "bytes": 3711,
+          "sha256": "4b2e8e072f4b411ada17b03ccc11742c9fe4a5d372030d1e66a24c8d3e39af1f"
+        },
+        {
+          "path": "J0015-reconcile/workspace/leads/merge-semantics.md",
+          "bytes": 3403,
+          "sha256": "57a65c1202edf22068bac55949ff97ca7a7e3ce01ed67e74b26de85c61978ba2"
+        },
+        {
+          "path": "J0015-reconcile/workspace/leads/policy-settings.md",
+          "bytes": 3547,
+          "sha256": "6cdebd911e86daf67c0525bcaf29244fe6689c4c6d7baf7520c74fb904220f6f"
+        },
+        {
+          "path": "J0015-reconcile/workspace/leads/requeue-build-retry.md",
+          "bytes": 3367,
+          "sha256": "9596e48fe9e7d779077a776eb9b99f70c9c0641f26c93b9a98f931eb997d30fc"
+        },
+        {
+          "path": "J0019-compare/workspace/notes.md",
+          "bytes": 49723,
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        },
+        {
+          "path": "J0019-compare/workspace/leads/auth-method-privilege-disclosure.md",
+          "bytes": 3652,
+          "sha256": "81ff6329b46ea56046074191cc14f79a9ffe3c62c4fa1df8c5d0053c436c2343"
+        },
+        {
+          "path": "J0019-compare/workspace/leads/azure-server-instance-trust-record.md",
+          "bytes": 4434,
+          "sha256": "d63264b1d2ff066a70d57e05e1e37f65e49e9f8dc906a34ce57f76a3f2a65372"
+        },
+        {
+          "path": "J0019-compare/workspace/leads/credential-at-rest-platform-variance.md",
+          "bytes": 2388,
+          "sha256": "c8a54a1a342ed9fd48dac95e01e4924d95cb4c7576943df37431569ada24ae1a"
+        },
+        {
+          "path": "J0019-compare/workspace/leads/forge-review-record-observation-currentness.md",
+          "bytes": 2633,
+          "sha256": "b20b9d13f89356a9f592f30cb19070562b9b35966b52f53294a03a52d1dca5f2"
+        },
+        {
+          "path": "J0020-compare/workspace/notes.md",
+          "bytes": 46845,
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        },
+        {
+          "path": "J0020-compare/workspace/leads/azure-api-spec-pinning.md",
+          "bytes": 2686,
+          "sha256": "a54ea44be6eab386ba478254580ee70192d21ab510dd9658605654781669d568"
+        },
+        {
+          "path": "J0020-compare/workspace/leads/checks-projection-record-gap.md",
+          "bytes": 2934,
+          "sha256": "2e3ba8e1d7621a0b83bb51f6bfe1f9f3d37a39fc666b75d70d2e3058d60478ec"
+        },
+        {
+          "path": "J0020-compare/workspace/leads/evaluation-id-immutability.md",
+          "bytes": 2238,
+          "sha256": "708f31da389f05eff74f471583537ce588c234dc4e78a4331cffa8416e432a8d"
+        },
+        {
+          "path": "J0021-reconcile/workspace/notes.md",
+          "bytes": 37603,
+          "sha256": "d4f6e07b572269ae0ed1bb8d355e16bdd9adfbd7494738de5db60b4bd76be9d5"
+        },
+        {
+          "path": "J0021-reconcile/workspace/leads/event-delivery.md",
+          "bytes": 5304,
+          "sha256": "22ed36ea732e91654b61a1c1c7432249ea738cd43c118a2f1d8427b4feb1b330"
+        },
+        {
+          "path": "J0021-reconcile/workspace/leads/identity-inference.md",
+          "bytes": 6306,
+          "sha256": "9f61ef9168d8419970cc28686c7e1ffe33b4153c564db092033d1d50bc2dbf82"
+        },
+        {
+          "path": "J0021-reconcile/workspace/leads/server-version-negotiation.md",
+          "bytes": 4609,
+          "sha256": "e3a4cedfadbc341e250adbdaef44723330f86eabf186d53daa24b6abf1e2b6b3"
+        },
+        {
+          "path": "J0021-reconcile/workspace/leads/stale-thread-marking.md",
+          "bytes": 6157,
+          "sha256": "b625aea1f68252c09bb17c2bb84e7afd9cf6f24711fc694278d4e7ed148a62c6"
+        },
+        {
+          "path": "J0021-reconcile/workspace/leads/upstream-shared-machinery.md",
+          "bytes": 5917,
+          "sha256": "0d36724ff10878c79ca2f32752ac095e018289a076c2b5a0622903c302538724"
+        },
+        {
+          "path": "J0022-reconcile/workspace/notes.md",
+          "bytes": 7755,
+          "sha256": "0fedba33544c04f346a3dce756b2bf8f9bc9baf85ae272f8ad08d76b2610ecfa"
+        },
+        {
+          "path": "J0024-reconcile/workspace/notes.md",
+          "bytes": 29734,
+          "sha256": "c031016bb3fd411cce51047c270279d7c7bc4ce664be5ea2c50ebbe07f78dcf3"
+        }
+      ]
+    }
+  },
+  "source_verification": {
+    "rule": "Standing addition: every code or API fact carried by a union proposition is verified against the arm's OWN cached source, or against the Plans file on main, before the proposition is admitted. Verifications are recorded with source lines on each finding.",
+    "provider_api_facts_verified_in_the_arms_caches": 11,
+    "plans_side_facts_verified_against_main": 11,
+    "all_held": true
+  },
+  "adjudication_source": {
+    "directory": "/home/sittingmongoose/PM-Experiments/topic2-20260917/adjudication/topic2",
+    "manifest": "/home/sittingmongoose/PM-Experiments/topic2-20260917/adjudication/topic2-manifest.json",
+    "manifest_sha256_internal": "565e32eac87405b723023d563c9f4912cc1ac588af175b13e2eb01e00ac63563"
+  },
+  "headline": {
+    "union_size": 73,
+    "class_split": {
+      "correction": 32,
+      "optional_capability": 8,
+      "product_choice": 4,
+      "unsupported_or_covered": 29
+    },
+    "arm_s": {
+      "credited": 50,
+      "percent": 68.49,
+      "unique": 31
+    },
+    "h2": {
+      "credited": 42,
+      "percent": 57.53,
+      "unique": 23
+    },
+    "shared": 19,
+    "h2_research_credit": 0,
+    "what_the_union_cannot_support": "Any recall estimate for the owner document, any yield-per-lead comparison, any claim of semantic absence, and any arm-to-arm process conclusion. Five compared leads out of 115 discovered is not a sample of ADO-001..005; whole PlanUnits were never compared by either arm."
+  }
+}
