@@ -582,6 +582,15 @@ acceptance_criteria:
     enumerated list of entries for a given JJ version is an owner audit of native internals that this landing does not
     perform; it is recorded in the ledger as an open question, and a version change invalidates the list until it is
     re-audited.
+  - >-
+    Completeness has a decision procedure, not only a definition. The closure expands the retained set through every
+    stage - operation to view, view to commit, commit to tree, and the retained non-current, abandoned and rebased
+    objects - and records which stages it verified. A missing parent, a malformed identifier, a self-parent and a parent
+    cycle are four distinct closure blockers, each naming the object, never a silent skip; a closure carrying any of
+    them is not `complete`. Dependency objects are transferred and persisted before any head, operation head or bookmark
+    pointer that refers to them is published, and a restore materializes in the same dependency-safe order with
+    operation heads and activation markers last, so an interrupted transfer never leaves a pointer to an object that is
+    not there. Activation still waits for the isolated disposable verification.
   - Ordinary restore does not activate hooks, aliases, credential helpers, filters, unsafe includes, URL user-info, extraHeaders, SSH material, forge credentials, or provider profiles. Non-secret restored refs and a separately authorized portable envelope remain pending owner validation and a fresh credential lease.
   - Operation History pivots only to existing `cmd.backup.browse`, `cmd.backup.file.compare`, and Project Backup routes; isolated operation inspection/restore uses existing `cmd.jujutsu.operation.show` and `cmd.jujutsu.operation.restore`; neutral rebind/status/remote validation uses Source Control; Forge/AutomationBinding remains Forge-owned. The exact 31-command JJ inventory is unchanged.
   - Machine records require `expected_event_types=[]`; schema and fixture success remains event-silent, handler_unavailable/static, and not runtime, native adapter, clean-host recovery, security, visual, or readiness proof.

@@ -3051,6 +3051,21 @@
           "official_source_ref": "official-source:jj:0.44.0",
           "recorded_at_utc": "2026-08-31T20:00:00Z"
         },
+        "closure_expansion": {
+          "stages_verified": [
+            "operation_to_view",
+            "view_to_commit",
+            "commit_to_tree",
+            "retained_non_current_objects"
+          ],
+          "blockers": [],
+          "materialization_order": [
+            "dependency_objects",
+            "workspace_files",
+            "operation_heads",
+            "activation_markers"
+          ]
+        },
         "store_entry_classifications": [
           {
             "entry_ref": "store-entry:jj:alpha:op-store",
@@ -3181,6 +3196,21 @@
           "official_source_ref": "official-source:jj:0.44.0",
           "recorded_at_utc": "2026-08-31T20:00:00Z"
         },
+        "closure_expansion": {
+          "stages_verified": [
+            "operation_to_view",
+            "view_to_commit",
+            "commit_to_tree",
+            "retained_non_current_objects"
+          ],
+          "blockers": [],
+          "materialization_order": [
+            "dependency_objects",
+            "workspace_files",
+            "operation_heads",
+            "activation_markers"
+          ]
+        },
         "store_entry_classifications": [
           {
             "entry_ref": "store-entry:jj:beta:op-store",
@@ -3291,6 +3321,21 @@
           "catalog_generation": 4,
           "official_source_ref": "official-source:jj:0.44.0",
           "recorded_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "closure_expansion": {
+          "stages_verified": [
+            "operation_to_view",
+            "view_to_commit",
+            "commit_to_tree",
+            "retained_non_current_objects"
+          ],
+          "blockers": [],
+          "materialization_order": [
+            "dependency_objects",
+            "workspace_files",
+            "operation_heads",
+            "activation_markers"
+          ]
         },
         "store_entry_classifications": [
           {
@@ -4342,6 +4387,33 @@
         "command_class": "transport_mutation"
       },
       "expected_error": "untracking a bookmark makes no remote call, so it is a local mutation"
+    },
+    {
+      "name": "backup_jj_complete_closure_requires_every_expansion_stage",
+      "definition": "backup_jj_closure_record",
+      "base_valid": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",
+      "patch": {
+        "closure_expansion.stages_verified": ["operation_to_view", "view_to_commit", "commit_to_tree"]
+      },
+      "expected_error": "a complete closure expanded operation to view to commit to tree and the retained non-current objects"
+    },
+    {
+      "name": "backup_jj_complete_closure_admits_no_expansion_blocker",
+      "definition": "backup_jj_closure_record",
+      "base_valid": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",
+      "patch": {
+        "closure_expansion.blockers": [{"blocker_kind": "parent_cycle", "object_ref": "object:jj:alpha:cycle-7"}]
+      },
+      "expected_error": "a parent cycle is a distinct closure blocker, not a silent skip inside a complete closure"
+    },
+    {
+      "name": "backup_jj_expansion_blocker_kind_is_closed",
+      "definition": "backup_jj_closure_record",
+      "base_valid": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",
+      "patch": {
+        "closure_expansion.blockers": [{"blocker_kind": "unknown_parent", "object_ref": "object:jj:alpha:cycle-7"}]
+      },
+      "expected_error": "the expansion blockers are exactly missing parent, malformed id, self parent and parent cycle"
     },
     {
       "name": "command_availability_divergence_reason_code_is_exact",

@@ -2385,6 +2385,71 @@
       },
       "additionalProperties": false
     },
+    "closure_expansion_blocker": {
+      "title": "JujutsuClosureExpansionBlocker",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blocker_kind",
+        "object_ref"
+      ],
+      "properties": {
+        "blocker_kind": {
+          "enum": [
+            "missing_parent",
+            "malformed_id",
+            "self_parent",
+            "parent_cycle"
+          ]
+        },
+        "object_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        }
+      }
+    },
+    "closure_expansion": {
+      "title": "JujutsuClosureExpansion",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stages_verified",
+        "blockers",
+        "materialization_order"
+      ],
+      "properties": {
+        "stages_verified": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "operation_to_view",
+              "view_to_commit",
+              "commit_to_tree",
+              "retained_non_current_objects"
+            ]
+          }
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/closure_expansion_blocker"
+          }
+        },
+        "materialization_order": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "dependency_objects",
+              "workspace_files",
+              "operation_heads",
+              "activation_markers"
+            ]
+          }
+        }
+      }
+    },
     "native_store_entry_classification": {
       "title": "JujutsuNativeStoreEntryClassification",
       "type": "object",
@@ -2661,6 +2726,7 @@
         "backup_manifest_ref",
         "repository_context_ref",
         "toolchain_identity",
+        "closure_expansion",
         "store_entry_classifications",
         "read_pinning",
         "pointer_resolutions",
@@ -2704,6 +2770,9 @@
         },
         "toolchain_identity": {
           "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/native_toolchain_identity"
+        },
+        "closure_expansion": {
+          "$ref": "#/$defs/closure_expansion"
         },
         "store_entry_classifications": {
           "type": "array",
@@ -2832,6 +2901,32 @@
         }
       },
       "allOf": [
+        {
+          "if": {
+            "properties": {
+              "closure_state": {
+                "const": "complete"
+              }
+            },
+            "required": [
+              "closure_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "closure_expansion": {
+                "properties": {
+                  "stages_verified": {
+                    "minItems": 4
+                  },
+                  "blockers": {
+                    "maxItems": 0
+                  }
+                }
+              }
+            }
+          }
+        },
         {
           "if": {
             "properties": {
