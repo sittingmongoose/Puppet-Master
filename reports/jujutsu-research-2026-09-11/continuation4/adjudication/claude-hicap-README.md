@@ -1,6 +1,14 @@
 # Arm claude-hicap — adjudication against the continuation-3 union
 
-> **All six arms are now scored. The final comparison table, the recomputed nesting, the six-arm union, all 27 out-of-union candidates and the cross-arm factual verifications are in [`README.md`](README.md)**, which supersedes every comparison table below.
+> ## Revised after independent review — 2026-09-17
+>
+> The independent review at `REVIEW_ADJUDICATION_20260916.md` returned **fix first**. It upheld the method, the nesting, the manifests, the quarantine discipline and the absence of family bias, and re-derived 80 credits including every correction. I re-verified each finding against the run state before applying it.
+>
+> **This arm: 46 → 45 of 110.**
+>
+> **F001 was withdrawn (review item B4).** Its two cited passages — an unreceipted side effect *of a read*, and an outcome-classification rule that presupposes a receipt — do not assert F001's obligation that every terminal attempt carries a non-null owner receipt, and five other arms were refused on that same test. **Corrections are 2/5 (`F106`, `F107`)**, which still supports "the first corrections credited to any new arm". Also applied: S7 (a quotation inside the F092 basis was deepseek41's sentence and is removed) and S12 (F092's half-coverage disclosed). F106 and F107 were re-derived by the reviewer and upheld.
+>
+> **Every figure for this arm below that disagrees with `claude-hicap-scoring.json` is superseded by that file.** The recomputed lattice, and the confirmation that every structural conclusion survives, are in `README.md` and `cross-arm.json`.
 
 I am an Opus 5 agent acting as adjudicator. I ran no arm. Same method and verification as for Arm C and
 deepseek41.
@@ -46,18 +54,20 @@ against a 40 ceiling is the kill window of a post-response boundary, not an off-
 12 notes.md (29,455–65,166 bytes each) and 52 `workspace/leads/*.md`. That is **4.6× Arm C's** 18-document,
 ~180 KB corpus. No job is empty.
 
-## Credited — 46 of 110 (41.82%)
+## Credited — 45 of 110 (40.91%)  *(46 before review item B4)*
 
 | Class | Credited | Denominator |
 |---|---:|---:|
-| **Correction** | **3** | 5 |
+| **Correction** | **2** | 5 |
 | Optional capability | 4 | 36 |
 | Product choice | 3 | 6 |
 | Unsupported or already-covered | 36 | 63 |
-| **Total** | **46** | **110** |
+| **Total** | **45** | **110** |
 
-- **Corrections (3/5):** `F001`, **`F106`**, **`F107`** — the first corrections credited to any new arm.
-  Only `F108` and `F109` are missed.
+- **Corrections (2/5):** **`F106`**, **`F107`** — still the first corrections credited to any new arm.
+  `F001` was credited here and **withdrawn on review (B4)**: its two cited passages do not assert the
+  non-null-receipt obligation, and five other arms were refused on that same test. `F108` and `F109`
+  are missed.
 - **Optional capability (4/36):** `F028` `F035` `F066` `F090`.
 - **Product choice (3/6):** `F032` `F044` `F083`.
 - **Unsupported or already-covered (36/63):** `F002` `F004` `F006` `F007` `F008` `F010` `F011` `F029`
@@ -85,8 +95,8 @@ Six partials: `F019` `F020` `F022` `F069` `F076` `F103`.
 
 | | Arm C | claude-hicap |
 |---|---:|---:|
-| Credited | 18 (16.36%) | **46 (41.82%)** |
-| Corrections | 0/5 | **3/5** |
+| Credited *(post-review)* | 18 (16.36%) | **45 (40.91%)** |
+| Corrections | 0/5 | **2/5** |
 | Jobs with a saved assertion | 4/12 | **12/12** |
 | Jobs bound by a limit | 11/12 | **0/12** |
 | Input leads reaching a comparison | 3/88 (3.4%) | **14/88 (15.9%)** |
@@ -95,7 +105,7 @@ Six partials: `F019` `F020` `F022` `F069` `F076` `F103`.
 and lost none; it adds 13 over deepseek41 and loses none. The union of all three new arms equals
 claude-hicap's own set.
 
-Gained over Arm C: `F001` `F002` `F007` `F008` `F011` `F028` `F029` `F031` `F032` `F033` `F034` `F035`
+Gained over Arm C (F001 removed on review B4): `F002` `F007` `F008` `F011` `F028` `F029` `F031` `F032` `F033` `F034` `F035`
 `F036` `F037` `F043` `F044` `F053` `F056` `F073` `F074` `F083` `F087` `F088` `F089` `F090` `F094` `F106`
 `F107`.
 
@@ -161,7 +171,7 @@ Recorded with evidence, **not added to the union**. Full text in `claude-hicap-c
 |---|---:|
 | hicap ∩ premium | 44 |
 | hicap ∩ hybrid | 35 |
-| hicap ∩ premium only | 11 — `F001` `F008` `F031` `F032` `F033` `F034` `F036` `F053` `F084` `F090` `F106` |
+| hicap ∩ premium only | 10 — `F008` `F031` `F032` `F033` `F034` `F036` `F053` `F084` `F090` `F106` |
 | hicap ∩ hybrid only | 2 — `F073` `F083` |
 | **Unique to hicap** | **0** |
 | Held by premium, missed | 34 |
@@ -187,11 +197,11 @@ caveat below.**
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | Review model | gpt-6-astra xhigh | gpt-6-astra xhigh | claude-opus-5 xhigh | deepseek-v4.1-flash max | **claude-opus-5 xhigh** | pending | pending | running |
 | Inputs | own arm | own arm | premium's artifacts | premium's artifacts | **premium's artifacts** | – | – | – |
-| Recall / expanded 110 | 78 (70.91%) | 90 (81.82%) | 18 (16.36%) | 33 (30.00%) | **46 (41.82%)** | – | – | – |
-| Corrections / 5 | 4 | 2 | 0 | 0 | **3** | – | – | – |
-| Optional capabilities / 36 | 20 | 30 | 1 | 2 | **4** | – | – | – |
-| Product choices / 6 | 3 | 5 | 0 | 1 | **3** | – | – | – |
-| Unsupported or already-covered / 63 | 51 | 53 | 17 | 30 | **36** | – | – | – |
+| Recall / expanded 110 *(post-review)* | 78 (70.91%) | 90 (81.82%) | 18 (16.36%) | 34 (30.91%) | **45 (40.91%)** | 40 (36.36%) | 42 (38.18%) | 36 (32.73%) |
+| Corrections / 5 | 4 | 2 | 0 | 0 | **2** | 1 | 0 | 0 |
+| Optional capabilities / 36 | 20 | 30 | 1 | 2 | **4** | 3 | 6 | 1 |
+| Product choices / 6 | 3 | 5 | 0 | 1 | **3** | 1 | 0 | 0 |
+| Unsupported or already-covered / 63 | 51 | 53 | 17 | 31 | **36** | 35 | 36 | 34 |
 | Unique to the arm | 20 | 32 | 0 | 0 | **0** | – | – | – |
 | Reconcile / compare split | 6 / 6 | 6 / 4 | 8 / 4 | 9 / 3 | **6 / 6** | – | – | – |
 | Completed / limited / interrupted | 7 / 5 / 0 | 2 / 5 / 3 | 1 / 11 / 0 | 2 / 10 / 0 | **12 / 0 / 0** | – | – | – |
@@ -212,9 +222,12 @@ caveat below.**
 **Cost and duration are not comparable for this arm.** It ran under a deliberately different budget
 regime, chosen to *remove* the binding constraint rather than to measure one, and it is not comparable
 with goal 2's arms (premium, hybrid) or with the other continuation-4 arms. Only the **outputs** are
-comparable. The honest cost statement is narrower and holds: within the Claude family alone, 2.3× the
-captured spend bought 2.6× the recall and the first corrections — and, per the counter-result above, no
-improvement on the one factual error both Claude arms share.
+comparable. The honest cost statement is narrower and, recomputed after review, still holds: within the Claude family
+alone, 2.3× the captured spend bought **2.5×** the recall (18 → 45) and the first corrections — now **two**,
+`F106` and `F107`, after `F001` was withdrawn on review (B4) — and, per the counter-result above, no
+improvement on the one factual error both Claude arms share. Sharper after review item N1: the correct
+garbage-collection framing was in the shared frozen discovery lead, so both Claude arms did not merely fail
+to find it — they **overturned a correct inherited framing**, and the extra budget did not help.
 
 ## Limits
 

@@ -721,7 +721,7 @@
       "credited_job": "muse13/J0028-compare",
       "premium_supported": true,
       "hybrid_supported": true,
-      "basis": "Repair 3 is bounds honesty made enforceable: 'when a commit row fills page_size, the page MUST close even if that node also yields a trailer/decoration row (i.e. close on >=, never exact-==); a page MUST never exceed page_size, returned_count<=200, or nodes maxItems 200', against SCS-017's stated cap of 200 nodes and bounded hydration. The external worked example is a page that reaches max+1, misses the equality and over-fills.",
+      "basis": "Repair 3 is bounds honesty made enforceable: 'when a commit row fills page_size, the page MUST close even if that node also yields a trailer/decoration row (i.e. close on >=, never exact-==); a page MUST never exceed page_size, returned_count<=200, or nodes maxItems 200', against SCS-017's stated cap of 200 nodes and bounded hydration. The external worked example is a page that reaches max+1, misses the equality and over-fills. [Review item S12: credited on F092's bounds-honesty clause only; no arm in this bundle measured any cost.]",
       "evidence": [
         {
           "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-muse13-20260916-215801/jobs/J0028-compare/workspace/notes.md",

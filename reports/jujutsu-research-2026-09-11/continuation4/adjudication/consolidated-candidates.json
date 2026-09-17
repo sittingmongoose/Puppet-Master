@@ -56,8 +56,11 @@
         "glm53"
       ],
       "my_classification": "correction",
-      "note": "THE STRONGEST CONVERGENCE IN THE EXPERIMENT. Two arms with different models reached the same defect from opposite directions and never saw each other's work. Arm C came from the receipt side - object_closure_result: complete is admissible whatever depth produced it, and the Backup owner already has an integrity_verification_level enum to reference. glm53 came from the semantics side - git-fsck(1)'s --connectivity-only 'will detect corruption in commits and trees, but not do any semantic checks ... Corruption in blob objects will not be detected at all' - plus field evidence from Dojjo, where refs agreed via ls-remote while the object store was torn and only a full fsck caught it. glm53 supplies the discriminating fixture: a byte-flipped blob under matching refs. Neither was rejected by continuation 3, and continuation 3's own F106 is a correction in the same JJI-008 restore family.",
-      "recommendation": "The one candidate from continuation 4 I would put in front of the Plans owners on its own."
+      "note": "THE STRONGEST CONVERGENCE IN THE EXPERIMENT. Two arms reached the same defect by different routes, from a shared inherited pointer (see shared_seed_disclosure). Arm C came from the receipt side - object_closure_result: complete is admissible whatever depth produced it, and the Backup owner already has an integrity_verification_level enum to reference. glm53 came from the semantics side - git-fsck(1)'s --connectivity-only 'will detect corruption in commits and trees, but not do any semantic checks ... Corruption in blob objects will not be detected at all' - plus field evidence from Dojjo, where refs agreed via ls-remote while the object store was torn and only a full fsck caught it. glm53 supplies the discriminating fixture: a byte-flipped blob under matching refs. Neither was rejected by continuation 3, and continuation 3's own F106 is a correction in the same JJI-008 restore family.",
+      "recommendation": "The one candidate from continuation 4 I would put in front of the Plans owners on its own.",
+      "classification_source": "taken from the per-candidate records (review item S5)",
+      "shared_seed_disclosure": "REVIEW ITEM S6 - NOT INDEPENDENT DISCOVERY. Both arms started from the SAME frozen premium discovery leads, which point straight at this territory: leads/dojjo-git-transport-versus-native-closure.md:7 - 'Code comment that fsck --connectivity-only skips refs/jj/keep should be verified against Git docs before using it; not established here'; leads/git-backed-store-alternates-and-shared-layout.md:7 - 'Git fsck alone does not validate native operation/view/extra metadata closure'; leads/git-promisor-objects-and-offline-restore.md:3 - 'a clean Git fsck result in a partial clone does not prove every native-history object is present for an offline restore'. I verified all three are byte-identical across the claude, glm53 and deepseek41 runs. The honest framing: FIVE review arms were handed the same explicit pointer and TWO converted it into the same concrete contract defect by different routes - Arm C from receipt admissibility, glm53 from the undefined term plus a discriminating fixture. Three arms with the same pointer did not convert it. Still the strongest candidate in the set; not independent discovery.",
+      "cross_reference": "C4M-01 (muse13) is in the same JJI-008 family - a different defect (closure expansion and ordering, not verification depth) - and belongs in this cluster's cross-reference."
     },
     {
       "cluster": "No owner-level save contract for a diff/compare or merge-editor surface",
@@ -71,9 +74,10 @@
         "muse13",
         "glm53"
       ],
-      "my_classification": "product choice",
+      "my_classification": "C4D-04: capability / C4M-03: capability / C4G-02: product choice",
       "note": "Three arms independently. Each proposes a typed per-path save vocabulary in place of a string map, and each states the alternative of an explicit decision to keep conflict resolution terminal-native. FLAGGED FOR ALL THREE: this is the surface of continuation 3's rejected cluster 'Corruption taxonomy, extras detector, clone stage details and arbitrary conflict editor', and much of each proposal restates union obligations (F029, F031, F033, F034, F036, F037, F056) already credited to the arm that raised it. The genuinely new part, common to all three, is that 'missing' must never be admissible as a write instruction.",
-      "recommendation": "Record; expect it to be declined on continuation 3's reasoning unless the owners decide to open the surface."
+      "recommendation": "Record; expect it to be declined on continuation 3's reasoning unless the owners decide to open the surface.",
+      "classification_source": "taken from the per-candidate records (review item S5)"
     },
     {
       "cluster": "A divergent change has no representable state",
@@ -85,9 +89,10 @@
         "claude-hicap",
         "muse13"
       ],
-      "my_classification": "correction (hicap) / product choice (muse13 half A)",
+      "my_classification": "C4H-05: correction / C4M-05: capability",
       "note": "Two arms. claude-hicap establishes that the word appears nowhere in any source-control, Jujutsu or GUI context in the Plans and that node_state, the GUI graph_states prefix list and the JJ error and disabled-reason enums are all closed without it; muse13 frames the same gap as a product choice about offset-qualified targeting. F006 (identity separation) is credited to both and F022 (explicit convergence) is a union capability neither earned. Neither was rejected.",
-      "recommendation": "A real representability gap; cheap to check against the closed enums."
+      "recommendation": "A real representability gap; cheap to check against the closed enums.",
+      "classification_source": "taken from the per-candidate records (review item S5)"
     },
     {
       "cluster": "The closure and certification records bind no version, environment or resolved path",
@@ -105,7 +110,8 @@
       ],
       "my_classification": "correction",
       "note": "Four arms, three of them review arms bounded by the same artifacts and one the full arm. deepseek41 binds the JJ tool and store-format version; muse13 binds the resolving environment and the pointer chains with their distinct bases (alternates relative to the object database, commondir relative to $GIT_DIR); Arm C binds the drill-time resolution of in-store pointers inside the isolation boundary; the union arm binds a nine-row certification scenario matrix. F050 is the behavioural rule and is credited to five of six arms; none of these is in the union.",
-      "recommendation": "The largest agreed gap by arm count. Worth one consolidated owner question rather than four."
+      "recommendation": "The largest agreed gap by arm count. Worth one consolidated owner question rather than four.",
+      "classification_source": "taken from the per-candidate records (review item S5)"
     },
     {
       "cluster": "Reads must be pinned rather than granted write authority",
@@ -119,7 +125,8 @@
       ],
       "my_classification": "correction",
       "note": "Both arms land on the same side of a boundary continuation 3 settled by REJECTING an expansion. Continuation 3 declined to 'add a mutating status.refresh branch as a required correction' because F002 already fixes read effects and a writer-bearing branch would change that authority. claude-hicap requires every capture and drill read to be pinned to an exact operation with ignore-working-copy and never load_at_head(); the union arm requires a proven non-mutating observation path with typed stale results and states that 'blanket addition of writer leases to all reads would change the existing contract unnecessarily'. Independent convergence on an already-adjudicated boundary is the best evidence in this experiment that the 110-finding union is well drawn.",
-      "recommendation": "No union change; record as confirmation."
+      "recommendation": "No union change; record as confirmation.",
+      "classification_source": "taken from the per-candidate records (review item S5)"
     }
   ],
   "candidates": [
@@ -141,7 +148,7 @@
       "continuation3_already_rejected": "NO. Not among continuation 3's four rejected expansions. Worth naming its kinship: continuation 3's own F106 is a correction in the same JJI-008 restore-verification family, found from the field side (a readiness flag admissible under blocked conditions) rather than the depth side.",
       "distinctness": "F081 requires complete native object interpretation and an isolated restore before activation; it does not constrain what depth of checking is allowed to produce the receipt's complete value. This is contradictory/underdetermined content inside an already-present typed receipt, the same shape continuation 3 used to hold F106 distinct from F001.",
       "adjudicator_note": "Not added to the union. Recorded as a candidate with evidence, as the brief requires.",
-      "detail_file": "claude-candidates.json"
+      "detail_file": "arm-c-candidates.json"
     },
     {
       "candidate_id": "C4C-02",
@@ -164,7 +171,7 @@
       "continuation3_already_rejected": "NO. F079 requires alternate and shared stores inside the closure and F081 requires an isolated restore; neither constrains how the restored copy's own pointers resolve at drill time, and no rejected expansion covers it.",
       "distinctness": "F079 requires the capture to include underlying Git/common/alternate/shared stores; F081 requires an isolated restore. Neither constrains how the restored copy's own path pointers are resolved at drill time, which is what makes a same-host drill able to pass by reading the original's objects. The arm itself records that the clean-host condition exists in the BKP-006 lineage packet but survives in current owner text only as a future test surface.",
       "adjudicator_note": "Not added to the union. The strongest of the five: it identifies a way to obtain a false complete-recovery badge that the current owner text permits.",
-      "detail_file": "claude-candidates.json"
+      "detail_file": "arm-c-candidates.json"
     },
     {
       "candidate_id": "C4C-03",
@@ -183,7 +190,7 @@
       "continuation3_already_rejected": "NO. Adjacent to F084, which governs restored configuration; this is about machine-local entries inside .jj/repo, which no union finding or rejected expansion addresses.",
       "distinctness": "F084 governs restored configuration, helpers, hooks, filters, includes and credentials. The arm states the gap explicitly: the Plans say what must be sanitized and inactive after restore but say nothing about the machine-local, ephemeral, non-configuration entries inside the store tree.",
       "adjudicator_note": "Not added to the union. The negative test (store/extra/lockfile, store/extra/foo.lock, op_heads/locks must not be treated as locks) is the part that makes it more than a restatement of F084.",
-      "detail_file": "claude-candidates.json"
+      "detail_file": "arm-c-candidates.json"
     },
     {
       "candidate_id": "C4C-04",
@@ -200,7 +207,7 @@
       "continuation3_already_rejected": "YES, EFFECTIVELY - and I contested it at the time. Continuation 3 rejected 'Corruption taxonomy, extras detector, clone stage details and arbitrary conflict editor' as 'Refinements/alternatives under existing F082/F086/F056 and their scope boundaries, not additional demonstrated product obligations.' A new blocker class for present-but-unloadable native metadata is a corruption-taxonomy refinement under F082. Recorded, not advanced.",
       "distinctness": "CONTESTED BY THE ADJUDICATOR. Continuation 3's symmetric adjudication already rejected the expansion 'Corruption taxonomy, extras detector, clone stage details and arbitrary conflict editor' with the reason 'Refinements/alternatives under existing F082/F086/F056 and their scope boundaries, not additional demonstrated product obligations.' This candidate is a corruption/blocker taxonomy addition under F082 and falls within that rejected class. Recorded for completeness, flagged as most likely a refinement of F082 rather than a new finding.",
       "adjudicator_note": "Not added to the union, and additionally flagged as probably inside continuation 3's rejected-expansion class.",
-      "detail_file": "claude-candidates.json"
+      "detail_file": "arm-c-candidates.json"
     },
     {
       "candidate_id": "C4C-05",
@@ -219,7 +226,7 @@
       "continuation3_already_rejected": "NO. F004 states that advisory locks do not establish ownership and F079 requires the fence to exist; neither addresses a fence held truthfully over one writer path while another is uncovered.",
       "distinctness": "F004 states the general rule that advisory locks do not establish ownership and F079 requires the fence to exist; SCS-014 already rejects a lost fence. Neither addresses a fence held truthfully over one path while another was never covered, which is the case the arm demonstrates externally. Credited separately as baseline support for F004; the contract-level covered-path requirement is the residue recorded here.",
       "adjudicator_note": "Not added to the union. AMENDED 2026-09-16: one of the two external legs of this candidate is unsound. Arm C's claim that dojjo 'opts out of the documented mitigation by passing UNIX_EPOCH' is wrong - jj's lib/src/simple_op_store.rs:285-298 removes a file only when mtime <= keep_newer, so UNIX_EPOCH removes nothing. Verified by the adjudicator against the source; deepseek41/J0025 found it. The candidate SURVIVES on its other leg, which is unaffected: the per-instance FsDojoUploadStore io_lock that does not coordinate across concurrent HTTP requests, and the file:// remote path that bypasses the smart-HTTP handler and its lock entirely. The covered-writer-path proposition does not depend on the GC claim.",
-      "detail_file": "claude-candidates.json"
+      "detail_file": "arm-c-candidates.json"
     },
     {
       "candidate_id": "C4D-01",
@@ -634,5 +641,14 @@
       "adjudicator_note": "Not added to the union.",
       "detail_file": "glm53-candidates.json"
     }
-  ]
+  ],
+  "post_review_revision": {
+    "review": "REVIEW_ADJUDICATION_20260916.md 2026-09-17",
+    "items_applied": [
+      "S4 detail_file pointer",
+      "S5 cluster classifications aligned to the per-candidate records",
+      "S6 shared-seed disclosure on the C4C-01/C4G-01 convergence"
+    ],
+    "reviewer_verdict_on_the_candidates": "All 27 checked for under-flagging; the five flagged as inside a continuation-3 rejection were upheld, and no further flags were required. C4C-01/C4G-01 upheld as the one candidate worth putting in front of the Plans owners on its own."
+  }
 }

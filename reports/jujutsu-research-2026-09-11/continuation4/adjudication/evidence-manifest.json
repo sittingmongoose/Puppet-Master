@@ -17,8 +17,9 @@
   "adjudication_source": {
     "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/adjudication/claude",
     "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/adjudication/claude-manifest.json",
-    "manifest_sha256_internal": "138424216690b85865ddd4d7227796ca24ec33c1c65a80204226c2d1bbe55a62",
-    "progress_log": "adjudication/claude/PROGRESS.md (kept out of this bundle; it is a working log, not a result)"
+    "manifest_sha256_internal": "6293c7e92d6c567f8cf9e6b43b6ec6cd6b5955ba28cd401ec206d9f36ff66f87",
+    "progress_log": "adjudication/claude/PROGRESS.md (kept out of this bundle; it is a working log, not a result)",
+    "manifest_regenerated": "after the 2026-09-17 review revision"
   },
   "union_and_method": [
     {
@@ -72,8 +73,10 @@
       "sha256": "7895190214ff9145dbf343b93f7c1bceda1c5dc5277fd11cb2456ec911614de4"
     },
     {
-      "path": "continuation4/PROGRESS.md (runner's log)",
-      "sha256": "868969215f231260c3d77acc231d4c3b95150e3d4eddbd3c70ddced166d97dbf"
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/PROGRESS.md",
+      "sha256": "868969215f231260c3d77acc231d4c3b95150e3d4eddbd3c70ddced166d97dbf",
+      "kind": "read_time_snapshot_of_a_mutable_append_only_log",
+      "sha256_note": "REVIEW ITEM S8: this is the runner's live append-only log. The sha256 recorded here is a READ-TIME SNAPSHOT taken when I read it and will not re-verify against the current file, which has grown since. It is the only pointer in this manifest that cannot be re-verified, and it is labelled rather than dropped because the read is part of the record. Every other pointer re-hashes exactly."
     }
   ],
   "assertion_corpus": {
@@ -177,7 +180,7 @@
     "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-deepseek41-20260916-202016",
     "attempt": "clean rerun; arm-history/deepseek41-attempt-1/ is explicitly NOT scored",
     "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/deepseek41-manifest.json",
-    "manifest_sha256_internal": "de1811511814da303a8116ce53dbc260ec11144acc1054023b86dccc76206558",
+    "manifest_sha256_internal": "abaf7d6d41087c0a1b7202bfdce2370f9fdca0ce99fbf2ff9a0e3a9b2a709c94",
     "manifest_file_bytes_sha256": "b07dae8a565233e449b0fc7d2ff246b3bc5266dae8823dd13d4e47f39eb2389a",
     "report": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/deepseek41-report.json",
     "report_sha256": "8b2112825b60d2087988ca73bc8a7d46bd430fac3848029ea6ee9a1d4a21776e",
@@ -187,7 +190,8 @@
     "reverification_note": "Recomputed the internal digest from the 7,015 rows and independently re-hashed the whole tree with the run's own hash_manifest.py algorithm on 2026-09-16; both match.",
     "run_json_sha256": "ba5ff54ad0a5b1053bcd04179cbacca277b332f19a71a7a4f0ce101aead82e37",
     "timing_json_sha256": "cec959fbf1778f7a7f2cecce7d5ec32fb630e7b8e6e4cc058e77fef8ba617cbf",
-    "progress_json_sha256": "b037c5d7387ef30081459fadaaadf4cfab221c439a85a9ea79f29b6503a0badd"
+    "progress_json_sha256": "b037c5d7387ef30081459fadaaadf4cfab221c439a85a9ea79f29b6503a0badd",
+    "manifest_regenerated": "after the 2026-09-17 review revision"
   },
   "deepseek41_assertion_corpus": {
     "root": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-deepseek41-20260916-202016/jobs",
@@ -283,7 +287,7 @@
     "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937",
     "role": "control arm for Arm C's response-ceiling caveat; same model and inputs, limits raised to 160 responses / 3600 s / $20 per job, $150 cap",
     "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/claude-hicap-manifest.json",
-    "manifest_sha256_internal": "ebf8612dd5953cbf8f4da9fa6b6b5b11a89e4015cc907c26d0afc553b0eafbb5",
+    "manifest_sha256_internal": "dcbf83c8178c430d91a681636c82bc0c19e71466d4f5f4aa432df12fe6a390fd",
     "manifest_file_bytes_sha256": "feefc4c94ccec49890db58d57ccd0d350d35d2bd0fabc33936760f670f16b983",
     "report": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/claude-hicap-report.json",
     "files": 8098,
@@ -293,7 +297,8 @@
     "nothing_was_bound": "all 12 jobs terminal_reason completed, result_is_error false; responses 37-110 of 160, elapsed 685.6-1070.1 s of 3600, cost $4.0991-$12.1166 of $20, money_stop_reason null",
     "run_json_sha256": "917c8a0ddb918ed9a57690cb4a83686163d226bd187ad3bb79b396003663b3cc",
     "timing_json_sha256": "b5171fcf0b3bc7d3a56efe4fb6a4991a006f3ac685f8908fc13cda6d9cef5cb1",
-    "progress_json_sha256": "ab015f83e695eeb702393bdfbde06371f592596596528a35027d771df69d1de3"
+    "progress_json_sha256": "ab015f83e695eeb702393bdfbde06371f592596596528a35027d771df69d1de3",
+    "manifest_regenerated": "after the 2026-09-17 review revision"
   },
   "claude_hicap_assertion_corpus": {
     "root": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs",
@@ -596,7 +601,7 @@
     "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-muse13-20260916-215801",
     "terminal_stop_checked_first": "campaign-terminal.json and monitor-state.json both record 'Stop: admitted_attempt_cap' - a designed gate, not an exception",
     "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/muse13-manifest.json",
-    "manifest_sha256_internal": "c20aa3925d8a04521fe5314ff993b9a861b80c4c02ca6f1b500b9502659991d3",
+    "manifest_sha256_internal": "9948b75c20f026bbf25bedf6ce6f70054f2829c3092036a830aeedc3979f9730",
     "manifest_file_bytes_sha256": "2763e496eaf3d35ccb460a26befe499f243f659cd4445131bf58ad088efa2aa1",
     "report": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/muse13-report.json",
     "files": 11510,
@@ -604,7 +609,8 @@
     "independently_reverified": true,
     "run_json_sha256": "0cb106036dbdf5c48034a7af09817541e9db50aa68ec3c2c26dcf8e5fb246b3c",
     "timing_json_sha256": "3e1292cae71a6e97eafbf8806a00e81f1f992d5d9399bfa885d3433dba946152",
-    "progress_json_sha256": "b0c218d65b38ce6c7fbb3f1b013eb55fdaf946cc2bdd2eb0d9aa7e1049b76ed8"
+    "progress_json_sha256": "b0c218d65b38ce6c7fbb3f1b013eb55fdaf946cc2bdd2eb0d9aa7e1049b76ed8",
+    "manifest_regenerated": "after the 2026-09-17 review revision"
   },
   "muse13_assertion_corpus": {
     "root": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-muse13-20260916-215801/jobs",
@@ -692,7 +698,7 @@
     "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-union-20260916-221929",
     "terminal_stop_checked_first": "run.json stop_reason 'Stop: admitted_attempt_cap', stop_kind 'limit_or_gate'; campaign-terminal.json and monitor-state.json agree. A designed gate, not an exception - the material difference from the quarantined 21:57Z attempt.",
     "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/union-manifest.json",
-    "manifest_sha256_internal": "2e8ada3ff095c4fd544daee0311e17cc78503b166a43db4331693495d205f5d8",
+    "manifest_sha256_internal": "749fd46a7ab6e462016851f5c8cf04897cdc03befaa43f46a4a2baa524c93abf",
     "manifest_file_bytes_sha256": "77d2059a34f267191af5e73ccdb2b2a9c6aa0d2f9bf59513e15fd4eefe5dd1da",
     "report": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/union-report.json",
     "files": 7894,
@@ -705,7 +711,8 @@
     "timing_json_sha256": "b15b7dc4df73ae41ee395e62fdfc3b60c7460a2d6d54d6bc01ad865e2f169aaf",
     "progress_json_sha256": "8680a452aa76005b0e343454e5094c687a6ad4380b7e98ddde37e85c8c48b2ec",
     "priced_usage_final_sha256": "8f560f57da4f1f7ebe2aa979656b603dec0512d14540fcbdfcfcd60ad0b494f6",
-    "selector_of_record": "run.json researcher = openrouter/stealth/union-alpha at effort high; oh-my-pi reports omp/18.2.2. protocol/arm-budgets/union.json continuation4_arms.union still names opencode-go/union-alpha and oh-my-pi 18.1.13 - the frozen cost-policy copy, the same stale-selector class the runner documented for deepseek41."
+    "selector_of_record": "run.json researcher = openrouter/stealth/union-alpha at effort high; oh-my-pi reports omp/18.2.2. protocol/arm-budgets/union.json continuation4_arms.union still names opencode-go/union-alpha and oh-my-pi 18.1.13 - the frozen cost-policy copy, the same stale-selector class the runner documented for deepseek41.",
+    "manifest_regenerated": "after the 2026-09-17 review revision"
   },
   "union_assertion_corpus": {
     "root": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-union-20260916-221929/jobs",
@@ -1227,8 +1234,9 @@
   "adjudication_source_union": {
     "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/adjudication/union",
     "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/adjudication/union-manifest.json",
-    "manifest_sha256_internal": "51768ce02e26497339cc988430c40b7344590196d65847a52fafe3247c01d4e0",
-    "progress_log": "adjudication/union/PROGRESS.md (kept out of this bundle; it is a working log, not a result)"
+    "manifest_sha256_internal": "749fd46a7ab6e462016851f5c8cf04897cdc03befaa43f46a4a2baa524c93abf",
+    "progress_log": "adjudication/union/PROGRESS.md (kept out of this bundle; it is a working log, not a result)",
+    "manifest_regenerated": "after the 2026-09-17 review revision"
   },
   "status": "COMPLETE. All six continuation-4 arms are scored.",
   "runner_bundle_cross_reference": {
@@ -1246,7 +1254,7 @@
     "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-glm53-20260917-000655",
     "terminal_stop_checked_first": "campaign-terminal.json, monitor-state.json and protocol/arm-budgets/glm53.json all record 'Stop: admitted_attempt_cap'; the budget file adds stop_kind 'limit_or_gate'. Designed, not the FileNotFoundError that quarantined the 21:57Z attempt.",
     "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/glm53-manifest.json",
-    "manifest_sha256_internal": "e2d003ea0eb895d403cd42a28c2416f13ade5d81ee8d1a358ca2031d6a5b1931",
+    "manifest_sha256_internal": "63064300d170253db3cd505fc5e773ffcaf4584b5b872ccf7a95561bfe26be4b",
     "manifest_file_bytes_sha256": "1901695d71d0a2f9ada51bcaaff23020d982303ec658734b4a779be3077f225d",
     "report": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/glm53-report.json",
     "files": 5758,
@@ -1267,7 +1275,8 @@
     "progress_json_sha256": "e770cbe6b234a362a632f75f3ed9ea867d4cc44d67bf55e1211d76e9f0a3822b",
     "priced_usage_final_sha256": "1fa9f4d2cdb53eafe562f529d051583645ab2cd087d20ffd79c8f1f3c8261ed0",
     "campaign_terminal_sha256": "6ed6a8319b5244ec81623cbc88340b5ace793ad1815a9e57cb6c80ec872cb6f4",
-    "selector_of_record": "run.json premium = {adapter: omp, model: zai/glm-5.3-flash, effort: max}. protocol/arm-budgets/glm53.json has no continuation4_arms.glm53 block and no glm53 row in lifetime_captured_caps_usd - the frozen cost-policy block does not describe this arm at all."
+    "selector_of_record": "run.json premium = {adapter: omp, model: zai/glm-5.3-flash, effort: max}. protocol/arm-budgets/glm53.json has no continuation4_arms.glm53 block and no glm53 row in lifetime_captured_caps_usd - the frozen cost-policy block does not describe this arm at all.",
+    "manifest_regenerated": "after the 2026-09-17 review revision"
   },
   "glm53_assertion_corpus": {
     "root": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-glm53-20260917-000655/jobs",
@@ -1328,8 +1337,9 @@
   "adjudication_source_glm53": {
     "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/adjudication/glm53",
     "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/adjudication/glm53-manifest.json",
-    "manifest_sha256_internal": "f93b8538a0c0fc03325c12b9a1226be284d04e2f7f149bee97388b33437b1f92",
-    "progress_log": "adjudication/glm53/PROGRESS.md (kept out of this bundle; a working log, not a result)"
+    "manifest_sha256_internal": "63064300d170253db3cd505fc5e773ffcaf4584b5b872ccf7a95561bfe26be4b",
+    "progress_log": "adjudication/glm53/PROGRESS.md (kept out of this bundle; a working log, not a result)",
+    "manifest_regenerated": "after the 2026-09-17 review revision"
   },
   "consolidated_candidates": {
     "file": "consolidated-candidates.json",
@@ -1360,5 +1370,45 @@
       "glm53's manifest racing the monitor's final write",
       "Arm C's ceiling caveat tested by claude-hicap"
     ]
+  },
+  "post_review_revision": {
+    "review": "REVIEW_ADJUDICATION_20260916.md 2026-09-17, verdict 'fix first'",
+    "credit_changes": {
+      "claude-hicap": "-F001 (B4)",
+      "glm53": "-F068 (B5)",
+      "union": "-F015 (B6)",
+      "deepseek41": "+F043 at 2 of 3 clauses (S10)"
+    },
+    "post_review_recall": {
+      "claude": 18,
+      "deepseek41": 34,
+      "glm53": 36,
+      "muse13": 40,
+      "union": 42,
+      "claude-hicap": 45
+    },
+    "post_review_unions": {
+      "four_arm_review": 45,
+      "four_arm_set_equal_to_claude_hicap": true,
+      "five_arm_review": 48,
+      "six_arm": 57,
+      "reached_by_no_arm": 53
+    },
+    "every_structural_conclusion_survives": true,
+    "text_and_pointer_items_applied": [
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5",
+      "S6",
+      "S7",
+      "S8",
+      "S9",
+      "S11",
+      "S12",
+      "N1"
+    ],
+    "reviewer_manifest_result": "481 evidence references across the six findings files re-hashed with 0 missing and 0 mismatches; 257 of 258 evidence-manifest pointers re-hash, the exception being the PROGRESS.md row now labelled above."
   }
 }

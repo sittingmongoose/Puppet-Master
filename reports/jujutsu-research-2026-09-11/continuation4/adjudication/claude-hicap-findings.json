@@ -4,21 +4,6 @@
   "adjudicator": "Opus 5 agent (claude-opus-5[1m]), did not run any arm; shares a model family with the reviewed model",
   "credited": [
     {
-      "finding_id": "F001",
-      "title": "Terminal attempts always have receipts",
-      "classification": "correction",
-      "credited_job": "claude-hicap/J0020-compare",
-      "premium_supported": true,
-      "hybrid_supported": false,
-      "basis": "The L-39a5001283f3 repair asserts that a native effect without a receipt is a violation: a conforming capture could author a 'reconcile divergent operations' operation in the user's live repository 'with no writer lease, no before/after operation identities (Plans/Jujutsu_Integration.md:114) and no receipt'. J0022 R3 adds the terminal-outcome half: `cancelled` requires product-observed cancellation evidence, and a non-zero helper exit with no such observation is `failed` with a typed error or `effect_unknown` with a null after revision and the `after_reconciliation` retry disposition.",
-      "evidence": [
-        {
-          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0020-compare/workspace/notes.md",
-          "sha256": "32fd04c196f91210f1b35be08b30f3512d1d372c7bbc43f45c376db2978fb926"
-        }
-      ]
-    },
-    {
       "finding_id": "F002",
       "title": "Nominal reads may write",
       "classification": "unsupported_or_rejected",
@@ -845,7 +830,7 @@
       "credited_job": "claude-hicap/J0026-compare",
       "premium_supported": true,
       "hybrid_supported": true,
-      "basis": "Repair 1 is bounds honesty made checkable: page_size, returned_count and len(nodes) are mutually unconstrained, so 'A record with page_size: 80, returned_count: 200 and 200 nodes validates today', and the replacement states the bound 'as an inequality on a content count, not an equality on a layout coordinate', with layout or lane bookkeeping never counted. The external worked example is a page bound that can be stepped over so that 'one page can return the remainder of the entire log'.",
+      "basis": "Repair 1 is bounds honesty made checkable: page_size, returned_count and len(nodes) are mutually unconstrained, so 'A record with page_size: 80, returned_count: 200 and 200 nodes validates today', and the replacement states the bound 'as an inequality on a content count, not an equality on a layout coordinate'. [Review item S7: a closing quotation here was deepseek41's sentence, not this arm's, and is removed. It is verbatim at runs/jujutsu-deepseek41-20260916-202016/jobs/J0026-reconcile/workspace/notes.md:98-99 and appears nowhere in claude-hicap's corpus. The credit never depended on it; this arm's own text is quoted verbatim above.] [Review item S12: F092 has two clauses - measure graph/query/snapshot/ref-import costs independently AND keep bounds and progress labels honest. This credit, like every F092 credit in this bundle, rests on the bounds-honesty clause only; no arm measured any cost. The latitude was applied evenly across both arm families and changes no ranking, but it is disclosed here as F089's half-coverage was.]",
       "evidence": [
         {
           "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0026-compare/workspace/notes.md",
@@ -947,6 +932,24 @@
     }
   ],
   "partial_matches": [
+    {
+      "finding_id": "F001",
+      "title": "Terminal attempts always have receipts",
+      "why_partial": "WITHDRAWN CREDIT (review item B4). I credited this and I was wrong; the material does not meet the test I applied to the other five arms. The credit rested on exactly two passages. J0020-compare:455-461 complains that an unauthorised side effect OF A READ is unreceipted - 'a conforming PM capture could read the original repository at head ... with no writer lease, no before/after operation identities and no receipt'. J0022-compare:331-341 is an OUTCOME-CLASSIFICATION rule that presupposes the receipt rather than requiring it - a helper exit status 'is recorded in the receipt's diagnostic fields ... and never as state'. Neither asserts F001's proposition, that every terminal attempt must carry a non-null owner receipt. I re-ran the reviewer's corpus sweep over claude-hicap's own twelve jobs for 'non-null receipt|terminal receipt|owner receipt|receipt_ref|null receipt|without a receipt|no receipt': two substantive hits, and both are the passages above. I stated the correct test on this same finding for five other arms ('is not itself asserted as a finding'; 'The arm treats the obligation as satisfied rather than finding where it is not enforced') and did not apply it here. muse13's J0024-compare:300-302 states materially the same rule as hicap's J0022 passage and was recorded partial; the two now match. F106 and F107 are unaffected and stand.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "32fd04c196f91210f1b35be08b30f3512d1d372c7bbc43f45c376db2978fb926"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0022-compare/workspace/notes.md",
+          "sha256": "4fb81c977a313f44a2d3e63b48f70885c3985c1aa0e000dd04cadb696efd0425"
+        }
+      ],
+      "withdrawn_credit": true,
+      "review_item": "B4",
+      "review_source": "Independent review REVIEW_ADJUDICATION_20260916.md, 2026-09-17. I re-verified the finding against the run state before applying it."
+    },
     {
       "finding_id": "F019",
       "title": "Stale workspace recovery",

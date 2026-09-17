@@ -33,24 +33,24 @@
       "percent": 16.36
     },
     "deepseek41": {
-      "count": 33,
-      "percent": 30.0
+      "count": 34,
+      "percent": 30.91
     },
     "claude-hicap": {
-      "count": 46,
-      "percent": 41.82
+      "count": 45,
+      "percent": 40.91
     },
     "muse13": {
       "count": 40,
       "percent": 36.36
     },
     "union": {
-      "count": 43,
-      "percent": 39.09
+      "count": 42,
+      "percent": 38.18
     },
     "glm53": {
-      "count": 37,
-      "percent": 33.64
+      "count": 36,
+      "percent": 32.73
     },
     "premium": {
       "count": 78,
@@ -63,76 +63,76 @@
   },
   "nesting": {
     "proper_subsets": [
-      "claude (18) subset of glm53 (37)",
+      "claude (18) subset of claude-hicap (45)",
+      "claude (18) subset of glm53 (36)",
       "claude (18) subset of muse13 (40)",
-      "claude (18) subset of union (43)",
-      "claude (18) subset of claude-hicap (46)",
-      "deepseek41 (33) subset of muse13 (40)",
-      "deepseek41 (33) subset of claude-hicap (46)",
-      "muse13 (40) subset of claude-hicap (46)"
+      "claude (18) subset of union (42)",
+      "deepseek41 (34) subset of claude-hicap (45)",
+      "deepseek41 (34) subset of muse13 (40)",
+      "muse13 (40) subset of claude-hicap (45)"
     ],
+    "count": 7,
     "not_comparable": {
       "claude vs deepseek41": {
         "claude_only": 1,
-        "deepseek41_only": 16
-      },
-      "deepseek41 vs glm53": {
-        "deepseek41_only": 4,
-        "glm53_only": 8
+        "deepseek41_only": 17
       },
       "deepseek41 vs union": {
         "deepseek41_only": 8,
-        "union_only": 18
+        "union_only": 16
       },
-      "muse13 vs glm53": {
-        "muse13_only": 7,
-        "glm53_only": 4
+      "deepseek41 vs glm53": {
+        "deepseek41_only": 4,
+        "glm53_only": 6
+      },
+      "claude-hicap vs union": {
+        "claude-hicap_only": 13,
+        "union_only": 10
+      },
+      "claude-hicap vs glm53": {
+        "claude-hicap_only": 12,
+        "glm53_only": 3
       },
       "muse13 vs union": {
         "muse13_only": 10,
-        "union_only": 13
+        "union_only": 12
       },
-      "claude-hicap vs glm53": {
-        "claude-hicap_only": 13,
-        "glm53_only": 4
-      },
-      "claude-hicap vs union": {
-        "claude-hicap_only": 14,
-        "union_only": 11
+      "muse13 vs glm53": {
+        "muse13_only": 7,
+        "glm53_only": 3
       },
       "union vs glm53": {
         "union_only": 14,
         "glm53_only": 8
       }
     },
-    "result_changed_by_glm53": "After four arms the review set was a clean chain ending at claude-hicap, and the four-arm review union was exactly claude-hicap's own 46 - no arm had contributed anything it missed. glm53 holds F068, F069, F085 and F086, which no other review arm reached, so claude-hicap is NO LONGER the review-arm ceiling and the review arms differ in depth AND, at the margin, in kind.",
-    "claude_is_the_floor": "Arm C's 18 findings are a proper subset of all four other review arms and of the union arm - the only arm in the experiment that is contained by every other arm. That is a ceiling artefact, not a judgement: 11 of its 12 jobs stopped at the 40-response ceiling, and claude-hicap proves it, finishing all 12 on the same inputs and model at 46."
+    "result_changed_by_glm53": "After four arms the review set was a clean chain ending at claude-hicap, and the four-arm review union was SET-EQUAL to claude-hicap's own credited set - no arm had contributed anything it missed. glm53 holds F069, F085 and F086, which no other review arm reached, so claude-hicap is not the review-arm ceiling. This survives the review: the four-arm review union is now 45 and is STILL set-equal to claude-hicap's 45, and glm53 still breaks it on three findings rather than four.",
+    "claude_is_the_floor": "Arm C's 18 findings remain a proper subset of all five other arms - the only arm contained by every other. A ceiling artefact, not a judgement: 11 of its 12 jobs stopped at the 40-response ceiling and claude-hicap, identical in inputs, model, effort, admissions, workers and batching, finished all 12 at 45."
   },
   "unions": {
-    "four_arm_review_union_before_glm53": 46,
-    "five_arm_review_union": 50,
-    "five_arm_review_union_percent": 45.45,
-    "six_arm_union": 59,
-    "six_arm_union_percent": 53.64,
+    "four_arm_review_union": 45,
+    "four_arm_review_union_is_set_equal_to_claude_hicap": true,
+    "five_arm_review_union": 48,
+    "five_arm_review_union_percent": 43.64,
+    "six_arm_union": 57,
+    "six_arm_union_percent": 51.82,
     "union_arm_adds_over_all_review_arms": [
       "F005",
-      "F015",
       "F019",
       "F024",
       "F025",
       "F038",
       "F052",
       "F057",
-      "F065"
+      "F065",
+      "F068"
     ],
     "glm53_adds_over_the_other_review_arms": [
-      "F068",
       "F069",
       "F085",
       "F086"
     ],
     "held_by_review_arms_and_missed_by_the_union_arm": [
-      "F001",
       "F032",
       "F033",
       "F034",
@@ -150,11 +150,13 @@
       "F107"
     ],
     "findings_no_arm_reached": [
+      "F001",
       "F003",
       "F009",
       "F012",
       "F013",
       "F014",
+      "F015",
       "F016",
       "F017",
       "F018",
@@ -202,10 +204,19 @@
       "F109",
       "F110"
     ],
-    "count_no_arm_reached": 51
+    "count_no_arm_reached": 53,
+    "before_review": {
+      "four_arm": 46,
+      "five_arm": 50,
+      "six_arm": 59,
+      "no_arm": 51,
+      "union_adds": 11,
+      "review_arms_hold": 16
+    }
   },
   "against_the_full_pipeline_arms": {
     "no_arm_produced_a_finding_outside_premium_union_hybrid": true,
+    "IMPORTANT_QUALIFICATION": "premium union hybrid IS the whole 110-finding union - continuation 3 built the union from those two arms' output. So 'no arm produced a finding outside premium union hybrid' is TRUE BY CONSTRUCTION and carries no evidential weight on its own. The substantive claim is narrower and is the one to quote: no arm, the full-pipeline union arm included, delivered a proposition I could credit as a NEW union finding. The 27 out-of-union candidates are where that judgement can be re-examined.",
     "detail": {
       "claude": {
         "in_premium": 18,
@@ -213,12 +224,12 @@
         "outside_both": []
       },
       "deepseek41": {
-        "in_premium": 33,
-        "in_hybrid": 25,
+        "in_premium": 34,
+        "in_hybrid": 26,
         "outside_both": []
       },
       "claude-hicap": {
-        "in_premium": 44,
+        "in_premium": 43,
         "in_hybrid": 35,
         "outside_both": []
       },
@@ -228,17 +239,16 @@
         "outside_both": []
       },
       "union": {
-        "in_premium": 42,
-        "in_hybrid": 38,
+        "in_premium": 41,
+        "in_hybrid": 37,
         "outside_both": []
       },
       "glm53": {
-        "in_premium": 36,
-        "in_hybrid": 29,
+        "in_premium": 35,
+        "in_hybrid": 28,
         "outside_both": []
       }
-    },
-    "reading": "Six arms, five review replacements and one full arm on the same case, produced ZERO propositions I could credit as a union finding outside premium union hybrid. The 110-finding union was not extended by any of them. What changed is reachability: the six-arm union is 59 of 110, up from the 46 four arms reached."
+    }
   },
   "factual_verifications": [
     {
@@ -249,11 +259,12 @@
         "claude": "WRONG, asserted as fact: gc(head, UNIX_EPOCH) 'preserves nothing by recency', therefore the dojjo server prunes everything unreachable.",
         "claude-hicap": "WRONG, and it quoted the correct predicate while drawing the opposite conclusion - the control's counter-result.",
         "deepseek41": "RIGHT. It read simple_op_store.rs and caught Arm C. This is why Arm C's four adjudication files were amended.",
-        "muse13": "NEUTRAL. Recorded the call without characterising a retention direction it had not verified.",
+        "muse13": "RIGHT, and I had undersold this as 'NEUTRAL' (review item N1). muse13's J0019-reconcile:86 and J0021-compare:106 both say op-store GC is called with SystemTime::UNIX_EPOCH '(not an aggressive cutoff)' - that is a direction, and the correct one. It is materially the same wording I credited glm53's J0020 for as 'preserved the correct framing it inherited'; the two labels now match.",
         "union": "NOT REACHED. The lead family never entered a study or compare job.",
         "glm53": "BOTH, in different jobs. J0020 preserved the correct framing it inherited ('op-store GC with UNIX_EPOCH, no aggressive retention cutoff'); J0023 inferred the wrong direction and then quarantined its own inference in the same document - 'inferred from the call shape ... not verified against pinned jj source. Flagged uncertain; verify against jj simple_op_store before reusing the claim' - naming the exact file deepseek41 read."
       },
-      "conclusion": "Five distinct outcomes on one code fact. An error labelled as an unverified inference with the verification step written down is not the same failure as an error asserted as fact."
+      "conclusion": "An error labelled as an unverified inference with the verification step written down is not the same failure as an error asserted as fact - and overturning a correct inherited framing is worse than either.",
+      "shared_input_finding": "REVIEW ITEM N1, and it sharpens the result against the Claude arms. The CORRECT framing was already in the shared frozen discovery lead every review arm received - jobs/J0001-discovery/workspace/leads/dojjo-mirror-normalization-and-cold-join-check.md:3, 'it calls op-store GC with UNIX_EPOCH, not an aggressive retention cutoff' - which I verified is byte-identical across all five review runs (sha256 8a91fcbc580de837f779...). So every review arm started with the right answer. deepseek41 verified it against source and kept it; muse13 and glm53's J0020 preserved it; BOTH CLAUDE ARMS ACTIVELY OVERTURNED A CORRECT INHERITED FRAMING. That is a worse result for the Claude arms than I first recorded, and it is the cleanest evidence in this bundle against family bias in my own adjudication."
     },
     {
       "id": "V2",
@@ -307,7 +318,29 @@
       "claude-hicap": "match",
       "muse13": "match",
       "union": "match",
-      "glm53": "rows match exactly; tree re-hash differs by one non-output file (see V6)"
+      "glm53": "rows match exactly; tree re-hash differs by one non-output file (see V6)",
+      "post_review": "Unchanged by the review; the reviewer independently re-hashed 481 evidence references across the six findings files with zero failures."
     }
+  },
+  "post_review_revision": {
+    "review": "REVIEW_ADJUDICATION_20260916.md, 2026-09-17, verdict 'fix first'.",
+    "upheld": [
+      "the method",
+      "the nesting including its set-equality form",
+      "the manifests (481 evidence references, 0 hash failures; SHA256SUMS complete)",
+      "the quarantine discipline (the two interrupted runs appear only under /quarantined_runs)",
+      "the frozen-input boundary (no credit in any sheet cites J0001-J0004)",
+      "the absence of family bias",
+      "80 credits re-derived including every credited correction",
+      "the garbage-collection reading (the reviewer read simple_op_store.rs independently)"
+    ],
+    "changes_applied": {
+      "B4": "withdrew claude-hicap F001",
+      "B5": "withdrew glm53 F068",
+      "B6": "withdrew union F015",
+      "S10": "added deepseek41 F043 at 2 of 3 clauses, disclosed"
+    },
+    "verification": "I re-verified all four against the run state before applying: hicap's two F001 passages and a corpus sweep of its twelve own jobs; glm53's single 'draft' bullet against its byte-identical frozen input lead; union's J0017 refusal text plus zero 'timeline' occurrences; deepseek41's J0021:50 and :52.",
+    "every_structural_conclusion_survives": true
   }
 }

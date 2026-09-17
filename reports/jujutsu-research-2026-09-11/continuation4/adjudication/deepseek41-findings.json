@@ -320,6 +320,28 @@
       ]
     },
     {
+      "finding_id": "F043",
+      "title": "Authenticated browser and local IPC",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "deepseek41/J0021-reconcile",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "ADDED AFTER INDEPENDENT REVIEW (item S10). This finding had no row at all - neither credited nor partial - and the material was there. CREDITED AT 2 OF THE PROPOSITION'S 3 CLAUSES, with the third disclosed as missing, which is the bar at which claude-hicap's F106 (2 of 3 counterexamples) and muse13's F107 (3 of 4 clauses) were credited. Bind caller/repository identity - J0021-reconcile/workspace/notes.md:50: the save doc comment says 'check that each file being saved was one of the files we were comparing originally', but 'the default implementation rescans current state; nothing retains the original path set, and nothing binds contents, repository, snapshot, session or server identity' [types.rs:78-83, 94-105]. Avoid reusing a stale incompatible server instance - :52: 'The mutex serializes this process's handlers only - not other filesystem writers, and not a different server instance whose file names coincide' [local_server.rs:18, 78-105], and the arm quotes the upstream error text that names the scenario: 'Perhaps this client is now connected to a different server than the one it was started from?'. These are the arm's own findings with primary citations, and materially the same sentences that earned muse13 its F043 credit. CLAUSE NOT MET: authenticate local editor/server sessions. It appears only as an open question at :116 - 'whether any local process reaching the loopback HTTP API (no token; 127.0.0.1 only) can drive a save with a valid-but-stale path set' - not as an asserted obligation. Unlike claude-hicap and muse13, this arm never states that the session must be authenticated.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-deepseek41-20260916-202016/jobs/J0021-reconcile/workspace/notes.md",
+          "sha256": "2f134c9bd0a1c67a784b65f4639e557a9a14d5e8a54a6ea660d3c4e701fbd59c"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-deepseek41-20260916-202016/jobs/J0021-reconcile/workspace/leads/diffedit3-symlink-confinement.md",
+          "sha256": "848461460d25c30160e24b4708801bd6218702f373d729c68f1b3a493ed842fa"
+        }
+      ],
+      "clause_coverage": "2 of 3; the authentication clause is disclosed as absent",
+      "review_item": "S10",
+      "review_source": "Independent review REVIEW_ADJUDICATION_20260916.md, 2026-09-17; re-verified against the run state before applying."
+    },
+    {
       "finding_id": "F050",
       "title": "Included tools and exact qualification",
       "classification": "unsupported_or_rejected",
@@ -611,7 +633,7 @@
       "credited_job": "deepseek41/J0026-reconcile",
       "premium_supported": true,
       "hybrid_supported": true,
-      "basis": "Alternatives observed: 'Pagination here is fetch the whole log incrementally into one in-memory graph (loadLog drains all pages), not a bounded windowed viewport - relevant if bounded is later read as viewport-bounded', alongside the demonstrated page-bound overshoot in which 'one page can return the remainder of the entire log'. The bounds label is corrected against the measured mechanism rather than accepted.",
+      "basis": "Alternatives observed: 'Pagination here is fetch the whole log incrementally into one in-memory graph (loadLog drains all pages), not a bounded windowed viewport - relevant if bounded is later read as viewport-bounded', alongside the demonstrated page-bound overshoot in which 'one page can return the remainder of the entire log'. The bounds label is corrected against the measured mechanism rather than accepted. [Review item S12: credited on F092's bounds-honesty clause only; no arm in this bundle measured any cost.]",
       "evidence": [
         {
           "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-deepseek41-20260916-202016/jobs/J0026-reconcile/workspace/notes.md",

@@ -424,6 +424,16 @@
       "F106",
       "F108",
       "F109"
+    ],
+    "partials": [
+      "F001",
+      "F022",
+      "F028",
+      "F044",
+      "F069",
+      "F076",
+      "F083",
+      "F094"
     ]
   },
   "coverage_vs_other_arms": {
@@ -483,7 +493,8 @@
       ]
     },
     "nesting": "claude (18) and deepseek41 (33) are both proper subsets of muse13 (40), which is a proper subset of claude-hicap (46). claude and deepseek41 are not comparable with each other. The four-arm union is exactly claude-hicap's 46.",
-    "interpretation": "Nothing unique to the arm. Nine premium-only findings (the external-editor and diff-fidelity family plus F084 and F090) and one hybrid-only (F073)."
+    "interpretation": "Nothing unique to the arm. Nine premium-only findings (the external-editor and diff-fidelity family plus F084 and F090) and one hybrid-only (F073).",
+    "post_review_note": "Recomputed after the independent review's withdrawals and addition."
   },
   "request_limited_coverage": {
     "jobs_bound_by_the_response_ceiling": 2,
@@ -535,5 +546,19 @@
     "Cost is a captured upper valuation priced from native receipts at the published tariff, not a cash invoice.",
     "This arm's per-job limits (40 responses, 2400 s) match Arm C's and deepseek41's, so its cost and duration ARE comparable with those two; they are NOT comparable with claude-hicap, which ran a deliberately different budget regime.",
     "The arm admitted 14 of 88 input leads, so most of what it missed it was never given."
-  ]
+  ],
+  "post_review_revision": {
+    "review": "Independent review REVIEW_ADJUDICATION_20260916.md (2026-09-17), verdict 'fix first'. Applied 2026-09-17.",
+    "verdict_for_this_arm": "S12: F092's half-coverage disclosed. No credit changed.",
+    "figures_after_review": {
+      "credited": 40,
+      "percent": 36.36,
+      "by_class": {
+        "correction": "1/5",
+        "optional_capability": "3/36",
+        "product_choice": "1/6",
+        "unsupported_or_rejected": "35/63"
+      }
+    }
+  }
 }

@@ -1,6 +1,14 @@
 # Continuation 4 adjudication — the `union` arm (full arm from discovery)
 
-> **All six arms are now scored. The final comparison table, the recomputed nesting, the six-arm union, all 27 out-of-union candidates and the cross-arm factual verifications are in [`README.md`](README.md)**, which supersedes every comparison table below.
+> ## Revised after independent review — 2026-09-17
+>
+> The independent review at `REVIEW_ADJUDICATION_20260916.md` returned **fix first**. It upheld the method, the nesting, the manifests, the quarantine discipline and the absence of family bias, and re-derived 80 credits including every correction. I re-verified each finding against the run state before applying it.
+>
+> **This arm: 43 → 42 of 110.**
+>
+> **F015 was withdrawn (review item B6).** The credited passage refuses the panel ("no new rail panel"), the redo half appears only as "not approved scope", and "timeline" does not occur in that job at all — I had read the virtualization clause from a diff-hydration acceptance line. This is now consistent with the `F103` partial, which I refused for exactly the same reason. **The arm still adds 9 findings no review arm reached.** Also applied: S12.
+>
+> **Every figure for this arm below that disagrees with `union-scoring.json` is superseded by that file.** The recomputed lattice, and the confirmation that every structural conclusion survives, are in `README.md` and `cross-arm.json`.
 
 **I am an Opus 5 agent** (`claude-opus-5[1m]`) acting as adjudicator. I ran no arm and have no
 model-family relationship with the reviewed model. Every figure below was rebuilt from the run's
@@ -113,23 +121,22 @@ cap, with **$3.00 unresolved** from the three killed jobs; 17 reconciled, 3 unre
 
 ## Recall on the fixed 110-finding union
 
-**43 / 110 = 39.09%.** On continuation 3's original 105-finding basis, 43/105 = 40.95%.
+**42 / 110 = 38.18%.** On continuation 3's original 105-finding basis, 42/105 = 40.00%. *(43 before review item B6, which withdrew `F015`.)*
 
 | Class | Credited | Denominator |
 |---|---:|---:|
 | correction | 0 | 5 |
-| optional_capability | 7 | 36 |
+| optional_capability | 6 | 36 |
 | product_choice | 0 | 6 |
 | unsupported_or_rejected | 36 | 63 |
 
 Corrections missed: F001, F106, F107, F108, F109. Partial matches recorded but **not** credited:
 F001, F027, F044, F089, F103, F105, F107.
 
-### optional_capability (7)
+### optional_capability (6)
 
 | ID | Title | First credited at | Strongest statement |
 |---|---|---|---|
-| F015 | Operation history navigation | compare | `J0017-compare` |
 | F024 | Interdiff | compare | `J0017-compare` |
 | F025 | Change evolution view | compare | `J0017-compare` |
 | F028 | Machine-readable hunk selection | discovery | `J0001-discovery` |
@@ -292,7 +299,6 @@ space:
 | ID | Title | Class |
 |---|---|---|
 | F005 | Expected operation is not native compare-and-swap | unsupported_or_rejected |
-| F015 | Operation history navigation | optional_capability |
 | F019 | Stale workspace recovery | unsupported_or_rejected |
 | F024 | Interdiff | optional_capability |
 | F025 | Change evolution view | optional_capability |
@@ -303,9 +309,9 @@ space:
 | F068 | Description drafts survive refresh | unsupported_or_rejected |
 | F069 | Immutable content caches and async selection | unsupported_or_rejected |
 
-That lifts the five-arm continuation-4 union from **46 (41.82%)** to **57 (51.82%)**.
+Post-review that is **9** findings, and the six-arm union is **57 (51.82%)** against a five-arm review union of **48 (43.64%)**.
 
-Against that, the review arms hold **14** findings this arm misses:
+Against that, the review arms hold **15** findings this arm misses:
 
 F001 (Terminal attempts always have receipts), F032 (Edited text line-ending policy), F033 (External editor path confinement), F034 (Partial external editor writes), F036 (External editor stale sessions), F037 (Bound reads before allocating), F044 (Adapter implementation shape), F053 (Windows links and native file types), F074 (Process execution follows owner environment), F083 (Backup derived indexes), F089 (Partial clone and LFS/submodule eligibility), F090 (Authorized incomplete-object materialization), F106 (Restore readiness consistency), F107 (Graph page consistency and adjacency bounds).
 
@@ -404,7 +410,7 @@ arbitrary conflict editor).
   - Plans/Backup_Restore_System.md BRS-014:563-599
   - idursun/jjui internal/config/default/config.toml:30-34, 52-99 and internal/ui/common/selection.go:36-80 @ 83a5851
 
-**Did continuation 3 already reject it?** NO. Three of its four components are already IN the union and are credited to this arm - F024 interdiff, F025 change evolution view, F065 revset assistance, F015 operation history navigation - all of them premium-side or hybrid-side optional capabilities that no review arm reached. The residue outside the union is the search-scope labelling rule: that 'not loaded' must never be presented as proof of absence and that a missing target keeps its identity rather than silently selecting a different mutation target.
+**Did continuation 3 already reject it?** NO. Three of its four components are already IN the union and are credited to this arm - F024 interdiff, F025 change evolution view and F065 revset assistance - premium-side or hybrid-side optional capabilities that no review arm reached. (My original text also named F015 here; that credit was withdrawn as review item B6, so the arm's operation-history component is a partial, not a credit.) The residue outside the union is the search-scope labelling rule: that 'not loaded' must never be presented as proof of absence and that a missing target keeps its identity rather than silently selecting a different mutation target.
 
 **Why it is distinct from what is credited.** Recorded because the arm bundles four union capabilities with one genuinely new disclosure rule. The new part is small and specific; the rest is why this arm's optional-capability recall is the highest of the five continuation-4 arms.
 
@@ -433,7 +439,7 @@ arbitrary conflict editor).
 
 ## Observations
 
-**THE UNION QUESTION: a different research model redistributed coverage; it did not extend the union.** This is the only arm whose recall is not bounded by the premium arm's artifacts, and it is the one thing in the experiment that could have changed the union. It did not. All 43 credited findings sit inside premium or hybrid: 42 in premium, 38 in hybrid, ZERO outside both. What it did do is reach 11 findings no review arm reached - F005, F015, F019, F024, F025, F038, F052, F057, F065, F068, F069 - lifting the five-arm union from 46 (41.82%) to 57 (51.82%). Those 11 come from lead families the premium arm never generated or never routed, which is exactly the space a full arm can enter and a same-input review replacement structurally cannot. On this evidence the answer to 'could a different research model change the union' is no for the union's membership and yes for its reachability.
+**THE UNION QUESTION: a different research model redistributed coverage; it did not extend the union.** This is the only arm whose recall is not bounded by the premium arm's artifacts, and it is the one thing in the experiment that could have changed the union. It did not. All 42 credited findings sit inside premium or hybrid: 41 in premium, 37 in hybrid, ZERO outside both - though note that premium union hybrid IS all 110, so nothing could have fallen outside it by construction. What it did do is reach 9 findings no review arm reached - F005, F019, F024, F025, F038, F052, F057, F065, F068 - lifting the six-arm union to 57 (51.82%) against the five-arm review union of 48. [Post-review figures; F015 was withdrawn as review item B6.] Those 9 come from lead families the premium arm never generated or never routed, which is exactly the space a full arm can enter and a same-input review replacement structurally cannot. On this evidence the answer to 'could a different research model change the union' is no for the union's membership and yes for its reachability.
 
 **The review arms hold 14 findings the union misses, dominated by one lead family the union found but never routed.** F001, F032, F033, F034, F036, F037, F044, F053, F074, F083, F089, F090, F106 and F107 are held by review arms and not by the union. Seven of them (F031 aside, which the union does hold) are the diffedit3 and external-editor family: F032, F033, F034, F036, F037, F053 plus F074. The union's own discovery DID find that family - lead 23, 'Diffedit3: editable intermediate tree, not merely a merge dialog', which names the deletion bug, the SSH and WSL story and the server lifetime question - but with 20 admissions covering five stages it never routed that lead to a study or a compare job. The finding was in hand and never developed. That is the clearest cost of a full arm's breadth: it pays for discovery with depth.
 
@@ -452,11 +458,11 @@ union arm's is not.**
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | Arm kind | full pipeline | full pipeline | **full pipeline** | review only | review only | review only | review only, control | running |
 | Review model | gpt-6-astra xhigh | gpt-6-astra xhigh | **stealth/union-alpha high** | claude-opus-5 xhigh | deepseek-v4.1-flash max | muse-spark-1.3 xhigh | claude-opus-5 xhigh | – |
-| Recall / expanded 110 | 78 (70.91%) | 90 (81.82%) | **43 (39.09%)** | 18 (16.36%) | 33 (30.00%) | 40 (36.36%) | 46 (41.82%) | – |
-| Corrections / 5 | 4 | 2 | **0** | 0 | 0 | 1 | 3 | – |
-| Optional capabilities / 36 | 20 | 30 | **7** | 1 | 2 | 3 | 4 | – |
-| Product choices / 6 | 3 | 5 | **0** | 0 | 1 | 1 | 3 | – |
-| Unsupported or already-covered / 63 | 51 | 53 | **36** | 17 | 30 | 35 | 36 | – |
+| Recall / expanded 110 *(post-review)* | 78 (70.91%) | 90 (81.82%) | **42 (38.18%)** | 18 (16.36%) | 34 (30.91%) | 40 (36.36%) | 45 (40.91%) | 36 (32.73%) |
+| Corrections / 5 | 4 | 2 | **0** | 0 | 0 | 1 | 2 | 0 |
+| Optional capabilities / 36 | 20 | 30 | **6** | 1 | 2 | 3 | 4 | 1 |
+| Product choices / 6 | 3 | 5 | **0** | 0 | 1 | 1 | 3 | 0 |
+| Unsupported or already-covered / 63 | 51 | 53 | **36** | 17 | 31 | 35 | 36 | 34 |
 | Unique to the arm | 20 | 32 | **0** | 0 | 0 | 0 | 0 | – |
 | Stage job split (d/i/h/r/c) | – / – / – / 6 / 6 | – / – / – / 6 / 4 | **1 / 5 / 5 / 6 / 3** | – / – / – / 8 / 4 | – / – / – / 9 / 3 | – / – / – / 7 / 5 | – / – / – / 6 / 6 | – |
 | Completed / limited / interrupted | 7 / 5 / 0 | 2 / 5 / 3 | **17 / 0 / 3 (time)** | 1 / 11 / 0 | 2 / 10 / 0 | 10 / 2 / 0 | 12 / 0 / 0 | – |

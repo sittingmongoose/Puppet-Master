@@ -1,6 +1,14 @@
 # Arm muse13 — adjudication against the continuation-3 union
 
-> **All six arms are now scored. The final comparison table, the recomputed nesting, the six-arm union, all 27 out-of-union candidates and the cross-arm factual verifications are in [`README.md`](README.md)**, which supersedes every comparison table below.
+> ## Revised after independent review — 2026-09-17
+>
+> The independent review at `REVIEW_ADJUDICATION_20260916.md` returned **fix first**. It upheld the method, the nesting, the manifests, the quarantine discipline and the absence of family bias, and re-derived 80 credits including every correction. I re-verified each finding against the run state before applying it.
+>
+> **This arm: 40 → 40 of 110.**
+>
+> **No credit changed.** Applied: S12 (`F092`'s half-coverage disclosed).
+>
+> **Every figure for this arm below that disagrees with `muse13-scoring.json` is superseded by that file.** The recomputed lattice, and the confirmation that every structural conclusion survives, are in `README.md` and `cross-arm.json`.
 
 I am an Opus 5 agent acting as adjudicator. I ran no arm. Same method and verification as for the three
 arms before it. No model-family relationship between me and the reviewed model here.
@@ -132,11 +140,11 @@ Premium and hybrid rows are continuation 3's own numbers.
 | Measure | Premium | Hybrid | Claude (Arm C) | deepseek41 | **muse13** | claude-hicap | union | glm53 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | Review model | gpt-6-astra xhigh | gpt-6-astra xhigh | claude-opus-5 xhigh | deepseek-v4.1-flash max | **muse-spark-1.3 xhigh** | claude-opus-5 xhigh | requeued | requeued |
-| Recall / expanded 110 | 78 (70.91%) | 90 (81.82%) | 18 (16.36%) | 33 (30.00%) | **40 (36.36%)** | 46 (41.82%) | – | – |
-| Corrections / 5 | 4 | 2 | 0 | 0 | **1** | 3 | – | – |
-| Optional capabilities / 36 | 20 | 30 | 1 | 2 | **3** | 4 | – | – |
-| Product choices / 6 | 3 | 5 | 0 | 1 | **1** | 3 | – | – |
-| Unsupported or already-covered / 63 | 51 | 53 | 17 | 30 | **35** | 36 | – | – |
+| Recall / expanded 110 *(post-review)* | 78 (70.91%) | 90 (81.82%) | 18 (16.36%) | 34 (30.91%) | **40 (36.36%)** | 45 (40.91%) | 42 (38.18%) | 36 (32.73%) |
+| Corrections / 5 | 4 | 2 | 0 | 0 | **1** | 2 | 0 | 0 |
+| Optional capabilities / 36 | 20 | 30 | 1 | 2 | **3** | 4 | 6 | 1 |
+| Product choices / 6 | 3 | 5 | 0 | 1 | **1** | 3 | 0 | 0 |
+| Unsupported or already-covered / 63 | 51 | 53 | 17 | 31 | **35** | 36 | 36 | 34 |
 | Unique to the arm | 20 | 32 | 0 | 0 | **0** | 0 | – | – |
 | Reconcile / compare split | 6 / 6 | 6 / 4 | 8 / 4 | 9 / 3 | **7 / 5** | 6 / 6 | – | – |
 | Completed / limited / interrupted | 7 / 5 / 0 | 2 / 5 / 3 | 1 / 11 / 0 | 2 / 10 / 0 | **10 / 2 / 0** | 12 / 0 / 0 | – | – |

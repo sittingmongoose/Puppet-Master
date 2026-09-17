@@ -1,6 +1,14 @@
 # Arm C (Claude Opus 5 review) — adjudication against the continuation-3 union
 
-> **All six arms are now scored. The final comparison table, the recomputed nesting, the six-arm union, all 27 out-of-union candidates and the cross-arm factual verifications are in [`README.md`](README.md)**, which supersedes every comparison table below.
+> ## Revised after independent review — 2026-09-17
+>
+> The independent review at `REVIEW_ADJUDICATION_20260916.md` returned **fix first**. It upheld the method, the nesting, the manifests, the quarantine discipline and the absence of family bias, and re-derived 80 credits including every correction. I re-verified each finding against the run state before applying it.
+>
+> **This arm: 18 → 18 of 110.**
+>
+> **No credit changed.** Applied: S9 (the amended-false clause in the `F079` basis is now marked inline, not only in the amendments block) and S11 (`F072`'s credit is disclosed as resting on 1 of its 4 clauses). Also S12.
+>
+> **Every figure for this arm below that disagrees with `claude-scoring.json` is superseded by that file.** The recomputed lattice, and the confirmation that every structural conclusion survives, are in `README.md` and `cross-arm.json`.
 
 I am an Opus 5 agent acting as adjudicator. I ran no arm. This scores the Claude arm's frozen outputs
 against the adjudicated 110-finding union from continuation 3, using continuation 3's own crediting rules.

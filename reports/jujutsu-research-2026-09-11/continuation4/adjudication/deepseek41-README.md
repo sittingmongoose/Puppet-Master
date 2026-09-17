@@ -1,6 +1,14 @@
 # Arm deepseek41 — adjudication against the continuation-3 union
 
-> **All six arms are now scored. The final comparison table, the recomputed nesting, the six-arm union, all 27 out-of-union candidates and the cross-arm factual verifications are in [`README.md`](README.md)**, which supersedes every comparison table below.
+> ## Revised after independent review — 2026-09-17
+>
+> The independent review at `REVIEW_ADJUDICATION_20260916.md` returned **fix first**. It upheld the method, the nesting, the manifests, the quarantine discipline and the absence of family bias, and re-derived 80 credits including every correction. I re-verified each finding against the run state before applying it.
+>
+> **This arm: 33 → 34 of 110.**
+>
+> **F043 was added (review item S10).** It previously had no row at all — neither credited nor partial — and the material was in `J0021-reconcile` notes lines 50 and 52. It is credited at **2 of the proposition's 3 clauses**, with the authentication clause disclosed as absent, the bar at which claude-hicap's F106 and muse13's F107 were credited. Also applied: S12.
+>
+> **Every figure for this arm below that disagrees with `deepseek41-scoring.json` is superseded by that file.** The recomputed lattice, and the confirmation that every structural conclusion survives, are in `README.md` and `cross-arm.json`.
 
 I am an Opus 5 agent acting as adjudicator. I ran no arm. This scores the deepseek41 arm's frozen outputs
 against the adjudicated 110-finding union from continuation 3, using continuation 3's own crediting rules.
@@ -68,7 +76,7 @@ Scoring only receipted deliveries would have lost it.
 
 Four jobs produced no assertion document at all: J0017, J0018, J0023 and **J0028-compare**.
 
-## Credited findings — 33 of 110 (30.00%)
+## Credited findings — 34 of 110 (30.91%)  *(33 before review item S10 added `F043`)*
 
 | Class | Credited | Denominator |
 |---|---:|---:|
@@ -241,12 +249,12 @@ Premium and hybrid rows are continuation 3's own numbers from `continuation3/fin
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | Review model | gpt-6-astra xhigh | gpt-6-astra xhigh | claude-opus-5 xhigh | **deepseek-v4.1-flash max** | pending | pending | pending | running |
 | Inputs | own arm | own arm | premium's frozen artifacts | **premium's frozen artifacts** | – | – | – | – |
-| Recall / expanded 110 | 78 (70.91%) | 90 (81.82%) | 18 (16.36%) | **33 (30.00%)** | – | – | – | – |
+| Recall / expanded 110 *(post-review)* | 78 (70.91%) | 90 (81.82%) | 18 (16.36%) | **34 (30.91%)** | 45 (40.91%) | 40 (36.36%) | 42 (38.18%) | 36 (32.73%) |
 | Recall / fixed original 105 | 74 (70.48%) | 88 (83.81%) | 18 (17.14%) | **33 (31.43%)** | – | – | – | – |
-| Corrections / 5 | 4 | 2 | 0 | **0** | – | – | – | – |
-| Optional capabilities / 36 | 20 | 30 | 1 | **2** | – | – | – | – |
-| Product choices / 6 | 3 | 5 | 0 | **1** | – | – | – | – |
-| Unsupported or already-covered / 63 | 51 | 53 | 17 | **30** | – | – | – | – |
+| Corrections / 5 | 4 | 2 | 0 | **0** | 2 | 1 | 0 | 0 |
+| Optional capabilities / 36 | 20 | 30 | 1 | **2** | 4 | 3 | 6 | 1 |
+| Product choices / 6 | 3 | 5 | 0 | **1** | 3 | 1 | 0 | 0 |
+| Unsupported or already-covered / 63 | 51 | 53 | 17 | **31** | 36 | 35 | 36 | 34 |
 | Unique to the arm | 20 | 32 | 0 | **0** | – | – | – | – |
 | Reconcile / compare split | 6 / 6 | 6 / 4 | 8 / 4 | **9 / 3** | – | – | – | – |
 | Completed / limited / interrupted | 7 / 5 / 0 | 2 / 5 / 3 | 1 / 11 / 0 | **2 / 10 / 0** | – | – | – | – |

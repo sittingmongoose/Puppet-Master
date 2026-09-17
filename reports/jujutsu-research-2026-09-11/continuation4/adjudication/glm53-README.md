@@ -1,6 +1,14 @@
 # Continuation 4 adjudication — the `glm53` arm (review replacement)
 
-> **All six arms are now scored. The final comparison table, the recomputed nesting, the six-arm union, all 27 out-of-union candidates and the cross-arm factual verifications are in [`README.md`](README.md)**, which supersedes every comparison table below.
+> ## Revised after independent review — 2026-09-17
+>
+> The independent review at `REVIEW_ADJUDICATION_20260916.md` returned **fix first**. It upheld the method, the nesting, the manifests, the quarantine discipline and the absence of family bias, and re-derived 80 credits including every correction. I re-verified each finding against the run state before applying it.
+>
+> **This arm: 37 → 36 of 110.**
+>
+> **F068 was withdrawn (review item B5).** Its only material — one bullet — restates the arm's own frozen input lead with the word "Confirmed", and the proposition's second clause is absent. **The review-arm-exclusive set is now `F069`, `F085`, `F086`**, and the result that claude-hicap is no longer the review-arm ceiling survives on those three. Also applied: S12.
+>
+> **Every figure for this arm below that disagrees with `glm53-scoring.json` is superseded by that file.** The recomputed lattice, and the confirmation that every structural conclusion survives, are in `README.md` and `cross-arm.json`.
 
 **I am an Opus 5 agent** (`claude-opus-5[1m]`) acting as adjudicator. I ran no arm and have no
 model-family relationship with the reviewed model. Every figure was rebuilt from durable state.
@@ -82,18 +90,18 @@ admissions bought only **nine distinct logical jobs**.
 
 ## Recall on the fixed 110-finding union
 
-**37 / 110 = 33.64%.** On the original 105 basis, 37/105 = 35.24%.
+**36 / 110 = 32.73%.** On the original 105 basis, 36/105 = 34.29%. *(37 before review item B5, which withdrew `F068`.)*
 
 | Class | Credited | Denominator |
 |---|---:|---:|
 | correction | 0 | 5 |
-| optional_capability | 2 | 36 |
+| optional_capability | 1 | 36 |
 | product_choice | 0 | 6 |
 | unsupported_or_rejected | 35 | 63 |
 
 Corrections missed: F001, F106, F107, F108, F109.
 
-### optional_capability (2)
+### optional_capability (1)
 
 | ID | Title | First earned | Strongest statement |
 |---|---|---|---|
@@ -124,7 +132,6 @@ Corrections missed: F001, F106, F107, F108, F109.
 | F059 | Push targets and bookmark effects | reconcile | `J0023-reconcile` |
 | F061 | Graph bounds, continuity and isolation | reconcile | `J0026-reconcile` |
 | F062 | Graph visual and menu regressions | reconcile | `J0023-reconcile` |
-| F068 | Description drafts survive refresh | reconcile | `J0026-reconcile` |
 | F069 | Immutable content caches and async selection | reconcile | `J0026-reconcile` |
 | F072 | One catalog and authoritative eligibility | compare | `J0024-compare` |
 | F073 | Runtime evidence versus unused scaffolding | reconcile | `J0020-reconcile` |
@@ -225,13 +232,12 @@ its one hybrid-only credit.
 After four arms the picture was a clean chain — `claude` (18) and `deepseek41` (33) both proper
 subsets of `muse13` (40), `muse13` a proper subset of `claude-hicap` (46) — and the four-arm review
 union was exactly claude-hicap's own 46, so no arm had contributed anything claude-hicap missed.
-**glm53 ends that.** It holds **four findings no other review arm reached** — F068 (description
-drafts survive refresh), F069 (immutable content caches and async selection), F085 (capture
+**glm53 ends that.** It holds **three findings no other review arm reached** — F069 (immutable content caches and async selection), F085 (capture
 generation differs from upload resume), F086 (clone completion and cleanup) — and is therefore not a
 subset of claude-hicap.
 
-- Five-arm **review** union: 46 → **50 (45.45%)**
-- Six-arm union including the full `union` arm: **59 (53.64%)**
+- Five-arm **review** union: 45 → **48 (43.64%)**
+- Six-arm union including the full `union` arm: **57 (51.82%)**
 
 The revised reading: the review arms differ in depth **and, at the margin, in kind**.
 
@@ -307,7 +313,7 @@ F082/F086/F056.
 
 ## Observations
 
-**glm53 breaks the four-arm result: claude-hicap is no longer the review-arm ceiling.** After four arms the structure was a clean chain - claude (18) and deepseek41 (33) both proper subsets of muse13 (40), muse13 a proper subset of claude-hicap (46) - and the four-arm review union was exactly claude-hicap's own 46, so no arm had contributed anything claude-hicap missed. glm53 ends that. It holds four findings no other review arm reached (F068 drafts survive refresh, F069 immutable content caches, F085 capture generation differs from upload resume, F086 clone completion and cleanup) and is therefore NOT a subset of claude-hicap. The five-arm review union rises from 46 (41.82%) to 50 (45.45%), and the six-arm union to 59 (53.64%). The revised reading: the review arms differ in depth AND, at the margin, in kind.
+**glm53 breaks the four-arm result: claude-hicap is no longer the review-arm ceiling.** After four arms the structure was a clean chain - claude (18) and deepseek41 (33) both proper subsets of muse13 (40), muse13 a proper subset of claude-hicap (46) - and the four-arm review union was exactly claude-hicap's own set, so no arm had contributed anything claude-hicap missed. glm53 ends that. It holds three findings no other review arm reached (F069 immutable content caches, F085 capture generation differs from upload resume, F086 clone completion and cleanup) and is therefore NOT a subset of claude-hicap. The five-arm review union rises from 45 (40.91%) to 48 (43.64%), and the six-arm union to 57 (51.82%). [Post-review figures; F068, the fourth, was withdrawn as review item B5 and the result survives on the other three.] The revised reading: the review arms differ in depth AND, at the margin, in kind.
 
 **The UNIX_EPOCH garbage-collection fact now has five distinct outcomes across six arms.** One code fact - jj's op_store().gc(head, SystemTime::UNIX_EPOCH) as called by Dojjo's sync server - separated the arms cleanly. (1) Arm C asserted that it prunes everything unreachable, which is wrong: lib/src/simple_op_store.rs:285-357's remove_file_if_not_new KEEPS a file when mtime > keep_newer, so with keep_newer = UNIX_EPOCH nothing is removed. (2) claude-hicap repeated the same error while quoting the correct predicate. (3) deepseek41 read simple_op_store.rs and got it right; it is the arm that caught Arm C. (4) muse13 recorded the call without characterising the retention direction it had not verified. (5) glm53 did BOTH, in different jobs, and the difference is instructive: J0020 preserved the correct framing it inherited ('op-store GC with UNIX_EPOCH, no aggressive retention cutoff'), while J0023 inferred the wrong direction - 'prunes op-store data unreachable from the single resolved op head with zero time grace' - and then quarantined its own inference in the same document: 'Exact op_store::gc reachability/grace semantics are inferred from the call shape ([op_id], UNIX_EPOCH) and code comments, not verified against pinned jj source. Flagged uncertain; verify against jj simple_op_store before reusing the claim.' It named the exact file deepseek41 read and I verified. An error correctly labelled as an unverified inference, with the verification step written down, is not the same failure as an error asserted as fact.
 

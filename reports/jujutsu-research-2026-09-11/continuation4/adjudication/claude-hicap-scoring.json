@@ -479,7 +479,6 @@
   "recall": {
     "expanded_union_denominator": 110,
     "credited": [
-      "F001",
       "F002",
       "F004",
       "F006",
@@ -526,24 +525,33 @@
       "F106",
       "F107"
     ],
-    "count": 46,
-    "recall_percent": 41.82,
+    "count": 45,
+    "recall_percent": 40.91,
     "by_class": {
-      "correction": "3/5",
+      "correction": "2/5",
       "optional_capability": "4/36",
       "product_choice": "3/6",
       "unsupported_or_rejected": "36/63"
     },
-    "fixed_original_105_count": 44,
-    "fixed_original_105_recall_percent": 41.9,
+    "fixed_original_105_count": 43,
+    "fixed_original_105_recall_percent": 40.95,
     "corrections_credited": [
-      "F001",
       "F106",
       "F107"
     ],
     "corrections_missed": [
+      "F001",
       "F108",
       "F109"
+    ],
+    "partials": [
+      "F001",
+      "F019",
+      "F020",
+      "F022",
+      "F069",
+      "F076",
+      "F103"
     ]
   },
   "control_result": {
@@ -645,7 +653,8 @@
       ],
       "deepseek41_only": []
     },
-    "interpretation": "Still nothing unique to the arm: all 46 sit inside premium or hybrid. But it is the first new arm to reach hybrid-only findings (F073, F083) and the first to credit any correction at all."
+    "interpretation": "Still nothing unique to the arm: all 46 sit inside premium or hybrid. But it is the first new arm to reach hybrid-only findings (F073, F083) and the first to credit any correction at all.",
+    "post_review_note": "Recomputed after the independent review's withdrawals and addition."
   },
   "request_limited_coverage": {
     "jobs_bound_by_anything": 0,
@@ -691,5 +700,19 @@
     "COST AND DURATION ARE NOT COMPARABLE with goal 2's arms or with the other continuation-4 arms; this arm ran under a different budget regime by design. Only outputs are comparable.",
     "The arm admitted 14 of 88 input leads, so the 64 findings it missed are dominated by leads it was never given, not by leads it judged wrongly.",
     "Observation O4H-01 records a factual error this arm shares with Arm C; it does not affect the score."
-  ]
+  ],
+  "post_review_revision": {
+    "review": "Independent review REVIEW_ADJUDICATION_20260916.md (2026-09-17), verdict 'fix first'. Applied 2026-09-17.",
+    "verdict_for_this_arm": "B4: withdrew F001. The two cited passages do not assert the non-null-receipt obligation and five other arms were refused on the same test. Corrections 3/5 -> 2/5; 'the first corrections credited to any new arm' still holds on F106 and F107. S7: removed a quotation that was deepseek41's sentence, not this arm's, from the F092 basis. S12: F092's half-coverage disclosed.",
+    "figures_after_review": {
+      "credited": 45,
+      "percent": 40.91,
+      "by_class": {
+        "correction": "2/5",
+        "optional_capability": "4/36",
+        "product_choice": "3/6",
+        "unsupported_or_rejected": "36/63"
+      }
+    }
+  }
 }

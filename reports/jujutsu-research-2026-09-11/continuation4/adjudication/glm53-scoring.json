@@ -541,7 +541,6 @@
       "F061",
       "F062",
       "F066",
-      "F068",
       "F069",
       "F072",
       "F073",
@@ -557,16 +556,16 @@
       "F092",
       "F102"
     ],
-    "count": 37,
-    "recall_percent": 33.64,
+    "count": 36,
+    "recall_percent": 32.73,
     "by_class": {
       "correction": "0/5",
       "optional_capability": "2/36",
       "product_choice": "0/6",
-      "unsupported_or_rejected": "35/63"
+      "unsupported_or_rejected": "34/63"
     },
-    "fixed_original_105_count": 37,
-    "fixed_original_105_recall_percent": 35.24,
+    "fixed_original_105_count": 36,
+    "fixed_original_105_recall_percent": 34.29,
     "corrections_credited": [],
     "corrections_missed": [
       "F001",
@@ -576,6 +575,7 @@
       "F109"
     ],
     "partials": [
+      "F068",
       "F001",
       "F005",
       "F009",
@@ -645,15 +645,15 @@
   "coverage_vs_other_arms": {
     "premium": {
       "total": 78,
-      "shared": 36,
+      "shared": 35,
       "this_arm_only": [
         "F073"
       ],
-      "premium_only": 42
+      "premium_only": 43
     },
     "hybrid": {
       "total": 90,
-      "shared": 29,
+      "shared": 28,
       "this_arm_only": [
         "F008",
         "F031",
@@ -664,7 +664,7 @@
         "F084",
         "F085"
       ],
-      "hybrid_only": 61
+      "hybrid_only": 62
     },
     "unique_to_this_arm_against_premium_and_hybrid": [],
     "adds_over_the_other_four_review_arms": [
@@ -677,7 +677,8 @@
     "five_arm_review_union_percent": 45.45,
     "six_arm_union": 59,
     "six_arm_union_percent": 53.64,
-    "structural_result": "claude-hicap is no longer the review-arm ceiling. glm53 is not a subset of it."
+    "structural_result": "claude-hicap is no longer the review-arm ceiling. glm53 is not a subset of it.",
+    "post_review_note": "Recomputed after the independent review's withdrawals and addition."
   },
   "limits": [
     "One frozen case; a same-input review replacement. Recall is bounded by the premium arm's research artifacts.",
@@ -686,5 +687,19 @@
     "7 of 12 jobs were request-limited; request-limited coverage and the reached-delivery fraction are reported separately. Unperformed work remains unknown, never a negative finding.",
     "Cost is a captured upper valuation at the preserved tariff basis, not a cash invoice.",
     "One file of the frozen tree (monitor-state.json, the scheduler's heartbeat) was rewritten four seconds after the freeze. No arm output is affected; it is reported rather than passed over."
-  ]
+  ],
+  "post_review_revision": {
+    "review": "Independent review REVIEW_ADJUDICATION_20260916.md (2026-09-17), verdict 'fix first'. Applied 2026-09-17.",
+    "verdict_for_this_arm": "B5: withdrew F068. Its only material restates the arm's own frozen input lead with the word 'Confirmed', and the proposition's second clause is absent. The review-arm-exclusive set becomes F069, F085, F086 and the 'claude-hicap is no longer the ceiling' result survives on those three. S12: F092's half-coverage disclosed.",
+    "figures_after_review": {
+      "credited": 36,
+      "percent": 32.73,
+      "by_class": {
+        "correction": "0/5",
+        "optional_capability": "2/36",
+        "product_choice": "0/6",
+        "unsupported_or_rejected": "34/63"
+      }
+    }
+  }
 }

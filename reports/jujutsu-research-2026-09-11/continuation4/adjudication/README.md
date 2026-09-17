@@ -1,5 +1,34 @@
 # Continuation 4 — adjudication of six Jujutsu arms against the continuation-3 union
 
+> ## Revised after independent review — 2026-09-17
+>
+> An independent Opus 5 reviewer, who ran and scored no arm, re-derived this bundle from the frozen
+> run state and returned **fix first**. Their review is at
+> `/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/REVIEW_ADJUDICATION_20260916.md`.
+>
+> **Upheld:** the method; the nesting *including its set-equality form*; the manifests (481 evidence
+> references across the six findings files, 0 missing and 0 hash mismatches; `SHA256SUMS` complete);
+> the quarantine discipline; the frozen-input boundary (no credit in any sheet cites `J0001`–`J0004`);
+> the garbage-collection reading, which they checked against the source themselves; and **no family
+> bias**. They re-derived **80 credits**, including every credited correction.
+>
+> **Four changes, all of which I re-verified against the run state before applying:**
+>
+> | Item | Change | Why |
+> |---|---|---|
+> | **B4** | withdraw `claude-hicap` **F001** | Its two cited passages are an unreceipted side effect *of a read* and an outcome-classification rule that *presupposes* a receipt. Neither asserts the non-null-receipt obligation, and I had refused five other arms on that same test. Corrections **3/5 → 2/5**. |
+> | **B5** | withdraw `glm53` **F068** | Its only material restates the arm's own frozen input lead with the word "Confirmed"; the proposition's second clause is absent. |
+> | **B6** | withdraw `union` **F015** | The credited passage *refuses* the panel ("no new rail panel"), redo appears only as "not approved scope", and "timeline" does not occur in that job — I read the virtualization clause from a diff-hydration line. Now consistent with the `F103` partial. |
+> | **S10** | add `deepseek41` **F043** | It had no row at all and the material was there. Credited at **2 of 3 clauses** with the authentication clause disclosed as absent. |
+>
+> **Every structural conclusion survives, and I checked each one:** all **seven** proper subsets hold;
+> the four-arm review union is **still set-equal** to claude-hicap's own credited set; glm53 still
+> breaks the ceiling (on three findings rather than four); and "no arm extended the union" is
+> untouched. Text and pointer fixes S1–S9, S11, S12 and N1 are applied throughout.
+>
+> Figures in this file are **post-review**. Pre-review values are kept in
+> `cross-arm.json /unions/before_review`.
+
 **I am an Opus 5 agent** (`claude-opus-5[1m]`) acting as adjudicator. **I ran no arm.** This bundle
 scores six frozen arms against the adjudicated **110-finding union** from continuation 3, using
 continuation 3's own crediting rules: a finding is credited only when a **delivered assertion states
@@ -43,10 +72,10 @@ hybrid accumulated over two campaigns; the union arm ran all five stages in one 
 | Arm | Model, effort | /110 | corr /5 | cap /36 | prod /6 | unsup /63 | Jobs bound | Jobs with a saved assertion |
 |---|---|---:|---:|---:|---:|---:|---|---:|
 | `claude` (Arm C) | claude-opus-5 xhigh | 18 (16.36%) | 0 | 1 | 0 | 17 | 11 of 12 on responses | 4/12 |
-| `deepseek41` | deepseek-v4.1-flash max | 33 (30.00%) | 0 | 2 | 1 | 30 | 10 of 12 on responses | 8/12 |
-| `glm53` | glm-5.3-flash max | 37 (33.64%) | 0 | 2 | 0 | 35 | 7 of 12 on responses | 8/12 |
+| `deepseek41` | deepseek-v4.1-flash max | **34 (30.91%)** | 0 | 2 | 1 | 31 | 10 of 12 on responses | 8/12 |
+| `glm53` | glm-5.3-flash max | **36 (32.73%)** | 0 | 1 | 0 | 35 | 7 of 12 on responses | 8/12 |
 | `muse13` | muse-spark-1.3 xhigh | 40 (36.36%) | 1 | 3 | 1 | 35 | 2 of 12 on responses | 11/12 |
-| `claude-hicap` | claude-opus-5 xhigh, 160-response ceiling | **46 (41.82%)** | 3 | 4 | 3 | 36 | **none** | 12/12 |
+| `claude-hicap` | claude-opus-5 xhigh, 160-response ceiling | **45 (40.91%)** | 2 | 4 | 3 | 36 | **none** | 12/12 |
 
 Cost and duration are comparable among `claude`, `deepseek41`, `glm53` and `muse13` — identical
 per-job limits. **`claude-hicap`'s are not comparable with any of them**: it ran under an authorized
@@ -58,7 +87,7 @@ higher ceiling. Only its outputs are.
 |---|---|---:|---:|---:|---:|---:|---|
 | `premium` | gpt-6-astra xhigh | 78 (70.91%) | 4 | 20 | 3 | 51 | five, over two campaigns |
 | `hybrid` | deepseek-v4-flash | 90 (81.82%) | 2 | 30 | 5 | 53 | five, over two campaigns |
-| `union` | stealth/union-alpha high | 43 (39.09%) | 0 | 7 | 0 | 36 | **five, in one run** |
+| `union` | stealth/union-alpha high | **42 (38.18%)** | 0 | 6 | 0 | 36 | **five, in one run** |
 
 The union arm's recall **by stage** — 12 at discovery, 0 at implementation, 0 at history, 10 at
 reconcile, 21 at compare — against premium's 73 research-stage plus 5 late and hybrid's 86 plus 4.
@@ -70,36 +99,48 @@ leads**. Its cost ($0 at a zero tariff) is not comparable with anything. Detail 
 ## What the six arms did and did not establish
 
 **No arm extended the union.** Six arms — five review replacements and one full arm on the same case
-— produced **zero** propositions I could credit as a union finding outside premium ∪ hybrid. That
-includes the union arm, which is the one thing in this experiment that could have changed the union:
-all 43 of its credits sit inside premium ∪ hybrid. A different research model **redistributed**
-coverage; it did not extend it.
+— produced **zero** propositions I could credit as a **new** union finding. That includes the union
+arm, which is the one thing in this experiment that could have changed the union: all 42 of its
+credits sit inside premium ∪ hybrid.
+
+**State this precisely, because the trivial version of it is worthless.** Premium ∪ hybrid *is* the
+whole 110-finding union — continuation 3 built the union from those two arms' output — so "nothing
+fell outside premium ∪ hybrid" is true **by construction** and carries no evidential weight on its
+own. The substantive claim is the narrower one: **no arm delivered a proposition I could credit as a
+finding the union does not already contain.** The 27 candidates below are exactly where that
+judgement is recorded and can be re-examined; adding one to the union is not the adjudicator's
+authority. A different research model **redistributed** coverage; it did not extend it.
 
 **Reachability did change.**
 
 | Set | Findings | % of 110 |
 |---|---:|---:|
-| Four-arm review union (before glm53) | 46 | 41.82 |
-| **Five-arm review union** | **50** | **45.45** |
-| Union arm alone | 43 | 39.09 |
-| **Six-arm union** | **59** | **53.64** |
-| Reached by no arm | 51 | 46.36 |
+| Four-arm review union (before glm53) | 45 | 40.91 |
+| **Five-arm review union** | **48** | **43.64** |
+| Union arm alone | 42 | 38.18 |
+| **Six-arm union** | **57** | **51.82** |
+| Reached by no arm | 53 | 48.18 |
 
-The union arm adds **11** findings no review arm reached: F005 (Expected operation is not native compare-and-swap), F015 (Operation history navigation), F019 (Stale workspace recovery), F024 (Interdiff), F025 (Change evolution view), F038 (Credential architecture and custody already chosen), F052 (Git HEAD and index health are separate), F057 (Exact-profile conflict byte regression), F065 (Revset assistance).
+The union arm adds **9** findings no review arm reached: F005 (Expected operation is not native compare-and-swap), F019 (Stale workspace recovery), F024 (Interdiff), F025 (Change evolution view), F038 (Credential architecture and custody already chosen), F052 (Git HEAD and index health are separate), F057 (Exact-profile conflict byte regression), F065 (Revset assistance), F068 (Description drafts survive refresh).
 
-`glm53` adds **4** no other review arm reached: F068 (Description drafts survive refresh), F069 (Immutable content caches and async selection), F085 (Capture generation differs from upload resume), F086 (Clone completion and cleanup).
+`glm53` adds **3** no other review arm reached: F069 (Immutable content caches and async selection), F085 (Capture generation differs from upload resume), F086 (Clone completion and cleanup). *(F068 was the fourth before review item B5.)*
 
-The review arms hold **14** the union arm misses: F001 (Terminal attempts always have receipts), F032 (Edited text line-ending policy), F033 (External editor path confinement), F034 (Partial external editor writes), F036 (External editor stale sessions), F037 (Bound reads before allocating), F044 (Adapter implementation shape), F053 (Windows links and native file types), F074 (Process execution follows owner environment), F083 (Backup derived indexes), F085 (Capture generation differs from upload resume), F086 (Clone completion and cleanup), F089 (Partial clone and LFS/submodule eligibility), F090 (Authorized incomplete-object materialization), F106 (Restore readiness consistency), F107 (Graph page consistency and adjacency bounds). Seven of those fourteen are one lead family —
+The review arms hold **15** the union arm misses: F032 (Edited text line-ending policy), F033 (External editor path confinement), F034 (Partial external editor writes), F036 (External editor stale sessions), F037 (Bound reads before allocating), F044 (Adapter implementation shape), F053 (Windows links and native file types), F074 (Process execution follows owner environment), F083 (Backup derived indexes), F085 (Capture generation differs from upload resume), F086 (Clone completion and cleanup), F089 (Partial clone and LFS/submodule eligibility), F090 (Authorized incomplete-object materialization), F106 (Restore readiness consistency), F107 (Graph page consistency and adjacency bounds). Seven of those fifteen are one lead family —
 diffedit3 and external editors — which the union arm's own discovery found as lead 23 and never
 routed to a study or compare job within 20 admissions.
 
 ## Nesting, recomputed with glm53
 
-Proper subsets:
+Seven proper subset relations, written out one per line — the compact form read as a chain, and the
+chain is false (`glm53` ⊄ `muse13`, `union` ⊄ `claude-hicap`):
 
-- `claude` (18) ⊂ `glm53` (37), ⊂ `muse13` (40), ⊂ `union` (43), ⊂ `claude-hicap` (46)
-- `deepseek41` (33) ⊂ `muse13` (40), ⊂ `claude-hicap` (46)
-- `muse13` (40) ⊂ `claude-hicap` (46)
+- `claude` (18) ⊂ `claude-hicap` (45)
+- `claude` (18) ⊂ `glm53` (36)
+- `claude` (18) ⊂ `muse13` (40)
+- `claude` (18) ⊂ `union` (42)
+- `deepseek41` (34) ⊂ `claude-hicap` (45)
+- `deepseek41` (34) ⊂ `muse13` (40)
+- `muse13` (40) ⊂ `claude-hicap` (45)
 
 Not comparable: `claude` vs `deepseek41`; `deepseek41` vs `glm53`; `deepseek41` vs `union`; `muse13`
 vs `glm53`; `muse13` vs `union`; `claude-hicap` vs `glm53`; `claude-hicap` vs `union`; `union` vs
@@ -215,11 +256,13 @@ Checks I ran against primary sources, not against the arms' claims about each ot
 - **claude** — WRONG, asserted as fact: gc(head, UNIX_EPOCH) 'preserves nothing by recency', therefore the dojjo server prunes everything unreachable.
 - **claude-hicap** — WRONG, and it quoted the correct predicate while drawing the opposite conclusion - the control's counter-result.
 - **deepseek41** — RIGHT. It read simple_op_store.rs and caught Arm C. This is why Arm C's four adjudication files were amended.
-- **muse13** — NEUTRAL. Recorded the call without characterising a retention direction it had not verified.
+- **muse13** — RIGHT, and I had undersold this as "NEUTRAL" (review item N1). Its `J0019-reconcile:86` and `J0021-compare:106` both say op-store GC is called with `SystemTime::UNIX_EPOCH` "(not an aggressive cutoff)" — a direction, and the correct one, and materially the same wording I credited glm53's J0020 for. The two labels now match.
 - **union** — NOT REACHED. The lead family never entered a study or compare job.
 - **glm53** — BOTH, in different jobs. J0020 preserved the correct framing it inherited ('op-store GC with UNIX_EPOCH, no aggressive retention cutoff'); J0023 inferred the wrong direction and then quarantined its own inference in the same document - 'inferred from the call shape ... not verified against pinned jj source. Flagged uncertain; verify against jj simple_op_store before reusing the claim' - naming the exact file deepseek41 read.
 
-**Conclusion.** Five distinct outcomes on one code fact. An error labelled as an unverified inference with the verification step written down is not the same failure as an error asserted as fact.
+**The finding I had missed (review item N1), and it is the sharper one.** That correct framing was already in the **shared frozen discovery lead** every review arm received — `jobs/J0001-discovery/workspace/leads/dojjo-mirror-normalization-and-cold-join-check.md:3`, *"it calls op-store GC with UNIX_EPOCH, not an aggressive retention cutoff"* — byte-identical across all five review runs (sha256 `8a91fcbc580de837f779…`), which I re-verified. So **every review arm started with the right answer.** deepseek41 verified it against source and kept it; muse13 and glm53's J0020 preserved it; **both Claude arms actively overturned a correct inherited framing.** That is a worse result for the Claude arms than I first recorded, and it is the cleanest evidence in this bundle against family bias in my own adjudication.
+
+**Conclusion.** Four distinct outcomes on one code fact. An error labelled as an unverified inference with the verification step written down is not the same failure as an error asserted as fact — and overturning a correct inherited framing is worse than either.
 
 ### V2 — The deepseek-v4-flash selector appearing in every arm's budget file
 

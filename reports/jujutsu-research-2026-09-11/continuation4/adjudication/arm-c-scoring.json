@@ -418,7 +418,32 @@
       "count": 18,
       "note": "all 18 credited findings are inside the original 105; none of F106-F110 was credited",
       "recall_percent": 17.14
-    }
+    },
+    "fixed_original_105_count": 18,
+    "fixed_original_105_recall_percent": 17.14,
+    "corrections_credited": [],
+    "corrections_missed": [
+      "F001",
+      "F106",
+      "F107",
+      "F108",
+      "F109"
+    ],
+    "partials": [
+      "F001",
+      "F002",
+      "F007",
+      "F011",
+      "F029",
+      "F069",
+      "F074",
+      "F083",
+      "F087",
+      "F088",
+      "F089",
+      "F094",
+      "F097"
+    ]
   },
   "coverage_vs_other_arms": {
     "premium_expanded": 78,
@@ -490,7 +515,8 @@
     "held_by_premium_missed_by_claude": 60,
     "held_by_hybrid_missed_by_claude": 73,
     "held_by_both_others_missed_by_claude": 41,
-    "interpretation": "Every finding the Claude arm earned is a subset of premium's coverage; 17 of 18 are also hybrid's. The arm added no finding to the union's covered set."
+    "interpretation": "Every finding the Claude arm earned is a subset of premium's coverage; 17 of 18 are also hybrid's. The arm added no finding to the union's covered set.",
+    "post_review_note": "Recomputed after the independent review's withdrawals and addition."
   },
   "request_limited_coverage": {
     "jobs_at_the_40_response_ceiling": 11,
@@ -574,5 +600,19 @@
       "effect_on_score": "None. F079 and F004 rest on independent Plans citations. Candidate C4C-05 loses one of two external legs and survives on the other.",
       "note": "Arm C cited only the docs.rs trait documentation for jj-lib 0.38.0; deepseek41 read the filesystem implementation."
     }
-  ]
+  ],
+  "post_review_revision": {
+    "review": "Independent review REVIEW_ADJUDICATION_20260916.md (2026-09-17), verdict 'fix first'. Applied 2026-09-17.",
+    "verdict_for_this_arm": "S9: the amended-false clause in the F079 basis is now marked inline rather than only in the amendments block. S11: F072's credit is disclosed as resting on 1 of the proposition's 4 clauses. S12: F092's half-coverage disclosed.",
+    "figures_after_review": {
+      "credited": 18,
+      "percent": 16.36,
+      "by_class": {
+        "correction": "0/5",
+        "optional_capability": "1/36",
+        "product_choice": "0/6",
+        "unsupported_or_rejected": "17/63"
+      }
+    }
+  }
 }

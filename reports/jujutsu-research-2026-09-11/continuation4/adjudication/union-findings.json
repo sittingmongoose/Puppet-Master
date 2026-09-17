@@ -201,22 +201,6 @@
       ]
     },
     {
-      "finding_id": "F015",
-      "title": "Operation history navigation",
-      "classification": "optional_capability",
-      "stage_first_earned": "compare",
-      "credited_job": "union/J0017-compare",
-      "premium_supported": true,
-      "hybrid_supported": true,
-      "basis": "FIRST ARM. Proposal A offers a contextual inspector for revision, file and operation selections in the existing Source Control surface, with operation history kept on its own owner route, and the decision line names 'redo/revert' among the reviewable directions alongside evolution navigation. Its acceptance requires that returning from oplog restores source selection and scroll and that bounded hydration works on large diffs, which is the virtualized-timeline half.",
-      "evidence": [
-        {
-          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-union-20260916-221929/jobs/J0017-compare/workspace/notes.md",
-          "sha256": "9a80ee86cdbb4b34ac8d7db126e161e13bd3c43fbab25dca9d3c7754d5cd54e8"
-        }
-      ]
-    },
-    {
       "finding_id": "F019",
       "title": "Stale workspace recovery",
       "classification": "unsupported_or_rejected",
@@ -864,7 +848,7 @@
       "credited_job": "union/J0016-compare",
       "premium_supported": true,
       "hybrid_supported": true,
-      "basis": "The only arm to assert the measure-independently clause as well as the honest-bounds clause. J0016: 'Boolean fixture assertions are not memory measurements'; 'Pagination is not retained-memory bounding ... it is not evidence of viewport-limited acquisition'; 'On large graphs, prove bounded retained rows/edges/bytes and bounded in-flight requests as well as bounded rendered rows'; 'Choosing a retained-node/byte budget and prefetch/eviction policy requires measured implementation evidence; 200 nodes per page is the existing limit, not a total-cache budget to invent here.' J0017: 'Batch loading alone is not a retained-memory bound', with the default total limit zero or unlimited.",
+      "basis": "The only arm to assert the measure-independently clause as well as the honest-bounds clause. J0016: 'Boolean fixture assertions are not memory measurements'; 'Pagination is not retained-memory bounding ... it is not evidence of viewport-limited acquisition'; 'On large graphs, prove bounded retained rows/edges/bytes and bounded in-flight requests as well as bounded rendered rows'; 'Choosing a retained-node/byte budget and prefetch/eviction policy requires measured implementation evidence; 200 nodes per page is the existing limit, not a total-cache budget to invent here.' J0017: 'Batch loading alone is not a retained-memory bound', with the default total limit zero or unlimited. [Review item S12: credited on F092's bounds-honesty clause only; no arm measured any cost.]",
       "evidence": [
         {
           "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-union-20260916-221929/jobs/J0016-compare/workspace/notes.md",
@@ -931,6 +915,24 @@
   ],
   "partial_matches": [
     {
+      "finding_id": "F015",
+      "title": "Operation history navigation",
+      "reason": "WITHDRAWN CREDIT (review item B6). I read a refusal as an offer. The passage I credited, J0017-compare/workspace/notes.md:81, ends 'Keep operation history and Backup on their existing owner routes; NO NEW RAIL PANEL, universal Restore button, or direct UI subprocess', and J0016-compare:20 adds that GG's separate application is 'not a reason to add a JJ-only panel'. The redo half appears only in the decision line at J0017:6 - 'redo/revert ... remain separately reviewable product choices below-not approved scope' - which is the coverage-list form I refuse elsewhere; Proposal C at :105 says 'Do not silently add ... bare redo, or selected-operation revert.' The virtualized-timeline half is not there at all: 'timeline' has zero occurrences in J0017 and the single 'virtualiz' hit at :38 is the OWNER'S source-graph schema. My basis read the acceptance clause 'bounded hydration works on large diffs' as the virtualized-timeline half; that is diff hydration, not a timeline. RECONCILED WITH F103: I refused F103 with the reason 'not proposed' on the strength of this same declining language, so crediting F015 was internally inconsistent. Both are now partials for the same reason - the arm names these directions as unapproved product choices rather than proposing them. F024, F025 and F065 are unaffected: each is proposed in its own right.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-union-20260916-221929/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "9a80ee86cdbb4b34ac8d7db126e161e13bd3c43fbab25dca9d3c7754d5cd54e8"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-union-20260916-221929/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "ebbe0efde329cf0253c1de6b2080429613e91928c2e2f210c1b6fea2fd8b1cd6"
+        }
+      ],
+      "withdrawn_credit": true,
+      "review_item": "B6",
+      "review_source": "Independent review REVIEW_ADJUDICATION_20260916.md, 2026-09-17. I re-verified the finding against the run state before applying it."
+    },
+    {
       "finding_id": "F001",
       "title": "Terminal attempts always have receipts",
       "classification": "correction",
@@ -958,7 +960,7 @@
       "finding_id": "F103",
       "title": "Reverse one selected native operation",
       "classification": "optional_capability",
-      "reason": "Discovery lead 24 distinguishes undo, selected-operation restore and remote rollback and J0016 records that GG's undo 'merges inverse views into a new operation ... narrower than arbitrary selected-operation restore'. Offering a separately labelled inverse-merge action of one selected operation, distinct from sequential undo and full-view restore, is not proposed."
+      "reason": "Discovery lead 24 distinguishes undo, selected-operation restore and remote rollback and J0016 records that GG's undo 'merges inverse views into a new operation ... narrower than arbitrary selected-operation restore'. Offering a separately labelled inverse-merge action of one selected operation, distinct from sequential undo and full-view restore, is not proposed. [Review item B6: F015 was withdrawn for exactly this reason and the two now agree.]"
     },
     {
       "finding_id": "F105",

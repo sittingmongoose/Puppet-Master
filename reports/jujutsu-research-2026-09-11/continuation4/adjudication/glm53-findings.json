@@ -405,22 +405,6 @@
       ]
     },
     {
-      "finding_id": "F068",
-      "title": "Description drafts survive refresh",
-      "classification": "unsupported_or_rejected",
-      "stage_first_earned": "reconcile",
-      "credited_job": "glm53/J0026-reconcile",
-      "premium_supported": true,
-      "hybrid_supported": true,
-      "basis": "J0026 verifies the behaviour and its identity key: GG 0.41.0 'Draft descriptions are saved across operations as long as the change-id of your selection remains the same' (CHANGELOG.md:14), confirmed with the stated nuance that 'preservation is keyed on the selection's change-id'. It is placed inside the same lead's finding that a change-id is not a sufficient identity - offsets are positional and nothing immutable is retained across a rewrite - so draft survival is tied to exact identity rather than to a refresh.",
-      "evidence": [
-        {
-          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-glm53-20260917-000655/jobs/J0026-reconcile/workspace/notes.md",
-          "sha256": "4781641ee55b5847ba8cdde98c92c07bdd4da8b4ab5376f150c2c8b3a539b727"
-        }
-      ]
-    },
-    {
       "finding_id": "F069",
       "title": "Immutable content caches and async selection",
       "classification": "unsupported_or_rejected",
@@ -664,7 +648,7 @@
       "credited_job": "glm53/J0026-reconcile",
       "premium_supported": true,
       "hybrid_supported": true,
-      "basis": "Bounds honesty made concrete and checkable. J0026 concern 2: a missing-edge visual row 'adds no LogRow but increments row (queries.rs:297) before the boundary check row == max (queries.rs:300). A page can deliver page_size - 1 commit rows plus one visual row, and next_row accounting includes visual rows.' Concern 3 turns the same accounting error into data loss on resume: QuerySession::new skips state.next_row stream items where one stream item is one commit, but next_row counted commit rows plus virtual rows, so 'the skip loop over-consumes ... those commits are silently never rendered while stems/graph lines stay self-consistent'. The arm states the standard it is holding the design to - the lookahead pagination is 'a usable comparator ... with three specific boundary behaviors to avoid or handle explicitly' - and refuses an unsupported performance inference elsewhere: a GitHub search returning total_count 0 'does not establish absence of reports'.",
+      "basis": "Bounds honesty made concrete and checkable. J0026 concern 2: a missing-edge visual row 'adds no LogRow but increments row (queries.rs:297) before the boundary check row == max (queries.rs:300). A page can deliver page_size - 1 commit rows plus one visual row, and next_row accounting includes visual rows.' Concern 3 turns the same accounting error into data loss on resume: QuerySession::new skips state.next_row stream items where one stream item is one commit, but next_row counted commit rows plus virtual rows, so 'the skip loop over-consumes ... those commits are silently never rendered while stems/graph lines stay self-consistent'. The arm states the standard it is holding the design to - the lookahead pagination is 'a usable comparator ... with three specific boundary behaviors to avoid or handle explicitly' - and refuses an unsupported performance inference elsewhere: a GitHub search returning total_count 0 'does not establish absence of reports'. [Review item S12: credited on F092's bounds-honesty clause only; the cost-measurement clause is met by no arm in this bundle. Disclosed, not silently allowed.]",
       "evidence": [
         {
           "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-glm53-20260917-000655/jobs/J0026-reconcile/workspace/notes.md",
@@ -702,6 +686,24 @@
     }
   ],
   "partial_matches": [
+    {
+      "finding_id": "F068",
+      "title": "Description drafts survive refresh",
+      "why_partial": "WITHDRAWN CREDIT (review item B5). The arm's entire material on this is one bullet, J0026-reconcile/workspace/notes.md:49: '0.41.0: \"Draft descriptions are saved across operations as long as the change-id of your selection remains the same\" - CHANGELOG.md:14. Confirmed (nuance: preservation is keyed on the selection's change-id).' I verified it is the ONLY occurrence of 'draft' in glm53's own twelve jobs. Its frozen INPUT lead already says the same thing - jobs/J0001-discovery/workspace/leads/gg-session-and-selection.md:2, '0.41 preserves draft descriptions while selected change ID stays the same', a premium-arm artifact byte-identical across all the review runs (sha256 4d91d85327a8326817aa71f3794b155b34c3e731eaa2dc52ea654600e0032907). So the arm restated its own input with a citation and the word 'Confirmed'. No PM obligation is stated and the proposition's second clause - clearly separate drafts from committed history - is absent. The connective reasoning in my original basis ('so draft survival is tied to exact identity rather than to a refresh') was my synthesis, not the arm's assertion. Contrast the union arm's F068, which states the obligation in full. This is the credit the 'glm53 broke the nesting' result partly rested on; the result survives on F069, F085 and F086.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-glm53-20260917-000655/jobs/J0026-reconcile/workspace/notes.md",
+          "sha256": "4781641ee55b5847ba8cdde98c92c07bdd4da8b4ab5376f150c2c8b3a539b727"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-glm53-20260917-000655/jobs/J0001-discovery/workspace/leads/gg-session-and-selection.md",
+          "sha256": "4d91d85327a8326817aa71f3794b155b34c3e731eaa2dc52ea654600e0032907"
+        }
+      ],
+      "withdrawn_credit": true,
+      "review_item": "B5",
+      "review_source": "Independent review REVIEW_ADJUDICATION_20260916.md, 2026-09-17. I re-verified the finding against the run state before applying it."
+    },
     {
       "finding_id": "F001",
       "title": "Terminal attempts always have receipts",
