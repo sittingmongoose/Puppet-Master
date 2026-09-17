@@ -1,0 +1,243 @@
+{
+  "what_happened": "The Claude CLI began reporting status \"allowed_warning\" with utilization 0.90 on the five-hour window resetting 2026-09-17T08:30:00Z. Both of the coordinator rule triggers were breached (status != allowed; utilization >= 0.80). Admissions were stopped on both live arms; no worker was cancelled and every live job was left to finish and receipt normally.",
+  "fired_at_utc": "2026-09-17T05:43Z",
+  "schema_correction": {
+    "earlier_claim": "An earlier note in this bundle said no utilization field exists in rate_limit_event.",
+    "correction": "That was true of the 40 all-\"allowed\" records seen at the time but WRONG as a general claim. The payload schema is CONDITIONAL on status: an \"allowed\" record carries overageStatus and overageDisabledReason and no utilization; an \"allowed_warning\" record carries utilization (0..1) and usually surpassedThreshold, and drops the overage fields. Utilization is reported only once a threshold is passed, which is why it was invisible while the account was healthy.",
+    "consequence_for_resume": "Below the warning threshold the CLI reports NO utilization at all, so \"utilization under 50%\" cannot be positively confirmed after the reset: an absent field is consistent with any value below the warning threshold, not specifically below 0.5. No claim of <50% is made from an absent field.",
+    "field_shapes_observed": {
+      "isUsingOverage + overageDisabledReason + overageStatus + rateLimitType + resetsAt + status": 8,
+      "isUsingOverage + rateLimitType + resetsAt + status + surpassedThreshold + utilization": 6,
+      "isUsingOverage + rateLimitType + resetsAt + status + utilization": 2
+    },
+    "utilization_values_observed": [
+      0.9,
+      0.91
+    ]
+  },
+  "sentinel_defect": {
+    "what": "The sentinel matched live arms on the campaign DIRECTORY rather than the arm. For arm-h2 it returned the already-terminal h2-research alongside h2-review; for arm-s it matched nothing at all. So s-full - the arm whose own jobs produced the warning - was left running and admitting while the sentinel recorded ok:true.",
+    "why_it_matters": "A stop that reports success while the offending arm keeps running is worse than no stop.",
+    "detected_by": "Reading the drained-arm list in the sentinel record against the set of runs without a campaign-terminal.json.",
+    "remediation": "s-full drained by hand at 05:44Z. The sentinel now resolves the arm from each run's own run.json and liveness from whether that run has written campaign-terminal.json - the same durable evidence the campaign uses - instead of a path substring; drains are idempotent; the utilization >= 0.80 trigger was added. Verified live: the restarted sentinel resolved arm-s/s-full and arm-h2/h2-review correctly and reported \"already drained; left alone\" for both."
+  },
+  "drain_mechanism": "The durable Meter cap_usd was lowered to each arm's committed total, so every further reservation fails with captured_plus_live_cap and the campaign ends on the designed Stop(insufficient_priced_usage_headroom) once its last live job finishes. The allowance gate was deliberately NOT used: it raises at the top of the scheduler loop and cancels live workers. No captured figure was altered; each meter records the original cap, the committed total, the live jobs left running, the reason and the typed evidence under cap_reductions.",
+  "authorized_caps_unchanged": {
+    "s-full": 250,
+    "h2-research": 50,
+    "h2-review": 150
+  },
+  "caps_after_drain": {
+    "s-full": 48.046643,
+    "h2-review": 36.0,
+    "h2-research": 0.154507
+  },
+  "records": [
+    {
+      "campaign_dir": "runs",
+      "run": "topic2-h2-review-20260917-053231",
+      "job": "J0014-reconcile",
+      "info": {
+        "status": "allowed",
+        "resetsAt": 1789633800,
+        "rateLimitType": "five_hour",
+        "overageStatus": "rejected",
+        "overageDisabledReason": "out_of_credits",
+        "isUsingOverage": false
+      }
+    },
+    {
+      "campaign_dir": "runs",
+      "run": "topic2-h2-review-20260917-053231",
+      "job": "J0015-reconcile",
+      "info": {
+        "status": "allowed",
+        "resetsAt": 1789633800,
+        "rateLimitType": "five_hour",
+        "overageStatus": "rejected",
+        "overageDisabledReason": "out_of_credits",
+        "isUsingOverage": false
+      }
+    },
+    {
+      "campaign_dir": "runs",
+      "run": "topic2-h2-review-20260917-053231",
+      "job": "J0013-reconcile",
+      "info": {
+        "status": "allowed",
+        "resetsAt": 1789633800,
+        "rateLimitType": "five_hour",
+        "overageStatus": "rejected",
+        "overageDisabledReason": "out_of_credits",
+        "isUsingOverage": false
+      }
+    },
+    {
+      "campaign_dir": "runs",
+      "run": "topic2-s-full-20260917-051531",
+      "job": "J0001-discovery",
+      "info": {
+        "status": "allowed",
+        "resetsAt": 1789633800,
+        "rateLimitType": "five_hour",
+        "overageStatus": "rejected",
+        "overageDisabledReason": "out_of_credits",
+        "isUsingOverage": false
+      }
+    },
+    {
+      "campaign_dir": "runs",
+      "run": "topic2-s-full-20260917-051531",
+      "job": "J0001-discovery",
+      "info": {
+        "status": "allowed",
+        "resetsAt": 1789633800,
+        "rateLimitType": "five_hour",
+        "overageStatus": "rejected",
+        "overageDisabledReason": "out_of_credits",
+        "isUsingOverage": false
+      }
+    },
+    {
+      "campaign_dir": "runs",
+      "run": "topic2-s-full-20260917-051531",
+      "job": "J0002-implementation",
+      "info": {
+        "status": "allowed",
+        "resetsAt": 1789633800,
+        "rateLimitType": "five_hour",
+        "overageStatus": "rejected",
+        "overageDisabledReason": "out_of_credits",
+        "isUsingOverage": false
+      }
+    },
+    {
+      "campaign_dir": "runs",
+      "run": "topic2-s-full-20260917-051531",
+      "job": "J0002-implementation",
+      "info": {
+        "status": "allowed_warning",
+        "resetsAt": 1789633800,
+        "rateLimitType": "five_hour",
+        "utilization": 0.9,
+        "isUsingOverage": false,
+        "surpassedThreshold": 0.9
+      }
+    },
+    {
+      "campaign_dir": "runs",
+      "run": "topic2-s-full-20260917-051531",
+      "job": "J0002-implementation",
+      "info": {
+        "status": "allowed_warning",
+        "resetsAt": 1789633800,
+        "rateLimitType": "five_hour",
+        "utilization": 0.91,
+        "isUsingOverage": false,
+        "surpassedThreshold": 0.9
+      }
+    },
+    {
+      "campaign_dir": "runs",
+      "run": "topic2-s-full-20260917-051531",
+      "job": "J0004-implementation",
+      "info": {
+        "status": "allowed",
+        "resetsAt": 1789633800,
+        "rateLimitType": "five_hour",
+        "overageStatus": "rejected",
+        "overageDisabledReason": "out_of_credits",
+        "isUsingOverage": false
+      }
+    },
+    {
+      "campaign_dir": "runs",
+      "run": "topic2-s-full-20260917-051531",
+      "job": "J0004-implementation",
+      "info": {
+        "status": "allowed_warning",
+        "resetsAt": 1789633800,
+        "rateLimitType": "five_hour",
+        "utilization": 0.9,
+        "isUsingOverage": false
+      }
+    },
+    {
+      "campaign_dir": "runs",
+      "run": "topic2-s-full-20260917-051531",
+      "job": "J0004-implementation",
+      "info": {
+        "status": "allowed_warning",
+        "resetsAt": 1789633800,
+        "rateLimitType": "five_hour",
+        "utilization": 0.9,
+        "isUsingOverage": false,
+        "surpassedThreshold": 0.9
+      }
+    },
+    {
+      "campaign_dir": "runs",
+      "run": "topic2-s-full-20260917-051531",
+      "job": "J0004-implementation",
+      "info": {
+        "status": "allowed_warning",
+        "resetsAt": 1789633800,
+        "rateLimitType": "five_hour",
+        "utilization": 0.91,
+        "isUsingOverage": false,
+        "surpassedThreshold": 0.9
+      }
+    },
+    {
+      "campaign_dir": "runs",
+      "run": "topic2-s-full-20260917-051531",
+      "job": "J0003-history",
+      "info": {
+        "status": "allowed",
+        "resetsAt": 1789633800,
+        "rateLimitType": "five_hour",
+        "overageStatus": "rejected",
+        "overageDisabledReason": "out_of_credits",
+        "isUsingOverage": false
+      }
+    },
+    {
+      "campaign_dir": "runs",
+      "run": "topic2-s-full-20260917-051531",
+      "job": "J0003-history",
+      "info": {
+        "status": "allowed_warning",
+        "resetsAt": 1789633800,
+        "rateLimitType": "five_hour",
+        "utilization": 0.9,
+        "isUsingOverage": false
+      }
+    },
+    {
+      "campaign_dir": "runs",
+      "run": "topic2-s-full-20260917-051531",
+      "job": "J0003-history",
+      "info": {
+        "status": "allowed_warning",
+        "resetsAt": 1789633800,
+        "rateLimitType": "five_hour",
+        "utilization": 0.9,
+        "isUsingOverage": false,
+        "surpassedThreshold": 0.9
+      }
+    },
+    {
+      "campaign_dir": "runs",
+      "run": "topic2-s-full-20260917-051531",
+      "job": "J0003-history",
+      "info": {
+        "status": "allowed_warning",
+        "resetsAt": 1789633800,
+        "rateLimitType": "five_hour",
+        "utilization": 0.91,
+        "isUsingOverage": false,
+        "surpassedThreshold": 0.9
+      }
+    }
+  ]
+}

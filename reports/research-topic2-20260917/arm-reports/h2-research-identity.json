@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-17T05:30:18Z",
+  "generated_at": "2026-09-17T05:36:15Z",
   "method": "Runtime identity and protocol fingerprints for every continuation-5 run.\n\nRuntime identity is taken from each job's OWN record: every adapter hashes and\nversion-checks the binary it is about to run and writes that into raw-*/run.json. The\ninstalled_now block is a live reading taken when this script runs, so a runtime that\nchanged mid-phase shows up as a disagreement instead of being papered over.\n\nThe protocol fingerprint is the first 16 hex characters of\nsha256(json.dumps({file: sha256}, sort_keys=True)) over the key protocol files as the\nrun itself recorded them in run.json['protocol_sha256']. Runs sharing a fingerprint ran\nidentical code; nothing here is asserted from memory.",
   "key_files": [
     "discovery_to_plan.py",
@@ -41,8 +41,30 @@
         "adapters/omp_native.py": "55489f0316d6",
         "native_receipts.py": "87bf4f2337d2"
       },
-      "jobs_with_native_records": 0,
-      "runtimes": []
+      "jobs_with_native_records": 12,
+      "runtimes": [
+        {
+          "adapter": "omp",
+          "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
+          "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72",
+          "version": "omp/18.2.2",
+          "jobs": [
+            "J0001-discovery",
+            "J0002-implementation",
+            "J0003-history",
+            "J0004-implementation",
+            "J0005-implementation",
+            "J0006-implementation",
+            "J0007-history",
+            "J0008-history",
+            "J0009-implementation",
+            "J0010-history",
+            "J0011-history",
+            "J0012-implementation"
+          ],
+          "job_count": 12
+        }
+      ]
     }
   ]
 }
