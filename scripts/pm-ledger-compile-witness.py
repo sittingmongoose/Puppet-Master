@@ -5,9 +5,9 @@ Witness 1, repairs versus targets: every findings record that names a PlanUnit a
 among the compile queue targets of the record's atoms, and (when --base is given) the unit must actually differ
 from the base revision.
 
-Witness 2, exact tokens: every exact token of a compiled atom must appear in the prose of each owner PlanUnit the
-atom compiled into, and in that unit's preserved_exact_tokens registry. Tokens that appear only in companion outputs
-(schemas, fixtures) are reported as such, never counted as present in the owner unit.
+Witness 2, exact tokens: every exact token of a compiled atom must appear in the prose of at least one owner PlanUnit
+the atom's queue item compiled into, and in at least one of those units' preserved_exact_tokens registries. Tokens
+that appear only in companion outputs (schemas, fixtures) are reported as such, never counted as present in an owner unit.
 
 Both witnesses are static text checks; they need no model and make no judgment about meaning. Exit 0 when no
 witness fires, 2 when at least one does, 1 on a usage or read error.
@@ -155,26 +155,26 @@ def run(root: Path, ledger_dir: Path, base: str | None) -> dict:
             companion_text += p.read_text(encoding="utf-8", errors="replace")
     w2 = []
     for it in queue.get("items", []):
-        for uid in it.get("target_plan_unit_ids", []):
-            if uid.startswith("DL-") or uid not in units:
-                continue
-            prose = units[uid]["text"]
-            reg = registry(prose)
-            for a in it.get("source_atom_ids", []):
-                for tok in atoms.get(a, {}).get("exact_tokens", []):
-                    in_prose = tok in prose
-                    in_reg = tok in reg
-                    w2.append({"queue_id": it.get("queue_id"), "atom": a, "unit": uid, "token": tok, "in_unit_prose": in_prose,
-                               "in_unit_registry": in_reg, "in_companion_outputs_only": (not in_prose) and (tok in companion_text),
-                               "fires": not (in_prose and in_reg)})
+        owners = [u for u in it.get("target_plan_unit_ids", []) if not u.startswith("DL-") and u in units]
+        if not owners:
+            continue
+        regs = {u: registry(units[u]["text"]) for u in owners}
+        for a in it.get("source_atom_ids", []):
+            for tok in atoms.get(a, {}).get("exact_tokens", []):
+                in_prose = [u for u in owners if tok in units[u]["text"]]
+                in_reg = [u for u in owners if tok in regs[u]]
+                w2.append({"queue_id": it.get("queue_id"), "atom": a, "token": tok, "owner_units": owners,
+                           "units_with_token_in_prose": in_prose, "units_with_token_in_registry": in_reg,
+                           "in_companion_outputs_only": (not in_prose) and (tok in companion_text),
+                           "fires": not (in_prose and in_reg)})
     fires1 = [r for r in w1 if r["fires"]]
     fires2 = [r for r in w2 if r["fires"]]
     return {"schema_id": "pm.ledger_compile_witness.v1", "ledger_id": ledger_id, "base": base, "documents": docs,
             "witness_repairs_vs_targets": w1, "witness_exact_tokens": w2,
             "summary": {"records": len(w1), "records_firing": len(fires1), "named_but_not_targeted": sum(len(r["named_but_not_targeted"]) for r in w1),
                         "named_but_unchanged_since_base": sum(len(r["named_but_unchanged_since_base"]) for r in w1),
-                        "token_unit_pairs": len(w2), "tokens_missing_from_prose": sum(1 for r in w2 if not r["in_unit_prose"]),
-                        "tokens_missing_from_registry": sum(1 for r in w2 if not r["in_unit_registry"]),
+                        "item_tokens": len(w2), "tokens_missing_from_prose": sum(1 for r in w2 if not r["units_with_token_in_prose"]),
+                        "tokens_missing_from_registry": sum(1 for r in w2 if not r["units_with_token_in_registry"]),
                         "tokens_only_in_companion_outputs": sum(1 for r in w2 if r["in_companion_outputs_only"])},
             "status": "findings" if (fires1 or fires2) else "pass"}
 
@@ -203,13 +203,13 @@ def main() -> int:
         for r in report["witness_repairs_vs_targets"]:
             if r["fires"]:
                 print(f"    - {r['record'][:70]}: not targeted {r['named_but_not_targeted']} unchanged {r['named_but_unchanged_since_base']}")
-        print(f"  witness 2 exact tokens: {s['token_unit_pairs']} token-unit pairs; missing from prose {s['tokens_missing_from_prose']} (of which only in companion outputs {s['tokens_only_in_companion_outputs']}); missing from registry {s['tokens_missing_from_registry']}")
+        print(f"  witness 2 exact tokens: {s['item_tokens']} item tokens; missing from every owner unit's prose {s['tokens_missing_from_prose']} (of which only in companion outputs {s['tokens_only_in_companion_outputs']}); missing from every owner registry {s['tokens_missing_from_registry']}")
         per: dict[str, list[str]] = {}
         for r in report["witness_exact_tokens"]:
-            if not r["in_unit_prose"]:
-                per.setdefault(r["unit"], []).append(r["token"])
-        for uid, toks in sorted(per.items()):
-            print(f"    - {uid}: not in prose {toks}")
+            if not r["units_with_token_in_prose"]:
+                per.setdefault(",".join(r["owner_units"]), []).append(r["token"])
+        for owners, toks in sorted(per.items()):
+            print(f"    - {owners}: not in prose {toks}")
     return 0 if report["status"] == "pass" else 2
 
 

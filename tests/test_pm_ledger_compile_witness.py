@@ -99,10 +99,22 @@ class WitnessTests(unittest.TestCase):
             report = self.mod.run(root, ledger, None)
         self.assertEqual(report["status"], "findings")
         by_token = {r["token"]: r for r in report["witness_exact_tokens"]}
-        self.assertTrue(by_token["alpha_field"]["in_unit_prose"] and by_token["alpha_field"]["in_unit_registry"])
-        self.assertFalse(by_token["delta_missing"]["in_unit_prose"])
-        self.assertFalse(by_token["delta_missing"]["in_unit_registry"])
+        self.assertEqual(by_token["alpha_field"]["units_with_token_in_prose"], ["DEM-001"])
+        self.assertEqual(by_token["alpha_field"]["units_with_token_in_registry"], ["DEM-001"])
+        self.assertEqual(by_token["delta_missing"]["units_with_token_in_prose"], [])
+        self.assertEqual(by_token["delta_missing"]["units_with_token_in_registry"], [])
         self.assertEqual(report["summary"]["tokens_missing_from_prose"], 1)
+
+    def test_token_in_one_of_several_owner_units_passes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            ledger = write_ledger(root, targets_for_atom=["DEM-001", "DEM-002"], tokens=["alpha_field", "gamma"],
+                                  repairs_sentence="Repairs DEM-001 and DEM-002. Change: splits the obligation across both.")
+            report = self.mod.run(root, ledger, None)
+        self.assertEqual(report["status"], "pass")
+        by_token = {r["token"]: r for r in report["witness_exact_tokens"]}
+        self.assertEqual(by_token["alpha_field"]["units_with_token_in_prose"], ["DEM-001"])
+        self.assertEqual(by_token["gamma"]["units_with_token_in_prose"], ["DEM-002"])
 
     def test_registry_parsing_handles_quoted_inline_list(self):
         self.assertEqual(self.mod.registry('preserved_exact_tokens: [a, "b c", \'d\']\n'), ["a", "b c", "d"])
