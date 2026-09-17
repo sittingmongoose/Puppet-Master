@@ -1,6 +1,6 @@
 {
   "schema": "jj.continuation4.landing_verification.v1",
-  "generated_at_utc": "2026-09-17T05:43:57Z",
+  "generated_at_utc": "2026-09-17T11:18:18Z",
   "branch": "plans/c4-corrections-20260917",
   "base": "a6162b559b502278458a56e95c5c0891c3e2a505",
   "status": "COMPILED_CORRECTION_INTEGRITY_PASS_PENDING_INDEPENDENT_BRANCH_REVIEW",
@@ -85,7 +85,7 @@
         "status": "pass",
         "findings": 0,
         "positive": 1047,
-        "negative": 3420
+        "negative": 3421
       }
     },
     "configured_shards": {
@@ -193,5 +193,19 @@
     ]
   },
   "claim_boundary": "Static schema, fixture, shard, index and semantic-gate integrity only. No governance seal, runtime certification, native adapter, security, performance or readiness claim.",
-  "reseal_request": "This wave edits Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md and Plans/Decision_Log.md, so Spec Lock hashes, owner and artifact evidence hashes and the readiness report are stale for those documents until the designated Plans agent reseals. That staleness is the expected consequence of editing canon and does not stop a landing."
+  "reseal_request": "This wave edits Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md and Plans/Decision_Log.md, so Spec Lock hashes, owner and artifact evidence hashes and the readiness report are stale for those documents until the designated Plans agent reseals. That staleness is the expected consequence of editing canon and does not stop a landing.",
+  "independent_review": {
+    "file": "REVIEW_C4_CORRECTIONS_20260917.md",
+    "verdict": "land; no blocking finding, no should-fix finding",
+    "notes_applied": [
+      "N1: materialization_order now requires a dependency step through a contains constraint, with a negative fixture. The previous rule enforced relative order but admitted an order that named no dependency step at all.",
+      "N2: the five canon passages that mark an unenforced obligation now name q-008, q-009 or q-010 rather than describing them.",
+      "N3: DL-058 quotes the answer whole, including the third sentence about experiment tooling that the earlier prefix dropped.",
+      "N6: the Part 1 record's machine twin adjudication-part1.json is added to the receipts with its hash."
+    ],
+    "notes_recorded_without_change": [
+      "N4: the new gate branch reads the owner schema to build the admitted action-id set, where the source_control branch reads nothing. The docstring already flagged the difference; the alternative is restating thirty-one command ids in the script, where they would drift.",
+      "N5: graph_states still admits a five-element list that omits divergent, because no frozen prefixItems list in that schema carries minItems. Pre-existing pattern, inherited rather than introduced."
+    ]
+  }
 }

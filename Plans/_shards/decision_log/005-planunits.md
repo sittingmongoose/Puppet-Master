@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L941-L4335
+Source lines: L941-L4336
 
-Source SHA256: `4c4963e63b84487d85682a2af68e8504daffe9061880ccd51f5ed9ee964b2d87`
+Source SHA256: `e13092293142e0751062175638b866f26a2e0d71302a529d84a90e9784665e48`
 
 ---
 
@@ -3207,7 +3207,8 @@ status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   Jared answered the seven shape questions the continuation-4 candidate adjudication raised on 2026-09-17,
-  verbatim "I agree with all 7 of your recommendations. You can do all the next steps." Restore verification
+  verbatim and whole "I agree with all 7 of your recommendations. You can do all the next steps. You can use Opus 5
+  max for your strong model."; the third sentence is about experiment tooling rather than canon. Restore verification
   depth lands as a JJI-008 rule plus an `object_verification_depth` field on the receipt referencing the Backup
   owner's existing `integrity_verification_level` enum. Divergence lands by appending `divergent` to the frozen
   `graph_states` list, which preserves every existing position, and by minting
@@ -3263,7 +3264,7 @@ source_lineage:
   - Plans/Decision_Log.md#DL-056
   - Plans/Decision_Log.md#DL-057
 preserved_exact_tokens:
-  - I agree with all 7 of your recommendations. You can do all the next steps.
+  - I agree with all 7 of your recommendations. You can do all the next steps. You can use Opus 5 max for your strong model.
   - object_verification_depth
   - integrity_verification_level
   - change_divergent_ambiguous_target

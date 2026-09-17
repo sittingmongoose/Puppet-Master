@@ -66,6 +66,12 @@
       "in_repository": false
     },
     {
+      "path": "/home/sittingmongoose/PM-Experiments/c4-candidates-20260917/adjudication-part1.json",
+      "sha256": "00e9509577fe14bb0b9fd97eec4ac10a6fd538fd119cd11de9c88d46eded75ad",
+      "use": "The machine twin of the Part 1 record: one structured entry per candidate with verdict, promise, contradiction, currentness result and cited passages, plus the post-review revision block. It is the form the seventeen records were read from when this wave's acceptance criteria and ledger findings were written; the Markdown twin above is the same content rendered. Both are covered by that directory's own SHA256SUMS.",
+      "in_repository": false
+    },
+    {
       "path": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/C4_CANDIDATE_ANSWERS_20260917.md",
       "sha256": "544654e50051d8ea99c835b2989d48d1e64fdf040a8e934d6ac6d16226305608",
       "use": "Jared's seven shape answers, verbatim. Supports DL-058 and questions q-001 through q-005. Agent-relayed; not verifiable from inside this repository.",

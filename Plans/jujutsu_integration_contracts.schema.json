@@ -2515,6 +2515,9 @@
           "type": "array",
           "minItems": 2,
           "uniqueItems": true,
+          "contains": {
+            "const": "dependency_objects"
+          },
           "items": {
             "enum": [
               "dependency_objects",

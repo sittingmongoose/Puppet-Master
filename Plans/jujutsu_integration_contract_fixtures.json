@@ -4434,6 +4434,15 @@
       "expected_error": "the expansion blockers are exactly missing parent, malformed id, self parent and parent cycle"
     },
     {
+      "name": "backup_jj_materialization_order_must_carry_a_dependency_step",
+      "definition": "backup_jj_closure_record",
+      "base_valid": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",
+      "patch": {
+        "closure_expansion.materialization_order": ["operation_heads", "activation_markers"]
+      },
+      "expected_error": "an order that names no dependency step never persists the objects the heads refer to"
+    },
+    {
       "name": "backup_jj_colocated_layout_resolves_its_whole_pointer_chain",
       "definition": "backup_jj_closure_record",
       "base_valid": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",

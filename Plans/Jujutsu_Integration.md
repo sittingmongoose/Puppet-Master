@@ -146,7 +146,8 @@ acceptance_criteria:
     HEAD, or refresh a stale workspace. When that path cannot serve the request the command returns its existing typed
     stale, blocked or degraded result rather than mutating to make the answer available, and a successful process exit
     or a no-op message is diagnostic only. Declaring the adapter's complete native effect scope for each invocation is
-    an owner obligation with no validator surface in this landing; it is recorded in the ledger as an open question.
+    an owner obligation with no validator surface in this landing; it is recorded as open question `q-009` in
+    `pldg-20260917-001-jujutsu-continuation4-corrections`.
   - >-
     No canonical Jujutsu command reaches an adapter invocation that can start an interactive diff or merge editor. The
     inventory's own case is `cmd.jujutsu.change.split`, whose only schema-expressible target is a change id while the
@@ -161,8 +162,8 @@ acceptance_criteria:
     least `cmd.jujutsu.operation.log` and `cmd.jujutsu.operation.show`, so an empty recovery set is not admissible for
     the states that most need one. Every identifier in `allowed_action_ids` is drawn from the canonical inventory. That
     these two remain servable from the operation store alone, without a current working-copy snapshot, a valid writer
-    lease or a healthy status projection, is an owner obligation with no validator surface here and is recorded in the
-    ledger as an open question.
+    lease or a healthy status projection, is an owner obligation with no validator surface here and is recorded as
+    open question `q-010` in `pldg-20260917-001-jujutsu-continuation4-corrections`.
   - >-
     `cmd.jujutsu.bookmark.track` and `cmd.jujutsu.bookmark.untrack` are local mutations. They are view transactions over
     the repository's own tracking state, they make no remote call, and they take a null `credential_lease_ref` with
@@ -303,7 +304,7 @@ validation_surfaces:
     The recovery-action floor is enforced by `Plans/jujutsu_integration_contracts.schema.json`; that every admitted
     identifier exists is a relational rule enforced by the `jujutsu_integration_contracts` branch of
     `contract_semantic_failures` in `scripts/pm-new-contracts-verify.py`. That the floor commands are servable from the
-    operation store alone is an owner obligation with no validator surface, recorded as an open question in
+    operation store alone is an owner obligation with no validator surface, recorded as open question `q-010` in
     `pldg-20260917-001-jujutsu-continuation4-corrections`.
 risk_class: jujutsu_ui_or_migration_misrepresentation
 reasoning_tier: high
@@ -591,8 +592,8 @@ acceptance_criteria:
     are captured as bytes and never restored as active state, so a restored copy carries no other machine's store
     identity. An unrecognized entry inside the store tree yields `partial` with the entry named, never `complete`. The
     enumerated list of entries for a given JJ version is an owner audit of native internals that this landing does not
-    perform; it is recorded in the ledger as an open question, and a version change invalidates the list until it is
-    re-audited.
+    perform; it is recorded as open question `q-008` in `pldg-20260917-001-jujutsu-continuation4-corrections`, and a
+    version change invalidates the list until it is re-audited.
   - >-
     Completeness has a decision procedure, not only a definition. The closure expands the retained set through every
     stage - operation to view, view to commit, commit to tree, and the retained non-current, abandoned and rebased
@@ -622,8 +623,9 @@ validation_surfaces:
     declared owner route. Regression coverage is `tests/test_pm_jujutsu_closure_semantics.py`.
   - >-
     Two obligations in this unit have no validator surface and are recorded as open questions in
-    `pldg-20260917-001-jujutsu-continuation4-corrections`: the enumerated list of machine-local and ephemeral store
-    entries for a pinned JJ version, and the adapter's complete declared native effect scope per invocation.
+    `pldg-20260917-001-jujutsu-continuation4-corrections`. Question `q-008` is the enumerated list of machine-local and
+    ephemeral store entries for a pinned JJ version, and question `q-009` is the adapter's complete declared native
+    effect scope per invocation.
   - future colocated/non-colocated/shared-workspace clean-host restore, GC race, historical-operation, unsafe-config, collision/conflict, and no-hidden-snapshot tests
 risk_class: incomplete_jj_operation_recovery_or_restore_dual_writer
 reasoning_tier: high

@@ -921,7 +921,7 @@ Sixth, the two product choices. `merge_editor_available` belongs with the deferr
 
 Seventh, one rejected candidate. A candidate about the marker-based gate on Mark Conflict Resolved was read by the bundle adjudicator as distinct from a continuation-3 rejection and by this adjudication as the same thing, since the rows it names are Git adapter commands. The answer confirms it stays rejected.
 
-Jared's answer to all seven, verbatim: "I agree with all 7 of your recommendations. You can do all the next steps."
+Jared's answer to all seven, verbatim and whole: "I agree with all 7 of your recommendations. You can do all the next steps. You can use Opus 5 max for your strong model." The third sentence is about experiment tooling rather than canon, and is quoted here so the record carries the whole utterance rather than the part that bears on the Plans.
 
 What this buys is thirteen repairs that each fail a fixture when they are violated, rather than thirteen paragraphs that read well. What it costs is four new relational rules in a script that had two, a schema that carries more identity than it did, and two obligations that are written down as unenforced and tracked as questions rather than quietly implied.
 
@@ -4137,7 +4137,8 @@ status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   Jared answered the seven shape questions the continuation-4 candidate adjudication raised on 2026-09-17,
-  verbatim "I agree with all 7 of your recommendations. You can do all the next steps." Restore verification
+  verbatim and whole "I agree with all 7 of your recommendations. You can do all the next steps. You can use Opus 5
+  max for your strong model."; the third sentence is about experiment tooling rather than canon. Restore verification
   depth lands as a JJI-008 rule plus an `object_verification_depth` field on the receipt referencing the Backup
   owner's existing `integrity_verification_level` enum. Divergence lands by appending `divergent` to the frozen
   `graph_states` list, which preserves every existing position, and by minting
@@ -4193,7 +4194,7 @@ source_lineage:
   - Plans/Decision_Log.md#DL-056
   - Plans/Decision_Log.md#DL-057
 preserved_exact_tokens:
-  - I agree with all 7 of your recommendations. You can do all the next steps.
+  - I agree with all 7 of your recommendations. You can do all the next steps. You can use Opus 5 max for your strong model.
   - object_verification_depth
   - integrity_verification_level
   - change_divergent_ambiguous_target
