@@ -111,5 +111,6 @@
     "6e438a01668ec4c9": [
       "deepseek41 attempt 1 (aborted)"
     ]
-  }
+  },
+  "derivation": "protocol_fingerprint = sha256(json.dumps({file: run.json's protocol_sha256[file] for file in key_files}, sort_keys=True).encode()).hexdigest()[:16]"
 }

@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-09-16T20:52Z",
+  "recorded_at": "2026-09-16T20:52Z (items C1-C3); defects D1-D4 added 2026-09-17T02:10:10Z",
   "principle": "Corrections are recorded additively. No frozen run directory, receipt or native record was edited.",
   "items": [
     {
@@ -38,6 +38,60 @@
       "meaning": "The ceiling is enforced after a response, so oh-my-pi can already have dispatched one more request before the adapter kills it. The limit should be read as \"at most 40 admitted responses, with at most one further response already in flight\", not as a hard 40.",
       "cost_effect": "immaterial here: the arm captured $0.5315 against a $50 cap",
       "effect_on_results": "none"
+    },
+    {
+      "id": "D1-claude-adapter-counted-stream-blocks",
+      "found": "2026-09-16T19:27Z",
+      "fixed_in_freeze": "18fe177b8da49fa47a6db0557d596e636241711aa7e42dfa41ef29f9faadc70d",
+      "defect": "The Claude Code CLI emits one assistant event per content block, with the same message id repeated up to five times. The adapter counted events as model responses, so a 40-response ceiling fired at about 17 real responses and every job died in ~2 minutes. The sidecar request count was inflated the same way, and the durable Meter count stayed 0 because the adapter never called the boundary, so each job reconciled as incomplete and carried a $12 cold liability.",
+      "evidence": {
+        "archived_attempt": "arm-history/claude-attempt-1",
+        "shape": "attempt-1 jobs stop at exactly 40 assistant events with 10-22 distinct message ids (J0017: 40 events, 17 ids)",
+        "job_end_receipts_were_already_right": "17 receipts priced $1.0694 against the CLI-reported $1.06945"
+      },
+      "fix": "Count distinct response ids, record one usage row per response, and drive the durable Meter per response. Verified by replaying the archived stream: 17 requests, collector complete, zero gaps.",
+      "effect_on_scored_results": "none; the spoiled attempt is archived and not scored"
+    },
+    {
+      "id": "D2-post-response-boundary-off-by-one",
+      "found": "2026-09-16T20:16Z",
+      "fixed_in_freeze": "fad9e93b9e61ec5b165b6de0aed0cba63145f217343a2fca67217862be9a557a",
+      "defect": "request_boundary refuses to register a request once a ceiling is hit, but the response that triggered the denial had already happened and carried a receipt. Job-end receipts therefore exceeded the durable request count by one, reconciliation demands equality, and each failed job retained a $12 liability until the arm cap denied further admissions.",
+      "evidence": {
+        "archived_attempt": "arm-history/deepseek41-attempt-1",
+        "shape": "six jobs with receipts = durable count + 1, each reconciled false, $72.00 of phantom liability against a $50 cap, arm ended Stop: insufficient_priced_usage_headroom"
+      },
+      "fix": "cost_watch.record_response always registers a response that already happened and only denies the next request; a ceiling denial no longer rewrites the runtime status, only a monetary stop does.",
+      "effect_on_scored_results": "none; the rerun under the fixed freeze reconciled 12 of 12"
+    },
+    {
+      "id": "D3-shared-temp-name-in-the-record-writer",
+      "found": "2026-09-16T21:57Z",
+      "fixed_in_freeze": "53f8fac98b02e8f2c191e076c8460222e728589b7fb367bfd5c3a0899f9df970",
+      "defect": "discovery_to_plan.put() wrote through a fixed temp name, <name>.tmp, while bounded_campaign writes jobs/<job>/worker-process.json from two places at once: the campaign parent about ten times a second and the worker child once at startup. One renamed the other's temp file away and the loser's rename raised FileNotFoundError, which is not a Stop, so the campaign ended as a workflow_error.",
+      "evidence": {
+        "archived_attempts": [
+          "arm-history/union-aborted-20260916-2157",
+          "arm-history/glm53-aborted-20260916-2157"
+        ],
+        "shape": "both campaign-terminal.json files record the identical worker-process.json.tmp FileNotFoundError, 26.74 s apart, each naming its own run directory",
+        "consequence": "the four sub-second interrupted jobs were cancelled by the crash's own shutdown path, not by anything of their own"
+      },
+      "fix": "put() writes to a temp name unique to the writing process and call and removes its own temp file on failure. Regression test protocol/test_worker_record_races.py runs two stub campaigns concurrently and also asserts that the old shared name still loses the rename.",
+      "effect_on_scored_results": "none; both arms were rerun from scratch under the fixed freeze"
+    },
+    {
+      "id": "D4-hardcoded-runtime-version",
+      "found": "2026-09-16T20:50Z",
+      "fixed_in_freeze": "1440ca6c96460e591a334decf00132b915cd9b373fd7c9c91a0153f153e99475",
+      "defect": "Both adapters declared a hardcoded verified_runtime_version while oh-my-pi was updated in place at the same path during the session (omp/18.1.13 -> omp/18.2.2), so the declared version could be false while every job record was right.",
+      "evidence": {
+        "same_as": "C2",
+        "per_run_identities": "runtime-identity.json, regenerated from all eleven runs"
+      },
+      "fix": "omp_native.installed_runtime() and the Claude equivalent shell --version and hash the binary at capability time; gates record the runtime block and the boundary check compares the binary hash, so a runtime that changes between gate and campaign fails closed.",
+      "effect_on_scored_results": "none; no arm ran against a runtime other than the one its own job records name"
     }
-  ]
+  ],
+  "scope": "C1-C3 are the adjudicator bookkeeping items. D1-D4 are the four defects found while the arms ran; each has the attempt it spoiled archived rather than scored, and each was fixed in a freeze that later arms ran under."
 }

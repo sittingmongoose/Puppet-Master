@@ -63,5 +63,23 @@
   "qualification": {
     "path": "qualification",
     "manifest_sha256": "f98474591ca02762341223c7369ac84a3a9a5f511494e84d891c84b7d7a91e12"
+  },
+  "re_hash_notes": {
+    "method": "Each manifest lists every file under its tree with a SHA-256; a re-hash today reproduces the digest unless a file changed after the freeze.",
+    "known_differences": [
+      {
+        "manifest": "arm-outputs/glm53-manifest.json",
+        "file": "monitor-state.json",
+        "reason": "the arm monitor was still running and wrote its last state about four seconds after the tree was hashed; telemetry only, written by the monitor, not by any job",
+        "affects_job_outputs": false
+      },
+      {
+        "manifest": "qualification/protocol-manifest.json",
+        "file": "itself",
+        "reason": "the protocol manifest was regenerated later in the phase, so the copy inside the qualification tree is older than the tree it describes",
+        "affects_job_outputs": false
+      }
+    ],
+    "procedure_change": "Quiesce the monitor (and any writer of telemetry) before hashing a tree, then freeze. Applied from now on; the two differences above are annotated rather than re-frozen so the published digests keep matching what was reported."
   }
 }

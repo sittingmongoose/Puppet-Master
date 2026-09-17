@@ -60,13 +60,15 @@
     },
     {
       "freeze_sha256": "53f8fac98b02e8f2c191e076c8460222e728589b7fb367bfd5c3a0899f9df970",
-      "landed": "2026-09-17T00:1xZ",
+      "landed": "2026-09-16T22:11:33Z",
       "fingerprint": "d4aa6f95cd22f33f",
       "contains": "put() writes through a temp name unique to the writing process and call, with its own cleanup on failure, plus test_worker_record_races.py running two stub campaigns concurrently (one case proves the old shared temp name still loses the rename).",
       "arms": [
         "union",
         "glm53"
-      ]
+      ],
+      "landed_source": "mtime of protocol/freeze.json",
+      "precedes": "union 22:19:33Z-00:05:52Z and glm53 00:07:06Z-01:01:17Z, the two arms it governed"
     }
   ]
 }

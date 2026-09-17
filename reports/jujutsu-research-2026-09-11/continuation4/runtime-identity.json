@@ -1,12 +1,14 @@
 {
-  "captured_at": "2026-09-16T20:50Z",
+  "regenerated_at": "2026-09-17T02:09:05Z",
+  "supersedes": "the 2026-09-16T20:50Z snapshot, which covered five runs and recorded claude-hicap at 6 jobs mid-run",
+  "method": "Every job record under jobs/*/raw-*/run.json carries the runtime its adapter hashed and version-checked at launch. These rows are that data for every run of the phase, scored and archived.",
   "installed_now": {
     "omp": {
       "invoked_as": "/home/sittingmongoose/.local/bin/omp",
       "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
       "self_reported_version": "omp/18.2.2",
       "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72",
-      "note": "The directory name says omp-18.1.12-linux-x64; the binary self-reports omp/18.2.2. The directory name is not the version."
+      "note": "The directory name says omp-18.1.12-linux-x64; that is a directory name, not a version. The binary self-reports omp/18.2.2. It was updated in place during the session: the union attempt at 18:49Z ran against omp/18.1.13 sha 3be5a308cc91e6f6bba148175fbe651d3583ff6d32ae221cb931dc08a64e1f39."
     },
     "claude": {
       "invoked_as": "/home/sittingmongoose/.local/bin/claude",
@@ -16,46 +18,165 @@
     }
   },
   "per_arm_from_job_records": {
-    "claude (Arm C)": [
-      {
-        "binary": "/home/sittingmongoose/.local/share/claude/versions/2.1.226",
-        "self_reported_version": "2.1.226 (Claude Code)",
-        "sha256": "4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555",
-        "jobs": 12
-      }
-    ],
-    "claude-hicap": [
-      {
-        "binary": "/home/sittingmongoose/.local/share/claude/versions/2.1.226",
-        "self_reported_version": "2.1.226 (Claude Code)",
-        "sha256": "4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555",
-        "jobs": 6
-      }
-    ],
-    "deepseek41 (rerun)": [
-      {
-        "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
-        "self_reported_version": "omp/18.2.2",
-        "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72",
-        "jobs": 12
-      }
-    ],
-    "deepseek41 (attempt 1)": [
-      {
-        "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
-        "self_reported_version": "omp/18.2.2",
-        "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72",
-        "jobs": 10
-      }
-    ],
-    "union (attempt 1)": [
-      {
-        "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
-        "self_reported_version": "omp/18.1.13",
-        "sha256": "3be5a308cc91e6f6bba148175fbe651d3583ff6d32ae221cb931dc08a64e1f39",
-        "jobs": 1
-      }
-    ]
+    "claude (Arm C)": {
+      "kind": "scored",
+      "run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b",
+      "jobs_admitted": 12,
+      "jobs_with_runtime_records": 12,
+      "runtimes": [
+        {
+          "binary": "/home/sittingmongoose/.local/share/claude/versions/2.1.226",
+          "self_reported_version": "2.1.226 (Claude Code)",
+          "sha256": "4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555",
+          "jobs": 12
+        }
+      ]
+    },
+    "claude-hicap": {
+      "kind": "scored",
+      "run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937",
+      "jobs_admitted": 12,
+      "jobs_with_runtime_records": 12,
+      "runtimes": [
+        {
+          "binary": "/home/sittingmongoose/.local/share/claude/versions/2.1.226",
+          "self_reported_version": "2.1.226 (Claude Code)",
+          "sha256": "4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555",
+          "jobs": 12
+        }
+      ]
+    },
+    "deepseek41": {
+      "kind": "scored",
+      "run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-deepseek41-20260916-202016",
+      "jobs_admitted": 12,
+      "jobs_with_runtime_records": 12,
+      "runtimes": [
+        {
+          "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
+          "self_reported_version": "omp/18.2.2",
+          "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72",
+          "jobs": 12
+        }
+      ]
+    },
+    "glm53": {
+      "kind": "scored",
+      "run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-glm53-20260917-000655",
+      "jobs_admitted": 12,
+      "jobs_with_runtime_records": 12,
+      "runtimes": [
+        {
+          "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
+          "self_reported_version": "omp/18.2.2",
+          "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72",
+          "jobs": 12
+        }
+      ]
+    },
+    "muse13": {
+      "kind": "scored",
+      "run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-muse13-20260916-215801",
+      "jobs_admitted": 12,
+      "jobs_with_runtime_records": 12,
+      "runtimes": [
+        {
+          "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
+          "self_reported_version": "omp/18.2.2",
+          "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72",
+          "jobs": 12
+        }
+      ]
+    },
+    "union": {
+      "kind": "scored",
+      "run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-union-20260916-221929",
+      "jobs_admitted": 20,
+      "jobs_with_runtime_records": 20,
+      "runtimes": [
+        {
+          "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
+          "self_reported_version": "omp/18.2.2",
+          "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72",
+          "jobs": 20
+        }
+      ]
+    },
+    "claude attempt 1": {
+      "kind": "archived",
+      "run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-history/claude-attempt-1/run-jujutsu-claude-20260916",
+      "jobs_admitted": 7,
+      "jobs_with_runtime_records": 7,
+      "runtimes": [
+        {
+          "binary": "/home/sittingmongoose/.local/share/claude/versions/2.1.226",
+          "self_reported_version": "2.1.226 (Claude Code)",
+          "sha256": "4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555",
+          "jobs": 7
+        }
+      ],
+      "jobs_admitted_source": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-history/claude-attempt-1/claude.json"
+    },
+    "deepseek41 attempt 1": {
+      "kind": "archived",
+      "run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-history/deepseek41-attempt-1/run-jujutsu-deepseek41-20260916",
+      "jobs_admitted": 10,
+      "jobs_with_runtime_records": 10,
+      "runtimes": [
+        {
+          "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
+          "self_reported_version": "omp/18.2.2",
+          "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72",
+          "jobs": 10
+        }
+      ],
+      "jobs_admitted_source": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-history/deepseek41-attempt-1/deepseek41.json"
+    },
+    "union attempt 1": {
+      "kind": "archived",
+      "run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-history/aborted-attempt-1/run-jujutsu-union-20260916",
+      "jobs_admitted": 1,
+      "jobs_with_runtime_records": 1,
+      "runtimes": [
+        {
+          "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
+          "self_reported_version": "omp/18.1.13",
+          "sha256": "3be5a308cc91e6f6bba148175fbe651d3583ff6d32ae221cb931dc08a64e1f39",
+          "jobs": 1
+        }
+      ],
+      "jobs_admitted_source": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-history/aborted-attempt-1/union.json"
+    },
+    "union attempt 2": {
+      "kind": "archived",
+      "run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-history/union-aborted-20260916-2157/run-jujutsu-union-20260916-214322",
+      "jobs_admitted": 4,
+      "jobs_with_runtime_records": 2,
+      "runtimes": [
+        {
+          "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
+          "self_reported_version": "omp/18.2.2",
+          "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72",
+          "jobs": 2
+        }
+      ],
+      "jobs_admitted_source": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-history/union-aborted-20260916-2157/union.json"
+    },
+    "glm53 attempt 1": {
+      "kind": "archived",
+      "run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-history/glm53-aborted-20260916-2157/run-jujutsu-glm53-20260916-214321",
+      "jobs_admitted": 3,
+      "jobs_with_runtime_records": 1,
+      "runtimes": [
+        {
+          "binary": "/mnt/Cursor/PM-Experiments/omp-runtimes/omp-18.1.12-linux-x64/omp-linux-x64",
+          "self_reported_version": "omp/18.2.2",
+          "sha256": "77c3520ab8ef8318dda02a0715e3b6e69589c427dc23f90a4bb97650caa72f72",
+          "jobs": 1
+        }
+      ],
+      "jobs_admitted_source": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-history/glm53-aborted-20260916-2157/glm53.json"
+    }
   },
-  "correction": "Earlier notes recorded the oh-my-pi runtime as 18.1.13, which was its self-reported version when this session started. The binary has since been updated in place at the same path; every job record carries the version and hash that job actually ran against, and those per-arm rows are authoritative."
+  "note_on_archived_rows": "An archived attempt has runtime records only for jobs whose adapter actually started; jobs cancelled within a second of admission have none."
 }

@@ -106,7 +106,10 @@ phase was $0.01, a single control probe.
 | deepseek41 | 7 of 12 | 17 | discovered 87, reconciled 9, comparisons 4 |
 | glm53 | 8 of 12 | 16 | discovered 81, reconciled 6, comparisons 5 |
 | muse13 | 11 of 12 | 25 | discovered 79, reconciled 3, comparisons 11 |
-| union | 18 of 20 | 20 | discovered 98, studied 1, reconciled 4, comparisons 3 |
+| union | 19 of 20 | 20 | discovered 98, studied 1, reconciled 4, comparisons 3 |
+
+Only union `J0019-reconcile` produced no `notes.md`; `J0018` and `J0020` saved 6,336 and 8,790 bytes
+respectively, and `arm-reports/union.json` carries `notes_present: true` on 19 rows.
 
 ## Code each arm ran
 
@@ -134,26 +137,64 @@ the spoiled attempt archived rather than scored:
 4. **Declared runtime versions were hardcoded** while oh-my-pi was updated in place during the session
    (omp/18.1.13 → omp/18.2.2 at the same path). Adapters now read the installed binary's version and hash
    at capability time, gates record them, and the boundary check compares the hash, so a runtime that
-   changes between gate and campaign fails closed. `runtime-identity.json` records the identity every arm
-   actually ran against, taken from each job's own record.
+   changes between gate and campaign fails closed. `runtime-identity.json` was regenerated after the phase
+   from every job record of all eleven runs — the six scored arms at 12 jobs each (union 20) and the five
+   archived attempts — so it now carries the identity each arm actually ran against, and it names the one
+   run that used the older binary (union attempt 1, omp/18.1.13).
 
-`corrections.json` holds the adjudicator's bookkeeping items in full, including why a `deepseek-v4-flash`
+`corrections.json` holds all of this as records: the four defects above as `D1`-`D4`, each with the
+archived attempt that evidences it and the freeze that fixed it, and the adjudicator's bookkeeping items
+`C1`-`C3` in full — including why a `deepseek-v4-flash`
 label appears in every arm's budget (it is continuation 3's hybrid-arm cost-policy block, not a per-arm
 selector; the arm's route is recorded in its run config, its gate, its adapter argv and all 470 of its
 native usage rows), and why some jobs record 41 responses against a 40 ceiling (the boundary runs after a
 response, so at most one further response can already be in flight: read the limit as "at most 40
 admitted, one may already be on the wire").
 
-**Codex remains fail-closed in continuation 4.** Editing the meter and collector invalidated the recorded
-transport-gate proof, so `codex_native` reports `available: false`. To run a Codex arm again, re-record the
-transport-gate boundary proof against the current adapter, proxy, meter, collector and installed-binary
-hashes and put those hashes in the arm's launch gate. Do not relax the boundary check.
+**Codex remains fail-closed in continuation 4.** The proof is `protocol/native-boundary-proof.json`,
+mirrored into every launch gate as `native_boundary_proofs.codex` with a `receipt_path` and
+`receipt_sha256`. Editing the meter and the collector invalidated it: a live call to
+`codex_native.native_boundary_capability()` now fails on exactly two comparisons, `meter_sha256` and
+`collector_sha256`, so the adapter reports `available: false` and every campaign refuses to launch.
+
+Re-proving it is not a hash refresh. To run a Codex arm again:
+
+1. Re-run the suites the proof itself records under `tests`, against the *current* meter and collector, from
+   `protocol/`: `python3 -B -m unittest test_job_end_v4 test_bounded_campaign_v2 test_native_continuation3 -q`
+   and the independent meter/collector suites named in the same field.
+2. Capture a **fresh transport-gate receipt**: run the gate (`adapters/transport_gate.py`) against the
+   installed `codex` binary and keep the evidence file the gate writes, recording `adapter`,
+   `runtime_version`, `runtime_sha256`, `proxy_sha256`, `max_model_requests`, `denied_before_dispatch` and
+   `all_dispatch_routes_verified`.
+3. Obtain a **fresh independent review** of that capture and of the changed meter and collector, and record
+   it in the proof's `independent_review` block.
+4. Write the new `protocol/native-boundary-proof.json` with the recomputed `adapter_sha256`, `proxy_sha256`,
+   `meter_sha256`, `collector_sha256` and `runtime_sha256`, then record that file's path and SHA-256 in the
+   arm's launch gate.
+
+The adapter's `valid` predicate has **fifteen** conditions, not five hashes: the five hashes above, plus
+`protocol_version == 4`, `live_receipts_required is False`, `usage_reconciliation == 'job_end_native_records'`,
+`live_campaign_allowed is True`, `runtime_version` equal to the installed binary's, `independently_reviewed
+is True`, `all_dispatch_routes_verified is True`, `denied_before_dispatch is True`, `max_model_requests == 40`,
+`max_job_seconds == 2400` and `admitted_phases == ['reconcile', 'compare']`. On top of that,
+`bounded_campaign.verify_native_boundary` requires the receipt file to exist with a matching hash and its
+evidence's `proxy_sha256` and `runtime_sha256` to agree with the installed proxy and runtime. The three
+judgement fields — `independently_reviewed`, `all_dispatch_routes_verified`, `denied_before_dispatch` — are
+about the code being reviewed and the routes being captured, so copying them from the old proof would assert
+a review of a meter and collector that no longer exist. **A hash refresh alone cannot satisfy this predicate,
+and the boundary check must not be relaxed to get past it.**
 
 ## Files here
 
 - `arm-reports/<arm>.json` — per-arm limits, stage timing, per-job rows with `bound_by`, cost, delivery counts
 - `freeze-history.json` — every freeze, what changed, which arms used it
-- `protocol-fingerprints.json` — each run's pinned protocol hashes, grouped
-- `output-manifests.json` — SHA-256 manifests of every frozen output tree, including the archived attempts
+- `protocol-fingerprints.json` — each run's pinned protocol hashes, grouped. `protocol_fingerprint =
+  sha256(json.dumps({file: run.json's protocol_sha256[file] for file in key_files}, sort_keys=True))[:16]`,
+  so any reader can recompute it from a run's own `run.json`
+- `output-manifests.json` — SHA-256 manifests of every frozen output tree, including the archived attempts,
+  with `re_hash_notes` for the two trees that no longer re-hash by one telemetry file each (`glm53`'s
+  `monitor-state.json`, written four seconds after the freeze, and the qualification tree's own older copy of
+  `protocol-manifest.json`). No arm job output differs anywhere. The freeze procedure now reads: **quiesce the
+  monitor and any other telemetry writer before hashing a tree**, then freeze
 - `runtime-identity.json` — binary path, self-reported version and hash per arm
 - `corrections.json` — the adjudicator's bookkeeping items, with evidence
