@@ -70,40 +70,47 @@ are. Each arm's launch gate records this as `limits_differ_from_goal2`.
 
 Targets this is measured against: **75 minutes per review stage** and **3 hours for a whole pipeline**.
 
-## Status — Arm S COMPLETE. Arm H2's review half held at a window warning.
+## Status — FINAL. All three arms are terminal and frozen.
 
-**Arm S reached its designed terminal** `Stop: admitted_attempt_cap` at 2026-09-17T16:14:46Z, using all 20
-admissions. It is the first Opus arm in this topic to finish, and the first to produce review output.
+Every arm reached a **designed gate**. Nothing is running, and nothing can be resumed: both Opus arms have
+spent their restarts and their arm clocks.
 
-| Arm | Outcome | Admissions | Captured / cap | Reviews delivered |
+| Arm | Terminal | Admissions | Captured / cap | Delivered |
 |---|---|---|---|---|
-| **S** (Opus 5, effort max, all stages) | **COMPLETE**, `admitted_attempt_cap` | 20 of 20 | $111.63 / $250 | 3 reconciled, 3 compared |
-| **H2 research** (Muse Spark) | **COMPLETE**, `admitted_attempt_cap` | 12 of 12 | $0.15 / $50 | — |
-| **H2 review** (Opus 5, effort max) | **HELD** — 6 of 12 admissions and 1 restart still in hand | 6 of 12 | $8.15 / $150 | none completed |
+| **S** (Opus 5, effort max, all stages) | `admitted_attempt_cap` | 20 of 20 | $111.63 / $250 | 3 reconciled, 3 compared |
+| **H2 research** (Muse Spark, xhigh) | `admitted_attempt_cap` | 12 of 12 | $0.15 / $50 | 32 leads |
+| **H2 review** (Opus 5, effort max) | `admitted_attempt_cap` | 12 of 12 | $43.72 / $150 | 7 reconciled, 2 compared |
 
-### Both review stages came in under the 75-minute target
+Both Opus arms carry 6 jobs that never completed, and in **both** cases those are the jobs killed by the
+retired cap-lowering drain documented in `CORRECTION-drain-killed-campaigns.json` — not failures of the runs
+themselves. The $72.00 unresolved on each arm is those same jobs. Every job admitted after the drain was
+retired reconciled with $0.00 unresolved.
 
-`reconcile` wall **50m 46s** (0.68× target, concurrency 1.822) and `compare` wall **21m 43s** (0.29× target,
-concurrency 2.331). Nothing hit a ceiling: responses per job 25–107 against the 160 ceiling, longest job
-1463 s of 3600 s, dearest job $12.05 of the $20 per-job budget.
+### The admission hold worked in production
 
-The arm-total wall of 10h 59m against the 3-hour pipeline target is **not** a meaningful figure — it spans the
-~6.5 h outage and the operator holds. **Summed job time is 4h 26m 47s** at average concurrency 0.405; that is
-the honest number for this arm. The live run after the 14:50Z resume took 84 minutes.
+At 21:18:18Z the sentinel fired on a genuine five-hour exhaustion — `{"status": "allowed_warning",
+"rateLimitType": "five_hour", "utilization": 0.96, "surpassedThreshold": 0.9}` — and placed the
+headroom-sized hold. Its own event record shows the arithmetic working exactly as the tests predicted:
 
-Of Arm S's 20 jobs, 14 completed and 6 did not — and all six are the jobs the retired drain crashed earlier
-in the day. Every job admitted after the resume completed. The $72.00 unresolved is the same six jobs.
+```
+committed_usd 144.45 | cap_usd 150.00 | headroom 5.55 | hold_usd 5.55
+committed_after 150.00 | denies_new_admissions true | truncates_live_jobs false
+```
 
-### Why Arm H2's review half is held
+Committed landed on the cap exactly. **New admissions were denied, live jobs were not truncated**, and the
+campaign reached its own designed terminal seven minutes later with every job settled. This is the behaviour
+the retired drain destroyed four times earlier in the day.
 
-The typed probe at 16:16:00Z returned `{"status": "allowed_warning", "rateLimitType": "five_hour",
-"utilization": 0.9, "resetsAt": 1789669800}` — **reset 2026-09-17T18:30:00Z**. The standing rule is to stop at
-the first `allowed_warning` on any window, so nothing was activated and no clock started. The same window read
-`allowed` with no utilization field 86 minutes earlier; Arm S's 20 admissions and $111.63 are what moved it,
-which is the expected trade rather than a surprise.
+The five-hour-only gating rule proved itself twice within twenty minutes: it let the 20:59Z resume through a
+0.37 seven-day *pacing* warning, then still fired on the real 0.96 five-hour exhaustion.
 
-No hold was placed: a hold denies admissions on a *live* campaign, and nothing is running. Arm S stopped on its
-own designed gate.
+### Timing against the targets
+
+Arm S is the only arm whose review stages ran uninterrupted, and **both came in under the 75-minute target**:
+reconcile **50m 46s** (0.68×) and compare **21m 43s** (0.29×).
+
+Wall-clock figures for the two Opus arms span the whole day — the outage, the operator holds and the waits —
+and are **not** meaningful. Use summed job time: Arm S **4h 26m 47s**, H2-review **1h 47m 47s**.
 
 ### Per-stage wall time against the targets
 
@@ -119,9 +126,9 @@ own designed gate.
 | h2-research | implementation | 9m 25s | 12m 23s | 1.316 | — | — |
 | h2-research | history | 8m 11s | 12m 50s | 1.568 | — | — |
 | **h2-research** | **arm total** | **12m 52s** | **28m 08s** | **2.185** | **3 h** | **0.07x (under)** |
-| h2-review | reconcile | 6h 46m 16s | 32m 26s | 0.08 | 75 min | 5.42x (OVER) |
-| h2-review | compare | 0m 55s | 1m 50s | 1.995 | 75 min | 0.01x (under) |
-| **h2-review** | **arm total** | **6h 46m 26s** | **31m 31s** | **0.078** | **3 h** | **2.26x (OVER)** |
+| h2-review | reconcile | 15h 52m 23s | 1h 03m 29s | 0.067 | 75 min | 12.70x (OVER) |
+| h2-review | compare | 9h 05m 00s | 44m 18s | 0.081 | 75 min | 7.27x (OVER) |
+| **h2-review** | **arm total** | **15h 52m 34s** | **1h 47m 47s** | **0.113** | **3 h** | **5.29x (OVER)** |
 
 ### Job status and what bound each job
 
@@ -129,7 +136,7 @@ own designed gate.
 |---|---|---|---|---|---|
 | s-full | 20 | completed 14, interrupted 5, null 1 | **finished** 14, **interrupted** 5, **null** 1 | 14 of 20 | $72.00 |
 | h2-research | 12 | budget_truncated 10, completed 2 | **finished** 2, **responses** 10 | 12 of 12 | $0.00 |
-| h2-review | 6 | interrupted 6 | **interrupted** 6 | 0 of 6 | $72.00 |
+| h2-review | 13 | cli_error 3, completed 3, interrupted 6 | **error** 3, **finished** 3, **interrupted** 6 | 6 of 13 | $72.00 |
 
 ### Cost
 
@@ -137,7 +144,7 @@ own designed gate.
 |---|---|---|---|---|
 | s-full | $111.6301 | $250 | $104.9907 | $0.8160–$12.0466 |
 | h2-research | $0.1545 | $50 | $0.0000 | $0.0074–$0.0228 |
-| h2-review | $8.1547 | $150 | $0.0000 | $0.1622–$2.6263 |
+| h2-review | $43.7156 | $150 | $35.5609 | $0.1622–$13.2072 |
 
 ### Responses and duration against the per-job ceilings
 
@@ -145,7 +152,7 @@ own designed gate.
 |---|---|---|---|---|---|---|
 | s-full | 25–107 (mean 60.3) | 160 | 1463.2s | 3600s | $12.05 | $20 |
 | h2-research | 33–41 (mean 39.7) | 40 | 177.5s | 2400s | $0.02 | $— |
-| h2-review | 6–53 (mean 27.2) | 160 | 630.7s | 3600s | $2.63 | $20 |
+| h2-review | 6–100 (mean 41.7) | 160 | 1126.8s | 3600s | $13.21 | $20 |
 
 ### Delivery counts (counts only, nothing adjudicated)
 
@@ -153,8 +160,19 @@ own designed gate.
 |---|---|---|---|---|---|
 | s-full | 16 of 20 | 13 | {'discovered': 115, 'studied': 0, 'reconciled': 3, 'comparison_delivered': 3} | 115 | 118 |
 | h2-research | 6 of 12 | 2 | {'discovered': 32, 'studied': 0, 'reconciled': 0, 'comparison_delivered': 0} | 32 | 32 |
-| h2-review | 2 of 6 | 2 | {'discovered': 39, 'studied': 0, 'reconciled': 2, 'comparison_delivered': 0} | 39 | 41 |
+| h2-review | 7 of 13 | 11 | {'discovered': 44, 'studied': 0, 'reconciled': 7, 'comparison_delivered': 2} | 44 | 51 |
 
+
+### Reading notes
+
+- H2-review's report counts **13 jobs** because its meter journal holds the `HOLD-admission-sentinel` entry
+  beside the 12 admissions. That is a scheduler hold, not a model job: adapter null, 0 requests, $0.00
+  observed, never terminal. **Twelve jobs ran.**
+- `cli_error` on H2-review's last three jobs is the Claude CLI hitting the account limit mid-job. All three
+  still reconciled with $0.00 unresolved.
+- Both Opus arms ran under **verified waits authorized by Jared** (one for Arm S, two for H2-review),
+  excluding outage time from their processing clocks. Each interval was pinned to the exact completion of the
+  last in-arm model request and verified to contain none.
 
 ### Frozen outputs
 
@@ -162,18 +180,21 @@ own designed gate.
 |---|---|---|---|
 | s-full | `arm-s/runs/topic2-s-full-20260917-051531` | `4bfc2dcfb6b08f402dbcc48daf94b9172d38d5b5f33970cdb3a2476348e2c3b1` | 14,089 |
 | h2-research | `arm-h2/runs/topic2-h2-research-20260917-051541` | `c1e7a066c8f21d3561d64020eeb87f0e737495fd02b380fe4796789d1ff2481c` | 8,214 |
-| h2-review | `arm-h2/runs/topic2-h2-review-20260917-053231` | `8504c2bea091baa1b6ffd311ddc4da64a31207a42b3e23c3bd4ec1e6bcf5ffda` | 5,817 |
+| h2-review | `arm-h2/runs/topic2-h2-review-20260917-053231` | `88da881acae5f2835c6f2be6b9fc1b16750e605bf48eb58e41bb1ecb490a9649` | 7,458 |
 
-Each freeze was taken with the arm's monitor stopped first and verified with an explicit assertion that no file
-in the run is newer than its manifest. Attempt-1 archives with their own manifests are under each arm's
+Each freeze was taken with the arm's monitor stopped first and verified with an explicit assertion that no
+file in the run is newer than its manifest. Attempt-1 archives with their own manifests are under each arm's
 `arm-history/`.
 
 ### Runtime identity
 
 `claude-opus-5` via Claude Code CLI **2.1.226** (sha `4e9bec1177ce9690…`) at effort **max** on Arm S and Arm
 H2's review half; `muse-code/muse-spark-1.3-contributor` at xhigh via oh-my-pi **18.2.2**
-(sha `77c3520ab8ef8318…`) on Arm H2's research half. Protocol fingerprint `e59e71488db37fb5`. Each value read
-from the job's own record.
+(sha `77c3520ab8ef8318…`) on Arm H2's research half. Protocol fingerprint `e59e71488db37fb5`. Every value read
+from the job's own record; the gate compares the binary hash live, so a runtime that changed between gate and
+campaign fails closed.
+
+**No adjudication is done here.** The adjudicator builds the blind union from the three frozen trees above.
 
 ## Protocol
 

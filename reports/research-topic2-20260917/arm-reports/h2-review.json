@@ -1,8 +1,13 @@
 {
   "arm": "h2-review",
   "run": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231",
-  "stop_reason": null,
-  "campaign_terminal": {},
+  "stop_reason": "Stop: admitted_attempt_cap",
+  "campaign_terminal": {
+    "at": "2026-09-17T21:25:13.286632+00:00",
+    "stop_reason": "Stop: admitted_attempt_cap",
+    "partial": true,
+    "pending_intake_preserved": true
+  },
   "route": null,
   "limits": {
     "new_admissions": 12,
@@ -31,25 +36,29 @@
       "average_concurrency": null
     },
     "reconcile": {
-      "wall_seconds": 24375.539288282394,
-      "summed_job_seconds": 1945.8711686134338,
-      "average_concurrency": 0.07982884586060571
+      "wall_seconds": 57142.68285536766,
+      "summed_job_seconds": 3808.9440883426664,
+      "average_concurrency": 0.06665672485107821
     },
     "compare": {
-      "wall_seconds": 54.97304558753967,
-      "summed_job_seconds": 109.66493725776672,
-      "average_concurrency": 1.9948856041300294
+      "wall_seconds": 32700.230355978012,
+      "summed_job_seconds": 2657.719944940567,
+      "average_concurrency": 0.08127526674914394
     }
   },
-  "arm_wall_seconds": 24385.79944229126,
-  "summed_job_seconds": 1891.4005870819092,
-  "average_concurrency": 0.07756155755967276,
-  "processing_seconds": 773.6388211250305,
+  "arm_wall_seconds": 57154.07470703125,
+  "summed_job_seconds": 6466.664033283234,
+  "average_concurrency": 0.11314440950065258,
+  "processing_seconds": 10972.05582857132,
   "job_status_counts": {
-    "interrupted": 6
+    "interrupted": 6,
+    "completed": 3,
+    "cli_error": 3
   },
   "bound_by_counts": {
-    "interrupted": 6
+    "interrupted": 6,
+    "finished": 3,
+    "error": 3
   },
   "jobs": [
     {
@@ -141,21 +150,111 @@
       "lead_deliveries": 0,
       "notes_present": false,
       "runtime_terminal_reason": null
+    },
+    {
+      "job": "J0019-compare",
+      "phase": "compare",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 1120.6,
+      "requests": 46,
+      "receipts": 46,
+      "reconciled": true,
+      "captured_usd": 7.0259,
+      "leads": 1,
+      "lead_deliveries": 1,
+      "notes_present": true,
+      "runtime_terminal_reason": "completed"
+    },
+    {
+      "job": "J0020-compare",
+      "phase": "compare",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 1126.8,
+      "requests": 100,
+      "receipts": 100,
+      "reconciled": true,
+      "captured_usd": 13.2072,
+      "leads": 1,
+      "lead_deliveries": 1,
+      "notes_present": true,
+      "runtime_terminal_reason": "completed"
+    },
+    {
+      "job": "J0021-reconcile",
+      "phase": "reconcile",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 1126.2,
+      "requests": 93,
+      "receipts": 93,
+      "reconciled": true,
+      "captured_usd": 8.0618,
+      "leads": 1,
+      "lead_deliveries": 1,
+      "notes_present": true,
+      "runtime_terminal_reason": "completed"
+    },
+    {
+      "job": "J0022-reconcile",
+      "phase": "reconcile",
+      "status": "cli_error",
+      "bound_by": "error",
+      "elapsed_s": 317.1,
+      "requests": 27,
+      "receipts": 27,
+      "reconciled": true,
+      "captured_usd": 1.7471,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "runtime_terminal_reason": "api_error"
+    },
+    {
+      "job": "J0023-compare",
+      "phase": "compare",
+      "status": "cli_error",
+      "bound_by": "error",
+      "elapsed_s": 299.0,
+      "requests": 36,
+      "receipts": 36,
+      "reconciled": true,
+      "captured_usd": 3.3455,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": "api_error"
+    },
+    {
+      "job": "J0024-reconcile",
+      "phase": "reconcile",
+      "status": "cli_error",
+      "bound_by": "error",
+      "elapsed_s": 418.8,
+      "requests": 35,
+      "receipts": 35,
+      "reconciled": true,
+      "captured_usd": 2.1733,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "runtime_terminal_reason": "api_error"
     }
   ],
-  "captured_upper_usd": 8.15471075,
+  "captured_upper_usd": 43.71560424999998,
   "cap_usd": 150.0,
-  "runtime_reported_cost_usd": 0.0,
+  "runtime_reported_cost_usd": 35.5609,
   "unresolved_charge_usd": 72.0,
-  "job_end_reconciled": 0,
-  "job_count": 6,
+  "job_end_reconciled": 6,
+  "job_count": 13,
   "lead_stage_counts": {
-    "discovered": 39,
+    "discovered": 44,
     "studied": 0,
-    "reconciled": 2,
-    "comparison_delivered": 0
+    "reconciled": 7,
+    "comparison_delivered": 2
   },
-  "pending_reconcile_leads": 39,
-  "pending_compare_leads": 41,
+  "pending_reconcile_leads": 44,
+  "pending_compare_leads": 51,
   "note": "Counts and limits only. No output was adjudicated."
 }
