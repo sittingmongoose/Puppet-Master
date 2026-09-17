@@ -64,7 +64,7 @@ VOLATILE_KEYS = {"generated_at_utc", "timestamp", "elapsed_seconds", "duration_s
 
 HASH_RE = re.compile(r"\b[0-9a-f]{32,}\b")
 TIME_RE = re.compile(r"\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})?")
-SPAN_ID_RE = re.compile(r"^(?P<stem>[A-Za-z0-9_.-]+)-S\d+$")
+SPAN_ID_RE_CACHE: dict[str, re.Pattern[str]] = {}
 
 # Error kinds that a canon edit is expected to produce until the designated Plans agent reseals.
 # AGENTS.md already carves these out of a landing refusal; the script only names them.
@@ -211,6 +211,11 @@ def normalize(check: str, subcheck: str, failure: Any, root: Path) -> dict[str, 
         "path": path,
         "fields": rest,
         "stale": is_staleness(error, scrubbed),
+        # The unscrubbed failure, for the branch-path match only. Scrubbing replaces the measured
+        # `actual`/`expected` with a type tag, and some failures name a document only inside those
+        # lists, so matching against the scrubbed fields would miss them. Keys starting with an
+        # underscore are dropped before anything is printed.
+        "_raw": raw,
     }
 
 
@@ -219,6 +224,11 @@ def is_staleness(error: str, scrubbed: dict[str, Any]) -> bool:
         return True
     detail = scrubbed.get("detail")
     return isinstance(detail, str) and STALENESS_DETAIL_MARKER in detail
+
+
+def public(item: dict[str, Any]) -> dict[str, Any]:
+    """The item without the working fields that are not meant to be printed."""
+    return {key: value for key, value in item.items() if not key.startswith("_")}
 
 
 def bucket_of(item: dict[str, Any]) -> str:
@@ -309,16 +319,17 @@ def path_tokens(paths: list[str]) -> list[tuple[str, str]]:
     return out
 
 
-def names_branch_path(item: dict[str, Any], tokens: list[tuple[str, str]]) -> list[str]:
+def names_branch_path(item: dict[str, Any], tokens: list[tuple[str, str]], root: Path) -> list[str]:
     """Which of the branch's paths this failure names. Wide on purpose: reporting a failure that
-    only mentions a branch path is safe, missing one is not."""
-    text = canonical({"path": item["path"], **item["fields"]})
+    only mentions a branch path is safe, missing one is not. Reads the unscrubbed failure, so a
+    document named only inside a measured `actual` or `expected` list still counts."""
+    text = strip_root(canonical(item["_raw"]), root)
     hits = []
     for path, stem in tokens:
         if contains_path(text, path):
             hits.append(path)
             continue
-        if stem and mentions_span_stem(item, stem):
+        if stem and mentions_span_stem(text, stem):
             hits.append(path)
     return hits
 
@@ -335,14 +346,15 @@ def contains_path(text: str, path: str) -> bool:
         start = index + 1
 
 
-def mentions_span_stem(item: dict[str, Any], stem: str) -> bool:
-    for value in item["fields"].values():
-        if not isinstance(value, str):
-            continue
-        match = SPAN_ID_RE.match(value)
-        if match and match.group("stem") == stem:
-            return True
-    return False
+def mentions_span_stem(text: str, stem: str) -> bool:
+    """A snapshot failure names a document only through its span ids: `<stem>-S0001` for
+    `Plans/<stem>.md`. The quotes keep the id a whole JSON value, so `assistant-chat` does not
+    match `assistant-chat-design-S0001`."""
+    pattern = SPAN_ID_RE_CACHE.get(stem)
+    if pattern is None:
+        pattern = re.compile('"' + re.escape(stem) + r'-S\d+"')
+        SPAN_ID_RE_CACHE[stem] = pattern
+    return pattern.search(text) is not None
 
 
 # -------------------------------------------------------------------------------------- baseline
@@ -514,10 +526,9 @@ def main() -> int:
         fingerprints = known.get(name, set())
         if fingerprints is not None and item["key"].rsplit("|", 1)[1] not in fingerprints:
             new_items.append(item)
-        hits = names_branch_path(item, tokens)
+        hits = names_branch_path(item, tokens, root)
         if hits:
-            item = {**item, "branch_paths": hits}
-            on_branch.append(item)
+            on_branch.append({**public(item), "branch_paths": hits})
 
     grown = grown_buckets(seen_buckets, baseline_counts)
     resolved = sorted(set(baseline_counts) - set(seen_buckets))
@@ -536,7 +547,7 @@ def main() -> int:
                 "baseline_commit": baseline.get("commit"),
                 "branch_paths": touched,
                 "checks": {check: statuses[check] for check in CHECKS},
-                "new": new_items,
+                "new": [public(item) for item in new_items],
                 "on_branch": on_branch,
                 "grown_buckets": grown,
                 "resolved_buckets": resolved,

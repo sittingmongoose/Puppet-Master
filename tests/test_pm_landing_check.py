@@ -333,7 +333,7 @@ class BaselineDiff(unittest.TestCase):
 class BranchPathMatch(unittest.TestCase):
     def match(self, failure, paths, check="run-gates", subcheck="s"):
         item = M.normalize(check, subcheck, failure, CHECKOUT)
-        return M.names_branch_path(item, M.path_tokens(paths))
+        return M.names_branch_path(item, M.path_tokens(paths), CHECKOUT)
 
     def test_the_path_field_matches(self):
         self.assertEqual(self.match(STALE_HASH, ["Plans/00-plans-index.md"]), ["Plans/00-plans-index.md"])
@@ -376,6 +376,25 @@ class BranchPathMatch(unittest.TestCase):
 
     def test_a_failure_that_names_nothing_on_the_branch_does_not_match(self):
         self.assertEqual(self.match(SPAN_META, ["scripts/pm-landing-check.py"]), [])
+
+    def test_a_document_named_only_inside_a_measured_value_still_matches(self):
+        """The key drops actual/expected, but the branch match reads the failure as it came:
+        current_snapshot_batch_doc_set_not_exactly_once names its documents only in those lists."""
+        failure = {
+            "path": "Plans/.plan_migration/run-017/batch_report.jsonl",
+            "error": "current_snapshot_batch_doc_set_not_exactly_once",
+            "expected": ["Plans/00-plans-index.md", "Plans/Decision_Log.md"],
+            "actual": ["Plans/00-plans-index.md"],
+        }
+        item = M.normalize("plan-migration-validate", "", failure, CHECKOUT)
+        self.assertEqual(item["fields"]["expected"], "<list>")
+        self.assertEqual(self.match(failure, ["Plans/Decision_Log.md"]), ["Plans/Decision_Log.md"])
+
+    def test_the_printed_item_carries_no_private_fields(self):
+        item = M.normalize("run-gates", "s", STALE_HASH, CHECKOUT)
+        self.assertIn("_raw", item)
+        self.assertNotIn("_raw", M.public(item))
+        self.assertEqual(set(M.public(item)), {"key", "check", "subcheck", "error", "path", "fields", "stale"})
 
     def test_a_touched_script_is_matched_by_its_own_path(self):
         failure = {"path": "Plans/.plan_index/plan_units.jsonl", "error": "implementation_surface_missing_or_untyped",
