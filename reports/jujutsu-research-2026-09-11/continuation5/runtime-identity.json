@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-17T14:46:26Z",
+  "generated_at": "2026-09-17T19:08:02Z",
   "method": "Runtime identity and protocol fingerprints for every continuation-5 run.\n\nRuntime identity is taken from each job's OWN record: every adapter hashes and\nversion-checks the binary it is about to run and writes that into raw-*/run.json. The\ninstalled_now block is a live reading taken when this script runs, so a runtime that\nchanged mid-phase shows up as a disagreement instead of being papered over.\n\nThe protocol fingerprint is the first 16 hex characters of\nsha256(json.dumps({file: sha256}, sort_keys=True)) over the key protocol files as the\nrun itself recorded them in run.json['protocol_sha256']. Runs sharing a fingerprint ran\nidentical code; nothing here is asserted from memory.",
   "key_files": [
     "discovery_to_plan.py",
@@ -207,6 +207,43 @@
             "J0058-compare"
           ],
           "job_count": 12
+        }
+      ]
+    },
+    {
+      "run": "jujutsu-t80-20260917-183819",
+      "arm": "t80",
+      "route": {
+        "adapter": "claude",
+        "model": "opus",
+        "effort": "xhigh"
+      },
+      "protocol_fingerprint": "26b8419edb275cfd",
+      "protocol_key_file_sha256": {
+        "discovery_to_plan.py": "7b3df6a00936",
+        "cost_watch.py": "ce03a0ba1570",
+        "bounded_campaign.py": "dae03021f1b9",
+        "adapters/claude_native.py": "359c944f90ab",
+        "adapters/omp_native.py": "55489f0316d6",
+        "native_receipts.py": "87bf4f2337d2"
+      },
+      "jobs_with_native_records": 7,
+      "runtimes": [
+        {
+          "adapter": "claude",
+          "binary": "/home/sittingmongoose/.local/share/claude/versions/2.1.226",
+          "sha256": "4e9bec1177ce9690e8bd988b710ac24105e70da428dd094c5adcbbe786a55555",
+          "version": "2.1.226 (Claude Code)",
+          "jobs": [
+            "J0017-reconcile",
+            "J0018-reconcile",
+            "J0019-reconcile",
+            "J0020-compare",
+            "J0021-compare",
+            "J0022-compare",
+            "J0023-reconcile"
+          ],
+          "job_count": 7
         }
       ]
     },

@@ -1,6 +1,6 @@
 {
   "note": "Every frozen output tree, named by a sorted SHA-256 file manifest and one manifest digest. Raw trees stay outside this repository under ~/PM-Experiments/jujutsu-followup-20260911/continuation5/. Telemetry writers (the arm monitor, the allowance heartbeat) are stopped before a tree is hashed.",
-  "generated_at": "2026-09-17T14:47:06Z",
+  "generated_at": "2026-09-17T19:08:04Z",
   "trees": {
     "p-depth": {
       "run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-p-depth-20260917-043853",
@@ -25,6 +25,14 @@
       "total_bytes": 449932843,
       "manifest_sha256": "17b32556b5d3491e526a2a84384ad048030a856f84d643e01305502149e550e0",
       "manifest_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/arm-outputs/b-compare-manifest.json"
+    },
+    "t80": {
+      "run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-183819",
+      "frozen_at": "2026-09-17T19:07:41Z",
+      "file_count": 5947,
+      "total_bytes": 188951818,
+      "manifest_sha256": "7b8c1ad07552c8e54082352525b39efe294a86fc8a3bb2d142cb2732c3503d97",
+      "manifest_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/arm-outputs/t80-manifest.json"
     }
   }
 }

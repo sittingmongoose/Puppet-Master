@@ -169,6 +169,48 @@ the cheap half of the work to a cheap model moved it to 32. Arm B's totals are n
 more than Arm P and its two stages together exceed the 75-minute target, though each stage on its own is
 inside it. None of these outputs has been adjudicated, so this table is reach, not quality.
 
+## Sweep arm T80 — cut short by the sentinel at 7 of 12 admissions
+
+T80 repeats `claude-hicap` exactly — same premium artifacts and starting state, **frozen lead order**,
+Opus 5 at effort **xhigh**, $20 per job, three workers, frozen batching — with one authorized change: an
+**80-response** ceiling instead of 160, at 3 600 s and a $150 cap. It asks whether 80 buys most of what 160
+bought, given that goal 2's 40 capped 11 of claude-hicap's 12 jobs while 160 capped none.
+
+It did not get to answer. Seven admissions in, the sentinel fired on a typed
+`{"status":"allowed_warning","rateLimitType":"seven_day","utilization":0.25}` record — the **seven-day**
+window, not the five-hour one — and the stop rule is "first `allowed_warning` on any window". The campaign
+ended on `Stop: insufficient_priced_usage_headroom`, the designed monetary stop, with every job receipted.
+
+| Stage | Jobs | Wall s | Summed job s | Avg concurrency |
+|---|---|---|---|---|
+| reconcile | 4 | 1 595.3 | 2 787.1 | 1.747 |
+| compare | 3 | 824.3 | 2 089.0 | 2.534 |
+| **arm** | **7** | **1 663.1** | **4 876.1** | **2.932** |
+
+| bound_by | Jobs | What it really was |
+|---|---|---|
+| finished | 3 | the job ended on its own |
+| responses | 1 | `J0017-reconcile` hit the 80-response ceiling exactly |
+| budget | 3 | **not money — the sentinel.** Meter stop reason `captured_plus_live_cap`, i.e. the hold |
+
+Captured **$36.6835** of the $150 cap; the dearest job was $6.17 of its $20 budget, so none of the three
+"budget" rows is a real monetary limit. All 7 jobs reconciled, receipts equal requests, $0.00 unresolved;
+6 of 7 wrote `notes.md`; 10 lead deliveries receipted. Responses per job 19–80, mean 57.6.
+
+**5 of the 88 leads reached a comparison** — but on 7 of 12 admissions, so this is not a like-for-like recall
+number against Arm B's 32, Arm P's 16 or claude-hicap's 14. The one genuine ceiling reading is that at 80,
+one job in seven was still turn-capped, where claude-hicap at 160 had none capped and ran 37–110 per job.
+
+### A correction about the hold
+
+Earlier in this run the admission hold was described as stopping admissions "while live jobs run to their own
+terminal". That is only half right, and T80 is what showed it. `Meter.request_boundary` uses the same
+committed-over-cap test as `Meter.reserve`, so the hold also denies the **next request** of jobs already
+running: it stops admissions *and* truncates live jobs at their next request boundary. It remains graceful —
+no worker is killed, every job writes a terminal receipt and reconciles — and two of the three truncated jobs
+still delivered their leads and wrote notes, but the third was cut at 19 responses and delivered nothing. The
+accurate description is "stops admissions and truncates live jobs cleanly".
+
 ## Rate limits
 
 The Claude CLI emits a typed `{"type":"rate_limit_event","rate_limit_info":{…}}` object. That object is the
@@ -210,6 +252,7 @@ verifiable rather than asserted. `runtime-identity.json` is taken from each job'
 | `arm-reports/p-depth.json` | Arm P depth stage, per job: status, bound_by, elapsed, requests, receipts, reconciliation, cost, deliveries |
 | `arm-reports/b-breadth.json` | Arm B breadth stage, same per-job detail |
 | `arm-reports/b-compare.json` | Arm B compare stage, same per-job detail |
+| `arm-reports/t80.json` | Sweep arm T80, same per-job detail |
 | `arm-b-delivery-order.json` | The order b-breadth delivered its 54 reconciled leads in, which the compare stage admitted in |
 | `compare-isolation.json` | The pre-activation proof that the compare stage can only depend on Muse's reconcile deliveries |
 | `b-compare-attempts.json` | Both compare attempts side by side: what each reached, cost and stopped on, and where attempt 1 is archived |
@@ -223,5 +266,10 @@ verifiable rather than asserted. `runtime-identity.json` is taken from each job'
 
 ## Still to run
 
-The sweep arms T80, A24 and T320 are patched in, gate-verified and held until the coordinator confirms the
-window. Their limits, and how each differs from goal 2, are recorded in each arm policy's `limits_note`.
+**A24 and T320 are held.** The fresh probe taken after T80's terminal returned `allowed_warning` on the
+**seven-day** window at 0.25 utilization, resetting **2026-09-24T12:00:00 Z**, and the rule is to hold and
+report on a warning. The five-hour window was clean at the time (reset 23:30 Z), so waiting out five hours
+will not clear this: the seven-day warning persists for a week. Proceeding needs either that window to clear
+or a decision to gate on the five-hour window alone. T80 itself also has 5 unused admissions and could be
+regranted. All three sweep arms remain patched in and gate-verified; their limits and how each differs from
+goal 2 are recorded in each arm policy's `limits_note`.
