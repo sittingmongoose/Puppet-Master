@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L848-L4012
+Source lines: L848-L4013
 
-Source SHA256: `32f87298e6fe4d773294cab054c8fd76b3bee915d0e6c704bd70fc8cad0cb7c1`
+Source SHA256: `a386cfe3da2297d6132cee6531321d1fd2dbc709180eb4c26fe543a8102e11ba`
 
 ---
 
@@ -2993,7 +2993,8 @@ canonical_text: >-
   minutes, and on a nightly schedule; migration_snapshot runs only nightly, in a worktree, by the
   designated Plans agent, because it creates a new tracked run directory; a landing is
   refused when a failure names a file the branch touches, and proceeds with the failures reported
-  when every failure names files the branch does not touch.
+  when every failure names files the branch does not touch; stale governance hashes for the documents
+  the branch itself edited are the expected state until the designated reseal and never stop a landing.
 gui_related: false
 gui_classification_reason: Seal profile composition and repository gate placement are planning governance timing, not GUI behavior.
 split_recommended: false

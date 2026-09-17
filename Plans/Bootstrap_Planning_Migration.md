@@ -453,7 +453,11 @@ the nightly schedule in a worktree by the designated Plans agent. They fail on t
 which is why the landing rule turns on whose files a failure names rather than on the gate passing
 outright. A landing is refused when a failure names a file the landing branch touches, and that
 failure is fixed on the branch; when every failure names files the branch does not touch, the landing
-proceeds and the failures are reported, which is the rule the shard check already follows. The
+proceeds and the failures are reported, which is the rule the shard check already follows.
+Stale-hash failures for documents the branch itself edited, in Spec Lock, owner or artifact evidence
+hashes, the readiness report or the plan-migration inventory, are the expected consequence of editing
+canon before the designated Plans agent's next reseal; they never stop a landing and are reported with
+a reseal request. The
 nightly run covers the repository whether or not anything landed, so repository qualification never
 depends on a branch having been pushed. `AGENTS.md` and `.claude/CLAUDE.md` carry this step in their
 landing procedure.
@@ -474,7 +478,11 @@ canonical_text: >-
   ten minutes there. A landing is refused when a repository-wide failure
   names a file the landing branch touches, and that failure is fixed on the branch; when every
   failure names files the branch does not touch, the landing proceeds and the failures are reported,
-  which is the rule the shard check already follows. The nightly run covers the repository whether or
+  which is the rule the shard check already follows. Stale-hash failures for documents the branch
+  itself edited, in Spec Lock, owner or artifact evidence hashes, the readiness report or the
+  plan-migration inventory, are the expected consequence of editing canon before the designated
+  Plans agent's next reseal; they never stop a landing and are reported with a reseal request. The
+  nightly run covers the repository whether or
   not anything landed, so repository qualification never depends on a branch having been pushed.
   AGENTS.md and .claude/CLAUDE.md carry this step in their landing procedure with the measured cost
   stated.
@@ -487,6 +495,7 @@ acceptance_criteria:
   - The landing procedure in AGENTS.md and .claude/CLAUDE.md names run-gates, audit-governance, and the migration validate as one step after the fast-forward and the shard check, states the measured cost of about ten minutes, and keeps the migration snapshot out of the shared checkout.
   - A repository-wide failure that names a file the landing branch touches stops the landing and is fixed on the branch.
   - A repository-wide failure that names only files the landing branch does not touch does not stop the landing; main is pushed and the failures are reported, exactly as the shard-check rule reads.
+  - A stale-hash failure for a document the landing branch itself edited (Spec Lock, owner or artifact evidence hashes, the readiness report, the plan-migration inventory) is the expected consequence of editing canon before the next designated reseal; it never stops the landing and is reported with a reseal request.
   - All four operations, including the migration snapshot taken in a worktree by the designated Plans agent, run on a nightly schedule against main, independently of whether anything landed.
   - No per-plan seal is required to run them, and no seal record claims their outcome.
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
