@@ -3112,6 +3112,7 @@
         "selected_historical_operation_id": "jj-op:alpha:12",
         "historical_operation_result": "verified_on_disposable_copy",
         "object_closure_result": "complete",
+        "object_verification_depth": "full_data_read_passed",
         "workspace_map_result": "verified",
         "working_copy_relation": "dirty_files_preserved_separately",
         "colocation_activation_disposition": "restored_colocated_single_writer",
@@ -3161,6 +3162,7 @@
         "selected_historical_operation_id": "jj-op:beta:3",
         "historical_operation_result": "verified_on_disposable_copy",
         "object_closure_result": "complete",
+        "object_verification_depth": "full_data_read_passed",
         "workspace_map_result": "verified",
         "working_copy_relation": "matches_latest_snapshot",
         "colocation_activation_disposition": "owner_rebind_non_colocated_required",
@@ -3214,6 +3216,7 @@
         "selected_historical_operation_id": "jj-op:gamma:7",
         "historical_operation_result": "verified_on_disposable_copy",
         "object_closure_result": "complete",
+        "object_verification_depth": "full_data_read_passed",
         "workspace_map_result": "verified",
         "working_copy_relation": "dirty_files_preserved_separately",
         "colocation_activation_disposition": "restored_colocated_single_writer",
@@ -3674,6 +3677,33 @@
         "working_copy_relation": "unverified"
       },
       "expected_error": "activation readiness requires a verified captured working-copy relationship"
+    },
+    {
+      "name": "backup_jj_complete_object_closure_rejects_a_structure_only_verification",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_restore_ready_for_owner_activation_is_internally_consistent",
+      "patch": {
+        "object_verification_depth": "structure_passed"
+      },
+      "expected_error": "a complete object closure cannot rest on a structure-only pass that never read object content"
+    },
+    {
+      "name": "backup_jj_complete_object_closure_rejects_a_sampled_read",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_restore_ready_for_owner_activation_is_internally_consistent",
+      "patch": {
+        "object_verification_depth": "sampled_data_passed"
+      },
+      "expected_error": "a complete object closure cannot rest on a sampled read that leaves unread objects"
+    },
+    {
+      "name": "backup_jj_complete_object_closure_rejects_an_unrun_verification",
+      "definition": "backup_jj_restore_verification_receipt",
+      "base_valid": "backup_jj_restore_ready_for_owner_activation_is_internally_consistent",
+      "patch": {
+        "object_verification_depth": "not_run"
+      },
+      "expected_error": "a complete object closure cannot be reported when object verification did not run"
     },
     {
       "name": "backup_jj_restore_verification_cannot_push_remote",

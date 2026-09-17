@@ -2582,6 +2582,7 @@
         "selected_historical_operation_id",
         "historical_operation_result",
         "object_closure_result",
+        "object_verification_depth",
         "workspace_map_result",
         "working_copy_relation",
         "colocation_activation_disposition",
@@ -2655,6 +2656,9 @@
             "partial",
             "failed"
           ]
+        },
+        "object_verification_depth": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/integrity_verification_level"
         },
         "workspace_map_result": {
           "enum": [
@@ -2777,6 +2781,25 @@
         }
       },
       "allOf": [
+        {
+          "if": {
+            "properties": {
+              "object_closure_result": {
+                "const": "complete"
+              }
+            },
+            "required": [
+              "object_closure_result"
+            ]
+          },
+          "then": {
+            "properties": {
+              "object_verification_depth": {
+                "const": "full_data_read_passed"
+              }
+            }
+          }
+        },
         {
           "if": {
             "properties": {

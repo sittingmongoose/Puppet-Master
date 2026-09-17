@@ -490,6 +490,15 @@ acceptance_criteria:
     `colocation_activation_disposition` is `blocked_dual_writer_or_identity_collision`, or when `working_copy_relation`
     is `unverified`. `verified_read_only` keeps its existing conditions unchanged, and an explicit
     `owner_rebind_non_colocated_required` disposition remains a valid readiness path.
+  - >-
+    "Object verification" in the restore drill means full object-store integrity verification: commits, trees and blob
+    contents are read and checked. A connectivity-only or reachability-only pass cannot satisfy it, and agreement of
+    refs, bookmarks or operation-log text alone cannot pass it. The receipt states the depth that produced its result in
+    `object_verification_depth`, using the Backup owner's existing `integrity_verification_level` vocabulary, and
+    `object_closure_result` is `complete` only when that depth is `full_data_read_passed`. A torn pack and a
+    byte-flipped blob under matching refs are both detected; the byte-flipped blob is the discriminating case, because a
+    connectivity-only verifier passes it. The verification runs once on the disposable restored copy before activation,
+    never on the original and never while the capture barrier is held.
   - Ordinary restore does not activate hooks, aliases, credential helpers, filters, unsafe includes, URL user-info, extraHeaders, SSH material, forge credentials, or provider profiles. Non-secret restored refs and a separately authorized portable envelope remain pending owner validation and a fresh credential lease.
   - Operation History pivots only to existing `cmd.backup.browse`, `cmd.backup.file.compare`, and Project Backup routes; isolated operation inspection/restore uses existing `cmd.jujutsu.operation.show` and `cmd.jujutsu.operation.restore`; neutral rebind/status/remote validation uses Source Control; Forge/AutomationBinding remains Forge-owned. The exact 31-command JJ inventory is unchanged.
   - Machine records require `expected_event_types=[]`; schema and fixture success remains event-silent, handler_unavailable/static, and not runtime, native adapter, clean-host recovery, security, visual, or readiness proof.
@@ -518,7 +527,8 @@ source_lineage:
   - Plans/Source_Control_System.md#SCS-014
   - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.3
   - source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-jj-restore-readiness-consistency-106
-preserved_exact_tokens: [colocated, non-colocated, shared multi-workspace, operation heads, repository views, conflicts, abandoned, rebased, capture barrier, GC fence, ignore-working-copy, "expected_event_types=[]"]
+  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-restore-object-verification-depth-c4-01
+preserved_exact_tokens: [colocated, non-colocated, shared multi-workspace, operation heads, repository views, conflicts, abandoned, rebased, capture barrier, GC fence, ignore-working-copy, object verification, object_verification_depth, full_data_read_passed, "expected_event_types=[]"]
 negative_constraints:
   - Do not treat op-log text, a Git push, mirror clone, Git bundle, current bookmark, or reachable forge as complete JJ recovery.
   - Do not run verification or historical operation restore on the original active repository.
