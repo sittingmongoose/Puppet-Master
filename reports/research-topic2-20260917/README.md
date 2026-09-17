@@ -72,9 +72,70 @@ Targets this is measured against: **75 minutes per review stage** and **3 hours 
 
 ## Status
 
-**Both arms launched 2026-09-17 05:15Z and are running.** Per-stage wall time, summed job time, concurrency, the
-job-status and bound-by table, cost, frozen output paths with manifest hashes, and runtime identity are written
-here at each arm's terminal, in `arm-reports/`.
+**Arm H2 research half COMPLETE** 2026-09-17T05:28:38Z on the designed gate `Stop: admitted_attempt_cap`.
+**Arm H2 review half launched** 05:32:39Z on `claude-opus-5` at effort max. **Arm S still running** (discovery).
+
+### Per-stage wall time against the targets
+
+| Arm | Stage | Wall | Summed job time | Avg concurrency | Target | Against target |
+|---|---|---|---|---|---|---|
+| h2-research | discovery | 2m 55s | 2m 54s | 0.997 | — | — |
+| h2-research | implementation | 9m 25s | 12m 23s | 1.316 | — | — |
+| h2-research | history | 8m 11s | 12m 50s | 1.568 | — | — |
+| **h2-research** | **arm total** | **12m 52s** | **28m 08s** | **2.185** | **3 h** | **0.07x (under)** |
+
+### Job status and what bound each job
+
+| Arm | Jobs | Statuses | Bound by | Reconciled | Unresolved |
+|---|---|---|---|---|---|
+| h2-research | 12 | budget_truncated 10, completed 2 | **finished** 2, **responses** 10 | 12 of 12 | $0.00 |
+
+### Cost
+
+| Arm | Captured upper | Cap | Runtime-reported | Per-job range |
+|---|---|---|---|---|
+| h2-research | $0.1545 | $50 | $0.0000 | $0.0074–$0.0228 |
+
+### Responses and duration against the per-job ceilings
+
+| Arm | Responses per job | Ceiling | Longest job | Ceiling | Dearest job | Budget |
+|---|---|---|---|---|---|---|
+| h2-research | 33–41 (mean 39.7) | 40 | 177.5s | 2400s | $0.02 | $— |
+
+### Delivery counts (counts only, nothing adjudicated)
+
+| Arm | Jobs writing notes.md | Lead deliveries | Lead stage counts | Pending reconcile | Pending compare |
+|---|---|---|---|---|---|
+| h2-research | 6 of 12 | 2 | {'discovered': 32, 'studied': 0, 'reconciled': 0, 'comparison_delivered': 0} | 32 | 32 |
+
+
+Arm H2's research half used all 12 admissions in **12m 52s**, 0.07x the 3-hour pipeline target, and produced
+32 leads. Ten of its twelve jobs were bound by the **40-response ceiling**, not by money: it spent $0.1545 of
+its $50 cap. Note that the omp adapter labels a response-ceiling stop `budget_truncated`, because the stop is
+delivered by the durable Meter denying the next response; the meter records `model_request_limit` for those
+jobs and the bound-by column resolves them to **responses**. All twelve reconciled with receipts equal to
+requests and $0.00 unresolved.
+
+### Account condition that governs tonight
+
+The Claude CLI emits typed `rate_limit_event` records. Every one seen so far — 40 records across this topic and
+the two earlier continuations — reports `status: "allowed"`, on a `five_hour` window resetting
+**2026-09-17T08:30:00Z**, with `overageStatus: "rejected"` and `overageDisabledReason: "out_of_credits"`. The
+account therefore has **no overage to fall back on**: when the five-hour window is exhausted, requests are
+blocked rather than billed. With other threads sharing this account, that window — not the $250 and $150 arm
+caps — is the binding constraint.
+
+A sentinel reads those typed records every 20 seconds and, on `status != "allowed"` or `isUsingOverage`, stops
+both arms *admitting* while letting live jobs finish, by lowering the durable Meter's cap to its committed
+total so every further reservation fails and the campaign ends on the designed
+`Stop(insufficient_priced_usage_headroom)`. The allowance gate is deliberately **not** used for this: it raises
+at the top of the scheduler loop and cancels live workers.
+
+**A measurement gap is recorded rather than approximated.** A utilization threshold cannot be evaluated: no
+utilization field exists. All 40 records carry exactly six fields — `status`, `resetsAt`, `rateLimitType`,
+`overageStatus`, `overageDisabledReason`, `isUsingOverage` — and the CLI exposes utilization nowhere else
+(`claude --help` has no usage or quota command; `auth status` returns only identity and subscription fields).
+The sentinel enforces the typed conditions exactly and asserts nothing about a percentage it cannot see.
 
 ## Protocol
 

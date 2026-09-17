@@ -1,0 +1,258 @@
+{
+  "arm": "h2-research",
+  "run": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-research-20260917-051541",
+  "stop_reason": "Stop: admitted_attempt_cap",
+  "campaign_terminal": {
+    "at": "2026-09-17T05:28:38.596997+00:00",
+    "stop_reason": "Stop: admitted_attempt_cap",
+    "partial": true,
+    "pending_intake_preserved": true
+  },
+  "route": null,
+  "limits": {
+    "new_admissions": 12,
+    "workers": 3,
+    "job_seconds": 2400,
+    "max_model_requests": null,
+    "job_budget_usd": null,
+    "arm_seconds": 14400,
+    "batch_chars": 10000,
+    "batch_max_leads": 3
+  },
+  "stage_timing": {
+    "discovery": {
+      "wall_seconds": 174.94116878509521,
+      "summed_job_seconds": 174.343,
+      "average_concurrency": 0.9965807431764101
+    },
+    "implementation": {
+      "wall_seconds": 564.765175819397,
+      "summed_job_seconds": 742.9920000000001,
+      "average_concurrency": 1.3155768659461349
+    },
+    "history": {
+      "wall_seconds": 491.17549896240234,
+      "summed_job_seconds": 770.171,
+      "average_concurrency": 1.5680159161582157
+    },
+    "reconcile": {
+      "wall_seconds": 0,
+      "summed_job_seconds": 0,
+      "average_concurrency": null
+    },
+    "compare": {
+      "wall_seconds": 0,
+      "summed_job_seconds": 0,
+      "average_concurrency": null
+    }
+  },
+  "arm_wall_seconds": 772.3548221588135,
+  "summed_job_seconds": 1687.506,
+  "average_concurrency": 2.1848843971521306,
+  "processing_seconds": 772.4396378993988,
+  "job_status_counts": {
+    "budget_truncated": 10,
+    "completed": 2
+  },
+  "bound_by_counts": {
+    "responses": 10,
+    "finished": 2
+  },
+  "jobs": [
+    {
+      "job": "J0001-discovery",
+      "phase": "discovery",
+      "status": "budget_truncated",
+      "bound_by": "responses",
+      "elapsed_s": 174.3,
+      "requests": 40,
+      "receipts": 40,
+      "reconciled": true,
+      "captured_usd": 0.0103,
+      "leads": 0,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": null
+    },
+    {
+      "job": "J0002-implementation",
+      "phase": "implementation",
+      "status": "budget_truncated",
+      "bound_by": "responses",
+      "elapsed_s": 97.7,
+      "requests": 40,
+      "receipts": 40,
+      "reconciled": true,
+      "captured_usd": 0.0099,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": null
+    },
+    {
+      "job": "J0003-history",
+      "phase": "history",
+      "status": "budget_truncated",
+      "bound_by": "responses",
+      "elapsed_s": 175.0,
+      "requests": 40,
+      "receipts": 40,
+      "reconciled": true,
+      "captured_usd": 0.0145,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": null
+    },
+    {
+      "job": "J0004-implementation",
+      "phase": "implementation",
+      "status": "budget_truncated",
+      "bound_by": "responses",
+      "elapsed_s": 116.0,
+      "requests": 41,
+      "receipts": 41,
+      "reconciled": true,
+      "captured_usd": 0.0123,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": true,
+      "runtime_terminal_reason": null
+    },
+    {
+      "job": "J0005-implementation",
+      "phase": "implementation",
+      "status": "budget_truncated",
+      "bound_by": "responses",
+      "elapsed_s": 89.9,
+      "requests": 40,
+      "receipts": 40,
+      "reconciled": true,
+      "captured_usd": 0.0074,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": null
+    },
+    {
+      "job": "J0006-implementation",
+      "phase": "implementation",
+      "status": "budget_truncated",
+      "bound_by": "responses",
+      "elapsed_s": 157.6,
+      "requests": 41,
+      "receipts": 41,
+      "reconciled": true,
+      "captured_usd": 0.0141,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": true,
+      "runtime_terminal_reason": null
+    },
+    {
+      "job": "J0007-history",
+      "phase": "history",
+      "status": "budget_truncated",
+      "bound_by": "responses",
+      "elapsed_s": 158.3,
+      "requests": 41,
+      "receipts": 41,
+      "reconciled": true,
+      "captured_usd": 0.0139,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": true,
+      "runtime_terminal_reason": null
+    },
+    {
+      "job": "J0008-history",
+      "phase": "history",
+      "status": "budget_truncated",
+      "bound_by": "responses",
+      "elapsed_s": 117.8,
+      "requests": 40,
+      "receipts": 40,
+      "reconciled": true,
+      "captured_usd": 0.0127,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": null
+    },
+    {
+      "job": "J0009-implementation",
+      "phase": "implementation",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 142.9,
+      "requests": 39,
+      "receipts": 39,
+      "reconciled": true,
+      "captured_usd": 0.0124,
+      "leads": 1,
+      "lead_deliveries": 1,
+      "notes_present": true,
+      "runtime_terminal_reason": null
+    },
+    {
+      "job": "J0010-history",
+      "phase": "history",
+      "status": "budget_truncated",
+      "bound_by": "responses",
+      "elapsed_s": 177.5,
+      "requests": 41,
+      "receipts": 41,
+      "reconciled": true,
+      "captured_usd": 0.0154,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": true,
+      "runtime_terminal_reason": null
+    },
+    {
+      "job": "J0011-history",
+      "phase": "history",
+      "status": "budget_truncated",
+      "bound_by": "responses",
+      "elapsed_s": 141.6,
+      "requests": 40,
+      "receipts": 40,
+      "reconciled": true,
+      "captured_usd": 0.0088,
+      "leads": 1,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "runtime_terminal_reason": null
+    },
+    {
+      "job": "J0012-implementation",
+      "phase": "implementation",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 138.9,
+      "requests": 33,
+      "receipts": 33,
+      "reconciled": true,
+      "captured_usd": 0.0228,
+      "leads": 1,
+      "lead_deliveries": 1,
+      "notes_present": true,
+      "runtime_terminal_reason": null
+    }
+  ],
+  "captured_upper_usd": 0.15450725399999996,
+  "cap_usd": 50,
+  "runtime_reported_cost_usd": 0.0,
+  "unresolved_charge_usd": 0.0,
+  "job_end_reconciled": 12,
+  "job_count": 12,
+  "lead_stage_counts": {
+    "discovered": 32,
+    "studied": 0,
+    "reconciled": 0,
+    "comparison_delivered": 0
+  },
+  "pending_reconcile_leads": 32,
+  "pending_compare_leads": 32,
+  "note": "Counts and limits only. No output was adjudicated."
+}
