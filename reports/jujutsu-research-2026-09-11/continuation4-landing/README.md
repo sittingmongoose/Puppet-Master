@@ -107,6 +107,39 @@ cites the withdrawn claim.
 assigned `DL-056` and `DL-057` to the two cards, so the seven shape answers took the next free number, `DL-058`. The
 seven answers are chronologically first and numerically last; the numbers are identifiers, not an ordering claim.
 
+## A landing hazard worth knowing: a stale index blocks every ff-merge
+
+This branch's first landing attempt was refused, and the cause is worth recording because it is invisible to the
+check `AGENTS.md` prescribes.
+
+`git status` in the shared checkout showed 250 paths as `MM`, six of which this branch touches. Read literally, that
+is the condition that says stop and hand the branch over: another thread has uncommitted changes in files the branch
+touches. It was not that.
+
+Two commands tell the cases apart, and they disagree:
+
+```
+git diff HEAD --name-only      # 1 path: .omp/lsp.json, a local tool config
+git diff --cached --name-only   # 248 paths
+```
+
+The working tree was byte-identical to `HEAD` on every one of those 250 paths. What differed was the **staging area**:
+someone had staged the pre-`2a92905501` content and never committed or reset it, so the index held blobs matching
+neither `HEAD` nor the working tree. That is what produces `MM`, and it is what makes `git merge --ff-only` refuse
+with "Your local changes to the following files would be overwritten by merge" even though no local change exists.
+
+The distinction matters because the two cases want opposite responses. Real uncommitted work in a file the branch
+touches means stop, because a landing would strand it. A stale index means nothing is at risk: the content on disk
+already equals `HEAD`, and `git -C /mnt/Cursor/PuppetMaster reset` — mixed, no path arguments, no `--hard` — clears
+the staging area and rewrites no file. This landing confirmed the diagnosis with a third check before acting: a
+sampled staged blob equalled the `HEAD~1` version, dating the staged content to before the commit that was already
+`HEAD`.
+
+The rule in `AGENTS.md` is unchanged and was followed: the branch was handed back rather than landed, and the index
+was cleared only after the owner authorized it. What this adds is the diagnostic. **A lander who sees `MM` on files
+they touch should run `git diff HEAD --name-only` before concluding anything.** If it comes back empty, or names only
+files outside the branch, the working tree is clean and the obstruction is an abandoned index, not somebody's work.
+
 ## Claim boundary
 
 Static schema, fixture, shard, index and semantic-gate integrity only. No governance seal, runtime certification,
