@@ -1,0 +1,655 @@
+{
+  "schema_id": "pm.external_research.contract_fixtures.v1",
+  "owner_schema": "Plans/external_research_contracts.schema.json",
+  "claim_boundary": "Static schema and fixture consistency only. No research job, adjudication, packet delivery, budget denial or provenance check is executed; runtime, provider, recovery, security, visual and performance proof remains NOT_RUN.",
+  "owner_doc": "Plans/External_Research.md",
+  "valid": [
+    {
+      "name": "job_reconcile_admits_the_frozen_snapshot",
+      "definition": "research_job_record",
+      "value": {
+        "schema_id": "pm.external_research.research_job.v1",
+        "schema_version": "1.0.0",
+        "research_job_id": "erj-reconcile-0001",
+        "topic_id": "ertopic-jujutsu-0001",
+        "project_id": "project:01",
+        "arm_id": "arm-strong-review",
+        "stage": "reconcile",
+        "admitted_inputs": [
+          {
+            "input_class": "frozen_plans_snapshot",
+            "path": "Plans/.plan_index/plan_units.jsonl",
+            "sha256": "3f2a1c4e5d6b7a8c9e0f1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f"
+          },
+          {
+            "input_class": "product_brief",
+            "path": "topics/jujutsu/brief.md",
+            "sha256": "a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f90"
+          },
+          {
+            "input_class": "arm_artifact",
+            "path": "jobs/J0001-discovery/workspace/notes.md",
+            "sha256": "0f1e2d3c4b5a69788796a5b4c3d2e1f00f1e2d3c4b5a69788796a5b4c3d2e1f0"
+          }
+        ],
+        "admitted_lead_count": 8,
+        "max_model_responses": 160,
+        "max_job_seconds": 2400,
+        "responses_admitted": 66,
+        "elapsed_seconds": 1070.0,
+        "terminal_state": "finished",
+        "bound_by": "designed_stop",
+        "bound_by_source": "both",
+        "assertions_saved": 14,
+        "run_manifest_ref": "ermf-0001"
+      }
+    },
+    {
+      "name": "job_discovery_sees_the_brief_only",
+      "definition": "research_job_record",
+      "value": {
+        "schema_id": "pm.external_research.research_job.v1",
+        "schema_version": "1.0.0",
+        "research_job_id": "erj-discovery-0001",
+        "topic_id": "ertopic-jujutsu-0001",
+        "project_id": "project:01",
+        "arm_id": "arm-breadth",
+        "stage": "discovery",
+        "admitted_inputs": [
+          {
+            "input_class": "product_brief",
+            "path": "topics/jujutsu/brief.md",
+            "sha256": "a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f90"
+          }
+        ],
+        "admitted_lead_count": 23,
+        "max_model_responses": 40,
+        "max_job_seconds": 2400,
+        "responses_admitted": 40,
+        "elapsed_seconds": 595.1,
+        "terminal_state": "responses",
+        "bound_by": "response_ceiling",
+        "bound_by_source": "durable_meter",
+        "assertions_saved": 3,
+        "run_manifest_ref": "ermf-0001"
+      }
+    },
+    {
+      "name": "finding_correction_lands_under_repair_authorization",
+      "definition": "research_finding_record",
+      "value": {
+        "schema_id": "pm.external_research.finding.v1",
+        "schema_version": "1.0.0",
+        "finding_id": "ERF-0106",
+        "topic_id": "ertopic-jujutsu-0001",
+        "union_id": "erunion-jujutsu-110",
+        "finding_class": "correction",
+        "title": "Restore readiness consistency",
+        "proposition": "A readiness receipt must not report ready for owner activation while a blocking workspace, colocation or working-copy field is set.",
+        "citations": [
+          {
+            "source_path": "Plans/Jujutsu_Integration.md",
+            "locator": "JJI-008",
+            "sha256": "9a8b7c6d5e4f30211203f4e5d6c7b8a99a8b7c6d5e4f30211203f4e5d6c7b8a9"
+          }
+        ],
+        "credit_state": "credited",
+        "credited_job_ref": "erj-reconcile-0001",
+        "in_union": true,
+        "landing_path": "repair_authorization",
+        "rejection_check_refs": []
+      }
+    },
+    {
+      "name": "finding_capability_waits_for_the_user",
+      "definition": "research_finding_record",
+      "value": {
+        "schema_id": "pm.external_research.finding.v1",
+        "schema_version": "1.0.0",
+        "finding_id": "ERF-0110",
+        "topic_id": "ertopic-jujutsu-0001",
+        "union_id": "erunion-jujutsu-110",
+        "finding_class": "capability",
+        "title": "Creation-time object-format selection",
+        "proposition": "A new repository may offer an evidence-gated object-format choice at creation time.",
+        "citations": [
+          {
+            "source_path": "reports/jujutsu-research-2026-09-11/continuation3/final/README.md",
+            "locator": "F110",
+            "sha256": "5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d"
+          }
+        ],
+        "credit_state": "credited",
+        "credited_job_ref": "erj-reconcile-0001",
+        "in_union": true,
+        "landing_path": "user_decision",
+        "rejection_check_refs": []
+      }
+    },
+    {
+      "name": "finding_candidate_outside_the_union",
+      "definition": "research_finding_record",
+      "value": {
+        "schema_id": "pm.external_research.finding.v1",
+        "schema_version": "1.0.0",
+        "finding_id": "ERC-C4C-01",
+        "topic_id": "ertopic-jujutsu-0001",
+        "union_id": "erunion-jujutsu-110",
+        "finding_class": "correction",
+        "title": "Restore-drill object verification has no defined depth",
+        "proposition": "A completeness result is admissible whatever verification depth produced it, so a connectivity-only verifier would pass a corrupt-blob closure.",
+        "citations": [
+          {
+            "source_path": "reports/jujutsu-research-2026-09-11/continuation4/adjudication/consolidated-candidates.json",
+            "locator": "C4C-01",
+            "sha256": "c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3"
+          }
+        ],
+        "credit_state": "candidate",
+        "credited_job_ref": null,
+        "in_union": false,
+        "landing_path": "repair_authorization",
+        "rejection_check_refs": [
+          "erunion-jujutsu-110#rejected-marker-only-conflict-command",
+          "erunion-jujutsu-110#rejected-mutating-status-refresh-branch"
+        ]
+      }
+    },
+    {
+      "name": "finding_unsupported_or_already_covered",
+      "definition": "research_finding_record",
+      "value": {
+        "schema_id": "pm.external_research.finding.v1",
+        "schema_version": "1.0.0",
+        "finding_id": "ERF-0044",
+        "topic_id": "ertopic-jujutsu-0001",
+        "union_id": "erunion-jujutsu-110",
+        "finding_class": "unsupported_or_covered",
+        "title": "Adapter implementation shape",
+        "proposition": "The proposal restates an obligation the owner document already carries.",
+        "citations": [
+          {
+            "source_path": "Plans/Source_Control_System.md",
+            "locator": "SCS-003",
+            "sha256": "9a8b7c6d5e4f30211203f4e5d6c7b8a99a8b7c6d5e4f30211203f4e5d6c7b8a9"
+          }
+        ],
+        "credit_state": "refused",
+        "credited_job_ref": null,
+        "in_union": true,
+        "landing_path": "none",
+        "rejection_check_refs": []
+      }
+    },
+    {
+      "name": "packet_one_artifact_two_cards",
+      "definition": "research_decision_packet",
+      "value": {
+        "schema_id": "pm.external_research.decision_packet.v1",
+        "schema_version": "1.0.0",
+        "decision_packet_id": "erdp-0001",
+        "topic_id": "ertopic-jujutsu-0001",
+        "project_id": "project:01",
+        "artifact_ref": "chat_artifact:erdp-0001",
+        "card_refs": [
+          "erdc-0001",
+          "erdc-0002"
+        ],
+        "presentation": "one_at_a_time",
+        "status_label_mode": "text_only",
+        "created_at_utc": "2026-09-17T05:00:40+00:00"
+      }
+    },
+    {
+      "name": "card_pending_capability_item",
+      "definition": "research_decision_card",
+      "value": {
+        "schema_id": "pm.external_research.decision_card.v1",
+        "schema_version": "1.0.0",
+        "decision_card_id": "erdc-0001",
+        "decision_packet_id": "erdp-0001",
+        "finding_ref": "ERF-0110",
+        "finding_class": "capability",
+        "plain_name": "Choose the storage format when you create a repository",
+        "question": "Should Puppet Master let you pick the repository storage format when you create a new one?",
+        "why_it_came_up": "The research found that the format is fixed at creation and cannot be changed later, so the choice has to be offered there or not at all.",
+        "what_you_get": "A choice at creation time, with the option disabled and explained whenever your installed tools cannot support it.",
+        "what_it_costs": "Setup gains one more decision, and Puppet Master has to keep evidence of which tools support which format.",
+        "options": [
+          "Add the picker as described, evidence-gated",
+          "Keep the current default format and offer no choice"
+        ],
+        "recommendation": "Add the picker as described, evidence-gated.",
+        "allowed_responses": [
+          "approve",
+          "deny",
+          "deny_with_changes",
+          "ask_a_question"
+        ],
+        "disposition": "pending",
+        "disposition_recorded_at_utc": null
+      }
+    },
+    {
+      "name": "card_answered_product_choice_item",
+      "definition": "research_decision_card",
+      "value": {
+        "schema_id": "pm.external_research.decision_card.v1",
+        "schema_version": "1.0.0",
+        "decision_card_id": "erdc-0002",
+        "decision_packet_id": "erdp-0001",
+        "finding_ref": "ERC-C4U-03",
+        "finding_class": "product_choice",
+        "plain_name": "Graph gestures as their own actions",
+        "question": "Should graph gestures be their own set of actions rather than pictures of the existing ones?",
+        "why_it_came_up": "The research found that the graph's gestures do not map onto the existing single-target actions.",
+        "what_you_get": "Graph actions that say what they do, instead of a picture of a different action.",
+        "what_it_costs": "A second action vocabulary to keep consistent with the first.",
+        "options": [
+          "Give the graph its own action vocabulary",
+          "Keep the graph as a view over the existing actions",
+          "Defer until the graph view is built"
+        ],
+        "recommendation": null,
+        "allowed_responses": [
+          "approve",
+          "deny",
+          "deny_with_changes",
+          "ask_a_question"
+        ],
+        "disposition": "deny_with_changes",
+        "disposition_recorded_at_utc": "2026-09-17T05:00:40+00:00"
+      }
+    },
+    {
+      "name": "receipt_cold_allowance_admitted",
+      "definition": "research_budget_receipt",
+      "value": {
+        "schema_id": "pm.external_research.budget_receipt.v1",
+        "schema_version": "1.0.0",
+        "budget_receipt_id": "erbr-0001",
+        "research_job_ref": "erj-reconcile-0001",
+        "arm_id": "arm-strong-review",
+        "lifetime_cap_usd": 150.0,
+        "captured_usage_usd": 82.5164,
+        "in_flight_allowance_usd": 12.0,
+        "unresolved_usage_usd": 0.0,
+        "allowance_basis": "cold_allowance",
+        "reconciled_jobs_for_average": 0,
+        "native_records_present": true,
+        "valuation_basis": "runtime_reported_cost",
+        "estimate_disclaimer": "captured_usage_is_an_upper_bound_estimate_not_a_billed_amount",
+        "admission_decision": "admitted"
+      }
+    },
+    {
+      "name": "receipt_unreconciled_job_retains_unresolved",
+      "definition": "research_budget_receipt",
+      "value": {
+        "schema_id": "pm.external_research.budget_receipt.v1",
+        "schema_version": "1.0.0",
+        "budget_receipt_id": "erbr-0002",
+        "research_job_ref": "erj-discovery-0001",
+        "arm_id": "arm-breadth",
+        "lifetime_cap_usd": 100.0,
+        "captured_usage_usd": 0.0,
+        "in_flight_allowance_usd": 1.0,
+        "unresolved_usage_usd": 1.0,
+        "allowance_basis": "same_arm_same_stage_average",
+        "reconciled_jobs_for_average": 2,
+        "native_records_present": false,
+        "valuation_basis": "tariff_floor",
+        "estimate_disclaimer": "captured_usage_is_an_upper_bound_estimate_not_a_billed_amount",
+        "admission_decision": "denied"
+      }
+    },
+    {
+      "name": "manifest_quiesced_before_hashing",
+      "definition": "research_run_manifest",
+      "value": {
+        "schema_id": "pm.external_research.run_manifest.v1",
+        "schema_version": "1.0.0",
+        "run_manifest_id": "ermf-0001",
+        "topic_id": "ertopic-jujutsu-0001",
+        "protocol_freeze_sha256": "53f8fac98b02e8f2c191e076c8460222e728589b7fb367bfd5c3a0899f9df970",
+        "protocol_file_hashes": {
+          "protocol/bounded_campaign.py": "7b1385c3a2d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e",
+          "protocol/job_end.py": "e2d003ea1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6"
+        },
+        "protocol_fingerprint": "53f8fac98b02e8f2",
+        "freeze_recorded_at_utc": "2026-09-16T22:11:33+00:00",
+        "first_job_started_at_utc": "2026-09-16T22:19:29+00:00",
+        "freeze_precedes_first_job": true,
+        "runtime_identity": {
+          "binary_path": "/usr/local/bin/omp",
+          "reported_version": "18.2.2",
+          "binary_sha256": "77c3520ab8ef83180a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f6071",
+          "capture_basis": "installed_binary_at_capability_time"
+        },
+        "output_tree_manifests": [
+          {
+            "tree_path": "runs/jujutsu-union-20260916-221929",
+            "manifest_sha256": "8a91fcbc580de837f779a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f6",
+            "telemetry_quiesced": true
+          }
+        ],
+        "rehash_differences": []
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "job_admits_a_decision_record_input",
+      "definition": "research_job_record",
+      "base_valid": "job_reconcile_admits_the_frozen_snapshot",
+      "rejects_for": "admitted_input.input_class closed enum",
+      "reason": "A recorded decision may never enter a research input, so a finding cannot be an echo of an answer the product already holds (ERS-003).",
+      "patch": {
+        "admitted_inputs.0.input_class": "decision_record"
+      }
+    },
+    {
+      "name": "job_discovery_reads_the_frozen_snapshot",
+      "definition": "research_job_record",
+      "base_valid": "job_discovery_sees_the_brief_only",
+      "rejects_for": "stage conditional forbidding frozen_plans_snapshot before reconcile",
+      "reason": "The frozen plans snapshot enters no earlier than reconciliation; discovery and the studies see the brief and their own artifacts only (ERS-003).",
+      "patch": {
+        "admitted_inputs.0.input_class": "frozen_plans_snapshot"
+      }
+    },
+    {
+      "name": "job_claims_a_designed_stop_after_a_time_cut",
+      "definition": "research_job_record",
+      "base_valid": "job_reconcile_admits_the_frozen_snapshot",
+      "rejects_for": "bound_by designed_stop requires terminal_state finished",
+      "reason": "A job cut by its time limit did not reach a designed stop, and calling it one would hide a truncated result (ERS-002, ERS-009).",
+      "patch": {
+        "terminal_state": "time"
+      }
+    },
+    {
+      "name": "job_reports_an_adapter_label_as_its_bound",
+      "definition": "research_job_record",
+      "base_valid": "job_discovery_sees_the_brief_only",
+      "rejects_for": "bound_by_source closed enum",
+      "reason": "An adapter may report any denial as a budget denial when the cause was the response ceiling, so an adapter label is not an admissible source (ERS-009).",
+      "patch": {
+        "bound_by_source": "adapter_label"
+      }
+    },
+    {
+      "name": "job_without_a_run_manifest",
+      "definition": "research_job_record",
+      "base_valid": "job_reconcile_admits_the_frozen_snapshot",
+      "rejects_for": "run_manifest_ref required",
+      "reason": "A job that names no run manifest cannot be reproduced from its own records (ERS-014).",
+      "remove": [
+        "run_manifest_ref"
+      ]
+    },
+    {
+      "name": "job_with_an_unhashed_input",
+      "definition": "research_job_record",
+      "base_valid": "job_reconcile_admits_the_frozen_snapshot",
+      "rejects_for": "admitted_input.sha256 required",
+      "reason": "Every admitted input is recorded by path and SHA-256, and a job whose inputs do not hash to the recorded values fails closed before dispatch (ERS-003).",
+      "remove": [
+        "admitted_inputs.0.sha256"
+      ]
+    },
+    {
+      "name": "finding_correction_routed_to_a_user_decision",
+      "definition": "research_finding_record",
+      "base_valid": "finding_correction_lands_under_repair_authorization",
+      "rejects_for": "finding_class correction requires landing_path repair_authorization",
+      "reason": "A correction to an existing promise lands under the standing repair authorization; routing it to the user would ask the user to approve a repair (ERS-006).",
+      "patch": {
+        "landing_path": "user_decision"
+      }
+    },
+    {
+      "name": "finding_capability_landed_under_repair_authorization",
+      "definition": "research_finding_record",
+      "base_valid": "finding_capability_waits_for_the_user",
+      "rejects_for": "finding_class capability requires landing_path user_decision",
+      "reason": "A capability is not a repair; landing one under the repair authorization would add product scope the user never approved (ERS-007).",
+      "patch": {
+        "landing_path": "repair_authorization"
+      }
+    },
+    {
+      "name": "finding_credited_without_a_cited_passage",
+      "definition": "research_finding_record",
+      "base_valid": "finding_correction_lands_under_repair_authorization",
+      "rejects_for": "citations minItems 1",
+      "reason": "A credit requires a delivered assertion stating the same proposition with the passage it cites; without one the judgement cannot be re-checked (ERS-004, ERS-013).",
+      "patch": {
+        "citations": []
+      }
+    },
+    {
+      "name": "finding_candidate_declared_inside_the_union",
+      "definition": "research_finding_record",
+      "base_valid": "finding_candidate_outside_the_union",
+      "rejects_for": "credit_state candidate requires in_union false",
+      "reason": "Adding a candidate to the union is the union owner's act, never the adjudicator's (ERS-004).",
+      "patch": {
+        "in_union": true
+      }
+    },
+    {
+      "name": "finding_candidate_without_a_rejection_check",
+      "definition": "research_finding_record",
+      "base_valid": "finding_candidate_outside_the_union",
+      "rejects_for": "credit_state candidate requires a non-empty rejection_check_refs",
+      "reason": "An out-of-union candidate is recorded with an explicit check against the expansions the union already rejected (ERS-004).",
+      "patch": {
+        "rejection_check_refs": []
+      }
+    },
+    {
+      "name": "finding_credited_to_no_job",
+      "definition": "research_finding_record",
+      "base_valid": "finding_correction_lands_under_repair_authorization",
+      "rejects_for": "credit_state credited requires a non-null credited_job_ref",
+      "reason": "A credit names the job whose delivered assertion earned it, so the receipt per credit is not optional (ERS-013).",
+      "patch": {
+        "credited_job_ref": null
+      }
+    },
+    {
+      "name": "finding_with_an_invented_class",
+      "definition": "research_finding_record",
+      "base_valid": "finding_unsupported_or_already_covered",
+      "rejects_for": "finding_class closed enum",
+      "reason": "Every finding carries exactly one of the four classes; a fifth class would let a finding escape both landing paths (ERS-004).",
+      "patch": {
+        "finding_class": "observation"
+      }
+    },
+    {
+      "name": "packet_presented_all_at_once",
+      "definition": "research_decision_packet",
+      "base_valid": "packet_one_artifact_two_cards",
+      "rejects_for": "presentation const one_at_a_time",
+      "reason": "Items are presented one at a time; presenting the whole packet as the decision surface is the form DL-036 replaced (ERS-005).",
+      "patch": {
+        "presentation": "all_at_once"
+      }
+    },
+    {
+      "name": "packet_using_colored_status_bars",
+      "definition": "research_decision_packet",
+      "base_valid": "packet_one_artifact_two_cards",
+      "rejects_for": "status_label_mode const text_only",
+      "reason": "Status and disposition use text labels; no colored border bars or stripes and no emoji glyphs (DL-036, ERS-005).",
+      "patch": {
+        "status_label_mode": "colored_border_bars"
+      }
+    },
+    {
+      "name": "packet_without_its_artifact",
+      "definition": "research_decision_packet",
+      "base_valid": "packet_one_artifact_two_cards",
+      "rejects_for": "artifact_ref required",
+      "reason": "The full artifact containing every item must exist before any item is presented and stay openable throughout (DL-036, ERS-005).",
+      "remove": [
+        "artifact_ref"
+      ]
+    },
+    {
+      "name": "card_built_from_a_correction_finding",
+      "definition": "research_decision_card",
+      "base_valid": "card_pending_capability_item",
+      "rejects_for": "card finding_class limited to capability and product_choice",
+      "reason": "A correction lands under the standing repair authorization and never becomes a decision card (ERS-005, ERS-006).",
+      "patch": {
+        "finding_class": "correction"
+      }
+    },
+    {
+      "name": "card_with_a_fifth_response",
+      "definition": "research_decision_card",
+      "base_valid": "card_pending_capability_item",
+      "rejects_for": "allowed_responses maxItems 4",
+      "reason": "The DL-036 response set is fixed at four; an added response such as auto-approval is exactly what the decision flow forbids (ERS-005).",
+      "patch": {
+        "allowed_responses": [
+          "approve",
+          "deny",
+          "deny_with_changes",
+          "ask_a_question",
+          "auto_approve"
+        ]
+      }
+    },
+    {
+      "name": "card_with_reordered_responses",
+      "definition": "research_decision_card",
+      "base_valid": "card_pending_capability_item",
+      "rejects_for": "allowed_responses prefixItems order",
+      "reason": "The four responses are fixed in order, so a card cannot re-present them in a different order (ERS-005).",
+      "patch": {
+        "allowed_responses": [
+          "deny",
+          "approve",
+          "deny_with_changes",
+          "ask_a_question"
+        ]
+      }
+    },
+    {
+      "name": "card_answered_without_a_recorded_time",
+      "definition": "research_decision_card",
+      "base_valid": "card_answered_product_choice_item",
+      "rejects_for": "non-pending disposition requires disposition_recorded_at_utc",
+      "reason": "A disposition is recorded so the same question is not asked again; an answer with no recorded time is not a disposition (ERS-005, ERS-007).",
+      "patch": {
+        "disposition_recorded_at_utc": null
+      }
+    },
+    {
+      "name": "card_offering_a_single_option",
+      "definition": "research_decision_card",
+      "base_valid": "card_pending_capability_item",
+      "rejects_for": "options minItems 2",
+      "reason": "A decision card presents the options; one option is not a decision (ERS-005).",
+      "patch": {
+        "options": [
+          "Add the picker as described, evidence-gated"
+        ]
+      }
+    },
+    {
+      "name": "receipt_averaging_after_one_reconciled_job",
+      "definition": "research_budget_receipt",
+      "base_valid": "receipt_unreconciled_job_retains_unresolved",
+      "rejects_for": "same_arm_same_stage_average requires reconciled_jobs_for_average of at least 2",
+      "reason": "A stage allowance switches from the cold allowance to the observed average only after two fully reconciled same-arm same-stage jobs (ERS-008).",
+      "patch": {
+        "reconciled_jobs_for_average": 1
+      }
+    },
+    {
+      "name": "receipt_dropping_the_unresolved_charge",
+      "definition": "research_budget_receipt",
+      "base_valid": "receipt_unreconciled_job_retains_unresolved",
+      "rejects_for": "native_records_present false requires a positive unresolved_usage_usd",
+      "reason": "A terminal job with no complete native accounting retains its allowance as a separate unresolved charge that counts against the cap indefinitely (ERS-008).",
+      "patch": {
+        "unresolved_usage_usd": 0.0
+      }
+    },
+    {
+      "name": "receipt_presented_as_a_billed_amount",
+      "definition": "research_budget_receipt",
+      "base_valid": "receipt_cold_allowance_admitted",
+      "rejects_for": "estimate_disclaimer const",
+      "reason": "Captured usage is an upper-bound estimate, never a billed amount or a certified total liability (ERS-008).",
+      "patch": {
+        "estimate_disclaimer": "final billed amount for this research topic"
+      }
+    },
+    {
+      "name": "receipt_without_a_lifetime_cap",
+      "definition": "research_budget_receipt",
+      "base_valid": "receipt_cold_allowance_admitted",
+      "rejects_for": "lifetime_cap_usd required",
+      "reason": "Admission is checked against the arm's lifetime cap, so a receipt that names no cap proves no admission (ERS-008, ERS-009).",
+      "remove": [
+        "lifetime_cap_usd"
+      ]
+    },
+    {
+      "name": "manifest_with_a_declared_runtime_version",
+      "definition": "research_run_manifest",
+      "base_valid": "manifest_quiesced_before_hashing",
+      "rejects_for": "runtime_identity.capture_basis const installed_binary_at_capability_time",
+      "reason": "Declared runtime versions went stale when the runtime was updated in place at the same path; identity is read from the installed binary at capability time (ERS-014).",
+      "patch": {
+        "runtime_identity.capture_basis": "declared_in_protocol"
+      }
+    },
+    {
+      "name": "manifest_hashed_with_live_telemetry",
+      "definition": "research_run_manifest",
+      "base_valid": "manifest_quiesced_before_hashing",
+      "rejects_for": "output_tree_manifest.telemetry_quiesced const true",
+      "reason": "A monitor heartbeat written after the freeze makes an otherwise identical tree fail re-hashing, so telemetry is quiesced before hashing (ERS-014).",
+      "patch": {
+        "output_tree_manifests.0.telemetry_quiesced": false
+      }
+    },
+    {
+      "name": "manifest_whose_freeze_followed_its_first_job",
+      "definition": "research_run_manifest",
+      "base_valid": "manifest_quiesced_before_hashing",
+      "rejects_for": "freeze_precedes_first_job const true",
+      "reason": "A provenance file exists to show that the code preceded the run; a freeze recorded after the jobs it governed asserts the opposite (ERS-014).",
+      "patch": {
+        "freeze_precedes_first_job": false
+      }
+    },
+    {
+      "name": "manifest_without_protocol_file_hashes",
+      "definition": "research_run_manifest",
+      "base_valid": "manifest_quiesced_before_hashing",
+      "rejects_for": "protocol_file_hashes minProperties 1",
+      "reason": "Two runs share a fingerprint only if each pins the protocol file hashes it validated against (ERS-014).",
+      "patch": {
+        "protocol_file_hashes": {}
+      }
+    },
+    {
+      "name": "manifest_with_a_malformed_freeze_timestamp",
+      "definition": "research_run_manifest",
+      "base_valid": "manifest_quiesced_before_hashing",
+      "rejects_for": "freeze_recorded_at_utc timestamp pattern",
+      "reason": "A malformed freeze timestamp is the one field a reader checks in a provenance file, and it was a real published defect in the continuation-4 bundle (ERS-014).",
+      "patch": {
+        "freeze_recorded_at_utc": "2026-09-17T00:1xZ"
+      }
+    }
+  ]
+}

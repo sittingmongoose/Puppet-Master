@@ -6539,6 +6539,7 @@
     "ATS-053",
     "SIR-036",
     "C-047",
+    "ATS-054",
     "ATS-018",
     "CS-074",
     "CS-075",
@@ -12685,6 +12686,11 @@
       "edge_type": "depends_on",
       "from": "ATS-053",
       "to": "SP-308"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-054",
+      "to": "ATS-046"
     },
     {
       "edge_type": "depends_on",
@@ -97807,7 +97813,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-17T11:48:58Z",
+  "generated_at_utc": "2026-09-17T11:49:33Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -110711,6 +110717,23 @@
       },
       "status": "accepted",
       "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "external_research_static_contracts",
+      "gui_related": true,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-054",
+      "reasoning_tier": "high",
+      "risk_class": "static_fixture_or_false_execution_claim",
+      "source_location": {
+        "heading": "External Research Contract Validation Registration (2026-09-17)",
+        "heading_level": 2,
+        "heading_line": 4830,
+        "line": 4832,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_criterion"
     },
     {
       "context_scope": "bitbucket_provider_identity",
@@ -211206,10 +211229,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15540,
+    "depends_on_edge_count": 15541,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18226,
-    "node_count": 6670,
+    "edge_count": 18227,
+    "node_count": 6671,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2686,
     "unresolved_reference_count": 0

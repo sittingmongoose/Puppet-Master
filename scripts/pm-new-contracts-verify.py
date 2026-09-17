@@ -38,6 +38,7 @@ CONTRACT_PAIRS = (
     ("Plans/backup_restore_system_contracts.schema.json", "Plans/backup_restore_system_contract_fixtures.json"),
     ("Plans/doctor_contracts.schema.json", "Plans/doctor_contract_fixtures.json"),
     ("Plans/egolite_retained_requirement_contracts.schema.json", "Plans/egolite_retained_requirement_contract_fixtures.json"),
+    ("Plans/external_research_contracts.schema.json", "Plans/external_research_contract_fixtures.json"),
     ("Plans/final_gui_interaction_contracts.schema.json", "Plans/final_gui_interaction_contract_fixtures.json"),
     ("Plans/forge_integration_contracts.schema.json", "Plans/forge_integration_contract_fixtures.json"),
     ("Plans/forge_integration_contracts.schema.json", "Plans/cursor_origin_integration_fixtures.json"),
@@ -67,7 +68,7 @@ CONTRACT_PAIRS = (
     ("Plans/artifact_recording_command_contracts.schema.json", "Plans/artifact_recording_command_contract_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 30
+EXPECTED_CONTRACT_PAIR_COUNT = 31
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"

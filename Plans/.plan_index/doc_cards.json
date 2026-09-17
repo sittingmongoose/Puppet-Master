@@ -1752,9 +1752,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 21,
-        "True": 32
+        "True": 33
       },
-      "heading_count": 118,
+      "heading_count": 119,
       "implementation_surfaces": [
         "Concepts/pm7-tools/global_hover_tags_source.py",
         "Concepts/pm7-tools/home_workspace_source.py",
@@ -1789,6 +1789,8 @@
         "Plans/event_record.schema.json",
         "Plans/evidence_artifact_binding_modes.json",
         "Plans/evidence_artifact_binding_modes.schema.json",
+        "Plans/external_research_contract_fixtures.json",
+        "Plans/external_research_contracts.schema.json",
         "Plans/forge_backup_tsnet_acceptance.json",
         "Plans/forge_backup_tsnet_acceptance.schema.json",
         "Plans/human-in-the-loop.md",
@@ -1838,9 +1840,9 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 4828,
+      "line_count": 4893,
       "path": "Plans/Automated_Testing_System.md",
-      "plan_unit_count": 53,
+      "plan_unit_count": 54,
       "plan_unit_ids": [
         "ATS-001",
         "ATS-023",
@@ -1894,7 +1896,8 @@
         "ATS-050",
         "ATS-051",
         "ATS-052",
-        "ATS-053"
+        "ATS-053",
+        "ATS-054"
       ],
       "reasoning_tiers": [
         "high",
@@ -1950,10 +1953,10 @@
         "web_gui_dev_test_authority_leak",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "55495462761adba1f5265a34d922b10d986d02bc756b4dec400e82aff36e78e9",
+      "sha256": "fdb39aa81a50dbfdb152fc72de40ef3b3ea88b343a77bcc051f738cac3f68fca",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 53
+        "accepted": 54
       },
       "title": "Automated Testing System",
       "unit_type_counts": {
@@ -1962,7 +1965,7 @@
         "requirement": 22,
         "schema_contract": 3,
         "validation_contract": 1,
-        "validation_criterion": 23
+        "validation_criterion": 24
       },
       "validation_surfaces": [
         "Concepts/pm7-tools/build_pm7.py final generated-artifact static gate",
@@ -1985,6 +1988,8 @@
         "Plans/assistant_plan_cancel_contracts/owner-field-map.json",
         "Plans/assistant_plan_cancel_contracts/publication-dependencies.json",
         "Plans/assistant_plan_cancel_contracts/semantic-obligations.json",
+        "Plans/external_research_contract_fixtures.json",
+        "Plans/external_research_contracts.schema.json",
         "Plans/forge_backup_tsnet_acceptance.json",
         "Plans/forge_backup_tsnet_acceptance.schema.json",
         "Plans/forge_integration_contract_fixtures.json",
@@ -6250,7 +6255,7 @@
         "unapproved_scope_expansion",
         "unreviewed_canon_change"
       ],
-      "sha256": "0efc0400c5f9ff17112c8c0345e26d4fe4b22895f8c62b4debfc0bb727973f4c",
+      "sha256": "bf90ecb8f6075f2d00b4ce71f8a32e479149c86ec8822f49a2b8966d45be813f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 14
@@ -19706,7 +19711,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-17T11:48:58Z",
+  "generated_at_utc": "2026-09-17T11:49:33Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19715,12 +19720,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3492,
-      "True": 3178
+      "True": 3179
     },
-    "plan_unit_count": 6670,
+    "plan_unit_count": 6671,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6479,
+      "accepted": 6480,
       "retired": 182,
       "superseded": 9
     },
@@ -19813,7 +19818,7 @@
       "ui_wiring_rule": 1,
       "validation": 13,
       "validation_contract": 1,
-      "validation_criterion": 26,
+      "validation_criterion": 27,
       "validation_requirement": 3,
       "validation_rule": 24,
       "variant_contract": 2,

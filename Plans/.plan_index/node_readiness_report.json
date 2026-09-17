@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15540,
+    "depends_on_edge_count": 15541,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18226,
-    "node_count": 6670,
+    "edge_count": 18227,
+    "node_count": 6671,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2686,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-17T11:48:58Z",
+  "generated_at_utc": "2026-09-17T11:49:33Z",
   "gui_related_units": {
-    "count": 3178,
+    "count": 3179,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -4490,6 +4490,17 @@
           "heading_level": 3,
           "heading_line": 4174,
           "line": 4176,
+          "path": "Plans/Automated_Testing_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Automated_Testing_System.md",
+        "plan_unit_id": "ATS-054",
+        "source_location": {
+          "heading": "External Research Contract Validation Registration (2026-09-17)",
+          "heading_level": 2,
+          "heading_line": 4830,
+          "line": 4832,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -34982,10 +34993,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6670,
+  "plan_unit_count": 6671,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2123,
+      "high": 2124,
       "low": 5,
       "medium": 7,
       "standard": 4535
@@ -38247,7 +38258,7 @@
       "static_evidence_promoted_to_performance_proof": 1,
       "static_evidence_promoted_to_server_readiness": 1,
       "static_fixture_false_certification": 1,
-      "static_fixture_or_false_execution_claim": 1,
+      "static_fixture_or_false_execution_claim": 2,
       "static_or_misleading_plan_compile_ui": 1,
       "static_registry_promoted_to_runtime_or_event_authority": 1,
       "static_remote_contract_promoted_to_wan_readiness": 1,
@@ -38814,7 +38825,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6479,
+      "accepted": 6480,
       "retired": 182,
       "superseded": 9
     },
@@ -38907,7 +38918,7 @@
       "ui_wiring_rule": 1,
       "validation": 13,
       "validation_contract": 1,
-      "validation_criterion": 26,
+      "validation_criterion": 27,
       "validation_requirement": 3,
       "validation_rule": 24,
       "variant_contract": 2,
@@ -39006,7 +39017,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "55495462761adba1f5265a34d922b10d986d02bc756b4dec400e82aff36e78e9",
+        "expected": "fdb39aa81a50dbfdb152fc72de40ef3b3ea88b343a77bcc051f738cac3f68fca",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
