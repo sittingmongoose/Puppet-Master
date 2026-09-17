@@ -1,0 +1,101 @@
+{
+  "question": "What is discarded if Jared chooses FRESH ARMS (Path A) rather than the verified wait (Path B)?",
+  "discarded": {
+    "s-full": {
+      "captured_upper_usd": 14.8987,
+      "opus5_responses": 193,
+      "jobs": 4,
+      "jobs_completed_cleanly": 1,
+      "jobs_with_notes_md": 2,
+      "unresolved_charge_usd": 36.0,
+      "detail": [
+        {
+          "job": "J0001-discovery",
+          "phase": "discovery",
+          "runtime_status": "completed",
+          "requests": 105,
+          "captured_usd": 12.0466,
+          "notes_md": true
+        },
+        {
+          "job": "J0002-implementation",
+          "phase": "implementation",
+          "runtime_status": "interrupted",
+          "requests": 26,
+          "captured_usd": 0.973,
+          "notes_md": true
+        },
+        {
+          "job": "J0003-history",
+          "phase": "history",
+          "runtime_status": null,
+          "requests": 26,
+          "captured_usd": 0.816,
+          "notes_md": false
+        },
+        {
+          "job": "J0004-implementation",
+          "phase": "implementation",
+          "runtime_status": "interrupted",
+          "requests": 36,
+          "captured_usd": 1.063,
+          "notes_md": false
+        }
+      ],
+      "leads_discovery_produced": 23
+    },
+    "h2-review": {
+      "captured_upper_usd": 7.1788,
+      "opus5_responses": 141,
+      "jobs": 3,
+      "jobs_completed_cleanly": 0,
+      "jobs_with_notes_md": 2,
+      "unresolved_charge_usd": 36.0,
+      "detail": [
+        {
+          "job": "J0013-reconcile",
+          "phase": "reconcile",
+          "runtime_status": "interrupted",
+          "requests": 53,
+          "captured_usd": 2.6263,
+          "notes_md": false
+        },
+        {
+          "job": "J0014-reconcile",
+          "phase": "reconcile",
+          "runtime_status": "interrupted",
+          "requests": 42,
+          "captured_usd": 2.469,
+          "notes_md": true
+        },
+        {
+          "job": "J0015-reconcile",
+          "phase": "reconcile",
+          "runtime_status": "interrupted",
+          "requests": 46,
+          "captured_usd": 2.0835,
+          "notes_md": true
+        }
+      ]
+    }
+  },
+  "not_discarded": {
+    "h2-research": {
+      "captured_upper_usd": 0.1545,
+      "jobs": 12,
+      "leads": 32,
+      "why": "Arm H2 research half reached its designed terminal and is REUSED as-is: the fresh h2-review run was staged --from that exact frozen run, 2595 artifacts byte-copied and hashed on both sides."
+    },
+    "frozen_case": "azure-devops-frozen-20260917 is unchanged and used by both paths.",
+    "frozen_attempt_outputs": "Both interrupted runs stay on disk, frozen, with their manifests; nothing is deleted under either path."
+  },
+  "totals": {
+    "captured_upper_usd_discarded": 22.0775,
+    "opus5_responses_discarded": 334,
+    "jobs_discarded": 7,
+    "jobs_that_had_completed_cleanly": 1,
+    "jobs_with_notes_md": 4,
+    "unresolved_liability_on_archived_attempts_usd": 72.0,
+    "note": "The unresolved figure is a LIABILITY recorded against the archived attempts, not cash spent again. It stays on the attempt record under either path."
+  }
+}
