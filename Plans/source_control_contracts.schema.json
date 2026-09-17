@@ -2868,7 +2868,7 @@
               "parent_refs_truncated": {"type": "boolean"},
               "parent_expansion_cursor_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
               "label_ref": {"$ref": "#/$defs/non_secret_ref"},
-              "node_state": {"enum": ["normal", "rewritten", "abandoned", "conflicted"]},
+              "node_state": {"enum": ["normal", "rewritten", "abandoned", "conflicted", "divergent"]},
               "selected": {"type": "boolean"}
             },
             "allOf": [

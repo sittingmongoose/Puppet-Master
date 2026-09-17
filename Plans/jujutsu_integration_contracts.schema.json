@@ -140,7 +140,8 @@
         "jj_0_44_colocated_import_export_disabled_upstream_race",
         "exact_live_probe_missing",
         "invalid_target_identity",
-        "effect_unknown_reconciliation_required"
+        "effect_unknown_reconciliation_required",
+        "change_divergent_ambiguous_target"
       ]
     },
     "error_code": {
@@ -167,6 +168,7 @@
         "exact_live_probe_missing",
         "invalid_target_identity",
         "effect_unknown_reconciliation_required",
+        "change_divergent_ambiguous_target",
         "adapter_failed",
         "operation_cancelled",
         "cleanup_unproven",

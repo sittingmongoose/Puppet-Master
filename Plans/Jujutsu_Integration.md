@@ -134,6 +134,12 @@ acceptance_criteria:
   - Every established command_result attempt with outcome succeeded, blocked, failed, cancelled, recovery_required, or effect_unknown references a typed operation receipt through non_secret_ref; accepted work still requires ObservableWork and may have a null receipt_ref.
   - Effect-unknown or stale-operation results block automatic retry.
   - >-
+    A change target that resolves to more than one visible commit is ambiguous, not invalid. The request is refused
+    before any effect with the typed reason `change_divergent_ambiguous_target`, and the same request succeeds when it
+    carries the exact immutable `commit_id` that names which of the divergent commits it means. Refusal is the whole
+    obligation: no command in the inventory resolves the divergence, picks a commit for the caller, or falls back to the
+    newest one.
+  - >-
     `cmd.jujutsu.git.clone` preserves a current JJ adapter/catalog fence and exact caller
     route/focus/continuation context through success or cancellation, and never normalizes to the ordinary Git clone.
   - >-

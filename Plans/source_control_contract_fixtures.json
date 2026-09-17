@@ -2280,6 +2280,77 @@
       }
     },
     {
+      "name": "jujutsu_source_graph_represents_a_divergent_change_as_two_nodes",
+      "definition": "source_graph_projection",
+      "value": {
+        "schema_id": "pm.source_control.source_graph_projection.v1",
+        "projection_id": "source-graph:jj:delta:31",
+        "repository_context_ref": "repository-context:jj:delta",
+        "repo_id": "repo:jj-alpha",
+        "workspace_id": "jj-workspace:alpha",
+        "scm_backend": "jujutsu",
+        "selected_revision_ref": "revision:jj:alpha:27",
+        "graph_kind": "jujutsu_change_graph",
+        "currentness": {
+          "state": "stale",
+          "projection_generation": 27,
+          "observed_at_utc": "2026-09-02T15:50:00Z",
+          "expires_at_utc": null
+        },
+        "page": {
+          "cursor_ref": "cursor:source-graph:jj:delta:page-1",
+          "next_cursor_ref": null,
+          "page_size": 80,
+          "returned_count": 2,
+          "total_count": null,
+          "has_more": false
+        },
+        "nodes": [
+          {
+            "node_ref": "graph-node:jj:delta:change-zebra-a",
+            "revision_ref": "revision:jj:delta:31",
+            "stable_change_ref": "change:jj:delta:zebra",
+            "parent_refs": [],
+            "parent_refs_truncated": false,
+            "parent_expansion_cursor_ref": null,
+            "label_ref": "label:source-graph:jj:delta:zebra-a",
+            "node_state": "divergent",
+            "selected": true
+          },
+          {
+            "node_ref": "graph-node:jj:delta:change-zebra-b",
+            "revision_ref": "revision:jj:delta:32",
+            "stable_change_ref": "change:jj:delta:zebra",
+            "parent_refs": [],
+            "parent_refs_truncated": false,
+            "parent_expansion_cursor_ref": null,
+            "label_ref": "label:source-graph:jj:delta:zebra-b",
+            "node_state": "divergent",
+            "selected": false
+          }
+        ],
+        "edges": [],
+        "virtualization": {
+          "page_bounded": true,
+          "virtualized": true,
+          "stable_node_identity": true,
+          "selection_anchor_preserved": true,
+          "unbounded_hydration": false
+        },
+        "history_separation": {
+          "projection_kind": "source_history",
+          "jujutsu_operation_history_separate": true,
+          "backup_history_separate": true
+        },
+        "identity_authority": {
+          "repository_context_authoritative": true,
+          "display_path_authoritative": false,
+          "shared_commit_authoritative": false
+        },
+        "runtime_evidence_claimed": false
+      }
+    },
+    {
       "name": "git_source_graph_marks_a_node_whose_parents_exceed_the_bound_as_truncated",
       "definition": "source_graph_projection",
       "value": {
@@ -2701,6 +2772,15 @@
       "patch": {"nodes.1.node_ref": "graph-node:git:alpha:43"},
       "semantic_rule": "source_graph_duplicate_node_ref_in_page",
       "expected_error": "two nodes on one page cannot share a node_ref, whatever their revision_ref values"
+    },
+    {
+      "name": "git_source_graph_cannot_report_a_divergent_node_state",
+      "definition": "source_graph_projection",
+      "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
+      "patch": {
+        "nodes.0.node_state": "divergent"
+      },
+      "expected_error": "divergence is Jujutsu-only; a Git page keeps normal or conflicted node states"
     },
     {
       "name": "source_graph_cannot_repeat_an_identical_node_row_in_one_page",

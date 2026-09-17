@@ -601,7 +601,8 @@
             "abandoned",
             "conflicted",
             "local_bookmarks",
-            "remote_bookmarks"
+            "remote_bookmarks",
+            "divergent"
           ],
           "staging_visible": false,
           "stash_visible": false,
@@ -2159,6 +2160,19 @@
         "provider_setup",
         "free_models_setup",
         "ready"
+      ],
+      "expected": "rejected"
+    },
+    {
+      "case_id": "jujutsu_graph_states_divergent_position_is_exact",
+      "json_pointer": "/contracts/7/jujutsu_visual_semantics/graph_states",
+      "replacement": [
+        "rewritten",
+        "abandoned",
+        "conflicted",
+        "local_bookmarks",
+        "remote_bookmarks",
+        "diverged"
       ],
       "expected": "rejected"
     }

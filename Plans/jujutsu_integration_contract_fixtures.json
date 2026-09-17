@@ -2854,6 +2854,42 @@
       }
     },
     {
+      "name": "command_availability_change_target_is_divergent_and_ambiguous",
+      "definition": "command_availability",
+      "value": {
+        "schema_id": "pm.jujutsu.command_availability.v1",
+        "command_id": "cmd.jujutsu.change.squash",
+        "repository_context_ref": "repository-context:jj:main",
+        "availability": {
+          "requested": true,
+          "effective": false,
+          "state": "blocked",
+          "reason_codes": [
+            "change_divergent_ambiguous_target"
+          ],
+          "disabled_reason_code": "change_divergent_ambiguous_target",
+          "allowed_action_ids": [
+            "cmd.jujutsu.operation.log",
+            "cmd.jujutsu.operation.show"
+          ],
+          "evaluated_at_utc": "2026-08-31T20:12:00Z"
+        },
+        "currentness": {
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "adapter_ref": "adapter:jj:0.44.0",
+          "adapter_version": "0.44.0",
+          "certification_catalog_ref": "catalog:jj:generation-4",
+          "catalog_generation": 4,
+          "catalog_currentness": "current",
+          "snapshot_id": "snapshot:jj:blocked",
+          "expected_operation_id": "op-expected-blocked",
+          "checked_at_utc": "2026-08-31T20:12:00Z"
+        },
+        "recorded_at_utc": "2026-08-31T20:12:00Z"
+      }
+    },
+    {
       "name": "command_result_jujutsu_clone_not_initialized_destination_cancelled",
       "definition": "command_result",
       "value": {
@@ -3704,6 +3740,15 @@
         "object_verification_depth": "not_run"
       },
       "expected_error": "a complete object closure cannot be reported when object verification did not run"
+    },
+    {
+      "name": "command_availability_divergence_reason_code_is_exact",
+      "definition": "command_availability",
+      "base_valid": "command_availability_change_target_is_divergent_and_ambiguous",
+      "patch": {
+        "availability.disabled_reason_code": "change_divergent"
+      },
+      "expected_error": "the divergence reason code is exactly change_divergent_ambiguous_target; the vocabulary is closed"
     },
     {
       "name": "backup_jj_restore_verification_cannot_push_remote",

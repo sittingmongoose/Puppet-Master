@@ -1050,8 +1050,8 @@ canonical_text: >-
   SourceGraph is one paginated, virtualized Source Control projection under the existing Source Control owner.
   It binds every page to an exact RepositoryContext, repository, workspace, backend, selected revision, projection
   generation, freshness, and stable node/edge references. Git renders a commit graph with parent/merge edges;
-  Jujutsu renders stable change identity, current commit identity, rewrites, abandonment, and conflicts without a
-  fake staging model. SourceGraph is source history only: Jujutsu operation history and Backup history remain
+  Jujutsu renders stable change identity, current commit identity, rewrites, abandonment, divergence, and conflicts
+  without a fake staging model. SourceGraph is source history only: Jujutsu operation history and Backup history remain
   separate owner projections and routes. Repository identity comes from RepositoryContext, never display paths or
   shared commits. Pages are capped at 200 nodes, hydration remains bounded, `node_ref` is unique within a page,
   selection anchors survive pagination, and stale or partial pages remain visibly stale or partial. The projection
@@ -1097,6 +1097,12 @@ acceptance_criteria:
     the request alone and nothing about the page's currentness has to be inferred. It is admitted only while that
     projection is `current`, asks for at most 32 references at a time, and claims no mutation, no repository-identity
     authority and no runtime evidence.
+  - >-
+    A divergent change is representable. More than one visible commit may carry one stable change reference, which is
+    ordinary Jujutsu state rather than an error, and a node in that condition reports `node_state` `divergent` instead
+    of being mislabelled `normal` or dropped from the page. The `divergent` state is Jujutsu-only: a Git page keeps its
+    existing `normal` or `conflicted` node states. Divergence is reported, never resolved here; the projection
+    introduces no convergence command and SCS-017 continues to introduce no mutation command at all.
   - Static schema and fixtures keep `runtime_evidence_claimed=false` and establish no handler, adapter, native Slint behavior, performance result, scenario result, or readiness claim.
 validation_surfaces:
   - Plans/source_control_contracts.schema.json#/$defs/source_graph_projection
