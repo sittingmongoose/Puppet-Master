@@ -202,6 +202,23 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/event_record
 
 ContractRef: ContractName:Plans/Working_Notebook.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
 
+### External research terms
+
+- **External research** -- the process that turns a user's idea or incomplete plans into well-researched coherent plans by studying a subject against the product's own frozen plans and a product brief. It is a capability, never an authority: no research output can approve, verify, complete, schedule or land anything, and a finding reaches canon only as a correction under the standing repair authorization or as a capability or product choice the user has answered. Owner: `Plans/External_Research.md`.
+- **Research stage** -- one of the closed set `discovery | implementation | history | reconcile | compare`, run in that order and followed by adjudication, independent review and ledger landing. A stage that was not reached is unknown, never a finding of absence.
+- **Admitted input class** -- the closed set `frozen_plans_snapshot | product_brief | arm_artifact`. A recorded decision, answered packet or decision sheet has no admissible value, which is what keeps an answer the product already holds from returning as a finding; the frozen snapshot is admitted no earlier than `reconcile`.
+- **Finding class** -- the closed set `correction | capability | product_choice | unsupported_or_covered`. `correction` is a contradiction inside a promise the product already makes; `capability` is something the product does not yet do; `product_choice` is a decision only the user can make; `unsupported_or_covered` is a class of the union, not a false-positive rate.
+- **Union** -- the adjudicated set of findings for a topic. A finding is credited to an arm only when a delivered assertion states the same proposition and cites the passage supporting it; a partial match is recorded as partial, never as a credit.
+- **Candidate** -- a proposition outside the union, recorded with its evidence, its classification and an explicit check against the expansions the union already rejected. Admitting a candidate to the union is the union owner's act, never the adjudicator's.
+- **Standing repair authorization** -- the existing authority under which a `correction` lands without a new user decision, after a currentness re-check against live canon, an independent review by an agent that ran and scored no arm of the topic, and a registered ledger. It never covers a capability or a product choice.
+- **Captured usage and unresolved usage** -- captured usage is the upper-bound estimate reconciled at job end from a runtime's own native records, never a billed amount or a certified liability; unresolved usage is the allowance a terminal job retains when it produced no complete native accounting, which counts against the arm's lifetime cap indefinitely and stays visible in every report.
+- **In-flight allowance** -- the bounded amount admission adds to captured usage before every model request: a fixed cold allowance until two same-arm same-stage jobs have fully reconciled, then that arm and stage's observed per-job average.
+- **Turn budget** -- the per-job model-response ceiling for a review stage, sized so every job reaches a designed stop. A job stopped by the ceiling instead is **turn-capped**, and a turn-capped arm's recall is a ceiling artefact that is never quoted as a model result.
+- **Admissions** -- the count of leads a stage admitted. Admissions, not money or wall time, are the reported bound on recall, and a recall figure is reported with the admitted-lead count that bounded it.
+- **Protocol fingerprint** -- the digest of the protocol file hashes a run validated against, so two runs sharing a fingerprint provably ran identical code. **Runtime identity** is the binary path, self-reported version and binary hash read from the installed binary at capability time, never declared.
+
+ContractRef: ContractName:Plans/External_Research.md, ContractName:Plans/Decision_Log.md, ContractName:Plans/Automated_Testing_System.md
+
 ### Help architecture and project status terms
 
 - **History/Ledger help links** -- `History` and `Ledger` keep exact records first while exposing concept help links for unfamiliar states and `/actions`.

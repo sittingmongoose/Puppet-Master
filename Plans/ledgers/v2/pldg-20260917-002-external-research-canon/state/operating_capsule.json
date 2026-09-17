@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-002-external-research-canon",
-  "updated_at_utc": "2026-09-17T05:35:00+00:00",
+  "updated_at_utc": "2026-09-17T06:05:00+00:00",
   "authority": "Live Plans are canon; this ledger is source lineage only.",
   "scope": "Make Puppet Master's external research capability product canon from the September 2026 campaign: one owner document with ERS-001 to ERS-014, one static contract family with 12 positive and 30 negative fixtures registered in the closed contracts pack list, and consumer references in Assistant Chat, Planning Ledger and Settings.",
   "negative_constraints": [
@@ -17,5 +17,5 @@
     "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/source_shards/authorization.md",
     "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/source_shards/evidence.md"
   ],
-  "next_action": "This ledger is compiled and the branch is pushed for independent review. Four questions stay open: q-001 and q-002 hold continuation 5's review-configuration and latency results, which had not reported when this wave ran, so ERS-010 and ERS-012 carry continuation 4's numbers with their run named; q-003 is the governance coverage reseal for Plans/External_Research.md and Plans/Settings_System.md, which belongs to the designated Plans agent; q-004 is the consumer reference that belongs in the Jujutsu, Source Control and Backup owners, left to the concurrent plans/c4-corrections-20260917 branch so the two branches stay disjoint."
+  "next_action": "This ledger is compiled and the branch is pushed for independent review. Four questions stay open: q-001 and q-002 hold continuation 5's review-configuration and latency results, which had not reported when this wave ran, so ERS-010 and ERS-012 carry continuation 4's numbers with their run named; q-003 is the governance coverage reseal for Plans/External_Research.md and Plans/Settings_System.md, which belongs to the designated Plans agent; q-004 is the consumer reference that belongs in the Jujutsu, Source Control and Backup owners, left to the concurrent plans/c4-corrections-20260917 branch, which holds those files. The two branches were kept apart on the owner documents, not made disjoint: they share eight changed paths, and Plans/ledgers/v2/ledger_registry.json conflicts for whichever lands second, resolved by keeping both ledger entries and the later updated_at_utc."
 }

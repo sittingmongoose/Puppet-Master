@@ -1844,7 +1844,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 4893,
+      "line_count": 4894,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 54,
       "plan_unit_ids": [
@@ -1957,7 +1957,7 @@
         "web_gui_dev_test_authority_leak",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "fdb39aa81a50dbfdb152fc72de40ef3b3ea88b343a77bcc051f738cac3f68fca",
+      "sha256": "513c7eaac21b0117b26c0a32ae8e88c0181f36fd6a277f179433f4f951f66a54",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 54
@@ -6221,7 +6221,7 @@
         "Plans/external_research_contracts.schema.json",
         "Plans/usage-feature.md"
       ],
-      "line_count": 790,
+      "line_count": 791,
       "path": "Plans/External_Research.md",
       "plan_unit_count": 14,
       "plan_unit_ids": [
@@ -6259,7 +6259,7 @@
         "unapproved_scope_expansion",
         "unreviewed_canon_change"
       ],
-      "sha256": "4cc162a59533c3388e47b6a67ada3dd858a13b6088d4d0054c5e1a4565d7b382",
+      "sha256": "3804ee0ace3becf9e5264a2a88bcf1ddf280c227d77acb200b2ba6084c842803",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 14
@@ -8285,13 +8285,13 @@
         "False": 11,
         "True": 16
       },
-      "heading_count": 60,
+      "heading_count": 61,
       "implementation_surfaces": [
         "Plans/Glossary.md",
         "future Help surfaces",
         "future context help"
       ],
-      "line_count": 2159,
+      "line_count": 2176,
       "path": "Plans/Glossary.md",
       "plan_unit_count": 27,
       "plan_unit_ids": [
@@ -8333,7 +8333,7 @@
         "migration_lineage",
         "teach_help_content_gap"
       ],
-      "sha256": "94a7c04cf2f59015b4cf11c204410386c7ebb13266903d43af3af2a3ebb67826",
+      "sha256": "8d703c098f19782b4b6feccf71eac720e477481580decbdd9a86c1124f702cb5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 27
@@ -19721,7 +19721,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-17T11:51:51Z",
+  "generated_at_utc": "2026-09-17T11:52:25Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -1,23 +1,23 @@
 # Shard Index: Plans/Glossary.md
 
-Generated: 2026-09-10T02:47:39Z
+Generated: 2026-09-17T11:28:54Z
 
-Source SHA256: `94a7c04cf2f59015b4cf11c204410386c7ebb13266903d43af3af2a3ebb67826`
+Source SHA256: `8d703c098f19782b4b6feccf71eac720e477481580decbdd9a86c1124f702cb5`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `e80b7bb0a58273640250521dcf9775fe918db9bc133462d85b5faa0987914e0d`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L23 `b29eb048a74d520243822dc6809f6aed34e44efa1e2583dd35ec00e1535cfa49`
-- [003 - 0. Scope](003-0.-scope.md) L25-L31 `5d51fab5570059bc91c50ce28e4257ee528539eb2f7f92179900c79964adc05a`
-- [004 - 1. Canonical platform name](004-1.-canonical-platform-name.md) L33-L39 `783e6b3bf410cc5464ede542d219129099b35fed828611af6de2b6edb8c9f88c`
-- [005 - 2. Core terms](005-2.-core-terms.md) L41-L264 `c3d0e178ba1c6f82a78fcb67032a4fb33e4ba0701e2452766325249718fe590f`
-- [006 - 4. Evidence](006-4.-evidence.md) L266-L274 `5ff94add760ff56da80a1ce65ad98d7077cc5cedea397879b7c711af813ab61e`
-- [007 - 5. Secret handling](007-5.-secret-handling.md) L276-L284 `465e135b82ae3e3d29d9c0c2e5c000d30a44829544c45830a7c68e15de321214`
-- [008 - 6. Primitives](008-6.-primitives.md) L286-L327 `22c594c3ec2c203c3778f8a59803ef253f94787717d49b8792cbcbbbb5580817`
-- [009 - References](009-references.md) L329-L332 `5ebdbfc693a547d462f9dbd2f584f74ba2d5d4ebbea98851dce72827c6128c07`
-- [010 - Owner / Consumer Map](010-owner-consumer-map.md) L334-L338 `4533aa928793cc1fee8eb412b7b531c5c9aced9f3e42f83fb2a289e580037908`
-- [011 - PlanUnits](011-planunits.md) L340-L1664 `5c8b4cbcac44262708942952921bb0c2584e4cc8831f16468c453e5ab9b9b8ea`
-- [012 - Migration Coverage](012-migration-coverage.md) L1666-L1676 `58658e014a1477f5b5a201d5dc2b7a28d953a6dac94f9de238e7a81c71784b4f`
-- [013 - Ledger Compile Addendum - pldg-20260626-001-feature-name](013-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L1679-L2159 `1bfb79844b9717ccc675182ff4845750d2d8c79393da130bcc50f7f38a32c4fc`
+- [001 - Preamble](001-preamble.md) L1-L1 `35ca50ac319a2933bad441d4d59513b651a2d0cc79fcab17a3f0fae6fe8fb54b`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L23 `979e7042cb344ebc7447014f5841bbb4db9a51faf3b320f98872b05dd06c99cc`
+- [003 - 0. Scope](003-0.-scope.md) L25-L31 `08a840b647d595a15178c33fb569c3d805c8329c77c9ab4d386cc7d97b92ba0c`
+- [004 - 1. Canonical platform name](004-1.-canonical-platform-name.md) L33-L39 `ebd1f63f187c84a3a065c91deb4f0a21d429cef7eb03f0f879858d5e7ce324bc`
+- [005 - 2. Core terms](005-2.-core-terms.md) L41-L281 `85c602f40af61be82e9cfedce0de44a8b88f4749c26063d503ec04e1108164d7`
+- [006 - 4. Evidence](006-4.-evidence.md) L283-L291 `4436bd2603b7c554ec1ea477bf4530ee4202cfd377d577611b901ed3c2789888`
+- [007 - 5. Secret handling](007-5.-secret-handling.md) L293-L301 `7f2c7a2330796fa12373b0378cae95cff1d09b9dd89d3725b421c60b5d5af703`
+- [008 - 6. Primitives](008-6.-primitives.md) L303-L344 `8bee9456d9c4cc7eff0fd2064726f0c22ff1bddad3de84ba14dbdd740f37b582`
+- [009 - References](009-references.md) L346-L349 `4a6394fa25779b10fe0c246cc54f924814c5d219b9962e7b6b3fc65cec7f4ff1`
+- [010 - Owner / Consumer Map](010-owner-consumer-map.md) L351-L355 `8fb3eb8dffb6464b8c7adc7efb1ada314d640a9d869a3fe87eb582ddec8c0552`
+- [011 - PlanUnits](011-planunits.md) L357-L1681 `58aea5cbc080d1bbf54f64fdf64f8a0cfa8709d3c549369834b8860acc48a502`
+- [012 - Migration Coverage](012-migration-coverage.md) L1683-L1693 `c4224cbee7a7a1006f122b0fe4ddbbf004ccf3284abc7050772c387376e3c72b`
+- [013 - Ledger Compile Addendum - pldg-20260626-001-feature-name](013-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L1696-L2176 `34d12350ed51205b501422910f2ee92ec1e2b5f944c2da81457dcc5720f7f5c7`

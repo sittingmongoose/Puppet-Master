@@ -4853,7 +4853,7 @@ canonical_text: >-
   billed amount, and that a run manifest cannot declare a runtime version, hash a tree with live
   telemetry, record a freeze after the jobs it governed, or publish a malformed freeze timestamp.
   The pair is registered in the closed CONTRACT_PAIRS manifest of scripts/pm-new-contracts-verify.py,
-  whose authored cardinality rises from 30 to 31, and runs as the named subcheck
+  whose authored cardinality that script owns and reports, and runs as the named subcheck
   validate-new-contracts in pm-plans-verify.py run-gates and audit-governance. Retaining or
   validating a fixture never means executing it: this is static schema and fixture evidence only,
   and native handler, provider, recovery, security, visual and performance proof remains NOT_RUN.
@@ -4882,11 +4882,12 @@ source_lineage:
   - Plans/External_Research.md:ERS-001
   - reports/jujutsu-research-2026-09-11/continuation4/adjudication/README.md
   - reports/jujutsu-research-2026-09-11/continuation3/gate/cost-policy.json
-preserved_exact_tokens: ["validate-new-contracts", "NOT_RUN", "static schema and fixture evidence only", "30 negative fixtures"]
+preserved_exact_tokens: ["validate-new-contracts", "NOT_RUN", "static schema and fixture evidence only"]
 negative_constraints:
   - Do not infer runtime, provider, recovery, security, visual or performance results from fixture validation.
   - Do not add schemas or fixture pairs to the gate through an ambient glob.
   - Do not convert static validation into execution evidence or a readiness unlock.
+  - Do not restore a literal CONTRACT_PAIRS cardinality to this gate registration; that denominator belongs to scripts/pm-new-contracts-verify.py.
 owner_hints: [Plans/Automated_Testing_System.md]
 ```
 

@@ -252,16 +252,16 @@ plan_unit_id: ERS-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/External_Research.md
-canonical_text: "Research findings that need the user's answer are delivered as a decision packet under DL-036: one chat artifact containing every item, then each item presented one at a time as a plain-language card answered with exactly one of Approve, Deny, Deny with changes, or Ask a question. This owner supplies the packet content - the plain name, the one-sentence question, why it came up, what the user gets, what it costs, the options and the recommendation if there is one - and the finding reference, class and cited passages behind each item. It does not restate the card contract, the response set, the artifact behaviour or the questionnaire reuse, which are owned by assistant-chat-design under DL-036, nor the disposition record, which is owned by Decision_Log. A packet item is derived from exactly one union finding of class capability or product_choice."
+canonical_text: "Research findings that need the user's answer are delivered as a decision packet under DL-036. This owner fills in DL-036's plain-language decision form for each item and adds what is research-specific: the union finding the item derives from, that finding's class, and the passages the finding cites. The form itself, the card contract, the response set, the artifact behaviour and the questionnaire reuse are owned by Decision_Log DL-036 and assistant-chat-design and are referenced here, never restated; the disposition record is owned by Decision_Log. A packet item is derived from exactly one union finding of class capability or product_choice."
 gui_related: true
 gui_classification_reason: The packet and its cards are user-visible chat content produced by this owner, even though the surface contract is owned elsewhere.
 split_recommended: false
 depends_on: [ERS-004, DL-036]
 unblocks: [ERS-007]
 acceptance_criteria:
-  - Each packet item carries the plain-language fields of DL-036 plus its finding reference, class and cited passages.
+  - Each packet item carries DL-036's decision form, filled in by this owner, plus its finding reference, class and cited passages.
   - Each packet item derives from exactly one union finding classed capability or product_choice.
-  - The card contract, the four responses, the artifact behaviour and the questionnaire reuse are referenced to DL-036 and assistant-chat-design, not restated here.
+  - The decision form, the card contract, the four responses, the artifact behaviour and the questionnaire reuse are referenced to DL-036 and assistant-chat-design, and no field list of theirs is reproduced here.
   - Status and disposition use text labels; no colored border bars or stripes and no emoji glyphs are produced by this owner.
 validation_surfaces:
   - python3 scripts/pm-new-contracts-verify.py
@@ -410,6 +410,7 @@ source_lineage:
   - reports/jujutsu-research-2026-09-11/continuation3/gate/cost-policy.json
   - reports/jujutsu-research-2026-09-11/continuation3/gate/README.md
   - reports/jujutsu-research-2026-09-11/continuation4/corrections.json
+  - reports/jujutsu-research-2026-09-11/continuation4/README.md
 preserved_exact_tokens: ["captured usage", "unresolved", "lifetime cap", "job-end", "native records"]
 negative_constraints:
   - Do not present captured usage as a billed cash amount or a certified spend bound.
@@ -736,7 +737,7 @@ ContractRef: ContractName:Plans/External_Research.md, ContractName:Plans/assista
 
 ## 5. Validation And Acceptance
 
-Static contract validation is materialized as `Plans/external_research_contracts.schema.json` plus 12 positive and 30 negative fixtures in `Plans/external_research_contract_fixtures.json`, registered as a pack pair in the closed `CONTRACT_PAIRS` manifest of `scripts/pm-new-contracts-verify.py` (named subcheck `validate-new-contracts` in `scripts/pm-plans-verify.py run-gates`) and registered as `ATS-054` in `Plans/Automated_Testing_System.md`. Static validation covers schema shape and explicitly encoded invariants only. Each negative fixture is a single mutation of a named positive, names the constraint it must fail in `rejects_for`, and says in `reason` why the product forbids it; the six record families carry 6, 7, 3, 5, 4 and 5 negatives respectively.
+Static contract validation is materialized as `Plans/external_research_contracts.schema.json` plus 12 positive and 30 negative fixtures in `Plans/external_research_contract_fixtures.json`, registered as a pack pair in the closed `CONTRACT_PAIRS` manifest of `scripts/pm-new-contracts-verify.py`, whose cardinality that script owns and reports (named subcheck `validate-new-contracts` in `scripts/pm-plans-verify.py run-gates`) and registered as `ATS-054` in `Plans/Automated_Testing_System.md`. Static validation covers schema shape and explicitly encoded invariants only. Each negative fixture is a single mutation of a named positive, names the constraint it must fail in `rejects_for`, and says in `reason` why the product forbids it; the six record families carry 6, 7, 3, 5, 4 and 5 negatives respectively.
 
 Runtime proof remains NOT_RUN: no research job, adjudication, packet delivery, budget denial or provenance check is executed by this owner's validation. The measured figures quoted in `ERS-010`, `ERS-011` and `ERS-012` are results of the September 2026 Jujutsu research continuations on one frozen case; they are the basis for the promises here, not a general performance claim, and are cited by path and SHA-256 in Section 8.
 
@@ -779,7 +780,7 @@ Source lineage for this owner is the September 2026 external research campaign a
 | `reports/jujutsu-research-2026-09-11/continuation4/output-manifests.json` | `ddd20a45398aeff7176a460b6a042d6cbf13a22c00f42dcb7f536a7e8ed1d429` |
 | `reports/jujutsu-research-2026-09-11/continuation4/protocol-fingerprints.json` | `cd23bfaaf68d34110c79dff936f367e5d89028c7c8df4b6105eef478b229ab52` |
 | `reports/jujutsu-research-2026-09-11/d5/README.md` | `28aca2dee2fee3cddd9f5df423c25aca44936b477e7465e9391621a882b275ea` |
-| `PM-Experiments/research-audit-native-20260907/process-pilot-20260908/REVIEW_ADJUDICATION_20260916.md` | `8a7358bcd7883c6d6f93a986a488f3504ac36e1716e960bdf7690b88f29d10ac` |
+| `PM-Experiments/research-audit-native-20260907/process-pilot-20260908/REVIEW_ADJUDICATION_20260916.md` (appended to after this reading; hash is the 2026-09-17 snapshot, not a frozen file) | `8a7358bcd7883c6d6f93a986a488f3504ac36e1716e960bdf7690b88f29d10ac` |
 | `PM-Experiments/research-audit-native-20260907/process-pilot-20260908/BRIEF_GOAL3_RESEARCH_CANON_20260917.md` | `15f8004b938040ee34bf0c02ce600c18f098e713a7315ad0ac092bf88d006169` |
 | `PM-Experiments/research-audit-native-20260907/process-pilot-20260908/DECISIONS_PLAIN_20260909.md` | `98c7c005b490904a33f1ec0ec88c6402db48f33ec7ce0cb82ee3d01cf87e7847` |
 

@@ -16,7 +16,7 @@ the experiments did not exercise, and every promise names the run that establish
 Profile. It was registered exactly as the previous owner document, `Plans/Working_Notebook.md`, was registered
 at commit `99a3c7db9d`: appended to the `sources` array of `Plans/sharding_config.json`, given a dated Change
 Summary bullet with a `ContractRef` line and a named Plan map section in `Plans/00-plans-index.md`, and given a
-row in that document's root shard-index table.
+row in that document's root shard-index table, plus the Glossary terms section below.
 
 | Unit | What it fixes |
 |---|---|
@@ -51,8 +51,9 @@ and says in `reason` why the product forbids it.
 | `research_run_manifest` | 1 | 5 | No declared runtime version; no hashing with live telemetry; no freeze recorded after the jobs it governed; no empty protocol hashes; no malformed freeze timestamp |
 
 **One scripts change, registration only.** The pair is added to the closed `CONTRACT_PAIRS` manifest in
-`scripts/pm-new-contracts-verify.py` and `EXPECTED_CONTRACT_PAIR_COUNT` is raised from 30 to 31. That is the
-whole diff: two lines. No semantics branch was added, no other pack's behaviour changed, and the verifier's own
+`scripts/pm-new-contracts-verify.py` and `EXPECTED_CONTRACT_PAIR_COUNT` is raised by one. That is the whole
+diff: three changed lines, two added and one removed. No semantics branch was added, no other pack's behaviour
+changed, and the verifier's own
 comment — "Adding a contract pair is a reviewed gate change, not an ambient glob" — is why the change is stated
 here rather than buried. `Plans/Automated_Testing_System.md` gains `ATS-054` for the family.
 
@@ -62,6 +63,12 @@ correction-class finding never becomes a card. `PLS-023` in `Plans/Planning_Ledg
 research wave lands through a registered v2 ledger that records the landing without authorizing it. `SSYS-037`
 in `Plans/Settings_System.md` records that Settings holds the four research limit values while External
 Research owns their meaning. None of the three restates the contract it points at.
+
+**One Glossary section.** `### External research terms` in `Plans/Glossary.md` defines external research,
+research stage, admitted input class, finding class, union, candidate, standing repair authorization, captured
+and unresolved usage, in-flight allowance, turn budget, admissions, and protocol fingerprint with runtime
+identity. This is the fifth registration mechanism the `Working_Notebook.md` precedent used and the one this
+bundle originally skipped; the independent review caught it as `S5`.
 
 **One ledger.** `Plans/ledgers/v2/pldg-20260917-002-external-research-canon/`, registered in
 `Plans/ledgers/v2/ledger_registry.json`: 6 events, 5 design atoms, 5 decisions, 0 corrections, 5 compiled
@@ -116,14 +123,17 @@ canon.
 | `pm-new-contracts-verify.py` | pass, 0 findings, 31 pairs, 1053 positives valid, 3409 negatives rejected |
 | `pm-shard-plans.py --check --config Plans/sharding_config.json` | pass, 99 docs, 2690 shards, 0 failures |
 | `pm-plan-index.py validate` | pass, 0 failures, 6671 PlanUnits, 25947 acceptance units, coverage pass |
-| `pm-bootstrap-ledger-validate.py` | fail on three pre-existing governance coverage omissions, 0 warnings, every ledger-internal check passing (6 events, 5 atoms, 5 decisions, 0 corrections, 5 compile-queue items, 4 open questions, 662 PlanUnits checked) |
+| `pm-bootstrap-ledger-validate.py` | fail on three governance coverage omissions and nothing else, 0 warnings, every ledger-internal check passing (6 events, 5 atoms, 5 decisions, 0 corrections, 5 compile-queue items, 4 open questions, 662 PlanUnits checked) |
 
 The ledger failure is the same class the F106 to F109 landing recorded in
-`reports/jujutsu-research-2026-09-11/continuation3-landing/README.md`. This branch added
-`Plans/External_Research.md` to `sharding_config` sources, because registering a new owner document requires
-it; `Plans/Spec_Lock.json` and `Plans/plan_graph.json` are reseal artifacts owned by the designated Plans
-agent and were not touched, and `Plans/Settings_System.md` was already outside all three coverage sets on
-`origin/main`. Governance reseals belong to the designated Plans agent.
+`reports/jujutsu-research-2026-09-11/continuation3-landing/README.md`, but two of the three errors name a
+document this branch created, so it is not all inherited. `Plans/Settings_System.md`'s absence from
+`sharding_config` sources, `Spec_Lock` and `plan_graph` is genuinely pre-existing on `origin/main` and this
+branch did not change it. `Plans/External_Research.md`'s absence from `Spec_Lock` and `plan_graph` is caused by
+this branch, unavoidably: this branch added the document to `sharding_config` sources, because registering a
+new owner document requires it, but a new owner document cannot appear in a governance seal until the seal
+phase runs, and AGENTS.md reserves that to the designated Plans agent. All three are routed to `q-003` for that
+reason; none is a defect this branch could fix.
 
 ## Open questions for Jared
 
@@ -137,10 +147,27 @@ agent and were not touched, and `Plans/Settings_System.md` was already outside a
    belongs to the designated Plans agent.
 4. **`q-004` — the External Research consumer reference that belongs in `Plans/Jujutsu_Integration.md`,
    `Plans/Source_Control_System.md` and `Plans/Backup_Restore_System.md`.** Open by design: branch
-   `plans/c4-corrections-20260917` held those files concurrently, and the two branches were kept disjoint.
+   `plans/c4-corrections-20260917` held those files concurrently, and this branch edits none of them.
 
 All four are recorded as ledger question records in
 `Plans/ledgers/v2/pldg-20260917-002-external-research-canon/records/questions.jsonl`.
+
+## Overlap with `plans/c4-corrections-20260917`, and the conflict to expect
+
+The two branches were kept apart on the owner documents, not made disjoint. This branch edits none of
+`Plans/Jujutsu_Integration.md`, `Plans/Source_Control_System.md`, `Plans/Backup_Restore_System.md`,
+`Plans/final_gui_interaction_contracts.schema.json` or their fixtures, which is what `q-004` records and what
+`verification.json` claims. But measured by changed paths the two branches share **eight** files against their
+common base `a6162b559b`:
+
+| Shared file | Why | How it resolves |
+|---|---|---|
+| `Plans/.plan_index/acceptance_units.jsonl`, `coverage_report.json`, `dependencies.json`, `doc_cards.json`, `node_readiness_report.json`, `plan_units.jsonl` | Both branches regenerate the plan index with their edits, as AGENTS.md requires | Never hand-merged. Regenerate with `scripts/pm-plan-index.py generate` after the rebase |
+| `scripts/pm-new-contracts-verify.py` | This branch appends one `CONTRACT_PAIRS` tuple and raises the count; the other adds a Jujutsu semantics branch and touches neither `CONTRACT_PAIRS` nor `EXPECTED_CONTRACT_PAIR_COUNT` | Composable, different hunks. No count collision |
+| `Plans/ledgers/v2/ledger_registry.json` | Both append a new ledger object at the same insertion point and both rewrite the same trailing `updated_at_utc` | **A guaranteed conflict on both hunks for whichever branch lands second.** Keep both ledger entries and the later `updated_at_utc`; take nothing else from either side |
+
+The corrections branch lands first, so this branch resolves the registry conflict on rebase. Naming it here so
+it is expected rather than discovered.
 
 ## Claim boundary
 

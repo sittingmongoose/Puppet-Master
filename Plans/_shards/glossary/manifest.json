@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-09-10T02:47:39Z",
+  "generated_at_utc": "2026-09-17T11:28:54Z",
   "index_path": "Plans/_shards/glossary/00-index.md",
-  "index_sha256": "cde5cc8df378adb51bd4c4a06e4c31f0fbe123b237184ee5a5b637facfba6c45",
+  "index_sha256": "41b024a91ce3ed548413fcebbda817295514ce651796fc00957e858882227e14",
   "manifest_path": "Plans/_shards/glossary/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/glossary/001-preamble.md",
-      "sha256": "e80b7bb0a58273640250521dcf9775fe918db9bc133462d85b5faa0987914e0d",
+      "sha256": "35ca50ac319a2933bad441d4d59513b651a2d0cc79fcab17a3f0fae6fe8fb54b",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/glossary/002-canonical-owner-section-requirements.md",
-      "sha256": "b29eb048a74d520243822dc6809f6aed34e44efa1e2583dd35ec00e1535cfa49",
+      "sha256": "979e7042cb344ebc7447014f5841bbb4db9a51faf3b320f98872b05dd06c99cc",
       "shard_id": "002",
       "source_line_end": 23,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/glossary/003-0.-scope.md",
-      "sha256": "5d51fab5570059bc91c50ce28e4257ee528539eb2f7f92179900c79964adc05a",
+      "sha256": "08a840b647d595a15178c33fb569c3d805c8329c77c9ab4d386cc7d97b92ba0c",
       "shard_id": "003",
       "source_line_end": 31,
       "source_line_start": 25,
@@ -35,7 +35,7 @@
     {
       "heading": "1. Canonical platform name",
       "path": "Plans/_shards/glossary/004-1.-canonical-platform-name.md",
-      "sha256": "783e6b3bf410cc5464ede542d219129099b35fed828611af6de2b6edb8c9f88c",
+      "sha256": "ebd1f63f187c84a3a065c91deb4f0a21d429cef7eb03f0f879858d5e7ce324bc",
       "shard_id": "004",
       "source_line_end": 39,
       "source_line_start": 33,
@@ -44,88 +44,88 @@
     {
       "heading": "2. Core terms",
       "path": "Plans/_shards/glossary/005-2.-core-terms.md",
-      "sha256": "c3d0e178ba1c6f82a78fcb67032a4fb33e4ba0701e2452766325249718fe590f",
+      "sha256": "85c602f40af61be82e9cfedce0de44a8b88f4749c26063d503ec04e1108164d7",
       "shard_id": "005",
-      "source_line_end": 264,
+      "source_line_end": 281,
       "source_line_start": 41,
       "split_rule": "heading-##"
     },
     {
       "heading": "4. Evidence",
       "path": "Plans/_shards/glossary/006-4.-evidence.md",
-      "sha256": "5ff94add760ff56da80a1ce65ad98d7077cc5cedea397879b7c711af813ab61e",
+      "sha256": "4436bd2603b7c554ec1ea477bf4530ee4202cfd377d577611b901ed3c2789888",
       "shard_id": "006",
-      "source_line_end": 274,
-      "source_line_start": 266,
+      "source_line_end": 291,
+      "source_line_start": 283,
       "split_rule": "heading-##"
     },
     {
       "heading": "5. Secret handling",
       "path": "Plans/_shards/glossary/007-5.-secret-handling.md",
-      "sha256": "465e135b82ae3e3d29d9c0c2e5c000d30a44829544c45830a7c68e15de321214",
+      "sha256": "7f2c7a2330796fa12373b0378cae95cff1d09b9dd89d3725b421c60b5d5af703",
       "shard_id": "007",
-      "source_line_end": 284,
-      "source_line_start": 276,
+      "source_line_end": 301,
+      "source_line_start": 293,
       "split_rule": "heading-##"
     },
     {
       "heading": "6. Primitives",
       "path": "Plans/_shards/glossary/008-6.-primitives.md",
-      "sha256": "22c594c3ec2c203c3778f8a59803ef253f94787717d49b8792cbcbbbb5580817",
+      "sha256": "8bee9456d9c4cc7eff0fd2064726f0c22ff1bddad3de84ba14dbdd740f37b582",
       "shard_id": "008",
-      "source_line_end": 327,
-      "source_line_start": 286,
+      "source_line_end": 344,
+      "source_line_start": 303,
       "split_rule": "heading-##"
     },
     {
       "heading": "References",
       "path": "Plans/_shards/glossary/009-references.md",
-      "sha256": "5ebdbfc693a547d462f9dbd2f584f74ba2d5d4ebbea98851dce72827c6128c07",
+      "sha256": "4a6394fa25779b10fe0c246cc54f924814c5d219b9962e7b6b3fc65cec7f4ff1",
       "shard_id": "009",
-      "source_line_end": 332,
-      "source_line_start": 329,
+      "source_line_end": 349,
+      "source_line_start": 346,
       "split_rule": "heading-##"
     },
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/glossary/010-owner-consumer-map.md",
-      "sha256": "4533aa928793cc1fee8eb412b7b531c5c9aced9f3e42f83fb2a289e580037908",
+      "sha256": "8fb3eb8dffb6464b8c7adc7efb1ada314d640a9d869a3fe87eb582ddec8c0552",
       "shard_id": "010",
-      "source_line_end": 338,
-      "source_line_start": 334,
+      "source_line_end": 355,
+      "source_line_start": 351,
       "split_rule": "heading-##"
     },
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/glossary/011-planunits.md",
-      "sha256": "5c8b4cbcac44262708942952921bb0c2584e4cc8831f16468c453e5ab9b9b8ea",
+      "sha256": "58aea5cbc080d1bbf54f64fdf64f8a0cfa8709d3c549369834b8860acc48a502",
       "shard_id": "011",
-      "source_line_end": 1664,
-      "source_line_start": 340,
+      "source_line_end": 1681,
+      "source_line_start": 357,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/glossary/012-migration-coverage.md",
-      "sha256": "58658e014a1477f5b5a201d5dc2b7a28d953a6dac94f9de238e7a81c71784b4f",
+      "sha256": "c4224cbee7a7a1006f122b0fe4ddbbf004ccf3284abc7050772c387376e3c72b",
       "shard_id": "012",
-      "source_line_end": 1676,
-      "source_line_start": 1666,
+      "source_line_end": 1693,
+      "source_line_start": 1683,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260626-001-feature-name",
       "path": "Plans/_shards/glossary/013-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
-      "sha256": "1bfb79844b9717ccc675182ff4845750d2d8c79393da130bcc50f7f38a32c4fc",
+      "sha256": "34d12350ed51205b501422910f2ee92ec1e2b5f944c2da81457dcc5720f7f5c7",
       "shard_id": "013",
-      "source_line_end": 2159,
-      "source_line_start": 1679,
+      "source_line_end": 2176,
+      "source_line_start": 1696,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 2159,
+    "line_count": 2176,
     "path": "Plans/Glossary.md",
-    "sha256": "94a7c04cf2f59015b4cf11c204410386c7ebb13266903d43af3af2a3ebb67826"
+    "sha256": "8d703c098f19782b4b6feccf71eac720e477481580decbdd9a86c1124f702cb5"
   }
 }

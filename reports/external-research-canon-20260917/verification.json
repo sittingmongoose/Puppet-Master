@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.external_research_canon.verification.v1",
-  "generated_at_utc": "2026-09-17T05:35:00+00:00",
+  "generated_at_utc": "2026-09-17T06:05:00+00:00",
   "branch": "plans/goal3-research-20260917",
   "base_commit": "a6162b559b502278458a56e95c5c0891c3e2a505",
   "agent": "Opus 5 (claude-opus-5[1m])",
@@ -59,7 +59,7 @@
         "governance coverage targets missing from plan_graph coverage: ['Plans/External_Research.md', 'Plans/Settings_System.md']"
       ],
       "warnings": [],
-      "error_disposition": "All three are governance coverage omissions in Spec_Lock, plan_graph and sharding_config. Plans/External_Research.md was added to sharding_config sources by this branch; Spec_Lock and plan_graph are reseal artifacts owned by the designated Plans agent, and Plans/Settings_System.md was already outside all three on origin/main. Recorded as ledger question q-003. Every ledger-internal check passes with no warnings."
+      "error_disposition": "All three are governance coverage omissions and nothing else, and two of the three name a document this branch created. Plans/Settings_System.md's absence from sharding_config sources, Spec_Lock and plan_graph is pre-existing on origin/main and unchanged here. Plans/External_Research.md's absence from Spec_Lock and plan_graph is caused by this branch and is unavoidable: the branch added it to sharding_config sources as registering a new owner document requires, but a new owner document cannot appear in a governance seal until the seal phase runs, which AGENTS.md reserves to the designated Plans agent. All three are routed to ledger question q-003. Every ledger-internal check passes with no warnings."
     }
   ],
   "units_added": {
@@ -115,8 +115,9 @@
     },
     "gate_registration": {
       "file": "scripts/pm-new-contracts-verify.py",
-      "change": "pair appended to the closed CONTRACT_PAIRS manifest and EXPECTED_CONTRACT_PAIR_COUNT raised from 30 to 31",
-      "scope": "registration only; no semantics branch added and no other pack's behaviour changed"
+      "change": "pair appended to the closed CONTRACT_PAIRS manifest and EXPECTED_CONTRACT_PAIR_COUNT raised by one; three changed lines, two added and one removed",
+      "scope": "registration only; no semantics branch added and no other pack's behaviour changed",
+      "cardinality_owner": "scripts/pm-new-contracts-verify.py owns and reports the CONTRACT_PAIRS cardinality. Per main's 2a92905501 no canon document carries that literal, so ATS-054 and External_Research.md section 5 state the shape without the number. This bundle records the number because it is dated evidence of one commit, not a standing canon claim."
     }
   },
   "ledger": {
@@ -132,5 +133,46 @@
     "compile_queue_items": 5
   },
   "continuation5_disposition": "Continuation 5 had not reported when this wave ran. ERS-010 and ERS-012 carry continuation 4's measured figures with their run named; continuation 5's results are open ledger questions q-001 and q-002, not placeholders in canon text.",
-  "disjointness": "This branch edits none of Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Backup_Restore_System.md, Plans/final_gui_interaction_contracts.schema.json or their fixtures, which branch plans/c4-corrections-20260917 held concurrently. The consumer reference that belongs in those owners is ledger question q-004."
+  "disjointness": "This branch edits none of Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Backup_Restore_System.md, Plans/final_gui_interaction_contracts.schema.json or their fixtures, which branch plans/c4-corrections-20260917 held concurrently. The two branches were kept apart on the owner documents, not made disjoint: measured by changed paths against their common base a6162b559b they share eight files. The consumer reference that belongs in those owners is ledger question q-004.",
+  "shared_files_with_c4_corrections": {
+    "other_branch": "plans/c4-corrections-20260917",
+    "common_base": "a6162b559b502278458a56e95c5c0891c3e2a505",
+    "count": 8,
+    "regenerated_never_merged": [
+      "Plans/.plan_index/acceptance_units.jsonl",
+      "Plans/.plan_index/coverage_report.json",
+      "Plans/.plan_index/dependencies.json",
+      "Plans/.plan_index/doc_cards.json",
+      "Plans/.plan_index/node_readiness_report.json",
+      "Plans/.plan_index/plan_units.jsonl"
+    ],
+    "composable": [
+      {
+        "path": "scripts/pm-new-contracts-verify.py",
+        "why": "this branch appends one CONTRACT_PAIRS tuple and raises the count; the other adds a Jujutsu semantics branch and touches neither CONTRACT_PAIRS nor EXPECTED_CONTRACT_PAIR_COUNT, so the hunks do not overlap and there is no count collision"
+      }
+    ],
+    "expected_conflict": [
+      {
+        "path": "Plans/ledgers/v2/ledger_registry.json",
+        "why": "both branches append a new ledger object at the same insertion point and both rewrite the same trailing updated_at_utc line",
+        "resolution": "keep both ledger entries and the later updated_at_utc; take nothing else from either side"
+      }
+    ]
+  },
+  "independent_review": {
+    "path": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/REVIEW_GOAL3_20260917.md",
+    "reviewed_commit": "07f4cb7cc1",
+    "verdict": "fix first; six should-fix items, none blocking; every hash and figure verified",
+    "applied": {
+      "S1": "ERS-005 now references DL-036's decision form instead of enumerating its seven fields, keeping only the research-specific additions, as ACD-467 already did",
+      "S2": "the cross-pack cardinality clause and the bare numeric preserved token are removed from ATS-054, section 5 of External_Research.md states the shape without the number, and ATS-054 gains a negative constraint keeping the denominator with the script, per main's 2a92905501",
+      "S3": "reports/jujutsu-research-2026-09-11/continuation4/README.md added to ERS-008's source_lineage, the run behind its two pricing sentences",
+      "S4": "the bundle README's disjointness sentence corrected and the eight shared files named, with the ledger_registry.json conflict and its resolution stated in advance",
+      "S5": "### External research terms added to Plans/Glossary.md, the fifth registration mechanism of the Working_Notebook precedent",
+      "S6": "the scripts edit is three changed lines, two added and one removed, not two",
+      "N1": "two of the three ledger-validator errors name a document this branch created; stated in the README and in this file's error_disposition",
+      "N2": "the REVIEW_ADJUDICATION_20260916.md lineage row is labelled a 2026-09-17 read-time snapshot of a file that is appended to"
+    }
+  }
 }
