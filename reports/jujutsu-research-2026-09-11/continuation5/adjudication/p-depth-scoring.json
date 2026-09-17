@@ -1,0 +1,800 @@
+{
+  "schema": "jj.continuation5.arm_scoring.v1",
+  "arm": "p-depth",
+  "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm",
+  "arm_kind": "Prioritized depth. Stage 1: muse-code/muse-spark-1.3-contributor ranked all 88 frozen leads. Stage 2: claude-opus-5 at effort max reviewed them in that order over the same premium artifacts and starting state as claude-hicap. The ONLY authorized difference from claude-hicap is the admission ORDER and effort max in place of xhigh.",
+  "run": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-p-depth-20260917-043853",
+    "terminal_stop_checked_first": "campaign-terminal.json and monitor-state.json both record 'Stop: admitted_attempt_cap' - the arm used all 12 admissions and ended on its own designed stop. Confirmed before scoring.",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/arm-outputs/p-depth-manifest.json",
+    "manifest_sha256_internal": "bb21eaef631ad7c4bd6edee9f24860314ccffda32ee008a996e7816e09dd7cd2",
+    "files": 7404,
+    "total_bytes": 224158935,
+    "prioritization_manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/arm-outputs/p-rank-manifest.json",
+    "prioritization_manifest_sha256_internal": "9ef19ee20e5d2cb62295fec0250172d06389c408798c9d15d7d5e08cbc573126",
+    "prioritization_files": 115,
+    "verification": "BOTH manifests verified THREE ways: recomputed internal digest from the sorted rows, matched the runner's quoted value, and independently re-hashed the whole tree with the run's own hash_manifest.py. All three agree for both, with zero differing files. The runner quiesced the monitor and the allowance heartbeat before freezing, which is the fix for the race I reported on glm53 in continuation 4.",
+    "same_frozen_case": "run.json input_manifest_sha256 11a497945fa57bb5ea062b67289f258af1f89eb9bcb475e7f6b1f9f692c8272a - the same frozen case every continuation-4 review arm ran."
+  },
+  "review_model": {
+    "prioritizer": "muse-code/muse-spark-1.3-contributor at effort xhigh via oh-my-pi omp/18.2.2",
+    "reviewer": "claude-opus-5 at effort max via Claude Code CLI 2.1.226 (binary sha 4e9bec1177ce9690...)",
+    "per_job_ceiling_responses": 160,
+    "per_job_timeout_seconds": 3600,
+    "per_job_budget_usd": 20,
+    "workers": 3,
+    "admissions": 12,
+    "arm_cap_usd": 150,
+    "effort_note": "claude-hicap ran at xhigh; Arm P runs at max because the CLI accepts it. That is a second difference from the baseline and it is NOT isolated from the ordering variable."
+  },
+  "runner_figures_checked": {
+    "all_confirmed": true,
+    "corrections": [],
+    "checked": [
+      "12 own jobs J0017-J0028, 6 reconcile and 6 compare - confirmed (J0001-J0016 are the inherited frozen premium artifacts and are not this arm's output)",
+      "11 finished, 1 cut by the account session limit - confirmed",
+      "43 to 89 responses per job - confirmed from native-job-end-accounting receipts (74,51,43,52,61,64,70,62,65,89,82,76)",
+      "12 of 12 wrote notes.md; 32 lead deliveries - confirmed",
+      "16 of 88 leads reached a comparison and they are exactly ranks 1-16 with no gaps - confirmed by mapping every compare job's lead_ids through arm-p-admission-order.json",
+      "all 12 jobs accounting-complete, receipts == request_count in every job, zero gaps, $0 unresolved - confirmed"
+    ],
+    "note": "Every runner figure I checked was already correct. This is the second arm in the campaign for which that is true (glm53 was the first)."
+  },
+  "job_table": [
+    {
+      "job": "J0017-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "error": null,
+      "elapsed_seconds": 1092.4,
+      "native_responses": 74,
+      "request_count": 74,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-21de7aceefe8",
+        "L-4634dafd85af",
+        "L-a87239280738"
+      ],
+      "assigned_ranks": [
+        1,
+        2,
+        3
+      ],
+      "receipted_lead_deliveries": [
+        "L-21de7aceefe8",
+        "L-4634dafd85af",
+        "L-a87239280738"
+      ],
+      "notes_present": true,
+      "notes_bytes": 42727,
+      "authored_lead_documents": 4,
+      "credited_findings": []
+    },
+    {
+      "job": "J0018-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "error": null,
+      "elapsed_seconds": 924.2,
+      "native_responses": 51,
+      "request_count": 51,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-3016429f1ffd",
+        "L-f8ff85550285",
+        "L-6028298d8855"
+      ],
+      "assigned_ranks": [
+        4,
+        5,
+        6
+      ],
+      "receipted_lead_deliveries": [
+        "L-3016429f1ffd",
+        "L-6028298d8855",
+        "L-f8ff85550285"
+      ],
+      "notes_present": true,
+      "notes_bytes": 46122,
+      "authored_lead_documents": 5,
+      "credited_findings": []
+    },
+    {
+      "job": "J0019-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "error": null,
+      "elapsed_seconds": 654.4,
+      "native_responses": 43,
+      "request_count": 43,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-772b9a7a0dbf"
+      ],
+      "assigned_ranks": [
+        7
+      ],
+      "receipted_lead_deliveries": [
+        "L-772b9a7a0dbf"
+      ],
+      "notes_present": true,
+      "notes_bytes": 23518,
+      "authored_lead_documents": 5,
+      "credited_findings": []
+    },
+    {
+      "job": "J0020-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "error": null,
+      "elapsed_seconds": 841.1,
+      "native_responses": 52,
+      "request_count": 52,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-772b9a7a0dbf"
+      ],
+      "assigned_ranks": [
+        7
+      ],
+      "receipted_lead_deliveries": [
+        "L-772b9a7a0dbf"
+      ],
+      "notes_present": true,
+      "notes_bytes": 44267,
+      "authored_lead_documents": 0,
+      "credited_findings": [
+        "F054",
+        "F084"
+      ]
+    },
+    {
+      "job": "J0021-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "error": null,
+      "elapsed_seconds": 953.8,
+      "native_responses": 61,
+      "request_count": 61,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-3016429f1ffd",
+        "L-f8ff85550285",
+        "L-6028298d8855"
+      ],
+      "assigned_ranks": [
+        4,
+        5,
+        6
+      ],
+      "receipted_lead_deliveries": [
+        "L-3016429f1ffd",
+        "L-6028298d8855",
+        "L-f8ff85550285"
+      ],
+      "notes_present": true,
+      "notes_bytes": 78324,
+      "authored_lead_documents": 5,
+      "credited_findings": [
+        "F002",
+        "F004",
+        "F005",
+        "F011",
+        "F019",
+        "F044"
+      ]
+    },
+    {
+      "job": "J0022-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "error": null,
+      "elapsed_seconds": 1007.7,
+      "native_responses": 64,
+      "request_count": 64,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-21de7aceefe8",
+        "L-4634dafd85af",
+        "L-a87239280738"
+      ],
+      "assigned_ranks": [
+        1,
+        2,
+        3
+      ],
+      "receipted_lead_deliveries": [
+        "L-21de7aceefe8",
+        "L-4634dafd85af",
+        "L-a87239280738"
+      ],
+      "notes_present": true,
+      "notes_bytes": 56903,
+      "authored_lead_documents": 2,
+      "credited_findings": [
+        "F006",
+        "F050",
+        "F051",
+        "F052",
+        "F079",
+        "F082",
+        "F102"
+      ]
+    },
+    {
+      "job": "J0023-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "error": null,
+      "elapsed_seconds": 1018.1,
+      "native_responses": 70,
+      "request_count": 70,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-62e705862167",
+        "L-289201b4f4ec",
+        "L-732df4469871"
+      ],
+      "assigned_ranks": [
+        8,
+        9,
+        10
+      ],
+      "receipted_lead_deliveries": [
+        "L-289201b4f4ec",
+        "L-62e705862167",
+        "L-732df4469871"
+      ],
+      "notes_present": true,
+      "notes_bytes": 42288,
+      "authored_lead_documents": 4,
+      "credited_findings": []
+    },
+    {
+      "job": "J0024-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "error": null,
+      "elapsed_seconds": 883.2,
+      "native_responses": 62,
+      "request_count": 62,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-c16f21f72e55",
+        "L-f0795b00764c",
+        "L-6ab2467deb87"
+      ],
+      "assigned_ranks": [
+        11,
+        12,
+        13
+      ],
+      "receipted_lead_deliveries": [
+        "L-6ab2467deb87",
+        "L-c16f21f72e55",
+        "L-f0795b00764c"
+      ],
+      "notes_present": true,
+      "notes_bytes": 25807,
+      "authored_lead_documents": 1,
+      "credited_findings": []
+    },
+    {
+      "job": "J0025-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "error": null,
+      "elapsed_seconds": 1227.3,
+      "native_responses": 65,
+      "request_count": 65,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-2ccd857addc8",
+        "L-4af7ce1cedec",
+        "L-aa07eee74517"
+      ],
+      "assigned_ranks": [
+        14,
+        15,
+        16
+      ],
+      "receipted_lead_deliveries": [
+        "L-2ccd857addc8",
+        "L-4af7ce1cedec",
+        "L-aa07eee74517"
+      ],
+      "notes_present": true,
+      "notes_bytes": 39436,
+      "authored_lead_documents": 6,
+      "credited_findings": []
+    },
+    {
+      "job": "J0026-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "error": null,
+      "elapsed_seconds": 1077.5,
+      "native_responses": 89,
+      "request_count": 89,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-62e705862167",
+        "L-289201b4f4ec",
+        "L-732df4469871"
+      ],
+      "assigned_ranks": [
+        8,
+        9,
+        10
+      ],
+      "receipted_lead_deliveries": [
+        "L-289201b4f4ec",
+        "L-62e705862167",
+        "L-732df4469871"
+      ],
+      "notes_present": true,
+      "notes_bytes": 52686,
+      "authored_lead_documents": 3,
+      "credited_findings": [
+        "F073",
+        "F080",
+        "F081",
+        "F089",
+        "F090"
+      ]
+    },
+    {
+      "job": "J0027-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "error": null,
+      "elapsed_seconds": 981.5,
+      "native_responses": 82,
+      "request_count": 82,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-c16f21f72e55",
+        "L-f0795b00764c",
+        "L-6ab2467deb87"
+      ],
+      "assigned_ranks": [
+        11,
+        12,
+        13
+      ],
+      "receipted_lead_deliveries": [
+        "L-6ab2467deb87",
+        "L-c16f21f72e55",
+        "L-f0795b00764c"
+      ],
+      "notes_present": true,
+      "notes_bytes": 49638,
+      "authored_lead_documents": 3,
+      "credited_findings": [
+        "F007",
+        "F008",
+        "F033",
+        "F035",
+        "F056",
+        "F057",
+        "F072"
+      ]
+    },
+    {
+      "job": "J0028-compare",
+      "phase": "compare",
+      "runtime_status": "cli_error",
+      "bound_by": "account_session_limit",
+      "error": "You've hit your session limit \u00b7 resets 8:30am (UTC)",
+      "elapsed_seconds": 840.8,
+      "native_responses": 76,
+      "request_count": 76,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-2ccd857addc8",
+        "L-4af7ce1cedec",
+        "L-aa07eee74517"
+      ],
+      "assigned_ranks": [
+        14,
+        15,
+        16
+      ],
+      "receipted_lead_deliveries": [
+        "L-2ccd857addc8",
+        "L-4af7ce1cedec",
+        "L-aa07eee74517"
+      ],
+      "notes_present": true,
+      "notes_bytes": 58935,
+      "authored_lead_documents": 3,
+      "credited_findings": [
+        "F010",
+        "F030",
+        "F061",
+        "F064",
+        "F094"
+      ]
+    }
+  ],
+  "request_limited_coverage": {
+    "applies": false,
+    "statement": "NO JOB WAS REQUEST-LIMITED, TIME-LIMITED OR MONEY-LIMITED. Responses per job ran 43-89 against a 160 ceiling; the longest job took 1,227.3 s of 3,600 s; the dearest cost $10.89 of $20; the arm spent $85.50 of $150. The ceiling caveat that governs Arm C, deepseek41, muse13 and glm53 does not apply, exactly as it did not apply to claude-hicap. The binding limit was the 12-admission cap.",
+    "evidence": [
+      "outcome.json runtime_status is 'completed' for 11 jobs and 'cli_error' for one",
+      "no job reached 160 responses",
+      "priced usage $85.5011 of $150"
+    ]
+  },
+  "limit_cut_job": {
+    "job": "J0028-compare",
+    "reported_separately_as_instructed": true,
+    "status": "cli_error",
+    "error": "You've hit your session limit \u00b7 resets 8:30am (UTC)",
+    "what_it_is": "The ACCOUNT's shared five-hour window, not an arm limit. The typed rate_limit_event at 05:48:52Z records status rejected, overageStatus rejected, overageDisabledReason out_of_credits, window resetting 08:30:00Z. Two other Claude Code threads shared the account.",
+    "output_completeness": "COMPLETE AND FULLY SCOREABLE. It had already dispatched 76 responses, reconciled 76 receipts against 76 requests with accounting complete and zero gaps, wrote a 58,935-byte notes.md and delivered all three of its leads plus three lead documents. I read the document to its end: it terminates on a finished 'Explicit limits of this report' section, not mid-sentence. The limit hit after the work was written.",
+    "scoring_impact": "J0028 carries 5 of the 32 credits (F002, F030, F061, F064, F094) including BOTH findings this arm adds over all six continuation-4 arms. Discarding it would have cost the arm its two most distinctive results.",
+    "ranks_affected": [
+      14,
+      15,
+      16
+    ]
+  },
+  "assertion_corpus": {
+    "documents": 53,
+    "total_bytes": 705002,
+    "composition": "12 notes.md (one per own job) and 41 authored lead documents",
+    "included": "workspace/notes.md and workspace/leads/*.md for J0017-J0028 only",
+    "excluded_as_inherited_inputs": "jobs/J0001-J0016 are byte copies of the premium arm's frozen artifacts and are NOT this arm's output; no credit cites them",
+    "excluded_as_inputs": [
+      "handoff.md",
+      "navigation.md",
+      "brief.md",
+      "assignment.md",
+      "sources.md",
+      "tool-help.md",
+      "research.py"
+    ],
+    "excluded_as_locator_inventories": [
+      "workspace/research-evidence/sources/**"
+    ]
+  },
+  "code_fact_verification": {
+    "rule": "The standing addition for continuation 5: every code-fact assertion is verified against the pinned source in the arm's cache before credit, with source lines recorded.",
+    "facts_checked": 23,
+    "upheld": 23,
+    "errors_found": 0,
+    "sources_used": [
+      "the arm's own shared cache at cache/v3/repos/jj-vcs--jj, pinned e6dd2c0d60f22ef8d21d171b5fb8e4178f0af1d9",
+      "the arm's own fetch receipts for v0.44.0 raw files (J0022 S00044 stacked_table.rs sha 713fed9e..., S00045 git.rs sha eace5106...), whose recorded hashes I re-verified against the stored text",
+      "the frozen Plans at bc7569b3f5 via git show, for the contract-side assertions"
+    ],
+    "index": "V-P1..V-P23, recorded per finding in p-depth-findings.json code_fact_verification arrays",
+    "headline": "ZERO errors. This is the only arm in the campaign for which I found no incorrect code-fact assertion. For contrast, both continuation-4 Claude arms asserted the inverse of jj's UNIX_EPOCH garbage-collection predicate, and glm53 asserted it in one job while quarantining it in another.",
+    "notable": "Three assertions the arm marks as its own discovery rather than inherited - the special-file silent omission category (V-P15), the submodule-contents category (V-P16), and TableStore::gc's doc comment holding at v0.44.0 and not only at the pin (V-P6) - all verified correct."
+  },
+  "recall": {
+    "expanded_union_denominator": 110,
+    "credited": [
+      "F002",
+      "F004",
+      "F005",
+      "F006",
+      "F007",
+      "F008",
+      "F010",
+      "F011",
+      "F019",
+      "F030",
+      "F033",
+      "F035",
+      "F044",
+      "F050",
+      "F051",
+      "F052",
+      "F054",
+      "F056",
+      "F057",
+      "F061",
+      "F064",
+      "F072",
+      "F073",
+      "F079",
+      "F080",
+      "F081",
+      "F082",
+      "F084",
+      "F089",
+      "F090",
+      "F094",
+      "F102"
+    ],
+    "count": 32,
+    "recall_percent": 29.09,
+    "by_class": {
+      "correction": "0/5",
+      "optional_capability": "2/36",
+      "product_choice": "1/6",
+      "unsupported_or_rejected": "29/63"
+    },
+    "fixed_original_105_count": 32,
+    "corrections_credited": [],
+    "corrections_missed": [
+      "F001",
+      "F106",
+      "F107",
+      "F108",
+      "F109"
+    ],
+    "partials": [
+      "F001",
+      "F029",
+      "F071",
+      "F087",
+      "F107"
+    ],
+    "all_credits_from_compare_jobs": "Every one of the 32 credits is earned in a COMPARE job. The six reconcile jobs are external technical reconciliation - they verify the leads against primary sources and correct the inherited prose - and they supply the evidence the compare jobs then state against the Plans. That is the designed division of labour, and it means this arm's recall is a function of how many leads reached COMPARE, not how many reached reconcile."
+  },
+  "comparison_with_claude_hicap": {
+    "baseline": "claude-hicap, continuation 4, post-review: 45/110 (40.91%), corrections 2/5, optional 4/36, product 3/6, unsupported 36/63. Same premium artifacts, same starting state, same 12 admissions, 3 workers, 160-response ceiling, 3,600 s and $20 per job. Differences: admission ORDER (Muse ranking vs frozen order) and effort (max vs xhigh).",
+    "arm_p": "32/110 (29.09%)",
+    "net": "-13",
+    "gained": [
+      "F005",
+      "F019",
+      "F052",
+      "F054",
+      "F057",
+      "F064"
+    ],
+    "gained_titles": {
+      "F005": "Expected operation is not native compare-and-swap",
+      "F019": "Stale workspace recovery",
+      "F052": "Git HEAD and index health are separate",
+      "F054": "Effective config and template parsing",
+      "F057": "Exact-profile conflict byte regression",
+      "F064": "Hidden graph regression qualification"
+    },
+    "lost": [
+      "F028",
+      "F029",
+      "F031",
+      "F032",
+      "F034",
+      "F036",
+      "F037",
+      "F043",
+      "F053",
+      "F059",
+      "F062",
+      "F066",
+      "F074",
+      "F083",
+      "F087",
+      "F088",
+      "F092",
+      "F106",
+      "F107"
+    ],
+    "lost_titles": {
+      "F028": "Machine-readable hunk selection",
+      "F029": "Hunk and editable diff safety",
+      "F031": "Diff text and metadata round-trip",
+      "F032": "Edited text line-ending policy",
+      "F034": "Partial external editor writes",
+      "F036": "External editor stale sessions",
+      "F037": "Bound reads before allocating",
+      "F043": "Authenticated browser and local IPC",
+      "F053": "Windows links and native file types",
+      "F059": "Push targets and bookmark effects",
+      "F062": "Graph visual and menu regressions",
+      "F066": "Direct graph manipulation",
+      "F074": "Process execution follows owner environment",
+      "F083": "Backup derived indexes",
+      "F087": "Read preview and dry-run side effects",
+      "F088": "Parent retention in history edits",
+      "F092": "Performance mechanisms are not capability proof",
+      "F106": "Restore readiness consistency",
+      "F107": "Graph page consistency and adjacency bounds"
+    },
+    "shared": 26,
+    "verdict": "PRIORITIZATION LOST. Arm P scored 32 against claude-hicap's 45 on identical inputs - a net loss of 13 findings - despite comparing 16 leads to claude-hicap's 14 and spending $85.50 against claude-hicap's $82.52.",
+    "why": "The 19 findings lost are not scattered: they are two coherent families the ranking pushed below rank 16. The external-editor and diff family - F029, F031, F032, F034, F036, F037, F053, F028, F087 - and the graph and history family - F062, F066, F088, F092, F107, F043, F059, F074, F083, F106. Muse Spark's top 16 are almost entirely backup closure, GC fencing, store integrity, colocation certification and identity. Its own stated reasons show why: nine of the top ten name operation recovery, GC, closure, colocation or config. The prioritizer optimised for one theme and got depth in it.",
+    "what_prioritization_did_buy": "The 6 gained findings are real and they are where the extra depth went: F005 and F019 come from reading the concurrency and stale-workspace material to the bottom, F052 and F057 from checking two defects against the exact v0.44.0 tag rather than by release dating, and F054 and F064 are reached by NO continuation-4 arm at all."
+  },
+  "ranking_yield": {
+    "question": "Which ranks produced credits?",
+    "by_rank_band": [
+      {
+        "rank_band": "1-3",
+        "compare_job": "J0022-compare",
+        "leads": 3,
+        "credits": 7,
+        "finding_ids": [
+          "F006",
+          "F050",
+          "F051",
+          "F052",
+          "F079",
+          "F082",
+          "F102"
+        ]
+      },
+      {
+        "rank_band": "4-6",
+        "compare_job": "J0021-compare",
+        "leads": 3,
+        "credits": 6,
+        "finding_ids": [
+          "F002",
+          "F004",
+          "F005",
+          "F011",
+          "F019",
+          "F044"
+        ]
+      },
+      {
+        "rank_band": "7",
+        "compare_job": "J0020-compare",
+        "leads": 1,
+        "credits": 2,
+        "finding_ids": [
+          "F054",
+          "F084"
+        ]
+      },
+      {
+        "rank_band": "8-10",
+        "compare_job": "J0026-compare",
+        "leads": 3,
+        "credits": 5,
+        "finding_ids": [
+          "F073",
+          "F080",
+          "F081",
+          "F089",
+          "F090"
+        ]
+      },
+      {
+        "rank_band": "11-13",
+        "compare_job": "J0027-compare",
+        "leads": 3,
+        "credits": 7,
+        "finding_ids": [
+          "F007",
+          "F008",
+          "F033",
+          "F035",
+          "F056",
+          "F057",
+          "F072"
+        ]
+      },
+      {
+        "rank_band": "14-16",
+        "compare_job": "J0028-compare",
+        "leads": 3,
+        "credits": 5,
+        "finding_ids": [
+          "F010",
+          "F030",
+          "F061",
+          "F064",
+          "F094"
+        ]
+      }
+    ],
+    "reading": "THE YIELD IS FLAT, AND THAT IS THE RESULT. Ranks 11-13 produced 7 credits, exactly as many as ranks 1-3; ranks 14-16 produced 5, as many as ranks 8-10. The prioritizer's ordering did not predict yield. If the ranking had been informative, credits would decline with rank; they do not. Rank 7 produced the fewest (2) only because it was a single-lead job.",
+    "credits_per_lead": {
+      "ranks_1_3": 2.3333333333333335,
+      "ranks_4_6": 2.0,
+      "rank_7": 2.0,
+      "ranks_8_10": 1.6666666666666667,
+      "ranks_11_13": 2.3333333333333335,
+      "ranks_14_16": 1.6666666666666667
+    },
+    "consequence": "Because yield per lead is roughly constant across the compared band, the arm's recall is governed by HOW MANY leads reached compare and WHICH FAMILIES they belong to - not by their order. Arm P compared two more leads than claude-hicap and still lost 13 findings, because the 16 it compared were thematically concentrated while claude-hicap's 14, taken in frozen order, spanned more families.",
+    "caveat": "This measures yield against the 110-finding union only. The ranking may well have optimised for something else - the top-ranked leads did produce this arm's deepest contract repairs, and two findings no other arm reached."
+  },
+  "coverage_vs_other_arms": {
+    "premium": {
+      "total": 78,
+      "shared": 31,
+      "arm_p_only": [
+        "F073"
+      ]
+    },
+    "hybrid": {
+      "total": 90,
+      "shared": 27,
+      "arm_p_only": [
+        "F005",
+        "F008",
+        "F033",
+        "F084",
+        "F090"
+      ]
+    },
+    "outside_premium_union_hybrid": [],
+    "note": "premium union hybrid is the whole 110-finding union by construction, so nothing can fall outside it; the substantive statement is that this arm delivered no proposition I could credit as a finding the union does not already contain.",
+    "continuation4_five_arm_review_union": 48,
+    "continuation4_six_arm_union": 57,
+    "arm_p_adds_over_all_six_continuation4_arms": [
+      "F054",
+      "F064"
+    ],
+    "seven_arm_union": 59,
+    "seven_arm_union_percent": 53.64,
+    "reached_by_no_arm_before": 53,
+    "reached_by_no_arm_now": 51
+  },
+  "reached_delivery_fraction": {
+    "input_leads": 88,
+    "leads_admitted_to_a_reconcile_job": 16,
+    "with_a_saved_reconcile_assertion": 16,
+    "leads_admitted_to_a_compare_job": 16,
+    "with_a_saved_comparison": 16,
+    "rate": "16/16 = 100% at both stages",
+    "of_the_88_input_leads": "16/88 = 18.2% reached a comparison",
+    "baseline": "claude-hicap reached 14/88 = 15.9%",
+    "jobs": "12/12 jobs produced a saved assertion; 12/12 produced a receipted delivery",
+    "reading": "Everything admitted got there, at both stages, including the session-limited job. There is no 'did not get there' loss inside the admitted set. The arm's misses are entirely a function of which 16 of 88 leads were admitted."
+  },
+  "cost": {
+    "captured_upper_usd": 85.5011,
+    "cli_reported_usd": 85.5011,
+    "cap_usd": 150,
+    "unresolved_usd": 0.0,
+    "per_job_range_usd": [
+      3.81,
+      10.89
+    ],
+    "usd_per_credited_finding": 2.6719,
+    "prioritization_stage_usd": 0.011961,
+    "comparability": "Comparable with claude-hicap ($82.5164, 45 credits, $1.834 per finding) because the per-job limits are identical. Arm P cost $2.672 per credited finding - 46% more per finding. NOT comparable with the goal-2 arms or the 40-response continuation-4 arms.",
+    "prioritization_was_nearly_free": "The ranking pass cost $0.011961 - 0.014% of the arm's spend. Whatever else is true, prioritization is cheap; it is the admission budget it steers that is expensive."
+  },
+  "timing": {
+    "reconcile_wall_s": 3339.1,
+    "compare_wall_s": 3531.3,
+    "arm_wall_s": 4193.3,
+    "summed_job_s": 11502.0,
+    "average_concurrency": 2.743,
+    "target_s": 4500,
+    "inside_target": true,
+    "vs_claude_hicap": "claude-hicap arm wall 3,535.2 s; Arm P 4,193.3 s. Arm P is 18.6% slower for 13 fewer findings."
+  },
+  "limits": [
+    "One frozen case, one ordering, one prioritizer. This does not establish that prioritization cannot help - only that THIS ranking, on THIS union, lost.",
+    "Two variables moved at once: admission order AND effort (max vs claude-hicap's xhigh). The ordering effect is not cleanly isolated, and the effort difference runs in Arm P's favour, which makes the 13-finding loss a conservative estimate of the ordering penalty.",
+    "Recall is measured against continuation 3's fixed 110-finding union, which was built from premium and hybrid output. A prioritizer that optimises for anything the union does not contain is penalised here by construction - see ranking_yield.caveat.",
+    "The 110-finding union is not a yield oracle. 'Lost' findings are findings claude-hicap reached and this arm did not; they are not necessarily more valuable than the deeper contract repairs Arm P produced in its own band.",
+    "'Unsupported or already-covered' is a union class, not a false-positive rate.",
+    "Adjudicator and the depth-stage model share a family; all 23 code facts were independently verified against pinned bytes to make the judgement re-checkable."
+  ]
+}

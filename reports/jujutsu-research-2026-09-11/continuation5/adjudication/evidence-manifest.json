@@ -1,0 +1,305 @@
+{
+  "schema": "jj.continuation5.adjudication.evidence_manifest.v1",
+  "label": "Continuation 5 Arm P adjudication bundle - evidence pointers and hashes",
+  "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm",
+  "note": "Raw captures stay outside this repository per AGENTS.md. Evidence is cited by path plus SHA-256.",
+  "runner_bundle_cross_reference": {
+    "branch": "research/continuation5-20260917",
+    "commit": "eda0c92821",
+    "path": "reports/jujutsu-research-2026-09-11/continuation5/",
+    "policy": "Referenced by path, never duplicated. This bundle carries only the adjudication layer.",
+    "figures_checked": "every runner figure I checked was already correct; no corrections were needed"
+  },
+  "arm_run": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-p-depth-20260917-043853",
+    "terminal_stop_checked_first": "campaign-terminal.json and monitor-state.json both record 'Stop: admitted_attempt_cap'",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/arm-outputs/p-depth-manifest.json",
+    "manifest_sha256_internal": "bb21eaef631ad7c4bd6edee9f24860314ccffda32ee008a996e7816e09dd7cd2",
+    "files": 7404,
+    "total_bytes": 224158935,
+    "verified_three_ways": "row recompute, runner's quoted value, and an independent tree re-hash - all agree, zero differing files",
+    "run_json_sha256": "159ce26001fdad25a354f766e287d3e27f2e7d36391184195c6886524171e266",
+    "timing_json_sha256": "aa7c956c136fb1e982d0cda62ddd873dc2f220129f8678ec4cb3316c96857042",
+    "progress_json_sha256": "7e6f782e0ea26fd05b31660363523343219c07270a3961efde8c4b9d05a9d48d",
+    "campaign_terminal_sha256": "d01032bf0e7b9d0caec75366c89a77744e6aa22d977b594d9d1fba76708db315",
+    "input_manifest_sha256": "11a497945fa57bb5ea062b67289f258af1f89eb9bcb475e7f6b1f9f692c8272a"
+  },
+  "prioritization_job": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/prioritization/J0001-prioritize-20260917-043645",
+    "manifest_sha256_internal": "9ef19ee20e5d2cb62295fec0250172d06389c408798c9d15d7d5e08cbc573126",
+    "files": 115,
+    "verified_three_ways": true,
+    "admission_order_file": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/arm-p-admission-order.json",
+    "order_verified": "every compare job's lead_ids mapped through the order file gives exactly ranks 1-16, no gaps"
+  },
+  "assertion_corpus": {
+    "root": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-p-depth-20260917-043853/jobs",
+    "documents": 53,
+    "total_bytes": 705002,
+    "composition": "12 notes.md and 41 authored lead documents, jobs J0017-J0028 only",
+    "excluded": "jobs J0001-J0016 are byte copies of the frozen premium artifacts; no credit cites them",
+    "files": [
+      {
+        "path": "J0017-reconcile/workspace/notes.md",
+        "sha256": "81fc5615e25bc2ebbbc2a58bfa62ab9121a648b7b23f2f2eb9eed11f4469eae3"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/L-2e64f8a10d9b.md",
+        "sha256": "cbeab9d5140f74a868d4f893d24e7a2153c4d7f17969c5683d7b28651751fe9d"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/L-3c81b0e7a4d2.md",
+        "sha256": "333dabb76de62f758274f4fb0d550059f8c006833aa05abf21f157cc1848b0b3"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/L-5b90d1c3f827.md",
+        "sha256": "1c8b794b6a4cea4b84195cc81aa4a1a7ec3093b53cb60d9e4f9051f5bce3c080"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/L-7f2ae94c1b63.md",
+        "sha256": "5c9f12a76581431c2d4e4e23b354ba8667dfb4917cc2accc21324dab2554b9e8"
+      },
+      {
+        "path": "J0018-reconcile/workspace/notes.md",
+        "sha256": "510f17871b2520fa44f660c8ceeff8feb05b857cacb6caef9efde3196da1fe8e"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/background-snapshot-induced-divergence.md",
+        "sha256": "6170cd4943bd701f691ce0808b10f4dc7c7c3ef963670c47df6ceb55786d243c"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/deferred-operation-publication.md",
+        "sha256": "e9e0c8cbf5a55c4bb62555952ea7fa80e0d77c3645b3c37259af3445055a2efb"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/gc-fence-raciness.md",
+        "sha256": "069d5dd60827603a387ac45f0f9d348143ef79ffaf26c9d30d47bed8c7319ff0"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/git-import-export-lock-scope.md",
+        "sha256": "8c28ed90a81c882a7a3c802dc2ff63ff8d1f9448e19bf8a71a48f8e9ef2ff9e5"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/workspace-store-outside-operation-log.md",
+        "sha256": "8458a3ef382fccb2194eb9b7db0740cf7e33548f8311d61f083a19535a08ba06"
+      },
+      {
+        "path": "J0019-reconcile/workspace/notes.md",
+        "sha256": "48b6796e6ecc2dfc367dacade025347a508367c2dd94fac3331c948fc3ef4da1"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/L-3b77ae10c95d-workspace-repo-file-escape.md",
+        "sha256": "d340111a2e488457a8baffc93017c31c9024715c62a17abd5c8280abea689298"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/L-5d0ce8b4a213-capture-symlink-leak.md",
+        "sha256": "3b7582ce83e7b9116c8b831396309622798520f6e206c37e2d7eb2b7f0ea2400"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/L-7c25e90fb318-config-gc-owner-state.md",
+        "sha256": "d8fc40cf92c68229bc5d09b9d9d67c8039efa81306278b0a832a66901237340c"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/L-9f2c41d7e6ab-invocation-side-effects.md",
+        "sha256": "fda20cbc3f605a85c0f8c6e3055f4c7ad410a0d2ec65eaf2b076552afc34239d"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/L-a41f6b29d70e-config-id-entropy-seeding.md",
+        "sha256": "f2fce08f86ca921ac8abd0bfff879b1751685c428ee38ac93b648b5e1c28cf56"
+      },
+      {
+        "path": "J0020-compare/workspace/notes.md",
+        "sha256": "63cc75c0eec14894e42aa112179c54bf7232b874bbbcafd5e95757a5c355e20d"
+      },
+      {
+        "path": "J0021-compare/workspace/notes.md",
+        "sha256": "c5d7a2bf8fc196b1a342a331382290ebcce6d2bf954069e4f0d6380dded79a86"
+      },
+      {
+        "path": "J0021-compare/workspace/leads/adapter-binding-and-operation-attributes.md",
+        "sha256": "98ef9dc443b4f18b292e01630c3ad5dd550b221a9bf70959f409ba0d7a876930"
+      },
+      {
+        "path": "J0021-compare/workspace/leads/change-metadata-store-silent-loss.md",
+        "sha256": "2e88b99727ac5b6771eb87affcaa19c7447e74aa1001efdd127f671a7a17ecbe"
+      },
+      {
+        "path": "J0021-compare/workspace/leads/inherited-native-auto-recovery-config.md",
+        "sha256": "d2e62fa1e556c7d5ba0a243a9fc929f22c6ebe4c6361d364115bfdaf64bec453"
+      },
+      {
+        "path": "J0021-compare/workspace/leads/read-commands-denied-writer-lease.md",
+        "sha256": "4f0dc2c6a3c4669e7e5109dbe5ae250abb8613dafe60c4799d1a891c190e834e"
+      },
+      {
+        "path": "J0021-compare/workspace/leads/writer-lease-has-no-native-counterpart.md",
+        "sha256": "33d02d0fb273e38499163327eb3b0ce89374522a25628849f2ff179f04d7bc77"
+      },
+      {
+        "path": "J0022-compare/workspace/notes.md",
+        "sha256": "d7d1fbfc5d5a019084a5ed63dbc96dbd7adf49aa83f55da834bf75cee89fade4"
+      },
+      {
+        "path": "J0022-compare/workspace/leads/L-8d3b1f6c25ae.md",
+        "sha256": "18a2214a6cb2f9ca778087f9477890f143cade6ef91279270a0617e692b36a12"
+      },
+      {
+        "path": "J0022-compare/workspace/leads/L-c4e07a9182bd.md",
+        "sha256": "b011a33bb63c57b593e3e67189622c04555d76b32e41c88a24d3dc004c9df77d"
+      },
+      {
+        "path": "J0023-reconcile/workspace/notes.md",
+        "sha256": "a41234e875a6cf1d04b651a388133d85ed7ccdc90a5176f220c075fc9804e6dc"
+      },
+      {
+        "path": "J0023-reconcile/workspace/leads/lead-jj-creates-git-worktrees-vs-docs.md",
+        "sha256": "2456eeaf8c5cb637446501cd948d8075eb24d900b4899df38c4a1c41b93f951f"
+      },
+      {
+        "path": "J0023-reconcile/workspace/leads/lead-keep-refs-gc-fence-location.md",
+        "sha256": "9074b73fc9855180d4d4649ce142a46014a066e9c0ca3f439a2a3432c6250335"
+      },
+      {
+        "path": "J0023-reconcile/workspace/leads/lead-partial-clone-breaks-snapshot.md",
+        "sha256": "c1125983d4786f8f08f5b4c223ee5fcb84a474cf7b1713e978f5f25388ca2789"
+      },
+      {
+        "path": "J0023-reconcile/workspace/leads/lead-snapshot-ignored-paths-unreported.md",
+        "sha256": "c8d581d9c2a664d0a0a7610accad471d3798c04a10d362d35bcfd91de9e256fa"
+      },
+      {
+        "path": "J0024-reconcile/workspace/notes.md",
+        "sha256": "8ce599505161978bd5589faf1231e9f78da1d84e02c71aecd348045e982dde6b"
+      },
+      {
+        "path": "J0024-reconcile/workspace/leads/jj-resolve-per-file-eligibility.md",
+        "sha256": "5f5b4505dd618a4745b2ff8faeb7ce141fae03dafc322b4bf61e46c423f727bd"
+      },
+      {
+        "path": "J0025-reconcile/workspace/notes.md",
+        "sha256": "a882d420736b76b7a8767be1266353fc074787f5c94af0cbacdaceb34aa8072a"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/git-partial-clone-eligibility-detection.md",
+        "sha256": "a360d74ba5472a98241185ad2ec6cf13f82e9add5cb6dcb0b457c5fd0543f150"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/jj-crash-durability-and-op-store-recovery.md",
+        "sha256": "de553985db956f02aa09cb9bd5c6e4e805aff0903c500b419cd53729bade8e18"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/jj-keep-ref-gc-fence-and-races.md",
+        "sha256": "4e8dcefe426041de9073d022bf74f929f03ad9d468a9ba45105b66ed03ed00e1"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/jj-operation-attribute-coverage-gaps.md",
+        "sha256": "cf42ecd18e623a046622856c3c840b2b734ef970688b5b31aeb980bf49be9592"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/jj-read-paths-that-mutate.md",
+        "sha256": "d81e2bc1949b23def54d295fe6b822b640851024f2c77997af8af047f3d523d1"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/jj-unpublished-operation-two-phase-publication.md",
+        "sha256": "83f33a454cf76baf0da644d8e63e802932943bab9955e801581c74cb7a861e78"
+      },
+      {
+        "path": "J0026-compare/workspace/notes.md",
+        "sha256": "34531f4b3e5d182d7f6efc4659230f1782af45bc4fcd8a3d566be6ca544a3de9"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/lead-isolation-is-asserted-not-proven.md",
+        "sha256": "cd79f64623a373516d8e009beb4df1458a36899a6c81937822e81a5b0001ee57"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/lead-jj-silent-omission-categories-beyond-warnings.md",
+        "sha256": "5fe4bc59217c59e4e6de3a8ed1621264557defd62adeedfdad67f740c2c4fdaf"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/lead-pm-creates-filtered-clones.md",
+        "sha256": "eca100e4453f6900e6868ee8d56ec3c02ba0a5c6b597c7d87d9256f21aa98e42"
+      },
+      {
+        "path": "J0027-compare/workspace/notes.md",
+        "sha256": "3035c40f8f29e005b864e469d23ea123771257c50ff791595e79926031882f04"
+      },
+      {
+        "path": "J0027-compare/workspace/leads/jj-external-tool-route-is-opt-in.md",
+        "sha256": "66b714cd9ff29b568ed5eb1aadf2b284d7a846144c971824c5528e441aebf205"
+      },
+      {
+        "path": "J0027-compare/workspace/leads/jj-merge-eligibility-precedes-tool-dispatch.md",
+        "sha256": "ae86b14e3d6c356f6a20f97b74dbb0fe6c8a77aa10d159622ef99ec5fe9567e9"
+      },
+      {
+        "path": "J0027-compare/workspace/leads/plans-have-no-jj-conflict-command.md",
+        "sha256": "4e87261fc5f6ea3a466ef30b3733f6b72426f44c50585ac0f4d00557955106fc"
+      },
+      {
+        "path": "J0028-compare/workspace/notes.md",
+        "sha256": "766101692da1ff4089d8ec9a5bb2186fb44c6e733f01ffa9441f6cc08147664b"
+      },
+      {
+        "path": "J0028-compare/workspace/leads/jj-backup-closure-missing-historical-secret-warning.md",
+        "sha256": "5e88faf7dcfc55782e7e2158580cb8c72785d8604e7c769e56917c295fdf3ba2"
+      },
+      {
+        "path": "J0028-compare/workspace/leads/jj-no-repository-health-or-maintenance-route.md",
+        "sha256": "cc9881ebc168e68e7a5024e9f11d44f9a6da6a89b600254b703aaa0ecce04811"
+      },
+      {
+        "path": "J0028-compare/workspace/leads/pm-created-filtered-clones-versus-jj-colocation.md",
+        "sha256": "ae6cf886af012a53fcae4a0551120e6f39fd243c3dc3d250f3a6fe673ee17470"
+      }
+    ]
+  },
+  "code_fact_verification": {
+    "facts_checked": 23,
+    "upheld": 23,
+    "errors_found": 0,
+    "index": "V-P1..V-P23, recorded per finding in p-depth-findings.json",
+    "sources": [
+      "the arm's fetch receipts for tag v0.44.0 (J0022 S00044 sha 713fed9e..., S00045 sha eace5106...)",
+      "the arm's pinned shared cache at cache/v3/repos/jj-vcs--jj @ e6dd2c0d60f22ef8d21d171b5fb8e4178f0af1d9",
+      "the frozen Plans at bc7569b3f5"
+    ]
+  },
+  "adjudication_source": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/adjudication/p-depth",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/adjudication/p-depth-manifest.json",
+    "manifest_sha256_internal": "4d17d95245890c9d4cce0ab62d42fbdc5d362b12014ac30c8d9aa9ca4996c5a8",
+    "progress_log": "adjudication/p-depth/PROGRESS.md (kept out of this bundle; a working log, not a result)"
+  },
+  "baseline": {
+    "arm": "claude-hicap",
+    "source": "reports/jujutsu-research-2026-09-11/continuation4/adjudication/claude-hicap-findings.json on main",
+    "credited": 45,
+    "note": "post-review figure after the independent review's B4 withdrawal of F001"
+  },
+  "headline": {
+    "arm_p_credited": 32,
+    "claude_hicap_credited": 45,
+    "net": -13,
+    "leads_compared": "16 vs 14",
+    "cost": "$85.50 vs $82.52",
+    "ranking_yield_by_band": [
+      7,
+      6,
+      2,
+      5,
+      7,
+      5
+    ],
+    "adds_over_all_six_continuation4_arms": [
+      "F054",
+      "F064"
+    ],
+    "seven_arm_union": 59,
+    "candidates_inside_standing_rejections": [
+      "C5P-02",
+      "C5P-03",
+      "C5P-05",
+      "C5P-06"
+    ]
+  }
+}
