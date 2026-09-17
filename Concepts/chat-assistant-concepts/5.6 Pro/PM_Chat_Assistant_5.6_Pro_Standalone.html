@@ -9292,6 +9292,9 @@ button.qs-spine-slot.is-current::after{
 /* Source-keyed graph geometry; no arrows inferred from list order. */
 .ar-graph-svg{width:100%;max-height:420px;overflow:visible}.ar-graph-svg rect{fill:var(--panel,#1b2130);stroke:var(--line,#777)}.ar-graph-svg text{fill:var(--text,#dfe4f5);font:12px system-ui}.ar-graph-svg path{fill:none;stroke:var(--muted,#929cb6);stroke-width:1.5}.ar-graph-svg polygon{fill:var(--muted,#929cb6)}.ar-graph-key p{margin:4px 0;font-size:12px;overflow-wrap:anywhere}.ar-document{min-width:0}.ar-document code,.ar-document dd{overflow-wrap:anywhere}
 
+/* Shared retained-file/manifest projections. */
+.snapshot-note{color:var(--muted);font-size:12px;line-height:1.6}.snapshot-manifest{display:grid;gap:8px}.snapshot-manifest>div{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px;border:1px solid var(--border);border-radius:10px}.snapshot-manifest span{flex:1;min-width:120px;overflow-wrap:anywhere}.snapshot-manifest small{color:var(--muted)}
+
 /* Question budgets own no visual surface; consumers use shared cards. */
 
 /* plans.css — feature module stylesheet. OWNER: Assistant-redesign wave (2026-09-03).
@@ -10602,6 +10605,13 @@ button.qs-spine-slot.is-current::after{
 .collab-checkbox-row small { margin-left:7px; color:var(--muted); }
 .collab-msg { padding:8px 0; border-bottom:1px solid var(--border); }
 @media(max-width:560px){ .collab-participant-editor { grid-template-columns:1fr; } }
+
+.plan-crew-summary{padding:12px;overflow-wrap:anywhere}.plan-crew-summary>p{font-size:12px;opacity:.8}.plan-crew-assignment{display:flex;flex-direction:column;gap:4px;padding:10px 0;border-bottom:1px solid var(--border)}.plan-crew-assignment span{font-size:12px}
+
+.plan-crew-participant-work { margin-top:16px; padding:14px; border:1px solid var(--border); border-radius:12px; }
+.plan-crew-participant-work p { font-size:12px; color:var(--muted); }
+.plan-crew-participant-work div { display:grid; gap:4px; margin:12px 0; overflow-wrap:anywhere; }
+.plan-crew-participant-work span {font-size:12px;}
 
 /* Local BSD protocol: presentation is owned by bsd.css. */
 
@@ -12805,6 +12815,10 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .b18-guide{--text-muted:var(--muted);--surface:var(--panel)}
 .b18-guide details[open] .b18-controls{max-height:180px;overflow:auto;padding-bottom:5px}
 .schedule-item-copy span,.plan-schedule-line small,.sched-card-time{overflow-wrap:anywhere;white-space:normal}
+
+/* Same existing theme tokens, no protected motion overrides. */
+.b18c-guide{border:1px solid var(--border);border-radius:14px;padding:12px;margin:8px 0;min-width:0;overflow-wrap:anywhere;background:var(--panel-bg)}
+.b18c-guide p{font-size:12px;line-height:1.5;margin:8px 0}.b18c-controls{display:flex;gap:6px;flex-wrap:wrap;min-width:0}.b18c-controls>button{white-space:normal;min-width:0;max-width:100%;font-size:12px}.b18c-guide .b18-guide-title{flex-wrap:wrap}.schedule-crew-config{padding:8px 0}
 
 /* composer.css — in-field composer chrome, selector collapse, follow-up queue.
  *
@@ -27710,7 +27724,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       origin: 'uploaded_snapshot', kind: kind, name: file.name, size: file.size,
       mime: mime || 'application/octet-stream', source_label: 'Uploaded from device',
       producer: { label: 'You', detail: 'Uploaded from device' },
-      filesafe: { status: 'clear', note: 'Scanned on upload · no secrets or credential patterns detected.' }
+      filesafe: { status: 'not_scanned', note: 'Device-selected bytes; no malware or secret scan has run.' }
     });
     /* attachHiddenProp (declared later, hoisted) keeps the real File off the
        enumerable property list so JSON.stringify — which composer-state.js
@@ -28053,6 +28067,20 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     else if (added > 1) ctx.toast(added + ' files added', 'Added to the composer tray as uploaded snapshots.');
   }
   AT.admitFiles = admitFiles;
+  function admitFolder(threadId,fileList) {
+    var files=Array.from(fileList||[]),ctx=ctxNow();if(!ctx||!files.length)return {ok:false,error:'empty_folder_selection'};
+    var root=files[0].webkitRelativePath?.split('/')[0];
+    if(!root||files.some(f=>!(f instanceof File)||!f.webkitRelativePath?.startsWith(root+'/')))return {ok:false,error:'invalid_folder_selection'};
+    var rec=baseRecord({origin:'folder_manifest',kind:'folder',semantic_kind:'folder',name:root,size:files.reduce((n,f)=>n+f.size,0),process_state:'ready',
+      source_label:'Selected from device',filesafe:{status:'not_scanned',note:'Selected bytes are not executed. No malware or secret scan has run.'},
+      folder_manifest:{totalFiles:files.length,shown:files.map(f=>({name:f.webkitRelativePath,size:f.size})),truncated:false,root_identity:root,materialization_status:'selected_not_retained'}});
+    attachHiddenProp(rec,'_files',files);registerRecord(rec);bufferFor(threadId).attachments.push(rec);touchComposer();ctx.renderApp();return {ok:true,attachment:rec};
+  }
+  EXT.action('att-upload-folder',function(ctx){
+    var tid=currentThreadId(),input=document.createElement('input');input.type='file';input.multiple=true;input.setAttribute('webkitdirectory','');input.id='pm56-att-folder-input';input.hidden=true;document.body.appendChild(input);
+    input.addEventListener('change',function(){var result=admitFolder(tid,input.files);input.remove();if(!result.ok)ctx.toast('Folder not added',result.error);});input.addEventListener('cancel',()=>input.remove());ctx.closeDialog();input.click();return true;
+  });
+
 
   var lastAttachThreadId = null;
   var fileInputEl = null;
@@ -28338,7 +28366,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       '<div class="drawer-head"><strong>Add attachment</strong><span class="meta-pill">Demo sources</span><span class="spacer"></span>' +
       '<button class="icon-button" data-action="close-dialog" aria-label="Close">' + attIcon(ctx, 'close', 13) + '</button></div>' +
       '<div class="dialog-body att-source-body">' +
-      sourceSection('Upload from this device', rowUpload) +
+      sourceSection('Upload from this device', rowUpload + sourceRow(ctx,'att-upload-folder','folder','Choose a folder','Keep all selected files together; exact copies are made when scheduling.')) +
       sourceSection('Project references', rowsProject) +
       sourceSection('Folder', rowFolder) +
       sourceSection('Generated artifacts', artifactRows) +
@@ -28802,6 +28830,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
   window.PM56_ATTACHMENTS = {
     version: 1,
     findAttachment: findAttachment,
+    admitFiles:admitFiles,admitFolder:admitFolder,
     originMeta: originMeta,
     ORIGINS: ORIGINS,
     PROCESS_LABELS: PROCESS_LABELS,
@@ -28820,7 +28849,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
  * This is session-local custody, not native persistence or Event Authority. */
 (function(){
 'use strict';
-const D=PM56_DATA,E=PM56_EXT,TX=PM56_TX,renderers=new Map();
+const D=PM56_DATA,E=PM56_EXT,TX=PM56_TX,renderers=new Map(),exporters=new Map();
 const clone=x=>JSON.parse(JSON.stringify(x));
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function key(value){let h=2166136261;for(const c of JSON.stringify(value)){h^=c.codePointAt(0);h=Math.imul(h,16777619);}return 'fnv1a-local:'+ (h>>>0).toString(16).padStart(8,'0');}
@@ -28850,10 +28879,11 @@ function retain(ref,holder){
  return TX.run(()=>{
   while(queue.length){const entry=queue.pop(),f=entry.ref,a=item(f?.artifact_id),key=JSON.stringify(normalized(f));
    if(seen.has(key))continue;seen.add(key);
-   if(!a?.revisions?.[f.artifact_version]){if(f===ref)TX.fail('artifact_revision_missing');continue;}
+   if(!a?.revisions?.[f.artifact_version]){if(f===ref||entry.required)TX.fail('artifact_revision_missing');continue;}
    if(scopeOf(a).project_id!==f.project_id||scopeOf(a).thread_id!==f.thread_id)TX.fail('denied');
    const row={artifact_version:f.artifact_version,kind:entry.holder.kind,id:entry.holder.id};
    if(!(a.retainedBy||[]).some(x=>JSON.stringify(x)===JSON.stringify(row)))TX.set(a,'retainedBy',(a.retainedBy||[]).concat(row));
+   for(const child of a.revisions[f.artifact_version].record.dependency_refs||[]){if(child.project_id!==f.project_id||child.thread_id!==f.thread_id)TX.fail('denied');queue.push({ref:child,holder:{kind:'artifact_revision',id:f.artifact_id+'@'+f.artifact_version},required:true});}
    const next=a.revisions[f.artifact_version].record.static_fallback_ref;
    if(next){if(next.project_id&&next.project_id!==f.project_id||next.thread_id&&next.thread_id!==f.thread_id)TX.fail('denied');
     queue.push({ref:{project_id:f.project_id,thread_id:f.thread_id,...next},holder:{kind:'artifact_revision',id:f.artifact_id+'@'+f.artifact_version}});}
@@ -28949,13 +28979,100 @@ function editor(ref){const x=resolve(ref);return `<article class="editor-doc ar-
 E.slot('editorDocument',ctx=>{const ref=fromRoute(ctx.editorId);return ref?editor(ref):'';});
 E.slot('editorTabLabel',ctx=>{const ref=fromRoute(ctx.editorId);if(!ref)return '';return esc((resolve(ref).revision?.record.title||'Unavailable artifact')+' · V'+ref.artifact_version);});
 E.chainAction('open-artifact',(ctx,btn)=>{if(!btn.dataset.version)return false;let ref;try{ref=JSON.parse(decodeURIComponent(btn.dataset.ref));}catch(e){ctx.toast('Cannot open','The exact artifact reference is missing.');return true;}const x=resolve(ref);ctx.openEditor(route(ref));return true;});
-function deliverText(name,text,mime='text/plain;charset=utf-8'){
+function deliverText(name,text,mime='text/plain;charset=utf-8'){return deliverBytes(name,text,mime);}
+function deliverBytes(name,text,mime='application/octet-stream'){
  try{const blob=new Blob([text],{type:mime}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.rel='noopener';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(url);a.remove();},4000);return {ok:true,result:'handed to the browser as '+name};}
  catch(e){return {ok:false,error:'download_refused',result:'the browser refused the download ('+String(e.message||e)+') — no file was written'};}
 }
-E.action('ar-download',(ctx,btn)=>{let ref;try{ref=JSON.parse(decodeURIComponent(btn.dataset.ref));}catch(e){return true;}const x=resolve(ref);if(!x.ok){ctx.toast('Download unavailable',x.error);return true;}const q=x.revision.record,data=sourceText(q);const out=deliverText(q.title.replace(/[^a-zA-Z0-9._-]/g,'_')+'-v'+q.artifact_version+'.txt',data);if(!out.ok)ctx.toast('Download unavailable',out.error);return true;});
+E.action('ar-download',(ctx,btn)=>{let ref;try{ref=JSON.parse(decodeURIComponent(btn.dataset.ref));}catch(e){return true;}const x=resolve(ref);if(!x.ok){ctx.toast('Download unavailable',x.error);return true;}const q=x.revision.record;if(exporters.has(q.renderer_kind)){try{const e=exporters.get(q.renderer_kind)(q);const out=deliverBytes(e.name,e.bytes,e.mime);if(!out.ok)ctx.toast('Download unavailable',out.error);}catch(e){ctx.toast('Download unavailable',e.message);}return true;}const data=sourceText(q);const out=deliverText(q.title.replace(/[^a-zA-Z0-9._-]/g,'_')+'-v'+q.artifact_version+'.txt',data);if(!out.ok)ctx.toast('Download unavailable',out.error);return true;});
 
-window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fromRoute,editor,registerRenderer:register,kinds:()=>Array.from(renderers.keys()),key,freeze,scopeOf,unavailable};
+window.PM56_ARTIFACTS={deliverText,deliverBytes,registerExporter:(kind,fn)=>{if(exporters.has(kind))throw Error('duplicate_exporter');exporters.set(kind,fn);},publish,resolve,retain,purge,render,route,fromRoute,editor,registerRenderer:register,kinds:()=>Array.from(renderers.keys()),key,freeze,scopeOf,unavailable};
+})();
+
+/* Attachment owner: explicit selected-file/folder snapshot preparation.
+ * Bytes live in the existing shared Artifact revision owner after commit. File
+ * objects are transient input handles, not a second storage system. Session only.
+ * Local concept bounds are disclosed; no recursive OS access or scan is implied. */
+(function(){
+'use strict';
+const E=PM56_EXT,A=PM56_ARTIFACTS,AT=PM56_ATTACHMENTS,TX=PM56_TX;
+const clone=x=>JSON.parse(JSON.stringify(x)),bad=(error,detail)=>({ok:false,error,detail:detail||error.replaceAll('_',' ')});
+const MAX_FILE=16*1024*1024,MAX_TOTAL=32*1024*1024,MAX_FILES=256;
+const enc=new TextEncoder(),esc=x=>E.ctx().esc(String(x??''));
+// SHA-256 on exact bytes, with no text/line-ending normalization. Tests compare
+// binary, Unicode, empty and multi-block inputs to independently computed hashes.
+function sha256(input){
+ const u=input instanceof Uint8Array?input:enc.encode(String(input));
+ const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+ const size=Math.ceil((u.length+9)/64)*64,bytes=new Uint8Array(size);bytes.set(u);bytes[u.length]=128;
+ const view=new DataView(bytes.buffer),bits=BigInt(u.length)*8n;view.setUint32(size-8,Number(bits>>32n));view.setUint32(size-4,Number(bits&0xffffffffn));
+ let H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];const W=new Uint32Array(64),rot=(x,n)=>(x>>>n)|(x<<(32-n));
+ for(let at=0;at<size;at+=64){for(let i=0;i<16;i++)W[i]=view.getUint32(at+4*i);for(let i=16;i<64;i++){const x=W[i-15],y=W[i-2];W[i]=(W[i-16]+(rot(x,7)^rot(x,18)^(x>>>3))+W[i-7]+(rot(y,17)^rot(y,19)^(y>>>10)))>>>0;}
+  let [a,b,c,d,e,f,g,h]=H;for(let i=0;i<64;i++){const t1=(h+(rot(e,6)^rot(e,11)^rot(e,25))+((e&f)^(~e&g))+K[i]+W[i])>>>0,t2=((rot(a,2)^rot(a,13)^rot(a,22))+((a&b)^(a&c)^(b&c)))>>>0;h=g;g=f;f=e;e=(d+t1)>>>0;d=c;c=b;b=a;a=(t1+t2)>>>0;}H=H.map((x,i)=>(x+[a,b,c,d,e,f,g,h][i])>>>0);
+ }return H.map(x=>x.toString(16).padStart(8,'0')).join('');
+}
+function base64(bytes){let s='';for(let i=0;i<bytes.length;i+=8192)s+=String.fromCharCode(...bytes.subarray(i,i+8192));return btoa(s);}
+function unbase64(s){
+ if(typeof s!=='string'||s.length>Math.ceil(MAX_FILE/3)*4||s.length%4!==0)throw Error('invalid_snapshot_encoding');
+ const at=s.indexOf('='),body=at<0?s:s.slice(0,at),padding=at<0?'':s.slice(at);
+ if(/[^A-Za-z0-9+/]/.test(body)||padding&&!['=','=='].includes(padding))throw Error('invalid_snapshot_encoding');
+ const text=atob(s),bytes=new Uint8Array(text.length);for(let i=0;i<text.length;i++)bytes[i]=text.charCodeAt(i);return bytes;
+}
+function pathOK(path){return typeof path==='string'&&path.length>0&&path.length<=1024&&!/^[\\/]|[\\:\x00-\x1f\x7f]/.test(path)&&!path.split('/').some(p=>!p||p==='.'||p==='..');}
+function comparePath(a,b){const x=enc.encode(a),y=enc.encode(b);for(let i=0;i<Math.min(x.length,y.length);i++)if(x[i]!==y[i])return x[i]-y[i];return x.length-y.length;}
+function fileBytes(q){const p=q.payload;if(!p||p.schema!=='pm.concept.file_snapshot.v1')throw Error('invalid_file_snapshot');const bytes=unbase64(p.base64);if(bytes.length!==p.byte_length||sha256(bytes)!==p.sha256)throw Error('snapshot_bytes_changed');return bytes;}
+function folderBasis(p){return {root:p.root,files:p.files.map(f=>({path:f.path,byte_length:f.byte_length,sha256:f.sha256,ref:f.ref}))};}
+function inspect(ref){
+ const x=A.resolve(ref,{document:true});if(!x.ok)return x;const q=x.revision.record;
+ if(!['file_snapshot','folder_snapshot'].includes(q.renderer_kind))return {ok:true,not_file_snapshot:true};
+ try{
+  if(q.renderer_kind==='file_snapshot'){fileBytes(q);return {ok:true,sha256:q.payload.sha256,bytes:q.payload.byte_length};}
+  const p=q.payload;if(p?.schema!=='pm.concept.folder_snapshot.v1'||!Array.isArray(p.files)||!p.files.length||p.files.length>MAX_FILES||new Set(p.files.map(f=>f.path)).size!==p.files.length||p.files.some(f=>!pathOK(f.path)))throw Error('invalid_folder_manifest');
+  if(p.files.some((f,i)=>i&&comparePath(p.files[i-1].path,f.path)>=0)||sha256(JSON.stringify(folderBasis(p)))!==p.manifest_sha256)throw Error('folder_manifest_changed');
+  let total=0;for(const f of p.files){if(f.ref.project_id!==ref.project_id||f.ref.thread_id!==ref.thread_id)throw Error('snapshot_scope_mismatch');const r=A.resolve(f.ref,{document:true});if(!r.ok)throw Error('retained_file_'+r.error);const b=fileBytes(r.revision.record);if(b.length!==f.byte_length||r.revision.record.payload.sha256!==f.sha256)throw Error('retained_file_hash_changed');total+=b.length;}
+  if(total!==p.total_bytes||total>MAX_TOTAL)throw Error('folder_size_mismatch');return {ok:true,manifest_sha256:p.manifest_sha256,bytes:total,count:p.files.length};
+ }catch(e){return bad(e.message);}
+}
+async function prepare(draft){
+ try{
+  const c=E.ctx(),scope=PM56_GOAL.scope(draft.threadId);if(!scope||!draft.sourceBuffer||!PM56_COMPOSER_STATE.matchesScheduleCapture(c,draft.sourceBuffer))return bad('composer_changed');
+  const records=[],attachments=[],basis=JSON.stringify(draft);let total=0,count=0;
+  for(const a of draft.attachments||[]){
+   if(a.snapshot_ref||a.artifact_ref||a.artifact_id){attachments.push(clone(a));continue;}
+   const original=AT.findAttachment(c,draft.threadId,null,a.id);if(!original)return bad('attachment_source_missing');
+   if(original.filesafe?.status==='blocked'||['blocked','error','failed'].includes(original.process_state))return bad('attachment_owner_blocked');
+   const isFolder=original.kind==='folder',selected=isFolder?original._files:[original._file];
+   if(!Array.isArray(selected)||!selected.length||selected.some(f=>!(f instanceof File)))return bad('attachment_bytes_unavailable','Select the file or folder from this device. A name, live path or partial demo manifest is not a retained copy.');
+   if(count+selected.length>MAX_FILES)return bad('snapshot_file_limit','This local concept accepts at most 256 files; no partial folder was captured.');
+   const entries=[],seen=new Set();
+   for(const f of selected){
+    const path=isFolder?f.webkitRelativePath:f.name;if(!pathOK(path)||seen.has(path))return bad('invalid_or_duplicate_snapshot_path');seen.add(path);
+    if(f.size>MAX_FILE||total+f.size>MAX_TOTAL)return bad('snapshot_byte_limit','This local concept accepts 16 MiB per file and 32 MiB per selection; no partial snapshot was kept.');
+    const bytes=new Uint8Array(await f.arrayBuffer());if(bytes.length!==f.size)return bad('file_read_incomplete');total+=bytes.length;count++;
+    const digest=sha256(bytes),fileRef={artifact_id:'snapshot:'+draft.threadId+':'+a.id+':'+sha256(path+':'+digest),artifact_version:1,project_id:scope.projectId,thread_id:scope.threadId};
+    records.push({...fileRef,title:f.name,renderer_kind:'file_snapshot',payload:{schema:'pm.concept.file_snapshot.v1',filename:f.name,mime:f.type||'application/octet-stream',byte_length:bytes.length,sha256:digest,base64:base64(bytes)},source_ref:{attachment_id:a.id,source:'explicit_selected_file_bytes'},scan_status:'not_scanned'});
+    entries.push({path,byte_length:bytes.length,sha256:digest,ref:fileRef});
+   }
+   entries.sort((a,b)=>comparePath(a.path,b.path));let ref=entries[0].ref,manifest=null;
+   if(isFolder){const roots=new Set(entries.map(f=>f.path.split('/')[0]));if(roots.size!==1||entries.some(f=>!f.path.includes('/')))return bad('folder_root_mismatch');
+    const payload={schema:'pm.concept.folder_snapshot.v1',root:[...roots][0],files:entries,total_bytes:entries.reduce((n,f)=>n+f.byte_length,0)};manifest=sha256(JSON.stringify(folderBasis(payload)));payload.manifest_sha256=manifest;
+    ref={artifact_id:'snapshot:'+draft.threadId+':'+a.id+':manifest:'+manifest,artifact_version:1,project_id:scope.projectId,thread_id:scope.threadId};
+    records.push({...ref,title:payload.root,renderer_kind:'folder_snapshot',payload,dependency_refs:entries.map(f=>f.ref),source_ref:{attachment_id:a.id,source:'explicit_selected_folder_members'},scan_status:'not_scanned'});
+   }
+   attachments.push({...clone(a),snapshot_ref:ref,artifact_ref:ref,folder_manifest_hash:manifest,content_sha256:isFolder?null:entries[0].sha256,process_state:'ready'});
+  }
+  if(!PM56_COMPOSER_STATE.matchesScheduleCapture(E.ctx(),draft.sourceBuffer)||JSON.stringify(PM56_GOAL.scope(draft.threadId))!==JSON.stringify(scope))return bad('composer_or_scope_changed_during_snapshot');
+  return {ok:true,records:A.freeze(records),attachments:A.freeze(attachments),scope,basis,files:count,bytes:total};
+ }catch(e){return bad('snapshot_read_failed',String(e.message||e));}
+}
+function publish(prepared){if(!TX.isActive())return bad('snapshot_transaction_required');for(const q of prepared.records){const r=A.publish(q);if(!r.ok)TX.fail(r.error);}for(const a of prepared.attachments){const ref=a.snapshot_ref;if(ref){const v=inspect(ref);if(!v.ok)TX.fail(v.error);}}return {ok:true};}
+A.registerRenderer('file_snapshot',q=>{const bytes=fileBytes(q),p=q.payload;let text=null;try{text=new TextDecoder('utf-8',{fatal:true}).decode(bytes.subarray(0,65536));}catch(e){}return '<p class="snapshot-note">Exact retained file · '+bytes.length+' bytes · no malware or secret scan claimed</p>'+(text!==null&&!text.includes('\u0000')?'<pre class="ar-source">'+esc(text)+(bytes.length>65536?'\n[Preview bounded at 64 KiB; download retains every byte.]':'')+'</pre>':'<p class="snapshot-note">Binary contents retained. Download returns the original bytes without executing them.</p>')+'<details class="ar-disclosure"><summary>Content identity</summary><code>'+esc(p.sha256)+'</code></details>';});
+A.registerRenderer('folder_snapshot',q=>'<p class="snapshot-note">Complete selected-file manifest · '+q.payload.files.length+' files · '+q.payload.total_bytes+' bytes · session-local</p><div class="snapshot-manifest">'+q.payload.files.map(f=>'<div><span>'+esc(f.path)+'</span><small>'+f.byte_length+' bytes</small><button class="text-button" data-action="open-artifact" data-version="1" data-ref="'+esc(encodeURIComponent(JSON.stringify(f.ref)))+'">Open exact file</button></div>').join('')+'</div>');
+A.registerExporter('file_snapshot',q=>({name:q.payload.filename,bytes:fileBytes(q),mime:'application/octet-stream'}));
+A.registerExporter('folder_snapshot',q=>{const ref={artifact_id:q.artifact_id,artifact_version:q.artifact_version,project_id:q.project_id,thread_id:q.thread_id},v=inspect(ref);if(!v.ok)throw Error(v.error);return {name:q.payload.root+'-retained-bundle.json',bytes:enc.encode(JSON.stringify({schema:'pm.concept.folder_snapshot_bundle.v1',manifest:q,files:q.payload.files.map(f=>A.resolve(f.ref).revision.record)},null,2)),mime:'application/json'};});
+AT.prepareScheduleSnapshots=prepare;AT.publishScheduleSnapshots=publish;AT.inspectScheduleSnapshot=inspect;
+AT.snapshotBytes=ref=>{const x=A.resolve(ref);if(!x.ok)throw Error(x.error);return fileBytes(x.revision.record);};
+AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:MAX_TOTAL,files:MAX_FILES});
 })();
 
 /* One concept QuestionItem budget owner. In-memory records, not native durability.
@@ -30392,8 +30509,9 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     if(!r)return {ok:false,error:'plan_not_found'};
     const TX=window.PM56_TX,G=window.PM56_GOAL,api=window.PM56_PLANS;
     const expected=opts.expected||admissionSnapshot(ctx,r),topology=opts.execution_topology||'agent';
-    if(!['agent','goal_driven'].includes(topology))return {ok:false,error:'unsupported_execution_topology'};
-    const key=[r.plan_id,expected.version,expected.hash,topology].join('|');
+    if(!['agent','goal_driven','crew'].includes(topology))return {ok:false,error:'unsupported_execution_topology'};
+    if(topology==='crew'){const v=window.PM56_COLLAB?.validatePlanCrew(opts.crewDefinition,r.plan_id,true);if(!v?.ok)return {ok:false,error:v?.error||'crew_owner_unavailable'};}
+    const key=[r.plan_id,expected.version,expected.hash,topology,...(topology==='crew'?[opts.crewDefinition.content_key]:[])].join('|');
     if(r.buildAdmission?.key===key){
       const a=r.approved;
       if(!a||expected.project_id!==a.project_id||expected.thread_id!==r.thread_id||expected.worktree!==a.worktree||expected.permissions!==a.permissions||expected.route?.modelId!==a.modelId||expected.route?.accountId!==a.accountId||expected.route?.provider!==a.provider)return {ok:false,error:'idempotency_binding_mismatch'};
@@ -30424,12 +30542,19 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       const run={schema:'pm.concept.plan_run.v1',plan_run_id:runId,project_id:expected.project_id,thread_id:r.thread_id,plan_id:r.plan_id,plan_version:r.version,plan_hash:expected.hash,
         epoch,admission_epoch:epoch,state:'running',topology,scope:{projectId:expected.project_id,threadId:r.thread_id,worktreeId:expected.worktree},route:JSON.parse(JSON.stringify(expected.route)),permissions:expected.permissions,
         required_todo_ids:made.ids.slice(),planunit_bundle_ref:goalResult?.goal.binding.planunit_bundle_ref||null,created_at:new Date().toISOString()};
+      let crewResult=null;
+      if(topology==='crew'){
+        crewResult=window.PM56_COLLAB.admitPlanCrew(opts.crewDefinition,run);if(!crewResult?.ok)TX.fail(crewResult?.error||'crew_start_not_atomic');
+        run.crew_run_id=crewResult.run.id;run.collaboration_definition_key=opts.crewDefinition.content_key;
+        const recheck=window.PM56_COLLAB.validatePlanCrew(opts.crewDefinition,r.plan_id,true);if(!recheck.ok)TX.fail(recheck.error);
+      }
       const admitted=api.commitRun(r,run);if(!admitted?.ok)TX.fail(admitted?.error||'plan_run_refused');
       if(goalResult){const binding=api.bindRun(r,goalResult.goal,run);if(!binding?.ok)TX.fail(binding?.error||'goal_binding_refused');}
       error=validateAdmission(ctx,r,expected);if(error)TX.fail(error);
+      if(crewResult){const finalCrew=window.PM56_COLLAB.verifyPlanCrewAdmission(opts.crewDefinition,run,crewResult.run);if(!finalCrew.ok)TX.fail(finalCrew.error);}
       const approved={...freeze(r,ctx),project_id:expected.project_id,thread_id:r.thread_id,worktree:expected.worktree,
         runtime:expected.route.modelName,modelId:expected.route.modelId,provider:expected.route.provider,accountId:expected.route.accountId,permissions:expected.permissions,plan_run_id:runId,...(opts.scheduleRef?{schedule_id:opts.scheduleRef}:{})};
-      const receipt={key,goal_id:goalResult?.goal.id||null,plan_run_id:runId,binding:goalResult?.goal.binding||null,version:r.version,hash:expected.hash,command:'cmd.chat.plan.build',execution_topology:topology};
+      const receipt={key,goal_id:goalResult?.goal.id||null,plan_run_id:runId,binding:goalResult?.goal.binding||null,version:r.version,hash:expected.hash,command:topology==='crew'?'cmd.chat.plan.build_with_crew':'cmd.chat.plan.build',execution_topology:topology,...(crewResult?{crew_run_id:crewResult.run.id}: {})};
       const values={approved,buildAdmission:receipt,runSerial:seq,runEpoch:epoch,status:'building',current:true,buildStep:0,wait:opts.wait||null,attention:opts.paused?{kind:'paused',reason:'Paused at admission.',actions:['resume','cancel']}:null,
         topology,scheduleInvalidation:invalidation,requiredTodoIds:made.ids.slice(),todosCreated:{at:approved.at,from:r.backend==='ledger_bound'?'planunits':'plan_steps',count:made.created,reused:!!made.reused}};
       for(const [k,v] of Object.entries(values))TX.set(r,k,v);
@@ -30447,6 +30572,9 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
      left -- so a Plan resumed after a Pause could never reach Completed and
      could never complete its bound Goal. One body, one completion predicate. */
   function runTick(ctx,r){
+    try{return runTickBody(ctx,r);}finally{window.PM56_COLLAB?.refreshPlanCrew?.(r.plan_id);}
+  }
+  function runTickBody(ctx,r){
     if(r.status!=='building'){ stopRun(r); return; }
     var a=todoApi(), moved=null;
     const gate=r.workRef?inspectGoalPlan(r.plan_id):null;
@@ -31468,6 +31596,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     if(c.state.permissions!==run.permissions||!model||model.status!=='ready'||model.accountId!==run.route.accountId)return fail('Permission or provider route changed');
     if(RT.quota?.waiting)return fail('Waiting for Usage','quota');
     const windowGate=window.PM56_SCHED?.workEligibility?.(id);if(windowGate&&!windowGate.ok)return fail(windowGate.detail||windowGate.error,'window');
+    const crewGate=window.PM56_COLLAB?.crewExecutionGate?.(id);if(crewGate&&!crewGate.ok)return fail(crewGate.error);
     if(r.attention)return fail(r.attention.reason);
     if(!r.workRef||!workOwners.has(r.workRef.kind))return fail('No actual execution adapter is attached to this Plan in the local concept.');
     const work=workOwners.get(r.workRef.kind).inspect(r.workRef.ref,r),todos=todoApi().outcomeSummary(r.thread_id,run.required_todo_ids);
@@ -31477,7 +31606,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       fingerprint:JSON.stringify({version:r.version,hash:hashOf(body(r)),epoch:r.runEpoch,work:work.fingerprint,todos:todoApi().get(r.thread_id)?.map(t=>[t.todo_id,t.status,t.revision]),unitError}),nextAttemptRef:work.nextAttemptRef};
   }
   function finalizeGoalRun(id){const r=rec(id),x=inspectGoalPlan(id);if(!x.complete)return {ok:false,error:'plan_completion_not_verified'};
-    r.status='completed';r.current=false;r.attention=null;const run=P().runs[r.approved.plan_run_id];run.state='completed';run.completion_evidence_refs=x.evidenceRefs;stopRun(r);return {ok:true};
+    r.status='completed';r.current=false;r.attention=null;const run=P().runs[r.approved.plan_run_id];run.state='completed';run.completion_evidence_refs=x.evidenceRefs;stopRun(r);window.PM56_COLLAB?.refreshPlanCrew?.(id);return {ok:true};
   }
   function createFromWorkRequest(o){
     const c=EXT.ctx(),t=c.state.threads.find(t=>t.id===o?.threadId),owner=workOwners.get(o?.workRef?.kind);
@@ -31531,7 +31660,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     admitScheduled:function(binding){
       const c=EXT.ctx(),r=rec(binding.target_id);if(!r)return {ok:false,clause:'target_not_found'};
       const expected={project_id:binding.project_id,thread_id:binding.thread_id,worktree:binding.owner_worktree_snapshot||binding.worktree_snapshot,version:binding.exact_target_version,hash:binding.exact_target_hash,permissions:binding.permission_snapshot,route:binding.runtime_snapshot};
-      const out=buildCommand(c,r,{expected,execution_topology:binding.execution_topology,scheduleRef:binding.schedule_id,scheduleSnapshot:binding.runtime_snapshot});
+      const out=buildCommand(c,r,{expected,execution_topology:binding.execution_topology,scheduleRef:binding.schedule_id,scheduleSnapshot:binding.runtime_snapshot,crewDefinition:binding.topology_snapshot?.collaboration_definition_ref});
       return {...out,clause:out.error||null,approved:out.ok?r.approved:null};
     },
 
@@ -31579,7 +31708,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       const r=rec(id);if(!r||r.status!=='building'||r.approved?.plan_run_id!==binding.plan_run_id||r.version!==binding.version||hashOf(body(r))!==binding.hash)return {ok:false,error:'stale_window_binding'};
       if(r.attention&&!['window','quota_wait'].includes(r.attention.kind))return {ok:false,error:'owner_attention_blocks_window_pause'};
       window.PM56_PLANS.boundPause(id);r.attention={kind,reason,actions:['details','cancel']};const run=P().runs[binding.plan_run_id];run.state=kind==='quota_wait'?'waiting_quota':'waiting_window';
-      return {ok:true,paused:true,run_epoch:r.runEpoch};
+      window.PM56_COLLAB?.refreshPlanCrew?.(id);return {ok:true,paused:true,run_epoch:r.runEpoch};
     },
     resumeFromWindow:function(id,binding){
       const r=rec(id);if(!r||r.status!=='building'||r.approved?.plan_run_id!==binding.plan_run_id||r.version!==binding.version||hashOf(body(r))!==binding.hash||!['window','quota_wait'].includes(r.attention?.kind))return {ok:false,error:'stale_window_binding'};
@@ -31594,7 +31723,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       const run=P().runs[r.approved?.plan_run_id];if(run){run.state='paused';run.epoch=r.runEpoch;}
       r.attention={ kind:'paused', reason:'Paused at a shared safe boundary. The Build control stays Building….',
                     actions:['resume','cancel','details'] };
-      return { paused:true, label:BUILD_LABEL[r.status] };
+      window.PM56_COLLAB?.refreshPlanCrew?.(planId);return { paused:true, label:BUILD_LABEL[r.status] };
     },
     boundResume:function(planId){
       var r=rec(planId); if(!r||r.status!=='building') return null;
@@ -31602,7 +31731,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       r.attention=null;r.revisionStop=null;
       const run=P().runs[r.approved?.plan_run_id];if(run){run.state='running';run.epoch=r.runEpoch;}
       var c=EXT.ctx&&EXT.ctx(); if(c) resumeRun(c,r);
-      return { resumed:true, label:BUILD_LABEL[r.status] };
+      window.PM56_COLLAB?.refreshPlanCrew?.(planId);return { resumed:true, label:BUILD_LABEL[r.status] };
     },
     boundCancel:function(planId, epoch){
       var r=rec(planId); if(!r) return null;
@@ -32548,7 +32677,8 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       for(const [tid,s] of Object.entries(RT.todos.byThread))if((s.bindings||[]).some(x=>x.binding_id===b.binding_id||x.work_id===b.work_id&&x.attempt_id===b.attempt_id))return {ok:false,error:'work_binding_already_admitted'};
       const admitted=owner?.admit?.(item.workflow_ref,item,b,ev.cause_ref);
       if(!admitted?.ok)return {ok:false,error:admitted?.error||'work_owner_required'};
-      newBinding={schema:'pm.chat.todo_work_binding.v1',binding_id:b.binding_id,todo_id:b.todo_id,
+      const crew=window.PM56_COLLAB?.crewWorkBinding?.(item);if(crew&&!crew.ok)return {ok:false,error:crew.error};
+      newBinding={...(crew?.fields||{}),schema:'pm.chat.todo_work_binding.v1',binding_id:b.binding_id,todo_id:b.todo_id,
         work_kind:b.work_kind,work_id:b.work_id,attempt_id:b.attempt_id,expected_outcome:b.expected_outcome,
         admitted_at:nowIso(),terminal_result_ref:null,state:'running',project_id:item.project_id||PROJECT_ID,
         thread_id:threadId,run_id:item.run_id??null,admission_epoch:item.run_epoch??null,
@@ -33168,7 +33298,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
   }
   var msgSeq = { };
   function mkMsg(run, o) {
-    msgSeq[run.id] = (msgSeq[run.id] || 0) + 1;
+    PM56_TX.set(msgSeq,run.id,(msgSeq[run.id] || 0) + 1);
     return {
       id: o.id || rid('msg'),
       runId: run.id,
@@ -33688,6 +33818,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
   }
 
   function usageStrip(run) {
+    if(run.usage?.not_measured)return '<div class="collab-usage">No provider calls · no measured provider Usage</div>';
     var u = run.usage || {};
     return '<div class="collab-usage" data-k="collab-usage-' + esc(run.id) + '">' +
       '<span>' + fmtTokens(u.inputTokens) + ' in</span><span>' + fmtTokens(u.outputTokens) + ' out</span><span>' + fmtMoney(u.costUsd) + '</span>' +
@@ -33819,6 +33950,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
   }
 
   function kindInline(ctx, run) {
+    if(run.crew?.planBinding)return renderPlanCrew(ctx,run);
     if (run.kind === 'crew') return crewInline(ctx, run);
     if (run.kind === 'brainstorm') return brainstormInline(ctx, run);
     if (run.kind === 'review') return reviewInline(ctx, run);
@@ -33845,7 +33977,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     var cancelBtn = canCancel(run)
       ? '<button class="soft-button danger" data-action="collab-cancel" data-run="' + esc(run.id) + '">' + ctx.icon('close', 12) + ' Cancel</button>'
       : '<button class="soft-button" disabled title="Already terminal.">' + ctx.icon('close', 12) + ' Cancel</button>';
-    var reconfigBtn = '<button class="soft-button" data-action="collab-open-configure" data-kind="' + esc(run.kind) + '" data-reconfigure="' + esc(run.id) + '">' + ctx.icon('edit', 12) + ' Reconfigure</button>';
+    var reconfigBtn = '<button class="soft-button" '+(run.crew?.planBinding?'disabled title="Frozen build roster: cancel or revise before scheduling another"':'')+' data-action="collab-open-configure" data-kind="' + esc(run.kind) + '" data-reconfigure="' + esc(run.id) + '">' + ctx.icon('edit', 12) + ' Reconfigure</button>';
     var exportBtn = '<button class="soft-button" data-action="collab-export" data-run="' + esc(run.id) + '">' + ctx.icon('download', 12) + ' Export</button>';
     var kindExtra = '';
     if (run.kind === 'review') kindExtra = '<button class="soft-button" data-action="collab-review-run-again" data-run="' + esc(run.id) + '">' + ctx.icon('refresh', 12) + ' Run Another Review</button>';
@@ -33885,6 +34017,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
   }
 
   function renderCard(ctx, run) {
+    if(run.crew?.planBinding)refreshPlanCrew(run.crew.planBinding.plan_id);
     var expanded = !!UI.expanded[run.id];
     var shownP = run.participants.slice(0, 4);
     var moreP = run.participants.length - shownP.length;
@@ -33904,6 +34037,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
         statusChip(run.status, run.blockedReason) +
       '</div>' +
       '<p class="collab-card-meta">' + plural(run.participants.length, 'participant', 'participants') + ' · ' + esc(latestSummary(run)) + '</p>' +
+      (run.crew?.planBinding?'<p class="collab-card-meta">Local bounded execution · models are configured, not invoked</p>':'')+
       completionLine(ctx, run) +
       body +
       '<div class="collab-card-foot">' +
@@ -33934,6 +34068,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
 
   EXT.action('collab-pause', function (ctx, btn) {
     var run = findRun(btn.dataset.run); if (!run || !canPause(run)) return true;
+    if(run.crew?.planBinding){PM56_PLANS.boundPause(run.crew.planBinding.plan_id);refreshPlanCrew(run.crew.planBinding.plan_id);ctx.renderApp();return true;}
     run.status = 'paused'; run.stopEpoch += 1;
     run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Paused at a safe boundary. Participant state, the pending inbox and the transcript are preserved; nothing in flight was torn down.' }));
     ctx.renderApp();
@@ -33942,6 +34077,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
   });
   EXT.action('collab-resume', function (ctx, btn) {
     var run = findRun(btn.dataset.run); if (!run) return true;
+    if(run.crew?.planBinding){const plan=PM56_PLANS.get(run.crew.planBinding.plan_id),v=crewExecutionGate(run.crew.planBinding.plan_id),stop=PM56_SCHED.checkEpoch(PM56_SCHED.stopSnapshot());if(!v.ok||!stop.ok||plan?.attention?.kind!=='paused'){ctx.toast('Cannot resume',v.error||stop.error||'Use the Plan recovery or scheduling owner for this condition.');return true;}PM56_PLANS.boundResume(run.crew.planBinding.plan_id);refreshPlanCrew(run.crew.planBinding.plan_id);ctx.renderApp();return true;}
     if (!canResume(run)) { ctx.toast('Cannot resume', run.blockedReason || 'Not paused.'); return true; }
     run.status = 'running';
     run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Resumed the same run. No participant work is duplicated.' }));
@@ -33951,6 +34087,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
   });
   EXT.action('collab-cancel', function (ctx, btn) {
     var run = findRun(btn.dataset.run); if (!run || !canCancel(run)) return true;
+    if(run.crew?.planBinding){PM56_PLANS.boundCancel(run.crew.planBinding.plan_id);refreshPlanCrew(run.crew.planBinding.plan_id);ctx.renderApp();return true;}
     run.status = 'canceled'; run.completedAt = nowIso(); run.stopEpoch += 1;
     run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Cancelled. New admissions stopped; the card, transcript, participants and artifacts remain with truthful cancelled state.' }));
     if (RT.composer.destination && RT.composer.destination.refId === run.id) {
@@ -34105,7 +34242,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
   var TAB_LABEL = { overview: 'Overview', transcript: 'Transcript', participants: 'Participants', usage: 'Usage' };
 
   function renderParticipantView(ctx, run, p) {
-    var own = run.messages.filter(function (m) { return m.senderId === p.id; });
+    var own = run.messages.filter(function (m) { return m.senderId === p.id || m.senderKind==='user' && (m.recipientIds||[]).includes(p.id); });
     var body = own.length
       ? own.map(function (m) { return messageLine(ctx, run, m); }).join('')
       : '<p class="collab-empty">No output from this participant yet. This is a truthful empty transcript, not a summary standing in for one.</p>';
@@ -34117,7 +34254,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       (p.blockedReason ? '<p class="collab-p-blocked">' + ctx.icon('lock', 11) + esc(p.blockedReason) + '</p>' : '') +
       '<p class="collab-p-state">State: ' + esc(PSTATE_LABEL[p.status] || p.status) + (p.current ? ' — ' + esc(p.current) : '') + '</p>' +
       '<button class="soft-button" data-action="collab-message" data-run="' + esc(run.id) + '" data-participant="' + esc(p.id) + '">' + ctx.icon('send', 12) + ' Message this participant</button>' +
-      '<div class="collab-participant-transcript">' + body + '</div>' +
+      renderPlanCrewParticipant(run,p) + '<div class="collab-participant-transcript">' + body + '</div>' +
       '</div>';
   }
 
@@ -34386,6 +34523,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
   }
 
   function openConfigureDraft(kind, reconfigureRunId, autoMode) {
+    if(findRun(reconfigureRunId)?.crew?.planBinding)return;
     var def = RTC.definitions[kind];
     var run = reconfigureRunId ? findRun(reconfigureRunId) : null;
     var rows = [];
@@ -34590,7 +34728,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       '<div class="collab-participant-editor">' + d.rows.map(function (r, i) { return draftRowHtml(ctx, r, i); }).join('') + '</div>' +
       '<button class="text-button" data-action="collab-modal-add-participant">' + ctx.icon('plus', 12) + ' '+(d.kind==='review'&&d.config.strategy==='single_agent'?'Replace reviewer':'Add participant')+'</button>' +
       '<h4>How they work</h4>' +
-      kindConfigFields(ctx, d) +
+      kindConfigFields(ctx, d) + (d.scheduleIntent?'<p class="schedule-caption">Scheduling freezes this roster without starting it. The local work adapter executes one bounded operation at a time; requested models are retained, not invoked.</p>':'') +
       (supportsAdditive ? '<details class="collab-add-specialists"><summary>Optional specialists</summary>' +
         '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="wonderer"' + (d.wonderer ? ' checked' : '') + '><span title="Explores adjacent leads; labels unresearched ideas as hypotheses">Wonderer</span></label>' +
         '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="grillMe"' + (d.grillMe ? ' checked' : '') + '><span>Grill Me' + (d.kind === 'brainstorm' ? ' — raises the question maximum by ' + d.config.grillExtension : '') + '</span></label>' +
@@ -34599,7 +34737,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
       '</div>' +
       (d.lastFailure ? '<div class="collab-start-failure" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong><p>' + esc(d.lastFailure.message) + '</p></div>' : '') +
       (window.PM56_CREW_DEMOS?.guide(ctx,true)||'') + (window.PM56_REVIEW_DEMOS?.guide(ctx,true)||'') + (window.PM56_BRAINSTORM_DEMOS?.guide(ctx,true)||'') +
-      '<div class="dialog-body-foot collab-configure-foot"><button class="soft-button" data-action="collab-modal-cancel">Cancel</button><button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.autoMode ? 'Enable Crew Auto' : d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button></div>' +
+      '<div class="dialog-body-foot collab-configure-foot"><button class="soft-button" data-action="collab-modal-cancel">Cancel</button><button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.scheduleIntent?'Use this Crew':d.autoMode ? 'Enable Crew Auto' : d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button></div>' +
       '</section>';
   }
   EXT.slot('dialog', function (ctx) {
@@ -34625,6 +34763,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
   EXT.action('collab-open-configure', function (ctx, btn) {
     var kind = btn.dataset.kind;
     if (KINDS.indexOf(kind) < 0) return true;
+    if(findRun(btn.dataset.reconfigure)?.crew?.planBinding){ctx.toast('Frozen build roster','Cancel or revise the Plan before scheduling another roster. The admitted run is unchanged.');return true;}
     openConfigureDraft(kind, btn.dataset.reconfigure || null, btn.dataset.auto === '1');
     /* Close the wand menu first. Without this the menu stayed open BEHIND the
        modal on all four kinds, so the dialog was not modal in practice and the
@@ -34640,6 +34779,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
      emits no domain event, and restores a held natural-language request intact
      to the composer rather than running it with defaults. */
   EXT.action('collab-modal-cancel', function (ctx) {
+    if(RTC.draft?.scheduleIntent){RTC.draft=null;PM56_SCHED.returnFromCrewConfiguration();return true;}
     var d = RTC.draft;
     var held = d && d.heldRequest;
     RTC.draft = null;
@@ -34797,6 +34937,9 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
 
   EXT.action('collab-modal-commit', function (ctx) {
     var d = RTC.draft; if (!d) return true;
+    if(d.scheduleIntent){const out=preparePlanCrew(d.scheduleIntent.expected.plan_id||window.PM56_SCHED.currentCrewTarget(),d);if(!out.ok){d.lastFailure=out;ctx.renderOverlays();return true;}
+      const used=PM56_SCHED.acceptCrewConfiguration(out.snapshot,d.scheduleIntent.expected);if(!used.ok){d.lastFailure=used;ctx.renderOverlays();return true;}RTC.draft=null;return true;}
+
     normalizeReview(d);
     var limits = KIND_PARTICIPANT_LIMIT[d.kind];
     if (d.rows.length < limits[0] || d.rows.length > limits[1]) { ctx.toast('Out of range', KIND_LABEL[d.kind] + ' supports ' + limits[0] + '–' + limits[1] + ' participants.'); return true; }
@@ -35048,11 +35191,12 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
      is the thing the correction says must be provable rather than asserted. */
   RTC.effects = RTC.effects || { runs:0, providerCalls:0, usageRecords:0, events:0,
                                  cards:0, settingsWrites:0, installs:0, participants:0 };
-  function effect(kind, n){ RTC.effects[kind] = (RTC.effects[kind]||0) + (n||1); }
+  function effect(kind, n){ PM56_TX.set(RTC.effects,kind,(RTC.effects[kind]||0) + (n||1)); }
   function effectsSnapshot(){ return JSON.parse(JSON.stringify(RTC.effects)); }
 
   /* PART-001..004. One terminal outcome per slot, and never a silent swap. */
   function setOutcome(runId, pid, outcome, opts){
+    if(findRun(runId)?.crew?.planBinding)return {ok:false,error:'plan_work_owner_required'};
     opts = opts || {};
     var run = findRun(runId); if(!run) return { ok:false, error:'run_not_found' };
     var p = participant(run, pid); if(!p) return { ok:false, error:'participant_not_found' };
@@ -35077,6 +35221,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
   /* PART-004. Retry = a NEW attempt identity on the SAME slot. The old failed
      attempt is preserved, never overwritten. */
   function retryParticipant(runId, pid){
+    if(findRun(runId)?.crew?.planBinding)return {ok:false,error:'plan_work_owner_required'};
     var run=findRun(runId); if(!run) return { ok:false, error:'run_not_found' };
     var p=participant(run,pid); if(!p) return { ok:false, error:'participant_not_found' };
     if(!p.outcome) return { ok:false, error:'slot_not_terminal' };
@@ -35092,6 +35237,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
      The original attempt stays in history and the label never lies about which
      model ran. */
   function replaceParticipant(runId, pid, modelId, reason){
+    if(findRun(runId)?.crew?.planBinding)return {ok:false,error:'plan_work_owner_required'};
     var run=findRun(runId); if(!run) return { ok:false, error:'run_not_found' };
     var p=participant(run,pid); if(!p) return { ok:false, error:'participant_not_found' };
     if(!reason) return { ok:false, error:'replacement_requires_reason' };
@@ -35112,6 +35258,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
      never count toward a vote or a completion. */
   RTC.rejectedCallbacks = RTC.rejectedCallbacks || [];
   function acceptCallback(runId, pid, payload){
+    if(findRun(runId)?.crew?.planBinding)return {ok:false,error:'plan_work_owner_required'};
     var run=findRun(runId); if(!run) return { ok:false, error:'run_not_found' };
     var p=participant(run,pid); if(!p) return { ok:false, error:'participant_not_found' };
     var why=null;
@@ -35166,6 +35313,7 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
   }
 
   function completionProjection(run){
+    if(run.crew?.planBinding)refreshPlanCrew(run.crew.planBinding.plan_id);
     var req=[], done=[], failed=[], waived=[], i, p;
     for(i=0;i<run.participants.length;i++){
       p=run.participants[i];
@@ -35279,7 +35427,167 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
     return false;
   });
 
+  /* Batch 18 continuation. These are adapters of THIS collaboration owner, not
+     parallel run/message stores. Schedules carry frozen definitions; no provider
+     session, usage, or server persistence is asserted by the local adapter. */
+  const scheduledCopy=x=>JSON.parse(JSON.stringify(x));
+  const scheduledBad=(error,message)=>({ok:false,error,message:message||error.replaceAll('_',' ')});
+  function scheduledDestinationBasis(run,d){
+    return {run_id:run.id,kind:run.kind,thread_id:run.threadId,definition_revision:run.definitionRevision,
+      participant_id:d.participantId||null,assignments:run.participants.map(p=>({id:p.id,revision:p.assignmentRevision,model:p.requestedModelId,effective_model:p.effectiveModelId,provider:p.requestedProviderId,account:p.requestedAccountId,persona:p.requestedPersona}))};
+  }
+  function freezeScheduledDestination(d,scope){
+    const r=findRun(d?.refId);if(!r||r.threadId!==scope.threadId||d.destinationKind!==r.kind)return scheduledBad('destination_scope_mismatch');
+    const destination={kind:d.kind,refId:r.id,destinationKind:r.kind,participantId:d.participantId||null,label:d.label||r.title,detail:d.detail||'',glyph:d.glyph||KIND_ICON[r.kind],scheduled_binding:scheduledDestinationBasis(r,d)};
+    const v=validateScheduledDestination(destination,scope);return v.ok?{ok:true,destination:PM56_ARTIFACTS.freeze(destination)}:v;
+  }
+  function validateScheduledDestination(d,scope,publishedMessage){
+    const r=findRun(d?.refId);if(!r||r.threadId!==scope.threadId||!EXT.ctx().state.threads.some(t=>t.id===scope.threadId&&(t.projectId||'pm')===scope.projectId))return scheduledBad('destination_not_found');
+    if(!['workflow','participant'].includes(d.kind)||d.destinationKind!==r.kind||!d.scheduled_binding||JSON.stringify(d.scheduled_binding)!==JSON.stringify(scheduledDestinationBasis(r,d)))return scheduledBad('destination_generation_changed');
+    if(r.crew?.planBinding){const pr=PM56_PLANS.runs()[r.crew.planBinding.plan_run_id];if(!pr||['completed','cancelled','canceled','failed'].includes(pr.state))return scheduledBad('destination_ended');if(pr.state!=='running')return scheduledBad('destination_not_accepting');}
+    if(r.status!=='running')return scheduledBad(['completed','canceled','cancelled','failed'].includes(r.status)?'destination_ended':'destination_not_accepting');
+    if(d.kind==='participant'&&!participant(r,d.participantId)||d.kind==='workflow'&&d.participantId)return scheduledBad('participant_not_found');
+    if(window.PM56_ROOM?.owns(r.id)){
+      const v=PM56_ROOM.canSend(r.id,d);
+      if(!v.ok){
+        // Post-delivery revalidation may observe THIS operation's pending inbox.
+        // Another pending input must still hold; identity alone is not sufficient.
+        const msg=publishedMessage,shared=msg&&r.messages.find(x=>x.id===msg.id),thread=EXT.ctx().state.threads.find(t=>t.id===r.threadId);
+        const own=v.error==='finish_pending_delivery'&&shared&&thread?.messages.includes(shared)&&r.chatRoom.lastUserMessageId===msg.id&&shared.viaSchedule&&shared.scheduledDispatchId===msg.scheduledDispatchId&&shared.body===msg.body&&shared.time===msg.time&&JSON.stringify(shared.attachments)===JSON.stringify(msg.attachments)&&JSON.stringify(shared.recipientIds)===JSON.stringify(d.participantId?[d.participantId]:r.participants.map(p=>p.id));
+        if(!own)return scheduledBad(v.reason||v.error||'destination_not_accepting');
+      }
+    }
+    return {ok:true,run:r};
+  }
+  function deliverScheduledMessage(message,d){
+    const TX=PM56_TX;if(!TX.isActive())return scheduledBad('collaboration_transaction_required');
+    const c=EXT.ctx(),scope=PM56_GOAL.scope(d.scheduled_binding?.thread_id),v=scope&&validateScheduledDestination(d,scope);
+    if(!v?.ok)return v||scheduledBad('destination_not_found');
+    const r=v.run,t=c.state.threads.find(t=>t.id===r.threadId),old=r.messages.find(m=>m.id===message.id);
+    const recipients=d.participantId?[d.participantId]:r.participants.map(p=>p.id);
+    const deliveryKey=JSON.stringify([message.id,message.body,message.attachments,d.scheduled_binding,message.time]);
+    if(old)return old.scheduled_delivery_key===deliveryKey&&t.messages.includes(old)?{ok:true,replayed:true,message_id:old.id}:scheduledBad('collaboration_message_conflict');
+    if(t.messages.some(m=>m.id===message.id))return scheduledBad('collaboration_message_conflict');
+    for(const a of message.attachments||[]){const retained=PM56_ARTIFACTS.retain(a.snapshot_ref,{kind:'collaboration_message',id:message.id});if(!retained.ok)TX.fail(retained.error);}
+    const current=validateScheduledDestination(d,scope);if(!current.ok)TX.fail(current.error);
+    const shared={...message,...mkMsg(r,{id:message.id,senderKind:'user',senderName:'You',messageType:'message',body:message.body,recipientIds:recipients,createdAt:message.time}),scheduled_delivery_key:deliveryKey,attachment_refs:message.attachments};
+    // Construct the final object BEFORE either append, so rollback fingerprints
+    // and both projections refer to the same completed message, not two copies.
+    TX.append(r,'messages',shared);c.appendMessage(shared,t);
+    TX.set(r,'scheduledDeliveries',(r.scheduledDeliveries||[]).concat({message_id:shared.id,recipient_ids:recipients.slice(),at:shared.time}));
+    const final=validateScheduledDestination(d,scope);if(!final.ok)TX.fail(final.error);
+    if(r.chatRoom){TX.set(r.chatRoom,'summary',null);TX.set(r.chatRoom,'lastUserMessageId',shared.id);TX.set(r.chatRoom,'pendingRecipientIds',recipients.slice());TX.set(r.chatRoom,'deliveries',(r.chatRoom.deliveries||[]).concat({messageId:shared.id,recipientIds:recipients.slice()}));}
+    return {ok:true,message_id:shared.id,recipient_ids:recipients};
+  }
+  function planCrewSteps(plan){return (plan.revisions[plan.version]||[]).filter(b=>b.t==='plan_step');}
+  function planCrewBasis(x){const y=scheduledCopy(x);delete y.content_key;return y;}
+  function preparePlanCrew(planId,d){
+    const plan=PM56_PLANS.get(planId),expected=PM56_PLANS.admissionSnapshot(planId);
+    if(!plan||plan.status!=='ready'||!plan.workRef||!expected)return scheduledBad('plan_not_ready_for_crew');
+    if(d?.kind!=='crew'||!Array.isArray(d.rows)||!d.rows.length||d.rows.length>8||new Set(d.rows.map(r=>r.rowId)).size!==d.rows.length)return scheduledBad('crew_configuration_required');
+    if(d.scheduleIntent&&JSON.stringify(d.scheduleIntent.expected)!==JSON.stringify(expected))return scheduledBad('plan_changed_during_crew_configuration');
+    const all=planCrewSteps(plan),leaves=all.filter(s=>!all.some(c=>c.parent_step_id===s.plan_step_id));
+    if(d.rows.length>leaves.length)return scheduledBad('crew_more_required_slots_than_work','Choose at most '+leaves.length+' participants. Each required slot needs an actual bounded assignment.');
+    const participants=[];
+    for(const row of d.rows){const m=modelById(row.requestedModelId);if(!m||m.status!=='ready'||UNAVAILABLE_DEMO[m.id]||!row.role?.trim()||!row.persona)return scheduledBad('crew_route_unavailable','Resolve every requested model and role before scheduling; this path never substitutes.');
+      participants.push({id:row.rowId,role:row.role,model_id:m.id,model_name:m.name,provider_id:m.provider,account_id:m.accountId,persona:row.persona,effort:row.requestedEffort||'',fast:!!row.requestedFast,additive_role:row.additiveRoleKind||'none'});}
+    if(d.wonderer||d.grillMe)return scheduledBad('scheduled_specialist_adapter_unavailable','Optional discovery specialists need their workflow adapter; this bounded execution does not simulate them.');
+    if(d.config?.coordinator&&d.config.coordinator!=='parent_assistant')return scheduledBad('scheduled_coordinator_adapter_unavailable','Choose Current assistant for this bounded local execution. No dedicated provider coordinator is invoked.');
+    if(d.config?.assignmentStrategy==='adaptive')return scheduledBad('scheduled_adaptive_adapter_unavailable','Use frozen assignments for this local schedule; adaptive reassignment is not simulated.');
+    const requested=Number(d.config?.parallelism||1);if(!Number.isInteger(requested)||requested<1||requested>8)return scheduledBad('invalid_crew_concurrency');
+    const result={schema:'pm.concept.scheduled_crew_definition.v1',kind:'crew',plan_id:planId,plan_version:plan.version,plan_hash:expected.hash,expected:scheduledCopy(expected),name:d.name||plan.title,purpose:d.purpose||plan.title,
+      config:scheduledCopy(d.config||{}),participants,assignments:leaves.map((s,i)=>({plan_step_id:s.plan_step_id,participant_slot_id:participants[i%participants.length].id,expected_outcome:s.text})),
+      requested_concurrency:requested,effective_concurrency:1,execution_adapter:'existing_plan_bounded_local_work',execution_disclosure:'Local work runs sequentially under the frozen roster. No provider sessions, tokens or cost are reported.'};
+    result.content_key=PM56_ARTIFACTS.key(result);return {ok:true,snapshot:PM56_ARTIFACTS.freeze(result)};
+  }
+  function validatePlanCrew(x,planId,committed){
+    const p=PM56_PLANS.get(planId);if(!x||x.schema!=='pm.concept.scheduled_crew_definition.v1'||x.plan_id!==planId||x.kind!=='crew'||!Array.isArray(x.participants)||!x.participants.length||!Array.isArray(x.assignments))return scheduledBad('crew_configuration_required');
+    if(PM56_ARTIFACTS.key(planCrewBasis(x))!==x.content_key)return scheduledBad('crew_definition_changed');
+    if(x.kind!=='crew'||x.participants.length>8||!x.config||typeof x.config!=='object'||Array.isArray(x.config)||x.participants.some(p=>typeof p.id!=='string'||!p.id||typeof p.role!=='string'||!p.role.trim()||typeof p.persona!=='string'||!p.persona)||x.config.coordinator&&x.config.coordinator!=='parent_assistant'||x.config.assignmentStrategy==='adaptive'||!Number.isInteger(x.requested_concurrency)||x.requested_concurrency<1||x.requested_concurrency>8)return scheduledBad('invalid_crew_configuration');
+    if(!p||p.version!==x.plan_version||PM56_PLANS.hash(planId)!==x.plan_hash||JSON.stringify(PM56_PLANS.admissionSnapshot(planId))!==JSON.stringify(x.expected))return scheduledBad('crew_plan_binding_changed');
+    if(committed&&RTC.scheduledDefinitions?.[x.content_key]!==x)return scheduledBad('crew_definition_not_committed');
+    const leaves=planCrewSteps(p).filter(s=>!planCrewSteps(p).some(c=>c.parent_step_id===s.plan_step_id));
+    if(x.effective_concurrency!==1||x.assignments.length!==leaves.length||new Set(x.participants.map(p=>p.id)).size!==x.participants.length||new Set(x.assignments.map(a=>a.plan_step_id)).size!==leaves.length)return scheduledBad('crew_assignment_invalid');
+    for(const a of x.assignments)if(!leaves.some(s=>s.plan_step_id===a.plan_step_id&&s.text===a.expected_outcome)||!x.participants.some(p=>p.id===a.participant_slot_id))return scheduledBad('crew_assignment_invalid');
+    for(const q of x.participants){const m=modelById(q.model_id);if(!m||m.status!=='ready'||UNAVAILABLE_DEMO[m.id]||m.provider!==q.provider_id||m.accountId!==q.account_id)return scheduledBad('crew_route_unavailable');if(!x.assignments.some(a=>a.participant_slot_id===q.id))return scheduledBad('crew_assignment_missing');}
+    return {ok:true};
+  }
+  function commitPlanCrewDefinition(snapshot,planId){
+    if(!PM56_TX.isActive())return scheduledBad('crew_transaction_required');const v=validatePlanCrew(snapshot,planId,false);if(!v.ok)return v;
+    const prior=RTC.scheduledDefinitions?.[snapshot.content_key];if(prior){if(JSON.stringify(prior)!==JSON.stringify(snapshot))return scheduledBad('crew_definition_conflict');return {ok:true,snapshot:prior};}
+    const frozen=PM56_ARTIFACTS.freeze(scheduledCopy(snapshot));PM56_TX.set(RTC,'scheduledDefinitions',{...(RTC.scheduledDefinitions||{}),[snapshot.content_key]:frozen});return {ok:true,snapshot:frozen};
+  }
+  function admitPlanCrew(snapshot,planRun){
+    const TX=PM56_TX;if(!TX.isActive())return scheduledBad('crew_transaction_required');const valid=validatePlanCrew(snapshot,planRun.plan_id,true);if(!valid.ok)return valid;
+    const id='crew-'+planRun.plan_run_id,old=findRun(id);if(old)return old.crew?.planBinding?.plan_run_id===planRun.plan_run_id&&old.crew.planBinding.definition_key===snapshot.content_key?{ok:true,run:old,replayed:true}:scheduledBad('crew_admission_conflict');
+    if(RTC.runs.some(r=>r.crew?.planBinding?.plan_id===planRun.plan_id&&!['completed','canceled','failed'].includes(r.status)))return scheduledBad('crew_already_active');
+    const participants=snapshot.participants.map(q=>mkParticipant({id:id+':'+q.id,runId:id,role:q.role,requestedModelId:q.model_id,persona:q.persona,requestedEffort:q.effort,requestedFast:q.fast,additiveRoleKind:q.additive_role,status:'waiting',sessionId:'local:'+id+':'+q.id,sessionIsolation:'local work adapter; no provider session'}));
+    const items=PM56_TODOS.get(planRun.thread_id)||[];
+    const assignments=snapshot.assignments.map(a=>{const item=items.find(t=>t.run_id===planRun.plan_run_id&&(t.plan_step_ids||[]).includes(a.plan_step_id));if(!item)TX.fail('crew_todo_mapping_missing');return {...a,todo_id:item.todo_id,participant_id:id+':'+a.participant_slot_id};});
+    const run=mkRun({id,kind:'crew',threadId:planRun.thread_id,title:snapshot.name,purpose:snapshot.purpose,status:'running',participants,config:scheduledCopy(snapshot.config),coordinator:{kind:'parent_assistant'},idempotency_key:planRun.plan_run_id,config_fingerprint:snapshot.content_key,
+      crew:{planBinding:{plan_id:planRun.plan_id,plan_run_id:planRun.plan_run_id,plan_version:planRun.plan_version,plan_hash:planRun.plan_hash,definition_key:snapshot.content_key},assignments,definition:snapshot},expectedOutputs:assignments.map(a=>({id:id+':output:'+a.plan_step_id,todo_id:a.todo_id,expected_outcome:a.expected_outcome,delivered:false}))});
+    run.executionDisclosure=snapshot.execution_disclosure;run.usage={inputTokens:null,outputTokens:null,costUsd:null,not_measured:true};
+    TX.set(RTC,'runs',RTC.runs.concat(run));
+    const thread=EXT.ctx().state.threads.find(t=>t.id===planRun.thread_id);EXT.ctx().appendMessage({id:'card-'+id,role:'system',type:'collab-run',runId:id,time:planRun.created_at},thread);
+    effect('runs');effect('cards');effect('participants',participants.length);
+    return {ok:true,run};
+  }
+  function verifyPlanCrewAdmission(snapshot,planRun,run){
+    if(!run||findRun(run.id)!==run||run.id!=='crew-'+planRun.plan_run_id||run.kind!=='crew'||run.threadId!==planRun.thread_id||run.status!=='running'||run.config_fingerprint!==snapshot.content_key||run.crew?.definition!==snapshot)return scheduledBad('crew_admission_binding_changed');
+    const binding={plan_id:planRun.plan_id,plan_run_id:planRun.plan_run_id,plan_version:planRun.plan_version,plan_hash:planRun.plan_hash,definition_key:snapshot.content_key};
+    if(JSON.stringify(run.crew.planBinding)!==JSON.stringify(binding)||JSON.stringify(run.config)!==JSON.stringify(snapshot.config)||run.participants.length!==snapshot.participants.length)return scheduledBad('crew_admission_binding_changed');
+    const items=PM56_TODOS.get(planRun.thread_id)||[];
+    const expected=snapshot.assignments.map(a=>{const item=items.find(t=>t.run_id===planRun.plan_run_id&&(t.plan_step_ids||[]).includes(a.plan_step_id));return item?{...a,todo_id:item.todo_id,participant_id:run.id+':'+a.participant_slot_id}:null;});
+    if(expected.some(x=>!x)||JSON.stringify(expected)!==JSON.stringify(run.crew.assignments))return scheduledBad('crew_admission_binding_changed');
+    for(const q of snapshot.participants){const p=run.participants.find(p=>p.id===run.id+':'+q.id);if(!p||p.runId!==run.id||p.requestedModelId!==q.model_id||p.effectiveModelId!==q.model_id||p.requestedAccountId!==q.account_id||p.requestedProviderId!==q.provider_id||p.requestedPersona!==q.persona||p.role!==q.role||p.outcome!==null)return scheduledBad('crew_admission_binding_changed');}
+    return validatePlanCrew(snapshot,planRun.plan_id,true);
+  }
+  function refreshPlanCrew(planId){
+    for(const r of RTC.runs.filter(r=>r.crew?.planBinding?.plan_id===planId)){
+      const b=r.crew.planBinding,pr=PM56_PLANS.runs()[b.plan_run_id],p=PM56_PLANS.get(planId);if(!pr||!p)continue;
+      const state=pr.state==='completed'?'completed':pr.state==='cancelled'||pr.state==='canceled'?'canceled':pr.state==='paused'?'paused':['waiting_window','waiting_quota'].includes(pr.state)?'waiting':p.attention?'blocked':'running';
+      PM56_TX.set(r,'status',state);PM56_TX.set(r,'blockedReason',p.attention?.reason||null);
+      const items=PM56_TODOS.get(r.threadId)||[];
+      PM56_TX.set(r,'expectedOutputs',r.crew.assignments.map(a=>{const summary=PM56_TODOS.outcomeSummary(r.threadId,[a.todo_id]);return {id:r.id+':output:'+a.plan_step_id,todo_id:a.todo_id,expected_outcome:a.expected_outcome,delivered:summary.ok,evidence_refs:summary.evidenceRefs||[]};}));
+      for(const q of r.participants){const assigned=r.crew.assignments.filter(a=>a.participant_id===q.id).map(a=>items.find(t=>t.todo_id===a.todo_id)).filter(Boolean),done=assigned.length>0&&assigned.every(t=>['completed','skipped'].includes(t.status)&&PM56_TODOS.outcomeSummary(r.threadId,[t.todo_id]).ok);
+        PM56_TX.set(q,'status',done?'done':state==='canceled'?'disabled':assigned.some(t=>t.status==='in_progress')?'working':'waiting');PM56_TX.set(q,'outcome',done?'completed':state==='canceled'?'canceled':null);PM56_TX.set(q,'current',assigned.map(t=>t.title+' · '+t.status).join('; '));
+      }
+    }
+  }
+  function crewExecutionGate(planId){
+    const p=PM56_PLANS.get(planId),pr=p&&PM56_PLANS.runs()[p.approved?.plan_run_id];if(!pr||pr.topology!=='crew')return {ok:true};
+    const r=findRun(pr.crew_run_id);if(!r||r.crew?.planBinding?.plan_run_id!==pr.plan_run_id||r.crew.planBinding.plan_hash!==pr.plan_hash)return scheduledBad('crew_binding_missing');
+    const v=validatePlanCrew(r.crew.definition,planId,true);if(!v.ok)return v;
+    if(r.participants.length!==r.crew.definition.participants.length||r.participants.some(q=>!r.crew.definition.participants.some(s=>q.id===r.id+':'+s.id&&q.requestedModelId===s.model_id&&q.effectiveModelId===s.model_id&&q.requestedAccountId===s.account_id&&q.requestedPersona===s.persona)))return scheduledBad('crew_assignment_changed');
+    return {ok:true};
+  }
+  function crewWorkBinding(item){
+    const pr=PM56_PLANS.runs()[item.run_id];if(!pr||pr.topology!=='crew')return {ok:true,fields:{}};
+    const gate=crewExecutionGate(pr.plan_id);if(!gate.ok)return gate;
+    const r=findRun(pr.crew_run_id),a=r.crew.assignments.find(a=>a.todo_id===item.todo_id&&(item.plan_step_ids||[]).includes(a.plan_step_id));if(!a)return scheduledBad('crew_assignment_missing');
+    return {ok:true,fields:{collaboration_run_id:r.id,participant_id:a.participant_id,collaboration_definition_key:r.crew.planBinding.definition_key,assignment_id:r.id+':'+a.plan_step_id}};
+  }
+  function renderPlanCrewParticipant(run,p){
+    if(!run.crew?.planBinding)return '';
+    const b=run.crew.planBinding,work=PM56_TODOS.bindings(run.threadId).filter(w=>w.run_id===b.plan_run_id&&w.participant_id===p.id);
+    return '<section class="plan-crew-participant-work"><h4>Admitted local work</h4><p>No provider response is implied. These rows reference the shared To-Do work bindings.</p>'+
+      (work.length?work.map(w=>'<div><strong>'+esc(w.operation||w.work_kind||w.todo_id)+'</strong><span>'+esc(w.state)+' · '+esc(w.attempt_id||w.work_binding_id)+'</span></div>').join(''):'<p>No local operation admitted for this slot yet.</p>')+
+      '<button class="soft-button" data-action="pd-expand" data-id="'+esc(b.plan_id)+'">Open bound Plan and evidence</button></section>';
+  }
+  function renderPlanCrew(ctx,run){
+    refreshPlanCrew(run.crew.planBinding.plan_id);const items=PM56_TODOS.get(run.threadId)||[];
+    return '<section class="plan-crew-summary"><p>'+esc(run.executionDisclosure)+'</p><p>'+run.crew.definition.participants.length+' retained participants · requested concurrency '+run.crew.definition.requested_concurrency+' · effective 1</p><div>'+run.crew.assignments.map(a=>{const t=items.find(t=>t.todo_id===a.todo_id),q=participant(run,a.participant_id);return '<div class="plan-crew-assignment"><strong>'+esc(t?.title||a.plan_step_id)+'</strong><span>'+esc(q?.role)+' · '+esc(t?.status||'unavailable')+'</span></div>';}).join('')+'</div><button class="soft-button" data-action="pd-expand" data-id="'+esc(run.crew.planBinding.plan_id)+'">Open exact Plan</button></section>';
+  }
+
   window.PM56_COLLAB = {
+    freezeScheduledDestination,validateScheduledDestination,deliverScheduledMessage,preparePlanCrew,validatePlanCrew,commitPlanCrewDefinition,admitPlanCrew,verifyPlanCrewAdmission,crewExecutionGate,crewWorkBinding,refreshPlanCrew,
+    openScheduledCrew:(expected,snapshot)=>{
+      if(snapshot){const v=validatePlanCrew(snapshot,snapshot.plan_id,false);if(!v.ok)return v;}
+      openConfigureDraft('crew',null,false);const d=RTC.draft;
+      if(snapshot){d.name=snapshot.name;d.purpose=snapshot.purpose;d.config=scheduledCopy(snapshot.config);d.wonderer=false;d.grillMe=false;
+        d.rows=snapshot.participants.map(q=>({rowId:q.id,role:q.role,requestedModelId:q.model_id,persona:q.persona,requestedEffort:q.effort,requestedFast:q.fast,additiveRoleKind:q.additive_role}));}
+      d.scheduleIntent={expected:scheduledCopy(expected)};EXT.ctx().openDialog({type:'collab-configure'});return {ok:true};
+    },
     kinds: KINDS.slice(),
     definitions: function () { return RTC.definitions; },
     runs: function () { return RTC.runs; },
@@ -35309,9 +35617,9 @@ window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fro
        Two spellings of the same state inside one module is a trap for anyone
        porting it, so the state word is normalised and published here. */
     runStatusVocabulary: function(){
-      return ['configuring','running','paused','blocked','completed','canceled','failed'];
+      return ['configuring','running','paused','waiting','blocked','completed','canceled','failed'];
     },
-    appendMessage:function(runId,data){var r=findRun(runId);if(!r)return null;var m=mkMsg(r,data);r.messages.push(m);return m;},
+    appendMessage:function(runId,data){var r=findRun(runId);if(!r)return null;var m=mkMsg(r,data);PM56_TX.append(r,'messages',m);return m;},
     selectedFindings:function(runId){return UI.selectedFindings[runId]||(UI.selectedFindings[runId]={});},
     admitCrewWork: admitCrewWork,
     validateStart: startPreflight,
@@ -36312,6 +36620,9 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
       const resolved=window.PM56_ARTIFACTS.resolve(ref,{document:true});
       if(!resolved.ok)return msgError('attachment_'+resolved.error,'The exact attachment revision is unavailable; no newer bytes were substituted.');
       if(a.content_hash&&a.content_hash!==resolved.revision.content_key)return msgError('attachment_hash_changed');
+      const snapshotCheck=window.PM56_ATTACHMENTS?.inspectScheduleSnapshot?.(ref);
+      if(snapshotCheck&&!snapshotCheck.ok)return msgError(snapshotCheck.error,snapshotCheck.detail);
+      if(a.folder_manifest_hash&&snapshotCheck?.manifest_sha256!==a.folder_manifest_hash)return msgError('folder_manifest_changed');
       out.push({id:a.id||ref.artifact_id,name:attachmentLabel(a),kind:a.kind||'file',artifact_id:ref.artifact_id,artifact_version:ref.artifact_version,content_hash:resolved.revision.content_key,folder_manifest_hash:a.folder_manifest_hash||null,snapshot_ref:copy(ref),availability:'available',state:'ready'});
     }
     return {ok:true,items:out};
@@ -36327,11 +36638,15 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     if(d.sourceScope&&!identical(d.sourceScope,scope))return msgError('scope_changed');
     if(d.browser_context_refs?.length)return msgError('live_browser_context_not_schedulable','Freeze browser context as an attachment first. No future live selector is scheduled.');
     if(d.workflow_config||d.held_request)return msgError('workflow_configuration_requires_its_owner');
-    const destination=copy(d.destination||{kind:'assistant',thread_id:d.threadId,label:threadByIdRaw(d.threadId).title});
+    let destination=copy(d.destination||{kind:'assistant',thread_id:d.threadId,label:threadByIdRaw(d.threadId).title});
     if(destination.kind!=='assistant'&&!messageDestinations.has(destination.kind))return msgError('destination_owner_unavailable','This destination cannot accept a frozen scheduled message. Nothing was redirected to the Assistant.');
     if(destination.kind==='assistant'&&destination.thread_id&&destination.thread_id!==d.threadId)return msgError('destination_scope_mismatch');
     if(destination.unresolvable)return msgError('route_unavailable');
-    if(destination.kind!=='assistant'){const check=messageDestinations.get(destination.kind).validate(destination,scope);if(!check?.ok)return msgError(check?.error||'destination_unavailable');}
+    if(destination.kind!=='assistant'){
+      const owner=messageDestinations.get(destination.kind);
+      if(!destination.scheduled_binding&&owner.freeze){const prepared=owner.freeze(destination,scope);if(!prepared?.ok)return msgError(prepared?.error||'destination_unavailable');destination=prepared.destination;}
+      const check=owner.validate(destination,scope);if(!check?.ok)return msgError(check?.error||'destination_unavailable');
+    }
     const m=modelById(d.modelId);if(!m||m.status!=='ready')return msgError('route_unavailable','The selected model or account is unavailable. No fallback was chosen.');
     const attachments=resolveScheduledAttachments(d.attachments,scope);if(!attachments.ok)return attachments;
     return {ok:true,binding:{thread_id:d.threadId,project_id:scope.projectId,text:d.text,destination_ref:destination,attachment_refs:attachments.items,
@@ -36370,6 +36685,29 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
       persistNow();return {ok:true,record:old||record,replayed:false};
     });
   }
+  // Read selected File bytes before entering the synchronous shared transaction.
+  // A cancelled/edited form can never publish detached snapshots or clear text.
+  async function saveMessageWithSnapshots(d,editingId,stillCurrent=()=>true){
+    if(!d)return msgError('invalid_request');
+    const captured=copy(d);
+    const needs=(captured.attachments||[]).some(a=>!a.snapshot_ref&&!a.artifact_ref&&!a.artifact_id);
+    if(!needs)return stillCurrent()?saveMessage(EXT.ctx(),captured,editingId):msgError('schedule_form_changed');
+    const prior=P().messageRequests?.[captured.requestKey];
+    if(prior)return prior.selection_request===JSON.stringify(captured)?{ok:true,replayed:true,record:findMessage(prior.id)}:msgError('idempotency_conflict');
+    if(editingId)return msgError('attachment_snapshot_required','Edit retains the existing snapshot. Select new files in the composer for a new schedule.');
+    const prepared=await window.PM56_ATTACHMENTS.prepareScheduleSnapshots(captured);
+    if(!prepared.ok)return prepared;
+    if(!stillCurrent()||JSON.stringify(d)!==JSON.stringify(captured))return msgError('schedule_form_changed');
+    return PM56_TX.run(()=>{
+      if(!stillCurrent()||!PM56_COMPOSER_STATE.matchesScheduleCapture(EXT.ctx(),captured.sourceBuffer))PM56_TX.fail('composer_changed');
+      const result=PM56_ATTACHMENTS.publishScheduleSnapshots(prepared);if(!result.ok)PM56_TX.fail(result.error);
+      const saved=saveMessage(EXT.ctx(),{...captured,attachments:prepared.attachments},editingId);
+      if(!saved.ok)PM56_TX.fail(saved.error);
+      const requests=P().messageRequests;
+      PM56_TX.set(P(),'messageRequests',{...requests,[captured.requestKey]:{...requests[captured.requestKey],selection_request:JSON.stringify(captured)}});
+      return saved;
+    });
+  }
   function cancelMessageExact(id,expected){
     const m=findMessage(id);if(!m)return msgError('schedule_not_found');
     if(!expected||expected.revision!==m.revision||expected.currentness!==msgCurrent(m))return msgError('stale_schedule_revision');
@@ -36379,7 +36717,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   function messageTicket(id,atMs=Date.now()){
     const m=findMessage(id);return !m?msgError('schedule_not_found'):{ok:true,ticket:{...captureMessage(id),at:atMs,stop_epoch:P().stopEpoch,attempt_id:id+':r'+m.revision+':a'+((m.dispatch_attempts||[]).length+1)}};
   }
-  function messageEligibility(m,ticket){
+  function messageEligibility(m,ticket,publishedMessage){
     if(!Number.isFinite(ticket.at))return msgError('invalid_dispatch_time');
     const gate=evaluateEligibility('message',m,ticket.stop_epoch);if(!gate.ok)return msgError(gate.clause,gate.detail);
     if(m.binding_kind!=='scheduled_message_v2')return msgError('legacy_snapshot_requires_review','This historical fixture has no complete frozen snapshot. Edit it before dispatch.');
@@ -36392,7 +36730,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     const refs=resolveScheduledAttachments(m.attachment_refs,m.scope_snapshot);if(!refs.ok)return refs;
     if(m.destination_ref?.kind!=='assistant'){
       const owner=messageDestinations.get(m.destination_ref?.kind);if(!owner)return msgError('destination_owner_unavailable');
-      const resolved=owner.validate(m.destination_ref,m.scope_snapshot);if(!resolved?.ok)return msgError(resolved?.error||'destination_unavailable');
+      const resolved=owner.validate(m.destination_ref,m.scope_snapshot,publishedMessage);if(!resolved?.ok)return msgError(resolved?.error||'destination_unavailable');
     }
     if(RT.quota?.waiting)return msgError('quota_unavailable','Usage is unavailable; the scheduled message is held.');
     const late=ticket.at-Date.parse(m.scheduled_at_utc);
@@ -36428,14 +36766,14 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
       if(m.destination_ref.kind!=='assistant'){
         const result=messageDestinations.get(m.destination_ref.kind).deliver(message,m.destination_ref);if(!result?.ok)TX.fail(result?.error||'destination_delivery_failed');
       }else ctxAppend(th,message);
-      eligible=messageEligibility(m,ticket);if(!eligible.ok)TX.fail(eligible.error);
+      eligible=messageEligibility(m,ticket,message);if(!eligible.ok)TX.fail(eligible.error);
       if(ticket.currentness!==msgCurrent(m))TX.fail('stale_schedule_revision');
       if(P().stopped||ticket.stop_epoch!==P().stopEpoch)TX.fail('manual_stop_latched');
       const receipt={schedule_id:m.scheduled_dispatch_id,revision:m.revision,attempt_id:ticket.attempt_id,message_id:id,at:message.time,requested_runtime:copy(m.requested_runtime),effective_runtime:copy(m.requested_runtime),snapshot_key:m.snapshot_key,session_only:true};
       const result={ok:true,dispatched:true,message_id:id,receipt};
       TX.set(m,'state','sent');TX.set(m,'dispatchedMessageId',id);TX.set(m,'dispatchedAt',message.time);TX.set(m,'dispatch_receipt',receipt);TX.set(m,'heldReason',null);TX.set(m,'updatedAt',nowIso());
       TX.set(m,'dispatch_attempts',(m.dispatch_attempts||[]).concat({attempt_id:ticket.attempt_id,ticket_key:PM56_ARTIFACTS.key(ticket),at:message.time,result}));
-      persistNow();TX.defer(()=>messageReceivers.get(m.thread_id)?.(message,receipt));return result;
+      persistNow();if(m.destination_ref.kind==='assistant')TX.defer(()=>messageReceivers.get(m.thread_id)?.(message,receipt));return result;
     });
     if(!delivered.ok&&findMessage(ticket.id)===m&&m.revision===ticket.revision&&['scheduled','held','failed'].includes(m.state)){
       // Preserve the failed attempt AFTER the delivery transaction rolls back.
@@ -36487,7 +36825,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   function commitBuild(ctx) {
     var d = ui.buildDraft; if (!d) return null;
     if(!d.requestKey){d.error='Missing schedule request identity.';return null;}
-    const requestBinding=PM56_ARTIFACTS.key({planId:d.planId,version:d.version,hash:d.contentHash,expected:d.expected,kind:d.kind,date:d.date,time:d.time,start:d.startTime,pause:d.pauseTime,timezone:d.timezone,days:d.days,wind:d.windDown,auto:d.autoResumeNext,missed:d.missed,topology:d.executionTopology,editing:ui.editingBuildId||null});
+    const requestBinding=PM56_ARTIFACTS.key({planId:d.planId,version:d.version,hash:d.contentHash,expected:d.expected,kind:d.kind,date:d.date,time:d.time,start:d.startTime,pause:d.pauseTime,timezone:d.timezone,days:d.days,wind:d.windDown,auto:d.autoResumeNext,missed:d.missed,topology:d.executionTopology,crew:d.crewDefinition||null,editing:ui.editingBuildId||null});
     const prior=P().buildRequests?.[d.requestKey];
     if(prior){if(prior.binding!==requestBinding){d.error='idempotency_conflict';return null;}return findBuild(prior.id);}
     if(ui.editingBuildId){const old=findBuild(ui.editingBuildId);if(!old||old.revision!==d.expectedRevision||buildCurrent(old)!==d.expectedCurrentness||old.state!=='active'){d.error='stale_schedule_revision';return null;}}
@@ -36502,7 +36840,8 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     }
     const currentSnapshot=window.PM56_PLANS.admissionSnapshot(d.planId);
     if(d.expected&&JSON.stringify(d.expected)!==JSON.stringify(currentSnapshot)){d.error='Project, worktree, permissions or provider route changed. Reopen this form.';ctx.renderOverlays();return null;}
-    if(!['agent','goal_driven'].includes(d.executionTopology||'agent')){d.error='Unsupported execution topology.';return null;}
+    if(!['agent','goal_driven','crew'].includes(d.executionTopology||'agent')){d.error='Unsupported execution topology.';return null;}
+    if(d.executionTopology==='crew'){const v=window.PM56_COLLAB.validatePlanCrew(d.crewDefinition,d.planId,false);if(!v.ok){d.error=v.message||v.error;return null;}}
     var hash=d.contentHash,model=ctx.selectedModel();
     var existing = ui.editingBuildId ? findBuild(ui.editingBuildId) : null;
     var id = existing ? existing.schedule_id : ctx.uid('bld');
@@ -36540,6 +36879,10 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     const TX=PM56_TX,oldCurrent=existing?buildCurrent(existing):null;
     const result=TX.run(()=>{
       if(existing&&buildCurrent(existing)!==oldCurrent)TX.fail('stale_schedule_revision');
+      if(d.executionTopology==='crew'){
+        const def=PM56_COLLAB.commitPlanCrewDefinition(d.crewDefinition,d.planId);if(!def.ok)TX.fail(def.error);
+        rec.topology_snapshot=Object.freeze({...rec.topology_snapshot,collaboration_definition_ref:def.snapshot});
+      }
       if(!identical(window.PM56_PLANS.admissionSnapshot(d.planId),currentSnapshot))TX.fail('scope_changed');
       if(existing){
         const retained={createdAt:existing.createdAt,revision:existing.revision+1,occurrencesFired:existing.occurrencesFired.slice(),log:existing.log.concat({at:nowIso(),text:'Window updated under exact expected revision.'}),dispatchReceipt:existing.dispatchReceipt,runPhase:existing.runPhase,lastOccurrenceStart:existing.lastOccurrenceStart};
@@ -36644,7 +36987,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     const eligible=evaluateEligibility('build',b,captured);if(!eligible.ok)return fail(eligible.clause,eligible.detail);
     if(b.state!=='active')return fail('schedule_not_active');
     if(b.topology_snapshot?.execution_topology!==b.execution_topology)return fail('topology_snapshot_changed');
-    if(b.binding_kind!=='plan_content_v1'||!['one_time','recurring_window'].includes(b.schedule_kind)||!['agent','goal_driven'].includes(b.execution_topology))return fail('unsupported_demo_schedule');
+    if(b.binding_kind!=='plan_content_v1'||!['one_time','recurring_window'].includes(b.schedule_kind)||!['agent','goal_driven','crew'].includes(b.execution_topology))return fail('unsupported_demo_schedule');
     const due=b.schedule_kind==='one_time'?Date.parse(b.scheduled_at_utc):Date.parse(b.next_occurrence_at||b.createdAt);
     if(!Number.isFinite(atMs)||!Number.isFinite(due)||atMs<due)return fail('window_not_open');
     const calendar=buildWindow(b,atMs);
@@ -36672,7 +37015,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
       if(JSON.stringify(b)!==frozen||b.revision!==revision)TX.fail('schedule_changed_during_admission');
       if(!evaluateEligibility('build',b,captured).ok)TX.fail('stale_stop_epoch');
       const occurrence=new Date(due).toISOString(),receipt={schedule_id:b.schedule_id,plan_id:b.target_id,version:b.exact_target_version,hash:b.exact_target_hash,occurrence,at:new Date(atMs).toISOString(),concept:true,
-        execution_topology:b.execution_topology,plan_run_id:result.plan_run_id,goal_id:result.goal_id||null};
+        execution_topology:b.execution_topology,plan_run_id:result.plan_run_id,crew_run_id:result.crew_run_id||null,goal_id:result.goal_id||null};
       for(const [k,v] of Object.entries({clock_ms:atMs,held_reason:null,lastOccurrenceStart:occurrence,occurrencesFired:b.occurrencesFired.concat(occurrence),dispatchReceipt:receipt,
         state:b.schedule_kind==='one_time'?'completed':'active',runPhase:'admitted',runtime_created:true,plan_run_id:result.plan_run_id,goal_id:result.goal_id||null,revision:b.revision+1,updatedAt:nowIso(),
         log:[{at:nowIso(),text:'Admitted through the shared Plan command. Duplicate delivery returns the original run and Goal.'},...b.log]}))TX.set(b,k,v);
@@ -36688,6 +37031,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   function buildCurrent(rec){return PM56_ARTIFACTS.key({id:rec.schedule_id,revision:rec.revision,target:rec.target_id,version:rec.exact_target_version,hash:rec.exact_target_hash,topology:rec.execution_topology,topology_snapshot:rec.topology_snapshot,kind:rec.schedule_kind,at:rec.scheduled_at_utc,wind:rec.wind_down_seconds,auto:rec.auto_resume_next_window,missed:rec.missed_policy,grace:rec.grace_seconds,timezone:rec.timezone,start:rec.local_start,pause:rec.local_pause,days:rec.days_of_week,route:rec.runtime_snapshot,scope:rec.owner_worktree_snapshot,permissions:rec.permission_snapshot,state:rec.state});}
   function captureBuild(id){const b=findBuild(id);return b?{id,revision:b.revision,currentness:buildCurrent(b),epoch:P().stopEpoch}:null;}
   function buildRoute(rec){const c=EXT.ctx(),r=PM56_PLANS.get(rec.target_id),scope=PM56_GOAL.scope(rec.thread_id),model=modelById(rec.runtime_snapshot?.modelId);
+    if(rec.execution_topology==='crew'){const v=PM56_COLLAB.validatePlanCrew(rec.topology_snapshot?.collaboration_definition_ref,rec.target_id,true);if(!v.ok)return msgError(v.error,v.message);}
     if(!r||!scope||r.thread_id!==rec.thread_id||scope.projectId!==rec.project_id)return msgError('target_not_found');
     if(r.version!==rec.exact_target_version||PM56_PLANS.hash(r.plan_id)!==rec.exact_target_hash)return msgError('target_version_changed');
     if(scope.worktreeId!==rec.owner_worktree_snapshot||c.state.worktree!==rec.worktree_snapshot)return msgError('worktree_snapshot_changed');
@@ -36974,7 +37318,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
       '<div class="schedule-when"><h3>Send on</h3><div class="sched-field-grid"><label class="sched-field"><span>Date</span><input type="date" data-sched-input="msg-date" value="'+esc(d.date)+'"></label><label class="sched-field"><span>Time</span><input type="time" data-sched-input="msg-time" value="'+esc(d.time)+'"></label><label class="sched-field schedule-zone"><span>Timezone</span><select data-sched-input="msg-tz">'+tzOpts+'</select></label></div></div>'+
       wallResolution(d.date,d.time,d.timezone)+'<label class="sched-field"><span>Model & account</span>'+window.PM56_PICKERS.modelButton('sched-pick-model','schedule-model',d.modelId)+'</label>'+
       '<details class="schedule-details"><summary>If the send time is missed '+ctx.icon('down',11)+'</summary><div class="sched-field-grid"><label class="sched-field"><span>Action</span><select data-sched-input="msg-missed">'+[['hold','Hold for me'],['next_available','Send when available'],['cancel_after_grace','Cancel after grace']].map(([v,l])=>'<option value="'+v+'" '+(d.missed===v?'selected':'')+'>'+l+'</option>').join('')+'</select></label>'+(d.missed==='cancel_after_grace'?'<label class="sched-field"><span>Grace · minutes</span><input type="number" min="1" max="1440" data-sched-input="msg-grace" value="'+d.grace+'"></label>':'')+'</div></details>'+
-      '<div class="sched-form-error" role="alert">'+esc(d.error||'')+'</div></div><div class="schedule-form-foot"><button class="text-button" data-action="sched-open-manage">All schedules</button><span class="spacer"></span><button class="soft-button" data-action="sched-close-dialog">Cancel</button><button class="primary-button" data-action="sched-create-message" '+(!text.trim()||text.length>8000?'disabled':'')+'>'+(editing?'Save changes':'Schedule message')+'</button></div></section>';
+      '<div class="sched-form-error" role="alert">'+esc(d.error||'')+'</div></div><div class="schedule-form-foot"><button class="text-button" data-action="sched-open-manage">All schedules</button><span class="spacer"></span><button class="soft-button" data-action="sched-close-dialog">Cancel</button><button class="primary-button" data-action="sched-create-message" '+(!text.trim()||text.length>8000||ui.snapshotBusy?'disabled':'')+'>'+(ui.snapshotBusy?'Retaining selected bytes…':editing?'Save changes':'Schedule message')+'</button></div></section>';
   }
 
   function renderQuotaHint() {
@@ -36991,7 +37335,8 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     if(!TZ_OPTIONS.some(t=>t.id===d.timezone))zones='<option selected value="'+esc(d.timezone)+'">'+esc(zoneName(d.timezone))+'</option>'+zones;
     return '<section class="dialog sched-dialog sched-dialog--build" role="dialog" aria-modal="true" aria-label="Build At"><div class="drawer-head">'+ctx.icon('document',16)+'<strong>'+(ui.editingBuildId?'Edit build window':'Schedule a build')+'</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div><div class="dialog-body">'+
       '<div class="schedule-plan-target"><strong>'+esc(plan?.title||d.planId)+'</strong><span>V'+esc(d.version)+' · Fixed version</span></div>'+
-      (one?wallResolution(d.date,d.time,d.timezone):'')+'<label class="sched-field"><span>Execution</span><select data-sched-input="build-topology"><option value="agent" '+(d.executionTopology!=='goal_driven'?'selected':'')+'>Build normally</option><option value="goal_driven" '+(d.executionTopology==='goal_driven'?'selected':'')+'>Build as Goal</option><option value="crew" disabled>Build with Crew · atomic schedule adapter unavailable</option></select></label>'+(d.executionTopology==='goal_driven'?'<p class="schedule-caption">The Goal is created only when this exact build is admitted.</p>':'')+
+      (one?wallResolution(d.date,d.time,d.timezone):'')+'<label class="sched-field"><span>Execution</span><select data-sched-input="build-topology"><option value="agent" '+((d.executionTopology||'agent')==='agent'?'selected':'')+'>Build normally</option><option value="goal_driven" '+(d.executionTopology==='goal_driven'?'selected':'')+'>Build as Goal</option><option value="crew" '+(d.executionTopology==='crew'?'selected':'')+'>Build with Crew</option></select></label>'+(d.executionTopology==='goal_driven'?'<p class="schedule-caption">The Goal is created only when this exact build is admitted.</p>':'')+
+      (d.executionTopology==='crew'?'<section class="schedule-crew-config"><button class="soft-button" data-action="sched-configure-crew">'+(d.crewDefinition?'Review frozen Crew':'Configure Crew')+'</button><p class="schedule-caption">'+(d.crewDefinition?esc(d.crewDefinition.name)+' · '+d.crewDefinition.participants.length+' participants · no run until dispatch':'Choose the roster before scheduling. No unattended modal opens at dispatch.')+'</p></section>':'')+
       '<div class="schedule-kind">'+[['one_time','Once'],['recurring_window','Recurring window']].map(([v,l])=>'<button class="soft-button '+(d.kind===v?'active':'')+'" data-action="sched-set-build-kind" data-value="'+v+'">'+l+'</button>').join('')+'</div>'+
       '<div class="sched-field-grid">'+(one?'<label class="sched-field"><span>Date</span><input type="date" data-sched-input="build-date" value="'+esc(d.date)+'"></label><label class="sched-field"><span>Start</span><input type="time" data-sched-input="build-time" value="'+esc(d.time)+'"></label>':'<label class="sched-field"><span>Start</span><input type="time" data-sched-input="build-start" value="'+esc(d.startTime)+'"></label><label class="sched-field"><span>Pause</span><input type="time" data-sched-input="build-pause" value="'+esc(d.pauseTime)+'"></label>')+
       '<label class="sched-field schedule-zone"><span>Timezone</span><select data-sched-input="build-tz">'+zones+'</select></label></div>'+
@@ -37297,10 +37642,17 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     ui.msgDraft = null; ui.editingMsgId = null; ui.buildDraft = null;ui.editingBuildId=null;
     ctx.closeDialog();
   };
-  ACT['sched-create-message'] = function(ctx){
-    if(!ui.msgDraft)return;const editing=!!ui.editingMsgId,rec=commitMessage(ctx);if(!rec)return;
-    ui.msgDraft=null;ui.editingMsgId=null;ui.focusSchedule=rec.scheduled_dispatch_id;ui.manageTab='messages';
-    ctx.openDialog({type:'sched-manage'});ctx.renderApp();ctx.toast(editing?'Schedule updated':'Message scheduled','Exact session-local snapshot recorded. No provider or background timer has started.');
+  ACT['sched-create-message'] = async function(ctx){
+    if(!ui.msgDraft||ui.snapshotBusy)return;
+    const draft=ui.msgDraft,editingId=ui.editingMsgId,editing=!!editingId;
+    const finish=rec=>{ui.msgDraft=null;ui.editingMsgId=null;ui.focusSchedule=rec.scheduled_dispatch_id;ui.manageTab='messages';ctx.openDialog({type:'sched-manage'});ctx.renderApp();ctx.toast(editing?'Schedule updated':'Message scheduled','Exact session-local snapshot recorded. No provider or background timer has started.');};
+    if(!(draft.attachments||[]).some(a=>!a.snapshot_ref&&!a.artifact_ref&&!a.artifact_id)){const rec=commitMessage(ctx);if(rec)finish(rec);return;}
+    ui.snapshotBusy=true;ctx.renderOverlays();
+    const out=await saveMessageWithSnapshots(draft,editingId,()=>ui.msgDraft===draft&&ui.editingMsgId===editingId);
+    ui.snapshotBusy=false;
+    if(ui.msgDraft!==draft||ui.editingMsgId!==editingId)return;
+    if(!out.ok){draft.error=out.detail||out.error;ctx.renderOverlays();return;}
+    finish(out.record);
   };
   ACT['sched-cancel-message'] = function (ctx, btn) {
     var ok = cancelMessage(btn.dataset.id);
@@ -37331,9 +37683,10 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     var b=findBuild(btn.dataset.id);if(!b||b.state!=='active'||b.dispatchReceipt)return;
     ui.editingBuildId=b.schedule_id;
     var local=tzParts(b.timezone,Date.parse(b.scheduled_at_utc||b.next_occurrence_at));
-    ui.buildDraft={requestKey:ctx.uid('build-schedule-update'),expectedCurrentness:buildCurrent(b),executionTopology:b.execution_topology||'agent',expected:window.PM56_PLANS.admissionSnapshot(b.target_id),planId:b.target_id,version:b.exact_target_version,contentHash:b.exact_target_hash,expectedRevision:b.revision,kind:b.schedule_kind,date:local?local.y+'-'+pad2(local.mo)+'-'+pad2(local.d):'',time:b.local_start,startTime:b.local_start,pauseTime:b.local_pause||'02:00',timezone:b.timezone,days:b.days_of_week.slice(),windDown:b.wind_down_seconds/60,autoResumeNext:b.auto_resume_next_window,missed:b.missed_policy};
+    ui.buildDraft={requestKey:ctx.uid('build-schedule-update'),expectedCurrentness:buildCurrent(b),executionTopology:b.execution_topology||'agent',crewDefinition:b.topology_snapshot?.collaboration_definition_ref||null,expected:window.PM56_PLANS.admissionSnapshot(b.target_id),planId:b.target_id,version:b.exact_target_version,contentHash:b.exact_target_hash,expectedRevision:b.revision,kind:b.schedule_kind,date:local?local.y+'-'+pad2(local.mo)+'-'+pad2(local.d):'',time:b.local_start,startTime:b.local_start,pauseTime:b.local_pause||'02:00',timezone:b.timezone,days:b.days_of_week.slice(),windDown:b.wind_down_seconds/60,autoResumeNext:b.auto_resume_next_window,missed:b.missed_policy};
     ctx.openDialog({type:'sched-build-at',planId:b.target_id,version:b.exact_target_version});
   };
+  ACT['sched-configure-crew']=function(ctx){const d=ui.buildDraft;if(!d)return;const out=PM56_COLLAB.openScheduledCrew({...d.expected},d.crewDefinition);if(!out.ok){d.error=out.message||out.error;ctx.renderOverlays();}};
   ACT['sched-create-build'] = function (ctx, btn) {
     // A completed or canceled form cannot be replayed into a second schedule.
     if (!ui.buildDraft) return;
@@ -37477,12 +37830,15 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   });
 
   window.PM56_SCHED = {
+    currentCrewTarget:()=>ui.buildDraft?.planId,
+    returnFromCrewConfiguration:()=>{const d=ui.buildDraft;if(d)EXT.ctx().openDialog({type:'sched-build-at',planId:d.planId,version:d.version});else EXT.ctx().closeDialog();},
+    acceptCrewConfiguration:(snapshot,expected)=>{const d=ui.buildDraft;if(!d||d.planId!==snapshot.plan_id||!identical(d.expected,expected)||!identical(PM56_PLANS.admissionSnapshot(d.planId),expected))return msgError('schedule_form_changed');d.crewDefinition=snapshot;d.executionTopology='crew';EXT.ctx().openDialog({type:'sched-build-at',planId:d.planId,version:d.version});return {ok:true};},
     openBuildAt: openBuildAt,
     captureBuild,windowTick,workEligibility,setPlanQuotaConsent,buildWindow,
     buildDraft:defaultBuildDraft,editBuildDraft:id=>{const b=findBuild(id);if(!b)return null;ACT['sched-edit-build'](EXT.ctx(),{dataset:{id}});return copy(ui.buildDraft);},
     saveBuild:(draft,id)=>{const before=ui.buildDraft,edit=ui.editingBuildId;ui.buildDraft=draft;ui.editingBuildId=id||null;try{const r=commitBuild(EXT.ctx());return r?{ok:true,record:r}:msgError(draft.error||'build_schedule_refused');}finally{ui.buildDraft=before;ui.editingBuildId=edit;}},
     cancelBuildExact:(id,expected)=>cancelBuild(id,expected),
-    captureMessage,saveMessage:(draft,editingId)=>saveMessage(EXT.ctx(),draft,editingId),prepareMessage:(draft)=>prepareMessage(EXT.ctx(),draft),
+    captureMessage,saveMessageWithSnapshots,saveMessage:(draft,editingId)=>saveMessage(EXT.ctx(),draft,editingId),prepareMessage:(draft)=>prepareMessage(EXT.ctx(),draft),
     messageDraft:()=>defaultMsgDraft(EXT.ctx()),editMessageDraft:id=>findMessage(id)?loadMessageForEdit(findMessage(id)):null,
     cancelMessageExact,messageTicket,deliverMessage,dispatchMessageAt,
     registerMessageReceiver:(threadId,receiver)=>{if(messageReceivers.has(threadId))throw Error('duplicate_schedule_receiver');messageReceivers.set(threadId,receiver);},
@@ -37513,6 +37869,8 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     restore: restoreFixture,
     fixture: function () { return JSON.parse(SEED_JSON); }
   };
+
+  ['workflow','participant'].forEach(kind=>PM56_SCHED.registerMessageDestination(kind,{freeze:(d,s)=>PM56_COLLAB.freezeScheduledDestination(d,s),validate:(d,s,m)=>PM56_COLLAB.validateScheduledDestination(d,s,m),deliver:(m,d)=>PM56_COLLAB.deliverScheduledMessage(m,d)}));
 
   /* If the user just pressed "Reload page now", reopen the management dialog
      once EXT.ctx is live, so restart survival is visible without extra
@@ -41727,7 +42085,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   if(round.messages.length===round.participantIds.length){round.complete=true;s.roundsSoFar=round.number;}
   return {ok:true,messageId:m.id,roundComplete:round.complete};
  }
- function canSend(id,dest){const r=run(id);if(!owns(id))return fail('room_missing');if(r.status!=='running')return fail('room_ended_or_paused');if(r.chatRoom.round&&!r.chatRoom.round.complete)return fail('finish_current_round');if(r.config.turnPolicy==='ask_everyone_once'&&r.chatRoom.roundsSoFar>=1||r.chatRoom.roundsSoFar>=+r.config.maxRounds)return fail('round_limit_reached');if(dest?.participantId&&!r.participants.some(p=>p.id===dest.participantId))return fail('participant_missing');return {ok:true};}
+ function canSend(id,dest){const r=run(id);if(!owns(id))return fail('room_missing');if(r.status!=='running')return fail('room_ended_or_paused');if(r.chatRoom.round&&!r.chatRoom.round.complete)return fail('finish_current_round');if(r.chatRoom.pendingRecipientIds?.length)return fail('finish_pending_delivery');if(r.config.turnPolicy==='ask_everyone_once'&&r.chatRoom.roundsSoFar>=1||r.chatRoom.roundsSoFar>=+r.config.maxRounds)return fail('round_limit_reached');if(dest?.participantId&&!r.participants.some(p=>p.id===dest.participantId))return fail('participant_missing');return {ok:true};}
  function receiveUser(id,message,buffer,thread){
   const r=run(id),dest=buffer.destination,check=canSend(id,dest);if(!check.ok)return check;
   if(thread.id!==r.threadId)return fail('wrong_thread');
@@ -43616,8 +43974,8 @@ function controls(ctx,r){
 }
 E.slot('composerBelow',ctx=>{
  const r=sessions.get(ctx.thread.id);if(!r)return '';const m=record(r),b=build(r);
- const hint=r.flow==='messages'?(!m?'Open the wand → Schedule Message. Nothing is scheduled by this preparation.':'Publish V2, then evaluate the scheduled time. The message still reads V1. Disconnect V1 to try a Held result.'):(!b?'Send the prepared Plan request, then use More → Build At. Do not Build Now.':'Let the first output finish, move to wind-down, then the next window. The original run and completed output must survive.');
- return '<section class="b18-guide" data-b18-flow="'+r.flow+'"><div class="b18-guide-title"><strong>Batch 18 · '+(r.flow==='messages'?'Exact scheduled messages':'Recurring execution windows')+'</strong><small>Explicit local clock · no background service</small></div><p>'+ctx.esc(hint)+'</p><details class="b18-clock" '+(r.clockOpen?'open':'')+'><summary>Local clock &amp; input controls</summary><div class="b18-controls">'+controls(ctx,r)+'</div>'+(r.last?'<p class="b18-decision" role="status">'+ctx.esc(r.last)+'</p>':'')+'</details></section>';
+ const hint=r.instruction|| (r.flow==='messages'?(!m?'Open the wand → Schedule Message. Nothing is scheduled by this preparation.':'Publish V2, then evaluate the scheduled time. The message still reads V1. Disconnect V1 to try a Held result.'):(!b?'Send the prepared Plan request, then use More → Build At. Do not Build Now.':'Let the first output finish, move to wind-down, then the next window. The original run and completed output must survive.'));
+ return '<section class="b18-guide" data-b18-flow="'+r.flow+'"><div class="b18-guide-title"><strong>Batch 18 · '+(r.guideTitle|| (r.flow==='messages'?'Exact scheduled messages':'Recurring execution windows'))+'</strong><small>Explicit local clock · no background service</small></div><p>'+ctx.esc(hint)+'</p><details class="b18-clock" '+(r.clockOpen?'open':'')+'><summary>Local clock &amp; input controls</summary><div class="b18-controls">'+controls(ctx,r)+'</div>'+(r.last?'<p class="b18-decision" role="status">'+ctx.esc(r.last)+'</p>':'')+'</details></section>';
 });
 E.slot('transcriptMessage',ctx=>{const m=ctx.m||ctx.message;return m?.type==='b18-result'?'<article class="b18-result"><strong>Sum: '+ctx.esc(m.sum)+'</strong><p>Calculated from the exact scheduled attachment. This is a local calculation, not a provider response.</p>'+artifactButton(m.ref,'Inspect result and source identity')+'</article>':'';});
 function outcome(r,out){r.last=out.ok?out.duplicate?'Original receipt returned; no duplicate delivery.':out.completed?'The existing run is complete. No new run was started.':out.resumed?'The same unfinished PlanRun resumed.':out.paused?'The original run paused at a safe boundary.':out.winding_down?'Wind-down: the bounded operation may finish, but no new work is admitted.':'Clock evaluated through the shared scheduler.':out.detail||out.error||'Refused';E.ctx().renderApp();}
@@ -43638,7 +43996,64 @@ E.action('b18-quota',ctx=>{const r=current(),b=r&&build(r);if(!b)return;R.quota.
 E.action('b18-consent',ctx=>{const r=current(),b=r&&build(r);if(b)outcome(r,S.setPlanQuotaConsent(b.target_id,true));});
 const gallery=PM56_REPAIR_DEMOS,prior=gallery.gallery;
 gallery.gallery=ctx=>'<section class="demo-section"><h3>Scheduled messages &amp; windows · Batch 18</h3><div class="demo-section-body"><button class="demo-trigger" data-action="b18-start" data-flow="messages"><strong>Send the version you scheduled</strong><small>Freeze a message and V1 attachment. Hold when unavailable; never substitute V2.</small></button><button class="demo-trigger" data-action="b18-start" data-flow="windows"><strong>One build, across two windows</strong><small>Pause real local work at a safe boundary and resume the same run.</small></button></div></section>'+prior(ctx);
-window.PM56_B18={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=current();return r?{...clone(r),message:record(r)?clone(record(r)):null,build:build(r)?clone(build(r)):null}:null;}};
+window.PM56_B18={setInstruction:(text,title)=>{const r=current();if(r){r.instruction=text;r.guideTitle=title;E.ctx().renderApp();}},start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=current();return r?{...clone(r),message:record(r)?clone(record(r)):null,build:build(r)?clone(build(r)):null}:null;}};
+})();
+
+/* Batch 18 continuation gallery. Inputs/clock controls are explicitly local
+ * examples; all operational state remains with Scheduling, Collaboration,
+ * Plan, To-Do, Composer and Artifact owners. No paid/provider execution. */
+(function(){
+'use strict';const E=PM56_EXT,S=PM56_SCHED,C=PM56_COLLAB,AT=PM56_ATTACHMENTS,CS=PM56_COMPOSER_STATE,A=PM56_ARTIFACTS;
+const sessions=new Map(),clone=x=>JSON.parse(JSON.stringify(x));let serial=0;
+const get=()=>sessions.get(E.ctx()?.thread.id),message=r=>S.list().messages.filter(m=>m.thread_id===r?.threadId).at(-1),room=r=>C.runsForThread(r?.threadId).find(x=>PM56_ROOM.owns(x.id));
+const act=(name,data={})=>E.run(name,{dataset:data},new Event('click'));
+function selected(version=1){const values=[['notes.txt',version===1?'# Snapshot note\r\nOriginal V1 — keep this line.\r\n<script>not executed<\/script>\r\n':'REPLACED V2 must not be used\n'],['data/numbers.bin',new Uint8Array(version===1?[0,1,2,13,10,127,128,254,255]:[99])],['empty.txt','']];return values.map(([path,bytes])=>{const f=new File([bytes],path.split('/').at(-1),{type:path.endsWith('.txt')?'text/plain':'application/octet-stream'});Object.defineProperty(f,'webkitRelativePath',{value:'Sample/'+path});return f;});}
+function start(flow){
+ if(flow==='crew'){PM56_B18.start('windows');PM56_B18.setInstruction('Send the prepared request. Open the Plan, then More → Build At → Build with Crew. Configure and schedule the roster before evaluating the local clock.','Frozen Crew across two windows');return;}
+ if(!['folder','room'].includes(flow))return;
+ let ctx=E.ctx(),t;
+ if(flow==='room'){
+  PM56_ROOM_DEMOS.start('discussion');act('room-demo-close');ctx=E.ctx();t=ctx.thread;
+ }else{
+  const id='b18c-folder-'+(++serial);t=clone(ctx.state.threads.find(t=>t.id==='query'));Object.assign(t,{id,title:'Keep a folder unchanged',projectId:id,worktreeId:id,messages:[],archived:false,pinned:false,goalId:null,status:'ready'});ctx.state.threads.push(t);
+  Object.assign(ctx.state,{historyMode:'closed',menu:null,dialog:null,hover:null,editorTabs:[],activeEditor:null,editorRevealed:false,demoOpen:false});ctx.state.activity.open=false;ctx.switchThread(id);ctx=E.ctx();ctx.state.composer='Read the exact folder snapshot, preserving the original bytes and member paths.';CS.bufferFor(id).text=ctx.state.composer;CS.bufferFor(id).attachments=[];CS.bufferFor(id).destination=null;PM56_RUNTIME.composer.destination=null;
+  S.registerMessageReceiver(id,(msg,receipt)=>{
+   const ref=msg.attachments[0]?.snapshot_ref;if(!ref)return;const result=AT.inspectScheduleSnapshot(ref);if(!result.ok)return;
+   const reportRef={artifact_id:receipt.message_id+':readback',artifact_version:1,project_id:id,thread_id:id};
+   const published=A.publish({...reportRef,title:'Exact retained input readback',renderer_kind:'json',payload:{source_ref:ref,...result,scheduled_message_id:receipt.schedule_id,message_id:msg.id,local_readback:true}});
+   if(published.ok)E.ctx().appendMessage({id:receipt.message_id+':readback',role:'assistant',type:'text',body:'Read the exact retained snapshot: '+result.bytes+' bytes'+(result.count?' across '+result.count+' files':'')+'. This is a local integrity readback, not an AI response.',time:receipt.at},t);
+  });
+ }
+ const r={flow,threadId:t.id,note:null,ticket:null,sourceId:null,sourceVersion:1,missing:false};sessions.set(t.id,r);PM56_RUNTIME.quota.waiting=false;ctx.renderApp();
+}
+function button(action,label,attrs=''){return '<button class="soft-button" data-action="'+action+'" '+attrs+'>'+label+'</button>';}
+function openRef(ref,label){return button('open-artifact',label,'data-version="'+ref.artifact_version+'" data-ref="'+encodeURIComponent(JSON.stringify(ref))+'"');}
+function guide(ctx){const r=get();if(!r)return '';const m=message(r),target=room(r),ref=m?.attachment_refs[0]?.snapshot_ref;
+ let controls='',hint='';
+ if(r.flow==='folder'){
+  hint=!m?'Choose a folder from your device, or load the labelled sample. Open the wand → Schedule Message.':'The schedule retains every selected member. Replace the sample source or disconnect one retained member, then evaluate the local clock.';
+  if(!m)controls=button('att-upload-folder','Choose a folder')+button('b18c-sample-folder','Load sample folder (fixture)');
+  else controls=button('b18c-replace-source','Replace sample source with V2',r.sourceId?'':'disabled title="Only the sample fixture can be replaced here"')+button('b18c-toggle-member',r.missing?'Restore retained member':'Disconnect retained member')+openRef(ref,'Open retained snapshot');
+ }else{
+  hint=!target?'Finish the shared Chat Room configuration. Nothing is scheduled yet.':!m?'Message the room or a participant, then use the wand → Schedule Message.':'Deliver at the explicit local time. Open the discussion to see the same message identity; its recorded participants do not make provider calls.';
+  if(target)controls=button('b18c-target-room','Message this room')+button('b18c-target-participant','Message first participant')+button('collab-open-panel','Open discussion','data-run="'+ctx.esc(target.id)+'"');
+ }
+ if(m)controls+=button('b18c-message-due','Evaluate scheduled time')+button('b18c-message-repeat','Replay delivery');
+ return '<section class="b18c-guide"><div class="b18-guide-title"><strong>Batch 18 · '+(r.flow==='folder'?'Selected folder snapshots':'Exact collaborative delivery')+'</strong><small>Session-local example · no background timer</small></div><p>'+ctx.esc(hint)+'</p><div class="b18c-controls">'+controls+'</div>'+(r.note?'<p class="b18-decision" role="status">'+ctx.esc(r.note)+'</p>':'')+'</section>';
+}
+E.slot('composerBelow',guide);
+function note(r,out){r.note=out.ok?out.duplicate?'Original message returned; nothing was delivered twice.':'Exact scheduled message delivered through its owner.':out.detail||out.error||'Unavailable';E.ctx().renderApp();}
+E.action('b18c-start',(c,b)=>{start(b.dataset.flow);return true;});
+E.action('b18c-sample-folder',ctx=>{const r=get();if(!r||r.flow!=='folder'||message(r))return;const buf=CS.bufferFor(r.threadId);if(buf.attachments.length){r.note='Remove the current selection before loading a sample; existing attachments were preserved.';ctx.renderApp();return;}
+ const out=AT.admitFolder(r.threadId,selected());if(out.ok){r.sourceId=out.attachment.id;r.note='Three locally generated sample Files selected. They are fixtures, not files read from your device.';}else r.note=out.error;ctx.renderApp();});
+E.action('b18c-replace-source',ctx=>{const r=get(),source=r?.sourceId&&AT.findAttachment(ctx,r.threadId,null,r.sourceId);if(!source?._files)return;source._files=selected(2);r.sourceVersion=2;r.note='The sample selection now supplies V2 bytes. Its previously retained V1 snapshot is unchanged.';ctx.renderApp();});
+E.action('b18c-toggle-member',ctx=>{const r=get(),m=message(r),ref=m?.attachment_refs[0]?.snapshot_ref;if(!ref)return;const root=A.resolve(ref);if(!root.ok){r.note=root.error;ctx.renderApp();return;}
+ const member=root.revision.record.payload?.files?.[0]?.ref||ref,record=PM56_DATA.artifacts.find(x=>x.id===member.artifact_id);if(!record)return;r.missing=!r.missing;record.revisionAvailability={...(record.revisionAvailability||{}),[member.artifact_version]:r.missing?'missing':'available'};r.note=r.missing?'One exact retained member is unavailable. The whole message must hold.':'The exact retained member is available again; no newer bytes were substituted.';ctx.renderApp();});
+E.action('b18c-message-due',ctx=>{const r=get(),m=message(r);if(!m)return;const decision=S.messageTicket(m.scheduled_dispatch_id,Date.parse(m.scheduled_at_utc));r.ticket=decision.ticket;note(r,S.deliverMessage(decision.ticket));});
+E.action('b18c-message-repeat',ctx=>{const r=get();if(r?.ticket)note(r,S.deliverMessage(r.ticket));});
+for(const [name,direct] of [['b18c-target-room',false],['b18c-target-participant',true]])E.action(name,ctx=>{const r=get(),target=room(r);if(!target)return;act('collab-message',{run:target.id,...(direct?{participant:target.participants[0].id}:{})});if(!ctx.state.composer){ctx.state.composer='Please retain this scheduled question in the same discussion.';CS.bufferFor(r.threadId).text=ctx.state.composer;}ctx.renderApp();});
+const g=PM56_REPAIR_DEMOS,prior=g.gallery;g.gallery=ctx=>'<section class="demo-section"><h3>Batch 18 · Crew, discussions and selected files</h3><div class="demo-section-body">'+[['crew','Schedule a frozen Crew','Configure once, admit atomically, resume the same attributed work.'],['room','Send to the same discussion','One exact scheduled message, two transcript views, no fallback.'],['folder','Keep a folder unchanged','Retain all selected bytes; a missing member holds the whole message.']].map(([id,title,detail])=>'<button class="demo-trigger" data-action="b18c-start" data-flow="'+id+'"><strong>'+title+'</strong><small>'+detail+'</small></button>').join('')+'</div></section>'+prior(ctx);
+window.PM56_B18C={start,snapshot:()=>{const r=get();return r?{...clone(r),message:message(r)?clone(message(r)):null,roomId:room(r)?.id||null}:null;}};
 })();
 </script>
   <script>(() => {

@@ -394,7 +394,7 @@
       origin: 'uploaded_snapshot', kind: kind, name: file.name, size: file.size,
       mime: mime || 'application/octet-stream', source_label: 'Uploaded from device',
       producer: { label: 'You', detail: 'Uploaded from device' },
-      filesafe: { status: 'clear', note: 'Scanned on upload · no secrets or credential patterns detected.' }
+      filesafe: { status: 'not_scanned', note: 'Device-selected bytes; no malware or secret scan has run.' }
     });
     /* attachHiddenProp (declared later, hoisted) keeps the real File off the
        enumerable property list so JSON.stringify — which composer-state.js
@@ -737,6 +737,20 @@
     else if (added > 1) ctx.toast(added + ' files added', 'Added to the composer tray as uploaded snapshots.');
   }
   AT.admitFiles = admitFiles;
+  function admitFolder(threadId,fileList) {
+    var files=Array.from(fileList||[]),ctx=ctxNow();if(!ctx||!files.length)return {ok:false,error:'empty_folder_selection'};
+    var root=files[0].webkitRelativePath?.split('/')[0];
+    if(!root||files.some(f=>!(f instanceof File)||!f.webkitRelativePath?.startsWith(root+'/')))return {ok:false,error:'invalid_folder_selection'};
+    var rec=baseRecord({origin:'folder_manifest',kind:'folder',semantic_kind:'folder',name:root,size:files.reduce((n,f)=>n+f.size,0),process_state:'ready',
+      source_label:'Selected from device',filesafe:{status:'not_scanned',note:'Selected bytes are not executed. No malware or secret scan has run.'},
+      folder_manifest:{totalFiles:files.length,shown:files.map(f=>({name:f.webkitRelativePath,size:f.size})),truncated:false,root_identity:root,materialization_status:'selected_not_retained'}});
+    attachHiddenProp(rec,'_files',files);registerRecord(rec);bufferFor(threadId).attachments.push(rec);touchComposer();ctx.renderApp();return {ok:true,attachment:rec};
+  }
+  EXT.action('att-upload-folder',function(ctx){
+    var tid=currentThreadId(),input=document.createElement('input');input.type='file';input.multiple=true;input.setAttribute('webkitdirectory','');input.id='pm56-att-folder-input';input.hidden=true;document.body.appendChild(input);
+    input.addEventListener('change',function(){var result=admitFolder(tid,input.files);input.remove();if(!result.ok)ctx.toast('Folder not added',result.error);});input.addEventListener('cancel',()=>input.remove());ctx.closeDialog();input.click();return true;
+  });
+
 
   var lastAttachThreadId = null;
   var fileInputEl = null;
@@ -1022,7 +1036,7 @@
       '<div class="drawer-head"><strong>Add attachment</strong><span class="meta-pill">Demo sources</span><span class="spacer"></span>' +
       '<button class="icon-button" data-action="close-dialog" aria-label="Close">' + attIcon(ctx, 'close', 13) + '</button></div>' +
       '<div class="dialog-body att-source-body">' +
-      sourceSection('Upload from this device', rowUpload) +
+      sourceSection('Upload from this device', rowUpload + sourceRow(ctx,'att-upload-folder','folder','Choose a folder','Keep all selected files together; exact copies are made when scheduling.')) +
       sourceSection('Project references', rowsProject) +
       sourceSection('Folder', rowFolder) +
       sourceSection('Generated artifacts', artifactRows) +
@@ -1486,6 +1500,7 @@
   window.PM56_ATTACHMENTS = {
     version: 1,
     findAttachment: findAttachment,
+    admitFiles:admitFiles,admitFolder:admitFolder,
     originMeta: originMeta,
     ORIGINS: ORIGINS,
     PROCESS_LABELS: PROCESS_LABELS,

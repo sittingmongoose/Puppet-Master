@@ -61,7 +61,7 @@
   if(round.messages.length===round.participantIds.length){round.complete=true;s.roundsSoFar=round.number;}
   return {ok:true,messageId:m.id,roundComplete:round.complete};
  }
- function canSend(id,dest){const r=run(id);if(!owns(id))return fail('room_missing');if(r.status!=='running')return fail('room_ended_or_paused');if(r.chatRoom.round&&!r.chatRoom.round.complete)return fail('finish_current_round');if(r.config.turnPolicy==='ask_everyone_once'&&r.chatRoom.roundsSoFar>=1||r.chatRoom.roundsSoFar>=+r.config.maxRounds)return fail('round_limit_reached');if(dest?.participantId&&!r.participants.some(p=>p.id===dest.participantId))return fail('participant_missing');return {ok:true};}
+ function canSend(id,dest){const r=run(id);if(!owns(id))return fail('room_missing');if(r.status!=='running')return fail('room_ended_or_paused');if(r.chatRoom.round&&!r.chatRoom.round.complete)return fail('finish_current_round');if(r.chatRoom.pendingRecipientIds?.length)return fail('finish_pending_delivery');if(r.config.turnPolicy==='ask_everyone_once'&&r.chatRoom.roundsSoFar>=1||r.chatRoom.roundsSoFar>=+r.config.maxRounds)return fail('round_limit_reached');if(dest?.participantId&&!r.participants.some(p=>p.id===dest.participantId))return fail('participant_missing');return {ok:true};}
  function receiveUser(id,message,buffer,thread){
   const r=run(id),dest=buffer.destination,check=canSend(id,dest);if(!check.ok)return check;
   if(thread.id!==r.threadId)return fail('wrong_thread');

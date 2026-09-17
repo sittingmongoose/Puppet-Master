@@ -1,0 +1,100 @@
+{
+  "schema": "pm.batch18.continuation_coverage.v1",
+  "batch": 18,
+  "upstream_pin": "8bcac669377013c5665901cf71fba7e1dcd5e051",
+  "html_sha256": "344b6549cc9ee880d0f28d5de0ad4002024385fc582b1cefb8aee04046ef48ab",
+  "original_historical_full_wording_available": false,
+  "formal_audit": false,
+  "native_verified": false,
+  "accepted": false,
+  "scope": [
+    {
+      "gap": "Atomic scheduled Crew admission",
+      "owners": [
+        "Plans/Scheduling_and_Quota_Resume.md#PSCHED-001..014",
+        "Plans/Assistant_Plan_Runtime.md#APR-011",
+        "Plans/Collaborative_Workflows.md#2.1",
+        "Plans/ToDo_Runtime.md"
+      ],
+      "source": [
+        "scheduling.js",
+        "collaboration.js",
+        "plans.js",
+        "todos.js"
+      ],
+      "tests": [
+        "crew_schedule_no_execution",
+        "crew_admission_atomic_identity",
+        "crew_commit_failure_rolls_all_owners_back",
+        "crew_owner_failure_leaves_no_orphans",
+        "crew_defaults_cannot_retarget",
+        "crew_frozen_account_unavailable",
+        "crew_schedule_and_dispatch_replay",
+        "crew_pause_blocks_auto_resume",
+        "crew_attributed_actual_completion",
+        "crew_window_same_run_and_outputs",
+        "crew_review_reopens_exact_roster",
+        "crew_configuration_stale_form_refuses",
+        "crew_generic_writers_cannot_fake_completion",
+        "crew_altered_helper_result_rolls_back",
+        "crew_cancel_preserves_unrelated_message"
+      ],
+      "ordinary": "crew at 1440/900/700; shared modal, actual calculation, wind-down, recurrence, participant details",
+      "boundary": "Sequential bounded local adapter; configured models not invoked; unsupported special adapters refuse."
+    },
+    {
+      "gap": "Collaborative scheduled-message delivery",
+      "owners": [
+        "Plans/Scheduling_and_Quota_Resume.md#SMSG-004..011",
+        "Plans/Collaborative_Workflows.md#2.3",
+        "Plans/Collaborative_Workflows.md#4.5"
+      ],
+      "source": [
+        "scheduling.js",
+        "collaboration.js",
+        "room-protocol.js"
+      ],
+      "tests": [
+        "collaborative_message_shared_identity",
+        "collaborative_participant_exact_and_replay",
+        "collaboration_ended_target_holds",
+        "collaboration_generation_mismatch_holds",
+        "collaboration_pause_holds_then_explicit_resume",
+        "collaboration_two_surface_rollback",
+        "collaboration_stop_during_owner_delivery",
+        "collaboration_selected_file_same_ref_both_surfaces",
+        "pending_room_message_not_overwritten"
+      ],
+      "ordinary": "room and participant at 1440/900/700; actual same-object delivery, recorded addressed rounds",
+      "boundary": "Session-only exact-once proof, not crash/network/durable inbox proof or all collaborative protocols."
+    },
+    {
+      "gap": "General selected file/folder snapshots",
+      "owners": [
+        "Plans/Scheduling_and_Quota_Resume.md#SMSG-007..011",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/FileManager.md"
+      ],
+      "source": [
+        "attachments.js",
+        "attachment-snapshots.js",
+        "artifact-revisions.js",
+        "scheduling.js"
+      ],
+      "tests": [
+        "file_actual_bytes_retained",
+        "folder_full_manifest_and_children",
+        "snapshot_cancelled_form_no_publish",
+        "snapshot_changed_composer_during_read",
+        "snapshot_partial_read_refuses",
+        "live_path_without_selected_bytes_refuses",
+        "selected_snapshot_idempotency_after_composer_consumed",
+        "file_read_failure_keeps_all_inputs",
+        "file_owner_block_not_bypassed",
+        "bytes.cjs"
+      ],
+      "ordinary": "folder fixture all widths plus real browser directory selection and downloaded binary/text/empty files",
+      "boundary": "All selected Files, not native filesystem enumeration; no scan claim; 16/32 MiB and 256-member bounds; JSON folder bundle."
+    }
+  ]
+}

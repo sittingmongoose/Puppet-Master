@@ -739,6 +739,9 @@
       const resolved=window.PM56_ARTIFACTS.resolve(ref,{document:true});
       if(!resolved.ok)return msgError('attachment_'+resolved.error,'The exact attachment revision is unavailable; no newer bytes were substituted.');
       if(a.content_hash&&a.content_hash!==resolved.revision.content_key)return msgError('attachment_hash_changed');
+      const snapshotCheck=window.PM56_ATTACHMENTS?.inspectScheduleSnapshot?.(ref);
+      if(snapshotCheck&&!snapshotCheck.ok)return msgError(snapshotCheck.error,snapshotCheck.detail);
+      if(a.folder_manifest_hash&&snapshotCheck?.manifest_sha256!==a.folder_manifest_hash)return msgError('folder_manifest_changed');
       out.push({id:a.id||ref.artifact_id,name:attachmentLabel(a),kind:a.kind||'file',artifact_id:ref.artifact_id,artifact_version:ref.artifact_version,content_hash:resolved.revision.content_key,folder_manifest_hash:a.folder_manifest_hash||null,snapshot_ref:copy(ref),availability:'available',state:'ready'});
     }
     return {ok:true,items:out};
@@ -754,11 +757,15 @@
     if(d.sourceScope&&!identical(d.sourceScope,scope))return msgError('scope_changed');
     if(d.browser_context_refs?.length)return msgError('live_browser_context_not_schedulable','Freeze browser context as an attachment first. No future live selector is scheduled.');
     if(d.workflow_config||d.held_request)return msgError('workflow_configuration_requires_its_owner');
-    const destination=copy(d.destination||{kind:'assistant',thread_id:d.threadId,label:threadByIdRaw(d.threadId).title});
+    let destination=copy(d.destination||{kind:'assistant',thread_id:d.threadId,label:threadByIdRaw(d.threadId).title});
     if(destination.kind!=='assistant'&&!messageDestinations.has(destination.kind))return msgError('destination_owner_unavailable','This destination cannot accept a frozen scheduled message. Nothing was redirected to the Assistant.');
     if(destination.kind==='assistant'&&destination.thread_id&&destination.thread_id!==d.threadId)return msgError('destination_scope_mismatch');
     if(destination.unresolvable)return msgError('route_unavailable');
-    if(destination.kind!=='assistant'){const check=messageDestinations.get(destination.kind).validate(destination,scope);if(!check?.ok)return msgError(check?.error||'destination_unavailable');}
+    if(destination.kind!=='assistant'){
+      const owner=messageDestinations.get(destination.kind);
+      if(!destination.scheduled_binding&&owner.freeze){const prepared=owner.freeze(destination,scope);if(!prepared?.ok)return msgError(prepared?.error||'destination_unavailable');destination=prepared.destination;}
+      const check=owner.validate(destination,scope);if(!check?.ok)return msgError(check?.error||'destination_unavailable');
+    }
     const m=modelById(d.modelId);if(!m||m.status!=='ready')return msgError('route_unavailable','The selected model or account is unavailable. No fallback was chosen.');
     const attachments=resolveScheduledAttachments(d.attachments,scope);if(!attachments.ok)return attachments;
     return {ok:true,binding:{thread_id:d.threadId,project_id:scope.projectId,text:d.text,destination_ref:destination,attachment_refs:attachments.items,
@@ -797,6 +804,29 @@
       persistNow();return {ok:true,record:old||record,replayed:false};
     });
   }
+  // Read selected File bytes before entering the synchronous shared transaction.
+  // A cancelled/edited form can never publish detached snapshots or clear text.
+  async function saveMessageWithSnapshots(d,editingId,stillCurrent=()=>true){
+    if(!d)return msgError('invalid_request');
+    const captured=copy(d);
+    const needs=(captured.attachments||[]).some(a=>!a.snapshot_ref&&!a.artifact_ref&&!a.artifact_id);
+    if(!needs)return stillCurrent()?saveMessage(EXT.ctx(),captured,editingId):msgError('schedule_form_changed');
+    const prior=P().messageRequests?.[captured.requestKey];
+    if(prior)return prior.selection_request===JSON.stringify(captured)?{ok:true,replayed:true,record:findMessage(prior.id)}:msgError('idempotency_conflict');
+    if(editingId)return msgError('attachment_snapshot_required','Edit retains the existing snapshot. Select new files in the composer for a new schedule.');
+    const prepared=await window.PM56_ATTACHMENTS.prepareScheduleSnapshots(captured);
+    if(!prepared.ok)return prepared;
+    if(!stillCurrent()||JSON.stringify(d)!==JSON.stringify(captured))return msgError('schedule_form_changed');
+    return PM56_TX.run(()=>{
+      if(!stillCurrent()||!PM56_COMPOSER_STATE.matchesScheduleCapture(EXT.ctx(),captured.sourceBuffer))PM56_TX.fail('composer_changed');
+      const result=PM56_ATTACHMENTS.publishScheduleSnapshots(prepared);if(!result.ok)PM56_TX.fail(result.error);
+      const saved=saveMessage(EXT.ctx(),{...captured,attachments:prepared.attachments},editingId);
+      if(!saved.ok)PM56_TX.fail(saved.error);
+      const requests=P().messageRequests;
+      PM56_TX.set(P(),'messageRequests',{...requests,[captured.requestKey]:{...requests[captured.requestKey],selection_request:JSON.stringify(captured)}});
+      return saved;
+    });
+  }
   function cancelMessageExact(id,expected){
     const m=findMessage(id);if(!m)return msgError('schedule_not_found');
     if(!expected||expected.revision!==m.revision||expected.currentness!==msgCurrent(m))return msgError('stale_schedule_revision');
@@ -806,7 +836,7 @@
   function messageTicket(id,atMs=Date.now()){
     const m=findMessage(id);return !m?msgError('schedule_not_found'):{ok:true,ticket:{...captureMessage(id),at:atMs,stop_epoch:P().stopEpoch,attempt_id:id+':r'+m.revision+':a'+((m.dispatch_attempts||[]).length+1)}};
   }
-  function messageEligibility(m,ticket){
+  function messageEligibility(m,ticket,publishedMessage){
     if(!Number.isFinite(ticket.at))return msgError('invalid_dispatch_time');
     const gate=evaluateEligibility('message',m,ticket.stop_epoch);if(!gate.ok)return msgError(gate.clause,gate.detail);
     if(m.binding_kind!=='scheduled_message_v2')return msgError('legacy_snapshot_requires_review','This historical fixture has no complete frozen snapshot. Edit it before dispatch.');
@@ -819,7 +849,7 @@
     const refs=resolveScheduledAttachments(m.attachment_refs,m.scope_snapshot);if(!refs.ok)return refs;
     if(m.destination_ref?.kind!=='assistant'){
       const owner=messageDestinations.get(m.destination_ref?.kind);if(!owner)return msgError('destination_owner_unavailable');
-      const resolved=owner.validate(m.destination_ref,m.scope_snapshot);if(!resolved?.ok)return msgError(resolved?.error||'destination_unavailable');
+      const resolved=owner.validate(m.destination_ref,m.scope_snapshot,publishedMessage);if(!resolved?.ok)return msgError(resolved?.error||'destination_unavailable');
     }
     if(RT.quota?.waiting)return msgError('quota_unavailable','Usage is unavailable; the scheduled message is held.');
     const late=ticket.at-Date.parse(m.scheduled_at_utc);
@@ -855,14 +885,14 @@
       if(m.destination_ref.kind!=='assistant'){
         const result=messageDestinations.get(m.destination_ref.kind).deliver(message,m.destination_ref);if(!result?.ok)TX.fail(result?.error||'destination_delivery_failed');
       }else ctxAppend(th,message);
-      eligible=messageEligibility(m,ticket);if(!eligible.ok)TX.fail(eligible.error);
+      eligible=messageEligibility(m,ticket,message);if(!eligible.ok)TX.fail(eligible.error);
       if(ticket.currentness!==msgCurrent(m))TX.fail('stale_schedule_revision');
       if(P().stopped||ticket.stop_epoch!==P().stopEpoch)TX.fail('manual_stop_latched');
       const receipt={schedule_id:m.scheduled_dispatch_id,revision:m.revision,attempt_id:ticket.attempt_id,message_id:id,at:message.time,requested_runtime:copy(m.requested_runtime),effective_runtime:copy(m.requested_runtime),snapshot_key:m.snapshot_key,session_only:true};
       const result={ok:true,dispatched:true,message_id:id,receipt};
       TX.set(m,'state','sent');TX.set(m,'dispatchedMessageId',id);TX.set(m,'dispatchedAt',message.time);TX.set(m,'dispatch_receipt',receipt);TX.set(m,'heldReason',null);TX.set(m,'updatedAt',nowIso());
       TX.set(m,'dispatch_attempts',(m.dispatch_attempts||[]).concat({attempt_id:ticket.attempt_id,ticket_key:PM56_ARTIFACTS.key(ticket),at:message.time,result}));
-      persistNow();TX.defer(()=>messageReceivers.get(m.thread_id)?.(message,receipt));return result;
+      persistNow();if(m.destination_ref.kind==='assistant')TX.defer(()=>messageReceivers.get(m.thread_id)?.(message,receipt));return result;
     });
     if(!delivered.ok&&findMessage(ticket.id)===m&&m.revision===ticket.revision&&['scheduled','held','failed'].includes(m.state)){
       // Preserve the failed attempt AFTER the delivery transaction rolls back.
@@ -914,7 +944,7 @@
   function commitBuild(ctx) {
     var d = ui.buildDraft; if (!d) return null;
     if(!d.requestKey){d.error='Missing schedule request identity.';return null;}
-    const requestBinding=PM56_ARTIFACTS.key({planId:d.planId,version:d.version,hash:d.contentHash,expected:d.expected,kind:d.kind,date:d.date,time:d.time,start:d.startTime,pause:d.pauseTime,timezone:d.timezone,days:d.days,wind:d.windDown,auto:d.autoResumeNext,missed:d.missed,topology:d.executionTopology,editing:ui.editingBuildId||null});
+    const requestBinding=PM56_ARTIFACTS.key({planId:d.planId,version:d.version,hash:d.contentHash,expected:d.expected,kind:d.kind,date:d.date,time:d.time,start:d.startTime,pause:d.pauseTime,timezone:d.timezone,days:d.days,wind:d.windDown,auto:d.autoResumeNext,missed:d.missed,topology:d.executionTopology,crew:d.crewDefinition||null,editing:ui.editingBuildId||null});
     const prior=P().buildRequests?.[d.requestKey];
     if(prior){if(prior.binding!==requestBinding){d.error='idempotency_conflict';return null;}return findBuild(prior.id);}
     if(ui.editingBuildId){const old=findBuild(ui.editingBuildId);if(!old||old.revision!==d.expectedRevision||buildCurrent(old)!==d.expectedCurrentness||old.state!=='active'){d.error='stale_schedule_revision';return null;}}
@@ -929,7 +959,8 @@
     }
     const currentSnapshot=window.PM56_PLANS.admissionSnapshot(d.planId);
     if(d.expected&&JSON.stringify(d.expected)!==JSON.stringify(currentSnapshot)){d.error='Project, worktree, permissions or provider route changed. Reopen this form.';ctx.renderOverlays();return null;}
-    if(!['agent','goal_driven'].includes(d.executionTopology||'agent')){d.error='Unsupported execution topology.';return null;}
+    if(!['agent','goal_driven','crew'].includes(d.executionTopology||'agent')){d.error='Unsupported execution topology.';return null;}
+    if(d.executionTopology==='crew'){const v=window.PM56_COLLAB.validatePlanCrew(d.crewDefinition,d.planId,false);if(!v.ok){d.error=v.message||v.error;return null;}}
     var hash=d.contentHash,model=ctx.selectedModel();
     var existing = ui.editingBuildId ? findBuild(ui.editingBuildId) : null;
     var id = existing ? existing.schedule_id : ctx.uid('bld');
@@ -967,6 +998,10 @@
     const TX=PM56_TX,oldCurrent=existing?buildCurrent(existing):null;
     const result=TX.run(()=>{
       if(existing&&buildCurrent(existing)!==oldCurrent)TX.fail('stale_schedule_revision');
+      if(d.executionTopology==='crew'){
+        const def=PM56_COLLAB.commitPlanCrewDefinition(d.crewDefinition,d.planId);if(!def.ok)TX.fail(def.error);
+        rec.topology_snapshot=Object.freeze({...rec.topology_snapshot,collaboration_definition_ref:def.snapshot});
+      }
       if(!identical(window.PM56_PLANS.admissionSnapshot(d.planId),currentSnapshot))TX.fail('scope_changed');
       if(existing){
         const retained={createdAt:existing.createdAt,revision:existing.revision+1,occurrencesFired:existing.occurrencesFired.slice(),log:existing.log.concat({at:nowIso(),text:'Window updated under exact expected revision.'}),dispatchReceipt:existing.dispatchReceipt,runPhase:existing.runPhase,lastOccurrenceStart:existing.lastOccurrenceStart};
@@ -1071,7 +1106,7 @@
     const eligible=evaluateEligibility('build',b,captured);if(!eligible.ok)return fail(eligible.clause,eligible.detail);
     if(b.state!=='active')return fail('schedule_not_active');
     if(b.topology_snapshot?.execution_topology!==b.execution_topology)return fail('topology_snapshot_changed');
-    if(b.binding_kind!=='plan_content_v1'||!['one_time','recurring_window'].includes(b.schedule_kind)||!['agent','goal_driven'].includes(b.execution_topology))return fail('unsupported_demo_schedule');
+    if(b.binding_kind!=='plan_content_v1'||!['one_time','recurring_window'].includes(b.schedule_kind)||!['agent','goal_driven','crew'].includes(b.execution_topology))return fail('unsupported_demo_schedule');
     const due=b.schedule_kind==='one_time'?Date.parse(b.scheduled_at_utc):Date.parse(b.next_occurrence_at||b.createdAt);
     if(!Number.isFinite(atMs)||!Number.isFinite(due)||atMs<due)return fail('window_not_open');
     const calendar=buildWindow(b,atMs);
@@ -1099,7 +1134,7 @@
       if(JSON.stringify(b)!==frozen||b.revision!==revision)TX.fail('schedule_changed_during_admission');
       if(!evaluateEligibility('build',b,captured).ok)TX.fail('stale_stop_epoch');
       const occurrence=new Date(due).toISOString(),receipt={schedule_id:b.schedule_id,plan_id:b.target_id,version:b.exact_target_version,hash:b.exact_target_hash,occurrence,at:new Date(atMs).toISOString(),concept:true,
-        execution_topology:b.execution_topology,plan_run_id:result.plan_run_id,goal_id:result.goal_id||null};
+        execution_topology:b.execution_topology,plan_run_id:result.plan_run_id,crew_run_id:result.crew_run_id||null,goal_id:result.goal_id||null};
       for(const [k,v] of Object.entries({clock_ms:atMs,held_reason:null,lastOccurrenceStart:occurrence,occurrencesFired:b.occurrencesFired.concat(occurrence),dispatchReceipt:receipt,
         state:b.schedule_kind==='one_time'?'completed':'active',runPhase:'admitted',runtime_created:true,plan_run_id:result.plan_run_id,goal_id:result.goal_id||null,revision:b.revision+1,updatedAt:nowIso(),
         log:[{at:nowIso(),text:'Admitted through the shared Plan command. Duplicate delivery returns the original run and Goal.'},...b.log]}))TX.set(b,k,v);
@@ -1115,6 +1150,7 @@
   function buildCurrent(rec){return PM56_ARTIFACTS.key({id:rec.schedule_id,revision:rec.revision,target:rec.target_id,version:rec.exact_target_version,hash:rec.exact_target_hash,topology:rec.execution_topology,topology_snapshot:rec.topology_snapshot,kind:rec.schedule_kind,at:rec.scheduled_at_utc,wind:rec.wind_down_seconds,auto:rec.auto_resume_next_window,missed:rec.missed_policy,grace:rec.grace_seconds,timezone:rec.timezone,start:rec.local_start,pause:rec.local_pause,days:rec.days_of_week,route:rec.runtime_snapshot,scope:rec.owner_worktree_snapshot,permissions:rec.permission_snapshot,state:rec.state});}
   function captureBuild(id){const b=findBuild(id);return b?{id,revision:b.revision,currentness:buildCurrent(b),epoch:P().stopEpoch}:null;}
   function buildRoute(rec){const c=EXT.ctx(),r=PM56_PLANS.get(rec.target_id),scope=PM56_GOAL.scope(rec.thread_id),model=modelById(rec.runtime_snapshot?.modelId);
+    if(rec.execution_topology==='crew'){const v=PM56_COLLAB.validatePlanCrew(rec.topology_snapshot?.collaboration_definition_ref,rec.target_id,true);if(!v.ok)return msgError(v.error,v.message);}
     if(!r||!scope||r.thread_id!==rec.thread_id||scope.projectId!==rec.project_id)return msgError('target_not_found');
     if(r.version!==rec.exact_target_version||PM56_PLANS.hash(r.plan_id)!==rec.exact_target_hash)return msgError('target_version_changed');
     if(scope.worktreeId!==rec.owner_worktree_snapshot||c.state.worktree!==rec.worktree_snapshot)return msgError('worktree_snapshot_changed');
@@ -1401,7 +1437,7 @@
       '<div class="schedule-when"><h3>Send on</h3><div class="sched-field-grid"><label class="sched-field"><span>Date</span><input type="date" data-sched-input="msg-date" value="'+esc(d.date)+'"></label><label class="sched-field"><span>Time</span><input type="time" data-sched-input="msg-time" value="'+esc(d.time)+'"></label><label class="sched-field schedule-zone"><span>Timezone</span><select data-sched-input="msg-tz">'+tzOpts+'</select></label></div></div>'+
       wallResolution(d.date,d.time,d.timezone)+'<label class="sched-field"><span>Model & account</span>'+window.PM56_PICKERS.modelButton('sched-pick-model','schedule-model',d.modelId)+'</label>'+
       '<details class="schedule-details"><summary>If the send time is missed '+ctx.icon('down',11)+'</summary><div class="sched-field-grid"><label class="sched-field"><span>Action</span><select data-sched-input="msg-missed">'+[['hold','Hold for me'],['next_available','Send when available'],['cancel_after_grace','Cancel after grace']].map(([v,l])=>'<option value="'+v+'" '+(d.missed===v?'selected':'')+'>'+l+'</option>').join('')+'</select></label>'+(d.missed==='cancel_after_grace'?'<label class="sched-field"><span>Grace · minutes</span><input type="number" min="1" max="1440" data-sched-input="msg-grace" value="'+d.grace+'"></label>':'')+'</div></details>'+
-      '<div class="sched-form-error" role="alert">'+esc(d.error||'')+'</div></div><div class="schedule-form-foot"><button class="text-button" data-action="sched-open-manage">All schedules</button><span class="spacer"></span><button class="soft-button" data-action="sched-close-dialog">Cancel</button><button class="primary-button" data-action="sched-create-message" '+(!text.trim()||text.length>8000?'disabled':'')+'>'+(editing?'Save changes':'Schedule message')+'</button></div></section>';
+      '<div class="sched-form-error" role="alert">'+esc(d.error||'')+'</div></div><div class="schedule-form-foot"><button class="text-button" data-action="sched-open-manage">All schedules</button><span class="spacer"></span><button class="soft-button" data-action="sched-close-dialog">Cancel</button><button class="primary-button" data-action="sched-create-message" '+(!text.trim()||text.length>8000||ui.snapshotBusy?'disabled':'')+'>'+(ui.snapshotBusy?'Retaining selected bytes…':editing?'Save changes':'Schedule message')+'</button></div></section>';
   }
 
   function renderQuotaHint() {
@@ -1418,7 +1454,8 @@
     if(!TZ_OPTIONS.some(t=>t.id===d.timezone))zones='<option selected value="'+esc(d.timezone)+'">'+esc(zoneName(d.timezone))+'</option>'+zones;
     return '<section class="dialog sched-dialog sched-dialog--build" role="dialog" aria-modal="true" aria-label="Build At"><div class="drawer-head">'+ctx.icon('document',16)+'<strong>'+(ui.editingBuildId?'Edit build window':'Schedule a build')+'</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div><div class="dialog-body">'+
       '<div class="schedule-plan-target"><strong>'+esc(plan?.title||d.planId)+'</strong><span>V'+esc(d.version)+' · Fixed version</span></div>'+
-      (one?wallResolution(d.date,d.time,d.timezone):'')+'<label class="sched-field"><span>Execution</span><select data-sched-input="build-topology"><option value="agent" '+(d.executionTopology!=='goal_driven'?'selected':'')+'>Build normally</option><option value="goal_driven" '+(d.executionTopology==='goal_driven'?'selected':'')+'>Build as Goal</option><option value="crew" disabled>Build with Crew · atomic schedule adapter unavailable</option></select></label>'+(d.executionTopology==='goal_driven'?'<p class="schedule-caption">The Goal is created only when this exact build is admitted.</p>':'')+
+      (one?wallResolution(d.date,d.time,d.timezone):'')+'<label class="sched-field"><span>Execution</span><select data-sched-input="build-topology"><option value="agent" '+((d.executionTopology||'agent')==='agent'?'selected':'')+'>Build normally</option><option value="goal_driven" '+(d.executionTopology==='goal_driven'?'selected':'')+'>Build as Goal</option><option value="crew" '+(d.executionTopology==='crew'?'selected':'')+'>Build with Crew</option></select></label>'+(d.executionTopology==='goal_driven'?'<p class="schedule-caption">The Goal is created only when this exact build is admitted.</p>':'')+
+      (d.executionTopology==='crew'?'<section class="schedule-crew-config"><button class="soft-button" data-action="sched-configure-crew">'+(d.crewDefinition?'Review frozen Crew':'Configure Crew')+'</button><p class="schedule-caption">'+(d.crewDefinition?esc(d.crewDefinition.name)+' · '+d.crewDefinition.participants.length+' participants · no run until dispatch':'Choose the roster before scheduling. No unattended modal opens at dispatch.')+'</p></section>':'')+
       '<div class="schedule-kind">'+[['one_time','Once'],['recurring_window','Recurring window']].map(([v,l])=>'<button class="soft-button '+(d.kind===v?'active':'')+'" data-action="sched-set-build-kind" data-value="'+v+'">'+l+'</button>').join('')+'</div>'+
       '<div class="sched-field-grid">'+(one?'<label class="sched-field"><span>Date</span><input type="date" data-sched-input="build-date" value="'+esc(d.date)+'"></label><label class="sched-field"><span>Start</span><input type="time" data-sched-input="build-time" value="'+esc(d.time)+'"></label>':'<label class="sched-field"><span>Start</span><input type="time" data-sched-input="build-start" value="'+esc(d.startTime)+'"></label><label class="sched-field"><span>Pause</span><input type="time" data-sched-input="build-pause" value="'+esc(d.pauseTime)+'"></label>')+
       '<label class="sched-field schedule-zone"><span>Timezone</span><select data-sched-input="build-tz">'+zones+'</select></label></div>'+
@@ -1724,10 +1761,17 @@
     ui.msgDraft = null; ui.editingMsgId = null; ui.buildDraft = null;ui.editingBuildId=null;
     ctx.closeDialog();
   };
-  ACT['sched-create-message'] = function(ctx){
-    if(!ui.msgDraft)return;const editing=!!ui.editingMsgId,rec=commitMessage(ctx);if(!rec)return;
-    ui.msgDraft=null;ui.editingMsgId=null;ui.focusSchedule=rec.scheduled_dispatch_id;ui.manageTab='messages';
-    ctx.openDialog({type:'sched-manage'});ctx.renderApp();ctx.toast(editing?'Schedule updated':'Message scheduled','Exact session-local snapshot recorded. No provider or background timer has started.');
+  ACT['sched-create-message'] = async function(ctx){
+    if(!ui.msgDraft||ui.snapshotBusy)return;
+    const draft=ui.msgDraft,editingId=ui.editingMsgId,editing=!!editingId;
+    const finish=rec=>{ui.msgDraft=null;ui.editingMsgId=null;ui.focusSchedule=rec.scheduled_dispatch_id;ui.manageTab='messages';ctx.openDialog({type:'sched-manage'});ctx.renderApp();ctx.toast(editing?'Schedule updated':'Message scheduled','Exact session-local snapshot recorded. No provider or background timer has started.');};
+    if(!(draft.attachments||[]).some(a=>!a.snapshot_ref&&!a.artifact_ref&&!a.artifact_id)){const rec=commitMessage(ctx);if(rec)finish(rec);return;}
+    ui.snapshotBusy=true;ctx.renderOverlays();
+    const out=await saveMessageWithSnapshots(draft,editingId,()=>ui.msgDraft===draft&&ui.editingMsgId===editingId);
+    ui.snapshotBusy=false;
+    if(ui.msgDraft!==draft||ui.editingMsgId!==editingId)return;
+    if(!out.ok){draft.error=out.detail||out.error;ctx.renderOverlays();return;}
+    finish(out.record);
   };
   ACT['sched-cancel-message'] = function (ctx, btn) {
     var ok = cancelMessage(btn.dataset.id);
@@ -1758,9 +1802,10 @@
     var b=findBuild(btn.dataset.id);if(!b||b.state!=='active'||b.dispatchReceipt)return;
     ui.editingBuildId=b.schedule_id;
     var local=tzParts(b.timezone,Date.parse(b.scheduled_at_utc||b.next_occurrence_at));
-    ui.buildDraft={requestKey:ctx.uid('build-schedule-update'),expectedCurrentness:buildCurrent(b),executionTopology:b.execution_topology||'agent',expected:window.PM56_PLANS.admissionSnapshot(b.target_id),planId:b.target_id,version:b.exact_target_version,contentHash:b.exact_target_hash,expectedRevision:b.revision,kind:b.schedule_kind,date:local?local.y+'-'+pad2(local.mo)+'-'+pad2(local.d):'',time:b.local_start,startTime:b.local_start,pauseTime:b.local_pause||'02:00',timezone:b.timezone,days:b.days_of_week.slice(),windDown:b.wind_down_seconds/60,autoResumeNext:b.auto_resume_next_window,missed:b.missed_policy};
+    ui.buildDraft={requestKey:ctx.uid('build-schedule-update'),expectedCurrentness:buildCurrent(b),executionTopology:b.execution_topology||'agent',crewDefinition:b.topology_snapshot?.collaboration_definition_ref||null,expected:window.PM56_PLANS.admissionSnapshot(b.target_id),planId:b.target_id,version:b.exact_target_version,contentHash:b.exact_target_hash,expectedRevision:b.revision,kind:b.schedule_kind,date:local?local.y+'-'+pad2(local.mo)+'-'+pad2(local.d):'',time:b.local_start,startTime:b.local_start,pauseTime:b.local_pause||'02:00',timezone:b.timezone,days:b.days_of_week.slice(),windDown:b.wind_down_seconds/60,autoResumeNext:b.auto_resume_next_window,missed:b.missed_policy};
     ctx.openDialog({type:'sched-build-at',planId:b.target_id,version:b.exact_target_version});
   };
+  ACT['sched-configure-crew']=function(ctx){const d=ui.buildDraft;if(!d)return;const out=PM56_COLLAB.openScheduledCrew({...d.expected},d.crewDefinition);if(!out.ok){d.error=out.message||out.error;ctx.renderOverlays();}};
   ACT['sched-create-build'] = function (ctx, btn) {
     // A completed or canceled form cannot be replayed into a second schedule.
     if (!ui.buildDraft) return;
@@ -1904,12 +1949,15 @@
   });
 
   window.PM56_SCHED = {
+    currentCrewTarget:()=>ui.buildDraft?.planId,
+    returnFromCrewConfiguration:()=>{const d=ui.buildDraft;if(d)EXT.ctx().openDialog({type:'sched-build-at',planId:d.planId,version:d.version});else EXT.ctx().closeDialog();},
+    acceptCrewConfiguration:(snapshot,expected)=>{const d=ui.buildDraft;if(!d||d.planId!==snapshot.plan_id||!identical(d.expected,expected)||!identical(PM56_PLANS.admissionSnapshot(d.planId),expected))return msgError('schedule_form_changed');d.crewDefinition=snapshot;d.executionTopology='crew';EXT.ctx().openDialog({type:'sched-build-at',planId:d.planId,version:d.version});return {ok:true};},
     openBuildAt: openBuildAt,
     captureBuild,windowTick,workEligibility,setPlanQuotaConsent,buildWindow,
     buildDraft:defaultBuildDraft,editBuildDraft:id=>{const b=findBuild(id);if(!b)return null;ACT['sched-edit-build'](EXT.ctx(),{dataset:{id}});return copy(ui.buildDraft);},
     saveBuild:(draft,id)=>{const before=ui.buildDraft,edit=ui.editingBuildId;ui.buildDraft=draft;ui.editingBuildId=id||null;try{const r=commitBuild(EXT.ctx());return r?{ok:true,record:r}:msgError(draft.error||'build_schedule_refused');}finally{ui.buildDraft=before;ui.editingBuildId=edit;}},
     cancelBuildExact:(id,expected)=>cancelBuild(id,expected),
-    captureMessage,saveMessage:(draft,editingId)=>saveMessage(EXT.ctx(),draft,editingId),prepareMessage:(draft)=>prepareMessage(EXT.ctx(),draft),
+    captureMessage,saveMessageWithSnapshots,saveMessage:(draft,editingId)=>saveMessage(EXT.ctx(),draft,editingId),prepareMessage:(draft)=>prepareMessage(EXT.ctx(),draft),
     messageDraft:()=>defaultMsgDraft(EXT.ctx()),editMessageDraft:id=>findMessage(id)?loadMessageForEdit(findMessage(id)):null,
     cancelMessageExact,messageTicket,deliverMessage,dispatchMessageAt,
     registerMessageReceiver:(threadId,receiver)=>{if(messageReceivers.has(threadId))throw Error('duplicate_schedule_receiver');messageReceivers.set(threadId,receiver);},
@@ -1940,6 +1988,8 @@
     restore: restoreFixture,
     fixture: function () { return JSON.parse(SEED_JSON); }
   };
+
+  ['workflow','participant'].forEach(kind=>PM56_SCHED.registerMessageDestination(kind,{freeze:(d,s)=>PM56_COLLAB.freezeScheduledDestination(d,s),validate:(d,s,m)=>PM56_COLLAB.validateScheduledDestination(d,s,m),deliver:(m,d)=>PM56_COLLAB.deliverScheduledMessage(m,d)}));
 
   /* If the user just pressed "Reload page now", reopen the management dialog
      once EXT.ctx is live, so restart survival is visible without extra

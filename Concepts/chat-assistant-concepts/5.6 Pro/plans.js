@@ -1363,8 +1363,9 @@
     if(!r)return {ok:false,error:'plan_not_found'};
     const TX=window.PM56_TX,G=window.PM56_GOAL,api=window.PM56_PLANS;
     const expected=opts.expected||admissionSnapshot(ctx,r),topology=opts.execution_topology||'agent';
-    if(!['agent','goal_driven'].includes(topology))return {ok:false,error:'unsupported_execution_topology'};
-    const key=[r.plan_id,expected.version,expected.hash,topology].join('|');
+    if(!['agent','goal_driven','crew'].includes(topology))return {ok:false,error:'unsupported_execution_topology'};
+    if(topology==='crew'){const v=window.PM56_COLLAB?.validatePlanCrew(opts.crewDefinition,r.plan_id,true);if(!v?.ok)return {ok:false,error:v?.error||'crew_owner_unavailable'};}
+    const key=[r.plan_id,expected.version,expected.hash,topology,...(topology==='crew'?[opts.crewDefinition.content_key]:[])].join('|');
     if(r.buildAdmission?.key===key){
       const a=r.approved;
       if(!a||expected.project_id!==a.project_id||expected.thread_id!==r.thread_id||expected.worktree!==a.worktree||expected.permissions!==a.permissions||expected.route?.modelId!==a.modelId||expected.route?.accountId!==a.accountId||expected.route?.provider!==a.provider)return {ok:false,error:'idempotency_binding_mismatch'};
@@ -1395,12 +1396,19 @@
       const run={schema:'pm.concept.plan_run.v1',plan_run_id:runId,project_id:expected.project_id,thread_id:r.thread_id,plan_id:r.plan_id,plan_version:r.version,plan_hash:expected.hash,
         epoch,admission_epoch:epoch,state:'running',topology,scope:{projectId:expected.project_id,threadId:r.thread_id,worktreeId:expected.worktree},route:JSON.parse(JSON.stringify(expected.route)),permissions:expected.permissions,
         required_todo_ids:made.ids.slice(),planunit_bundle_ref:goalResult?.goal.binding.planunit_bundle_ref||null,created_at:new Date().toISOString()};
+      let crewResult=null;
+      if(topology==='crew'){
+        crewResult=window.PM56_COLLAB.admitPlanCrew(opts.crewDefinition,run);if(!crewResult?.ok)TX.fail(crewResult?.error||'crew_start_not_atomic');
+        run.crew_run_id=crewResult.run.id;run.collaboration_definition_key=opts.crewDefinition.content_key;
+        const recheck=window.PM56_COLLAB.validatePlanCrew(opts.crewDefinition,r.plan_id,true);if(!recheck.ok)TX.fail(recheck.error);
+      }
       const admitted=api.commitRun(r,run);if(!admitted?.ok)TX.fail(admitted?.error||'plan_run_refused');
       if(goalResult){const binding=api.bindRun(r,goalResult.goal,run);if(!binding?.ok)TX.fail(binding?.error||'goal_binding_refused');}
       error=validateAdmission(ctx,r,expected);if(error)TX.fail(error);
+      if(crewResult){const finalCrew=window.PM56_COLLAB.verifyPlanCrewAdmission(opts.crewDefinition,run,crewResult.run);if(!finalCrew.ok)TX.fail(finalCrew.error);}
       const approved={...freeze(r,ctx),project_id:expected.project_id,thread_id:r.thread_id,worktree:expected.worktree,
         runtime:expected.route.modelName,modelId:expected.route.modelId,provider:expected.route.provider,accountId:expected.route.accountId,permissions:expected.permissions,plan_run_id:runId,...(opts.scheduleRef?{schedule_id:opts.scheduleRef}:{})};
-      const receipt={key,goal_id:goalResult?.goal.id||null,plan_run_id:runId,binding:goalResult?.goal.binding||null,version:r.version,hash:expected.hash,command:'cmd.chat.plan.build',execution_topology:topology};
+      const receipt={key,goal_id:goalResult?.goal.id||null,plan_run_id:runId,binding:goalResult?.goal.binding||null,version:r.version,hash:expected.hash,command:topology==='crew'?'cmd.chat.plan.build_with_crew':'cmd.chat.plan.build',execution_topology:topology,...(crewResult?{crew_run_id:crewResult.run.id}: {})};
       const values={approved,buildAdmission:receipt,runSerial:seq,runEpoch:epoch,status:'building',current:true,buildStep:0,wait:opts.wait||null,attention:opts.paused?{kind:'paused',reason:'Paused at admission.',actions:['resume','cancel']}:null,
         topology,scheduleInvalidation:invalidation,requiredTodoIds:made.ids.slice(),todosCreated:{at:approved.at,from:r.backend==='ledger_bound'?'planunits':'plan_steps',count:made.created,reused:!!made.reused}};
       for(const [k,v] of Object.entries(values))TX.set(r,k,v);
@@ -1418,6 +1426,9 @@
      left -- so a Plan resumed after a Pause could never reach Completed and
      could never complete its bound Goal. One body, one completion predicate. */
   function runTick(ctx,r){
+    try{return runTickBody(ctx,r);}finally{window.PM56_COLLAB?.refreshPlanCrew?.(r.plan_id);}
+  }
+  function runTickBody(ctx,r){
     if(r.status!=='building'){ stopRun(r); return; }
     var a=todoApi(), moved=null;
     const gate=r.workRef?inspectGoalPlan(r.plan_id):null;
@@ -2439,6 +2450,7 @@
     if(c.state.permissions!==run.permissions||!model||model.status!=='ready'||model.accountId!==run.route.accountId)return fail('Permission or provider route changed');
     if(RT.quota?.waiting)return fail('Waiting for Usage','quota');
     const windowGate=window.PM56_SCHED?.workEligibility?.(id);if(windowGate&&!windowGate.ok)return fail(windowGate.detail||windowGate.error,'window');
+    const crewGate=window.PM56_COLLAB?.crewExecutionGate?.(id);if(crewGate&&!crewGate.ok)return fail(crewGate.error);
     if(r.attention)return fail(r.attention.reason);
     if(!r.workRef||!workOwners.has(r.workRef.kind))return fail('No actual execution adapter is attached to this Plan in the local concept.');
     const work=workOwners.get(r.workRef.kind).inspect(r.workRef.ref,r),todos=todoApi().outcomeSummary(r.thread_id,run.required_todo_ids);
@@ -2448,7 +2460,7 @@
       fingerprint:JSON.stringify({version:r.version,hash:hashOf(body(r)),epoch:r.runEpoch,work:work.fingerprint,todos:todoApi().get(r.thread_id)?.map(t=>[t.todo_id,t.status,t.revision]),unitError}),nextAttemptRef:work.nextAttemptRef};
   }
   function finalizeGoalRun(id){const r=rec(id),x=inspectGoalPlan(id);if(!x.complete)return {ok:false,error:'plan_completion_not_verified'};
-    r.status='completed';r.current=false;r.attention=null;const run=P().runs[r.approved.plan_run_id];run.state='completed';run.completion_evidence_refs=x.evidenceRefs;stopRun(r);return {ok:true};
+    r.status='completed';r.current=false;r.attention=null;const run=P().runs[r.approved.plan_run_id];run.state='completed';run.completion_evidence_refs=x.evidenceRefs;stopRun(r);window.PM56_COLLAB?.refreshPlanCrew?.(id);return {ok:true};
   }
   function createFromWorkRequest(o){
     const c=EXT.ctx(),t=c.state.threads.find(t=>t.id===o?.threadId),owner=workOwners.get(o?.workRef?.kind);
@@ -2502,7 +2514,7 @@
     admitScheduled:function(binding){
       const c=EXT.ctx(),r=rec(binding.target_id);if(!r)return {ok:false,clause:'target_not_found'};
       const expected={project_id:binding.project_id,thread_id:binding.thread_id,worktree:binding.owner_worktree_snapshot||binding.worktree_snapshot,version:binding.exact_target_version,hash:binding.exact_target_hash,permissions:binding.permission_snapshot,route:binding.runtime_snapshot};
-      const out=buildCommand(c,r,{expected,execution_topology:binding.execution_topology,scheduleRef:binding.schedule_id,scheduleSnapshot:binding.runtime_snapshot});
+      const out=buildCommand(c,r,{expected,execution_topology:binding.execution_topology,scheduleRef:binding.schedule_id,scheduleSnapshot:binding.runtime_snapshot,crewDefinition:binding.topology_snapshot?.collaboration_definition_ref});
       return {...out,clause:out.error||null,approved:out.ok?r.approved:null};
     },
 
@@ -2550,7 +2562,7 @@
       const r=rec(id);if(!r||r.status!=='building'||r.approved?.plan_run_id!==binding.plan_run_id||r.version!==binding.version||hashOf(body(r))!==binding.hash)return {ok:false,error:'stale_window_binding'};
       if(r.attention&&!['window','quota_wait'].includes(r.attention.kind))return {ok:false,error:'owner_attention_blocks_window_pause'};
       window.PM56_PLANS.boundPause(id);r.attention={kind,reason,actions:['details','cancel']};const run=P().runs[binding.plan_run_id];run.state=kind==='quota_wait'?'waiting_quota':'waiting_window';
-      return {ok:true,paused:true,run_epoch:r.runEpoch};
+      window.PM56_COLLAB?.refreshPlanCrew?.(id);return {ok:true,paused:true,run_epoch:r.runEpoch};
     },
     resumeFromWindow:function(id,binding){
       const r=rec(id);if(!r||r.status!=='building'||r.approved?.plan_run_id!==binding.plan_run_id||r.version!==binding.version||hashOf(body(r))!==binding.hash||!['window','quota_wait'].includes(r.attention?.kind))return {ok:false,error:'stale_window_binding'};
@@ -2565,7 +2577,7 @@
       const run=P().runs[r.approved?.plan_run_id];if(run){run.state='paused';run.epoch=r.runEpoch;}
       r.attention={ kind:'paused', reason:'Paused at a shared safe boundary. The Build control stays Building….',
                     actions:['resume','cancel','details'] };
-      return { paused:true, label:BUILD_LABEL[r.status] };
+      window.PM56_COLLAB?.refreshPlanCrew?.(planId);return { paused:true, label:BUILD_LABEL[r.status] };
     },
     boundResume:function(planId){
       var r=rec(planId); if(!r||r.status!=='building') return null;
@@ -2573,7 +2585,7 @@
       r.attention=null;r.revisionStop=null;
       const run=P().runs[r.approved?.plan_run_id];if(run){run.state='running';run.epoch=r.runEpoch;}
       var c=EXT.ctx&&EXT.ctx(); if(c) resumeRun(c,r);
-      return { resumed:true, label:BUILD_LABEL[r.status] };
+      window.PM56_COLLAB?.refreshPlanCrew?.(planId);return { resumed:true, label:BUILD_LABEL[r.status] };
     },
     boundCancel:function(planId, epoch){
       var r=rec(planId); if(!r) return null;

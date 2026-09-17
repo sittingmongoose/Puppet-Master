@@ -4,7 +4,7 @@
  * This is session-local custody, not native persistence or Event Authority. */
 (function(){
 'use strict';
-const D=PM56_DATA,E=PM56_EXT,TX=PM56_TX,renderers=new Map();
+const D=PM56_DATA,E=PM56_EXT,TX=PM56_TX,renderers=new Map(),exporters=new Map();
 const clone=x=>JSON.parse(JSON.stringify(x));
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function key(value){let h=2166136261;for(const c of JSON.stringify(value)){h^=c.codePointAt(0);h=Math.imul(h,16777619);}return 'fnv1a-local:'+ (h>>>0).toString(16).padStart(8,'0');}
@@ -34,10 +34,11 @@ function retain(ref,holder){
  return TX.run(()=>{
   while(queue.length){const entry=queue.pop(),f=entry.ref,a=item(f?.artifact_id),key=JSON.stringify(normalized(f));
    if(seen.has(key))continue;seen.add(key);
-   if(!a?.revisions?.[f.artifact_version]){if(f===ref)TX.fail('artifact_revision_missing');continue;}
+   if(!a?.revisions?.[f.artifact_version]){if(f===ref||entry.required)TX.fail('artifact_revision_missing');continue;}
    if(scopeOf(a).project_id!==f.project_id||scopeOf(a).thread_id!==f.thread_id)TX.fail('denied');
    const row={artifact_version:f.artifact_version,kind:entry.holder.kind,id:entry.holder.id};
    if(!(a.retainedBy||[]).some(x=>JSON.stringify(x)===JSON.stringify(row)))TX.set(a,'retainedBy',(a.retainedBy||[]).concat(row));
+   for(const child of a.revisions[f.artifact_version].record.dependency_refs||[]){if(child.project_id!==f.project_id||child.thread_id!==f.thread_id)TX.fail('denied');queue.push({ref:child,holder:{kind:'artifact_revision',id:f.artifact_id+'@'+f.artifact_version},required:true});}
    const next=a.revisions[f.artifact_version].record.static_fallback_ref;
    if(next){if(next.project_id&&next.project_id!==f.project_id||next.thread_id&&next.thread_id!==f.thread_id)TX.fail('denied');
     queue.push({ref:{project_id:f.project_id,thread_id:f.thread_id,...next},holder:{kind:'artifact_revision',id:f.artifact_id+'@'+f.artifact_version}});}
@@ -133,11 +134,12 @@ function editor(ref){const x=resolve(ref);return `<article class="editor-doc ar-
 E.slot('editorDocument',ctx=>{const ref=fromRoute(ctx.editorId);return ref?editor(ref):'';});
 E.slot('editorTabLabel',ctx=>{const ref=fromRoute(ctx.editorId);if(!ref)return '';return esc((resolve(ref).revision?.record.title||'Unavailable artifact')+' · V'+ref.artifact_version);});
 E.chainAction('open-artifact',(ctx,btn)=>{if(!btn.dataset.version)return false;let ref;try{ref=JSON.parse(decodeURIComponent(btn.dataset.ref));}catch(e){ctx.toast('Cannot open','The exact artifact reference is missing.');return true;}const x=resolve(ref);ctx.openEditor(route(ref));return true;});
-function deliverText(name,text,mime='text/plain;charset=utf-8'){
+function deliverText(name,text,mime='text/plain;charset=utf-8'){return deliverBytes(name,text,mime);}
+function deliverBytes(name,text,mime='application/octet-stream'){
  try{const blob=new Blob([text],{type:mime}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.rel='noopener';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(url);a.remove();},4000);return {ok:true,result:'handed to the browser as '+name};}
  catch(e){return {ok:false,error:'download_refused',result:'the browser refused the download ('+String(e.message||e)+') — no file was written'};}
 }
-E.action('ar-download',(ctx,btn)=>{let ref;try{ref=JSON.parse(decodeURIComponent(btn.dataset.ref));}catch(e){return true;}const x=resolve(ref);if(!x.ok){ctx.toast('Download unavailable',x.error);return true;}const q=x.revision.record,data=sourceText(q);const out=deliverText(q.title.replace(/[^a-zA-Z0-9._-]/g,'_')+'-v'+q.artifact_version+'.txt',data);if(!out.ok)ctx.toast('Download unavailable',out.error);return true;});
+E.action('ar-download',(ctx,btn)=>{let ref;try{ref=JSON.parse(decodeURIComponent(btn.dataset.ref));}catch(e){return true;}const x=resolve(ref);if(!x.ok){ctx.toast('Download unavailable',x.error);return true;}const q=x.revision.record;if(exporters.has(q.renderer_kind)){try{const e=exporters.get(q.renderer_kind)(q);const out=deliverBytes(e.name,e.bytes,e.mime);if(!out.ok)ctx.toast('Download unavailable',out.error);}catch(e){ctx.toast('Download unavailable',e.message);}return true;}const data=sourceText(q);const out=deliverText(q.title.replace(/[^a-zA-Z0-9._-]/g,'_')+'-v'+q.artifact_version+'.txt',data);if(!out.ok)ctx.toast('Download unavailable',out.error);return true;});
 
-window.PM56_ARTIFACTS={deliverText,publish,resolve,retain,purge,render,route,fromRoute,editor,registerRenderer:register,kinds:()=>Array.from(renderers.keys()),key,freeze,scopeOf,unavailable};
+window.PM56_ARTIFACTS={deliverText,deliverBytes,registerExporter:(kind,fn)=>{if(exporters.has(kind))throw Error('duplicate_exporter');exporters.set(kind,fn);},publish,resolve,retain,purge,render,route,fromRoute,editor,registerRenderer:register,kinds:()=>Array.from(renderers.keys()),key,freeze,scopeOf,unavailable};
 })();

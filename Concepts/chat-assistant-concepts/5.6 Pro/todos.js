@@ -916,7 +916,8 @@
       for(const [tid,s] of Object.entries(RT.todos.byThread))if((s.bindings||[]).some(x=>x.binding_id===b.binding_id||x.work_id===b.work_id&&x.attempt_id===b.attempt_id))return {ok:false,error:'work_binding_already_admitted'};
       const admitted=owner?.admit?.(item.workflow_ref,item,b,ev.cause_ref);
       if(!admitted?.ok)return {ok:false,error:admitted?.error||'work_owner_required'};
-      newBinding={schema:'pm.chat.todo_work_binding.v1',binding_id:b.binding_id,todo_id:b.todo_id,
+      const crew=window.PM56_COLLAB?.crewWorkBinding?.(item);if(crew&&!crew.ok)return {ok:false,error:crew.error};
+      newBinding={...(crew?.fields||{}),schema:'pm.chat.todo_work_binding.v1',binding_id:b.binding_id,todo_id:b.todo_id,
         work_kind:b.work_kind,work_id:b.work_id,attempt_id:b.attempt_id,expected_outcome:b.expected_outcome,
         admitted_at:nowIso(),terminal_result_ref:null,state:'running',project_id:item.project_id||PROJECT_ID,
         thread_id:threadId,run_id:item.run_id??null,admission_epoch:item.run_epoch??null,

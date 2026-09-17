@@ -319,7 +319,7 @@
   }
   var msgSeq = { };
   function mkMsg(run, o) {
-    msgSeq[run.id] = (msgSeq[run.id] || 0) + 1;
+    PM56_TX.set(msgSeq,run.id,(msgSeq[run.id] || 0) + 1);
     return {
       id: o.id || rid('msg'),
       runId: run.id,
@@ -839,6 +839,7 @@
   }
 
   function usageStrip(run) {
+    if(run.usage?.not_measured)return '<div class="collab-usage">No provider calls · no measured provider Usage</div>';
     var u = run.usage || {};
     return '<div class="collab-usage" data-k="collab-usage-' + esc(run.id) + '">' +
       '<span>' + fmtTokens(u.inputTokens) + ' in</span><span>' + fmtTokens(u.outputTokens) + ' out</span><span>' + fmtMoney(u.costUsd) + '</span>' +
@@ -970,6 +971,7 @@
   }
 
   function kindInline(ctx, run) {
+    if(run.crew?.planBinding)return renderPlanCrew(ctx,run);
     if (run.kind === 'crew') return crewInline(ctx, run);
     if (run.kind === 'brainstorm') return brainstormInline(ctx, run);
     if (run.kind === 'review') return reviewInline(ctx, run);
@@ -996,7 +998,7 @@
     var cancelBtn = canCancel(run)
       ? '<button class="soft-button danger" data-action="collab-cancel" data-run="' + esc(run.id) + '">' + ctx.icon('close', 12) + ' Cancel</button>'
       : '<button class="soft-button" disabled title="Already terminal.">' + ctx.icon('close', 12) + ' Cancel</button>';
-    var reconfigBtn = '<button class="soft-button" data-action="collab-open-configure" data-kind="' + esc(run.kind) + '" data-reconfigure="' + esc(run.id) + '">' + ctx.icon('edit', 12) + ' Reconfigure</button>';
+    var reconfigBtn = '<button class="soft-button" '+(run.crew?.planBinding?'disabled title="Frozen build roster: cancel or revise before scheduling another"':'')+' data-action="collab-open-configure" data-kind="' + esc(run.kind) + '" data-reconfigure="' + esc(run.id) + '">' + ctx.icon('edit', 12) + ' Reconfigure</button>';
     var exportBtn = '<button class="soft-button" data-action="collab-export" data-run="' + esc(run.id) + '">' + ctx.icon('download', 12) + ' Export</button>';
     var kindExtra = '';
     if (run.kind === 'review') kindExtra = '<button class="soft-button" data-action="collab-review-run-again" data-run="' + esc(run.id) + '">' + ctx.icon('refresh', 12) + ' Run Another Review</button>';
@@ -1036,6 +1038,7 @@
   }
 
   function renderCard(ctx, run) {
+    if(run.crew?.planBinding)refreshPlanCrew(run.crew.planBinding.plan_id);
     var expanded = !!UI.expanded[run.id];
     var shownP = run.participants.slice(0, 4);
     var moreP = run.participants.length - shownP.length;
@@ -1055,6 +1058,7 @@
         statusChip(run.status, run.blockedReason) +
       '</div>' +
       '<p class="collab-card-meta">' + plural(run.participants.length, 'participant', 'participants') + ' · ' + esc(latestSummary(run)) + '</p>' +
+      (run.crew?.planBinding?'<p class="collab-card-meta">Local bounded execution · models are configured, not invoked</p>':'')+
       completionLine(ctx, run) +
       body +
       '<div class="collab-card-foot">' +
@@ -1085,6 +1089,7 @@
 
   EXT.action('collab-pause', function (ctx, btn) {
     var run = findRun(btn.dataset.run); if (!run || !canPause(run)) return true;
+    if(run.crew?.planBinding){PM56_PLANS.boundPause(run.crew.planBinding.plan_id);refreshPlanCrew(run.crew.planBinding.plan_id);ctx.renderApp();return true;}
     run.status = 'paused'; run.stopEpoch += 1;
     run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Paused at a safe boundary. Participant state, the pending inbox and the transcript are preserved; nothing in flight was torn down.' }));
     ctx.renderApp();
@@ -1093,6 +1098,7 @@
   });
   EXT.action('collab-resume', function (ctx, btn) {
     var run = findRun(btn.dataset.run); if (!run) return true;
+    if(run.crew?.planBinding){const plan=PM56_PLANS.get(run.crew.planBinding.plan_id),v=crewExecutionGate(run.crew.planBinding.plan_id),stop=PM56_SCHED.checkEpoch(PM56_SCHED.stopSnapshot());if(!v.ok||!stop.ok||plan?.attention?.kind!=='paused'){ctx.toast('Cannot resume',v.error||stop.error||'Use the Plan recovery or scheduling owner for this condition.');return true;}PM56_PLANS.boundResume(run.crew.planBinding.plan_id);refreshPlanCrew(run.crew.planBinding.plan_id);ctx.renderApp();return true;}
     if (!canResume(run)) { ctx.toast('Cannot resume', run.blockedReason || 'Not paused.'); return true; }
     run.status = 'running';
     run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Resumed the same run. No participant work is duplicated.' }));
@@ -1102,6 +1108,7 @@
   });
   EXT.action('collab-cancel', function (ctx, btn) {
     var run = findRun(btn.dataset.run); if (!run || !canCancel(run)) return true;
+    if(run.crew?.planBinding){PM56_PLANS.boundCancel(run.crew.planBinding.plan_id);refreshPlanCrew(run.crew.planBinding.plan_id);ctx.renderApp();return true;}
     run.status = 'canceled'; run.completedAt = nowIso(); run.stopEpoch += 1;
     run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Cancelled. New admissions stopped; the card, transcript, participants and artifacts remain with truthful cancelled state.' }));
     if (RT.composer.destination && RT.composer.destination.refId === run.id) {
@@ -1256,7 +1263,7 @@
   var TAB_LABEL = { overview: 'Overview', transcript: 'Transcript', participants: 'Participants', usage: 'Usage' };
 
   function renderParticipantView(ctx, run, p) {
-    var own = run.messages.filter(function (m) { return m.senderId === p.id; });
+    var own = run.messages.filter(function (m) { return m.senderId === p.id || m.senderKind==='user' && (m.recipientIds||[]).includes(p.id); });
     var body = own.length
       ? own.map(function (m) { return messageLine(ctx, run, m); }).join('')
       : '<p class="collab-empty">No output from this participant yet. This is a truthful empty transcript, not a summary standing in for one.</p>';
@@ -1268,7 +1275,7 @@
       (p.blockedReason ? '<p class="collab-p-blocked">' + ctx.icon('lock', 11) + esc(p.blockedReason) + '</p>' : '') +
       '<p class="collab-p-state">State: ' + esc(PSTATE_LABEL[p.status] || p.status) + (p.current ? ' — ' + esc(p.current) : '') + '</p>' +
       '<button class="soft-button" data-action="collab-message" data-run="' + esc(run.id) + '" data-participant="' + esc(p.id) + '">' + ctx.icon('send', 12) + ' Message this participant</button>' +
-      '<div class="collab-participant-transcript">' + body + '</div>' +
+      renderPlanCrewParticipant(run,p) + '<div class="collab-participant-transcript">' + body + '</div>' +
       '</div>';
   }
 
@@ -1537,6 +1544,7 @@
   }
 
   function openConfigureDraft(kind, reconfigureRunId, autoMode) {
+    if(findRun(reconfigureRunId)?.crew?.planBinding)return;
     var def = RTC.definitions[kind];
     var run = reconfigureRunId ? findRun(reconfigureRunId) : null;
     var rows = [];
@@ -1741,7 +1749,7 @@
       '<div class="collab-participant-editor">' + d.rows.map(function (r, i) { return draftRowHtml(ctx, r, i); }).join('') + '</div>' +
       '<button class="text-button" data-action="collab-modal-add-participant">' + ctx.icon('plus', 12) + ' '+(d.kind==='review'&&d.config.strategy==='single_agent'?'Replace reviewer':'Add participant')+'</button>' +
       '<h4>How they work</h4>' +
-      kindConfigFields(ctx, d) +
+      kindConfigFields(ctx, d) + (d.scheduleIntent?'<p class="schedule-caption">Scheduling freezes this roster without starting it. The local work adapter executes one bounded operation at a time; requested models are retained, not invoked.</p>':'') +
       (supportsAdditive ? '<details class="collab-add-specialists"><summary>Optional specialists</summary>' +
         '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="wonderer"' + (d.wonderer ? ' checked' : '') + '><span title="Explores adjacent leads; labels unresearched ideas as hypotheses">Wonderer</span></label>' +
         '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="grillMe"' + (d.grillMe ? ' checked' : '') + '><span>Grill Me' + (d.kind === 'brainstorm' ? ' — raises the question maximum by ' + d.config.grillExtension : '') + '</span></label>' +
@@ -1750,7 +1758,7 @@
       '</div>' +
       (d.lastFailure ? '<div class="collab-start-failure" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong><p>' + esc(d.lastFailure.message) + '</p></div>' : '') +
       (window.PM56_CREW_DEMOS?.guide(ctx,true)||'') + (window.PM56_REVIEW_DEMOS?.guide(ctx,true)||'') + (window.PM56_BRAINSTORM_DEMOS?.guide(ctx,true)||'') +
-      '<div class="dialog-body-foot collab-configure-foot"><button class="soft-button" data-action="collab-modal-cancel">Cancel</button><button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.autoMode ? 'Enable Crew Auto' : d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button></div>' +
+      '<div class="dialog-body-foot collab-configure-foot"><button class="soft-button" data-action="collab-modal-cancel">Cancel</button><button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.scheduleIntent?'Use this Crew':d.autoMode ? 'Enable Crew Auto' : d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button></div>' +
       '</section>';
   }
   EXT.slot('dialog', function (ctx) {
@@ -1776,6 +1784,7 @@
   EXT.action('collab-open-configure', function (ctx, btn) {
     var kind = btn.dataset.kind;
     if (KINDS.indexOf(kind) < 0) return true;
+    if(findRun(btn.dataset.reconfigure)?.crew?.planBinding){ctx.toast('Frozen build roster','Cancel or revise the Plan before scheduling another roster. The admitted run is unchanged.');return true;}
     openConfigureDraft(kind, btn.dataset.reconfigure || null, btn.dataset.auto === '1');
     /* Close the wand menu first. Without this the menu stayed open BEHIND the
        modal on all four kinds, so the dialog was not modal in practice and the
@@ -1791,6 +1800,7 @@
      emits no domain event, and restores a held natural-language request intact
      to the composer rather than running it with defaults. */
   EXT.action('collab-modal-cancel', function (ctx) {
+    if(RTC.draft?.scheduleIntent){RTC.draft=null;PM56_SCHED.returnFromCrewConfiguration();return true;}
     var d = RTC.draft;
     var held = d && d.heldRequest;
     RTC.draft = null;
@@ -1948,6 +1958,9 @@
 
   EXT.action('collab-modal-commit', function (ctx) {
     var d = RTC.draft; if (!d) return true;
+    if(d.scheduleIntent){const out=preparePlanCrew(d.scheduleIntent.expected.plan_id||window.PM56_SCHED.currentCrewTarget(),d);if(!out.ok){d.lastFailure=out;ctx.renderOverlays();return true;}
+      const used=PM56_SCHED.acceptCrewConfiguration(out.snapshot,d.scheduleIntent.expected);if(!used.ok){d.lastFailure=used;ctx.renderOverlays();return true;}RTC.draft=null;return true;}
+
     normalizeReview(d);
     var limits = KIND_PARTICIPANT_LIMIT[d.kind];
     if (d.rows.length < limits[0] || d.rows.length > limits[1]) { ctx.toast('Out of range', KIND_LABEL[d.kind] + ' supports ' + limits[0] + '–' + limits[1] + ' participants.'); return true; }
@@ -2199,11 +2212,12 @@
      is the thing the correction says must be provable rather than asserted. */
   RTC.effects = RTC.effects || { runs:0, providerCalls:0, usageRecords:0, events:0,
                                  cards:0, settingsWrites:0, installs:0, participants:0 };
-  function effect(kind, n){ RTC.effects[kind] = (RTC.effects[kind]||0) + (n||1); }
+  function effect(kind, n){ PM56_TX.set(RTC.effects,kind,(RTC.effects[kind]||0) + (n||1)); }
   function effectsSnapshot(){ return JSON.parse(JSON.stringify(RTC.effects)); }
 
   /* PART-001..004. One terminal outcome per slot, and never a silent swap. */
   function setOutcome(runId, pid, outcome, opts){
+    if(findRun(runId)?.crew?.planBinding)return {ok:false,error:'plan_work_owner_required'};
     opts = opts || {};
     var run = findRun(runId); if(!run) return { ok:false, error:'run_not_found' };
     var p = participant(run, pid); if(!p) return { ok:false, error:'participant_not_found' };
@@ -2228,6 +2242,7 @@
   /* PART-004. Retry = a NEW attempt identity on the SAME slot. The old failed
      attempt is preserved, never overwritten. */
   function retryParticipant(runId, pid){
+    if(findRun(runId)?.crew?.planBinding)return {ok:false,error:'plan_work_owner_required'};
     var run=findRun(runId); if(!run) return { ok:false, error:'run_not_found' };
     var p=participant(run,pid); if(!p) return { ok:false, error:'participant_not_found' };
     if(!p.outcome) return { ok:false, error:'slot_not_terminal' };
@@ -2243,6 +2258,7 @@
      The original attempt stays in history and the label never lies about which
      model ran. */
   function replaceParticipant(runId, pid, modelId, reason){
+    if(findRun(runId)?.crew?.planBinding)return {ok:false,error:'plan_work_owner_required'};
     var run=findRun(runId); if(!run) return { ok:false, error:'run_not_found' };
     var p=participant(run,pid); if(!p) return { ok:false, error:'participant_not_found' };
     if(!reason) return { ok:false, error:'replacement_requires_reason' };
@@ -2263,6 +2279,7 @@
      never count toward a vote or a completion. */
   RTC.rejectedCallbacks = RTC.rejectedCallbacks || [];
   function acceptCallback(runId, pid, payload){
+    if(findRun(runId)?.crew?.planBinding)return {ok:false,error:'plan_work_owner_required'};
     var run=findRun(runId); if(!run) return { ok:false, error:'run_not_found' };
     var p=participant(run,pid); if(!p) return { ok:false, error:'participant_not_found' };
     var why=null;
@@ -2317,6 +2334,7 @@
   }
 
   function completionProjection(run){
+    if(run.crew?.planBinding)refreshPlanCrew(run.crew.planBinding.plan_id);
     var req=[], done=[], failed=[], waived=[], i, p;
     for(i=0;i<run.participants.length;i++){
       p=run.participants[i];
@@ -2430,7 +2448,167 @@
     return false;
   });
 
+  /* Batch 18 continuation. These are adapters of THIS collaboration owner, not
+     parallel run/message stores. Schedules carry frozen definitions; no provider
+     session, usage, or server persistence is asserted by the local adapter. */
+  const scheduledCopy=x=>JSON.parse(JSON.stringify(x));
+  const scheduledBad=(error,message)=>({ok:false,error,message:message||error.replaceAll('_',' ')});
+  function scheduledDestinationBasis(run,d){
+    return {run_id:run.id,kind:run.kind,thread_id:run.threadId,definition_revision:run.definitionRevision,
+      participant_id:d.participantId||null,assignments:run.participants.map(p=>({id:p.id,revision:p.assignmentRevision,model:p.requestedModelId,effective_model:p.effectiveModelId,provider:p.requestedProviderId,account:p.requestedAccountId,persona:p.requestedPersona}))};
+  }
+  function freezeScheduledDestination(d,scope){
+    const r=findRun(d?.refId);if(!r||r.threadId!==scope.threadId||d.destinationKind!==r.kind)return scheduledBad('destination_scope_mismatch');
+    const destination={kind:d.kind,refId:r.id,destinationKind:r.kind,participantId:d.participantId||null,label:d.label||r.title,detail:d.detail||'',glyph:d.glyph||KIND_ICON[r.kind],scheduled_binding:scheduledDestinationBasis(r,d)};
+    const v=validateScheduledDestination(destination,scope);return v.ok?{ok:true,destination:PM56_ARTIFACTS.freeze(destination)}:v;
+  }
+  function validateScheduledDestination(d,scope,publishedMessage){
+    const r=findRun(d?.refId);if(!r||r.threadId!==scope.threadId||!EXT.ctx().state.threads.some(t=>t.id===scope.threadId&&(t.projectId||'pm')===scope.projectId))return scheduledBad('destination_not_found');
+    if(!['workflow','participant'].includes(d.kind)||d.destinationKind!==r.kind||!d.scheduled_binding||JSON.stringify(d.scheduled_binding)!==JSON.stringify(scheduledDestinationBasis(r,d)))return scheduledBad('destination_generation_changed');
+    if(r.crew?.planBinding){const pr=PM56_PLANS.runs()[r.crew.planBinding.plan_run_id];if(!pr||['completed','cancelled','canceled','failed'].includes(pr.state))return scheduledBad('destination_ended');if(pr.state!=='running')return scheduledBad('destination_not_accepting');}
+    if(r.status!=='running')return scheduledBad(['completed','canceled','cancelled','failed'].includes(r.status)?'destination_ended':'destination_not_accepting');
+    if(d.kind==='participant'&&!participant(r,d.participantId)||d.kind==='workflow'&&d.participantId)return scheduledBad('participant_not_found');
+    if(window.PM56_ROOM?.owns(r.id)){
+      const v=PM56_ROOM.canSend(r.id,d);
+      if(!v.ok){
+        // Post-delivery revalidation may observe THIS operation's pending inbox.
+        // Another pending input must still hold; identity alone is not sufficient.
+        const msg=publishedMessage,shared=msg&&r.messages.find(x=>x.id===msg.id),thread=EXT.ctx().state.threads.find(t=>t.id===r.threadId);
+        const own=v.error==='finish_pending_delivery'&&shared&&thread?.messages.includes(shared)&&r.chatRoom.lastUserMessageId===msg.id&&shared.viaSchedule&&shared.scheduledDispatchId===msg.scheduledDispatchId&&shared.body===msg.body&&shared.time===msg.time&&JSON.stringify(shared.attachments)===JSON.stringify(msg.attachments)&&JSON.stringify(shared.recipientIds)===JSON.stringify(d.participantId?[d.participantId]:r.participants.map(p=>p.id));
+        if(!own)return scheduledBad(v.reason||v.error||'destination_not_accepting');
+      }
+    }
+    return {ok:true,run:r};
+  }
+  function deliverScheduledMessage(message,d){
+    const TX=PM56_TX;if(!TX.isActive())return scheduledBad('collaboration_transaction_required');
+    const c=EXT.ctx(),scope=PM56_GOAL.scope(d.scheduled_binding?.thread_id),v=scope&&validateScheduledDestination(d,scope);
+    if(!v?.ok)return v||scheduledBad('destination_not_found');
+    const r=v.run,t=c.state.threads.find(t=>t.id===r.threadId),old=r.messages.find(m=>m.id===message.id);
+    const recipients=d.participantId?[d.participantId]:r.participants.map(p=>p.id);
+    const deliveryKey=JSON.stringify([message.id,message.body,message.attachments,d.scheduled_binding,message.time]);
+    if(old)return old.scheduled_delivery_key===deliveryKey&&t.messages.includes(old)?{ok:true,replayed:true,message_id:old.id}:scheduledBad('collaboration_message_conflict');
+    if(t.messages.some(m=>m.id===message.id))return scheduledBad('collaboration_message_conflict');
+    for(const a of message.attachments||[]){const retained=PM56_ARTIFACTS.retain(a.snapshot_ref,{kind:'collaboration_message',id:message.id});if(!retained.ok)TX.fail(retained.error);}
+    const current=validateScheduledDestination(d,scope);if(!current.ok)TX.fail(current.error);
+    const shared={...message,...mkMsg(r,{id:message.id,senderKind:'user',senderName:'You',messageType:'message',body:message.body,recipientIds:recipients,createdAt:message.time}),scheduled_delivery_key:deliveryKey,attachment_refs:message.attachments};
+    // Construct the final object BEFORE either append, so rollback fingerprints
+    // and both projections refer to the same completed message, not two copies.
+    TX.append(r,'messages',shared);c.appendMessage(shared,t);
+    TX.set(r,'scheduledDeliveries',(r.scheduledDeliveries||[]).concat({message_id:shared.id,recipient_ids:recipients.slice(),at:shared.time}));
+    const final=validateScheduledDestination(d,scope);if(!final.ok)TX.fail(final.error);
+    if(r.chatRoom){TX.set(r.chatRoom,'summary',null);TX.set(r.chatRoom,'lastUserMessageId',shared.id);TX.set(r.chatRoom,'pendingRecipientIds',recipients.slice());TX.set(r.chatRoom,'deliveries',(r.chatRoom.deliveries||[]).concat({messageId:shared.id,recipientIds:recipients.slice()}));}
+    return {ok:true,message_id:shared.id,recipient_ids:recipients};
+  }
+  function planCrewSteps(plan){return (plan.revisions[plan.version]||[]).filter(b=>b.t==='plan_step');}
+  function planCrewBasis(x){const y=scheduledCopy(x);delete y.content_key;return y;}
+  function preparePlanCrew(planId,d){
+    const plan=PM56_PLANS.get(planId),expected=PM56_PLANS.admissionSnapshot(planId);
+    if(!plan||plan.status!=='ready'||!plan.workRef||!expected)return scheduledBad('plan_not_ready_for_crew');
+    if(d?.kind!=='crew'||!Array.isArray(d.rows)||!d.rows.length||d.rows.length>8||new Set(d.rows.map(r=>r.rowId)).size!==d.rows.length)return scheduledBad('crew_configuration_required');
+    if(d.scheduleIntent&&JSON.stringify(d.scheduleIntent.expected)!==JSON.stringify(expected))return scheduledBad('plan_changed_during_crew_configuration');
+    const all=planCrewSteps(plan),leaves=all.filter(s=>!all.some(c=>c.parent_step_id===s.plan_step_id));
+    if(d.rows.length>leaves.length)return scheduledBad('crew_more_required_slots_than_work','Choose at most '+leaves.length+' participants. Each required slot needs an actual bounded assignment.');
+    const participants=[];
+    for(const row of d.rows){const m=modelById(row.requestedModelId);if(!m||m.status!=='ready'||UNAVAILABLE_DEMO[m.id]||!row.role?.trim()||!row.persona)return scheduledBad('crew_route_unavailable','Resolve every requested model and role before scheduling; this path never substitutes.');
+      participants.push({id:row.rowId,role:row.role,model_id:m.id,model_name:m.name,provider_id:m.provider,account_id:m.accountId,persona:row.persona,effort:row.requestedEffort||'',fast:!!row.requestedFast,additive_role:row.additiveRoleKind||'none'});}
+    if(d.wonderer||d.grillMe)return scheduledBad('scheduled_specialist_adapter_unavailable','Optional discovery specialists need their workflow adapter; this bounded execution does not simulate them.');
+    if(d.config?.coordinator&&d.config.coordinator!=='parent_assistant')return scheduledBad('scheduled_coordinator_adapter_unavailable','Choose Current assistant for this bounded local execution. No dedicated provider coordinator is invoked.');
+    if(d.config?.assignmentStrategy==='adaptive')return scheduledBad('scheduled_adaptive_adapter_unavailable','Use frozen assignments for this local schedule; adaptive reassignment is not simulated.');
+    const requested=Number(d.config?.parallelism||1);if(!Number.isInteger(requested)||requested<1||requested>8)return scheduledBad('invalid_crew_concurrency');
+    const result={schema:'pm.concept.scheduled_crew_definition.v1',kind:'crew',plan_id:planId,plan_version:plan.version,plan_hash:expected.hash,expected:scheduledCopy(expected),name:d.name||plan.title,purpose:d.purpose||plan.title,
+      config:scheduledCopy(d.config||{}),participants,assignments:leaves.map((s,i)=>({plan_step_id:s.plan_step_id,participant_slot_id:participants[i%participants.length].id,expected_outcome:s.text})),
+      requested_concurrency:requested,effective_concurrency:1,execution_adapter:'existing_plan_bounded_local_work',execution_disclosure:'Local work runs sequentially under the frozen roster. No provider sessions, tokens or cost are reported.'};
+    result.content_key=PM56_ARTIFACTS.key(result);return {ok:true,snapshot:PM56_ARTIFACTS.freeze(result)};
+  }
+  function validatePlanCrew(x,planId,committed){
+    const p=PM56_PLANS.get(planId);if(!x||x.schema!=='pm.concept.scheduled_crew_definition.v1'||x.plan_id!==planId||x.kind!=='crew'||!Array.isArray(x.participants)||!x.participants.length||!Array.isArray(x.assignments))return scheduledBad('crew_configuration_required');
+    if(PM56_ARTIFACTS.key(planCrewBasis(x))!==x.content_key)return scheduledBad('crew_definition_changed');
+    if(x.kind!=='crew'||x.participants.length>8||!x.config||typeof x.config!=='object'||Array.isArray(x.config)||x.participants.some(p=>typeof p.id!=='string'||!p.id||typeof p.role!=='string'||!p.role.trim()||typeof p.persona!=='string'||!p.persona)||x.config.coordinator&&x.config.coordinator!=='parent_assistant'||x.config.assignmentStrategy==='adaptive'||!Number.isInteger(x.requested_concurrency)||x.requested_concurrency<1||x.requested_concurrency>8)return scheduledBad('invalid_crew_configuration');
+    if(!p||p.version!==x.plan_version||PM56_PLANS.hash(planId)!==x.plan_hash||JSON.stringify(PM56_PLANS.admissionSnapshot(planId))!==JSON.stringify(x.expected))return scheduledBad('crew_plan_binding_changed');
+    if(committed&&RTC.scheduledDefinitions?.[x.content_key]!==x)return scheduledBad('crew_definition_not_committed');
+    const leaves=planCrewSteps(p).filter(s=>!planCrewSteps(p).some(c=>c.parent_step_id===s.plan_step_id));
+    if(x.effective_concurrency!==1||x.assignments.length!==leaves.length||new Set(x.participants.map(p=>p.id)).size!==x.participants.length||new Set(x.assignments.map(a=>a.plan_step_id)).size!==leaves.length)return scheduledBad('crew_assignment_invalid');
+    for(const a of x.assignments)if(!leaves.some(s=>s.plan_step_id===a.plan_step_id&&s.text===a.expected_outcome)||!x.participants.some(p=>p.id===a.participant_slot_id))return scheduledBad('crew_assignment_invalid');
+    for(const q of x.participants){const m=modelById(q.model_id);if(!m||m.status!=='ready'||UNAVAILABLE_DEMO[m.id]||m.provider!==q.provider_id||m.accountId!==q.account_id)return scheduledBad('crew_route_unavailable');if(!x.assignments.some(a=>a.participant_slot_id===q.id))return scheduledBad('crew_assignment_missing');}
+    return {ok:true};
+  }
+  function commitPlanCrewDefinition(snapshot,planId){
+    if(!PM56_TX.isActive())return scheduledBad('crew_transaction_required');const v=validatePlanCrew(snapshot,planId,false);if(!v.ok)return v;
+    const prior=RTC.scheduledDefinitions?.[snapshot.content_key];if(prior){if(JSON.stringify(prior)!==JSON.stringify(snapshot))return scheduledBad('crew_definition_conflict');return {ok:true,snapshot:prior};}
+    const frozen=PM56_ARTIFACTS.freeze(scheduledCopy(snapshot));PM56_TX.set(RTC,'scheduledDefinitions',{...(RTC.scheduledDefinitions||{}),[snapshot.content_key]:frozen});return {ok:true,snapshot:frozen};
+  }
+  function admitPlanCrew(snapshot,planRun){
+    const TX=PM56_TX;if(!TX.isActive())return scheduledBad('crew_transaction_required');const valid=validatePlanCrew(snapshot,planRun.plan_id,true);if(!valid.ok)return valid;
+    const id='crew-'+planRun.plan_run_id,old=findRun(id);if(old)return old.crew?.planBinding?.plan_run_id===planRun.plan_run_id&&old.crew.planBinding.definition_key===snapshot.content_key?{ok:true,run:old,replayed:true}:scheduledBad('crew_admission_conflict');
+    if(RTC.runs.some(r=>r.crew?.planBinding?.plan_id===planRun.plan_id&&!['completed','canceled','failed'].includes(r.status)))return scheduledBad('crew_already_active');
+    const participants=snapshot.participants.map(q=>mkParticipant({id:id+':'+q.id,runId:id,role:q.role,requestedModelId:q.model_id,persona:q.persona,requestedEffort:q.effort,requestedFast:q.fast,additiveRoleKind:q.additive_role,status:'waiting',sessionId:'local:'+id+':'+q.id,sessionIsolation:'local work adapter; no provider session'}));
+    const items=PM56_TODOS.get(planRun.thread_id)||[];
+    const assignments=snapshot.assignments.map(a=>{const item=items.find(t=>t.run_id===planRun.plan_run_id&&(t.plan_step_ids||[]).includes(a.plan_step_id));if(!item)TX.fail('crew_todo_mapping_missing');return {...a,todo_id:item.todo_id,participant_id:id+':'+a.participant_slot_id};});
+    const run=mkRun({id,kind:'crew',threadId:planRun.thread_id,title:snapshot.name,purpose:snapshot.purpose,status:'running',participants,config:scheduledCopy(snapshot.config),coordinator:{kind:'parent_assistant'},idempotency_key:planRun.plan_run_id,config_fingerprint:snapshot.content_key,
+      crew:{planBinding:{plan_id:planRun.plan_id,plan_run_id:planRun.plan_run_id,plan_version:planRun.plan_version,plan_hash:planRun.plan_hash,definition_key:snapshot.content_key},assignments,definition:snapshot},expectedOutputs:assignments.map(a=>({id:id+':output:'+a.plan_step_id,todo_id:a.todo_id,expected_outcome:a.expected_outcome,delivered:false}))});
+    run.executionDisclosure=snapshot.execution_disclosure;run.usage={inputTokens:null,outputTokens:null,costUsd:null,not_measured:true};
+    TX.set(RTC,'runs',RTC.runs.concat(run));
+    const thread=EXT.ctx().state.threads.find(t=>t.id===planRun.thread_id);EXT.ctx().appendMessage({id:'card-'+id,role:'system',type:'collab-run',runId:id,time:planRun.created_at},thread);
+    effect('runs');effect('cards');effect('participants',participants.length);
+    return {ok:true,run};
+  }
+  function verifyPlanCrewAdmission(snapshot,planRun,run){
+    if(!run||findRun(run.id)!==run||run.id!=='crew-'+planRun.plan_run_id||run.kind!=='crew'||run.threadId!==planRun.thread_id||run.status!=='running'||run.config_fingerprint!==snapshot.content_key||run.crew?.definition!==snapshot)return scheduledBad('crew_admission_binding_changed');
+    const binding={plan_id:planRun.plan_id,plan_run_id:planRun.plan_run_id,plan_version:planRun.plan_version,plan_hash:planRun.plan_hash,definition_key:snapshot.content_key};
+    if(JSON.stringify(run.crew.planBinding)!==JSON.stringify(binding)||JSON.stringify(run.config)!==JSON.stringify(snapshot.config)||run.participants.length!==snapshot.participants.length)return scheduledBad('crew_admission_binding_changed');
+    const items=PM56_TODOS.get(planRun.thread_id)||[];
+    const expected=snapshot.assignments.map(a=>{const item=items.find(t=>t.run_id===planRun.plan_run_id&&(t.plan_step_ids||[]).includes(a.plan_step_id));return item?{...a,todo_id:item.todo_id,participant_id:run.id+':'+a.participant_slot_id}:null;});
+    if(expected.some(x=>!x)||JSON.stringify(expected)!==JSON.stringify(run.crew.assignments))return scheduledBad('crew_admission_binding_changed');
+    for(const q of snapshot.participants){const p=run.participants.find(p=>p.id===run.id+':'+q.id);if(!p||p.runId!==run.id||p.requestedModelId!==q.model_id||p.effectiveModelId!==q.model_id||p.requestedAccountId!==q.account_id||p.requestedProviderId!==q.provider_id||p.requestedPersona!==q.persona||p.role!==q.role||p.outcome!==null)return scheduledBad('crew_admission_binding_changed');}
+    return validatePlanCrew(snapshot,planRun.plan_id,true);
+  }
+  function refreshPlanCrew(planId){
+    for(const r of RTC.runs.filter(r=>r.crew?.planBinding?.plan_id===planId)){
+      const b=r.crew.planBinding,pr=PM56_PLANS.runs()[b.plan_run_id],p=PM56_PLANS.get(planId);if(!pr||!p)continue;
+      const state=pr.state==='completed'?'completed':pr.state==='cancelled'||pr.state==='canceled'?'canceled':pr.state==='paused'?'paused':['waiting_window','waiting_quota'].includes(pr.state)?'waiting':p.attention?'blocked':'running';
+      PM56_TX.set(r,'status',state);PM56_TX.set(r,'blockedReason',p.attention?.reason||null);
+      const items=PM56_TODOS.get(r.threadId)||[];
+      PM56_TX.set(r,'expectedOutputs',r.crew.assignments.map(a=>{const summary=PM56_TODOS.outcomeSummary(r.threadId,[a.todo_id]);return {id:r.id+':output:'+a.plan_step_id,todo_id:a.todo_id,expected_outcome:a.expected_outcome,delivered:summary.ok,evidence_refs:summary.evidenceRefs||[]};}));
+      for(const q of r.participants){const assigned=r.crew.assignments.filter(a=>a.participant_id===q.id).map(a=>items.find(t=>t.todo_id===a.todo_id)).filter(Boolean),done=assigned.length>0&&assigned.every(t=>['completed','skipped'].includes(t.status)&&PM56_TODOS.outcomeSummary(r.threadId,[t.todo_id]).ok);
+        PM56_TX.set(q,'status',done?'done':state==='canceled'?'disabled':assigned.some(t=>t.status==='in_progress')?'working':'waiting');PM56_TX.set(q,'outcome',done?'completed':state==='canceled'?'canceled':null);PM56_TX.set(q,'current',assigned.map(t=>t.title+' · '+t.status).join('; '));
+      }
+    }
+  }
+  function crewExecutionGate(planId){
+    const p=PM56_PLANS.get(planId),pr=p&&PM56_PLANS.runs()[p.approved?.plan_run_id];if(!pr||pr.topology!=='crew')return {ok:true};
+    const r=findRun(pr.crew_run_id);if(!r||r.crew?.planBinding?.plan_run_id!==pr.plan_run_id||r.crew.planBinding.plan_hash!==pr.plan_hash)return scheduledBad('crew_binding_missing');
+    const v=validatePlanCrew(r.crew.definition,planId,true);if(!v.ok)return v;
+    if(r.participants.length!==r.crew.definition.participants.length||r.participants.some(q=>!r.crew.definition.participants.some(s=>q.id===r.id+':'+s.id&&q.requestedModelId===s.model_id&&q.effectiveModelId===s.model_id&&q.requestedAccountId===s.account_id&&q.requestedPersona===s.persona)))return scheduledBad('crew_assignment_changed');
+    return {ok:true};
+  }
+  function crewWorkBinding(item){
+    const pr=PM56_PLANS.runs()[item.run_id];if(!pr||pr.topology!=='crew')return {ok:true,fields:{}};
+    const gate=crewExecutionGate(pr.plan_id);if(!gate.ok)return gate;
+    const r=findRun(pr.crew_run_id),a=r.crew.assignments.find(a=>a.todo_id===item.todo_id&&(item.plan_step_ids||[]).includes(a.plan_step_id));if(!a)return scheduledBad('crew_assignment_missing');
+    return {ok:true,fields:{collaboration_run_id:r.id,participant_id:a.participant_id,collaboration_definition_key:r.crew.planBinding.definition_key,assignment_id:r.id+':'+a.plan_step_id}};
+  }
+  function renderPlanCrewParticipant(run,p){
+    if(!run.crew?.planBinding)return '';
+    const b=run.crew.planBinding,work=PM56_TODOS.bindings(run.threadId).filter(w=>w.run_id===b.plan_run_id&&w.participant_id===p.id);
+    return '<section class="plan-crew-participant-work"><h4>Admitted local work</h4><p>No provider response is implied. These rows reference the shared To-Do work bindings.</p>'+
+      (work.length?work.map(w=>'<div><strong>'+esc(w.operation||w.work_kind||w.todo_id)+'</strong><span>'+esc(w.state)+' · '+esc(w.attempt_id||w.work_binding_id)+'</span></div>').join(''):'<p>No local operation admitted for this slot yet.</p>')+
+      '<button class="soft-button" data-action="pd-expand" data-id="'+esc(b.plan_id)+'">Open bound Plan and evidence</button></section>';
+  }
+  function renderPlanCrew(ctx,run){
+    refreshPlanCrew(run.crew.planBinding.plan_id);const items=PM56_TODOS.get(run.threadId)||[];
+    return '<section class="plan-crew-summary"><p>'+esc(run.executionDisclosure)+'</p><p>'+run.crew.definition.participants.length+' retained participants · requested concurrency '+run.crew.definition.requested_concurrency+' · effective 1</p><div>'+run.crew.assignments.map(a=>{const t=items.find(t=>t.todo_id===a.todo_id),q=participant(run,a.participant_id);return '<div class="plan-crew-assignment"><strong>'+esc(t?.title||a.plan_step_id)+'</strong><span>'+esc(q?.role)+' · '+esc(t?.status||'unavailable')+'</span></div>';}).join('')+'</div><button class="soft-button" data-action="pd-expand" data-id="'+esc(run.crew.planBinding.plan_id)+'">Open exact Plan</button></section>';
+  }
+
   window.PM56_COLLAB = {
+    freezeScheduledDestination,validateScheduledDestination,deliverScheduledMessage,preparePlanCrew,validatePlanCrew,commitPlanCrewDefinition,admitPlanCrew,verifyPlanCrewAdmission,crewExecutionGate,crewWorkBinding,refreshPlanCrew,
+    openScheduledCrew:(expected,snapshot)=>{
+      if(snapshot){const v=validatePlanCrew(snapshot,snapshot.plan_id,false);if(!v.ok)return v;}
+      openConfigureDraft('crew',null,false);const d=RTC.draft;
+      if(snapshot){d.name=snapshot.name;d.purpose=snapshot.purpose;d.config=scheduledCopy(snapshot.config);d.wonderer=false;d.grillMe=false;
+        d.rows=snapshot.participants.map(q=>({rowId:q.id,role:q.role,requestedModelId:q.model_id,persona:q.persona,requestedEffort:q.effort,requestedFast:q.fast,additiveRoleKind:q.additive_role}));}
+      d.scheduleIntent={expected:scheduledCopy(expected)};EXT.ctx().openDialog({type:'collab-configure'});return {ok:true};
+    },
     kinds: KINDS.slice(),
     definitions: function () { return RTC.definitions; },
     runs: function () { return RTC.runs; },
@@ -2460,9 +2638,9 @@
        Two spellings of the same state inside one module is a trap for anyone
        porting it, so the state word is normalised and published here. */
     runStatusVocabulary: function(){
-      return ['configuring','running','paused','blocked','completed','canceled','failed'];
+      return ['configuring','running','paused','waiting','blocked','completed','canceled','failed'];
     },
-    appendMessage:function(runId,data){var r=findRun(runId);if(!r)return null;var m=mkMsg(r,data);r.messages.push(m);return m;},
+    appendMessage:function(runId,data){var r=findRun(runId);if(!r)return null;var m=mkMsg(r,data);PM56_TX.append(r,'messages',m);return m;},
     selectedFindings:function(runId){return UI.selectedFindings[runId]||(UI.selectedFindings[runId]={});},
     admitCrewWork: admitCrewWork,
     validateStart: startPreflight,
