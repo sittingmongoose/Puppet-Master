@@ -9,19 +9,19 @@
   ],
   "ledger_id": "pldg-20260917-002-external-research-canon",
   "schema_id": "pm.ledger_compile_witness.v1",
-  "status": "findings",
+  "status": "pass",
   "summary": {
     "item_tokens": 34,
     "named_but_not_targeted": 0,
     "named_but_unchanged_since_base": 0,
     "records": 0,
     "records_firing": 0,
-    "registry_entries_absent_already_at_base": 16,
-    "registry_entries_absent_from_text": 16,
+    "registry_entries_absent_already_at_base": 0,
+    "registry_entries_absent_from_text": 0,
     "tokens_missing_from_prose": 0,
-    "tokens_missing_from_registry": 4,
+    "tokens_missing_from_registry": 0,
     "tokens_only_in_companion_outputs": 0,
-    "units_with_registry_entries_absent_from_text": 9
+    "units_with_registry_entries_absent_from_text": 0
   },
   "witness_exact_tokens": [
     {
@@ -574,7 +574,7 @@
     },
     {
       "atom": "atom-external-research-contract-family",
-      "fires": true,
+      "fires": false,
       "in_companion_outputs_only": false,
       "owner_units": [
         "ATS-054"
@@ -584,7 +584,9 @@
       "units_with_token_in_prose": [
         "ATS-054"
       ],
-      "units_with_token_in_registry": []
+      "units_with_token_in_registry": [
+        "ATS-054"
+      ]
     },
     {
       "atom": "atom-external-research-contract-family",
@@ -604,7 +606,7 @@
     },
     {
       "atom": "atom-external-research-contract-family",
-      "fires": true,
+      "fires": false,
       "in_companion_outputs_only": false,
       "owner_units": [
         "ATS-054"
@@ -614,7 +616,9 @@
       "units_with_token_in_prose": [
         "ATS-054"
       ],
-      "units_with_token_in_registry": []
+      "units_with_token_in_registry": [
+        "ATS-054"
+      ]
     },
     {
       "atom": "atom-research-packet-chat-consumer",
@@ -682,7 +686,7 @@
     },
     {
       "atom": "atom-research-packet-chat-consumer",
-      "fires": true,
+      "fires": false,
       "in_companion_outputs_only": false,
       "owner_units": [
         "ACD-467"
@@ -692,7 +696,9 @@
       "units_with_token_in_prose": [
         "ACD-467"
       ],
-      "units_with_token_in_registry": []
+      "units_with_token_in_registry": [
+        "ACD-467"
+      ]
     },
     {
       "atom": "atom-research-landing-ledger-consumer",
@@ -744,7 +750,7 @@
     },
     {
       "atom": "atom-research-landing-ledger-consumer",
-      "fires": true,
+      "fires": false,
       "in_companion_outputs_only": false,
       "owner_units": [
         "PLS-023"
@@ -754,7 +760,9 @@
       "units_with_token_in_prose": [
         "PLS-023"
       ],
-      "units_with_token_in_registry": []
+      "units_with_token_in_registry": [
+        "PLS-023"
+      ]
     },
     {
       "atom": "atom-research-limit-values-settings",
@@ -830,15 +838,9 @@
       "unit": "ERS-001"
     },
     {
-      "absent_already_at_base": [
-        "compare",
-        "reconcile"
-      ],
-      "entries_absent_from_unit_text": [
-        "reconcile",
-        "compare"
-      ],
-      "fires": true,
+      "absent_already_at_base": [],
+      "entries_absent_from_unit_text": [],
+      "fires": false,
       "registry_entries": 7,
       "unit": "ERS-002"
     },
@@ -850,31 +852,17 @@
       "unit": "ERS-003"
     },
     {
-      "absent_already_at_base": [
-        "unsupported or already-covered"
-      ],
-      "entries_absent_from_unit_text": [
-        "unsupported or already-covered"
-      ],
-      "fires": true,
+      "absent_already_at_base": [],
+      "entries_absent_from_unit_text": [],
+      "fires": false,
       "registry_entries": 6,
       "unit": "ERS-004"
     },
     {
-      "absent_already_at_base": [
-        "Approve",
-        "Ask a question",
-        "Deny",
-        "Deny with changes"
-      ],
-      "entries_absent_from_unit_text": [
-        "Approve",
-        "Deny",
-        "Deny with changes",
-        "Ask a question"
-      ],
-      "fires": true,
-      "registry_entries": 4,
+      "absent_already_at_base": [],
+      "entries_absent_from_unit_text": [],
+      "fires": false,
+      "registry_entries": 3,
       "unit": "ERS-005"
     },
     {
@@ -885,37 +873,23 @@
       "unit": "ERS-006"
     },
     {
-      "absent_already_at_base": [
-        "accepted for planning",
-        "unapproved optional capability"
-      ],
-      "entries_absent_from_unit_text": [
-        "accepted for planning",
-        "unapproved optional capability"
-      ],
-      "fires": true,
+      "absent_already_at_base": [],
+      "entries_absent_from_unit_text": [],
+      "fires": false,
       "registry_entries": 3,
       "unit": "ERS-007"
     },
     {
-      "absent_already_at_base": [
-        "native records"
-      ],
-      "entries_absent_from_unit_text": [
-        "native records"
-      ],
-      "fires": true,
+      "absent_already_at_base": [],
+      "entries_absent_from_unit_text": [],
+      "fires": false,
       "registry_entries": 5,
       "unit": "ERS-008"
     },
     {
-      "absent_already_at_base": [
-        "bound_by"
-      ],
-      "entries_absent_from_unit_text": [
-        "bound_by"
-      ],
-      "fires": true,
+      "absent_already_at_base": [],
+      "entries_absent_from_unit_text": [],
+      "fires": false,
       "registry_entries": 4,
       "unit": "ERS-009"
     },
@@ -941,28 +915,16 @@
       "unit": "ERS-012"
     },
     {
-      "absent_already_at_base": [
-        "same family"
-      ],
-      "entries_absent_from_unit_text": [
-        "same family"
-      ],
-      "fires": true,
+      "absent_already_at_base": [],
+      "entries_absent_from_unit_text": [],
+      "fires": false,
       "registry_entries": 5,
       "unit": "ERS-013"
     },
     {
-      "absent_already_at_base": [
-        "output manifest",
-        "protocol fingerprint",
-        "runtime identity"
-      ],
-      "entries_absent_from_unit_text": [
-        "protocol fingerprint",
-        "runtime identity",
-        "output manifest"
-      ],
-      "fires": true,
+      "absent_already_at_base": [],
+      "entries_absent_from_unit_text": [],
+      "fires": false,
       "registry_entries": 4,
       "unit": "ERS-014"
     },
@@ -970,25 +932,21 @@
       "absent_already_at_base": [],
       "entries_absent_from_unit_text": [],
       "fires": false,
-      "registry_entries": 3,
+      "registry_entries": 5,
       "unit": "ATS-054"
     },
     {
       "absent_already_at_base": [],
       "entries_absent_from_unit_text": [],
       "fires": false,
-      "registry_entries": 4,
+      "registry_entries": 5,
       "unit": "ACD-467"
     },
     {
-      "absent_already_at_base": [
-        "standing repair authorization"
-      ],
-      "entries_absent_from_unit_text": [
-        "standing repair authorization"
-      ],
-      "fires": true,
-      "registry_entries": 3,
+      "absent_already_at_base": [],
+      "entries_absent_from_unit_text": [],
+      "fires": false,
+      "registry_entries": 4,
       "unit": "PLS-023"
     },
     {

@@ -845,7 +845,7 @@ Decided on 2026-09-17 by Jared, answering a decision card raised by the continua
 
 The question was what Puppet Master should do about conflict and merge editing on a Jujutsu workspace. Three continuation-4 review arms independently proposed a typed per-path save vocabulary for a diff, compare or merge editor, and each of the three also offered the alternative of deciding explicitly to keep Jujutsu conflict resolution terminal-native. A fourth candidate noticed that `merge_editor_available`, the flag that gates the Open Merge Editor row in the command catalog, occurs exactly once in the whole corpus and is defined by no owner at all.
 
-It came up because these four are the only continuation-4 candidates that are not corrections. Nothing in canon is false today: the Git conflict commands are scoped to Git adapter commands, the Jujutsu inventory deliberately contains no conflict-resolution command, and a flag with no definition on a command with no handler makes no claim. But the moment anyone builds that surface, an undefined availability flag and an undefined save contract both become load-bearing, and the arms agreed on the one thing that must never be true: that "missing" is an admissible write instruction.
+It came up because these four, with the bookmark-disclosure candidate answered as DL-057, are the five continuation-4 candidates that are not corrections. Nothing in canon is false today: the Git conflict commands are scoped to Git adapter commands, the Jujutsu inventory deliberately contains no conflict-resolution command, and a flag with no definition on a command with no handler makes no claim. But the moment anyone builds that surface, an undefined availability flag and an undefined save contract both become load-bearing, and the arms agreed on the one thing that must never be true: that "missing" is an admissible write instruction.
 
 The options were:
 
@@ -887,11 +887,11 @@ The answer is option 1.
 
 So the bookmark state vocabulary is exactly `synced`, `unsynced`, `tracked per remote`, `combined` and `absent`. Every control and confirmation names the remotes it affects before dispatch. Untrack on a combined bookmark confirms every remote by name; untrack on one unsynced remote confirms that remote. Rename on a tracking bookmark discloses that it untracks first. Push and fetch say whether they reach all remotes or one. Delete-local and forget-remote never share one control. Pseudo-remotes and non-fetchable remotes are not shown as ordinary remotes, and an unsynced, untracked or absent reference is never folded silently into a combined chip.
 
-The disclosure is carried where a confirmation already is. Every Jujutsu confirmation now records the remote scope it disclosed and the exact remote identities it named, and the three scopes constrain the list: no remote names none, one remote names exactly one, all remotes names at least one. A confirmation that claims to affect every remote while naming none is rejected.
+The disclosure is carried where a confirmation already is. Every Jujutsu confirmation now records `disclosed_remote_scope`, the remote scope it disclosed, and `disclosed_remote_identity_refs`, the exact remote identities it named, and the three scopes constrain the list: no remote names none, one remote names exactly one, all remotes names at least one. A confirmation that claims to affect every remote while naming none is rejected.
 
 This adds no command. `forget-remote` stays out of the frozen thirty-one-command Jujutsu inventory, and this decision creates no route to add it.
 
-This buys wording a person can act on and a confirmation record that proves what they were told, in exchange for three required fields on a record that already carried six.
+This buys wording a person can act on and a confirmation record that proves what they were told, in exchange for two required fields on a record that already carried six.
 
 This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
 
@@ -905,7 +905,7 @@ Decided on 2026-09-17 by Jared, answering seven questions the continuation-4 can
 
 The question behind all seven was the same: the adjudication had found thirteen genuine corrections, and several of them could be repaired in more than one way. A correction repairs an existing promise and adds nothing, so where the repair had a cheap form and a falsifiable form, or an owner-obligation form and a schema form, the choice was the owner's rather than the adjudicator's.
 
-The seven, and what each one settles:
+The seven shapes, and what each one settles:
 
 First, verification depth. The restore drill promised object verification and nothing defined it, so a reachability-only pass satisfied the words. The rule could go in the owner document alone, or in the owner document plus a depth field on the receipt. The answer is both, with the field referencing the Backup owner's existing `integrity_verification_level` vocabulary, so a fixture can fail on it.
 
@@ -919,7 +919,7 @@ Fifth, the relational rules. Four of the repairs turn on relations JSON Schema c
 
 Sixth, the two product choices. `merge_editor_available` belongs with the deferred merge-editor cluster rather than on its own, and the bookmark disclosure question is its own decision. Both are recorded here and answered in full as DL-056 and DL-057.
 
-Seventh, one rejected candidate. A candidate about the marker-based gate on Mark Conflict Resolved was read by the bundle adjudicator as distinct from a continuation-3 rejection and by this adjudication as the same thing, since the rows it names are Git adapter commands. The answer confirms it stays rejected.
+Seventh, one rejected candidate. A candidate about the marker-based gate on Mark Conflict Resolved was read by the bundle adjudicator as distinct from a continuation-3 rejection and by this adjudication as the same thing, since the rows it names are Git adapter commands. The answer confirms it stays rejected. This shape is the adjudication's own disposition and raised no ledger question of its own; it is carried by the authorization shard, which forbids reopening candidate C4D-02. The sixth shape carries two questions, `q-006` and `q-007`.
 
 Jared's answer to all seven, verbatim and whole: "I agree with all 7 of your recommendations. You can do all the next steps. You can use Opus 5 max for your strong model." The third sentence is about experiment tooling rather than canon, and is quoted here so the record carries the whole utterance rather than the part that bears on the Plans.
 
@@ -927,7 +927,7 @@ What this buys is thirteen repairs that each fail a fixture when they are violat
 
 This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
 
-SourceRef: questions `q-001` through `q-005` in `Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections`; `/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/C4_CANDIDATE_ANSWERS_20260917.md`, SHA-256 `544654e50051d8ea99c835b2989d48d1e64fdf040a8e934d6ac6d16226305608` as read on 2026-09-17; `~/PM-Experiments/c4-candidates-20260917/ADJUDICATION_PART1.md`; Jared, direction of 2026-09-17. Agent-relayed, not verifiable from inside this repository.
+SourceRef: questions `q-001` through `q-007` in `Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections`; `/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/C4_CANDIDATE_ANSWERS_20260917.md`, SHA-256 `544654e50051d8ea99c835b2989d48d1e64fdf040a8e934d6ac6d16226305608` as read on 2026-09-17; `~/PM-Experiments/c4-candidates-20260917/ADJUDICATION_PART1.md`, SHA-256 `d6b09e549eb9c2cfb4b226d19fd2fbe381ac4255ee117d8ef55d7cd5e1d59b16` as read on 2026-09-17; Jared, direction of 2026-09-17. Agent-relayed, not verifiable from inside this repository.
 
 ContractRef: ContractName:Plans/Jujutsu_Integration.md, ContractName:Plans/Source_Control_System.md
 
@@ -4190,6 +4190,8 @@ source_lineage:
   - Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections:q-003
   - Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections:q-004
   - Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections:q-005
+  - Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections:q-006
+  - Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections:q-007
   - Plans/Decision_Log.md:DL-058-direction-2026-09-17
   - Plans/Decision_Log.md#DL-056
   - Plans/Decision_Log.md#DL-057

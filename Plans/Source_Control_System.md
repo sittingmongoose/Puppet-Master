@@ -902,8 +902,8 @@ acceptance_criteria:
     `gc_fence_covered_paths`, which enumerates the writer paths the fence covered - the native JJ process
     (`native_jj_process`), a colocated Git writer (`colocated_git`), and any registered external or automation path
     (`registered_external_automation`) - each reported `covered`, `uncovered` or `unknown`, and each covered path naming
-    the evidence that it was covered. A fence claim that enumerates no path is rejected. Where coverage cannot be asserted for a known
-    path the closure is `partial` with that path named, because a fence held truthfully over one writer while another
+    the evidence that it was covered. A fence claim that enumerates no path is rejected. Where any known path is reported
+    `uncovered` or `unknown` the closure is `partial` with that path named, because a fence held truthfully over one writer while another
     was never covered is a true sentence about an incomplete capture.
   - >-
     The isolated boundary this unit requires before activation is a resolved boundary, not an asserted one. Where the

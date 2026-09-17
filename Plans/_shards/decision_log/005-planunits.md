@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L941-L4336
+Source lines: L941-L4338
 
-Source SHA256: `e13092293142e0751062175638b866f26a2e0d71302a529d84a90e9784665e48`
+Source SHA256: `8c56fcc49a6c4a3a53ced9b3e4c451d522b4c50bd243fe255f8f4c4270bdf307`
 
 ---
 
@@ -3260,6 +3260,8 @@ source_lineage:
   - Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections:q-003
   - Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections:q-004
   - Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections:q-005
+  - Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections:q-006
+  - Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections:q-007
   - Plans/Decision_Log.md:DL-058-direction-2026-09-17
   - Plans/Decision_Log.md#DL-056
   - Plans/Decision_Log.md#DL-057

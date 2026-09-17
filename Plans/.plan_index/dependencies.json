@@ -97846,7 +97846,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-17T23:41:30Z",
+  "generated_at_utc": "2026-09-17T23:56:03Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -125925,8 +125925,8 @@
       "source_location": {
         "heading": "DL-001 - Decision Log Source-Preserving Bridge Retired",
         "heading_level": 3,
-        "heading_line": 4215,
-        "line": 4217,
+        "heading_line": 4217,
+        "line": 4219,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -151374,8 +151374,8 @@
       "source_location": {
         "heading": "JJI-004 - Colocated Repository Mutation Authority And Git Fencing",
         "heading_level": 3,
-        "heading_line": 198,
-        "line": 200,
+        "heading_line": 206,
+        "line": 208,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151391,8 +151391,8 @@
       "source_location": {
         "heading": "JJI-005 - Undo, Operation Restore, Conflicts, FileSafe, And Recovery",
         "heading_level": 3,
-        "heading_line": 241,
-        "line": 243,
+        "heading_line": 249,
+        "line": 251,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151408,8 +151408,8 @@
       "source_location": {
         "heading": "JJI-006 - JJ Setup, GUI Projection, Compatibility, And Migration",
         "heading_level": 3,
-        "heading_line": 273,
-        "line": 275,
+        "heading_line": 281,
+        "line": 283,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151425,8 +151425,8 @@
       "source_location": {
         "heading": "JJI-007 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 489,
-        "line": 491,
+        "heading_line": 497,
+        "line": 499,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151442,8 +151442,8 @@
       "source_location": {
         "heading": "JJI-008 - Complete JJ Backup Closure Across Layouts And Safe Restore Handoff",
         "heading_level": 3,
-        "heading_line": 540,
-        "line": 542,
+        "heading_line": 548,
+        "line": 550,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151459,8 +151459,8 @@
       "source_location": {
         "heading": "JJI-009 - Private PM Owned Adapter Service",
         "heading_level": 3,
-        "heading_line": 699,
-        "line": 701,
+        "heading_line": 707,
+        "line": 709,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151476,8 +151476,8 @@
       "source_location": {
         "heading": "JJI-010 - Read Only And Earlier State Browsing",
         "heading_level": 3,
-        "heading_line": 765,
-        "line": 767,
+        "heading_line": 773,
+        "line": 775,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151493,8 +151493,8 @@
       "source_location": {
         "heading": "JJI-011 - Named Checkpoints And Receipt Based History Metadata",
         "heading_level": 3,
-        "heading_line": 833,
-        "line": 835,
+        "heading_line": 841,
+        "line": 843,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151510,8 +151510,8 @@
       "source_location": {
         "heading": "JJI-012 - Verified Group Undo Redo And Selected Operation Reversal",
         "heading_level": 3,
-        "heading_line": 898,
-        "line": 900,
+        "heading_line": 906,
+        "line": 908,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151527,8 +151527,8 @@
       "source_location": {
         "heading": "JJI-013 - Explicit History Storage Maintenance",
         "heading_level": 3,
-        "heading_line": 966,
-        "line": 968,
+        "heading_line": 974,
+        "line": 976,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151544,8 +151544,8 @@
       "source_location": {
         "heading": "JJI-014 - Explicit Workspace Adoption Repair And Visibility",
         "heading_level": 3,
-        "heading_line": 1025,
-        "line": 1027,
+        "heading_line": 1033,
+        "line": 1035,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151561,8 +151561,8 @@
       "source_location": {
         "heading": "JJI-015 - Managed Rewrite Preview And Apply Lifecycle",
         "heading_level": 3,
-        "heading_line": 1091,
-        "line": 1093,
+        "heading_line": 1099,
+        "line": 1101,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151578,8 +151578,8 @@
       "source_location": {
         "heading": "JJI-016 - Qualified Native Change Editing Semantics",
         "heading_level": 3,
-        "heading_line": 1156,
-        "line": 1158,
+        "heading_line": 1164,
+        "line": 1166,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151595,8 +151595,8 @@
       "source_location": {
         "heading": "JJI-017 - Version Comparison And Focused Change Evolution",
         "heading_level": 3,
-        "heading_line": 1232,
-        "line": 1234,
+        "heading_line": 1240,
+        "line": 1242,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151612,8 +151612,8 @@
       "source_location": {
         "heading": "JJI-018 - Exact Hunk Selection And Graph Rewrite Intent",
         "heading_level": 3,
-        "heading_line": 1292,
-        "line": 1294,
+        "heading_line": 1300,
+        "line": 1302,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151629,8 +151629,8 @@
       "source_location": {
         "heading": "JJI-019 - Conditional Conflict Publication And Bookmark Resolution",
         "heading_level": 3,
-        "heading_line": 1359,
-        "line": 1361,
+        "heading_line": 1367,
+        "line": 1369,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151646,8 +151646,8 @@
       "source_location": {
         "heading": "JJI-020 - History Annotation And Recovery Retention Boundary",
         "heading_level": 3,
-        "heading_line": 1434,
-        "line": 1436,
+        "heading_line": 1442,
+        "line": 1444,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151663,8 +151663,8 @@
       "source_location": {
         "heading": "JJI-021 - Typed New Repository Object Format Extension",
         "heading_level": 3,
-        "heading_line": 1510,
-        "line": 1512,
+        "heading_line": 1518,
+        "line": 1520,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -151680,8 +151680,8 @@
       "source_location": {
         "heading": "JJI-022 - Certified Object Format Profiles And Owner Owned Format Evidence",
         "heading_level": 3,
-        "heading_line": 1570,
-        "line": 1572,
+        "heading_line": 1578,
+        "line": 1580,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",

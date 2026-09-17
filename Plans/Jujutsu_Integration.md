@@ -161,7 +161,8 @@ acceptance_criteria:
     A blocked repository always admits a way to look. When availability is `unavailable` or `blocked` for
     `repository_quarantined`, `catalog_stale`, `revision_stale` or `operation_stale`, `allowed_action_ids` contains at
     least `cmd.jujutsu.operation.log` and `cmd.jujutsu.operation.show`, so an empty recovery set is not admissible for
-    the states that most need one. Every identifier in `allowed_action_ids` is drawn from the canonical inventory. That
+    the states that most need one. Every identifier in `allowed_action_ids` is drawn from the canonical inventory or
+    from a declared owner route, which is the admitted set the contract gate reads from the owner schema itself. That
     these two remain servable from the operation store alone, without a current working-copy snapshot, a valid writer
     lease or a healthy status projection, is an owner obligation with no validator surface here and is recorded as
     open question `q-010` in `pldg-20260917-001-jujutsu-continuation4-corrections`.
@@ -172,6 +173,13 @@ acceptance_criteria:
     expected-revision fence, currentness and the exact remote identity they name, because naming a remote is not
     contacting one. Classifying them as transport contradicted the shipped fixtures, which already recorded a
     `local_mutation` permission scope, and would have made a purely local operation unavailable offline.
+  - >-
+    A bookmark confirmation names the remotes it affects. Every Jujutsu confirmation record carries
+    `disclosed_remote_scope`, one of `no_remote`, `one_remote` or `all_remotes`, and the matching
+    `disclosed_remote_identity_refs`, and the scope constrains the list: no remote names none, one remote names exactly
+    one, all remotes names at least one. A confirmation claiming to affect every remote while naming none is rejected.
+    The wording a person reads is the Source Control owner's, set in DL-057 and carried by SCS-005; what this unit owns
+    is that the record the existing commands already require carries the disclosure.
   - >-
     `cmd.jujutsu.git.clone` preserves a current JJ adapter/catalog fence and exact caller
     route/focus/continuation context through success or cancellation, and never normalizes to the ordinary Git clone.
@@ -190,7 +198,7 @@ context_scope: jujutsu_commands
 implementation_surfaces: [Plans/jujutsu_integration_contracts.schema.json, Plans/jujutsu_integration_contract_fixtures.json, Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Wiring_Matrix.production.json, future JJ adapter]
 node_compile_hint: {mode: jujutsu_command_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:egolite-register:TS-03, source_ref:egolite-register:CT-01, source_ref:pldg-20260911-001-jujutsu-receipt-correction:atom-jj-terminal-receipt-001, source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-clone-preinit-native-identity-108, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-divergent-change-representable-c4-02, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-read-proven-non-mutating-c4-05, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-no-interactive-editor-session-c4-08, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-recovery-action-floor-c4-09, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-bookmark-tracking-is-local-c4-10, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-bookmark-disclosure-dl057]
-preserved_exact_tokens: [cmd.jujutsu.*, cmd.jj.*, ObservableWork, before operation ID, after operation ID, native_state_phase, destination_not_initialized, divergent, change_divergent_ambiguous_target, commit_id, interactive_editor_session_required, cmd.jujutsu.change.split, allowed_action_ids, repository_quarantined, cmd.jujutsu.operation.log, cmd.jujutsu.operation.show, cmd.jujutsu.bookmark.track, cmd.jujutsu.bookmark.untrack, local_mutation, credential_lease_ref]
+preserved_exact_tokens: [cmd.jujutsu.*, cmd.jj.*, ObservableWork, before operation ID, after operation ID, native_state_phase, destination_not_initialized, divergent, change_divergent_ambiguous_target, commit_id, interactive_editor_session_required, cmd.jujutsu.change.split, allowed_action_ids, repository_quarantined, cmd.jujutsu.operation.log, cmd.jujutsu.operation.show, cmd.jujutsu.bookmark.track, cmd.jujutsu.bookmark.untrack, local_mutation, credential_lease_ref, disclosed_remote_scope, disclosed_remote_identity_refs]
 negative_constraints: [Do not register cmd.jj.* as a primary command., Do not scrape terminal prose for state., Do not retry an unknown effect.]
 owner_hints: [Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Shared_Integration_Runtime.md]
 ```
@@ -298,7 +306,7 @@ acceptance_criteria:
     unit carries the floor's lineage. The floor itself is set on command availability by JJI-003: where availability is
     `unavailable` or `blocked` for `repository_quarantined`, `catalog_stale`, `revision_stale` or `operation_stale`,
     `allowed_action_ids` contains at least `cmd.jujutsu.operation.log` and `cmd.jujutsu.operation.show` and every
-    identifier it admits exists in the canonical inventory. This unit renders that set as the blocked row's recovery
+    identifier it admits exists in the canonical inventory or in a declared owner route. This unit renders that set as the blocked row's recovery
     actions and never renders a blocked row with an empty recovery set. Whether the effective-capability snapshot
     should carry a recovery-action floor field of its own rather than projecting JJI-003's is open question `q-011` in
     `pldg-20260917-001-jujutsu-continuation4-corrections`.
@@ -565,7 +573,7 @@ acceptance_criteria:
   - Non-colocated closure preserves the JJ operation/object store and every explicitly mapped backing/alternate store without assuming a colocated Git checkout; shared multi-workspace closure preserves stable workspace/source mappings while foreign absolute paths remain non-authoritative.
   - Complete closure includes operation heads/views, commits/trees/conflicts, retained non-current/abandoned/rebased objects, current workspace files, and required dependency stores; a text op log, Git push, mirror clone, Git bundle, current bookmarks, or remote availability alone cannot satisfy it.
   - Capture cannot manufacture a JJ snapshot/commit/operation to align dirty files with the last recorded operation; the closure and restore receipt disclose the captured-files relationship separately.
-  - Restore verification is isolated, read-only against the original, version-compatible, and ignore-working-copy on every read rather than only where required; a disposable restored copy can list operations, inspect views, and restore the selected historical operation with object verification.
+  - Restore verification is isolated, read-only against the original, version-compatible in the bound sense this unit defines below rather than as an assertion, and ignore-working-copy on every read rather than only where required; a disposable restored copy can list operations, inspect views, and restore the selected historical operation with object verification.
   - Colocation is not inferred after restore. Activation either proves one restored colocated JJ writer, explicitly rebinds as non-colocated through the owner, or blocks as a dual-writer/identity collision.
   - JJ conflicts, filesystem/path collisions, missing object closure, stale target state, and operation mismatch remain distinct receipt refs. A blocked/conflicted result cannot be promoted to successful Backup activation or auto-selected newest operation.
   - >-
@@ -619,10 +627,10 @@ acceptance_criteria:
     that establishes it; a filename pattern such as `*.lock` is never a classification. Machine-local and ephemeral
     entries are captured as bytes and carry `restored_as_active_state` false, so a restored copy carries no other
     machine's store identity. An unrecognized entry inside the store tree yields `partial` with the entry named, never
-    `complete`, and is never restored as active state either. The
+    `complete`, and is never restored as active state either. The obligations this unit lands are those three. The
     enumerated list of entries for a given JJ version is an owner audit of native internals that this landing does not
-    perform; it is recorded as open question `q-008` in `pldg-20260917-001-jujutsu-continuation4-corrections`, and a
-    version change invalidates the list until it is re-audited.
+    perform; it is recorded as open question `q-008` in `pldg-20260917-001-jujutsu-continuation4-corrections`, whose
+    answer a version change invalidates until the list is re-audited.
   - >-
     Completeness has a decision procedure, not only a definition. The closure records a `closure_expansion` that
     expands the retained set through every stage - `operation_to_view`, `view_to_commit`, `commit_to_tree`, and the
@@ -653,10 +661,10 @@ validation_surfaces:
     head with activation markers last, and every recovery action identifier comes from the canonical inventory or a
     declared owner route. Regression coverage is `tests/test_pm_jujutsu_closure_semantics.py`.
   - >-
-    Two obligations in this unit have no validator surface and are recorded as open questions in
-    `pldg-20260917-001-jujutsu-continuation4-corrections`. Question `q-008` is the enumerated list of machine-local and
-    ephemeral store entries for a pinned JJ version, and question `q-009` is the adapter's complete declared native
-    effect scope per invocation.
+    Two obligations behind this unit's rules have no validator surface and are recorded as open questions in
+    `pldg-20260917-001-jujutsu-continuation4-corrections`. Question `q-008`, the enumerated list of machine-local and
+    ephemeral store entries for a pinned JJ version, belongs to this unit. Question `q-009`, the adapter's complete
+    declared native effect scope per invocation, belongs to JJI-003, which states it there.
   - future colocated/non-colocated/shared-workspace clean-host restore, GC race, historical-operation, unsafe-config, collision/conflict, and no-hidden-snapshot tests
 risk_class: incomplete_jj_operation_recovery_or_restore_dual_writer
 reasoning_tier: high

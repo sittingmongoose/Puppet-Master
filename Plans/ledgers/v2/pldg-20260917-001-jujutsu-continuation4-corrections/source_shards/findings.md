@@ -3,7 +3,10 @@
 Each entry names the existing promise or contradiction it repairs, the passage it cites, and what changed. That is what
 makes each one a correction rather than a feature. Nineteen correction-shaped candidates were adjudicated; two pairs
 merged, one was covered by existing canon, one was rejected as inside a continuation-3 rejection, and two were
-reclassified as product choices and answered separately as DL-056 and DL-057.
+reclassified as product choices and answered separately as DL-056 and DL-057. Those counts describe the nineteen
+correction-shaped candidates only. The authorization shard's five capabilities or product choices, and the five
+candidates already flagged inside a continuation-3 rejection before this ledger opened, count the whole wave rather
+than this subset, which is why the two numbers differ.
 
 ## Record 1 — restore object verification depth (C4C-01, claude; C4G-01, glm53)
 
@@ -65,7 +68,7 @@ executable is an optional capability and is not landed.
 
 ## Record 11 — the recovery action floor (C4H-03, claude-hicap)
 
-Repairs Contracts_V0's recovery-action rule and JJI-006. `allowed_action_ids` had no floor, so an empty array validated
+Repairs Contracts_V0's recovery-action rule, JJI-003 and JJI-006. `allowed_action_ids` had no floor, so an empty array validated
 for a quarantined repository. Change: a conditional requires operation log and operation show for the quarantine and
 staleness reason codes, both already in the frozen inventory. Servability is open question `q-010`.
 

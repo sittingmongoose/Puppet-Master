@@ -5406,7 +5406,7 @@
         "scripts/pm-plans-verify.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 4364,
+      "line_count": 4366,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 55,
       "plan_unit_ids": [
@@ -5527,7 +5527,7 @@
         "undisclosed_remote_scope_on_a_destructive_bookmark_action",
         "weak_integration_underclassification"
       ],
-      "sha256": "e13092293142e0751062175638b866f26a2e0d71302a529d84a90e9784665e48",
+      "sha256": "8c56fcc49a6c4a3a53ced9b3e4c451d522b4c50bd243fe255f8f4c4270bdf307",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 55
@@ -9020,7 +9020,7 @@
         "future qualified owner adapter and typed contract extensions",
         "future signed compatibility catalog and qualified owner adapter"
       ],
-      "line_count": 1631,
+      "line_count": 1639,
       "path": "Plans/Jujutsu_Integration.md",
       "plan_unit_count": 22,
       "plan_unit_ids": [
@@ -9074,7 +9074,7 @@
         "verified_group_undo_redo_and_selected_operation_reversal",
         "version_comparison_and_focused_change_evolution"
       ],
-      "sha256": "e7b60328f70aa8bf504fd4d3d9f28cfe43508de9efa43334f88ac4026c3a54a6",
+      "sha256": "eb6ecedfab42d1de333e81fc4b249b6a04d6c219ee6e42865a6ef32517602641",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 22
@@ -9104,7 +9104,7 @@
         "Plans/source_control_contracts.schema.json#/$defs/new_repository_object_format_selection",
         "Plans/source_control_contracts.schema.json#/$defs/repository_object_format_profile",
         "The recovery-action floor is enforced by `Plans/jujutsu_integration_contracts.schema.json`; that every admitted identifier exists is a relational rule enforced by the `jujutsu_integration_contracts` branch of `contract_semantic_failures` in `scripts/pm-new-contracts-verify.py`. That the floor commands are servable from the operation store alone is an owner obligation with no validator surface, recorded as open question `q-010` in `pldg-20260917-001-jujutsu-continuation4-corrections`.",
-        "Two obligations in this unit have no validator surface and are recorded as open questions in `pldg-20260917-001-jujutsu-continuation4-corrections`. Question `q-008` is the enumerated list of machine-local and ephemeral store entries for a pinned JJ version, and question `q-009` is the adapter's complete declared native effect scope per invocation.",
+        "Two obligations behind this unit's rules have no validator surface and are recorded as open questions in `pldg-20260917-001-jujutsu-continuation4-corrections`. Question `q-008`, the enumerated list of machine-local and ephemeral store entries for a pinned JJ version, belongs to this unit. Question `q-009`, the adapter's complete declared native effect scope per invocation, belongs to JJI-003, which states it there.",
         "adaptive GUI fixtures",
         "alias normalization tests",
         "colocation migration fixtures",
@@ -16991,7 +16991,7 @@
         "unbounded_graph_hydration_or_source_history_identity_conflation",
         "wrong_environment_or_stale_version_certification"
       ],
-      "sha256": "aa1f249d7fc6446adadeff95d9857ec9dda487c07e8fd723936c51d6331b6d5a",
+      "sha256": "95e9d8c8ae61481eeb426820fe9158a0e65f29f6605f40648f32d229093a8c88",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 22
@@ -19721,7 +19721,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-17T23:41:30Z",
+  "generated_at_utc": "2026-09-17T23:56:03Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
