@@ -1,0 +1,640 @@
+{
+  "schema": "jj.continuation5.arm_scoring.v1",
+  "arm": "b-breadth-compare",
+  "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm",
+  "arm_kind": "Cheap breadth then strong compare. Muse Spark reconciled in the frozen order (30 admissions, 54 of 88 leads delivered, 25 min, $0.36); claude-opus-5 at effort max then compared 32 of those leads against the frozen Plans in Muse's delivery order, with no premium reconcile output reachable.",
+  "scored_attempt": {
+    "run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734",
+    "manifest_sha256_internal": "17b32556b5d3491e526a2a84384ad048030a856f84d643e01305502149e550e0",
+    "files": 20012,
+    "attempt_1_excluded": {
+      "run": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-123157",
+      "manifest_sha256_internal": "5b340f3ae1bd7d165f7383b29c7d3663d41f779fa192d38352140c1fb1196f77",
+      "why": "Destroyed by the account's shared five-hour rate limit, not by the model, the inputs or the protocol. Archived under arm-history/b-compare-attempt-1/ per the continuation-4 precedent.",
+      "contains_no_scoreable_output": "It delivered ZERO comparisons and no job wrote notes.md, so there is no assertion document in it to score even in principle. I verified this rather than taking it on the instruction."
+    }
+  },
+  "run": {
+    "breadth_manifest_sha256_internal": "711302fab6dd1c07e7e06a03edf26123b2fa370a083227869e274205b04564c5",
+    "breadth_files": 18258,
+    "terminal_stop": "Both stages record 'Stop: admitted_attempt_cap' - each used all of its admissions and ended on its own designed stop.",
+    "verification": "BOTH manifests verified three ways - internal digest recomputed from the sorted rows, matched against the runner's quoted value, and an independent tree re-hash - with zero differing files.",
+    "same_frozen_case": "run.json input_manifest_sha256 11a497945f... - the same frozen case every review arm ran."
+  },
+  "isolation": {
+    "claim": "The compare stage could only depend on Muse's reconcile deliveries, never on a premium reconcile output.",
+    "runner_proof": "compare-isolation.json records pass: 54 reconcile-ready leads, 30 cheap reconcile jobs, 12 premium reconcile jobs present but with ZERO deliveries, no compare-eligible lead depending on a premium reconcile.",
+    "my_independent_check": "I rebuilt it from the compare jobs' own job.json upstream chains. Every reconcile job cited upstream is J0017+ - a Muse b-breadth job. NOT ONE of the twelve premium reconcile jobs J0005-J0016 appears as an upstream dependency. I also confirmed the carry-across was byte-faithful: all 23 Muse reconcile notes.md are sha256-identical between the breadth tree and the compare tree, 0 differing, 0 absent.",
+    "caveat_stated_honestly": "The compare jobs DO see the premium arm's implementation and history study notes (J0002/J0003/J0004), exactly as claude-hicap and Arm P did. The isolated layer is the RECONCILE layer, which is what the design varies; it is not a claim that the arm saw nothing from the premium arm."
+  },
+  "job_table": [
+    {
+      "job": "J0047-compare",
+      "delivery_positions": [
+        1,
+        2,
+        3
+      ],
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 1067.7,
+      "native_responses": 76,
+      "request_count": 76,
+      "accounting_complete": true,
+      "delivered": 3,
+      "notes_bytes": 42122,
+      "authored_lead_documents": 2,
+      "credited_findings": [
+        "F002",
+        "F010",
+        "F079",
+        "F081",
+        "F084",
+        "F102"
+      ]
+    },
+    {
+      "job": "J0048-compare",
+      "delivery_positions": [
+        4
+      ],
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 761.8,
+      "native_responses": 59,
+      "request_count": 59,
+      "accounting_complete": true,
+      "delivered": 1,
+      "notes_bytes": 38288,
+      "authored_lead_documents": 4,
+      "credited_findings": [
+        "F007",
+        "F008",
+        "F043"
+      ]
+    },
+    {
+      "job": "J0049-compare",
+      "delivery_positions": [
+        5
+      ],
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 827.4,
+      "native_responses": 86,
+      "request_count": 86,
+      "accounting_complete": true,
+      "delivered": 1,
+      "notes_bytes": 35693,
+      "authored_lead_documents": 4,
+      "credited_findings": [
+        "F029",
+        "F030",
+        "F031",
+        "F033",
+        "F034",
+        "F035",
+        "F036",
+        "F037"
+      ]
+    },
+    {
+      "job": "J0050-compare",
+      "delivery_positions": [
+        6,
+        7,
+        8
+      ],
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 1106.4,
+      "native_responses": 76,
+      "request_count": 76,
+      "accounting_complete": true,
+      "delivered": 3,
+      "notes_bytes": 75304,
+      "authored_lead_documents": 3,
+      "credited_findings": [
+        "F066",
+        "F073"
+      ]
+    },
+    {
+      "job": "J0051-compare",
+      "delivery_positions": [
+        9,
+        10,
+        11
+      ],
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 869.2,
+      "native_responses": 78,
+      "request_count": 78,
+      "accounting_complete": true,
+      "delivered": 3,
+      "notes_bytes": 50375,
+      "authored_lead_documents": 3,
+      "credited_findings": [
+        "F004",
+        "F006",
+        "F061",
+        "F068",
+        "F107"
+      ]
+    },
+    {
+      "job": "J0052-compare",
+      "delivery_positions": [
+        12,
+        13,
+        14
+      ],
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 886.7,
+      "native_responses": 78,
+      "request_count": 78,
+      "accounting_complete": true,
+      "delivered": 3,
+      "notes_bytes": 42496,
+      "authored_lead_documents": 3,
+      "credited_findings": [
+        "F011",
+        "F089"
+      ]
+    },
+    {
+      "job": "J0053-compare",
+      "delivery_positions": [
+        15,
+        16,
+        17
+      ],
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 1095.7,
+      "native_responses": 78,
+      "request_count": 78,
+      "accounting_complete": true,
+      "delivered": 3,
+      "notes_bytes": 50664,
+      "authored_lead_documents": 3,
+      "credited_findings": []
+    },
+    {
+      "job": "J0054-compare",
+      "delivery_positions": [
+        18,
+        19,
+        20
+      ],
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 1300.7,
+      "native_responses": 62,
+      "request_count": 62,
+      "accounting_complete": true,
+      "delivered": 3,
+      "notes_bytes": 50240,
+      "authored_lead_documents": 2,
+      "credited_findings": [
+        "F027",
+        "F044"
+      ]
+    },
+    {
+      "job": "J0055-compare",
+      "delivery_positions": [
+        21,
+        22,
+        23
+      ],
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 733.1,
+      "native_responses": 79,
+      "request_count": 79,
+      "accounting_complete": true,
+      "delivered": 3,
+      "notes_bytes": 39000,
+      "authored_lead_documents": 3,
+      "credited_findings": [
+        "F025",
+        "F059",
+        "F060",
+        "F086"
+      ]
+    },
+    {
+      "job": "J0056-compare",
+      "delivery_positions": [
+        24,
+        25,
+        26
+      ],
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 899.8,
+      "native_responses": 68,
+      "request_count": 68,
+      "accounting_complete": true,
+      "delivered": 3,
+      "notes_bytes": 55245,
+      "authored_lead_documents": 3,
+      "credited_findings": [
+        "F005",
+        "F050",
+        "F110"
+      ]
+    },
+    {
+      "job": "J0057-compare",
+      "delivery_positions": [
+        27,
+        28,
+        29
+      ],
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 953.2,
+      "native_responses": 77,
+      "request_count": 77,
+      "accounting_complete": true,
+      "delivered": 3,
+      "notes_bytes": 51650,
+      "authored_lead_documents": 5,
+      "credited_findings": [
+        "F056",
+        "F057",
+        "F082"
+      ]
+    },
+    {
+      "job": "J0058-compare",
+      "delivery_positions": [
+        30,
+        31,
+        32
+      ],
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 784.6,
+      "native_responses": 56,
+      "request_count": 56,
+      "accounting_complete": true,
+      "delivered": 3,
+      "notes_bytes": 51574,
+      "authored_lead_documents": 2,
+      "credited_findings": [
+        "F094"
+      ]
+    }
+  ],
+  "request_limited_coverage": {
+    "compare_stage": {
+      "applies": false,
+      "statement": "No compare job was request-limited, time-limited, money-limited or rate-limited. Responses ran 56-86 against a 160 ceiling; the longest job took 1,300.7 s of 3,600 s; the dearest cost $10.21 of $20; the arm spent $102.20 of $150. All 12 jobs reconciled with receipts equal to requests and zero gaps. Every typed rate_limit_event stayed 'allowed' and the watcher never had to hold.",
+      "binding_limit": "the 12-admission cap"
+    },
+    "breadth_stage": {
+      "applies": true,
+      "statement": "16 of the 30 Muse jobs were response-limited at the 40-response ceiling and 14 finished. Receipts ran 23-41 (the 41s are the documented post-response off-by-one). All 30 reconciled with receipts equal to requests.",
+      "consequence_for_the_compare": "Of the 32 leads that reached a comparison, 14 - almost half - came from a Muse reconcile job that was response-limited, and 3 came from a note the Muse job itself labelled partial or in progress. See reconcile_adequacy."
+    }
+  },
+  "recall": {
+    "expanded_union_denominator": 110,
+    "credited": [
+      "F002",
+      "F004",
+      "F005",
+      "F006",
+      "F007",
+      "F008",
+      "F010",
+      "F011",
+      "F025",
+      "F027",
+      "F029",
+      "F030",
+      "F031",
+      "F033",
+      "F034",
+      "F035",
+      "F036",
+      "F037",
+      "F043",
+      "F044",
+      "F050",
+      "F056",
+      "F057",
+      "F059",
+      "F060",
+      "F061",
+      "F066",
+      "F068",
+      "F073",
+      "F079",
+      "F081",
+      "F082",
+      "F084",
+      "F086",
+      "F089",
+      "F094",
+      "F102",
+      "F107",
+      "F110"
+    ],
+    "count": 39,
+    "recall_percent": 35.45,
+    "by_class": {
+      "correction": "1/5",
+      "optional_capability": "6/36",
+      "product_choice": "1/6",
+      "unsupported_or_rejected": "31/63"
+    },
+    "corrections_credited": [
+      "F107"
+    ],
+    "partials": [
+      "F090",
+      "F022",
+      "F074",
+      "F080",
+      "F051"
+    ]
+  },
+  "recall_by_stage": {
+    "question": "What would Muse's reconcile alone have credited, and what did the Opus compare add?",
+    "muse_reconcile_alone": 0,
+    "opus_compare_added": 39,
+    "why_zero_is_structural_not_a_failure": "It is not that Muse's reconciliation was poor. It is that the stage CANNOT earn a union credit by construction. Every union finding is a proposition about what Puppet Master must do, and a credit requires that proposition to be stated against a cited passage. All 23 Muse reconcile notes are headed 'external technical, no Plans comparison', and I verified that NOT ONE of them cites a single Plans/ passage. The reconcile stage verifies lead claims against primary sources and records corrections; it never reaches the Plans.",
+    "what_the_reconcile_stage_actually_contributed": "Evidence, breadth and delivery order - not credits. It turned 88 unreviewed leads into 54 reconciled ones for $0.36 in 25 minutes, which is what let the expensive stage compare 32 leads instead of 14.",
+    "measurement_caveat": "This is a property of the two-stage SPLIT, not of Muse. A reconcile stage that also read the Plans could earn credits; this one was deliberately not given them."
+  },
+  "reconcile_adequacy": {
+    "question": "Were the Muse reconcile outputs an adequate basis for the compare?",
+    "verdict": "ADEQUATE IN SUBSTANCE, THIN AS EVIDENCE - and the compare stage paid to re-do the verification.",
+    "in_substance": "Where the compare could check the inherited reconciliation, it generally held. J0057: 'The parent prose and the child note agree that #9649 describes deterministic total loss ... I re-verified the last point directly and it holds.' J0055 records that 'the handoff/child notes agree with primary sources'. I found no case where the compare adopted a false conclusion from the cheap stage.",
+    "but_the_compare_re_verified_everything": "Eleven of the twelve compare jobs carry explicit re-verification or correction language, 2 to 11 statements each. J0056: 'Child notes (J0027) were treated as evidence, not authority.' J0055: 'External evidence (re-verified at f9588f3, NOT TAKEN FROM HANDOFF PROSE).' J0047: 'Upstream child evidence (J0019-reconcile) was treated as evidence, not authority. Where it conflicted with a primary source I re-read the primary source and say so.' So the cheap stage did not save the expensive stage the verification work; the expensive stage did it again.",
+    "the_clearest_case_of_being_limited": "The --connectivity-only question. Muse's J0019 explicitly declined it: 'the Git-docs claim about --connectivity-only semantics was not independently verified - retained as unverified, per handoff.' It handed forward BOTH an unresolved question AND an incorrect rationale. J0047-compare had to fetch git-fsck's documentation itself and found 'the OPERATIONAL conclusion (use a full fsck) is right, but the stated REASON is wrong', replacing it with 'presence and reachability are not integrity'. That correction then became the arm's F010 and F079 credits - so the cheap stage's deferral cost compare budget and, had the compare accepted it, would have propagated a wrong reason into a PM repair.",
+    "cases_where_the_compare_found_new_evidence_the_reconcile_missed": "J0056: 'New primary evidence found in this job (not in the handoff)'; J0055: 'New, load-bearing detail not present in handoff.md or the J0025 child note'; J0056's object-format lead: 'Additive correction to the handoff's \"just an ID string\" framing, newly verified here' - the finding that became F110, which no arm had ever reached, was NOT in the cheap reconcile at all.",
+    "quantified": {
+      "compared_leads": 32,
+      "from_a_response_limited_muse_job": 14,
+      "from_a_muse_note_the_job_labelled_partial": 3,
+      "muse_jobs_feeding_the_32": 12,
+      "muse_jobs_with_no_notes_at_all": 7,
+      "compare_jobs_recording_re_verification_or_correction": "11 of 12"
+    }
+  },
+  "ranking_yield": {
+    "question": "Per-lead yield over the 32 compared leads",
+    "by_delivery_position": [
+      {
+        "positions": "1-3",
+        "job": "J0047-compare",
+        "leads": 3,
+        "credits": 6,
+        "finding_ids": [
+          "F002",
+          "F010",
+          "F079",
+          "F081",
+          "F084",
+          "F102"
+        ]
+      },
+      {
+        "positions": "4",
+        "job": "J0048-compare",
+        "leads": 1,
+        "credits": 3,
+        "finding_ids": [
+          "F007",
+          "F008",
+          "F043"
+        ]
+      },
+      {
+        "positions": "5",
+        "job": "J0049-compare",
+        "leads": 1,
+        "credits": 8,
+        "finding_ids": [
+          "F029",
+          "F030",
+          "F031",
+          "F033",
+          "F034",
+          "F035",
+          "F036",
+          "F037"
+        ]
+      },
+      {
+        "positions": "6-8",
+        "job": "J0050-compare",
+        "leads": 3,
+        "credits": 2,
+        "finding_ids": [
+          "F066",
+          "F073"
+        ]
+      },
+      {
+        "positions": "9-11",
+        "job": "J0051-compare",
+        "leads": 3,
+        "credits": 5,
+        "finding_ids": [
+          "F004",
+          "F006",
+          "F061",
+          "F068",
+          "F107"
+        ]
+      },
+      {
+        "positions": "12-14",
+        "job": "J0052-compare",
+        "leads": 3,
+        "credits": 2,
+        "finding_ids": [
+          "F011",
+          "F089"
+        ]
+      },
+      {
+        "positions": "15-17",
+        "job": "J0053-compare",
+        "leads": 3,
+        "credits": 0,
+        "finding_ids": []
+      },
+      {
+        "positions": "18-20",
+        "job": "J0054-compare",
+        "leads": 3,
+        "credits": 2,
+        "finding_ids": [
+          "F027",
+          "F044"
+        ]
+      },
+      {
+        "positions": "21-23",
+        "job": "J0055-compare",
+        "leads": 3,
+        "credits": 4,
+        "finding_ids": [
+          "F025",
+          "F059",
+          "F060",
+          "F086"
+        ]
+      },
+      {
+        "positions": "24-26",
+        "job": "J0056-compare",
+        "leads": 3,
+        "credits": 3,
+        "finding_ids": [
+          "F005",
+          "F050",
+          "F110"
+        ]
+      },
+      {
+        "positions": "27-29",
+        "job": "J0057-compare",
+        "leads": 3,
+        "credits": 3,
+        "finding_ids": [
+          "F056",
+          "F057",
+          "F082"
+        ]
+      },
+      {
+        "positions": "30-32",
+        "job": "J0058-compare",
+        "leads": 3,
+        "credits": 1,
+        "finding_ids": [
+          "F094"
+        ]
+      }
+    ],
+    "credits_per_lead_overall": 1.219,
+    "reading": "39 credits over 32 leads is 1.22 per lead, against Arm P's 32 over 16 (2.00) and claude-hicap's 45 over 14 (3.21). YIELD PER LEAD FALLS AS BREADTH RISES, and it falls steeply: doubling the compared leads from 16 to 32 raised recall by only 7 findings. The reason is visible in the credited sets - the marginal leads land in families the union has already been saturated on, so they re-earn findings other leads already earned rather than adding new ones.",
+    "no_positional_trend": "Credits by delivery position band are flat-to-noisy (3,4,6,4,7,4,2,3,4,4,5,3 by job). Muse's delivery order - which is just job terminal time in the frozen order - carries no more yield information than Arm P's explicit ranking did."
+  },
+  "comparison": {
+    "claude_hicap": {
+      "credited": 45,
+      "gained": [
+        "F005",
+        "F025",
+        "F027",
+        "F057",
+        "F060",
+        "F068",
+        "F086",
+        "F110"
+      ],
+      "lost": [
+        "F028",
+        "F032",
+        "F051",
+        "F053",
+        "F062",
+        "F072",
+        "F074",
+        "F080",
+        "F083",
+        "F087",
+        "F088",
+        "F090",
+        "F092",
+        "F106"
+      ],
+      "shared": 31,
+      "net": -6
+    },
+    "arm_p": {
+      "credited": 32,
+      "gained": [
+        "F025",
+        "F027",
+        "F029",
+        "F031",
+        "F034",
+        "F036",
+        "F037",
+        "F043",
+        "F059",
+        "F060",
+        "F066",
+        "F068",
+        "F086",
+        "F107",
+        "F110"
+      ],
+      "lost": [
+        "F019",
+        "F051",
+        "F052",
+        "F054",
+        "F064",
+        "F072",
+        "F080",
+        "F090"
+      ],
+      "shared": 24,
+      "net": 7
+    },
+    "verdict": "Arm B beats Arm P by 7 and still loses to claude-hicap by 6. Splitting breadth from depth recovered most of what prioritization threw away - the whole external-editor family (F029 F031 F034 F036 F037), the graph family (F061 F066 F107) and the bookmark family (F059 F060) all come back - but it did not beat simply running the expensive model over the frozen order.",
+    "what_arm_b_uniquely_adds": [
+      "F027",
+      "F060",
+      "F110"
+    ],
+    "eight_arm_union": 62,
+    "eight_arm_union_percent": 56.36,
+    "reached_by_no_arm": 48,
+    "progression": "continuation-4 six-arm union 57; with Arm P 59; with Arm B 62 of 110 (56.36%). Findings reached by no arm: 53 -> 51 -> 48."
+  },
+  "cost": {
+    "breadth_usd": 0.3606,
+    "compare_attempt2_usd": 102.1967,
+    "compare_attempt1_usd_archived": 6.2983,
+    "arm_total_usd": 108.8556,
+    "scored_total_usd": 102.5573,
+    "usd_per_credited_finding": 2.6297,
+    "comparison": {
+      "claude-hicap": "$82.52 / 45 = $1.834",
+      "arm_p": "$85.51 / 32 = $2.672",
+      "arm_b": "$102.56 / 39 = $2.63"
+    },
+    "note": "Arm B is the most expensive arm in the campaign and the second-worst value per finding. The cheap stage really is cheap - $0.36, 0.35% of the arm - but it bought breadth whose marginal yield per lead is low."
+  },
+  "timing": {
+    "breadth_wall_s": 1527.6,
+    "compare_wall_s": 3981.3,
+    "two_stage_total_s": 5508.9,
+    "target_s": 4500,
+    "each_stage_inside_target": true,
+    "arm_as_a_whole_inside_target": false,
+    "note": "91 min 49 s end to end against a 75-minute target. Each stage fits; the sequential arm does not."
+  },
+  "limits": [
+    "One frozen case, one cheap model, one split. This does not establish that a breadth/depth split cannot win - only that this one did not beat the single-stage baseline.",
+    "Two variables differ from claude-hicap: the reconcile model AND the lead set that reached compare. The split's effect is not cleanly isolated.",
+    "Recall is measured against continuation 3's fixed 110-finding union, built from premium and hybrid output; every arm can only score inside it.",
+    "The scored result is attempt 2. Attempt 1 was destroyed by the account's shared rate limit and is excluded; I verified it contains no assertion document rather than taking that on instruction.",
+    "'Unsupported or already-covered' is a union class, not a false-positive rate.",
+    "Adjudicator and the compare-stage model share a family; code facts were verified against pinned bytes to make the judgement re-checkable."
+  ]
+}
