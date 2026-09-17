@@ -540,9 +540,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 183,
-        "True": 282
+        "True": 283
       },
-      "heading_count": 680,
+      "heading_count": 681,
       "implementation_surfaces": [
         "AGENTS.md",
         "Concepts/chat-assistant-concepts/5.6 Pro/app.js",
@@ -561,6 +561,7 @@
         "Plans/Decision_Log.md",
         "Plans/Decision_Policy.md",
         "Plans/Executor_Protocol.md",
+        "Plans/External_Research.md",
         "Plans/FileManager.md",
         "Plans/FileSafe.md",
         "Plans/FinalGUISpec.md",
@@ -619,9 +620,9 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 25734,
+      "line_count": 25784,
       "path": "Plans/assistant-chat-design.md",
-      "plan_unit_count": 465,
+      "plan_unit_count": 466,
       "plan_unit_ids": [
         "ACD-430",
         "ACD-424",
@@ -1087,7 +1088,8 @@
         "ACD-462",
         "ACD-465",
         "ACD-464",
-        "ACD-466"
+        "ACD-466",
+        "ACD-467"
       ],
       "reasoning_tiers": [
         "high",
@@ -1180,6 +1182,7 @@
         "debug_restore",
         "debug_safety",
         "debug_status_mapping",
+        "decision_review_flow_drift",
         "default_governance",
         "denied_payload_taxonomy",
         "destructive_action",
@@ -1422,10 +1425,10 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "9a576b87011551fa8a85cb161a649b8725f13324651cd8e951ce3eb21858e3d4",
+      "sha256": "c3b84300b2eb7a23d933d79d1b3b0bf348e2ca394340eec84cfb4a9c8c9cc791",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 465
+        "accepted": 466
       },
       "title": "Assistant & Chat UI -- Design Plan",
       "unit_type_counts": {
@@ -1434,7 +1437,7 @@
         "decision": 6,
         "gui_requirement": 5,
         "integration_contract": 1,
-        "requirement": 307,
+        "requirement": 308,
         "validation_rule": 2
       },
       "validation_surfaces": [
@@ -1498,6 +1501,7 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
+        "python3 scripts/pm-new-contracts-verify.py",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py lint-contractrefs",
@@ -13170,10 +13174,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 20,
+        "False": 21,
         "True": 2
       },
-      "heading_count": 35,
+      "heading_count": 36,
       "implementation_surfaces": [
         "Plans/*.md",
         "Plans/.audits/_semantic_closure_registry.jsonl",
@@ -13184,6 +13188,7 @@
         "Plans/Assistant_Plan_Runtime.md",
         "Plans/Bootstrap_Planning_Migration.md",
         "Plans/Collaborative_Workflows.md",
+        "Plans/External_Research.md",
         "Plans/PRD_Builder.md",
         "Plans/Plan_Document_System.md",
         "Plans/Plan_To_Node_Compilation.md",
@@ -13225,9 +13230,9 @@
         "scripts/pm-prd-planning-runtime-validate.py",
         "tests/test_pm_audit_closure.py"
       ],
-      "line_count": 1408,
+      "line_count": 1449,
       "path": "Plans/Planning_Ledger_System.md",
-      "plan_unit_count": 22,
+      "plan_unit_count": 23,
       "plan_unit_ids": [
         "PLS-001",
         "PLS-002",
@@ -13250,7 +13255,8 @@
         "PLS-018",
         "PLS-020",
         "PLS-021",
-        "PLS-022"
+        "PLS-022",
+        "PLS-023"
       ],
       "reasoning_tiers": [
         "high",
@@ -13279,16 +13285,16 @@
         "source_loss",
         "vague_compile_output"
       ],
-      "sha256": "f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec",
+      "sha256": "489240b5746d19d2778fe8f8f2282483710638965e24c760893a0fb28314d8cf",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 22
+        "accepted": 23
       },
       "title": "Planning Ledger System",
       "unit_type_counts": {
         "constraint": 1,
         "decision": 1,
-        "requirement": 19,
+        "requirement": 20,
         "schema_contract": 1
       },
       "validation_surfaces": [
@@ -16202,9 +16208,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 1,
-        "True": 35
+        "True": 36
       },
-      "heading_count": 73,
+      "heading_count": 75,
       "implementation_surfaces": [
         "Concepts/PMConcept7.html",
         "Concepts/pm7-tools/build_pm7.py",
@@ -16223,6 +16229,7 @@
         "Plans/Commands_System.md",
         "Plans/Containers_Registry_and_Unraid.md",
         "Plans/Crosswalk.md",
+        "Plans/External_Research.md",
         "Plans/FinalGUISpec.md",
         "Plans/GitHub_Integration.md",
         "Plans/Multi-Account.md",
@@ -16258,9 +16265,9 @@
         "future native Slint Plugins manager projection",
         "future typed Settings owner projections"
       ],
-      "line_count": 2228,
+      "line_count": 2279,
       "path": "Plans/Settings_System.md",
-      "plan_unit_count": 36,
+      "plan_unit_count": 37,
       "plan_unit_ids": [
         "SSYS-001",
         "SSYS-002",
@@ -16297,10 +16304,12 @@
         "SSYS-033",
         "SSYS-034",
         "SSYS-035",
-        "SSYS-036"
+        "SSYS-036",
+        "SSYS-037"
       ],
       "reasoning_tiers": [
         "high",
+        "medium",
         "standard"
       ],
       "risk_classes": [
@@ -16325,6 +16334,7 @@
         "settings_inventory_or_denominator_drift",
         "settings_manager_registry_or_dry_projection_drift",
         "settings_onboarding_doctor_false_readiness",
+        "settings_ownership_drift",
         "settings_packet_command_or_visible_state_silent_drop",
         "settings_parallel_owner_drift",
         "settings_parallel_runtime_or_manager_topology_drift",
@@ -16341,10 +16351,10 @@
         "terminal_research_consumer_or_acceptance_drift",
         "theme_or_layout_cross_project_leak"
       ],
-      "sha256": "e74d9bb2c6e1a7cf73345af91db4dee07b0ac271a3768ebc3921154b97fb53bc",
+      "sha256": "81d1e9569a5e1f2a9bc3028fc92a78a5ee0e3ed61da685d58579360f076105c8",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 36
+        "accepted": 37
       },
       "title": "Settings System",
       "unit_type_counts": {
@@ -16352,7 +16362,7 @@
         "contract": 5,
         "integration_contract": 3,
         "owner_boundary": 4,
-        "requirement": 20,
+        "requirement": 21,
         "schema_contract": 1,
         "security_constraint": 1,
         "validation": 1
@@ -19711,7 +19721,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-17T11:49:33Z",
+  "generated_at_utc": "2026-09-17T11:50:07Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19719,13 +19729,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3492,
-      "True": 3179
+      "False": 3493,
+      "True": 3181
     },
-    "plan_unit_count": 6671,
+    "plan_unit_count": 6674,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6480,
+      "accepted": 6483,
       "retired": 182,
       "superseded": 9
     },
@@ -19792,7 +19802,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5233,
+      "requirement": 5236,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

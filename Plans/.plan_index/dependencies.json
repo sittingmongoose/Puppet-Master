@@ -4410,6 +4410,7 @@
     "PSMERA-019",
     "PSMERA-020",
     "WS-007",
+    "SSYS-037",
     "SSYS-010",
     "PLUG-021",
     "PLUG-040",
@@ -4543,7 +4544,9 @@
     "OSI-124",
     "OSI-141",
     "PG-051",
+    "ACD-467",
     "ERS-007",
+    "PLS-023",
     "ERS-011",
     "ERS-013",
     "F2-194",
@@ -10436,6 +10439,16 @@
       "edge_type": "depends_on",
       "from": "ACD-466",
       "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-467",
+      "to": "DL-036"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-467",
+      "to": "ERS-005"
     },
     {
       "edge_type": "depends_on",
@@ -42204,6 +42217,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "PLS-023",
+      "to": "ERS-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-023",
+      "to": "PLS-001"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "PLUG-001",
       "to": "PLUG-002"
     },
@@ -71074,6 +71097,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SSYS-037",
+      "to": "ERS-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SSYS-037",
+      "to": "SSYS-005"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "T-001",
       "to": "T-002"
     },
@@ -97813,7 +97846,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-17T11:49:33Z",
+  "generated_at_utc": "2026-09-17T11:50:07Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -106871,6 +106904,23 @@
         "heading_level": 3,
         "heading_line": 25673,
         "line": 25675,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "research_decision_review",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-467",
+      "reasoning_tier": "high",
+      "risk_class": "decision_review_flow_drift",
+      "source_location": {
+        "heading": "External Research Decision Packet Consumer Addendum (2026-09-17)",
+        "heading_level": 2,
+        "heading_line": 25736,
+        "line": 25740,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -176798,6 +176848,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "planning_ledger",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-023",
+      "reasoning_tier": "high",
+      "risk_class": "source_authority_drift",
+      "source_location": {
+        "heading": "External Research Landing Boundary Addendum (2026-09-17)",
+        "heading_level": 2,
+        "heading_line": 1410,
+        "line": 1414,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plugins_system_generated_tail_batch_211",
       "gui_related": false,
       "owner_doc": "Plans/Plugins_System.md",
@@ -199748,6 +199815,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "external_research_limits",
+      "gui_related": true,
+      "owner_doc": "Plans/Settings_System.md",
+      "plan_unit_id": "SSYS-037",
+      "reasoning_tier": "medium",
+      "risk_class": "settings_ownership_drift",
+      "source_location": {
+        "heading": "SSYS-037 - External Research Limit Values",
+        "heading_level": 3,
+        "heading_line": 2232,
+        "line": 2236,
+        "path": "Plans/Settings_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "tools_generated_residual_tail",
       "gui_related": true,
       "owner_doc": "Plans/Tools.md",
@@ -211229,10 +211313,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15541,
+    "depends_on_edge_count": 15547,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18227,
-    "node_count": 6671,
+    "edge_count": 18233,
+    "node_count": 6674,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2686,
     "unresolved_reference_count": 0

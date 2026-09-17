@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15541,
+    "depends_on_edge_count": 15547,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18227,
-    "node_count": 6671,
+    "edge_count": 18233,
+    "node_count": 6674,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2686,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-17T11:49:33Z",
+  "generated_at_utc": "2026-09-17T11:50:07Z",
   "gui_related_units": {
-    "count": 3179,
+    "count": 3181,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -3511,6 +3511,17 @@
           "heading_level": 3,
           "heading_line": 25673,
           "line": 25675,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-467",
+        "source_location": {
+          "heading": "External Research Decision Packet Consumer Addendum (2026-09-17)",
+          "heading_level": 2,
+          "heading_line": 25736,
+          "line": 25740,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -30443,6 +30454,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Settings_System.md",
+        "plan_unit_id": "SSYS-037",
+        "source_location": {
+          "heading": "SSYS-037 - External Research Limit Values",
+          "heading_level": 3,
+          "heading_line": 2232,
+          "line": 2236,
+          "path": "Plans/Settings_System.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Tools.md",
         "plan_unit_id": "T-001",
         "source_location": {
@@ -34993,12 +35015,12 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6671,
+  "plan_unit_count": 6674,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2124,
+      "high": 2126,
       "low": 5,
-      "medium": 7,
+      "medium": 8,
       "standard": 4535
     },
     "risk_class_counts": {
@@ -35895,7 +35917,7 @@
       "decision_authority_or_disposition_loss": 3,
       "decision_log_authority_drift": 1,
       "decision_log_projection_drift": 1,
-      "decision_review_flow_drift": 2,
+      "decision_review_flow_drift": 3,
       "decomposition_degradation_boundary": 1,
       "decomposition_degraded_payload_loss": 1,
       "deep_plan_conversion_or_question_registry_drift": 1,
@@ -38058,7 +38080,7 @@
       "settings_model_role_drift": 1,
       "settings_models_availability_display": 1,
       "settings_onboarding_doctor_false_readiness": 1,
-      "settings_ownership_drift": 1,
+      "settings_ownership_drift": 2,
       "settings_packet_command_or_visible_state_silent_drop": 1,
       "settings_parallel_owner_drift": 1,
       "settings_parallel_runtime_or_manager_topology_drift": 1,
@@ -38168,7 +38190,7 @@
       "slint_provider_auth_alignment": 1,
       "slint_scale_mechanism_drift": 1,
       "sound_settings_drift": 1,
-      "source_authority_drift": 1,
+      "source_authority_drift": 2,
       "source_context_drift": 1,
       "source_control_actions_docker_owner_split": 1,
       "source_control_backend_route_split_or_phantom_handler": 1,
@@ -38825,7 +38847,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6480,
+      "accepted": 6483,
       "retired": 182,
       "superseded": 9
     },
@@ -38892,7 +38914,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5233,
+      "requirement": 5236,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

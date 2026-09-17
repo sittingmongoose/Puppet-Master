@@ -2226,3 +2226,54 @@ negative_constraints:
 - Do not fork the owner category/eligibility inventory or copy credentials.
 - Do not treat fixtures as native transaction, rollback, security or readiness evidence.
 ```
+
+## External research limits — 2026-09-17
+
+### SSYS-037 - External Research Limit Values
+
+Settings owns the four Project-scoped values that bound an external research topic: the per-topic cost cap, the per-job limits on model responses and wall seconds, the lifetime cap per research arm, and whether retained unresolved usage blocks further admission or only stays visible. Their meaning, their defaults and the rule that every job reports which limit ended it belong to `Plans/External_Research.md` (`ERS-008`, `ERS-009`); this owner holds the values, their inventory rows and their surfaces, and no other owner stores them. The rows themselves are added to `Plans/settings_inventory.json` in the authorized inventory wave; this unit fixes ownership and meaning and claims no existing row. The per-job limits are the live bound in practice, so their controls state plainly that they, not the cost cap, are what usually ends a job.
+
+```yaml
+plan_unit_id: SSYS-037
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  The four external research limits are Project-scoped Settings values held by this owner and its
+  inventory, namely a per-topic cost cap, per-job limits on model responses and wall seconds, a
+  lifetime cap per research arm, and an unresolved-usage disposition of blocks_admission or
+  visible_only. Their semantics and defaults are owned by Plans/External_Research.md; Settings
+  holds the values, the inventory rows and the surfaces, and no other owner stores them. Their
+  controls state that the per-job limits, not the cost cap, are what usually ends a job, and
+  retained unresolved usage stays visible whichever disposition is chosen.
+gui_related: true
+gui_classification_reason: The four limits are user-visible Settings controls with explanatory copy.
+split_recommended: false
+depends_on: [SSYS-005, ERS-009]
+unblocks: []
+acceptance_criteria:
+  - The four research limits are specified here as Project-scoped Settings values; their inventory rows are registered in the authorized inventory wave, and until then no row is claimed to exist.
+  - No other owner document stores or duplicates a research limit value.
+  - Retained unresolved usage remains visible under either disposition.
+  - The per-job limit controls state that they, not the cost cap, usually end a job.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: settings_ownership_drift
+reasoning_tier: medium
+context_scope: external_research_limits
+implementation_surfaces: [Plans/Settings_System.md, Plans/settings_inventory.json, Plans/External_Research.md]
+node_compile_hint: {mode: consumer_disposition, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/External_Research.md:ERS-009
+  - reports/jujutsu-research-2026-09-11/continuation3/gate/cost-policy.json
+preserved_exact_tokens: ["per-topic cost cap", "per-job", "lifetime cap", "unresolved usage"]
+negative_constraints:
+  - Do not store a research limit value outside this owner and its inventory.
+  - Do not hide retained unresolved usage under either disposition.
+  - Do not present the per-topic cost cap as the limit that ends a job.
+  - Do not register the inventory rows as a runtime, readiness or governance claim.
+owner_hints: [Plans/Settings_System.md, Plans/External_Research.md]
+```
+
+ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/External_Research.md
