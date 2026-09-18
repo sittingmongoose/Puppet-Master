@@ -1,0 +1,196 @@
+{
+  "schema": "jj.continuation5.arm_candidates.v1",
+  "arm": "a24",
+  "rule": "Out-of-union propositions recorded with evidence, passages cited, my classification and an explicit check against continuation 3's rejected expansions. The adjudicator does not add them to the union.",
+  "continuation3_rejected_expansions_checked_against": [
+    {
+      "proposal": "Marker-only conflict command is a JJ owner defect",
+      "reason": "Frozen Source Control line 308 scopes legacy commands to Git absent explicit normalization; same finding withdrawn from P21/P26."
+    },
+    {
+      "proposal": "Add mutating status.refresh branch as a required correction",
+      "reason": "F002 already fixes read effects and denial; a new writer-bearing branch would change that authority."
+    },
+    {
+      "proposal": "Reopen generic in-operation credential prompting",
+      "reason": "F038 already adjudicated prompt-suppressed owner helpers and foreground/background policy. H18 acknowledges unreviewed external auth-owner dependencies."
+    },
+    {
+      "proposal": "Corruption taxonomy, extras detector, clone stage details and arbitrary conflict editor",
+      "reason": "Refinements/alternatives under existing F082/F086/F056 and their scope boundaries, not additional demonstrated product obligations."
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_id": "C5A-01",
+      "label": "The JJ store's entries need a four-way disposition, version-bound, and pointers must be rewritten on restore",
+      "job": "a24/J0021-compare",
+      "my_classification": "correction",
+      "assertion": "The closure record classifies every captured JJ store entry as shared_content (portable), host_local_pathmap (captured but non-authoritative, requiring rebind before use), pointer (captured with both raw bytes and resolved target), or ephemeral_lock (captured for forensics only, never restored as active state); an entry matching none is `unclassified` and forces closure_state: partial. The classification BINDS the exact discovered JJ repo-format version it was audited against, so a store at a different version degrades to unclassified rather than assuming parity. Restore rebinds path maps, drops locks, rewrites pointers to stay inside the isolated boundary, and verification fails closed if any pointer or path map still resolves outside it.",
+      "passage_cited": [
+        "Plans/Jujutsu_Integration.md:449-458 JJI-008 canonical text, :465 AC2 ('foreign absolute paths remain non-authoritative'), :468 AC5, :471 AC8, :503",
+        "Plans/jujutsu_integration_contracts.schema.json:2215-2222 workspace_map_refs (required, minItems 1; minItems 2 for shared_multi_workspace at :2299-2319), :2393 workspace_map_result",
+        "Plans/Source_Control_System.md:798 (sanitize is scoped to CONFIGURATION and does not reach a path map), :794, :167-169 ('not timeless floors')",
+        "jj lib/src/workspace.rs:576-594 (.jj/repo may be a POINTER FILE), :340 and :407 (workspace_store.add registers ABSOLUTE host roots), lib/src/workspace_store.rs:100-131 at v0.44.0 versus lib/src/simple_workspace_store.rs on main",
+        "FileLock::lock call sites: workspace_store/index.lock, StackedTable's store/extra lock, simple_op_heads_store's op_heads/lock, local_working_copy's working-copy lock, cli_util's git_import_export.lock"
+      ],
+      "continuation3_already_rejected": "NO. Not among the four rejected expansions. It is the same family as Arm B's C5B-02 and T80's C5T-04 - defects in the restore path found by reading what the records do not carry - and none of those is rejected either.",
+      "distinctness": "F084 and F010 are both credited to this arm. What is outside the union is the four-way TAXONOMY and, more importantly, the VERSION BINDING: the arm shows the entry inventory is version-dependent (the same type moved file between v0.44.0 and main, and jj still creates workspace_store lazily 'for repos that were created before workspace_store was added'), so a classification audited once silently rots. Corroborated from the opposite direction by a second product that maintains an exact audited four-entry lock list with source citations and a documented instruction to re-audit when the jj pin moves, explicitly refusing an 'anything ending in .lock' heuristic.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-a24-20260917-233922/jobs/J0021-compare/workspace/notes.md",
+          "sha256": "5ce832585f987ebfcf7c892b55ae4eecba54f65f2febedcb6be634daafb78c1e"
+        }
+      ],
+      "adjudicator_note": "Not added to the union. The strongest candidate from this arm, and the version-binding clause is the part no earlier arm reached."
+    },
+    {
+      "candidate_id": "C5A-02",
+      "label": "store/git_target is a host-local pointer that lets a structurally valid closure record claim `complete` with the object store absent",
+      "job": "a24/J0021-compare",
+      "my_classification": "correction",
+      "assertion": "Capture resolves store/git_target for every discovered JJ store and records it as a required closure object - {recorded_bytes_ref, resolved_path_ref, relation} with relation in {internal_store_relative, colocated_parent_relative, external_absolute, external_relative, unreadable}. layout_profile is DERIVED from that resolved target plus the workspace map, never from the presence of a sibling .git directory. An external target resolving outside the captured tree must appear in git_common_directory_ref or alternate_store_refs, or closure_state is partial/blocked. `unreadable` is a typed blocker, not a non_colocated default.",
+      "passage_cited": [
+        "Plans/Jujutsu_Integration.md:465 JJI-008 AC2, :464 AC1, :468 AC5, :501-502",
+        "Plans/jujutsu_integration_contracts.schema.json:2173-2179 layout_profile, :2223-2238 (git_common_directory_ref is NULLABLE except for colocated), :2281-2298, :2377-2411 colocation_activation_disposition",
+        "Plans/Source_Control_System.md:798 SCS-014",
+        "jj lib/src/git_backend.rs:335-350 (GitBackend::load reads store/git_target, joins and canonicalizes), :311-327; lib/src/workspace.rs:268-283 (relative only when the Git repo is inside the workspace, otherwise ABSOLUTE); cli/src/commands/git/init.rs:114-129 (--git-repo is a first-class user option); docs/git-compatibility.md:197-218 (colocation IS a rewrite of this pointer)"
+      ],
+      "continuation3_already_rejected": "NO. Not among the four.",
+      "distinctness": "F079 and F084 are credited to this arm. This is the specific structural consequence: layout_profile has NO value for 'JJ repo backed by an external Git repository at an absolute path', such a repo presents as non_colocated while its object store lives outside everything the capture walked, and git_common_directory_ref is permitted to be null for non_colocated - so complete validates over an absent store. The isolation half is worse: a restored git_target still resolving to the original machine path means the 'isolated' copy opens the ORIGINAL Git store.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-a24-20260917-233922/jobs/J0021-compare/workspace/notes.md",
+          "sha256": "5ce832585f987ebfcf7c892b55ae4eecba54f65f2febedcb6be634daafb78c1e"
+        }
+      ],
+      "adjudicator_note": "Not added to the union."
+    },
+    {
+      "candidate_id": "C5A-03",
+      "label": "A capture blocked for a non-dependency reason is UNREPRESENTABLE in both closure schemas",
+      "job": "a24/J0029-compare",
+      "my_classification": "correction",
+      "assertion": "The state 'the capture barrier was lost, but no dependency is missing' cannot be recorded at any completeness value. capture_completeness = complete REQUIRES barrier_outcome = held_during_capture and gc_fence_outcome = held_during_capture; capture_completeness in {partial, blocked} REQUIRES missing_dependency_refs minItems 1; additionalProperties is false and the required list contains no blocked-reason field of any kind. So {barrier_outcome: lost_during_capture, missing_dependency_refs: []} is forbidden at complete by the barrier rule and at partial and blocked by the minItems rule. The same trap applies to not_acquired and to both non-held values of gc_fence_outcome, and BackupJujutsuClosureRecord reproduces the second half.",
+      "passage_cited": [
+        "Plans/source_control_contracts.schema.json:2937-2943 barrier_outcome, :2947-2953 gc_fence_outcome, :3012-3018 capture_completeness, :3079-3115, :3116-3137, :3150 additionalProperties false, :2868-2896 required list",
+        "Plans/jujutsu_integration_contracts.schema.json:2346-2367, :2130-2156, :2375",
+        "Plans/Source_Control_System.md:793 (the owner text demands exactly the unrepresentable case)"
+      ],
+      "continuation3_already_rejected": "NO. Not among the four. It is a schema-level contradiction rather than a new capability or a repair route.",
+      "distinctness": "F079 is credited to this arm for the barrier and fence obligation. This candidate is the proof that the record cannot EXPRESS the obligation's own failure mode - the arm calls it 'the sharpest finding in the job, and a schema-level contradiction rather than a matter of interpretation', and I checked the four conditionals against the schema on main and they hold.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-a24-20260917-233922/jobs/J0029-compare/workspace/notes.md",
+          "sha256": "c0a7be262c48d3f668d0bc8bde75271989f7b753f1272ab019c605a4cad0bb1c"
+        }
+      ],
+      "adjudicator_note": "Not added to the union. The single most mechanically checkable candidate in continuation 5."
+    },
+    {
+      "candidate_id": "C5A-04",
+      "label": "FileSafe's safe-point profile is defined entirely in Git terms and has no Jujutsu profile",
+      "job": "a24/J0029-compare",
+      "my_classification": "correction",
+      "assertion": "Three owner documents require FileSafe to work for Jujutsu, and the FileSafe owner document never mentions Jujutsu at all. The safe-point worktree manifest REQUIRES repo_id, worktree_id, canonical worktree-root identity, branch name, exact HEAD OID and Git index entries and stages, plus Git mode or submodule gitlink OID - none of which exists in a non-colocated JJ workspace, which has no Git index, no Git HEAD and no .git at the worktree root, while mutations still require a FileSafe decision. Membership of the .jj store is left to Git ignore evaluation the Plans never specify for a JJ workspace, and FileSafe's exact-replace restore would rewind the Jujutsu operation store as ordinary bytes - the outcome :190 forbids.",
+      "passage_cited": [
+        "Plans/FileSafe.md:1492-1500 (manifest required fields), :1514 ('exact replacement of the target manifest, never merge')",
+        "Plans/Jujutsu_Integration.md:9, :190, :222, :301, :309, :101 ('Do not use a Git index as JJ state'), :81, :91, :11 ('JJ workspaces are not Git worktrees'), :32",
+        "Plans/Source_Control_System.md:681; Plans/Automated_Testing_System.md:1670",
+        "jj docs/git-compatibility.md:197-210 ('Ignore the .jj directory in Git' - jj writes /* into .jj/.gitignore in a COLOCATED workspace only)"
+      ],
+      "continuation3_already_rejected": "NO. Not among the four. It touches no command inventory and adds no route; it asks an existing owner to declare a profile it already implies.",
+      "distinctness": "F010 and F011 are credited to this arm. This candidate is the enumeration: the arm tallied every file matching 'Jujutsu' across the corpus (194 hits) and FileSafe, WorktreeGitImprovement and Executor_Protocol do not appear, and the literal store token .jj occurs in six places, none of them FileSafe. The arm is scrupulous about what it is claiming: 'I am NOT claiming this misbehaviour occurs. I am claiming the Plans do not determine that it cannot, and that today the determining factor is an implementation detail of an external tool rather than a PM contract.'",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-a24-20260917-233922/jobs/J0029-compare/workspace/notes.md",
+          "sha256": "c0a7be262c48d3f668d0bc8bde75271989f7b753f1272ab019c605a4cad0bb1c"
+        }
+      ],
+      "adjudicator_note": "Not added to the union."
+    },
+    {
+      "candidate_id": "C5A-05",
+      "label": "A 32nd canonical command, cmd.jujutsu.bookmark.forget",
+      "job": "a24/J0026-compare and a24/J0035-compare",
+      "my_classification": "product choice",
+      "assertion": "Add cmd.jujutsu.bookmark.forget so a user whose intent is 'stop tracking this locally, leave the remote alone' has a covered route. At v0.44.0 forget is the ONLY native way to drop a local bookmark without queueing a remote deletion, and native delete's own help text points users at it. Both jobs raise it independently and both recommend NOT exposing --include-remotes in a first cut, because the next fetch recreates the remote bookmark if it still exists upstream - an action that visibly undoes itself.",
+      "passage_cited": [
+        "Plans/Jujutsu_Integration.md:23 (Sec.1 lists bookmark coverage), :301 (the closed 31-command enum), :472 JJI-008 ('The exact 31-command JJ inventory is unchanged'), :351-388 JJI-007 addendum, :404-408, :125",
+        "Plans/jujutsu_integration_contracts.schema.json:85-119 command_id enum",
+        "jj cli/src/commands/bookmark/forget.rs:32-36 and :39-47; delete.rs:34-35"
+      ],
+      "continuation3_already_rejected": "NO, and I am flagging the relationship. It adds a command to a closed inventory, which is the same class of owner adjudication that rejection 4's cluster covers and that C4D-04, C4M-03, C4G-02, C5P-05 and C5T-03 were all flagged under. It is NOT the conflict-editor surface and it does not add a content-selection route; it adds one read-adjacent local-only mutation whose native semantics are fully documented. Both jobs file it as requiring approval and state the 31-count's load-bearing role themselves.",
+      "distinctness": "F059 is credited to this arm for the bookmark state and effect disclosure. This is the missing ROUTE behind it: without forget, the repair can only DISCLOSE the delete/push coupling and never let the user avoid it, and 'the Puppet Master bookmark surface stays strictly less capable than the CLI it wraps'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-a24-20260917-233922/jobs/J0026-compare/workspace/notes.md",
+          "sha256": "2ba0b76ae67cc1c61d78d68609ff42fac4b7adacc7bc9bc5d0d425500adf721b"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-a24-20260917-233922/jobs/J0035-compare/workspace/notes.md",
+          "sha256": "0b63912554f9dd1f30d04a6f2a4eeec3d1bba2df46dd274dfd6d7d721885c1e7"
+        }
+      ],
+      "adjudicator_note": "Not added to the union; the command-inventory half is flagged against the standing rejection cluster."
+    },
+    {
+      "candidate_id": "C5A-06",
+      "label": "An edge kind for elided ancestry, and page arithmetic that is checkable",
+      "job": "a24/J0027-compare",
+      "my_classification": "product choice",
+      "assertion": "Add indirect_ancestor to the closed edges[].kind enum plus an optional elided_count, and state in SCS-017 that an edge spanning omitted revisions renders as indirect and never as a direct parent. A 200-node page of a filtered history - and Jujutsu's DEFAULT log revset is filtered - will routinely contain two visible nodes whose real relationship is 'ancestor, with hidden commits between', so rendering kind: parent asserts something false and omitting the edge hides the relationship.",
+      "passage_cited": [
+        "Plans/source_control_contracts.schema.json:2805 edges[].kind (closed: parent | merge_parent | rewrite_predecessor), :2845-2851 (the Git conditional restricting edges), nodes[].parent_refs unconstrained",
+        "Plans/Source_Control_System.md SCS-017 canonical text and acceptance criterion 2 (:971)"
+      ],
+      "continuation3_already_rejected": "NO. Not among the four. Widening a frozen closed enum is an owner decision, which is why the arm files it as a proposal and offers the cheaper boolean edges[].indirect variant with no count.",
+      "distinctness": "F061 and F107 are both credited to this arm and cover page bounds, cursor identity and selection anchors. This candidate is the EDGE-level honesty claim: the arm's own framing is that 'displaying stale or partial information honestly currently holds at the page level and not at the edge level'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-a24-20260917-233922/jobs/J0027-compare/workspace/notes.md",
+          "sha256": "d3fbbb94c1a22c4c9f4881753b7ecf6b495e063d752953d53acfc3593a16fdf7"
+        }
+      ],
+      "adjudicator_note": "Not added to the union."
+    }
+  ],
+  "observations": [
+    {
+      "observation_id": "O5A-01",
+      "label": "THE RESULT: doubling admissions bought FIVE union findings and cost two",
+      "detail": "A24 scored 43/110 against claude-hicap's 45 - a net of MINUS TWO - while comparing 26 leads to hicap's 14 and spending $162.15 against $82.52. The comparison is exact rather than approximate: hicap's fourteen compared leads are a STRICT SUBSET of A24's twenty-six, and the split falls on a job boundary. A24's first six compare jobs carry precisely hicap's fourteen leads and earned 38; its last four carry twelve leads hicap never reached and earned 5 findings the first six had not already produced (F005, F025, F027, F057, F086). Credits per compared lead fall from 2.71 on the first fourteen to 0.42 on the next twelve - a 6.5x collapse.",
+      "adjudicator_note": "Recorded as the arm's result and the answer to the admission-budget question."
+    },
+    {
+      "observation_id": "O5A-02",
+      "label": "The variance floor is confirmed a second time, independently",
+      "detail": "On lead sets that were IDENTICAL, with the same model at the same effort and no limit reached by either run, A24 earned 38 where claude-hicap earned 45 - a seven-finding difference from run-to-run variance alone. T80 measured eight on four jobs; A24 measures seven on six. Two independent estimates, 7 and 8, on the same case and the same model. That is now the best-supported number in the campaign, and it means EVERY arm-to-arm difference in continuation 5 smaller than about eight findings is indistinguishable from noise: A24 versus hicap (-2), A24 versus Arm B (+4), Arm B versus hicap (-6) are all inside it. Only Arm P (-13), T80 (-19) and A24 versus T80 (+17) are outside.",
+      "adjudicator_note": "Recorded, and it is the single most important qualifier on every table in this bundle."
+    },
+    {
+      "observation_id": "O5A-03",
+      "label": "The three stopped jobs are the sentinel, not money, and the label says otherwise",
+      "detail": "All three carry runtime_status budget_truncated and bound_by budget. The journal shows the arm had committed $176.46 of a $300 cap when the sentinel pinned a headroom-sized hold of $145.19 on a typed five-hour allowed_warning at utilization 0.90, taking committed-with-hold to $321.66 and denying the next request on three live jobs with reason captured_plus_live_cap. This is the same adapter-labelling caveat I recorded for deepseek41 in continuation 4 and it must be read from the journal, not the status. The hold also behaved exactly as designed: it fired after all 24 admissions were spent so it cost no admissions, live jobs settled to their own terminals rather than being cancelled, and all 24 jobs reconciled with $0.00 unresolved - the cleanest accounting of any arm in either continuation.",
+      "adjudicator_note": "Recorded."
+    },
+    {
+      "observation_id": "O5A-04",
+      "label": "A high-quality job can produce zero marginal union credit",
+      "detail": "J0031-compare is the campaign's sharpest statement that $defs/command_result carries NO condition on `cancelled` beyond 'has an error payload', so a cancelled cmd.jujutsu.git.push may report effect_state: none with a null after_revision and validate - and it proves the corpus's one cancelled fixture is clone, the single operation where absence of effect is provable because the destination is new. Every union finding it reaches (F007, F074, F081) had already been earned from the first fourteen leads. Three fresh leads, real new work, zero marginal credit against a fixed union. This is what the 0.42-per-lead figure is made of, and it is a property of measuring against a FIXED union as much as of the leads.",
+      "adjudicator_note": "Recorded, with the qualifier stated."
+    },
+    {
+      "observation_id": "O5A-05",
+      "label": "A24 bounds the external-editor blast radius that three earlier arms left unbounded",
+      "detail": "J0020 verified the whole matcher chain first-hand at its own pinned commit and resolved what it had listed as an open uncertainty: the effective snapshot matcher is IntersectionMatcher(sparse_matcher, UnionMatcher(fsmonitor_matcher, force_tracking_matcher)); a None fsmonitor matcher falls through to EverythingMatcher; and diff_working_copies passes force_tracking_matcher: &NothingMatcher - so the union is EverythingMatcher and the intersection is EXACTLY the sparse set. A file the editor creates at a path outside changed_files is NOT snapshotted; a file it writes at a changed path is picked up with no prompt because start_tracking_matcher is EverythingMatcher. I re-verified both source sites against the arm's own checkout. The arm's conclusion is the honest one: 'the blast radius should not be described as unbounded'. That is a correction to the campaign's own earlier framing, made by an arm against itself.",
+      "adjudicator_note": "Recorded as the arm's best single piece of verification work."
+    },
+    {
+      "observation_id": "O5A-06",
+      "label": "A24 adds nothing to the campaign union",
+      "detail": "Every one of A24's 43 credits was already reached by an earlier arm. The ten-arm union stays at 62 of 110 (56.36%) and findings reached by no arm stay at 48. Three continuation-5 arms in a row - P, T80 and A24 - have now added zero; only Arm B extended the union, by three. Against a fixed union built from premium and hybrid output, more of the same model on more of the same leads does not reach further.",
+      "adjudicator_note": "Recorded."
+    }
+  ]
+}

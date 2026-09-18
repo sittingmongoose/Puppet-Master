@@ -1,11 +1,11 @@
 {
   "schema": "jj.continuation5.adjudication.evidence_manifest.v1",
-  "label": "Continuation 5 adjudication bundle - Arms P, B and T80, evidence pointers and hashes",
+  "label": "Continuation 5 adjudication bundle - Arms P, B, T80 and A24, evidence pointers and hashes",
   "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm",
   "note": "Raw captures stay outside this repository per AGENTS.md. Evidence is cited by path plus SHA-256.",
   "runner_bundle_cross_reference": {
     "branch": "research/continuation5-20260917",
-    "commit": "eda0c92821 (Arm P) / 2a0a15078d (Arm B) / 5b519ce413 (T80)",
+    "commit": "eda0c92821 (Arm P) / 2a0a15078d (Arm B) / 5b519ce413 (T80) / ae54b3df2f (A24, final)",
     "path": "reports/jujutsu-research-2026-09-11/continuation5/",
     "policy": "Referenced by path, never duplicated. This bundle carries only the adjudication layer.",
     "figures_checked": "every runner figure I checked was already correct; no corrections were needed"
@@ -315,6 +315,18 @@
         "t80-findings.json",
         "t80-candidates.json",
         "t80-scoring.json"
+      ]
+    },
+    {
+      "arm": "a24",
+      "kind": "admission-budget arm above claude-hicap: same model, effort, artifacts, starting state, frozen order, 3 workers and 160/3600/$20 per job; ONE variable, 24 admissions instead of 12",
+      "credited": 43,
+      "recall_percent": 39.09,
+      "files": [
+        "a24-README.md",
+        "a24-findings.json",
+        "a24-candidates.json",
+        "a24-scoring.json"
       ]
     }
   ],
@@ -1002,5 +1014,485 @@
     "nine_arm_union": 62,
     "reached_by_no_arm": 48,
     "t80_adds_to_the_union": 0
+  },
+  "a24_run": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-a24-20260917-233922",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/arm-outputs/a24-manifest.json",
+    "manifest_sha256_internal": "b08f251811a565eca2730ead9c256504da56fef3ace2bd361a6c333ef929f460",
+    "files": 18368,
+    "total_bytes": 416976628,
+    "verified_three_ways": "rows recomputed, the runner's quoted value matched, and an independent re-hash of the live tree - zero differing files",
+    "terminal_stop": "Stop: admitted_attempt_cap at 2026-09-18T01:29:51Z; partial true, pending_intake_preserved true",
+    "attempt_1_excluded": "archived under arm-history/a24-attempt-1; cut by an arm collision and a hold race. Not scored, per instruction.",
+    "lead_set_relation": "claude-hicap's 14 compared leads are a STRICT SUBSET of A24's 26, verified lead by lead. A24's first six compare jobs (J0020, J0021, J0022, J0026, J0027, J0029) carry exactly hicap's fourteen; its last four (J0031, J0033, J0035, J0036) carry twelve hicap never reached. This is what makes the admissions 13-24 measurement exact rather than estimated.",
+    "the_three_stopped_jobs": "runtime_status budget_truncated and bound_by budget is the adapter's label for ANY meter denial. The priced-usage journal records admission_hold_pinned (reason: typed rate_limit_event five_hour status=allowed_warning utilization=0.9; committed_without_hold_usd 176.46; cap_usd 300; pin_size_usd 145.19; committed_with_hold_usd 321.66), then three next_request_denied events with reason captured_plus_live_cap, then admission_hold_released. SENTINEL, NOT MONEY.",
+    "pinned_source": "jj @ a497458e49e89a5559f32f3884e1d5294bd77a4f in the run's own cache (a different pin from the v0.44.0 profile the continuation-4 arms used; A24 cites both and says which)"
+  },
+  "a24_assertion_corpus": {
+    "root": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-a24-20260917-233922/jobs",
+    "documents": 101,
+    "total_bytes": 1228080,
+    "composition": "22 notes.md and 79 authored lead documents from the arm's own jobs J0017-J0040. J0038-compare and J0040-reconcile wrote nothing.",
+    "excluded": "Jobs J0001-J0016 are the INHERITED FROZEN PREMIUM jobs carried into the run tree, not arm output; no credit cites them.",
+    "files": [
+      {
+        "path": "J0017-reconcile/workspace/notes.md",
+        "sha256": "36a22b7c1738c6e6dd44a1565e4012effce3f53323baed7c64a5ae19596da8d7"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/diffedit3-line-endings.md",
+        "sha256": "dbb6affd94961cac74c676a6f181beb081e7b6ffd1528e529d996eacec62f7e7"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/diffedit3-symlink-confinement.md",
+        "sha256": "6feddcd0f03db6bc369c5e9cfdea56243633b1a3ee0e8bc2e5512366beb6614f"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/diffedit3-type-collision-save-error.md",
+        "sha256": "1edbc4408211f6a284d2f8aed5f778fb9134cd6e895c19b8b7a5f7edc27fb410"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/jj-diffedit-output-snapshot-scope.md",
+        "sha256": "550848ffa5f6f2e2393f1b8aecc7f7fdcded84d2a5e0b58030b777c408e9b25e"
+      },
+      {
+        "path": "J0017-reconcile/workspace/leads/native-interactive-symlinks.md",
+        "sha256": "bfa1884fe9cc0b39ffc0943c57532a446c250f3884c2682e37aa5965068b3c43"
+      },
+      {
+        "path": "J0018-reconcile/workspace/notes.md",
+        "sha256": "557b612a956aaacaceee45628e3a5f7d5e009de50f5ac7b86641b9d2e44a1e83"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/diffedit3-file-fidelity.md",
+        "sha256": "434dcbd767a4d789073ff71c0f0a75147278f34817ec40de4a9e2981fc7318a3"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/diffedit3-symlink-write.md",
+        "sha256": "c14cb6799d8876033d65cd79269fdd73f004235a68b0ceddefa89cc33204f584"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/external-tool-stdio-readiness.md",
+        "sha256": "f3c47e8857e94a27d3d7b47b49c206568f1baef4a31be490de6008c875c0c60a"
+      },
+      {
+        "path": "J0018-reconcile/workspace/leads/jj-resolve-partial-result.md",
+        "sha256": "42d39c98ce1be8d2c1d49bab68abd703e085578981baa63cf323e52200d66e6a"
+      },
+      {
+        "path": "J0019-reconcile/workspace/notes.md",
+        "sha256": "4470488b1a6ce84c34304b30e912bd9371a5ed8da0c4349526ede25fe5293e0b"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/cold-join-fabricated-checkout.md",
+        "sha256": "c197c81817674a9ded19427c945228ec668ecdfb38a18419419138914d46969f"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/idle-sync-transport-need-unenforced.md",
+        "sha256": "e6da6dc707daec7c99f6b8cb2131f3dcb7b70f5c77417950247d81030df5602b"
+      },
+      {
+        "path": "J0019-reconcile/workspace/leads/server-normalize-writes-operations.md",
+        "sha256": "b26e1d8acea826ab99a404eac86e255d05280f9863a10d5ede35eb68dac65774"
+      },
+      {
+        "path": "J0020-compare/workspace/notes.md",
+        "sha256": "3f833de673e0550a7ae16c67f213a8b15d22dc10a88e39d10bece7d7b1405603"
+      },
+      {
+        "path": "J0020-compare/workspace/leads/plans-byte-preservation-only-in-file-manager.md",
+        "sha256": "97248b3e6ed8b2979e858995571cfac1766fe2302847f5b6b794024432c64631"
+      },
+      {
+        "path": "J0020-compare/workspace/leads/plans-spawned-tool-write-channel.md",
+        "sha256": "c6283e5fc188d188d25d003457810d2b95d2c7a6bd2792cb2f69f280d8d38fda"
+      },
+      {
+        "path": "J0021-compare/workspace/notes.md",
+        "sha256": "5ce832585f987ebfcf7c892b55ae4eecba54f65f2febedcb6be634daafb78c1e"
+      },
+      {
+        "path": "J0021-compare/workspace/leads/colocated-auto-integration-defeats-command-gating.md",
+        "sha256": "f706d5717d1e3dec31342f87258d710bed672088c98176bd676dac45a4db90ca"
+      },
+      {
+        "path": "J0021-compare/workspace/leads/jj-read-commands-mutate-without-op-pin.md",
+        "sha256": "c8bd179934ef9bf6b69986844ba2f1aa5f70d7ffa21cfdbbdbd82a7d95b20f67"
+      },
+      {
+        "path": "J0021-compare/workspace/leads/jj-store-entry-inventory-is-version-bound.md",
+        "sha256": "44ab9ebd3929dc5a37299088b3e1118d5e500dc007606a56a8adbce0421386cb"
+      },
+      {
+        "path": "J0021-compare/workspace/leads/jj-store-pointers-are-not-configuration.md",
+        "sha256": "eb3d4d65c2b074761ccf230574559cb2d65b45c8401e6853a7eae2624cd5713e"
+      },
+      {
+        "path": "J0021-compare/workspace/leads/keep-refs-make-retained-object-closure-testable.md",
+        "sha256": "9dd8e2221680beca97f0ff1a9701f16d70c4a8ee6ef428952c137916c0aa7ca5"
+      },
+      {
+        "path": "J0022-compare/workspace/notes.md",
+        "sha256": "cbaf5ab26523fa10a9aeaf0dd028299bb437be3e5f01ce39ee6aa5cd0d680e1f"
+      },
+      {
+        "path": "J0022-compare/workspace/leads/file-by-file-diff-edit-discards-earlier-files.md",
+        "sha256": "00308314115d44aebf8e16382cb316063f69662abdd33b49e79c4bf6c369ea37"
+      },
+      {
+        "path": "J0022-compare/workspace/leads/tool-capability-discovery-from-jj-tool-table.md",
+        "sha256": "9bc83a895833b84189edb07a431678036846a00faef7bf01acf50367ce5071ad"
+      },
+      {
+        "path": "J0023-reconcile/workspace/notes.md",
+        "sha256": "be6750b500be9d8110ca6f44a0b54139c65aa8cf664fb00f561e50a1798edfdd"
+      },
+      {
+        "path": "J0023-reconcile/workspace/leads/dojjo-op-store-gc-keep-newer-fence.md",
+        "sha256": "60075ea9cc7e25d88b9ff03faf7e16621939761f3537eb7a7631138aa0d9d7f7"
+      },
+      {
+        "path": "J0023-reconcile/workspace/leads/gg-delete-forget-operation-description-mismatch.md",
+        "sha256": "3306cbd0bdfea26beecbaa555501357c2c9f877f2f4997ede2c99fb303dfe1c3"
+      },
+      {
+        "path": "J0023-reconcile/workspace/leads/gg-drag-eligibility-three-state-preview.md",
+        "sha256": "514bd437782ca3979724ccb42664590c345647452ee891b9e52cd4a774b58f09"
+      },
+      {
+        "path": "J0023-reconcile/workspace/leads/gg-rename-bookmark-loses-native-tracking-transfer.md",
+        "sha256": "5a5b993a84daa124daaad99a73437bf354bd34ff814fffe36129ac13e1e38609"
+      },
+      {
+        "path": "J0024-reconcile/workspace/notes.md",
+        "sha256": "b521148784f9ac73ba056b2542d3c3020fe68e8e4abc6dc4db8c7f8d623a19fb"
+      },
+      {
+        "path": "J0024-reconcile/workspace/leads/gg-paged-transport-without-bounded-display-or-cancel.md",
+        "sha256": "8828494069ea14035fc5bdac1eaf2026c600f5279de35a48e024cf7737bc88a5"
+      },
+      {
+        "path": "J0024-reconcile/workspace/leads/git-format-version-and-extensions-gate-restore.md",
+        "sha256": "00bb1dba9c4422af039c5d9d7cef1f0dc5a982d475e93a3a156d67368be9fb65"
+      },
+      {
+        "path": "J0024-reconcile/workspace/leads/gix-alternates-resolution-base-discrepancy.md",
+        "sha256": "c94ed6d5c7a9f02a5d386dc60b731e497d6ca1251445873fec356b5212ce1eae"
+      },
+      {
+        "path": "J0024-reconcile/workspace/leads/jj-keep-refs-gc-fence-in-shared-git-store.md",
+        "sha256": "f57e3fb879a05212d6979725e826f9be1ddd09f264fc1d998c425bbe78765cf5"
+      },
+      {
+        "path": "J0024-reconcile/workspace/leads/jj-workspace-store-registry-and-relocation.md",
+        "sha256": "19cb37e3884952d8d0ff2ea4f2d63d975fe91473e27845f9753ed9d8d1f4ebbd"
+      },
+      {
+        "path": "J0025-reconcile/workspace/notes.md",
+        "sha256": "07ccbda12c497fada3532af47d20f69fcfba24f12cd8d66420a8560cf0124e58"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/cross-store-atomicity-gap.md",
+        "sha256": "bec521d193d7b78d11e2a94064569d8795cdda390d0150fdd52002eff0437314"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/oplog-two-implementations-diverge-on-worktree-capture.md",
+        "sha256": "0e0d40206f03b302aa1fa13aba4f320c9d7f777b062ece1fef6ddfc20f0a36f2"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/promisor-closure-verification-primitives.md",
+        "sha256": "09f4034da9af15a57951319745792e20c8475d776949d8241ca070fdea835f3f"
+      },
+      {
+        "path": "J0025-reconcile/workspace/leads/silent-missing-restore-point.md",
+        "sha256": "ed126295a4ddaadba6c60bee814cfdfb28db7bee0c47cc700b44a892a9071e82"
+      },
+      {
+        "path": "J0026-compare/workspace/notes.md",
+        "sha256": "2ba0b76ae67cc1c61d78d68609ff42fac4b7adacc7bc9bc5d0d425500adf721b"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/jj-bookmark-forget-absent-from-canonical-inventory.md",
+        "sha256": "4d5d2c934df86d82ce9a3c0b35841e286cd5718820e19f8306c0adf46f0d87fc"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/jj-git-tracking-remote-is-not-an-ordinary-remote.md",
+        "sha256": "beac2ab1c4f6f84ca2870a6c9459ad8959a555cda2ad2470905de56588039f86"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/jj-immutable-revision-has-no-typed-reason-code.md",
+        "sha256": "0e4db65d6429027944a93d391512dbf9fd2b2ce233247617537e4807a153492b"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/jj-load-at-head-authors-an-operation.md",
+        "sha256": "7c45e1f9e1fa18c7fc74dbcc0dfa148e0e8235bd7d2aa18c672eb7c87d59b744"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/jj-util-gc-keep-newer-policy-window.md",
+        "sha256": "ef12aa763b369eb57621ffc20b4d6495bc565f8c28d443de55b361f8779d72f0"
+      },
+      {
+        "path": "J0026-compare/workspace/leads/uiw-012-is-the-reusable-gesture-mutation-contract.md",
+        "sha256": "8c26561f7cb43f9e3613d01b16cc459b08081bf7248f04dc2d7eb19ff0b62e64"
+      },
+      {
+        "path": "J0027-compare/workspace/notes.md",
+        "sha256": "d3fbbb94c1a22c4c9f4881753b7ecf6b495e063d752953d53acfc3593a16fdf7"
+      },
+      {
+        "path": "J0027-compare/workspace/leads/closed-vocabularies-decide-by-omission.md",
+        "sha256": "50106112acb4d0c8951a2257d50d0044a9100f46b68b8c0ca21cf9dd200ca1b1"
+      },
+      {
+        "path": "J0027-compare/workspace/leads/operation-log-has-no-bounded-projection.md",
+        "sha256": "57549384b64481caf7cf14ab5eec3505bd86e69b4ec350670c83f7e6b626730b"
+      },
+      {
+        "path": "J0027-compare/workspace/leads/promises-without-acceptance-criteria.md",
+        "sha256": "7d10265f7069dede602621f4b9400d90491ebf265333b6c2ed15dc0d70c67430"
+      },
+      {
+        "path": "J0027-compare/workspace/leads/scs-017-truncated-page-indistinguishable-from-end-of-history.md",
+        "sha256": "8a263b5ce829f514db0b816ea4f992d11cb551bf37d33add749085a8732ecb8c"
+      },
+      {
+        "path": "J0028-reconcile/workspace/notes.md",
+        "sha256": "f986b733b9df2381ddaa8fe30b0dd50a23e0e83ffebf97242302e1ac42ab0199"
+      },
+      {
+        "path": "J0028-reconcile/workspace/leads/canceled-can-be-reported-after-the-remote-was-already-mutated.md",
+        "sha256": "8b15aa2a33345ed581f9bbf33c28d279b6ca526be59b1a32bd247dc579e1fee9"
+      },
+      {
+        "path": "J0028-reconcile/workspace/leads/continuous-selection-cursor-across-a-changeset.md",
+        "sha256": "3e6f6117f7881b16ecf4f82fc5502d3c3ca5b3bd682c1b51b97f300b332ced54"
+      },
+      {
+        "path": "J0028-reconcile/workspace/leads/diff-editor-accept-can-exit-zero-after-a-partial-write.md",
+        "sha256": "20a077a3867a2405234c3cc7b6f0a13df4fa97d30a466af38055b53b2cf7775c"
+      },
+      {
+        "path": "J0028-reconcile/workspace/leads/process-cancellation-does-not-port-from-unix-to-windows.md",
+        "sha256": "e8e6635648b31d98cffbf927716154069b046f89fb8c497cea0b4f2aad759910"
+      },
+      {
+        "path": "J0028-reconcile/workspace/leads/restore-visits-only-registered-entries-and-drops-per-ref-failures.md",
+        "sha256": "41450dfbf418886a8513a3b33cbb838af786a9534c5f3d3b5330964eafe540f1"
+      },
+      {
+        "path": "J0029-compare/workspace/notes.md",
+        "sha256": "c0a7be262c48d3f668d0bc8bde75271989f7b753f1272ab019c605a4cad0bb1c"
+      },
+      {
+        "path": "J0029-compare/workspace/leads/capture-side-has-no-typed-blocked-reason.md",
+        "sha256": "ce7f62cea4a9c150250f1e287b0f71d5e161088ad6e40893138d1167153e6f2c"
+      },
+      {
+        "path": "J0029-compare/workspace/leads/git-shaped-contracts-assume-dot-git.md",
+        "sha256": "85258d5cd1c661c073a34e0f8be3e38aa3122ae0232c3f53b504387765be5220"
+      },
+      {
+        "path": "J0029-compare/workspace/leads/remote-index-cache-offline-degradation.md",
+        "sha256": "0e9a47d13d181b016bcfebf7db83626e653a40fd6bebbb3b4905b0b80a6604d0"
+      },
+      {
+        "path": "J0029-compare/workspace/leads/unsupported-repository-shapes-not-dimensioned-in-closure.md",
+        "sha256": "df096c880f37acd617d3724cb207924983b71ccb86c1b32ed302517d55481140"
+      },
+      {
+        "path": "J0030-reconcile/workspace/notes.md",
+        "sha256": "710ec81cb0cba5908d87fa02f7dcc458b923c17f3b3ebeaf8c978bc4864947e6"
+      },
+      {
+        "path": "J0030-reconcile/workspace/leads/jayjay-external-diff-tool-path-guard-gap.md",
+        "sha256": "e5850a2cffb4bf398c7aeebbabf9e94e6ba523aefdd4479af121ec1a11100071"
+      },
+      {
+        "path": "J0030-reconcile/workspace/leads/jj-workspace-store-is-a-fifth-repo-side-store.md",
+        "sha256": "a269f017e1453b0c6a3b0b7ef98b13b7aad0415ab40c5005dba7beb1b445a803"
+      },
+      {
+        "path": "J0031-compare/workspace/notes.md",
+        "sha256": "1d716bb1568cb64872aec391ee6a5c336c7ab64e6fa32a80a454e6e587d52e29"
+      },
+      {
+        "path": "J0032-reconcile/workspace/notes.md",
+        "sha256": "c1e7a1e18251a88a36f032f5f8826ef12fca3564c57e29e6595f9ec9e0d7f8f4"
+      },
+      {
+        "path": "J0032-reconcile/workspace/leads/L-3f5c81d2a746-colocation-is-mutable-post-clone.md",
+        "sha256": "321581464d9e9b116f6e5502ed2ecd4488a24ca7a43bad23e61ef4ea510f7c41"
+      },
+      {
+        "path": "J0032-reconcile/workspace/leads/L-4e8d02f9c617-clone-suppresses-synthetic-predecessors.md",
+        "sha256": "bdf7380f3489ab8ed14816fc1cf5058168793e4722a9a29d149d6bd7900ec55b"
+      },
+      {
+        "path": "J0032-reconcile/workspace/leads/L-5d27be3af804-multi-remote-tracking-internals.md",
+        "sha256": "4e16c0ad7d91ff8cd35a14aa4cc7491e3f7351337826a8c2557751b422053c3d"
+      },
+      {
+        "path": "J0032-reconcile/workspace/leads/L-7c30ab5f1e92-split-legacy-bookmark-behavior.md",
+        "sha256": "c43966aaa2731cde01f447556ab4fa031f3902f8dd09d42061e493bb4bf6c01e"
+      },
+      {
+        "path": "J0032-reconcile/workspace/leads/L-8a64f13c9e20-evolution-history-retention-and-format-floor.md",
+        "sha256": "4a15d58a4fd86da618bcd05f2ddaf1892852dd490e3f6080efebb3867a812c98"
+      },
+      {
+        "path": "J0032-reconcile/workspace/leads/L-9b41d7c6a085-evolog-inter-diff-mechanism.md",
+        "sha256": "ba6f202e8399ff573b281426a4a6838508dd6a1d6e532fb966c8070f593cf8d3"
+      },
+      {
+        "path": "J0033-compare/workspace/notes.md",
+        "sha256": "5af04f09e3b51c2e99c51ec4c1ca54e257db9bd3a7290a511d788773b8a8a73c"
+      },
+      {
+        "path": "J0033-compare/workspace/leads/jj-command-request-carries-no-per-command-payload.md",
+        "sha256": "063c627ea5f2da46b4d1e6b8e4045838b46650f3358a5d0d7680b28ed0211d11"
+      },
+      {
+        "path": "J0033-compare/workspace/leads/review-route-identity-is-git-worktree-shaped.md",
+        "sha256": "3953a3ad35cd98aacb6d919d449b42c6ca652cf1c3ec35d21849f0af34a64380"
+      },
+      {
+        "path": "J0034-reconcile/workspace/notes.md",
+        "sha256": "fc95ace324f1ff4d5bcf0883bb69e539401d21f3c230fd3c31034cb24289f436"
+      },
+      {
+        "path": "J0034-reconcile/workspace/leads/J0034-9648-regression-test-mutation-hole.md",
+        "sha256": "4c8667d5be7871373a7b721fbe2ffb4e34e7b7354464f7729e04e7d75fbcde2c"
+      },
+      {
+        "path": "J0034-reconcile/workspace/leads/J0034-directory-fsync-is-a-deliberate-upstream-tradeoff.md",
+        "sha256": "caedb8bb238bc5a54a7af8b43a8dac590ded2889c2afd1a9921c7784cc1a30f5"
+      },
+      {
+        "path": "J0034-reconcile/workspace/leads/J0034-extras-loss-is-silent-and-gc-erases-it.md",
+        "sha256": "aeed090ed031b558cdc7993207c9def152fe45d324abeee67290de313bfbac72"
+      },
+      {
+        "path": "J0034-reconcile/workspace/leads/J0034-nonfile-conflict-gap-has-no-open-tracking-issue.md",
+        "sha256": "ad3011554466cf324d12c1435286729ca1ce140851af49b2ada478d7e138bdda"
+      },
+      {
+        "path": "J0034-reconcile/workspace/leads/J0034-two-current-upstream-snapshots-in-this-run.md",
+        "sha256": "8902d9aaabe7feb20523a83f19b40be2b4250cd899afa178ef106f40ce7db6f6"
+      },
+      {
+        "path": "J0034-reconcile/workspace/leads/README-J0034.md",
+        "sha256": "1f79652603397bf75d98388beab8733ede483f978f4e309635e19b23ed1f740f"
+      },
+      {
+        "path": "J0035-compare/workspace/notes.md",
+        "sha256": "0b63912554f9dd1f30d04a6f2a4eeec3d1bba2df46dd274dfd6d7d721885c1e7"
+      },
+      {
+        "path": "J0035-compare/workspace/leads/L-b3d7e1a4c982-machine-readable-bookmark-tracking-state.md",
+        "sha256": "9d4f122262ed903c0a130f0edcda28cd7bd5f866535e114cf902aa6166d82b64"
+      },
+      {
+        "path": "J0035-compare/workspace/leads/L-c47a90f5d613-native-source-for-rewrite-predecessor-edges.md",
+        "sha256": "25f44d2796b89f2053c11861b24b4b457a46705fc8c763e22275b8ffb041ef79"
+      },
+      {
+        "path": "J0035-compare/workspace/leads/L-e29f4b8c07d1-clone-interruption-and-residual-destination-behaviour.md",
+        "sha256": "a42809ba6b71503a9f03da7b20171ffd8fa6462ee5775aa7111265150a026fe5"
+      },
+      {
+        "path": "J0036-compare/workspace/notes.md",
+        "sha256": "0c2d0cc9f99e4b92a52a9984bbeeb3004177e0166765e5b064788f5b91687acb"
+      },
+      {
+        "path": "J0036-compare/workspace/leads/J0036-filesafe-has-no-jujutsu-awareness.md",
+        "sha256": "37dbec65b39028122c48990612da1eed42192aebf35a25bc8fbfea367ce30072"
+      },
+      {
+        "path": "J0036-compare/workspace/leads/J0036-neutral-source-control-commands-gated-on-git-available.md",
+        "sha256": "5c0d4bf1f19f4f135c03cbb388fcda12c4f2697ff59c905cb78b382c0be3a6d4"
+      },
+      {
+        "path": "J0036-compare/workspace/leads/J0036-no-admitted-conflict-route-for-jujutsu.md",
+        "sha256": "1c9d656ab337555ddb7f88e0ede45f6cf4b92f6d428ce80e700ea5827299160d"
+      },
+      {
+        "path": "J0036-compare/workspace/leads/J0036-typed-integrity-vocabulary-exists-for-pm-storage-not-for-the-source-store.md",
+        "sha256": "25353cf15b8fad3bbb994ad0928fe987fe507290054dd165be2e27cf6c48fe8b"
+      },
+      {
+        "path": "J0036-compare/workspace/leads/README-J0036.md",
+        "sha256": "b577687f17661b2d219ffda25da9ceac3d56500418fef3f99f7f32dc25494acb"
+      },
+      {
+        "path": "J0037-reconcile/workspace/notes.md",
+        "sha256": "7cdf6db3cdd38c9c27c3143b97265770c673316fce477682d8909a4673d45744"
+      },
+      {
+        "path": "J0037-reconcile/workspace/leads/jj-extra-metadata-table-separate-closure.md",
+        "sha256": "db81bca3e79e4f7a5132bf44ffe2dcdaa96ac8eeef67927026fcd48f72df16c9"
+      },
+      {
+        "path": "J0037-reconcile/workspace/leads/jj-import-export-lock-absent-in-noncolocated.md",
+        "sha256": "36413b1cb3a17980a9a2c8fdc06950024deb00e83048c36daf4308b9889eeac2"
+      },
+      {
+        "path": "J0039-reconcile/workspace/notes.md",
+        "sha256": "e43b7daefac7f306bdf24be0a58899696d68dde845cfbb51d96ff6f76cbe4dd3"
+      }
+    ]
+  },
+  "adjudication_source_a24": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/adjudication/a24",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/adjudication/a24-manifest.json",
+    "manifest_sha256_internal": "c390976b244b475df5b9c5be72f2f0c36d15b2cb68d86cb75c92e8db0191c25c"
+  },
+  "code_fact_verification_a24": {
+    "pinned_source": "jj-vcs/jj @ a497458e49e89a5559f32f3884e1d5294bd77a4f in the arm's own cache",
+    "verified": [
+      "V-A1 cli/src/merge_tools/diff_working_copies.rs:297-318 - snapshot_results snapshots diff_wc.output.unwrap_or(diff_wc.right) with start_tracking_matcher: &EverythingMatcher, force_tracking_matcher: &NothingMatcher, max_new_file_size: u64::MAX. UPHELD.",
+      "V-A2 lib/src/local_working_copy.rs:1314-1326 - IntersectionMatcher::new(sparse_matcher, UnionMatcher::new(fsmonitor_matcher, force_tracking_matcher)) with a None fsmonitor matcher falling through to &EverythingMatcher; :1436-1444 FsmonitorSettings::None => (None, None). UPHELD - and together these BOUND the external-editor blast radius to exactly the sparse set, which three earlier arms left unbounded."
+    ]
+  },
+  "five_arm_headline": {
+    "table": "Published in README.md",
+    "credited_of_110": {
+      "claude_hicap": 45,
+      "arm_p": 32,
+      "arm_b": 39,
+      "t80": 26,
+      "a24": 43
+    },
+    "production_reading": "Plan around the claude-hicap configuration: one expensive model at high effort over the frozen lead order, 12 admissions, a response ceiling above the observed maximum. Nothing beat it, and the two designs that came close (A24 -2, Arm B -6) are inside the variance floor.",
+    "variance_floor": {
+      "t80_estimate": 8,
+      "a24_estimate": 7,
+      "statement": "Two independent measurements on the same case and model with identical lead sets and no limit reached. Any arm-to-arm difference smaller than about eight findings is not distinguishable from noise.",
+      "inside_the_band": [
+        "A24 vs hicap -2",
+        "Arm B vs hicap -6",
+        "A24 vs Arm B +4"
+      ],
+      "outside_the_band": [
+        "Arm P -13",
+        "T80 -19",
+        "A24 vs T80 +17"
+      ]
+    },
+    "marginal_value_of_admissions_13_to_24": {
+      "credits": 5,
+      "ids": [
+        "F005",
+        "F025",
+        "F027",
+        "F057",
+        "F086"
+      ],
+      "leads": 12,
+      "per_lead": 0.42,
+      "versus_first_14_per_lead": 2.71
+    },
+    "ten_arm_union": 62,
+    "reached_by_no_arm": 48,
+    "union_stopped_growing_at": "the eighth arm (Arm B); T80 and A24 each added zero"
   }
 }

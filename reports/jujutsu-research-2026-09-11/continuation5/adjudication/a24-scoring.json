@@ -1,0 +1,726 @@
+{
+  "schema": "jj.continuation5.arm_scoring.v1",
+  "arm": "a24",
+  "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm",
+  "arm_kind": "The ADMISSION-BUDGET arm above claude-hicap. Same model (claude-opus-5), same effort (xhigh), same premium artifacts and starting state, same FROZEN lead order, 3 workers, 160 responses / 3,600 s / $20 per job. ONE variable: 24 admissions instead of 12.",
+  "why_this_is_the_cleanest_admission_comparison_in_the_campaign": "claude-hicap's 14 compared leads are a STRICT SUBSET of A24's 26, and the split is exact: A24's first six compare jobs (J0020, J0021, J0022, J0026, J0027, J0029) carry precisely hicap's fourteen lead ids, and its last four (J0031, J0033, J0035, J0036) carry twelve leads hicap never reached. I verified that lead by lead. So the marginal value of admissions 13 to 24 is directly measurable: it is whatever the last four compare jobs produced that the first six did not.",
+  "run": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-a24-20260917-233922",
+    "manifest_sha256_internal": "b08f251811a565eca2730ead9c256504da56fef3ace2bd361a6c333ef929f460",
+    "files": 18368,
+    "total_bytes": 416976628,
+    "verified_three_ways": "internal digest recomputed from the sorted rows, matched the runner's quoted value, and an independent re-hash of the live tree - all three agree, ZERO differing files",
+    "terminal_stop": "Stop: admitted_attempt_cap at 2026-09-18T01:29:51Z, partial true, pending_intake_preserved true - a designed gate",
+    "attempt_1_excluded": "archived; cut by an arm collision and a hold race. Not scored, per instruction."
+  },
+  "runner_figures_checked": {
+    "all_confirmed": true,
+    "checked": [
+      "24 admissions, all used; 21 completed, 3 budget_truncated; job_end_reconciled 24 of 24",
+      "responses 27-131 against a 160 ceiling; longest job 1,434.2 s of 3,600; dearest $13.91 of $20",
+      "captured_upper_usd 162.1497 of a $300 cap; runtime-reported 162.1497; unresolved $0.00",
+      "reconcile wall 6,608.2 s, compare wall 5,863 s, arm wall 6,617.0 s, summed 19,612.7 s, average concurrency 2.964",
+      "lead stages discovered 137 / reconciled 4 / comparison_delivered 26; 22 of 24 jobs wrote notes.md"
+    ]
+  },
+  "THE_THREE_STOPPED_JOBS_ARE_NOT_MONEY": {
+    "what_the_status_says": "runtime_status budget_truncated, bound_by budget, error aborted_streaming - the same label the oh-my-pi and claude adapters put on ANY meter denial.",
+    "what_durable_state_says": "The priced-usage journal records, in order: admission_hold_pinned at 1789694965.70 with reason 'typed rate_limit_event five_hour status=allowed_warning utilization=0.9', committed_without_hold_usd 176.46, cap_usd 300, pin_size_usd 145.19, committed_with_hold_usd 321.66; then three next_request_denied events for J0038, J0039 and J0040 with reason 'captured_plus_live_cap'; then admission_hold_released once the arm reached its terminal.",
+    "my_finding": "The arm's OWN spend was $176.46 committed against a $300 cap. It was the SENTINEL'S HEADROOM-SIZED HOLD of $145.19 that pushed committed over the cap and denied the next request. This is the rate-limit gate firing, NOT money exhaustion, and the label must not be read as budget. It is exactly the caveat I recorded for deepseek41 in continuation 4: read the journal, not the raw status.",
+    "and_the_hold_behaved_correctly": "It fired AFTER all 24 admissions had been spent, so it cost the arm no admissions; live jobs were denied their next request and settled to their own terminals rather than being cancelled; all 24 jobs reconciled with $0.00 unresolved. J0039-reconcile still wrote notes.md and delivered 1 of its 3 leads; J0038-compare and J0040-reconcile wrote nothing."
+  },
+  "job_table": [
+    {
+      "job": "J0017-reconcile",
+      "phase": "reconcile",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 743.9,
+      "requests": 79,
+      "receipts": 79,
+      "captured_usd": 5.8143,
+      "leads": 1,
+      "lead_deliveries": 1,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": []
+    },
+    {
+      "job": "J0018-reconcile",
+      "phase": "reconcile",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 772.4,
+      "requests": 58,
+      "receipts": 58,
+      "captured_usd": 4.7435,
+      "leads": 1,
+      "lead_deliveries": 1,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": []
+    },
+    {
+      "job": "J0019-reconcile",
+      "phase": "reconcile",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 754.5,
+      "requests": 51,
+      "receipts": 51,
+      "captured_usd": 4.9507,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": []
+    },
+    {
+      "job": "J0020-compare",
+      "phase": "compare",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 596.7,
+      "requests": 49,
+      "receipts": 49,
+      "captured_usd": 5.0473,
+      "leads": 1,
+      "lead_deliveries": 1,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": [
+        "F029",
+        "F030",
+        "F031",
+        "F033",
+        "F034",
+        "F037",
+        "F053",
+        "F073"
+      ]
+    },
+    {
+      "job": "J0021-compare",
+      "phase": "compare",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 1214.6,
+      "requests": 131,
+      "receipts": 131,
+      "captured_usd": 13.9113,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": [
+        "F002",
+        "F010",
+        "F051",
+        "F079",
+        "F080",
+        "F084"
+      ]
+    },
+    {
+      "job": "J0022-compare",
+      "phase": "compare",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 745.1,
+      "requests": 72,
+      "receipts": 72,
+      "captured_usd": 8.0119,
+      "leads": 1,
+      "lead_deliveries": 1,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": [
+        "F007",
+        "F008",
+        "F028",
+        "F032",
+        "F035",
+        "F056",
+        "F074"
+      ]
+    },
+    {
+      "job": "J0023-reconcile",
+      "phase": "reconcile",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 725.0,
+      "requests": 82,
+      "receipts": 82,
+      "captured_usd": 6.1851,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": []
+    },
+    {
+      "job": "J0024-reconcile",
+      "phase": "reconcile",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 932.2,
+      "requests": 92,
+      "receipts": 92,
+      "captured_usd": 7.8694,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": []
+    },
+    {
+      "job": "J0025-reconcile",
+      "phase": "reconcile",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 1164.6,
+      "requests": 44,
+      "receipts": 44,
+      "captured_usd": 5.9023,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": []
+    },
+    {
+      "job": "J0026-compare",
+      "phase": "compare",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 924.5,
+      "requests": 82,
+      "receipts": 82,
+      "captured_usd": 9.937,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": [
+        "F044",
+        "F050",
+        "F059",
+        "F066",
+        "F072",
+        "F087"
+      ]
+    },
+    {
+      "job": "J0027-compare",
+      "phase": "compare",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 1322.8,
+      "requests": 67,
+      "receipts": 67,
+      "captured_usd": 9.5191,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": [
+        "F004",
+        "F006",
+        "F030",
+        "F061",
+        "F068",
+        "F079",
+        "F081",
+        "F082",
+        "F089",
+        "F107"
+      ]
+    },
+    {
+      "job": "J0028-reconcile",
+      "phase": "reconcile",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 936.7,
+      "requests": 88,
+      "receipts": 88,
+      "captured_usd": 7.858,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": []
+    },
+    {
+      "job": "J0029-compare",
+      "phase": "compare",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 1434.2,
+      "requests": 86,
+      "receipts": 86,
+      "captured_usd": 11.519,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": [
+        "F011",
+        "F090",
+        "F102"
+      ]
+    },
+    {
+      "job": "J0030-reconcile",
+      "phase": "reconcile",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 792.2,
+      "requests": 55,
+      "receipts": 55,
+      "captured_usd": 5.4169,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": []
+    },
+    {
+      "job": "J0031-compare",
+      "phase": "compare",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 661.8,
+      "requests": 70,
+      "receipts": 70,
+      "captured_usd": 7.0348,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": [
+        "F007",
+        "F074",
+        "F081"
+      ]
+    },
+    {
+      "job": "J0032-reconcile",
+      "phase": "reconcile",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 671.7,
+      "requests": 45,
+      "receipts": 45,
+      "captured_usd": 3.5383,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": []
+    },
+    {
+      "job": "J0033-compare",
+      "phase": "compare",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 905.8,
+      "requests": 69,
+      "receipts": 69,
+      "captured_usd": 9.7117,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": [
+        "F005",
+        "F027"
+      ]
+    },
+    {
+      "job": "J0034-reconcile",
+      "phase": "reconcile",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 836.2,
+      "requests": 53,
+      "receipts": 53,
+      "captured_usd": 4.5424,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": []
+    },
+    {
+      "job": "J0035-compare",
+      "phase": "compare",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 1066.5,
+      "requests": 98,
+      "receipts": 98,
+      "captured_usd": 11.0081,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": [
+        "F025",
+        "F086"
+      ]
+    },
+    {
+      "job": "J0036-compare",
+      "phase": "compare",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 915.1,
+      "requests": 66,
+      "receipts": 66,
+      "captured_usd": 7.8335,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": [
+        "F057"
+      ]
+    },
+    {
+      "job": "J0037-reconcile",
+      "phase": "reconcile",
+      "status": "completed",
+      "bound_by": "finished",
+      "elapsed_s": 769.0,
+      "requests": 72,
+      "receipts": 72,
+      "captured_usd": 5.4505,
+      "leads": 3,
+      "lead_deliveries": 3,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": []
+    },
+    {
+      "job": "J0038-compare",
+      "phase": "compare",
+      "status": "budget_truncated",
+      "bound_by": "budget",
+      "elapsed_s": 290.5,
+      "requests": 41,
+      "receipts": 41,
+      "captured_usd": 3.37,
+      "leads": 3,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "reconciled": true,
+      "credited_findings": []
+    },
+    {
+      "job": "J0039-reconcile",
+      "phase": "reconcile",
+      "status": "budget_truncated",
+      "bound_by": "budget",
+      "elapsed_s": 236.0,
+      "requests": 27,
+      "receipts": 27,
+      "captured_usd": 1.4315,
+      "leads": 3,
+      "lead_deliveries": 1,
+      "notes_present": true,
+      "reconciled": true,
+      "credited_findings": []
+    },
+    {
+      "job": "J0040-reconcile",
+      "phase": "reconcile",
+      "status": "budget_truncated",
+      "bound_by": "budget",
+      "elapsed_s": 200.7,
+      "requests": 32,
+      "receipts": 32,
+      "captured_usd": 1.5433,
+      "leads": 3,
+      "lead_deliveries": 0,
+      "notes_present": false,
+      "reconciled": true,
+      "credited_findings": []
+    }
+  ],
+  "recall": {
+    "expanded_union_denominator": 110,
+    "credited": [
+      "F002",
+      "F004",
+      "F005",
+      "F006",
+      "F007",
+      "F008",
+      "F010",
+      "F011",
+      "F025",
+      "F027",
+      "F028",
+      "F029",
+      "F030",
+      "F031",
+      "F032",
+      "F033",
+      "F034",
+      "F035",
+      "F037",
+      "F044",
+      "F050",
+      "F051",
+      "F053",
+      "F056",
+      "F057",
+      "F059",
+      "F061",
+      "F066",
+      "F068",
+      "F072",
+      "F073",
+      "F074",
+      "F079",
+      "F080",
+      "F081",
+      "F082",
+      "F084",
+      "F086",
+      "F087",
+      "F089",
+      "F090",
+      "F102",
+      "F107"
+    ],
+    "count": 43,
+    "recall_percent": 39.09,
+    "by_class": {
+      "correction": "1/5",
+      "optional_capability": "6/36",
+      "product_choice": "2/6",
+      "unsupported_or_rejected": "34/63"
+    },
+    "corrections_credited": [
+      "F107"
+    ],
+    "partials": [
+      "F001",
+      "F022",
+      "F060",
+      "F083",
+      "F108",
+      "F088"
+    ]
+  },
+  "MARGINAL_VALUE_OF_ADMISSIONS_13_TO_24": {
+    "headline": "FIVE union findings, for twelve extra leads and roughly half the arm's money. This is the clearest diminishing-returns measurement in the campaign because the lead sets are strictly nested.",
+    "first_six_compare_jobs": {
+      "leads": 14,
+      "note": "exactly claude-hicap's fourteen",
+      "credits": 38,
+      "per_lead": 2.71
+    },
+    "last_four_compare_jobs": {
+      "leads": 12,
+      "note": "twelve leads hicap never reached",
+      "credits": 5,
+      "ids": [
+        "F005",
+        "F025",
+        "F027",
+        "F057",
+        "F086"
+      ],
+      "per_lead": 0.42
+    },
+    "collapse": "2.71 -> 0.42 credits per lead, a 6.5x fall, between the first fourteen leads of the frozen order and the next twelve.",
+    "and_one_job_produced_nothing_new": "J0031-compare (GitButler / hunk.nvim / JayJay) is high-quality work - it produced the campaign's sharpest statement that $defs/command_result has no condition on `cancelled` at all - and every union finding it reaches (F007, F074, F081) was already earned from the first fourteen leads. Three fresh leads, zero marginal union credit.",
+    "the_honest_qualifier": "The five marginal findings are real and two of them are genuinely new to the whole campaign's reading of this case (F057's 0.44 carriage-return conflict defect and F086's proof that native clone cleanup covers one stage only). But against a FIXED union of 110 the twelfth-to-twenty-fourth admission bought 5 findings for about $80."
+  },
+  "comparison": {
+    "claude_hicap": {
+      "credited": 45,
+      "gained": [
+        "F005",
+        "F025",
+        "F027",
+        "F057",
+        "F068",
+        "F086"
+      ],
+      "lost": [
+        "F036",
+        "F043",
+        "F062",
+        "F083",
+        "F088",
+        "F092",
+        "F094",
+        "F106"
+      ],
+      "net": -2,
+      "leads_compared": {
+        "a24": 26,
+        "claude_hicap": 14
+      },
+      "subset": "claude-hicap's 14 compared leads are a STRICT SUBSET of A24's 26.",
+      "on_the_same_fourteen_leads": {
+        "a24": 38,
+        "claude_hicap": 45,
+        "net": -7,
+        "hicap_only": [
+          "F036",
+          "F043",
+          "F062",
+          "F083",
+          "F088",
+          "F092",
+          "F094",
+          "F106"
+        ],
+        "reading": "A24 lost 7 findings to claude-hicap on lead sets that were IDENTICAL, with the same model at the same effort and no limit reached by either run. That is inside the 8-finding variance floor T80 measured, and it is the second independent observation of it."
+      },
+      "cost": "$162.15 against $82.52 - 1.96x the money for 2 fewer findings."
+    },
+    "arm_p": {
+      "credited": 32,
+      "net": 11,
+      "gained": [
+        "F025",
+        "F027",
+        "F028",
+        "F029",
+        "F031",
+        "F032",
+        "F034",
+        "F037",
+        "F053",
+        "F059",
+        "F066",
+        "F068",
+        "F074",
+        "F086",
+        "F087",
+        "F107"
+      ],
+      "lost": [
+        "F019",
+        "F052",
+        "F054",
+        "F064",
+        "F094"
+      ]
+    },
+    "arm_b": {
+      "credited": 39,
+      "net": 4,
+      "gained": [
+        "F028",
+        "F032",
+        "F051",
+        "F053",
+        "F072",
+        "F074",
+        "F080",
+        "F087",
+        "F090"
+      ],
+      "lost": [
+        "F036",
+        "F043",
+        "F060",
+        "F094",
+        "F110"
+      ]
+    },
+    "t80": {
+      "credited": 26,
+      "net": 17,
+      "gained": [
+        "F005",
+        "F025",
+        "F027",
+        "F028",
+        "F032",
+        "F037",
+        "F044",
+        "F050",
+        "F051",
+        "F053",
+        "F057",
+        "F059",
+        "F066",
+        "F072",
+        "F074",
+        "F086",
+        "F087",
+        "F090"
+      ],
+      "lost": [
+        "F036"
+      ]
+    },
+    "per_compared_lead_yield": {
+      "claude_hicap": 3.21,
+      "t80": 2.36,
+      "a24_first_14": 2.71,
+      "arm_p": 2.0,
+      "a24_overall": 1.65,
+      "arm_b": 1.22,
+      "a24_last_12": 0.42
+    },
+    "ten_arm_union": 62,
+    "adds_over_all_nine_prior_arms": [],
+    "reached_by_no_arm": 48
+  },
+  "request_limited_coverage": {
+    "jobs_bound_by_the_160_response_ceiling": 0,
+    "jobs_bound_by_the_job_time_limit": 0,
+    "jobs_money_truncated": 0,
+    "jobs_stopped_by_the_rate_limit_sentinel_hold": 3,
+    "ids": [
+      "J0038-compare",
+      "J0039-reconcile",
+      "J0040-reconcile"
+    ],
+    "jobs_finished": 21,
+    "responses": "27-131, mean 68.0, against a 160 ceiling. NOTHING hit a ceiling.",
+    "what_the_sentinel_cost": "Three admissions' worth of work: J0038-compare's three leads never reached a comparison, and two reconcile jobs delivered 1 of 6 leads between them. On the yield measured above (0.42 credits per marginal lead) the expected loss is about one union finding.",
+    "unresolved": "$0.00. All 24 jobs reconciled with receipts equal to requests - the cleanest accounting of any arm in either continuation."
+  },
+  "cost": {
+    "captured_upper_usd": 162.1497,
+    "cap_usd": 300,
+    "unresolved_usd": 0.0,
+    "usd_per_credited_finding": 3.77,
+    "comparison": {
+      "claude-hicap": "$82.52 / 45 = $1.83",
+      "arm_p": "$85.50 / 32 = $2.67",
+      "arm_b": "$102.56 / 39 = $2.63",
+      "t80": "$76.45 / 26 = $2.94",
+      "a24": "$162.15 / 43 = $3.77"
+    },
+    "note": "A24 is the dearest arm in either continuation and the second-worst value per finding. Doubling admissions doubled the money and moved recall by -2."
+  },
+  "timing": {
+    "reconcile_wall_s": 6608.2,
+    "compare_wall_s": 5863.0,
+    "arm_wall_s": 6617.0,
+    "summed_job_s": 19612.7,
+    "average_concurrency": 2.964,
+    "target_s": 4500,
+    "inside_target": false,
+    "note": "110 minutes against the 75-minute target, 47% over - but at 2.96 average concurrency this is the best-scheduled arm of the five, and the overrun is the admission count, not a stall. Compare claude-hicap 3,535 s for 12 admissions."
+  },
+  "limits": [
+    "One frozen case, one admission comparison, one run at each admission count. The marginal-yield figure is a single-sample estimate.",
+    "The scored result is attempt 2; attempt 1 was cut by an arm collision and a hold race and is archived.",
+    "Recall is measured against continuation 3's fixed 110-finding union, built from premium and hybrid output; every arm can only score inside it. The marginal leads can therefore only re-earn findings that union already contains - which is exactly what the 0.42-per-lead figure measures and is NOT a claim that those leads produced no value.",
+    "'Unsupported or already-covered' is a union class, not a false-positive rate.",
+    "Adjudicator and the reviewed model share a family; code facts were verified against the arm's own pinned checkout."
+  ]
+}
