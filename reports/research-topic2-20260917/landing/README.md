@@ -76,7 +76,7 @@ The ledger is `Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections`, reg
 All deterministic checks pass except the ledger validator's three governance-coverage errors, which are the
 pre-existing omissions for the owner documents this wave edits and are the designated Plans agent's reseal rather
 than ordinary work. The compile witness passes on all three witnesses against `origin/main`: every findings record
-targets the units it names and each of them differs from base, all fifty-two exact tokens reach an owning unit's
+targets the units it names and each of them differs from base, all fifty-three exact tokens reach an owning unit's
 prose and its registry, and no unit the compile targets carries a registry entry absent from its own text.
 
 One pre-existing break was repaired: `tests/test_pm_forge_provider_fixture_gate.py` asserted 30 contract pairs and
@@ -123,3 +123,26 @@ the enrolled `tfvc_container_unsupported` is rejected by the closed vocabulary â
 recorded as unenforced: `gate_record` requires its three URL fields so omission cannot evade the rule, and
 `review_revision` rejects `stale_head_changed` paired with a cause that moved no head â€” which is precisely the false
 report `AZ-11` exists to stop.
+
+## Review cycle 2
+
+A second blind review of `211442d028` returned **land**: 0 blocking, 4 should-fix, 4 notes. It verified thirteen of
+the fourteen cycle-1 dispositions, reproduced every count this bundle claims, and confirmed the three ledger-validator
+errors hold at base and are therefore pre-existing as stated. One cycle-1 disposition, **R-07**, it found only partly
+fixed.
+
+The review cycle cap is two, so the four should-fix findings are **recorded, not fixed**. `q-021` carries C2-01 and
+C2-02 in the reviewer's own words: FGI-015's amended criterion still ends "Neither closed profile schema has a field
+for those six" while locating four of the six on `provider_instance_profile`, which is itself a closed profile
+schema, and it maps the issuer to `Plans/GitHub_API_Auth_and_Flows.md`, which records no issuer for the other twelve
+providers FGI-015 governs. `q-022` carries C2-07, a nesting between three sibling properties that does not exist.
+All three are wording repairs to one criterion and one sentence; none changes a shape, a fixture or a command.
+
+Three findings were corrected here, because they are this ledger's own bookkeeping and leaving them wrong defeats
+the record: the findings shard's record 26 still described the compile the cycle-1 fix replaced (C2-03), `events.jsonl`
+still ended at `evt-006` whose summary contradicted the state it anchored (C2-04, now `evt-007`), and this README
+reported the pre-fix exact-token count (C2-08). `q-019`'s own text was widened to name the TFVC container fixture the
+bundle already assigned to it (C2-05), and record 26 now says plainly that the `point-of-consent` exact token was
+withdrawn by review rather than silently replaced (C2-06).
+
+Six questions are open and none blocks landing: `q-017` to `q-022`.

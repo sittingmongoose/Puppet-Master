@@ -1,15 +1,15 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260918-001-azure-devops-corrections",
-  "updated_at_utc": "2026-09-18T05:20:00+00:00",
+  "updated_at_utc": "2026-09-18T06:10:00+00:00",
   "title": "Azure DevOps correction wave and decision-card answers",
   "status": "compiled",
   "created_at_utc": "2026-09-18T00:45:00+00:00",
   "record_counts": {
-    "events": 6,
+    "events": 7,
     "design_atoms": 33,
     "decisions": 33,
-    "questions": 20,
+    "questions": 22,
     "blockers": 0,
     "corrections": 33
   },
@@ -18,5 +18,5 @@
     "Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections/source_shards/findings.md"
   ],
   "phase": "compiled_azure_devops_corrections_and_decision_cards",
-  "last_event_id": "evt-006"
+  "last_event_id": "evt-007"
 }

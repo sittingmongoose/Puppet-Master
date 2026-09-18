@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260918-001-azure-devops-corrections",
-  "updated_at_utc": "2026-09-18T05:20:00+00:00",
-  "last_event_id": "evt-006",
+  "updated_at_utc": "2026-09-18T06:10:00+00:00",
+  "last_event_id": "evt-007",
   "canonical_plan_targets": [
     "Plans/Azure_DevOps_Integration.md",
     "Plans/Decision_Log.md",
@@ -42,7 +42,7 @@
     "named_tests": "pass; tests/test_pm_forge_provider_fixture_gate.py was red at the base commit for a prior thread's unregistered contract pair (EXPECTED_CONTRACT_PAIR_COUNT 31 against an asserted 30, stale since ca7d5f4ff6) and this branch repaired that as well, so the pass is not a property of the base",
     "compile_witness": "pass",
     "claim_boundary": "Static schema, fixture, shard, index, named-test and compile-witness integrity only. No governance seal, runtime certification, provider access or readiness admission.",
-    "partial_enforcement": "Four obligations have no validator surface and are recorded as open questions q-017, q-018, q-019 and q-020 rather than implied by the contracts.",
+    "partial_enforcement": "Six obligations have no validator surface and are recorded as open questions q-017 to q-022 rather than implied by the contracts.",
     "governance_coverage_errors": [
       "governance coverage targets missing from sharding_config sources: ['Plans/Azure_DevOps_Integration.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']",
       "governance coverage targets missing from Spec_Lock coverage: ['Plans/Azure_DevOps_Integration.md', 'Plans/Decision_Log.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']",
@@ -776,5 +776,5 @@
     }
   ],
   "notes": "Every item names the owner PlanUnits the correction or answer actually edited, with the schemas and fixture packs it needed as companion outputs. The prose compile ran first and the companions second, with the compile witness between them.",
-  "terminal_ledger_event_id": "evt-006"
+  "terminal_ledger_event_id": "evt-007"
 }

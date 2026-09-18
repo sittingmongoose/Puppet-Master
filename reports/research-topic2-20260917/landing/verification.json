@@ -3,7 +3,7 @@
   "generated_at_utc": "2026-09-18T01:32:18Z",
   "branch": "plans/azure-devops-corrections-20260918",
   "base": "4f5eda0d18a9deff2349b03ae573f0ffd706ed61",
-  "status": "COMPILED_CORRECTION_INTEGRITY_PASS_REVIEW_CYCLE_1_APPLIED_PENDING_CYCLE_2",
+  "status": "COMPILED_CORRECTION_INTEGRITY_PASS_REVIEW_CYCLES_COMPLETE_READY_TO_LAND",
   "landed_on_main": false,
   "commits": [
     {
@@ -397,6 +397,14 @@
     {
       "question": "q-020",
       "obligation": "Which validator surface will test SCS-023, F3-561, FGI-018, FGI-019 and FGI-020. No schema or fixture pack contains their shapes, because the addendum admits no typed schema variant, and each unit now says so instead of naming a file that cannot fail."
+    },
+    {
+      "question": "q-021",
+      "obligation": "FGI-015's amended criterion contradicts itself on what a closed profile schema is, and maps the issuer to a document that carries it for one provider of thirteen. Recorded by blind review cycle 2 rather than fixed, under the cycle cap."
+    },
+    {
+      "question": "q-022",
+      "obligation": "FGI-015 describes normalized_host and api_base_path as sitting under restricted_network_target_policy, which is a sibling const rather than a container."
     }
   ],
   "not_landed": [
@@ -499,6 +507,59 @@
           "id": "R-14 / R-14-change",
           "disposition": "fixed",
           "detail": "The authorization shard and this bundle state the counting convention: the lane is where the defect lives, not where the repair lands. AZ-20 and AZ-19 are common-lane defects whose repairs land in the Azure owner and in Source Control; AZ-26 is the one re-owned item. By lane 12/13/1, by target_doc 13/12/1."
+        }
+      ]
+    },
+    {
+      "cycle": 2,
+      "verdict": "land",
+      "findings": "~/PM-Experiments/blind-review-azure-20260918/cycle2/findings.jsonl, SHA-256 99a561a32f6a09b2fa9132ea9cb2674b7621df6f502dfdd2cd7a644b2e3e7a96",
+      "severity_counts": {
+        "blocking": 0,
+        "should_fix": 4,
+        "note": 4
+      },
+      "cycle_cap": "two; reached. The should-fix findings are recorded as open ledger questions rather than fixed, and no further substantive canon edit was made.",
+      "dispositions": [
+        {
+          "id": "C2-01",
+          "disposition": "recorded as q-021",
+          "detail": "FGI-015's criterion ends 'Neither closed profile schema has a field for those six' while locating four of the six on provider_instance_profile, itself a closed profile schema. The reviewer's text and suggested repair are carried verbatim in q-021."
+        },
+        {
+          "id": "C2-02",
+          "disposition": "recorded as q-021",
+          "detail": "The issuer is mapped to Plans/GitHub_API_Auth_and_Flows.md, which records no issuer for the other twelve providers FGI-015 governs. The reviewer's text and suggested repair, to map the issuer to FGI-015's own provider list, are carried verbatim in q-021."
+        },
+        {
+          "id": "C2-07",
+          "disposition": "recorded as q-022",
+          "detail": "'under restricted_network_target_policy' describes a nesting between three sibling properties that does not exist. Reviewer's text carried verbatim."
+        },
+        {
+          "id": "C2-03",
+          "disposition": "fixed (ledger bookkeeping)",
+          "detail": "The findings shard's record 26 described the compile the cycle-1 fix replaced, including the removed point-of-consent surface. It now describes what FGI-015 actually says."
+        },
+        {
+          "id": "C2-04",
+          "disposition": "fixed (ledger bookkeeping)",
+          "detail": "evt-007 appended for the two review cycles; last_event_id advanced in the manifest, all three state projections and the compile queue's terminal event. evt-006's summary is left as the historical record it is."
+        },
+        {
+          "id": "C2-05 / C2-05-change",
+          "disposition": "fixed (ledger bookkeeping)",
+          "detail": "q-019's summary, detail and affected surfaces now name the TFVC container-recognition fixture and ADO-001, so the ledger says what this bundle already said."
+        },
+        {
+          "id": "C2-06",
+          "disposition": "recorded",
+          "detail": "Record 26 now states that the point-of-consent exact token was withdrawn by review rather than silently replaced, and names the two tokens that replaced it."
+        },
+        {
+          "id": "C2-08",
+          "disposition": "fixed",
+          "detail": "This bundle's README said fifty-two exact tokens where the witness reports fifty-three; corrected."
         }
       ]
     }

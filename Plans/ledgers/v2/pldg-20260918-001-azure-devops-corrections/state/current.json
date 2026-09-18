@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260918-001-azure-devops-corrections",
-  "updated_at_utc": "2026-09-18T05:20:00+00:00",
-  "last_event_id": "evt-006",
+  "updated_at_utc": "2026-09-18T06:10:00+00:00",
+  "last_event_id": "evt-007",
   "canonical_plan_targets": [
     "Plans/Azure_DevOps_Integration.md",
     "Plans/Decision_Log.md",
@@ -42,7 +42,7 @@
     "named_tests": "pass; tests/test_pm_forge_provider_fixture_gate.py was red at the base commit for a prior thread's unregistered contract pair (EXPECTED_CONTRACT_PAIR_COUNT 31 against an asserted 30, stale since ca7d5f4ff6) and this branch repaired that as well, so the pass is not a property of the base",
     "compile_witness": "pass",
     "claim_boundary": "Static schema, fixture, shard, index, named-test and compile-witness integrity only. No governance seal, runtime certification, provider access or readiness admission.",
-    "partial_enforcement": "Four obligations have no validator surface and are recorded as open questions q-017, q-018, q-019 and q-020 rather than implied by the contracts.",
+    "partial_enforcement": "Six obligations have no validator surface and are recorded as open questions q-017 to q-022 rather than implied by the contracts.",
     "governance_coverage_errors": [
       "governance coverage targets missing from sharding_config sources: ['Plans/Azure_DevOps_Integration.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']",
       "governance coverage targets missing from Spec_Lock coverage: ['Plans/Azure_DevOps_Integration.md', 'Plans/Decision_Log.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']",
@@ -54,7 +54,7 @@
   "design_atoms_total": 33,
   "ready_for_plan_compile_atoms": 0,
   "candidate_atoms_count": 0,
-  "open_questions_count": 4,
+  "open_questions_count": 6,
   "deferred_questions_count": 0,
   "open_blockers_count": 0,
   "compiled_plan_unit_ids": [
@@ -85,8 +85,8 @@
     "SCS-023"
   ],
   "cursor": {
-    "last_event_id": "evt-006",
-    "next_action": "Twenty-six corrections and seven owner decision-card answers are compiled, and blind review cycle 1 is applied. Four questions stay open and none blocks landing: q-017 the queued second research pass over the never-compared Azure PlanUnits, q-018 whether a documented status-to-policy join key exists, q-019 when the Azure review, policy and check fixtures get written, and q-020 which validator surface will test the five planning units the card answers created. The branch stops for review cycle 2."
+    "last_event_id": "evt-007",
+    "next_action": "Twenty-six corrections and seven owner decision-card answers are compiled. Blind review cycle 1 was applied and cycle 2 returned land with nothing blocking. Six questions stay open and none blocks landing: q-017 the queued second research pass, q-018 the absent status-to-policy join key, q-019 the unwritten Azure review, policy, check and TFVC-container fixtures, q-020 the validator surfaces for the five planning units, and q-021 and q-022 the FGI-015 wording repairs cycle 2 recorded rather than fixed. Ready to land on main."
   },
   "landing_condition": "Reviewer approval, then fast-forward onto main with regenerated shards and index."
 }
