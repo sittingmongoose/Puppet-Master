@@ -5,6 +5,12 @@ rebuilt from durable state, and every code or API fact carried by a union propos
 against the arm's own cached source or against the Plans file on `main` before the proposition was
 admitted.
 
+> **Provenance.** Classification was made against `Plans/Azure_DevOps_Integration.md` sha256
+> `3ae59c0217219175051418df0482663b247888cc65db087f942158ca5887cc2d` at `4f5eda0d18`; the Azure
+> corrections landed at `e9fafbdb21` have since changed that document, sha256
+> `cffbf0b1080a48573693d832e596a5b8307934dbe726abc765a0164e7a03d066`, and acted on several of these
+> findings; this bundle is a record of the union at scoring time, not a current assessment.
+
 Three terminal, frozen arms: **Arm S** (`claude-opus-5` at effort max, full pipeline from discovery),
 **h2-research** (Muse Spark, research stages only) and **h2-review** (`claude-opus-5` at effort max,
 reconcile and compare from h2-research's outputs). H2 is scored as **one arm** — research plus review.
