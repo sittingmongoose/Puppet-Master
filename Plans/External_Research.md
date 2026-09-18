@@ -168,16 +168,17 @@ plan_unit_id: ERS-003
 unit_type: requirement
 status: accepted
 owner_doc: Plans/External_Research.md
-canonical_text: "A research job admits exactly three input classes: the frozen plans snapshot identified by content hash, the product brief, and the job's own arm artifacts from earlier stages of the same topic. Recorded decisions, answered packets, decision sheets and any other record of what the user already chose are excluded from every research input, so a finding can never be an echo of an answer the product already holds. The frozen snapshot enters at reconciliation; discovery and the studies see the brief and their own artifacts only. Every input is recorded by path and SHA-256 in the run manifest, and a job whose declared inputs do not hash to the recorded values fails closed before dispatch."
+canonical_text: "A research job admits exactly four input classes: the frozen plans snapshot identified by content hash, the product brief, the job's own arm artifacts from earlier stages of the same topic, and another arm's frozen artifacts admitted as `declared_other_arm_artifact`, which is admissible only at reconciliation and comparison and only when the record declares which arm they came from. Recorded decisions, answered packets, decision sheets and any other record of what the user already chose are excluded from every research input, so a finding can never be an echo of an answer the product already holds. The frozen snapshot enters at reconciliation, as does another arm's declared work; discovery and the studies see the brief and their own artifacts only. Every input is recorded by path and SHA-256 in the run manifest, and a job whose declared inputs do not hash to the recorded values fails closed before dispatch."
 gui_related: false
 gui_classification_reason: Input admission and hashing are process and contract specification with no user-visible surface of their own.
 split_recommended: false
 depends_on: [ERS-002]
 unblocks: [ERS-004, ERS-013, ERS-014]
 acceptance_criteria:
-  - A research job admits only the frozen plans snapshot, the product brief and its own arm artifacts.
+  - A research job admits only the frozen plans snapshot, the product brief, its own arm artifacts, and another arm's artifacts declared as `declared_other_arm_artifact`.
+  - A `declared_other_arm_artifact` input names the arm it came from in `declared_source_arm_id`, and no other input class carries one; an undeclared other-arm input is rejected before dispatch.
   - No decision record, answered packet or decision sheet is readable from any research stage.
-  - The frozen plans snapshot is admitted no earlier than reconciliation.
+  - The frozen plans snapshot and another arm's declared artifacts are admitted no earlier than reconciliation; a discovery or study job admits neither.
   - Every admitted input appears in the run manifest by path and SHA-256, and a hash disagreement stops the job before dispatch.
 validation_surfaces:
   - python3 scripts/pm-new-contracts-verify.py
@@ -193,11 +194,11 @@ source_lineage:
   - reports/jujutsu-research-2026-09-11/continuation3/gate/README.md
   - reports/jujutsu-research-2026-09-11/continuation4/README.md
   - reports/jujutsu-research-2026-09-11/continuation4/adjudication/README.md
-preserved_exact_tokens: ["frozen plans snapshot", "product brief", "arm artifacts", "fails closed"]
+preserved_exact_tokens: ["frozen plans snapshot", "product brief", "arm artifacts", "declared_other_arm_artifact", "declared_source_arm_id", "fails closed"]
 negative_constraints:
   - Do not admit a decision log, answer sheet or decision packet into any research stage.
   - Do not admit an unhashed or unrecorded input.
-  - Do not let a research stage read another arm's artifacts.
+  - Do not let a research stage read another arm's artifacts without declaring the arm they came from, and never in discovery or a study.
 owner_hints: [Plans/External_Research.md]
 ```
 
@@ -429,7 +430,7 @@ plan_unit_id: ERS-009
 unit_type: requirement
 status: accepted
 owner_doc: Plans/External_Research.md
-canonical_text: "The user sets four research limits: a per-topic cost cap, per-job limits on model responses and wall seconds, a lifetime cap per arm, and whether unresolved usage blocks further admission or only stays visible. The per-job limits are the live bound in practice: they, not the cost cap, are what ends a job that does not finish. In continuation 4 of the Jujutsu research they ended 33 of 80 jobs, 47 finished, and the cost cap ended none. Every limit is a Project-scoped settings value owned by Settings_System and its inventory; this owner fixes their meaning, their defaults and the rule that a job reports which limit ended it. A job's terminal record names in `bound_by` the limit that bound it, read from the runtime's own result record and the durable meter rather than from an adapter label, because an adapter may report any denial as a budget denial when the cause was the response ceiling."
+canonical_text: "The user sets four research limits: a per-topic cost cap, per-job limits on model responses and wall seconds, a lifetime cap per arm, and whether unresolved usage blocks further admission or only stays visible. The blocking branch is what continuation 4 exercised; `visible_only` is a design default that no run has exercised yet, and it stays marked as one until a run does. The per-job limits are the live bound in practice: they, not the cost cap, are what ends a job that does not finish. In continuation 4 of the Jujutsu research they ended 33 of 80 jobs, 47 finished, and the cost cap ended none. Every limit is a Project-scoped settings value owned by Settings_System and its inventory; this owner fixes their meaning, their defaults and the rule that a job reports which limit ended it. A job's terminal record names in `bound_by` the limit that bound it, read from the runtime's own result record and the durable meter rather than from an adapter label, because an adapter may report any denial as a budget denial when the cause was the response ceiling."
 gui_related: false
 gui_classification_reason: Limit semantics are specification; the settings rows and their controls are owned by Settings_System and FinalGUI.
 split_recommended: false

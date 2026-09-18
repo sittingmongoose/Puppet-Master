@@ -335,6 +335,52 @@
         ],
         "rehash_differences": []
       }
+    },
+    {
+      "name": "job_reconcile_admits_a_declared_other_arm_artifact",
+      "definition": "research_job_record",
+      "value": {
+        "schema_id": "pm.external_research.research_job.v1",
+        "schema_version": "1.0.0",
+        "research_job_id": "erj-reconcile-0002",
+        "topic_id": "ertopic-jujutsu-0001",
+        "project_id": "project:01",
+        "arm_id": "arm-review-glm53",
+        "stage": "reconcile",
+        "admitted_inputs": [
+          {
+            "input_class": "frozen_plans_snapshot",
+            "path": "Plans/.plan_index/plan_units.jsonl",
+            "sha256": "3f2a1c4e5d6b7a8c9e0f1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f"
+          },
+          {
+            "input_class": "product_brief",
+            "path": "topics/jujutsu/brief.md",
+            "sha256": "a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f90"
+          },
+          {
+            "input_class": "arm_artifact",
+            "path": "jobs/J0001-discovery/workspace/notes.md",
+            "sha256": "0f1e2d3c4b5a69788796a5b4c3d2e1f00f1e2d3c4b5a69788796a5b4c3d2e1f0"
+          },
+          {
+            "input_class": "declared_other_arm_artifact",
+            "path": "jobs/J0007-history/workspace/premium-arm-history.md",
+            "sha256": "b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3",
+            "declared_source_arm_id": "arm-premium-study"
+          }
+        ],
+        "admitted_lead_count": 8,
+        "max_model_responses": 160,
+        "max_job_seconds": 2400,
+        "responses_admitted": 66,
+        "elapsed_seconds": 1070.0,
+        "terminal_state": "finished",
+        "bound_by": "designed_stop",
+        "bound_by_source": "both",
+        "assertions_saved": 14,
+        "run_manifest_ref": "ermf-0001"
+      }
     }
   ],
   "invalid": [
@@ -649,6 +695,16 @@
       "reason": "A malformed freeze timestamp is the one field a reader checks in a provenance file, and it was a real published defect in the continuation-4 bundle (ERS-014).",
       "patch": {
         "freeze_recorded_at_utc": "2026-09-17T00:1xZ"
+      }
+    },
+    {
+      "name": "job_other_arm_artifact_without_a_declaration",
+      "definition": "research_job_record",
+      "base_valid": "job_reconcile_admits_a_declared_other_arm_artifact",
+      "rejects_for": "admitted_input.declared_source_arm_id required for declared_other_arm_artifact",
+      "reason": "Another arm's artifact is admissible only when the job declares which arm it came from, so an inherited input can never be read as the job's own work (ERS-003).",
+      "patch": {
+        "admitted_inputs.3.declared_source_arm_id": null
       }
     }
   ]

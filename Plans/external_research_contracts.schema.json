@@ -40,12 +40,31 @@
       "required": ["input_class", "path", "sha256"],
       "properties": {
         "input_class": {
-          "description": "Closed admission vocabulary. A decision record, answered packet or decision sheet has no admissible value here, so research input leakage is not expressible.",
-          "enum": ["frozen_plans_snapshot", "product_brief", "arm_artifact"]
+          "description": "Closed admission vocabulary. A decision record, answered packet or decision sheet has no admissible value here, so research input leakage is not expressible. declared_other_arm_artifact is another arm's frozen artifact, admitted only when the job declares which arm it came from, so a reader can tell a job's own work from work it inherited.",
+          "enum": ["frozen_plans_snapshot", "product_brief", "arm_artifact", "declared_other_arm_artifact"]
         },
         "path": {"$ref": "#/$defs/non_empty_string"},
-        "sha256": {"$ref": "#/$defs/sha256_hex"}
-      }
+        "sha256": {"$ref": "#/$defs/sha256_hex"},
+        "declared_source_arm_id": {
+          "description": "The arm the artifact came from. Required and non-empty for declared_other_arm_artifact, null for every other class.",
+          "oneOf": [{"$ref": "#/$defs/non_empty_string"}, {"type": "null"}]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"input_class": {"const": "declared_other_arm_artifact"}},
+            "required": ["input_class"]
+          },
+          "then": {
+            "required": ["declared_source_arm_id"],
+            "properties": {"declared_source_arm_id": {"$ref": "#/$defs/non_empty_string"}}
+          },
+          "else": {
+            "properties": {"declared_source_arm_id": {"type": "null"}}
+          }
+        }
+      ]
     },
     "finding_citation": {
       "type": "object",
@@ -141,7 +160,9 @@
               "admitted_inputs": {
                 "items": {
                   "not": {
-                    "properties": {"input_class": {"const": "frozen_plans_snapshot"}},
+                    "properties": {
+                      "input_class": {"enum": ["frozen_plans_snapshot", "declared_other_arm_artifact"]}
+                    },
                     "required": ["input_class"]
                   }
                 }

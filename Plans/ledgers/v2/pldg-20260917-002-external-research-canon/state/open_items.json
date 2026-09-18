@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-002-external-research-canon",
-  "updated_at_utc": "2026-09-18T00:35:00+00:00",
+  "updated_at_utc": "2026-09-18T09:00:00+00:00",
   "open_questions": [
     {
       "question_id": "q-001",
@@ -43,66 +43,13 @@
         "Plans/Source_Control_System.md",
         "Plans/Backup_Restore_System.md"
       ]
-    },
-    {
-      "question_id": "q-005",
-      "summary": "Does ERS-003's input rule admit a review arm that reads another arm's frozen artifacts, which is what continuation 4's review arms actually did?",
-      "status": "open",
-      "blocks_landing": false,
-      "affected_surfaces": [
-        "Plans/External_Research.md#ERS-003",
-        "Plans/external_research_contracts.schema.json"
-      ]
-    },
-    {
-      "question_id": "q-006",
-      "summary": "Is Plans/Automated_Testing_System.md inside this compile's authorization?",
-      "status": "open",
-      "blocks_landing": false,
-      "affected_surfaces": [
-        "Plans/Automated_Testing_System.md#ATS-054",
-        "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/source_shards/authorization.md",
-        "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/state/compile_queue.json"
-      ]
-    },
-    {
-      "question_id": "q-007",
-      "summary": "What establishes the visible_only branch of the unresolved-usage disposition?",
-      "status": "open",
-      "blocks_landing": false,
-      "affected_surfaces": [
-        "Plans/External_Research.md#ERS-008",
-        "Plans/External_Research.md#ERS-009",
-        "Plans/Settings_System.md#SSYS-037",
-        "Plans/external_research_contracts.schema.json"
-      ]
-    },
-    {
-      "question_id": "q-008",
-      "summary": "What authorizes the settings inventory wave SSYS-037 defers its rows to, and what tracks it?",
-      "status": "open",
-      "blocks_landing": false,
-      "affected_surfaces": [
-        "Plans/Settings_System.md#SSYS-037",
-        "Plans/settings_inventory.json"
-      ]
-    },
-    {
-      "question_id": "q-009",
-      "summary": "Should this compile's consumer units carry their own markdown headings, as every other PlanUnit in their documents does?",
-      "status": "open",
-      "blocks_landing": false,
-      "affected_surfaces": [
-        "Plans/assistant-chat-design.md#ACD-467",
-        "Plans/Automated_Testing_System.md#ATS-054",
-        "Plans/Planning_Ledger_System.md#PLS-023"
-      ]
     }
   ],
   "deferred_questions": [],
   "open_blockers": [],
   "remaining_work": [
-    "This ledger is compiled and the branch is pushed for independent review. Four questions stay open: q-001 and q-002 hold continuation 5's review-configuration and latency results, which had not reported when this wave ran, so ERS-010 and ERS-012 carry continuation 4's numbers with their run named; q-003 is the governance coverage reseal for Plans/External_Research.md and Plans/Settings_System.md, which belongs to the designated Plans agent; q-004 is the consumer reference that belongs in the Jujutsu, Source Control and Backup owners, left to the concurrent plans/c4-corrections-20260917 branch, which holds those files. The two branches were kept apart on the owner documents, not made disjoint: they share eight changed paths, and Plans/ledgers/v2/ledger_registry.json conflicts for whichever lands second, resolved by keeping both ledger entries and the later updated_at_utc."
+    "This ledger is compiled and the branch is pushed for independent review. Four questions stay open: q-001 and q-002 hold continuation 5's review-configuration and latency results, which had not reported when this wave ran, so ERS-010 and ERS-012 carry continuation 4's numbers with their run named; q-003 is the governance coverage reseal for Plans/External_Research.md and Plans/Settings_System.md, which belongs to the designated Plans agent; q-004 is the consumer reference that belongs in the Jujutsu, Source Control and Backup owners, left to the concurrent plans/c4-corrections-20260917 branch, which holds those files. The two branches were kept apart on the owner documents, not made disjoint: they share eight changed paths, and Plans/ledgers/v2/ledger_registry.json conflicts for whichever lands second, resolved by keeping both ledger entries and the later updated_at_utc.",
+    "Governance reseal for the documents this repair edited is owed to the designated Plans agent: Plans/Spec_Lock.json, Plans/.evidence/**, the plan graph and the readiness report carry hashes that this branch's canon edits make stale. Recorded per Jared's answer of 2026-09-18."
   ],
   "scope_note": "Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Backup_Restore_System.md, Plans/final_gui_interaction_contracts.schema.json and their fixtures are outside this ledger; branch plans/c4-corrections-20260917 held them concurrently and q-004 records the consumer reference that belongs there.",
   "deferred_governance_validation_errors": [
@@ -110,5 +57,46 @@
     "governance coverage targets missing from Spec_Lock coverage: ['Plans/External_Research.md', 'Plans/Settings_System.md']",
     "governance coverage targets missing from plan_graph coverage: ['Plans/External_Research.md', 'Plans/Settings_System.md']"
   ],
-  "answered_questions": []
+  "answered_questions": [
+    {
+      "question_id": "q-005",
+      "summary": "Does ERS-003's input rule admit a review arm that reads another arm's frozen artifacts, which is what continuation 4's review arms actually did?",
+      "status": "answered",
+      "answer": "Add the admitted input class rather than a prose qualifier. `admitted_input.input_class` gains `declared_other_arm_artifact` and the record gains `declared_source_arm_id`, required and non-empty for that class and null for every other, so an inherited input can never be read as the job's own work. The stage rule that keeps the frozen snapshot out of discovery and the studies now keeps the new class out too, which is what the review arms actually did: they read another arm's frozen artifacts at reconciliation and comparison. One positive and one negative fixture prove both halves, so the pair ships 13 positives and 31 negatives. ERS-003's text, criteria, tokens and negative constraint follow.",
+      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
+      "answered_at_utc": "2026-09-18T09:00:00+00:00"
+    },
+    {
+      "question_id": "q-006",
+      "summary": "Is Plans/Automated_Testing_System.md inside this compile's authorization?",
+      "status": "answered",
+      "answer": "Plans/Automated_Testing_System.md is inside this compile's authorization as a consumer reference only, recorded in the authorization shard's scope list alongside the other three consumer references. ATS-054 registers the contract pair the shard already authorizes and claims nothing else; it stands.",
+      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
+      "answered_at_utc": "2026-09-18T09:00:00+00:00"
+    },
+    {
+      "question_id": "q-007",
+      "summary": "What establishes the visible_only branch of the unresolved-usage disposition?",
+      "status": "answered",
+      "answer": "`visible_only` has no establishing run. It is marked a design default pending a run that exercises it, in ERS-009 and in the Settings owner's consumer reference, rather than stated as measured. The blocking branch is the one continuation 4 exercised.",
+      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
+      "answered_at_utc": "2026-09-18T09:00:00+00:00"
+    },
+    {
+      "question_id": "q-008",
+      "summary": "What authorizes the settings inventory wave SSYS-037 defers its rows to, and what tracks it?",
+      "status": "answered",
+      "answer": "The settings inventory wave is owed to the Settings owner's next authorized wave, not to this thread. SSYS-037 now says so in its text and its criterion, so the promise has a named owner instead of an unowned deferral.",
+      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
+      "answered_at_utc": "2026-09-18T09:00:00+00:00"
+    },
+    {
+      "question_id": "q-009",
+      "summary": "Should this compile's consumer units carry their own markdown headings, as every other PlanUnit in their documents does?",
+      "status": "answered",
+      "answer": "The three consumer units get their own markdown headings. ACD-467, ATS-054 and PLS-023 now carry `### <id> - <title>` headings like every other PlanUnit in their documents. A `###` heading is not a shard boundary, so no shard is split and no other document is touched.",
+      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
+      "answered_at_utc": "2026-09-18T09:00:00+00:00"
+    }
+  ]
 }

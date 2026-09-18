@@ -2,13 +2,15 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L4830-L4895
+Source lines: L4830-L4899
 
-Source SHA256: `ce5b8c419799b2ead305cf6e75c442211989227faccd47fca4a8100defc1f6fc`
+Source SHA256: `588b2cad9f74f2aebd496cc766198665a8197a65fa75db41e224ab2cbe58343f`
 
 ---
 
 ## External Research Contract Validation Registration (2026-09-17)
+
+### ATS-054 - External Research Static Contract Family Registration
 
 ```yaml
 plan_unit_id: ATS-054
@@ -21,7 +23,9 @@ canonical_text: >-
   record shapes (research job record, classified finding record, decision packet, decision card,
   budget receipt and run manifest), 12 positive fixtures proving schema shape and the encoded
   invariants, and 30 negative fixtures each mutating one named positive so that it fails for
-  exactly one named constraint. The negatives prove that a decision record cannot be admitted as
+  exactly one named constraint, with one further positive and one further negative added under
+  question q-005 for the declared other-arm input class, so the pair ships 13 positives and 31
+  negatives on the same rule. The negatives prove that a decision record cannot be admitted as
   a research input, that the frozen plans snapshot cannot enter before reconciliation, that a
   designed stop cannot be claimed after a time cut, that an adapter label is not an admissible
   source for the limit that bound a job, that a correction cannot be routed to a user decision and

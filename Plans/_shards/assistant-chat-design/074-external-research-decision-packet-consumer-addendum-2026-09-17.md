@@ -2,15 +2,17 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25736-L25784
+Source lines: L25736-L25786
 
-Source SHA256: `69a88b2f64d2bd07c387cddc846aa739eea267f95ce8d409dc90c56c816ffc0c`
+Source SHA256: `5278a595c627cc18c8d2a684738ae4d0ba26b44a95d98a767f5e96f59c1f5190`
 
 ---
 
 ## External Research Decision Packet Consumer Addendum (2026-09-17)
 
 External research packets (`Plans/External_Research.md`, `ERS-005`) are delivered through the decision flow this owner already defines under `DL-036`: one chat artifact holding every item, then one item at a time as a plain-language card answered with exactly one of Approve, Deny, Deny with changes, or Ask a question, with the full artifact openable throughout and status shown in text labels. Nothing about that surface changes for research packets. What this addendum records is the consumer boundary: the research owner supplies the packet content and the finding reference behind each item, and this owner keeps the artifact, the card, the response set, the questionnaire reuse and the presentation rules. A research finding classed `correction` never becomes a card, because corrections land under the standing repair authorization without a user decision; only `capability` and `product_choice` items reach this surface.
+
+### ACD-467 - External Research Decision Packet Consumer Boundary
 
 ```yaml
 plan_unit_id: ACD-467

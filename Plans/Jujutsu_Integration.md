@@ -317,15 +317,15 @@ acceptance_criteria:
     the two partial states this unit's limits and blockers project onto.
   - >-
     "Current certification evidence" has content. The effective-capability snapshot carries the same
-    `toolchain_identity` block the closure records carry - the one shared `native_toolchain_identity` definition Source
-    Control owns - and a `certified_scenarios` matrix of exactly nine rows -
+    `native_toolchain_identity` block the closure records carry, the one shared definition Source Control owns as
+    `pm.source_control.native_toolchain_identity.v1`, and a `certified_scenarios` matrix of exactly nine rows -
     non-mutating observation, ordinary snapshot synchronization, explicit import, explicit export, stale-workspace
     refresh, external-Git compatibility, workspace creation, workspace removal, and any approved conversion path -
     each reported `supported`, `unsupported` or `unknown`, and each `supported` row naming the evidence that certifies
     it. `unknown` is never promoted to supported or demoted to unsupported. A snapshot whose `disposition` is
     `admitted` leaves no row `unknown`, an unsupported, unreleased, untested, stale or mismatched combination cannot
     borrow another row's mutation admission, and certifying a root layout certifies no child layout. The snapshot's
-    existing top-level `adapter_version` is the compatibility alias of `toolchain_identity.adapter_version`.
+    existing top-level `adapter_version` is the compatibility alias of `native_toolchain_identity.adapter_version`.
 validation_surfaces:
   - JJ setup fixtures
   - adaptive GUI fixtures
@@ -593,8 +593,8 @@ acceptance_criteria:
     never on the original and never while the capture barrier is held.
   - >-
     "Version-compatible" is bound rather than asserted. The closure record and the restore verification receipt each
-    carry one `toolchain_identity` block, which is the single shared `native_toolchain_identity` definition Source
-    Control owns as `pm.source_control.native_toolchain_identity.v1`, naming the exact jj executable version and build,
+    carry one `native_toolchain_identity` block, the single shared definition Source Control owns as
+    `pm.source_control.native_toolchain_identity.v1`, naming the exact jj executable version and build,
     the Puppet Master adapter version, the Git version or its explicit absence, the store-format generation the closure
     was written in and the minimum generation required to read it, the exact Execution Host and Environment, and the
     certification catalog and official source the identity came from. Restore verification compares the closure's identity against the verifying

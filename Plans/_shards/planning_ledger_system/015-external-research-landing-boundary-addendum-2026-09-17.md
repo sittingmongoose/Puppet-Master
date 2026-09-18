@@ -2,15 +2,17 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L1410-L1449
+Source lines: L1410-L1451
 
-Source SHA256: `136a1da57287a59c98aee9b55b76c9944bd266fa51117943adb13b2f29343fc9`
+Source SHA256: `90fa584e9dc777abc3dc135ee5bc7929cb154b7ceab5a72911a7fe63366f038c`
 
 ---
 
 ## External Research Landing Boundary Addendum (2026-09-17)
 
 Every external research wave that changes canon lands through a ledger registered here (`Plans/External_Research.md`, `ERS-006`). The ledger is the landing record, not the research result: it carries the corrections as correction records with the finding ids they repair, the design atoms and decisions that compiled them, the questions the wave raised with their answers and answer bases, and the compile queue that names the owner PlanUnits produced. Research artifacts, adjudication bundles and run manifests stay where they were published and are cited by path and SHA-256; they are never copied into the ledger as canon. A ledger is not the authorization: a correction lands under the standing repair authorization after its currentness re-check and independent review, and a capability or product choice lands only after the user's recorded answer.
+
+### PLS-023 - External Research Landing Boundary
 
 ```yaml
 plan_unit_id: PLS-023

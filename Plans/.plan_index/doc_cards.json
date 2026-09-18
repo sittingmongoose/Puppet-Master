@@ -542,7 +542,7 @@
         "False": 183,
         "True": 283
       },
-      "heading_count": 681,
+      "heading_count": 682,
       "implementation_surfaces": [
         "AGENTS.md",
         "Concepts/chat-assistant-concepts/5.6 Pro/app.js",
@@ -620,7 +620,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 25784,
+      "line_count": 25786,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 466,
       "plan_unit_ids": [
@@ -1425,7 +1425,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "69a88b2f64d2bd07c387cddc846aa739eea267f95ce8d409dc90c56c816ffc0c",
+      "sha256": "5278a595c627cc18c8d2a684738ae4d0ba26b44a95d98a767f5e96f59c1f5190",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 466
@@ -1758,7 +1758,7 @@
         "False": 21,
         "True": 33
       },
-      "heading_count": 119,
+      "heading_count": 120,
       "implementation_surfaces": [
         "Concepts/pm7-tools/global_hover_tags_source.py",
         "Concepts/pm7-tools/home_workspace_source.py",
@@ -1844,7 +1844,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 4895,
+      "line_count": 4899,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 54,
       "plan_unit_ids": [
@@ -1957,7 +1957,7 @@
         "web_gui_dev_test_authority_leak",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "ce5b8c419799b2ead305cf6e75c442211989227faccd47fca4a8100defc1f6fc",
+      "sha256": "588b2cad9f74f2aebd496cc766198665a8197a65fa75db41e224ab2cbe58343f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 54
@@ -6221,7 +6221,7 @@
         "Plans/external_research_contracts.schema.json",
         "Plans/usage-feature.md"
       ],
-      "line_count": 791,
+      "line_count": 792,
       "path": "Plans/External_Research.md",
       "plan_unit_count": 14,
       "plan_unit_ids": [
@@ -6259,7 +6259,7 @@
         "unapproved_scope_expansion",
         "unreviewed_canon_change"
       ],
-      "sha256": "3202dd0841a9da3d1186ef9f14fed3cf48bdad3e6ea520e714dcc9aadf6ae082",
+      "sha256": "1c5ecd15a0ab8378b50cda457f5693eae266ab1788a46493ba4cb77daa688b86",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 14
@@ -9074,7 +9074,7 @@
         "verified_group_undo_redo_and_selected_operation_reversal",
         "version_comparison_and_focused_change_evolution"
       ],
-      "sha256": "eb6ecedfab42d1de333e81fc4b249b6a04d6c219ee6e42865a6ef32517602641",
+      "sha256": "fd41242a734eeac42becac09e91fa1cbf477ad1c38b5d1aa31bd5cd65adb4dc1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 22
@@ -13177,7 +13177,7 @@
         "False": 21,
         "True": 2
       },
-      "heading_count": 36,
+      "heading_count": 37,
       "implementation_surfaces": [
         "Plans/*.md",
         "Plans/.audits/_semantic_closure_registry.jsonl",
@@ -13230,7 +13230,7 @@
         "scripts/pm-prd-planning-runtime-validate.py",
         "tests/test_pm_audit_closure.py"
       ],
-      "line_count": 1449,
+      "line_count": 1451,
       "path": "Plans/Planning_Ledger_System.md",
       "plan_unit_count": 23,
       "plan_unit_ids": [
@@ -13285,7 +13285,7 @@
         "source_loss",
         "vague_compile_output"
       ],
-      "sha256": "136a1da57287a59c98aee9b55b76c9944bd266fa51117943adb13b2f29343fc9",
+      "sha256": "90fa584e9dc777abc3dc135ee5bc7929cb154b7ceab5a72911a7fe63366f038c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 23
@@ -16351,7 +16351,7 @@
         "terminal_research_consumer_or_acceptance_drift",
         "theme_or_layout_cross_project_leak"
       ],
-      "sha256": "051f75827a5bea5edb7c75ffb80847419275a5a2d2f4a657aeb994a864c8c392",
+      "sha256": "6050975740ee7f2a819dccd3966ee23e5a8f2aef7544710099cb0900a7c856cf",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 37
@@ -19721,7 +19721,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-18T00:02:54Z",
+  "generated_at_utc": "2026-09-18T00:32:54Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

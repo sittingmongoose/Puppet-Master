@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-001-jujutsu-continuation4-corrections",
-  "updated_at_utc": "2026-09-18T00:25:00+00:00",
-  "last_event_id": "evt-008",
+  "updated_at_utc": "2026-09-18T09:00:00+00:00",
+  "last_event_id": "evt-009",
   "canonical_plan_targets": [
     "Plans/Decision_Log.md",
     "Plans/Jujutsu_Integration.md",
@@ -49,7 +49,7 @@
   "design_atoms_total": 13,
   "ready_for_plan_compile_atoms": 0,
   "candidate_atoms_count": 0,
-  "open_questions_count": 6,
+  "open_questions_count": 3,
   "deferred_questions_count": 0,
   "open_blockers_count": 0,
   "compiled_plan_unit_ids": [
@@ -65,8 +65,8 @@
     "SCS-017"
   ],
   "cursor": {
-    "last_event_id": "evt-008",
-    "next_action": "The compile is repaired and scripts/pm-ledger-compile-witness.py exits 0 on this ledger. Five questions stay open and none blocks landing: q-008, q-009 and q-010 from the landing, plus q-011 the recovery-action floor field on the effective-capability snapshot and q-012 one name for the shared version block. The repair branch waits for one blind form-driven review before landing."
+    "last_event_id": "evt-009",
+    "next_action": "Jared's answers of 2026-09-18 are recorded and applied; q-011, q-012 and q-013 are answered. Three questions from the landing stay open and none blocks landing: q-008, q-009 and q-010. The governance reseal for the edited documents is owed to the designated Plans agent. The branch waits for cycle 2 of the blind form-driven review before landing."
   },
   "landing_condition": "Reviewer approval, then fast-forward onto main with regenerated shards and index."
 }

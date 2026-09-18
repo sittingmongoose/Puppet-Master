@@ -3054,7 +3054,7 @@
         "source_closure_ref": "source-closure:jj:colocated:alpha:41",
         "backup_manifest_ref": "backup-manifest:project-alpha:41",
         "repository_context_ref": "repository-context:jj:project-alpha",
-        "toolchain_identity": {
+        "native_toolchain_identity": {
           "schema_id": "pm.source_control.native_toolchain_identity.v1",
           "jj_executable_version": "0.44.0",
           "jj_build_ref": "jj-build:0.44.0-release",
@@ -3199,7 +3199,7 @@
         "source_closure_ref": "source-closure:jj:non-colocated:beta:18",
         "backup_manifest_ref": "backup-manifest:project-beta:18",
         "repository_context_ref": "repository-context:jj:project-beta",
-        "toolchain_identity": {
+        "native_toolchain_identity": {
           "schema_id": "pm.source_control.native_toolchain_identity.v1",
           "jj_executable_version": "0.44.0",
           "jj_build_ref": "jj-build:0.44.0-release",
@@ -3325,7 +3325,7 @@
         "source_closure_ref": "source-closure:jj:shared:gamma:9",
         "backup_manifest_ref": "backup-manifest:project-gamma:9",
         "repository_context_ref": "repository-context:jj:project-gamma",
-        "toolchain_identity": {
+        "native_toolchain_identity": {
           "schema_id": "pm.source_control.native_toolchain_identity.v1",
           "jj_executable_version": "0.44.0",
           "jj_build_ref": "jj-build:0.44.0-release",
@@ -3489,7 +3489,7 @@
         "restore_run_ref": "restore-run:project-alpha:as-new:1",
         "restore_preview_ref": "restore-preview:project-alpha:as-new:1",
         "isolated_repository_context_ref": "repository-context:jj:project-alpha:isolated",
-        "toolchain_identity": {
+        "native_toolchain_identity": {
           "schema_id": "pm.source_control.native_toolchain_identity.v1",
           "jj_executable_version": "0.44.0",
           "jj_build_ref": "jj-build:0.44.0-release",
@@ -3592,7 +3592,7 @@
         "restore_run_ref": "restore-run:project-beta:in-place:1",
         "restore_preview_ref": "restore-preview:project-beta:in-place:1",
         "isolated_repository_context_ref": "repository-context:jj:project-beta:isolated",
-        "toolchain_identity": {
+        "native_toolchain_identity": {
           "schema_id": "pm.source_control.native_toolchain_identity.v1",
           "jj_executable_version": "0.44.0",
           "jj_build_ref": "jj-build:0.44.0-release",
@@ -3695,7 +3695,7 @@
         "restore_run_ref": "restore-run:project-gamma:as-new:1",
         "restore_preview_ref": "restore-preview:project-gamma:as-new:1",
         "isolated_repository_context_ref": "repository-context:jj:project-gamma:isolated",
-        "toolchain_identity": {
+        "native_toolchain_identity": {
           "schema_id": "pm.source_control.native_toolchain_identity.v1",
           "jj_executable_version": "0.44.0",
           "jj_build_ref": "jj-build:0.44.0-release",
@@ -4275,7 +4275,7 @@
       "definition": "backup_jj_closure_record",
       "base_valid": "backup_jj_colocated_closure_captures_git_common_store_and_dirty_files",
       "remove": [
-        "toolchain_identity"
+        "native_toolchain_identity"
       ],
       "expected_error": "a closure that binds no toolchain identity cannot be checked for version compatibility at restore"
     },

@@ -2804,7 +2804,7 @@
         "source_closure_ref",
         "backup_manifest_ref",
         "repository_context_ref",
-        "toolchain_identity",
+        "native_toolchain_identity",
         "closure_expansion",
         "store_entry_classifications",
         "read_pinning",
@@ -2847,7 +2847,7 @@
         "repository_context_ref": {
           "$ref": "#/$defs/non_secret_ref"
         },
-        "toolchain_identity": {
+        "native_toolchain_identity": {
           "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/native_toolchain_identity"
         },
         "closure_expansion": {
@@ -3142,7 +3142,7 @@
         "restore_run_ref",
         "restore_preview_ref",
         "isolated_repository_context_ref",
-        "toolchain_identity",
+        "native_toolchain_identity",
         "toolchain_compatibility",
         "read_pinning",
         "operation_heads_after_refs",
@@ -3193,7 +3193,7 @@
         "isolated_repository_context_ref": {
           "$ref": "#/$defs/non_secret_ref"
         },
-        "toolchain_identity": {
+        "native_toolchain_identity": {
           "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/native_toolchain_identity"
         },
         "toolchain_compatibility": {

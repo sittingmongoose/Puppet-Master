@@ -4829,6 +4829,8 @@ ContractRef: ContractName:Plans/workflow_activation_contracts/methods.json, Cont
 
 ## External Research Contract Validation Registration (2026-09-17)
 
+### ATS-054 - External Research Static Contract Family Registration
+
 ```yaml
 plan_unit_id: ATS-054
 unit_type: validation_criterion
@@ -4840,7 +4842,9 @@ canonical_text: >-
   record shapes (research job record, classified finding record, decision packet, decision card,
   budget receipt and run manifest), 12 positive fixtures proving schema shape and the encoded
   invariants, and 30 negative fixtures each mutating one named positive so that it fails for
-  exactly one named constraint. The negatives prove that a decision record cannot be admitted as
+  exactly one named constraint, with one further positive and one further negative added under
+  question q-005 for the declared other-arm input class, so the pair ships 13 positives and 31
+  negatives on the same rule. The negatives prove that a decision record cannot be admitted as
   a research input, that the frozen plans snapshot cannot enter before reconciliation, that a
   designed stop cannot be claimed after a time cut, that an adapter label is not an admissible
   source for the limit that bound a job, that a correction cannot be routed to a user decision and

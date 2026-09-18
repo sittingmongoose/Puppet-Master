@@ -14,8 +14,11 @@ Scope admitted by this authorization:
 - one contracts pair `Plans/external_research_contracts.schema.json` and
   `Plans/external_research_contract_fixtures.json`, added to the contracts verifier's pack list because that
   is how packs are registered in `scripts/pm-new-contracts-verify.py`, as a registration-only scripts edit;
-- consumer references in `Plans/assistant-chat-design.md`, `Plans/Planning_Ledger_System.md` and
-  `Plans/Settings_System.md` rather than duplicated contracts;
+- consumer references in `Plans/assistant-chat-design.md`, `Plans/Planning_Ledger_System.md`,
+  `Plans/Settings_System.md` and `Plans/Automated_Testing_System.md` rather than duplicated contracts. The
+  Automated Testing reference is the registration record for the contracts pair this scope already admits, and
+  was added to this list on 2026-09-18 answering `q-006`; it is a consumer reference only and claims nothing
+  beyond the pair's registration;
 - this ledger, registered and validated, with every source cited by path and SHA-256.
 
 Scope explicitly excluded by the launching instruction: `Plans/Jujutsu_Integration.md`,

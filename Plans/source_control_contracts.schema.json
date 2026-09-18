@@ -990,7 +990,7 @@
         "schema_id",
         "scm_backend",
         "adapter_version",
-        "toolchain_identity",
+        "native_toolchain_identity",
         "certified_scenarios",
         "repository_profile",
         "certification_catalog_ref",
@@ -1015,7 +1015,7 @@
         "adapter_version": {
           "$ref": "#/$defs/non_empty_string"
         },
-        "toolchain_identity": {
+        "native_toolchain_identity": {
           "$ref": "#/$defs/native_toolchain_identity"
         },
         "certified_scenarios": {
