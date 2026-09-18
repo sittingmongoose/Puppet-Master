@@ -516,6 +516,23 @@
       "validator_policy": "allow",
       "replacement_ref": "coordination EventRecord family plus coordination_* redb projections",
       "notes": "Retired source-lineage/debug export for handoff validation mirrors; canonical truth is runtime verification/receipt records and redb projections."
+    },
+    {
+      "raw_ref": "scratchpad/pm-integration-20260831/audits/",
+      "classification": "generated_process_artifact",
+      "surface_type": "process_artifact",
+      "match_kind": "prefix",
+      "canonical_route": "Plans/00-plans-index.md",
+      "evidence_refs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "allowed_contexts": [
+        "Predecessor-packet audit runners retained as process evidence",
+        "PlanUnit implementation_surfaces and validation_surfaces that name a retained audit runner"
+      ],
+      "validator_policy": "allow",
+      "notes": "The 2026-08-31 integration audit runners are retained audit process artifacts, not repository surfaces. They are still on disk, under the shared checkout's ignored scratchpad, so they resolve there and in no other checkout; that made lint_path_refs report the ATS-020 and SMPFS-151 surfaces as missing everywhere except the machine that lands. Typing them here makes the gate read the same in every checkout without moving audit runners into canon. Both units already say in their own text that the runner is predecessor-packet audit only and is not current acceptance."
     }
   ]
 }

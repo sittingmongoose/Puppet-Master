@@ -1,0 +1,35 @@
+{
+  "schema_id": "pm.usage_gui.acceptance_fixture_case.v1",
+  "owner_plan_unit": "UF-088",
+  "fixture_id": "GUI-USG-006",
+  "title": "reported cache zero differs from unsupported cache",
+  "surfaces": [
+    "Usage",
+    "Ledger",
+    "model row",
+    "Prompt cache"
+  ],
+  "source_lineage": [
+    "Plans/usage-feature.md#UF-088",
+    "Plans/Contracts_V0.md#CV-200",
+    "PlanUnit:UF-088",
+    "tests/fixtures/usage_gui/cases/GUI-USG-006.json"
+  ],
+  "must": [
+    "cache_read:0",
+    "cache_reporting_state:reported",
+    "cache_reporting_state:not_exposed",
+    "cache_reporting_state:unknown"
+  ],
+  "must_not": [
+    "zero_cache_as_unsupported",
+    "unsupported_cache_as_zero"
+  ],
+  "input": {
+    "fixture_identity": "GUI-USG-006",
+    "authority": "canonical_test_fixture"
+  },
+  "expected_projection": {
+    "truthful_unknown_zero_hidden_partial_semantics": true
+  }
+}

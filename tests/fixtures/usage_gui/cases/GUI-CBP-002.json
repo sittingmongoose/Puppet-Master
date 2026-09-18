@@ -1,0 +1,39 @@
+{
+  "schema_id": "pm.usage_gui.acceptance_fixture_case.v1",
+  "owner_plan_unit": "UF-088",
+  "fixture_id": "GUI-CBP-002",
+  "title": "Antigravity G1 credits are credits-only",
+  "surfaces": [
+    "Antigravity CLI provider row",
+    "Usage",
+    "Dashboard Usage widget",
+    "Provider settings"
+  ],
+  "source_lineage": [
+    "Plans/CLI_Bridged_Providers.md#CBP-027",
+    "Plans/usage-feature.md#UF-088",
+    "PlanUnit:UF-088",
+    "tests/fixtures/usage_gui/cases/GUI-CBP-002.json"
+  ],
+  "must": [
+    "provider_id:antigravity_cli",
+    "route:agy",
+    "G1 credits",
+    "UseG1Credits",
+    "credits_status",
+    "credits_remaining"
+  ],
+  "must_not": [
+    "token_bucket_populated_from_credits",
+    "cost_populated_from_credits",
+    "quota_populated_from_credits",
+    "provider_total_from_credits"
+  ],
+  "input": {
+    "fixture_identity": "GUI-CBP-002",
+    "authority": "canonical_test_fixture"
+  },
+  "expected_projection": {
+    "truthful_unknown_zero_hidden_partial_semantics": true
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schema_id": "pm.usage_gui.acceptance_fixture_case.v1",
+  "owner_plan_unit": "UF-088",
+  "fixture_id": "GUI-USG-005",
+  "title": "disabled quota bucket is disabled, not empty",
+  "surfaces": [
+    "Usage",
+    "provider/settings row",
+    "Antigravity CLI quota row",
+    "Plans & limits"
+  ],
+  "source_lineage": [
+    "Plans/usage-feature.md#UF-088",
+    "Plans/CLI_Bridged_Providers.md#CBP-027",
+    "PlanUnit:UF-088",
+    "tests/fixtures/usage_gui/cases/GUI-USG-005.json"
+  ],
+  "must": [
+    "quota_status:disabled",
+    "window_kind:unknown_or_disabled",
+    "disabled_reason"
+  ],
+  "must_not": [
+    "zero_remaining",
+    "exhausted",
+    "success",
+    "reset_countdown",
+    "fabricated_progress"
+  ],
+  "input": {
+    "fixture_identity": "GUI-USG-005",
+    "authority": "canonical_test_fixture"
+  },
+  "expected_projection": {
+    "truthful_unknown_zero_hidden_partial_semantics": true
+  }
+}

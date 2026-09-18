@@ -2,9 +2,9 @@
 
 Source: `Plans/Bootstrap_Planning_Migration.md`
 
-Source lines: L421-L540
+Source lines: L421-L560
 
-Source SHA256: `e7fad6cd4eb4ad7cb8de456d18e89dd0370f4c1294fc8323c8905f64ff9c613f`
+Source SHA256: `894d9a7a0490b9e35e866e16844dc4f3bd20f786eb5f4fc148ca4d7648e128fb`
 
 ---
 
@@ -37,7 +37,13 @@ or as evidence that the repository-wide gates passed.
 
 Three of the four omitted operations, `run_gates`, `audit_governance` and `migration_validate`, run
 when a branch lands on `main` and on a nightly schedule. At landing they run in the shared checkout
-after the fast-forward and the shard check, and they cost about ten minutes there. `migration_snapshot`
+after the fast-forward and the shard check and before `main` is pushed, and they cost about ten
+minutes there. The lander runs them through `scripts/pm-landing-check.py`, which reports only the
+failures that are new since the recorded baseline `reports/landing-checks/baseline.json` and the
+failures that name a path the branch touches; the three checks produce tens of thousands of
+pre-existing failures that name no landed file, and reading that list at every landing told the
+lander nothing. The baseline is refreshed from a full run against `main` on the nightly schedule,
+never per landing. `migration_snapshot`
 creates a new tracked run directory, so it never runs in the shared checkout at landing; it runs on
 the nightly schedule in a worktree by the designated Plans agent. They fail on this repository today for reasons that belong to no single plan,
 which is why the landing rule turns on whose files a failure names rather than on the gate passing
@@ -64,8 +70,14 @@ canonical_text: >-
   branch lands on main and on a nightly schedule, not inside a per-plan governance seal; the
   migration_snapshot creates a new tracked run directory, so it runs only on the nightly schedule, in
   a worktree, by the designated Plans agent, never in the shared checkout at landing. At landing the
-  three checks run in the shared checkout after the fast-forward and the shard check and cost about
-  ten minutes there. A landing is refused when a repository-wide failure
+  three checks run in the shared checkout after the fast-forward and the shard check, before main is
+  pushed, and cost about ten minutes there. The lander runs them through
+  scripts/pm-landing-check.py, which reports only failures that are new since the recorded baseline
+  reports/landing-checks/baseline.json or that name a path the branch touches, because the three
+  produce tens of thousands of pre-existing failures that name no landed file. The baseline is
+  recorded from a full run against main in a full checkout, committed with the commit it was taken
+  at, and refreshed on the nightly schedule only, never per landing. A landing is refused when a
+  repository-wide failure
   names a file the landing branch touches, and that failure is fixed on the branch; when every
   failure names files the branch does not touch, the landing proceeds and the failures are reported,
   which is the rule the shard check already follows. Stale-hash failures for documents the branch
@@ -82,7 +94,9 @@ split_recommended: false
 depends_on: [BPM-005]
 unblocks: []
 acceptance_criteria:
-  - The landing procedure in AGENTS.md and .claude/CLAUDE.md names run-gates, audit-governance, and the migration validate as one step after the fast-forward and the shard check, states the measured cost of about ten minutes, and keeps the migration snapshot out of the shared checkout.
+  - The landing procedure in AGENTS.md and .claude/CLAUDE.md names run-gates, audit-governance, and the migration validate as one step after the fast-forward and the shard check and before main is pushed, states the measured cost of about ten minutes, and keeps the migration snapshot out of the shared checkout.
+  - That step is run through scripts/pm-landing-check.py, which reports only failures that are new since reports/landing-checks/baseline.json or that name a path from git diff --name-only origin/main..HEAD, and which runs the same three checks with the same arguments and scope.
+  - The baseline is recorded from a full run against main in a full checkout, is committed with the commit it was taken at, and is refreshed on the nightly schedule only, never per landing.
   - A repository-wide failure that names a file the landing branch touches stops the landing and is fixed on the branch.
   - A repository-wide failure that names only files the landing branch does not touch does not stop the landing; main is pushed and the failures are reported, exactly as the shard-check rule reads.
   - A stale-hash failure for a document the landing branch itself edited (Spec Lock, owner or artifact evidence hashes, the readiness report, the plan-migration inventory) is the expected consequence of editing canon before the next designated reseal; it never stops the landing and is reported with a reseal request.
@@ -90,6 +104,7 @@ acceptance_criteria:
   - No per-plan seal is required to run them, and no seal record claims their outcome.
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
 validation_surfaces:
+  - python3 scripts/pm-landing-check.py --base origin/main
   - python3 scripts/pm-plans-verify.py run-gates
   - python3 scripts/pm-plans-verify.py audit-governance
   - "python3 scripts/pm-plan-migration.py validate --run-dir <the run named in Plans/.plan_migration/current_run.json>"
@@ -102,6 +117,8 @@ implementation_surfaces:
   - AGENTS.md
   - .claude/CLAUDE.md
   - Plans/Bootstrap_Planning_Migration.md
+  - scripts/pm-landing-check.py
+  - reports/landing-checks/baseline.json
 node_compile_hint:
   mode: landing_gate_placement
   create_worknodes: false
@@ -114,6 +131,8 @@ preserved_exact_tokens:
   - audit_governance
   - migration_snapshot
   - migration_validate
+  - scripts/pm-landing-check.py
+  - reports/landing-checks/baseline.json
   - "git merge --ff-only"
   - AGENTS.md
   - .claude/CLAUDE.md
@@ -122,6 +141,7 @@ negative_constraints:
   - Do not land a branch whose own files fail a repository-wide gate.
   - Do not repair or commit another thread's files to make a repository-wide gate pass at landing.
   - Do not treat the nightly run as a substitute for the landing run, or the landing run as a substitute for the nightly one.
+  - Do not record a baseline from a checkout that is missing any input the three checks read, and do not refresh the baseline to make a landing pass.
 owner_hints:
   - Plans/Bootstrap_Planning_Migration.md
   - Plans/bootstrap/Bootstrap_Planning_Workflow.md

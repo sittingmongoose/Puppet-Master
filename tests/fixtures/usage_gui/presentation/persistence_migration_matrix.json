@@ -1,0 +1,90 @@
+{
+  "schema_id": "pm.usage_gui.persistence_migration_matrix.v1",
+  "owner_plan_units": [
+    "UF-094",
+    "UF-095",
+    "WS-020",
+    "ATS-036"
+  ],
+  "source_lineage": [
+    "Plans/usage-feature.md#UF-094",
+    "Plans/usage-feature.md#UF-095",
+    "Plans/Widget_System.md#WS-020",
+    "Plans/Automated_Testing_System.md#ATS-036"
+  ],
+  "surfaces": [
+    "Usage workspace demo state",
+    "Usage widget grid"
+  ],
+  "state_families": [
+    "room",
+    "detail",
+    "range",
+    "scope",
+    "more",
+    "hidden",
+    "layout",
+    "order"
+  ],
+  "usage_widget_layout_record_required_fields": [
+    "layout_schema_version",
+    "default_set_version",
+    "host_id",
+    "room_id",
+    "widget_id",
+    "visible",
+    "order_index",
+    "slot_id",
+    "geometry_id",
+    "semantic_tier_id",
+    "preset_id",
+    "configuration_refs",
+    "committed_revision"
+  ],
+  "usage_widget_layout_record_field_contract": {
+    "layout_schema_version": "integer>=1",
+    "default_set_version": "non_empty_string",
+    "host_id": "const:usage",
+    "room_id": "non_empty_stable_string",
+    "widget_id": "non_empty_stable_string",
+    "visible": "boolean",
+    "order_index": "integer>=0",
+    "slot_id": "non_empty_stable_string|null",
+    "geometry_id": "non_empty_supported_geometry_string",
+    "semantic_tier_id": "non_empty_supported_tier_string",
+    "preset_id": "non_empty_supported_preset_string|null",
+    "configuration_refs": "sorted_unique_non_secret_string_array",
+    "committed_revision": "integer>=0"
+  },
+  "usage_widget_layout_record_forbidden_fields": [
+    "preview_rect",
+    "pointer_id",
+    "pointer_coordinates",
+    "ghost",
+    "placeholder",
+    "animation_state",
+    "draft",
+    "frame_draft"
+  ],
+  "cases": [
+    "fresh_current_defaults",
+    "current_saved_layout",
+    "v11_envelope_one_time_import_to_v12",
+    "older_namespace_migration",
+    "invalid_widget_eviction",
+    "unsupported_geometry_fallback"
+  ],
+  "must": [
+    "settled_only",
+    "versioned_migration",
+    "pm7:usage:prototype:workspace:v12:demo_only_noncanonical_lineage",
+    "pm7:usage:prototype:workspace:v11:one_time_prior_envelope_import",
+    "pm7:usage:v10:bounded_legacy_import_when_no_valid_envelope",
+    "explicit_fallback_disposition"
+  ],
+  "must_not": [
+    "preview_frame_persistence",
+    "ghost_persistence",
+    "prototype_key_as_canonical"
+  ]
+}

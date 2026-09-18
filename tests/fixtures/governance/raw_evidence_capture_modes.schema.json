@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/raw_evidence_capture_modes/1.0.0/raw_evidence_capture_modes.schema.json",
+  "title": "Raw evidence capture syntax modes",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "mode_semantics",
+    "entries"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.raw_evidence_capture_modes.v1"
+    },
+    "mode_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "historical_snapshot",
+        "live_current"
+      ],
+      "properties": {
+        "historical_snapshot": {
+          "const": "The exact path and SHA-256 bind an intentionally malformed point-in-time raw capture; it must remain unparseable with the declared parser error class."
+        },
+        "live_current": {
+          "const": "The exact path and SHA-256 bind current JSON or JSONL; it must parse successfully and receives no malformed-capture exemption."
+        }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 16,
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "mode",
+          "sha256",
+          "reason"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^tests/agent_packet_restrictions/.*\\.jsonl?$"
+          },
+          "mode": {
+            "enum": [
+              "historical_snapshot",
+              "live_current"
+            ]
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "parse_error_class": {
+            "enum": [
+              "json_decode_error",
+              "unicode_decode_error"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "mode": {
+                  "const": "historical_snapshot"
+                }
+              },
+              "required": [
+                "mode"
+              ]
+            },
+            "then": {
+              "required": [
+                "parse_error_class"
+              ]
+            },
+            "else": {
+              "not": {
+                "required": [
+                  "parse_error_class"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

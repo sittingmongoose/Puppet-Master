@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.usage_gui.room_disclosure_matrix.v1",
+  "owner_plan_units": [
+    "UF-093",
+    "F3-514",
+    "ATS-036"
+  ],
+  "source_lineage": [
+    "Plans/usage-feature.md#UF-093",
+    "Plans/FinalGUISpec.md#F3-514",
+    "Plans/Automated_Testing_System.md#ATS-036"
+  ],
+  "surfaces": [
+    "Usage room rail",
+    "Usage room canvas",
+    "Usage inspector"
+  ],
+  "rooms": [
+    "Overview",
+    "Plans & limits",
+    "Costs",
+    "Accounts",
+    "Free models",
+    "Context",
+    "Analytics",
+    "Ledger",
+    "Attention",
+    "Prompt cache",
+    "Tools",
+    "Signals",
+    "Source authority"
+  ],
+  "disclosure_levels": [
+    "At a glance",
+    "Detailed",
+    "Diagnostics"
+  ],
+  "must": [
+    "room_specific_panel_catalog",
+    "material_disclosure_change",
+    "provider_setup_required_exact_state",
+    "provider_setup_preserves_operation_and_continuation_identity",
+    "provider_setup_cta:cmd.settings.bloom.open:ai:ai.accounts.provider-connections",
+    "scope_filters_timestamped_identity_bound_records",
+    "range_filters_timestamped_identity_bound_records",
+    "local_projection_only"
+  ],
+  "must_not": [
+    "Essen",
+    "Std",
+    "Adv",
+    "essentials",
+    "standard",
+    "advanced",
+    "provider_setup_auto_install",
+    "provider_setup_auto_authenticate",
+    "provider_setup_silent_cross_route"
+  ]
+}

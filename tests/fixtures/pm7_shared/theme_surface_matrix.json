@@ -1,0 +1,51 @@
+{
+  "schema_id": "pm.pm7.theme_surface_matrix.v1",
+  "owner_plan_units": [
+    "F3-513",
+    "F3-517",
+    "ATS-037",
+    "ATS-038"
+  ],
+  "source_lineage": [
+    "Plans/FinalGUISpec.md#F3-513",
+    "Plans/FinalGUISpec.md#F3-517",
+    "Plans/Automated_Testing_System.md#ATS-037",
+    "Plans/Automated_Testing_System.md#ATS-038"
+  ],
+  "themes": [
+    "basic-dark",
+    "basic-light",
+    "friendly-dark",
+    "friendly-light",
+    "retro-dark",
+    "retro-light",
+    "glass-dark",
+    "glass-light"
+  ],
+  "desktop_widths_css_px": [
+    1440,
+    1180,
+    980,
+    860,
+    680
+  ],
+  "surfaces": [
+    "home",
+    "dashboard",
+    "usage",
+    "assistant_context",
+    "status_bar",
+    "side_panels"
+  ],
+  "must": [
+    "font_palette_shape_contract",
+    "stable_functional_inventory",
+    "no_viewport_escape"
+  ],
+  "must_not": [
+    "blank_first_paint",
+    "black_transition",
+    "clipped_theme_picker",
+    "cut_off_tab_picker"
+  ]
+}

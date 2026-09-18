@@ -1,0 +1,119 @@
+{
+  "schema_id": "pm.raw_evidence_capture_modes.v1",
+  "mode_semantics": {
+    "historical_snapshot": "The exact path and SHA-256 bind an intentionally malformed point-in-time raw capture; it must remain unparseable with the declared parser error class.",
+    "live_current": "The exact path and SHA-256 bind current JSON or JSONL; it must parse successfully and receives no malformed-capture exemption."
+  },
+  "entries": [
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v9_run_01/direct_appserver_receipts/slot-bravo_S10A_DECISION_A14.json",
+      "mode": "historical_snapshot",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "parse_error_class": "json_decode_error",
+      "reason": "Captured newline-only direct app-server decision evidence."
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/canary_004/r10-codex-app-canary-004-evidence/parent_prefix.raw.jsonl",
+      "mode": "live_current",
+      "sha256": "94705eeaf3a9c50d270438c64f6c16330b08223c22a4adc7e9f111846e59aaa8",
+      "reason": "Syntax-valid preserved parent-prefix capture; its failed and zero-credit transport semantics remain recorded separately in reservation and capture-failure evidence."
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/canary_004/r10-codex-app-canary-004-evidence/parent_capture.raw.jsonl",
+      "mode": "live_current",
+      "sha256": "43830354b0844ff23e8c67bb1ae82cc1db935fa6d586eda60a502aeeb872a76f",
+      "reason": "Syntax-valid preserved parent capture; its failed and zero-credit transport semantics remain recorded separately in reservation and capture-failure evidence."
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-001/fault_evidence/fault-019-forced-loss-instead-of-drain/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+      "mode": "historical_snapshot",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error_class": "json_decode_error",
+      "reason": "Empty fault-injection attempt capture is the expected loss evidence."
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-001/fault_evidence/fault-024-loss-after-raw/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+      "mode": "historical_snapshot",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error_class": "json_decode_error",
+      "reason": "Empty fault-injection raw-result capture is the expected loss evidence."
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-002/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+      "mode": "historical_snapshot",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error_class": "json_decode_error",
+      "reason": "Empty fault-injection raw-result capture is the expected loss evidence."
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-002/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+      "mode": "historical_snapshot",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error_class": "json_decode_error",
+      "reason": "Empty fault-injection attempt capture is the expected crash evidence."
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-003-final-self-test-001/fault_evidence/019-forced-loss-instead-of-drain/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+      "mode": "historical_snapshot",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error_class": "json_decode_error",
+      "reason": "Empty fault-injection attempt capture is the expected loss evidence."
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-004-final-self-test-001/fault_evidence/025-loss-after-completion/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json",
+      "mode": "historical_snapshot",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error_class": "json_decode_error",
+      "reason": "Empty fault-injection completion capture is the expected loss evidence."
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-004-final-self-test-001/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+      "mode": "historical_snapshot",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error_class": "json_decode_error",
+      "reason": "Empty fault-injection attempt capture is the expected crash evidence."
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-005-final-self-test-001/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json",
+      "mode": "historical_snapshot",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error_class": "json_decode_error",
+      "reason": "Empty fault-injection completion capture is the expected loss evidence."
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-005-final-self-test-001/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+      "mode": "historical_snapshot",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error_class": "json_decode_error",
+      "reason": "Empty fault-injection raw-result capture is the expected crash evidence."
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-008-final-self-test-002/fault_evidence/019-forced-loss-instead-of-drain/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+      "mode": "historical_snapshot",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error_class": "json_decode_error",
+      "reason": "Empty fault-injection raw-result capture is the expected loss evidence."
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-008-final-self-test-002/fault_evidence/027-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+      "mode": "historical_snapshot",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error_class": "json_decode_error",
+      "reason": "Empty fault-injection raw-result capture is the expected crash evidence."
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-002/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json",
+      "mode": "historical_snapshot",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error_class": "json_decode_error",
+      "reason": "Empty fault-injection completion capture is the expected loss evidence."
+    },
+    {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-002/fault_evidence/027-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+      "mode": "historical_snapshot",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error_class": "json_decode_error",
+      "reason": "Empty fault-injection raw-result capture is the expected crash evidence."
+    }
+  ]
+}

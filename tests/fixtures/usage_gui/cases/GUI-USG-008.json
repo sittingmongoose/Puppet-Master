@@ -1,0 +1,37 @@
+{
+  "schema_id": "pm.usage_gui.acceptance_fixture_case.v1",
+  "owner_plan_unit": "UF-088",
+  "fixture_id": "GUI-USG-008",
+  "title": "partial and aborted streams preserve partial usage once",
+  "surfaces": [
+    "Usage",
+    "Runtime Artifacts",
+    "Run Graph",
+    "Orchestrator",
+    "Ledger"
+  ],
+  "source_lineage": [
+    "Plans/usage-feature.md#UF-088",
+    "Plans/runtime_artifact_tool_llm_trace.schema.json:1",
+    "PlanUnit:UF-088",
+    "tests/fixtures/usage_gui/cases/GUI-USG-008.json"
+  ],
+  "must": [
+    "settlement_status:streaming_partial_or_failed",
+    "stream_state:partial_or_aborted",
+    "dedupe_key",
+    "accepted_partial_rollup_once"
+  ],
+  "must_not": [
+    "final_copy",
+    "settled_copy",
+    "duplicate_partial_rollup"
+  ],
+  "input": {
+    "fixture_identity": "GUI-USG-008",
+    "authority": "canonical_test_fixture"
+  },
+  "expected_projection": {
+    "truthful_unknown_zero_hidden_partial_semantics": true
+  }
+}

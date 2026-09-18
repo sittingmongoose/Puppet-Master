@@ -116,6 +116,36 @@ def load(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def missing_inputs() -> list[dict[str, Any]]:
+    """The fixture files this validator reads without first asking whether they are there.
+
+    They are gitignored, so a checkout that has not been given them has none of them. Reading one
+    then raised FileNotFoundError, and the caller saw a traceback with an absolute path in it rather
+    than a failure it could act on. Report them instead, and fail.
+    """
+    failures: list[dict[str, Any]] = []
+    for root in (USAGE_ROOT, SHARED_ROOT):
+        if not root.is_dir():
+            failures.append({
+                "error": "fixture_root_missing",
+                "path": root.relative_to(ROOT).as_posix(),
+                "detail": "the fixture directory is not in this checkout",
+            })
+    if not failures:
+        for name in sorted(EXPECTED_SHARED_FILES):
+            if not (SHARED_ROOT / name).is_file():
+                failures.append({
+                    "error": "shared_fixture_file_missing",
+                    "path": (SHARED_ROOT / name).relative_to(ROOT).as_posix(),
+                })
+        if not USAGE_MATRIX.is_file():
+            failures.append({
+                "error": "usage_fixture_matrix_missing",
+                "path": USAGE_MATRIX.relative_to(ROOT).as_posix(),
+            })
+    return failures
+
+
 def patch(base: dict[str, Any], changes: dict[str, Any]) -> dict[str, Any]:
     value = copy.deepcopy(base)
     for key, child in changes.items():
@@ -155,6 +185,18 @@ def expected_chart_accessible_name(label: str, series: list[int]) -> str:
 
 def validate() -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
+    absent = missing_inputs()
+    if absent:
+        return {
+            "schema_id": "pm.pm7_gui_fixture_validation.v1",
+            "status": "fail",
+            "usage_fixture_file_count": 0,
+            "usage_fixture_count": 0,
+            "shared_fixture_file_count": 0,
+            "workspace_event_valid_count": 0,
+            "context_compaction_event_family_count": 0,
+            "failures": absent,
+        }
     usage_files = sorted(p for p in USAGE_ROOT.rglob("*") if p.is_file()) if USAGE_ROOT.exists() else []
     shared_files = sorted(p for p in SHARED_ROOT.iterdir() if p.is_file()) if SHARED_ROOT.exists() else []
     if len(usage_files) != EXPECTED_USAGE_FILE_COUNT:

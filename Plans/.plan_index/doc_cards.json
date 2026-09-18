@@ -2728,9 +2728,11 @@
         "Plans/ledgers/v2",
         "Plans/ledgers/v2/*/state",
         "Plans/plan_graph.json",
-        "future migration inventory"
+        "future migration inventory",
+        "reports/landing-checks/baseline.json",
+        "scripts/pm-landing-check.py"
       ],
-      "line_count": 540,
+      "line_count": 560,
       "path": "Plans/Bootstrap_Planning_Migration.md",
       "plan_unit_count": 9,
       "plan_unit_ids": [
@@ -2759,7 +2761,7 @@
         "thread_restart_continuity",
         "workflow_continuity"
       ],
-      "sha256": "e7fad6cd4eb4ad7cb8de456d18e89dd0370f4c1294fc8323c8905f64ff9c613f",
+      "sha256": "894d9a7a0490b9e35e866e16844dc4f3bd20f786eb5f4fc148ca4d7648e128fb",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 9
@@ -2787,6 +2789,7 @@
         "Source-lineage coverage.",
         "Validators after pilot and each batch.",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+        "python3 scripts/pm-landing-check.py --base origin/main",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir <the run named in Plans/.plan_migration/current_run.json>",
         "python3 scripts/pm-plans-verify.py audit-governance",
@@ -5416,7 +5419,7 @@
         "scripts/pm-plans-verify.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 4947,
+      "line_count": 4951,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 62,
       "plan_unit_ids": [
@@ -5551,7 +5554,7 @@
         "unrenderable_branch_policy_promise",
         "weak_integration_underclassification"
       ],
-      "sha256": "7d05e52984903d8483e05bd23dcc36cca4a075b7e88fc43b3af49633d8fededd",
+      "sha256": "e0534283f62c9e6d80f55d374ca96fcc8b6dad7e66c6a6d4d1b4b6923993355e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 62
@@ -5583,6 +5586,7 @@
         "python3 -m unittest tests.test_pm_wiring_vocabulary",
         "python3 scripts/pm-browser-event-admission.py",
         "python3 scripts/pm-event-authority-currentness.py validate",
+        "python3 scripts/pm-landing-check.py --base origin/main",
         "python3 scripts/pm-new-contracts-verify.py",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
@@ -19768,7 +19772,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-18T06:17:48Z",
+  "generated_at_utc": "2026-09-20T23:21:14Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

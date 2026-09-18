@@ -1,0 +1,37 @@
+{
+  "schema_id": "pm.usage_gui.acceptance_fixture_case.v1",
+  "owner_plan_unit": "UF-088",
+  "fixture_id": "GUI-USG-007",
+  "title": "inclusive and exclusive token totals do not double count",
+  "surfaces": [
+    "Usage",
+    "Ledger",
+    "Runtime Artifacts",
+    "model row",
+    "Analytics"
+  ],
+  "source_lineage": [
+    "Plans/usage-feature.md#UF-088",
+    "Plans/Contracts_V0.md#CV-196",
+    "PlanUnit:UF-088",
+    "tests/fixtures/usage_gui/cases/GUI-USG-007.json"
+  ],
+  "must": [
+    "counting_semantics",
+    "input_total_includes_cache",
+    "output_total_includes_reasoning",
+    "provider_total_semantics"
+  ],
+  "must_not": [
+    "cache_added_when_provider_inclusive",
+    "reasoning_added_when_provider_inclusive",
+    "double_counted_total"
+  ],
+  "input": {
+    "fixture_identity": "GUI-USG-007",
+    "authority": "canonical_test_fixture"
+  },
+  "expected_projection": {
+    "truthful_unknown_zero_hidden_partial_semantics": true
+  }
+}

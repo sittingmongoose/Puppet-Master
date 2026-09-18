@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L1125-L4919
+Source lines: L1125-L4923
 
-Source SHA256: `7d05e52984903d8483e05bd23dcc36cca4a075b7e88fc43b3af49633d8fededd`
+Source SHA256: `e0534283f62c9e6d80f55d374ca96fcc8b6dad7e66c6a6d4d1b4b6923993355e`
 
 ---
 
@@ -2989,8 +2989,11 @@ canonical_text: >-
   repository qualification and reports no outcome for an operation it did not run. Every retained
   operation runs the same validator with the same arguments and scope as before. Three of the four omitted
   operations, run_gates, audit_governance, and migration_validate, run when a branch lands on main,
-  in the shared checkout after the fast-forward and the shard check at a measured cost of about ten
-  minutes, and on a nightly schedule; migration_snapshot runs only nightly, in a worktree, by the
+  in the shared checkout after the fast-forward and the shard check and before main is pushed, at a
+  measured cost of about ten minutes, read through scripts/pm-landing-check.py, which reports only
+  the failures that are new since the recorded baseline reports/landing-checks/baseline.json and the
+  failures that name a path the branch touches, and on a nightly schedule from which the baseline is
+  refreshed, never per landing; migration_snapshot runs only nightly, in a worktree, by the
   designated Plans agent, because it creates a new tracked run directory; a landing is
   refused when a failure names a file the branch touches, and proceeds with the failures reported
   when every failure names files the branch does not touch; stale governance hashes for the documents
@@ -3003,7 +3006,7 @@ unblocks: []
 acceptance_criteria:
   - BPM-005 states the fifteen plan-layer operations, the four omitted operations, the labelled seal record, that a plan-layer seal never claims repository qualification, and that every retained operation runs unchanged.
   - BPM-009 places run_gates, audit_governance, and migration_validate at landing on main and all four, including migration_snapshot in a worktree, on a nightly schedule, with the landing refusal and reporting rule and the measured cost.
-  - The landing procedure in AGENTS.md and .claude/CLAUDE.md carries the repository-wide gates as one step after the fast-forward and the shard check, and states the measured cost.
+  - The landing procedure in AGENTS.md and .claude/CLAUDE.md carries the repository-wide gates as one step after the fast-forward and the shard check and before the push, states the measured cost, and runs them through scripts/pm-landing-check.py against the recorded baseline.
   - The bootstrap seal prose no longer says that a per-plan seal runs the full gate set, and no passage in Plans says a seal qualifies the repository.
   - No validator, validator argument, or validator scope changes for any retained operation.
   - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds, executable queues, or build tasks are created by this record.
@@ -3011,6 +3014,7 @@ validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-landing-check.py --base origin/main
   - Manual AGENTS.md and .claude/CLAUDE.md landing-procedure review.
 risk_class: seal_claim_overreach_or_unrun_repository_gates
 reasoning_tier: high

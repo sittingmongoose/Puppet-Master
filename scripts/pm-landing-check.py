@@ -15,7 +15,13 @@ sets only:
   on-branch  a failure that names a path from `git diff --name-only <base>..HEAD`, whether or not
              it is new
 
-It exits 0 when both sets are empty.
+It also compares each check's per-subcheck failure totals against the baseline, because the checks
+print only 50 (run-gates) or 100 (audit-governance) failures per subcheck: everything above that cap
+is never keyed, and the on-branch match runs over the sample, not over the whole failure set. A rise
+in a truncated subcheck is therefore reported and stops the landing, since what was added cannot be
+matched against the branch's paths.
+
+It exits 0 when it has nothing to report.
 
 A key is `check | subcheck | error kind | path | fingerprint`. The fingerprint is a short digest of
 the failure's remaining fields after the parts that move on their own are removed: timestamps, hash
@@ -33,9 +39,11 @@ the checks' own inputs.
 
 Exit codes:
   0  nothing to report
-  1  something to report, and every reported item is a governance-staleness kind that a canon edit
-     is expected to produce before the next reseal (landing proceeds, with a reseal request)
-  2  at least one reported item is not that (landing stops)
+  1  nothing it reports stops the landing: governance staleness on files the branch edited, or
+     failures that are new but name none of the branch's files (push, and report them)
+  2  it reports something that does stop the landing: a failure on the branch's files that is not
+     staleness, a bucket that grew whose error kind is not staleness, or a rise in a subcheck whose
+     failures are truncated, where the on-branch match cannot see what was added
   3  the script could not run a check or could not read the baseline or the branch paths
 """
 from __future__ import annotations
@@ -226,6 +234,19 @@ def is_staleness(error: str, scrubbed: dict[str, Any]) -> bool:
     return isinstance(detail, str) and STALENESS_DETAIL_MARKER in detail
 
 
+def excused_by_kind(on_branch: list[dict[str, Any]]) -> dict[str, int]:
+    """How many reported items each staleness error kind excuses.
+
+    One prefix can carry thousands of them, so a new failure kind underneath it would otherwise
+    arrive as a slightly larger number in one line. Counting by kind makes it show up by name.
+    """
+    counts: dict[str, int] = {}
+    for item in on_branch:
+        if item["stale"]:
+            counts[item["error"]] = counts.get(item["error"], 0) + 1
+    return dict(sorted(counts.items(), key=lambda pair: (-pair[1], pair[0])))
+
+
 def public(item: dict[str, Any]) -> dict[str, Any]:
     """The item without the working fields that are not meant to be printed."""
     return {key: value for key, value in item.items() if not key.startswith("_")}
@@ -233,6 +254,62 @@ def public(item: dict[str, Any]) -> dict[str, Any]:
 
 def bucket_of(item: dict[str, Any]) -> str:
     return f"{item['check']}|{item['subcheck']}|{item['error']}|{item['path']}"
+
+
+def grown_subchecks(
+    counts: dict[str, dict[str, dict[str, int]]],
+    baseline_checks: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Subchecks reporting more failures than the baseline recorded.
+
+    Each check reports a true total per subcheck but prints only the first 50 or 100 of them, so
+    most of a large subcheck is never keyed and never matched against the branch's paths. Comparing
+    the totals is the only way a failure added above the cap announces itself. When the subcheck is
+    truncated the rise stops the landing, because nothing can say whether what was added names a
+    file the branch touched.
+    """
+    rows = []
+    for check in sorted(counts):
+        recorded = (baseline_checks.get(check) or {}).get("subchecks") or {}
+        for subcheck in sorted(counts[check]):
+            now = counts[check][subcheck]
+            was = int((recorded.get(subcheck) or {}).get("reported", 0))
+            if now["reported"] <= was:
+                continue
+            rows.append({
+                "check": check,
+                "subcheck": subcheck,
+                "baseline_reported": was,
+                "reported": now["reported"],
+                "sampled": now["sampled"],
+                "truncated": now["sampled"] < now["reported"],
+            })
+    return rows
+
+
+def blocking_items(
+    on_branch: list[dict[str, Any]],
+    grown: list[dict[str, Any]],
+    subcheck_growth: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """What stops a landing, by the rule in AGENTS.md.
+
+    A failure on a file the branch touched that is not governance staleness; a bucket that grew whose
+    error kind is not staleness; and a rise in a truncated subcheck, whose added failures nothing can
+    match against the branch's paths. A failure that is new but names none of the branch's files does
+    not stop the landing: it is reported and pushed, exactly as the shard-check rule reads.
+    """
+    return (
+        [item for item in on_branch if not item["stale"]]
+        + [row for row in grown if not row["stale"]]
+        + [row for row in subcheck_growth if row["truncated"]]
+    )
+
+
+def exit_code(reported: list[Any], grown: list[Any], subcheck_growth: list[Any], blocking: list[Any]) -> int:
+    if not reported and not grown and not subcheck_growth:
+        return 0
+    return 2 if blocking else 1
 
 
 def grown_buckets(seen: dict[str, int], baseline: dict[str, int]) -> list[dict[str, Any]]:
@@ -531,11 +608,12 @@ def main() -> int:
             on_branch.append({**public(item), "branch_paths": hits})
 
     grown = grown_buckets(seen_buckets, baseline_counts)
+    subcheck_growth = grown_subchecks(counts, baseline.get("checks") or {})
     resolved = sorted(set(baseline_counts) - set(seen_buckets))
 
     reported_keys = {item["key"] for item in new_items} | {item["key"] for item in on_branch}
     reported = [item for item in items if item["key"] in reported_keys]
-    blocking = [item for item in on_branch if not item["stale"]] + [row for row in grown if not row["stale"]]
+    blocking = blocking_items(on_branch, grown, subcheck_growth)
 
     if args.json:
         print(json.dumps(
@@ -546,10 +624,20 @@ def main() -> int:
                 "base": args.base,
                 "baseline_commit": baseline.get("commit"),
                 "branch_paths": touched,
-                "checks": {check: statuses[check] for check in CHECKS},
+                "checks": {
+                    check: {
+                        "status": statuses[check],
+                        "failure_total": sum(c["reported"] for c in counts[check].values()),
+                        "baseline_failure_total": (baseline.get("checks", {}).get(check) or {}).get("failure_total", 0),
+                        "subchecks": {name: counts[check][name] for name in sorted(counts[check])},
+                    }
+                    for check in CHECKS
+                },
                 "new": [public(item) for item in new_items],
                 "on_branch": on_branch,
                 "grown_buckets": grown,
+                "grown_subchecks": subcheck_growth,
+                "excused_by_kind": excused_by_kind(on_branch),
                 "resolved_buckets": resolved,
                 "blocking": len(blocking),
             },
@@ -564,6 +652,17 @@ def main() -> int:
             was = baseline.get("checks", {}).get(check, {}).get("failure_total", 0)
             print(f"  {check:24s} {statuses[check]:5s} {total:7d} failures (baseline {was})")
         print(f"  branch paths from git diff --name-only {args.base}..HEAD: {len(touched)}")
+        truncated = [
+            f"{check}/{name}" for check in CHECKS for name in sorted(counts[check])
+            if counts[check][name]["sampled"] < counts[check][name]["reported"]
+        ]
+        if truncated:
+            hidden = sum(
+                counts[check][name]["reported"] - counts[check][name]["sampled"]
+                for check in CHECKS for name in counts[check]
+            )
+            print(f"  {len(truncated)} subchecks print only part of their failures: "
+                  f"{hidden} failures are never keyed, and the on-branch match runs over the rest")
         print()
         print(f"New since the baseline: {len(new_items)}")
         for item in new_items[:40]:
@@ -574,14 +673,25 @@ def main() -> int:
         for row in grown[:40]:
             print(f"  [{'staleness' if row['stale'] else 'blocking '}] {row['bucket']}  "
                   f"{row['baseline_count']} -> {row['count']}")
+        print(f"Subchecks reporting more failures than the baseline: {len(subcheck_growth)}")
+        for row in subcheck_growth[:40]:
+            tag = "blocking " if row["truncated"] else "off-branch"
+            note = f" (only {row['sampled']} of {row['reported']} are printed, so what was added cannot be matched)" if row["truncated"] else ""
+            print(f"  [{tag}] {row['check']}/{row['subcheck'] or '-'}  "
+                  f"{row['baseline_reported']} -> {row['reported']}{note}")
         print(f"Naming a path this branch touches: {len(on_branch)}")
+        excused = excused_by_kind(on_branch)
+        if excused:
+            print(f"  of which excused as governance staleness, by kind ({sum(excused.values())} in total):")
+            for kind, count in excused.items():
+                print(f"      {count:7d}  {kind}")
         for item in on_branch[:40]:
             print(describe(item))
         if len(on_branch) > 40:
             print(f"  ... {len(on_branch) - 40} more")
         print(f"Gone since the baseline (nothing to do): {len(resolved)}")
         print()
-        if not reported and not grown:
+        if not reported and not grown and not subcheck_growth:
             print("Nothing to report. The three checks found only what the baseline already knew.")
         elif not blocking:
             advice = []
@@ -589,13 +699,13 @@ def main() -> int:
                 advice.append("governance staleness for what this branch edited, so ask the Plans agent for a reseal")
             if any(item["key"] not in {other["key"] for other in on_branch} for item in new_items):
                 advice.append("new but names no file this branch touched, so report it to Jared")
+            if subcheck_growth:
+                advice.append("a subcheck that reports more than the baseline, with every failure still printed")
             print("Nothing reported stops the landing: it is " + "; and ".join(advice) + ".")
         else:
             print(f"{plural(len(blocking), 'item')} the baseline does not excuse. Fix them on this branch.")
 
-    if not reported and not grown:
-        return 0
-    return 2 if blocking else 1
+    return exit_code(reported, grown, subcheck_growth, blocking)
 
 
 def untracked_check_inputs(root: Path) -> list[str]:

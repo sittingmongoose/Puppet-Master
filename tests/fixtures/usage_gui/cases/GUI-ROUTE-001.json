@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.usage_gui.acceptance_fixture_case.v1",
+  "owner_plan_unit": "UF-088",
+  "fixture_id": "GUI-ROUTE-001",
+  "title": "Ledger routes by distinct usage attempt identity; non-Ledger details stay local",
+  "surfaces": [
+    "Usage",
+    "Ledger",
+    "Runtime Artifacts",
+    "Provider details",
+    "Account details",
+    "Presentation panel details"
+  ],
+  "source_lineage": [
+    "Plans/usage-feature.md#UF-088",
+    "Plans/Wiring_Matrix.production.json:1",
+    "PlanUnit:UF-088",
+    "tests/fixtures/usage_gui/cases/GUI-ROUTE-001.json"
+  ],
+  "must": [
+    "route_target.object_kind:usage_attempt",
+    "object_id:attempt_id",
+    "route_target.object_id_equals_attempt_id",
+    "ledger_attempt_id_primary_route",
+    "usage_attempt_primary_route",
+    "ledger_usage_event_ref_correlation_passthrough",
+    "usage_event_ref",
+    "usage_record_id",
+    "provider_attempt_ref",
+    "attempt_id",
+    "trace_ref",
+    "source_class",
+    "source_confidence",
+    "source_authority",
+    "settlement_status",
+    "projection_freshness",
+    "projection_health",
+    "non_ledger_panel_details_are_local",
+    "local_provider_detail_uses_stable_provider_id",
+    "local_account_detail_uses_stable_account_id",
+    "local_detail.route_dispatch:false"
+  ],
+  "must_not": [
+    "timestamp_primary_route",
+    "run_only_primary_route",
+    "thread_only_primary_route",
+    "tier_only_primary_route",
+    "attempt_id_copied_to_usage_event_ref",
+    "usage_event_ref_copied_to_attempt_id",
+    "opaque_card_id_as_usage_provider",
+    "non_ledger_panel_dispatches_open_usage_subject"
+  ],
+  "input": {
+    "fixture_identity": "GUI-ROUTE-001",
+    "authority": "canonical_test_fixture"
+  },
+  "expected_projection": {
+    "truthful_unknown_zero_hidden_partial_semantics": true,
+    "ledger": {
+      "route_target": {
+        "object_kind": "usage_attempt",
+        "object_id_source": "attempt_id"
+      },
+      "identity_contract": {
+        "attempt_id_distinct_from_usage_event_ref": true,
+        "correlation_passthrough": [
+          "usage_event_ref",
+          "usage_record_id",
+          "provider_attempt_ref"
+        ]
+      }
+    },
+    "non_ledger_details": [
+      {
+        "detail_kind": "provider",
+        "identity_field": "provider_id",
+        "route_dispatch": false
+      },
+      {
+        "detail_kind": "account",
+        "identity_field": "account_id",
+        "route_dispatch": false
+      },
+      {
+        "detail_kind": "presentation_panel",
+        "identity_field": "stable_panel_id",
+        "route_dispatch": false
+      }
+    ]
+  }
+}
