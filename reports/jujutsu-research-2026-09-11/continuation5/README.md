@@ -364,7 +364,7 @@ verifiable rather than asserted. `runtime-identity.json` is taken from each job'
 ## What ran, and what is left
 
 All five campaign arms are complete: Arm P (prioritization + depth), Arm B (breadth + compare), T80 and
-A24. T320 was cancelled. Four attempts are archived unscored and preserved with their manifests —
+A24. T320 was cancelled. Three attempts are archived unscored and preserved with their manifests —
 b-compare attempt 1, T80 attempt 1, A24 attempt 1 — each cut by something outside the arm: the account's
 shared rate limit, a gate rule that was later corrected, or an admission pin that was later rebuilt.
 
