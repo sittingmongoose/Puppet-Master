@@ -7,11 +7,15 @@ sealing, no formal audit, no user-acceptance claim.
 ## Scope
 
 Worklist batch 19 (`DEMO_REMAINING_WORKLIST.json`, `PLANNED_NOT_EXECUTED` at
-build time): `v2:ATT-001..014` and `v4:FOLDER-001..008`. The worklist carries
-source-row IDs only; no per-requirement prose exists in the worklist or the
-concept directory, so the operative requirement wording is the Batch 19 goal
-§2 clause list (disclosed as missing historical wording in
-`BATCH_19_COVERAGE.json`).
+build time) defines membership: `v2:ATT-001..014` and `v4:FOLDER-001..008`.
+Requirement wording (see `BATCH_19_COVERAGE.json` revision 2 for the
+per-ID mapping): ATT-001..014 statements are mirrored exact v2 wording from
+`Plans/.audits/assistant-settings-v3/DEMO_REQUIREMENT_MATRIX.csv` lines
+18..31 (custody `mirrored_exact_v2_statement`; wording lineage, not
+original-packet recovery). FOLDER-001..008 come from the grouped owner
+clauses in `Plans/FileManager.md` (`Additive Correction v4`, lines
+5020..5074) plus F-084; no per-ID historical v4 wording exists and none is
+invented.
 
 Covered behaviors:
 
@@ -60,16 +64,29 @@ not provide it; use a venv with Playwright installed):
 
 Each group writes `RUN.json` with per-command exit codes and logs, and refuses
 to run unless the frozen HTML is unchanged and both generated outputs match.
-`handlers` runs 22 cases; `surfaces` runs 11 intake/live/folder/device probes
-(1440/900/700, Orbit/Simple, reduced motion); `record` captures four
-screencast workflows with screenshots; `regressions` replays the retained
-B18/B17 suites.
+`handlers` runs 23 cases (22 original plus `layout_origins_and_chrome_truth`,
+which asserts tray/attach layout, the 9-origin census, X geometry,
+hover-hidden chrome contents and extra Details needles); `surfaces` runs 11
+intake/live/folder/device probes (1440/900/700, Orbit/Simple, reduced
+motion); `record` captures four screencast workflows with screenshots;
+`regressions` replays the retained B18/B17 suites.
 
-Known limitation: the nested pre-B17 legacy leg
-(`tests/b17/run.py regressions` → `tests/b10/qa/regression-batch1.py`) fails
-identically on pristine main with `FileNotFoundError` because that corpus
-file is absent from the repository. It is a pre-existing harness condition,
-not a B19 defect; B17/B18 handler suites pass on the B19 HTML.
+Legacy corpus note: the nested pre-B17 leg (`tests/b17/run.py regressions`)
+needs historical test files (`tests/b10/qa/*`, `tests/b11/*`,
+`tests/b11-repair/*`, `tests/b12/*`) that are still absent from this
+repository — they were NOT restored here. For the follow-up, 35 of those
+test-only files were restored from the accepted B18 completion cumulative
+archive into an external copy of the B19 source (hash-verified, nothing
+overwritten, runtime/HTML untouched), and the full adapted chain executed
+green on the frozen B19 HTML, including hash-pinned `regression-batch1.py`
+(19/19) and `regression-batch2.py` (157/157). See the follow-up report and
+`RESTORED_DEPS.json` in the evidence ZIP.
+
+Inherited failure (not a B19 defect): the b16 `restructure` check
+`Concurrent leaves appear separately` (to-do domain, untouched by B19)
+fails deterministically at width 900 on pristine base as well as B19, and
+is flaky at width 700 (pass/fail/pass across runs); it passes at 1440.
+No runtime change was made for it.
 
 ## Deliveries
 
