@@ -1,11 +1,12 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260918-001-azure-devops-corrections",
-  "updated_at_utc": "2026-09-18T01:30:00+00:00",
+  "updated_at_utc": "2026-09-18T05:20:00+00:00",
   "open_questions": [
     "q-017",
     "q-018",
-    "q-019"
+    "q-019",
+    "q-020"
   ],
   "answered_questions": [
     "q-001",
@@ -45,6 +46,12 @@
       "disposition": "not written; the promise was amended instead",
       "decision": "Plans/Azure_DevOps_Integration.md#ADO-003",
       "note": "Tracked as q-019."
+    },
+    {
+      "item": "validator surfaces for the five planning units SCS-023, F3-561, FGI-018, FGI-019 and FGI-020",
+      "disposition": "no validator surface in this landing",
+      "decision": "Plans/Decision_Log.md#DL-062",
+      "note": "Tracked as q-020, raised by blind review cycle 1."
     }
   ],
   "not_landed": [

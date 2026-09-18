@@ -4825,6 +4825,7 @@
           "webhook_redelivery_gate": null,
           "source_control_handoff_ref": null,
           "policy_preview_ref": "policy-preview:42",
+          "policy_scope_ref": "policy-scope:forgejo:alpha:refs/heads/main:exact",
           "expected_policy_revision": "policy-revision:7",
           "expected_policy_set": {
             "members": [
@@ -6672,6 +6673,96 @@
         }
       },
       "expected_error": "one scalar revision cannot fence a set whose membership can change without any member's revision changing"
+    },
+    {
+      "name": "gate_record_cannot_stay_silent_about_its_url",
+      "definition": "gate_record",
+      "expected_error": "a gate row states its URL, or states that there is none and why; omitting all three fields says nothing",
+      "value": {
+        "schema_id": "pm.forge.gate_record.v1",
+        "gate_id": "gate-record:azure:pr-8:policy:2",
+        "provider": "azure_devops",
+        "repository_binding_ref": "forge-binding:azure:1",
+        "provider_review_id": "pr:8",
+        "source": "policy_evaluation",
+        "provider_gate_identity": {
+          "configuration_id": "policy-configuration:azure:32",
+          "configuration_type_id": "policy-type:required-reviewers",
+          "configuration_revision": 2,
+          "instance_id": "policy-evaluation:azure:pr-8:32",
+          "context_genre": null,
+          "context_name": null
+        },
+        "enforcement": "required",
+        "raw_status": "queued",
+        "normalized_status": "queued",
+        "binding_kind": "review_bound",
+        "binding": {
+          "review_revision_ref": null,
+          "merge_commit_id": "git-oid:7777777777777777777777777777777777777777",
+          "merge_source_commit_id": "git-oid:2222222222222222222222222222222222222222",
+          "merge_target_commit_id": "git-oid:8888888888888888888888888888888888888888"
+        },
+        "evidence_refs": [
+          "evidence:policy-evaluation:8"
+        ],
+        "observed_at_utc": "2026-09-17T09:06:00Z"
+      }
+    },
+    {
+      "name": "stale_head_changed_cannot_name_a_cause_that_moved_no_head",
+      "definition": "review_revision",
+      "base_valid": "review_revision_stales_evidence_after_head_change",
+      "patch": {
+        "evidence_state_cause": "target_revision_moved"
+      },
+      "expected_error": "stale_head_changed means the head actually moved; a target move, a retarget or a policy expiry is reported as itself"
+    },
+    {
+      "name": "policy_apply_cannot_drop_the_scope_the_preview_fenced",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_repository_policy_apply",
+      "patch": {
+        "target": {
+          "target_kind": "repository_policy",
+          "identity_source": "validated_repository_binding",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:alpha",
+          "repository_locator_ref": "repository-locator:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": null,
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "policy_preview_ref": "policy-preview:42",
+          "expected_policy_revision": "policy-revision:7",
+          "expected_policy_set": {
+            "members": [
+              {
+                "policy_resource_id": "policy-configuration:forgejo:alpha:31",
+                "policy_scope_ref": "policy-scope:forgejo:alpha:refs/heads/main:exact",
+                "expected_policy_revision": 7
+              }
+            ],
+            "member_set_digest": "1111111111111111111111111111111111111111111111111111111111111111"
+          }
+        }
+      },
+      "expected_error": "the apply fences the same scope entry the preview fenced; a mutation that cannot say which scope it applies to has the defect the preview repair removed"
     }
   ],
   "command_coverage": {

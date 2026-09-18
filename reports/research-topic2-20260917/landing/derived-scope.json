@@ -1,6 +1,6 @@
 {
   "schema": "azure.topic2.derived_scope.v1",
-  "generated_at_utc": "2026-09-18T01:27:03Z",
+  "generated_at_utc": "2026-09-18T05:13:00Z",
   "regeneration": [
     "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
     "python3 scripts/pm-plan-index.py generate"

@@ -46,6 +46,13 @@ admissible values, enumerate every `allOf` branch that names it before concludin
 `provider_project_id` requirement was added as its own conditional rather than folded into the existing
 Azure-and-Bitbucket one, and why the checks-command fence was split by binding kind rather than loosened.
 
+**The lane convention, stated once.** A correction's lane is **where the defect lives, not where the repair
+lands**. The two differ for three of the twenty-six, so counting the compile queue by `target_doc` gives a different
+split and neither number is wrong: `AZ-20` (TA-026) is a common-lane defect whose repair amends ADO-003, `AZ-19`
+(TA-025) is a common-lane defect whose repair amends SCS-016, and `AZ-26` (TA-042) is the single re-owned item,
+counted outside both lanes, whose repair lands in the common lane's own document. **By lane: 12 Azure, 13 common,
+1 re-owned. By `target_doc`: 13 Azure, 12 Forge, 1 Source Control.** Same twenty-six corrections.
+
 **`TA-011` and `TA-042` are distinct and land in different places.** `TA-011` is a defect in the common *schema*,
 `Plans/forge_integration_contracts.schema.json`, and is counted inside the thirteen common-lane items. `TA-042` is a
 defect in `Plans/Forge_Integrations.md` the owner document, and is the single re-owned item counted outside both
@@ -90,5 +97,29 @@ bound with an unknown and probably large remainder.** Jared queued the second pa
 blocking this landing; it is open question `q-017`.
 
 One consequence is worth saying twice: `TA-038`'s repair amends the fixture promise rather than writing the
-fixtures, so `ADO-003`, `ADO-005`, `ADO-006` and `ADO-007` carry acceptance criteria that no fixture can currently
-falsify. Each of those units says so in its own validation surfaces, and `q-019` tracks the work.
+fixtures, so `ADO-001` (its TFVC container-recognition criterion only), `ADO-003`, `ADO-005`, `ADO-006` and
+`ADO-007` carry acceptance criteria that no fixture can currently falsify. Each of those units says so in its own
+validation surfaces, and `q-019` tracks the work. The five planning units the card answers created — `SCS-023`,
+`F3-561`, `FGI-018`, `FGI-019` and `FGI-020` — are in the same position for a different reason: the addendum that
+carries them admits no typed schema variant, so no schema or fixture pack holds their shapes. Each says
+"no validator surface in this landing" rather than naming a file that cannot fail, and `q-020` tracks it.
+
+## Review cycle 1
+
+A blind form-driven review of `7380013f04` returned **fix then land**: 1 blocking, 9 should-fix, 3 notes, 1
+withdrawn. All fourteen are applied in one fix commit, no amend. The per-finding disposition is in
+`verification.json` under `review_cycles`. Three are worth naming here.
+
+**R-11** was the one with blast radius beyond this branch: `ledger_registry.json` had been rewritten with sorted
+keys, turning a one-entry addition into a 185-line diff across nine other threads' entries. It is restored to the
+file's own serialization — 26 added lines and one changed timestamp.
+
+**R-01** was the blocking one, and it was the same defect `AZ-01` exists to repair: `ADO-001` named a TFVC negative
+fixture that did not exist. A real TFVC negative is now written — a profile declaring a near-miss spelling instead of
+the enrolled `tfvc_container_unsupported` is rejected by the closed vocabulary — and the claim is amended to say that
+**container recognition** itself has no fixture, because the corpus carries no container shape to present one in.
+
+**R-04 and R-06** were both obligations this landing stated and did not enforce. Both are now enforced rather than
+recorded as unenforced: `gate_record` requires its three URL fields so omission cannot evade the rule, and
+`review_revision` rejects `stale_head_changed` paired with a cause that moved no head — which is precisely the false
+report `AZ-11` exists to stop.

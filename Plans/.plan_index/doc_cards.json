@@ -2132,7 +2132,7 @@
         "future Azure review/policy adapter",
         "future Source Control review UI"
       ],
-      "line_count": 386,
+      "line_count": 398,
       "path": "Plans/Azure_DevOps_Integration.md",
       "plan_unit_count": 7,
       "plan_unit_ids": [
@@ -2156,7 +2156,7 @@
         "duplicated_or_unenforced_azure_check_presentation",
         "silently_transferred_azure_approval_or_policy_evidence"
       ],
-      "sha256": "0645a1f75db20a9701d8e714d5ba9503380fe6ca29c80358607bdf28ce195cc3",
+      "sha256": "cffbf0b1080a48573693d832e596a5b8307934dbe726abc765a0164e7a03d066",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 7
@@ -2172,15 +2172,16 @@
         "Azure build/pipeline/check fixtures",
         "Azure capability fixtures",
         "Plans/azure_devops_integration_fixtures.json",
-        "That pack holds the Services and Server adapter profiles and the repository-binding negatives and nothing else. The Azure Pull Request, Policies/Checks and Builds/Pipelines fixtures this unit's placement promise would need do not exist yet, so placement is stated here and is not yet falsifiable by a fixture.",
+        "That pack holds the Services and Server adapter profiles, an Azure DevOps Server instance profile, four repository-binding negatives and two provider-profile negatives. It holds no Pull Request, Policies/Checks or Builds/Pipelines fixture, which is what this unit's placement promise would need, so placement is stated here and is not yet falsifiable by a fixture.",
         "The Azure policy-evaluation and status-check fixtures this unit will need do not exist yet, so it is planned and not yet falsifiable by a fixture.",
         "The Azure review, policy and check fixtures this unit needs do not exist yet. What exists is the Services and Server adapter profiles and the repository-binding negatives in Plans/azure_devops_integration_fixtures.json; no Azure review revision, thread, vote, policy evaluation or check fixture exists in any Plans fixture pack, so these criteria are stated and not yet falsifiable by a fixture. Writing them is separate work gated on the common gate-record contract.",
         "The Azure vote and policy-evaluation fixtures this unit will need do not exist yet, for the reason ADO-003 states: no Azure review, vote, policy or check fixture exists in any Plans fixture pack. This unit is planned and is not yet falsifiable by a fixture.",
+        "The TFVC leg is only partly falsifiable. A negative rejects a profile that declares a near-miss spelling instead of the enrolled tfvc_container_unsupported code, so the vocabulary is checked. Recognising a TFVC container from the provider's own repository-kind data has no fixture, because the corpus carries no container shape to present one in: that criterion is stated and not yet falsifiable, and writing the fixture waits on the same Azure fixture work ADO-003 names.",
         "access/scope/version/license/rate matrices",
         "command/wiring census, GUI/accessibility fixtures, migration negatives",
         "future stale-head/vote tests, Draft capability tests",
-        "missing-project and variant negative tests",
-        "null-project and TFVC negative fixtures",
+        "future variant negative tests",
+        "missing-project, null-project, missing-project-GUID and non-GUID-project-identifier negatives",
         "secret scans",
         "service hook replay/dedupe tests"
       ]
@@ -7014,7 +7015,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 38198,
+      "line_count": 38199,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 561,
       "plan_unit_ids": [
@@ -7678,7 +7679,7 @@
         "visualizer_script_policy_drift",
         "wand_overflow_or_demo_command_pollution"
       ],
-      "sha256": "1c8533ce825c035ad9b38759680854fc2c77f46d9c63c6fec2ed97aa1be82689",
+      "sha256": "43437de2f53d342ba114fb46f90a8f32de6fced1ed522738f4d99778a94add85",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 560,
@@ -7807,6 +7808,7 @@
         "git diff --check",
         "manual FinalGUISpec heading review",
         "manual markdown anchor/cross-reference review",
+        "no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. Neither final-GUI contract file is touched by this landing and neither carries a gate list, a source column or an enforcement value, so neither can test this unit.",
         "node Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
         "node Concepts/pm7-tools/verify/settings_placement_checkpoint.mjs",
         "node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs",
@@ -7881,7 +7883,7 @@
         "future signed provider catalog",
         "future webhook ingress"
       ],
-      "line_count": 1273,
+      "line_count": 1283,
       "path": "Plans/Forge_Integrations.md",
       "plan_unit_count": 20,
       "plan_unit_ids": [
@@ -7931,7 +7933,7 @@
         "stale_review_evidence_or_agent_publication",
         "unbindable_vote_promise"
       ],
-      "sha256": "e596a563d95db42046e81d8ebf2420a732bd1f2ab36a7f1a35a28602c3005e90",
+      "sha256": "f0f8de3bb61d4c4e7829e1e28dc97b3b91ad38ca098a8be92b577514803ea93a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 20
@@ -7977,6 +7979,9 @@
         "future push-success/review-failure, timeout-after-create, restart resume, rewritten stack, protected head, exact base mapping and Draft policy fixtures",
         "future requeue disabled-reason and confirmation fixtures",
         "migration fixtures",
+        "no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. No merge-strategy field exists in the forge schema or its fixture pack, at base or after this landing, so the contracts gate cannot fail if this unit's promises are broken.",
+        "no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. No requeue command, target kind or disabled reason exists in the forge schema or its fixture pack, so the contracts gate cannot fail if this unit's promises are broken.",
+        "no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. No vote, approval or reviewer definition exists in the forge schema or its fixture pack, so the contracts gate cannot fail if this unit's promises are broken.",
         "no-prose-scrape negatives",
         "no-unregistered-event check",
         "pipeline projection fixtures",
@@ -16975,7 +16980,7 @@
         "future source-control facade",
         "future source-control migration"
       ],
-      "line_count": 1687,
+      "line_count": 1686,
       "path": "Plans/Source_Control_System.md",
       "plan_unit_count": 23,
       "plan_unit_ids": [
@@ -17031,7 +17036,7 @@
         "unbounded_graph_hydration_or_source_history_identity_conflation",
         "wrong_environment_or_stale_version_certification"
       ],
-      "sha256": "94f423aa2d0241c333c9c29b9cdaadb45194af1f81814dd7e3042b4c260ebdfc",
+      "sha256": "250bda4cd00826028b35afff57446f6096fef26c1a6432d83a8daaeb3898787a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 23
@@ -17097,10 +17102,10 @@
         "future native pagination, stale-page, anchor-preservation, large-graph, Git/Jujutsu parity, accessibility, and frame-pacing tests",
         "future normalized roundtrip",
         "future owner-return and protected-auth runtime fixtures",
+        "no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. Neither source-control contract file carries an enforcement or gate-list shape, and Plans/Source_Control_System.md is not a sharding_config source, so the shard check never reads this document.",
         "prompt suppression tests",
         "python3 scripts/pm-new-contracts-verify.py",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 scripts/pm-touch-closure-verify.py --json",
         "remote fan-out",
         "repository_context schema fixtures",
@@ -19763,7 +19768,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-18T06:16:03Z",
+  "generated_at_utc": "2026-09-18T06:17:15Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

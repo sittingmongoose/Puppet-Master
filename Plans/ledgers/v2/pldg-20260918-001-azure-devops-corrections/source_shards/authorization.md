@@ -17,6 +17,20 @@ The twenty-six split twelve in the Azure owner or its own fixtures, thirteen in 
 re-owned out of the Azure lane into `Plans/Forge_Integrations.md`. Two merges fold seven propositions into two
 corrections: `C-CHECKS-BINDING` from TA-022, TA-023 and TA-024, and `C-CHECKS-CARRIER` from TA-018 to TA-021.
 
+**The lane is where the defect lives, not where the repair lands**, and the two differ for three items, so counting
+the compile queue by `target_doc` gives a different split. Stated once, so neither number reads as an error:
+
+- `AZ-20` (TA-026) is a common-lane defect: the forge contracts have forty-six definitions and not one is a vote, an
+  approval or a reviewer. Its repair amends ADO-003, so its `target_doc` is the Azure owner.
+- `AZ-19` (TA-025) is a common-lane defect in the Check carrier. Its repair amends SCS-016, so its `target_doc` is
+  `Plans/Source_Control_System.md`, the only correction with that target.
+- `AZ-26` (TA-042) is the one re-owned item and is counted outside both lanes. Its `target_doc` is
+  `Plans/Forge_Integrations.md`, which is also the common lane's document, so by `target_doc` it is
+  indistinguishable from a common-lane item.
+
+By lane the split is 12 Azure, 13 common, 1 re-owned. By `target_doc` it is 13 Azure, 12 Forge, 1 Source Control.
+Both describe the same twenty-six corrections.
+
 Every proposition here repairs an existing promise. TA-002 named a real defect whose minimal repair adds a field and
 a product decision, so the Part 1 record reclassified it to a decision card and it is not landed. NEW-01 was an
 additional finding the Part 1 record raised on its own authority; the confirmation review withdrew it, because

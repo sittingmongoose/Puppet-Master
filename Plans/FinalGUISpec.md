@@ -38183,8 +38183,9 @@ acceptance_criteria:
   - A truncated gate list is shown as truncated with the control that resumes it.
   - No command, handler, event or runtime behaviour is admitted by this unit, and no WorkNode or NodeSeed is created.
 validation_surfaces:
-  - Plans/final_gui_interaction_contracts.schema.json
-  - Plans/final_gui_interaction_contract_fixtures.json
+  - >-
+    no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. Neither final-GUI contract file is touched by this landing and neither carries a gate
+    list, a source column or an enforcement value, so neither can test this unit.
   - future gate-list responsive and accessibility fixtures
 risk_class: unstated_enforcement_or_duplicated_gate_presentation
 reasoning_tier: high

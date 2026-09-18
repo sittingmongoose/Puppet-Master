@@ -3,7 +3,7 @@
   "generated_at_utc": "2026-09-18T01:32:18Z",
   "branch": "plans/azure-devops-corrections-20260918",
   "base": "4f5eda0d18a9deff2349b03ae573f0ffd706ed61",
-  "status": "COMPILED_CORRECTION_INTEGRITY_PASS_PENDING_INDEPENDENT_BRANCH_REVIEW",
+  "status": "COMPILED_CORRECTION_INTEGRITY_PASS_REVIEW_CYCLE_1_APPLIED_PENDING_CYCLE_2",
   "landed_on_main": false,
   "commits": [
     {
@@ -235,9 +235,22 @@
   ],
   "corrections_landed_count": 26,
   "lane_split": {
-    "azure_owner_or_its_fixtures": 12,
-    "common_forge_contracts": 13,
-    "re_owned_to_forge_integrations": 1
+    "convention": "The lane is where the defect lives, not where the repair lands.",
+    "by_lane": {
+      "azure_owner_or_its_fixtures": 12,
+      "common_forge_contracts": 13,
+      "re_owned_to_forge_integrations": 1
+    },
+    "by_compile_queue_target_doc": {
+      "Plans/Azure_DevOps_Integration.md": 13,
+      "Plans/Forge_Integrations.md": 12,
+      "Plans/Source_Control_System.md": 1
+    },
+    "items_where_the_two_differ": [
+      "AZ-20 (TA-026): common-lane defect, Azure-owner repair",
+      "AZ-19 (TA-025): common-lane defect, Source Control repair",
+      "AZ-26 (TA-042): the re-owned item, counted outside both lanes, Forge Integrations repair"
+    ]
   },
   "propositions_merged_into_them": {
     "C-CHECKS-BINDING": [
@@ -336,7 +349,7 @@
     {
       "command": "python3 scripts/pm-new-contracts-verify.py",
       "result": "pass",
-      "detail": "1066 of 1066 positives valid, 3472 of 3472 negatives rejected, 0 findings"
+      "detail": "1066 of 1066 positives valid, 3476 of 3476 negatives rejected, 0 findings"
     },
     {
       "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
@@ -351,7 +364,7 @@
     {
       "command": "python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections --base origin/main",
       "result": "pass",
-      "detail": "witness 1: 0 of 33 records fire, 0 named-but-not-targeted, 0 named-but-unchanged. witness 2: 52 item tokens, 0 missing from prose, 0 missing from a registry. witness 3: 0 units carry registry entries absent from their own text"
+      "detail": "witness 1: 0 of 33 records fire, 0 named-but-not-targeted, 0 named-but-unchanged. witness 2: 53 item tokens, 0 missing from prose, 0 missing from a registry. witness 3: 0 units carry registry entries absent from their own text"
     },
     {
       "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections",
@@ -380,6 +393,10 @@
     {
       "question": "q-019",
       "obligation": "When the Azure review, policy and check fixtures get written. TA-038 amended the promise instead, so several criteria are stated and not yet falsifiable, and each unit says so."
+    },
+    {
+      "question": "q-020",
+      "obligation": "Which validator surface will test SCS-023, F3-561, FGI-018, FGI-019 and FGI-020. No schema or fixture pack contains their shapes, because the addendum admits no typed schema variant, and each unit now says so instead of naming a file that cannot fail."
     }
   ],
   "not_landed": [
@@ -399,5 +416,103 @@
     "detail": "That branch is editing Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Backup_Restore_System.md and Plans/External_Research.md. This branch touches Plans/Source_Control_System.md in two places only: SCS-016, amended minimally for the nullable canonical URL, the Check status vocabulary and four pre-existing registry orphans, and one new unit SCS-023 appended at the end of the document. It touches no other SCS unit and no other document on that list. Whichever lands second rebases; the SCS-016 passage must be re-read against the current text before the edit is reapplied."
   },
   "independent_review": "Not yet reviewed. The acceptance rule is deterministic checks pass plus one blind form-driven review with a cycle cap of two.",
-  "commits_note": "This list was written after the ledger and bundle commit and before the single follow-up commit that records it, so the branch carries exactly one commit more than the list: the commit whose subject is \"bundle: record the ledger commit in the landing verification\". git log 4f5eda0d18..HEAD is authoritative."
+  "commits_note": "This list was written after the ledger and bundle commit and before the single follow-up commit that records it, so the branch carries exactly one commit more than the list: the commit whose subject is \"bundle: record the ledger commit in the landing verification\". git log 4f5eda0d18..HEAD is authoritative.",
+  "review_cycles": [
+    {
+      "cycle": 1,
+      "verdict": "fix_then_land",
+      "findings": "~/PM-Experiments/blind-review-azure-20260918/findings.jsonl, SHA-256 f60c1eeeb1675d049e5f7f2f8b777e58c4353773bb83a563f5af20a018ffc87c",
+      "severity_counts": {
+        "blocking": 1,
+        "should_fix": 9,
+        "note": 3,
+        "withdrawn": 1
+      },
+      "applied_as": "one fix commit, no amend",
+      "dispositions": [
+        {
+          "id": "R-11",
+          "disposition": "fixed",
+          "detail": "Plans/ledgers/v2/ledger_registry.json restored to its base serialization; the diff is now 26 added lines for the new entry and one changed timestamp, and no other thread's entry is rewritten."
+        },
+        {
+          "id": "R-01",
+          "disposition": "fixed (blocking)",
+          "detail": "A TFVC reason-code negative was written, and ADO-001's validation surfaces and section 3 now name what exists and state that TFVC container recognition has no fixture because the corpus carries no container shape to present one in."
+        },
+        {
+          "id": "R-04",
+          "disposition": "fixed",
+          "detail": "canonical_url, canonical_url_origin and url_absent_reason are required on gate_record, with a negative that omits all three."
+        },
+        {
+          "id": "R-06",
+          "disposition": "fixed by enforcement",
+          "detail": "review_revision gains a branch pairing stale_head_changed with head_revision_changed or force_pushed, and a negative pairs it with target_revision_moved. Not recorded as an unenforced obligation, because it is now enforced."
+        },
+        {
+          "id": "R-03",
+          "disposition": "fixed by requiring",
+          "detail": "policy_scope_ref added to the apply conditional's required list, with a negative; the AZ-17 record's claim that both policy conditionals require both fields is now true."
+        },
+        {
+          "id": "R-02",
+          "disposition": "fixed",
+          "detail": "ADO-005's 'and nothing else' replaced with the pack's actual contents."
+        },
+        {
+          "id": "R-07",
+          "disposition": "fixed",
+          "detail": "The coined point-of-consent surface is gone. FGI-015 now maps each of the seven facts to a named existing surface, and auth_methods and credential_access replace point-of-consent in the registry."
+        },
+        {
+          "id": "R-08",
+          "disposition": "fixed",
+          "detail": "SCS-023 drops the two contract files and the shard check that never reads its document, and discloses no validator surface, recorded as q-020."
+        },
+        {
+          "id": "R-09",
+          "disposition": "fixed",
+          "detail": "F3-561 drops the two final-GUI contract files and carries the same disclosure."
+        },
+        {
+          "id": "R-10",
+          "disposition": "fixed",
+          "detail": "FGI-018, FGI-019 and FGI-020 drop the forge schema, the forge fixture pack and the contracts gate, and carry the same disclosure."
+        },
+        {
+          "id": "R-05 / R-05-change",
+          "disposition": "fixed by the preferred repair",
+          "detail": "The '(the Source Location's own Host)' parenthetical is reverted. The registry orphan is cured by reflowing the folded scalar so 'Source Location' is contiguous, which was the reviewer's preferred repair and asserts nothing new."
+        },
+        {
+          "id": "R-12 / R-12-change",
+          "disposition": "withdrawn by the reviewer; disclosure mirrored anyway",
+          "detail": "The ledger's validation_state.named_tests now carries the same pre-existing-break disclosure the bundle already had."
+        },
+        {
+          "id": "R-13",
+          "disposition": "fixed",
+          "detail": "ADO-005's canonical_text now carries the branch-policy narrowing, so queue-027's attribution of ADO-005 to the CD-01 answer is accurate."
+        },
+        {
+          "id": "R-14 / R-14-change",
+          "disposition": "fixed",
+          "detail": "The authorization shard and this bundle state the counting convention: the lane is where the defect lives, not where the repair lands. AZ-20 and AZ-19 are common-lane defects whose repairs land in the Azure owner and in Source Control; AZ-26 is the one re-owned item. By lane 12/13/1, by target_doc 13/12/1."
+        }
+      ]
+    }
+  ],
+  "units_with_stated_but_unfalsifiable_criteria": [
+    "ADO-001 (TFVC container recognition only)",
+    "ADO-003",
+    "ADO-005",
+    "ADO-006",
+    "ADO-007",
+    "SCS-023",
+    "F3-561",
+    "FGI-018",
+    "FGI-019",
+    "FGI-020"
+  ]
 }

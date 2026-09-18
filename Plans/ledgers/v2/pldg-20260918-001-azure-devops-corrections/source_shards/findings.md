@@ -36,7 +36,7 @@ Repairs FGI-005. One typed gate record carries the provider identity, an enforce
 
 FGI-014 separates Git from unsupported TFVC and carries `TFVC` as a preserved exact token, and the forge acceptance packet requires Git and TFVC fixtures to select the right capabilities with a named scenario expecting no TFVC-as-Git registration. Verified on current main: `TFVC` occurred zero times in `Plans/Azure_DevOps_Integration.md`, the sole canonical owner for Azure repository identity and Azure-specific degradation, section 7's non-goals did not list it, and neither profile's reason codes could express that a container is TFVC rather than Git.
 
-Repairs ADO-001. The owner now recognizes a TFVC container from the provider's own repository-kind data and reports `tfvc_container_unsupported`, both profiles declare that code, section 7 states the non-goal, and recognition from a CLI failure string, a 403 body or an empty Git response is forbidden.
+Repairs ADO-001. The owner now recognizes a TFVC container from the provider's own repository-kind data and reports `tfvc_container_unsupported`, both profiles declare that code, section 7 states the non-goal, and recognition from a CLI failure string, a 403 body or an empty Git response is forbidden. One negative rejects a profile that declares a near-miss spelling instead of the enrolled code, so the vocabulary is checked. Container recognition itself has no fixture, because the corpus carries no container shape to present one in; ADO-001's validation surfaces and section 3 say so rather than naming a fixture that does not exist.
 
 ## Record 7 — AZ-07 (TA-001): A new head is the wrong staling trigger for Azure
 
@@ -66,7 +66,7 @@ Repairs ADO-003. A retarget re-resolves the applicable branch policy and check s
 
 `review_revision.evidence_state` is a closed four-value enum in which only `stale_head_changed` names a cause, so at least five distinct and independently verified Azure staleness causes would all be reported to the person as a changed head, false in four of the five: retarget, merge-base drift from target movement, conflict resolution in the provider's own interface, force push, and policy-driven time expiry, which is a staleness with neither a head change nor a new iteration.
 
-Repairs FGI-004. `evidence_state_cause` names the path that produced the state while the four frozen values stay exactly as they are, and a current revision carries no staleness cause.
+Repairs FGI-004. `evidence_state_cause` names the path that produced the state while the four frozen values stay exactly as they are, a current revision carries no staleness cause, and `stale_head_changed` may name only a cause that actually moved the head, so the false report this correction exists to stop is rejected rather than merely forbidden in prose. A negative pairs `stale_head_changed` with `target_revision_moved` and is rejected.
 
 ## Record 12 — AZ-12 (TA-007): A thread's anchor is a revision pair on Azure and the schema stored one ref
 
@@ -102,7 +102,7 @@ Repairs ADO-003. One negative constraint on the Azure owner, modelled on the exi
 
 The policy preview command required a policy resource id, a provider patch reference and an expected policy revision, and identified its subject with one opaque string whose only worked example in the corpus is a branch name. Azure's identity is the policy configuration id plus the scope entry that made it apply, and two different configurations can both be the branch policy on one branch; the provider's own write path already addresses individual configurations by id. The expected revision was a single scalar while the provider's revision is per configuration, so one scalar could not fence a set whose membership can change without any member's revision changing.
 
-Repairs FGI-005. `command_target` gains `policy_scope_ref` and `expected_policy_set`, a per-configuration member list with a membership digest, and both policy conditionals require them.
+Repairs FGI-005. `command_target` gains `policy_scope_ref` and `expected_policy_set`, a per-configuration member list with a membership digest, and both policy conditionals require both, so an apply cannot drop the scope entry its preview fenced. A negative removes it from the apply request.
 
 ## Record 18 — AZ-18 (TA-017): A policy or check collection carried no completeness state and no cursor
 
@@ -114,7 +114,7 @@ Repairs FGI-005. `pipeline_projection` gains `checks_truncated` and `checks_expa
 
 SCS-016 names canonical URL among the mandatory fields for a materialized Check record and the schema required it with a URI format. The Azure policy evaluation record has no URL field at all, only links and a configuration URL the provider documents as where the policy configuration can be retrieved, which is the policy's own REST URL rather than a human-facing result page. Either the record could not validate or Puppet Master synthesised a link and presented it as the provider's own.
 
-Repairs SCS-016. The canonical URL becomes nullable with a required `canonical_url_origin` and `url_absent_reason`, an absent URL must state why, a present one must declare whether the provider supplied it or Puppet Master synthesized it, and the Check row's normalized status is pinned to the closed gate vocabulary. This is the minimal touch to a document another branch is also editing.
+Repairs SCS-016. The canonical URL becomes nullable with a required `canonical_url_origin` and `url_absent_reason`, an absent URL must state why, a present one must declare whether the provider supplied it or Puppet Master synthesized it, and the Check row's normalized status is pinned to the closed gate vocabulary. The same three fields are required on the forge `gate_record`, so the rule cannot be evaded by omission in either carrier, and a negative omits all three. This is the minimal touch to a document another branch is also editing.
 
 ## Record 20 — AZ-20 (TA-026): No vote, approval or reviewer object exists in the forge contracts
 

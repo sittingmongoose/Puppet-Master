@@ -1356,6 +1356,28 @@
         {
           "if": {
             "properties": {
+              "evidence_state": {
+                "const": "stale_head_changed"
+              }
+            },
+            "required": [
+              "evidence_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence_state_cause": {
+                "enum": [
+                  "head_revision_changed",
+                  "force_pushed"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
               "contents_complete": {
                 "const": true
               }
@@ -1566,6 +1588,9 @@
         "normalized_status",
         "binding_kind",
         "binding",
+        "canonical_url",
+        "canonical_url_origin",
+        "url_absent_reason",
         "evidence_refs",
         "observed_at_utc"
       ],
@@ -5388,12 +5413,16 @@
               "target": {
                 "required": [
                   "policy_preview_ref",
+                  "policy_scope_ref",
                   "expected_policy_revision",
                   "expected_policy_set"
                 ],
                 "properties": {
                   "policy_preview_ref": {
                     "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "policy_scope_ref": {
+                    "$ref": "#/$defs/non_empty_string"
                   },
                   "expected_policy_revision": {
                     "$ref": "#/$defs/non_secret_ref"

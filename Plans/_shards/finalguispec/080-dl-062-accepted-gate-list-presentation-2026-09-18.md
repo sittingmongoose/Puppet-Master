@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38157-L38198
+Source lines: L38157-L38199
 
-Source SHA256: `1c8533ce825c035ad9b38759680854fc2c77f46d9c63c6fec2ed97aa1be82689`
+Source SHA256: `43437de2f53d342ba114fb46f90a8f32de6fced1ed522738f4d99778a94add85`
 
 ---
 
@@ -37,8 +37,9 @@ acceptance_criteria:
   - A truncated gate list is shown as truncated with the control that resumes it.
   - No command, handler, event or runtime behaviour is admitted by this unit, and no WorkNode or NodeSeed is created.
 validation_surfaces:
-  - Plans/final_gui_interaction_contracts.schema.json
-  - Plans/final_gui_interaction_contract_fixtures.json
+  - >-
+    no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. Neither final-GUI contract file is touched by this landing and neither carries a gate
+    list, a source column or an enforcement value, so neither can test this unit.
   - future gate-list responsive and accessibility fixtures
 risk_class: unstated_enforcement_or_duplicated_gate_presentation
 reasoning_tier: high

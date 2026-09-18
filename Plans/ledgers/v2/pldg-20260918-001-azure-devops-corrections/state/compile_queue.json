@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260918-001-azure-devops-corrections",
-  "updated_at_utc": "2026-09-18T01:30:00+00:00",
+  "updated_at_utc": "2026-09-18T05:20:00+00:00",
   "last_event_id": "evt-006",
   "canonical_plan_targets": [
     "Plans/Azure_DevOps_Integration.md",
@@ -39,10 +39,10 @@
     "scoped_contracts": "pass",
     "plan_index": "pass",
     "configured_shards": "pass",
-    "named_tests": "pass",
+    "named_tests": "pass; tests/test_pm_forge_provider_fixture_gate.py was red at the base commit for a prior thread's unregistered contract pair (EXPECTED_CONTRACT_PAIR_COUNT 31 against an asserted 30, stale since ca7d5f4ff6) and this branch repaired that as well, so the pass is not a property of the base",
     "compile_witness": "pass",
     "claim_boundary": "Static schema, fixture, shard, index, named-test and compile-witness integrity only. No governance seal, runtime certification, provider access or readiness admission.",
-    "partial_enforcement": "Three obligations have no validator surface and are recorded as open questions q-017, q-018 and q-019 rather than implied by the contracts.",
+    "partial_enforcement": "Four obligations have no validator surface and are recorded as open questions q-017, q-018, q-019 and q-020 rather than implied by the contracts.",
     "governance_coverage_errors": [
       "governance coverage targets missing from sharding_config sources: ['Plans/Azure_DevOps_Integration.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']",
       "governance coverage targets missing from Spec_Lock coverage: ['Plans/Azure_DevOps_Integration.md', 'Plans/Decision_Log.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']",

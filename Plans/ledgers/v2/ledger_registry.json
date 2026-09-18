@@ -263,7 +263,7 @@
       "status": "compiled",
       "phase": "compiled_azure_devops_corrections_and_decision_cards",
       "created_at_utc": "2026-09-18T00:45:00+00:00",
-      "last_updated_at_utc": "2026-09-18T01:30:00+00:00",
+      "last_updated_at_utc": "2026-09-18T05:20:00+00:00",
       "last_event_id": "evt-006",
       "canonical_plan_targets": [
         "Plans/Azure_DevOps_Integration.md",
@@ -273,7 +273,7 @@
         "Plans/Source_Control_System.md"
       ],
       "resume_file": "Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections/state/handoff.json",
-      "notes": "Twenty-six corrections from two Azure DevOps research arms, confirmed by the Part 1 candidate record of 2026-09-17 and upheld by its confirmation review of 2026-09-18: twelve in the Azure owner or its own fixtures, thirteen in the common forge contracts, and one re-owned to Plans/Forge_Integrations.md, with two merges folding seven propositions into two. Compiled into ADO-001 to ADO-005, FGI-003, FGI-004, FGI-005, FGI-007, FGI-015 and SCS-016, with a new gate_record definition, a closed provider_unsupported_reason_code vocabulary, provider_project_id for azure_devops, revision causes and completeness, thread revision anchors, per-endpoint API versions, review-scoped capability entries and the two repaired command fences. Jared's nine candidate answers are q-008 to q-016 and his seven decision-card answers are q-001 to q-007, all verbatim \"agree\" on 2026-09-18, landed as DL-059 to DL-065 with ADO-006, ADO-007, SCS-023, F3-561, FGI-018, FGI-019 and FGI-020. TA-002 stays a decision card and is not landed; NEW-01 was withdrawn by the confirmation review because the repository_binding conditional already rejects a null project for azure_devops, so only a fixture was added. Contracts gate, named tests, configured shards, plan index and all three compile witnesses pass. Three questions stay open and none blocks landing: q-017 the queued second research pass, q-018 the absent status-to-policy join key, and q-019 the unwritten Azure review, policy and check fixtures. Not yet landed on main; the branch stops for independent review. No packet disposition, governance seal or runtime claim.",
+      "notes": "Twenty-six corrections from two Azure DevOps research arms, confirmed by the Part 1 candidate record of 2026-09-17 and upheld by its confirmation review of 2026-09-18: twelve in the Azure owner or its own fixtures, thirteen in the common forge contracts, and one re-owned to Plans/Forge_Integrations.md, with two merges folding seven propositions into two. Compiled into ADO-001 to ADO-005, FGI-003, FGI-004, FGI-005, FGI-007, FGI-015 and SCS-016, with a new gate_record definition, a closed provider_unsupported_reason_code vocabulary, provider_project_id for azure_devops, revision causes and completeness, thread revision anchors, per-endpoint API versions, review-scoped capability entries and the two repaired command fences. Jared's nine candidate answers are q-008 to q-016 and his seven decision-card answers are q-001 to q-007, all verbatim \"agree\" on 2026-09-18, landed as DL-059 to DL-065 with ADO-006, ADO-007, SCS-023, F3-561, FGI-018, FGI-019 and FGI-020. TA-002 stays a decision card and is not landed; NEW-01 was withdrawn by the confirmation review because the repository_binding conditional already rejects a null project for azure_devops, so only a fixture was added. Contracts gate, named tests, configured shards, plan index and all three compile witnesses pass. Blind review cycle 1 of 2026-09-18 was applied as one fix commit. Four questions stay open and none blocks landing: q-017 the queued second research pass, q-018 the absent status-to-policy join key, q-019 the unwritten Azure review, policy and check fixtures, and q-020 the validator surfaces for the five planning units. Not yet landed on main; the branch stops for independent review. No packet disposition, governance seal or runtime claim.",
       "compiled_owner_docs": [
         "Plans/Azure_DevOps_Integration.md",
         "Plans/Decision_Log.md",
@@ -1617,5 +1617,5 @@
       "updated_at_utc": "2026-07-04T00:47:25Z"
     }
   ],
-  "updated_at_utc": "2026-09-18T01:30:00+00:00"
+  "updated_at_utc": "2026-09-18T05:20:00+00:00"
 }

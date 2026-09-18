@@ -934,11 +934,17 @@ canonical_text: >-
   host, tenant/account, API base path, scoped private CA, redirects/pagination, SSH host key, and explicit
   localhost/metadata policy before credentials, without global TLS disable or cross-origin Authorization.
   Authentication is provider- and instance-scoped, and what a provider profile itself carries is the closed field
-  set of its own schema: today that is the authentication methods it admits, its capability and reason vocabulary,
-  its version or tier gate and its catalog reference. Issuer, allowed host, non-secret token owner, requested
-  scopes, refresh and revoke, and the separate Git-versus-API roles are recorded by the trust, instance and
-  point-of-consent surfaces those facts belong to, not by the profile record, and this unit does not claim the
-  profile identifies them. The provider list is: GitHub direct OAuth/App/token plus separate Git helper;
+  set of its own schema: the setup methods it admits, in `provider_adapter_profile.auth_methods`, together with its
+  capability and reason vocabulary, its version or tier gate and its catalog reference. The other six facts are
+  each recorded by a named existing surface rather than by the profile record: the issuer by
+  `Plans/GitHub_API_Auth_and_Flows.md` and by `provider_instance_profile.oauth_registration_ref` for a registered
+  instance flow; the allowed host by `provider_instance_profile.normalized_host` and `api_base_path` under
+  `restricted_network_target_policy`; the non-secret token owner by `provider_instance_profile.credential_ref`,
+  `token_lease.credential_ref` and `app_installation.credential_key_ref`; the requested scopes by
+  `api_compatibility.scopes` and `token_lease.scope_grant_refs`; refresh and revoke by `token_lease.state`,
+  `expires_at_utc` and `ttl_seconds` with `app_installation.state`; and the separate Git-versus-API roles by
+  `provider_instance_profile.git_transport_state`, `api_state`, `transport_api_independent` and
+  `credential_access`. The provider list is: GitHub direct OAuth/App/token plus separate Git helper;
   GitLab registered OAuth/PKCE or scoped PAT; Azure Services Entra and Server supported on-prem auth;
   Bitbucket Cloud OAuth/current scoped API token and Data Center supported instance token; Microsoft Entra is the
   Azure Services issuer rather than a new legacy Azure DevOps OAuth registration; Forgejo/Gitea
@@ -957,11 +963,15 @@ acceptance_criteria:
   - All thirteen provider profiles and four local-VCS profiles exist separately with every named dimension reporting explicit state/probe/reason rather than generic compatibility.
   - Same-name/different-instance, custom base path/SSH port, private CA, redirect, metadata, and changed-host-key fixtures fail or prompt at the exact trust gate without leaking authorization.
   - >-
-    Every provider profile identifies the setup method it admits, and issuer, allowed host, non-secret token owner,
-    requested scopes, refresh/revoke and the separate Git-versus-API roles are each identified by the named surface
-    that carries them. Neither closed profile schema has a field for those seven facts, so this criterion is met by
-    naming where each one lives rather than by a profile record that structurally cannot hold it; adding them to the
-    profile schemas would be a new capability and is not done here.
+    Every provider profile identifies the setup method it admits, in `provider_adapter_profile.auth_methods`. The
+    other six facts are identified by the surfaces the canonical text names one by one: the issuer by
+    `Plans/GitHub_API_Auth_and_Flows.md` and `oauth_registration_ref`, the allowed host by `normalized_host` and
+    `api_base_path`, the non-secret token owner by the three `credential_ref` and `credential_key_ref` fields, the
+    requested scopes by `api_compatibility.scopes` and `token_lease.scope_grant_refs`, refresh and revoke by the
+    `token_lease` lifetime and state fields, and the Git-versus-API roles by `git_transport_state`, `api_state`,
+    `transport_api_independent` and `credential_access`. Neither closed profile schema has a field for those six,
+    so this criterion is met by naming the surface that holds each one; adding them to the profile schemas would be
+    a new capability and is not done here.
   - Repository delete, force push, policy edit, runner registration, secret write, and organization management remain individually risk-tiered with preview, permission, confirmation, and currentness.
   - Every visible hosted-admin control resolves to owner command, versioned schema, permission, receipt, or labeled external-only route; GitHub retained administration is inventoried and no live section is silently dropped.
 validation_surfaces: [Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, Plans/protected_auth_browser_contracts.schema.json, Plans/protected_auth_browser_contract_fixtures.json, future provider matrix/trust/admin fixtures]
@@ -982,7 +992,7 @@ source_lineage:
   - source_ref:corrected-slice:machine__provider_profiles.json__part-002__lines-000201-000420.txt:201-420
   - source_ref:corrected-slice:machine__provider_profiles.json__part-003__lines-000401-000620.txt:401-620
   - source_ref:corrected-slice:machine__provider_profiles.json__part-004__lines-000601-000692.txt:601-692
-preserved_exact_tokens: [github_cloud, github_enterprise, gitlab_saas, gitlab_self_managed, azure_devops_services, azure_devops_server, bitbucket_cloud, bitbucket_data_center, forgejo, gitea, cursor_origin_native, cursor_origin_github_mirror, generic_git, Microsoft Entra, guided scoped PAT, registered OAuth/PKCE, human-only broker, point-of-consent]
+preserved_exact_tokens: [github_cloud, github_enterprise, gitlab_saas, gitlab_self_managed, azure_devops_services, azure_devops_server, bitbucket_cloud, bitbucket_data_center, forgejo, gitea, cursor_origin_native, cursor_origin_github_mirror, generic_git, Microsoft Entra, guided scoped PAT, registered OAuth/PKCE, human-only broker, auth_methods, credential_access]
 negative_constraints:
   - Do not use one GitHub-compatible boolean, universal username/password form, global TLS bypass, or cross-origin Authorization.
   - Do not request account passwords, deprecated Bitbucket app passwords, new legacy Azure DevOps OAuth, or silent admin scopes for ordinary work.
@@ -1172,9 +1182,9 @@ acceptance_criteria:
   - A provider with no equivalent for a neutral value does not offer that value, and no value is silently mapped to a different one.
   - No command is added, no handler or event is registered, and no WorkNode or NodeSeed is created by this unit.
 validation_surfaces:
-  - Plans/forge_integration_contracts.schema.json
-  - Plans/forge_integration_contract_fixtures.json
-  - python3 scripts/pm-new-contracts-verify.py
+  - >-
+    no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. No merge-strategy field exists in the forge schema or its fixture pack, at base or after
+    this landing, so the contracts gate cannot fail if this unit's promises are broken.
   - future per-provider merge strategy mapping fixtures
 risk_class: implicit_merge_strategy_selection
 reasoning_tier: high
@@ -1215,9 +1225,9 @@ acceptance_criteria:
   - The command targets one evaluation identity from the gate record, never a whole policy set.
   - This unit admits no command to the central command set, the command catalog, production wiring or any event family, and creates no WorkNode or NodeSeed.
 validation_surfaces:
-  - Plans/forge_integration_contracts.schema.json
-  - Plans/forge_integration_contract_fixtures.json
-  - python3 scripts/pm-new-contracts-verify.py
+  - >-
+    no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. No requeue command, target kind or disabled reason exists in the forge schema or its
+    fixture pack, so the contracts gate cannot fail if this unit's promises are broken.
   - future requeue disabled-reason and confirmation fixtures
 risk_class: silent_no_op_or_undisclosed_build_cancellation
 reasoning_tier: high
@@ -1257,9 +1267,9 @@ acceptance_criteria:
   - A vote observed against an earlier provider revision is reported stale against the current one rather than carried silently.
   - No command, handler, event or runtime behaviour is admitted by this unit, and no WorkNode or NodeSeed is created.
 validation_surfaces:
-  - Plans/forge_integration_contracts.schema.json
-  - Plans/forge_integration_contract_fixtures.json
-  - python3 scripts/pm-new-contracts-verify.py
+  - >-
+    no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. No vote, approval or reviewer definition exists in the forge schema or its fixture pack,
+    so the contracts gate cannot fail if this unit's promises are broken.
   - future per-provider vote and reviewer fixtures
 risk_class: unbindable_vote_promise
 reasoning_tier: high

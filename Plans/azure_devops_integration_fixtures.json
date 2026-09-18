@@ -172,6 +172,15 @@
       }
     },
     {
+      "name": "azure_devops_profile_cannot_declare_an_unenrolled_tfvc_reason",
+      "definition": "provider_adapter_profile",
+      "base_valid": "azure_devops_services_profile",
+      "patch": {
+        "unsupported_reason_codes": ["organization_access_denied", "project_access_denied", "policy_write_scope_missing", "tfvc_unsupported"]
+      },
+      "expected_error": "a TFVC container is declared with the enrolled code tfvc_container_unsupported; a near-miss spelling is not in the closed profile reason vocabulary"
+    },
+    {
       "name": "azure_devops_profile_cannot_declare_a_read_side_policy_scope_failure",
       "definition": "provider_adapter_profile",
       "base_valid": "azure_devops_services_profile",

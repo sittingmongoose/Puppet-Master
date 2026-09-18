@@ -1063,9 +1063,8 @@ canonical_text: >-
   subscription work per authorized binding; authenticated replay/order-checked webhooks are optional
   accelerators, polling remains available, and Funnel/public ingress is never enabled merely for webhooks.
   Cache identity includes instance, account, repository, and revision and shared governors bound pagination,
-  logs, retries, 429 backoff, and inactive subscriptions. Local filesystem work executes in the Source
-  Location's authorized Environment (the Source Location's own Host) through the selected installation,
-  Worktree/Workspace Manager, and
+  logs, retries, 429 backoff, and inactive subscriptions. Local filesystem work executes in the
+  Source Location's authorized Environment through the selected installation, Worktree/Workspace Manager, and
   FileSafe; hosting API/CLI work uses its exact egress Host, adapter/profile, credential, and explicit repository
   target and returns durable receipts to the Home Server without making a worker Project authority. Agents
   consume compact typed available-action summaries and blockers through the same commands, never raw registry/log
@@ -1671,9 +1670,9 @@ acceptance_criteria:
   - A truncated gate list is shown as truncated rather than as a complete one, on the flag-and-cursor rule this owner already states for a bounded list.
   - No command, handler, event or runtime behaviour is admitted by this unit, and no WorkNode or NodeSeed is created.
 validation_surfaces:
-  - Plans/source_control_contracts.schema.json
-  - Plans/source_control_contract_fixtures.json
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - >-
+    no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. Neither source-control contract file carries an enforcement or gate-list shape, and
+    Plans/Source_Control_System.md is not a sharding_config source, so the shard check never reads this document.
   - future gate-list projection and accessibility fixtures
 risk_class: section_proliferation_or_unstated_enforcement
 reasoning_tier: high

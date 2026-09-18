@@ -25,7 +25,7 @@ FORGE_SCHEMA = "Plans/forge_integration_contracts.schema.json"
 PROVIDER_PACKS = {
     "Plans/cursor_origin_integration_fixtures.json": (4, 4),
     "Plans/gitlab_integration_fixtures.json": (3, 1),
-    "Plans/azure_devops_integration_fixtures.json": (3, 5),
+    "Plans/azure_devops_integration_fixtures.json": (3, 6),
     "Plans/bitbucket_integration_fixtures.json": (2, 1),
 }
 
@@ -125,7 +125,7 @@ class ForgeProviderFixtureGateTests(unittest.TestCase):
         self.assertEqual(report["findings"], [])
         self.assertEqual(report["claim_boundary"], "static_schema_and_fixture_consistency_only")
         for count, expected in {"contract_pairs": 4, "positive_cases": 12, "positive_cases_valid": 12,
-                                "negative_cases": 11, "negative_cases_rejected": 11}.items():
+                                "negative_cases": 12, "negative_cases_rejected": 12}.items():
             self.assertEqual(report["counts"][count], expected, count)
         self.assertEqual(report["inputs"], [{"schema": schema, "fixtures": fixture} for schema, fixture in pairs])
 

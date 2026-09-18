@@ -1,11 +1,11 @@
 {
   "schema": "azure.topic2.evidence_receipts.v1",
-  "generated_at_utc": "2026-09-18T01:27:03Z",
+  "generated_at_utc": "2026-09-18T05:13:00Z",
   "claim_boundary": "Every `use` field says what the named file actually supports, not what it is about. A file that only mentions a subject is recorded as that fact, not as support. Nothing here supports a runtime, provider-access, security or readiness claim.",
   "in_repository": [
     {
       "path": "Plans/Azure_DevOps_Integration.md",
-      "sha256": "0645a1f75db20a9701d8e714d5ba9503380fe6ca29c80358607bdf28ce195cc3",
+      "sha256": "cffbf0b1080a48573693d832e596a5b8307934dbe726abc765a0164e7a03d066",
       "sha256_at_base": "3ae59c0217219175051418df0482663b247888cc65db087f942158ca5887cc2d",
       "edited_by_this_branch": true,
       "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
@@ -19,42 +19,42 @@
     },
     {
       "path": "Plans/FinalGUISpec.md",
-      "sha256": "1c8533ce825c035ad9b38759680854fc2c77f46d9c63c6fec2ed97aa1be82689",
+      "sha256": "43437de2f53d342ba114fb46f90a8f32de6fced1ed522738f4d99778a94add85",
       "sha256_at_base": "159a3a21434eed3117a5b340250d28e36fc798eeca5545bffa5d5760462a8f8f",
       "edited_by_this_branch": true,
       "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
     },
     {
       "path": "Plans/Forge_Integrations.md",
-      "sha256": "e596a563d95db42046e81d8ebf2420a732bd1f2ab36a7f1a35a28602c3005e90",
+      "sha256": "f0f8de3bb61d4c4e7829e1e28dc97b3b91ad38ca098a8be92b577514803ea93a",
       "sha256_at_base": "4d13b2bd5fb5b77be4c3deb1814b04d1e5d1069ac3576cd4fe8f8a1816d6eb95",
       "edited_by_this_branch": true,
       "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
     },
     {
       "path": "Plans/Source_Control_System.md",
-      "sha256": "1d22459ed225de45bc9c18edc6e61496f3ade03c2835ae6e3446ea376fd4ba06",
+      "sha256": "2ae948484f53e92c0832678bf4a332f042bb47d6340613a369c48dc0856b051e",
       "sha256_at_base": "07a8401d312980fbb30b7d6df0b24732e81f3de6e87624fe795e0c1bb1c3baff",
       "edited_by_this_branch": true,
       "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
     },
     {
       "path": "Plans/azure_devops_integration_fixtures.json",
-      "sha256": "7938e909b9abaa6a0258e36e930b8a0cace5ed064d3ef0af3048baa381780f13",
+      "sha256": "d57d7c7a1ba4286552cc51695a8bda517b56c550dabef7bf25615681533ff25f",
       "sha256_at_base": "aaefd3b321d300d75aafed1871d9e7c32313220ee16e9da9edbd82c6a765ee72",
       "edited_by_this_branch": true,
       "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
     },
     {
       "path": "Plans/forge_integration_contract_fixtures.json",
-      "sha256": "bddbc8f4f1b739e9b41aef41b0f9e97e6cd051014a247066e84894731f94ee26",
+      "sha256": "fa238ae7ce62b8ea71a87c9a08495cd280d8d6607d7a1e4893ddc79f7c244369",
       "sha256_at_base": "8d123b215c20be0838e554b639fedc30b5b401a800663033ddb281178effc506",
       "edited_by_this_branch": true,
       "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
     },
     {
       "path": "Plans/forge_integration_contracts.schema.json",
-      "sha256": "6f4478be420519d7e21c0191839e1f0465ddf776ff87cd6149ebcac399e0a3d7",
+      "sha256": "9b0471d75b5a35fe58f5f757cf7945879c41b13a2ecd51b406bfc9ba00ccd835",
       "sha256_at_base": "9ccecc1c40af59cc7396a7f6851152308214cc9f6989fb08d1ee3a45dd69aef8",
       "edited_by_this_branch": true,
       "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
@@ -75,7 +75,7 @@
     },
     {
       "path": "tests/test_pm_forge_provider_fixture_gate.py",
-      "sha256": "a013701323a995dacdc500a7bec14c5a31baeab7e402b8edadccd38eb29e6845",
+      "sha256": "834a0cda82096bf0d9afffa407e1138792729b5328523339a61370e63c777078",
       "sha256_at_base": "88d685f42301cc0fe1bd4fc2c98d6f9203c9a7e5054eaa9232fabe3914ba06e9",
       "edited_by_this_branch": true,
       "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."

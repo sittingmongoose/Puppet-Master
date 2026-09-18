@@ -56,7 +56,16 @@ acceptance_criteria:
     A TFVC container is recognized from the provider's own repository-kind data and reported as the typed reason
     tfvc_container_unsupported. Recognition is evidence-based: a CLI failure string, a 403 body or an empty Git
     response cannot establish it, and a TFVC container is never presented as an empty or broken Git repository.
-validation_surfaces: [Plans/azure_devops_integration_fixtures.json, missing-project and variant negative tests, null-project and TFVC negative fixtures]
+validation_surfaces:
+  - Plans/azure_devops_integration_fixtures.json
+  - missing-project, null-project, missing-project-GUID and non-GUID-project-identifier negatives
+  - >-
+    The TFVC leg is only partly falsifiable. A negative rejects a profile that declares a near-miss spelling
+    instead of the enrolled tfvc_container_unsupported code, so the vocabulary is checked. Recognising a TFVC
+    container from the provider's own repository-kind data has no fixture, because the corpus carries no container
+    shape to present one in: that criterion is stated and not yet falsifiable, and writing the fixture waits on
+    the same Azure fixture work ADO-003 names.
+  - future variant negative tests
 risk_class: azure_container_identity_collapse
 reasoning_tier: high
 context_scope: azure_devops_provider_identity
@@ -225,7 +234,9 @@ status: accepted
 owner_doc: Plans/Azure_DevOps_Integration.md
 canonical_text: >-
   Azure DevOps appears in existing Source Control and Source Control Settings with Pull Request, Policies/Checks,
-  Builds/Pipelines and exact organization/collection/project/repository state. Connect uses
+  Builds/Pipelines and exact organization/collection/project/repository state. The branch policies shown are the
+  ones evaluated on a pull request; reading the policies configured on a branch is not offered, and DL-059 defers
+  that read rather than declining it. Connect uses
   cmd.integration.connection.add with typed Azure payload; all forge actions use cmd.forge.*. No
   cmd.azure_devops.* or dedicated panel exists. Migration requires validated hierarchy, variant and capability evidence.
 gui_related: true
@@ -239,9 +250,10 @@ acceptance_criteria:
 validation_surfaces:
   - Plans/azure_devops_integration_fixtures.json
   - >-
-    That pack holds the Services and Server adapter profiles and the repository-binding negatives and nothing else.
-    The Azure Pull Request, Policies/Checks and Builds/Pipelines fixtures this unit's placement promise would need do
-    not exist yet, so placement is stated here and is not yet falsifiable by a fixture.
+    That pack holds the Services and Server adapter profiles, an Azure DevOps Server instance profile, four
+    repository-binding negatives and two provider-profile negatives. It holds no Pull Request, Policies/Checks or
+    Builds/Pipelines fixture, which is what this unit's placement promise would need, so placement is stated here
+    and is not yet falsifiable by a fixture.
   - command/wiring census, GUI/accessibility fixtures, migration negatives
 risk_class: azure_gui_command_or_migration_drift
 reasoning_tier: high
@@ -249,14 +261,14 @@ context_scope: azure_devops_gui_settings_migration
 implementation_surfaces: [Plans/Settings_System.md, Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json]
 node_compile_hint: {mode: azure_devops_gui_migration_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:egolite-register:UI-01..03, source_ref:egolite-register:CT-01..02]
-preserved_exact_tokens: [Connect Azure DevOps, Pull Request, Policies, Checks, Builds, Pipelines, Ready with limits]
-negative_constraints: [Do not create cmd.azure_devops.*., Do not create an Azure DevOps panel., Do not omit project identity.]
+preserved_exact_tokens: [Connect Azure DevOps, Pull Request, Policies, Checks, Builds, Pipelines, Ready with limits, evaluated on a pull request]
+negative_constraints: [Do not create cmd.azure_devops.*., Do not create an Azure DevOps panel., Do not omit project identity., Do not present branch-scoped policy information that no command reads.]
 owner_hints: [Plans/Azure_DevOps_Integration.md, Plans/Forge_Integrations.md, Plans/Settings_System.md]
 ```
 
 ## 3. Contracts, Schemas, Events, Or Data Shapes
 
-`Plans/azure_devops_integration_fixtures.json` validates Services and Server adapter profiles, a missing-project negative, a null-project negative and a TFVC-container negative against `Plans/forge_integration_contracts.schema.json`. It holds no Azure review revision, thread, vote, policy-evaluation or check fixture: those are named by ADO-003 and ADO-005 as surfaces the Azure adapter will need and they are not yet written, so the Azure review, policy and check acceptance criteria are stated and not yet falsifiable by a fixture. Azure DevOps adds no provider-specific common schema, command namespace, or event envelope.
+`Plans/azure_devops_integration_fixtures.json` validates the Services and Server adapter profiles, an Azure DevOps Server instance profile, four repository-binding negatives covering a missing project, a nulled project, a missing project GUID and a project GUID that is a display name, and two profile negatives covering a read-side policy scope reason the service cannot produce and a near-miss TFVC reason code, against `Plans/forge_integration_contracts.schema.json`. There is no TFVC-container negative: the corpus carries no container shape to present one in, so TFVC container recognition is stated in ADO-001 and not yet falsifiable by a fixture. It holds no Azure review revision, thread, vote, policy-evaluation or check fixture: those are named by ADO-003 and ADO-005 as surfaces the Azure adapter will need and they are not yet written, so the Azure review, policy and check acceptance criteria are stated and not yet falsifiable by a fixture. Azure DevOps adds no provider-specific common schema, command namespace, or event envelope.
 
 Connect, auth, test and Details reuse shared `cmd.integration.connection.*` and `cmd.auth_profile.*`. Repository/PR/policy/check/build/pipeline/hook/open-browser actions use applicable `cmd.forge.*` identities with `forge_provider=azure_devops`, variant, organization/collection, project, repository binding and expected generation/revision. Async work returns `ObservableWork`.
 
