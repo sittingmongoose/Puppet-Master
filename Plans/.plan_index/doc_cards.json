@@ -2129,7 +2129,7 @@
         "future Azure review/policy adapter",
         "future Source Control review UI"
       ],
-      "line_count": 219,
+      "line_count": 289,
       "path": "Plans/Azure_DevOps_Integration.md",
       "plan_unit_count": 5,
       "plan_unit_ids": [
@@ -2149,7 +2149,7 @@
         "azure_gui_command_or_migration_drift",
         "azure_stale_pr_or_policy_evidence"
       ],
-      "sha256": "3ae59c0217219175051418df0482663b247888cc65db087f942158ca5887cc2d",
+      "sha256": "ef99e9da8bac89bb06acd757a90c09b826b55a7ad68555b3ecc36c489f3a1dee",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 5
@@ -2162,19 +2162,18 @@
       },
       "validation_surfaces": [
         "API/version/rate degradation matrix",
-        "Azure PR revision/thread/policy fixtures",
         "Azure build/pipeline/check fixtures",
         "Azure capability fixtures",
-        "Draft capability tests",
-        "GUI/accessibility fixtures",
         "Plans/azure_devops_integration_fixtures.json",
+        "That pack holds the Services and Server adapter profiles and the repository-binding negatives and nothing else. The Azure Pull Request, Policies/Checks and Builds/Pipelines fixtures this unit's placement promise would need do not exist yet, so placement is stated here and is not yet falsifiable by a fixture.",
+        "The Azure review, policy and check fixtures this unit needs do not exist yet. What exists is the Services and Server adapter profiles and the repository-binding negatives in Plans/azure_devops_integration_fixtures.json; no Azure review revision, thread, vote, policy evaluation or check fixture exists in any Plans fixture pack, so these criteria are stated and not yet falsifiable by a fixture. Writing them is separate work gated on the common gate-record contract.",
         "access/scope/version/license/rate matrices",
-        "command/wiring census",
-        "migration negatives",
+        "command/wiring census, GUI/accessibility fixtures, migration negatives",
+        "future stale-head/vote tests, Draft capability tests",
         "missing-project and variant negative tests",
+        "null-project and TFVC negative fixtures",
         "secret scans",
-        "service hook replay/dedupe tests",
-        "stale-head/vote tests"
+        "service hook replay/dedupe tests"
       ]
     },
     {
@@ -19721,7 +19720,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-18T04:38:57Z",
+  "generated_at_utc": "2026-09-18T06:13:16Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
