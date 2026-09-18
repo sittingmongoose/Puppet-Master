@@ -462,6 +462,44 @@ nightly run covers the repository whether or not anything landed, so repository 
 depends on a branch having been pushed. `AGENTS.md` and `.claude/CLAUDE.md` carry this step in their
 landing procedure.
 
+Amended 2026-09-17 under `Plans/Decision_Log.md#DL-067`: the three landing checks report only what
+is new. Two landings on 2026-09-17 took fourteen minutes twelve seconds and fifteen minutes sixteen
+seconds and produced identical failure sets -- twenty-five failing sub-checks and two hundred
+twenty-eight individual failures, none of which belonged to either branch -- so reading the whole
+output at every landing tells a lander nothing. All three checks still run in full; what changes is
+what is read. `scripts/pm-landing-check.py` runs the three in the checkout it is invoked in and turns
+every failure into a stable key of check, sub-check, error kind, path, and a digest of what is left
+of the failure once timestamps, hash values, the absolute path of the checkout it ran in, and the
+measured `actual` and `expected` values are removed. It reports two sets and nothing else: failures
+whose key is not in the recorded baseline or whose check's failure count has risen above the baseline
+count, and failures that name a path from `git diff --name-only <base>..HEAD`, whether or not they
+are new.
+
+The per-sub-check totals are compared as well as the keys, because `run_gates` prints only fifty
+failures per sub-check and `audit_governance` only a hundred while reporting the true total.
+Everything above that cap is never keyed, and the on-branch match therefore runs over the sample
+rather than the whole failure set, so a rise in a truncated sub-check is reported and stops the
+landing: what was added cannot be matched against the branch's paths.
+
+The check runs after the fast-forward and the shard check and **before** `main` is pushed, because it
+measures the branch by its diff against `main` and that diff is empty once `main` is pushed. Its
+outcomes are graded: nothing to report; nothing that stops the landing, being governance staleness on
+files the branch edited or new failures naming none of the branch's files, which are pushed and
+reported; something that stops the landing, being a non-staleness failure on the branch's own files, a
+grown bucket whose error kind is not staleness, or a rise in a truncated sub-check; and failing to run
+at all, which is not success.
+
+The baseline lives at `reports/landing-checks/baseline.json`, taken from a full run against `main` in
+a full checkout with `--record-baseline` and committed with the commit it was taken at. It is
+refreshed on the nightly run beside the migration snapshot, by the designated Plans agent in a
+worktree, whether or not anything landed; nothing on this machine schedules that today, so it is a
+scheduled task that does both and commits both, with its runbook in
+`reports/landing-checks/README.md`. A baseline is never refreshed to make a landing pass, which would
+excuse exactly the failure it was meant to show. The stale-hash carve-out is unchanged and still
+applies to anything the comparison surfaces on the branch's own documents. The command, its baseline
+file and the landing-procedure wording in `AGENTS.md` and `.claude/CLAUDE.md` are carried by the
+branch that implements this decision; this addendum states the rule.
+
 ### BPM-009 - Repository-Wide Gates Run At Landing And Nightly
 
 ```yaml
@@ -474,8 +512,8 @@ canonical_text: >-
   branch lands on main and on a nightly schedule, not inside a per-plan governance seal; the
   migration_snapshot creates a new tracked run directory, so it runs only on the nightly schedule, in
   a worktree, by the designated Plans agent, never in the shared checkout at landing. At landing the
-  three checks run in the shared checkout after the fast-forward and the shard check and cost about
-  ten minutes there. A landing is refused when a repository-wide failure
+  three checks run in the shared checkout after the `git merge --ff-only` fast-forward and the shard
+  check and cost about ten minutes there. A landing is refused when a repository-wide failure
   names a file the landing branch touches, and that failure is fixed on the branch; when every
   failure names files the branch does not touch, the landing proceeds and the failures are reported,
   which is the rule the shard check already follows. Stale-hash failures for documents the branch
@@ -485,7 +523,21 @@ canonical_text: >-
   nightly run covers the repository whether or
   not anything landed, so repository qualification never depends on a branch having been pushed.
   AGENTS.md and .claude/CLAUDE.md carry this step in their landing procedure with the measured cost
-  stated.
+  stated. The three landing checks report only what is new or what is on the branch. Each run
+  executes all three in full and turns every failure into a stable key of check, sub-check, error
+  kind, path, and a digest of what is left once timestamps, hash values, the absolute path of the
+  checkout it ran in, and the measured actual and expected values are removed. A landing run reports
+  two sets and nothing else: failures whose key is not in the recorded baseline or whose check's
+  failure count rose above the baseline count, and failures that name a path the branch changed
+  whether or not they are new. Per-sub-check totals are compared as well as keys, because run_gates
+  prints only fifty failures per sub-check and audit_governance only a hundred while reporting the
+  true total, so a rise in a truncated sub-check is reported and stops the landing. The check runs
+  after the fast-forward and the shard check and before main is pushed, because it measures the
+  branch by its diff against main and that diff is empty once main is pushed. scripts/pm-landing-check.py
+  is the one command that runs the three checks and performs the comparison; the landing invocation
+  names the branch's base, and the nightly invocation passes --record-baseline and writes
+  reports/landing-checks/baseline.json, committed with the commit it was taken at. A baseline is
+  never refreshed to make a landing pass.
 gui_related: false
 gui_classification_reason: Gate placement in the landing and nightly repository procedures is governance timing, not GUI behavior.
 split_recommended: false
@@ -498,8 +550,16 @@ acceptance_criteria:
   - A stale-hash failure for a document the landing branch itself edited (Spec Lock, owner or artifact evidence hashes, the readiness report, the plan-migration inventory) is the expected consequence of editing canon before the next designated reseal; it never stops the landing and is reported with a reseal request.
   - All four operations, including the migration snapshot taken in a worktree by the designated Plans agent, run on a nightly schedule against main, independently of whether anything landed.
   - No per-plan seal is required to run them, and no seal record claims their outcome.
+  - A landing run reports two sets and nothing else: failures new since the recorded baseline or whose check's count rose, and failures naming a path the branch changed; all three checks still run in full.
+  - A failure's key is its check, its sub-check, its error kind, the path it names, and a digest of the remaining fields once timestamps, hash values, the checkout's absolute path and the measured values are removed; a run that changes nothing reports nothing.
+  - Per-sub-check totals are compared as well as keys, and a rise in a sub-check whose failures are truncated is reported and stops the landing because the on-branch match cannot see what was added.
+  - The landing invocation is scripts/pm-landing-check.py against the branch's base, and it runs before main is pushed, because the branch diff it measures is empty afterwards.
+  - The nightly invocation passes --record-baseline and writes reports/landing-checks/baseline.json from a full run against main in a full checkout, committed with the commit it was taken at.
+  - A missing, empty or unreadable baseline is an error rather than an empty failure set, so a landing never reads "nothing to report" from a baseline that was never recorded.
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
 validation_surfaces:
+  - python3 scripts/pm-landing-check.py --base origin/main
+  - python3 scripts/pm-landing-check.py --record-baseline
   - python3 scripts/pm-plans-verify.py run-gates
   - python3 scripts/pm-plans-verify.py audit-governance
   - "python3 scripts/pm-plan-migration.py validate --run-dir <the run named in Plans/.plan_migration/current_run.json>"
@@ -518,6 +578,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - Plans/Decision_Log.md#DL-055
+  - Plans/Decision_Log.md#DL-067
   - Plans/Bootstrap_Planning_Migration.md#BPM-005
 preserved_exact_tokens:
   - run_gates
@@ -527,11 +588,19 @@ preserved_exact_tokens:
   - "git merge --ff-only"
   - AGENTS.md
   - .claude/CLAUDE.md
+  - scripts/pm-landing-check.py
+  - reports/landing-checks/baseline.json
+  - "--record-baseline"
 negative_constraints:
   - Do not run the four repository-wide operations inside a per-plan seal in order to satisfy this rule.
   - Do not land a branch whose own files fail a repository-wide gate.
   - Do not repair or commit another thread's files to make a repository-wide gate pass at landing.
   - Do not treat the nightly run as a substitute for the landing run, or the landing run as a substitute for the nightly one.
+  - Do not narrow, skip or shorten any of the three checks to make a landing faster; only the reporting changes.
+  - Do not stop a landing on a failure that is already in the baseline.
+  - Do not treat a missing or unreadable baseline as an empty failure set.
+  - Do not refresh the baseline to make a landing pass.
+  - Do not run the landing check after main is pushed, when the branch diff it measures is already empty.
 owner_hints:
   - Plans/Bootstrap_Planning_Migration.md
   - Plans/bootstrap/Bootstrap_Planning_Workflow.md
