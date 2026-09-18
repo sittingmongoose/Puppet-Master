@@ -1,0 +1,60 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260918-001-azure-devops-corrections",
+  "updated_at_utc": "2026-09-18T01:30:00+00:00",
+  "open_questions": [
+    "q-017",
+    "q-018",
+    "q-019"
+  ],
+  "answered_questions": [
+    "q-001",
+    "q-002",
+    "q-003",
+    "q-004",
+    "q-005",
+    "q-006",
+    "q-007",
+    "q-008",
+    "q-009",
+    "q-010",
+    "q-011",
+    "q-012",
+    "q-013",
+    "q-014",
+    "q-015",
+    "q-016"
+  ],
+  "open_blockers": [],
+  "deferred_questions": [],
+  "deferred_items": [
+    {
+      "item": "branch-policy read command",
+      "disposition": "deferred, not declined",
+      "decision": "Plans/Decision_Log.md#DL-059",
+      "note": "Receives no PlanUnit until the gate list of DL-062 exists to display it."
+    },
+    {
+      "item": "joined single gate list for Azure",
+      "disposition": "deferred pending a documented join key",
+      "decision": "Plans/Decision_Log.md#DL-061",
+      "note": "Tracked as q-018."
+    },
+    {
+      "item": "Azure review, policy and check fixtures",
+      "disposition": "not written; the promise was amended instead",
+      "decision": "Plans/Azure_DevOps_Integration.md#ADO-003",
+      "note": "Tracked as q-019."
+    }
+  ],
+  "not_landed": [
+    {
+      "item": "TA-002, the empty-description Azure revision causes",
+      "disposition": "reclassified to a decision card by the Part 1 record; not landed here"
+    },
+    {
+      "item": "NEW-01, dropping null from repository_locator.project",
+      "disposition": "withdrawn by the confirmation review of 2026-09-18; the base type is unchanged and only a second Azure negative was added as fixture coverage"
+    }
+  ]
+}

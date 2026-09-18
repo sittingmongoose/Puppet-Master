@@ -95,8 +95,11 @@ acceptance_criteria:
     on repository read under the same scope that reads code. A caller who can read the repository can read its
     policies, so policy_scope_missing is not a read-side state the service can produce and is not declared as one.
   - >-
-    Policy applicability and policy status are two capabilities, repository_policy and checks, probed and degraded
-    separately. Which policies apply is branch-keyed and released; whether each one passes is review-keyed and
+    The Azure profiles declare review_versions and repository_policy among their optional capabilities, because
+    the command contract pins each of those capability names for a command the Azure owner is named as consuming,
+    and a profile that omits one cannot satisfy the rule that every operation resolves a capability entry before
+    dispatch. Policy applicability and policy status are then two capabilities, repository_policy and checks,
+    probed and degraded separately. Which policies apply is branch-keyed and released; whether each one passes is review-keyed and
     preview-only. A host whose probed API set lacks the preview policy-evaluations endpoint reports
     capability_unsupported naming the API version it looked for, and never an inferred status and never an empty
     check list.
@@ -107,7 +110,7 @@ context_scope: azure_devops_auth_access_capabilities
 implementation_surfaces: [Plans/forge_integration_contracts.schema.json, future Azure auth/API adapter]
 node_compile_hint: {mode: azure_devops_capability_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:egolite-register:SCM-012..017]
-preserved_exact_tokens: [Entra, PAT, SSH, organization access, project access, branch policy, build access, signed support catalog, EditPolicies, PolicyExempt, PullRequestBypassPolicy, policy_scope_missing, repository_policy, capability_unsupported]
+preserved_exact_tokens: [Entra, PAT, SSH, organization access, project access, branch policy, build access, signed support catalog, EditPolicies, PolicyExempt, PullRequestBypassPolicy, policy_scope_missing, review_versions, repository_policy, capability_unsupported]
 negative_constraints: [Do not persist raw credentials., Do not equate authentication with project/repository access., Do not mutate an unsupported Server version., Do not report a policy read failure as a policy scope failure., Do not infer policy status from merge status or show an empty check list when the evaluations endpoint is absent.]
 owner_hints: [Plans/Azure_DevOps_Integration.md, Plans/Forge_Integrations.md, Plans/Multi-Account.md]
 ```

@@ -1,0 +1,22 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260918-001-azure-devops-corrections",
+  "updated_at_utc": "2026-09-18T01:30:00+00:00",
+  "status": "fail_deferred_governance_coverage",
+  "summary": {
+    "events": 6,
+    "design_atoms": 33,
+    "decisions": 33,
+    "open_questions": 3,
+    "deferred_questions": 0,
+    "open_blockers": 0,
+    "compile_queue_items": 34
+  },
+  "notes": "The three errors are the pre-existing governance coverage omissions for the owner documents this wave edits, the same class the continuation-4 landing recorded for its own owners. They are not caused by this wave: the three named documents are not sharding_config sources and none of the four is carried in Spec_Lock or plan_graph coverage today. Refreshing that coverage is the designated Plans agent's reseal, not ordinary work.",
+  "validator_status": "fail",
+  "errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Azure_DevOps_Integration.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Azure_DevOps_Integration.md', 'Plans/Decision_Log.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Azure_DevOps_Integration.md', 'Plans/Decision_Log.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']"
+  ]
+}

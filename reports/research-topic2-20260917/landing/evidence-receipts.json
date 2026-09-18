@@ -1,0 +1,326 @@
+{
+  "schema": "azure.topic2.evidence_receipts.v1",
+  "generated_at_utc": "2026-09-18T01:27:03Z",
+  "claim_boundary": "Every `use` field says what the named file actually supports, not what it is about. A file that only mentions a subject is recorded as that fact, not as support. Nothing here supports a runtime, provider-access, security or readiness claim.",
+  "in_repository": [
+    {
+      "path": "Plans/Azure_DevOps_Integration.md",
+      "sha256": "0645a1f75db20a9701d8e714d5ba9503380fe6ca29c80358607bdf28ce195cc3",
+      "sha256_at_base": "3ae59c0217219175051418df0482663b247888cc65db087f942158ca5887cc2d",
+      "edited_by_this_branch": true,
+      "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
+    },
+    {
+      "path": "Plans/Decision_Log.md",
+      "sha256": "ffb6344a914e4cf1d8de0b4a25dafb9aae33f2eb03502bcc18baacb5fd717828",
+      "sha256_at_base": "e13092293142e0751062175638b866f26a2e0d71302a529d84a90e9784665e48",
+      "edited_by_this_branch": true,
+      "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "sha256": "1c8533ce825c035ad9b38759680854fc2c77f46d9c63c6fec2ed97aa1be82689",
+      "sha256_at_base": "159a3a21434eed3117a5b340250d28e36fc798eeca5545bffa5d5760462a8f8f",
+      "edited_by_this_branch": true,
+      "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
+    },
+    {
+      "path": "Plans/Forge_Integrations.md",
+      "sha256": "e596a563d95db42046e81d8ebf2420a732bd1f2ab36a7f1a35a28602c3005e90",
+      "sha256_at_base": "4d13b2bd5fb5b77be4c3deb1814b04d1e5d1069ac3576cd4fe8f8a1816d6eb95",
+      "edited_by_this_branch": true,
+      "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
+    },
+    {
+      "path": "Plans/Source_Control_System.md",
+      "sha256": "1d22459ed225de45bc9c18edc6e61496f3ade03c2835ae6e3446ea376fd4ba06",
+      "sha256_at_base": "07a8401d312980fbb30b7d6df0b24732e81f3de6e87624fe795e0c1bb1c3baff",
+      "edited_by_this_branch": true,
+      "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
+    },
+    {
+      "path": "Plans/azure_devops_integration_fixtures.json",
+      "sha256": "7938e909b9abaa6a0258e36e930b8a0cace5ed064d3ef0af3048baa381780f13",
+      "sha256_at_base": "aaefd3b321d300d75aafed1871d9e7c32313220ee16e9da9edbd82c6a765ee72",
+      "edited_by_this_branch": true,
+      "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
+    },
+    {
+      "path": "Plans/forge_integration_contract_fixtures.json",
+      "sha256": "bddbc8f4f1b739e9b41aef41b0f9e97e6cd051014a247066e84894731f94ee26",
+      "sha256_at_base": "8d123b215c20be0838e554b639fedc30b5b401a800663033ddb281178effc506",
+      "edited_by_this_branch": true,
+      "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
+    },
+    {
+      "path": "Plans/forge_integration_contracts.schema.json",
+      "sha256": "6f4478be420519d7e21c0191839e1f0465ddf776ff87cd6149ebcac399e0a3d7",
+      "sha256_at_base": "9ccecc1c40af59cc7396a7f6851152308214cc9f6989fb08d1ee3a45dd69aef8",
+      "edited_by_this_branch": true,
+      "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
+    },
+    {
+      "path": "Plans/source_control_contract_fixtures.json",
+      "sha256": "0a9be4cc28430529243174a7272fa0148b89818f7de5a7d669fc806e508c9871",
+      "sha256_at_base": "2e3a45b78e317b5050d79b4d3871586be749bd34f82c8602ac2682fd458abdc7",
+      "edited_by_this_branch": true,
+      "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
+    },
+    {
+      "path": "Plans/source_control_contracts.schema.json",
+      "sha256": "7e911abca6ecd2e990775b75310c12af5827c0ca6e4287a7c6fc682966614ed3",
+      "sha256_at_base": "012a1640c7a84b21e06f705a308409d7892df19917493a7fc2eb9257fa71c2dd",
+      "edited_by_this_branch": true,
+      "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
+    },
+    {
+      "path": "tests/test_pm_forge_provider_fixture_gate.py",
+      "sha256": "a013701323a995dacdc500a7bec14c5a31baeab7e402b8edadccd38eb29e6845",
+      "sha256_at_base": "88d685f42301cc0fe1bd4fc2c98d6f9203c9a7e5054eaa9232fabe3914ba06e9",
+      "edited_by_this_branch": true,
+      "use": "Canon or test edited by this branch. Its diff is the correction; the receipts below are what justify it."
+    }
+  ],
+  "out_of_repository": [
+    {
+      "path": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md",
+      "sha256": "1f3ba7531118088f61b3d09554d09498e53797bc93ce128f9032c529fa35f3b4",
+      "use": "Jared's answers of 2026-09-18, verbatim \"agree\". Supports the nine candidate answers recorded as q-008 to q-016 and the seven card answers recorded as q-001 to q-007. Agent-relayed; not verifiable from inside this repository.",
+      "in_repository": false
+    },
+    {
+      "path": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/AZURE_DECISION_CARDS_20260918.html",
+      "sha256": "7379920aee612156224e5bd770b8d099e9e588760c0aeee573af10f45a65de29",
+      "use": "The seven decision cards. Supports the question, options and recommendation quoted in each of DL-059 to DL-065; it does not support any claim about what Azure DevOps does.",
+      "in_repository": false
+    },
+    {
+      "path": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/REVIEW_TOPIC2_CANDIDATES_20260918.md",
+      "sha256": "e3b349c388b2e098df384c5bfb62f0a6f6be1969a6e9f932a9dbb7c76f167211",
+      "use": "The confirmation review. Supports the confirmed list of twenty-six and the withdrawal of NEW-01, including the mechanically tested finding that repository_binding's conditional already rejects a null project for azure_devops and bitbucket_data_center. It is why the base type was left unchanged.",
+      "in_repository": false
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/topic2-candidates-20260917/README.md",
+      "sha256": "2e0230351253281cda7f4c8eef7d104f9e077d75b2e18122d0e81c5665943451",
+      "use": "The Part 1 verdict record in prose. Supports the lane split of twelve, thirteen and one, the two merges, the three corrected union claims and the inherited recall limit.",
+      "in_repository": false
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/topic2-candidates-20260917/topic2-part1-verdicts.json",
+      "sha256": "2a5362337a7c22445b505b312639a2e4ae03f4deb261ac2b07bc3e2b2fb77b6a",
+      "use": "The thirty-two verdicts in full. Supports each correction's promise, contradiction, cited passages and repair shape, and the twenty-two provider-fact verifications by locus. It does not itself support a provider fact; the arm caches it cites do.",
+      "in_repository": false
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/topic2-candidates-20260917/manifest.json",
+      "sha256": "53a69ba2a6cc69a0d8c0a3813bfda7f6cf5db2234bd809337c5ad8444574d665",
+      "use": "The Part 1 manifest. Supports the integrity of the record's eleven files and the canon commit it was scored against, which is this branch's base.",
+      "in_repository": false
+    },
+    {
+      "path": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/BRIEF_TOPIC2_LANDING_20260918.md",
+      "sha256": "df94b6991c4fe1fbc0b9c79e5a22227a063afb9fa3be30c06aa6b8dfece05b27",
+      "use": "The landing brief. Supports the scope and shape of this branch, not any factual claim in canon.",
+      "in_repository": false
+    }
+  ],
+  "provider_facts": [
+    {
+      "id": "PV-01",
+      "fact": "IterationReason publishes exactly seven bit-valued members with Push = 0",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0014-reconcile/workspace/research-evidence/sources/S00009/text.txt:3107-3115",
+      "use": "Supports the reclassified TA-002 only; no correction landed here rests on it.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-03",
+      "fact": "GitPullRequestIteration carries sourceRefCommit, targetRefCommit and commonRefCommit, the first common commit of both refs",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-s/.../jobs/J0015-compare/workspace/research-evidence/sources/S00035/text.txt:259-261",
+      "use": "Supports AZ-07: target movement changes the merge base and therefore the revision's identity.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-04",
+      "fact": "Retarget carries newTargetRefName and oldTargetRefName and moves no head",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-s/.../jobs/J0015-compare/workspace/research-evidence/sources/S00035/text.txt:276",
+      "use": "Supports AZ-07 and AZ-10.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-05",
+      "fact": "Build-validation policy expiry expires the current policy status when the protected branch updates",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-s/.../jobs/J0007-implementation/workspace/research-evidence/sources/S00034/text.txt:524-526",
+      "use": "Supports AZ-11's fifth staleness cause, which has neither a head change nor a new iteration.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-06",
+      "fact": "hasMoreCommits, commitTooManyChanges, commentTruncated and nextSkip/nextTop on the changes route",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-s/.../jobs/J0015-compare/.../S00035/text.txt:269,181,175 and jobs/J0014-reconcile/.../S00009/text.txt:2018",
+      "use": "Supports AZ-08's completeness axis.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-07",
+      "fact": "Threads - List takes $baseIteration as the left side and $iteration as the right at api-version 7.1",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-s/.../jobs/J0015-compare/.../S00052/text.txt:32 ; S00039/text.txt:215 ; jobs/J0008-history/.../S00055/text.txt:704",
+      "use": "Supports AZ-12's revision anchor pair.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-08",
+      "fact": "A pull request created with more than 100,000 modified files will not support iterations",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-s/.../jobs/J0015-compare/.../S00041/text.txt:100",
+      "use": "Supports AZ-13's review-scoped capability entry.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-09",
+      "fact": "The Git Repositories security namespace publishes PolicyExempt, EditPolicies and PullRequestBypassPolicy and no read bit; policy/evaluations lists only vso.code",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-s/.../jobs/J0012-reconcile/.../S00041/text.txt:118,127,131,135 ; jobs/J0015-compare/.../S00035/text.txt:88",
+      "use": "Supports AZ-15's removal of the read-side policy reason.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-10",
+      "fact": "git/policy/configurations is api-version 7.1 with repositoryId and refName; policy/evaluations is 7.1-preview.1 with artifactId",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-s/.../jobs/J0016-compare/.../S00073/text.txt:33 ; arm-h2/.../jobs/J0020-compare/.../S00074/text.txt:33-35",
+      "use": "Supports AZ-10, AZ-16, AZ-18, AZ-21 and AZ-22.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-11",
+      "fact": "autoCompleteIgnoreConfigIds applies only to optional policies where isBlocking is false, and auto-complete always waits for required policies",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-s/.../jobs/J0016-compare/.../S00094/text.txt:500-503",
+      "use": "Supports AZ-05's enforcement field and AZ-17's per-configuration identity.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-12",
+      "fact": "PolicyEvaluationRecord carries no commit, iteration or revision field; PolicyEvaluationStatus is queued, running, approved, rejected, notApplicable, broken",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-h2/.../jobs/J0020-compare/.../S00031/text.txt:214-263",
+      "use": "Supports AZ-04's review-bound family and AZ-05's status vocabulary.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-13",
+      "fact": "GitStatusState.notApplicable bypasses the policy requirement, while PolicyEvaluationStatus.notApplicable means the policy does not apply",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-h2/.../jobs/J0020-compare/.../S00041/text.txt:48 and S00042/text.txt:48 against S00031/text.txt:260-261",
+      "use": "Supports AZ-05's separation of requirement_bypassed from not_applicable.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-14",
+      "fact": "Pull Request Iteration Statuses - List is released at api-version 7.1 on the iterations statuses route",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-h2/.../jobs/J0020-compare/.../S00075/text.txt:30 ; arm-s/.../jobs/J0014-reconcile/.../S00023/text.txt:30",
+      "use": "Supports AZ-04's revision-bound family.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-15",
+      "fact": "The policy-evaluation Context carries lastMergeCommitId, lastMergeSourceCommitId and lastMergeTargetCommitId",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-s/.../jobs/J0008-history/workspace/research-evidence/sources/S00074/text.txt:81-95",
+      "use": "Supports AZ-04's merge triple.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-16",
+      "fact": "configuration.url is where the policy configuration can be retrieved; the evaluation record has no human-facing URL",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-s/.../jobs/J0016-compare/.../S00072/text.txt:213",
+      "use": "Supports AZ-19's nullable canonical URL.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-17",
+      "fact": "IdentityRefWithVote carries no iteration id, commit id or timestamp; isReapprove exists",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-s/.../jobs/J0015-compare/.../S00040/text.txt:67,152",
+      "use": "Supports AZ-20 and the DL-060 observed-at binding.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-18",
+      "fact": "The policy artifact template is vstfs:///CodeReview/CodeReviewId/{projectId}/{pullRequestId}, and the reference client's own test asserts the literal undefined segment",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-s/.../jobs/J0016-compare/.../S00072/text.txt:32 ; jobs/J0007-implementation/.../S00023/text.txt:1",
+      "use": "Supports AZ-24's required project GUID.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-19",
+      "fact": "If MergeStrategy is not set to any value a no-FF merge will be created if SquashMerge is false",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-s/.../jobs/J0016-compare/.../S00094/text.txt:225",
+      "use": "Supports AZ-09 and DL-063.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-20",
+      "fact": "Any policy evaluation can be requeued, at present only build policies act on it, and requeueing a build policy queues a new build and cancels any existing one",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-h2/.../jobs/J0020-compare/.../S00044/text.txt:33-34",
+      "use": "Supports AZ-25 and DL-064.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-21",
+      "fact": "PolicyConfiguration carries isBlocking, isEnabled, isDeleted, a numeric revision, a numeric id and a type",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-s/.../jobs/J0008-history/.../S00074/text.txt:70-80",
+      "use": "Supports AZ-05's enforcement and AZ-17's per-configuration revision.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    },
+    {
+      "id": "PV-22",
+      "fact": "The REST API versioning banner covers Azure DevOps Services, Server and Server 2022",
+      "locus": "~/PM-Experiments/topic2-20260917/arm-s/.../jobs/J0015-compare/.../S00041/text.txt:27 ; arm-h2/.../jobs/J0020-compare/.../S00039/text.txt:1",
+      "use": "Supports AZ-22's Server degradation rule.",
+      "in_repository": false,
+      "note": "Re-found in the arms' own cached sources by the Part 1 record, read-only. Frozen run outputs; not committed here."
+    }
+  ],
+  "not_support": [
+    {
+      "claim": "That the Azure adapter works, or that any provider call was made",
+      "why": "No provider was contacted by this branch. Every fact above is a documentation or reference-client reading recorded in a frozen research cache."
+    },
+    {
+      "claim": "That ADO-003's review, vote, policy and check criteria are falsifiable today",
+      "why": "TA-038's repair amends the promise rather than writing the fixtures. Those criteria are stated and carry no fixture; q-019 tracks the work, and the units say so in their own validation surfaces."
+    },
+    {
+      "claim": "A recall estimate for Plans/Azure_DevOps_Integration.md",
+      "why": "The union rests on five compared leads of 115 or more discovered. Twenty-six is a lower bound with an unknown remainder; q-017 tracks the queued second pass."
+    }
+  ],
+  "withdrawn": [
+    {
+      "finding": "NEW-01, dropping null from repository_locator.project",
+      "why": "The confirmation review tested the shipped schema across all nine providers and found the repository_binding conditional already rejects a null project for azure_devops and bitbucket_data_center. The proposed change would also have invalidated the shipped gitlab, forgejo and gitea positives. Only the second Azure negative it allowed as fixture coverage was added."
+    },
+    {
+      "finding": "The union's claim that command_target already requires both review revision refs for the compare command",
+      "why": "False as written: the conditional declares both properties and places neither in a required list. AZ-12 rests on the FGI-004 promise alone, and its record says so."
+    },
+    {
+      "finding": "The union's claim that pipeline_disabled is a reason-code enum member",
+      "why": "It is in neither closed enum. The corrected finding in AZ-14 is stronger and not Azure-specific: every non-empty declaration in the corpus carries at least one off-enum code."
+    }
+  ]
+}

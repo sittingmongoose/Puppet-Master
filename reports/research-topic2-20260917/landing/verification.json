@@ -1,0 +1,398 @@
+{
+  "schema": "azure.topic2.landing_verification.v1",
+  "generated_at_utc": "2026-09-18T01:32:18Z",
+  "branch": "plans/azure-devops-corrections-20260918",
+  "base": "4f5eda0d18a9deff2349b03ae573f0ffd706ed61",
+  "status": "COMPILED_CORRECTION_INTEGRITY_PASS_PENDING_INDEPENDENT_BRANCH_REVIEW",
+  "landed_on_main": false,
+  "commits": [
+    {
+      "sha": "5df94ecc8868ebe37ddea985769c2bdbfbad6dd1",
+      "subject": "Azure owner corrections: ADO-001..ADO-005 prose repairs for the 2026-09-17 Azure DevOps candidate record"
+    },
+    {
+      "sha": "5c3790afddd598eaaab9912c33659e27ad44e682",
+      "subject": "Common forge contract corrections: gate record, revision causes, thread anchors, closed profile codes"
+    },
+    {
+      "sha": "2fee6616e5289770b94d9364944b8cc666900c38",
+      "subject": "DL-059 to DL-065: the seven Azure decision-card answers of 2026-09-18, in both sections"
+    }
+  ],
+  "corrections_landed": [
+    {
+      "record": "AZ-01",
+      "finding_ids": "TA-038",
+      "lane": "Azure owner",
+      "units": "ADO-003, ADO-005",
+      "promise": "ADO-003 and ADO-005 name Azure review, policy and check fixtures, and section 3 says the Azure pack validates them",
+      "repair": "The promise is amended to what exists: those fixtures are not yet written and the units say so"
+    },
+    {
+      "record": "AZ-02",
+      "finding_ids": "TA-008",
+      "lane": "Azure owner",
+      "units": "ADO-002",
+      "promise": "FGI-003 requires every provider operation to resolve one capability entry before dispatch",
+      "repair": "review_versions declared on both Azure profiles and named in ADO-002"
+    },
+    {
+      "record": "AZ-03",
+      "finding_ids": "TA-010",
+      "lane": "Azure owner",
+      "units": "ADO-002",
+      "promise": "FGI-003's dispatch rule, and the policies-and-checks promise",
+      "repair": "repository_policy declared on both Azure profiles and named in ADO-002"
+    },
+    {
+      "record": "AZ-04",
+      "finding_ids": "TA-022 + TA-023 + TA-024",
+      "lane": "common forge contracts",
+      "units": "FGI-005",
+      "promise": "ADO-003: PR evidence binds exact immutable revision and policy or check identities",
+      "repair": "A declared binding kind per gate row, the merge triple for the review-bound family, and a checks command that names the family before it fences it"
+    },
+    {
+      "record": "AZ-05",
+      "finding_ids": "TA-018 + TA-019 + TA-020 + TA-021",
+      "lane": "common forge contracts",
+      "units": "FGI-005",
+      "promise": "The policies-and-checks promise: see the gates Azure enforces and whether each one currently passes",
+      "repair": "One typed gate record with provider identity, enforcement, a closed status vocabulary and a source surface"
+    },
+    {
+      "record": "AZ-06",
+      "finding_ids": "TA-034",
+      "lane": "Azure owner",
+      "units": "ADO-001",
+      "promise": "FGI-014 separates Git from unsupported TFVC and the acceptance packet requires TFVC fixtures",
+      "repair": "TFVC recognized from provider repository-kind data and reported as tfvc_container_unsupported"
+    },
+    {
+      "record": "AZ-07",
+      "finding_ids": "TA-001",
+      "lane": "Azure owner",
+      "units": "ADO-003",
+      "promise": "ADO-003: a new head creates a new immutable review revision and stales evidence",
+      "repair": "The trigger is a new provider revision: any leg of base, head or merge-base"
+    },
+    {
+      "record": "AZ-08",
+      "finding_ids": "TA-005",
+      "lane": "common forge contracts",
+      "units": "FGI-004",
+      "promise": "FGI-003's preserved token, partial data is never complete",
+      "repair": "contents_complete and incomplete_reason_codes on review_revision"
+    },
+    {
+      "record": "AZ-09",
+      "finding_ids": "TA-035",
+      "lane": "Azure owner",
+      "units": "ADO-003",
+      "promise": "ADO-004: async mutations expose ObservableWork and terminal provider receipts",
+      "repair": "An omitted merge strategy selects no-fast-forward on Azure, and the permitted set is known first"
+    },
+    {
+      "record": "AZ-10",
+      "finding_ids": "TA-003",
+      "lane": "Azure owner",
+      "units": "ADO-003",
+      "promise": "Section 0: policy identity survives the mapping",
+      "repair": "A retarget re-resolves the applicable policy and check set rather than carrying it"
+    },
+    {
+      "record": "AZ-11",
+      "finding_ids": "TA-004",
+      "lane": "common forge contracts",
+      "units": "FGI-004",
+      "promise": "ADO-003: do not flatten policy failure into generic unavailable",
+      "repair": "evidence_state_cause names which of five paths produced the state"
+    },
+    {
+      "record": "AZ-12",
+      "finding_ids": "TA-007",
+      "lane": "common forge contracts",
+      "units": "FGI-004",
+      "promise": "FGI-004: thread resolution is scoped to one immutable review revision and actor",
+      "repair": "revision_anchor carries the whole window plus a tracking fact, with no partial tuple"
+    },
+    {
+      "record": "AZ-13",
+      "finding_ids": "TA-009",
+      "lane": "common forge contracts",
+      "units": "FGI-003",
+      "promise": "FGI-003: every provider operation resolves one capability entry before dispatch",
+      "repair": "A review-scoped capability entry as a floor under the binding-scoped ceiling"
+    },
+    {
+      "record": "AZ-14",
+      "finding_ids": "TA-011",
+      "lane": "common forge contracts",
+      "units": "FGI-003",
+      "promise": "FGI-003: missing scope, tier, version, rate, offline, managed policy and unsupported states remain distinguishable",
+      "repair": "provider_unsupported_reason_code, one closed 24-member vocabulary the field is typed against"
+    },
+    {
+      "record": "AZ-15",
+      "finding_ids": "TA-012",
+      "lane": "Azure owner",
+      "units": "ADO-002",
+      "promise": "ADO-002: organization, project, repository, policy and build access failures remain distinguishable",
+      "repair": "The policy leg scoped to write, exempt and bypass; policy_write_scope_missing replaces the read-side code"
+    },
+    {
+      "record": "AZ-16",
+      "finding_ids": "TA-013",
+      "lane": "Azure owner",
+      "units": "ADO-003",
+      "promise": "Section 0: policy identity survives the mapping",
+      "repair": "Policy applicability is resolved provider-side and a failed resolution fails closed"
+    },
+    {
+      "record": "AZ-17",
+      "finding_ids": "TA-016",
+      "lane": "common forge contracts",
+      "units": "FGI-005",
+      "promise": "ADO-003: branch-policy and check identities",
+      "repair": "policy_scope_ref plus a per-configuration expected_policy_set with a membership digest"
+    },
+    {
+      "record": "AZ-18",
+      "finding_ids": "TA-017",
+      "lane": "common forge contracts",
+      "units": "FGI-005",
+      "promise": "FGI-003's partial data is never complete, and DL-054's flag-and-cursor rule",
+      "repair": "checks_truncated with checks_expansion_cursor_ref, and policy_set_partial"
+    },
+    {
+      "record": "AZ-19",
+      "finding_ids": "TA-025",
+      "lane": "common forge contracts",
+      "units": "SCS-016",
+      "promise": "SCS-016 names canonical URL among the mandatory fields for a materialized Check record",
+      "repair": "canonical_url nullable with canonical_url_origin and url_absent_reason, and the closed Check status vocabulary"
+    },
+    {
+      "record": "AZ-20",
+      "finding_ids": "TA-026",
+      "lane": "common forge contracts",
+      "units": "ADO-003",
+      "promise": "ADO-003: votes and approvals cannot transfer silently after head change",
+      "repair": "The two vote criteria amended to the observed-at binding a shape can keep"
+    },
+    {
+      "record": "AZ-21",
+      "finding_ids": "TA-029",
+      "lane": "common forge contracts",
+      "units": "FGI-007",
+      "promise": "ADO-004: API compatibility pins host, version, endpoints, scopes, features and rate",
+      "repair": "Each probed endpoint carries its own api_version and release_state"
+    },
+    {
+      "record": "AZ-22",
+      "finding_ids": "TA-030",
+      "lane": "Azure owner",
+      "units": "ADO-002, ADO-004",
+      "promise": "ADO-002: Server capabilities require a current signed host and version support entry",
+      "repair": "Applicability and status probed and degraded separately, with capability_unsupported naming the version"
+    },
+    {
+      "record": "AZ-23",
+      "finding_ids": "TA-032",
+      "lane": "common forge contracts",
+      "units": "FGI-007",
+      "promise": "FGI-015: instance trust validates normalized host, API base path, private CA and SSH host key before credentials",
+      "repair": "provider_instance_profile widened to azure_devops with its own conditional and an Azure Server fixture"
+    },
+    {
+      "record": "AZ-24",
+      "finding_ids": "TA-033",
+      "lane": "Azure owner",
+      "units": "ADO-001",
+      "promise": "ADO-001: project is mandatory and no path, URL, display name or focus may replace the hierarchy",
+      "repair": "provider_project_id, required and GUID-shaped for azure_devops, never parsed from a URL"
+    },
+    {
+      "record": "AZ-25",
+      "finding_ids": "TA-036",
+      "lane": "Azure owner",
+      "units": "ADO-004",
+      "promise": "ADO-004: ObservableWork for run, retry and cancel",
+      "repair": "Section 7 states the requeue is not offered and what it would have to disclose"
+    },
+    {
+      "record": "AZ-26",
+      "finding_ids": "TA-042",
+      "lane": "re-owned to Forge Integrations",
+      "units": "FGI-015",
+      "promise": "FGI-015 acceptance criterion 3: every provider profile identifies seven named facts",
+      "repair": "The criterion names the surface that carries each fact rather than claiming the profile record does"
+    }
+  ],
+  "corrections_landed_count": 26,
+  "lane_split": {
+    "azure_owner_or_its_fixtures": 12,
+    "common_forge_contracts": 13,
+    "re_owned_to_forge_integrations": 1
+  },
+  "propositions_merged_into_them": {
+    "C-CHECKS-BINDING": [
+      "TA-022",
+      "TA-023",
+      "TA-024"
+    ],
+    "C-CHECKS-CARRIER": [
+      "TA-018",
+      "TA-019",
+      "TA-020",
+      "TA-021"
+    ]
+  },
+  "owner_decisions_landed": [
+    {
+      "decision": "DL-059",
+      "card_finding": "TA-014",
+      "chosen": "option 1",
+      "answer": "Narrow the promise to pull requests now; the branch-policy read is deferred, not declined",
+      "planned_as": "no PlanUnit, by design"
+    },
+    {
+      "decision": "DL-060",
+      "card_finding": "TA-027",
+      "chosen": "option 1",
+      "answer": "Bind Azure approvals to the revision observed when read, labelled as observed by Puppet Master",
+      "planned_as": "ADO-006"
+    },
+    {
+      "decision": "DL-061",
+      "card_finding": "TA-040",
+      "chosen": "option 3",
+      "answer": "Evaluations primary with unwatched statuses separate, joined once a key is established",
+      "planned_as": "ADO-007"
+    },
+    {
+      "decision": "DL-062",
+      "card_finding": "TA-041",
+      "chosen": "option 1",
+      "answer": "One gate list with a source column and an enforcement column",
+      "planned_as": "SCS-023 and F3-561"
+    },
+    {
+      "decision": "DL-063",
+      "card_finding": "TA-035",
+      "chosen": "option 1",
+      "answer": "A typed merge-strategy field, defaulting to the provider's default, always shown",
+      "planned_as": "FGI-018"
+    },
+    {
+      "decision": "DL-064",
+      "card_finding": "TA-036",
+      "chosen": "option 1",
+      "answer": "A requeue command, disabled with a typed reason where the provider has no equivalent",
+      "planned_as": "FGI-019"
+    },
+    {
+      "decision": "DL-065",
+      "card_finding": "TA-026",
+      "chosen": "option 1",
+      "answer": "A provider-neutral vote and reviewer carrier with decision 2's binding",
+      "planned_as": "FGI-020"
+    }
+  ],
+  "plan_units_edited": [
+    "ADO-001",
+    "ADO-002",
+    "ADO-003",
+    "ADO-004",
+    "ADO-005",
+    "FGI-003",
+    "FGI-004",
+    "FGI-005",
+    "FGI-007",
+    "FGI-015",
+    "SCS-016"
+  ],
+  "plan_units_created": [
+    "ADO-006",
+    "ADO-007",
+    "DL-059",
+    "DL-060",
+    "DL-061",
+    "DL-062",
+    "DL-063",
+    "DL-064",
+    "DL-065",
+    "F3-561",
+    "FGI-018",
+    "FGI-019",
+    "FGI-020",
+    "SCS-023"
+  ],
+  "checks": [
+    {
+      "command": "python3 scripts/pm-new-contracts-verify.py",
+      "result": "pass",
+      "detail": "1066 of 1066 positives valid, 3472 of 3472 negatives rejected, 0 findings"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+      "result": "pass",
+      "detail": "2691 shards over 99 sources, 0 failures"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "result": "pass",
+      "detail": "6688 plan units"
+    },
+    {
+      "command": "python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections --base origin/main",
+      "result": "pass",
+      "detail": "witness 1: 0 of 33 records fire, 0 named-but-not-targeted, 0 named-but-unchanged. witness 2: 52 item tokens, 0 missing from prose, 0 missing from a registry. witness 3: 0 units carry registry entries absent from their own text"
+    },
+    {
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections",
+      "result": "fail_deferred_governance_coverage",
+      "detail": "Three errors, all the pre-existing governance coverage omissions for the owner documents this wave edits. The same class the continuation-4 landing recorded for its own owners. Not caused by this wave and not fixable by ordinary work; they are a designated Plans agent reseal."
+    },
+    {
+      "command": "python3 -m unittest tests.test_pm_forge_provider_fixture_gate tests.test_pm_source_control_effects tests.test_pm_source_control_response tests.test_pm_ledger_compile_witness tests.test_pm_plan_index tests.test_pm_forge_backup_acceptance tests.test_pm_jujutsu_closure_semantics tests.test_pm_wiring_vocabulary tests.test_pm_ui_command_response",
+      "result": "pass",
+      "detail": "98 tests, OK"
+    }
+  ],
+  "pre_existing_break_repaired": {
+    "file": "tests/test_pm_forge_provider_fixture_gate.py",
+    "detail": "The test asserted 30 contract pairs and 26 schema sources while scripts/pm-new-contracts-verify.py on origin/main sets EXPECTED_CONTRACT_PAIR_COUNT = 31. It has failed on main since ca7d5f4ff6 added the External Research pair without updating the assertions. Repaired here to 31 and 27 because this branch touches that file; no other change to it was needed beyond the Azure provider-pack counts."
+  },
+  "unenforced_obligations": [
+    {
+      "question": "q-017",
+      "obligation": "The queued second research pass over the never-compared Azure PlanUnits; 26 is a lower bound with an unknown remainder."
+    },
+    {
+      "question": "q-018",
+      "obligation": "Whether a documented key joining an Azure status check to the policy that watches it exists. DL-061 and ADO-007 gate the joined list on it."
+    },
+    {
+      "question": "q-019",
+      "obligation": "When the Azure review, policy and check fixtures get written. TA-038 amended the promise instead, so several criteria are stated and not yet falsifiable, and each unit says so."
+    }
+  ],
+  "not_landed": [
+    {
+      "item": "TA-002",
+      "why": "Reclassified to a decision card by the Part 1 record. Its minimal repair persists a raw provider cause on a closed record and decides what an unmappable cause renders as, which is a field plus a product decision."
+    },
+    {
+      "item": "NEW-01",
+      "why": "Withdrawn by the confirmation review of 2026-09-18. repository_binding's conditional already rejects a null project for azure_devops and bitbucket_data_center, and dropping null from the base type would have invalidated the shipped gitlab, forgejo and gitea positives. Only the second Azure negative the review allowed as fixture coverage was added."
+    }
+  ],
+  "claim_boundary": "Static schema, fixture, shard, index, named-test and compile-witness integrity only. No governance seal, no runtime or native adapter evidence, no provider access, no readiness admission. No provider was contacted by this branch.",
+  "reseal_request": "Plans/Azure_DevOps_Integration.md, Plans/Decision_Log.md, Plans/FinalGUISpec.md, Plans/Forge_Integrations.md and Plans/Source_Control_System.md were edited, so their Spec Lock, evidence and readiness hashes are now stale. The designated Plans agent's next reseal covers them; this branch changed no governance artifact.",
+  "cross_branch_overlap": {
+    "branch": "plans/compile-repair-20260917",
+    "detail": "That branch is editing Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Backup_Restore_System.md and Plans/External_Research.md. This branch touches Plans/Source_Control_System.md in two places only: SCS-016, amended minimally for the nullable canonical URL, the Check status vocabulary and four pre-existing registry orphans, and one new unit SCS-023 appended at the end of the document. It touches no other SCS unit and no other document on that list. Whichever lands second rebases; the SCS-016 passage must be re-read against the current text before the edit is reapplied."
+  },
+  "independent_review": "Not yet reviewed. The acceptance rule is deterministic checks pass plus one blind form-driven review with a cycle cap of two."
+}

@@ -1,0 +1,780 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260918-001-azure-devops-corrections",
+  "updated_at_utc": "2026-09-18T01:30:00+00:00",
+  "last_event_id": "evt-006",
+  "canonical_plan_targets": [
+    "Plans/Azure_DevOps_Integration.md",
+    "Plans/Decision_Log.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Forge_Integrations.md",
+    "Plans/Source_Control_System.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Azure_DevOps_Integration.md",
+    "Plans/Decision_Log.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Forge_Integrations.md",
+    "Plans/Source_Control_System.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Azure_DevOps_Integration.md",
+    "Plans/Decision_Log.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Forge_Integrations.md",
+    "Plans/Source_Control_System.md",
+    "Plans/azure_devops_integration_fixtures.json",
+    "Plans/forge_integration_contract_fixtures.json",
+    "Plans/forge_integration_contracts.schema.json",
+    "Plans/source_control_contract_fixtures.json",
+    "Plans/source_control_contracts.schema.json",
+    "tests/test_pm_forge_provider_fixture_gate.py"
+  ],
+  "governance_status": "not_requested",
+  "latest_audit_ref": "reports/research-topic2-20260917/landing/verification.json",
+  "latest_audit_status": "COMPILED_CORRECTION_INTEGRITY_PASS_PENDING_INDEPENDENT_BRANCH_REVIEW",
+  "validation_state": {
+    "ledger_health": "fail_deferred_governance_coverage",
+    "canonical_compile": "applied_twenty_six_adjudicated_corrections_and_seven_owner_decision_card_answers",
+    "scoped_contracts": "pass",
+    "plan_index": "pass",
+    "configured_shards": "pass",
+    "named_tests": "pass",
+    "compile_witness": "pass",
+    "claim_boundary": "Static schema, fixture, shard, index, named-test and compile-witness integrity only. No governance seal, runtime certification, provider access or readiness admission.",
+    "partial_enforcement": "Three obligations have no validator surface and are recorded as open questions q-017, q-018 and q-019 rather than implied by the contracts.",
+    "governance_coverage_errors": [
+      "governance coverage targets missing from sharding_config sources: ['Plans/Azure_DevOps_Integration.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']",
+      "governance coverage targets missing from Spec_Lock coverage: ['Plans/Azure_DevOps_Integration.md', 'Plans/Decision_Log.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']",
+      "governance coverage targets missing from plan_graph coverage: ['Plans/Azure_DevOps_Integration.md', 'Plans/Decision_Log.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']"
+    ]
+  },
+  "status": "compiled_azure_devops_corrections_and_decision_cards",
+  "items": [
+    {
+      "queue_id": "queue-001",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-01"
+      ],
+      "target_doc": "Plans/Azure_DevOps_Integration.md",
+      "target_docs": [
+        "Plans/Azure_DevOps_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "ADO-003",
+        "ADO-005"
+      ],
+      "compiled_plan_unit_ids": [
+        "ADO-003",
+        "ADO-005"
+      ],
+      "companion_outputs": [
+        "Plans/azure_devops_integration_fixtures.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-002",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-02"
+      ],
+      "target_doc": "Plans/Azure_DevOps_Integration.md",
+      "target_docs": [
+        "Plans/Azure_DevOps_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "ADO-002"
+      ],
+      "compiled_plan_unit_ids": [
+        "ADO-002"
+      ],
+      "companion_outputs": [
+        "Plans/azure_devops_integration_fixtures.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-003",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-03"
+      ],
+      "target_doc": "Plans/Azure_DevOps_Integration.md",
+      "target_docs": [
+        "Plans/Azure_DevOps_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "ADO-002"
+      ],
+      "compiled_plan_unit_ids": [
+        "ADO-002"
+      ],
+      "companion_outputs": [
+        "Plans/azure_devops_integration_fixtures.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-004",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-04"
+      ],
+      "target_doc": "Plans/Forge_Integrations.md",
+      "target_docs": [
+        "Plans/Forge_Integrations.md"
+      ],
+      "target_plan_unit_ids": [
+        "FGI-005"
+      ],
+      "compiled_plan_unit_ids": [
+        "FGI-005"
+      ],
+      "companion_outputs": [
+        "Plans/forge_integration_contracts.schema.json",
+        "Plans/forge_integration_contract_fixtures.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-005",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-05"
+      ],
+      "target_doc": "Plans/Forge_Integrations.md",
+      "target_docs": [
+        "Plans/Forge_Integrations.md"
+      ],
+      "target_plan_unit_ids": [
+        "FGI-005"
+      ],
+      "compiled_plan_unit_ids": [
+        "FGI-005"
+      ],
+      "companion_outputs": [
+        "Plans/forge_integration_contracts.schema.json",
+        "Plans/forge_integration_contract_fixtures.json",
+        "Plans/source_control_contracts.schema.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-006",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-06"
+      ],
+      "target_doc": "Plans/Azure_DevOps_Integration.md",
+      "target_docs": [
+        "Plans/Azure_DevOps_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "ADO-001"
+      ],
+      "compiled_plan_unit_ids": [
+        "ADO-001"
+      ],
+      "companion_outputs": [
+        "Plans/azure_devops_integration_fixtures.json",
+        "Plans/forge_integration_contracts.schema.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-007",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-07"
+      ],
+      "target_doc": "Plans/Azure_DevOps_Integration.md",
+      "target_docs": [
+        "Plans/Azure_DevOps_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "ADO-003"
+      ],
+      "compiled_plan_unit_ids": [
+        "ADO-003"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-008",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-08"
+      ],
+      "target_doc": "Plans/Forge_Integrations.md",
+      "target_docs": [
+        "Plans/Forge_Integrations.md"
+      ],
+      "target_plan_unit_ids": [
+        "FGI-004"
+      ],
+      "compiled_plan_unit_ids": [
+        "FGI-004"
+      ],
+      "companion_outputs": [
+        "Plans/forge_integration_contracts.schema.json",
+        "Plans/forge_integration_contract_fixtures.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-009",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-09"
+      ],
+      "target_doc": "Plans/Azure_DevOps_Integration.md",
+      "target_docs": [
+        "Plans/Azure_DevOps_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "ADO-003"
+      ],
+      "compiled_plan_unit_ids": [
+        "ADO-003"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-010",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-10"
+      ],
+      "target_doc": "Plans/Azure_DevOps_Integration.md",
+      "target_docs": [
+        "Plans/Azure_DevOps_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "ADO-003"
+      ],
+      "compiled_plan_unit_ids": [
+        "ADO-003"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-011",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-11"
+      ],
+      "target_doc": "Plans/Forge_Integrations.md",
+      "target_docs": [
+        "Plans/Forge_Integrations.md"
+      ],
+      "target_plan_unit_ids": [
+        "FGI-004"
+      ],
+      "compiled_plan_unit_ids": [
+        "FGI-004"
+      ],
+      "companion_outputs": [
+        "Plans/forge_integration_contracts.schema.json",
+        "Plans/forge_integration_contract_fixtures.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-012",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-12"
+      ],
+      "target_doc": "Plans/Forge_Integrations.md",
+      "target_docs": [
+        "Plans/Forge_Integrations.md"
+      ],
+      "target_plan_unit_ids": [
+        "FGI-004"
+      ],
+      "compiled_plan_unit_ids": [
+        "FGI-004"
+      ],
+      "companion_outputs": [
+        "Plans/forge_integration_contracts.schema.json",
+        "Plans/forge_integration_contract_fixtures.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-013",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-13"
+      ],
+      "target_doc": "Plans/Forge_Integrations.md",
+      "target_docs": [
+        "Plans/Forge_Integrations.md"
+      ],
+      "target_plan_unit_ids": [
+        "FGI-003"
+      ],
+      "compiled_plan_unit_ids": [
+        "FGI-003"
+      ],
+      "companion_outputs": [
+        "Plans/forge_integration_contracts.schema.json",
+        "Plans/forge_integration_contract_fixtures.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-014",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-14"
+      ],
+      "target_doc": "Plans/Forge_Integrations.md",
+      "target_docs": [
+        "Plans/Forge_Integrations.md"
+      ],
+      "target_plan_unit_ids": [
+        "FGI-003"
+      ],
+      "compiled_plan_unit_ids": [
+        "FGI-003"
+      ],
+      "companion_outputs": [
+        "Plans/forge_integration_contracts.schema.json",
+        "Plans/azure_devops_integration_fixtures.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-015",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-15"
+      ],
+      "target_doc": "Plans/Azure_DevOps_Integration.md",
+      "target_docs": [
+        "Plans/Azure_DevOps_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "ADO-002"
+      ],
+      "compiled_plan_unit_ids": [
+        "ADO-002"
+      ],
+      "companion_outputs": [
+        "Plans/azure_devops_integration_fixtures.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-016",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-16"
+      ],
+      "target_doc": "Plans/Azure_DevOps_Integration.md",
+      "target_docs": [
+        "Plans/Azure_DevOps_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "ADO-003"
+      ],
+      "compiled_plan_unit_ids": [
+        "ADO-003"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-017",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-17"
+      ],
+      "target_doc": "Plans/Forge_Integrations.md",
+      "target_docs": [
+        "Plans/Forge_Integrations.md"
+      ],
+      "target_plan_unit_ids": [
+        "FGI-005"
+      ],
+      "compiled_plan_unit_ids": [
+        "FGI-005"
+      ],
+      "companion_outputs": [
+        "Plans/forge_integration_contracts.schema.json",
+        "Plans/forge_integration_contract_fixtures.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-018",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-18"
+      ],
+      "target_doc": "Plans/Forge_Integrations.md",
+      "target_docs": [
+        "Plans/Forge_Integrations.md"
+      ],
+      "target_plan_unit_ids": [
+        "FGI-005"
+      ],
+      "compiled_plan_unit_ids": [
+        "FGI-005"
+      ],
+      "companion_outputs": [
+        "Plans/forge_integration_contracts.schema.json",
+        "Plans/forge_integration_contract_fixtures.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-019",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-19"
+      ],
+      "target_doc": "Plans/Source_Control_System.md",
+      "target_docs": [
+        "Plans/Source_Control_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "SCS-016"
+      ],
+      "compiled_plan_unit_ids": [
+        "SCS-016"
+      ],
+      "companion_outputs": [
+        "Plans/source_control_contracts.schema.json",
+        "Plans/source_control_contract_fixtures.json",
+        "Plans/forge_integration_contracts.schema.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-020",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-20"
+      ],
+      "target_doc": "Plans/Azure_DevOps_Integration.md",
+      "target_docs": [
+        "Plans/Azure_DevOps_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "ADO-003"
+      ],
+      "compiled_plan_unit_ids": [
+        "ADO-003"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-021",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-21"
+      ],
+      "target_doc": "Plans/Forge_Integrations.md",
+      "target_docs": [
+        "Plans/Forge_Integrations.md"
+      ],
+      "target_plan_unit_ids": [
+        "FGI-007"
+      ],
+      "compiled_plan_unit_ids": [
+        "FGI-007"
+      ],
+      "companion_outputs": [
+        "Plans/forge_integration_contracts.schema.json",
+        "Plans/forge_integration_contract_fixtures.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-022",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-22"
+      ],
+      "target_doc": "Plans/Azure_DevOps_Integration.md",
+      "target_docs": [
+        "Plans/Azure_DevOps_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "ADO-002",
+        "ADO-004"
+      ],
+      "compiled_plan_unit_ids": [
+        "ADO-002",
+        "ADO-004"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-023",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-23"
+      ],
+      "target_doc": "Plans/Forge_Integrations.md",
+      "target_docs": [
+        "Plans/Forge_Integrations.md"
+      ],
+      "target_plan_unit_ids": [
+        "FGI-007"
+      ],
+      "compiled_plan_unit_ids": [
+        "FGI-007"
+      ],
+      "companion_outputs": [
+        "Plans/forge_integration_contracts.schema.json",
+        "Plans/azure_devops_integration_fixtures.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-024",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-24"
+      ],
+      "target_doc": "Plans/Azure_DevOps_Integration.md",
+      "target_docs": [
+        "Plans/Azure_DevOps_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "ADO-001"
+      ],
+      "compiled_plan_unit_ids": [
+        "ADO-001"
+      ],
+      "companion_outputs": [
+        "Plans/forge_integration_contracts.schema.json",
+        "Plans/azure_devops_integration_fixtures.json"
+      ],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-025",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-25"
+      ],
+      "target_doc": "Plans/Azure_DevOps_Integration.md",
+      "target_docs": [
+        "Plans/Azure_DevOps_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "ADO-004"
+      ],
+      "compiled_plan_unit_ids": [
+        "ADO-004"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-026",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-az-26"
+      ],
+      "target_doc": "Plans/Forge_Integrations.md",
+      "target_docs": [
+        "Plans/Forge_Integrations.md"
+      ],
+      "target_plan_unit_ids": [
+        "FGI-015"
+      ],
+      "compiled_plan_unit_ids": [
+        "FGI-015"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-003"
+    },
+    {
+      "queue_id": "queue-027",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-card-cd-01"
+      ],
+      "target_doc": "Plans/Decision_Log.md",
+      "target_docs": [
+        "Plans/Decision_Log.md",
+        "Plans/Azure_DevOps_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "DL-059",
+        "ADO-005"
+      ],
+      "compiled_plan_unit_ids": [
+        "DL-059",
+        "ADO-005"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-028",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-card-cd-02"
+      ],
+      "target_doc": "Plans/Decision_Log.md",
+      "target_docs": [
+        "Plans/Decision_Log.md",
+        "Plans/Azure_DevOps_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "DL-060",
+        "ADO-006"
+      ],
+      "compiled_plan_unit_ids": [
+        "DL-060",
+        "ADO-006"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-029",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-card-cd-03"
+      ],
+      "target_doc": "Plans/Decision_Log.md",
+      "target_docs": [
+        "Plans/Decision_Log.md",
+        "Plans/Azure_DevOps_Integration.md"
+      ],
+      "target_plan_unit_ids": [
+        "DL-061",
+        "ADO-007"
+      ],
+      "compiled_plan_unit_ids": [
+        "DL-061",
+        "ADO-007"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-030",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-card-cd-04"
+      ],
+      "target_doc": "Plans/Decision_Log.md",
+      "target_docs": [
+        "Plans/Decision_Log.md",
+        "Plans/Source_Control_System.md"
+      ],
+      "target_plan_unit_ids": [
+        "DL-062",
+        "SCS-023"
+      ],
+      "compiled_plan_unit_ids": [
+        "DL-062",
+        "SCS-023"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-030b",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-card-cd-04"
+      ],
+      "target_doc": "Plans/FinalGUISpec.md",
+      "target_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "target_plan_unit_ids": [
+        "F3-561"
+      ],
+      "compiled_plan_unit_ids": [
+        "F3-561"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-031",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-card-cd-05"
+      ],
+      "target_doc": "Plans/Decision_Log.md",
+      "target_docs": [
+        "Plans/Decision_Log.md",
+        "Plans/Forge_Integrations.md"
+      ],
+      "target_plan_unit_ids": [
+        "DL-063",
+        "FGI-018"
+      ],
+      "compiled_plan_unit_ids": [
+        "DL-063",
+        "FGI-018"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-032",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-card-cd-06"
+      ],
+      "target_doc": "Plans/Decision_Log.md",
+      "target_docs": [
+        "Plans/Decision_Log.md",
+        "Plans/Forge_Integrations.md"
+      ],
+      "target_plan_unit_ids": [
+        "DL-064",
+        "FGI-019"
+      ],
+      "compiled_plan_unit_ids": [
+        "DL-064",
+        "FGI-019"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-005"
+    },
+    {
+      "queue_id": "queue-033",
+      "status": "compiled",
+      "source_atom_ids": [
+        "atom-azure-card-cd-07"
+      ],
+      "target_doc": "Plans/Decision_Log.md",
+      "target_docs": [
+        "Plans/Decision_Log.md",
+        "Plans/Forge_Integrations.md"
+      ],
+      "target_plan_unit_ids": [
+        "DL-065",
+        "FGI-020"
+      ],
+      "compiled_plan_unit_ids": [
+        "DL-065",
+        "FGI-020"
+      ],
+      "companion_outputs": [],
+      "compile_event_id": "evt-005"
+    }
+  ],
+  "notes": "Every item names the owner PlanUnits the correction or answer actually edited, with the schemas and fixture packs it needed as companion outputs. The prose compile ran first and the companions second, with the compile witness between them.",
+  "terminal_ledger_event_id": "evt-006"
+}

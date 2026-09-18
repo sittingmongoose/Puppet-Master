@@ -1,0 +1,32 @@
+{
+  "schema": "azure.topic2.derived_scope.v1",
+  "generated_at_utc": "2026-09-18T01:27:03Z",
+  "regeneration": [
+    "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+    "python3 scripts/pm-plan-index.py generate"
+  ],
+  "policy": "Derived files were regenerated and committed in the same commit as the source edit that caused them.",
+  "shards_touched": {
+    "note": "Plans/Azure_DevOps_Integration.md, Plans/Forge_Integrations.md and Plans/Source_Control_System.md are not in sharding_config sources, so they produce no shards. Plans/Decision_Log.md and Plans/FinalGUISpec.md are, and both shard sets regenerated with the commit that edited them. No shard of a document this branch did not edit changed.",
+    "paths": [
+      "Plans/_shards/decision_log/",
+      "Plans/_shards/finalguispec/"
+    ]
+  },
+  "plan_index_touched": [
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/node_readiness_report.json",
+    "Plans/.plan_index/plan_units.jsonl"
+  ],
+  "not_touched": [
+    "Plans/Spec_Lock.json",
+    "Plans/.evidence/**",
+    "Plans/auto_decisions.jsonl",
+    "Plans/plan_graph.json",
+    "Plans/.plan_migration/**",
+    "every scripts/ file (no gate or validator was changed by this wave)"
+  ]
+}

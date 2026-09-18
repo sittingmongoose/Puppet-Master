@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260918-001-azure-devops-corrections",
+  "updated_at_utc": "2026-09-18T01:30:00+00:00",
+  "last_event_id": "evt-006",
+  "canonical_plan_targets": [
+    "Plans/Azure_DevOps_Integration.md",
+    "Plans/Decision_Log.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Forge_Integrations.md",
+    "Plans/Source_Control_System.md"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Azure_DevOps_Integration.md",
+    "Plans/Decision_Log.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Forge_Integrations.md",
+    "Plans/Source_Control_System.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/Azure_DevOps_Integration.md",
+    "Plans/Decision_Log.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Forge_Integrations.md",
+    "Plans/Source_Control_System.md",
+    "Plans/azure_devops_integration_fixtures.json",
+    "Plans/forge_integration_contract_fixtures.json",
+    "Plans/forge_integration_contracts.schema.json",
+    "Plans/source_control_contract_fixtures.json",
+    "Plans/source_control_contracts.schema.json",
+    "tests/test_pm_forge_provider_fixture_gate.py"
+  ],
+  "governance_status": "not_requested",
+  "latest_audit_ref": "reports/research-topic2-20260917/landing/verification.json",
+  "latest_audit_status": "COMPILED_CORRECTION_INTEGRITY_PASS_PENDING_INDEPENDENT_BRANCH_REVIEW",
+  "validation_state": {
+    "ledger_health": "fail_deferred_governance_coverage",
+    "canonical_compile": "applied_twenty_six_adjudicated_corrections_and_seven_owner_decision_card_answers",
+    "scoped_contracts": "pass",
+    "plan_index": "pass",
+    "configured_shards": "pass",
+    "named_tests": "pass",
+    "compile_witness": "pass",
+    "claim_boundary": "Static schema, fixture, shard, index, named-test and compile-witness integrity only. No governance seal, runtime certification, provider access or readiness admission.",
+    "partial_enforcement": "Three obligations have no validator surface and are recorded as open questions q-017, q-018 and q-019 rather than implied by the contracts.",
+    "governance_coverage_errors": [
+      "governance coverage targets missing from sharding_config sources: ['Plans/Azure_DevOps_Integration.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']",
+      "governance coverage targets missing from Spec_Lock coverage: ['Plans/Azure_DevOps_Integration.md', 'Plans/Decision_Log.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']",
+      "governance coverage targets missing from plan_graph coverage: ['Plans/Azure_DevOps_Integration.md', 'Plans/Decision_Log.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']"
+    ]
+  },
+  "phase": "compiled_azure_devops_corrections_and_decision_cards",
+  "accepted_decisions_count": 33,
+  "design_atoms_total": 33,
+  "ready_for_plan_compile_atoms": 0,
+  "candidate_atoms_count": 0,
+  "open_questions_count": 3,
+  "deferred_questions_count": 0,
+  "open_blockers_count": 0,
+  "compiled_plan_unit_ids": [
+    "ADO-001",
+    "ADO-002",
+    "ADO-003",
+    "ADO-004",
+    "ADO-005",
+    "ADO-006",
+    "ADO-007",
+    "DL-059",
+    "DL-060",
+    "DL-061",
+    "DL-062",
+    "DL-063",
+    "DL-064",
+    "DL-065",
+    "F3-561",
+    "FGI-003",
+    "FGI-004",
+    "FGI-005",
+    "FGI-007",
+    "FGI-015",
+    "FGI-018",
+    "FGI-019",
+    "FGI-020",
+    "SCS-016",
+    "SCS-023"
+  ],
+  "cursor": {
+    "last_event_id": "evt-006",
+    "next_action": "Twenty-six corrections and seven owner decision-card answers are compiled. Three questions stay open and none blocks landing: q-017 the queued second research pass over the never-compared Azure PlanUnits, q-018 whether a documented status-to-policy join key exists, and q-019 when the Azure review, policy and check fixtures get written. The branch stops for independent review before landing on main."
+  },
+  "landing_condition": "Reviewer approval, then fast-forward onto main with regenerated shards and index."
+}

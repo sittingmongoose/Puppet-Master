@@ -1,0 +1,64 @@
+{
+  "schema": "azure.topic2.currentness_before_edit.v1",
+  "generated_at_utc": "2026-09-18T01:27:03Z",
+  "base_commit": "4f5eda0d18a9deff2349b03ae573f0ffd706ed61",
+  "method": "The Part 1 record re-read every passage the union cites against Plans/Azure_DevOps_Integration.md on this exact commit and found it byte-identical to the adjudication snapshot, so nothing went stale between adjudication and the record. The confirmation review independently hashed all thirteen cited canon files at the same commit and matched thirteen of thirteen. This branch's base is that commit, so no passage was re-adjudicated for drift.",
+  "files": [
+    {
+      "path": "Plans/Azure_DevOps_Integration.md",
+      "sha256_at_base": "3ae59c0217219175051418df0482663b247888cc65db087f942158ca5887cc2d",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/Decision_Log.md",
+      "sha256_at_base": "e13092293142e0751062175638b866f26a2e0d71302a529d84a90e9784665e48",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "sha256_at_base": "159a3a21434eed3117a5b340250d28e36fc798eeca5545bffa5d5760462a8f8f",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/Forge_Integrations.md",
+      "sha256_at_base": "4d13b2bd5fb5b77be4c3deb1814b04d1e5d1069ac3576cd4fe8f8a1816d6eb95",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/Source_Control_System.md",
+      "sha256_at_base": "07a8401d312980fbb30b7d6df0b24732e81f3de6e87624fe795e0c1bb1c3baff",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/azure_devops_integration_fixtures.json",
+      "sha256_at_base": "aaefd3b321d300d75aafed1871d9e7c32313220ee16e9da9edbd82c6a765ee72",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/forge_integration_contract_fixtures.json",
+      "sha256_at_base": "8d123b215c20be0838e554b639fedc30b5b401a800663033ddb281178effc506",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/forge_integration_contracts.schema.json",
+      "sha256_at_base": "9ccecc1c40af59cc7396a7f6851152308214cc9f6989fb08d1ee3a45dd69aef8",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/source_control_contract_fixtures.json",
+      "sha256_at_base": "2e3a45b78e317b5050d79b4d3871586be749bd34f82c8602ac2682fd458abdc7",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "Plans/source_control_contracts.schema.json",
+      "sha256_at_base": "012a1640c7a84b21e06f705a308409d7892df19917493a7fc2eb9257fa71c2dd",
+      "edited_by_this_branch": true
+    },
+    {
+      "path": "tests/test_pm_forge_provider_fixture_gate.py",
+      "sha256_at_base": "88d685f42301cc0fe1bd4fc2c98d6f9203c9a7e5054eaa9232fabe3914ba06e9",
+      "edited_by_this_branch": true
+    }
+  ],
+  "coverage_check": "The confirmation review also re-tested eight propositions and all three union corrections mechanically on this commit and reproduced each one."
+}

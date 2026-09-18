@@ -1,0 +1,22 @@
+{
+  "errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Azure_DevOps_Integration.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Azure_DevOps_Integration.md', 'Plans/Decision_Log.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Azure_DevOps_Integration.md', 'Plans/Decision_Log.md', 'Plans/Forge_Integrations.md', 'Plans/Source_Control_System.md']"
+  ],
+  "ledger_id": "pldg-20260918-001-azure-devops-corrections",
+  "schema_id": "pm.bootstrap_ledger_validator_report.v1",
+  "status": "fail",
+  "summary": {
+    "atoms": 33,
+    "compile_queue_items": 34,
+    "corrections": 33,
+    "decisions": 33,
+    "events": 6,
+    "plan_units_checked": 673,
+    "questions": 19
+  },
+  "warnings": [],
+  "generated_at_utc": "2026-09-18T01:32:18Z",
+  "interpretation": "The three errors are the pre-existing governance coverage omissions for the owner documents this wave edits. Plans/Azure_DevOps_Integration.md, Plans/Forge_Integrations.md and Plans/Source_Control_System.md are not sharding_config sources, and none of those three nor Plans/Decision_Log.md is carried in Spec_Lock or plan_graph coverage today. The continuation-4 landing recorded the same class for its own owners. Every other check on this ledger passes, including all three compile witnesses."
+}
