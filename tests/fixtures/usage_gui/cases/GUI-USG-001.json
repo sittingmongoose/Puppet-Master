@@ -1,0 +1,36 @@
+{
+  "schema_id": "pm.usage_gui.acceptance_fixture_case.v1",
+  "owner_plan_unit": "UF-088",
+  "fixture_id": "GUI-USG-001",
+  "title": "missing usage renders unknown, not zero",
+  "surfaces": [
+    "Usage",
+    "Ledger",
+    "Dashboard Usage widget",
+    "Context Detail Pane"
+  ],
+  "source_lineage": [
+    "Plans/usage-feature.md#UF-088",
+    "PlanUnit:UF-088",
+    "tests/fixtures/usage_gui/cases/GUI-USG-001.json"
+  ],
+  "must": [
+    "source_class:unknown",
+    "source_confidence:unknown",
+    "source_authority:unknown",
+    "usage_reporting_state:unknown_or_unavailable",
+    "raw_payload_ref:absent_or_redacted"
+  ],
+  "must_not": [
+    "zero_tokens",
+    "zero_cost",
+    "no_usage_success"
+  ],
+  "input": {
+    "fixture_identity": "GUI-USG-001",
+    "authority": "canonical_test_fixture"
+  },
+  "expected_projection": {
+    "truthful_unknown_zero_hidden_partial_semantics": true
+  }
+}

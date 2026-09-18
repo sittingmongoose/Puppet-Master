@@ -1,0 +1,35 @@
+{
+  "schema_id": "pm.pm7.surface_inventory_fixture.v1",
+  "owner_plan_units": [
+    "F3-513",
+    "F3-517",
+    "ATS-037"
+  ],
+  "source_lineage": [
+    "Plans/FinalGUISpec.md#F3-513",
+    "Plans/FinalGUISpec.md#F3-517",
+    "Plans/Automated_Testing_System.md#ATS-037"
+  ],
+  "surfaces": [
+    "global_shell",
+    "title_bar",
+    "home",
+    "dashboard",
+    "usage",
+    "assistant_context",
+    "status_bar",
+    "side_panels",
+    "cozy_shelves",
+    "bottom_panel"
+  ],
+  "must": [
+    "one_functional_inventory_across_themes",
+    "stable_surface_identity",
+    "viewport_bounds"
+  ],
+  "must_not": [
+    "theme_hides_function",
+    "duplicate_critical_id",
+    "white_until_hover"
+  ]
+}

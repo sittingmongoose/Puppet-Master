@@ -829,9 +829,9 @@ A per-plan seal therefore runs fifteen operations: it registers owners, generate
 
 What makes that safe is the label the seal record carries, not the decision. A plan-layer seal record names its profile, names the four operations it did not run, records that the repository is not qualified by it, and records that the repository gates were not run in it. A seal like that cannot be read as a full-profile seal, and it claims no result for anything it skipped. A plan-layer seal never claims repository qualification.
 
-Three of the four omitted operations, the gate run, the governance audit and the migration validate, run when a branch lands on main and on a nightly schedule. At landing they run in the shared checkout after the fast-forward and the shard check, and they cost about ten minutes there. The migration snapshot creates a new tracked run directory, so it never runs in the shared checkout at landing; it runs nightly, in a worktree, by the designated Plans agent. A landing is refused when a failure names a file the landing branch touches, and that failure is fixed on the branch; when every failure names files the branch does not touch, the landing proceeds and the failures are reported. That is the rule the shard check already follows, applied to the same moment. Stale governance hashes for the very documents a branch edited, in Spec Lock, the evidence hashes, the readiness report or the migration inventory, are what every canon edit produces until the designated Plans agent reseals; they never stop a landing and are reported with a reseal request. The nightly run covers the repository whether or not anything landed, so repository qualification never depends on somebody having pushed a branch.
+Three of the four omitted operations, the gate run, the governance audit and the migration validate, run when a branch lands on main and on a nightly schedule. At landing they run in the shared checkout after the fast-forward and the shard check and before main is pushed, and they cost about ten minutes there. Since Jared's answer of 2026-09-18 the lander reads them through `scripts/pm-landing-check.py`, which runs the same three checks and reports only the failures that are new since the recorded baseline `reports/landing-checks/baseline.json` and the failures that name a path the branch touches; the first baseline held 37,935 failures that named no landed file, and reading that list at every landing told the lander nothing. The baseline is recorded from a full run against main in a full checkout, committed with the commit it was taken at, and refreshed on the nightly schedule only, never per landing. The migration snapshot creates a new tracked run directory, so it never runs in the shared checkout at landing; it runs nightly, in a worktree, by the designated Plans agent. A landing is refused when a failure names a file the landing branch touches, and that failure is fixed on the branch; when every failure names files the branch does not touch, the landing proceeds and the failures are reported. That is the rule the shard check already follows, applied to the same moment. Stale governance hashes for the very documents a branch edited, in Spec Lock, the evidence hashes, the readiness report or the migration inventory, are what every canon edit produces until the designated Plans agent reseals; they never stop a landing and are reported with a reseal request. The nightly run covers the repository whether or not anything landed, so repository qualification never depends on somebody having pushed a branch.
 
-This buys a per-plan seal in the order of twenty minutes instead of forty, and a seal cost that scales with the change instead of with the repository. It costs a seal record that has to say what it did not run, three checks that must actually run at landing and four operations on a schedule rather than being assumed, and a landing that is refused when they fail on files the branch touches.
+This buys a per-plan seal in the order of twenty minutes instead of forty, and a seal cost that scales with the change instead of with the repository. It costs a seal record that has to say what it did not run, three checks that must actually run at landing and four operations on a schedule rather than being assumed, a landing that is refused when they fail on files the branch touches, and a recorded baseline that has to be refreshed or the residue it excuses goes stale.
 
 This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
 
@@ -3919,8 +3919,11 @@ canonical_text: >-
   repository qualification and reports no outcome for an operation it did not run. Every retained
   operation runs the same validator with the same arguments and scope as before. Three of the four omitted
   operations, run_gates, audit_governance, and migration_validate, run when a branch lands on main,
-  in the shared checkout after the fast-forward and the shard check at a measured cost of about ten
-  minutes, and on a nightly schedule; migration_snapshot runs only nightly, in a worktree, by the
+  in the shared checkout after the fast-forward and the shard check and before main is pushed, at a
+  measured cost of about ten minutes, read through scripts/pm-landing-check.py, which reports only
+  the failures that are new since the recorded baseline reports/landing-checks/baseline.json and the
+  failures that name a path the branch touches, and on a nightly schedule from which the baseline is
+  refreshed, never per landing; migration_snapshot runs only nightly, in a worktree, by the
   designated Plans agent, because it creates a new tracked run directory; a landing is
   refused when a failure names a file the branch touches, and proceeds with the failures reported
   when every failure names files the branch does not touch; stale governance hashes for the documents
@@ -3933,7 +3936,7 @@ unblocks: []
 acceptance_criteria:
   - BPM-005 states the fifteen plan-layer operations, the four omitted operations, the labelled seal record, that a plan-layer seal never claims repository qualification, and that every retained operation runs unchanged.
   - BPM-009 places run_gates, audit_governance, and migration_validate at landing on main and all four, including migration_snapshot in a worktree, on a nightly schedule, with the landing refusal and reporting rule and the measured cost.
-  - The landing procedure in AGENTS.md and .claude/CLAUDE.md carries the repository-wide gates as one step after the fast-forward and the shard check, and states the measured cost.
+  - The landing procedure in AGENTS.md and .claude/CLAUDE.md carries the repository-wide gates as one step after the fast-forward and the shard check and before the push, states the measured cost, and runs them through scripts/pm-landing-check.py against the recorded baseline.
   - The bootstrap seal prose no longer says that a per-plan seal runs the full gate set, and no passage in Plans says a seal qualifies the repository.
   - No validator, validator argument, or validator scope changes for any retained operation.
   - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds, executable queues, or build tasks are created by this record.
@@ -3941,6 +3944,7 @@ validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-landing-check.py --base origin/main
   - Manual AGENTS.md and .claude/CLAUDE.md landing-procedure review.
 risk_class: seal_claim_overreach_or_unrun_repository_gates
 reasoning_tier: high

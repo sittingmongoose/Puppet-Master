@@ -1,0 +1,42 @@
+{
+  "schema_id": "pm.usage_gui.acceptance_fixture_case.v1",
+  "owner_plan_unit": "UF-088",
+  "fixture_id": "GUI-CBP-001",
+  "title": "Antigravity missing commands render not exposed or unknown",
+  "surfaces": [
+    "Antigravity CLI provider row",
+    "Usage",
+    "provider/settings row",
+    "Provider settings"
+  ],
+  "source_lineage": [
+    "Plans/CLI_Bridged_Providers.md#CBP-027",
+    "Plans/usage-feature.md#UF-088",
+    "PlanUnit:UF-088",
+    "tests/fixtures/usage_gui/cases/GUI-CBP-001.json"
+  ],
+  "must": [
+    "/stats",
+    "/usage",
+    "/quota",
+    "/credits",
+    "stats_unavailable",
+    "usage:unknown",
+    "quota:not_exposed",
+    "credits:not_exposed"
+  ],
+  "must_not": [
+    "fabricated_stats",
+    "fabricated_usage",
+    "fabricated_quota",
+    "fabricated_credits",
+    "quota:not_exposed_as_zero"
+  ],
+  "input": {
+    "fixture_identity": "GUI-CBP-001",
+    "authority": "canonical_test_fixture"
+  },
+  "expected_projection": {
+    "truthful_unknown_zero_hidden_partial_semantics": true
+  }
+}

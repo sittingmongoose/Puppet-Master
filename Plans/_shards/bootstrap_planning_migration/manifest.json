@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-09-17T02:21:40Z",
+  "generated_at_utc": "2026-09-18T00:37:57Z",
   "index_path": "Plans/_shards/bootstrap_planning_migration/00-index.md",
-  "index_sha256": "8abdf6d5727b3169f4d56c685f9785ea6e8d59113f76982a3aa3728cd59ac92a",
+  "index_sha256": "2f5bb5a335aa479d1cb8bbf7aab318c64304b29bbca7cffb3a3e0ccc35eb8e1d",
   "manifest_path": "Plans/_shards/bootstrap_planning_migration/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/bootstrap_planning_migration/001-preamble.md",
-      "sha256": "5275338d10925af222666c85a349d944ca2950fdec6f68c01d17b155a151d0b3",
+      "sha256": "5fa33cb90c29ad3442d67ee83170830ef992fdce0250f3b61132313a394c483c",
       "shard_id": "001",
       "source_line_end": 3,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/bootstrap_planning_migration/002-0.-scope.md",
-      "sha256": "a8d613377a2d3fc71f219a1ad557ff8249593d991e69d46e07b49c1ca217b1fd",
+      "sha256": "0d537cb4d54c32149c0325f2d5ba6c4d0be211f16fef97a2fd7694f6ecd42443",
       "shard_id": "002",
       "source_line_end": 9,
       "source_line_start": 5,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Migration Principles",
       "path": "Plans/_shards/bootstrap_planning_migration/003-1.-migration-principles.md",
-      "sha256": "28b4bb4f877ec504fb6551031d35f82c94899c45cfd1ad595570a05c00e1d25b",
+      "sha256": "6ce4a0da859eacd2d198efa42bbb87aa3936bbed9e5a33a7a858deb0d7b72a93",
       "shard_id": "003",
       "source_line_end": 19,
       "source_line_start": 11,
@@ -35,7 +35,7 @@
     {
       "heading": "2. PlanUnits",
       "path": "Plans/_shards/bootstrap_planning_migration/004-2.-planunits.md",
-      "sha256": "e2ae8b025f1475c3584b54686114f91172f57040b98733ab510b54228b02cdfb",
+      "sha256": "c4502c3faf3183332669f2e8360371a20715509298c79a7d93810ed371f022d7",
       "shard_id": "004",
       "source_line_end": 303,
       "source_line_start": 21,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Compilation Coverage",
       "path": "Plans/_shards/bootstrap_planning_migration/005-3.-compilation-coverage.md",
-      "sha256": "91190e26a2940f7afd5833ca96912c30b2e468d6548373a289c49fee10d89620",
+      "sha256": "7e6ebd9018dbc03df626468d742d252bd7f1198ac3e4fd4fb37fda8103de9c7b",
       "shard_id": "005",
       "source_line_end": 321,
       "source_line_start": 305,
@@ -53,7 +53,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/bootstrap_planning_migration/006-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "ab40d8d71de125746c2fd5d58c04fe57662cf93023c720e58213c6c9b8bca824",
+      "sha256": "d9f8307b7466ad4e76d669ea048d285013373df255772f94149a6cd7f865ece0",
       "shard_id": "006",
       "source_line_end": 404,
       "source_line_start": 324,
@@ -62,7 +62,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/bootstrap_planning_migration/007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "1bf07220014e8539a04b4b011b5f1547158c5d9505c4b8bc8e4505f69e9bcf3c",
+      "sha256": "6ce98edd81eea4402443d4260f4a15dcb9d808a80f7b2f13da1fb84d14c224b6",
       "shard_id": "007",
       "source_line_end": 412,
       "source_line_start": 406,
@@ -71,7 +71,7 @@
     {
       "heading": "FABLE Remaining Action Plan Repair Notes (2026-07-08)",
       "path": "Plans/_shards/bootstrap_planning_migration/008-fable-remaining-action-plan-repair-notes-2026-07-08.md",
-      "sha256": "655bbea903a6a312a2b1dfbf45f0e601cfb6a83eecb410503457ec15ab1c60f3",
+      "sha256": "e40ad922e428ad2472d690a60be8ec5cd2ae38029da45402df8e642a0866bc20",
       "shard_id": "008",
       "source_line_end": 419,
       "source_line_start": 413,
@@ -80,16 +80,16 @@
     {
       "heading": "Plan-Layer Seal Profile And Landing Gates Addendum - 2026-09-17",
       "path": "Plans/_shards/bootstrap_planning_migration/009-plan-layer-seal-profile-and-landing-gates-addendum-2026-09-17.md",
-      "sha256": "46a6a4509d2a03a7e299c1213a1d7516fef37407b264fcd92c33596bb43e1e96",
+      "sha256": "3b0fa027bca147a7c1e6f573384d81ab510e9fb9108c0ef26cf3de4d65eb80ac",
       "shard_id": "009",
-      "source_line_end": 540,
+      "source_line_end": 560,
       "source_line_start": 421,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 540,
+    "line_count": 560,
     "path": "Plans/Bootstrap_Planning_Migration.md",
-    "sha256": "e7fad6cd4eb4ad7cb8de456d18e89dd0370f4c1294fc8323c8905f64ff9c613f"
+    "sha256": "894d9a7a0490b9e35e866e16844dc4f3bd20f786eb5f4fc148ca4d7648e128fb"
   }
 }

@@ -1,0 +1,72 @@
+{
+  "schema_id": "pm.pm7.home_workspace_transaction_fixture.v1",
+  "owner_plan_units": [
+    "WS-019",
+    "F3-515",
+    "F3-517",
+    "ATS-037",
+    "ATS-039"
+  ],
+  "source_lineage": [
+    "Plans/Widget_System.md#WS-019",
+    "Plans/FinalGUISpec.md#F3-515",
+    "Plans/FinalGUISpec.md#F3-517",
+    "Plans/Automated_Testing_System.md#ATS-037",
+    "Plans/Automated_Testing_System.md#ATS-039"
+  ],
+  "surfaces": [
+    "home_editor",
+    "home_terminal",
+    "home_dashboard",
+    "home_assistant"
+  ],
+  "legacy_size_migration": {
+    "source_shape": {
+      "basis_px": 360,
+      "flex_weight": 1,
+      "min_width_px": 240,
+      "min_height_px": 180
+    },
+    "normalized_current_shape": {
+      "basis_px": 360,
+      "cross_basis_px": 360,
+      "flex_weight": 1,
+      "min_width_px": 240,
+      "min_height_px": 180
+    },
+    "normalization_rule": "pre_field_cross_basis_px_copies_basis_px_before_current_schema_validation"
+  },
+  "must": [
+    "preview_spy_empty",
+    "dashboard_wrapper_or_host_is_widget_mutation_owner",
+    "outer_presentation_grid_is_not_widget_mutation_owner",
+    "stable_widget_identity_and_committed_order_snapshot",
+    "measured_physical_placeholder_footprint",
+    "stable_before_after_insertion_intent",
+    "pointer_and_keyboard_dashboard_move_parity",
+    "dashboard_resize_frozen_peer_geometry",
+    "dashboard_reorder_live_peer_displacement",
+    "final_coordinate_commit",
+    "commit_last_painted_intent",
+    "one_existing_command",
+    "one_owner_result",
+    "settled_persistence",
+    "cross_basis_px_required_after_normalization",
+    "preset_id_closed_to_compact_standard_wide_tall_focus",
+    "escape_pointercancel_lostpointercapture_blur_invalid_noop_rollback",
+    "truthful_aria_grabbed",
+    "rollback_and_cleanup"
+  ],
+  "must_not": [
+    "preview_event",
+    "preview_write",
+    "duplicate_commit",
+    "pointerup_retarget",
+    "unchanged_release_command",
+    "cancel_command",
+    "outer_grid_direct_card_mutation",
+    "persisted_preview_footprint",
+    "leaked_pointer_capture",
+    "pending_animation_frame"
+  ]
+}

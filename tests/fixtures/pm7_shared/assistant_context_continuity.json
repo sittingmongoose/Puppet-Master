@@ -1,0 +1,82 @@
+{
+  "schema_id": "pm.pm7.assistant_context_continuity_fixture.v1",
+  "owner_plan_units": [
+    "ACD-448",
+    "F3-516",
+    "ATS-037"
+  ],
+  "source_lineage": [
+    "Plans/assistant-chat-design.md#ACD-448",
+    "Plans/FinalGUISpec.md#F3-516",
+    "Plans/Automated_Testing_System.md#ATS-037"
+  ],
+  "surfaces": [
+    "home_assistant_seat",
+    "global_right_host",
+    "context_ring",
+    "context_detail_pane"
+  ],
+  "must": [
+    "single_node_identity",
+    "single_store_identity",
+    "prior_seat_rollback",
+    "active_thread_identity_continuity",
+    "transcript_continuity",
+    "draft_continuity",
+    "attachment_continuity",
+    "activity_continuity",
+    "detail_drawer_node_identity_continuity",
+    "detail_drawer_selected_tab_continuity",
+    "detail_drawer_scroll_position_continuity",
+    "focus_continuity",
+    "failed_reseat_prior_seat_rollback",
+    "stale_reseat_prior_seat_rollback",
+    "current_window_percent",
+    "effective_window_tokens",
+    "cache_hit",
+    "source_composition",
+    "Compact Now",
+    "More Details",
+    "open_drawer_compact_now_one_result",
+    "open_drawer_compact_now_one_receipt",
+    "open_drawer_compact_now_zero_events",
+    "open_drawer_compact_now_coherent_ring_detail_revision",
+    "open_drawer_compact_now_preserves_drawer_identity_tab_scroll_focus"
+  ],
+  "must_not": [
+    "second_assistant",
+    "second_context_store",
+    "context.compaction.started",
+    "context.compaction.completed",
+    "context.compaction.failed"
+  ],
+  "continuity_state": {
+    "preserved_fields": [
+      "active_thread_id",
+      "transcript_revision",
+      "draft_revision",
+      "attachment_set_revision",
+      "activity_revision",
+      "detail_drawer_node_id",
+      "detail_drawer_selected_tab",
+      "detail_drawer_scroll_position",
+      "focused_element_id"
+    ],
+    "failed_reseat_restores": "prior_committed_seat",
+    "stale_reseat_restores": "prior_committed_seat"
+  },
+  "open_detail_drawer_compact_now": {
+    "command_id": "cmd.chat.compact_context",
+    "command_result_count": 1,
+    "receipt_count": 1,
+    "event_types": [],
+    "ring_revision_changed": true,
+    "detail_revision_matches_ring": true,
+    "preserve": [
+      "detail_drawer_node_id",
+      "detail_drawer_selected_tab",
+      "detail_drawer_scroll_position",
+      "focused_element_id"
+    ]
+  }
+}

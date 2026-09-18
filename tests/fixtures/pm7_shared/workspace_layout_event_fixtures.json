@@ -1,0 +1,191 @@
+{
+  "schema_id": "pm.pm7.workspace_layout_event_fixtures.v1",
+  "owner_plan_units": [
+    "F3-515",
+    "ATS-037",
+    "ATS-040"
+  ],
+  "source_lineage": [
+    "Plans/FinalGUISpec.md#F3-515",
+    "Plans/Automated_Testing_System.md#ATS-037",
+    "Plans/Automated_Testing_System.md#ATS-040",
+    "Plans/event_payloads/workspace_layout_changed.schema.json"
+  ],
+  "surfaces": [
+    "Home workspace",
+    "Usage widget grid"
+  ],
+  "payload_schema": "Plans/event_payloads/workspace_layout_changed.schema.json",
+  "valid": [
+    {
+      "schema_id": "pm.event.workspace_layout_changed.v1",
+      "schema_version": "1.1.0",
+      "project_id": "project:pm7",
+      "workspace_tab_id": "home",
+      "command_id": "cmd.workspace_layout.move_surface",
+      "interaction_transaction_id": "interaction:move:1",
+      "origin": "home_workspace",
+      "correlation_id": "correlation:move:1",
+      "command_result_ref": "result:workspace:move:1",
+      "receipt_refs": [
+        "receipt:workspace:move:1"
+      ],
+      "prior_layout_revision": 41,
+      "new_layout_revision": 42,
+      "mutation_kind": "move",
+      "affected_surface_instance_ids": [
+        "surface:editor:1"
+      ],
+      "source_host": "home_main",
+      "target_host": "dock_right",
+      "target_slot_index": 0,
+      "target_surface_instance_id": null,
+      "insertion_edge": "inside",
+      "commit_origin": "pointer_release",
+      "semantic_size_preset_id": null,
+      "settled_layout_ref": "layout:home:42",
+      "settled_at_utc": "2026-08-27T00:00:00Z",
+      "settled_only": true,
+      "preview_state_included": false,
+      "persisted": true
+    },
+    {
+      "schema_id": "pm.event.workspace_layout_changed.v1",
+      "schema_version": "1.1.0",
+      "project_id": "project:pm7",
+      "workspace_tab_id": "home",
+      "command_id": "cmd.workspace_layout.resize_surface",
+      "interaction_transaction_id": "interaction:size:1",
+      "origin": "home_workspace",
+      "correlation_id": "correlation:size:1",
+      "command_result_ref": "result:workspace:size:1",
+      "receipt_refs": [
+        "receipt:workspace:size:1"
+      ],
+      "prior_layout_revision": 42,
+      "new_layout_revision": 43,
+      "mutation_kind": "resize_commit",
+      "affected_surface_instance_ids": [
+        "surface:dashboard:1"
+      ],
+      "source_host": "dock_right",
+      "target_host": "dock_right",
+      "target_slot_index": 0,
+      "target_surface_instance_id": "surface:dashboard:1",
+      "insertion_edge": null,
+      "commit_origin": "semantic_preset",
+      "semantic_size_preset_id": "wide",
+      "settled_layout_ref": "layout:home:43",
+      "settled_at_utc": "2026-08-27T00:00:01Z",
+      "settled_only": true,
+      "preview_state_included": false,
+      "persisted": true
+    }
+  ],
+  "invalid": [
+    {
+      "name": "preview_state_forbidden",
+      "base_valid": 0,
+      "patch": {
+        "preview_state_included": true
+      }
+    },
+    {
+      "name": "settled_only_required",
+      "base_valid": 0,
+      "patch": {
+        "settled_only": false
+      }
+    },
+    {
+      "name": "persisted_required",
+      "base_valid": 0,
+      "patch": {
+        "persisted": false
+      }
+    },
+    {
+      "name": "result_ref_required",
+      "base_valid": 0,
+      "remove": [
+        "command_result_ref"
+      ]
+    },
+    {
+      "name": "receipt_ref_required",
+      "base_valid": 0,
+      "patch": {
+        "receipt_refs": []
+      }
+    },
+    {
+      "name": "project_id_required",
+      "base_valid": 0,
+      "remove": [
+        "project_id"
+      ]
+    },
+    {
+      "name": "new_layout_revision_required",
+      "base_valid": 0,
+      "remove": [
+        "new_layout_revision"
+      ]
+    },
+    {
+      "name": "mutation_kind_is_closed",
+      "base_valid": 0,
+      "patch": {
+        "mutation_kind": "preview_move"
+      }
+    },
+    {
+      "name": "target_host_is_closed",
+      "base_valid": 0,
+      "patch": {
+        "target_host": "usage_overlay"
+      }
+    },
+    {
+      "name": "semantic_size_preset_is_closed",
+      "base_valid": 1,
+      "patch": {
+        "semantic_size_preset_id": "giant"
+      }
+    },
+    {
+      "name": "layout_revision_must_advance",
+      "base_valid": 0,
+      "patch": {
+        "new_layout_revision": 41
+      }
+    },
+    {
+      "name": "workspace_command_family_required",
+      "base_valid": 0,
+      "patch": {
+        "command_id": "cmd.widget.move"
+      }
+    },
+    {
+      "name": "exactly_one_receipt_required",
+      "base_valid": 0,
+      "patch": {
+        "receipt_refs": [
+          "receipt:workspace:move:1",
+          "receipt:workspace:move:2"
+        ]
+      }
+    }
+  ],
+  "must": [
+    "exactly_one_workspace_event_family",
+    "settled_only",
+    "preview_state_excluded"
+  ],
+  "must_not": [
+    "context.compaction.started",
+    "context.compaction.completed",
+    "context.compaction.failed"
+  ]
+}

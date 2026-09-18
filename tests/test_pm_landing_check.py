@@ -10,6 +10,9 @@ from __future__ import annotations
 import importlib.util
 import json
 from pathlib import Path
+import subprocess
+import sys
+import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -132,6 +135,35 @@ class KeyNormalization(unittest.TestCase):
                 "audit-governance|spec_lock|stale_hash|"
             )
         )
+
+
+class KeyIntegrity(unittest.TestCase):
+    """The diff leans on these; a quiet regression in any one of them hides a real failure."""
+
+    def test_the_fingerprint_is_wide_enough_to_tell_failures_apart(self):
+        seen = {}
+        for n in range(500):
+            item = M.normalize("c", "s", dict(SPAN_META, span_id=f"doc-S{n:04d}"), CHECKOUT)
+            print_fp = item["key"].rsplit("|", 1)[1]
+            self.assertEqual(len(print_fp), 12, print_fp)
+            self.assertNotIn(print_fp, seen, f"collision between doc-S{n:04d} and {seen.get(print_fp)}")
+            seen[print_fp] = f"doc-S{n:04d}"
+
+    def test_canonical_sorts_keys_so_the_baseline_is_stable(self):
+        self.assertEqual(M.canonical({"b": 1, "a": 2}), M.canonical({"a": 2, "b": 1}))
+        self.assertEqual(M.canonical({"b": 1, "a": 2}), '{"a":2,"b":1}')
+
+    def test_scrub_reaches_into_nested_values(self):
+        nested = {"error": "e", "rows": [{"sha": "a" * 64, "when": "2026-09-17T21:12:03Z"}]}
+        scrubbed = M.scrub(nested, CHECKOUT)
+        self.assertEqual(scrubbed["rows"][0]["sha"], "<hash>")
+        self.assertEqual(scrubbed["rows"][0]["when"], "<time>")
+
+    def test_a_short_hex_run_is_not_mistaken_for_a_hash(self):
+        """Masking too wide would merge distinct paths into one bucket."""
+        self.assertEqual(M.scrub({"path": "Plans/abcdef1.md"}, CHECKOUT)["path"], "Plans/abcdef1.md")
+        self.assertEqual(M.scrub({"path": "x/" + "a" * 31 + ".md"}, CHECKOUT)["path"], "x/" + "a" * 31 + ".md")
+        self.assertEqual(M.scrub({"v": "a" * 32}, CHECKOUT)["v"], "<hash>")
 
 
 class StalenessClassification(unittest.TestCase):
@@ -307,6 +339,47 @@ class BaselineDiff(unittest.TestCase):
         seen = {name: max(count - 1, 0) for name, count in self.counts.items()}
         self.assertEqual(M.grown_buckets(seen, self.counts), [])
 
+    def test_growth_is_reported_for_a_count_only_bucket_too(self):
+        """These three buckets are the ones with no fingerprints, so the count is the only signal."""
+        many = [dict(SPAN_META, span_id=f"00-plans-index-S{n:04d}") for n in range(5)]
+        _, baseline = baseline_from(
+            {"plan-migration-validate": dict(MIGRATION_REPORT, failures=many)}, max_fingerprints=2)
+        _, counts = M.baseline_index(baseline)
+        bucket = next(name for name in counts if SPAN_META["error"] in name)
+        self.assertIsNone(M.baseline_index(baseline)[0][bucket])
+        self.assertEqual(M.grown_buckets({bucket: 6}, counts)[0]["count"], 6)
+        self.assertEqual(M.grown_buckets({bucket: 5}, counts), [])
+
+    def test_the_cap_is_inclusive(self):
+        """A bucket of exactly max_fingerprints keeps them; one more and it is counted instead."""
+        for size, enumerated in ((3, True), (4, False)):
+            failures = [dict(SPAN_META, span_id=f"d-S{n:04d}") for n in range(size)]
+            _, baseline = baseline_from(
+                {"plan-migration-validate": dict(MIGRATION_REPORT, failures=failures)}, max_fingerprints=3)
+            row = next(r for r in baseline["buckets"] if r["error"] == SPAN_META["error"])
+            self.assertEqual(row["fingerprints"] is not None, enumerated, size)
+            self.assertEqual(row["count"], size)
+
+    def test_the_baseline_lists_its_buckets_and_fingerprints_in_order(self):
+        _, baseline = baseline_from(ALL_REPORTS)
+        names = [f"{r['check']}|{r['subcheck']}|{r['error']}|{r['path']}" for r in baseline["buckets"]]
+        self.assertEqual(names, sorted(names))
+        for row in baseline["buckets"]:
+            if row["fingerprints"]:
+                self.assertEqual(row["fingerprints"], sorted(row["fingerprints"]))
+
+    def test_a_count_only_bucket_keeps_its_count_for_the_growth_check(self):
+        """It has no fingerprints, so the count is the only thing standing between it and silence."""
+        many = [dict(SPAN_META, span_id=f"d-S{n:04d}") for n in range(5)]
+        _, baseline = baseline_from(
+            {"plan-migration-validate": dict(MIGRATION_REPORT, failures=many)}, max_fingerprints=2)
+        known, counts = M.baseline_index(baseline)
+        bucket = next(name for name in counts if SPAN_META["error"] in name)
+        self.assertIsNone(known[bucket])
+        self.assertEqual(counts[bucket], 5)
+        self.assertEqual(M.grown_buckets({bucket: 6}, counts), [
+            {"bucket": bucket, "baseline_count": 5, "count": 6, "stale": True}])
+
     def test_a_bucket_under_the_cap_keeps_its_fingerprints(self):
         row = [r for r in self.baseline["buckets"] if r["error"] == "stale_hash"][0]
         self.assertIsInstance(row["fingerprints"], list)
@@ -328,6 +401,108 @@ class BaselineDiff(unittest.TestCase):
         left = json.dumps({k: v for k, v in self.baseline.items() if k != "recorded_at_utc"}, sort_keys=True)
         right = json.dumps({k: v for k, v in again.items() if k != "recorded_at_utc"}, sort_keys=True)
         self.assertEqual(left, right)
+
+
+class TheDecision(unittest.TestCase):
+    """What stops a landing. This is the one line that decides it, so it gets its own fixtures."""
+
+    def item(self, *, stale, on_branch_path=None):
+        failure = STALE_HASH if stale else PATH_REF
+        item = M.normalize("run-gates", "s", failure, CHECKOUT)
+        return {**M.public(item), "branch_paths": [on_branch_path]} if on_branch_path else M.public(item)
+
+    def test_a_new_off_branch_failure_that_is_not_staleness_does_not_stop_the_landing(self):
+        """It names none of the branch's files, so the rule says push and report it."""
+        new = [self.item(stale=False)]
+        blocking = M.blocking_items([], [], [])
+        self.assertEqual(blocking, [])
+        self.assertEqual(M.exit_code(new, [], [], blocking), 1)
+
+    def test_a_non_staleness_failure_on_the_branch_stops_the_landing(self):
+        on_branch = [self.item(stale=False, on_branch_path="Plans/.plan_index/plan_units.jsonl")]
+        blocking = M.blocking_items(on_branch, [], [])
+        self.assertEqual(len(blocking), 1)
+        self.assertEqual(M.exit_code(on_branch, [], [], blocking), 2)
+
+    def test_staleness_on_the_branch_does_not_stop_the_landing(self):
+        on_branch = [self.item(stale=True, on_branch_path="Plans/00-plans-index.md")]
+        blocking = M.blocking_items(on_branch, [], [])
+        self.assertEqual(blocking, [])
+        self.assertEqual(M.exit_code(on_branch, [], [], blocking), 1)
+
+    def test_nothing_reported_is_exit_zero(self):
+        self.assertEqual(M.exit_code([], [], [], []), 0)
+
+    def test_a_grown_bucket_that_is_not_staleness_stops_the_landing(self):
+        grown = [{"bucket": "c|s|some_error|p", "baseline_count": 1, "count": 2, "stale": False}]
+        blocking = M.blocking_items([], grown, [])
+        self.assertEqual(len(blocking), 1)
+        self.assertEqual(M.exit_code([], grown, [], blocking), 2)
+
+    def test_a_grown_staleness_bucket_does_not_stop_the_landing(self):
+        grown = [{"bucket": "c|s|stale_hash|p", "baseline_count": 1, "count": 2, "stale": True}]
+        self.assertEqual(M.blocking_items([], grown, []), [])
+        self.assertEqual(M.exit_code([], grown, [], []), 1)
+
+    def test_a_rise_in_a_truncated_subcheck_stops_the_landing(self):
+        """Above the print cap nothing is keyed, so the branch match cannot see what was added."""
+        rows = [{"check": "run-gates", "subcheck": "validate_evidence", "baseline_reported": 1552,
+                 "reported": 1553, "sampled": 50, "truncated": True}]
+        blocking = M.blocking_items([], [], rows)
+        self.assertEqual(len(blocking), 1)
+        self.assertEqual(M.exit_code([], [], rows, blocking), 2)
+
+    def test_a_rise_in_a_subcheck_that_prints_everything_does_not(self):
+        """Its failures are all keyed, so the ordinary new and on-branch rules already judged them."""
+        rows = [{"check": "run-gates", "subcheck": "verify_spec_lock", "baseline_reported": 35,
+                 "reported": 36, "sampled": 36, "truncated": False}]
+        self.assertEqual(M.blocking_items([], [], rows), [])
+        self.assertEqual(M.exit_code([], [], rows, []), 1)
+
+
+class SubcheckTotals(unittest.TestCase):
+    BASELINE = {
+        "run-gates": {"failure_total": 1587, "subchecks": {
+            "verify_spec_lock": {"reported": 35, "sampled": 35},
+            "validate_evidence": {"reported": 1552, "sampled": 50},
+        }},
+    }
+
+    def counts(self, **subchecks):
+        return {"run-gates": subchecks}
+
+    def test_a_rise_above_the_print_cap_is_reported_as_truncated(self):
+        rows = M.grown_subchecks(
+            self.counts(validate_evidence={"reported": 1600, "sampled": 50}), self.BASELINE)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["baseline_reported"], 1552)
+        self.assertEqual(rows[0]["reported"], 1600)
+        self.assertTrue(rows[0]["truncated"])
+
+    def test_an_unchanged_total_is_not_reported(self):
+        self.assertEqual(
+            M.grown_subchecks(self.counts(validate_evidence={"reported": 1552, "sampled": 50}), self.BASELINE), [])
+
+    def test_a_fallen_total_is_not_reported(self):
+        self.assertEqual(
+            M.grown_subchecks(self.counts(validate_evidence={"reported": 10, "sampled": 10}), self.BASELINE), [])
+
+    def test_a_subcheck_the_baseline_never_saw_counts_from_zero(self):
+        rows = M.grown_subchecks(self.counts(json_syntax={"reported": 2, "sampled": 2}), self.BASELINE)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual((rows[0]["subcheck"], rows[0]["baseline_reported"], rows[0]["truncated"]), ("json_syntax", 0, False))
+
+    def test_a_rise_in_a_fully_printed_subcheck_is_reported_but_not_truncated(self):
+        rows = M.grown_subchecks(self.counts(verify_spec_lock={"reported": 36, "sampled": 36}), self.BASELINE)
+        self.assertEqual([(r["subcheck"], r["truncated"]) for r in rows], [("verify_spec_lock", False)])
+
+    def test_the_rows_are_ordered(self):
+        rows = M.grown_subchecks(
+            self.counts(validate_evidence={"reported": 1600, "sampled": 50},
+                        aaa={"reported": 1, "sampled": 1},
+                        verify_spec_lock={"reported": 40, "sampled": 40}),
+            self.BASELINE)
+        self.assertEqual([r["subcheck"] for r in rows], ["aaa", "validate_evidence", "verify_spec_lock"])
 
 
 class BranchPathMatch(unittest.TestCase):
@@ -356,6 +531,15 @@ class BranchPathMatch(unittest.TestCase):
 
     def test_a_span_id_does_not_match_a_different_document(self):
         self.assertEqual(self.match(COVERAGE, ["Plans/assistant-chat.md"]), [])
+
+    def test_a_stem_that_is_the_tail_of_another_stem_does_not_match(self):
+        """The opening quote: without it `chat-design` matches `assistant-chat-design-S0001`."""
+        self.assertEqual(self.match(COVERAGE, ["Plans/chat-design.md"]), [])
+
+    def test_a_span_id_with_more_after_its_number_does_not_match(self):
+        """The closing quote: without it `...-S0001` matches `...-S0001-draft`."""
+        failure = dict(COVERAGE, span_id="assistant-chat-design-S0001-draft")
+        self.assertEqual(self.match(failure, ["Plans/assistant-chat-design.md"]), [])
 
     def test_a_longer_name_that_begins_with_a_touched_path_does_not_match(self):
         """A file whose name only starts with a touched path is a different file."""
@@ -404,6 +588,187 @@ class BranchPathMatch(unittest.TestCase):
     def test_branch_paths_reports_a_bad_revision_instead_of_returning_nothing(self):
         with self.assertRaises(RuntimeError):
             M.branch_paths(ROOT, "no-such-revision-cafebabe")
+
+
+class EndToEnd(unittest.TestCase):
+    """Drive main() itself, with the three checks stubbed and a real git repository underneath.
+
+    Everything above tests a helper. Mutation testing showed that a helper suite cannot see a
+    regression in main's own wiring: dropping the count-only guard, never returning 2, counting
+    off-branch items as blocking and reversing the resolved set all left the suite green. These
+    exercise the wiring.
+    """
+
+    SPAN = dict(SPAN_META)
+    OFF_BRANCH_NEW = {"path": "Plans/Glossary.md", "error": "brand_new_kind"}
+    ON_BRANCH_NEW = {"path": "Plans/Touched.md", "error": "brand_new_kind"}
+
+    def setUp(self):
+        self.scratch = tempfile.TemporaryDirectory()
+        self.addCleanup(self.scratch.cleanup)
+        self.repo = Path(self.scratch.name)
+        self.module = load_module()
+        self.git("init", "-q", "-b", "main")
+        self.git("config", "user.email", "t@example.invalid")
+        self.git("config", "user.name", "t")
+        (self.repo / "Plans").mkdir()
+        (self.repo / "Plans" / "Base.md").write_text("base\n", encoding="utf-8")
+        self.git("add", "Plans/Base.md")
+        self.git("commit", "-qm", "base")
+        self.base = self.git("rev-parse", "HEAD").strip()
+        self.reports = {}
+
+    def git(self, *args):
+        return subprocess.run(["git", *args], cwd=self.repo, capture_output=True, text=True, check=True).stdout
+
+    def touch(self, name):
+        (self.repo / "Plans" / name).write_text("x\n", encoding="utf-8")
+        self.git("add", f"Plans/{name}")
+        self.git("commit", "-qm", name)
+
+    def stub_checks(self, gates_failures, migration_failures, gates_reported=None):
+        """Stand in for the three subprocess runs, so a test costs milliseconds, not ten minutes."""
+        sampled = len(gates_failures)
+        reported = sampled if gates_reported is None else gates_reported
+        reports = {
+            "run-gates": {
+                "check": "run-gates", "status": "fail" if gates_failures else "pass",
+                "failures": [{"check": "verify_spec_lock", "failures": gates_failures}] if gates_failures else [],
+                "checks": {"verify_spec_lock": {"status": "fail", "failures": reported}},
+            },
+            "audit-governance": {"check": "audit-governance", "status": "pass", "failures": []},
+            "plan-migration-validate": {
+                "status": "fail" if migration_failures else "pass", "failures": list(migration_failures)},
+        }
+        self.module.run_check = lambda name, root, run_dir, timeout: reports[name]
+        self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
+
+    def run_main(self, *argv):
+        import io, contextlib
+        out = io.StringIO()
+        sys.argv = ["pm-landing-check.py", "--root", str(self.repo), *argv]
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(io.StringIO()):
+            code = self.module.main()
+        return code, out.getvalue()
+
+    def record(self, *argv):
+        code, out = self.run_main("--record-baseline", "--baseline", "baseline.json", *argv)
+        self.assertEqual(code, 0, out)
+        return json.loads((self.repo / "baseline.json").read_text(encoding="utf-8"))
+
+    def compare(self, *argv):
+        return self.run_main("--base", self.base, "--baseline", "baseline.json", *argv)
+
+    def test_a_tree_that_matches_its_baseline_exits_zero(self):
+        self.stub_checks([STALE_HASH], [self.SPAN])
+        self.record()
+        self.touch("Touched.md")
+        code, out = self.compare()
+        self.assertEqual(code, 0, out)
+        self.assertIn("Nothing to report", out)
+
+    def test_a_new_failure_that_names_no_branch_file_exits_one(self):
+        self.stub_checks([STALE_HASH], [self.SPAN])
+        self.record()
+        self.touch("Touched.md")
+        self.stub_checks([STALE_HASH, self.OFF_BRANCH_NEW], [self.SPAN])
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("New since the baseline: 1", out)
+        self.assertIn("Naming a path this branch touches: 0", out)
+        self.assertIn("Nothing reported stops the landing", out)
+
+    def test_a_non_staleness_failure_on_a_branch_file_exits_two(self):
+        self.stub_checks([STALE_HASH], [self.SPAN])
+        self.record()
+        self.touch("Touched.md")
+        self.stub_checks([STALE_HASH, self.ON_BRANCH_NEW], [self.SPAN])
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn("Naming a path this branch touches: 1", out)
+        self.assertIn("the baseline does not excuse", out)
+
+    def test_staleness_on_a_branch_file_exits_one_and_is_counted_by_kind(self):
+        self.stub_checks([dict(STALE_HASH, path="Plans/Touched.md")], [self.SPAN])
+        self.record()
+        self.touch("Touched.md")
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("Naming a path this branch touches: 1", out)
+        self.assertIn("stale_hash", out)
+        self.assertIn("excused as governance staleness, by kind", out)
+
+    def test_growth_inside_a_count_only_bucket_is_caught(self):
+        many = [dict(self.SPAN, span_id=f"d-S{n:04d}") for n in range(5)]
+        self.stub_checks([STALE_HASH], many)
+        baseline = self.record("--max-fingerprints", "2")
+        row = next(r for r in baseline["buckets"] if r["error"] == self.SPAN["error"])
+        self.assertIsNone(row["fingerprints"])
+        self.touch("Touched.md")
+        self.stub_checks([STALE_HASH], many + [dict(self.SPAN, span_id="d-S9999")])
+        code, out = self.compare()
+        self.assertIn("New since the baseline: 0", out)  # the bucket is matched by count, not by key
+        self.assertIn("Checks whose failure count rose: 1", out)
+        self.assertIn("5 -> 6", out)
+        self.assertEqual(code, 1, out)  # current_snapshot_ is staleness, so it does not block
+
+    def test_a_count_only_bucket_does_not_flood_the_new_list(self):
+        """Every span inside it is unknown by key; only the count may speak."""
+        many = [dict(self.SPAN, span_id=f"d-S{n:04d}") for n in range(5)]
+        self.stub_checks([STALE_HASH], many)
+        self.record("--max-fingerprints", "2")
+        self.touch("Touched.md")
+        swapped = many[:-1] + [dict(self.SPAN, span_id="d-S8888")]
+        self.stub_checks([STALE_HASH], swapped)
+        code, out = self.compare()
+        self.assertIn("New since the baseline: 0", out)
+        self.assertIn("Checks whose failure count rose: 0", out)
+        self.assertEqual(code, 0, out)
+
+    def test_a_rise_above_a_print_cap_is_caught_and_blocks(self):
+        self.stub_checks([STALE_HASH], [self.SPAN], gates_reported=1552)
+        self.record()
+        self.touch("Touched.md")
+        self.stub_checks([STALE_HASH], [self.SPAN], gates_reported=1553)
+        code, out = self.compare()
+        self.assertIn("Subchecks reporting more failures than the baseline: 1", out)
+        self.assertIn("1552 -> 1553", out)
+        self.assertIn("cannot be matched", out)
+        self.assertEqual(code, 2, out)
+
+    def test_a_failure_that_went_away_is_resolved_not_new(self):
+        self.stub_checks([STALE_HASH, self.OFF_BRANCH_NEW], [self.SPAN])
+        self.record()
+        self.touch("Touched.md")
+        self.stub_checks([STALE_HASH], [self.SPAN])
+        code, out = self.compare()
+        self.assertIn("New since the baseline: 0", out)
+        self.assertIn("Gone since the baseline (nothing to do): 1", out)
+        self.assertEqual(code, 0, out)
+
+    def test_the_json_mode_carries_the_totals_a_wrapper_needs(self):
+        self.stub_checks([STALE_HASH], [self.SPAN], gates_reported=1552)
+        self.record()
+        self.touch("Touched.md")
+        code, out = self.compare("--json")
+        report = json.loads(out)
+        self.assertEqual(report["checks"]["run-gates"]["failure_total"], 1552)
+        self.assertEqual(report["checks"]["run-gates"]["baseline_failure_total"], 1552)
+        self.assertEqual(report["checks"]["run-gates"]["subchecks"]["verify_spec_lock"],
+                         {"reported": 1552, "sampled": 1})
+        for key in ("new", "on_branch", "grown_buckets", "grown_subchecks", "excused_by_kind", "resolved_buckets"):
+            self.assertIn(key, report)
+        self.assertNotIn("_raw", out)
+        self.assertEqual(code, 0, out)
+
+    def test_a_missing_baseline_stops_before_running_anything(self):
+        ran = []
+        self.stub_checks([], [])
+        inner = self.module.run_check
+        self.module.run_check = lambda *a, **k: (ran.append(1), inner(*a, **k))[1]
+        code, _ = self.compare()
+        self.assertEqual(code, 3)
+        self.assertEqual(ran, [])
 
 
 class BaselineReading(unittest.TestCase):

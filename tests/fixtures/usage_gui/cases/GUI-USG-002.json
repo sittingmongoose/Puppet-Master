@@ -1,0 +1,39 @@
+{
+  "schema_id": "pm.usage_gui.acceptance_fixture_case.v1",
+  "owner_plan_unit": "UF-088",
+  "fixture_id": "GUI-USG-002",
+  "title": "provider-reported zero remains reported zero",
+  "surfaces": [
+    "Usage",
+    "Ledger",
+    "provider/settings row",
+    "Dashboard"
+  ],
+  "source_lineage": [
+    "Plans/usage-feature.md#UF-088",
+    "PlanUnit:UF-088",
+    "tests/fixtures/usage_gui/cases/GUI-USG-002.json"
+  ],
+  "must": [
+    "source_class:provider_reported",
+    "source_confidence",
+    "source_authority",
+    "settlement_status:settled_or_adjusted",
+    "zero_buckets",
+    "raw_payload_ref",
+    "provider_payload_hash"
+  ],
+  "must_not": [
+    "missing_usage",
+    "null_usage",
+    "unknown_usage",
+    "missing_usage_copy"
+  ],
+  "input": {
+    "fixture_identity": "GUI-USG-002",
+    "authority": "canonical_test_fixture"
+  },
+  "expected_projection": {
+    "truthful_unknown_zero_hidden_partial_semantics": true
+  }
+}

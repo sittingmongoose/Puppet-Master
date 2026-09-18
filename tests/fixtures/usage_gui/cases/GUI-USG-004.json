@@ -1,0 +1,39 @@
+{
+  "schema_id": "pm.usage_gui.acceptance_fixture_case.v1",
+  "owner_plan_unit": "UF-088",
+  "fixture_id": "GUI-USG-004",
+  "title": "BYOK and subscription costs are hidden, not estimated",
+  "surfaces": [
+    "Usage",
+    "Ledger",
+    "provider/settings row",
+    "model row",
+    "Runtime Artifacts"
+  ],
+  "source_lineage": [
+    "Plans/usage-feature.md#UF-088",
+    "PlanUnit:UF-088",
+    "tests/fixtures/usage_gui/cases/GUI-USG-004.json"
+  ],
+  "must": [
+    "usage_event_ref",
+    "usage_record_id",
+    "source_confidence",
+    "source_authority",
+    "hidden_byok",
+    "hidden_subscription",
+    "display_cost_policy:suppress"
+  ],
+  "must_not": [
+    "fake_per_token_price",
+    "pricing_snapshot_id_without_source",
+    "cost_microdollars_fabricated"
+  ],
+  "input": {
+    "fixture_identity": "GUI-USG-004",
+    "authority": "canonical_test_fixture"
+  },
+  "expected_projection": {
+    "truthful_unknown_zero_hidden_partial_semantics": true
+  }
+}

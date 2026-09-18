@@ -1,0 +1,53 @@
+{
+  "schema_id": "pm.usage_gui.curated_size_matrix.v1",
+  "owner_plan_units": [
+    "WS-017",
+    "WS-018",
+    "WS-019",
+    "UF-096",
+    "F3-514"
+  ],
+  "source_lineage": [
+    "Plans/Widget_System.md#WS-017",
+    "Plans/Widget_System.md#WS-018",
+    "Plans/Widget_System.md#WS-019",
+    "Plans/usage-feature.md#UF-096",
+    "Plans/FinalGUISpec.md#F3-514"
+  ],
+  "surfaces": [
+    "Usage widget grid",
+    "Usage widget configuration"
+  ],
+  "semantic_sizes": [
+    "compact",
+    "standard",
+    "wide",
+    "tall",
+    "focus"
+  ],
+  "width_families": [
+    "narrow",
+    "standard",
+    "wide"
+  ],
+  "height_families": [
+    "compact",
+    "standard",
+    "tall"
+  ],
+  "must": [
+    "larger_size_adds_useful_content",
+    "provider_heavy_narrow_tall",
+    "partial_rows_keep_curated_width",
+    "content_tier_selected_from_measured_physical_width",
+    "reorder_placeholder_uses_measured_physical_width_and_height",
+    "usage_resize_placeholder_tracks_last_painted_supported_physical_footprint"
+  ],
+  "must_not": [
+    "routine_internal_scroll",
+    "empty_middle_space",
+    "full_width_lone_card",
+    "nominal_grid_span_as_physical_width",
+    "preview_physical_span_persisted"
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "schema_id": "pm.usage_gui.widget_content_tiers.v1",
+  "owner_plan_units": [
+    "WS-017",
+    "UF-096",
+    "F3-514"
+  ],
+  "source_lineage": [
+    "Plans/Widget_System.md#WS-017",
+    "Plans/usage-feature.md#UF-096",
+    "Plans/FinalGUISpec.md#F3-514"
+  ],
+  "surfaces": [
+    "Usage widgets"
+  ],
+  "policy": "complete_or_hidden",
+  "must": [
+    "complete_rows",
+    "complete_bars_or_none",
+    "value_labels_when_visible",
+    "humanized_event_labels",
+    "tiny_chart_complete_ordered_series_in_accessible_name",
+    "tiny_chart_exactly_one_visible_label_per_painted_bar_including_zero",
+    "painted_vertical_label_horizontally_associated_with_own_bar",
+    "painted_vertical_label_inside_plot",
+    "measured_direct_or_vertical_lane_placement_is_pairwise_non_overlapping",
+    "no_painted_bar_label_suppression",
+    "metric_declared_unit_formatter_applied",
+    "attempt_charge_integer_cents_render_as_currency",
+    "chart_title_latest_and_distinct_peak_complete"
+  ],
+  "must_not": [
+    "partial_next_tier",
+    "bottom_content_peeking",
+    "clipped_value_lane",
+    "unsupported_as_zero",
+    "painted_label_outside_plot",
+    "painted_label_detached_from_own_fill",
+    "raw_attempt_charge_cents"
+  ],
+  "tiny_chart_label_contract": {
+    "painted_label_count_rule": "exactly_one_visible_label_per_painted_bar_including_zero",
+    "sampling_rule": "none; preserve_every_painted_bar_in_source_order",
+    "collision_rule": "measured_direct_or_vertical_lane_placement_inside_plot; no_suppression; pairwise_non_overlapping",
+    "painted_label_position": "horizontally_associated_with_own_bar_inside_measured_in_plot_label_region",
+    "unit_formatting_rule": "use_metric_declared_display_unit_and_formatter; attempt_charge_integer_cents_render_as_currency_with_exactly_two_decimals",
+    "title_fact_layout_rule": "title_plus_latest_and_distinct_peak_complete_in_one_row_or_narrow_two_row_composition",
+    "accessible_name_template": "{series_label}, values {comma_joined_full_ordered_series}; Latest {latest}[ · peak {peak_when_distinct}]",
+    "render_families": [
+      {
+        "kind": "instrument_activity",
+        "default_series_label": "Recent activity",
+        "series_source": "instrument.options.bars"
+      },
+      {
+        "kind": "summary_signal",
+        "default_series_label": "Window trend",
+        "series_source": "summary.options.bars"
+      },
+      {
+        "kind": "chart_panel",
+        "default_series_label": "Recent trend",
+        "series_source": "chartPanel.values"
+      }
+    ],
+    "cases": [
+      {
+        "case_id": "instrument_recent_activity_12",
+        "kind": "instrument_activity",
+        "series_label": "Recent activity",
+        "ordered_series": [22, 31, 28, 44, 39, 52, 48, 61, 57, 68, 64, 72],
+        "expected_painted_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+        "expected_accessible_name": "Recent activity, values 22, 31, 28, 44, 39, 52, 48, 61, 57, 68, 64, 72; Latest 72"
+      },
+      {
+        "case_id": "summary_window_trend_12",
+        "kind": "summary_signal",
+        "series_label": "Window trend",
+        "ordered_series": [31, 36, 33, 42, 38, 47, 44, 51, 49, 57, 54, 61],
+        "expected_painted_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+        "expected_accessible_name": "Window trend, values 31, 36, 33, 42, 38, 47, 44, 51, 49, 57, 54, 61; Latest 61"
+      },
+      {
+        "case_id": "chart_panel_daily_charge_index_24",
+        "kind": "chart_panel",
+        "series_label": "Daily charge index",
+        "ordered_series": [18, 24, 20, 33, 28, 37, 45, 31, 39, 51, 44, 48, 57, 62, 54, 66, 59, 73, 68, 75, 70, 82, 77, 88],
+        "expected_painted_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+        "expected_accessible_name": "Daily charge index, values 18, 24, 20, 33, 28, 37, 45, 31, 39, 51, 44, 48, 57, 62, 54, 66, 59, 73, 68, 75, 70, 82, 77, 88; Latest 88"
+      },
+      {
+        "case_id": "short_series_all_labels_5",
+        "kind": "chart_panel",
+        "series_label": "Recent trend",
+        "ordered_series": [42, 28, 61, 68, 63],
+        "expected_painted_indices": [0, 1, 2, 3, 4],
+        "expected_accessible_name": "Recent trend, values 42, 28, 61, 68, 63; Latest 63 · peak 68"
+      }
+    ]
+  }
+}

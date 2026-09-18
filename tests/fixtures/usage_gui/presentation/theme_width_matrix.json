@@ -1,0 +1,43 @@
+{
+  "schema_id": "pm.usage_gui.theme_width_matrix.v1",
+  "owner_plan_units": [
+    "F3-513",
+    "F3-514",
+    "ATS-038"
+  ],
+  "source_lineage": [
+    "Plans/FinalGUISpec.md#F3-513",
+    "Plans/FinalGUISpec.md#F3-514",
+    "Plans/Automated_Testing_System.md#ATS-038"
+  ],
+  "surfaces": [
+    "Usage"
+  ],
+  "themes": [
+    "basic-dark",
+    "basic-light",
+    "friendly-dark",
+    "friendly-light",
+    "retro-dark",
+    "retro-light",
+    "glass-dark",
+    "glass-light"
+  ],
+  "desktop_widths_css_px": [
+    1440,
+    1180,
+    980,
+    860,
+    680
+  ],
+  "must": [
+    "no_viewport_escape",
+    "font_ready_and_fallback",
+    "no_blank_or_black_frame"
+  ],
+  "must_not": [
+    "white_until_hover",
+    "clipped_controls",
+    "theme_inventory_change"
+  ]
+}

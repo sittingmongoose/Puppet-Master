@@ -1,0 +1,34 @@
+{
+  "schema_id": "pm.pm7.status_bar_fixture.v1",
+  "owner_plan_units": [
+    "F3-448",
+    "F3-516",
+    "ATS-037"
+  ],
+  "source_lineage": [
+    "Plans/FinalGUISpec.md#F3-448",
+    "Plans/FinalGUISpec.md#F3-516",
+    "Plans/Automated_Testing_System.md#ATS-037"
+  ],
+  "surfaces": [
+    "global_status_bar"
+  ],
+  "inventory": [
+    "workspace",
+    "orchestrator",
+    "index",
+    "ports",
+    "branch",
+    "sync"
+  ],
+  "must": [
+    "full_width",
+    "participates_in_layout",
+    "does_not_cover_content"
+  ],
+  "must_not": [
+    "notification_item",
+    "bell_item",
+    "floating_overlay"
+  ]
+}
