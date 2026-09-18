@@ -4225,17 +4225,23 @@
     },
     "normalized_remote_record": {
       "type": "object", "additionalProperties": false,
-      "required": ["schema_id", "record_kind", "provider_kind", "instance_id", "account_id", "repository_id", "immutable_external_id", "raw_status", "normalized_status", "revision_ref", "canonical_url", "observed_at_utc", "native_object_label", "vendor_extensions", "vendor_extensions_preserved"],
+      "required": ["schema_id", "record_kind", "provider_kind", "instance_id", "account_id", "repository_id", "immutable_external_id", "raw_status", "normalized_status", "revision_ref", "canonical_url", "canonical_url_origin", "url_absent_reason", "observed_at_utc", "native_object_label", "vendor_extensions", "vendor_extensions_preserved"],
       "properties": {
         "schema_id": {"const": "pm.source_control.normalized_remote_record.v1"},
         "record_kind": {"enum": ["ReviewRequest", "ReviewThread", "Check", "AutomationDefinition", "AutomationRun", "JobOrStage", "LogSegment", "RemoteArtifact"]},
         "provider_kind": {"enum": ["github", "gitlab", "azure_devops", "bitbucket_cloud", "bitbucket_data_center", "forgejo", "gitea", "cursor_origin", "generic_git"]},
         "instance_id": {"$ref": "#/$defs/identity_id"}, "account_id": {"$ref": "#/$defs/identity_id"}, "repository_id": {"$ref": "#/$defs/identity_id"}, "immutable_external_id": {"$ref": "#/$defs/identity_id"},
-        "raw_status": {"type": "string", "minLength": 1}, "normalized_status": {"type": "string", "minLength": 1}, "revision_ref": {"$ref": "#/$defs/non_secret_ref"}, "canonical_url": {"type": "string", "format": "uri"}, "observed_at_utc": {"$ref": "#/$defs/timestamp"},
+        "raw_status": {"type": "string", "minLength": 1}, "normalized_status": {"type": "string", "minLength": 1}, "revision_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "canonical_url": {"description": "The provider's own human-facing page for this record. Nullable, because a provider can materialize a record with no such page: a policy evaluation carries only the REST URL its configuration can be fetched from, which is not a result page. A synthesized portal link is admissible only when it is labelled synthesized.", "type": ["string", "null"], "format": "uri"},
+        "canonical_url_origin": {"enum": ["provider_supplied", "synthesized_by_puppet_master", "absent"]}, "url_absent_reason": {"type": ["string", "null"], "minLength": 1},
+        "observed_at_utc": {"$ref": "#/$defs/timestamp"},
         "native_object_label": {"enum": ["Pull request", "Merge request", "Check", "Workflow", "Pipeline", "Stage", "Job", "Trace", "Log segment", "Artifact"]},
         "vendor_extensions": {"type": "object"}, "vendor_extensions_preserved": {"const": true}
       },
-      "allOf": [{"if": {"properties": {"provider_kind": {"const": "gitlab"}, "record_kind": {"const": "ReviewRequest"}}, "required": ["provider_kind", "record_kind"]}, "then": {"properties": {"native_object_label": {"const": "Merge request"}}}}]
+      "allOf": [{"if": {"properties": {"provider_kind": {"const": "gitlab"}, "record_kind": {"const": "ReviewRequest"}}, "required": ["provider_kind", "record_kind"]}, "then": {"properties": {"native_object_label": {"const": "Merge request"}}}},
+        {"if": {"properties": {"canonical_url": {"type": "null"}}, "required": ["canonical_url"]}, "then": {"properties": {"canonical_url_origin": {"const": "absent"}, "url_absent_reason": {"type": "string", "minLength": 1}}}},
+        {"if": {"properties": {"canonical_url": {"type": "string"}}, "required": ["canonical_url"]}, "then": {"properties": {"canonical_url_origin": {"enum": ["provider_supplied", "synthesized_by_puppet_master"]}, "url_absent_reason": {"type": "null"}}}},
+        {"if": {"properties": {"record_kind": {"const": "Check"}}, "required": ["record_kind"]}, "then": {"properties": {"normalized_status": {"description": "A Check row's normalized status comes from the closed gate vocabulary of pm.forge.gate_record.v1 and nowhere else. requirement_bypassed and not_applicable stay separate members, and a status the provider could not produce is errored rather than folded into failed, skipped or unavailable.", "enum": ["queued", "running", "succeeded", "failed", "errored", "not_applicable", "requirement_bypassed", "unknown"]}}}}]
     },
     "external_effect_reconciliation": {
       "type": "object", "additionalProperties": false,

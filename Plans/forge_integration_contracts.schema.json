@@ -32,6 +32,9 @@
       "$ref": "#/$defs/pipeline_projection"
     },
     {
+      "$ref": "#/$defs/gate_record"
+    },
+    {
       "$ref": "#/$defs/app_installation"
     },
     {
@@ -179,6 +182,14 @@
         "provider_repository_id": {
           "$ref": "#/$defs/non_empty_string"
         },
+        "provider_project_id": {
+          "description": "The provider's own stable identifier for the project container, distinct from its display name. Null where the provider has no project layer or issues no separate project identifier. Obtained from a provider resource and never parsed from a remote or display URL.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
         "repository_locator": {
           "type": "object",
           "required": [
@@ -274,6 +285,29 @@
                     "$ref": "#/$defs/non_empty_string"
                   }
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "const": "azure_devops"
+              }
+            },
+            "required": [
+              "provider"
+            ]
+          },
+          "then": {
+            "required": [
+              "provider_project_id"
+            ],
+            "properties": {
+              "provider_project_id": {
+                "type": "string",
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
               }
             }
           }
@@ -580,7 +614,8 @@
         "provider": {
           "enum": [
             "forgejo",
-            "gitea"
+            "gitea",
+            "azure_devops"
           ]
         },
         "provider_variant": {
@@ -631,7 +666,8 @@
         "detected_product": {
           "enum": [
             "forgejo",
-            "gitea"
+            "gitea",
+            "azure_devops"
           ]
         },
         "product_version": {
@@ -760,6 +796,31 @@
               },
               "detected_product": {
                 "const": "gitea"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "const": "azure_devops"
+              }
+            },
+            "required": [
+              "provider"
+            ]
+          },
+          "then": {
+            "properties": {
+              "provider_variant": {
+                "enum": [
+                  "azure_devops_services",
+                  "azure_devops_server"
+                ]
+              },
+              "detected_product": {
+                "const": "azure_devops"
               }
             }
           }
@@ -913,6 +974,8 @@
       "type": "object",
       "required": [
         "capability",
+        "scope",
+        "scope_ref",
         "requested",
         "effective",
         "state",
@@ -923,6 +986,20 @@
       "properties": {
         "capability": {
           "$ref": "#/$defs/capability_name"
+        },
+        "scope": {
+          "description": "Where this entry was resolved. Most capabilities are settled at repository-binding scope, but a provider may fix support for one review at creation time and never update it, so a review-scoped entry exists. A review-scoped entry may only narrow its binding-scoped entry: it is a floor under a ceiling, never a way to claim more than the binding allows.",
+          "enum": [
+            "repository_binding",
+            "review"
+          ]
+        },
+        "scope_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
         },
         "requested": {
           "type": "boolean"
@@ -964,6 +1041,49 @@
           "uniqueItems": true
         }
       },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "repository_binding"
+              }
+            },
+            "required": [
+              "scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "scope_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "review"
+              }
+            },
+            "required": [
+              "scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "scope_ref": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "effective": {
+                "const": false
+              }
+            }
+          }
+        }
+      ],
       "additionalProperties": false
     },
     "capability_envelope": {
@@ -1124,6 +1244,9 @@
         "merge_base_revision",
         "evidence_refs",
         "evidence_state",
+        "evidence_state_cause",
+        "contents_complete",
+        "incomplete_reason_codes",
         "created_at_utc"
       ],
       "properties": {
@@ -1174,10 +1297,101 @@
             "invalid"
           ]
         },
+        "evidence_state_cause": {
+          "description": "Why the evidence is in this state. evidence_state keeps its four frozen values; the cause names which of the provider's several staleness paths produced it, so a retarget, a target-branch move, a provider-side conflict resolution, a force push and a policy time expiry are not all reported as a changed head.",
+          "enum": [
+            "not_stale",
+            "head_revision_changed",
+            "target_revision_moved",
+            "retargeted",
+            "merge_base_changed",
+            "force_pushed",
+            "conflict_resolved_in_provider",
+            "policy_evidence_expired",
+            "revalidation_requested",
+            "provider_invalidated",
+            "cause_unknown"
+          ]
+        },
+        "contents_complete": {
+          "description": "False when any part of the revision's own contents was truncated by the provider, independently of whether the evidence is stale. A revision can be current and incomplete.",
+          "type": "boolean"
+        },
+        "incomplete_reason_codes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "commit_list_truncated",
+              "change_list_truncated",
+              "comment_text_truncated",
+              "revision_model_unsupported"
+            ]
+          },
+          "uniqueItems": true
+        },
         "created_at_utc": {
           "$ref": "#/$defs/timestamp"
         }
       },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "evidence_state": {
+                "const": "current"
+              }
+            },
+            "required": [
+              "evidence_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence_state_cause": {
+                "const": "not_stale"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "contents_complete": {
+                "const": true
+              }
+            },
+            "required": [
+              "contents_complete"
+            ]
+          },
+          "then": {
+            "properties": {
+              "incomplete_reason_codes": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "contents_complete": {
+                "const": false
+              }
+            },
+            "required": [
+              "contents_complete"
+            ]
+          },
+          "then": {
+            "properties": {
+              "incomplete_reason_codes": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ],
       "additionalProperties": false
     },
     "review_thread": {
@@ -1186,6 +1400,7 @@
         "schema_id",
         "thread_id",
         "review_revision_ref",
+        "revision_anchor",
         "path",
         "range",
         "participants",
@@ -1204,6 +1419,64 @@
         },
         "review_revision_ref": {
           "$ref": "#/$defs/non_empty_string"
+        },
+        "revision_anchor": {
+          "description": "A thread's position is a projection onto the revision window it was read through, not a stored fact: the same comment reports different lines to two callers asking for different windows. The anchor therefore carries the window's two sides, the revision the thread was created against, and whether the provider supplied a durable tracking identity. Every field is required, so a partial anchor tuple cannot be persisted.",
+          "type": "object",
+          "required": [
+            "created_at_review_revision_ref",
+            "left_review_revision_ref",
+            "right_review_revision_ref",
+            "tracking_state",
+            "tracking_identity_ref"
+          ],
+          "properties": {
+            "created_at_review_revision_ref": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "left_review_revision_ref": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "right_review_revision_ref": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "tracking_state": {
+              "enum": [
+                "tracked",
+                "no_tracking_record",
+                "tracking_not_applicable"
+              ]
+            },
+            "tracking_identity_ref": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "tracking_state": {
+                    "const": "tracked"
+                  }
+                },
+                "required": [
+                  "tracking_state"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "tracking_identity_ref": {
+                    "$ref": "#/$defs/non_empty_string"
+                  }
+                }
+              }
+            }
+          ],
+          "additionalProperties": false
         },
         "path": {
           "type": [
@@ -1277,6 +1550,343 @@
       },
       "additionalProperties": false
     },
+    "gate_record": {
+      "description": "One branch policy or status check on one review, with the identity the provider supplied, whether it is required or advisory, what its status means, and what that status is bound to. Without this record a gate list is an array of opaque refs and free-string statuses, and 'whether each one currently passes' cannot be answered.",
+      "type": "object",
+      "required": [
+        "schema_id",
+        "gate_id",
+        "provider",
+        "repository_binding_ref",
+        "provider_review_id",
+        "source",
+        "provider_gate_identity",
+        "enforcement",
+        "raw_status",
+        "normalized_status",
+        "binding_kind",
+        "binding",
+        "evidence_refs",
+        "observed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.gate_record.v1"
+        },
+        "gate_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "provider": {
+          "$ref": "#/$defs/provider"
+        },
+        "repository_binding_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "provider_review_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source": {
+          "description": "Which provider surface the row came from. The two surfaces can carry the same wire word with opposite meanings, so the source is required before a status can be read.",
+          "enum": [
+            "policy_evaluation",
+            "status_check"
+          ]
+        },
+        "provider_gate_identity": {
+          "description": "The identities the provider actually supplies for this gate. A configuration identity says which rule this is, an instance identity says which evaluation or posting of it this row reports, and the context pair is how a status check names itself.",
+          "type": "object",
+          "required": [
+            "configuration_id",
+            "configuration_type_id",
+            "configuration_revision",
+            "instance_id",
+            "context_genre",
+            "context_name"
+          ],
+          "properties": {
+            "configuration_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            },
+            "configuration_type_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            },
+            "configuration_revision": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "instance_id": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "context_genre": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            },
+            "context_name": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "enforcement": {
+          "description": "Required versus advisory is the decisive axis for a person deciding whether a failing gate is a wall or a warning, and no other field in the corpus carries it.",
+          "enum": [
+            "required",
+            "advisory",
+            "not_enforced",
+            "unknown"
+          ]
+        },
+        "raw_status": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "normalized_status": {
+          "description": "The closed gate vocabulary. requirement_bypassed and not_applicable are separate members on purpose: one provider word means the gate was posted to remove a requirement, and the same word on the other surface means the rule does not apply to this review. errored is separate from failed, because a gate that could not run has not failed.",
+          "enum": [
+            "queued",
+            "running",
+            "succeeded",
+            "failed",
+            "errored",
+            "not_applicable",
+            "requirement_bypassed",
+            "unknown"
+          ]
+        },
+        "binding_kind": {
+          "description": "What this row's status refers to. A revision-bound gate was posted against one revision of the review. A review-bound gate is evaluated by the provider against the merge of source and target and cannot be head-scoped at all.",
+          "enum": [
+            "revision_bound",
+            "review_bound"
+          ]
+        },
+        "binding": {
+          "type": "object",
+          "required": [
+            "review_revision_ref",
+            "merge_commit_id",
+            "merge_source_commit_id",
+            "merge_target_commit_id"
+          ],
+          "properties": {
+            "review_revision_ref": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            },
+            "merge_commit_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            },
+            "merge_source_commit_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            },
+            "merge_target_commit_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "canonical_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "canonical_url_origin": {
+          "enum": [
+            "provider_supplied",
+            "synthesized_by_puppet_master",
+            "absent"
+          ]
+        },
+        "url_absent_reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          },
+          "uniqueItems": true
+        },
+        "observed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "binding_kind": {
+                "const": "revision_bound"
+              }
+            },
+            "required": [
+              "binding_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "binding": {
+                "properties": {
+                  "review_revision_ref": {
+                    "$ref": "#/$defs/non_empty_string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "binding_kind": {
+                "const": "review_bound"
+              }
+            },
+            "required": [
+              "binding_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "binding": {
+                "properties": {
+                  "review_revision_ref": {
+                    "type": "null"
+                  },
+                  "merge_commit_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "merge_source_commit_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "merge_target_commit_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source": {
+                "const": "policy_evaluation"
+              }
+            },
+            "required": [
+              "source"
+            ]
+          },
+          "then": {
+            "properties": {
+              "binding_kind": {
+                "const": "review_bound"
+              },
+              "normalized_status": {
+                "not": {
+                  "const": "requirement_bypassed"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "canonical_url": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "canonical_url"
+            ]
+          },
+          "then": {
+            "required": [
+              "url_absent_reason",
+              "canonical_url_origin"
+            ],
+            "properties": {
+              "url_absent_reason": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "canonical_url_origin": {
+                "const": "absent"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "canonical_url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "canonical_url"
+            ]
+          },
+          "then": {
+            "required": [
+              "url_absent_reason",
+              "canonical_url_origin"
+            ],
+            "properties": {
+              "url_absent_reason": {
+                "type": "null"
+              },
+              "canonical_url_origin": {
+                "enum": [
+                  "provider_supplied",
+                  "synthesized_by_puppet_master"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
     "pipeline_projection": {
       "type": "object",
       "required": [
@@ -1289,6 +1899,8 @@
         "state",
         "jobs",
         "checks",
+        "checks_truncated",
+        "checks_expansion_cursor_ref",
         "currentness",
         "observable_work_id",
         "updated_at_utc"
@@ -1336,11 +1948,22 @@
           "uniqueItems": true
         },
         "checks": {
+          "description": "References to pm.forge.gate_record.v1 rows. Both Azure listing routes page, so the list is fenced by checks_truncated and checks_expansion_cursor_ref on the pattern DL-054 already set for parent references: a first page that was cut short is otherwise shape-identical to a complete one.",
           "type": "array",
           "items": {
             "$ref": "#/$defs/non_secret_ref"
           },
           "uniqueItems": true
+        },
+        "checks_truncated": {
+          "type": "boolean"
+        },
+        "checks_expansion_cursor_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
         },
         "currentness": {
           "enum": [
@@ -1363,6 +1986,46 @@
           "$ref": "#/$defs/timestamp"
         }
       },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "checks_truncated": {
+                "const": true
+              }
+            },
+            "required": [
+              "checks_truncated"
+            ]
+          },
+          "then": {
+            "properties": {
+              "checks_expansion_cursor_ref": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "checks_truncated": {
+                "const": false
+              }
+            },
+            "required": [
+              "checks_truncated"
+            ]
+          },
+          "then": {
+            "properties": {
+              "checks_expansion_cursor_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ],
       "additionalProperties": false
     },
     "app_installation": {
@@ -1751,9 +2414,33 @@
           "$ref": "#/$defs/non_empty_string"
         },
         "endpoints": {
+          "description": "Each probed endpoint with the API version and release state it answered at. One adapter version, catalog generation or contract hash cannot stand in for these, because a single host serves different routes of one request family at different versions.",
           "type": "array",
           "items": {
-            "$ref": "#/$defs/non_empty_string"
+            "type": "object",
+            "required": [
+              "name",
+              "api_version",
+              "release_state"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "api_version": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "release_state": {
+                "enum": [
+                  "released",
+                  "preview",
+                  "deprecated",
+                  "absent",
+                  "unknown"
+                ]
+              }
+            },
+            "additionalProperties": false
           },
           "uniqueItems": true
         },
@@ -2170,7 +2857,7 @@
         "unsupported_reason_codes": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/non_empty_string"
+            "$ref": "#/$defs/provider_unsupported_reason_code"
           },
           "uniqueItems": true
         },
@@ -2485,6 +3172,35 @@
         "cmd.forge.connection.reauthorize"
       ]
     },
+    "provider_unsupported_reason_code": {
+      "description": "Closed vocabulary for the codes a provider adapter profile may declare statically as unsupported states. It is separate from disabled_reason_code and error_code, which are runtime dispositions: this list is what a profile is permitted to claim about itself before any request is made. A code that is not in this list cannot be declared.",
+      "enum": [
+        "actions_disabled",
+        "adapter_contract_unknown",
+        "api_disabled",
+        "collection_access_denied",
+        "dedicated_release_unsupported",
+        "host_not_in_signed_catalog",
+        "license_limit",
+        "license_tier_limit",
+        "missing_scope",
+        "organization_access_denied",
+        "origin_cli_missing_on_selected_environment",
+        "pipeline_disabled",
+        "pipelines_not_a_data_center_capability",
+        "plan_limit",
+        "policy_write_scope_missing",
+        "preview_not_eligible",
+        "project_access_denied",
+        "rate_limited",
+        "server_not_in_signed_catalog",
+        "server_version_unsupported",
+        "tfvc_container_unsupported",
+        "tier_limit",
+        "version_unsupported",
+        "workspace_access_denied"
+      ]
+    },
     "disabled_reason_code": {
       "enum": [
         "repository_binding_missing",
@@ -2540,7 +3256,8 @@
         "runner_preview_missing",
         "runner_host_revision_stale",
         "release_asset_digest_mismatch",
-        "effect_unknown_reconciliation_required"
+        "effect_unknown_reconciliation_required",
+        "policy_set_partial"
       ]
     },
     "error_code": {
@@ -3258,6 +3975,47 @@
           ],
           "pattern": "^[0-9a-f]{40,64}$"
         },
+        "checks_binding_kind": {
+          "description": "Which check family this request is for. A revision-bound family is fenced by the head revision; a review-bound family is evaluated by the provider against the merge of source and target and cannot be head-scoped, so it is fenced by the merge triple instead. Sending a head fence to a surface that never receives it is not enforcement.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "enum": [
+                "revision_bound",
+                "review_bound"
+              ]
+            }
+          ]
+        },
+        "review_merge_binding": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "required": [
+                "merge_commit_id",
+                "merge_source_commit_id",
+                "merge_target_commit_id"
+              ],
+              "properties": {
+                "merge_commit_id": {
+                  "$ref": "#/$defs/non_empty_string"
+                },
+                "merge_source_commit_id": {
+                  "$ref": "#/$defs/non_empty_string"
+                },
+                "merge_target_commit_id": {
+                  "$ref": "#/$defs/non_empty_string"
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
         "policy_resource_id": {
           "type": [
             "string",
@@ -3292,6 +4050,61 @@
             },
             {
               "$ref": "#/$defs/non_secret_ref"
+            }
+          ]
+        },
+        "policy_scope_ref": {
+          "description": "The provider scope entry that made this policy apply. Two different configurations can both be the branch policy on one branch, so a branch name is not an identity.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "expected_policy_set": {
+          "description": "The per-configuration fence. One scalar revision cannot fence a set whose membership can change without any member's revision changing, so the request names each configuration it saw and the revision it saw, and member_set_digest fences the membership itself.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "required": [
+                "members",
+                "member_set_digest"
+              ],
+              "properties": {
+                "members": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "policy_resource_id",
+                      "policy_scope_ref",
+                      "expected_policy_revision"
+                    ],
+                    "properties": {
+                      "policy_resource_id": {
+                        "$ref": "#/$defs/non_empty_string"
+                      },
+                      "policy_scope_ref": {
+                        "$ref": "#/$defs/non_empty_string"
+                      },
+                      "expected_policy_revision": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "minItems": 1,
+                  "uniqueItems": true
+                },
+                "member_set_digest": {
+                  "$ref": "#/$defs/sha256"
+                }
+              },
+              "additionalProperties": false
             }
           ]
         },
@@ -4408,7 +5221,7 @@
               "target": {
                 "required": [
                   "provider_review_id",
-                  "review_head_oid"
+                  "checks_binding_kind"
                 ],
                 "properties": {
                   "target_kind": {
@@ -4417,14 +5230,63 @@
                   "provider_review_id": {
                     "$ref": "#/$defs/non_empty_string"
                   },
-                  "review_head_oid": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{40,64}$"
+                  "checks_binding_kind": {
+                    "enum": [
+                      "revision_bound",
+                      "review_bound"
+                    ]
                   },
                   "identity_source": {
                     "const": "validated_repository_binding"
                   }
-                }
+                },
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "checks_binding_kind": {
+                          "const": "revision_bound"
+                        }
+                      },
+                      "required": [
+                        "checks_binding_kind"
+                      ]
+                    },
+                    "then": {
+                      "required": [
+                        "review_head_oid"
+                      ],
+                      "properties": {
+                        "review_head_oid": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{40,64}$"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "checks_binding_kind": {
+                          "const": "review_bound"
+                        }
+                      },
+                      "required": [
+                        "checks_binding_kind"
+                      ]
+                    },
+                    "then": {
+                      "required": [
+                        "review_merge_binding"
+                      ],
+                      "properties": {
+                        "review_merge_binding": {
+                          "type": "object"
+                        }
+                      }
+                    }
+                  }
+                ]
               }
             }
           }
@@ -4484,11 +5346,16 @@
               "target": {
                 "required": [
                   "policy_resource_id",
+                  "policy_scope_ref",
                   "provider_patch_ref",
-                  "expected_policy_revision"
+                  "expected_policy_revision",
+                  "expected_policy_set"
                 ],
                 "properties": {
                   "policy_resource_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "policy_scope_ref": {
                     "$ref": "#/$defs/non_empty_string"
                   },
                   "provider_patch_ref": {
@@ -4496,6 +5363,9 @@
                   },
                   "expected_policy_revision": {
                     "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "expected_policy_set": {
+                    "type": "object"
                   }
                 }
               }
@@ -4518,7 +5388,8 @@
               "target": {
                 "required": [
                   "policy_preview_ref",
-                  "expected_policy_revision"
+                  "expected_policy_revision",
+                  "expected_policy_set"
                 ],
                 "properties": {
                   "policy_preview_ref": {
@@ -4526,6 +5397,9 @@
                   },
                   "expected_policy_revision": {
                     "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "expected_policy_set": {
+                    "type": "object"
                   }
                 }
               },

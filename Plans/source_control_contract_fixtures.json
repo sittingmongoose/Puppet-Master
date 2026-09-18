@@ -2204,7 +2204,7 @@
     {
       "name": "gitlab_merge_request_preserves_native_status_and_extensions",
       "definition": "normalized_remote_record",
-      "value": {"schema_id": "pm.source_control.normalized_remote_record.v1", "record_kind": "ReviewRequest", "provider_kind": "gitlab", "instance_id": "instance:gitlab:self-managed", "account_id": "account:gitlab:alpha", "repository_id": "provider-repo:gitlab:481", "immutable_external_id": "mr:12", "raw_status": "opened", "normalized_status": "open", "revision_ref": "sha:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "canonical_url": "https://gitlab.example.invalid/group/repo/-/merge_requests/12", "observed_at_utc": "2026-09-01T15:01:00Z", "native_object_label": "Merge request", "vendor_extensions": {"approval_policy_ref": "approval-policy:gitlab:12", "child_pipeline_refs": ["pipeline:child:9"]}, "vendor_extensions_preserved": true}
+      "value": {"schema_id": "pm.source_control.normalized_remote_record.v1", "record_kind": "ReviewRequest", "provider_kind": "gitlab", "instance_id": "instance:gitlab:self-managed", "account_id": "account:gitlab:alpha", "repository_id": "provider-repo:gitlab:481", "immutable_external_id": "mr:12", "raw_status": "opened", "normalized_status": "open", "revision_ref": "sha:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "canonical_url": "https://gitlab.example.invalid/group/repo/-/merge_requests/12", "canonical_url_origin": "provider_supplied", "url_absent_reason": null, "observed_at_utc": "2026-09-01T15:01:00Z", "native_object_label": "Merge request", "vendor_extensions": {"approval_policy_ref": "approval-policy:gitlab:12", "child_pipeline_refs": ["pipeline:child:9"]}, "vendor_extensions_preserved": true}
     },
     {
       "name": "timeout_after_acceptance_enters_exact_reconciliation",

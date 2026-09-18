@@ -362,6 +362,8 @@
         "capabilities": [
           {
             "capability": "review",
+            "scope": "repository_binding",
+            "scope_ref": null,
             "requested": true,
             "effective": true,
             "state": "available",
@@ -373,6 +375,8 @@
           },
           {
             "capability": "pipelines",
+            "scope": "repository_binding",
+            "scope_ref": null,
             "requested": true,
             "effective": false,
             "state": "unsupported",
@@ -425,6 +429,9 @@
           "capture:raw:4"
         ],
         "evidence_state": "stale_head_changed",
+        "evidence_state_cause": "head_revision_changed",
+        "contents_complete": true,
+        "incomplete_reason_codes": [],
         "created_at_utc": "2026-08-31T13:02:00Z"
       }
     },
@@ -435,6 +442,13 @@
         "schema_id": "pm.forge.review_thread.v1",
         "thread_id": "review-thread:1",
         "review_revision_ref": "review-revision:mr-14:v3",
+        "revision_anchor": {
+          "created_at_review_revision_ref": "review-revision:mr-14:v2",
+          "left_review_revision_ref": "review-revision:mr-14:v2",
+          "right_review_revision_ref": "review-revision:mr-14:v3",
+          "tracking_state": "tracked",
+          "tracking_identity_ref": "change-tracking:mr-14:lib-rs:7"
+        },
         "path": "src/lib.rs",
         "range": {
           "start_line": 40,
@@ -471,8 +485,10 @@
           "pipeline-job:test"
         ],
         "checks": [
-          "check:branch-policy:1"
+          "gate-record:azure:pr-8:policy:1"
         ],
+        "checks_truncated": false,
+        "checks_expansion_cursor_ref": null,
         "currentness": "current",
         "observable_work_id": "observable-work:pipeline:77",
         "updated_at_utc": "2026-08-31T13:03:00Z"
@@ -510,8 +526,16 @@
         "catalog_generation": 9,
         "probe_id": "probe:origin:1",
         "endpoints": [
-          "repositories.read",
-          "reviews.read"
+          {
+            "name": "repositories.read",
+            "api_version": "preview",
+            "release_state": "preview"
+          },
+          {
+            "name": "reviews.read",
+            "api_version": "preview",
+            "release_state": "preview"
+          }
         ],
         "scopes": [
           "repository:read"
@@ -4605,6 +4629,8 @@
           "official_page_route_ref": null,
           "webhook_redelivery_gate": null,
           "source_control_handoff_ref": null,
+          "checks_binding_kind": "revision_bound",
+          "review_merge_binding": null,
           "review_head_oid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
         },
         "availability": {
@@ -4689,9 +4715,25 @@
           "official_page_route_ref": null,
           "webhook_redelivery_gate": null,
           "source_control_handoff_ref": null,
-          "policy_resource_id": "branch-policy:main",
+          "policy_resource_id": "policy-configuration:forgejo:alpha:31",
+          "policy_scope_ref": "policy-scope:forgejo:alpha:refs/heads/main:exact",
           "provider_patch_ref": "provider-patch:branch-policy:41",
-          "expected_policy_revision": "policy-revision:7"
+          "expected_policy_revision": "policy-revision:7",
+          "expected_policy_set": {
+            "members": [
+              {
+                "policy_resource_id": "policy-configuration:forgejo:alpha:31",
+                "policy_scope_ref": "policy-scope:forgejo:alpha:refs/heads/main:exact",
+                "expected_policy_revision": 7
+              },
+              {
+                "policy_resource_id": "policy-configuration:forgejo:alpha:32",
+                "policy_scope_ref": "policy-scope:forgejo:alpha:refs/heads/:prefix",
+                "expected_policy_revision": 2
+              }
+            ],
+            "member_set_digest": "1111111111111111111111111111111111111111111111111111111111111111"
+          }
         },
         "availability": {
           "requested": true,
@@ -4783,7 +4825,22 @@
           "webhook_redelivery_gate": null,
           "source_control_handoff_ref": null,
           "policy_preview_ref": "policy-preview:42",
-          "expected_policy_revision": "policy-revision:7"
+          "expected_policy_revision": "policy-revision:7",
+          "expected_policy_set": {
+            "members": [
+              {
+                "policy_resource_id": "policy-configuration:forgejo:alpha:31",
+                "policy_scope_ref": "policy-scope:forgejo:alpha:refs/heads/main:exact",
+                "expected_policy_revision": 7
+              },
+              {
+                "policy_resource_id": "policy-configuration:forgejo:alpha:32",
+                "policy_scope_ref": "policy-scope:forgejo:alpha:refs/heads/:prefix",
+                "expected_policy_revision": 2
+              }
+            ],
+            "member_set_digest": "1111111111111111111111111111111111111111111111111111111111111111"
+          }
         },
         "availability": {
           "requested": true,
@@ -5205,6 +5262,205 @@
       "value": {"schema_id": "pm.forge.hosted_administration_surface.v1", "provider": "forgejo", "instance_profile_ref": "instance-profile:forgejo:1", "field_schema_ref": "field-schema:forgejo:1:branch-policy", "actions": [
         {"area": "repository_policy", "read_state": "ready", "write_state": "protected", "permission_ref": "permission:repository-policy", "receipt_or_external_route_ref": "receipt-schema:repository-policy"}, {"area": "branch_policy", "read_state": "ready", "write_state": "protected", "permission_ref": "permission:branch-policy", "receipt_or_external_route_ref": "receipt-schema:branch-policy"}, {"area": "ci_environments", "read_state": "ready", "write_state": "permission_denied", "permission_ref": "permission:ci-environments", "receipt_or_external_route_ref": "route:external:ci-environments"}, {"area": "deployment_approvals", "read_state": "ready", "write_state": "protected", "permission_ref": "permission:deployment-approval", "receipt_or_external_route_ref": "receipt-schema:deployment-approval"}, {"area": "secrets", "read_state": "ready", "write_state": "protected", "permission_ref": "permission:protected-values", "receipt_or_external_route_ref": "receipt-schema:write-only-value"}, {"area": "variables", "read_state": "ready", "write_state": "protected", "permission_ref": "permission:variables", "receipt_or_external_route_ref": "receipt-schema:variable-write"}, {"area": "runners", "read_state": "ready", "write_state": "protected", "permission_ref": "permission:runners", "receipt_or_external_route_ref": "receipt-schema:runner-registration"}, {"area": "release_assets", "read_state": "ready", "write_state": "external_only", "permission_ref": "permission:releases", "receipt_or_external_route_ref": "route:external:releases"}
       ], "secret_submission": {"human_only_broker": true, "readback_allowed": false, "metadata_names_are_values": false}, "runner_registration": {"explicit_execution_host_target": true, "explicit_consent": true, "enabled_by_ci_connection_alone": false}, "unsupported_action_fallback": "clearly_labeled_external_link", "fake_success_allowed": false, "runtime_support_claimed": false}
+    },
+    {
+      "name": "azure_review_revision_target_move_stales_without_a_head_change",
+      "definition": "review_revision",
+      "value": {
+        "schema_id": "pm.forge.review_revision.v1",
+        "review_revision_id": "review-revision:azure-pr-8:v2",
+        "provider": "azure_devops",
+        "repository_binding_ref": "forge-binding:azure:1",
+        "provider_review_id": "pr:8",
+        "version": 2,
+        "base_revision": "git-oid:1111111111111111111111111111111111111111",
+        "head_revision": "git-oid:2222222222222222222222222222222222222222",
+        "merge_base_revision": "git-oid:3333333333333333333333333333333333333333",
+        "evidence_refs": [
+          "evidence:policy-evaluation:8"
+        ],
+        "evidence_state": "revalidation_required",
+        "evidence_state_cause": "target_revision_moved",
+        "contents_complete": true,
+        "incomplete_reason_codes": [],
+        "created_at_utc": "2026-09-17T09:00:00Z"
+      }
+    },
+    {
+      "name": "azure_review_revision_can_be_current_and_incomplete",
+      "definition": "review_revision",
+      "value": {
+        "schema_id": "pm.forge.review_revision.v1",
+        "review_revision_id": "review-revision:azure-pr-9:v1",
+        "provider": "azure_devops",
+        "repository_binding_ref": "forge-binding:azure:1",
+        "provider_review_id": "pr:9",
+        "version": 1,
+        "base_revision": "git-oid:4444444444444444444444444444444444444444",
+        "head_revision": "git-oid:5555555555555555555555555555555555555555",
+        "merge_base_revision": "git-oid:6666666666666666666666666666666666666666",
+        "evidence_refs": [
+          "evidence:changes-page:1"
+        ],
+        "evidence_state": "current",
+        "evidence_state_cause": "not_stale",
+        "contents_complete": false,
+        "incomplete_reason_codes": [
+          "commit_list_truncated",
+          "change_list_truncated"
+        ],
+        "created_at_utc": "2026-09-17T09:01:00Z"
+      }
+    },
+    {
+      "name": "azure_review_thread_anchor_records_an_untracked_position",
+      "definition": "review_thread",
+      "value": {
+        "schema_id": "pm.forge.review_thread.v1",
+        "thread_id": "review-thread:azure:8:1",
+        "review_revision_ref": "review-revision:azure-pr-8:v2",
+        "revision_anchor": {
+          "created_at_review_revision_ref": "review-revision:azure-pr-8:v1",
+          "left_review_revision_ref": "review-revision:azure-pr-8:v1",
+          "right_review_revision_ref": "review-revision:azure-pr-8:v2",
+          "tracking_state": "no_tracking_record",
+          "tracking_identity_ref": null
+        },
+        "path": "src/adapter.rs",
+        "range": {
+          "start_line": 12,
+          "end_line": 12
+        },
+        "participants": [
+          "account:azure:reviewer:1"
+        ],
+        "comments": [
+          "comment:azure:1"
+        ],
+        "resolution_state": "unresolved",
+        "resolution_actor_ref": null,
+        "evidence_refs": [
+          "evidence:thread-read:1"
+        ],
+        "blocking": false
+      }
+    },
+    {
+      "name": "azure_policy_evaluation_gate_is_review_bound_to_the_merge_triple",
+      "definition": "gate_record",
+      "value": {
+        "schema_id": "pm.forge.gate_record.v1",
+        "gate_id": "gate-record:azure:pr-8:policy:1",
+        "provider": "azure_devops",
+        "repository_binding_ref": "forge-binding:azure:1",
+        "provider_review_id": "pr:8",
+        "source": "policy_evaluation",
+        "provider_gate_identity": {
+          "configuration_id": "policy-configuration:azure:31",
+          "configuration_type_id": "policy-type:build-validation",
+          "configuration_revision": 7,
+          "instance_id": "policy-evaluation:azure:pr-8:31",
+          "context_genre": null,
+          "context_name": null
+        },
+        "enforcement": "required",
+        "raw_status": "rejected",
+        "normalized_status": "failed",
+        "binding_kind": "review_bound",
+        "binding": {
+          "review_revision_ref": null,
+          "merge_commit_id": "git-oid:7777777777777777777777777777777777777777",
+          "merge_source_commit_id": "git-oid:2222222222222222222222222222222222222222",
+          "merge_target_commit_id": "git-oid:8888888888888888888888888888888888888888"
+        },
+        "canonical_url": null,
+        "canonical_url_origin": "absent",
+        "url_absent_reason": "the provider publishes no human-facing page for a policy evaluation, only the REST URL its configuration can be fetched from",
+        "evidence_refs": [
+          "evidence:policy-evaluation:8"
+        ],
+        "observed_at_utc": "2026-09-17T09:02:00Z"
+      }
+    },
+    {
+      "name": "azure_status_check_gate_is_revision_bound_and_can_bypass_a_requirement",
+      "definition": "gate_record",
+      "value": {
+        "schema_id": "pm.forge.gate_record.v1",
+        "gate_id": "gate-record:azure:pr-8:status:1",
+        "provider": "azure_devops",
+        "repository_binding_ref": "forge-binding:azure:1",
+        "provider_review_id": "pr:8",
+        "source": "status_check",
+        "provider_gate_identity": {
+          "configuration_id": null,
+          "configuration_type_id": null,
+          "configuration_revision": null,
+          "instance_id": "status:azure:pr-8:iteration-2:5",
+          "context_genre": "continuous-integration",
+          "context_name": "unit-tests"
+        },
+        "enforcement": "advisory",
+        "raw_status": "notApplicable",
+        "normalized_status": "requirement_bypassed",
+        "binding_kind": "revision_bound",
+        "binding": {
+          "review_revision_ref": "review-revision:azure-pr-8:v2",
+          "merge_commit_id": null,
+          "merge_source_commit_id": null,
+          "merge_target_commit_id": null
+        },
+        "canonical_url": "https://dev.azure.invalid/org-alpha/_build/results?buildId=77",
+        "canonical_url_origin": "provider_supplied",
+        "url_absent_reason": null,
+        "evidence_refs": [
+          "evidence:iteration-status:5"
+        ],
+        "observed_at_utc": "2026-09-17T09:03:00Z"
+      }
+    },
+    {
+      "name": "azure_review_scoped_capability_entry_narrows_the_binding_entry",
+      "definition": "capability_envelope",
+      "value": {
+        "schema_id": "pm.forge.capability_envelope.v1",
+        "provider": "azure_devops",
+        "repository_binding_ref": "forge-binding:azure:1",
+        "catalog_generation": 12,
+        "adapter_version": "1.2.0",
+        "requested_at_utc": "2026-09-17T09:04:00Z",
+        "currentness": "current",
+        "capabilities": [
+          {
+            "capability": "review_versions",
+            "scope": "repository_binding",
+            "scope_ref": null,
+            "requested": true,
+            "effective": true,
+            "state": "available",
+            "reason_codes": [],
+            "mutation_safe": false,
+            "fallbacks": [
+              "validated_api_read"
+            ]
+          },
+          {
+            "capability": "review_versions",
+            "scope": "review",
+            "scope_ref": "pr:8",
+            "requested": true,
+            "effective": false,
+            "state": "unsupported",
+            "reason_codes": [
+              "capability_unsupported"
+            ],
+            "mutation_safe": false,
+            "fallbacks": [
+              "none"
+            ]
+          }
+        ]
+      }
     }
   ],
   "invalid": [
@@ -6125,6 +6381,297 @@
         "panel_id": "github_actions"
       },
       "expected_error": "github_actions is a migration-read alias, not a second canonical occupant"
+    },
+    {
+      "name": "review_revision_current_cannot_name_a_staleness_cause",
+      "definition": "review_revision",
+      "base_valid": "azure_review_revision_can_be_current_and_incomplete",
+      "patch": {
+        "evidence_state_cause": "head_revision_changed"
+      },
+      "expected_error": "current evidence has no staleness cause; the cause is not_stale"
+    },
+    {
+      "name": "review_revision_complete_cannot_carry_an_incompleteness_reason",
+      "definition": "review_revision",
+      "base_valid": "azure_review_revision_target_move_stales_without_a_head_change",
+      "patch": {
+        "incomplete_reason_codes": [
+          "commit_list_truncated"
+        ]
+      },
+      "expected_error": "a revision declared complete cannot also name a truncation"
+    },
+    {
+      "name": "review_thread_cannot_persist_a_partial_revision_anchor",
+      "definition": "review_thread",
+      "base_valid": "azure_review_thread_anchor_records_an_untracked_position",
+      "patch": {
+        "revision_anchor": {
+          "created_at_review_revision_ref": "review-revision:azure-pr-8:v1",
+          "left_review_revision_ref": "review-revision:azure-pr-8:v1",
+          "tracking_state": "no_tracking_record",
+          "tracking_identity_ref": null
+        }
+      },
+      "expected_error": "a thread anchor is the whole window; a partial anchor tuple cannot be persisted"
+    },
+    {
+      "name": "tracked_thread_anchor_needs_the_tracking_identity",
+      "definition": "review_thread",
+      "base_valid": "azure_review_thread_anchor_records_an_untracked_position",
+      "patch": {
+        "revision_anchor": {
+          "created_at_review_revision_ref": "review-revision:azure-pr-8:v1",
+          "left_review_revision_ref": "review-revision:azure-pr-8:v1",
+          "right_review_revision_ref": "review-revision:azure-pr-8:v2",
+          "tracking_state": "tracked",
+          "tracking_identity_ref": null
+        }
+      },
+      "expected_error": "a tracked anchor names the durable tracking identity it was tracked by"
+    },
+    {
+      "name": "review_bound_gate_cannot_be_fenced_by_a_revision",
+      "definition": "gate_record",
+      "base_valid": "azure_policy_evaluation_gate_is_review_bound_to_the_merge_triple",
+      "patch": {
+        "binding": {
+          "review_revision_ref": "review-revision:azure-pr-8:v2",
+          "merge_commit_id": "git-oid:7777777777777777777777777777777777777777",
+          "merge_source_commit_id": "git-oid:2222222222222222222222222222222222222222",
+          "merge_target_commit_id": "git-oid:8888888888888888888888888888888888888888"
+        }
+      },
+      "expected_error": "a review-bound gate is evaluated against the merge and carries no revision fence"
+    },
+    {
+      "name": "revision_bound_gate_cannot_omit_its_revision",
+      "definition": "gate_record",
+      "base_valid": "azure_status_check_gate_is_revision_bound_and_can_bypass_a_requirement",
+      "patch": {
+        "binding": {
+          "review_revision_ref": null,
+          "merge_commit_id": null,
+          "merge_source_commit_id": null,
+          "merge_target_commit_id": null
+        }
+      },
+      "expected_error": "a revision-bound gate names the revision its status was posted against"
+    },
+    {
+      "name": "policy_evaluation_gate_cannot_report_a_bypassed_requirement",
+      "definition": "gate_record",
+      "base_valid": "azure_policy_evaluation_gate_is_review_bound_to_the_merge_triple",
+      "patch": {
+        "normalized_status": "requirement_bypassed"
+      },
+      "expected_error": "only a status check can bypass a requirement; a policy evaluation that does not apply is not_applicable"
+    },
+    {
+      "name": "gate_record_without_a_url_needs_a_stated_reason",
+      "definition": "gate_record",
+      "base_valid": "azure_policy_evaluation_gate_is_review_bound_to_the_merge_triple",
+      "patch": {
+        "url_absent_reason": null
+      },
+      "expected_error": "an absent canonical URL is stated, never left blank"
+    },
+    {
+      "name": "synthesized_gate_link_cannot_be_labelled_provider_supplied",
+      "definition": "gate_record",
+      "base_valid": "azure_policy_evaluation_gate_is_review_bound_to_the_merge_triple",
+      "patch": {
+        "canonical_url": "https://dev.azure.invalid/org-alpha/_git/service-one/pullrequest/8",
+        "canonical_url_origin": "provider_supplied",
+        "url_absent_reason": "the provider publishes no human-facing page for a policy evaluation, only the REST URL its configuration can be fetched from"
+      },
+      "expected_error": "a record carrying a URL carries no absence reason"
+    },
+    {
+      "name": "truncated_check_list_must_carry_its_cursor",
+      "definition": "pipeline_projection",
+      "base_valid": "pipeline_projection_uses_observable_work",
+      "patch": {
+        "checks_truncated": true
+      },
+      "expected_error": "a truncated gate list names where to resume; a first page that was cut short is otherwise shape-identical to a complete one"
+    },
+    {
+      "name": "complete_check_list_cannot_carry_a_cursor",
+      "definition": "pipeline_projection",
+      "base_valid": "pipeline_projection_uses_observable_work",
+      "patch": {
+        "checks_expansion_cursor_ref": "policy-page-cursor:azure:pr-8:2"
+      },
+      "expected_error": "a complete gate list has nothing to resume from"
+    },
+    {
+      "name": "api_endpoint_cannot_be_a_bare_name",
+      "definition": "api_compatibility",
+      "base_valid": "unknown_api_compatibility_fails_closed_for_mutation",
+      "patch": {
+        "endpoints": [
+          "repositories.read"
+        ]
+      },
+      "expected_error": "each probed endpoint carries the API version and release state it answered at"
+    },
+    {
+      "name": "review_scoped_capability_entry_cannot_claim_effective",
+      "definition": "capability_envelope",
+      "base_valid": "azure_review_scoped_capability_entry_narrows_the_binding_entry",
+      "patch": {
+        "capabilities": [
+          {
+            "capability": "review_versions",
+            "scope": "review",
+            "scope_ref": "pr:8",
+            "requested": true,
+            "effective": true,
+            "state": "available",
+            "reason_codes": [],
+            "mutation_safe": false,
+            "fallbacks": [
+              "validated_api_read"
+            ]
+          }
+        ]
+      },
+      "expected_error": "a review-scoped entry may only narrow its binding-scoped entry, never claim more than it"
+    },
+    {
+      "name": "binding_scoped_capability_entry_cannot_name_a_review",
+      "definition": "capability_envelope",
+      "base_valid": "azure_review_scoped_capability_entry_narrows_the_binding_entry",
+      "patch": {
+        "capabilities": [
+          {
+            "capability": "review_versions",
+            "scope": "repository_binding",
+            "scope_ref": "pr:8",
+            "requested": true,
+            "effective": true,
+            "state": "available",
+            "reason_codes": [],
+            "mutation_safe": false,
+            "fallbacks": [
+              "validated_api_read"
+            ]
+          }
+        ]
+      },
+      "expected_error": "a binding-scoped entry carries no narrower scope reference"
+    },
+    {
+      "name": "review_checks_request_cannot_omit_the_binding_kind",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_review_checks",
+      "patch": {
+        "target": {
+          "target_kind": "review_checks",
+          "identity_source": "validated_repository_binding",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:alpha",
+          "repository_locator_ref": "repository-locator:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": "pr:44",
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "review_head_oid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected_error": "a checks request names which check family it is fencing before it sends a fence"
+    },
+    {
+      "name": "review_bound_checks_request_cannot_send_only_a_head_fence",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_review_checks",
+      "patch": {
+        "target": {
+          "target_kind": "review_checks",
+          "identity_source": "validated_repository_binding",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:alpha",
+          "repository_locator_ref": "repository-locator:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": "pr:44",
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "checks_binding_kind": "review_bound",
+          "review_merge_binding": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "review_head_oid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected_error": "the review-bound family is fenced by the merge triple; a head OID the endpoint never receives is not enforcement"
+    },
+    {
+      "name": "policy_preview_cannot_fence_a_set_with_one_scalar",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_repository_policy_preview",
+      "patch": {
+        "target": {
+          "target_kind": "repository_policy",
+          "identity_source": "validated_repository_binding",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:alpha",
+          "repository_locator_ref": "repository-locator:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": null,
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "policy_resource_id": "policy-configuration:forgejo:alpha:31",
+          "policy_scope_ref": "policy-scope:forgejo:alpha:refs/heads/main:exact",
+          "provider_patch_ref": "provider-patch:branch-policy:41",
+          "expected_policy_revision": "policy-revision:7"
+        }
+      },
+      "expected_error": "one scalar revision cannot fence a set whose membership can change without any member's revision changing"
     }
   ],
   "command_coverage": {

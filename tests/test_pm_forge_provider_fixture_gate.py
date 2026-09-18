@@ -25,7 +25,7 @@ FORGE_SCHEMA = "Plans/forge_integration_contracts.schema.json"
 PROVIDER_PACKS = {
     "Plans/cursor_origin_integration_fixtures.json": (4, 4),
     "Plans/gitlab_integration_fixtures.json": (3, 1),
-    "Plans/azure_devops_integration_fixtures.json": (2, 1),
+    "Plans/azure_devops_integration_fixtures.json": (3, 5),
     "Plans/bitbucket_integration_fixtures.json": (2, 1),
 }
 
@@ -103,10 +103,10 @@ class ForgeProviderFixtureGateTests(unittest.TestCase):
         for fixture in PROVIDER_PACKS:
             with self.subTest(fixture=fixture):
                 self.assertEqual(GATE.CONTRACT_PAIRS.count((FORGE_SCHEMA, fixture)), 1)
-        self.assertEqual(len(GATE.CONTRACT_PAIRS), 30)
-        self.assertEqual(len(set(GATE.CONTRACT_PAIRS)), 30)
-        self.assertEqual(GATE.EXPECTED_CONTRACT_PAIR_COUNT, 30)
-        self.assertEqual(len({schema for schema, _ in GATE.CONTRACT_PAIRS}), 26)
+        self.assertEqual(len(GATE.CONTRACT_PAIRS), 31)
+        self.assertEqual(len(set(GATE.CONTRACT_PAIRS)), 31)
+        self.assertEqual(GATE.EXPECTED_CONTRACT_PAIR_COUNT, 31)
+        self.assertEqual(len({schema for schema, _ in GATE.CONTRACT_PAIRS}), 27)
         self.assertEqual(
             {fixture for schema, fixture in GATE.CONTRACT_PAIRS if schema == FORGE_SCHEMA},
             set(PROVIDER_PACKS) | {"Plans/forge_integration_contract_fixtures.json"},
@@ -124,8 +124,8 @@ class ForgeProviderFixtureGateTests(unittest.TestCase):
         self.assertEqual(exit_code, 0, report["findings"])
         self.assertEqual(report["findings"], [])
         self.assertEqual(report["claim_boundary"], "static_schema_and_fixture_consistency_only")
-        for count, expected in {"contract_pairs": 4, "positive_cases": 11, "positive_cases_valid": 11,
-                                "negative_cases": 7, "negative_cases_rejected": 7}.items():
+        for count, expected in {"contract_pairs": 4, "positive_cases": 12, "positive_cases_valid": 12,
+                                "negative_cases": 11, "negative_cases_rejected": 11}.items():
             self.assertEqual(report["counts"][count], expected, count)
         self.assertEqual(report["inputs"], [{"schema": schema, "fixtures": fixture} for schema, fixture in pairs])
 

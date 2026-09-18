@@ -130,10 +130,17 @@ owner_doc: Plans/Forge_Integrations.md
 canonical_text: >-
   RepositoryCapabilityRouting evaluates provider variant, host, account, repository, scopes/grants, tier/license,
   server version, adapter version, signed catalog generation, API compatibility, rate budget and currentness for
-  each capability. Self-hosted profiles keep Git transport, general API, and Actions state independent; pin detected
-  product/version and supported API schema; and distinguish Actions disabled, no runner, no workflow, insufficient
-  permission, and unsupported. Unknown or failed compatibility disables mutation; validated reads may remain degraded
-  and partial data is never complete.
+  each capability. A capability entry is resolved at repository-binding scope by default. Where a provider fixes
+  support for one review at creation and never revisits it, a review-scoped entry may narrow the binding-scoped one;
+  it is a floor under that ceiling and can never claim more than the binding allows, and the result stays a
+  capability limit rather than a permission failure. Self-hosted profiles keep Git transport, general API, and
+  Actions state independent; pin detected product/version and supported API schema; and distinguish Actions
+  disabled, no runner, no workflow, insufficient permission, and unsupported. A profile's declared unsupported
+  reason codes come from one closed vocabulary that is checked, so a declared state is always one the corpus can
+  tell from another; the vocabulary is separate from the runtime disabled and error codes because a profile
+  declaration is a static claim a provider makes about itself before any request. Unknown or failed compatibility
+  disables mutation; a capability is available, degraded, unavailable or unsupported and mutation_safe is stated
+  rather than assumed; validated reads may remain degraded and partial data is never complete.
 gui_related: true
 gui_classification_reason: Capability state controls visible sections, disabled reasons, remediation, and requested/effective disclosure.
 depends_on: [FGI-001]
@@ -141,6 +148,14 @@ unblocks: [FGI-004, FGI-005, FGI-006, FGI-007, FGI-008]
 acceptance_criteria:
   - Every provider operation resolves one capability entry before dispatch.
   - Missing scope, tier, version, rate, offline, managed policy and unsupported states remain distinguishable.
+  - >-
+    Those states stay distinguishable because the codes a profile declares are drawn from one closed, checked
+    vocabulary, `provider_unsupported_reason_code`. A free string array cannot keep them apart: a profile could
+    declare a code no consumer recognises and nothing would say so.
+  - >-
+    A capability whose support the provider fixes per review resolves at review scope with the binding-level entry
+    as a ceiling. A review-scoped entry never reports a capability as effective, and a binding-scoped entry never
+    names a narrower subject.
   - API-disabled Forgejo/Gitea instances may retain healthy Git fetch/publish; Actions state never stands in for either API or transport state.
   - Mutation cannot proceed under unknown, stale, or failed compatibility.
 validation_surfaces: [capability envelope fixtures, provider matrix fixtures, stale and fail-closed mutation tests]
@@ -150,8 +165,8 @@ context_scope: forge_capability_routing
 implementation_surfaces: [Plans/forge_integration_contracts.schema.json, future provider adapters]
 node_compile_hint: {mode: forge_capability_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:egolite-register:SCM-05, source_ref:egolite-register:ORI-03]
-preserved_exact_tokens: [requested, effective, available, degraded, unavailable, unsupported, mutation_safe, partial data is never complete]
-negative_constraints: [Do not hide unsupported capabilities., Do not downgrade a failed mutation into success., Do not scrape terminal prose as capability proof.]
+preserved_exact_tokens: [requested, effective, available, degraded, unavailable, unsupported, mutation_safe, partial data is never complete, provider_unsupported_reason_code, review scope]
+negative_constraints: [Do not hide unsupported capabilities., Do not downgrade a failed mutation into success., Do not scrape terminal prose as capability proof., Do not admit a profile reason code from outside the closed vocabulary., Do not let a review-scoped entry widen its binding-scoped entry.]
 owner_hints: [Plans/Forge_Integrations.md]
 ```
 
@@ -164,9 +179,16 @@ status: accepted
 owner_doc: Plans/Forge_Integrations.md
 canonical_text: >-
   ForgeReviewRevision binds provider review identity, version, exact base/head/merge-base and evidence refs.
-  A new head creates a new revision and stales or revalidates prior approvals, tests, captures and audits.
-  ForgeReviewThread binds exact revision, path/range, participants, comments, resolution actor/state, evidence and
-  blocking status. Agent-authored reviews default Draft unless explicit Project policy permits otherwise; Mark Ready is distinct.
+  A new provider revision creates a new revision and stales or revalidates prior approvals, tests, captures and
+  audits. Identity is the whole triple, so any leg of base, head or merge-base changing is a new revision: a
+  target-branch move or a retarget stales evidence with no head change at all. The revision names which of those
+  paths made it stale, because reporting five different causes as stale_head_changed is false in four of them, and
+  it states separately whether its own contents are complete, because a revision can be current and truncated at
+  the same time. ForgeReviewThread binds exact revision, path/range, participants, comments, resolution actor/state,
+  evidence and blocking status. A thread's position is a projection onto the revision window it was read through
+  rather than a stored fact, so its anchor carries both sides of that window, the revision it was created against,
+  and whether the provider supplied a durable tracking identity; a partial anchor tuple is never persisted.
+  Agent-authored reviews default Draft unless explicit Project policy permits otherwise; Mark Ready is distinct.
 gui_related: true
 gui_classification_reason: Reviews, versions, threads, Draft/Ready, evidence staleness and actions are user-visible.
 depends_on: [FGI-003]
@@ -175,6 +197,19 @@ acceptance_criteria:
   - Review evidence cannot silently transfer to a new head revision.
   - Thread resolution is scoped to one immutable review revision and actor.
   - Agent review creation defaults Draft and Mark Ready uses a separate command and receipt.
+  - >-
+    A revision names the cause of its own state in `evidence_state_cause`. Current evidence carries no staleness
+    cause; a stale or revalidation-required revision names which path produced it, and stale_head_changed means the
+    head actually moved.
+  - >-
+    Completeness is a separate axis from staleness. `contents_complete` states whether the revision's own contents
+    are whole and, when they are not, which truncation produced that; a complete revision cannot also name a
+    truncation, and an incomplete one cannot stay silent about why.
+  - >-
+    A thread's `revision_anchor` is the whole window. It carries the revision the thread was created against, the
+    left and right sides it was read through, and a tracking state of tracked, no tracking record, or not
+    applicable; a tracked anchor names the tracking identity it was tracked by, and no partial anchor tuple is
+    persisted.
 validation_surfaces: [review revision/thread fixtures, stale-head gate tests, Draft/Mark Ready policy tests, compact query fixtures]
 risk_class: stale_review_evidence_or_agent_publication
 reasoning_tier: high
@@ -182,8 +217,8 @@ context_scope: forge_reviews
 implementation_surfaces: [Plans/forge_integration_contracts.schema.json, future review adapters]
 node_compile_hint: {mode: immutable_forge_review_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:egolite-register:ORI-04]
-preserved_exact_tokens: [ForgeReviewRevision, ForgeReviewThread, Draft, Mark Ready, stale_head_changed]
-negative_constraints: [Do not reuse approvals across a changed head., Do not publish an agent review as Ready by default., Do not inject a whole review when a compact query suffices.]
+preserved_exact_tokens: [ForgeReviewRevision, ForgeReviewThread, Draft, Mark Ready, stale_head_changed, evidence_state_cause, contents_complete, revision_anchor]
+negative_constraints: [Do not reuse approvals across a changed head., Do not publish an agent review as Ready by default., Do not inject a whole review when a compact query suffices., Do not report a staleness with no head change as stale_head_changed., Do not present a truncated revision as complete., Do not persist a partial thread anchor tuple.]
 owner_hints: [Plans/Forge_Integrations.md]
 ```
 
@@ -199,7 +234,18 @@ canonical_text: >-
   identities, bound through an independent AutomationBinding and to repository/review revision where applicable.
   Automation authority is never inferred from Git hosting authority. Run, retry, cancel, approval and runner administration
   are asynchronous guarded work using ObservableWork; list/refresh/open preserve projection currentness. Historical,
-  stale, partial, cancelled, Actions-disabled, no-runner, no-workflow and insufficient-permission results remain explicit.
+  stale, partial, cancelled, Actions-disabled, no-runner, no-workflow and insufficient-permission results remain
+  explicit. Every branch policy or status check a review carries is one typed gate record rather than an opaque
+  reference: it holds the identity the provider supplied, whether it is required or advisory, a normalized status
+  from one closed vocabulary, and the source surface it came from, because two provider surfaces can carry the same
+  wire word with opposite meanings. A gate record also declares what its status is bound to. A revision-bound gate
+  was posted against one revision; a review-bound gate is evaluated by the provider against the merge of source and
+  target, carries the merge triple rather than a head fence, and cannot be head-scoped at all, so sending it a head
+  key the endpoint never receives is not enforcement. A gate list that was cut short says so and says where to
+  resume. A policy request identifies one provider configuration and the scope entry that made it apply, and fences
+  the whole applicable set per configuration, because membership can change without any member's revision changing.
+  A gate whose provider publishes no human-facing page carries no URL and states why; a synthesized portal link is
+  admissible only when it is labelled synthesized.
 gui_related: true
 gui_classification_reason: Pipeline/check state, jobs, logs, actions, progress, and degraded history are visible.
 depends_on: [FGI-003, FGI-004]
@@ -209,6 +255,20 @@ acceptance_criteria:
   - Pipeline and runner requests carry an exact automation binding and expected automation-binding generation even when its provider differs from the repository host.
   - Accepted async mutation returns ObservableWork and one terminal provider result.
   - A stale or partial pipeline projection cannot authorize retry/cancel without direct validation.
+  - >-
+    Whether each gate currently passes is answerable from the record. Enforcement is required, advisory, not
+    enforced or unknown; the status vocabulary keeps requirement_bypassed apart from not_applicable and errored
+    apart from failed, and none of them is folded into a pipeline-run state or a generic unavailable.
+  - >-
+    A gate declares its binding kind. A revision-bound row names the revision its status was posted against; a
+    review-bound row names the merge commit, merge source commit and merge target commit it was evaluated against
+    and carries no revision fence. A request for one family cannot be fenced as though it were the other.
+  - >-
+    A truncated gate or policy list is distinguishable from a complete one and carries the cursor that resumes it,
+    and policy_set_partial names that state; a complete list carries no cursor.
+  - >-
+    A policy request names one provider configuration and the scope entry that made it apply, and carries a
+    per-configuration expected-revision set with a membership digest. One scalar revision cannot fence a set.
 validation_surfaces: [pipeline projection fixtures, retry/cancel idempotency tests, stale history and partial result tests]
 risk_class: pipeline_mutation_or_progress_misrepresentation
 reasoning_tier: high
@@ -216,8 +276,8 @@ context_scope: forge_pipelines_and_checks
 implementation_surfaces: [Plans/forge_integration_contracts.schema.json, Plans/Shared_Integration_Runtime.md, future pipeline adapters]
 node_compile_hint: {mode: forge_pipeline_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:egolite-register:SCM-05, source_ref:egolite-register:TS-04]
-preserved_exact_tokens: [pipeline, build, jobs, checks, ObservableWork, partial, stale]
-negative_constraints: [Do not infer progress from elapsed time., Do not call partial history complete., Do not retry or cancel from a stale projection.]
+preserved_exact_tokens: [pipeline, build, jobs, checks, ObservableWork, partial, stale, gate record, requirement_bypassed, policy_set_partial, binding kind]
+negative_constraints: [Do not infer progress from elapsed time., Do not call partial history complete., Do not retry or cancel from a stale projection., Do not fence a review-bound gate with a head revision., Do not present a truncated gate list as complete., Do not identify a branch policy by a branch name., Do not present a synthesized link as the provider's own.]
 owner_hints: [Plans/Forge_Integrations.md, Plans/Shared_Integration_Runtime.md]
 ```
 
@@ -261,8 +321,14 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/Forge_Integrations.md
 canonical_text: >-
-  ForgeApiCompatibility pins provider/variant, adapter version, OpenAPI or contract hash, signed catalog generation,
-  probe, endpoints, scopes, features, mutation safety, requested/effective capability, rate budget and currentness.
+  ForgeApiCompatibility pins provider/variant, adapter version, OpenAPI hash or contract hash, signed catalog
+  generation, probe, endpoints, scopes, features, mutation safety, requested/effective capability, rate budget and
+  currentness. The endpoint pin is per endpoint. One host can serve two routes of the same request family at two
+  different API versions and release states, so each probed endpoint records the version and release state it
+  answered at, and one adapter version, catalog generation or contract hash cannot stand in for them. A
+  customer-hosted instance of any provider, not only the Actions-based self-hosted products, may carry the typed
+  instance profile that records its normalized host, API base path, detected product and version, transport and API
+  state, trust material and currentness.
   Retry-After is honored with bounded coalescing, jitter and backoff. The fallback ladder is validated API read,
   low-level Git data, Git transport, narrow version-gated structured-JSON CLI, or official provider page; never prose scraping.
 gui_related: true
@@ -273,6 +339,13 @@ acceptance_criteria:
   - Unknown compatibility fails mutation closed while explicitly admitted reads may remain degraded.
   - Retry respects provider budgets and does not create retry storms or duplicate effects.
   - Every fallback is typed and evidence-bearing; partial data remains partial.
+  - >-
+    Every probed endpoint carries its own `api_version` and `release_state`, and a bare endpoint name is rejected. A
+    capability that depends on a preview-only or absent route degrades on its own and reports
+    capability_unsupported naming the version that was looked for, rather than taking its neighbours with it.
+  - >-
+    A customer-hosted instance of a provider with per-instance host, base path and version can carry an instance
+    profile; trust validation is not reserved to one product family.
 validation_surfaces: [API compatibility fixtures, rate-limit/backoff tests, CLI JSON version gate tests, no-prose-scrape negatives]
 risk_class: forge_api_drift_or_unsafe_fallback
 reasoning_tier: high
@@ -280,8 +353,8 @@ context_scope: forge_api_compatibility
 implementation_surfaces: [Plans/forge_integration_contracts.schema.json, future signed provider catalog]
 node_compile_hint: {mode: forge_api_compatibility_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:egolite-register:ORI-03, source_ref:egolite-register:SCM-05]
-preserved_exact_tokens: [ForgeApiCompatibility, OpenAPI hash, catalog generation, Retry-After, structured-JSON CLI, partial]
-negative_constraints: [Do not scrape terminal prose., Do not mutate on unknown compatibility., Do not ignore Retry-After., Do not call fallback data complete.]
+preserved_exact_tokens: [ForgeApiCompatibility, OpenAPI hash, catalog generation, Retry-After, structured-JSON CLI, partial, api_version, release_state]
+negative_constraints: [Do not scrape terminal prose., Do not mutate on unknown compatibility., Do not ignore Retry-After., Do not call fallback data complete., Do not pin one API version for a host or a product when its endpoints differ.]
 owner_hints: [Plans/Forge_Integrations.md]
 ```
 
@@ -860,9 +933,15 @@ canonical_text: >-
   and external URL fallback; no GitHub-compatible boolean grants parity. Instance trust validates normalized
   host, tenant/account, API base path, scoped private CA, redirects/pagination, SSH host key, and explicit
   localhost/metadata policy before credentials, without global TLS disable or cross-origin Authorization.
-  Authentication is provider- and instance-scoped: GitHub direct OAuth/App/token plus separate Git helper;
+  Authentication is provider- and instance-scoped, and what a provider profile itself carries is the closed field
+  set of its own schema: today that is the authentication methods it admits, its capability and reason vocabulary,
+  its version or tier gate and its catalog reference. Issuer, allowed host, non-secret token owner, requested
+  scopes, refresh and revoke, and the separate Git-versus-API roles are recorded by the trust, instance and
+  point-of-consent surfaces those facts belong to, not by the profile record, and this unit does not claim the
+  profile identifies them. The provider list is: GitHub direct OAuth/App/token plus separate Git helper;
   GitLab registered OAuth/PKCE or scoped PAT; Azure Services Entra and Server supported on-prem auth;
-  Bitbucket Cloud OAuth/current scoped API token and Data Center supported instance token; Forgejo/Gitea
+  Bitbucket Cloud OAuth/current scoped API token and Data Center supported instance token; Microsoft Entra is the
+  Azure Services issuer rather than a new legacy Azure DevOps OAuth registration; Forgejo/Gitea
   guided scoped PAT by default or registered OAuth/PKCE; Origin official CLI browser auth plus verified Git
   helper. Account passwords and silent ordinary admin scope grants are forbidden. Hosted administration
   enumerates read and write independently for repository/branch policy, CI environments/deployment approvals,
@@ -877,7 +956,12 @@ unblocks: [F3-529]
 acceptance_criteria:
   - All thirteen provider profiles and four local-VCS profiles exist separately with every named dimension reporting explicit state/probe/reason rather than generic compatibility.
   - Same-name/different-instance, custom base path/SSH port, private CA, redirect, metadata, and changed-host-key fixtures fail or prompt at the exact trust gate without leaking authorization.
-  - Every provider profile identifies issuer, allowed host, setup method, non-secret token owner, requested scopes, refresh/revoke, and separate Git-versus-API roles.
+  - >-
+    Every provider profile identifies the setup method it admits, and issuer, allowed host, non-secret token owner,
+    requested scopes, refresh/revoke and the separate Git-versus-API roles are each identified by the named surface
+    that carries them. Neither closed profile schema has a field for those seven facts, so this criterion is met by
+    naming where each one lives rather than by a profile record that structurally cannot hold it; adding them to the
+    profile schemas would be a new capability and is not done here.
   - Repository delete, force push, policy edit, runner registration, secret write, and organization management remain individually risk-tiered with preview, permission, confirmation, and currentness.
   - Every visible hosted-admin control resolves to owner command, versioned schema, permission, receipt, or labeled external-only route; GitHub retained administration is inventoried and no live section is silently dropped.
 validation_surfaces: [Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, Plans/protected_auth_browser_contracts.schema.json, Plans/protected_auth_browser_contract_fixtures.json, future provider matrix/trust/admin fixtures]
@@ -898,7 +982,7 @@ source_lineage:
   - source_ref:corrected-slice:machine__provider_profiles.json__part-002__lines-000201-000420.txt:201-420
   - source_ref:corrected-slice:machine__provider_profiles.json__part-003__lines-000401-000620.txt:401-620
   - source_ref:corrected-slice:machine__provider_profiles.json__part-004__lines-000601-000692.txt:601-692
-preserved_exact_tokens: [github_cloud, github_enterprise, gitlab_saas, gitlab_self_managed, azure_devops_services, azure_devops_server, bitbucket_cloud, bitbucket_data_center, forgejo, gitea, cursor_origin_native, cursor_origin_github_mirror, generic_git, Microsoft Entra, guided scoped PAT, registered OAuth/PKCE, human-only broker]
+preserved_exact_tokens: [github_cloud, github_enterprise, gitlab_saas, gitlab_self_managed, azure_devops_services, azure_devops_server, bitbucket_cloud, bitbucket_data_center, forgejo, gitea, cursor_origin_native, cursor_origin_github_mirror, generic_git, Microsoft Entra, guided scoped PAT, registered OAuth/PKCE, human-only broker, point-of-consent]
 negative_constraints:
   - Do not use one GitHub-compatible boolean, universal username/password form, global TLS bypass, or cross-origin Authorization.
   - Do not request account passwords, deprecated Bitbucket app passwords, new legacy Azure DevOps OAuth, or silent admin scopes for ordinary work.

@@ -16,12 +16,12 @@
         "pipeline_noun": "build",
         "auth_methods": ["entra", "pat_ref", "ssh_ref"],
         "required_capabilities": ["repository", "review", "checks", "transport"],
-        "optional_capabilities": ["review_threads", "pipelines", "automation", "issues", "webhooks"],
+        "optional_capabilities": ["review_threads", "review_versions", "repository_policy", "pipelines", "automation", "issues", "webhooks"],
         "version_or_tier_gate": "azure_devops_services_capability_probe",
         "official_page_route_ref": "official-page:azure-devops:connect",
         "structured_cli_fallback": false,
         "self_host_catalog_ref": null,
-        "unsupported_reason_codes": ["organization_access_denied", "project_access_denied", "policy_scope_missing"]
+        "unsupported_reason_codes": ["organization_access_denied", "project_access_denied", "policy_write_scope_missing", "tfvc_container_unsupported"]
       }
     },
     {
@@ -38,12 +38,48 @@
         "pipeline_noun": "build",
         "auth_methods": ["pat_ref", "ssh_ref"],
         "required_capabilities": ["repository", "review", "transport"],
-        "optional_capabilities": ["review_threads", "checks", "pipelines", "issues", "webhooks"],
+        "optional_capabilities": ["review_threads", "review_versions", "checks", "repository_policy", "pipelines", "issues", "webhooks"],
         "version_or_tier_gate": "signed_azure_devops_server_support_entry",
         "official_page_route_ref": "official-page:azure-devops-server:connect",
         "structured_cli_fallback": false,
         "self_host_catalog_ref": "catalog:azure-devops-server:generation-2",
-        "unsupported_reason_codes": ["server_not_in_signed_catalog", "server_version_unsupported", "collection_access_denied"]
+        "unsupported_reason_codes": ["server_not_in_signed_catalog", "server_version_unsupported", "collection_access_denied", "tfvc_container_unsupported"]
+      }
+    },
+    {
+      "name": "azure_devops_server_instance_profile",
+      "definition": "provider_instance_profile",
+      "value": {
+        "schema_id": "pm.forge.provider_instance_profile.v1",
+        "instance_id": "instance:azure-devops-server:alpha",
+        "provider": "azure_devops",
+        "provider_variant": "azure_devops_server",
+        "normalized_host": "tfs.example.invalid",
+        "web_base_url": "https://tfs.example.invalid/DefaultCollection",
+        "api_root": "https://tfs.example.invalid",
+        "api_base_path": "/DefaultCollection/_apis",
+        "ssh_host": "tfs.example.invalid",
+        "ssh_port": 22,
+        "private_ca_ref": "private-ca:azure-devops-server:alpha",
+        "known_host_proof_ref": "known-host:azure-devops-server:alpha",
+        "account_id": "account:azure:server:1",
+        "organization_locator": "DefaultCollection",
+        "detected_product": "azure_devops",
+        "product_version": "Azure DevOps Server 2022",
+        "api_schema_version": "7.1",
+        "api_state": "available",
+        "git_transport_state": "available",
+        "actions_state": "unsupported",
+        "actions_capability_ref": "capability:azure-devops-server:actions-not-a-product-surface",
+        "auth_method": "pat_ref",
+        "oauth_registration_ref": null,
+        "credential_access": "read_write",
+        "credential_ref": "credential:azure:server:1",
+        "transport_api_independent": true,
+        "redirect_credential_policy": "strip_authorization_on_origin_change",
+        "restricted_network_target_policy": "deny_localhost_and_metadata_unless_explicitly_approved",
+        "currentness_ref": "currentness:azure-devops-server:alpha",
+        "discovered_at_utc": "2026-09-17T09:05:00Z"
       }
     }
   ],
@@ -61,6 +97,7 @@
         "account_id": "account:azure:1",
         "repo_id": "repo:alpha",
         "provider_repository_id": "azure-repo:1",
+        "provider_project_id": "7d5b8f2a-3c41-4e06-9a1b-2f8c6d0e4a91",
         "repository_locator": {"organization_or_workspace": "org-alpha", "repository_slug": "service-one"},
         "authority": {"storage": "authority", "review": "authority", "checks": "authority", "automation": "authority", "issues": "authority", "transport": "authority", "mirror": "not_applicable"},
         "credential_ref": "credential:azure:1",
@@ -68,6 +105,80 @@
         "capability_catalog_ref": "catalog:azure:generation-1",
         "binding_generation": 1
       }
+    },
+    {
+      "name": "azure_devops_repository_cannot_null_the_project",
+      "definition": "repository_binding",
+      "expected_error": "an explicit null project is rejected for azure_devops by the provider conditional, exactly as an omitted one is",
+      "value": {
+        "schema_id": "pm.forge.repository_binding.v1",
+        "binding_id": "forge-binding:azure:null-project",
+        "provider": "azure_devops",
+        "provider_variant": "azure_devops_services",
+        "normalized_host": "dev.azure.com",
+        "account_id": "account:azure:1",
+        "repo_id": "repo:alpha",
+        "provider_repository_id": "azure-repo:1",
+        "provider_project_id": "7d5b8f2a-3c41-4e06-9a1b-2f8c6d0e4a91",
+        "repository_locator": {"organization_or_workspace": "org-alpha", "project": null, "repository_slug": "service-one"},
+        "authority": {"storage": "authority", "review": "authority", "checks": "authority", "automation": "authority", "issues": "authority", "transport": "authority", "mirror": "not_applicable"},
+        "credential_ref": "credential:azure:1",
+        "adapter_ref": "adapter:azure:1",
+        "capability_catalog_ref": "catalog:azure:generation-1",
+        "binding_generation": 1
+      }
+    },
+    {
+      "name": "azure_devops_repository_cannot_omit_the_project_guid",
+      "definition": "repository_binding",
+      "expected_error": "the project GUID is a second required identifier; without it the policy artifact identity resolves to undefined and the request returns an empty list rather than an error",
+      "value": {
+        "schema_id": "pm.forge.repository_binding.v1",
+        "binding_id": "forge-binding:azure:no-project-guid",
+        "provider": "azure_devops",
+        "provider_variant": "azure_devops_services",
+        "normalized_host": "dev.azure.com",
+        "account_id": "account:azure:1",
+        "repo_id": "repo:alpha",
+        "provider_repository_id": "azure-repo:1",
+        "repository_locator": {"organization_or_workspace": "org-alpha", "project": "project-alpha", "repository_slug": "service-one"},
+        "authority": {"storage": "authority", "review": "authority", "checks": "authority", "automation": "authority", "issues": "authority", "transport": "authority", "mirror": "not_applicable"},
+        "credential_ref": "credential:azure:1",
+        "adapter_ref": "adapter:azure:1",
+        "capability_catalog_ref": "catalog:azure:generation-1",
+        "binding_generation": 1
+      }
+    },
+    {
+      "name": "azure_devops_project_guid_cannot_be_a_display_name",
+      "definition": "repository_binding",
+      "expected_error": "provider_project_id is the provider's GUID, obtained from a provider resource and never a name or a URL fragment",
+      "value": {
+        "schema_id": "pm.forge.repository_binding.v1",
+        "binding_id": "forge-binding:azure:name-as-guid",
+        "provider": "azure_devops",
+        "provider_variant": "azure_devops_services",
+        "normalized_host": "dev.azure.com",
+        "account_id": "account:azure:1",
+        "repo_id": "repo:alpha",
+        "provider_repository_id": "azure-repo:1",
+        "provider_project_id": "project-alpha",
+        "repository_locator": {"organization_or_workspace": "org-alpha", "project": "project-alpha", "repository_slug": "service-one"},
+        "authority": {"storage": "authority", "review": "authority", "checks": "authority", "automation": "authority", "issues": "authority", "transport": "authority", "mirror": "not_applicable"},
+        "credential_ref": "credential:azure:1",
+        "adapter_ref": "adapter:azure:1",
+        "capability_catalog_ref": "catalog:azure:generation-1",
+        "binding_generation": 1
+      }
+    },
+    {
+      "name": "azure_devops_profile_cannot_declare_a_read_side_policy_scope_failure",
+      "definition": "provider_adapter_profile",
+      "base_valid": "azure_devops_services_profile",
+      "patch": {
+        "unsupported_reason_codes": ["organization_access_denied", "project_access_denied", "policy_scope_missing"]
+      },
+      "expected_error": "policy_scope_missing is not a state Azure can produce and is not in the closed profile reason vocabulary; the policy leg is the write, exempt and bypass paths"
     }
   ]
 }

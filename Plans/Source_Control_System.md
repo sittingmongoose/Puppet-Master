@@ -1051,8 +1051,10 @@ owner_doc: Plans/Source_Control_System.md
 canonical_text: >-
   Provider-neutral projections materialize ReviewRequest, ReviewThread, Check, AutomationDefinition,
   AutomationRun, JobOrStage, LogSegment, and RemoteArtifact with provider kind, service instance, account,
-  repository, immutable external ID, raw and normalized status, exact revision/SHA/change version, canonical URL,
-  observed time, native object vocabulary, and preserved vendor extensions. Before push, merge, review, comment,
+  repository, immutable external ID, raw_status and normalized_status, exact revision/SHA/change version, canonical
+  URL where the provider publishes one, observed time, native object vocabulary, and preserved vendor extensions. A
+  provider can materialize a record with no human-facing page at all, so a record may carry no canonical URL
+  provided it states why, and a synthesized portal deep link is admissible only when it is labelled synthesized. Before push, merge, review, comment,
   dispatch, cancel, or rerun, Puppet Master durably records the intended target and preconditions. It uses a
   provider idempotency key when supported; otherwise timeout enters outcome_unknown and exact remote
   reconciliation by object, commit, run, or correlation evidence. It never blindly repeats a non-idempotent
@@ -1062,10 +1064,11 @@ canonical_text: >-
   accelerators, polling remains available, and Funnel/public ingress is never enabled merely for webhooks.
   Cache identity includes instance, account, repository, and revision and shared governors bound pagination,
   logs, retries, 429 backoff, and inactive subscriptions. Local filesystem work executes in the Source
-  Location's authorized Environment through the selected installation, Worktree/Workspace Manager, and
+  Location's authorized Environment (the Source Location's own Host) through the selected installation,
+  Worktree/Workspace Manager, and
   FileSafe; hosting API/CLI work uses its exact egress Host, adapter/profile, credential, and explicit repository
   target and returns durable receipts to the Home Server without making a worker Project authority. Agents
-  consume compact typed available actions and blockers through the same commands, never raw registry/log
+  consume compact typed available-action summaries and blockers through the same commands, never raw registry/log
   dumps or UI scraping, and automated publish/merge/CI requires exact task policy, approval, protected-branch
   enforcement, and CI/cost disclosure. A forge runner is not a Puppet Master Execution Host unless separately configured.
 gui_related: true
@@ -1078,6 +1081,11 @@ acceptance_criteria:
   - Many Clients and undocked panels share one underlying authorized Home Server observer; duplicate webhook delivery and repository-switch races do not corrupt projections.
   - A TrueNAS Home Server with a WSL checkout and remote Forgejo instance routes filesystem and API phases to their exact environments and credential roles.
   - An unavailable requested agent action yields a supported alternative or structured blocker, never fabricated success, another account, protected-branch bypass, hidden UI scraping, or silent runner registration.
+  - >-
+    A record whose provider publishes no human-facing page carries a null canonical URL, a canonical_url_origin of
+    absent and a stated url_absent_reason, rather than a synthesized link presented as the provider's own. A Check
+    row's normalized status comes from the closed gate vocabulary and keeps requirement_bypassed apart from
+    not_applicable, so a status the provider could not produce is not folded into failure.
 validation_surfaces: [Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, future normalized roundtrip, timeout/reconcile, webhook replay, cache race, routing, and agent-policy fixtures]
 risk_class: semantic_flattening_duplicate_external_effect_or_authority_escape
 reasoning_tier: high
@@ -1091,10 +1099,11 @@ source_lineage:
   - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:63-69
   - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:71-77
   - source_ref:corrected-slice:machine__requirements.json__part-003__lines-000401-000620.txt:109-193
-preserved_exact_tokens: [ReviewRequest, ReviewThread, Check, AutomationDefinition, AutomationRun, JobOrStage, LogSegment, RemoteArtifact, raw_status, normalized_status, outcome_unknown, Home Server, Source Location, FileSafe, compact typed available-action summaries]
+preserved_exact_tokens: [ReviewRequest, ReviewThread, Check, AutomationDefinition, AutomationRun, JobOrStage, LogSegment, RemoteArtifact, raw_status, normalized_status, outcome_unknown, Home Server, Source Location, FileSafe, compact typed available-action summaries, canonical_url_origin, url_absent_reason, requirement_bypassed]
 negative_constraints:
   - Do not key remote objects without service instance, account, repository, immutable external ID, and revision identity.
   - Do not flatten native policy, child-pipeline, environment, gate, stage/job, trace, artifact, or vocabulary extensions.
+  - Do not present a synthesized deep link as the provider's own canonical URL, and do not leave an absent URL unexplained.
   - Do not retry an outcome-unknown non-idempotent effect before exact reconciliation or treat process exit as remote proof.
   - Do not start per-Client pollers, enable public ingress for a webhook, reuse Git credentials as API credentials, or let a worker become Project authority.
   - Do not expose whole forge registries/logs to agents or silently turn runners into Execution Hosts.
