@@ -172,6 +172,8 @@ Bounded repairs write `repair_closure_matrix.jsonl` only for actionable source r
 
 After repair edits, run an internal post-repair semantic audit over the original `audit_scope_manifest.jsonl` plus every impact row. Newly discovered actionable findings are added to the same scope/impact set and closed in the same Goal. Repair may finish only with `repair_required_count=0` or a true user decision; passing validators alone are insufficient. Only after internal semantic closure may repair append/update the global registry, regenerate PlanUnit index or governance artifacts, seal governance, or write `REPAIR_CERTIFICATION.md`.
 
+The repair round is one round, under `Plans/Planning_Wizard.md` PWIZ-028. It works from the findings the review that preceded it produced; a finding raised after it belongs to a later review rather than to this round. The post-repair audit above is limited to the affected rows -- the rows the repair changed and the rows it was supposed to change -- and exists to catch a repair that did not repair or that broke something beside what it fixed. It is not a fresh reading of the plan and it does not open a new subject. `repair_required_count=0` is therefore reached over that set: a finding that is not blocking is closed by being recorded as an open question on the plan, with its severity and its citations, rather than by another repair cycle.
+
 Repairs run:
 
 ```text
@@ -187,6 +189,8 @@ Run only after docs and generated indexes are stable. Then regenerate governance
 A per-plan seal runs the plan-layer profile only: `register_owners`, `index_generate`, `index_validate`, `readiness_generate`, `audit_status_generate`, `audit_status_validate`, `shards_generate`, `shards_check`, `shard_evidence_sync`, `spec_lock_refresh`, `final_index_validate`, `readiness_projection_check`, `spec_lock_verify`, `plan_graph_validate`, and `evidence_validate`. It omits the four repository-wide operations `run_gates`, `audit_governance`, `migration_snapshot`, and `migration_validate`, which run at landing on `main` and on a nightly schedule instead. Every retained operation runs the same validator with the same arguments and scope as before.
 
 The seal record says so: `seal_profile: plan_layer`, `omitted_operations` naming exactly those four, `full_repository_qualified: false`, and `repository_gates_status: not_run_in_this_seal`. A plan-layer seal is a production seal because it states what it did not run; it never claims repository qualification. `Plans/Bootstrap_Planning_Migration.md` BPM-005 and BPM-009 own this contract and the landing/nightly placement.
+
+A seal is accepted when four things have happened, in order, and not before: the deterministic checks pass, one scoped review has run, one bounded repair round has addressed that review's blocking findings with a further seal, and a re-review limited to the affected rows finds no blocking finding. Findings still standing at that point are recorded as open questions on the plan, each with its severity and its citations; they do not block acceptance unless a later review raises one of them to blocking, which sends the plan round again. Acceptance never waits for a review that returns no findings, never proceeds on a review whose blocking findings were not repaired and re-reviewed, and never omits a remaining finding from the plan. `Plans/Planning_Wizard.md` PWIZ-028 owns this bound, amending PWIZ-006 and PWIZ-011, under `Plans/Decision_Log.md#DL-066`.
 
 ## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
 

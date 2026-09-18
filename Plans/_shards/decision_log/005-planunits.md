@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L1125-L4923
+Source lines: L1202-L5155
 
-Source SHA256: `e0534283f62c9e6d80f55d374ca96fcc8b6dad7e66c6a6d4d1b4b6923993355e`
+Source SHA256: `1691101acd2c5dec0cbe8f9370f5da7bc6f46969c62c7acdc43046ef22e39160`
 
 ---
 
@@ -3683,6 +3683,161 @@ owner_hints:
   - Plans/Decision_Log.md
   - Plans/Forge_Integrations.md
   - Plans/Azure_DevOps_Integration.md
+```
+
+### DL-066 - Plan Seal Acceptance Is Bounded By One Review And One Repair Round
+
+```yaml
+plan_unit_id: DL-066
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-17 that acceptance of a plan seal is bounded. A seal is accepted when
+  the deterministic checks pass, one scoped review has run, one bounded repair round has addressed
+  that review's blocking findings with a further seal, and a re-review limited to the rows the
+  repair affected finds no blocking finding. The scoped review reads the rows the work under review
+  touched together with the canon needed to judge them, not the whole document. The repair round is
+  one round: it works from the findings that review produced, and a finding raised later belongs to
+  a later review. The affected-rows re-review checks that the repair repaired what it claimed and
+  broke nothing beside it; it is not a fresh reading of the plan. Findings that remain after that
+  point are recorded as open questions on the plan, each carrying its severity and its citations,
+  and they do not block acceptance unless a later review raises one of them to blocking. Acceptance
+  never requires a review that returns no findings, never proceeds on a review whose blocking
+  findings were not repaired and re-reviewed, and never omits a remaining finding from the plan.
+gui_related: false
+gui_classification_reason: Seal acceptance and review bounding are planning governance timing, not GUI behavior.
+split_recommended: false
+depends_on: [PWIZ-006, PWIZ-011, PWIZ-028]
+unblocks: []
+acceptance_criteria:
+  - PWIZ-028 states the four acceptance conditions in order, the open-question disposition for remaining findings, and the escalation path by which a later review may raise an open question to blocking.
+  - PWIZ-006 and PWIZ-011 carry the bound, so no reader of the topic audit loop or the final audit loop can read either as repairing and re-reviewing until a review returns no findings.
+  - The bootstrap seal and audit prose in Plans/bootstrap/Bootstrap_Planning_Workflow.md states the same bound and the same open-question disposition.
+  - A seal whose review raised blocking findings is not accepted until those findings were repaired in one bounded round, sealed again, and re-reviewed over the affected rows.
+  - Every finding remaining at acceptance appears on the plan as an open question with its severity and citations.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds, executable queues, or build tasks are created by this record.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - Manual review of Plans/Planning_Wizard.md PWIZ-006, PWIZ-011, and PWIZ-028 against this record.
+risk_class: unbounded_review_loop_or_suppressed_finding
+reasoning_tier: high
+context_scope: repo_governance
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Planning_Wizard.md
+  - Plans/bootstrap/Bootstrap_Planning_Workflow.md
+node_compile_hint:
+  mode: seal_acceptance_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md:DL-066-direction-2026-09-17
+  - Plans/Planning_Wizard.md#PWIZ-006
+  - Plans/Planning_Wizard.md#PWIZ-011
+  - Plans/Planning_Wizard.md#PWIZ-028
+preserved_exact_tokens:
+  - deterministic checks
+  - scoped review
+  - bounded repair round
+  - affected rows
+  - open questions
+  - blocking finding
+negative_constraints:
+  - Do not accept a seal on a review whose blocking findings were not repaired and re-reviewed.
+  - Do not withhold a recorded open question from the plan.
+  - Do not require a review that returns no findings before a seal may be accepted.
+  - Do not widen the affected-rows re-review into a fresh review of the whole plan.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Planning_Wizard.md
+```
+
+### DL-067 - Landing Checks Report Only Failures New Since A Recorded Baseline
+
+```yaml
+plan_unit_id: DL-067
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared decided on 2026-09-17 that the three read-only repository-wide checks at landing report
+  only what is new or what is on the branch. Each run still executes run_gates, audit_governance
+  and migration_validate in full. Every failure becomes a stable key of check, sub-check, error
+  kind, path, and a digest of the failure's remaining fields once timestamps, hash values, the
+  absolute path of the checkout it ran in, and the measured actual and expected values are removed.
+  A landing run reports two sets and nothing else: failures whose key is not in the recorded
+  baseline or whose check's failure count rose above the baseline count, and failures that name a
+  path the branch changed whether or not they are new. Because run_gates prints only fifty failures
+  per sub-check and audit_governance only a hundred while reporting the true total, per-sub-check
+  totals are compared as well, and a rise in a truncated sub-check is reported and stops the
+  landing, since what was added cannot be matched against the branch's paths. The check runs after
+  the fast-forward and the shard check and before main is pushed, because the branch is measured by
+  its diff against main and that diff is empty once main is pushed. Outcomes are graded: nothing to
+  report; nothing that stops the landing, being governance staleness on files the branch edited or
+  new failures naming none of the branch's files, which are pushed and reported; something that
+  stops the landing, being a non-staleness failure on the branch's own files, a grown bucket whose
+  error kind is not staleness, or a rise in a truncated sub-check; and failing to run at all, which
+  is not success. The baseline is a full run against main recorded in a full checkout and committed
+  with the commit it was taken at, refreshed on a nightly run beside the migration snapshot by the
+  designated Plans agent whether or not anything landed, and never refreshed to make a landing pass.
+  The measured basis is two landings of 2026-09-17 that took fourteen minutes twelve seconds and
+  fifteen minutes sixteen seconds and produced identical failure sets of twenty-five failing
+  sub-checks and two hundred twenty-eight failures, none of which belonged to either branch. The
+  command, its baseline file and the landing-procedure text are carried by the branch that
+  implements this decision, which owns scripts/pm-landing-check.py and
+  reports/landing-checks/baseline.json.
+gui_related: false
+gui_classification_reason: Landing check reporting and baseline placement are repository governance procedure, not GUI behavior.
+split_recommended: false
+depends_on: [BPM-009, DL-055]
+unblocks: []
+acceptance_criteria:
+  - BPM-009 states the two reported sets, the stable failure key, the per-sub-check total comparison, the nightly baseline refresh, and the graded outcomes.
+  - The landing procedure invokes scripts/pm-landing-check.py against the branch's base rather than the three commands separately, and runs before main is pushed.
+  - The recorded baseline lives at reports/landing-checks/baseline.json, taken from a full run against main in a full checkout and committed with the commit it was taken at.
+  - A rise in a sub-check whose failures are truncated is reported and stops the landing, because the on-branch match cannot see what was added.
+  - The stale-hash carve-out survives the change and still applies to anything the comparison surfaces on the branch's own documents.
+  - All three checks still run in full at landing, so the change alters what is read and not what is checked.
+  - The nightly run refreshes the baseline against main independently of whether anything landed.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds, executable queues, or build tasks are created by this record.
+validation_surfaces:
+  - python3 scripts/pm-landing-check.py --base origin/main
+  - python3 scripts/pm-landing-check.py --record-baseline
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - Manual AGENTS.md and .claude/CLAUDE.md landing-procedure review.
+risk_class: landing_signal_lost_in_preexisting_failures
+reasoning_tier: standard
+context_scope: repo_governance
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Bootstrap_Planning_Migration.md
+node_compile_hint:
+  mode: landing_baseline_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md:DL-067-direction-2026-09-17
+  - Plans/Decision_Log.md#DL-055
+  - Plans/Bootstrap_Planning_Migration.md#BPM-009
+preserved_exact_tokens:
+  - run_gates
+  - audit_governance
+  - migration_validate
+  - reports/landing-checks/baseline.json
+  - scripts/pm-landing-check.py
+negative_constraints:
+  - Do not narrow, skip or shorten any of the three checks in order to make a landing faster; only the reporting changes.
+  - Do not stop a landing on a failure that is already in the baseline and whose count has not risen.
+  - Do not treat an empty or missing baseline as an empty failure set.
+  - Do not refresh the baseline to make a landing pass.
+  - Do not let the nightly baseline refresh lapse and then read a stale baseline as current.
+  - Do not run the landing check after main is pushed, when the branch diff it measures is already empty.
+  - Do not repair or commit another thread's files to make a check pass at landing.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Bootstrap_Planning_Migration.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

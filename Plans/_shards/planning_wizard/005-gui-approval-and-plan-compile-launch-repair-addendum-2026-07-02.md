@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L99-L1142
+Source lines: L99-L1154
 
-Source SHA256: `ac582b97a7bf56c06d7b7f9b6dc72ba773b4da659e1de5cd6c3872e2b541b0b0`
+Source SHA256: `60b87b69635821bcf9ed89fa516a22e53955046cc4e8dcf34a2128127da34679`
 
 ---
 
@@ -349,6 +349,8 @@ unblocks: []
 acceptance_criteria:
 - The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
 - Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- 'Amended 2026-09-17 by PWIZ-028: the audit and repair loop this unit describes is bounded. A topic becomes Ready after the deterministic checks pass, one scoped review has run, one bounded repair round has addressed that review''s blocking findings with a further seal, and a re-review limited to the affected rows finds no blocking finding.'
+- 'Amended 2026-09-17 by PWIZ-028: findings remaining after the affected-rows re-review are recorded as open questions on the plan with their severity and citations; they do not block Ready unless a later review raises one to blocking.'
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -367,6 +369,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- Plans/Planning_Wizard.md#PWIZ-028
+- Plans/Decision_Log.md#DL-066
 - pldg-20260618-001-prd-planning-wizard:atom-0058
 - pldg-20260618-001-prd-planning-wizard:atom-0059
 - pldg-20260618-001-prd-planning-wizard:atom-0060
@@ -394,6 +398,8 @@ preserved_exact_tokens:
 - high-risk checkpoint
 negative_constraints:
 - Do not require later topic agents to interpret every prior raw ledger before continuing.
+- 'Amended 2026-09-17 by PWIZ-028: do not read the audit, repair and re-audit sequence in this unit as repeating until a review returns no findings.'
+- 'Amended 2026-09-17 by PWIZ-028: do not hold a topic out of Ready over a finding that is recorded as an open question and is not blocking.'
 owner_hints:
 - Plans/Planning_Wizard.md
 - Plans/Plan_Document_System.md
@@ -801,6 +807,8 @@ unblocks: []
 acceptance_criteria:
 - The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
 - Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- 'Amended 2026-09-17 by PWIZ-028: the audit and repair loop this unit owns is bounded. A sealed plan is accepted when the deterministic checks pass, one scoped review has run, one bounded repair round has addressed that review''s blocking findings with a further seal, and a re-review limited to the affected rows finds no blocking finding.'
+- 'Amended 2026-09-17 by PWIZ-028: a finding still standing after the affected-rows re-review is durably closed by being recorded as an open question on the plan with its severity and citations, and a later review may raise it to blocking.'
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -820,6 +828,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- Plans/Planning_Wizard.md#PWIZ-028
+- Plans/Decision_Log.md#DL-066
 - pldg-20260618-001-prd-planning-wizard:atom-0130
 - pldg-20260618-001-prd-planning-wizard:atom-0131
 - pldg-20260618-001-prd-planning-wizard:atom-0132
@@ -862,6 +872,8 @@ negative_constraints:
 - Do not make superseded experimental pipeline artifacts part of the product audit architecture.
 - Do not certify a broad final audit performed by one agent when parallel specialist review is required.
 - Do not allow parallel repair subagents to race canonical Plan writes.
+- 'Amended 2026-09-17 by PWIZ-028: do not read "re-audit until all findings are durably closed" as repairing and re-reviewing until a review returns no findings.'
+- 'Amended 2026-09-17 by PWIZ-028: do not treat a finding recorded as a non-blocking open question as an unclosed finding that withholds acceptance.'
 owner_hints:
 - Plans/Planning_Wizard.md
 - Plans/Goal_Runtime_System.md

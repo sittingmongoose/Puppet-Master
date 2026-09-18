@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L1116
+Source lines: L13-L1193
 
-Source SHA256: `e0534283f62c9e6d80f55d374ca96fcc8b6dad7e66c6a6d4d1b4b6923993355e`
+Source SHA256: `1691101acd2c5dec0cbe8f9370f5da7bc6f46969c62c7acdc43046ef22e39160`
 
 ---
 
@@ -1112,3 +1112,80 @@ This records planning canon only. It enables no runtime behaviour, admits no com
 SourceRef: decision card 7 in `/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/AZURE_DECISION_CARDS_20260918.html`, SHA-256 `7379920aee612156224e5bd770b8d099e9e588760c0aeee573af10f45a65de29` as read on 2026-09-18; Jared's answer of 2026-09-18, verbatim "agree", recorded in `/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md`, SHA-256 `1f3ba7531118088f61b3d09554d09498e53797bc93ce128f9032c529fa35f3b4` as read on 2026-09-18; question `q-007` in `Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections`. Agent-relayed, not verifiable from inside this repository.
 
 ContractRef: ContractName:Plans/Forge_Integrations.md, ContractName:Plans/Azure_DevOps_Integration.md
+
+
+### DL-066: A plan seal is accepted after one review and one bounded repair round
+
+Decided on 2026-09-17 by Jared.
+
+The question was when a sealed plan is finished. The audit loop, as canon described it, ran a review, repaired what the review found, ran another review, and repeated until nothing was left to find or a typed blocker stopped it. That has no end an operator can see from the inside, so the question was whether to put a bound on it, and what to do with whatever the bound leaves behind.
+
+It came up because reviews were measured not converging. On one arm of the Jev pilot's two-arm trial, a second fresh reviewer raised new should-fix items after the first reviewer's findings had already been repaired. The repairs were real and the new items were also real; neither reviewer was wrong. The first reviewed seal on the new harness found four defects, of which one had been introduced by the work under review and three had been in the document before it started. A loop that ends when a reviewer stops finding things therefore ends when the reviewers run out, not when the plan is right. Two other things follow from the same measurement: a fresh reviewer spends most of its effort on material the review was not about, and the work a repair round does is the part that is actually attributable to the change under review.
+
+The options were:
+
+1. Accept a seal once the deterministic checks pass, one scoped review has run, one bounded repair round has addressed that review's blocking findings with a further seal, and a re-review limited to the rows the repair affected finds no blocking finding; record whatever remains as open questions on the plan.
+2. Keep repairing and re-reviewing until a review returns no findings at all.
+3. Accept a seal as soon as the deterministic checks pass, and treat every review as advisory.
+
+The answer is option 1. A seal is accepted when four things have happened, in order, and not before.
+
+The deterministic checks pass. These are the checks that give the same answer every time they run on the same bytes, so a failure among them is never a matter of judgment and there is nothing to negotiate about it.
+
+One scoped review runs. Scoped means it reads the rows the work under review actually touched, with the surrounding canon it needs in order to judge them, rather than the whole document. One review, not a panel and not a series.
+
+One bounded repair round addresses that review's blocking findings, and the repaired plan is sealed again. Bounded means one round: the repair works from the findings that review produced, and a finding that arrives later belongs to a later review rather than to this round. The further seal is what proves the repaired text still passes the deterministic checks.
+
+A re-review limited to the affected rows finds no blocking finding. Affected rows means the rows the repair changed and the rows it was supposed to change. This step exists to catch a repair that did not repair, or that broke something next to what it fixed. It is not a fresh reading of the plan and it is not an opportunity to open a new subject.
+
+What the bound leaves behind is recorded rather than discarded. Every finding still standing at that point is written onto the plan as an open question, carrying its severity and the citations the reviewer gave it. An open question does not block acceptance. It stays visible, anyone may pick it up, and if a later review reads the same material and calls it blocking, it blocks from that point and the plan goes round again. Nothing is closed by being ignored.
+
+Two things this does not permit. A seal is not accepted on a review whose blocking findings were never repaired and re-reviewed, so the bound cannot be used to skip the round. And a finding that remains is not left off the plan, so the bound cannot be used to make a problem disappear by declining to write it down.
+
+What this buys is a seal that ends. An operator can tell from the outside whether a plan is accepted, and the cost of accepting one stops depending on how many reviewers are available. What it costs is that a plan can be accepted while known non-blocking findings are still open against it, so the open-question list has to be real, has to be read, and has to be able to escalate.
+
+This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
+
+SourceRef: `/home/sittingmongoose/PM-Experiments/harness-latency-20260916/D3_ACCEPTANCE_AND_LANDING_BASELINE_BRIEF.md`, SHA-256 `efd043f2a5a21f68841c8cd0813cef407cd587a5f0fb9958d19cc4bd135cf274` as read on 2026-09-17; `/home/sittingmongoose/PM-Experiments/harness-latency-20260916/reports/F_R7A_SCOPED_REVIEW_REPORT.md`; `/home/sittingmongoose/PM-Experiments/harness-latency-20260916/reports/N2_REVIEW_CALIBRATION_REPORT.md`; Jared, direction of 2026-09-17. Agent-relayed, not verifiable from inside this repository.
+
+ContractRef: ContractName:Plans/Planning_Wizard.md, ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/Plan_Document_System.md
+
+### DL-067: The landing checks report only the failures that are new since a recorded baseline
+
+Decided on 2026-09-17 by Jared.
+
+The question was what the three repository-wide checks at landing should tell the person landing a branch. They could report everything they find, which is what they did, or they could compare what they find against a recorded picture of the last full run and report only the difference.
+
+It came up because two landings on 2026-09-17 each spent a quarter of an hour reading the same failures. The first ran the three checks in fourteen minutes and twelve seconds; the second, three hours later, took fifteen minutes and sixteen seconds. Between them the two runs produced identical failure sets: twenty-five failing sub-checks and two hundred and twenty-eight individual failures, not one of which had appeared, changed or gone away in between, and none of which had anything to do with either branch. The Jev pilot's landings saw the same thing. A check whose output is the same before and after a change tells the person making the change nothing, and reading it costs the same whether it is useful or not.
+
+The options were:
+
+1. Compare each run's failure set against a recorded baseline from the last full run, report only what is new since it, and refresh the baseline nightly.
+2. Keep printing everything and let the person landing sort it out.
+3. Stop running the checks at landing and rely on the nightly run alone.
+
+The answer is option 1, with the stop rule that follows from it: a landing stops only on something the branch is answerable for.
+
+The checks themselves do not change. All three still run in full, they still read the whole repository, and nothing stops being checked and nothing is hidden. What changes is what is put in front of a reader. Every failure becomes a stable key made of the check, the sub-check, the kind of error, the path it names, and a short digest of what is left of the failure once the parts that move on their own are removed: timestamps, hash values, the absolute path of the checkout it ran in, and the measured actual and expected values. What survives is what makes one failure different from another, which span, which unit, which field, so a stale hash for one document keeps one key however often that document changes.
+
+A landing run reports two sets and nothing else. The first is what is new: a failure whose key is not in the recorded baseline, or a check whose failure count has risen above the baseline's count. The second is what is on the branch: a failure that names a path the branch changed, whether or not it is new. Everything else is silent.
+
+The count comparison is not decoration. The two aggregate checks print only the first fifty failures of a sub-check, or the first hundred, while reporting the true total, so everything above that cap is never keyed at all and the on-branch match runs over the sample rather than the whole set. A rise in a truncated sub-check is therefore reported and does stop the landing, because what was added cannot be matched against the branch's paths and nobody can say it was not the branch's.
+
+The check runs after the fast-forward and the shard check and before main is pushed. That order is not a preference: the branch is measured by what its diff against main names, and once main is pushed that list is empty and the check would be comparing the branch against itself.
+
+Outcomes are graded. Nothing to report is one outcome. Nothing that stops the landing is another: governance staleness on files the branch edited, or failures that are new but name none of the branch's files, both of which are pushed and reported. Something that stops the landing is the third: a failure on the branch's own files that is not staleness, a grown bucket whose error kind is not staleness, or a rise in a truncated sub-check. Being unable to run at all is the fourth, and is not success.
+
+The baseline is a full run against main, recorded in a full checkout and committed with the commit it was taken at. It is refreshed on a nightly run beside the migration snapshot, by the designated Plans agent in a worktree, whether or not anything landed. Nothing on this machine schedules that today, so it is a scheduled task that does the snapshot and the refresh together and commits both. A baseline is never refreshed to make a landing pass; doing that excuses exactly the failure it was meant to show.
+
+Two carve-outs stay exactly as they were. Stale governance hashes for the documents a branch itself edited remain the expected consequence of editing canon before the designated Plans agent's next reseal, so they never stop a landing, and they are still reported with a reseal request. And nobody repairs another thread's files to make a check pass.
+
+What this buys is a landing that reads its checks in seconds instead of a quarter of an hour, and a signal that means something when it appears. What it costs is a baseline that has to be kept current, a nightly run that has to actually run, and the risk that a failure sitting inside the baseline stays unexamined until somebody reads the nightly report on purpose.
+
+The command, the baseline file and the landing procedure text are carried by the branch that implements this decision, which owns `scripts/pm-landing-check.py`, its baseline at `reports/landing-checks/baseline.json`, its runbook, and the landing-procedure wording in `AGENTS.md` and `.claude/CLAUDE.md`. This record states the rule; that branch states how it is run.
+
+This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
+
+SourceRef: `/home/sittingmongoose/PM-Experiments/harness-latency-20260916/D3_ACCEPTANCE_AND_LANDING_BASELINE_BRIEF.md`, SHA-256 `efd043f2a5a21f68841c8cd0813cef407cd587a5f0fb9958d19cc4bd135cf274` as read on 2026-09-17; the two landing runs of 2026-09-17 at `/home/sittingmongoose/PM-Experiments/harness-latency-20260916/reports/landing-gates-20260917/` (run-gates.json SHA-256 `fec3ff2a4b515902772f1d76d2eaaeb5cfb202135151b456af31e445f5155ac4`) and `/home/sittingmongoose/PM-Experiments/harness-latency-20260916/reports/landing-gates-20260917-n4/` (run-gates.json SHA-256 `079c484c63bfcc99e421458b6c06bd2eb811d326078a197931516cad3fcd588b`); Jared, direction of 2026-09-17.
+
+ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/Planning_Ledger_System.md

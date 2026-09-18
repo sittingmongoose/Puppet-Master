@@ -2732,7 +2732,7 @@
         "reports/landing-checks/baseline.json",
         "scripts/pm-landing-check.py"
       ],
-      "line_count": 560,
+      "line_count": 620,
       "path": "Plans/Bootstrap_Planning_Migration.md",
       "plan_unit_count": 9,
       "plan_unit_ids": [
@@ -2761,7 +2761,7 @@
         "thread_restart_continuity",
         "workflow_continuity"
       ],
-      "sha256": "894d9a7a0490b9e35e866e16844dc4f3bd20f786eb5f4fc148ca4d7648e128fb",
+      "sha256": "2ce889933b04cdce0510d5d7577292bb7de5c3d0db194980d937b48d01b8230e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 9
@@ -2790,6 +2790,7 @@
         "Validators after pilot and each batch.",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-landing-check.py --base origin/main",
+        "python3 scripts/pm-landing-check.py --record-baseline",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir <the run named in Plans/.plan_migration/current_run.json>",
         "python3 scripts/pm-plans-verify.py audit-governance",
@@ -5342,10 +5343,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 25,
+        "False": 27,
         "True": 37
       },
-      "heading_count": 130,
+      "heading_count": 134,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5419,9 +5420,9 @@
         "scripts/pm-plans-verify.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 4951,
+      "line_count": 5183,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 62,
+      "plan_unit_count": 64,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5484,6 +5485,8 @@
         "DL-063",
         "DL-064",
         "DL-065",
+        "DL-066",
+        "DL-067",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5526,6 +5529,7 @@
         "implicit_merge_strategy_selection",
         "incomplete_parent_list_or_unreadable_expansion_freshness",
         "jujutsu_research_decision_drift",
+        "landing_signal_lost_in_preexisting_failures",
         "lane_cleanup_retention_loss",
         "migration_lineage",
         "navigation_primitive_boundary_drift",
@@ -5549,21 +5553,22 @@
         "terminal_research_decision_drift",
         "unbindable_vote_promise",
         "unbounded_or_dishonest_parent_adjacency_in_a_bounded_page",
+        "unbounded_review_loop_or_suppressed_finding",
         "undefined_merge_editor_availability_or_unsafe_external_write_to_a_jujutsu_workspace",
         "undisclosed_remote_scope_on_a_destructive_bookmark_action",
         "unrenderable_branch_policy_promise",
         "weak_integration_underclassification"
       ],
-      "sha256": "e0534283f62c9e6d80f55d374ca96fcc8b6dad7e66c6a6d4d1b4b6923993355e",
+      "sha256": "1691101acd2c5dec0cbe8f9370f5da7bc6f46969c62c7acdc43046ef22e39160",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 62
+        "accepted": 64
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 59
+        "requirement": 61
       },
       "validation_surfaces": [
         "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
@@ -5572,6 +5577,7 @@
         "Exact response SHA-256 and scope-name comparison",
         "Exact response-byte preservation and source SHA-256 checks",
         "Manual AGENTS.md and .claude/CLAUDE.md landing-procedure review.",
+        "Manual review of Plans/Planning_Wizard.md PWIZ-006, PWIZ-011, and PWIZ-028 against this record.",
         "Owner/consumer source-to-decision review",
         "PlanUnit YAML parse and identifier-uniqueness check",
         "Plans/jujutsu_integration_contract_fixtures.json",
@@ -5587,6 +5593,7 @@
         "python3 scripts/pm-browser-event-admission.py",
         "python3 scripts/pm-event-authority-currentness.py validate",
         "python3 scripts/pm-landing-check.py --base origin/main",
+        "python3 scripts/pm-landing-check.py --record-baseline",
         "python3 scripts/pm-new-contracts-verify.py",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
@@ -13387,10 +13394,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 6,
+        "False": 7,
         "True": 21
       },
-      "heading_count": 63,
+      "heading_count": 65,
       "implementation_surfaces": [
         "Plans/.implementation_readiness/buildability_gate_report.json",
         "Plans/.implementation_readiness/readiness_blockers.jsonl",
@@ -13398,6 +13405,7 @@
         "Plans/00-plans-index.md",
         "Plans/Automated_Testing_System.md",
         "Plans/Contracts_V0.md",
+        "Plans/Decision_Log.md",
         "Plans/Executor_Protocol.md",
         "Plans/FileSafe.md",
         "Plans/FinalGUISpec.md",
@@ -13416,6 +13424,7 @@
         "Plans/UI_Command_Catalog.md",
         "Plans/WorktreeGitImprovement.md",
         "Plans/assistant-chat-design.md",
+        "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
         "Plans/execution_unit_context.schema.json",
         "Plans/guided_tour_contracts.schema.json",
         "Plans/human-in-the-loop.md",
@@ -13428,9 +13437,9 @@
         "future Product Onboarding and Bootstrap projection controllers",
         "future Product Onboarding native controller"
       ],
-      "line_count": 2422,
+      "line_count": 2552,
       "path": "Plans/Planning_Wizard.md",
-      "plan_unit_count": 27,
+      "plan_unit_count": 28,
       "plan_unit_ids": [
         "PWIZ-001",
         "PWIZ-002",
@@ -13458,7 +13467,8 @@
         "PWIZ-024",
         "PWIZ-025",
         "PWIZ-026",
-        "PWIZ-027"
+        "PWIZ-027",
+        "PWIZ-028"
       ],
       "reasoning_tiers": [
         "high",
@@ -13479,16 +13489,18 @@
         "retired_provider_first_choreography_reactivated",
         "stale_approval_build_race",
         "stale_or_forbidden_behavior",
-        "tour_fake_shell_or_layout_loss"
+        "tour_fake_shell_or_layout_loss",
+        "unbounded_review_loop_or_suppressed_finding"
       ],
-      "sha256": "ac582b97a7bf56c06d7b7f9b6dc72ba773b4da659e1de5cd6c3872e2b541b0b0",
+      "sha256": "60b87b69635821bcf9ed89fa516a22e53955046cc4e8dcf34a2128127da34679",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 26,
+        "accepted": 27,
         "retired": 1
       },
       "title": "Planning Wizard",
       "unit_type_counts": {
+        "constraint": 1,
         "integration_contract": 2,
         "owner_boundary": 1,
         "requirement": 23,
@@ -13500,6 +13512,7 @@
         "Future Planning Wizard source pick local/SSH tests.",
         "Future policy-hidden source no-leak tests.",
         "Future research decision review integration, replay and accessible presentation receipts; not_run",
+        "Manual review of the seal record, the scoped review, the repair round and the affected-rows re-review against this unit.",
         "Plans/backup_restore_system_contracts.schema.json",
         "Plans/forge_integration_contracts.schema.json",
         "Plans/guided_tour_contract_fixtures.json",
@@ -13525,6 +13538,7 @@
         "keyboard and screen-reader fixtures",
         "legacy migration fixtures",
         "live-review",
+        "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-implementation-readiness.py validate",
@@ -13533,6 +13547,7 @@
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts",
         "python3 scripts/pm-shard-plans.py --check",
+        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "real-application action observation",
         "tests/test_pm_onboarding_phases.py",
         "tests/test_pm_settings_draft_transfer.py"
@@ -19772,7 +19787,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-21T00:48:54Z",
+  "generated_at_utc": "2026-09-21T03:58:42Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19780,13 +19795,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3493,
+      "False": 3496,
       "True": 3195
     },
-    "plan_unit_count": 6688,
+    "plan_unit_count": 6691,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6497,
+      "accepted": 6500,
       "retired": 182,
       "superseded": 9
     },
@@ -19812,7 +19827,7 @@
       "compatibility_contract": 1,
       "compatibility_disposition": 137,
       "compatibility_note": 2,
-      "constraint": 627,
+      "constraint": 628,
       "consumer_alignment": 1,
       "consumer_contract": 1,
       "consumer_requirement": 1,
@@ -19853,7 +19868,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5249,
+      "requirement": 5251,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
