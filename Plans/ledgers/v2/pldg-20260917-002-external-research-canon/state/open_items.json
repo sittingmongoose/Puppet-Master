@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-002-external-research-canon",
-  "updated_at_utc": "2026-09-18T09:00:00+00:00",
+  "updated_at_utc": "2026-09-18T10:00:00+00:00",
   "open_questions": [
     {
       "question_id": "q-001",
@@ -43,12 +43,24 @@
         "Plans/Source_Control_System.md",
         "Plans/Backup_Restore_System.md"
       ]
+    },
+    {
+      "question_id": "q-010",
+      "summary": "Should DL-036's negative-constraint line say colored border bars, as its consumers and the shipped fixture do?",
+      "status": "open",
+      "blocks_landing": false,
+      "affected_surfaces": [
+        "Plans/Decision_Log.md#DL-036",
+        "Plans/assistant-chat-design.md#ACD-467",
+        "Plans/Automated_Testing_System.md#ATS-054",
+        "Plans/external_research_contract_fixtures.json"
+      ]
     }
   ],
   "deferred_questions": [],
   "open_blockers": [],
   "remaining_work": [
-    "This ledger is compiled and the branch is pushed for independent review. Four questions stay open: q-001 and q-002 hold continuation 5's review-configuration and latency results, which had not reported when this wave ran, so ERS-010 and ERS-012 carry continuation 4's numbers with their run named; q-003 is the governance coverage reseal for Plans/External_Research.md and Plans/Settings_System.md, which belongs to the designated Plans agent; q-004 is the consumer reference that belongs in the Jujutsu, Source Control and Backup owners, left to the concurrent plans/c4-corrections-20260917 branch, which holds those files. The two branches were kept apart on the owner documents, not made disjoint: they share eight changed paths, and Plans/ledgers/v2/ledger_registry.json conflicts for whichever lands second, resolved by keeping both ledger entries and the later updated_at_utc.",
+    "This ledger is compiled and the branch is pushed for independent review. Five questions stay open. The 2026-09-18 answers wave answered q-005 through q-009 and the cycle-1 review raised q-010, whether DL-036's negative-constraint line should use its consumers' words; the four the landing raised are: q-001 and q-002 hold continuation 5's review-configuration and latency results, which had not reported when this wave ran, so ERS-010 and ERS-012 carry continuation 4's numbers with their run named; q-003 is the governance coverage reseal for Plans/External_Research.md and Plans/Settings_System.md, which belongs to the designated Plans agent; q-004 is the consumer reference that belongs in the Jujutsu, Source Control and Backup owners, left to the concurrent plans/c4-corrections-20260917 branch, which holds those files. The two branches were kept apart on the owner documents, not made disjoint: they share eight changed paths, and Plans/ledgers/v2/ledger_registry.json conflicts for whichever lands second, resolved by keeping both ledger entries and the later updated_at_utc.",
     "Governance reseal for the documents this repair edited is owed to the designated Plans agent: Plans/Spec_Lock.json, Plans/.evidence/**, the plan graph and the readiness report carry hashes that this branch's canon edits make stale. Recorded per Jared's answer of 2026-09-18."
   ],
   "scope_note": "Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Backup_Restore_System.md, Plans/final_gui_interaction_contracts.schema.json and their fixtures are outside this ledger; branch plans/c4-corrections-20260917 held them concurrently and q-004 records the consumer reference that belongs there.",

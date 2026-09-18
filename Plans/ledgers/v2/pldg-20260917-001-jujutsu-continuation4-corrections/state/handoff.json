@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-001-jujutsu-continuation4-corrections",
-  "updated_at_utc": "2026-09-18T09:00:00+00:00",
-  "last_event_id": "evt-009",
+  "updated_at_utc": "2026-09-18T10:00:00+00:00",
+  "last_event_id": "evt-010",
   "canonical_plan_targets": [
     "Plans/Decision_Log.md",
     "Plans/Jujutsu_Integration.md",
@@ -36,7 +36,7 @@
     "configured_shards": "pass",
     "semantic_gate_tests": "pass",
     "claim_boundary": "Static schema, fixture, shard, index and semantic-gate integrity only. No governance seal, runtime certification or readiness admission.",
-    "partial_enforcement": "Five obligations have no validator surface and are recorded as open questions q-008, q-009, q-010, q-011 and q-012 rather than implied by the contracts.",
+    "partial_enforcement": "Three obligations have no validator surface and are recorded as open questions q-008, q-009 and q-010 rather than implied by the contracts. Questions q-011, q-012 and q-013, raised by the 2026-09-17 compile repair, are answered and are not unenforced obligations: q-011 closed with no change, q-012 landed as a rename, and q-013 landed in this ledger's own records.",
     "governance_coverage_errors": [
       "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
       "governance coverage targets missing from Spec_Lock coverage: ['Plans/Decision_Log.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
@@ -46,12 +46,13 @@
   },
   "current_phase": "compiled_jujutsu_continuation4_corrections",
   "cursor": {
-    "last_event_id": "evt-009",
-    "next_action": "Jared's answers of 2026-09-18 are recorded and applied; q-011, q-012 and q-013 are answered. Three questions from the landing stay open and none blocks landing: q-008, q-009 and q-010. The governance reseal for the edited documents is owed to the designated Plans agent. The branch waits for cycle 2 of the blind form-driven review before landing."
+    "last_event_id": "evt-010",
+    "next_action": "Jared's answers of 2026-09-18 are applied and cycle 1 of the blind review is fixed. Four questions stay open and none blocks landing: q-008, q-009 and q-010 from the landing, and q-014 on which unit owns the closure definitions SCS-014 and JJI-008 share. The governance reseal for the edited documents is owed to the designated Plans agent. The branch waits for cycle 2 before landing."
   },
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections/source_shards/authorization.md",
     "Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections/source_shards/findings.md"
   ],
-  "landing_condition": "Reviewer approval, then fast-forward onto main with regenerated shards and index."
+  "landing_condition": "Reviewer approval, then fast-forward onto main with regenerated shards and index.",
+  "open_questions_count": 4
 }

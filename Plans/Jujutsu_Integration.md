@@ -213,8 +213,8 @@ owner_doc: Plans/Jujutsu_Integration.md
 canonical_text: >-
   When an active .jj store is verified in a colocated repository there is exactly one mutation authority, and it
   is JJ by default. A read-only Git inspection path may remain available. Any Git mutation requires an explicit
-  compatibility
-  preflight, the same current source-control writer lease, exact pre-mutation JJ operation ID, mutation scope,
+  compatibility preflight, the same current source-control writer lease, exact pre-mutation JJ operation ID,
+  mutation scope,
   Git expected revision, an explicit separately certified reconciliation path, exact post-mutation JJ operation ID
   and terminal receipt. `jj git import` or `jj git export` is never assumed as reconciliation. In a colocated 0.44.0
   workspace both are effective false by default; a late or unmatched Git mutation quarantines the workspace.
@@ -555,8 +555,8 @@ owner_doc: Plans/Jujutsu_Integration.md
 canonical_text: >-
   A source-inclusive JJ backup records the retained operation/object closure for the exact discovered layout:
   colocated, non-colocated, or shared multi-workspace. The closure includes operation heads/store, referenced
-  repository views,
-  commits/trees/conflicts, non-current abandoned/rebased objects needed by retained operations, underlying Git/common/
+  repository views, commits/trees/conflicts, non-current abandoned/rebased objects needed by retained operations,
+  underlying Git/common/
   alternate/shared stores when present, workspace maps and captured dirty files, under one capture barrier and GC/prune/
   rewrite fence. Restore verification runs on a clean isolated disposable repository, uses read modes that do not create
   a hidden JJ snapshot, proves a selected historical operation can be inspected and restored, and emits native
@@ -623,8 +623,9 @@ acceptance_criteria:
     with every head, and never resolved: Backup reconciles nothing.
   - >-
     Every entry inside the native store tree has a stated disposition. Each is classified against the pinned JJ version
-    as `native_history`, `machine_local`, `ephemeral` or `unrecognized`, and each classification names the source trace
-    that establishes it; a filename pattern such as `*.lock` is never a classification. Machine-local and ephemeral
+    as `native_history`, `machine_local`, `ephemeral` or `unrecognized`, and each classification other than
+    `unrecognized` names the source trace that establishes it, while an `unrecognized` entry records none because
+    nothing traces it; a filename pattern such as `*.lock` is never a classification. Machine-local and ephemeral
     entries are captured as bytes and carry `restored_as_active_state` false, so a restored copy carries no other
     machine's store identity. An unrecognized entry inside the store tree yields `partial` with the entry named, never
     `complete`, and is never restored as active state either. The obligations this unit lands are those three. The

@@ -3,8 +3,19 @@
   "run": "compile-repair-20260917",
   "branch": "plans/compile-repair-20260917",
   "base_revision": "4f5eda0d18a9deff2349b03ae573f0ffd706ed61",
-  "head_revision": "d84153998b1c077f6145fc2c62bff3e625794d6f",
-  "claim_boundary": "Static text, schema, fixture, shard, index and ledger-validator integrity only. No governance seal, runtime certification or readiness admission. No schema or fixture semantics were changed: every machine token this repair names in canon already existed in the shipped schemas and fixtures.",
+  "parent_revision": "06535673a112cff6e37caff9b3e7c294ac611b62",
+  "covers": "the commit this receipt lands in, which is the child of parent_revision. A receipt cannot name its own commit hash, so the parent and the complete changed-path list against the base identify what is covered; checks.log carries the same parent stamp and the time the sweep ran.",
+  "claim_boundary": "Static text, schema, fixture, shard, index and ledger-validator integrity only. No governance seal, runtime certification or readiness admission. The repair through b56be91761 changed no schema or fixture semantics. The boundary was widened on 2026-09-18 by Jared's answers, two of which are schema and fixture changes: q-012's native_toolchain_identity rename and ledger 002's q-005 declared_other_arm_artifact input class with its two fixtures. Nothing outside those nine answers changed a schema or a fixture.",
+  "boundary_widened_by": {
+    "path": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md",
+    "sha256": "ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c",
+    "read_on": "2026-09-18",
+    "caveat": "Agent-relayed, not verifiable from inside this repository.",
+    "schema_or_fixture_answers": [
+      "pldg-20260917-001 q-012",
+      "pldg-20260917-002 q-005"
+    ]
+  },
   "witness": {
     "pldg-20260917-001-jujutsu-continuation4-corrections": {
       "before": {
@@ -71,58 +82,128 @@
   },
   "checks": {
     "python3 scripts/pm-ledger-compile-witness.py <ledger>": "pass on both ledgers, with and without --base origin/main, exit 0",
-    "python3 scripts/pm-new-contracts-verify.py": "pass; 31 contract pairs, 1059 of 1059 positives valid, 3451 of 3451 negatives rejected",
+    "python3 scripts/pm-new-contracts-verify.py": "pass; 31 contract pairs, 1060 of 1060 positives valid, 3452 of 3452 negatives rejected",
     "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json": "pass; 99 docs, 2690 shards, no failures",
-    "python3 scripts/pm-plan-index.py validate": "pass; 6674 plan units, 25989 acceptance units, coverage pass",
+    "python3 scripts/pm-plan-index.py validate": "pass; 6674 plan units, 25990 acceptance units, coverage pass",
     "python3 scripts/pm-bootstrap-ledger-validate.py <ledger 001>": "fail on exactly the three pre-existing governance-coverage errors the compile itself recorded; no new error",
     "python3 scripts/pm-bootstrap-ledger-validate.py <ledger 002>": "fail on exactly the three pre-existing governance-coverage errors the compile itself recorded; no new error",
     "python3 -m unittest tests.test_pm_ledger_compile_witness tests.test_pm_jujutsu_closure_semantics tests.test_pm_source_control_effects tests.test_pm_plan_index": "36 tests, OK"
   },
   "blind_review_dispositions": {
     "packets": [
-      "reviewer-a",
-      "reviewer-b",
-      "reviewer-c",
+      "blind-review-cycle-1",
+      "er-pre-reviewer-a",
+      "er-pre-reviewer-b",
       "er-reviewer-a",
       "er-reviewer-b",
-      "er-pre-reviewer-a",
-      "er-pre-reviewer-b"
+      "reviewer-a",
+      "reviewer-b",
+      "reviewer-c"
     ],
-    "findings_total": 134,
+    "findings_total": 146,
     "by_disposition": {
-      "confirmed_and_repaired": 82,
+      "confirmed_and_repaired": 93,
       "not_confirmed": 4,
       "confirmed_recorded_not_repaired": 37,
-      "confirmed_deferred_to_question": 11
+      "confirmed_deferred_to_question": 12
     },
-    "by_ledger": {
-      "pldg-20260917-001-jujutsu-continuation4-corrections": {
-        "confirmed_and_repaired": 50,
-        "not_confirmed": 2
+    "by_packet": {
+      "blind-review-cycle-1": {
+        "confirmed_and_repaired": 10,
+        "confirmed_deferred_to_question": 2
       },
-      "pldg-20260917-002-external-research-canon": {
-        "confirmed_recorded_not_repaired": 37,
-        "confirmed_and_repaired": 32,
-        "confirmed_deferred_to_question": 11,
-        "not_confirmed": 2
+      "er-pre-reviewer-a": {
+        "confirmed_and_repaired": 6,
+        "confirmed_deferred_to_question": 3,
+        "confirmed_recorded_not_repaired": 9,
+        "not_confirmed": 1
+      },
+      "er-pre-reviewer-b": {
+        "confirmed_and_repaired": 10,
+        "confirmed_recorded_not_repaired": 7,
+        "confirmed_deferred_to_question": 2,
+        "not_confirmed": 1
+      },
+      "er-reviewer-a": {
+        "confirmed_recorded_not_repaired": 12,
+        "confirmed_and_repaired": 8,
+        "confirmed_deferred_to_question": 4
+      },
+      "er-reviewer-b": {
+        "confirmed_and_repaired": 9,
+        "confirmed_recorded_not_repaired": 9,
+        "confirmed_deferred_to_question": 1
+      },
+      "reviewer-a": {
+        "confirmed_and_repaired": 18,
+        "not_confirmed": 1
+      },
+      "reviewer-b": {
+        "confirmed_and_repaired": 19
+      },
+      "reviewer-c": {
+        "confirmed_and_repaired": 13,
+        "not_confirmed": 1
       }
     },
     "file": "findings-dispositions.jsonl"
   },
-  "open_questions_added": {
-    "pldg-20260917-001-jujutsu-continuation4-corrections": [
-      "q-011",
-      "q-012",
-      "q-013"
+  "blind_review_cycle_1": {
+    "findings": "~/PM-Experiments/blind-review-compile-repair-20260918/findings.jsonl",
+    "sha256": "aadaf1cfdf6410cae3f560211a90a367042fe42269c315f1708f015beca3ce72",
+    "verdict": "fix_then_land",
+    "blocking": 0,
+    "should_fix": 7,
+    "notes": 5,
+    "repaired": [
+      "R-01",
+      "R-02",
+      "R-03",
+      "R-04",
+      "R-05",
+      "R-06",
+      "R-09",
+      "R-10",
+      "R-11",
+      "R-12"
     ],
-    "pldg-20260917-002-external-research-canon": [
-      "q-005",
-      "q-006",
-      "q-007",
-      "q-008",
-      "q-009"
-    ]
+    "deferred_to_questions": {
+      "R-07": "pldg-20260917-001 q-014",
+      "R-08": "pldg-20260917-002 q-010"
+    }
   },
+  "open_questions": {
+    "pldg-20260917-001-jujutsu-continuation4-corrections": {
+      "open": [
+        "q-008",
+        "q-009",
+        "q-010",
+        "q-014"
+      ],
+      "answered_by_this_branch": [
+        "q-011",
+        "q-012",
+        "q-013"
+      ]
+    },
+    "pldg-20260917-002-external-research-canon": {
+      "open": [
+        "q-001",
+        "q-002",
+        "q-003",
+        "q-004",
+        "q-010"
+      ],
+      "answered_by_this_branch": [
+        "q-005",
+        "q-006",
+        "q-007",
+        "q-008",
+        "q-009"
+      ]
+    }
+  },
+  "reseal_owed": "Plans/Spec_Lock.json, Plans/.evidence/**, the plan graph and the readiness report carry hashes that this branch's canon edits make stale. The reseal is the designated Plans agent's, per Jared's answer of 2026-09-18, and is not performed here.",
   "files_changed_against_base": [
     "Plans/.plan_index/acceptance_units.jsonl",
     "Plans/.plan_index/coverage_report.json",
@@ -289,6 +370,11 @@
     "Plans/_shards/planning_ledger_system/015-external-research-landing-boundary-addendum-2026-09-17.md",
     "Plans/_shards/planning_ledger_system/manifest.json",
     "Plans/assistant-chat-design.md",
+    "Plans/external_research_contract_fixtures.json",
+    "Plans/external_research_contracts.schema.json",
+    "Plans/jujutsu_integration_contract_fixtures.json",
+    "Plans/jujutsu_integration_contracts.schema.json",
+    "Plans/ledgers/v2/ledger_registry.json",
     "Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections/events.jsonl",
     "Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections/manifest.json",
     "Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections/records/design_atoms.jsonl",
@@ -302,26 +388,33 @@
     "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/events.jsonl",
     "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/manifest.json",
     "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/records/questions.jsonl",
+    "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/source_shards/authorization.md",
+    "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/source_shards/evidence.md",
     "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/state/compile_queue.json",
     "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/state/current.json",
     "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/state/handoff.json",
     "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/state/open_items.json",
     "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/validation/ledger_health.json",
+    "Plans/source_control_contract_fixtures.json",
+    "Plans/source_control_contracts.schema.json",
     "reports/compile-repair-20260917/README.md",
+    "reports/compile-repair-20260917/checks.log",
+    "reports/compile-repair-20260917/findings-dispositions.jsonl",
     "reports/compile-repair-20260917/verification.json",
     "reports/compile-repair-20260917/witness-after-001.json",
     "reports/compile-repair-20260917/witness-after-002.json",
     "reports/compile-repair-20260917/witness-before-001.json",
     "reports/compile-repair-20260917/witness-before-002.json"
   ],
+  "files_changed_count": 200,
   "bundle_sha256": {
-    "README.md": "06e4786636d1c73908cd6fd8f8b353bca154a6896a05347b9e706b3321ab787a",
-    "checks.log": "4a4abd73de3f00ec7dd1ecaf900eb15e6e3957df337b2bb5ef7529721484475d",
-    "findings-dispositions.jsonl": "04df8a400c8b5eb7be049145ef2f26318610ca1ecd0657a5201b6406b45c3799",
+    "README.md": "76d8c442c3be474e724288b9115a6d886e9ea44e0c5f6d7e19e43f370770eb65",
+    "checks.log": "c16916ee180045489e853c4283f5765f4082d003845474726003e0b7997260c6",
+    "findings-dispositions.jsonl": "1bb12bcd9d3aa2f8418f133b9de369e1c37202c2fe8b3ddd295e52fcd2f9c494",
     "witness-after-001.json": "c745b0fb1a0bfb3d885bbe8499c65b35ffa28367150a43e6e1a35e6f47fc4cd4",
-    "witness-after-002.json": "90b13f9c78c882baef2663ebb479e8b01ef19737abffe658cf72fb72b79c93ca",
+    "witness-after-002.json": "9db1097f2802d227a2a87b3cb07a1392d4aee930af79164ec0aadbb45716c13b",
     "witness-before-001.json": "9ad339e73eb57633df220461230451a80fc9688fe45edf69ef01b634b26190e8",
     "witness-before-002.json": "42ec87cefbf3c9df7788500c062acf355b7a70ab5cfd4e665c57861d06cccb1b"
   },
-  "status": "pass_deterministic_checks_pending_independent_review"
+  "status": "pass_deterministic_checks_cycle1_fixed_pending_cycle2"
 }

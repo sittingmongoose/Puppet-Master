@@ -923,7 +923,7 @@ Seventh, one rejected candidate. A candidate about the marker-based gate on Mark
 
 Jared's answer to all seven, verbatim and whole: "I agree with all 7 of your recommendations. You can do all the next steps. You can use Opus 5 max for your strong model." The third sentence is about experiment tooling rather than canon, and is quoted here so the record carries the whole utterance rather than the part that bears on the Plans.
 
-What this buys is thirteen repairs that each fail a fixture when they are violated, rather than thirteen paragraphs that read well. What it costs is four new relational rules in a script that had two, a schema that carries more identity than it did, and two obligations that are written down as unenforced and tracked as questions rather than quietly implied.
+What this buys is thirteen repairs that each fail a fixture when they are violated, rather than thirteen paragraphs that read well. What it costs is four new relational rules in a script that had two, a schema that carries more identity than it did, and three obligations that are written down as unenforced and tracked as open questions `q-008`, `q-009` and `q-010` rather than quietly implied.
 
 This records planning canon only. It enables no runtime behaviour, admits no command or event, and seals no governance.
 

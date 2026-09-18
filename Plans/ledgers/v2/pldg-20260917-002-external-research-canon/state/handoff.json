@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-002-external-research-canon",
-  "updated_at_utc": "2026-09-18T09:00:00+00:00",
-  "last_event_id": "evt-009",
+  "updated_at_utc": "2026-09-18T10:00:00+00:00",
+  "last_event_id": "evt-010",
   "canonical_plan_targets": [
     "Plans/Automated_Testing_System.md",
     "Plans/External_Research.md",
@@ -49,8 +49,8 @@
   },
   "current_phase": "compiled_external_research_canon",
   "cursor": {
-    "last_event_id": "evt-009",
-    "next_action": "Jared's answers of 2026-09-18 are recorded and applied; q-005 through q-009 are answered. The questions raised at landing stay open and none blocks landing. The governance reseal for the edited documents is owed to the designated Plans agent. The branch waits for cycle 2 of the blind form-driven review before landing."
+    "last_event_id": "evt-010",
+    "next_action": "Jared's answers of 2026-09-18 are applied and cycle 1 of the blind review is fixed. Five questions stay open and none blocks landing: q-001 through q-004 from the landing, and q-010 on DL-036's wording. The governance reseal for the edited documents is owed to the designated Plans agent. The branch waits for cycle 2 before landing."
   },
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/source_shards/authorization.md",

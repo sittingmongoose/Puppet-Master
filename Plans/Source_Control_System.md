@@ -879,8 +879,7 @@ status: accepted
 owner_doc: Plans/Source_Control_System.md
 canonical_text: >-
   Source Control supplies Backup with backend-native source-closure truth, capture barrier evidence and GC fence
-  evidence;
-  Backup Restore remains owner of bytes, manifests, RestoreRun, staging, activation, and rollback. Every restored
+  evidence; Backup Restore remains owner of bytes, manifests, RestoreRun, staging, activation, and rollback. Every restored
   repository is verified in an isolated boundary before activation. Restore as New creates a new Project/repository
   binding while preserving an external repository identity only as non-authoritative lineage until explicit owner
   rebind and remote validation. In-place or selective restore never performs an implicit byte merge: it binds an exact
@@ -1008,8 +1007,8 @@ acceptance_criteria:
     write into. A control disabled by that scoping carries the typed reason `conflict_surface_read_only_on_jujutsu`
     rather than appearing unavailable without explanation, and its safe next action is the value the existing closed
     vocabulary already has, `inspect`; no new safe-next-action value is introduced. The save-back contract for a
-    Jujutsu conflict is deferred
-    until the built-in editor's save path is designed, and until then nothing writes conflict content back through
+    Jujutsu conflict is deferred until the built-in editor's save path is designed, and until then nothing writes
+    conflict content back through
     these surfaces.
   - Partial fan-out identifies exactly which ref reached each target; shared commits never establish repository identity and an Origin mirror never triggers duplicate automatic publication.
   - >-

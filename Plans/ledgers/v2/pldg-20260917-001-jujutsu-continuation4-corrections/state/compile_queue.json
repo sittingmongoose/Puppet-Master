@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-001-jujutsu-continuation4-corrections",
-  "updated_at_utc": "2026-09-18T09:00:00+00:00",
-  "last_event_id": "evt-009",
+  "updated_at_utc": "2026-09-18T10:00:00+00:00",
+  "last_event_id": "evt-010",
   "canonical_plan_targets": [
     "Plans/Decision_Log.md",
     "Plans/Jujutsu_Integration.md",
@@ -36,7 +36,7 @@
     "configured_shards": "pass",
     "semantic_gate_tests": "pass",
     "claim_boundary": "Static schema, fixture, shard, index and semantic-gate integrity only. No governance seal, runtime certification or readiness admission.",
-    "partial_enforcement": "Three obligations have no validator surface and are recorded as open questions q-008, q-009 and q-010 rather than implied by the contracts.",
+    "partial_enforcement": "Three obligations have no validator surface and are recorded as open questions q-008, q-009 and q-010 rather than implied by the contracts. Questions q-011, q-012 and q-013, raised by the 2026-09-17 compile repair, are answered and are not unenforced obligations: q-011 closed with no change, q-012 landed as a rename, and q-013 landed in this ledger's own records.",
     "governance_coverage_errors": [
       "governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
       "governance coverage targets missing from Spec_Lock coverage: ['Plans/Decision_Log.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
@@ -461,6 +461,6 @@
       "compile_event_id": "evt-002"
     }
   ],
-  "notes": "Thirteen corrections and three owner decisions are compiled. Three questions stay open and none blocks landing: q-008 the enumerated machine-local and ephemeral store entry list for a pinned JJ version, q-009 the adapter's complete declared native effect scope per invocation, and q-010 whether the recovery floor commands are servable from the operation store alone. The branch stops for independent review before landing on main. Repaired on 2026-09-17 under evt-007: the five findings records that named a unit the queue never targeted now target it and the unit carries the obligation, every exact atom token reaches its owner unit’s prose and registry, and the orphaned preserved_exact_tokens entries are gone. Two further questions are open, q-011 and q-012, and neither blocks landing.",
-  "terminal_ledger_event_id": "evt-009"
+  "notes": "Thirteen corrections and three owner decisions are compiled. Three questions stay open and none blocks landing: q-008 the enumerated machine-local and ephemeral store entry list for a pinned JJ version, q-009 the adapter's complete declared native effect scope per invocation, and q-010 whether the recovery floor commands are servable from the operation store alone. The branch stops for independent review before landing on main. Repaired on 2026-09-17 under evt-007: the five findings records that named a unit the queue never targeted now target it and the unit carries the obligation, every exact atom token reaches its owner unit’s prose and registry, and the orphaned preserved_exact_tokens entries are gone. Three further questions were raised by that repair and all three are answered: q-011 closed with no change, q-012 landed as the native_toolchain_identity rename and q-013 landed in this ledger's own records. Three questions stay open, q-008, q-009 and q-010, and none blocks landing.",
+  "terminal_ledger_event_id": "evt-010"
 }

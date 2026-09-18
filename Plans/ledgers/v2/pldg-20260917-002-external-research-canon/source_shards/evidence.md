@@ -22,7 +22,7 @@ campaign on one frozen Jujutsu case. Sources as read on 2026-09-17:
 | `reports/jujutsu-research-2026-09-11/d5/README.md` | `28aca2dee2fee3cddd9f5df423c25aca44936b477e7465e9391621a882b275ea` | The 44 preserved answers and their dispositions |
 | `/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/REVIEW_ADJUDICATION_20260916.md` (appended to after this reading; the hash is the 2026-09-17 snapshot, not a frozen file) | `8a7358bcd7883c6d6f93a986a488f3504ac36e1716e960bdf7690b88f29d10ac` | The independent review that withdrew three credits and added one, and the reviewer-independence rule |
 | `/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/DECISIONS_PLAIN_20260909.md` | `98c7c005b490904a33f1ec0ec88c6402db48f33ec7ce0cb82ee3d01cf87e7847` | The plain-language decision form behind DL-036 |
-| `Plans/Decision_Log.md` | `a386cfe3da2297d6132cee6531321d1fd2dbc709180eb4c26fe543a8102e11ba` | DL-036 packet flow and DL-043's note that the one correction landed under the existing repair authorization |
+| `Plans/Decision_Log.md` (a live canon document that changes; the hash is the reading this compile was drafted against and re-hashes to neither the compile's base nor any later revision, so a mismatch is expected) | `a386cfe3da2297d6132cee6531321d1fd2dbc709180eb4c26fe543a8102e11ba` | DL-036 packet flow and DL-043's note that the one correction landed under the existing repair authorization |
 
 Specific figures carried into canon, each with the unit that carries it:
 
