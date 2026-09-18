@@ -34,6 +34,12 @@ calls that a build-governance artifact, CLAUDE.md forbids hand-editing it, and A
 writing it to the designated Plans agent; a file that is refreshed on a schedule cannot live under
 that rule. `reports/**` is the documented home for compact result bundles.
 
+It refuses to run on a sparse worktree. The three checks read the whole tree, so everything outside
+a sparse cone is reported as a missing file: a dry run on a worktree without `Concepts` and `tests`
+produced three blocking items and 76 new failures that were all the absent cone. Run it in the
+shared checkout at landing, or after `git sparse-checkout disable`; `--allow-sparse` runs it anyway
+for a deliberate partial run.
+
 Deterministic: same tree in, same bytes out. No network. Nothing read outside the repository except
 the checks' own inputs.
 
@@ -107,6 +113,20 @@ def canonical(value: Any) -> str:
 
 
 # ---------------------------------------------------------------------------- running the checks
+
+
+def sparse_paths(root: Path) -> list[str]:
+    """The cone a sparse worktree is limited to; empty when the tree is whole.
+
+    `git sparse-checkout list` exits non-zero and says the worktree is not sparse when it is whole;
+    on a sparse one it prints the directories that are actually on disk.
+    """
+    proc = subprocess.run(
+        ["git", "sparse-checkout", "list"], cwd=root, capture_output=True, text=True
+    )
+    if proc.returncode != 0:
+        return []
+    return [line.strip() for line in proc.stdout.splitlines() if line.strip()]
 
 
 def current_run_dir(root: Path) -> str:
@@ -616,12 +636,23 @@ def main() -> int:
     parser.add_argument("--max-fingerprints", type=int, default=200, help="largest bucket the baseline enumerates")
     parser.add_argument("--subcheck-timeout-seconds", type=int, default=180, help="passed to the aggregate checks")
     parser.add_argument("--json", action="store_true", help="print the machine-readable report instead of the summary")
+    parser.add_argument("--allow-sparse", action="store_true",
+                        help="run on a sparse worktree anyway; everything outside the cone reads as missing")
     args = parser.parse_args()
 
     root = Path(args.root).resolve()
     baseline_path = Path(args.baseline)
     if not baseline_path.is_absolute():
         baseline_path = root / baseline_path
+
+    sparse = sparse_paths(root)
+    if sparse and not args.allow_sparse:
+        print(f"pm-landing-check: this worktree is sparse, limited to: {', '.join(sparse)}", file=sys.stderr)
+        print("pm-landing-check: the three checks read the whole tree, so every file outside that set "
+              "reads as missing and is reported as a failure of yours. Run this in the shared checkout "
+              "at landing, or here after `git sparse-checkout disable`. Pass --allow-sparse to run it "
+              "on this tree anyway.", file=sys.stderr)
+        return 3
 
     try:
         run_dir = args.run_dir or current_run_dir(root)

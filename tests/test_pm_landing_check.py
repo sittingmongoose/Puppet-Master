@@ -684,10 +684,11 @@ class EndToEnd(unittest.TestCase):
 
     def run_main(self, *argv):
         import io, contextlib
-        out = io.StringIO()
+        out, err = io.StringIO(), io.StringIO()
         sys.argv = ["pm-landing-check.py", "--root", str(self.repo), *argv]
-        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(io.StringIO()):
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
             code = self.module.main()
+        self.stderr = err.getvalue()
         return code, out.getvalue()
 
     def record(self, *argv):
@@ -873,6 +874,46 @@ class EndToEnd(unittest.TestCase):
         self.assertIn("Naming a path this branch touches: 1", out)
         self.assertEqual(code, 2, out)
 
+    def test_a_sparse_worktree_is_refused_before_anything_runs(self):
+        """A dry run on a worktree without Concepts and tests produced three blocking items and 76
+        new failures that were all the absent cone. None of them was about the branch."""
+        ran = []
+        self.stub_checks([STALE_HASH], [self.SPAN])
+        inner = self.module.run_check
+        self.module.run_check = lambda *a, **k: (ran.append(1), inner(*a, **k))[1]
+        self.module.sparse_paths = lambda root: ["Plans", "scripts"]
+        code, out = self.compare()
+        self.assertEqual(code, 3)
+        self.assertEqual(ran, [])
+        self.assertEqual(out, "")
+        self.assertIn("this worktree is sparse, limited to: Plans, scripts", self.stderr)
+        self.assertIn("git sparse-checkout disable", self.stderr)
+        self.assertIn("--allow-sparse", self.stderr)
+
+    def test_recording_a_baseline_on_a_sparse_worktree_is_refused_too(self):
+        """A baseline taken on a partial tree would bake the absent cone into every later landing."""
+        self.stub_checks([STALE_HASH], [self.SPAN])
+        self.module.sparse_paths = lambda root: ["Plans"]
+        code, _ = self.run_main("--record-baseline", "--baseline", "baseline.json")
+        self.assertEqual(code, 3)
+        self.assertFalse((self.repo / "baseline.json").exists())
+
+    def test_allow_sparse_runs_it_anyway(self):
+        self.stub_checks([STALE_HASH], [self.SPAN])
+        self.module.sparse_paths = lambda root: ["Plans"]
+        code, out = self.run_main("--record-baseline", "--baseline", "baseline.json", "--allow-sparse")
+        self.assertEqual(code, 0, self.stderr)
+        self.touch("Touched.md")
+        code, out = self.compare("--allow-sparse")
+        self.assertEqual(code, 0, out)
+        self.assertIn("Nothing to report", out)
+
+    def test_a_whole_worktree_is_not_refused(self):
+        self.stub_checks([STALE_HASH], [self.SPAN])
+        self.assertEqual(self.module.sparse_paths(self.repo), [])
+        code, _ = self.run_main("--record-baseline", "--baseline", "baseline.json")
+        self.assertEqual(code, 0)
+
     def test_a_missing_baseline_stops_before_running_anything(self):
         ran = []
         self.stub_checks([], [])
@@ -998,6 +1039,47 @@ class SampledSubchecksAreComparedByTotal(unittest.TestCase):
                          ("run-gates", "validate_evidence"))
         self.assertEqual(M.bucket_subcheck("plan-migration-validate||err|p|f"),
                          ("plan-migration-validate", ""))
+
+
+class SparseDetection(unittest.TestCase):
+    """Against a real sparse worktree, not a stub, because the refusal is only as good as this."""
+
+    def setUp(self):
+        self.scratch = tempfile.TemporaryDirectory()
+        self.addCleanup(self.scratch.cleanup)
+        self.repo = Path(self.scratch.name)
+        def git(*args):
+            return subprocess.run(["git", *args], cwd=self.repo, capture_output=True, text=True, check=True)
+        self.g = git
+        git("init", "-q", "-b", "main")
+        git("config", "user.email", "t@example.invalid")
+        git("config", "user.name", "t")
+        for folder in ("Plans", "Concepts"):
+            (self.repo / folder).mkdir()
+            (self.repo / folder / "f.md").write_text("x\n", encoding="utf-8")
+        (self.repo / "root.md").write_text("x\n", encoding="utf-8")
+        git("add", "-A")
+        git("commit", "-qm", "base")
+
+    def test_a_whole_worktree_reports_no_cone(self):
+        self.assertEqual(M.sparse_paths(self.repo), [])
+        self.assertTrue((self.repo / "Concepts" / "f.md").exists())
+
+    def test_a_sparse_worktree_reports_its_cone_and_is_really_missing_files(self):
+        self.g("sparse-checkout", "set", "--cone", "Plans")
+        self.assertEqual(M.sparse_paths(self.repo), ["Plans"])
+        self.assertFalse((self.repo / "Concepts" / "f.md").exists())
+        self.assertTrue((self.repo / "Plans" / "f.md").exists())
+
+    def test_disabling_it_puts_the_tree_back(self):
+        self.g("sparse-checkout", "set", "--cone", "Plans")
+        self.g("sparse-checkout", "disable")
+        self.assertEqual(M.sparse_paths(self.repo), [])
+        self.assertTrue((self.repo / "Concepts" / "f.md").exists())
+
+    def test_a_directory_that_is_not_a_repository_is_not_called_sparse(self):
+        with tempfile.TemporaryDirectory() as plain:
+            self.assertEqual(M.sparse_paths(Path(plain)), [])
 
 
 class BaselineReading(unittest.TestCase):
