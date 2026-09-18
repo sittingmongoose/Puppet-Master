@@ -87,19 +87,55 @@ tests/
 !/tests/test_pm_plan_migration.py
 !/tests/test_pm_validate_pm7_gui_fixtures.py
 !/tests/test_v3_residuals.js
-# Fixture directories the repository-wide gates read. run-gates and audit-governance fail on
-# missing files without them, so a checkout that does not have them cannot reproduce a landing
-# check. Named one by one, the same way the test files above are. tests/agent_packet_restrictions
-# stays ignored on purpose: it is a symlink to raw captures that are never committed here.
+# Fixture files the repository-wide gates read. run-gates and audit-governance fail on missing
+# files without them, so a checkout that does not have them cannot reproduce a landing check.
+# Each directory is opened only far enough to name its files one by one, the same way the test
+# files above are, so a fixture added later does not start tracking on its own.
+# tests/agent_packet_restrictions stays ignored on purpose: it is a symlink to raw captures,
+# which are never committed here.
 !/tests/fixtures/
 /tests/fixtures/*
-!/tests/fixtures/governance/
-!/tests/fixtures/pm7_shared/
 !/tests/fixtures/usage_gui/
 /tests/fixtures/usage_gui/*
+!/tests/fixtures/governance/
+/tests/fixtures/governance/*
+!/tests/fixtures/governance/raw_evidence_capture_modes.json
+!/tests/fixtures/governance/raw_evidence_capture_modes.schema.json
+!/tests/fixtures/pm7_shared/
+/tests/fixtures/pm7_shared/*
+!/tests/fixtures/pm7_shared/assistant_context_continuity.json
+!/tests/fixtures/pm7_shared/home_workspace_transaction.json
+!/tests/fixtures/pm7_shared/motion_frame_matrix.json
+!/tests/fixtures/pm7_shared/status_bar_contract.json
+!/tests/fixtures/pm7_shared/surface_inventory.json
+!/tests/fixtures/pm7_shared/theme_surface_matrix.json
+!/tests/fixtures/pm7_shared/workspace_layout_event_fixtures.json
 !/tests/fixtures/usage_gui/cases/
+/tests/fixtures/usage_gui/cases/*
+!/tests/fixtures/usage_gui/cases/GUI-CBP-001.json
+!/tests/fixtures/usage_gui/cases/GUI-CBP-002.json
+!/tests/fixtures/usage_gui/cases/GUI-RAP-001.json
+!/tests/fixtures/usage_gui/cases/GUI-RAW-001.json
+!/tests/fixtures/usage_gui/cases/GUI-ROUTE-001.json
+!/tests/fixtures/usage_gui/cases/GUI-USG-001.json
+!/tests/fixtures/usage_gui/cases/GUI-USG-002.json
+!/tests/fixtures/usage_gui/cases/GUI-USG-003.json
+!/tests/fixtures/usage_gui/cases/GUI-USG-004.json
+!/tests/fixtures/usage_gui/cases/GUI-USG-005.json
+!/tests/fixtures/usage_gui/cases/GUI-USG-006.json
+!/tests/fixtures/usage_gui/cases/GUI-USG-007.json
+!/tests/fixtures/usage_gui/cases/GUI-USG-008.json
 !/tests/fixtures/usage_gui/golden/
+/tests/fixtures/usage_gui/golden/*
+!/tests/fixtures/usage_gui/golden/usage_gui_acceptance_fixtures.json
 !/tests/fixtures/usage_gui/presentation/
+/tests/fixtures/usage_gui/presentation/*
+!/tests/fixtures/usage_gui/presentation/curated_size_matrix.json
+!/tests/fixtures/usage_gui/presentation/interaction_transaction_matrix.json
+!/tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json
+!/tests/fixtures/usage_gui/presentation/room_disclosure_matrix.json
+!/tests/fixtures/usage_gui/presentation/theme_width_matrix.json
+!/tests/fixtures/usage_gui/presentation/widget_content_tiers.json
 Concepts/**/evidence/
 **/simulator_runs/
 **/staged_windows_build*/

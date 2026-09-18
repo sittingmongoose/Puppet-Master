@@ -921,6 +921,31 @@ class DerivedFilesAreMatchedOnUnits(unittest.TestCase):
             ["Plans/Bootstrap_Planning_Migration.md"],
         )
 
+    def test_a_shard_failure_is_narrowed_the_same_way_as_an_index_failure(self):
+        """Both derived prefixes, not just the index: shards are regenerated whole too."""
+        failure = {"path": "Plans/_shards/decision_log/003-entries.md", "error": "shard_body_mismatch",
+                   "plan_unit_id": "ATS-020"}
+        item = M.normalize("run-gates", "check_shards", failure, CHECKOUT)
+        direct, _ = M.split_touched(self.TOUCHED)
+        self.assertEqual(
+            M.names_branch_path(item, M.path_tokens(direct), CHECKOUT, {"OTH-001": "Plans/Other.md"}), [])
+        self.assertEqual(
+            M.names_branch_path(item, M.path_tokens(direct), CHECKOUT,
+                                {"ATS-020": "Plans/Bootstrap_Planning_Migration.md"}),
+            ["Plans/Bootstrap_Planning_Migration.md"])
+        # the regression: with the shard path in the touched set it matched on the path alone
+        self.assertEqual(
+            M.names_branch_path(item, M.path_tokens(self.TOUCHED), CHECKOUT),
+            ["Plans/_shards/decision_log/003-entries.md"])
+
+    def test_a_derived_failure_that_names_no_unit_at_all_does_not_match(self):
+        failure = {"path": "Plans/.plan_index/plan_units.jsonl", "error": "index_row_unreadable", "line": 12}
+        item = M.normalize("run-gates", "s", failure, CHECKOUT)
+        direct, _ = M.split_touched(self.TOUCHED)
+        self.assertEqual(
+            M.names_branch_path(item, M.path_tokens(direct), CHECKOUT,
+                                {"ATS-020": "Plans/Bootstrap_Planning_Migration.md"}), [])
+
     def test_a_non_derived_failure_is_not_matched_on_units(self):
         """Unit identity is the rule for generated indexes only, not a second way in everywhere."""
         failure = {"path": "Plans/Other.md", "error": "e", "plan_unit_id": "ATS-020"}
