@@ -718,14 +718,36 @@
     return (ctx && ctx.state && ctx.state.selectedThread) || null;
   }
 
-  function admitFiles(threadId, fileList) {
+  /* B19: all file intake converges on cmd.chat.attachment.add via
+     admitViaCommand (FOLDER-001). Bounds refuse the whole selection before
+     any record is built (ATT-010). `source` is 'picker' or 'drag_drop'. */
+  function admitViaCommand(source, kind, make) {
+    var B19 = window.PM56_B19;
+    if (B19 && typeof B19.admitViaCommand === 'function') return B19.admitViaCommand({ source: source, semantic_kind: kind, make: make });
+    var rec = make();
+    if (!rec || typeof rec !== 'object') return { ok: false, error: 'invalid_request', detail: 'record factory produced nothing.' };
+    rec.command = 'cmd.chat.attachment.add';
+    rec.source_path = source;
+    rec.semantic_kind = kind;
+    return { ok: true, record: rec };
+  }
+  function admitFiles(threadId, fileList, source) {
     var ctx = ctxNow(); if (!ctx || !threadId) return;
+    source = source || 'picker';
+    var files = [];
+    for (var j = 0; j < fileList.length; j++) if (fileList[j]) files.push(fileList[j]);
+    var B19 = window.PM56_B19;
+    if (B19 && typeof B19.checkIntakeBounds === 'function') {
+      var bounds = B19.checkIntakeBounds(files);
+      if (!bounds.ok) { ctx.toast('Nothing added', bounds.detail); return; }
+    }
     var buf = bufferFor(threadId);
     var added = 0;
-    for (var i = 0; i < fileList.length; i++) {
-      var file = fileList[i];
-      if (!file) continue;
-      var rec = makeUploadedFromFile(file);
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      var admitted = admitViaCommand(source, 'file', (function (f) { return function () { return makeUploadedFromFile(f); }; })(file));
+      if (!admitted.ok) { ctx.toast('Not added', admitted.detail || admitted.error); continue; }
+      var rec = admitted.record;
       registerRecord(rec);
       buf.attachments.push(rec);
       added += 1;
@@ -739,11 +761,22 @@
   AT.admitFiles = admitFiles;
   function admitFolder(threadId,fileList) {
     var files=Array.from(fileList||[]),ctx=ctxNow();if(!ctx||!files.length)return {ok:false,error:'empty_folder_selection'};
+    var B19f=window.PM56_B19;
+    if(B19f&&typeof B19f.checkIntakeBounds==='function'){var bounds=B19f.checkIntakeBounds(files);if(!bounds.ok)return bounds;}
     var root=files[0].webkitRelativePath?.split('/')[0];
     if(!root||files.some(f=>!(f instanceof File)||!f.webkitRelativePath?.startsWith(root+'/')))return {ok:false,error:'invalid_folder_selection'};
-    var rec=baseRecord({origin:'folder_manifest',kind:'folder',semantic_kind:'folder',name:root,size:files.reduce((n,f)=>n+f.size,0),process_state:'ready',
-      source_label:'Selected from device',filesafe:{status:'not_scanned',note:'Selected bytes are not executed. No malware or secret scan has run.'},
-      folder_manifest:{totalFiles:files.length,shown:files.map(f=>({name:f.webkitRelativePath,size:f.size})),truncated:false,root_identity:root,materialization_status:'selected_not_retained'}});
+    /* B19: folders enter through the ONE shared command (FOLDER-001) with a
+       full FOLDER-004 bounded manifest — never a recursive dump. */
+    var admitted=admitViaCommand('picker','folder',function(){
+      var manifest=(B19f&&typeof B19f.manifestForSelectedFolder==='function')
+        ? B19f.manifestForSelectedFolder(root,files)
+        : {totalFiles:files.length,shown:files.map(f=>({name:f.webkitRelativePath,size:f.size})),truncated:false,root_identity:root,materialization_status:'selected_not_retained'};
+      return baseRecord({origin:'folder_manifest',kind:'folder',name:root,size:files.reduce((n,f)=>n+f.size,0),process_state:'ready',
+        source_label:'Selected from device',filesafe:{status:'not_scanned',note:'Selected bytes are not executed. No malware or secret scan has run.'},
+        folder_manifest:manifest});
+    });
+    if(!admitted.ok)return admitted;
+    var rec=admitted.record;
     attachHiddenProp(rec,'_files',files);registerRecord(rec);bufferFor(threadId).attachments.push(rec);touchComposer();ctx.renderApp();return {ok:true,attachment:rec};
   }
   EXT.action('att-upload-folder',function(ctx){
@@ -821,7 +854,7 @@
     var files = e.dataTransfer && e.dataTransfer.files;
     var tid = dragState.threadId || currentThreadId();
     dragState.active = false; dragState.count = null; dragState.threadId = null;
-    if (files && files.length && tid) admitFiles(tid, files);
+    if (files && files.length && tid) admitFiles(tid, files, 'drag_drop');
     else { var ctx = ctxNow(); if (ctx) ctx.renderApp(); }
   });
 
@@ -892,7 +925,7 @@
     var stLine = stLabel;
     if (rec.process_state === 'failed' && rec.error) stLine = stLabel + ' — ' + rec.error;
     else if (PENDING_STATES[rec.process_state]) stLine = stLabel + '…';
-    var driftBadge = rec.live_drift ? ('<span class="att-chip att-chip-stale">' + attIcon(ctx, 'warning', 10) + ' Changed since sent</span>') : '';
+    var driftBadge = (rec.live_drift || rec.folder_drift) ? ('<span class="att-chip att-chip-stale">' + attIcon(ctx, 'warning', 10) + ' Changed since sent</span>') : '';
 
     var actions = '';
     if (canOpenRecord(rec)) actions += chromeActionButton(ctx, 'att-open', 'eye', 'Open / preview', threadId, messageId, rec.id);
@@ -975,7 +1008,7 @@
        keyboard user can reach :focus-within (and therefore Retry/Details)
        on a still-processing or failed transcript attachment too. */
     var bodyAttrs = ' data-action="att-open"' + dataAttrs(threadId, messageId, rec.id) + ' role="button" tabindex="0"';
-    var driftDot = rec.live_drift ? '<i class="att-msg-drift-dot" aria-hidden="true"></i>' : '';
+    var driftDot = (rec.live_drift || rec.folder_drift) ? '<i class="att-msg-drift-dot" aria-hidden="true"></i>' : '';
     var allowRemove = rec.process_state === 'failed'; /* honesty note 5 / ATT-008: never rewrite a delivered attachment's history */
     return '<span class="att-msg-thumb att-obj" data-k="att-msg-thumb:' + esc(rec.id) + '" data-state="' + esc(rec.process_state) + '" data-kind="' + esc(rec.kind) + '">' +
       '<span class="att-tracer" aria-hidden="true"><i class="att-tracer-fill"></i></span>' +
@@ -1107,9 +1140,49 @@
     var folderSection = '';
     if (rec.folder_manifest) {
       var fm = rec.folder_manifest;
+      /* B19: full FOLDER-004 manifest rows + FOLDER-006 captured-vs-current. */
+      var driftHtml = '';
+      if (rec.folder_drift) {
+        driftHtml = detailRow('Changed since sent',
+          '<div class="event-card warning"><span class="event-icon">' + attIcon(ctx, 'warning', 14) + '</span><div class="event-copy">' +
+          '<strong>Folder changed after this message</strong><p>' + esc(rec.folder_drift.note) + '</p>' +
+          '<p>Captured manifest <span class="att-hash">' + esc(rec.folder_drift.captured_manifest_hash) + '</span> · current <span class="att-hash">' + esc(rec.folder_drift.current_manifest_hash) + '</span> as of ' + esc(fmtStamp(rec.folder_drift.changed_at)) + '. History below is what the agent saw.</p></div></div>');
+      }
       folderSection = detailSection('Folder manifest (bounded)',
-        detailRow('Files shown', esc(fm.shown.map(function (f) { return f.name + ' (' + bytesLabel(f.size) + ')'; }).join(', '))) +
-        detailRow('Total files', fm.totalFiles + (fm.truncated ? ' — truncated, not fully listed' : '')));
+        driftHtml +
+        detailRow('Root identity', '<span class="att-hash">' + esc(fm.root_identity || rec.name) + '</span>') +
+        detailRow('Manifest hash', '<span class="att-hash">' + esc(fm.manifest_hash || 'not frozen yet — assigned when scheduled or materialized') + '</span>') +
+        detailRow('Files shown', esc((fm.shown || []).map(function (f) { return (f.name || f.path) + ' (' + bytesLabel(f.size) + ')'; }).join(', '))) +
+        detailRow('Total files', fm.totalFiles + (fm.truncated ? ' — truncated, not fully listed' : '')) +
+        (fm.entries_policy ? detailRow('Entries policy', esc(fm.entries_policy)) : '') +
+        (fm.hash_policy ? detailRow('Hash policy', esc(fm.hash_policy)) : '') +
+        ((fm.exclusions && fm.exclusions.length) ? detailRow('Exclusions applied', esc(fm.exclusions.join(', '))) : '') +
+        (fm.permissions ? detailRow('Read scope', esc(fm.permissions)) : '') +
+        (fm.materialization_status ? detailRow('Materialization', esc(fm.materialization_status.replace(/_/g, ' '))) : ''));
+    }
+    /* B19: per-turn captures (ATT-007) and materialization receipts (FOLDER-008). */
+    var B19d = window.PM56_B19;
+    var captureSection = '';
+    if (rec.captured_turns && rec.captured_turns.length) {
+      captureSection = detailSection('Captured per turn (exact revision/hash)',
+        rec.captured_turns.map(function (c) {
+          return '<div class="b19-capture-row"><span>' + esc(c.turn) + '</span><span class="att-hash">' + esc(c.captured_hash || '—') + '</span><span>' + esc(c.captured_version || '') + '</span></div>';
+        }).join(''));
+    }
+    var receiptSection = '';
+    if (rec.receipts && rec.receipts.length) {
+      receiptSection = detailSection('Selected-context receipts (separate from the manifest)',
+        rec.receipts.map(function (r) {
+          return '<div class="b19-receipt"><span class="b19-receipt-id">' + esc(r.receipt_id) + ' · turn ' + esc(r.turn) + '</span>' +
+            detailRow('Included', esc(r.included.length ? r.included.join(', ') : 'nothing')) +
+            detailRow('Omitted', esc(r.omitted.length ? r.omitted.join(', ') : 'nothing')) +
+            detailRow('Policy', esc(r.policy || '')) + '</div>';
+        }).join(''));
+    }
+    var saveReason = 'FileSafe is not wired into this concept lab.';
+    if (B19d && typeof B19d.saveToProject === 'function') {
+      var saveProbe = B19d.saveToProject(rec, { path: 'project:/Inbox/' + (rec.name || 'attachment').split('/').pop(), threadId: d.threadId, messageId: d.messageId });
+      if (saveProbe && saveProbe.detail) saveReason = saveProbe.detail;
     }
 
     var footer = '<button type="button" class="soft-button" data-action="close-dialog">Close</button>' +
@@ -1117,7 +1190,9 @@
       footerButton('soft-button', 'att-download', 'Download exact version', d.threadId, d.messageId, rec.id) +
       (canOpenRecord(rec) ? footerButton('soft-button', 'att-open', 'Open / preview', d.threadId, d.messageId, rec.id) : '') +
       footerButton('soft-button', 'att-copy-ref', 'Copy reference', d.threadId, d.messageId, rec.id) +
-      footerButton('soft-button', '', 'Reveal in Project', d.threadId, d.messageId, rec.id, 'File Manager is not wired into this concept lab.');
+      footerButton('soft-button', 'att-request-delete', 'Request deletion', d.threadId, d.messageId, rec.id) +
+      footerButton('soft-button', '', 'Reveal in Project', d.threadId, d.messageId, rec.id, 'File Manager is not wired into this concept lab.') +
+      footerButton('soft-button', '', 'Save to Project', d.threadId, d.messageId, rec.id, saveReason);
 
     return '<section class="dialog att-details-dialog" style="width:min(640px,calc(100vw - 20px))" role="dialog" aria-label="More Info · ' + esc(rec.name) + '">' +
       '<div class="drawer-head"><strong>' + esc(rec.name) + '</strong><span class="meta-pill">' + esc(originMeta(rec.origin).label) + '</span>' +
@@ -1128,6 +1203,8 @@
       detailSection('Version & identity', detailRow('Version', versionHtml + lineageHtml) + detailRow('Hash', hashHtml) + detailRow('Type', mimeHtml)) +
       detailSection('Trust & freshness', detailRow('Live-reference drift', freshHtml)) +
       folderSection +
+      captureSection +
+      receiptSection +
       detailSection('Context materialization (fixture — recorded per dispatch by Prompt Pipeline)', materializationRows(rec)) +
       detailSection('Requested / effective transformation', detailRow('Transform', transformHtml)) +
       detailSection('FileSafe & redaction', detailRow('Result', fsHtml)) +
@@ -1195,8 +1272,13 @@
           'Materialized: ' + fmtStamp(rec.created_at)
         ];
         if (rec.folder_manifest) {
-          lines.push('Folder manifest (' + rec.folder_manifest.shown.length + ' of ' + rec.folder_manifest.totalFiles + ' files): ' +
-            rec.folder_manifest.shown.map(function (f) { return f.name; }).join(', '));
+          var fm19 = rec.folder_manifest;
+          lines.push('Folder manifest (' + (fm19.shown || []).length + ' of ' + fm19.totalFiles + ' files): ' +
+            (fm19.shown || []).map(function (f) { return f.name || f.path; }).join(', '));
+          lines.push('Root identity: ' + (fm19.root_identity || rec.name));
+          lines.push('Manifest hash: ' + (fm19.manifest_hash || 'not frozen yet'));
+          if (fm19.exclusions && fm19.exclusions.length) lines.push('Exclusions applied: ' + fm19.exclusions.join(', '));
+          if (rec.snapshot_ref) lines.push('Retained bundle: open the exact snapshot revision to download every retained byte.');
         }
         if (rec.live_drift) {
           lines.push('');
@@ -1241,11 +1323,25 @@
     return true;
   });
 
-  EXT.action('att-pick-project', function (ctx, btn) {
-    var tid = (ctx.state.dialog && ctx.state.dialog.threadId) || ctx.state.selectedThread;
-    var rec = makeProjectRefRecord(btn.dataset.key);
+  /* B19: reference routes converge on the shared command (FOLDER-001).
+     Files go through the file-only alias (FOLDER-002); the alias refuses a
+     folder. Folders go to cmd.chat.attachment.add directly (FOLDER-003: no
+     folder-specific command exists). */
+  function admitReferenceRoute(ctx, tid, kind, make) {
+    var B19r = window.PM56_B19;
+    var admitted;
+    if (kind === 'folder') {
+      admitted = admitViaCommand('file_manager', 'folder', make);
+    } else if (B19r && typeof B19r.addFileReference === 'function') {
+      admitted = B19r.addFileReference({ make: make });
+      if (admitted.ok && admitted.record) admitted.record.source_path = 'file_manager';
+    } else {
+      admitted = admitViaCommand('file_manager', 'file', make);
+    }
     ctx.closeDialog();
-    if (!rec) { ctx.toast('Not available', 'That project reference is not in this concept’s fixture catalog.'); return true; }
+    if (!admitted.ok) { ctx.toast('Not added', admitted.detail || admitted.error); return true; }
+    var rec = admitted.record;
+    if (!rec) { ctx.toast('Not available', 'That reference is not in this concept’s fixture catalog.'); return true; }
     rec.process_state = 'selected';
     registerRecord(rec);
     var buf = bufferFor(tid);
@@ -1254,35 +1350,23 @@
     touchComposer();
     ctx.renderApp();
     return true;
+  }
+
+  EXT.action('att-pick-project', function (ctx, btn) {
+    var tid = (ctx.state.dialog && ctx.state.dialog.threadId) || ctx.state.selectedThread;
+    var key = btn.dataset.key;
+    return admitReferenceRoute(ctx, tid, 'file', function () { return makeProjectRefRecord(key); });
   });
 
   EXT.action('att-pick-folder', function (ctx) {
     var tid = (ctx.state.dialog && ctx.state.dialog.threadId) || ctx.state.selectedThread;
-    var rec = makeFolderRecord();
-    ctx.closeDialog();
-    rec.process_state = 'selected';
-    registerRecord(rec);
-    var buf = bufferFor(tid);
-    buf.attachments.push(rec);
-    startPipeline(tid, rec.id, rec.origin, rec.kind);
-    touchComposer();
-    ctx.renderApp();
-    return true;
+    return admitReferenceRoute(ctx, tid, 'folder', function () { return makeFolderRecord(); });
   });
 
   EXT.action('att-pick-artifact', function (ctx, btn) {
     var tid = (ctx.state.dialog && ctx.state.dialog.threadId) || ctx.state.selectedThread;
-    var rec = makeArtifactRecord(btn.dataset.key);
-    ctx.closeDialog();
-    if (!rec) { ctx.toast('Not available', 'That generated artifact is not in this concept’s fixture catalog.'); return true; }
-    rec.process_state = 'selected';
-    registerRecord(rec);
-    var buf = bufferFor(tid);
-    buf.attachments.push(rec);
-    startPipeline(tid, rec.id, rec.origin, rec.kind);
-    touchComposer();
-    ctx.renderApp();
-    return true;
+    var key = btn.dataset.key;
+    return admitReferenceRoute(ctx, tid, 'file', function () { return makeArtifactRecord(key); });
   });
 
   EXT.action('att-pick-clipboard', function (ctx) {
@@ -1295,11 +1379,16 @@
     navigator.clipboard.readText().then(function (text) {
       var c2 = ctxNow(); if (!c2) return;
       if (!text) { c2.toast('Clipboard is empty', 'Nothing to attach.'); return; }
-      var rec = baseRecord({
-        origin: 'clipboard', kind: 'text', name: 'Clipboard text', size: text.length, mime: 'text/plain',
-        source_label: 'Clipboard', producer: { label: 'You', detail: 'Pasted from clipboard' }, process_state: 'selected',
-        filesafe: { status: 'clear', note: 'Scanned on paste · no secrets or credential patterns detected.' }
+      /* B19: clipboard enters through the shared command like every route. */
+      var admitted = admitViaCommand('clipboard', 'file', function () {
+        return baseRecord({
+          origin: 'clipboard', kind: 'text', name: 'Clipboard text', size: text.length, mime: 'text/plain',
+          source_label: 'Clipboard', producer: { label: 'You', detail: 'Pasted from clipboard' }, process_state: 'selected',
+          filesafe: { status: 'clear', note: 'Scanned on paste · no secrets or credential patterns detected.' }
+        });
       });
+      if (!admitted.ok) { c2.toast('Not added', admitted.detail || admitted.error); return; }
+      var rec = admitted.record;
       attachHiddenProp(rec, '_clipboardText', text);
       registerRecord(rec);
       var buf = bufferFor(tid);
@@ -1334,8 +1423,14 @@
       ctx.renderOverlays();
       return true;
     }
-    if (rec.artifact_ref && realArtifact(rec.artifact_ref)) {
-      ctx.openEditor(rec.artifact_ref);
+    /* B19 (F-084 open): a retained schedule snapshot opens in the shared
+       editor exactly like a generated artifact. An unavailable revision
+       refuses with a toast rather than opening a broken view. */
+    var openRef = (rec.artifact_ref && realArtifact(rec.artifact_ref)) ? rec.artifact_ref : (rec.snapshot_ref || null);
+    if (openRef) {
+      var chk = window.PM56_ARTIFACTS.resolve(openRef, { document: true });
+      if (!chk.ok) { ctx.toast('Exact revision unavailable', 'The retained bytes are gone; no newer version was substituted.'); return true; }
+      ctx.openEditor(window.PM56_ARTIFACTS.route(openRef));
       return true;
     }
     ctx.state.dialog = { type: 'att-details', threadId: tid, messageId: mid, attId: aid, messageRole: mid ? messageRoleOf(ctx, tid, mid) : null };
@@ -1364,6 +1459,20 @@
     var rec = findAttachment(ctx, tid, mid, aid);
     if (!rec) { ctx.toast('Attachment unavailable', 'It may have been removed.'); return true; }
     downloadAttachment(ctx, rec);
+    return true;
+  });
+
+  /* B19: ATT-013 reference-safe retention through the shared purge owner. */
+  EXT.action('att-request-delete', function (ctx, btn) {
+    var tid = btn.dataset.thread, mid = btn.dataset.message || null, aid = btn.dataset.att;
+    var rec = findAttachment(ctx, tid, mid, aid);
+    if (!rec) { ctx.toast('Attachment unavailable', 'It may have been removed.'); return true; }
+    var B19x = window.PM56_B19;
+    if (!B19x || typeof B19x.requestDeletion !== 'function') { ctx.toast('Deletion unavailable', 'The retention owner is not loaded.'); return true; }
+    var out = B19x.requestDeletion(rec, { kind: mid ? 'message' : 'composer', id: mid || tid });
+    if (out.ok) ctx.toast(out.local_only ? 'Nothing retained' : 'Revision purged', out.local_only ? out.note : ('Purged ' + out.purged + '. No other holder referenced it.'));
+    else ctx.toast('Deletion refused', out.detail || out.error);
+    ctx.renderApp();
     return true;
   });
 
@@ -1447,7 +1556,9 @@
      alias that refuses a folder, and no `cmd.chat.add_folder_reference` and no
      folder-specific handler, event or storage family exists.
      ===================================================================== */
-  var ATTACH_SOURCES = ['picker', 'drag_drop', 'file_manager', 'alias'];
+  /* B19: 'clipboard' joins the closed source enum. It is still the ONE
+     shared command — a separate origin, not a second handler. */
+  var ATTACH_SOURCES = ['picker', 'drag_drop', 'file_manager', 'alias', 'clipboard'];
 
   function attachmentAdd(req) {
     req = req || {};
@@ -1501,6 +1612,10 @@
     version: 1,
     findAttachment: findAttachment,
     admitFiles:admitFiles,admitFolder:admitFolder,
+    /* B19: the same factories the picker rows use, so demo preparations and
+       tests admit through the real command path instead of forging records. */
+    makeProjectRefRecord:makeProjectRefRecord,makeFolderRecord:makeFolderRecord,
+    makeArtifactRecord:makeArtifactRecord,makeUploadedFromFile:makeUploadedFromFile,
     originMeta: originMeta,
     ORIGINS: ORIGINS,
     PROCESS_LABELS: PROCESS_LABELS,

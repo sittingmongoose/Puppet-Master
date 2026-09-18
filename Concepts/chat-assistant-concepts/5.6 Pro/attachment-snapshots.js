@@ -50,6 +50,18 @@ async function prepare(draft){
    if(a.snapshot_ref||a.artifact_ref||a.artifact_id){attachments.push(clone(a));continue;}
    const original=AT.findAttachment(c,draft.threadId,null,a.id);if(!original)return bad('attachment_source_missing');
    if(original.filesafe?.status==='blocked'||['blocked','error','failed'].includes(original.process_state))return bad('attachment_owner_blocked');
+   // B19 (SMSG-007): reference origins without selectable bytes freeze their
+   // EXACT hash/version at commit — no bytes retained, never latest at dispatch.
+   const B19=window.PM56_B19,hasBytes=isFolder=>{const s=isFolder?original._files:[original._file];return Array.isArray(s)&&s.length&&s.every(f=>f instanceof File);};
+   if(!hasBytes(original.kind==='folder')&&B19&&typeof B19.captureReferenceForSchedule==='function'){
+    if(original.origin==='clipboard'&&typeof original._clipboardText==='string'&&original._clipboardText){
+      original._file=new File([original._clipboardText],'clipboard.txt',{type:'text/plain'});
+    }else{
+      const cap=B19.captureReferenceForSchedule(original,scope,{publish:false});
+      if(!cap.ok)return cap;
+      records.push(clone(cap.q));attachments.push(clone({...a,...cap.frozen}));continue;
+    }
+   }
    const isFolder=original.kind==='folder',selected=isFolder?original._files:[original._file];
    if(!Array.isArray(selected)||!selected.length||selected.some(f=>!(f instanceof File)))return bad('attachment_bytes_unavailable','Select the file or folder from this device. A name, live path or partial demo manifest is not a retained copy.');
    if(count+selected.length>MAX_FILES)return bad('snapshot_file_limit','This local concept accepts at most 256 files; no partial folder was captured.');

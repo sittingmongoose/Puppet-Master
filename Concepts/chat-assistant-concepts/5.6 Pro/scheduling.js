@@ -738,11 +738,19 @@
       if(!ref||ref.thread_id!==scope.threadId||ref.project_id!==scope.projectId)return msgError('attachment_snapshot_required','An attachment has no exact retained revision in this thread. Keep it in the composer until it can be frozen.');
       const resolved=window.PM56_ARTIFACTS.resolve(ref,{document:true});
       if(!resolved.ok)return msgError('attachment_'+resolved.error,'The exact attachment revision is unavailable; no newer bytes were substituted.');
-      if(a.content_hash&&a.content_hash!==resolved.revision.content_key)return msgError('attachment_hash_changed');
+      /* B19: reference captures pin the frozen content hash in payload, not in
+         the revision content_key (which covers the whole capture record). */
+      const revRec19=resolved.revision.record;
+      const pinned19=revRec19.renderer_kind==='reference_capture'?(revRec19.payload&&revRec19.payload.captured_hash):resolved.revision.content_key;
+      if(a.content_hash&&a.content_hash!==pinned19)return msgError('attachment_hash_changed');
+      /* B19: normalize to the SAME pinned hash that was verified — the
+         revision content_key for byte snapshots, the captured hash for
+         reference captures. Pinning a capture to its content_key would
+         substitute the capture record's own hash for the frozen content. */
       const snapshotCheck=window.PM56_ATTACHMENTS?.inspectScheduleSnapshot?.(ref);
       if(snapshotCheck&&!snapshotCheck.ok)return msgError(snapshotCheck.error,snapshotCheck.detail);
       if(a.folder_manifest_hash&&snapshotCheck?.manifest_sha256!==a.folder_manifest_hash)return msgError('folder_manifest_changed');
-      out.push({id:a.id||ref.artifact_id,name:attachmentLabel(a),kind:a.kind||'file',artifact_id:ref.artifact_id,artifact_version:ref.artifact_version,content_hash:resolved.revision.content_key,folder_manifest_hash:a.folder_manifest_hash||null,snapshot_ref:copy(ref),availability:'available',state:'ready'});
+      out.push({id:a.id||ref.artifact_id,name:attachmentLabel(a),kind:a.kind||'file',artifact_id:ref.artifact_id,artifact_version:ref.artifact_version,content_hash:pinned19,folder_manifest_hash:a.folder_manifest_hash||null,snapshot_ref:copy(ref),availability:'available',state:'ready'});
     }
     return {ok:true,items:out};
   }
