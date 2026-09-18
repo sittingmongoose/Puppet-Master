@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-002-external-research-canon",
-  "updated_at_utc": "2026-09-17T22:10:00+00:00",
+  "updated_at_utc": "2026-09-18T00:35:00+00:00",
   "open_questions": [
     {
       "question_id": "q-001",
@@ -42,6 +42,60 @@
         "Plans/Jujutsu_Integration.md",
         "Plans/Source_Control_System.md",
         "Plans/Backup_Restore_System.md"
+      ]
+    },
+    {
+      "question_id": "q-005",
+      "summary": "Does ERS-003's input rule admit a review arm that reads another arm's frozen artifacts, which is what continuation 4's review arms actually did?",
+      "status": "open",
+      "blocks_landing": false,
+      "affected_surfaces": [
+        "Plans/External_Research.md#ERS-003",
+        "Plans/external_research_contracts.schema.json"
+      ]
+    },
+    {
+      "question_id": "q-006",
+      "summary": "Is Plans/Automated_Testing_System.md inside this compile's authorization?",
+      "status": "open",
+      "blocks_landing": false,
+      "affected_surfaces": [
+        "Plans/Automated_Testing_System.md#ATS-054",
+        "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/source_shards/authorization.md",
+        "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/state/compile_queue.json"
+      ]
+    },
+    {
+      "question_id": "q-007",
+      "summary": "What establishes the visible_only branch of the unresolved-usage disposition?",
+      "status": "open",
+      "blocks_landing": false,
+      "affected_surfaces": [
+        "Plans/External_Research.md#ERS-008",
+        "Plans/External_Research.md#ERS-009",
+        "Plans/Settings_System.md#SSYS-037",
+        "Plans/external_research_contracts.schema.json"
+      ]
+    },
+    {
+      "question_id": "q-008",
+      "summary": "What authorizes the settings inventory wave SSYS-037 defers its rows to, and what tracks it?",
+      "status": "open",
+      "blocks_landing": false,
+      "affected_surfaces": [
+        "Plans/Settings_System.md#SSYS-037",
+        "Plans/settings_inventory.json"
+      ]
+    },
+    {
+      "question_id": "q-009",
+      "summary": "Should this compile's consumer units carry their own markdown headings, as every other PlanUnit in their documents does?",
+      "status": "open",
+      "blocks_landing": false,
+      "affected_surfaces": [
+        "Plans/assistant-chat-design.md#ACD-467",
+        "Plans/Automated_Testing_System.md#ATS-054",
+        "Plans/Planning_Ledger_System.md#PLS-023"
       ]
     }
   ],

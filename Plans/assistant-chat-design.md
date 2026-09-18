@@ -25777,7 +25777,7 @@ negative_constraints:
   - Do not add, remove or reorder a response for research packets.
   - Do not present a correction-class finding as a decision card.
   - Do not auto-approve, auto-deny or answer a card on the user's behalf.
-  - Do not introduce colored status bars, stripes or emoji glyphs.
+  - Do not introduce colored border bars, stripes or emoji glyphs.
 owner_hints: [Plans/assistant-chat-design.md, Plans/External_Research.md]
 ```
 

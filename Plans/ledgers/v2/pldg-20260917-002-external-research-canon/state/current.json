@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-002-external-research-canon",
-  "updated_at_utc": "2026-09-17T22:10:00+00:00",
-  "last_event_id": "evt-007",
+  "updated_at_utc": "2026-09-18T00:35:00+00:00",
+  "last_event_id": "evt-008",
   "canonical_plan_targets": [
     "Plans/Automated_Testing_System.md",
     "Plans/External_Research.md",
@@ -52,7 +52,7 @@
   "design_atoms_total": 5,
   "ready_for_plan_compile_atoms": 0,
   "candidate_atoms_count": 0,
-  "open_questions_count": 4,
+  "open_questions_count": 9,
   "deferred_questions_count": 0,
   "open_blockers_count": 0,
   "compiled_plan_unit_ids": [
@@ -76,7 +76,7 @@
     "SSYS-037"
   ],
   "cursor": {
-    "last_event_id": "evt-007",
+    "last_event_id": "evt-008",
     "next_action": "The compile is repaired and scripts/pm-ledger-compile-witness.py exits 0 on this ledger. The four questions raised at landing stay open and none blocks landing. The repair branch waits for one blind form-driven review before landing."
   },
   "landing_condition": "Independent review of the pushed branch, then fast-forward onto main with regenerated shards and index. The three governance-coverage omissions are a reseal request for the designated Plans agent, not a fix for this branch."

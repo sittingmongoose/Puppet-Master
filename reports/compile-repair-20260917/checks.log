@@ -1,0 +1,46 @@
+### witness 001 (no base)
+pldg-20260917-001-jujutsu-continuation4-corrections: pass
+  witness 1 repairs vs targets: 0 of 11 records fire; named-but-not-targeted 0; named-but-unchanged 0
+  witness 2 exact tokens: 56 item tokens; missing from every owner unit's prose 0 (of which only in companion outputs 0); missing from every owner registry 0
+  witness 3 registry hygiene: 0 units carry registry entries absent from their own text (0 entries; 0 already absent at base)
+exit=0
+### witness 001 (--base origin/main)
+pldg-20260917-001-jujutsu-continuation4-corrections: pass
+  witness 1 repairs vs targets: 0 of 11 records fire; named-but-not-targeted 0; named-but-unchanged 0
+  witness 2 exact tokens: 56 item tokens; missing from every owner unit's prose 0 (of which only in companion outputs 0); missing from every owner registry 0
+  witness 3 registry hygiene: 0 units carry registry entries absent from their own text (0 entries; 0 already absent at base)
+exit=0
+### witness 002 (no base)
+pldg-20260917-002-external-research-canon: pass
+  witness 1 repairs vs targets: 0 of 0 records fire; named-but-not-targeted 0; named-but-unchanged 0
+  witness 2 exact tokens: 34 item tokens; missing from every owner unit's prose 0 (of which only in companion outputs 0); missing from every owner registry 0
+  witness 3 registry hygiene: 0 units carry registry entries absent from their own text (0 entries; 0 already absent at base)
+exit=0
+### witness 002 (--base origin/main)
+pldg-20260917-002-external-research-canon: pass
+  witness 1 repairs vs targets: 0 of 0 records fire; named-but-not-targeted 0; named-but-unchanged 0
+  witness 2 exact tokens: 34 item tokens; missing from every owner unit's prose 0 (of which only in companion outputs 0); missing from every owner registry 0
+  witness 3 registry hygiene: 0 units carry registry entries absent from their own text (0 entries; 0 already absent at base)
+exit=0
+### contracts gate
+status pass
+{'contract_pairs': 31, 'expansion_alias_records_valid': 36, 'expansion_command_records_valid': 264, 'expansion_local_records_valid': 28, 'expansion_metaschemas_valid': 1, 'expansion_negative_records_checked': 21, 'expansion_negative_records_rejected': 21, 'metaschemas_valid': 31, 'negative_cases': 3451, 'negative_cases_rejected': 3451, 'onboarding_storage_contracts_valid': 1, 'owner_compat_command_records_valid': 240, 'owner_local_records_valid': 28, 'positive_cases': 1059, 'positive_cases_valid': 1059}
+### shard check
+pass 99 docs 2690 shards failures []
+### index validate
+{"acceptance_unit_count": 25989, "coverage_status": "pass", "node_readiness_status": "blocked_runtime_certification_incomplete", "plan_unit_count": 6674}
+### ledger validator 001
+fail
+ - governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']
+ - governance coverage targets missing from Spec_Lock coverage: ['Plans/Decision_Log.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']
+ - governance coverage targets missing from plan_graph coverage: ['Plans/Decision_Log.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']
+### ledger validator 002
+fail
+ - governance coverage targets missing from sharding_config sources: ['Plans/Settings_System.md']
+ - governance coverage targets missing from Spec_Lock coverage: ['Plans/External_Research.md', 'Plans/Settings_System.md']
+ - governance coverage targets missing from plan_graph coverage: ['Plans/External_Research.md', 'Plans/Settings_System.md']
+### named tests
+----------------------------------------------------------------------
+Ran 36 tests in 0.312s
+
+OK

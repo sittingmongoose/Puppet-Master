@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L25736-L25784
 
-Source SHA256: `017878d9df4c34b40e5c640e6b9d69ebf24687a6d63e2f10b7c962c239166871`
+Source SHA256: `69a88b2f64d2bd07c387cddc846aa739eea267f95ce8d409dc90c56c816ffc0c`
 
 ---
 
@@ -52,7 +52,7 @@ negative_constraints:
   - Do not add, remove or reorder a response for research packets.
   - Do not present a correction-class finding as a decision card.
   - Do not auto-approve, auto-deny or answer a card on the user's behalf.
-  - Do not introduce colored status bars, stripes or emoji glyphs.
+  - Do not introduce colored border bars, stripes or emoji glyphs.
 owner_hints: [Plans/assistant-chat-design.md, Plans/External_Research.md]
 ```
 

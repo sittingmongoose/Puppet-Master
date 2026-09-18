@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-002-external-research-canon",
-  "updated_at_utc": "2026-09-17T22:10:00+00:00",
-  "last_event_id": "evt-007",
+  "updated_at_utc": "2026-09-18T00:35:00+00:00",
+  "last_event_id": "evt-008",
   "canonical_plan_targets": [
     "Plans/Automated_Testing_System.md",
     "Plans/External_Research.md",
@@ -49,7 +49,7 @@
   },
   "current_phase": "compiled_external_research_canon",
   "cursor": {
-    "last_event_id": "evt-007",
+    "last_event_id": "evt-008",
     "next_action": "The compile is repaired and scripts/pm-ledger-compile-witness.py exits 0 on this ledger. The four questions raised at landing stay open and none blocks landing. The repair branch waits for one blind form-driven review before landing."
   },
   "source_refs": [

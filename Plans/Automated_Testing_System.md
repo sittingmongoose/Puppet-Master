@@ -4846,7 +4846,7 @@ canonical_text: >-
   source for the limit that bound a job, that a correction cannot be routed to a user decision and
   a capability cannot land under the repair authorization, that a credit cannot exist without a
   cited passage or a named job, that a candidate cannot declare itself inside the union or omit
-  its rejection check, that a packet cannot be presented all at once or use colored status bars,
+  its rejection check, that a packet cannot be presented all at once or use colored border bars,
   that the four DL-036 responses cannot be extended or reordered, that an answered card cannot omit
   its recorded time, that an averaged allowance cannot precede two reconciled jobs, that an
   unreconciled job cannot drop its unresolved charge, that captured usage cannot be presented as a
@@ -4888,6 +4888,7 @@ negative_constraints:
   - Do not add schemas or fixture pairs to the gate through an ambient glob.
   - Do not convert static validation into execution evidence or a readiness unlock.
   - Do not restore a literal CONTRACT_PAIRS cardinality to this gate registration; that denominator belongs to scripts/pm-new-contracts-verify.py.
+  - Do not change any behaviour of the contracts verifier beyond registering this pair.
 owner_hints: [Plans/Automated_Testing_System.md]
 ```
 

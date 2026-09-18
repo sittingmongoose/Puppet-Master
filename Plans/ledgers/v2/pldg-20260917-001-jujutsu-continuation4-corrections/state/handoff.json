@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-001-jujutsu-continuation4-corrections",
-  "updated_at_utc": "2026-09-17T21:40:00+00:00",
-  "last_event_id": "evt-007",
+  "updated_at_utc": "2026-09-18T00:25:00+00:00",
+  "last_event_id": "evt-008",
   "canonical_plan_targets": [
     "Plans/Decision_Log.md",
     "Plans/Jujutsu_Integration.md",
@@ -46,7 +46,7 @@
   },
   "current_phase": "compiled_jujutsu_continuation4_corrections",
   "cursor": {
-    "last_event_id": "evt-007",
+    "last_event_id": "evt-008",
     "next_action": "The compile is repaired and scripts/pm-ledger-compile-witness.py exits 0 on this ledger. Five questions stay open and none blocks landing: q-008, q-009 and q-010 from the landing, plus q-011 the recovery-action floor field on the effective-capability snapshot and q-012 one name for the shared version block. The repair branch waits for one blind form-driven review before landing."
   },
   "source_refs": [

@@ -2231,7 +2231,7 @@ negative_constraints:
 
 ### SSYS-037 - External Research Limit Values
 
-Settings owns the four Project-scoped values that bound an external research topic: the per-topic cost cap, the per-job limits on model responses and wall seconds, the lifetime cap per research arm, and whether retained unresolved usage blocks further admission or only stays visible. Their meaning, their defaults and the rule that every job reports which limit ended it belong to `Plans/External_Research.md` (`ERS-008`, `ERS-009`); this owner holds the values, their inventory rows and their surfaces, and no other owner stores them. The rows themselves are added to `Plans/settings_inventory.json` in the authorized inventory wave; this unit fixes ownership and meaning and claims no existing row. The per-job limits are the live bound in practice, so their controls state plainly that they, not the cost cap, are what usually ends a job.
+Settings owns the four Project-scoped values that bound an external research topic: the per-topic cost cap, the per-job limits on model responses and wall seconds, the lifetime cap per research arm, and whether retained unresolved usage blocks further admission or only stays visible. Their meaning, their defaults and the rule that every job reports which limit ended it belong to `Plans/External_Research.md` (`ERS-008`, `ERS-009`); this owner holds the values, their inventory rows and their surfaces, and no other owner stores them. The rows themselves are added to `Plans/settings_inventory.json` in the authorized inventory wave; this unit fixes ownership and meaning and claims no existing row. The per-job limits are the live bound in practice, so their controls state plainly that they, not the cost cap, are what ends a job that does not finish.
 
 ```yaml
 plan_unit_id: SSYS-037
@@ -2244,7 +2244,7 @@ canonical_text: >-
   lifetime cap per research arm, and an unresolved-usage disposition of blocks_admission or
   visible_only. Their semantics and defaults are owned by Plans/External_Research.md; Settings
   holds the values, the inventory rows and the surfaces, and no other owner stores them. Their
-  controls state that the per-job limits, not the cost cap, are what usually ends a job, and
+  controls state that the per-job limits, not the cost cap, are what ends a job that does not finish, and
   retained unresolved usage stays visible whichever disposition is chosen.
 gui_related: true
 gui_classification_reason: The four limits are user-visible Settings controls with explanatory copy.
