@@ -63,6 +63,10 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BASELINE = "reports/landing-checks/baseline.json"
 BASELINE_SCHEMA_ID = "pm.landing_check.baseline.v1"
 CURRENT_RUN_POINTER = "Plans/.plan_migration/current_run.json"
+PLAN_UNITS_INDEX = "Plans/.plan_index/plan_units.jsonl"
+# Files regenerated from every owner document. A branch that edits one document rewrites all of
+# them, so their paths say nothing about what the branch decided and are kept out of the match.
+DERIVED_PREFIXES = ("Plans/_shards/", "Plans/.plan_index/")
 
 # Failure fields that carry a measured value rather than an identity. Their drift is exactly what
 # the baseline absorbs, so the key keeps the field name and drops the number.
@@ -287,6 +291,34 @@ def grown_subchecks(
     return rows
 
 
+def partial_subchecks(
+    counts: dict[str, dict[str, dict[str, int]]],
+    baseline_checks: dict[str, Any],
+) -> set[tuple[str, str]]:
+    """Subchecks whose printed failures are only a sample, in this run or when the baseline was taken.
+
+    Which rows land inside a 50- or 100-row sample can change without a single failure being added
+    or removed, so a fingerprint appearing there for the first time means nothing. For these the
+    total is the only sound comparison, and it is compared. Their rows are still read, because the
+    branch match does not depend on the baseline.
+    """
+    out: set[tuple[str, str]] = set()
+    for check in counts:
+        for name, counted in counts[check].items():
+            if counted["sampled"] < counted["reported"]:
+                out.add((check, name))
+    for check, entry in (baseline_checks or {}).items():
+        for name, counted in ((entry or {}).get("subchecks") or {}).items():
+            if int(counted.get("sampled", 0)) < int(counted.get("reported", 0)):
+                out.add((check, name))
+    return out
+
+
+def bucket_subcheck(name: str) -> tuple[str, str]:
+    check, subcheck, _rest = name.split("|", 2)
+    return check, subcheck
+
+
 def blocking_items(
     on_branch: list[dict[str, Any]],
     grown: list[dict[str, Any]],
@@ -386,6 +418,45 @@ def branch_paths(root: Path, base: str) -> list[str]:
     return sorted({line.strip() for line in proc.stdout.splitlines() if line.strip()})
 
 
+def split_touched(paths: list[str]) -> tuple[list[str], list[str]]:
+    """Separate the paths the branch decided from the ones regeneration rewrote.
+
+    `Plans/_shards/**` and `Plans/.plan_index/**` are regenerated whole whenever any owner document
+    changes, so every branch that edits canon "touches" the index row of every unit in the
+    repository. Matching on those paths made a failure about a unit the branch never opened stop its
+    landing. They are matched on unit identity instead, below.
+    """
+    derived = [path for path in paths if path.startswith(DERIVED_PREFIXES)]
+    direct = [path for path in paths if not path.startswith(DERIVED_PREFIXES)]
+    return direct, derived
+
+
+def units_of_touched_docs(root: Path, paths: list[str]) -> dict[str, str]:
+    """{plan_unit_id: owner document} for every unit owned by a document this branch changed.
+
+    This is what replaces the derived paths: a failure recorded against a generated index belongs to
+    the branch when the unit it names is one the branch's own documents own.
+    """
+    owners = {path for path in paths if path.startswith("Plans/") and path.endswith(".md")}
+    index = root / PLAN_UNITS_INDEX
+    if not owners or not index.is_file():
+        return {}
+    units: dict[str, str] = {}
+    with index.open("r", encoding="utf-8") as handle:
+        for line in handle:
+            if not line.strip():
+                continue
+            try:
+                unit = json.loads(line)
+            except Exception:  # noqa: BLE001 - a malformed index row is the index's problem, not ours.
+                continue
+            owner = unit.get("owner_doc")
+            unit_id = unit.get("plan_unit_id")
+            if owner in owners and isinstance(unit_id, str) and unit_id:
+                units[unit_id] = owner
+    return units
+
+
 def path_tokens(paths: list[str]) -> list[tuple[str, str]]:
     """(path, span-id stem) pairs. Snapshot failures name a document only through its span ids,
     for example `assistant-chat-design-S0001` for `Plans/assistant-chat-design.md`."""
@@ -396,10 +467,18 @@ def path_tokens(paths: list[str]) -> list[tuple[str, str]]:
     return out
 
 
-def names_branch_path(item: dict[str, Any], tokens: list[tuple[str, str]], root: Path) -> list[str]:
+def names_branch_path(
+    item: dict[str, Any],
+    tokens: list[tuple[str, str]],
+    root: Path,
+    units: dict[str, str] | None = None,
+) -> list[str]:
     """Which of the branch's paths this failure names. Wide on purpose: reporting a failure that
     only mentions a branch path is safe, missing one is not. Reads the unscrubbed failure, so a
-    document named only inside a measured `actual` or `expected` list still counts."""
+    document named only inside a measured `actual` or `expected` list still counts.
+
+    A failure recorded against a generated index is matched on the unit it names instead of on the
+    index's own path, which every canon edit rewrites."""
     text = strip_root(canonical(item["_raw"]), root)
     hits = []
     for path, stem in tokens:
@@ -408,7 +487,17 @@ def names_branch_path(item: dict[str, Any], tokens: list[tuple[str, str]], root:
             continue
         if stem and mentions_span_stem(text, stem):
             hits.append(path)
+    if units and item["path"].startswith(DERIVED_PREFIXES):
+        owner = units.get(unit_named_by(item))
+        if owner and owner not in hits:
+            hits.append(owner)
     return hits
+
+
+def unit_named_by(item: dict[str, Any]) -> str | None:
+    raw = item["_raw"]
+    unit = raw.get("plan_unit_id") if isinstance(raw, dict) else None
+    return unit if isinstance(unit, str) else None
 
 
 def contains_path(text: str, path: str) -> bool:
@@ -592,24 +681,31 @@ def main() -> int:
         return 0
 
     known, baseline_counts = baseline_index(baseline)
-    tokens = path_tokens(touched)
+    direct, derived = split_touched(touched)
+    tokens = path_tokens(direct)
+    units = units_of_touched_docs(root, direct)
+    partial = partial_subchecks(counts, baseline.get("checks") or {})
 
     new_items: list[dict[str, Any]] = []
     on_branch: list[dict[str, Any]] = []
     seen_buckets: dict[str, int] = {}
     for item in items:
         name = bucket_of(item)
-        seen_buckets[name] = seen_buckets.get(name, 0) + 1
-        fingerprints = known.get(name, set())
-        if fingerprints is not None and item["key"].rsplit("|", 1)[1] not in fingerprints:
-            new_items.append(item)
-        hits = names_branch_path(item, tokens, root)
+        if (item["check"], item["subcheck"]) not in partial:
+            seen_buckets[name] = seen_buckets.get(name, 0) + 1
+            fingerprints = known.get(name, set())
+            if fingerprints is not None and item["key"].rsplit("|", 1)[1] not in fingerprints:
+                new_items.append(item)
+        hits = names_branch_path(item, tokens, root, units)
         if hits:
             on_branch.append({**public(item), "branch_paths": hits})
 
     grown = grown_buckets(seen_buckets, baseline_counts)
     subcheck_growth = grown_subchecks(counts, baseline.get("checks") or {})
-    resolved = sorted(set(baseline_counts) - set(seen_buckets))
+    resolved = sorted(
+        name for name in set(baseline_counts) - set(seen_buckets)
+        if bucket_subcheck(name) not in partial
+    )
 
     reported_keys = {item["key"] for item in new_items} | {item["key"] for item in on_branch}
     reported = [item for item in items if item["key"] in reported_keys]
@@ -619,6 +715,9 @@ def main() -> int:
         print(json.dumps(
             {
                 "schema_id": "pm.landing_check.report.v1",
+                "branch_units": len(units),
+                "derived_paths_excluded": derived,
+                "subchecks_compared_by_total_only": sorted(f"{c}/{s}" for c, s in partial),
                 "generated_at_utc": utc_now(),
                 "commit": commit,
                 "base": args.base,
@@ -663,6 +762,11 @@ def main() -> int:
             )
             print(f"  {len(truncated)} subchecks print only part of their failures: "
                   f"{hidden} failures are never keyed, and the on-branch match runs over the rest")
+            print(f"  {len(partial)} subchecks are compared by their total only, because which rows "
+                  f"they print can change on its own")
+        if derived:
+            print(f"  {len(derived)} regenerated files are matched on the units they name, "
+                  f"not on their own paths ({len(units)} units owned by documents this branch changed)")
         print()
         print(f"New since the baseline: {len(new_items)}")
         for item in new_items[:40]:
