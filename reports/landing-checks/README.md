@@ -100,9 +100,12 @@ missing-file errors that a real landing never sees.
     tests/test_pm_plan_migration.py
     tests/agent_packet_restrictions          (symlink into /mnt/Cursor/PuppetMaster-Evidence)
 
-The baseline records the list it was taken with, in `untracked_inputs`. Until those files are
-tracked, a baseline cannot be reproduced from git alone; copy them from the shared checkout before
-recording one.
+Six of those seven are now tracked, each file named individually in `.gitignore` by the
+tests-tracking convention: the directories are opened only far enough to name their 29 files, so a
+fixture added later stays ignored until someone names it. The seventh, the
+`tests/agent_packet_restrictions` symlink, stays ignored on purpose and has to be recreated in any
+tree that records a baseline; the runbook below does that. The baseline records what it was taken
+with, in `untracked_inputs`.
 
 ## Refreshing it: the nightly runbook
 
