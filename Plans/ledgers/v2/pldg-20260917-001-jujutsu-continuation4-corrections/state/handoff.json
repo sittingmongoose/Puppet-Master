@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-001-jujutsu-continuation4-corrections",
-  "updated_at_utc": "2026-09-18T10:00:00+00:00",
-  "last_event_id": "evt-010",
+  "updated_at_utc": "2026-09-18T12:00:00+00:00",
+  "last_event_id": "evt-011",
   "canonical_plan_targets": [
     "Plans/Decision_Log.md",
     "Plans/Jujutsu_Integration.md",
@@ -46,13 +46,13 @@
   },
   "current_phase": "compiled_jujutsu_continuation4_corrections",
   "cursor": {
-    "last_event_id": "evt-010",
-    "next_action": "Jared's answers of 2026-09-18 are applied and cycle 1 of the blind review is fixed. Four questions stay open and none blocks landing: q-008, q-009 and q-010 from the landing, and q-014 on which unit owns the closure definitions SCS-014 and JJI-008 share. The governance reseal for the edited documents is owed to the designated Plans agent. The branch waits for cycle 2 before landing."
+    "last_event_id": "evt-011",
+    "next_action": "Jared's answers of 2026-09-18 are applied and both blind-review cycles are fixed. Five questions stay open and none blocks landing: q-008, q-009 and q-010 from the landing, q-014 on which unit owns the closure definitions SCS-014 and JJI-008 share, and q-015 on block-scalar line width. The governance reseal for the edited documents is owed to the designated Plans agent. The branch is ready to land."
   },
   "source_refs": [
     "Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections/source_shards/authorization.md",
     "Plans/ledgers/v2/pldg-20260917-001-jujutsu-continuation4-corrections/source_shards/findings.md"
   ],
   "landing_condition": "Reviewer approval, then fast-forward onto main with regenerated shards and index.",
-  "open_questions_count": 4
+  "open_questions_count": 5
 }

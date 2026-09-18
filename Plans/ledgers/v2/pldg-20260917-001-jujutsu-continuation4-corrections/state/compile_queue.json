@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-001-jujutsu-continuation4-corrections",
-  "updated_at_utc": "2026-09-18T10:00:00+00:00",
-  "last_event_id": "evt-010",
+  "updated_at_utc": "2026-09-18T12:00:00+00:00",
+  "last_event_id": "evt-011",
   "canonical_plan_targets": [
     "Plans/Decision_Log.md",
     "Plans/Jujutsu_Integration.md",
@@ -462,5 +462,5 @@
     }
   ],
   "notes": "Thirteen corrections and three owner decisions are compiled. Three questions stay open and none blocks landing: q-008 the enumerated machine-local and ephemeral store entry list for a pinned JJ version, q-009 the adapter's complete declared native effect scope per invocation, and q-010 whether the recovery floor commands are servable from the operation store alone. The branch stops for independent review before landing on main. Repaired on 2026-09-17 under evt-007: the five findings records that named a unit the queue never targeted now target it and the unit carries the obligation, every exact atom token reaches its owner unit’s prose and registry, and the orphaned preserved_exact_tokens entries are gone. Three further questions were raised by that repair and all three are answered: q-011 closed with no change, q-012 landed as the native_toolchain_identity rename and q-013 landed in this ledger's own records. Three questions stay open, q-008, q-009 and q-010, and none blocks landing.",
-  "terminal_ledger_event_id": "evt-010"
+  "terminal_ledger_event_id": "evt-011"
 }

@@ -2231,7 +2231,7 @@ negative_constraints:
 
 ### SSYS-037 - External Research Limit Values
 
-Settings owns the four Project-scoped values that bound an external research topic: the per-topic cost cap, the per-job limits on model responses and wall seconds, the lifetime cap per research arm, and whether retained unresolved usage blocks further admission or only stays visible, the second of which is a design default no run has exercised yet. Their meaning, their defaults and the rule that every job reports which limit ended it belong to `Plans/External_Research.md` (`ERS-008`, `ERS-009`); this owner holds the values, their inventory rows and their surfaces, and no other owner stores them. The rows themselves are added to `Plans/settings_inventory.json` in the Settings owner's next authorized inventory wave, which owes them and which the External Research landing does not perform; this unit fixes ownership and meaning and claims no existing row. The per-job limits are the live bound in practice, so their controls state plainly that they, not the cost cap, are what ends a job that does not finish.
+Settings owns the four Project-scoped values that bound an external research topic: the per-topic cost cap, the per-job limits on model responses and wall seconds, the lifetime cap per research arm, and whether retained unresolved usage blocks further admission or only stays visible. Of the two dispositions, `visible_only` is a design default that no run has exercised yet and is marked as one until a run does; `blocks_admission` is what continuation 4 exercised. Their meaning, their defaults and the rule that every job reports which limit ended it belong to `Plans/External_Research.md` (`ERS-008`, `ERS-009`); this owner holds the values, their inventory rows and their surfaces, and no other owner stores them. The rows themselves are added to `Plans/settings_inventory.json` in the Settings owner's next authorized inventory wave, which owes them and which the External Research landing does not perform; this unit fixes ownership and meaning and claims no existing row. The per-job limits are the live bound in practice, so their controls state plainly that they, not the cost cap, are what ends a job that does not finish.
 
 ```yaml
 plan_unit_id: SSYS-037
@@ -2242,7 +2242,8 @@ canonical_text: >-
   The four external research limits are Project-scoped Settings values held by this owner and its
   inventory, namely a per-topic cost cap, per-job limits on model responses and wall seconds, a
   lifetime cap per research arm, and an unresolved-usage disposition of blocks_admission or
-  visible_only. Their semantics and defaults are owned by Plans/External_Research.md; Settings
+  visible_only, of which visible_only is a design default that no run has exercised and is presented as
+  one until a run does. Their semantics and defaults are owned by Plans/External_Research.md; Settings
   holds the values, the inventory rows and the surfaces, and no other owner stores them. Their
   controls state that the per-job limits, not the cost cap, are what ends a job that does not finish, and
   retained unresolved usage stays visible whichever disposition is chosen.
@@ -2255,7 +2256,8 @@ acceptance_criteria:
   - The four research limits are specified here as Project-scoped Settings values; their inventory rows are owed to the Settings owner's next authorized inventory wave, and until then no row is claimed to exist.
   - No other owner document stores or duplicates a research limit value.
   - Retained unresolved usage remains visible under either disposition.
-  - The per-job limit controls state that they, not the cost cap, usually end a job.
+  - A surface offering the unresolved-usage disposition names `visible_only` a design default until a run establishes it, and never presents it as exercised.
+  - The per-job limit controls state that they, not the cost cap, are what ends a job that does not finish.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py run-gates

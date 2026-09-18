@@ -19,8 +19,10 @@ and with blind form-driven reviews. This bundle is the repair of what those foun
   `declared_other_arm_artifact` input class with a required `declared_source_arm_id` and one positive
   and one negative fixture. Those changes are authorized by
   `/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md`,
-  SHA-256 `ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c` as read on 2026-09-18,
-  which is agent-relayed and not verifiable from inside this repository. Cycle 1 of the blind review
+  SHA-256 `ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c` as read on 2026-09-18. That
+  file is appended to as further answers arrive, so the hash is the reading this branch acted on rather
+  than a frozen file, and a later re-hash differs; it is also agent-relayed and not verifiable from inside
+  this repository. Cycle 1 of the blind review
   read the schema and fixture changes as contradicting the stated boundary, which they would have been
   without those answers; this paragraph is the correction. Nothing outside the nine answers changed a
   schema or a fixture.
@@ -51,11 +53,16 @@ the shipped validator, never against the reviewer's own quoted evidence.
 
 | | continuation-4 | External Research | total |
 |---|---|---|---|
-| confirmed and repaired | 50 | 32 | 82 |
-| confirmed, deferred to an open question | 0 | 11 | 11 |
+| confirmed and repaired | 50 | 33 | 83 |
+| confirmed, deferred to an open question | 0 | 10 | 10 |
 | confirmed, recorded and not repaired | 0 | 37 | 37 |
 | not confirmed | 2 | 2 | 4 |
 | | 52 | 82 | 134 |
+
+The two blind review cycles on this branch itself add 23 more, dispositioned in the same file under
+packets `blind-review-cycle-1` and `blind-review-cycle-2`: 19 repaired, 4 recorded as open questions.
+Across all nine packets the file holds 157 findings: 102 repaired, 14 deferred to an open question,
+37 recorded and not repaired, 4 not confirmed.
 
 Four reviewer claims were checked and rejected, and repairing any of them would have made canon worse:
 
@@ -79,37 +86,36 @@ input to judge, not as text to paste. Its DL-057 proposal is applied in this bra
 DL-058 proposal would have truncated Jared's verbatim answer back to two sentences, undoing review note
 N3, and is rejected.
 
-## What is deliberately not done here
+## What the nine answers changed, and what is still open
 
-Eight obligations need an owner decision or a schema change and are recorded as open ledger questions
-rather than asserted in canon. None blocks landing.
+Eight questions this repair raised were put to Jared and answered "agree" on 2026-09-18; a ninth item
+recorded the reseal as owed. What they changed is in the commit log and in `evt-009` on both ledgers, and
+the two that widened this repair's boundary are named in the boundary paragraph above. In short: `q-011`
+closed with no change, `q-012` renamed the property to `native_toolchain_identity` end to end, `q-013` put
+the pseudo-remote clause into ledger 001's own records, `q-005` added the `declared_other_arm_artifact`
+input class with its declaration field and two fixtures, `q-006` recorded the Automated Testing consumer
+reference in the authorization shard, `q-007` marked `visible_only` a design default, `q-008` recorded the
+settings inventory rows as owed to the Settings owner's next wave, and `q-009` gave the three consumer
+units their own headings. None of those eight is open any more.
 
-On `pldg-20260917-001-jujutsu-continuation4-corrections`:
-- `q-011` should the effective-capability snapshot carry a recovery-action floor field of its own, or
-  keep projecting the floor JJI-003 sets? `allowed_action_ids` exists only on `availability_payload`.
-- `q-012` should the shared version block carry one name end to end? The shared definition is
-  `native_toolchain_identity` and the property that carries it is `toolchain_identity`; canon now names
-  both rather than only the property, which is what the reviewers raised.
-- `q-013` should this ledger's summary of q-007's answer carry the pseudo-remote clause the approved
-  decision card contains? Canon carries it and it is authorized; only the ledger summary omits it.
+Twelve questions are open across the two ledgers and none blocks landing.
 
-On `pldg-20260917-002-external-research-canon`:
-- `q-005` ERS-003's input rule forbids reading another arm's artifacts, which is what continuation 4's
-  review arms did. A prose scope qualifier would be enough; a new input class would be a schema change.
-- `q-006` is `Plans/Automated_Testing_System.md` inside this compile's authorization? The shard does not
-  name it and the compile queue compiles ATS-054 into it.
-- `q-007` what establishes the `visible_only` branch of the unresolved-usage disposition?
-- `q-008` what authorizes the settings inventory wave SSYS-037 defers its rows to, and what tracks it?
-- `q-009` should the three consumer units carry their own markdown headings? Nothing is lost by the
-  fenced form, so this is a compile-form decision rather than a defect.
+On `pldg-20260917-001-jujutsu-continuation4-corrections`: `q-008`, `q-009` and `q-010` from the landing,
+the three obligations that compile left unenforced; `q-014` on which unit should own the closure
+definitions SCS-014 and JJI-008 now share, since the declared dependency edge runs the other way and
+adding the missing edge would make a cycle; and `q-015` on whether canon states a width for a folded block
+scalar, after two review cycles raised the line widths of the four this repair edited and the folding
+makes all of it semantically inert.
 
-Thirty-seven further External Research findings are confirmed, recorded in the dispositions file and not
-repaired in this cycle: mostly prose qualifiers on ERS-001, ERS-010, ERS-011 and ERS-012, ledger-receipt
-completeness on the compile queue and PLS-023, and citation form. Six of the citation-form findings are
-answered by the document itself, which says paths beginning `PM-Experiments/` are rooted at `/mnt/Cursor/`.
+On `pldg-20260917-002-external-research-canon`: `q-001` through `q-004` from the landing, including
+continuation 5's unreported results; `q-010` on whether DL-036 should use its consumers' words, since
+DL-036 is a landed decision outside this repair's scope; `q-011` on what enforces the `visible_only`
+design-default marking, which both owners now state as a criterion but no fixture tests; and `q-012` on
+whether the declared-input rule needs a second negative fixture for the class that must not declare.
 
-Governance artifacts are untouched. Editing canon makes the Spec Lock, evidence and readiness hashes
-stale for the edited documents; that is the designated Plans agent's reseal, not this branch's work.
+Governance artifacts are untouched. Editing canon makes the Spec Lock, evidence and readiness hashes stale
+for the edited documents; that reseal is the designated Plans agent's, per Jared's answer of 2026-09-18,
+and is not performed here.
 
 ## Cycle 1 of the blind review
 
@@ -133,7 +139,28 @@ the closure definitions SCS-014 and JJI-008 now share, because the declared depe
 way and adding the missing edge would make a cycle; `q-010` on ledger 002 asks whether DL-036 should use
 its consumers' words, since DL-036 is a landed decision outside this repair's scope.
 
+## Cycle 2 of the blind review
+
+Verdict fix-then-land: one blocking finding, five should-fix, five notes, all of it tracing to the two
+commits since cycle 1. Findings at `~/PM-Experiments/blind-review-compile-repair-20260918/cycle2/findings.jsonl`,
+SHA-256 `666e573c6094fa2cfd2b58c80fc3886f255c74511cbffe2b48fc49a96520813f`.
+
+The blocking finding, R2-01, was that the answers wave widened the admitted-input enum in the shipped
+schema and in ERS-003 but left the owner document's own contracts section stating the three-value closed
+set and omitting `declared_source_arm_id`, so `Plans/External_Research.md` contradicted itself and the
+schema it describes. That section now carries the fourth class, the declaration field and the
+reconcile-and-compare restriction, and `Plans/Glossary.md` and `Plans/00-plans-index.md` carry the same
+widening (R2-02). Nine of the eleven are repaired: the fixture counts in the owner document's validation
+section (R2-03), the answers-file citations annotated as a live source (R2-04), SSYS-037's misattached
+design-default clause and its absence from the unit itself (R2-05, R2-06), JJI-006's superseded token
+(R2-07), and this bundle's own stale section and table (R2-10, R2-11).
+
+Two notes are recorded as questions: `q-015` on ledger 001 asks whether canon states a width for a folded
+block scalar, after two cycles raised the four this repair edited and the folding makes all of it inert;
+`q-012` on ledger 002 asks whether the declared-input rule needs a second negative fixture for the class
+that must not declare.
+
 ## Acceptance
 
-Deterministic checks pass, and the branch stops for cycle 2 of the blind form-driven review under a cycle
-cap of two. Items that survive cycle 2 are recorded as open questions rather than repaired in a third pass.
+Deterministic checks pass and both review cycles are fixed, which exhausts the cycle cap of two. What
+survives is recorded as open questions rather than repaired in a third pass, and the branch lands.

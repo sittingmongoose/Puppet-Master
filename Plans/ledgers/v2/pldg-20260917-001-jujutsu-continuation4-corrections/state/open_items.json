@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-001-jujutsu-continuation4-corrections",
-  "updated_at_utc": "2026-09-18T10:00:00+00:00",
+  "updated_at_utc": "2026-09-18T12:00:00+00:00",
   "open_questions": [
     {
       "question_id": "q-008",
@@ -33,6 +33,14 @@
       "status": "open",
       "raised_by": "blind review cycle 1 of the compile repair, 2026-09-18",
       "provisional_state": "The references are definitional, not dependency edges: SCS-014 states the obligation and points at the unit that defines the machine terms. No edge was added because it would make a cycle with JJI-008's declared dependency on SCS-014.",
+      "blocks_landing": false
+    },
+    {
+      "question_id": "q-015",
+      "summary": "Should the four folded block scalars this repair edited be re-flowed whole to the surrounding line width, and is there a stated width for a Plans block scalar at all?",
+      "status": "open",
+      "raised_by": "blind review cycle 2 of the compile repair, 2026-09-18",
+      "provisional_state": "Semantically inert: YAML folding joins the lines and every validator passes either way. No repository rule states a width for a block scalar.",
       "blocks_landing": false
     }
   ],
@@ -136,7 +144,7 @@
       "summary": "Should the effective-capability snapshot carry a recovery-action floor field of its own, or keep projecting the floor JJI-003 sets on command availability?",
       "status": "answered",
       "answer": "Keep projecting the floor JJI-003 sets on command availability; the effective-capability snapshot gets no recovery-action floor field of its own. JJI-006 states that it renders the set JJI-003 requires and never renders a blocked row with an empty recovery set, which is what canon already says, so nothing changes and the question closes.",
-      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
+      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, a live file that is appended to as further answers arrive, so the hash is the 2026-09-18 reading of it rather than a frozen file and a later re-hash differs: SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
       "answered_at_utc": "2026-09-18T09:00:00+00:00"
     },
     {
@@ -144,7 +152,7 @@
       "summary": "Should the shared version block carry one name end to end, renaming the toolchain_identity property to native_toolchain_identity?",
       "status": "answered",
       "answer": "Rename the property to `native_toolchain_identity` so one name runs end to end. Applied to both schemas, both fixture files including the negative fixture's removal key, the JJI-006 and JJI-008 prose and their registries. The shared definition name and the `pm.source_control.native_toolchain_identity.v1` schema id are unchanged; the contracts gate passes with every positive valid and every negative rejected.",
-      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
+      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, a live file that is appended to as further answers arrive, so the hash is the 2026-09-18 reading of it rather than a frozen file and a later re-hash differs: SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
       "answered_at_utc": "2026-09-18T09:00:00+00:00"
     },
     {
@@ -152,7 +160,7 @@
       "summary": "Should q-007's recorded answer and the bookmark-disclosure atom carry the pseudo-remote clause the approved decision card contains?",
       "status": "answered",
       "answer": "Carry the pseudo-remote clause in this ledger's own summary of the bookmark answer, as the approved decision card does. q-007's recorded answer and the bookmark-disclosure atom's negative constraints now both state that pseudo-remotes and non-fetchable remotes are not presented as ordinary remotes and that an unsynced, untracked or absent reference is never folded silently into a combined chip. The canon clause in DL-057 and SCS-005 is unchanged; only the ledger's summaries gain what they had omitted.",
-      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
+      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, a live file that is appended to as further answers arrive, so the hash is the 2026-09-18 reading of it rather than a frozen file and a later re-hash differs: SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
       "answered_at_utc": "2026-09-18T09:00:00+00:00"
     }
   ]

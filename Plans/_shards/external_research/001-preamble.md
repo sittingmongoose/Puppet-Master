@@ -4,7 +4,7 @@ Source: `Plans/External_Research.md`
 
 Source lines: L1-L5
 
-Source SHA256: `1c5ecd15a0ab8378b50cda457f5693eae266ab1788a46493ba4cb77daa688b86`
+Source SHA256: `a7da7ac63f5064759a08e55eff0c70f3a410a55f58715ba188a88c02cad4d25d`
 
 ---
 

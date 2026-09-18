@@ -344,7 +344,7 @@ context_scope: jujutsu_setup_gui_migration
 implementation_surfaces: [Plans/Settings_System.md, Plans/FinalGUISpec.md, future Source Control UI]
 node_compile_hint: {mode: jujutsu_setup_gui_migration_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:egolite-register:SCM-003, source_ref:egolite-register:UI-01, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-native-toolchain-identity-c4-03, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-recovery-action-floor-c4-09]
-preserved_exact_tokens: [Install Jujutsu, Use Jujutsu here, Bookmarks, Operation Log, Ready with limits, Needs attention, native_toolchain_identity, toolchain_identity, certified_scenarios, allowed_action_ids, repository_quarantined, cmd.jujutsu.operation.log, cmd.jujutsu.operation.show]
+preserved_exact_tokens: [Install Jujutsu, Use Jujutsu here, Bookmarks, Operation Log, Ready with limits, Needs attention, native_toolchain_identity, certified_scenarios, allowed_action_ids, repository_quarantined, cmd.jujutsu.operation.log, cmd.jujutsu.operation.show]
 negative_constraints: [Do not install or mutate silently., Do not show Git-only staging or stash., Do not promote Preview certification without current evidence.]
 owner_hints: [Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Settings_System.md]
 ```

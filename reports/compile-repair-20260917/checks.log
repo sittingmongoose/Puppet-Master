@@ -1,7 +1,7 @@
 # Verification sweep for the compile-repair branch
-# Parent revision: 06535673a112cff6e37caff9b3e7c294ac611b62   (the cycle-1 fix commit built on this)
+# Parent revision: 0943d85a5ae7b1f72d07400652e4869a56250a93   (the cycle-2 fix commit built on this)
 # Base revision:   4f5eda0d18a9deff2349b03ae573f0ffd706ed61
-# Ran: 2026-09-18T00:43:37Z against the working tree that became the cycle-1 fix commit
+# Ran: 2026-09-18T04:39:27Z against the working tree that became the cycle-2 fix commit
 
 ### witness 001 (no base)
 pldg-20260917-001-jujutsu-continuation4-corrections: pass
@@ -33,21 +33,21 @@ contract_pairs 31 positives 1060 / 1060 negatives 3452 / 3452
 ### shard check
 pass 99 docs 2690 shards failures []
 ### index validate
-{"acceptance_unit_count": 25990, "coverage_status": "pass", "node_readiness_status": "blocked_runtime_certification_incomplete", "plan_unit_count": 6674}
+{"acceptance_unit_count": 25992, "coverage_status": "pass", "node_readiness_status": "blocked_runtime_certification_incomplete", "plan_unit_count": 6674}
 ### ledger validator 001
 fail
  - governance coverage targets missing from sharding_config sources: ['Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']
  - governance coverage targets missing from Spec_Lock coverage: ['Plans/Decision_Log.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']
  - governance coverage targets missing from plan_graph coverage: ['Plans/Decision_Log.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']
-summary {'atoms': 13, 'compile_queue_items': 14, 'corrections': 13, 'decisions': 13, 'events': 10, 'plan_units_checked': 99, 'questions': 14}
+summary {'atoms': 13, 'compile_queue_items': 14, 'corrections': 13, 'decisions': 13, 'events': 11, 'plan_units_checked': 99, 'questions': 15}
 ### ledger validator 002
 fail
  - governance coverage targets missing from sharding_config sources: ['Plans/Settings_System.md']
  - governance coverage targets missing from Spec_Lock coverage: ['Plans/External_Research.md', 'Plans/Settings_System.md']
  - governance coverage targets missing from plan_graph coverage: ['Plans/External_Research.md', 'Plans/Settings_System.md']
-summary {'atoms': 5, 'compile_queue_items': 5, 'corrections': 0, 'decisions': 5, 'events': 10, 'plan_units_checked': 662, 'questions': 10}
+summary {'atoms': 5, 'compile_queue_items': 5, 'corrections': 0, 'decisions': 5, 'events': 11, 'plan_units_checked': 662, 'questions': 12}
 ### named tests
 ----------------------------------------------------------------------
-Ran 36 tests in 0.278s
+Ran 36 tests in 0.249s
 
 OK

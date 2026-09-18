@@ -3,7 +3,7 @@
   "run": "compile-repair-20260917",
   "branch": "plans/compile-repair-20260917",
   "base_revision": "4f5eda0d18a9deff2349b03ae573f0ffd706ed61",
-  "parent_revision": "06535673a112cff6e37caff9b3e7c294ac611b62",
+  "parent_revision": "0943d85a5ae7b1f72d07400652e4869a56250a93",
   "covers": "the commit this receipt lands in, which is the child of parent_revision. A receipt cannot name its own commit hash, so the parent and the complete changed-path list against the base identify what is covered; checks.log carries the same parent stamp and the time the sweep ran.",
   "claim_boundary": "Static text, schema, fixture, shard, index and ledger-validator integrity only. No governance seal, runtime certification or readiness admission. The repair through b56be91761 changed no schema or fixture semantics. The boundary was widened on 2026-09-18 by Jared's answers, two of which are schema and fixture changes: q-012's native_toolchain_identity rename and ledger 002's q-005 declared_other_arm_artifact input class with its two fixtures. Nothing outside those nine answers changed a schema or a fixture.",
   "boundary_widened_by": {
@@ -14,7 +14,8 @@
     "schema_or_fixture_answers": [
       "pldg-20260917-001 q-012",
       "pldg-20260917-002 q-005"
-    ]
+    ],
+    "moving_source": "The answers file is appended to as further answers arrive, so the hash is the 2026-09-18 reading this branch acted on rather than a frozen file; a later re-hash differs and that is expected."
   },
   "witness": {
     "pldg-20260917-001-jujutsu-continuation4-corrections": {
@@ -84,7 +85,7 @@
     "python3 scripts/pm-ledger-compile-witness.py <ledger>": "pass on both ledgers, with and without --base origin/main, exit 0",
     "python3 scripts/pm-new-contracts-verify.py": "pass; 31 contract pairs, 1060 of 1060 positives valid, 3452 of 3452 negatives rejected",
     "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json": "pass; 99 docs, 2690 shards, no failures",
-    "python3 scripts/pm-plan-index.py validate": "pass; 6674 plan units, 25990 acceptance units, coverage pass",
+    "python3 scripts/pm-plan-index.py validate": "pass; 6674 plan units, 25992 acceptance units, coverage pass",
     "python3 scripts/pm-bootstrap-ledger-validate.py <ledger 001>": "fail on exactly the three pre-existing governance-coverage errors the compile itself recorded; no new error",
     "python3 scripts/pm-bootstrap-ledger-validate.py <ledger 002>": "fail on exactly the three pre-existing governance-coverage errors the compile itself recorded; no new error",
     "python3 -m unittest tests.test_pm_ledger_compile_witness tests.test_pm_jujutsu_closure_semantics tests.test_pm_source_control_effects tests.test_pm_plan_index": "36 tests, OK"
@@ -92,6 +93,7 @@
   "blind_review_dispositions": {
     "packets": [
       "blind-review-cycle-1",
+      "blind-review-cycle-2",
       "er-pre-reviewer-a",
       "er-pre-reviewer-b",
       "er-reviewer-a",
@@ -100,16 +102,20 @@
       "reviewer-b",
       "reviewer-c"
     ],
-    "findings_total": 146,
+    "findings_total": 157,
     "by_disposition": {
-      "confirmed_and_repaired": 93,
+      "confirmed_and_repaired": 102,
       "not_confirmed": 4,
       "confirmed_recorded_not_repaired": 37,
-      "confirmed_deferred_to_question": 12
+      "confirmed_deferred_to_question": 14
     },
     "by_packet": {
       "blind-review-cycle-1": {
         "confirmed_and_repaired": 10,
+        "confirmed_deferred_to_question": 2
+      },
+      "blind-review-cycle-2": {
+        "confirmed_and_repaired": 9,
         "confirmed_deferred_to_question": 2
       },
       "er-pre-reviewer-a": {
@@ -178,7 +184,8 @@
         "q-008",
         "q-009",
         "q-010",
-        "q-014"
+        "q-014",
+        "q-015"
       ],
       "answered_by_this_branch": [
         "q-011",
@@ -192,7 +199,9 @@
         "q-002",
         "q-003",
         "q-004",
-        "q-010"
+        "q-010",
+        "q-011",
+        "q-012"
       ],
       "answered_by_this_branch": [
         "q-005",
@@ -205,19 +214,64 @@
   },
   "reseal_owed": "Plans/Spec_Lock.json, Plans/.evidence/**, the plan graph and the readiness report carry hashes that this branch's canon edits make stale. The reseal is the designated Plans agent's, per Jared's answer of 2026-09-18, and is not performed here.",
   "files_changed_against_base": [
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
+    "Concepts/chat-assistant-concepts/5.6",
     "Plans/.plan_index/acceptance_units.jsonl",
     "Plans/.plan_index/coverage_report.json",
     "Plans/.plan_index/dependencies.json",
     "Plans/.plan_index/doc_cards.json",
     "Plans/.plan_index/node_readiness_report.json",
     "Plans/.plan_index/plan_units.jsonl",
+    "Plans/00-plans-index.md",
     "Plans/Automated_Testing_System.md",
     "Plans/Decision_Log.md",
     "Plans/External_Research.md",
+    "Plans/Glossary.md",
     "Plans/Jujutsu_Integration.md",
     "Plans/Planning_Ledger_System.md",
     "Plans/Settings_System.md",
     "Plans/Source_Control_System.md",
+    "Plans/_shards/00-plans-index/00-index.md",
+    "Plans/_shards/00-plans-index/001-preamble.md",
+    "Plans/_shards/00-plans-index/002-change-summary.md",
+    "Plans/_shards/00-plans-index/003-anti-drift-layer-required-reading-order.md",
+    "Plans/_shards/00-plans-index/004-rewrite-tie-in-2026-02-21.md",
+    "Plans/_shards/00-plans-index/005-plan-map.md",
+    "Plans/_shards/00-plans-index/006-known-cross-cutting-duplication-hotspots.md",
+    "Plans/_shards/00-plans-index/007-shard-indexes.md",
+    "Plans/_shards/00-plans-index/008-2026-03-07-addendum-containers-registry-and-unraid.md",
+    "Plans/_shards/00-plans-index/009-runtime-packet-index-coverage-consolidation-addendum-2026-03-09.md",
+    "Plans/_shards/00-plans-index/010-2026-03-12-addendum-source-control-github-actions-and-docker-man.md",
+    "Plans/_shards/00-plans-index/011-web-tools-firecrawl-missing-spec-owner-alignment-note-2026-03-30.md",
+    "Plans/_shards/00-plans-index/012-a2a-opencode-research-packet-map-2026-03-28.md",
+    "Plans/_shards/00-plans-index/013-owner-consumer-map.md",
+    "Plans/_shards/00-plans-index/014-planunits.md",
+    "Plans/_shards/00-plans-index/015-migration-coverage.md",
+    "Plans/_shards/00-plans-index/016-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+    "Plans/_shards/00-plans-index/017-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+    "Plans/_shards/00-plans-index/018-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+    "Plans/_shards/00-plans-index/019-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+    "Plans/_shards/00-plans-index/020-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+    "Plans/_shards/00-plans-index/021-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+    "Plans/_shards/00-plans-index/022-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+    "Plans/_shards/00-plans-index/manifest.json",
     "Plans/_shards/assistant-chat-design/00-index.md",
     "Plans/_shards/assistant-chat-design/001-preamble.md",
     "Plans/_shards/assistant-chat-design/002-canonical-owner-section-requirements.md",
@@ -352,6 +406,21 @@
     "Plans/_shards/external_research/009-7.-deferred-retired-compatibility-and-non-goals.md",
     "Plans/_shards/external_research/010-8.-source-lineage-and-governance.md",
     "Plans/_shards/external_research/manifest.json",
+    "Plans/_shards/glossary/00-index.md",
+    "Plans/_shards/glossary/001-preamble.md",
+    "Plans/_shards/glossary/002-canonical-owner-section-requirements.md",
+    "Plans/_shards/glossary/003-0.-scope.md",
+    "Plans/_shards/glossary/004-1.-canonical-platform-name.md",
+    "Plans/_shards/glossary/005-2.-core-terms.md",
+    "Plans/_shards/glossary/006-4.-evidence.md",
+    "Plans/_shards/glossary/007-5.-secret-handling.md",
+    "Plans/_shards/glossary/008-6.-primitives.md",
+    "Plans/_shards/glossary/009-references.md",
+    "Plans/_shards/glossary/010-owner-consumer-map.md",
+    "Plans/_shards/glossary/011-planunits.md",
+    "Plans/_shards/glossary/012-migration-coverage.md",
+    "Plans/_shards/glossary/013-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+    "Plans/_shards/glossary/manifest.json",
     "Plans/_shards/planning_ledger_system/00-index.md",
     "Plans/_shards/planning_ledger_system/001-preamble.md",
     "Plans/_shards/planning_ledger_system/002-0.-scope.md",
@@ -397,6 +466,25 @@
     "Plans/ledgers/v2/pldg-20260917-002-external-research-canon/validation/ledger_health.json",
     "Plans/source_control_contract_fixtures.json",
     "Plans/source_control_contracts.schema.json",
+    "Pro/BATCH_19_CHECKPOINT.json",
+    "Pro/BATCH_19_COVERAGE.json",
+    "Pro/BATCH_19_README.md",
+    "Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html",
+    "Pro/attachment-batch19.css",
+    "Pro/attachment-batch19.js",
+    "Pro/attachment-demo-batch19.css",
+    "Pro/attachment-demo-batch19.js",
+    "Pro/attachment-snapshots.js",
+    "Pro/attachments.js",
+    "Pro/build.py",
+    "Pro/index.html",
+    "Pro/scheduling.js",
+    "Pro/tests/b19/browser.py",
+    "Pro/tests/b19/handlers.js",
+    "Pro/tests/b19/handlers.py",
+    "Pro/tests/b19/package/build_packages.py",
+    "Pro/tests/b19/package/check_cumulative.py",
+    "Pro/tests/b19/run.py",
     "reports/compile-repair-20260917/README.md",
     "reports/compile-repair-20260917/checks.log",
     "reports/compile-repair-20260917/findings-dispositions.jsonl",
@@ -406,15 +494,40 @@
     "reports/compile-repair-20260917/witness-before-001.json",
     "reports/compile-repair-20260917/witness-before-002.json"
   ],
-  "files_changed_count": 200,
+  "files_changed_count": 279,
   "bundle_sha256": {
-    "README.md": "76d8c442c3be474e724288b9115a6d886e9ea44e0c5f6d7e19e43f370770eb65",
-    "checks.log": "c16916ee180045489e853c4283f5765f4082d003845474726003e0b7997260c6",
-    "findings-dispositions.jsonl": "1bb12bcd9d3aa2f8418f133b9de369e1c37202c2fe8b3ddd295e52fcd2f9c494",
-    "witness-after-001.json": "c745b0fb1a0bfb3d885bbe8499c65b35ffa28367150a43e6e1a35e6f47fc4cd4",
+    "README.md": "e0c64f65aaccf781e34858052dc8bdb4960a7e788cb1b0927681792989bbaf95",
+    "checks.log": "f8d3050a5443f9f390557ec719024c853c20d22f24adf8d4ead2083bcebf6d8b",
+    "findings-dispositions.jsonl": "29caabd8d3cb1843504555467ecef1b19146db74efb7e9965a514dc80cb3e28b",
+    "witness-after-001.json": "56a614e82181560112ac8ba8084c784e490345e73d6cd0cda5292db08879d08f",
     "witness-after-002.json": "9db1097f2802d227a2a87b3cb07a1392d4aee930af79164ec0aadbb45716c13b",
     "witness-before-001.json": "9ad339e73eb57633df220461230451a80fc9688fe45edf69ef01b634b26190e8",
     "witness-before-002.json": "42ec87cefbf3c9df7788500c062acf355b7a70ab5cfd4e665c57861d06cccb1b"
   },
-  "status": "pass_deterministic_checks_cycle1_fixed_pending_cycle2"
+  "status": "pass_deterministic_checks_both_review_cycles_fixed_ready_to_land",
+  "blind_review_cycle_2": {
+    "findings": "~/PM-Experiments/blind-review-compile-repair-20260918/cycle2/findings.jsonl",
+    "sha256": "666e573c6094fa2cfd2b58c80fc3886f255c74511cbffe2b48fc49a96520813f",
+    "verdict": "fix_then_land",
+    "blocking": 1,
+    "should_fix": 5,
+    "notes": 5,
+    "repaired": [
+      "R2-01",
+      "R2-02",
+      "R2-03",
+      "R2-04",
+      "R2-05",
+      "R2-06",
+      "R2-07",
+      "R2-10",
+      "R2-11"
+    ],
+    "deferred_to_questions": {
+      "R2-08": "pldg-20260917-001 q-015",
+      "R2-09": "pldg-20260917-002 q-012",
+      "R2-06 validator surface": "pldg-20260917-002 q-011"
+    },
+    "cycle_cap": "two cycles, both fixed; what survives is recorded as open questions rather than repaired in a third pass"
+  }
 }

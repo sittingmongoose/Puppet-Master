@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-002-external-research-canon",
-  "updated_at_utc": "2026-09-18T10:00:00+00:00",
-  "last_event_id": "evt-010",
+  "updated_at_utc": "2026-09-18T12:00:00+00:00",
+  "last_event_id": "evt-011",
   "canonical_plan_targets": [
     "Plans/Automated_Testing_System.md",
     "Plans/External_Research.md",
@@ -48,7 +48,7 @@
     "compile_witness": "pass_all_three_witnesses"
   },
   "status": "compiled_external_research_canon",
-  "terminal_ledger_event_id": "evt-010",
+  "terminal_ledger_event_id": "evt-011",
   "items": [
     {
       "queue_id": "queue-001",

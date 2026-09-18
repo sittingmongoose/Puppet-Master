@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260917-002-external-research-canon",
-  "updated_at_utc": "2026-09-18T10:00:00+00:00",
+  "updated_at_utc": "2026-09-18T12:00:00+00:00",
   "open_questions": [
     {
       "question_id": "q-001",
@@ -55,6 +55,28 @@
         "Plans/Automated_Testing_System.md#ATS-054",
         "Plans/external_research_contract_fixtures.json"
       ]
+    },
+    {
+      "question_id": "q-011",
+      "summary": "What enforces the rule that visible_only is presented as a design default until a run exercises it?",
+      "status": "open",
+      "blocks_landing": false,
+      "affected_surfaces": [
+        "Plans/External_Research.md#ERS-009",
+        "Plans/Settings_System.md#SSYS-037"
+      ]
+    },
+    {
+      "question_id": "q-012",
+      "summary": "Should the declared-input rule carry a second negative fixture for the class that must not declare, and does the existing negative name the constraint it actually fails?",
+      "status": "open",
+      "blocks_landing": false,
+      "affected_surfaces": [
+        "Plans/External_Research.md#ERS-003",
+        "Plans/external_research_contract_fixtures.json",
+        "Plans/external_research_contracts.schema.json",
+        "Plans/Automated_Testing_System.md#ATS-054"
+      ]
     }
   ],
   "deferred_questions": [],
@@ -75,7 +97,7 @@
       "summary": "Does ERS-003's input rule admit a review arm that reads another arm's frozen artifacts, which is what continuation 4's review arms actually did?",
       "status": "answered",
       "answer": "Add the admitted input class rather than a prose qualifier. `admitted_input.input_class` gains `declared_other_arm_artifact` and the record gains `declared_source_arm_id`, required and non-empty for that class and null for every other, so an inherited input can never be read as the job's own work. The stage rule that keeps the frozen snapshot out of discovery and the studies now keeps the new class out too, which is what the review arms actually did: they read another arm's frozen artifacts at reconciliation and comparison. One positive and one negative fixture prove both halves, so the pair ships 13 positives and 31 negatives. ERS-003's text, criteria, tokens and negative constraint follow.",
-      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
+      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, a live file that is appended to as further answers arrive, so the hash is the 2026-09-18 reading of it rather than a frozen file and a later re-hash differs: SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
       "answered_at_utc": "2026-09-18T09:00:00+00:00"
     },
     {
@@ -83,7 +105,7 @@
       "summary": "Is Plans/Automated_Testing_System.md inside this compile's authorization?",
       "status": "answered",
       "answer": "Plans/Automated_Testing_System.md is inside this compile's authorization as a consumer reference only, recorded in the authorization shard's scope list alongside the other three consumer references. ATS-054 registers the contract pair the shard already authorizes and claims nothing else; it stands.",
-      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
+      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, a live file that is appended to as further answers arrive, so the hash is the 2026-09-18 reading of it rather than a frozen file and a later re-hash differs: SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
       "answered_at_utc": "2026-09-18T09:00:00+00:00"
     },
     {
@@ -91,7 +113,7 @@
       "summary": "What establishes the visible_only branch of the unresolved-usage disposition?",
       "status": "answered",
       "answer": "`visible_only` has no establishing run. It is marked a design default pending a run that exercises it, in ERS-009 and in the Settings owner's consumer reference, rather than stated as measured. The blocking branch is the one continuation 4 exercised.",
-      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
+      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, a live file that is appended to as further answers arrive, so the hash is the 2026-09-18 reading of it rather than a frozen file and a later re-hash differs: SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
       "answered_at_utc": "2026-09-18T09:00:00+00:00"
     },
     {
@@ -99,7 +121,7 @@
       "summary": "What authorizes the settings inventory wave SSYS-037 defers its rows to, and what tracks it?",
       "status": "answered",
       "answer": "The settings inventory wave is owed to the Settings owner's next authorized wave, not to this thread. SSYS-037 now says so in its text and its criterion, so the promise has a named owner instead of an unowned deferral.",
-      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
+      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, a live file that is appended to as further answers arrive, so the hash is the 2026-09-18 reading of it rather than a frozen file and a later re-hash differs: SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
       "answered_at_utc": "2026-09-18T09:00:00+00:00"
     },
     {
@@ -107,7 +129,7 @@
       "summary": "Should this compile's consumer units carry their own markdown headings, as every other PlanUnit in their documents does?",
       "status": "answered",
       "answer": "The three consumer units get their own markdown headings. ACD-467, ATS-054 and PLS-023 now carry `### <id> - <title>` headings like every other PlanUnit in their documents. A `###` heading is not a shard boundary, so no shard is split and no other document is touched.",
-      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
+      "answer_basis": "Jared's answer of 2026-09-18, verbatim \"agree\", relayed by the reviewer and recorded in /mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/ANSWERS_20260918.md, a live file that is appended to as further answers arrive, so the hash is the 2026-09-18 reading of it rather than a frozen file and a later re-hash differs: SHA-256 ec15e8b383322546eed7eb699550b9444b5a27a9d1ab3e8b504adef095a0639c as read on 2026-09-18. Agent-relayed, not verifiable from inside this repository.",
       "answered_at_utc": "2026-09-18T09:00:00+00:00"
     }
   ]

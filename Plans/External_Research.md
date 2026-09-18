@@ -441,6 +441,10 @@ acceptance_criteria:
   - Every job's terminal record names the limit that bound it, derived from the runtime result record and the durable meter, not from an adapter label alone.
   - The limits are Project-scoped settings values registered by Settings_System, not values stored by this owner.
   - A response ceiling is read as at most N admitted with one response possibly already in flight.
+  - >-
+    `visible_only` is named a design default wherever the unresolved-usage disposition is offered or reported, until a
+    run exercises it; no surface or report presents it as measured. The marking has no validator surface in this
+    landing and is recorded as open question `q-011` in `pldg-20260917-002-external-research-canon`.
 validation_surfaces:
   - python3 scripts/pm-new-contracts-verify.py
   - python3 scripts/pm-plan-index.py validate
@@ -684,7 +688,7 @@ ContractRef: ContractName:Plans/External_Research.md, ContractName:Plans/Contrac
 
 ### Research job record
 
-Strict schema: `Plans/external_research_contracts.schema.json` (`$defs.research_job_record`). Required: `schema_id`, `schema_version`, `research_job_id`, `topic_id`, `project_id`, `arm_id`, `stage` (`discovery|implementation|history|reconcile|compare`), `admitted_inputs[]` (each a `path` plus `sha256` plus `input_class` of `frozen_plans_snapshot|product_brief|arm_artifact`), `admitted_lead_count`, `max_model_responses`, `max_job_seconds`, `responses_admitted`, `elapsed_seconds`, `terminal_state` (`finished|responses|time|budget|other`), `bound_by` (`designed_stop|response_ceiling|job_time_limit|budget_cap|other`), `bound_by_source` (`runtime_result_record|durable_meter|both`), `assertions_saved`, `run_manifest_ref`. A `frozen_plans_snapshot` input is admissible only on `reconcile` and `compare`; no `admitted_inputs` entry may carry `input_class: decision_record`, which the closed enum forbids outright.
+Strict schema: `Plans/external_research_contracts.schema.json` (`$defs.research_job_record`). Required: `schema_id`, `schema_version`, `research_job_id`, `topic_id`, `project_id`, `arm_id`, `stage` (`discovery|implementation|history|reconcile|compare`), `admitted_inputs[]` (each a `path` plus `sha256` plus `input_class` of `frozen_plans_snapshot|product_brief|arm_artifact|declared_other_arm_artifact`, plus `declared_source_arm_id`, which is a non-empty string exactly when the class is `declared_other_arm_artifact` and null otherwise), `admitted_lead_count`, `max_model_responses`, `max_job_seconds`, `responses_admitted`, `elapsed_seconds`, `terminal_state` (`finished|responses|time|budget|other`), `bound_by` (`designed_stop|response_ceiling|job_time_limit|budget_cap|other`), `bound_by_source` (`runtime_result_record|durable_meter|both`), `assertions_saved`, `run_manifest_ref`. A `frozen_plans_snapshot` or `declared_other_arm_artifact` input is admissible only on `reconcile` and `compare`, so a discovery or study job admits neither; no `admitted_inputs` entry may carry `input_class: decision_record`, which the closed enum forbids outright.
 
 ### Research finding record
 
@@ -738,7 +742,7 @@ ContractRef: ContractName:Plans/External_Research.md, ContractName:Plans/assista
 
 ## 5. Validation And Acceptance
 
-Static contract validation is materialized as `Plans/external_research_contracts.schema.json` plus 12 positive and 30 negative fixtures in `Plans/external_research_contract_fixtures.json`, registered as a pack pair in the closed `CONTRACT_PAIRS` manifest of `scripts/pm-new-contracts-verify.py`, which owns and reports that manifest's authored cardinality (named subcheck `validate-new-contracts` in `scripts/pm-plans-verify.py run-gates`) and registered as `ATS-054` in `Plans/Automated_Testing_System.md`. Static validation covers schema shape and explicitly encoded invariants only. Each negative fixture is a single mutation of a named positive, names the constraint it must fail in `rejects_for`, and says in `reason` why the product forbids it; the six record families carry 6, 7, 3, 5, 4 and 5 negatives respectively.
+Static contract validation is materialized as `Plans/external_research_contracts.schema.json` plus 13 positive and 31 negative fixtures in `Plans/external_research_contract_fixtures.json`, the 12 and 30 this compile registered plus one of each added under question `q-005` for the declared other-arm input class, registered as a pack pair in the closed `CONTRACT_PAIRS` manifest of `scripts/pm-new-contracts-verify.py`, which owns and reports that manifest's authored cardinality (named subcheck `validate-new-contracts` in `scripts/pm-plans-verify.py run-gates`) and registered as `ATS-054` in `Plans/Automated_Testing_System.md`. Static validation covers schema shape and explicitly encoded invariants only. Each negative fixture is a single mutation of a named positive, names the constraint it must fail in `rejects_for`, and says in `reason` why the product forbids it; the six record families carry 7, 7, 3, 5, 4 and 5 negatives respectively.
 
 Runtime proof remains NOT_RUN: no research job, adjudication, packet delivery, budget denial or provenance check is executed by this owner's validation. The measured figures quoted in `ERS-010`, `ERS-011` and `ERS-012` are results of the September 2026 Jujutsu research continuations on one frozen case; they are the basis for the promises here, not a general performance claim, and are cited by path and SHA-256 in Section 8.
 
