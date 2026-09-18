@@ -1,0 +1,35 @@
+{
+  "label": "Arm claude adjudication against the continuation-3 union, revised after independent review 2026-09-17",
+  "root": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/adjudication/claude",
+  "frozen_at": "2026-09-17T02:18:01Z",
+  "file_count": 5,
+  "total_bytes": 104325,
+  "files": [
+    {
+      "path": "PROGRESS.md",
+      "bytes": 9439,
+      "sha256": "8f74f979209db1318e49c17c711d733149b7f9d926ec87ed49bdd5ae2d0a79a5"
+    },
+    {
+      "path": "README.md",
+      "bytes": 23056,
+      "sha256": "fcfb3a97e2f4ef8cd1d7763662415161810eb8d9b6c74e5e73f082cf4b9afcef"
+    },
+    {
+      "path": "arm-c-candidates.json",
+      "bytes": 13311,
+      "sha256": "86294630038f6222a3325cb949fdbbcb86c1c92618d7ba42e040740eceac471f"
+    },
+    {
+      "path": "arm-c-findings.json",
+      "bytes": 37339,
+      "sha256": "08123ff964e317019325d3a75492fd30fa45d6726112e9bc266c5bc086b6eefc"
+    },
+    {
+      "path": "arm-c-scoring.json",
+      "bytes": 21180,
+      "sha256": "1555840f7a7722749ce75460edf575ace1fa81c963e149bbd5379deaa2ad8a3a"
+    }
+  ],
+  "manifest_sha256": "6293c7e92d6c567f8cf9e6b43b6ec6cd6b5955ba28cd401ec206d9f36ff66f87"
+}

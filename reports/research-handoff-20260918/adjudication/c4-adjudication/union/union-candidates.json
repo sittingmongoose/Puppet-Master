@@ -1,0 +1,169 @@
+{
+  "schema": "jj.continuation4.arm_candidates.v1",
+  "arm": "union",
+  "rule": "New propositions are recorded as candidates with evidence, the passage cited, my classification and whether continuation 3 already rejected them. The adjudicator does not add them to the union.",
+  "continuation3_rejected_expansions_checked_against": [
+    {
+      "proposal": "Marker-only conflict command is a JJ owner defect",
+      "reason": "Frozen Source Control line 308 scopes legacy commands to Git absent explicit normalization; same finding withdrawn from P21/P26."
+    },
+    {
+      "proposal": "Add mutating status.refresh branch as a required correction",
+      "reason": "F002 already fixes read effects and denial; a new writer-bearing branch would change that authority."
+    },
+    {
+      "proposal": "Reopen generic in-operation credential prompting",
+      "reason": "F038 already adjudicated prompt-suppressed owner helpers and foreground/background policy. H18 acknowledges unreviewed external auth-owner dependencies."
+    },
+    {
+      "proposal": "Corruption taxonomy, extras detector, clone stage details and arbitrary conflict editor",
+      "reason": "Refinements/alternatives under existing F082/F086/F056 and their scope boundaries, not additional demonstrated product obligations."
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_id": "C4U-01",
+      "label": "A read-class PM command must not be implemented by a default mutating jj invocation",
+      "arm_label": "J0015-compare R1",
+      "job": "union/J0015-compare",
+      "my_classification": "correction",
+      "assertion": "PM rejects a disabled interchange command before invoking any native helper or process, including flags that force explicit interchange; the adapter describes and gates its complete native effect scope (automatic working-copy snapshotting, Git HEAD/ref import, Git index/ref/HEAD updates, configured stale-workspace refresh); read/navigation requests keep their null mutation-authority contract and must use a proven non-mutating observation path, returning a typed stale/blocked/degraded result rather than calling default `jj status` or refreshing the workspace; successful completion requires structured native and Git postconditions, because a no-op message or exit status is diagnostic only.",
+      "passage_cited": [
+        "Plans/Jujutsu_Integration.md JJI-003:113-141, JJI-004:153-176, JJI-006:220-243, section 3.3:301",
+        "Plans/jujutsu_integration_contracts.schema.json:1010-1053 (read branch with null writer/FileSafe/interop authority)",
+        "jj-vcs/jj cli/src/cli_util.rs:460-517 (locks and snapshots for writable invocation; may recover a stale working copy under snapshot.auto-update-stale) and cli/src/commands/status.rs:67-91 (status calls that helper), pinned e6dd2c0d",
+        "jj PR #9904 patch lines 7-9, 53-59, 83-88, 147-190"
+      ],
+      "continuation3_already_rejected": "NO - and the relationship is worth stating precisely. Continuation 3 rejected 'Add mutating status.refresh branch as a required correction' with the reason 'F002 already fixes read effects and denial; a new writer-bearing branch would change that authority.' This candidate asks for the OPPOSITE of that rejected expansion: it keeps the read branch's null authority and explicitly says 'Blanket addition of writer leases to all reads would change the existing contract unnecessarily.' The union arm, working from its own discovery with no sight of continuation 3, independently arrived at the same conclusion continuation 3 reached when it rejected that expansion.",
+      "distinctness": "F002 requires nominal-read effects to be classified and fenced and is credited to this arm; F087 requires a read label not to confer authority and is also credited. This candidate is the implementation constraint that makes both decidable at the adapter boundary: name the native effect scope, prove the observation path is non-mutating, and never satisfy a read-class command with a default mutating invocation.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-union-20260916-221929/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "586eb7e18796524ef850e90b22bde8404ed8f18b8045c71741e7d148711d89ac"
+        }
+      ],
+      "adjudicator_note": "Not added to the union. The strongest of this arm's candidates and the one most directly useful to the Plans owners."
+    },
+    {
+      "candidate_id": "C4U-02",
+      "label": "The certification references have no scenario matrix behind them",
+      "arm_label": "J0015-compare R2",
+      "job": "union/J0015-compare",
+      "my_classification": "correction",
+      "assertion": "A colocation certification record must identify exact jj executable/build and adapter versions separately, Git version, catalog/source revision, Host/Environment/OS/filesystem, effective configuration, native repository/store and workspace name/root, Git worktree and common-directory identity, and topology/currentness generation, and must record separately the evidence for non-mutating observation, ordinary snapshot/synchronization, explicit import, explicit export, stale-workspace refresh, external-Git compatibility, workspace creation/removal and any approved conversion path. An unsupported, unreleased, untested, stale or mismatched combination cannot borrow another row's mutation admission; root certification does not certify a child layout.",
+      "passage_cited": [
+        "Plans/Jujutsu_Integration.md JJI-006 compatibility matrix, section 5 acceptance, JJI-004 reconciliation, JJI-005 recovery, JJI-008 closure",
+        "Plans/source_control_contracts.schema.json:811-1015 (jj_effective_capability_snapshot)",
+        "Plans/jujutsu_integration_contracts.schema.json:451-569, 573-699, 700-773, 1144-1189",
+        "Plans/Source_Control_System.md SCS-004:166-187 (0.44.0 and Git 2.55.0 are not timeless floors)"
+      ],
+      "continuation3_already_rejected": "NO. Continuation 3's rejected expansions were the marker-only conflict command, the mutating status.refresh branch, generic in-operation credential prompting, and a refinement cluster under F082/F086/F056. None is this.",
+      "distinctness": "F050 requires exact engine, CLI, repository-format and environment qualification and is credited to this arm. This candidate is the enumeration behind the existing references: the arm establishes that the inspected definitions 'do not themselves specify a root/child/common-directory/automatic-effect/versioned scenario record or the tests needed to admit it', and supplies a nine-row acceptance matrix. Closest in kind to deepseek41's C4D-01 version-binding candidate, reached independently and from a different direction.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-union-20260916-221929/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "586eb7e18796524ef850e90b22bde8404ed8f18b8045c71741e7d148711d89ac"
+        }
+      ],
+      "adjudicator_note": "Not added to the union."
+    },
+    {
+      "candidate_id": "C4U-03",
+      "label": "Graph gestures are a distinct operation vocabulary, not pictures of the existing scalar target",
+      "arm_label": "J0016-compare section 3",
+      "job": "union/J0016-compare",
+      "my_classification": "product choice",
+      "assertion": "If graph gestures are offered, a gesture must capture an immutable intent against the initiating Client, RepositoryContext, repo/workspace/backend, full operation and commit snapshot and projection generation, with typed operands that distinguish one change, a materialized ordered set, a parent edge with both endpoints and expected parent list, a path or byte-safe patch with source and base identities, and an exact bookmark with expected old target; command mapping is semantic rather than name-based, edge insertion and parent add/remove require an explicit approved operand contract and must not be shoehorned into a scalar destination or a hidden composite.",
+      "passage_cited": [
+        "Plans/Source_Control_System.md SCS-017:948-996 (navigation never mutates; projection introduces no mutation command)",
+        "Plans/jujutsu_integration_contracts.schema.json:451-572 (closed scalar command target with source/destination revisions)",
+        "Plans/UI_Command_Catalog.md:12055-12069",
+        "Plans/FinalGUISpec.md:35710-35754",
+        "gulbanana/gg app/mutators/BinaryMutator.ts:97-375 and src/worker/mutations/revision.rs:473-640 @ e9d3bfe"
+      ],
+      "continuation3_already_rejected": "NO, but note the overlap: F066 (direct graph manipulation) is already in the union as an optional capability and is credited to this arm. What is outside the union is the operand-vocabulary observation - that the frozen command target is 'a closed scalar target with source/destination revisions, not an edge/range/path/hunk gesture vocabulary', so the gestures are different operations rather than a different picture of rebase. claude-hicap reached the same structural point from the schema side (its Defect 5).",
+      "distinctness": "F066 asks whether to offer the gestures. This candidate is about what the contract would have to be able to express before any of them could be dispatched, and it is the reason the arm classifies the whole thing as requiring approval rather than as a repair.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-union-20260916-221929/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "ebbe0efde329cf0253c1de6b2080429613e91928c2e2f210c1b6fea2fd8b1cd6"
+        }
+      ],
+      "adjudicator_note": "Not added to the union. Classified product choice because the arm itself does, and because the union already carries the capability question as F066."
+    },
+    {
+      "candidate_id": "C4U-04",
+      "label": "Contextual source, evolution and operation inspection with assisted revset entry",
+      "arm_label": "J0017-compare Proposals A and B",
+      "job": "union/J0017-compare",
+      "my_classification": "capability",
+      "assertion": "(A) Add a source-history details mode for a selected change's immutable evolution commits, explicitly labelled rewrite interdiff versus full revision diff, plus a contextual inspector for revision, file and operation selections in the existing Source Control surface, keeping operation history and Backup on their existing owner routes. (B) Offer native-aware revset completion and signature help with source/destination selection for rebase and squash, and label search scope explicitly - bounded loaded-page quick search plus an explicit cancellable native query rather than silent scan-to-exhaustion, with missing targets retaining their identity under an unavailable or not-loaded explanation.",
+      "passage_cited": [
+        "Plans/Jujutsu_Integration.md JJI-005:180-209, section 4.1:307-309, section 3.1:253-287 (exact 31-command inventory)",
+        "Plans/Source_Control_System.md SCS-017:948-995",
+        "Plans/FinalGUISpec.md F3-529:35703-35740",
+        "Plans/Backup_Restore_System.md BRS-014:563-599",
+        "idursun/jjui internal/config/default/config.toml:30-34, 52-99 and internal/ui/common/selection.go:36-80 @ 83a5851"
+      ],
+      "continuation3_already_rejected": "NO. Three of its four components are already IN the union and are credited to this arm - F024 interdiff, F025 change evolution view, F065 revset assistance, F015 operation history navigation - all of them premium-side or hybrid-side optional capabilities that no review arm reached. The residue outside the union is the search-scope labelling rule: that 'not loaded' must never be presented as proof of absence and that a missing target keeps its identity rather than silently selecting a different mutation target.",
+      "distinctness": "Recorded because the arm bundles four union capabilities with one genuinely new disclosure rule. The new part is small and specific; the rest is why this arm's optional-capability recall is the highest of the five continuation-4 arms.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-union-20260916-221929/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "9a80ee86cdbb4b34ac8d7db126e161e13bd3c43fbab25dca9d3c7754d5cd54e8"
+        }
+      ],
+      "adjudicator_note": "Not added to the union. The search-scope rule is the only part outside it."
+    },
+    {
+      "candidate_id": "C4U-05",
+      "label": "Conflict presentation must not replace a real change with a deletion-shaped surrogate",
+      "arm_label": "J0016-compare conflict presentation",
+      "job": "union/J0016-compare",
+      "my_classification": "capability",
+      "assertion": "Show the normal parent-to-current change and the inherited unresolved conflict content as distinct views of one path, rather than replacing one with a deletion-shaped surrogate, with acceptance across changed-conflict, inherited-conflict, delete/edit and empty-diff cases and no false clean, resolved or deleted outcome and no duplicate change statistics.",
+      "passage_cited": [
+        "Plans/Jujutsu_Integration.md JJI-005:188-208",
+        "Plans/Source_Control_System.md SCS-017:959-972",
+        "Plans/FinalGUISpec.md:35710-35714",
+        "Plans/FileManager.md:569-577",
+        "gulbanana/gg src/worker/queries.rs:361-414 @ e9d3bfe (computes regular diffs then synthesizes conflict-to-empty hunks and discards regular changes for conflicted paths)"
+      ],
+      "continuation3_already_rejected": "PARTIALLY - and I am flagging it. Continuation 3 rejected the cluster 'Corruption taxonomy, extras detector, clone stage details and arbitrary conflict editor' as 'Refinements/alternatives under existing F082/F086/F056 and their scope boundaries, not additional demonstrated product obligations.' This is a conflict-presentation refinement under F056, which is credited to this arm. It is a presentation proposal rather than a conflict editor, so it is not squarely the rejected item, but it sits inside that rejected class and I would expect it to be declined on the same reasoning.",
+      "distinctness": "F056 requires native multi-term conflict state and side provenance to be preserved and clean-looking text to be insufficient. This candidate is about how the preserved state is rendered alongside ordinary changes. The arm itself marks GG's current visual result uncertain.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-union-20260916-221929/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "ebbe0efde329cf0253c1de6b2080429613e91928c2e2f210c1b6fea2fd8b1cd6"
+        }
+      ],
+      "adjudicator_note": "Not added to the union, and flagged as probably inside continuation 3's rejected-expansion class."
+    }
+  ],
+  "observations": [
+    {
+      "observation_id": "O4U-01",
+      "label": "THE UNION QUESTION: a different research model redistributed coverage; it did not extend the union",
+      "detail": "This is the only arm whose recall is not bounded by the premium arm's artifacts, and it is the one thing in the experiment that could have changed the union. It did not. All 43 credited findings sit inside premium or hybrid: 42 in premium, 38 in hybrid, ZERO outside both. What it did do is reach 11 findings no review arm reached - F005, F015, F019, F024, F025, F038, F052, F057, F065, F068, F069 - lifting the five-arm union from 46 (41.82%) to 57 (51.82%). Those 11 come from lead families the premium arm never generated or never routed, which is exactly the space a full arm can enter and a same-input review replacement structurally cannot. On this evidence the answer to 'could a different research model change the union' is no for the union's membership and yes for its reachability.",
+      "adjudicator_note": "Recorded as the arm's headline result."
+    },
+    {
+      "observation_id": "O4U-02",
+      "label": "The review arms hold 14 findings the union misses, dominated by one lead family the union found but never routed",
+      "detail": "F001, F032, F033, F034, F036, F037, F044, F053, F074, F083, F089, F090, F106 and F107 are held by review arms and not by the union. Seven of them (F031 aside, which the union does hold) are the diffedit3 and external-editor family: F032, F033, F034, F036, F037, F053 plus F074. The union's own discovery DID find that family - lead 23, 'Diffedit3: editable intermediate tree, not merely a merge dialog', which names the deletion bug, the SSH and WSL story and the server lifetime question - but with 20 admissions covering five stages it never routed that lead to a study or a compare job. The finding was in hand and never developed. That is the clearest cost of a full arm's breadth: it pays for discovery with depth.",
+      "adjudicator_note": "Recorded under time-truncated and admission-limited coverage."
+    },
+    {
+      "observation_id": "O4U-03",
+      "label": "Two corrections to the runner's figures, verified from durable state",
+      "detail": "(1) notes.md count is 19 of 20, not 18. J0018 and J0020 both timed out and still wrote notes.md (6,336 and 8,790 bytes), and J0018 wrote 8 lead documents as well; only J0019 produced nothing. Those saved documents are scored, per continuation 3's rule that budget-limited saved findings count when supported, and they carry the F005, F004, F002, F094, F082, F056, F057, F008 and F059 credits. (2) The 12-to-39 response range reconciles only through the durable meter: the three timeout jobs have no raw-omp/usage.json at all, so their native receipt count is zero while the durable meter recorded 27, 12 and 13. Totals are 484 native receipts across the 17 completed jobs (22-39 each) plus 52 durable-metered requests never receipted - which is exactly why each timeout job carries $1 unresolved, with accounting gaps missing_retained_usage_records and durable_meter_request_count_mismatch.",
+      "adjudicator_note": "Recorded. Neither changes the score; the first would have lost credits had I taken the runner's figure."
+    },
+    {
+      "observation_id": "O4U-04",
+      "label": "The arm independently reached a conclusion continuation 3 reached by rejecting an expansion",
+      "detail": "Continuation 3 rejected 'Add mutating status.refresh branch as a required correction' because 'F002 already fixes read effects and denial; a new writer-bearing branch would change that authority.' The union arm, with no sight of continuation 3 or any other arm, reached the same place from the opposite direction: J0015 R1 keeps the read branch's null authority, says 'Blanket addition of writer leases to all reads would change the existing contract unnecessarily', and instead requires a proven non-mutating observation path with a typed stale result. Independent convergence on a previously adjudicated boundary is the strongest single piece of evidence in this experiment that the continuation-3 union is well drawn.",
+      "adjudicator_note": "Recorded."
+    }
+  ]
+}

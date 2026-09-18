@@ -1,0 +1,104 @@
+<title>Editor Save-Back and Bookmark Scope</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --paper: #F7F7F4;
+    --ink: #1B1F1E;
+    --muted: #5C6664;
+    --rule: #D9DDDB;
+    --accent: #0F6E63;
+    --wash: #E3F0EE;
+    --soft: #EEF0EE;
+    --display: "Newsreader", Georgia, "Times New Roman", serif;
+    --body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+    --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #131716; --ink: #E7EAE8; --muted: #9AA5A2; --rule: #2A3230;
+      --accent: #5FB7AA; --wash: #1B2826; --soft: #1C2120; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #131716; --ink: #E7EAE8; --muted: #9AA5A2; --rule: #2A3230;
+    --accent: #5FB7AA; --wash: #1B2826; --soft: #1C2120; color-scheme: dark;
+  }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; padding-inline: 20px; padding-block: 40px 80px; }
+  main { max-width: 720px; margin-inline: auto; }
+  .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; }
+  h1 { font-family: var(--display); font-weight: 500; font-size: clamp(32px, 5vw, 42px); line-height: 1.12; margin: 0 0 16px; text-wrap: balance; letter-spacing: -0.01em; }
+  .lede { font-family: var(--display); font-size: 20px; line-height: 1.4; margin: 0 0 40px; max-width: 60ch; }
+  article { border-top: 1px solid var(--rule); padding-top: 28px; margin-bottom: 44px; }
+  article h2 { font-family: var(--display); font-weight: 500; font-size: 27px; line-height: 1.2; margin: 0 0 18px; text-wrap: balance; }
+  dl { margin: 0; display: grid; grid-template-columns: 1fr; gap: 14px; }
+  dt { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  dd { margin: 0; max-width: 64ch; }
+  dd p { margin: 0 0 10px; }
+  dd p:last-child { margin: 0; }
+  ol.options { margin: 0; padding-left: 22px; max-width: 64ch; }
+  ol.options li { margin-bottom: 10px; }
+  .rec { background: var(--wash); padding: 14px 18px; margin-top: 6px; max-width: 64ch; }
+  .answer { border: 1px solid var(--rule); padding: 14px 18px; max-width: 64ch; color: var(--muted); }
+  code { font-family: var(--mono); font-size: 0.92em; background: var(--soft); padding: 1px 5px; }
+  footer { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--muted); max-width: 64ch; }
+  @media (max-width: 480px) { body { padding-block: 28px 60px; } .lede { font-size: 18px; } }
+</style>
+<main>
+<p class="eyebrow">Jujutsu research, continuation 4. Two decisions for Jared, 17 September 2026</p>
+<h1>The two product choices left over from the six-arm run</h1>
+<p class="lede">Thirteen corrections from the six arms are landing under the standing repair authorization. Two things the arms found are not corrections, because canon makes no false promise about them today. They are choices, and they are yours. Each records as a Decision Log entry.</p>
+
+<article>
+  <h2>1. Conflict and merge editors on Jujutsu workspaces: build a safe save-back, or scope them read-only?</h2>
+  <dl>
+    <dt>The question</dt>
+    <dd><p>When a user opens a diff or merge editor on a Jujutsu workspace, should Puppet Master own a typed contract for saving the result back into the working copy, or should those surfaces be read-only or built-in-editor-only on Jujutsu workspaces, with a stated reason when a control is disabled?</p></dd>
+    <dt>Why it came up</dt>
+    <dd><p>Four arms reached the same territory from different directions. The plans already own every principle a well-known class of editor bugs violates: a save that turns a file the editor never saw into a deletion, an empty file confused with a deleted one, a tool that writes the working copy directly and is then described as atomic. But the surface where that class lives has no owner, no command and no schema. The Jujutsu command inventory has no conflict-editing command. The only merge-editor command rows belong to the Git adapter. And the command that opens a merge editor is gated on an availability flag that appears once in the whole corpus and is defined nowhere.</p>
+    <p>Two earlier decisions bear on this. In the Jujutsu answers you declined an external diff editor and a third-party diff library, and in the terminal decisions you chose to own the engine code rather than rely on other people's. Continuation 3 declined the arbitrary conflict editor surface for the same reasons. So the open question is narrower than it looks: not whether to add external editors, but what the built-in surfaces promise on Jujutsu workspaces.</p></dd>
+    <dt>What you get</dt>
+    <dd><p><strong>If you build the contract:</strong> a per-file save entry typed as text, deleted, missing, binary, unsupported with a reason, symlink with target, or mode change, so a scan fact can never become a write instruction; every save bound to the repository, workspace, expected native revision and conflict identity; a preflight before the first write; application through the FileSafe ledger so a failure on one file rolls the whole save back or fences it; and any external tool run over an isolated copy whose result is imported rather than written in place.</p>
+    <p><strong>If you scope the surfaces:</strong> diff open, merge-editor open and the Git external-merge-tool preference are read-only or built-in-editor-only on Jujutsu workspaces, the availability flag gets a definition, and a disabled control says why. Nothing new is promised.</p></dd>
+    <dt>What it costs</dt>
+    <dd><p>The contract is a new owned surface across Source Control, FileSafe and Jujutsu Integration: PlanUnits, schema, fixtures and a test matrix, and it re-opens the external-tool question you closed unless it is limited to the built-in editor. Scoping costs a handful of acceptance criteria and a reason code, and leaves the built-in editor as the only writer until its own save path is designed.</p></dd>
+    <dt>Options</dt>
+    <dd><ol class="options">
+      <li>Scope the surfaces read-only or built-in-editor-only on Jujutsu workspaces, define the availability flag, and give disabled controls a typed reason. Revisit the save-back contract when the built-in editor's save path is designed.</li>
+      <li>Build the typed save-back contract now, limited to the built-in editor.</li>
+      <li>Build the typed save-back contract now, including isolated-tree import for external tools.</li>
+      <li>Nothing new.</li>
+    </ol></dd>
+    <dt>Recommendation</dt>
+    <dd><div class="rec">Option 1. It keeps the surfaces truthful immediately, follows the three decisions you have already made about owning the code and not shipping external editors, and defers the expensive part to the point where the built-in editor's design can carry it. Option 2 becomes the natural follow-up then.</div></dd>
+    <dt>Your answer</dt>
+    <dd><div class="answer">Option 1, taken as recommended on 17 September 2026 ("Do you recommendations for the choices"). Records as DL-056.</div></dd>
+  </dl>
+</article>
+
+<article>
+  <h2>2. Bookmark controls: name the exact remote and action every time?</h2>
+  <dl>
+    <dt>The question</dt>
+    <dd><p>Should every Jujutsu bookmark control and confirmation say, in ordinary words, exactly which remotes it will touch and what it will do to each, rather than presenting a combined or synced bookmark as one thing?</p></dd>
+    <dt>Why it came up</dt>
+    <dd><p>The Muse arm found that nowhere in the plans is there a vocabulary for a bookmark's state across remotes: synced, unsynced, tracked on one remote and not another, combined. The dangerous cases, such as untracking a bookmark on every remote when the user meant one, are already unrepresentable in the command schema, which binds track and untrack to a single remote identity. So the gap is not a broken promise. It is what the controls and confirmations tell the user, which is a product surface.</p></dd>
+    <dt>What you get</dt>
+    <dd><p>Confirmations that disclose the affected remotes before dispatch. Untrack on a combined bookmark confirms every remote by name, untrack on one unsynced remote confirms that remote. Rename on a tracking bookmark discloses that it untracks first. Delete-local and forget-remote never share one control. Push and fetch say all-remotes or one-remote. Pseudo-remotes and non-fetchable remotes are not shown as ordinary remotes. Unsynced, untracked or absent references are never folded silently into a combined chip.</p></dd>
+    <dt>What it costs</dt>
+    <dd><p>A bookmark-state vocabulary in the Source Control owner and confirmation copy in the command catalog. There is no forget-remote command in the frozen Jujutsu inventory, so the forget-remote label stays out unless that command is added later, which would be a separate capability decision.</p></dd>
+    <dt>Options</dt>
+    <dd><ol class="options">
+      <li>Accept as a disclosure requirement on the owner: the vocabulary and the confirmation rules above, no new commands.</li>
+      <li>Accept with changes you name.</li>
+      <li>Decline; keep the current combined presentation.</li>
+    </ol></dd>
+    <dt>Recommendation</dt>
+    <dd><div class="rec">Option 1. It costs copy and a vocabulary, adds no command, and the cases it guards against are exactly the ones users cannot undo.</div></dd>
+    <dt>Your answer</dt>
+    <dd><div class="answer">Option 1, taken as recommended on 17 September 2026. Records as DL-057.</div></dd>
+  </dl>
+</article>
+
+<footer>Sources: the consolidated candidates in <code>reports/jujutsu-research-2026-09-11/continuation4/adjudication/</code> (deepseek41, muse13 and glm53 candidates on the editor surface; muse13 on bookmark scope), the Part 1 candidate record of 17 September 2026, and its independent review. Answers record as Decision Log entries in both sections, then shards and index regenerate.</footer>
+</main>

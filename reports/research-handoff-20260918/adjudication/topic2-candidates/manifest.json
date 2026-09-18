@@ -1,0 +1,150 @@
+{
+ "schema": "pm.topic2.part1_manifest.v1",
+ "produced": "2026-09-18T00:19:27Z",
+ "agent": "Opus 5 agent (claude-opus-5[1m])",
+ "directory": "/home/sittingmongoose/PM-Experiments/topic2-candidates-20260917",
+ "files": [
+  {
+   "path": "PROGRESS.md",
+   "sha256": "e3c229ba9372371c5a886fdf5fcb221b36cbbd63e7f0a7ca3536004f17154bbb",
+   "bytes": 7381
+  },
+  {
+   "path": "README.md",
+   "sha256": "2e0230351253281cda7f4c8eef7d104f9e077d75b2e18122d0e81c5665943451",
+   "bytes": 29894
+  },
+  {
+   "path": "build_record.py",
+   "sha256": "8af4b61708150ab7f2d6d31732a34673d55257f4f3f7d433726a1129f1c01d83",
+   "bytes": 8650
+  },
+  {
+   "path": "emit_manifest.py",
+   "sha256": "3374464932fdede5f6306686ce3ca7f576c6039a80c3b89cc98920a111d49cfb",
+   "bytes": 2164
+  },
+  {
+   "path": "emit_readme.py",
+   "sha256": "cefabf4590844040d779a023f563b60607511042033a14c4753e03a995fca3a3",
+   "bytes": 6628
+  },
+  {
+   "path": "emit_record.py",
+   "sha256": "c80beb5e1f4a2cc95c66f9dfdf1578fbc9739b5864607d7e74eaf199d4c6b0e9",
+   "bytes": 6785
+  },
+  {
+   "path": "topic2-part1-verdicts.json",
+   "sha256": "2a5362337a7c22445b505b312639a2e4ae03f4deb261ac2b07bc3e2b2fb77b6a",
+   "bytes": 96884
+  },
+  {
+   "path": "verdicts.py",
+   "sha256": "01e51146a37679c26d998bf012340758bb30b48e3b524acca5cbdbb3428916c7",
+   "bytes": 43209
+  },
+  {
+   "path": "work/base.json",
+   "sha256": "1be15a7581d8024a8cf91d9ae0c6f724c2480a38fc3fe59506ae657f6bd94255",
+   "bytes": 8236
+  },
+  {
+   "path": "work/corrections.txt",
+   "sha256": "1bbfb98d536ef2c825ae09812fb20cbc47750d67605e01c5b9ef967a10babaa4",
+   "bytes": 66301
+  },
+  {
+   "path": "work/provider_verify.txt",
+   "sha256": "121e6457933b6ed19009a4d3831c4568aca484db0be9aafa46d2da8df6ad4e00",
+   "bytes": 20315
+  }
+ ],
+ "internal_digest": "14c0cbce5a70965ee4017c520507901fa92555056239f13d294879a2e8fefe09",
+ "canon_read_on_main": {
+  "commit": "4f5eda0d18a9deff2349b03ae573f0ffd706ed61",
+  "files": [
+   {
+    "path": "Plans/Azure_DevOps_Integration.md",
+    "sha256": "3ae59c0217219175051418df0482663b247888cc65db087f942158ca5887cc2d"
+   },
+   {
+    "path": "Plans/FileSafe.md",
+    "sha256": "aafe2b1dae88e702340f53a1166c4c71f621ff80ecc9f4013742016589939339"
+   },
+   {
+    "path": "Plans/Forge_Integrations.md",
+    "sha256": "4d13b2bd5fb5b77be4c3deb1814b04d1e5d1069ac3576cd4fe8f8a1816d6eb95"
+   },
+   {
+    "path": "Plans/Source_Control_System.md",
+    "sha256": "07a8401d312980fbb30b7d6df0b24732e81f3de6e87624fe795e0c1bb1c3baff"
+   },
+   {
+    "path": "Plans/UI_Command_Catalog.md",
+    "sha256": "4fb0eb751c66b8565aa82e5407a97b67c6efb582c9206cbc47ee5f538ed504a6"
+   },
+   {
+    "path": "Plans/Wiring_Matrix.production.json",
+    "sha256": "ef3085adb3068257c35b7d848fdf5f16c30257980ec1b414f02c4041c4232bed"
+   },
+   {
+    "path": "Plans/azure_devops_integration_fixtures.json",
+    "sha256": "aaefd3b321d300d75aafed1871d9e7c32313220ee16e9da9edbd82c6a765ee72"
+   },
+   {
+    "path": "Plans/bitbucket_integration_fixtures.json",
+    "sha256": "8b9bc95990d507bf0b9e45bf4f7d0e86839e89bcfcb934ab301f2d578498dd20"
+   },
+   {
+    "path": "Plans/forge_backup_tsnet_acceptance.json",
+    "sha256": "b447098646a0e5de002da2e95d290511b7f47a259ee168df3b287dcecbdbbe0c"
+   },
+   {
+    "path": "Plans/forge_integration_contract_fixtures.json",
+    "sha256": "8d123b215c20be0838e554b639fedc30b5b401a800663033ddb281178effc506"
+   },
+   {
+    "path": "Plans/forge_integration_contracts.schema.json",
+    "sha256": "9ccecc1c40af59cc7396a7f6851152308214cc9f6989fb08d1ee3a45dd69aef8"
+   },
+   {
+    "path": "Plans/gitlab_integration_fixtures.json",
+    "sha256": "e07ebaff368627fe2aa68bf05ac0c2efdc380309b4e8a9c410386678aad2eb5d"
+   },
+   {
+    "path": "Plans/source_control_contracts.schema.json",
+    "sha256": "012a1640c7a84b21e06f705a308409d7892df19917493a7fc2eb9257fa71c2dd"
+   }
+  ]
+ },
+ "arm_evidence_rehashed": [
+  {
+   "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+   "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc",
+   "matches_union": true
+  },
+  {
+   "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0016-compare/workspace/notes.md",
+   "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027",
+   "matches_union": true
+  },
+  {
+   "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0017-compare/workspace/notes.md",
+   "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf",
+   "matches_union": true
+  },
+  {
+   "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+   "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356",
+   "matches_union": true
+  },
+  {
+   "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+   "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7",
+   "matches_union": true
+  }
+ ],
+ "run_directories": "read-only; nothing under ~/PM-Experiments/topic2-20260917/ was written or modified",
+ "canon": "no file under /mnt/Cursor/PuppetMaster was written or modified; no branch was created"
+}

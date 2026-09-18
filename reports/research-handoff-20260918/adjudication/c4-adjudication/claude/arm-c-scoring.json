@@ -1,0 +1,618 @@
+{
+  "schema": "jj.continuation4.arm_scoring.v1",
+  "arm": "claude",
+  "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm; shares a model family with the reviewed model, which is a stated bias caveat",
+  "run": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/arm-c-manifest.json",
+    "manifest_sha256_internal": "a0d3b38cb37ee3dfa47ec5ac878ce903f0ff15a0166d51c235af82613c01dd39",
+    "manifest_file_bytes_sha256": "bda960668eda9c08b2d1c0a2c2e6831694f1b744da7bc76011f46b588fdf2f59",
+    "files": 6234,
+    "total_bytes": 167320784,
+    "verification": "Independently re-hashed the whole tree with the run's own algorithm on 2026-09-16; digest matched the manifest exactly. The runner's reported hash is the manifest's internal manifest_sha256 (a digest over the sorted file rows), not the manifest file's own bytes."
+  },
+  "review_model": {
+    "model": "claude-opus-5",
+    "effort": "xhigh",
+    "transport": "Claude Code CLI 2.1.226",
+    "tools": [
+      "Bash",
+      "Glob",
+      "Grep",
+      "Read",
+      "Write"
+    ],
+    "per_job_ceiling_responses": 40,
+    "per_job_budget_usd": 12,
+    "per_job_timeout_seconds": 2400,
+    "workers": 3,
+    "admissions": 12,
+    "arm_cap_usd": 100
+  },
+  "inputs": {
+    "description": "the premium arm's frozen discovery, study and history artifacts in the state the premium continuation 3 started from",
+    "source": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911",
+    "upstream_jobs": 16,
+    "input_leads": 88,
+    "bound": "Same-input replacement of the review model. Recall is bounded by what the premium arm's research artifacts contain; the arm performed no discovery or study of its own."
+  },
+  "job_table": [
+    {
+      "job": "J0017-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "request_limit_reached",
+      "error": "aborted_streaming",
+      "elapsed_seconds": 410.094,
+      "model": [
+        "claude-opus-5"
+      ],
+      "requests": 40,
+      "receipts": 40,
+      "native_num_turns": 57,
+      "cli_reported_usd": 2.7857730000000003,
+      "captured_upper_usd": 2.785773,
+      "assigned_lead_ids": [
+        "L-80244e477912"
+      ],
+      "delivered_lead_ids": [],
+      "notes_present": false,
+      "notes_sha256": null,
+      "authored_lead_documents": [],
+      "source_locator_receipts": 40
+    },
+    {
+      "job": "J0018-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "request_limit_reached",
+      "error": "aborted_tools",
+      "elapsed_seconds": 326.151,
+      "model": [
+        "claude-opus-5"
+      ],
+      "requests": 40,
+      "receipts": 40,
+      "native_num_turns": 55,
+      "cli_reported_usd": 2.7099565000000005,
+      "captured_upper_usd": 2.709957,
+      "assigned_lead_ids": [
+        "L-7dc9a6726cf9"
+      ],
+      "delivered_lead_ids": [],
+      "notes_present": false,
+      "notes_sha256": null,
+      "authored_lead_documents": [],
+      "source_locator_receipts": 40
+    },
+    {
+      "job": "J0019-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "error": null,
+      "elapsed_seconds": 640.971,
+      "model": [
+        "claude-opus-5"
+      ],
+      "requests": 38,
+      "receipts": 38,
+      "native_num_turns": 60,
+      "cli_reported_usd": 4.0171755000000005,
+      "captured_upper_usd": 4.017176,
+      "assigned_lead_ids": [
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66",
+        "L-39a5001283f3"
+      ],
+      "delivered_lead_ids": [
+        "L-39a5001283f3",
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66"
+      ],
+      "notes_present": true,
+      "notes_sha256": "2ff85492dd1742a6b82163fa2295c058c4adfdbb2706e923f709594037b9172b",
+      "authored_lead_documents": [
+        "dojjo-create-verification-is-local-side-only.md",
+        "dojjo-git-transport-need-computed-not-honored.md",
+        "dojjo-op-store-gc-unix-epoch-and-lock-gap.md",
+        "dojjo-setup-manufactures-native-operations.md",
+        "dojjo-workspace-name-uniqueness-is-local-precheck.md",
+        "git-fsck-connectivity-only-rationale.md"
+      ],
+      "source_locator_receipts": 25
+    },
+    {
+      "job": "J0020-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "request_limit_reached",
+      "error": "aborted_streaming",
+      "elapsed_seconds": 291.897,
+      "model": [
+        "claude-opus-5"
+      ],
+      "requests": 40,
+      "receipts": 40,
+      "native_num_turns": 53,
+      "cli_reported_usd": 2.298367,
+      "captured_upper_usd": 2.298367,
+      "assigned_lead_ids": [
+        "L-7dc9a6726cf9"
+      ],
+      "delivered_lead_ids": [],
+      "notes_present": false,
+      "notes_sha256": null,
+      "authored_lead_documents": [],
+      "source_locator_receipts": 32
+    },
+    {
+      "job": "J0021-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "request_limit_reached",
+      "error": "aborted_streaming",
+      "elapsed_seconds": 212.737,
+      "model": [
+        "claude-opus-5"
+      ],
+      "requests": 40,
+      "receipts": 40,
+      "native_num_turns": 43,
+      "cli_reported_usd": 1.9805175000000006,
+      "captured_upper_usd": 1.980518,
+      "assigned_lead_ids": [
+        "L-80244e477912"
+      ],
+      "delivered_lead_ids": [],
+      "notes_present": false,
+      "notes_sha256": null,
+      "authored_lead_documents": [],
+      "source_locator_receipts": 29
+    },
+    {
+      "job": "J0022-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "request_limit_reached",
+      "error": "aborted_streaming",
+      "elapsed_seconds": 542.875,
+      "model": [
+        "claude-opus-5"
+      ],
+      "requests": 40,
+      "receipts": 40,
+      "native_num_turns": 62,
+      "cli_reported_usd": 3.3231434999999996,
+      "captured_upper_usd": 3.323143,
+      "assigned_lead_ids": [
+        "L-c0c7178a160f",
+        "L-444f31e68545",
+        "L-0793ad1e2a78"
+      ],
+      "delivered_lead_ids": [
+        "L-0793ad1e2a78",
+        "L-444f31e68545",
+        "L-c0c7178a160f"
+      ],
+      "notes_present": true,
+      "notes_sha256": "8763c8457e5637cafb2fde67bb6881f7d091cadd1ee8c5fcb6fdf4e1a43b5750",
+      "authored_lead_documents": [
+        "bookmark-verb-vocabulary-delete-forget-rename.md",
+        "direct-manipulation-target-resolution-bugs.md",
+        "dojjo-sync-complete-prunes-operation-history.md"
+      ],
+      "source_locator_receipts": 28
+    },
+    {
+      "job": "J0023-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "request_limit_reached",
+      "error": "aborted_streaming",
+      "elapsed_seconds": 295.631,
+      "model": [
+        "claude-opus-5"
+      ],
+      "requests": 40,
+      "receipts": 40,
+      "native_num_turns": 51,
+      "cli_reported_usd": 2.4288420000000004,
+      "captured_upper_usd": 2.428842,
+      "assigned_lead_ids": [
+        "L-ad68a4ac94ad",
+        "L-2e0dc4dec29d",
+        "L-289201b4f4ec"
+      ],
+      "delivered_lead_ids": [],
+      "notes_present": false,
+      "notes_sha256": null,
+      "authored_lead_documents": [],
+      "source_locator_receipts": 29
+    },
+    {
+      "job": "J0024-compare",
+      "phase": "compare",
+      "runtime_status": "request_limit_reached",
+      "error": "aborted_streaming",
+      "elapsed_seconds": 318.099,
+      "model": [
+        "claude-opus-5"
+      ],
+      "requests": 40,
+      "receipts": 40,
+      "native_num_turns": 55,
+      "cli_reported_usd": 2.815029,
+      "captured_upper_usd": 2.815029,
+      "assigned_lead_ids": [
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66",
+        "L-39a5001283f3"
+      ],
+      "delivered_lead_ids": [],
+      "notes_present": false,
+      "notes_sha256": null,
+      "authored_lead_documents": [],
+      "source_locator_receipts": 28
+    },
+    {
+      "job": "J0025-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "request_limit_reached",
+      "error": "aborted_streaming",
+      "elapsed_seconds": 460.699,
+      "model": [
+        "claude-opus-5"
+      ],
+      "requests": 40,
+      "receipts": 40,
+      "native_num_turns": 53,
+      "cli_reported_usd": 2.8391810000000004,
+      "captured_upper_usd": 2.839181,
+      "assigned_lead_ids": [
+        "L-ad68a4ac94ad",
+        "L-2e0dc4dec29d",
+        "L-289201b4f4ec"
+      ],
+      "delivered_lead_ids": [
+        "L-289201b4f4ec",
+        "L-2e0dc4dec29d",
+        "L-ad68a4ac94ad"
+      ],
+      "notes_present": true,
+      "notes_sha256": "d03c593639d2d7a134b532ef71edcef21fb0f877fc445b4fe499491259a34dba",
+      "authored_lead_documents": [],
+      "source_locator_receipts": 24
+    },
+    {
+      "job": "J0026-compare",
+      "phase": "compare",
+      "runtime_status": "request_limit_reached",
+      "error": "aborted_streaming",
+      "elapsed_seconds": 892.773,
+      "model": [
+        "claude-opus-5"
+      ],
+      "requests": 40,
+      "receipts": 40,
+      "native_num_turns": 66,
+      "cli_reported_usd": 4.946774499999999,
+      "captured_upper_usd": 4.946774,
+      "assigned_lead_ids": [
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66",
+        "L-39a5001283f3"
+      ],
+      "delivered_lead_ids": [
+        "L-39a5001283f3",
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66"
+      ],
+      "notes_present": true,
+      "notes_sha256": "eca15bac6cb2d2d0d830c62287bb69b995b2197761c1d7237cb51148d93e92b2",
+      "authored_lead_documents": [
+        "pm-gc-fence-held-does-not-state-coverage.md",
+        "pm-jj-isolated-drill-must-rebind-store-pointers.md",
+        "pm-jj-machine-local-store-entries-unclassified.md",
+        "pm-jj-restore-object-verification-depth-unstated.md",
+        "pm-jj-unloadable-metadata-has-no-blocker-class.md"
+      ],
+      "source_locator_receipts": 51
+    },
+    {
+      "job": "J0027-compare",
+      "phase": "compare",
+      "runtime_status": "request_limit_reached",
+      "error": "aborted_streaming",
+      "elapsed_seconds": 238.949,
+      "model": [
+        "claude-opus-5"
+      ],
+      "requests": 40,
+      "receipts": 40,
+      "native_num_turns": 45,
+      "cli_reported_usd": 3.243099500000001,
+      "captured_upper_usd": 3.2431,
+      "assigned_lead_ids": [
+        "L-c0c7178a160f",
+        "L-444f31e68545",
+        "L-0793ad1e2a78"
+      ],
+      "delivered_lead_ids": [],
+      "notes_present": false,
+      "notes_sha256": null,
+      "authored_lead_documents": [],
+      "source_locator_receipts": 38
+    },
+    {
+      "job": "J0028-compare",
+      "phase": "compare",
+      "runtime_status": "request_limit_reached",
+      "error": "aborted_streaming",
+      "elapsed_seconds": 258.048,
+      "model": [
+        "claude-opus-5"
+      ],
+      "requests": 40,
+      "receipts": 40,
+      "native_num_turns": 47,
+      "cli_reported_usd": 2.7361845000000002,
+      "captured_upper_usd": 2.736185,
+      "assigned_lead_ids": [
+        "L-ad68a4ac94ad",
+        "L-2e0dc4dec29d",
+        "L-289201b4f4ec"
+      ],
+      "delivered_lead_ids": [],
+      "notes_present": false,
+      "notes_sha256": null,
+      "authored_lead_documents": [],
+      "source_locator_receipts": 49
+    }
+  ],
+  "stage_timing": {
+    "reconcile_wall_seconds": 1386.1762328147888,
+    "reconcile_summed_job_seconds": 3181.055,
+    "reconcile_average_concurrency": 2.294841683687294,
+    "compare_wall_seconds": 1215.9205470085144,
+    "compare_summed_job_seconds": 1707.8690000000001,
+    "compare_average_concurrency": 1.404589308242063,
+    "arm_wall_seconds": 1867.9612114429474,
+    "summed_terminal_job_seconds": 4888.924,
+    "average_concurrency": 2.617251348716949
+  },
+  "cost": {
+    "captured_upper_usd": 36.12404350000002,
+    "cli_reported_usd": 36.124043,
+    "basis": "captured upper valuation equals the CLI-reported subscription-equivalent; not a cash invoice",
+    "unresolved_charge_usd": 0.0,
+    "job_end_reconciled_jobs": 12,
+    "job_end_unresolved_jobs": 0,
+    "cap_usd": 100,
+    "usd_per_credited_finding": 2.0069
+  },
+  "recall": {
+    "expanded_union_denominator": 110,
+    "credited": [
+      "F004",
+      "F006",
+      "F010",
+      "F030",
+      "F050",
+      "F051",
+      "F059",
+      "F061",
+      "F062",
+      "F066",
+      "F072",
+      "F079",
+      "F080",
+      "F081",
+      "F082",
+      "F084",
+      "F092",
+      "F102"
+    ],
+    "count": 18,
+    "recall_percent": 16.36,
+    "by_class": {
+      "correction": "0/5",
+      "optional_capability": "1/36",
+      "product_choice": "0/6",
+      "unsupported_or_rejected": "17/63"
+    },
+    "fixed_original_105_denominator": {
+      "count": 18,
+      "note": "all 18 credited findings are inside the original 105; none of F106-F110 was credited",
+      "recall_percent": 17.14
+    },
+    "fixed_original_105_count": 18,
+    "fixed_original_105_recall_percent": 17.14,
+    "corrections_credited": [],
+    "corrections_missed": [
+      "F001",
+      "F106",
+      "F107",
+      "F108",
+      "F109"
+    ],
+    "partials": [
+      "F001",
+      "F002",
+      "F007",
+      "F011",
+      "F029",
+      "F069",
+      "F074",
+      "F083",
+      "F087",
+      "F088",
+      "F089",
+      "F094",
+      "F097"
+    ]
+  },
+  "coverage_vs_other_arms": {
+    "premium_expanded": 78,
+    "hybrid_expanded": 90,
+    "claude_expanded": 18,
+    "shared_with_premium": [
+      "F004",
+      "F006",
+      "F010",
+      "F030",
+      "F050",
+      "F051",
+      "F059",
+      "F061",
+      "F062",
+      "F066",
+      "F072",
+      "F079",
+      "F080",
+      "F081",
+      "F082",
+      "F084",
+      "F092",
+      "F102"
+    ],
+    "shared_with_hybrid": [
+      "F004",
+      "F006",
+      "F010",
+      "F030",
+      "F050",
+      "F051",
+      "F059",
+      "F061",
+      "F062",
+      "F066",
+      "F072",
+      "F079",
+      "F080",
+      "F081",
+      "F082",
+      "F092",
+      "F102"
+    ],
+    "shared_with_both": [
+      "F004",
+      "F006",
+      "F010",
+      "F030",
+      "F050",
+      "F051",
+      "F059",
+      "F061",
+      "F062",
+      "F066",
+      "F072",
+      "F079",
+      "F080",
+      "F081",
+      "F082",
+      "F092",
+      "F102"
+    ],
+    "claude_and_premium_only": [
+      "F084"
+    ],
+    "claude_and_hybrid_only": [],
+    "unique_to_claude": [],
+    "held_by_premium_missed_by_claude": 60,
+    "held_by_hybrid_missed_by_claude": 73,
+    "held_by_both_others_missed_by_claude": 41,
+    "interpretation": "Every finding the Claude arm earned is a subset of premium's coverage; 17 of 18 are also hybrid's. The arm added no finding to the union's covered set.",
+    "post_review_note": "Recomputed after the independent review's withdrawals and addition."
+  },
+  "request_limited_coverage": {
+    "jobs_at_the_40_response_ceiling": 11,
+    "jobs_completed": 1,
+    "completed_job": "J0019-reconcile (38 responses, 641.0 s)",
+    "budget_truncated_jobs": 0,
+    "note": "The Meter boundary that produces budget_truncated never fired: no job reached the $12 per-job ceiling. Every truncation here is the 40-response ceiling.",
+    "jobs_with_any_delivered_assertion": 4,
+    "jobs_with_zero_delivered_assertion": 8,
+    "zero_delivery_jobs": [
+      "J0017-reconcile",
+      "J0018-reconcile",
+      "J0020-reconcile",
+      "J0021-reconcile",
+      "J0023-reconcile",
+      "J0024-compare",
+      "J0027-compare",
+      "J0028-compare"
+    ],
+    "zero_delivery_output": "source locator inventories only (research-evidence/sources/**, 28-40 receipts each) plus a 16-55 byte truncated last assistant turn; no notes.md, no lead documents, no lead deliveries",
+    "named_loss": "J0028-compare held exactly the three graph leads (L-ad68a4ac94ad, L-2e0dc4dec29d, L-289201b4f4ec) whose Plans comparison produced F107 in both premium and hybrid. Their reconcile evidence was delivered by J0025 and credited under F061/F030/F092/F006/F081, but the compare that would state the SourceGraph contract defect died at the ceiling with nothing saved. F107 was in reach and was lost to the ceiling, not to the model.",
+    "second_named_loss": "J0027-compare held the bookmark and direct-manipulation leads (L-c0c7178a160f, L-444f31e68545, L-0793ad1e2a78) whose reconcile assertions were credited under F059/F062/F066/F079; their comparison against canon was never delivered.",
+    "third_named_loss": "L-80244e477912 (diffedit3 file-type and partial-write limits) and L-7dc9a6726cf9 each got two reconcile attempts (J0017/J0021 and J0018/J0020) and delivered nothing from either. That lead family is the source of premium-unique F031/F033/F034/F036 in continuation 3."
+  },
+  "reached_delivery_fraction": {
+    "input_leads": 88,
+    "distinct_leads_admitted_to_a_reconcile_job": 11,
+    "distinct_leads_with_a_delivered_reconcile_assertion": 9,
+    "reconcile_delivery_rate_of_admitted": "9/11 = 81.8%",
+    "distinct_leads_admitted_to_a_compare_job": 9,
+    "distinct_leads_with_a_delivered_comparison": 3,
+    "compare_delivery_rate_of_admitted": "3/9 = 33.3%",
+    "of_the_88_input_leads": {
+      "reached_a_delivered_reconcile_assertion": "9/88 = 10.2%",
+      "reached_a_delivered_comparison": "3/88 = 3.4%"
+    },
+    "reading": "Separates 'did not get there' from 'got there and missed'. Only 3 of 88 input leads (3.4%) ever reached the compare stage that states a canon proposition, and the 18 credited findings come from that 3.4% plus the 9 reconcile deliveries. The arm's recall number is dominated by leads that were never reached, not by leads it reached and misjudged."
+  },
+  "assertion_corpus": {
+    "documents": 18,
+    "notes": 4,
+    "lead_documents": 14,
+    "jobs_with_assertions": [
+      "J0019-reconcile",
+      "J0022-reconcile",
+      "J0025-reconcile",
+      "J0026-compare"
+    ],
+    "excluded_as_not_arm_authored": [
+      "workspace/navigation.md (hashes to run.json navigation_sha256 0eb77a4d...)",
+      "workspace/handoff.md (upstream handoff input)",
+      "workspace/brief.md",
+      "workspace/assignment.md",
+      "workspace/sources.md",
+      "workspace/tool-help.md",
+      "workspace/research.py"
+    ],
+    "excluded_as_locator_inventory": "workspace/research-evidence/sources/** - continuation 3 explicitly treats source locator inventories as separate from assertion documents"
+  },
+  "limits": [
+    "One frozen case; same-input review replacement; recall is bounded by the premium arm's research artifacts, which contain no discovery or study of the arm's own.",
+    "The adjudicator is an Opus 5 agent and the reviewed model is claude-opus-5: adjudicator and reviewed model share a family.",
+    "Recall is against the adjudicated continuation-3 union, not an external exhaustive truth set.",
+    "Unsupported/rejected is a union class, not a false-positive rate.",
+    "11 of 12 jobs were request-limited; request-limited coverage and the reached-delivery fraction are reported separately so a reader can separate 'did not get there' from 'got there and missed'.",
+    "Cost is a captured upper valuation equal to the CLI-reported subscription-equivalent, not a cash invoice."
+  ],
+  "adjudicator_amendments": [
+    {
+      "at": "2026-09-16",
+      "found_by": "deepseek41/J0025-reconcile; verified by the adjudicator against jj lib/src/simple_op_store.rs:285-298",
+      "finding": "Arm C asserted that op_store().gc(head, SystemTime::UNIX_EPOCH) preserves nothing by recency and that the dojjo mirror therefore retains only the current head's closure after every sync. That is backwards: the implementation keeps a file when mtime > keep_newer, so UNIX_EPOCH preserves everything.",
+      "appears_in": [
+        "jobs/J0019-reconcile/workspace/notes.md (L-39a5001283f3 correction 1)",
+        "jobs/J0019-reconcile/workspace/leads/dojjo-op-store-gc-unix-epoch-and-lock-gap.md",
+        "jobs/J0022-reconcile/workspace/notes.md (L-c0c7178a160f conflicting evidence 2)",
+        "jobs/J0022-reconcile/workspace/leads/dojjo-sync-complete-prunes-operation-history.md (materially false; its central claim is that the mirror is never an operation-history archive)",
+        "jobs/J0026-compare/workspace/notes.md (covered-3 under L-39a5001283f3)",
+        "jobs/J0026-compare/workspace/leads/pm-gc-fence-held-does-not-state-coverage.md"
+      ],
+      "effect_on_score": "None. F079 and F004 rest on independent Plans citations. Candidate C4C-05 loses one of two external legs and survives on the other.",
+      "note": "Arm C cited only the docs.rs trait documentation for jj-lib 0.38.0; deepseek41 read the filesystem implementation."
+    }
+  ],
+  "post_review_revision": {
+    "review": "Independent review REVIEW_ADJUDICATION_20260916.md (2026-09-17), verdict 'fix first'. Applied 2026-09-17.",
+    "verdict_for_this_arm": "S9: the amended-false clause in the F079 basis is now marked inline rather than only in the amendments block. S11: F072's credit is disclosed as resting on 1 of the proposition's 4 clauses. S12: F092's half-coverage disclosed.",
+    "figures_after_review": {
+      "credited": 18,
+      "percent": 16.36,
+      "by_class": {
+        "correction": "0/5",
+        "optional_capability": "1/36",
+        "product_choice": "0/6",
+        "unsupported_or_rejected": "17/63"
+      }
+    }
+  }
+}

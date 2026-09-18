@@ -1,0 +1,280 @@
+{
+  "schema": "jj.continuation4.part1_hash_manifest.v1",
+  "generated": "2026-09-17",
+  "adjudicator": "Opus 5 agent (claude-opus-5[1m])",
+  "main_head": "a6162b559b502278458a56e95c5c0891c3e2a505",
+  "note": "Canon hashes are of the working tree of the shared checkout at the commit named above, which was clean when read. Run-state paths are read-only experiment state outside the repository.",
+  "files": [
+    {
+      "section": "part1_record",
+      "path": "/home/sittingmongoose/PM-Experiments/c4-candidates-20260917/adjudication-part1.json",
+      "sha256": "00e9509577fe14bb0b9fd97eec4ac10a6fd538fd119cd11de9c88d46eded75ad",
+      "use": "this adjudication"
+    },
+    {
+      "section": "part1_record",
+      "path": "/home/sittingmongoose/PM-Experiments/c4-candidates-20260917/ADJUDICATION_PART1.md",
+      "sha256": "d6b09e549eb9c2cfb4b226d19fd2fbe381ac4255ee117d8ef55d7cd5e1d59b16",
+      "use": "this adjudication"
+    },
+    {
+      "section": "bundle_read",
+      "path": "/mnt/Cursor/PuppetMaster/reports/jujutsu-research-2026-09-11/continuation4/adjudication/consolidated-candidates.json",
+      "sha256": "f09790f1e3b83a3675043741707ebbdc50d4c10e01bea7fdfe9fc38bbe40879c",
+      "use": "the 27 candidates, their classifications, the continuation-3 rejection checks and the convergence clusters"
+    },
+    {
+      "section": "bundle_read",
+      "path": "/mnt/Cursor/PuppetMaster/reports/jujutsu-research-2026-09-11/continuation4/adjudication/README.md",
+      "sha256": "c07c545ddc4588b65ba95a28868a46a30406fc3d70439f55050c27ac51d46d87",
+      "use": "the ranking order used here, and the cross-arm factual verifications V1/V2"
+    },
+    {
+      "section": "bundle_read",
+      "path": "/mnt/Cursor/PuppetMaster/reports/jujutsu-research-2026-09-11/continuation4/adjudication/arm-c-candidates.json",
+      "sha256": "86294630038f6222a3325cb949fdbbcb86c1c92618d7ba42e040740eceac471f",
+      "use": "C4C-01, C4C-02, C4C-03, C4C-05 assertions, cited passages, evidence hashes; and the C4C-05 UNIX_EPOCH amendment"
+    },
+    {
+      "section": "bundle_read",
+      "path": "/mnt/Cursor/PuppetMaster/reports/jujutsu-research-2026-09-11/continuation4/adjudication/claude-hicap-candidates.json",
+      "sha256": "65a1824175a93230ebe25b038546c8cd512b053396dfec8b763dff7bd189beef",
+      "use": "C4H-01..C4H-05 assertions, cited passages, evidence hashes"
+    },
+    {
+      "section": "bundle_read",
+      "path": "/mnt/Cursor/PuppetMaster/reports/jujutsu-research-2026-09-11/continuation4/adjudication/deepseek41-candidates.json",
+      "sha256": "a06310c4e63eabe7b983312074bf3474f5d75282947d6dd842062a303d52fa16",
+      "use": "C4D-01, C4D-02, C4D-03 assertions, cited passages, evidence hashes"
+    },
+    {
+      "section": "bundle_read",
+      "path": "/mnt/Cursor/PuppetMaster/reports/jujutsu-research-2026-09-11/continuation4/adjudication/muse13-candidates.json",
+      "sha256": "88b773f3f2d9921ff7931b0c6bf9042e75b27c001c37cca8708dd022a743576e",
+      "use": "C4M-01, C4M-02, C4M-04 assertions, cited passages, evidence hashes"
+    },
+    {
+      "section": "bundle_read",
+      "path": "/mnt/Cursor/PuppetMaster/reports/jujutsu-research-2026-09-11/continuation4/adjudication/union-candidates.json",
+      "sha256": "85baf934a26b55b283a385b5542e76101a66e51a401ca23ad91b916da1132357",
+      "use": "C4U-01, C4U-02 assertions, cited passages, evidence hashes"
+    },
+    {
+      "section": "bundle_read",
+      "path": "/mnt/Cursor/PuppetMaster/reports/jujutsu-research-2026-09-11/continuation4/adjudication/glm53-candidates.json",
+      "sha256": "11081996ff57303993779677e4b83cc51c7723d8a343986cb19c3e9d5388f442",
+      "use": "C4G-01, C4G-03 assertions, cited passages, evidence hashes"
+    },
+    {
+      "section": "bundle_read",
+      "path": "/mnt/Cursor/PuppetMaster/reports/jujutsu-research-2026-09-11/continuation4/adjudication/SHA256SUMS",
+      "sha256": "fdbb5b0c8affa9940642c26f894245e78fb88dc608ae5ef2c6a8b1081e1c1791",
+      "use": "the bundle-side hash record these files were checked against"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0019-reconcile/workspace/leads/dojjo-op-store-gc-unix-epoch-and-lock-gap.md",
+      "sha256": "c0cf000f2adb55ddfb0b922d9285421544c4480239ccf634b40101c3d87cc1ad",
+      "use": "arm working notes / lead supporting C4C-05 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0019-reconcile/workspace/notes.md",
+      "sha256": "2ff85492dd1742a6b82163fa2295c058c4adfdbb2706e923f709594037b9172b",
+      "use": "arm working notes / lead supporting C4C-03 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0026-compare/workspace/leads/pm-gc-fence-held-does-not-state-coverage.md",
+      "sha256": "dc302a4eb282257dcc9d97546180f80d36490ed70b34f2aa8fb1757294c6509d",
+      "use": "arm working notes / lead supporting C4C-05 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0026-compare/workspace/leads/pm-jj-isolated-drill-must-rebind-store-pointers.md",
+      "sha256": "ba3330c47a0981ac4c7eb1eb5b58854282112320e4d15ada6c72a19b570a3ab5",
+      "use": "arm working notes / lead supporting C4C-02 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0026-compare/workspace/leads/pm-jj-machine-local-store-entries-unclassified.md",
+      "sha256": "dab6c73e05e87cb97a0c1f3cd920290d69172f242d9367164eff93ea2a6cdc7d",
+      "use": "arm working notes / lead supporting C4C-03 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0026-compare/workspace/leads/pm-jj-restore-object-verification-depth-unstated.md",
+      "sha256": "fbbf91951173bb339429a27499ec14498e378ad5a2341a6b26314fefb1d17c1b",
+      "use": "arm working notes / lead supporting C4C-01 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0026-compare/workspace/notes.md",
+      "sha256": "eca15bac6cb2d2d0d830c62287bb69b995b2197761c1d7237cb51148d93e92b2",
+      "use": "arm working notes / lead supporting C4C-01, C4C-02, C4C-03, C4C-05 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0019-reconcile/workspace/leads/L-2c6f81ab34de.md",
+      "sha256": "98b63e83cb34c2639a7020745d9142a6654c1c5e58769620cf8863e455ae8f14",
+      "use": "arm working notes / lead supporting C4H-02 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0020-compare/workspace/notes.md",
+      "sha256": "32fd04c196f91210f1b35be08b30f3512d1d372c7bbc43f45c376db2978fb926",
+      "use": "arm working notes / lead supporting C4H-02 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0022-compare/workspace/leads/jj-split-forces-interactive-diff-editor.md",
+      "sha256": "f2e51a0ae54ad7b8447f0c8d3d58eb67b1c03428f2b3fd3a8b529bd7c4a3bd59",
+      "use": "arm working notes / lead supporting C4H-01 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0022-compare/workspace/notes.md",
+      "sha256": "4fb81c977a313f44a2d3e63b48f70885c3985c1aa0e000dd04cadb696efd0425",
+      "use": "arm working notes / lead supporting C4H-01 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0026-compare/workspace/leads/jj-divergent-change-unrepresentable.md",
+      "sha256": "dd73adc0ec207e8ac6f36039656622f11f601c028229269efa308ee8d3229773",
+      "use": "arm working notes / lead supporting C4H-05 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0026-compare/workspace/notes.md",
+      "sha256": "e5aa396df91b9926fc62a1697627c82c17c4f0e0ab4265accf986dbc284ab5a6",
+      "use": "arm working notes / lead supporting C4H-05 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0027-compare/workspace/notes.md",
+      "sha256": "d5bbdd9879508bb2cfbc9fb679cdb82031976ebb5441e5771c516e97877c47ec",
+      "use": "arm working notes / lead supporting C4H-04 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-hicap-20260916-203937/jobs/J0028-compare/workspace/notes.md",
+      "sha256": "0346af633f51de6d5d08d49d57baf9695d961a03976a20a34b3968240207ee02",
+      "use": "arm working notes / lead supporting C4H-03 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-deepseek41-20260916-202016/jobs/J0022-compare/workspace/notes.md",
+      "sha256": "b43707f2c77da49f147f6c20d71cc9af34a2547d001e5d0f59cc21b2f909d727",
+      "use": "arm working notes / lead supporting C4D-01 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-deepseek41-20260916-202016/jobs/J0024-compare/workspace/notes.md",
+      "sha256": "69ca19b76d6b64a197200ceba5e4f7a325bb48b620831d4b036e9472a42d1768",
+      "use": "arm working notes / lead supporting C4D-02, C4D-03 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-glm53-20260917-000655/jobs/J0020-reconcile/workspace/notes.md",
+      "sha256": "322feff26998d94a832a0a22bb51a7a0d8e8adf3950ab98689fe6f667e9f8c87",
+      "use": "arm working notes / lead supporting C4G-01 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-glm53-20260917-000655/jobs/J0024-compare/workspace/notes.md",
+      "sha256": "eb9f7c56029b9672c4dfde790cae156a2609f20dd42e912f03b6784bc97333d2",
+      "use": "arm working notes / lead supporting C4G-03 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-glm53-20260917-000655/jobs/J0028-compare/workspace/notes.md",
+      "sha256": "a3c552d2cdf0576552c7fd0bfdd16e59970d417ac94ae43b3fd2360ebe1bf96c",
+      "use": "arm working notes / lead supporting C4G-01 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-muse13-20260916-215801/jobs/J0026-compare/workspace/notes.md",
+      "sha256": "0452fd6e82d683bc95a5bccc7e67ce057bd823b436218769696466eae056a28d",
+      "use": "arm working notes / lead supporting C4M-01, C4M-04 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-muse13-20260916-215801/jobs/J0028-compare/workspace/notes.md",
+      "sha256": "89bc0d71671edc95c6e29694ffd0a24581a46329e01d2e68fc1344ddd9f840a9",
+      "use": "arm working notes / lead supporting C4M-02 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "run_state_evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-union-20260916-221929/jobs/J0015-compare/workspace/notes.md",
+      "sha256": "586eb7e18796524ef850e90b22bde8404ed8f18b8045c71741e7d148711d89ac",
+      "use": "arm working notes / lead supporting C4U-01, C4U-02 (read-only; hash matches the bundle record)"
+    },
+    {
+      "section": "canon_at_a6162b559b",
+      "path": "/mnt/Cursor/PuppetMaster/Plans/Jujutsu_Integration.md",
+      "sha256": "6092fe5c7c8cbb09f7eb6b03b56356eb9c942c1adc7fa33d04c3d6570e91ec68",
+      "use": "JJI-001..JJI-008, JJI-021/JJI-022, the frozen 31-command inventory and sections 3.1/3.3/4.1 \u2014 the promise text for records 1,2,3,4,5,6,7,8,9,10,11,12,13"
+    },
+    {
+      "section": "canon_at_a6162b559b",
+      "path": "/mnt/Cursor/PuppetMaster/Plans/Source_Control_System.md",
+      "sha256": "d04c4a05f985269bb5f1a2d91884f032c65d34a3f907097e449ea515b5dccd26",
+      "use": "SCS-004, SCS-005, SCS-014, SCS-015, SCS-017, the nineteen generic command IDs and the Git-adapter-command scoping at :313 \u2014 promises for records 2,3,4,5,6,8,9,10,13 and the covering passage for records 14 and 15"
+    },
+    {
+      "section": "canon_at_a6162b559b",
+      "path": "/mnt/Cursor/PuppetMaster/Plans/Backup_Restore_System.md",
+      "sha256": "42c7a278a65355e1b686b993723e9f93c098db6d2a88c53f763816707043f043",
+      "use": "BRS-005 independent axes and BRS-017 \"corrupt history cannot be masked\" \u2014 supporting promise for record 1"
+    },
+    {
+      "section": "canon_at_a6162b559b",
+      "path": "/mnt/Cursor/PuppetMaster/Plans/Contracts_V0.md",
+      "sha256": "f51aafa68444acedecad08f0c3964b2786b822377c25745d01bf96f31ef0f9a1",
+      "use": "the recovery-action admission rule at :508 \u2014 promise for record 11"
+    },
+    {
+      "section": "canon_at_a6162b559b",
+      "path": "/mnt/Cursor/PuppetMaster/Plans/UI_Command_Catalog.md",
+      "sha256": "4fb0eb751c66b8565aa82e5407a97b67c6efb582c9206cbc47ee5f538ed504a6",
+      "use": "the four Conflict-assistant rows at :548-551 \u2014 records 14, 15 and 17"
+    },
+    {
+      "section": "canon_at_a6162b559b",
+      "path": "/mnt/Cursor/PuppetMaster/Plans/jujutsu_integration_contracts.schema.json",
+      "sha256": "2e78d087706de9e53702b6463c267688ea31b3ba4a162a220e5939fb3de4dbaa",
+      "use": "object_closure_result, isolated_verification, availability_payload, command_target, command_request conditionals, disabled_reason_code/error_code, x-puppet-master-assertions \u2014 the contradiction surface for records 1,2,5,7,10,11,12"
+    },
+    {
+      "section": "canon_at_a6162b559b",
+      "path": "/mnt/Cursor/PuppetMaster/Plans/jujutsu_integration_contract_fixtures.json",
+      "sha256": "2f35bd5db1cbadb8cff1c9f271e3422cb68d0307db0337c16d8954fa32ded0ac",
+      "use": "the bookmark track/untrack fixtures carrying transport_mutation with permission.scope local_mutation \u2014 record 12"
+    },
+    {
+      "section": "canon_at_a6162b559b",
+      "path": "/mnt/Cursor/PuppetMaster/Plans/source_control_contracts.schema.json",
+      "sha256": "fb4b0812dafdbbf2063a80299e7805e114c9cafc9bd43bc20726d3ccd25c2523",
+      "use": "node_state, gc_fence_outcome/barrier_outcome, jj_effective_capability_snapshot, backup_source_closure_record \u2014 records 2,3,6,9"
+    },
+    {
+      "section": "canon_at_a6162b559b",
+      "path": "/mnt/Cursor/PuppetMaster/Plans/final_gui_interaction_contracts.schema.json",
+      "sha256": "05264bd70f570b8f1f9a0457119321471d2e1db25b19cda3a25892d41dde0fba",
+      "use": "the closed graph_states prefixItems list \u2014 record 2"
+    },
+    {
+      "section": "canon_at_a6162b559b",
+      "path": "/mnt/Cursor/PuppetMaster/Plans/backup_restore_system_contracts.schema.json",
+      "sha256": "acf770a78283becb973169b1e80c24f4bf808df90780c48ca71b38c20f62e09a",
+      "use": "the integrity_verification_level enum the repair in record 1 would reference"
+    },
+    {
+      "section": "canon_at_a6162b559b",
+      "path": "/mnt/Cursor/PuppetMaster/Plans/forge_backup_tsnet_acceptance.json",
+      "sha256": "b447098646a0e5de002da2e95d290511b7f47a259ee168df3b287dcecbdbbe0c",
+      "use": "the consumer acceptance rows repeating \"object verification\" and the three layout fixtures \u2014 record 1"
+    }
+  ],
+  "post_review_revision": "2026-09-17: record 2 contradiction restated per the independent review; records 5 and 9 citations refined. Hashes below are post-revision."
+}

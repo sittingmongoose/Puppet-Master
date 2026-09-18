@@ -1,0 +1,539 @@
+{
+  "schema": "jj.continuation5.arm_findings.v1",
+  "arm": "t80",
+  "arm_kind": "Continuation 5 T80, the turn-budget control BELOW claude-hicap. claude-opus-5 at effort xhigh - exactly as claude-hicap ran - over the same premium artifacts and starting state in the FROZEN order, 12 admissions, 3 workers, $20 per job. The ONLY authorized difference from claude-hicap is the per-job response ceiling: 80 instead of 160.",
+  "scored_attempt": "T80 ATTEMPT 2 only, runs/jujutsu-t80-20260917-191342, manifest b5498edb9f39ef4e444a109362c6233d1e1e7af0b5021436c9679facc33c448b. Attempt 1 is archived (archive-directory manifest 472b5e5eaa..., run-tree output manifest 7b8c1ad075...); it was cut by a since-corrected sentinel rule, not by money or any arm limit.",
+  "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm. Adjudicator and the reviewed model share a family; every credit names its assertion and the passage it cites, and code facts are verified against pinned bytes.",
+  "credited": [
+    {
+      "finding_id": "F002",
+      "title": "Nominal reads may write",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0020-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "THE SHARPEST STATEMENT OF THIS PROPOSITION IN THE CAMPAIGN, and it corrects the remedy Arm B proposed for the same finding. R1 shows that snapshotting is not the only write a read performs: loading at head resolves divergent operation heads and PERSISTS the result, and it does so 'even in the branch that returns \"without creating a merge operation\", where it still rewrites markers for ancestor heads'. It then refines the fix: --ignore-working-copy alone is not a sufficient read fence, AND --at-op=@ is not equivalent to an explicit operation id, because @ routes through resolve_op_for_load and returns MultipleOperations 'but resolve_op_heads still performs the ancestor-marker cleanup write before that resolver is reached'. So the rule is an EXPLICIT operation id for fenced reads, and @ only as a divergence probe when the marker write is acceptable and receipted. J0022 R3 adds the other half from the opposite side: cmd.jujutsu.diff.open 'is structurally a read, but an external diff editor is a mutation'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "630ca9dbe0cf3ba6d186c29bfd2a6e9fe148a01b66d5038469e986131ddf1e5d"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0022-compare/workspace/notes.md",
+          "sha256": "b1228f497ee2b2e8e358fb8a03172eb95e5e7a8e952493ad07120a33df3bd596"
+        }
+      ],
+      "code_fact_verification": [
+        "V-T1 jj-lib 0.44.0 op_heads_store.rs resolve_op_heads, lines 146-151: '// Return without creating a merge operation' then op_heads_store.update_op_heads(&ancestor_op_heads, op_head.id()) - the no-merge branch DOES write. And the marker cleanup at 146-151 precedes the resolver call at 155. VERIFIED, and it is the fact the arm's refinement rests on.",
+        "V-T2 jj-lib 0.44.0 OpHeadsStore::update_op_heads doc: 'Remove the old op heads and add the new one.' VERIFIED."
+      ]
+    },
+    {
+      "finding_id": "F004",
+      "title": "Writer authority is stronger than native locks",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0027-compare",
+      "job_was_turn_capped": true,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0027 F7 states it as a comparison the Plans win: 'one writer is a lease, not a per-window worker' - the external comparator's per-window worker thread does not establish repository ownership, while PM's lease does, and the arm records that this is already covered rather than inflating it into a gap. Credited in a TURN-CAPPED job.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0027-compare/workspace/notes.md",
+          "sha256": "4f17bd0fc5b9d55c1552ce307dcea57cfa9a6ba1a37272121ef2aee8a53c1d62"
+        }
+      ]
+    },
+    {
+      "finding_id": "F006",
+      "title": "Exact durable identity and operation-local selectors",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0027-compare",
+      "job_was_turn_capped": true,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0027 F6: 'identity is never a shortest visible prefix, and there is no working-copy bypass' - the arm separates the mutable change identity, the immutable commit identity and the operation-local selector, and finds the frozen contract already stricter than the external comparator's prefix rule. Credited in a TURN-CAPPED job.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0027-compare/workspace/notes.md",
+          "sha256": "4f17bd0fc5b9d55c1552ce307dcea57cfa9a6ba1a37272121ef2aee8a53c1d62"
+        }
+      ]
+    },
+    {
+      "finding_id": "F007",
+      "title": "Process failure and cancellation are not no-effect proof",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0022-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0022 R1 is the proposition against the contract: 'A JJ mutation that failed AFTER committing its transaction can be reported with no after-operation identity and no receipt.' The arm establishes the native shape - a later merge-tool failure leaves earlier resolutions committed because the transaction finishes before the error returns - and requires the terminal result to disclose the effect rather than presenting a nonzero outcome as no-effect.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0022-compare/workspace/notes.md",
+          "sha256": "b1228f497ee2b2e8e358fb8a03172eb95e5e7a8e952493ad07120a33df3bd596"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0018-reconcile/workspace/notes.md",
+          "sha256": "8c108e70c3f632ecdab29da54c289bf4f1372d20852ce0764b4745918d782bfd"
+        }
+      ]
+    },
+    {
+      "finding_id": "F008",
+      "title": "Partial multi-file resolve",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0022-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": false,
+      "basis": "J0022 R1 with J0018's extracted lead 'jj-resolve-partial-resolution.md - a later merge-tool failure leaves earlier resolutions committed'. The arm requires the earlier accepted resolutions to be preserved and reported rather than the whole resolve being reported as having done nothing.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0022-compare/workspace/notes.md",
+          "sha256": "b1228f497ee2b2e8e358fb8a03172eb95e5e7a8e952493ad07120a33df3bd596"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0018-reconcile/workspace/notes.md",
+          "sha256": "8c108e70c3f632ecdab29da54c289bf4f1372d20852ce0764b4745918d782bfd"
+        }
+      ]
+    },
+    {
+      "finding_id": "F010",
+      "title": "Native versus sidecar crash boundary",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0020-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0020 R1 and R3 together. R1 names the write a read performs and its collision with 'no restore drill mutates the original repository' and with JJI-004's sole-mutation-authority fence. R3 is the do-not-trust-a-healthy-looking-graph half, and it is the most precise version of it in the campaign: after marker loss 'get_head() with an empty heads/ does not error - it builds MutableTable::full(key_size) and saves it as the new head', so an empty marker directory with every segment blob intact reads as a fresh store rather than as damage.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "630ca9dbe0cf3ba6d186c29bfd2a6e9fe148a01b66d5038469e986131ddf1e5d"
+        }
+      ]
+    },
+    {
+      "finding_id": "F011",
+      "title": "Native recovery has explicit scope",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0026-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0026's second gap is stated against the exact promise: the Plans expose an Operation Log as a first-class JJ surface, route recovery through exact operation identities, and JJI-008 requires proving that a RETAINED HISTORICAL operation is restorable - and the arm shows the recovery scopes are not kept distinct behind that promise.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0026-compare/workspace/notes.md",
+          "sha256": "5ef2b80fbfcf02cd45b114cda810286a4586736c3b7a36c360ce52c60d30493f"
+        }
+      ]
+    },
+    {
+      "finding_id": "F029",
+      "title": "Hunk and editable diff safety",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0021-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0021 P1 is the binding the proposition asks for: a typed per-path entry family with 'a per-entry selected|unselected|conflicted selection state', where 'The apply boundary takes that typed set - never a path -> string map - and binds it to (repo_id, workspace_id, change_id, expected operation_id, writer lease, FileSafe decision, idempotency key)'. G2 supplies the gap it closes: 'No content-selection or diff-apply boundary exists for Jujutsu at all.'",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0021-compare/workspace/notes.md",
+          "sha256": "f618060e7000972eef120213ddba45cea744658f5f9c82cb68607b379c74372f"
+        }
+      ]
+    },
+    {
+      "finding_id": "F030",
+      "title": "Empty, absent and failed reads are distinct",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0027-compare",
+      "job_was_turn_capped": true,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0027 F4 is the failed-read clause against the contract: 'an error-truncated page is indistinguishable from end-of-history', with P1 proposing a typed page-termination reason so a failure cannot present as a clean exhaustion. J0021's P1 supplies the file-level clause - 'an absent file cannot be expressed as \"\"' - as a structural property of the typed model. Credited in a TURN-CAPPED job.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0027-compare/workspace/notes.md",
+          "sha256": "4f17bd0fc5b9d55c1552ce307dcea57cfa9a6ba1a37272121ef2aee8a53c1d62"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0021-compare/workspace/notes.md",
+          "sha256": "f618060e7000972eef120213ddba45cea744658f5f9c82cb68607b379c74372f"
+        }
+      ]
+    },
+    {
+      "finding_id": "F031",
+      "title": "Diff text and metadata round-trip",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0021-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": false,
+      "basis": "All three clauses. J0021 records that diffedit3's 'read model is typed (FileEntry = Missing | Text | Unsupported) but its save protocol is IndexMap<String,String>, so deletion, type change and mode cannot be expressed; a deleted-on-right file is recreated as an empty file', and C4 names the owner-side rule the corpus already has but scopes too narrowly: 'lossy text projection is already forbidden, but only in the FileManager editor'. P1's variants make mode_change and type_change first-class.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0021-compare/workspace/notes.md",
+          "sha256": "f618060e7000972eef120213ddba45cea744658f5f9c82cb68607b379c74372f"
+        }
+      ]
+    },
+    {
+      "finding_id": "F033",
+      "title": "External editor path confinement",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0021-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": false,
+      "basis": "J0021 C2 names it against its owning passage - 'write containment, atomicity and stale-baseline detection are already required' - and the comparison establishes the external counter-case: the save validator checks 'path membership only, not repository/snapshot/session identity', so containment rests on a rescan rather than on an authorized output scope.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0021-compare/workspace/notes.md",
+          "sha256": "f618060e7000972eef120213ddba45cea744658f5f9c82cb68607b379c74372f"
+        }
+      ]
+    },
+    {
+      "finding_id": "F034",
+      "title": "Partial external editor writes",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0021-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": false,
+      "basis": "J0021 C2's atomicity clause, with the external shape stated exactly: the tool 'writes sequentially with no rollback', and jj's own envelope 'gates most partial-write outcomes INSIDE JJ ONLY, because the deletion/type/EOL losses arrive through a SUCCESSFUL save' - which is the distinction the union asks for between whole-request rejection and I/O failure after files were written.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0021-compare/workspace/notes.md",
+          "sha256": "f618060e7000972eef120213ddba45cea744658f5f9c82cb68607b379c74372f"
+        }
+      ]
+    },
+    {
+      "finding_id": "F035",
+      "title": "External diff and merge tool handoff",
+      "classification": "optional_capability",
+      "credited_job": "t80/J0021-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0021 P2 proposes 'an external diff/merge tool invocation envelope' and J0022 P1 'external three-pane diff/merge editing for Jujutsu', with J0018's extracted lead naming the phases the envelope must separate: 'the tool's readiness, liveness and exit-code signals are ambiguous or absent, and JJ collapses them'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0021-compare/workspace/notes.md",
+          "sha256": "f618060e7000972eef120213ddba45cea744658f5f9c82cb68607b379c74372f"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0022-compare/workspace/notes.md",
+          "sha256": "b1228f497ee2b2e8e358fb8a03172eb95e5e7a8e952493ad07120a33df3bd596"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0018-reconcile/workspace/notes.md",
+          "sha256": "8c108e70c3f632ecdab29da54c289bf4f1372d20852ce0764b4745918d782bfd"
+        }
+      ]
+    },
+    {
+      "finding_id": "F036",
+      "title": "External editor stale sessions",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0021-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": false,
+      "basis": "J0021 C2's stale-baseline clause, with the identical-filenames mechanism stated: the validator re-validates 'against a fresh rescan - path membership only, not repository/snapshot/session identity', so a replacement server exposing the same relative names passes.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0021-compare/workspace/notes.md",
+          "sha256": "f618060e7000972eef120213ddba45cea744658f5f9c82cb68607b379c74372f"
+        }
+      ]
+    },
+    {
+      "finding_id": "F056",
+      "title": "Native conflict truth and supported shape",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0021-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0021 R1 and R2 plus J0022 R2. R1: 'cmd.source_control.mark_conflict_resolved must not be satisfied by marker absence on a Jujutsu repository.' R2: 'the Git-shaped conflict-side commands need an explicit backend disposition, and Jujutsu needs a stated resolution route.' J0022 R2 states the structural consequence: 'conflict_state_unresolved blocks JJ commands, but no JJ route resolves a conflict.'",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0021-compare/workspace/notes.md",
+          "sha256": "f618060e7000972eef120213ddba45cea744658f5f9c82cb68607b379c74372f"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0022-compare/workspace/notes.md",
+          "sha256": "b1228f497ee2b2e8e358fb8a03172eb95e5e7a8e952493ad07120a33df3bd596"
+        }
+      ]
+    },
+    {
+      "finding_id": "F061",
+      "title": "Graph bounds, continuity and isolation",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0027-compare",
+      "job_was_turn_capped": true,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0027 F3 and F4 against the owning contract: 'pagination is promised but no admitted request can carry a cursor' and 'an error-truncated page is indistinguishable from end-of-history', with F1 carrying forward the correction that 'worker-side paging is not a bounded view'. Credited in a TURN-CAPPED job.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0027-compare/workspace/notes.md",
+          "sha256": "4f17bd0fc5b9d55c1552ce307dcea57cfa9a6ba1a37272121ef2aee8a53c1d62"
+        }
+      ]
+    },
+    {
+      "finding_id": "F068",
+      "title": "Description drafts survive refresh",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0027-compare",
+      "job_was_turn_capped": true,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "GAINED OVER claude-hicap - the ONLY finding this arm reaches that the 160-turn baseline did not. J0027 P2, 'preserve an in-progress change description', proposes a durable record for an unsubmitted describe draft keyed to the change's stable identity and surviving operations. Credited in a TURN-CAPPED job, which is worth noting: the one thing the 80-turn arm adds over the 160-turn arm came out of a job the ceiling cut.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0027-compare/workspace/notes.md",
+          "sha256": "4f17bd0fc5b9d55c1552ce307dcea57cfa9a6ba1a37272121ef2aee8a53c1d62"
+        }
+      ]
+    },
+    {
+      "finding_id": "F073",
+      "title": "Runtime evidence versus unused scaffolding",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0020-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": false,
+      "hybrid_supported": true,
+      "basis": "J0020 R3 and J0027 F12. R3: closure 'completeness' is a self-declared value that a file-level copy can satisfy with empty backend metadata, so it 'must be a positive metadata check'. F12: 'define isolated_verification as unreachability, not just non-mutation' - the const-true assertion is not evidence of the property it names.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "630ca9dbe0cf3ba6d186c29bfd2a6e9fe148a01b66d5038469e986131ddf1e5d"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0027-compare/workspace/notes.md",
+          "sha256": "4f17bd0fc5b9d55c1552ce307dcea57cfa9a6ba1a37272121ef2aee8a53c1d62"
+        }
+      ]
+    },
+    {
+      "finding_id": "F079",
+      "title": "Complete retained native backup closure",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0020-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0020 R2 and R3. R2 is the sharpest framing of the fence in the campaign: 'Suspend/coordinate JJ/Git GC/prune/rewrites during capture is not achievable against external writers; the GC fence needs a mechanism', replacing 'suspend GC' with 'a fence that is actually constructible'. R3 requires the closure's completeness to rest on a positive metadata check rather than on the absence of a missing-dependency ref.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "630ca9dbe0cf3ba6d186c29bfd2a6e9fe148a01b66d5038469e986131ddf1e5d"
+        }
+      ]
+    },
+    {
+      "finding_id": "F080",
+      "title": "Snapshot omission and skipped checkout",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0026-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "GAINED OVER Arm B. J0026's third gap is the proposition from an angle no other arm took: 'a dirty file is treated as evidence of intent, with no provenance test'. The arm shows that captured_files_relation and the capture rules read a dirty-file set as if it expresses what the person did, and requires the physical file state to be distinguished from the recorded native tree with a provenance test rather than an assumption.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0026-compare/workspace/notes.md",
+          "sha256": "5ef2b80fbfcf02cd45b114cda810286a4586736c3b7a36c360ce52c60d30493f"
+        }
+      ]
+    },
+    {
+      "finding_id": "F081",
+      "title": "Backup existence is not verified recovery",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0020-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0020 R1 requires the restore-verification receipt to record the restored copy's op-head set before and after verification and to bind it to the captured closure record; J0027 F12 requires isolated_verification to mean unreachability rather than non-mutation. Together these are the union's isolated selected-historical-operation restore verified before activation.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "630ca9dbe0cf3ba6d186c29bfd2a6e9fe148a01b66d5038469e986131ddf1e5d"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0027-compare/workspace/notes.md",
+          "sha256": "4f17bd0fc5b9d55c1552ce307dcea57cfa9a6ba1a37272121ef2aee8a53c1d62"
+        }
+      ]
+    },
+    {
+      "finding_id": "F082",
+      "title": "Extras head integrity and crash corruption",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0020-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "THE MOST PRECISE STATEMENT OF THIS DEFECT IN THE CAMPAIGN, and it refines the mechanism every other arm asserted. Arm P established that get_head_locked removes tables[1..] with no self-name exclusion. This arm identifies the exact ordering condition under which v0.44.0's guard fails: because segment files are content-addressed, 'if tables[0] is an ANCESTOR of tables[1], the merged table serializes to the same bytes - and therefore the same name - as tables[1]. save_table removes heads/<tables[0]> (names differ, so the 0.44 guard does not fire), and the tables[1..] loop then removes heads/<tables[1]>. heads/ ends up EMPTY with every segment blob intact. The 0.44.0 guard only protects the reverse ordering (merged == tables[0]), so the loss path survives at the Plans' version profile; readdir order decides.' The arm marks this as a refinement of the inherited child note, 'which asserted the loss without the ordering condition'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "630ca9dbe0cf3ba6d186c29bfd2a6e9fe148a01b66d5038469e986131ddf1e5d"
+        }
+      ],
+      "code_fact_verification": [
+        "V-T3 lib/src/stacked_table.rs:352-375 @ v0.44.0 - save_in serializes, hashes with Blake2b512, uses the hex digest as the file name and calls persist_content_addressed_temp_file. Segment names ARE content hashes, so the arm's ordering argument follows. VERIFIED.",
+        "The two facts it builds on were verified in my Arm P adjudication and re-checked here: the unconditional tables[1..] removal loop (V-P1) and save_table's parent_table.name != table.name guard (V-P5), both at v0.44.0."
+      ]
+    },
+    {
+      "finding_id": "F084",
+      "title": "Sanitized inactive restore configuration",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0027-compare",
+      "job_was_turn_capped": true,
+      "premium_supported": true,
+      "hybrid_supported": false,
+      "basis": "J0027 F13 is the proposition widened past the security framing every other arm used: 'the sanitisation list omits layout-critical configuration and pointers ... Every sanitisation list in the corpus is security-shaped and layout-blind.' It then names what is missing and why each matters from pinned documentation - worktrees/<id>/gitdir is 'A text file containing the ABSOLUTE PATH back to the .git file that points to here', core.worktree 'should never be shared', extensions.worktreeConfig is an exclusionary gate because 'Older Git versions will refuse to access repositories with this extension', and core.repositoryformatversion gates operation entirely. Credited in a TURN-CAPPED job.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0027-compare/workspace/notes.md",
+          "sha256": "4f17bd0fc5b9d55c1552ce307dcea57cfa9a6ba1a37272121ef2aee8a53c1d62"
+        }
+      ]
+    },
+    {
+      "finding_id": "F089",
+      "title": "Partial clone and LFS/submodule eligibility",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0026-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0026's first gap is the never-silently-hydrate clause reached through the credential fence rather than the object store: the Plans promise that 'Reads and navigation carry no writer, credential, FileSafe, confirmation, or interop authority' and that a bounded credential lease is acquired 'only if transport is required', yet a read on a promisor store performs network I/O and may authenticate. J0027 F11 supplies the closure clause: 'a shallow or partially-cloned backing store validates as complete'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0026-compare/workspace/notes.md",
+          "sha256": "5ef2b80fbfcf02cd45b114cda810286a4586736c3b7a36c360ce52c60d30493f"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0027-compare/workspace/notes.md",
+          "sha256": "4f17bd0fc5b9d55c1552ce307dcea57cfa9a6ba1a37272121ef2aee8a53c1d62"
+        }
+      ]
+    },
+    {
+      "finding_id": "F102",
+      "title": "Upstream narrative inconsistencies",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "t80/J0020-compare",
+      "job_was_turn_capped": false,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "Sustained, and this arm's corrections are unusually load-bearing. J0020 corrects the inherited child note on the extras marker loss by supplying the ordering condition it lacked; J0027 F1 carries forward 'worker-side paging is not a bounded view' as a correction; J0020 records 'Corrections carried forward into this comparison' as its own section; and J0022 has a dedicated section C, 'Conflicts between child notes and older parent prose, reconciled'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "630ca9dbe0cf3ba6d186c29bfd2a6e9fe148a01b66d5038469e986131ddf1e5d"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0027-compare/workspace/notes.md",
+          "sha256": "4f17bd0fc5b9d55c1552ce307dcea57cfa9a6ba1a37272121ef2aee8a53c1d62"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0022-compare/workspace/notes.md",
+          "sha256": "b1228f497ee2b2e8e358fb8a03172eb95e5e7a8e952493ad07120a33df3bd596"
+        }
+      ]
+    },
+    {
+      "finding_id": "F107",
+      "title": "Graph page consistency and adjacency bounds",
+      "classification": "correction",
+      "credited_job": "t80/J0027-compare",
+      "job_was_turn_capped": true,
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0027 F3, F4 and P1 against the SourceGraph contract: 'pagination is promised but no admitted request can carry a cursor' is the usable-continuation clause; 'an error-truncated page is indistinguishable from end-of-history' plus the typed page-termination reason is the relational-validation clause; F5 and F6 supply node identity. Credited in a TURN-CAPPED job - and this is one of the five findings the capped job still reached out of the seven hicap earned on the same leads with 110 turns.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0027-compare/workspace/notes.md",
+          "sha256": "4f17bd0fc5b9d55c1552ce307dcea57cfa9a6ba1a37272121ef2aee8a53c1d62"
+        }
+      ],
+      "clause_coverage": "3 of 4 clauses stated, matching the bar at which muse13 was credited with the gap disclosed. The finite parent-reference expansion clause is not reached."
+    }
+  ],
+  "partial_matches": [
+    {
+      "finding_id": "F037",
+      "title": "Bound reads before allocating",
+      "why_partial": "J0021 records the external fact - the scan 'marks >200,000-byte/NUL/invalid-UTF-8 files unsupported (AFTER A FULL READ)' and 'drops walk errors' - and P1's typed model preserves the states with a too_large{limit, measured} variant. What it does not state is the obligation itself: bound the read before allocating. claude-hicap stated it on the same lead in a job that hit no limit, so this is a run-to-run difference rather than a ceiling effect.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0021-compare/workspace/notes.md",
+          "sha256": "f618060e7000972eef120213ddba45cea744658f5f9c82cb68607b379c74372f"
+        }
+      ]
+    },
+    {
+      "finding_id": "F053",
+      "title": "Windows links and native file types",
+      "why_partial": "J0021 C1 names FileSafe's typed manifest including 'symlink target bytes without following the link' and the Windows read-only attribute, and P1 adds a type_change{before_kind, after_kind} variant. The proposition's distinctive clause - distinguishing a Windows link or reparse point from its target, and qualifying hardlinks - is not stated. claude-hicap reached it on the same lead.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0021-compare/workspace/notes.md",
+          "sha256": "f618060e7000972eef120213ddba45cea744658f5f9c82cb68607b379c74372f"
+        }
+      ]
+    },
+    {
+      "finding_id": "F028",
+      "title": "Machine-readable hunk selection",
+      "why_partial": "J0021 P1's DiffEntry model is a typed per-path content-selection family with a per-entry selection state, which is the shape a machine-readable partial-change specification would need. But the proposition is about EXPOSING such specifications to agents and scripts through the adapter authority, and the proposal is scoped to the internal contract. claude-hicap reached F028 on the neighbouring lead in a job that hit no limit.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0021-compare/workspace/notes.md",
+          "sha256": "f618060e7000972eef120213ddba45cea744658f5f9c82cb68607b379c74372f"
+        }
+      ]
+    },
+    {
+      "finding_id": "F001",
+      "title": "Terminal attempts always have receipts",
+      "why_partial": "J0022 R1 requires an after-operation identity and a receipt for a mutation that failed after committing its transaction - which is the correction's shape for one case. It does not state the general obligation that EVERY terminal attempt carries a non-null owner receipt including cancelled and effect-unknown results. Refused on the same test I applied to six earlier arms.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0022-compare/workspace/notes.md",
+          "sha256": "b1228f497ee2b2e8e358fb8a03172eb95e5e7a8e952493ad07120a33df3bd596"
+        }
+      ]
+    },
+    {
+      "finding_id": "F022",
+      "title": "Divergent change convergence",
+      "why_partial": "J0027 F8 states that 'divergent and hidden changes have no place in the frozen vocabulary' and proposes representability. As with claude-hicap and Arm B, representability is not the explicit convergence of commits sharing one change identity that this finding asks for.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0027-compare/workspace/notes.md",
+          "sha256": "4f17bd0fc5b9d55c1552ce307dcea57cfa9a6ba1a37272121ef2aee8a53c1d62"
+        }
+      ]
+    }
+  ]
+}

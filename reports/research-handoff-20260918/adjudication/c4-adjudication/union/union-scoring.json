@@ -1,0 +1,1085 @@
+{
+  "schema": "jj.continuation4.arm_scoring.v1",
+  "arm": "union",
+  "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm; no model-family relationship with the reviewed model",
+  "arm_kind": {
+    "kind": "full arm from discovery",
+    "statement": "THE ONLY CONTINUATION-4 ARM WHOSE RECALL IS NOT BOUNDED BY THE PREMIUM ARM'S ARTIFACTS. It ran the whole pipeline - discovery, implementation, history, reconcile, compare - on the frozen case bc7569b3f5. Discovery and study workers received the product brief only; the frozen Plans entered at reconciliation and comparison; no artifact from any other arm was an input. It is therefore comparable with premium and hybrid on the full pipeline, and NOT comparable with the four review arms (claude, deepseek41, claude-hicap, muse13), whose ceiling is whatever the premium arm's frozen research artifacts already contain.",
+    "verified_from": [
+      "run.json continuation.fresh_arm=true and continuation.original_run=null",
+      "run.json inputs_note: 'Frozen case snapshot bc7569b3f5 only. Discovery and study workers receive the product brief; the frozen Plans enter at reconciliation and comparison. No artifact from any other arm.'",
+      "run.json input_manifest_sha256 11a497945fa57bb5ea062b67289f258af1f89eb9bcb475e7f6b1f9f692c8272a - the same frozen case premium and hybrid ran",
+      "run.json premium field carries the union model itself, not a premium artifact pointer",
+      "protocol/arm-budgets/union.json policy.admitted_phases lists all five stages"
+    ]
+  },
+  "run": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-union-20260916-221929",
+    "terminal_stop_checked_first": "CONFIRMED DESIGNED BEFORE SCORING, as instructed. run.json stop_reason 'Stop: admitted_attempt_cap' with stop_kind 'limit_or_gate'; campaign-terminal.json and monitor-state.json agree. Not an exception. This is the material difference from the quarantined union attempt of 21:57Z, which died on a Python FileNotFoundError renaming worker-process.json.tmp.",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/union-manifest.json",
+    "manifest_sha256_internal": "2e8ada3ff095c4fd544daee0311e17cc78503b166a43db4331693495d205f5d8",
+    "manifest_file_bytes_sha256": "77d2059a34f267191af5e73ccdb2b2a9c6aa0d2f9bf59513e15fd4eefe5dd1da",
+    "files": 7894,
+    "total_bytes": 363829324,
+    "verification": "Recomputed the internal digest from the 7,894 sorted rows and independently re-hashed the whole tree; both match. The runner's quoted figure is the internal manifest_sha256, not the manifest file's own bytes."
+  },
+  "review_model": {
+    "model": "openrouter/stealth/union-alpha",
+    "effort": "high",
+    "transport": "oh-my-pi, reported version omp/18.2.2",
+    "transport_note": "The binary lives under omp-runtimes/omp-18.1.12-linux-x64/ but reports omp/18.2.2; the directory name is a stale path label, not the version. raw-omp/run.json records both.",
+    "selector_of_record": "run.json researcher.model = openrouter/stealth/union-alpha. NOTE: protocol/arm-budgets/union.json continuation4_arms.union still says 'opencode-go/union-alpha' and 'oh-my-pi 18.1.13'. That block is the frozen cost-policy copy, the same stale-selector class the runner documented for deepseek41; the live selector is run.json's.",
+    "per_job_ceiling_responses": 40,
+    "per_job_budget_usd": null,
+    "per_job_timeout_seconds": 2400,
+    "workers": 3,
+    "admissions": 20,
+    "arm_cap_usd": 100,
+    "arm_seconds": 21600,
+    "tariff": "zero on every category (opencode catalogue captured 2026-09-16)"
+  },
+  "budget_truncated_caveat": {
+    "applies": false,
+    "finding": "NO JOB IN THIS ARM WAS RESPONSE-LIMITED OR MONEY-LIMITED. The adapter's budget_truncated mislabel, which had to be unwound for every review arm, does not arise here: no job carries that status. Three jobs are runtime_status 'timeout', bound by the 2,400 s per-job wall.",
+    "evidence": [
+      "native receipts per completed job run 22-39 against a 40 ceiling - no job reached it",
+      "timing.json money_stop_reason: null; priced-usage-final.json stop_reason: null",
+      "observed_upper_usd 0.0 against a $100 cap at a zero tariff",
+      "the three non-completing jobs record runtime_status 'timeout' with elapsed 2400.37-2400.60 s"
+    ]
+  },
+  "runner_figure_corrections": [
+    {
+      "figure": "18 of 20 wrote notes.md",
+      "correct": "19 of 20",
+      "detail": "J0018-reconcile (6,336 bytes, plus 8 lead documents) and J0020-reconcile (8,790 bytes) both timed out and still saved notes.md. Only J0019-reconcile produced nothing. Those saved documents are scored under continuation 3's rule that budget-limited saved findings count when supported, and they carry 12 of the 43 credits.",
+      "consequence": "Taking the runner's figure would have dropped real credits."
+    },
+    {
+      "figure": "12 to 39 responses per job",
+      "correct": "22-39 native receipts across the 17 completed jobs; 0 receipts for each of the three timeout jobs, whose durable meter recorded 27, 12 and 13",
+      "detail": "The three timeout jobs have no raw-omp/usage.json at all. 484 native receipts + 52 durable-metered-but-never-receipted = 536 attempted requests. This is exactly why each timeout job retains $1 unresolved: native-job-end-accounting.json records gaps missing_retained_usage_records and durable_meter_request_count_mismatch.",
+      "consequence": "None to the score; it corrects the response-range reading and explains the $3."
+    }
+  ],
+  "job_table": [
+    {
+      "job": "J0001-discovery",
+      "phase": "discovery",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 594.592,
+      "native_receipts": 27,
+      "durable_meter_requests": null,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [],
+      "receipted_lead_deliveries": [],
+      "notes_present": true,
+      "notes_bytes": 5787,
+      "notes_sha256": "652c1811fe6a5890102b2e23e0c677909d2216955ef89cc1f07606070470ba8f",
+      "authored_lead_documents": [
+        "01-colocation-version-boundaries.md",
+        "02-gg-direct-manipulation.md",
+        "03-jjui-contextual-history.md",
+        "04-native-concurrency-is-not-authority.md",
+        "05-native-backup-closure.md",
+        "06-conflicts-are-not-marker-text.md",
+        "07-gg-selection-and-window-scoping.md",
+        "08-gg-bookmark-state-axes.md",
+        "09-bounded-graph-streaming.md",
+        "10-recovery-ui-scope-comparison.md",
+        "11-sapling-local-graph-and-queue.md",
+        "12-editor-native-jj-integration.md",
+        "13-jj-stack-change-linked-review.md",
+        "14-colocated-cache-tree-fix.md",
+        "15-import-export-noop-is-not-safety.md",
+        "16-editor-rename-copy-restore.md",
+        "17-editor-temporary-tree-lifetime.md",
+        "18-editor-path-and-discovery-identity.md",
+        "19-background-read-and-snapshot-ownership.md",
+        "20-authentication-is-a-work-state.md",
+        "21-restored-config-remains-inactive.md",
+        "22-comparison-bound-hunk-selection.md",
+        "23-diffedit3-three-pane-and-save-semantics.md",
+        "24-native-undo-is-not-selected-op-revert.md",
+        "25-jj-view-forge-enrichment-and-editable-diffs.md",
+        "26-native-workflow-release-directions.md",
+        "27-deferred-adjacent-products.md",
+        "28-stale-workspace-git-head.md",
+        "29-client-command-ownership-architecture.md",
+        "30-jjui-review-and-targeted-push.md"
+      ],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": [
+        "F028",
+        "F079",
+        "F084"
+      ]
+    },
+    {
+      "job": "J0002-implementation",
+      "phase": "implementation",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 461.708,
+      "native_receipts": 28,
+      "durable_meter_requests": null,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-ab3d2b2b3a11"
+      ],
+      "receipted_lead_deliveries": [
+        "L-ab3d2b2b3a11"
+      ],
+      "notes_present": true,
+      "notes_bytes": 15463,
+      "notes_sha256": "36b96f2dd213c0e9c4fb1c9b82c468ec0d4a8b0797b560ef06da75b1f69fdeab",
+      "authored_lead_documents": [
+        "01-head-reset-warning-success.md",
+        "02-colocation-lifecycle-partial-effects.md",
+        "03-git-index-is-lossy-conflict-view.md",
+        "04-existing-corruption-and-latent-cache.md"
+      ],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0003-history",
+      "phase": "history",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 684.24,
+      "native_receipts": 39,
+      "durable_meter_requests": null,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-ab3d2b2b3a11"
+      ],
+      "receipted_lead_deliveries": [
+        "L-ab3d2b2b3a11"
+      ],
+      "notes_present": true,
+      "notes_bytes": 13833,
+      "notes_sha256": "c3e83aede17408357c7be19c3fc9571534b076e952e033786cf4acb9b6a7af7c",
+      "authored_lead_documents": [
+        "noncolocated-reference-cleanup.md",
+        "windows-colocation-lifetimes.md",
+        "worktree-cleanup-partial-outcomes.md"
+      ],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0004-implementation",
+      "phase": "implementation",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 429.969,
+      "native_receipts": 26,
+      "durable_meter_requests": null,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-68d66f244cb2"
+      ],
+      "receipted_lead_deliveries": [
+        "L-68d66f244cb2"
+      ],
+      "notes_present": true,
+      "notes_bytes": 14344,
+      "notes_sha256": "c1b0262a7e3ba9b341562f1cd2496c72e89e8875eccc5aef8f1e046a90d0649f",
+      "authored_lead_documents": [
+        "external-tool-result-lifetime.md",
+        "hunk-byte-fidelity.md",
+        "mutation-outcome-and-recovery.md",
+        "web-client-state-isolation.md"
+      ],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0005-history",
+      "phase": "history",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 519.085,
+      "native_receipts": 30,
+      "durable_meter_requests": null,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-68d66f244cb2"
+      ],
+      "receipted_lead_deliveries": [
+        "L-68d66f244cb2"
+      ],
+      "notes_present": true,
+      "notes_bytes": 12276,
+      "notes_sha256": "ca6fcd8bc6effc34f2c0e4c4519ff05537534ca542c4cad664d2fa42396a41aa",
+      "authored_lead_documents": [
+        "gg-conflict-rendering.md",
+        "gg-external-resolution-freshness.md",
+        "gg-immutability-after-bookmark-move.md"
+      ],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0006-implementation",
+      "phase": "implementation",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 425.089,
+      "native_receipts": 27,
+      "durable_meter_requests": null,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-2aeeb284fb3f"
+      ],
+      "receipted_lead_deliveries": [
+        "L-2aeeb284fb3f"
+      ],
+      "notes_present": true,
+      "notes_bytes": 13877,
+      "notes_sha256": "f073f9f5d5058abdeb09a55e4e4cd9475af213c944bf306b46630dcb2bc103af",
+      "authored_lead_documents": [
+        "evolog-split-partial-effect.md",
+        "operation-id-display-contract.md",
+        "preview-invalidation.md",
+        "stream-lifecycle.md"
+      ],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0007-history",
+      "phase": "history",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 615.997,
+      "native_receipts": 39,
+      "durable_meter_requests": null,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-2aeeb284fb3f"
+      ],
+      "receipted_lead_deliveries": [
+        "L-2aeeb284fb3f"
+      ],
+      "notes_present": true,
+      "notes_bytes": 13670,
+      "notes_sha256": "fe020a5a562d8da335d379b3f9855de27c5e497cedeb85f0db863af74d30f383",
+      "authored_lead_documents": [
+        "evolog-split-partial-outcome.md",
+        "oplog-parser-identity-boundary.md",
+        "split-selection-order-ownership.md",
+        "stream-lifecycle-before-first-output.md",
+        "undo-confirmation-target-drift.md"
+      ],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0008-implementation",
+      "phase": "implementation",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 479.703,
+      "native_receipts": 27,
+      "durable_meter_requests": null,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-004830b7c3fa"
+      ],
+      "receipted_lead_deliveries": [
+        "L-004830b7c3fa"
+      ],
+      "notes_present": true,
+      "notes_bytes": 13147,
+      "notes_sha256": "d838afb2942b37b63dd078a79d42c9378454bdb9f47b653419e11cdafa2e0f5c",
+      "authored_lead_documents": [
+        "observation-can-publish.md",
+        "operation-history-is-not-permanent-audit.md",
+        "operation-publication-is-not-command-completion.md"
+      ],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0009-history",
+      "phase": "history",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 378.134,
+      "native_receipts": 26,
+      "durable_meter_requests": null,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-004830b7c3fa"
+      ],
+      "receipted_lead_deliveries": [
+        "L-004830b7c3fa"
+      ],
+      "notes_present": true,
+      "notes_bytes": 12772,
+      "notes_sha256": "5997895ca191ed4120d1a60080c4449e24cd6e34a011b59080d1d02a38c70cd2",
+      "authored_lead_documents": [
+        "extra-table-head-cleanup.md",
+        "nonintegration-is-not-dry-run.md",
+        "operation-merge-determinism.md",
+        "root-parent-reconciliation.md"
+      ],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0010-implementation",
+      "phase": "implementation",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 584.714,
+      "native_receipts": 26,
+      "durable_meter_requests": null,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-e3903531cf7b"
+      ],
+      "receipted_lead_deliveries": [
+        "L-e3903531cf7b"
+      ],
+      "notes_present": true,
+      "notes_bytes": 13644,
+      "notes_sha256": "0b71c5673a33a913cbebf3144ffd488ccef2b7edfff78dbac160833e1a5c198b",
+      "authored_lead_documents": [
+        "external-source-payloads.md",
+        "metadata-fidelity.md",
+        "restore-cache-fidelity.md"
+      ],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0011-history",
+      "phase": "history",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 746.728,
+      "native_receipts": 38,
+      "durable_meter_requests": null,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-e3903531cf7b"
+      ],
+      "receipted_lead_deliveries": [
+        "L-e3903531cf7b"
+      ],
+      "notes_present": true,
+      "notes_bytes": 12729,
+      "notes_sha256": "00c05e288eed4ffb5967e3e7e5e4c0320f7622143c5d928d125e2e7425a44a1c",
+      "authored_lead_documents": [
+        "archive-sidecars.md",
+        "colocated-cache-tree.md",
+        "external-config.md",
+        "extras-head-loss.md"
+      ],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0012-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 637.359,
+      "native_receipts": 26,
+      "durable_meter_requests": null,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-ab3d2b2b3a11"
+      ],
+      "receipted_lead_deliveries": [
+        "L-ab3d2b2b3a11"
+      ],
+      "notes_present": true,
+      "notes_bytes": 21073,
+      "notes_sha256": "02e03e480bb208b5d01b68519263db97e12a05b4385d59e9cdf2195120c770b7",
+      "authored_lead_documents": [
+        "colocation-lifecycle-and-pruning.md",
+        "existing-corruption-and-latent-cache.md",
+        "git-index-conflict-limits.md",
+        "head-reset-reconciliation.md",
+        "noncolocated-reference-cleanup.md",
+        "windows-colocation-lifetimes.md"
+      ],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0013-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 665.564,
+      "native_receipts": 23,
+      "durable_meter_requests": null,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-68d66f244cb2"
+      ],
+      "receipted_lead_deliveries": [
+        "L-68d66f244cb2"
+      ],
+      "notes_present": true,
+      "notes_bytes": 21039,
+      "notes_sha256": "f21b71a85b616b7411915427f6c183a54bcd071f99c500a23096e344ac12594a",
+      "authored_lead_documents": [
+        "gg-conflict-presentation.md",
+        "gg-editor-result-ownership.md",
+        "gg-graph-generation-and-completeness.md",
+        "gg-hunk-byte-and-tree-fidelity.md",
+        "gg-mutation-outcome-and-recovery.md",
+        "gg-native-and-long-distance-interactions.md",
+        "gg-web-session-ownership.md"
+      ],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0014-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 794.285,
+      "native_receipts": 30,
+      "durable_meter_requests": null,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-2aeeb284fb3f"
+      ],
+      "receipted_lead_deliveries": [
+        "L-2aeeb284fb3f"
+      ],
+      "notes_present": true,
+      "notes_bytes": 22532,
+      "notes_sha256": "4e94c69a44c183b7c817539d8fc73dcd9c1435d03238e95fbece059bc4875d24",
+      "authored_lead_documents": [
+        "command-and-credential-ownership.md",
+        "evolog-split-partial-outcome.md",
+        "operation-identity.md",
+        "preview-invalidation.md",
+        "split-editor-ownership.md",
+        "stream-lifecycle.md",
+        "undo-confirmation-drift.md"
+      ],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0015-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 597.899,
+      "native_receipts": 27,
+      "durable_meter_requests": null,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-ab3d2b2b3a11"
+      ],
+      "receipted_lead_deliveries": [
+        "L-ab3d2b2b3a11"
+      ],
+      "notes_present": true,
+      "notes_bytes": 41948,
+      "notes_sha256": "586eb7e18796524ef850e90b22bde8404ed8f18b8045c71741e7d148711d89ac",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": [
+        "F006",
+        "F019",
+        "F050",
+        "F051",
+        "F052",
+        "F073",
+        "F080",
+        "F081",
+        "F087"
+      ]
+    },
+    {
+      "job": "J0016-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 396.731,
+      "native_receipts": 22,
+      "durable_meter_requests": null,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-68d66f244cb2"
+      ],
+      "receipted_lead_deliveries": [
+        "L-68d66f244cb2"
+      ],
+      "notes_present": true,
+      "notes_bytes": 31889,
+      "notes_sha256": "ebbe0efde329cf0253c1de6b2080429613e91928c2e2f210c1b6fea2fd8b1cd6",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": [
+        "F029",
+        "F030",
+        "F031",
+        "F035",
+        "F061",
+        "F062",
+        "F066",
+        "F068",
+        "F069",
+        "F072",
+        "F088",
+        "F092"
+      ]
+    },
+    {
+      "job": "J0017-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 498.003,
+      "native_receipts": 23,
+      "durable_meter_requests": null,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "assigned_lead_ids": [
+        "L-2aeeb284fb3f"
+      ],
+      "receipted_lead_deliveries": [
+        "L-2aeeb284fb3f"
+      ],
+      "notes_present": true,
+      "notes_bytes": 28963,
+      "notes_sha256": "9a80ee86cdbb4b34ac8d7db126e161e13bd3c43fbab25dca9d3c7754d5cd54e8",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": [
+        "F011",
+        "F015",
+        "F024",
+        "F025",
+        "F038",
+        "F043",
+        "F065"
+      ]
+    },
+    {
+      "job": "J0018-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "timeout",
+      "bound_by": "time_limit_2400s",
+      "elapsed_seconds": 2400.59,
+      "native_receipts": 0,
+      "durable_meter_requests": 27,
+      "accounting_complete": false,
+      "accounting_gaps": [
+        "missing_retained_usage_records",
+        "durable_meter_request_count_mismatch"
+      ],
+      "assigned_lead_ids": [
+        "L-004830b7c3fa"
+      ],
+      "receipted_lead_deliveries": [
+        "L-004830b7c3fa"
+      ],
+      "notes_present": true,
+      "notes_bytes": 6336,
+      "notes_sha256": "dd6bc3c3dd076460b390855c7f7d0479cbcdb4b9668f0fabcd099aa1988987a6",
+      "authored_lead_documents": [
+        "external-import-and-workspace-races.md",
+        "extra-table-head-cleanup.md",
+        "nonintegration-is-not-dry-run.md",
+        "observation-can-publish.md",
+        "operation-history-is-not-permanent-audit.md",
+        "operation-merge-determinism.md",
+        "operation-publication-is-not-command-completion.md",
+        "root-parent-reconciliation.md"
+      ],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": [
+        "F002",
+        "F004",
+        "F005",
+        "F007",
+        "F010",
+        "F082",
+        "F094",
+        "F102"
+      ]
+    },
+    {
+      "job": "J0019-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "timeout",
+      "bound_by": "time_limit_2400s",
+      "elapsed_seconds": 2400.604,
+      "native_receipts": 0,
+      "durable_meter_requests": 12,
+      "accounting_complete": false,
+      "accounting_gaps": [
+        "missing_retained_usage_records",
+        "durable_meter_request_count_mismatch"
+      ],
+      "assigned_lead_ids": [
+        "L-e3903531cf7b"
+      ],
+      "receipted_lead_deliveries": [],
+      "notes_present": false,
+      "notes_bytes": 0,
+      "notes_sha256": null,
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": false,
+      "credited_findings_primary": []
+    },
+    {
+      "job": "J0020-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "timeout",
+      "bound_by": "time_limit_2400s",
+      "elapsed_seconds": 2400.372,
+      "native_receipts": 0,
+      "durable_meter_requests": 13,
+      "accounting_complete": false,
+      "accounting_gaps": [
+        "missing_retained_usage_records",
+        "durable_meter_request_count_mismatch"
+      ],
+      "assigned_lead_ids": [
+        "L-b0eed765f602",
+        "L-ab3efe9bf53d",
+        "L-a30143312e02"
+      ],
+      "receipted_lead_deliveries": [
+        "L-a30143312e02",
+        "L-ab3efe9bf53d",
+        "L-b0eed765f602"
+      ],
+      "notes_present": true,
+      "notes_bytes": 8790,
+      "notes_sha256": "29673c60dfbd3b2867a38b77f9934b81f4f786dcfbe22b33d6f67c0538fd510f",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "credited_findings_primary": [
+        "F008",
+        "F056",
+        "F057",
+        "F059"
+      ]
+    }
+  ],
+  "stage_timing": {
+    "discovery": {
+      "wall_seconds": 595.0860736370087,
+      "summed_job_seconds": 594.592,
+      "average_concurrency": 0.9991697442455861
+    },
+    "implementation": {
+      "wall_seconds": 1889.1786711215973,
+      "summed_job_seconds": 2381.183,
+      "average_concurrency": 1.2604329259054687
+    },
+    "history": {
+      "wall_seconds": 2079.632590532303,
+      "summed_job_seconds": 2944.184,
+      "average_concurrency": 1.415723149081063
+    },
+    "reconcile": {
+      "wall_seconds": 3699.2587678432465,
+      "summed_job_seconds": 9298.773207719803,
+      "average_concurrency": 2.5136855222326617
+    },
+    "compare": {
+      "wall_seconds": 658.3194918632507,
+      "summed_job_seconds": 1492.633,
+      "average_concurrency": 2.267338303739694
+    }
+  },
+  "arm_timing": {
+    "arm_cumulative_wall_seconds": 6378.349567651749,
+    "summed_terminal_job_seconds": 16711.365207719802,
+    "average_concurrency": 2.6200140068322177
+  },
+  "cost": {
+    "captured_usd": 0.0,
+    "tariff": "zero on every category",
+    "cap_usd": 100,
+    "unresolved_charge_usd": 3.0,
+    "job_end_reconciled_jobs": 17,
+    "job_end_unresolved_jobs": 3,
+    "note": "Captured $0 is a tariff artefact, not a measure of work. Cost is NOT comparable with any other arm in this experiment."
+  },
+  "leads": {
+    "registry_total": 106,
+    "authored_by_discovery_job": 30,
+    "child_leads_authored_by_later_jobs": 76,
+    "still_at_stage_discovered": 98,
+    "admitted_beyond_discovery": 8,
+    "reached_full_pipeline_through_compare": 3,
+    "reached_reconcile_delivery": 7,
+    "studied_only_reconcile_produced_nothing": [
+      "L-e3903531cf7b"
+    ],
+    "unresolved_intake_among_discovered": 11,
+    "binding_limit": "the 20-admission cap, not responses and not money"
+  },
+  "recall": {
+    "expanded_union_denominator": 110,
+    "credited": [
+      "F002",
+      "F004",
+      "F005",
+      "F006",
+      "F007",
+      "F008",
+      "F010",
+      "F011",
+      "F019",
+      "F024",
+      "F025",
+      "F028",
+      "F029",
+      "F030",
+      "F031",
+      "F035",
+      "F038",
+      "F043",
+      "F050",
+      "F051",
+      "F052",
+      "F056",
+      "F057",
+      "F059",
+      "F061",
+      "F062",
+      "F065",
+      "F066",
+      "F068",
+      "F069",
+      "F072",
+      "F073",
+      "F079",
+      "F080",
+      "F081",
+      "F082",
+      "F084",
+      "F087",
+      "F088",
+      "F092",
+      "F094",
+      "F102"
+    ],
+    "count": 42,
+    "recall_percent": 38.18,
+    "by_class": {
+      "correction": "0/5",
+      "optional_capability": "6/36",
+      "product_choice": "0/6",
+      "unsupported_or_rejected": "36/63"
+    },
+    "fixed_original_105_count": 42,
+    "fixed_original_105_recall_percent": 40.0,
+    "corrections_credited": [],
+    "corrections_missed": [
+      "F001",
+      "F106",
+      "F107",
+      "F108",
+      "F109"
+    ],
+    "partials": [
+      "F015",
+      "F001",
+      "F027",
+      "F044",
+      "F089",
+      "F103",
+      "F105",
+      "F107"
+    ]
+  },
+  "recall_by_stage": {
+    "definition_primary": "stage of first credited support - the earliest stage whose delivered assertion states the proposition and cites a passage. This is the measure to compare with premium and hybrid on the full pipeline.",
+    "cumulative": [
+      {
+        "stage": "discovery",
+        "new": 12,
+        "cumulative": 12,
+        "percent": 10.91
+      },
+      {
+        "stage": "implementation",
+        "new": 0,
+        "cumulative": 12,
+        "percent": 10.91
+      },
+      {
+        "stage": "history",
+        "new": 0,
+        "cumulative": 12,
+        "percent": 10.91
+      },
+      {
+        "stage": "reconcile",
+        "new": 10,
+        "cumulative": 22,
+        "percent": 20.0
+      },
+      {
+        "stage": "compare",
+        "new": 21,
+        "cumulative": 43,
+        "percent": 39.09
+      }
+    ],
+    "definition_secondary": "stage of the strongest cited statement - the document recorded as primary evidence in union-findings.json",
+    "strongest_statement": {
+      "discovery": 3,
+      "reconcile": 12,
+      "compare": 28
+    },
+    "premium_hybrid_comparison": {
+      "method": "From continuation3/final/comparison.json: original_arms membership is credit earned in the goal-2 run, which admitted only discovery, implementation and history (d3 README records reconcile and compare wall time as 0.00 / unknown for both arms); continuation_credit names the continuation-3 reconcile or compare job that first earned the rest.",
+      "premium": {
+        "research_stages_discovery_implementation_history": 73,
+        "reconcile": 0,
+        "compare": 5,
+        "total": 78,
+        "first_earned_in_continuation_stages": [
+          "F001",
+          "F106",
+          "F107",
+          "F108",
+          "F110"
+        ]
+      },
+      "hybrid": {
+        "research_stages_discovery_implementation_history": 86,
+        "reconcile": 2,
+        "compare": 2,
+        "total": 90,
+        "first_earned_in_continuation_stages": [
+          "F030",
+          "F088",
+          "F107",
+          "F109"
+        ]
+      },
+      "union": {
+        "research_stages_discovery_implementation_history": 12,
+        "reconcile": 10,
+        "compare": 21,
+        "total": 43
+      },
+      "reading": "Premium and hybrid earned 94% and 96% of their coverage in the research stages across 88 and 91 leads over two campaigns; the union arm earned 72% of its coverage in reconcile and compare, from 8 admitted leads in a single 106-minute run. The shapes are not alike. Premium and hybrid had breadth of admitted leads; the union arm had one deep chain per worker. A caveat the reader must keep: premium's and hybrid's research-stage figures cannot be split finer than 'discovery+implementation+history' from the published artifacts, whereas the union arm's 12 are all attributable to J0001-discovery."
+    },
+    "implementation_and_history_result": {
+      "statement": "The union arm's implementation and history stages produced ZERO first credits. Ten of the twenty admissions and 5,325 summed job-seconds went to stages that added no union finding discovery had not already supported with a citation and that reconcile and compare did not later supply.",
+      "qualification": "Their 47 documents were read in full and are not empty: they supply the passage-level evidence that the reconcile and compare jobs then cite (job.json upstream chains record it, e.g. J0012 citing J0002 and J0003 notes). The result is about first credit against this union, not about whether the stages did work.",
+      "contrast": "For premium and hybrid these same stages carried essentially all of the coverage."
+    }
+  },
+  "time_truncated_coverage": {
+    "instruction": "reported separately, as required",
+    "truncated_jobs": [
+      "J0018-reconcile",
+      "J0019-reconcile",
+      "J0020-reconcile"
+    ],
+    "bound": "2,400 s per-job wall; elapsed 2400.590, 2400.604 and 2400.372 s",
+    "affected_leads": [
+      "L-004830b7c3fa",
+      "L-e3903531cf7b",
+      "L-b0eed765f602",
+      "L-ab3efe9bf53d",
+      "L-a30143312e02"
+    ],
+    "saved_output": "J0018 saved notes.md and 8 lead documents; J0020 saved notes.md; J0019 saved nothing",
+    "credits_whose_primary_evidence_is_a_truncated_job": [
+      "F002",
+      "F004",
+      "F005",
+      "F007",
+      "F008",
+      "F010",
+      "F056",
+      "F057",
+      "F059",
+      "F082",
+      "F094",
+      "F102"
+    ],
+    "credits_with_any_evidence_from_a_truncated_job": [
+      "F002",
+      "F004",
+      "F005",
+      "F006",
+      "F007",
+      "F008",
+      "F010",
+      "F030",
+      "F031",
+      "F056",
+      "F057",
+      "F059",
+      "F062",
+      "F068",
+      "F082",
+      "F094",
+      "F102"
+    ],
+    "credits_that_would_be_LOST_if_truncated_output_were_excluded": [
+      "F008",
+      "F057",
+      "F082"
+    ],
+    "recall_excluding_truncated_output": {
+      "count": 40,
+      "percent": 36.36
+    },
+    "reading": "12 of 43 credits have a time-truncated job as their primary evidence and 17 have some evidence from one, but only 3 findings rest on truncated output alone. Excluding it entirely would move recall from 39.09% to 36.36%. The truncated jobs were productive: J0018 alone carries 8 primary credits, more than any job except the two strongest compare jobs.",
+    "what_was_lost": "J0019 is the only true blank: lead L-e3903531cf7b completed implementation (J0010) and history (J0011) and then lost its reconciliation entirely, so it never reached compare. Its two study jobs' documents were still read and scored."
+  },
+  "request_limited_coverage": {
+    "applies": false,
+    "statement": "No job in this arm was request-limited. Native receipts per completed job are 22-39 against a 40-response ceiling. This is the first continuation-4 arm for which the ceiling was not binding, and it is why the response-ceiling caveat that governs Arm C, deepseek41, claude-hicap and muse13 does not apply here.",
+    "binding_limit_instead": "the 20-admission cap and, for three jobs, the 2,400 s wall"
+  },
+  "reached_delivery_fraction": {
+    "jobs_admitted": 20,
+    "jobs_producing_a_saved_assertion_document": 19,
+    "jobs_producing_a_receipted_delivery": 17,
+    "job_delivery_fraction": "19/20 = 95.0% saved; 17/20 = 85.0% receipted",
+    "leads_in_registry": 106,
+    "leads_admitted_beyond_discovery": 8,
+    "lead_admission_fraction": "8/106 = 7.55%",
+    "leads_admitted_that_reached_a_delivered_assertion": 8,
+    "leads_reaching_reconcile_delivery": 7,
+    "leads_reaching_compare_delivery": 3,
+    "reading": "Separating 'did not get there' from 'got there and missed': everything admitted got there. Every one of the 8 admitted leads produced delivered assertions, 7 of 8 reached reconciliation and 3 of 8 reached comparison. The arm's misses are therefore overwhelmingly 'did not get there' - 98 of 106 leads were never admitted to any study job at all, because a 20-admission budget spread over five stages can carry only about five lead chains."
+  },
+  "coverage_vs_premium_and_hybrid": {
+    "comparable": true,
+    "why": "Same frozen case, same full pipeline, no premium artifact as input. This is the only continuation-4 arm for which a full-pipeline comparison is legitimate.",
+    "premium": {
+      "total": 78,
+      "union_arm_shares": 41,
+      "union_arm_has_premium_lacks": [
+        "F073"
+      ],
+      "premium_has_union_arm_lacks": 37
+    },
+    "hybrid": {
+      "total": 90,
+      "union_arm_shares": 37,
+      "union_arm_has_hybrid_lacks": [
+        "F005",
+        "F008",
+        "F031",
+        "F065",
+        "F084"
+      ],
+      "hybrid_has_union_arm_lacks": 53
+    },
+    "unique_to_union_arm": [],
+    "headline": "ZERO findings unique to this arm. All 43 credits sit inside premium union hybrid: 42 in premium, 38 in hybrid. A different research model, given the same case and the whole pipeline, did not extend the 110-finding union by one proposition.",
+    "post_review_note": "Recomputed after the independent review's withdrawals and addition."
+  },
+  "coverage_vs_review_arms": {
+    "comparable": false,
+    "why": "The four review arms are same-input replacements bounded by the premium arm's artifacts; this arm is not. Their recall numbers answer a different question and must not be ranked against this one.",
+    "adds_over_all_four_review_arms": [
+      "F005",
+      "F015",
+      "F019",
+      "F024",
+      "F025",
+      "F038",
+      "F052",
+      "F057",
+      "F065",
+      "F068",
+      "F069"
+    ],
+    "review_arms_hold_union_arm_misses": [
+      "F001",
+      "F032",
+      "F033",
+      "F034",
+      "F036",
+      "F037",
+      "F044",
+      "F053",
+      "F074",
+      "F083",
+      "F089",
+      "F090",
+      "F106",
+      "F107"
+    ],
+    "four_arm_review_union": 46,
+    "five_arm_union": 57,
+    "five_arm_union_percent": 51.82,
+    "nesting": "claude (18) is a subset of union (43), of muse13 (40) and of claude-hicap (46); deepseek41 (33) is a subset of muse13 and claude-hicap; muse13 is a subset of claude-hicap. The union arm is comparable with none of them by containment - it holds 11 they all miss and misses 14 they hold."
+  },
+  "assertion_corpus": {
+    "documents": 114,
+    "bytes": 488422,
+    "composition": "19 notes.md (one per job except J0019) + 95 lead documents",
+    "included": "workspace/notes.md and workspace/leads/*.md only",
+    "excluded_as_inputs": [
+      "handoff.md",
+      "navigation.md",
+      "brief.md",
+      "assignment.md",
+      "sources.md",
+      "tool-help.md",
+      "research.py"
+    ],
+    "excluded_as_locator_inventories": [
+      "workspace/research-evidence/sources/**"
+    ]
+  },
+  "limits": [
+    "One case, one run. This does not establish a general model ranking.",
+    "Cost is $0 at a zero tariff and is not comparable with any other arm; duration is comparable only with premium and hybrid, and only loosely, because the admission budgets differ (20 here against 88 and 91 leads over two campaigns there).",
+    "Recall is measured against continuation 3's fixed 110-finding union, which was itself built from premium and hybrid output. A full arm can only score inside it; its out-of-union propositions are recorded as candidates and are NOT added.",
+    "premium and hybrid's research-stage credit cannot be split into discovery / implementation / history from the published artifacts."
+  ],
+  "post_review_revision": {
+    "review": "Independent review REVIEW_ADJUDICATION_20260916.md (2026-09-17), verdict 'fix first'. Applied 2026-09-17.",
+    "verdict_for_this_arm": "B6: withdrew F015. The credited passage refuses the panel ('no new rail panel'), the redo half appears only as 'not approved scope', and 'timeline' does not occur in the job at all - the virtualization clause was read from a diff-hydration acceptance line. Now consistent with the F103 partial, which was refused for the same reason. S12: F092's half-coverage disclosed.",
+    "figures_after_review": {
+      "credited": 42,
+      "percent": 38.18,
+      "by_class": {
+        "correction": "0/5",
+        "optional_capability": "6/36",
+        "product_choice": "0/6",
+        "unsupported_or_rejected": "36/63"
+      }
+    }
+  }
+}

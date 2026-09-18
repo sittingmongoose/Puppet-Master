@@ -1,0 +1,2837 @@
+{
+  "schema": "pm.topic2.blind_union.v1",
+  "topic": "Plans/Azure_DevOps_Integration.md",
+  "owner_text_scored_against": {
+    "file": "Plans/Azure_DevOps_Integration.md",
+    "branch": "origin/main",
+    "commit": "4f5eda0d18",
+    "sha256": "3ae59c0217219175051418df0482663b247888cc65db087f942158ca5887cc2d",
+    "lines": 219,
+    "plan_units": [
+      "ADO-001",
+      "ADO-002",
+      "ADO-003",
+      "ADO-004",
+      "ADO-005"
+    ]
+  },
+  "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm",
+  "method": "Blind union of both arms' DELIVERED assertions, built by me from the arms' own documents, not from any runner summary. A proposition enters the union when an arm states it against a cited passage. Classification is mine, against the CURRENT owner text on main - not against the frozen case - and every code or API fact carried by a credited proposition was verified against the arm's own cached source or against the Plans file on main before the proposition was admitted.",
+  "assertion_corpus_rule": "workspace/notes.md and workspace/leads/*.md only. Excluded as inputs: handoff.md, navigation.md, brief.md, assignment.md, sources.md, tool-help.md, research.py. Excluded as locator inventories: workspace/research-evidence/sources/** (used by me for verification, never as an assertion).",
+  "structural_fact": "Union propositions can only come from COMPARE-stage documents. I checked every reconcile, discovery, implementation and history note in both arms: all are headed 'external technical reconciliation' or equivalent and NOT ONE cites a Plans/ passage (literal count of 'Plans/' is zero in all 11 reconcile notes and all 13 research notes). So the union rests on FIVE documents: arm-s J0015/J0016/J0017-compare and h2-review J0019/J0020-compare, covering five leads.",
+  "union_size": 73,
+  "class_split": {
+    "correction": 32,
+    "optional_capability": 8,
+    "product_choice": 4,
+    "unsupported_or_covered": 29
+  },
+  "coverage": {
+    "arm_s": {
+      "count": 50,
+      "percent": 68.49,
+      "by_class": {
+        "correction": 26,
+        "optional_capability": 6,
+        "product_choice": 3,
+        "unsupported_or_covered": 15
+      }
+    },
+    "h2": {
+      "count": 42,
+      "percent": 57.53,
+      "by_class": {
+        "correction": 14,
+        "product_choice": 2,
+        "optional_capability": 5,
+        "unsupported_or_covered": 21
+      }
+    },
+    "shared": {
+      "count": 19,
+      "ids": [
+        "TA-010",
+        "TA-014",
+        "TA-015",
+        "TA-018",
+        "TA-019",
+        "TA-020",
+        "TA-022",
+        "TA-023",
+        "TA-030",
+        "TA-038",
+        "TA-039",
+        "TA-044",
+        "TA-046",
+        "TA-053",
+        "TA-054",
+        "TA-055",
+        "TA-056",
+        "TA-058",
+        "TA-059"
+      ],
+      "by_class": {
+        "correction": 8,
+        "product_choice": 1,
+        "optional_capability": 3,
+        "unsupported_or_covered": 7
+      }
+    },
+    "arm_s_unique": {
+      "count": 31,
+      "ids": [
+        "TA-001",
+        "TA-002",
+        "TA-003",
+        "TA-004",
+        "TA-005",
+        "TA-006",
+        "TA-007",
+        "TA-008",
+        "TA-009",
+        "TA-011",
+        "TA-012",
+        "TA-013",
+        "TA-016",
+        "TA-017",
+        "TA-024",
+        "TA-026",
+        "TA-027",
+        "TA-028",
+        "TA-029",
+        "TA-033",
+        "TA-035",
+        "TA-037",
+        "TA-040",
+        "TA-045",
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TA-050",
+        "TA-051",
+        "TA-052",
+        "TA-057"
+      ],
+      "by_class": {
+        "correction": 18,
+        "optional_capability": 3,
+        "product_choice": 2,
+        "unsupported_or_covered": 8
+      }
+    },
+    "h2_unique": {
+      "count": 23,
+      "ids": [
+        "TA-021",
+        "TA-025",
+        "TA-031",
+        "TA-032",
+        "TA-034",
+        "TA-036",
+        "TA-041",
+        "TA-042",
+        "TA-043",
+        "TA-060",
+        "TA-061",
+        "TA-062",
+        "TA-063",
+        "TA-064",
+        "TA-065",
+        "TA-066",
+        "TA-067",
+        "TA-068",
+        "TA-069",
+        "TA-070",
+        "TA-071",
+        "TA-072",
+        "TA-073"
+      ],
+      "by_class": {
+        "correction": 6,
+        "optional_capability": 2,
+        "product_choice": 1,
+        "unsupported_or_covered": 14
+      }
+    }
+  },
+  "findings": [
+    {
+      "finding_id": "TA-001",
+      "title": "\"A new head\" is the wrong staling trigger for Azure",
+      "proposition": "The staling trigger must be restated as a new PROVIDER REVISION - the provider's own revision identity advancing, OR any leg of (base_revision, head_revision, merge_base_revision) changing. Target-branch movement changes commonRefCommit and therefore revision identity while producing no iteration and no head change, so the Plans are internally inconsistent: identity is a triple and the staling trigger is one leg of it.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:100-101 ADO-003 canonical_text",
+        "ADO-003 acceptance :108",
+        "ADO-003 negative_constraints :118",
+        "Forge_Integrations.md:158-188 FGI-004",
+        "forge_integration_contracts.schema.json $defs.review_revision :1122-1161"
+      ],
+      "provider_evidence": "IterationReason publishes exactly seven values (push, forcePush, create, rebase, unknown, retarget, resolveConflicts) with an empty Description for every one; retarget carries newTargetRefName/oldTargetRefName and moves no head; commonRefCommit is defined by BOTH refs.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "R1"
+        },
+        {
+          "job": "J0017-compare",
+          "locus": "R2"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A1",
+          "finding": "IterationReason publishes exactly seven values - push, forcePush, create, rebase, unknown, retarget, resolveConflicts - with an EMPTY Description column for every one. Verified in arm-s J0015-compare research-evidence/sources/S00039/text.txt lines 468-479."
+        },
+        {
+          "id": "V-A2",
+          "finding": "GitPullRequestIteration carries sourceRefCommit ('The source Git commit of this iteration'), targetRefCommit ('The target Git commit of this iteration') and commonRefCommit ('The first common Git commit of the source and target refs'). Verified in arm-s J0015 S00039/text.txt lines 259-261, 288-293."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P1 never show stale review evidence as current",
+      "contradiction_exposed": "ADO-003 makes revision identity a TRIPLE (base, head, merge-base) and makes the staling trigger ONE LEG of it, so a revision's own identity fields can change with no head change and no new iteration - internally inconsistent inside the frozen Plans."
+    },
+    {
+      "finding_id": "TA-002",
+      "title": "An unmapped provider revision cause must never render as a push",
+      "proposition": "The provider's stated cause is persisted VERBATIM as a raw wire string alongside the typed one. A cause PM cannot map renders as unknown cause, never as push. Microsoft's own shipped client collapses any unrecognised reason to Push because IterationReason.Push = 0 and the accumulator guard is `if (resultPart)`.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:100-101",
+        "forge_integration_contracts.schema.json $defs.review_revision (additionalProperties:false)"
+      ],
+      "provider_evidence": "azure-devops-node-api@af336d2 api/Serialization.ts:262-295; the REST reference publishes seven single names with empty descriptions while the client enum is bit-valued.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "R1 step 2"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null,
+      "promise_served": "P1 stale evidence",
+      "contradiction_exposed": "The provider publishes seven causes with empty descriptions and the reference implementation collapses anything unrecognised to `push`, the most reassuring value; nothing in the Plans forbids PM doing the same."
+    },
+    {
+      "finding_id": "TA-003",
+      "title": "A retarget invalidates the applicable policy SET, not only the evidence",
+      "proposition": "Because branch policies are configured per target ref, a retarget changes WHICH policies apply at all: previously-satisfied required reviewers may cease to be required and new ones may appear. The repair re-resolves the policy/check set rather than carrying it.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:99-101 ADO-003",
+        "Azure_DevOps_Integration.md:11 (policy identity must survive the mapping)"
+      ],
+      "provider_evidence": "IterationReason.retarget with newTargetRefName/oldTargetRefName; branch policies are scoped by refName.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "R1 step 3"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null,
+      "promise_served": "P2 different kinds of no",
+      "contradiction_exposed": "Policies are scoped to the target ref, so a retarget changes WHICH policies apply; ADO-003 stales only the evidence and says nothing about the applicable set."
+    },
+    {
+      "finding_id": "TA-004",
+      "title": "evidence_state can name only one reason for staleness",
+      "proposition": "review_revision.evidence_state is a closed four-value enum in which only stale_head_changed names a cause, so at least five distinct Azure staleness causes (retarget, merge-base drift from target movement, web-UI conflict resolution, force push, policy-driven time expiry) would all be reported to the person as 'head changed' - false in four of the five, and in contradiction with ADO-003's own negative constraint against flattening.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs.review_revision.evidence_state {current, stale_head_changed, revalidation_required, invalid}",
+        "Forge_Integrations.md:185 (stale_head_changed is a preserved exact token)",
+        "forge_integration_contract_fixtures.json:411-429 (the only fixture exercising it - GitLab)"
+      ],
+      "provider_evidence": "Build validation policy offers 'Immediately when <branch> is updated' and 'After <n> hours if <branch> has been updated' - a staleness with neither a head change nor a new iteration.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "R2"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P4",
+          "finding": "forge_integration_contracts.schema.json on main: review_revision is additionalProperties:false; evidence_state is the closed enum {current, stale_head_changed, revalidation_required, invalid}; version, base_revision, head_revision and merge_base_revision are all required. VERIFIED."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P2 different kinds of no",
+      "contradiction_exposed": "ADO-003's own negative constraint forbids flattening policy failure into generic unavailable, while the closed evidence_state enum forces four of five Azure staleness causes to render as 'head changed'."
+    },
+    {
+      "finding_id": "TA-005",
+      "title": "review_revision cannot say that a revision's contents are incomplete",
+      "proposition": "Truncation is a distinct axis from staleness and the revision object has no room for it. Four truncation conventions sit on one Azure path (hasMoreCommits, commitTooManyChanges, commentTruncated, and $top/$skip with nextSkip/nextTop on the changes route), and review_revision is additionalProperties:false with no completeness field, so evidence can be shown as current while being partial - the brief's own failure mode reached with no staleness at all.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs.review_revision (additionalProperties:false)",
+        "Forge_Integrations.md FGI-003 preserved token 'partial data is never complete'",
+        "$defs.pipeline_projection.currentness and $defs.command_currentness.state both carry partial"
+      ],
+      "provider_evidence": "GitPullRequestIteration.hasMoreCommits; GitCommitRef.commitTooManyChanges / commentTruncated; iterations/{id}/changes $top default 100 max 2000 with nextSkip/nextTop documented as zero but observed omitted on the last page.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "R4"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P4",
+          "finding": "forge_integration_contracts.schema.json on main: review_revision is additionalProperties:false; evidence_state is the closed enum {current, stale_head_changed, revalidation_required, invalid}; version, base_revision, head_revision and merge_base_revision are all required. VERIFIED."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P1 stale evidence",
+      "contradiction_exposed": "FGI-003 owns the token 'partial data is never complete' and pipeline/command currentness both carry `partial`, but review_revision is additionalProperties:false with no completeness field - so partial contents show as current with no staleness at all."
+    },
+    {
+      "finding_id": "TA-006",
+      "title": "Extend review_revision with a cause, a raw provider cause and a completeness flag",
+      "proposition": "Add stale_cause (nullable, closed provider-neutral set), provider_revision_cause_raw (nullable, unparsed) and contents_completeness in {complete, partial, unknown}; add review_revision_cause_unknown to disabled_reason_code and error_code. The arm's own recommendation is to take contents_completeness and provider_revision_cause_raw now and defer stale_cause until a second provider needs more than one cause.",
+      "classification": "optional_capability",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs.review_revision",
+        "$defs.disabled_reason_code, $defs.error_code (closed enums shared by every provider)"
+      ],
+      "provider_evidence": "Same evidence as the two corrections it serves.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "P1"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-007",
+      "title": "A thread's anchor is a revision PAIR on Azure and the schema stores one ref",
+      "proposition": "review_thread requires a single review_revision_ref, but an Azure thread position is a projection onto the (left, right) iteration window the caller asked for, not a stored fact: two clients reading the same PR at the same moment get different line numbers for the same comment. The corpus already knows how to express a revision pair - command_target requires left_review_revision_ref AND right_review_revision_ref for review.version.compare - and simply does not extend it to threads. Created-at and tracked-to must be two separate facts, 'no tracking record' a third state, and a partial anchor tuple must never be persisted.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs.review_thread (single review_revision_ref, required)",
+        "$defs.command_target left_review_revision_ref / right_review_revision_ref :2984, :3111",
+        "schema conditional :4066-4091 for cmd.forge.review.version.compare",
+        "Forge_Integrations.md FGI-004 acceptance 'Thread resolution is scoped to one immutable review revision and actor.'"
+      ],
+      "provider_evidence": "Threads - List api-version 7.1: $baseIteration = 'left side of the diff', $iteration = 'right side'; CommentIterationContext (when created) and CommentTrackingCriteria (tracked to) are separate objects; changeTrackingId is the durable file-identity key.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "R3"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A11",
+          "finding": "Threads - List carries $iteration and $baseIteration as query parameters at api-version 7.1, documented as the right and left sides of the diff. Verified in arm-s J0015 S00052/text.txt lines 32, 64."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P1 stale evidence",
+      "contradiction_exposed": "command_target already requires left AND right review_revision_ref for review.version.compare; review_thread requires exactly one - the corpus knows how to express a pair and does not apply it to threads."
+    },
+    {
+      "finding_id": "TA-008",
+      "title": "Neither Azure profile declares the review_versions capability",
+      "proposition": "review_versions is a capability_name member, both review-version commands require it as their requested_capability, Forge_Integrations lists them in the exact 43-command central set, UI_Command_Catalog names Azure DevOps as their consumer surface, Wiring_Matrix carries their rows, and ADO's own \u00a74/\u00a75 show Versions/Threads and cover PR revisions - yet review_versions appears in neither required_capabilities nor optional_capabilities for either Azure variant. Add it as OPTIONAL for both.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "azure_devops_integration_fixtures.json:18-19 and :40-41",
+        "forge_integration_contracts.schema.json $defs.capability_name",
+        "schema :4031-4065",
+        "Forge_Integrations.md:142 (FGI-003 'Every provider operation resolves one capability entry before dispatch'), :578",
+        "UI_Command_Catalog.md:12073-12074",
+        "Azure_DevOps_Integration.md:194, :198"
+      ],
+      "provider_evidence": "Azure has the strongest native per-revision object in the corpus (PR iterations plus a dedicated per-iteration status route, GA at 7.1).",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "R5"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P1",
+          "finding": "Plans/azure_devops_integration_fixtures.json on main: Services required [repository, review, checks, transport] optional [review_threads, pipelines, automation, issues, webhooks]; Server required [repository, review, transport] optional [review_threads, checks, pipelines, issues, webhooks]. 'review_versions' occurs 0 times in the file and 'repository_policy' occurs 0 times. VERIFIED."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P1 stale evidence",
+      "contradiction_exposed": "review_versions is a capability token, both review-version commands require it, the command catalog names Azure DevOps as their consumer and the wiring matrix carries their rows - yet neither Azure profile declares it, so FGI-003's 'resolve one capability entry before dispatch' cannot succeed."
+    },
+    {
+      "finding_id": "TA-009",
+      "title": "Capability routing is binding-scoped; Azure decides revision support PER PULL REQUEST",
+      "proposition": "capability_envelope is keyed on repository_binding_ref and every FGI-003 input is at or above repository scope, but a PR with more than 100,000 modified files does not support iterations, supportsIterations is fixed at creation and is not updatable, and review_revision.version is required with minimum 1 on an additionalProperties:false object - so PM can neither emit a revision for a legacy PR nor drop it from the surface. Resolve review_versions at REVIEW scope with the binding-level entry as a ceiling, render the review with version affordances disabled and explained, and keep it a CAPABILITY failure, never a permission failure.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs.capability_envelope, $defs.capability_entry",
+        "$defs.review_revision.version required minimum 1",
+        "$defs.provider_adapter_profile.unsupported_reason_codes :2170-2176 (open array)",
+        "azure_devops_integration_fixtures.json:24, :46 (all existing codes access-shaped)"
+      ],
+      "provider_evidence": "'If the PR being created contains more than 100,000 modified files ... that PR won't support iterations ... any attempt to create a status for a non-existent iteration will return an error.' The service calls these legacy pull requests.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "R6"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A3",
+          "finding": "'If the PR being created contains more than 100,000 modified files, then, for performance and stability reasons, that PR won't support iterations ... any attempt to create a status for a non-existent iteration will return an error.' Verified in arm-s J0015 S00043/text.txt line 100."
+        },
+        {
+          "id": "V-A4",
+          "finding": "'Posting status to a specific iteration of a PR guarantees that status applies only to the code that was evaluated and none of the future updates.' Verified in arm-s J0015 S00043/text.txt line 98."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P2 different kinds of no",
+      "contradiction_exposed": "capability_envelope is keyed on the repository binding while Azure fixes revision support per pull request; review_revision.version is required with minimum 1 on a closed object, so PM can neither emit a revision for a legacy PR nor drop it."
+    },
+    {
+      "finding_id": "TA-010",
+      "title": "Neither Azure profile declares the repository_policy capability",
+      "proposition": "repository_policy is a capability_name token distinct from checks, command_target.target_kind carries repository_policy, cmd.forge.repository.policy.* requires it, provider_capability_matrix carries both checks and branch_policy as dimensions and FGI-015 requires each profile to report status/evidence/reason/freshness for branch policy - yet neither Azure profile lists repository_policy in required or optional capabilities. The Forgejo profile fixture does list it, so the omission is Azure-specific.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "azure_devops_integration_fixtures.json:18-19, :40-41",
+        "forge_integration_contracts.schema.json $defs.capability_name :118-138",
+        "schema :4448-4450",
+        "forge_integration_contracts.schema.json:5977 capability_dimensions (18-item tuple incl. checks and branch_policy)",
+        "Forge_Integrations.md:852-872 FGI-015",
+        "forge_integration_contract_fixtures.json:4017-4028 (forgejo declares it)"
+      ],
+      "provider_evidence": "Several in-box Azure policy types never post a status (minimum approvers, required reviewers, work-item linking, merge strategy, comment resolution), so a checks-only capability structurally cannot see them.",
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0016-compare",
+          "locus": "F6"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "R1"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P1",
+          "finding": "Plans/azure_devops_integration_fixtures.json on main: Services required [repository, review, checks, transport] optional [review_threads, pipelines, automation, issues, webhooks]; Server required [repository, review, transport] optional [review_threads, checks, pipelines, issues, webhooks]. 'review_versions' occurs 0 times in the file and 'repository_policy' occurs 0 times. VERIFIED."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P1 and the policies/checks sentence",
+      "contradiction_exposed": "repository_policy is a capability token distinct from checks, the policy commands require it, and the Forgejo profile declares it - the Azure profiles do not."
+    },
+    {
+      "finding_id": "TA-011",
+      "title": "unsupported_reason_codes is an unchecked free string array",
+      "proposition": "unsupported_reason_codes is typed as an array of non_empty_string, so the Azure profile's policy_scope_missing is not drawn from - and not checked against - the closed disabled_reason_code / error_code enums at all. Cross-provider the same field holds missing_scope (GitLab) and pipeline_disabled (Bitbucket), which ARE enum members; Azure's is not.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs.provider_adapter_profile.unsupported_reason_codes :2170-2176",
+        "$defs.disabled_reason_code (54 members; policy_scope_missing absent)",
+        "azure_devops_integration_fixtures.json:24",
+        "gitlab_integration_fixtures.json:24, bitbucket_integration_fixtures.json:24"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0016-compare",
+          "locus": "F6"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P5",
+          "finding": "provider_adapter_profile.unsupported_reason_codes is an array of non_empty_string (unchecked against any enum); disabled_reason_code has 54 members and policy_scope_missing is NOT one of them. VERIFIED."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P2 different kinds of no",
+      "contradiction_exposed": "unsupported_reason_codes is an unchecked free string array, so Azure's declared reason is not drawn from the closed enums that every other reason must come from."
+    },
+    {
+      "finding_id": "TA-012",
+      "title": "policy_scope_missing is a read-side reason the Azure service cannot produce",
+      "proposition": "Azure DevOps has no read-side policy permission: the Git Repositories namespace's policy bits (EditPolicies, PolicyExempt, PullRequestBypassPolicy) are all write/exempt/bypass, and reading policies rides on repository GenericRead - the evaluations endpoint lists exactly one OAuth scope, vso.code, the same scope that reads code. So 'I can see this repository but not its branch policies' is not a state the service has, and a caller who got policy_scope_missing would have been denied at the repository. ADO-002's distinguishability promise is real for the WRITE and BYPASS paths and the plan does not say which it means.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "azure_devops_integration_fixtures.json:24",
+        "Azure_DevOps_Integration.md:76 ADO-002 acceptance"
+      ],
+      "provider_evidence": "Security-namespace reference (Git Repositories namespace policy bits) plus the evaluations endpoint's single vso.code scope.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0016-compare",
+          "locus": "F6"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null,
+      "promise_served": "P2 different kinds of no",
+      "contradiction_exposed": "ADO-002 promises policy access failures stay distinguishable and the Services fixture declares policy_scope_missing, but Azure has no read-side policy permission - the state cannot be produced on the read path."
+    },
+    {
+      "finding_id": "TA-013",
+      "title": "Nothing in the corpus forbids client-side policy scope resolution",
+      "proposition": "The Plans constrain the OUTPUT of the policy mapping ('without losing policy identity') and say nothing about the DERIVATION. No statement requires provider-side applicability resolution, no prohibition on client-side scope resolution exists, and policy scope levels, matchKind and refName matching appear nowhere. An implementer who reads only the Plans, reaches for the obvious-looking collection endpoint and filters it client-side has violated no written constraint and produces a confident single WRONG answer, not an error - so no reason code fires and 'partial data is never complete' never gets a chance to apply. The corpus already has the right shape in an unrelated owner: FileSafe.md:225's fail-closed-on-scope-resolution rule.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:11",
+        "ADO-003 :99 (branch-policy/check identities)",
+        "ADO-005 (Policies/Checks on screen)",
+        "FileSafe.md:225 (the existing precedent)"
+      ],
+      "provider_evidence": "GET .../_apis/git/policy/configurations?repositoryId=&refName=&policyType= at api-version 7.1 performs scope resolution server-side; the non-git collection endpoint does not.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0016-compare",
+          "locus": "F1/R1"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A7",
+          "finding": "policy/evaluations is api-version 7.1-preview.1 with parameters artifactId, includeNotApplicable, $top, $skip (S00074 lines 33-35); git/policy/configurations is api-version 7.1 with repositoryId, refName, policyType, $top, continuationToken (S00047 lines 36-38). Both verified in arm-h2 J0020."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "the policies/checks sentence",
+      "contradiction_exposed": "The Plans constrain the OUTPUT of the policy mapping and say nothing about the derivation, so client-side scope resolution violates no written constraint and fails by producing a confident wrong answer that no reason code can catch."
+    },
+    {
+      "finding_id": "TA-014",
+      "title": "No command in the closed central set READS branch-policy configurations",
+      "proposition": "cmd.forge.repository.policy.preview and .apply are a two-phase MUTATION (propose a patch, then apply it) and cmd.forge.review.checks is PR-scoped, so nothing in the census reads 'the policies guarding this branch'. The owner must decide between narrowing the promise to 'on a pull request' - which is what the Plans already say - and adding the read. THE TWO ARMS DISAGREE ON THE DISPOSITION: Arm S files it as a proposal and recommends narrowing the brief first; H2 files it as a concrete repair against ADO-005's promise.",
+      "classification": "product_choice",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json :4471-4500 and :4505-4536 (the two policy conditionals)",
+        "Forge_Integrations.md:578 (the exact central set)",
+        "Azure_DevOps_Integration.md:161-165 ADO-005",
+        "$defs.command_target.target_kind (15 values, no branch)"
+      ],
+      "provider_evidence": "The provider read exists and is released: git/policy/configurations at 7.1 with refName as the fully-qualified ref.",
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0016-compare",
+          "locus": "F7/P1"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "R1"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A7",
+          "finding": "policy/evaluations is api-version 7.1-preview.1 with parameters artifactId, includeNotApplicable, $top, $skip (S00074 lines 33-35); git/policy/configurations is api-version 7.1 with repositoryId, refName, policyType, $top, continuationToken (S00047 lines 36-38). Both verified in arm-h2 J0020."
+        }
+      ],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-015",
+      "title": "Add a branch-scoped policy applicability read",
+      "proposition": "One provider-neutral read - 'which policies apply to this branch', keyed by (repository, fully-qualified ref) - returning typed check records with scope_level populated and NO status, every item explicitly not_evaluated. It is answerable at GA on Azure, it is what lets a person see what will gate a change before opening a pull request, and it gives the provider-resolution rule a legitimate endpoint to point at. Costs: it grows the frozen central command census, which is itself an acceptance criterion, and it creates a surface that shows rules without statuses.",
+      "classification": "optional_capability",
+      "owner_passages_cited": [
+        "Forge_Integrations.md:578 and :754 (the census is an acceptance criterion)",
+        "$defs.command_target.target_kind has no branch kind; no ref field exists",
+        "$defs.repository_binding.provider_repository_id (satisfies the uuid dependency)"
+      ],
+      "provider_evidence": "git/policy/configurations at api-version 7.1 with four documented scope combinations and continuationToken paging.",
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0016-compare",
+          "locus": "P1"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "R1"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A7",
+          "finding": "policy/evaluations is api-version 7.1-preview.1 with parameters artifactId, includeNotApplicable, $top, $skip (S00074 lines 33-35); git/policy/configurations is api-version 7.1 with repositoryId, refName, policyType, $top, continuationToken (S00047 lines 36-38). Both verified in arm-h2 J0020."
+        }
+      ],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-016",
+      "title": "policy_resource_id cannot express a scoped policy and expected_policy_revision cannot fence a set",
+      "proposition": "cmd.forge.repository.policy.preview identifies its subject with one opaque string whose worked example is 'branch-policy:main' - keyed by BRANCH NAME. Azure's identity is PolicyConfiguration.id plus the settings.scope[] entry that made it apply (refName, matchKind, nullable repositoryId), and two different configurations can both be 'the branch policy on main'. expected_policy_revision is a single scalar while revision is per-configuration, so one scalar cannot fence a set whose membership can change without any member's revision changing.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs.command_target.policy_resource_id :3261",
+        "expected_policy_revision and policy_revision_stale"
+      ],
+      "provider_evidence": "GitPullRequestCompletionOptions.autoCompleteIgnoreConfigIds is keyed by policy configuration id - the provider's own write path already addresses individual configurations by id.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0016-compare",
+          "locus": "F3/R3"
+        },
+        {
+          "job": "J0016-compare",
+          "locus": "F4a"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A8",
+          "finding": "autoCompleteIgnoreConfigIds: 'List of any policy configuration Id's which auto-complete should not wait for. Only applies to optional policies (isBlocking == false). Auto-complete always waits for required policies (isBlocking == true).' Verified in arm-s J0016-compare S00096/text.txt lines 500-503."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "the policies/checks sentence",
+      "contradiction_exposed": "Azure's own write path keys its ignore list by policy configuration id, so the provider addresses individual configurations by id while the frozen contract carries one opaque string whose worked example is a branch name."
+    },
+    {
+      "finding_id": "TA-017",
+      "title": "A policy or check collection carries no completeness state and no cursor",
+      "proposition": "Both listing endpoints page, FGI-003 already says 'partial data is never complete' and pipeline_projection_partial already exists - but there is no policy-set equivalent: no policy_set_partial, no completeness flag, no continuation handle. A truncated first page of policies is shape-identical to a complete one. The corpus proves it knows how to do this properly: DL-054 makes a truncated parent list carry parent_refs_truncated AND a parent_expansion_cursor_ref, with 'Do not present a truncated parent list as complete'.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs.disabled_reason_code (pipeline_projection_partial present, policy_set_partial absent)",
+        "Source_Control_System.md:1085-1094 / Decision_Log.md:790 DL-054",
+        "Forge_Integrations.md FGI-003"
+      ],
+      "provider_evidence": "$top + continuationToken on git/policy/configurations; $top/$skip on policy/evaluations.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0016-compare",
+          "locus": "R4"
+        },
+        {
+          "job": "J0017-compare",
+          "locus": "R5"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P6",
+          "finding": "disabled_reason_code contains pipeline_projection_partial and review_revision_stale; it does NOT contain policy_set_partial. VERIFIED."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P1 stale evidence",
+      "contradiction_exposed": "DL-054 already requires a truncated parent list to carry a flag AND a cursor with 'Do not present a truncated parent list as complete'; the forge policy path has neither, so a truncated first page is shape-identical to a complete one."
+    },
+    {
+      "finding_id": "TA-018",
+      "title": "There is no typed check or policy record anywhere in the corpus",
+      "proposition": "pipeline_projection.checks is an array of opaque non_secret_ref strings and normalized_remote_record carries only free-string raw/normalized status, so 'policy identity' - which ADO-003 requires PR evidence to bind - has no carrier. The Check record_kind is specified and UNEXERCISED: no fixture anywhere uses record_kind Check.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs.pipeline_projection.checks :1338-1344",
+        "source_control_contracts.schema.json $defs.normalized_remote_record (record_kind includes Check)",
+        "Azure_DevOps_Integration.md:99, :107 ADO-003"
+      ],
+      "provider_evidence": "The provider supplies every identity ADO-003 names: configuration.id (int32), configuration.type.id (uuid), evaluationId (uuid) per policy x PR, status id (int32) plus context{genre,name}.",
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0016-compare",
+          "locus": "R3"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "R7 + leads/checks-projection-record-gap.md"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P2",
+          "finding": "forge_integration_contracts.schema.json on main: capability_name contains both review_versions and repository_policy; command_target has left_review_revision_ref and right_review_revision_ref; target_kind is a 15-value enum with no branch member; pipeline_projection.checks is an array of non_secret_ref; pipeline_projection.state is the 8-value enum queued|running|waiting|succeeded|failed|cancelled|skipped|unknown. VERIFIED."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "the policies/checks sentence",
+      "contradiction_exposed": "ADO-003 requires PR evidence to bind policy/check IDENTITIES while the only carrier is an array of opaque refs and a free-string record kind that no fixture anywhere exercises."
+    },
+    {
+      "finding_id": "TA-019",
+      "title": "Blocking-ness has no carrier, so 'whether each one passes' is undecidable",
+      "proposition": "Nothing in the corpus carries required-vs-advisory for a gate: literal searches for 'blocking check' and 'mergeable' return no match, and the closed reason-code enums contain no blocking/advisory notion. 'Optional policy, currently failing' and 'blocking policy, currently failing' are the difference between a warning and a wall. Azure's own write path proves it is the decisive axis: autoCompleteIgnoreConfigIds 'Only applies to optional policies (isBlocking == false). Auto-complete always waits for required policies (isBlocking == true).'",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs.pipeline_projection (state + checks only)",
+        "$defs.disabled_reason_code / $defs.error_code",
+        "Azure_DevOps_Integration.md:97-101 ADO-003 (says nothing about required vs optional)"
+      ],
+      "provider_evidence": "PolicyConfiguration.isBlocking; autoCompleteIgnoreConfigIds documentation verbatim; the published merge-gating table's two columns differ entirely by it.",
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0016-compare",
+          "locus": "F4/F4a"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "R4"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A8",
+          "finding": "autoCompleteIgnoreConfigIds: 'List of any policy configuration Id's which auto-complete should not wait for. Only applies to optional policies (isBlocking == false). Auto-complete always waits for required policies (isBlocking == true).' Verified in arm-s J0016-compare S00096/text.txt lines 500-503."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "the policies/checks sentence",
+      "contradiction_exposed": "'Whether each one currently passes' cannot be answered without required-versus-advisory, which appears nowhere in the corpus - and Azure's own documentation makes it the axis that decides whether auto-complete waits."
+    },
+    {
+      "finding_id": "TA-020",
+      "title": "There is no check-status vocabulary and no forbidden-mapping rule",
+      "proposition": "normalized_status is an unconstrained string with no pinned mapping anywhere in the corpus, and the only adjacent enum - pipeline_projection.state - is a pipeline-run vocabulary with no member for 'the check itself errored'. PolicyEvaluationStatus.broken and GitStatusState.error and notSet have no clean target: mapping broken to failed tells the person their change was rejected when it was not; mapping it to unknown throws away the one fact that would let them act.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "source_control_contracts.schema.json:3963 raw_status / normalized_status (unconstrained strings)",
+        "forge_integration_contracts.schema.json $defs.pipeline_projection.state (8 values)",
+        "Azure_DevOps_Integration.md:118 ADO-003 negative constraint 'Do not flatten policy failure into generic unavailable.'"
+      ],
+      "provider_evidence": "PolicyEvaluationStatus = queued|running|approved|rejected|notApplicable|broken with broken = 'The policy has encountered an unexpected error'; GitStatusState = notSet|pending|succeeded|failed|error|notApplicable.",
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0016-compare",
+          "locus": "F4"
+        },
+        {
+          "job": "J0017-compare",
+          "locus": "R4"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "R5"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A5",
+          "finding": "PolicyEvaluationRecord = {_links, artifactId, completedDate, configuration, context, evaluationId, startedDate, status} - NO commit, iteration or revision field. PolicyEvaluationStatus = queued | running | approved | rejected | notApplicable | broken, with broken = 'The policy has encountered an unexpected error' and notApplicable = 'The policy does not apply to this pull request'. Verified in arm-h2 J0020-compare S00031/text.txt lines 214-263."
+        },
+        {
+          "id": "V-A6",
+          "finding": "In the published merge-gating table, notApplicable is '\u2713 Bypasses policy requirement', and 'When a required policy is set to Apply by default, you can post notApplicable to remove the policy requirement for a specific PR'. notSet is 'Treated as pending'. Verified in arm-h2 J0020 S00042/text.txt lines 47-54, 130. This is a DIFFERENT meaning from PolicyEvaluationStatus.notApplicable (V-A5)."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P2 different kinds of no",
+      "contradiction_exposed": "ADO-003 forbids flattening policy failure into generic unavailable, but normalized_status is an unconstrained string and the only adjacent enum has no member for 'the check itself errored' - so the flattening happens in the schema, before any adapter is written."
+    },
+    {
+      "finding_id": "TA-021",
+      "title": "notApplicable means two different things in the two Azure enums",
+      "proposition": "In GitStatusState, notApplicable SATISFIES the gate - it bypasses the policy requirement on a required Apply-by-default policy. In PolicyEvaluationStatus, notApplicable means 'The policy does not apply to this pull request'. Same wire word, two enums, two meanings, and pipeline_projection.state offers skipped, which is the obvious wrong answer for both. Each Check record must record which provider enum it came from and a per-enum normalization table must be pinned.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "Source_Control_System.md SCS-016 negative constraint 'Do not flatten native policy ... or vocabulary extensions'",
+        "normalized_status is a free string with no pinned mapping",
+        "$defs.pipeline_projection.state.skipped"
+      ],
+      "provider_evidence": "'notApplicable - Bypasses policy requirement' in the published merge-gating table, with 'When a required policy is set to Apply by default, you can post notApplicable to remove the policy requirement for a specific PR'; against PolicyEvaluationStatus.notApplicable = 'The policy does not apply to this pull request'.",
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "R5"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A5",
+          "finding": "PolicyEvaluationRecord = {_links, artifactId, completedDate, configuration, context, evaluationId, startedDate, status} - NO commit, iteration or revision field. PolicyEvaluationStatus = queued | running | approved | rejected | notApplicable | broken, with broken = 'The policy has encountered an unexpected error' and notApplicable = 'The policy does not apply to this pull request'. Verified in arm-h2 J0020-compare S00031/text.txt lines 214-263."
+        },
+        {
+          "id": "V-A6",
+          "finding": "In the published merge-gating table, notApplicable is '\u2713 Bypasses policy requirement', and 'When a required policy is set to Apply by default, you can post notApplicable to remove the policy requirement for a specific PR'. notSet is 'Treated as pending'. Verified in arm-h2 J0020 S00042/text.txt lines 47-54, 130. This is a DIFFERENT meaning from PolicyEvaluationStatus.notApplicable (V-A5)."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P2 different kinds of no",
+      "contradiction_exposed": "One wire word carries two provider meanings - bypass-satisfies and does-not-apply - and the nearest enum member, `skipped`, is wrong for both."
+    },
+    {
+      "finding_id": "TA-022",
+      "title": "cmd.forge.review.checks requires a key the Azure policy API cannot accept or return",
+      "proposition": "The checks conditional requires provider_review_id AND review_head_oid matching ^[0-9a-f]{40,64}$, but the evaluations endpoint's only query parameters are artifactId, $top, $skip and includeNotApplicable, the artifact template is project + PR with no iteration or commit component, and PolicyEvaluationRecord carries no commit field of any kind. The adapter can SEND review_head_oid; the provider never sees it and never validates it, and between reading the head and reading the evaluations a push can substitute a different revision with nothing in the response revealing it. The existing 'stale-head' negative fixture tests the caller-supplied-stale-oid case and cannot test this one.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json :4385-4430 (the cmd.forge.review.checks conditional)",
+        "forge_integration_contract_fixtures.json:5999 ('target.review_head_oid': 'stale-head')",
+        "Azure_DevOps_Integration.md:107 ADO-003 acceptance",
+        "source_control_contracts.schema.json normalized_remote_record.revision_ref (required)"
+      ],
+      "provider_evidence": "policy/evaluations query parameters and artifactId template; PolicyEvaluationRecord field list = {_links, artifactId, completedDate, configuration, context, evaluationId, startedDate, status}.",
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0016-compare",
+          "locus": "F2"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "R2"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A5",
+          "finding": "PolicyEvaluationRecord = {_links, artifactId, completedDate, configuration, context, evaluationId, startedDate, status} - NO commit, iteration or revision field. PolicyEvaluationStatus = queued | running | approved | rejected | notApplicable | broken, with broken = 'The policy has encountered an unexpected error' and notApplicable = 'The policy does not apply to this pull request'. Verified in arm-h2 J0020-compare S00031/text.txt lines 214-263."
+        },
+        {
+          "id": "V-A7",
+          "finding": "policy/evaluations is api-version 7.1-preview.1 with parameters artifactId, includeNotApplicable, $top, $skip (S00074 lines 33-35); git/policy/configurations is api-version 7.1 with repositoryId, refName, policyType, $top, continuationToken (S00047 lines 36-38). Both verified in arm-h2 J0020."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P1 stale evidence",
+      "contradiction_exposed": "The contract requires a commit key end-to-end; the provider never receives it, never validates it and returns nothing that reveals a substitution, so the strongest enforcement in the corpus is unenforceable for half of the checks surface."
+    },
+    {
+      "finding_id": "TA-023",
+      "title": "A check item must declare HOW its status is bound to a revision",
+      "proposition": "Three admissible bindings: revision_bound (the provider keyed the status by commit - Azure Git statuses, and the released per-iteration statuses route), review_bound (keyed by review only - Azure policy evaluations; the record carries the head the provider reported in the same transaction plus a head_matched_request flag), and unbound. When the heads do not match the item is review_revision_stale, not failed and not unknown, and the whole batch is not silently re-bound to the new head. A check read whose head is unreadable is unknown, never current.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs.pipeline_projection.checks",
+        "Forge_Integrations.md FGI-004/FGI-005",
+        "source_control_contracts.schema.json normalized_remote_record.vendor_extensions (a lawful home for the anchor kind)"
+      ],
+      "provider_evidence": "Pull Request Iteration Statuses - List is released at api-version 7.1; an individual status may carry iterationId; policy evaluations cannot be head-scoped at all.",
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0016-compare",
+          "locus": "R2"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "R2"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A5",
+          "finding": "PolicyEvaluationRecord = {_links, artifactId, completedDate, configuration, context, evaluationId, startedDate, status} - NO commit, iteration or revision field. PolicyEvaluationStatus = queued | running | approved | rejected | notApplicable | broken, with broken = 'The policy has encountered an unexpected error' and notApplicable = 'The policy does not apply to this pull request'. Verified in arm-h2 J0020-compare S00031/text.txt lines 214-263."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P1 stale evidence",
+      "contradiction_exposed": "Two check families - one revision-bound, one review-bound - are merged into one visually uniform list with no field saying which is which."
+    },
+    {
+      "finding_id": "TA-024",
+      "title": "Azure PR checks evaluate the MERGE of source and target, not the head",
+      "proposition": "For Azure DevOps the head OID does not identify what the check ran against: checks run on the result of the merge between source and target, which is why the evaluation context stores lastMergeCommitId, lastMergeSourceCommitId and lastMergeTargetCommitId rather than a single source id. The same head OID can correspond to two different evaluated states before and after the target branch moves - invisible to a head-only anchor. command_target already HAS source_revision and target_revision in its required key list, and the checks conditional does not require them.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json :4385-4430 (review_checks conditional requires only review_head_oid)",
+        "$defs.command_target.source_revision / target_revision :2986-2987, :3131, :3138",
+        "forge_integration_contract_fixtures.json:4542-4611 (both left null)"
+      ],
+      "provider_evidence": "Evaluation context keys lastMergeCommitId / lastMergeSourceCommitId / lastMergeTargetCommitId.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0017-compare",
+          "locus": "R3"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null,
+      "promise_served": "P1 stale evidence",
+      "contradiction_exposed": "command_target already carries source_revision and target_revision in its required key list, and the checks conditional does not require them, while Azure evaluates the merge rather than the head."
+    },
+    {
+      "finding_id": "TA-025",
+      "title": "canonical_url is required but Azure supplies none for evaluations",
+      "proposition": "normalized_remote_record.canonical_url is required with format uri and SCS-016 lists it among the mandatory fields, but PolicyEvaluationRecord has no URL field at all - only _links and configuration.url, which is the POLICY's own REST URL, not a human-facing result page - and GitPullRequestStatus.targetUrl carries no requirement marker. Allow null on Check records with a required url_absent_reason, and mark any synthesized portal deep link as synthesized rather than presenting it as the provider's own link.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "source_control_contracts.schema.json $defs.normalized_remote_record.canonical_url (required, format uri)",
+        "Source_Control_System.md SCS-016 :990-993"
+      ],
+      "provider_evidence": "PolicyEvaluationRecord fields; configuration.url = 'The URL where the policy configuration can be retrieved'; GitPullRequestStatus.targetUrl = 'URL with status details' with no requirement marker.",
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "R3"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P3",
+          "finding": "source_control_contracts.schema.json on main: normalized_remote_record requires canonical_url (type string, format uri) and revision_ref; record_kind includes Check; raw_status and normalized_status are unconstrained strings with minLength 1. VERIFIED."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P2 different kinds of no",
+      "contradiction_exposed": "normalized_remote_record requires canonical_url with format uri, and the Azure evaluation record has no URL at all - so either the record cannot validate or PM synthesises a link and presents it as the provider's."
+    },
+    {
+      "finding_id": "TA-026",
+      "title": "No vote, approval or reviewer object exists in the forge contracts",
+      "proposition": "ADO-003 promises that PR evidence binds exact immutable revision and policy/check identities and that votes cannot transfer silently after head change, but $defs contains no vote, approval, reviewer or check object at all - only review_revision, review_thread and pipeline_projection, whose checks is an array of opaque refs. The acceptance criteria have no shape to hold them.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs (no vote/approval/reviewer object)",
+        "Azure_DevOps_Integration.md:107-108 ADO-003 acceptance"
+      ],
+      "provider_evidence": "IdentityRefWithVote at 7.1 carries no iteration id, no commit id and no timestamp. isReapprove - 'Indicates if this approve vote should still be handled even though vote didn't change' - is the tell that per-iteration vote accounting exists server-side and is not exposed.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "P2 first half"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null,
+      "promise_served": "P1 stale evidence",
+      "contradiction_exposed": "ADO-003 has two acceptance criteria about votes and the contracts contain no vote, approval or reviewer object for them to bind."
+    },
+    {
+      "finding_id": "TA-027",
+      "title": "Every Azure approval is stale on first observation under \u00a77.1 read literally",
+      "proposition": "No Azure vote carries a revision identity, so 'Historical PR evidence without immutable revision/policy/check identity remains stale' applied literally makes every approval PM ever reads stale on first observation - correct, and useless. The Plans must choose and say which: (a) observation-time binding, recording the revision current when PM observed the vote, labelled PM-observed rather than provider-asserted; or (b) never attributable, rendering Azure votes un-versioned. The arm recommends (a) because (b) makes ADO-003's own acceptance criteria unmeetable.",
+      "classification": "product_choice",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:213 \u00a77.1",
+        "ADO-003 acceptance :108"
+      ],
+      "provider_evidence": "IdentityRefWithVote field set; PolicyEvaluationRecord carries no iteration or commit; git.pullrequest.updated payloads carry none either. votedFor group rollup means the displayed approver is not the acting approver.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "P2"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-028",
+      "title": "Add typed review_vote and review_check shapes with an explicit binding kind",
+      "proposition": "$defs.review_vote (participant ref, vote value, is_required, is_reapprove, voted_for group rollup, revision_binding in {provider_asserted, observed_at_revision, not_attributable}, nullable bound_revision_ref) and $defs.review_check (provider check identity, a state enum keeping error and notApplicable distinct, nullable bound_revision_ref, applicability). The binding kind is always visible, so the inference is visible as an inference rather than laundered into a fact.",
+      "classification": "optional_capability",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs (FGI-004/FGI-005 own the shapes)"
+      ],
+      "provider_evidence": "The mitigation for the residual race - re-read both the latest and the selected iteration after retrieving changes, failing closed if either identity moves - costs a round trip and converts a benign race into an error the caller must handle.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "P2"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-029",
+      "title": "api_compatibility.endpoints cannot hold a per-endpoint API version",
+      "proposition": "endpoints is a bare array of names with one adapter_version, one catalog_generation and one openapi_or_contract_sha256, while ADO-004 says API compatibility 'pins Services or Server variant, host/version, adapter/catalog, endpoints/scopes/features and rate'. The version string is not per product and not even per host; it is per ENDPOINT on a host - the prose asks for the pin and the shape records only the name.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs.api_compatibility.endpoints :1710-1841",
+        "Azure_DevOps_Integration.md:132-133 ADO-004"
+      ],
+      "provider_evidence": "One host serves git/policy/configurations at 7.1 (released) and policy/evaluations at 7.1-preview.1 in the same request family.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0017-compare",
+          "locus": "R6"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P7",
+          "finding": "api_compatibility.endpoints is {type: array, items: non_empty_string, uniqueItems: true} - a bare name list with no per-endpoint version. VERIFIED."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P3 the self-run server",
+      "contradiction_exposed": "ADO-004's prose asks compatibility to pin endpoints; the shape records only endpoint NAMES, while one host serves 7.1 and 7.1-preview.1 in the same request family."
+    },
+    {
+      "finding_id": "TA-030",
+      "title": "Applicability and status are two capabilities with different keys and different maturity",
+      "proposition": "Which policies apply is branch-keyed (repositoryId, refName) at GA 7.1; whether each passes is review-keyed (projectId, pullRequestId) at 7.1-preview.1. A surface may show applicability without status; it must never show status without a review. Because status rides on a preview api-version, an Azure DevOps SERVER host whose probed API set lacks the preview evaluations endpoint reports status as capability_unsupported with the version named - it does not fall back to inferring status from the PR's merge status and does not silently show an empty check list.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "Forge_Integrations.md:265 FGI-007 ('endpoints, scopes, features')",
+        "Azure_DevOps_Integration.md:133 ADO-004 'unknown mutations fail closed'",
+        "ADO-002 :68 (signed host/version support entry)"
+      ],
+      "provider_evidence": "git/policy/configurations at api-version 7.1; policy/evaluations at 7.1-preview.1; Microsoft's published support matrix stops at 7.0 and has no 7.1 column for on-prem.",
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0016-compare",
+          "locus": "R5"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "A/B5/P1"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A7",
+          "finding": "policy/evaluations is api-version 7.1-preview.1 with parameters artifactId, includeNotApplicable, $top, $skip (S00074 lines 33-35); git/policy/configurations is api-version 7.1 with repositoryId, refName, policyType, $top, continuationToken (S00047 lines 36-38). Both verified in arm-h2 J0020."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P3 the self-run server",
+      "contradiction_exposed": "Applicability is GA and status is preview, and the frozen Plans treat 'checks' as one capability - so a Server host that cannot serve the preview endpoint has no way to say so without either inferring status or showing an empty list."
+    },
+    {
+      "finding_id": "TA-031",
+      "title": "The signed support catalog entry ADO-002 requires has no schema anywhere",
+      "proposition": "'Signed support catalog' appears only as prose; the only carriers are self_host_catalog_ref (a string) and catalog_generation (an int), and nothing defines what an entry contains. A product-version table is demonstrably insufficient - Microsoft's own capability matrix stops at 7.0 while the operations in scope are 7.1 and 7.1-preview.1, and a preview version can be deactivated twelve weeks after the corresponding release, so a pinned preview can start failing on the CLOUD with no customer change. Define the entry per (area, variant, api-version): the spec blob sha256, the operation list with a preview flag, the required oauth scope family, and the route template's container token.",
+      "classification": "optional_capability",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:65-69 ADO-002, :206 \u00a77",
+        "forge_integration_contracts.schema.json self_host_catalog_ref, catalog_generation :2163-2169",
+        "$defs.api_compatibility.openapi_or_contract_sha256"
+      ],
+      "provider_evidence": "MicrosoftDocs/vsts-rest-api-specs carries per-area, per-version swagger including separate on-prem sets for the policy area, with cloud and on-prem policy specs differing in both hash and route template ({organization} vs {collection}). The GIT area has no on-prem spec directories, so the approach is not uniform across the three surfaces.",
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "P1"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-032",
+      "title": "Azure DevOps Server has no per-instance host, version or trust record",
+      "proposition": "provider_instance_profile - the one typed record carrying normalized_host, api_root, api_base_path, ssh_host, private_ca_ref, detected_product, product_version, api_schema_version, separate api_state and git_transport_state, redirect_credential_policy and currentness - restricts provider to enum [forgejo, gitea], and its fixtures are Forgejo/Gitea only. ADO-002 requires a current signed host/version support entry and ADO-004 says compatibility pins host/version, but api_compatibility carries neither a host nor a version field, and FGI-015 requires instance trust to validate normalized host, API base path, scoped private CA, redirects and SSH host key before credentials.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs.provider_instance_profile.provider enum [forgejo, gitea]",
+        "forge_integration_contract_fixtures.json:4122-4270, :6077-6113",
+        "Azure_DevOps_Integration.md:67-68, :77, :86, :132-133, :206",
+        "Forge_Integrations.md:860-862 FGI-015"
+      ],
+      "provider_evidence": "Azure DevOps Server is a customer-hosted instance with a per-collection API base path and its own version.",
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "R2"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P8",
+          "finding": "provider_instance_profile.provider is enum [forgejo, gitea]. VERIFIED - Azure DevOps Server cannot have one."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P3 the self-run server",
+      "contradiction_exposed": "ADO-002 requires a current signed host/version support entry and ADO-004 says compatibility pins host/version, but the only typed per-instance record in the corpus is restricted to forgejo and gitea and api_compatibility carries neither field."
+    },
+    {
+      "finding_id": "TA-033",
+      "title": "The project GUID is a second required identifier, not a spelling of the project name",
+      "proposition": "repository_locator is {organization_or_workspace, project, repository_slug}, all plain strings with additionalProperties:false, and a literal search of the whole corpus for provider_project_id returns NO matches - while the repository gets both a human identity and a provider_repository_id. Both identifiers are required in the same Azure request in different slots: the path takes 'Project ID or project name' while the policy artifact template is vstfs:///CodeReview/CodeReviewId/{projectId}/{pullRequestId}. A missing project GUID produces a well-formed URL, a 200 response and an empty list. Make provider_project_id required and GUID-shaped for azure_devops, obtained from a provider resource and never parsed from a URL; a binding without it is needs_binding, not 'connected with limits'.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json repository_locator :182-205, provider_repository_id :179-181",
+        "Azure_DevOps_Integration.md:9, ADO-001 :34-37, \u00a77.1 :213",
+        "$defs.command_target.policy_resource_id :3261 (the second consumer)",
+        "azure_devops_integration_fixtures.json:64"
+      ],
+      "provider_evidence": "Three independent implementations build the artifact id from a GUID obtained from a resource, never from a name. A renovate test on main asserts the literal string 'vstfs:///CodeReview/CodeReviewId/undefined/12345'; azure-devops-node-api PolicyApi.ts:374 guards only artifactId == null. An earlier instance of the same class (#21822) was reported as 'the problem is hard to find and cannot be seen directly in any logs'.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0017-compare",
+          "locus": "R1"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P9",
+          "finding": "A literal search for 'provider_project_id' across Plans/ returns ZERO files. VERIFIED."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P2 different kinds of no, and the project-identity promise",
+      "contradiction_exposed": "The repository gets both a human identity and a provider_repository_id; the project gets one field, and provider_project_id does not exist anywhere in Plans - while a missing GUID yields a well-formed URL, a 200 and an empty list."
+    },
+    {
+      "finding_id": "TA-034",
+      "title": "TFVC must be detected and explained, and the Azure owner never mentions it",
+      "proposition": "FGI-014 requires Azure Services and Server to separate Git 'from unsupported TFVC', TFVC is a preserved exact token, and the consumer acceptance packet requires 'detect and explain it without pretending to open a Git checkout' with a named TFVC fixture in scenario E2E-010. But Azure_DevOps_Integration.md contains no occurrence of TFVC or any equivalent, \u00a77 non-goals do not list it, and neither Azure profile's unsupported_reason_codes can express 'this container is TFVC, not Git'. The recognition must be evidence-based - from the provider's own repository-kind data, never from a CLI failure string or a 403 body, which is how the predecessor did it and misdiagnosed in both directions.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "Forge_Integrations.md:801-803 FGI-014, :835 (preserved token)",
+        "forge_backup_tsnet_acceptance.json:743-744, :4456, :2450-2461 E2E-010",
+        "Azure_DevOps_Integration.md (zero TFVC occurrences), :204-209 \u00a77",
+        "azure_devops_integration_fixtures.json:24, :46"
+      ],
+      "provider_evidence": "In the predecessor TFVC doubled the connection, auth and command paths, forced a strictly broader credential ('TFVC repositories require tokens with All Scopes'), and its unsupported sub-variant was refused by INFERRING capability from an authorization error.",
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "R1"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P10",
+          "finding": "'TFVC' occurs 0 times in Plans/Azure_DevOps_Integration.md; across Plans it occurs only in Forge_Integrations.md and forge_backup_tsnet_acceptance.json. VERIFIED."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P2 different kinds of no",
+      "contradiction_exposed": "FGI-014 and the acceptance packet require TFVC to be detected and explained with a named fixture, and the sole canonical owner for Azure repository identity does not mention it once."
+    },
+    {
+      "finding_id": "TA-035",
+      "title": "cmd.forge.review.merge carries no merge strategy, and omitting one is not neutral",
+      "proposition": "The obvious reading of the frozen Plans is that the product cannot have the reported bug because the merge command has no merge-strategy field at all and 'merge strategy' in Azure's sense appears nowhere in the corpus. That reading is wrong: omitting MergeStrategy is not neutral - 'If MergeStrategy is not set to any value, a no-FF merge will be created if SquashMerge == false', noFastForward is the default, and Microsoft recommends setting it explicitly in all cases. So a strategy-less completion is a noFastForward completion, and if the repository policy forbids no-fast-forward the request is refused. The product lands in the same place by the opposite route: the reported tool CHOOSES a strategy and can choose wrongly; the Plans as frozen choose one implicitly and cannot choose at all. Even a product that never displays a branch policy must know which merge strategies the effective policy permits the moment it offers a merge button.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json :4095-4199 (cmd.forge.review.merge), $defs.command_target :2969-3016",
+        "Forge_Integrations.md FGI-010",
+        "Azure_DevOps_Integration.md ADO-003"
+      ],
+      "provider_evidence": "GitPullRequestCompletionOptions.mergeStrategy documentation verbatim.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0016-compare",
+          "locus": "F8/R7"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A9",
+          "finding": "'If MergeStrategy is not set to any value, a no-FF merge will be created if SquashMerge == false ... It is recommended that you explicitly set MergeStrategy in all cases.' Verified in arm-s J0016 S00097/text.txt line 225."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P4 accepted is not finished",
+      "contradiction_exposed": "The merge command has no strategy field, which looks like safety and is not: omission selects no-fast-forward, so the Plans as frozen choose a strategy implicitly and cannot choose at all."
+    },
+    {
+      "finding_id": "TA-036",
+      "title": "Requeueing an Azure policy evaluation cancels any running build",
+      "proposition": "ADO-004 requires ObservableWork for run/retry/cancel and FGI-005 forbids retrying or cancelling from a stale projection, but the frozen contract has no per-PR policy-evaluation identity, no retry target kind for one, and no way to state that a retry has a destructive side effect on a third object. Requeueing a build policy queues a new build AND CANCELS any existing build, and for every non-build policy the requeue is a no-op.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:129-141 ADO-004",
+        "Forge_Integrations.md:197-221 FGI-005",
+        "forge_integration_contracts.schema.json $defs.command_target (pipeline_id, job_id, policy write fields only)"
+      ],
+      "provider_evidence": "PATCH .../policy/evaluations/{evaluationId}: 'Although any policy evaluation can be requeued, at present only build policies perform any action in response. Requeueing a build policy will queue a new build to run (cancelling any existing build ...)'.",
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "R6"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A10",
+          "finding": "'Although any policy evaluation can be requeued, at present only build policies perform any action in response. Requeueing a build policy will queue a new build to run (cancelling any existing build which...' Verified in arm-h2 J0020 S00046/text.txt lines 30-34."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "P4 accepted is not finished",
+      "contradiction_exposed": "ADO-004 requires ObservableWork for retry, and the frozen contract has no per-evaluation identity and no way to state that a retry destroys a third object."
+    },
+    {
+      "finding_id": "TA-037",
+      "title": "Surface policy re-queue as a verb distinct from retrying a build",
+      "proposition": "'Re-run this policy evaluation' is a different verb from 'retry this build' where the provider supports it, and should be surfaced as such rather than folded into pipeline retry.",
+      "classification": "optional_capability",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md ADO-004 (run/retry/cancel)",
+        "Forge_Integrations.md FGI-005"
+      ],
+      "provider_evidence": "The requeue route exists and is policy-scoped.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0017-compare",
+          "locus": "P2"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A10",
+          "finding": "'Although any policy evaluation can be requeued, at present only build policies perform any action in response. Requeueing a build policy will queue a new build to run (cancelling any existing build which...' Verified in arm-h2 J0020 S00046/text.txt lines 30-34."
+        }
+      ],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-038",
+      "title": "ADO-003 and ADO-005 name Azure review, policy and check fixtures that do not exist",
+      "proposition": "azure_devops_integration_fixtures.json is 73 lines: two provider_adapter_profile values and one repository_binding negative. There is no Azure review_revision, review_thread, policy, check, evaluation or status fixture anywhere in the corpus; every review-surface fixture in forge_integration_contract_fixtures.json is provider gitlab, and no fixture anywhere uses record_kind Check. The single Azure-referencing review value is a pipeline_projection whose review_revision_ref points at a revision object no fixture defines. So none of ADO-003's acceptance criteria is currently checkable for Azure. Either add the fixtures the unit names, or amend :188 and validation_surfaces to say plainly that they are not yet written.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:110 ADO-003 validation_surfaces, :174 ADO-005, :188, :198",
+        "azure_devops_integration_fixtures.json (whole file)",
+        "forge_integration_contract_fixtures.json:411-457, :458-480"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "R7"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "R7"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P11",
+          "finding": "Plans/azure_devops_integration_fixtures.json is 73 lines and contains exactly two valid provider_adapter_profile cases and one invalid repository_binding case (azure_devops_repository_cannot_drop_project_identity). VERIFIED."
+        }
+      ],
+      "premium_note": null,
+      "promise_served": "all four promises",
+      "contradiction_exposed": "Every repair in both arms is stated as an acceptance check, and ADO-003 names an Azure review-fixture surface that is not in the corpus - so none of its acceptance criteria is currently checkable for Azure."
+    },
+    {
+      "finding_id": "TA-039",
+      "title": "Show each policy's requirement level and its scope of origin",
+      "proposition": "Render alongside each policy (a) its requirement level - required, optional-and-still-waited-for, optional-and-explicitly-ignored - and (b) where it comes from: this repository, or the project. 'Does this block?' has no answer without knowing who is merging and how, because manual completion is not blocked by an optional policy while auto-complete IS unless the policy's id is listed in autoCompleteIgnoreConfigIds - so a pull request whose every readable field says 'ready to merge' can sit unmerged with nothing on screen to explain it. A project-level default-branch policy arrives with refName null and repositoryId null, merged into the same list and in no particular order, so a policy the person cannot change looks identical to one they own.",
+      "classification": "optional_capability",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:161-165 ADO-005 (shared vocabulary discipline), :181 (Policies, Checks preserved)",
+        "Source_Control_System.md SCS-005 section vocabulary",
+        "FinalGUISpec region list"
+      ],
+      "provider_evidence": "autoCompleteIgnoreConfigIds verbatim; Microsoft UI text 'Choose Optional to provide a notification of the build failure but still allow PRs to complete' describes a different merge path and is also true.",
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0017-compare",
+          "locus": "P1"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "P2"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A8",
+          "finding": "autoCompleteIgnoreConfigIds: 'List of any policy configuration Id's which auto-complete should not wait for. Only applies to optional policies (isBlocking == false). Auto-complete always waits for required policies (isBlocking == true).' Verified in arm-s J0016-compare S00096/text.txt lines 500-503."
+        }
+      ],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-040",
+      "title": "Decide what the Policies/Checks list contains when a check appears on two provider surfaces",
+      "proposition": "A status check is BOTH a separate API surface and a branch-policy type, so the same external check can appear once as a posted status and again as a policy evaluation - with two different state enums, and only the policy form knowing whether it is Required or Optional. The three naive options are each wrong in a different way: statuses-only loses requirement level and misses non-status policies; evaluations-only misses statuses no policy watches; both-naively shows one check twice, plausibly in two different states. The fork is currently undecided in the Plans, not decided wrongly - and it may not be implementable at all, because it is not established that a reliable join key exists.",
+      "classification": "product_choice",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:99 ADO-003 ('branch-policy/check identities' as one item)",
+        "ADO-004 :139"
+      ],
+      "provider_evidence": "'External services can use the PR Status API to post detailed status to your PRs. The branch policy for additional services enables those external services to participate in the PR workflow.' It is not established which configuration.settings field carries the status genre/name, nor whether it matches GitPullRequestStatus.context.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0017-compare",
+          "locus": "P3"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-041",
+      "title": "Give branch policies a presentation of their own, or a merged gate list with an enforcement column",
+      "proposition": "ADO-005 promises Azure appears with Policies/Checks, but the consumer vocabularies have no policies surface: SCS-005's adaptive section list and FinalGUISpec's provider-neutral region list both name 'current checks' and neither names policies. Since several in-box Azure policy types never post a status, a checks-only region structurally cannot show the full gate set. Two options: keep one region and make it a gate list whose rows carry source in {policy_evaluation, status_check} plus an enforcement column (cheapest, no new section vocabulary), or add a provider-neutral policies/rules region, which requires amending two consumer owners and risks the section proliferation SCS-005 forbids.",
+      "classification": "product_choice",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:161-165, :194 ADO-005",
+        "Source_Control_System.md SCS-005 :216-222, :239-240 ('Do not create a panel per forge or backend')",
+        "FinalGUISpec.md region list :35649"
+      ],
+      "provider_evidence": "Azure posts only three statuses natively; all other status checks come from external services via the PR Status API.",
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "P2"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-042",
+      "title": "Neither provider-profile schema can express FGI-015's own acceptance criterion",
+      "proposition": "FGI-015 requires that 'Every provider profile identifies issuer, allowed host, setup method, non-secret token owner, requested scopes, refresh/revoke, and separate Git-versus-API roles' - but both profile schemas are additionalProperties:false and neither has an issuer, allowed host, token owner, scopes, refresh/revoke or role field. api_compatibility.scopes is a flat probe-level list, not per method and not compared against a minimum, and credential_access is a four-value coarse enum.",
+      "classification": "correction",
+      "owner_passages_cited": [
+        "Forge_Integrations.md:880 FGI-015 acceptance, :904 negative constraints",
+        "forge_integration_contracts.schema.json $defs.provider_matrix_profile (additionalProperties:false), $defs.provider_adapter_profile.auth_methods (flat enum array)",
+        "GitHub_API_Auth_and_Flows.md:69, :83 (the point-of-consent precedent that does exist)"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "C1"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null,
+      "promise_served": "P2 different kinds of no",
+      "contradiction_exposed": "FGI-015 states an acceptance criterion its own two profile schemas, both additionalProperties:false, structurally cannot satisfy."
+    },
+    {
+      "finding_id": "TA-043",
+      "title": "Disclose per-auth-method privilege at the point of choice, with requested versus granted scopes",
+      "proposition": "The predecessor offered two ways to sign in and they differed in privilege by an order of magnitude without that difference being visible where the choice was made: the manual minimum was Build(read)/Code(read)/Work items(read) while the browser device flow minted an All-Scopes token. The cause was the caller omitting tokenScope and silently inheriting a library default whose empty value means all scopes, and the only thing distinguishing the minted token from a hand-made one in the user's profile was a display name. The proposal is to show requested scopes at the point of consent and compare requested against granted afterwards.",
+      "classification": "optional_capability",
+      "owner_passages_cited": [
+        "Forge_Integrations.md:880 FGI-015",
+        "GitHub_API_Auth_and_Flows.md:69 (device flow shows requested scopes), :83 (missing_scopes with allowed_action_ids)"
+      ],
+      "provider_evidence": "Microsoft/vsts-device-flow-auth @ 6bbee9d5, src/deviceflow.ts:86 and :112 - `this.tokenScope = tokenOptions.tokenScope || ''; //empty is all_scopes` - and :217-232 posting scope to _apis/token/sessiontokens; the extension passes only tokenDescription.",
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "C1"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-044",
+      "title": "Post check results to the per-iteration statuses route",
+      "proposition": "Where PM posts a check result to Azure, post it to .../pullRequests/{id}/iterations/{iterationId}/statuses rather than to the PR - the one place Azure supplies the version binding natively and says so. Caveats: nothing in ADO-003/ADO-004 says PM writes statuses at all; it requires the review_versions capability; on Server it needs a host publishing the route; whether a stale posted status actually blocks completion is a customer branch-policy setting, not PM's to promise; and posting notApplicable is a real mutation with policy consequences that would need its own risk tier.",
+      "classification": "optional_capability",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md ADO-003/ADO-004 (read-oriented)",
+        "Forge_Integrations.md:881 (risk tiers)"
+      ],
+      "provider_evidence": "'Posting status to a specific iteration of a PR guarantees that status applies only to the code that was evaluated and none of the future updates.' Released at api-version 7.1.",
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "P3"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "R2 partial"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A3",
+          "finding": "'If the PR being created contains more than 100,000 modified files, then, for performance and stability reasons, that PR won't support iterations ... any attempt to create a status for a non-existent iteration will return an error.' Verified in arm-s J0015 S00043/text.txt line 100."
+        },
+        {
+          "id": "V-A4",
+          "finding": "'Posting status to a specific iteration of a PR guarantees that status applies only to the code that was evaluated and none of the future updates.' Verified in arm-s J0015 S00043/text.txt line 98."
+        }
+      ],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-045",
+      "title": "The immutable review-revision object already exists and pins the exact triple",
+      "proposition": "review_revision requires base_revision, head_revision and merge_base_revision plus an integer version with minimum 1, which maps cleanly and non-lossily onto GitPullRequestIteration's targetRefCommit / sourceRefCommit / commonRefCommit and id. The Plans are MORE precise here than the brief, which mentions only commits.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs.review_revision :1122-1161"
+      ],
+      "provider_evidence": "GitPullRequestIteration field set at api-version 7.1.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "2.1"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P4",
+          "finding": "forge_integration_contracts.schema.json on main: review_revision is additionalProperties:false; evidence_state is the closed enum {current, stale_head_changed, revalidation_required, invalid}; version, base_revision, head_revision and merge_base_revision are all required. VERIFIED."
+        }
+      ],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-046",
+      "title": "Staling is specified as a product-side act, not a claim about the service",
+      "proposition": "FGI-004 says PM 'stales or revalidates' prior evidence and ADO-003 says PM 'stales approvals/check evidence'. That is the correct posture, because Azure's own vote reset is opt-in customer branch-policy configuration; the Plans do not promise that Azure DevOps resets anything.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Forge_Integrations.md FGI-004",
+        "Azure_DevOps_Integration.md:100-101 ADO-003"
+      ],
+      "provider_evidence": "resetOnSourcePush and the reset-conditions settings are customer policy configuration.",
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "2.2"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "A10"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-047",
+      "title": "A stale-revision vocabulary already exists",
+      "proposition": "review_revision.evidence_state carries current, stale_head_changed, revalidation_required and invalid, and disabled_reason_code / error_code already include review_revision_stale and policy_revision_stale.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs.review_revision.evidence_state :1169-1176, $defs.disabled_reason_code, $defs.error_code"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "2.3"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P4",
+          "finding": "forge_integration_contracts.schema.json on main: review_revision is additionalProperties:false; evidence_state is the closed enum {current, stale_head_changed, revalidation_required, invalid}; version, base_revision, head_revision and merge_base_revision are all required. VERIFIED."
+        },
+        {
+          "id": "V-P5",
+          "finding": "provider_adapter_profile.unsupported_reason_codes is an array of non_empty_string (unchecked against any enum); disabled_reason_code has 54 members and policy_scope_missing is NOT one of them. VERIFIED."
+        }
+      ],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-048",
+      "title": "'Partial data is never complete' is already an owner-level token",
+      "proposition": "FGI-003's canonical text states it, and pipeline_projection.currentness and command_currentness.state both carry partial, so the truncation hazard has a home in the Plans' vocabulary at the pipeline and command layer.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Forge_Integrations.md FGI-003",
+        "forge_integration_contracts.schema.json $defs.pipeline_projection.currentness, $defs.command_currentness"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "2.4"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P6",
+          "finding": "disabled_reason_code contains pipeline_projection_partial and review_revision_stale; it does NOT contain policy_set_partial. VERIFIED."
+        }
+      ],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-049",
+      "title": "The two-sided revision window is already modelled and in use",
+      "proposition": "command_target requires left_review_revision_ref AND right_review_revision_ref, the schema conditional applies both to cmd.forge.review.version.compare, and the shipped fixture populates them. The corpus already models 'a diff between two revisions' as a pair.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs.command_target :2984, :3111; conditional :4066-4091",
+        "forge_integration_contract_fixtures.json command_request_forge_review_version_compare"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "2.5"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P2",
+          "finding": "forge_integration_contracts.schema.json on main: capability_name contains both review_versions and repository_policy; command_target has left_review_revision_ref and right_review_revision_ref; target_kind is a 15-value enum with no branch member; pipeline_projection.checks is an array of non_secret_ref; pipeline_projection.state is the 8-value enum queued|running|waiting|succeeded|failed|cancelled|skipped|unknown. VERIFIED."
+        }
+      ],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-050",
+      "title": "The review-version commands are first-class and already name Azure as a consumer",
+      "proposition": "Both commands are in the exact 43-command common central set, named handlers exist, UI_Command_Catalog names Plans/Azure_DevOps_Integration.md among their consumer surfaces, and Wiring_Matrix carries their rows.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Forge_Integrations.md:571-572, :578",
+        "Commands_System.md:5509-5510",
+        "UI_Command_Catalog.md:12073-12074",
+        "Wiring_Matrix.production.json:30609ff"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "2.6"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-051",
+      "title": "Migration already refuses historical PR evidence without immutable identity",
+      "proposition": "\u00a77.1: 'Historical PR evidence without immutable revision/policy/check identity remains stale.' Correct rule; its consequence for Azure votes is what TA-027 raises.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:213 \u00a77.1"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0015-compare",
+          "locus": "2.7"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0015-compare/workspace/notes.md",
+          "sha256": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-052",
+      "title": "The Plans never promise a branch-keyed policy list - the brief is the overreach",
+      "proposition": "Every policy/check read surface in the corpus is keyed to a review: cmd.forge.review.checks requires provider_review_id, ADO-003 binds policy identities to PR evidence, ADO-004 says 'repository and review revision', there is no branch-scoped policy read command in the central set and no branch target kind. That conservatism is correct and matches the provider, where pass/fail status only exists per pull request. So the honest resolution is to narrow the brief to 'on a pull request', not to add a precedence rule - and this also CORRECTS the parent lead's own framing.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json :4409-4412",
+        "Azure_DevOps_Integration.md:99, :107; ADO-004 :130",
+        "Forge_Integrations.md:578",
+        "$defs.command_target.target_kind :2998-3016"
+      ],
+      "provider_evidence": "Pass/fail status exists only per pull request; the applicability endpoint can say WHICH policies apply but not whether each passes.",
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0016-compare",
+          "locus": "F7"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0016-compare/workspace/notes.md",
+          "sha256": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-A7",
+          "finding": "policy/evaluations is api-version 7.1-preview.1 with parameters artifactId, includeNotApplicable, $top, $skip (S00074 lines 33-35); git/policy/configurations is api-version 7.1 with repositoryId, refName, policyType, $top, continuationToken (S00047 lines 36-38). Both verified in arm-h2 J0020."
+        }
+      ],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-053",
+      "title": "Project identity is mandatory and enforced in prose, schema and a negative fixture",
+      "proposition": "ADO \u00a70 and ADO-001 forbid collapsing project into organization, collection, repository name, local path, remote URL or focused UI state; ADO-005 and \u00a77 repeat it; \u00a77.1 makes a missing project needs_binding and demotes URL parsing to discovery evidence. Enforcement is in the schema, not only in prose: project is a required key of repository_locator and the azure_devops branch narrows it to a non-empty string, with a matching negative fixture.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:11, ADO-001 :34-37, :44, :54; ADO-005 :173, :182; \u00a77 :207; \u00a77.1 :213",
+        "forge_integration_contracts.schema.json repository_locator :182-205 and the provider conditional :257-281",
+        "azure_devops_integration_fixtures.json:50-72"
+      ],
+      "provider_evidence": "The Plans forbid precisely the defect that shipped in a real Azure module.",
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0017-compare",
+          "locus": "C1"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "A1"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-054",
+      "title": "Different kinds of 'no' stay different",
+      "proposition": "ADO-002 keeps authentication method, account, organization/collection access, project access, repository access, branch-policy scope, build/pipeline access, API compatibility, rate and readiness distinct, and requires typed limits and remediation; capability_entry carries requested and effective as separate booleans and availability_payload requires state plus reason_codes plus allowed_action_ids.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:65-69, :76 ADO-002",
+        "forge_integration_contracts.schema.json $defs.capability_entry, $defs.availability_payload"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0017-compare",
+          "locus": "C2"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "A2"
+        },
+        {
+          "job": "J0019-compare",
+          "locus": "A8"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-055",
+      "title": "Provider-native status round-trips without flattening at the storage layer",
+      "proposition": "SCS-016 requires provider-neutral projections to materialize Check with raw AND normalized status, exact revision, canonical URL, native object vocabulary and preserved vendor extensions, and vendor_extensions_preserved is a const true - so a record that drops extensions cannot validate. The wire value 'broken' is REQUIRED to survive into raw_status and the opaque context blob has a lawful home. Covered for round-trip; the rendering layer is a separate gap.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Source_Control_System.md SCS-016 :990-993, :1014, :1032",
+        "source_control_contracts.schema.json $defs.normalized_remote_record :3955-3967"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0017-compare",
+          "locus": "C3"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "B3"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [
+        {
+          "id": "V-P3",
+          "finding": "source_control_contracts.schema.json on main: normalized_remote_record requires canonical_url (type string, format uri) and revision_ref; record_kind includes Check; raw_status and normalized_status are unconstrained strings with minLength 1. VERIFIED."
+        }
+      ],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-056",
+      "title": "API versions and feature availability are signed catalog/probe data, not constants",
+      "proposition": "\u00a77 states it for Server versions, APIs, auth methods, access rules, tiers/licenses and feature availability; ADO-002 requires a current signed host/version support entry and fails Server mutation closed without one. The cloud-only scope of a provider documentation page is therefore a data-acquisition problem the Plans already anticipate, not a Plan defect.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:206 \u00a77, :65-69 and :77 ADO-002"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0017-compare",
+          "locus": "C4"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "B5"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-057",
+      "title": "Real progress, no spinner-as-result",
+      "proposition": "ADO-004 requires ObservableWork and terminal provider receipts and forbids inferring progress from time; FGI-005 makes run/retry/cancel asynchronous guarded work with one terminal provider result; the schema adds external_effect_reconciliation with successful_cli_exit_proves_remote_state const false and accepted_request_distinct_from_durable_outcome const true. A queued or running policy evaluation is an in-progress fact and the Plans already forbid presenting acceptance as completion.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:140, :150 ADO-004",
+        "Forge_Integrations.md:190-222 FGI-005",
+        "source_control_contracts.schema.json:3969-3978"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "arm_s"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0017-compare",
+          "locus": "C5"
+        }
+      ],
+      "h2_citations": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-058",
+      "title": "'May I read branch policies' is already a distinct five-state administrative fact",
+      "proposition": "hosted_administration_surface enumerates repository_policy and branch_policy as separate areas, each with an independent read_state (ready, permission_denied, unsupported, external_only, unknown) and write_state. unknown as a first-class read state is exactly what distinguishing '200 empty', 'this host cannot answer' and 'not allowed to read' needs. Covered for the Settings administration surface; it is not wired to the per-pull-request checks list.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json :5993-6010 hosted_administration_surface",
+        "Forge_Integrations.md:868",
+        "FinalGUISpec.md:35767"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0017-compare",
+          "locus": "C6"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "R1 citation"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-059",
+      "title": "A checks query must bind an exact head OID from a current projection",
+      "proposition": "The command conditional pins requested_capability const checks, currentness.state const current, identity_source const validated_repository_binding, target_kind const review_checks, and requires provider_review_id and review_head_oid with a hex pattern - with a positive fixture and a negative fixture whose expected error is 'check projection must bind the exact review head OID'. So the Plans already forbid a checks list fetched by PR number alone and one fetched from a stale projection. The residual gap is about WHICH commits, not whether a commit.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json :4385-4430",
+        "forge_integration_contract_fixtures.json:4608, :5994-6002",
+        "Azure_DevOps_Integration.md:107 ADO-003"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "arm_s",
+        "h2"
+      ],
+      "arm_s_citations": [
+        {
+          "job": "J0017-compare",
+          "locus": "C7"
+        }
+      ],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "B2"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-s/runs/topic2-s-full-20260917-051531/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-060",
+      "title": "'Unknown is not passing' is already a rule, a vocabulary and an acceptance scenario",
+      "proposition": "SCS-015's negative constraint forbids turning unavailable or unknown checks into zero failed checks or unsupported; the availability vocabulary is explicit and 'unknown is never flattened to unsupported'; acceptance scenario E2E-015 'Unknown checks are not passing checks' exists. This lines up exactly with the provider's pending / notSet blocking-awaiting-result and with queued / running evaluations.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Source_Control_System.md SCS-015 :941-944, :975",
+        "forge_backup_tsnet_acceptance.json:2567-2580 E2E-015"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "B4"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-061",
+      "title": "Cloud and Server separation is structurally enforced",
+      "proposition": "The variant enum is closed and enforced by a schema conditional on provider == azure_devops; separate adapter profiles exist with different auth methods, container kinds, gates and reason codes.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json :2265-2289",
+        "azure_devops_integration_fixtures.json:5-48",
+        "Azure_DevOps_Integration.md ADO-001, ADO-002"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "B5"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-062",
+      "title": "On Server the evaluations surface exists, is preview and is collection-addressed",
+      "proposition": "Microsoft publishes a separate on-prem swagger for the policy area whose route templates are /{collection}/{project}/_apis/policy/evaluations carrying x-ms-preview true, an override version of 7.1-preview.1 and oauth2 [vso.code]. So the older parent question 'which policy APIs are MISSING on Server' has the answer 'none missing - the available api-version surface differs', confirmed from a machine-readable artifact.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:206 \u00a77"
+      ],
+      "provider_evidence": "policy/azure-devops-server-7.1/policy-onprem.json, 38,733 bytes, blob sha a9c40e117edeff0dfbc46df5c1e6242d15bbc9ce.",
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0020-compare",
+          "locus": "B6"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-063",
+      "title": "A connection must not be derived from the origin remote",
+      "proposition": "The predecessor read .git/config, took remote 'origin' and classified by substring, with its own header comment admitting the on-prem arm 'is basically a catch all. Any url could match it'. The Plans already make the remote non-load-bearing: hierarchy may not be inferred from a URL or focused view, migration cannot invent project or authority from a remote URL, and saved hosting bindings rather than a remote named origin choose among fork/upstream/multi-forge routes.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:11, ADO-001 :54, ADO-005 :173, \u00a77.1 :213",
+        "Source_Control_System.md:976",
+        "Forge_Integrations.md:806-807 FGI-014"
+      ],
+      "provider_evidence": "The successor product converged on the Plans' position, requiring explicit org and project settings with remote inference as a narrow fallback - and its own inference regex still fails for the plain dev.azure.com form.",
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "A1"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-064",
+      "title": "Activation preconditions must stay distinguishable from authentication failure",
+      "proposition": "A closed issue reported as 'unable to configure PAT' was not a credential problem at all - the extension never activated because no repository folder was open. capability_entry's separate requested and effective booleans and availability_payload's state plus reason_codes plus allowed_action_ids already distinguish 'cannot authenticate' from 'never attempted'.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "forge_integration_contracts.schema.json $defs.capability_entry, $defs.availability_payload"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "A2"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-065",
+      "title": "An SSH remote is not an API connection, and an auth method is never readiness by itself",
+      "proposition": "ADO-002's acceptance is explicit: 'Entra/PAT/SSH are auth methods or refs, never readiness by themselves', and authentication may not be equated with project or repository access.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:75, :86 ADO-002"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "A3"
+        },
+        {
+          "job": "J0019-compare",
+          "locus": "A4"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-066",
+      "title": "A thin PR surface with browser delegation is already addressed",
+      "proposition": "The common review contract and the fallback ladder already own what a review surface must show and what it may delegate.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Forge_Integrations.md (reviews, GUI section grammar and fallback ladder)",
+        "Azure_DevOps_Integration.md:19"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "A5"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-067",
+      "title": "Hand-built provider URLs from an unvalidated remote are already forbidden",
+      "proposition": "Display URLs and local paths remain descriptive only; hierarchy may not be inferred from a URL; URL parsing is discovery evidence only.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md ADO-001 :45, :54; \u00a77.1 :213"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "A6"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-068",
+      "title": "Polling cost and silent polling failure are already covered by typed availability and currentness",
+      "proposition": "One glyph for every kind of 'no' is precisely what the typed availability vocabulary, reason codes and currentness states exist to prevent.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:69 ADO-002 (typed limits and remediation)",
+        "Source_Control_System.md SCS-015 availability vocabulary",
+        "forge_integration_contracts.schema.json $defs.command_currentness"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "A7"
+        },
+        {
+          "job": "J0019-compare",
+          "locus": "A8"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-069",
+      "title": "Stale evidence presented as current is already forbidden",
+      "proposition": "The immutable review revision, evidence_state, currentness and the 'evidence currentness' clause of ADO-003 already forbid it.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:99-101 ADO-003",
+        "forge_integration_contracts.schema.json $defs.review_revision.evidence_state"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "A9"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-070",
+      "title": "Capability verdicts must not be synthesised from an error string",
+      "proposition": "\u00a77 forbids terminal prose scraping and FGI-003 requires capability resolution from a capability entry, not from an error body. The predecessor inferred an unsupported repository kind from an authorization error and misdiagnosed in both directions.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:207 \u00a77",
+        "Forge_Integrations.md FGI-003 :154"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "A11"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-071",
+      "title": "On-prem transport trust is already covered by FGI-015's instance-trust requirements",
+      "proposition": "FGI-015 requires instance trust to validate normalized host, tenant/account, API base path, scoped private CA, redirects/pagination, SSH host key and explicit localhost/metadata policy BEFORE credentials - which is what a TLS-verification bypass violates.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Forge_Integrations.md:860-862 FGI-015"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "A12"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-072",
+      "title": "Credential custody and key scoping are already covered",
+      "proposition": "Secrets remain credential refs, raw credentials may not be persisted, and Settings shows access and currentness without raw credentials.",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:68, :86 ADO-002; :194 \u00a74; :207 \u00a77"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "A13"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    },
+    {
+      "finding_id": "TA-073",
+      "title": "Adjacent products are optional capability projections, not implied by repository access",
+      "proposition": "\u00a77: 'Boards/issues are optional capability projections and are not silently claimed by repository access.'",
+      "classification": "unsupported_or_covered",
+      "owner_passages_cited": [
+        "Azure_DevOps_Integration.md:208 \u00a77"
+      ],
+      "provider_evidence": null,
+      "stated_by": [
+        "h2"
+      ],
+      "arm_s_citations": [],
+      "h2_citations": [
+        {
+          "job": "J0019-compare",
+          "locus": "A14"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/topic2-20260917/arm-h2/runs/topic2-h2-review-20260917-053231/jobs/J0019-compare/workspace/notes.md",
+          "sha256": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356"
+        }
+      ],
+      "my_source_verification": [],
+      "premium_note": null
+    }
+  ],
+  "product_promises": {
+    "source": "the frozen product brief, 1,263 words, sha256 a69e129dfb6e39ea6577739bd4a912599d70e70064c3e9d566ac33e5f1af74ae",
+    "P0_policies_and_checks": "brief.md:41-42 - see the branch policies and status checks Azure DevOps enforces on the target branch, and whether each one currently passes",
+    "P1_stale_evidence": "brief.md:53-59 - never show a person stale review evidence as if it were current",
+    "P2_kinds_of_no": "brief.md:61-68 - different kinds of 'no' stay different",
+    "P3_self_run_server": "brief.md:70-75 - an old self-run server is treated honestly",
+    "P4_accepted_is_not_finished": "brief.md:77-80 - real progress, real waiting, real cancellation and a real final outcome; a request the service accepted is not a request the service finished"
+  }
+}

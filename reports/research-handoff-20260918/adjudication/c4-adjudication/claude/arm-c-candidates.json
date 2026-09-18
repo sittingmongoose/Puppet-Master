@@ -1,0 +1,160 @@
+{
+  "schema": "jj.continuation4.arm_candidates.v1",
+  "arm": "claude",
+  "rule": "New propositions are recorded as candidates with evidence. The adjudicator does not add them to the continuation-3 union.",
+  "candidates": [
+    {
+      "candidate_id": "C4C-01",
+      "label": "JJ restore drill object verification has no stated depth",
+      "proposed_class": "correction",
+      "proposition": "The backup JJ restore-verification receipt must state the verification depth that produced object_closure_result, by reference to the Backup owner's existing integrity_verification_level enum, and object_closure_result: complete must be inadmissible when the depth did not read object content, so an activation-eligible outcome cannot rest on a reachability-only pass.",
+      "arm_label": "R1 (schema form recorded separately as P1)",
+      "job": "claude/J0026-compare",
+      "distinctness": "F081 requires complete native object interpretation and an isolated restore before activation; it does not constrain what depth of checking is allowed to produce the receipt's complete value. This is contradictory/underdetermined content inside an already-present typed receipt, the same shape continuation 3 used to hold F106 distinct from F001.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0026-compare/workspace/leads/pm-jj-restore-object-verification-depth-unstated.md",
+          "sha256": "fbbf91951173bb339429a27499ec14498e378ad5a2341a6b26314fefb1d17c1b"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0026-compare/workspace/notes.md",
+          "sha256": "eca15bac6cb2d2d0d830c62287bb69b995b2197761c1d7237cb51148d93e92b2"
+        }
+      ],
+      "cited_passages": [
+        "Plans/Jujutsu_Integration.md JJI-008:468",
+        "Plans/jujutsu_integration_contracts.schema.json:2460-2466, 2607-2640",
+        "Plans/Backup_Restore_System.md BRS-005:238-244, 252-253",
+        "Plans/backup_restore_system_contracts.schema.json:242",
+        "Plans/forge_backup_tsnet_acceptance.json:1709",
+        "git-scm.com/docs/git-fsck lines 246-250, 279-289"
+      ],
+      "adjudicator_note": "Not added to the union. Recorded as a candidate with evidence, as the brief requires."
+    },
+    {
+      "candidate_id": "C4C-02",
+      "label": "Isolated drill must resolve and rebind in-store location pointers",
+      "proposed_class": "correction",
+      "proposition": "Before any native command runs in the disposable copy, the restore drill must resolve every in-store location pointer (store/git_target, objects/info/alternates, .jj/repo pointer files, linked-workspace gitdir links) and record where each resolved; a pointer resolving outside the isolation boundary is a typed blocker distinct from missing objects and collisions, and is either rebound inside the boundary with the rebinding recorded or blocks the drill, never followed. isolated_verification: true is admissible only when every pointer resolved inside the boundary.",
+      "arm_label": "R3",
+      "job": "claude/J0026-compare",
+      "distinctness": "F079 requires the capture to include underlying Git/common/alternate/shared stores; F081 requires an isolated restore. Neither constrains how the restored copy's own path pointers are resolved at drill time, which is what makes a same-host drill able to pass by reading the original's objects. The arm itself records that the clean-host condition exists in the BKP-006 lineage packet but survives in current owner text only as a future test surface.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0026-compare/workspace/leads/pm-jj-isolated-drill-must-rebind-store-pointers.md",
+          "sha256": "ba3330c47a0981ac4c7eb1eb5b58854282112320e4d15ada6c72a19b570a3ab5"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0026-compare/workspace/notes.md",
+          "sha256": "eca15bac6cb2d2d0d830c62287bb69b995b2197761c1d7237cb51148d93e92b2"
+        }
+      ],
+      "cited_passages": [
+        "Plans/Jujutsu_Integration.md JJI-008:453-458, 465, 470, 482, 501",
+        "Plans/Source_Control_System.md SCS-014:778, 809",
+        "Plans/jujutsu_integration_contracts.schema.json:2386, 2558",
+        "Plans/jujutsu_integration_contract_fixtures.json:2956, 2990",
+        "Plans/WorktreeGitImprovement.md:890, 5237",
+        "Plans/forge_backup_tsnet_acceptance.json:1150-1183 (BKP-006, BKP-007)",
+        "jj-vcs/jj lib/src/git_backend.rs:305-352 @ e6dd2c0",
+        "jj-vcs/jj docs/git-compatibility.md:197-218",
+        "git-scm.com/docs/git-fsck lines 270-278"
+      ],
+      "adjudicator_note": "Not added to the union. The strongest of the five: it identifies a way to obtain a false complete-recovery badge that the current owner text permits."
+    },
+    {
+      "candidate_id": "C4C-03",
+      "label": "Machine-local and ephemeral native store entries have no stated disposition",
+      "proposed_class": "correction",
+      "proposition": "The source closure must record, for the pinned JJ version, an enumerated source-traced classification of machine-local and ephemeral entries inside .jj/repo (native lock files, per-machine store identity files) - captured as bytes but non-authoritative and never restored as active state - never a filename pattern such as '*.lock'; a version change invalidates the list until re-audited, and an unrecognized entry inside the store tree yields partial with a named ref rather than complete.",
+      "arm_label": "R2",
+      "job": "claude/J0026-compare",
+      "distinctness": "F084 governs restored configuration, helpers, hooks, filters, includes and credentials. The arm states the gap explicitly: the Plans say what must be sanitized and inactive after restore but say nothing about the machine-local, ephemeral, non-configuration entries inside the store tree.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0026-compare/workspace/leads/pm-jj-machine-local-store-entries-unclassified.md",
+          "sha256": "dab6c73e05e87cb97a0c1f3cd920290d69172f242d9367164eff93ea2a6cdc7d"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0026-compare/workspace/notes.md",
+          "sha256": "eca15bac6cb2d2d0d830c62287bb69b995b2197761c1d7237cb51148d93e92b2"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0019-reconcile/workspace/notes.md",
+          "sha256": "2ff85492dd1742a6b82163fa2295c058c4adfdbb2706e923f709594037b9172b"
+        }
+      ],
+      "cited_passages": [
+        "Plans/source_control_contracts.schema.json:2865-2896",
+        "Plans/Source_Control_System.md SCS-014:798",
+        "Plans/Backup_Restore_System.md BRS-017:952, 962; BRS-007:325-326",
+        "Plans/Jujutsu_Integration.md JJI-006:223-225, 233; JJI-008:468",
+        "keanemind/dojjo dojjo-mirror/src/mirror_exclude.rs:20-61 @ a0ad17ba"
+      ],
+      "adjudicator_note": "Not added to the union. The negative test (store/extra/lockfile, store/extra/foo.lock, op_heads/locks must not be treated as locks) is the part that makes it more than a restatement of F084."
+    },
+    {
+      "candidate_id": "C4C-04",
+      "label": "No blocker class for present-but-unloadable native metadata",
+      "proposed_class": "correction",
+      "proposition": "The JJ drill blocker taxonomy needs one distinct class for a restored copy whose objects and operations are all present but whose native metadata pointers are missing or unmergeable, separate from missing object closure, conflicts, collisions, stale target and operation mismatch; any repair of such state happens only inside the disposable copy and is disclosed in the receipt.",
+      "arm_label": "R4",
+      "job": "claude/J0026-compare",
+      "distinctness": "CONTESTED BY THE ADJUDICATOR. Continuation 3's symmetric adjudication already rejected the expansion 'Corruption taxonomy, extras detector, clone stage details and arbitrary conflict editor' with the reason 'Refinements/alternatives under existing F082/F086/F056 and their scope boundaries, not additional demonstrated product obligations.' This candidate is a corruption/blocker taxonomy addition under F082 and falls within that rejected class. Recorded for completeness, flagged as most likely a refinement of F082 rather than a new finding.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0026-compare/workspace/leads/pm-jj-unloadable-metadata-has-no-blocker-class.md",
+          "sha256": "1b6d1d993382cb5d0c8226c6717e7bffff7b43d9e70de7835f03a58ecf459080"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0026-compare/workspace/notes.md",
+          "sha256": "eca15bac6cb2d2d0d830c62287bb69b995b2197761c1d7237cb51148d93e92b2"
+        }
+      ],
+      "cited_passages": [
+        "Plans/Jujutsu_Integration.md JJI-008:457-458, 467, 470, 482, 501",
+        "Plans/jujutsu_integration_contracts.schema.json:2452-2459, 2571-2582, 2372",
+        "keanemind/dojjo sync-server/src/mirror_normalize.rs:89-133 @ a0ad17ba"
+      ],
+      "adjudicator_note": "Not added to the union, and additionally flagged as probably inside continuation 3's rejected-expansion class."
+    },
+    {
+      "candidate_id": "C4C-05",
+      "label": "gc_fence_outcome held_during_capture does not state what the fence covered",
+      "proposed_class": "correction",
+      "proposition": "gc_fence_outcome: held_during_capture must enumerate the writer paths the fence covered (native JJ process, colocated Git, registered external/automation paths) and assert that no uncovered mutation path into the same store existed for the capture window; if coverage cannot be asserted for a known path the closure is partial with the uncovered path named, and a fence claim with an empty covered-path list is rejected.",
+      "arm_label": "R5",
+      "job": "claude/J0026-compare",
+      "distinctness": "F004 states the general rule that advisory locks do not establish ownership and F079 requires the fence to exist; SCS-014 already rejects a lost fence. Neither addresses a fence held truthfully over one path while another was never covered, which is the case the arm demonstrates externally. Credited separately as baseline support for F004; the contract-level covered-path requirement is the residue recorded here.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0026-compare/workspace/leads/pm-gc-fence-held-does-not-state-coverage.md",
+          "sha256": "dc302a4eb282257dcc9d97546180f80d36490ed70b34f2aa8fb1757294c6509d"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0026-compare/workspace/notes.md",
+          "sha256": "eca15bac6cb2d2d0d830c62287bb69b995b2197761c1d7237cb51148d93e92b2"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-claude-20260916b/jobs/J0019-reconcile/workspace/leads/dojjo-op-store-gc-unix-epoch-and-lock-gap.md",
+          "sha256": "c0cf000f2adb55ddfb0b922d9285421544c4480239ccf634b40101c3d87cc1ad"
+        }
+      ],
+      "cited_passages": [
+        "Plans/source_control_contracts.schema.json:2937-2953",
+        "Plans/Source_Control_System.md SCS-014:792-793",
+        "Plans/Jujutsu_Integration.md JJI-008:452-453, 464, 470; JJI-004:158, 166",
+        "Plans/jujutsu_integration_contracts.schema.json:2183-2190, 2371",
+        "docs.rs/jj-lib/0.38.0 OpStore::gc (keep_newer)"
+      ],
+      "adjudicator_note": "Not added to the union. AMENDED 2026-09-16: one of the two external legs of this candidate is unsound. Arm C's claim that dojjo 'opts out of the documented mitigation by passing UNIX_EPOCH' is wrong - jj's lib/src/simple_op_store.rs:285-298 removes a file only when mtime <= keep_newer, so UNIX_EPOCH removes nothing. Verified by the adjudicator against the source; deepseek41/J0025 found it. The candidate SURVIVES on its other leg, which is unaffected: the per-instance FsDojoUploadStore io_lock that does not coordinate across concurrent HTTP requests, and the file:// remote path that bypasses the smart-HTTP handler and its lock entirely. The covered-writer-path proposition does not depend on the GC claim."
+    }
+  ],
+  "amendments": [
+    {
+      "at": "2026-09-16",
+      "scope": "C4C-05",
+      "summary": "One supporting leg (the UNIX_EPOCH GC claim) is factually wrong; the candidate survives on the lock-coverage leg."
+    }
+  ]
+}

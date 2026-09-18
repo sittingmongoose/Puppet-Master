@@ -1,0 +1,156 @@
+{
+  "schema": "jj.continuation5.arm_candidates.v1",
+  "arm": "t80",
+  "rule": "Out-of-union propositions recorded with evidence, passages cited, my classification and an explicit check against continuation 3's rejected expansions. The adjudicator does not add them to the union.",
+  "continuation3_rejected_expansions_checked_against": [
+    {
+      "proposal": "Marker-only conflict command is a JJ owner defect",
+      "reason": "Frozen Source Control line 308 scopes legacy commands to Git absent explicit normalization; same finding withdrawn from P21/P26."
+    },
+    {
+      "proposal": "Add mutating status.refresh branch as a required correction",
+      "reason": "F002 already fixes read effects and denial; a new writer-bearing branch would change that authority."
+    },
+    {
+      "proposal": "Reopen generic in-operation credential prompting",
+      "reason": "F038 already adjudicated prompt-suppressed owner helpers and foreground/background policy. H18 acknowledges unreviewed external auth-owner dependencies."
+    },
+    {
+      "proposal": "Corruption taxonomy, extras detector, clone stage details and arbitrary conflict editor",
+      "reason": "Refinements/alternatives under existing F082/F086/F056 and their scope boundaries, not additional demonstrated product obligations."
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_id": "C5T-01",
+      "label": "Divergent operation heads are not a named condition anywhere in the JJ owner, and PM's own storage owner already refuses the equivalent",
+      "job": "t80/J0020-compare",
+      "my_classification": "correction",
+      "assertion": "Every PM read of a JJ repository binds an EXPLICIT operation id and loads at it; --ignore-working-copy alone is not a sufficient read fence and --at-op=@ is not equivalent, because resolve_op_heads performs the ancestor-marker cleanup write before the @ resolver is reached. `divergent_operation_heads` becomes a typed first-class condition on the closure record and the restore-verification receipt, distinct from conflicts, collisions, missing object closure, stale target state and operation mismatch; capture records it, verification blocks on it, and PM never resolves it implicitly as a side effect of reading. The receipt records the restored copy's op-head set before and after verification.",
+      "passage_cited": [
+        "Plans/Jujutsu_Integration.md:453-454, :458, :468, :470, :502; JJI-003:114; JJI-004:152-158",
+        "Plans/jujutsu_integration_contracts.schema.json:2183-2190 (closure operation_head_refs) and :2441-2448 (receipt's own set), with no binding between them",
+        "Plans/forge_backup_tsnet_acceptance.json:1592 REST-007",
+        "THE IN-CORPUS PRECEDENT the arm found: Plans/Decision_Log.md:1974 - 'Divergent fallback histories cannot be automatically merged or overwritten' - with fallback_diverged a recorded state token at :1970 and Decision_Log.md:233 listing 'no divergent auto-merge, overwrite, or deletion' among the closed negative constraints",
+        "jj-lib 0.44.0 op_heads_store.rs resolve_op_heads (verified by me as V-T1) and cli/src/cli_util.rs at v0.44.0"
+      ],
+      "continuation3_already_rejected": "NO. Not among the four rejected expansions. Note the relationship to rejection 2, which declined 'a mutating status.refresh branch' because a writer-bearing branch would change read authority: this candidate goes the OTHER way, keeping reads non-authoring by binding them to an explicit operation id - the same side the continuation-4 union arm and claude-hicap took.",
+      "distinctness": "F002 and F081 are both credited to this arm. What is outside the union is the typed CONDITION and the precedent: the arm found that PM's storage owner already forbids automatic divergent-history merging by name, while the JJ owner has no counterpart, and that literal searches return no match for `op_heads` anywhere in the selected corpus and no Jujutsu-context match for `divergent`.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "630ca9dbe0cf3ba6d186c29bfd2a6e9fe148a01b66d5038469e986131ddf1e5d"
+        }
+      ],
+      "adjudicator_note": "Not added to the union. The strongest candidate from this arm, and the in-corpus precedent is what makes it cheap to adopt."
+    },
+    {
+      "candidate_id": "C5T-02",
+      "label": "The GC fence as written is not achievable against external writers and needs a constructible mechanism",
+      "job": "t80/J0020-compare",
+      "my_classification": "correction",
+      "assertion": "'Suspend/coordinate JJ/Git GC/prune/rewrites during capture' cannot be satisfied against writers PM does not control. Replace it with a fence that is actually constructible - detection and disclosure of whether a GC ran across the capture window - rather than a suspension PM has no mechanism to perform.",
+      "passage_cited": [
+        "Plans/forge_backup_tsnet_acceptance.json:1157",
+        "Plans/Jujutsu_Integration.md:452-453 and :464 (capture barrier and GC fence)",
+        "Plans/Source_Control_System.md SCS-014:793"
+      ],
+      "continuation3_already_rejected": "NO. Arm P raised the neighbouring candidate C5P-01 (the JJ closure record cannot express whether the fence held) and this is its complement: not that the outcome is unrecordable, but that the REQUIREMENT as worded is unperformable. Neither is among the four rejections.",
+      "distinctness": "F079 is credited to this arm. This is the wording repair behind it, and it converges with Arm P's C5P-01 from the opposite direction - two independent arms finding the same clause unenforceable for two different reasons.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0020-compare/workspace/notes.md",
+          "sha256": "630ca9dbe0cf3ba6d186c29bfd2a6e9fe148a01b66d5038469e986131ddf1e5d"
+        }
+      ],
+      "adjudicator_note": "Not added to the union."
+    },
+    {
+      "candidate_id": "C5T-03",
+      "label": "A typed Source-Control content-selection model and its apply boundary",
+      "job": "t80/J0021-compare",
+      "my_classification": "product choice",
+      "assertion": "One typed per-path entry family - text{bytes_ref, eol_profile}, absent, empty_file, binary, unsupported{reason}, symlink{target_bytes}, submodule/gitlink{oid}, mode_change, type_change, too_large{limit, measured}, plus a per-entry selection state - reused by the Changes list, diff view, review surface, conflict surface and any split/squash/restore selection. The apply boundary takes that typed set, never a path-to-string map, bound to repo, workspace, change, expected operation, writer lease, FileSafe decision and idempotency key.",
+      "passage_cited": [
+        "Plans/runtime_artifact_code_diff.schema.json:153-178 and Plans/evidence.schema.json:602-618 (the only file-status vocabularies in the corpus, both line-count-shaped evidence projections)",
+        "Plans/FileSafe.md:1492-1500 (the one typed manifest that already has the shape)",
+        "Plans/Jujutsu_Integration.md:91, :113-114, :255-287, :301; Plans/Source_Control_System.md:126-131"
+      ],
+      "continuation3_already_rejected": "PARTIALLY, and I am flagging it. The apply boundary implies a content-selection route for Jujutsu, and the corpus's 31-command inventory has none - which puts it adjacent to the declined 'arbitrary conflict editor' cluster that C4D-04, C4M-03, C4G-02 and C5P-05 were all flagged under. The typed-entry model itself is not in that cluster and is the part I would keep.",
+      "distinctness": "F029, F030 and F031 are credited to this arm and are the individual obligations. This is the single shape that would satisfy all three at one boundary, and the arm's own justification is that it 'removes, by construction, every failure mode in this lead'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0021-compare/workspace/notes.md",
+          "sha256": "f618060e7000972eef120213ddba45cea744658f5f9c82cb68607b379c74372f"
+        }
+      ],
+      "adjudicator_note": "Not added to the union; the apply-route half is flagged."
+    },
+    {
+      "candidate_id": "C5T-04",
+      "label": "The sanitisation lists are security-shaped and layout-blind",
+      "job": "t80/J0027-compare",
+      "my_classification": "correction",
+      "assertion": "Every sanitisation list in the corpus removes credential-bearing and executable material and none mentions the configuration and pointer files that decide WHERE a restored repository reads from. Searched and absent from the whole corpus: core.worktree, core.bare, core.sparseCheckout, extensions.worktreeConfig, commondir, git_target, repositoryformatversion; gitdir appears only in the Git worktree owner, in no backup or restore path.",
+      "passage_cited": [
+        "Plans/Source_Control_System.md:798; Plans/Jujutsu_Integration.md:471; Plans/Backup_Restore_System.md:150-158",
+        "Plans/WorktreeGitImprovement.md:875, :890, :5237 (where gitdir does appear, in a different owner)",
+        "gitrepository-layout lines 425-430 - worktrees/<id>/gitdir is 'A text file containing the absolute path back to the .git file that points to here'",
+        "git-worktree(1) lines 486-508 - core.worktree 'should never be shared'; extensions.worktreeConfig: 'Older Git versions will refuse to access repositories with this extension'"
+      ],
+      "continuation3_already_rejected": "NO. Not among the four. It is the same family as Arm P's C5P-04 and Arm B's C5B-02 - defects in the restore path found by reading what the records do not carry - and none of those is rejected either.",
+      "distinctness": "F084 is credited to this arm for the sanitized-inactive obligation. This candidate is the specific enumeration: the lists are complete for secrets and empty for layout, and a restored copy can therefore be sanitized and still point at the original tree.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342/jobs/J0027-compare/workspace/notes.md",
+          "sha256": "4f17bd0fc5b9d55c1552ce307dcea57cfa9a6ba1a37272121ef2aee8a53c1d62"
+        }
+      ],
+      "adjudicator_note": "Not added to the union. Earned in a turn-capped job."
+    }
+  ],
+  "observations": [
+    {
+      "observation_id": "O5T-01",
+      "label": "THE CONTROL RESULT: 80 turns costs 19 findings against 160, but only 2 of them are the ceiling",
+      "detail": "T80 scored 26/110 against claude-hicap's 45 on the one-variable comparison - same model, same effort, same frozen order, same artifacts, same 12 admissions, ceiling 80 instead of 160. I verified the inputs matched job by job: J0017-J0025 carry IDENTICAL lead sets in both runs. The 20 findings lost decompose four ways. TWO are the ceiling: T80's J0027-compare was capped at 80 on the lead group hicap's J0026 spent 110 responses on, and it still reached five of hicap's seven there, missing F092 and F094. EIGHT are the clock, not the ceiling: J0028-compare was killed by the 3,600 s wall having used only 60 of its 80 permitted responses, and hicap earned ten findings on that lead group. TWO are capped but confounded: J0017 and J0018 hit 80, yet hicap COMPLETED THE SAME LEADS IN 66 AND 58, so 80 was not structurally insufficient - those runs simply took a longer path. And EIGHT were lost from jobs that hit no limit at all.",
+      "adjudicator_note": "Recorded as the arm's result and the answer to the turn-budget question."
+    },
+    {
+      "observation_id": "O5T-02",
+      "label": "THE VARIANCE FLOOR: two runs of the same model on identical inputs differ by 8 union findings with no limit involved",
+      "detail": "T80's J0020, J0021, J0022 and J0026 all completed under every limit, on lead sets identical to claude-hicap's, with the same model at the same effort - and still missed F028, F037, F044, F053, F074, F083, F090 and F106 that hicap earned on those same leads. No ceiling, no timeout, no money bound, no rate limit. That is eight union findings of pure run-to-run variance, and it is FOUR TIMES the two findings the turn ceiling itself cost. It is the most useful number this arm produced, because it is a floor on how much of ANY arm-to-arm difference in this campaign can be read as a real effect: differences smaller than about eight findings between two single runs are not distinguishable from noise. It also qualifies my own earlier reports - Arm B's 6-finding deficit against claude-hicap sits inside this band.",
+      "adjudicator_note": "Recorded, and it applies retrospectively to every comparison I have published in this campaign."
+    },
+    {
+      "observation_id": "O5T-03",
+      "label": "A capped job is not an empty job: seven credits came out of the three the ceiling cut",
+      "detail": "All three turn-capped jobs wrote COMPLETE documents - J0017, J0018 and J0027 each end on a finished summary section, not mid-sentence - so the ceiling ended the turn loop after the conclusions were written. Seven of the arm's 26 credits were earned in those jobs (F004, F006, F030, F061, F068, F084, F107), including F068, the ONLY finding this arm reaches that claude-hicap did not. The capped compare job reached five of the seven findings hicap earned on the same leads with 110 turns. The timed-out job is the opposite case and the only real hole: it wrote nothing at all.",
+      "adjudicator_note": "Recorded. It is why 'turn-capped' must not be read as 'lost'."
+    },
+    {
+      "observation_id": "O5T-04",
+      "label": "The arm with the lowest turn ceiling is the slowest of the four, and one job caused it",
+      "detail": "T80's arm wall is 6,259.7 s - 104 min 20 s, 29 minutes over the 75-minute target and slower than claude-hicap (3,535 s), Arm P (4,193 s) and Arm B's compare stage (3,981 s). The single 3,600 s timeout accounts for most of it: J0028-compare held a worker for a full hour and produced nothing. A lower response ceiling did not make the arm faster, because the binding constraint on wall time was a job that was not turn-bound at all.",
+      "adjudicator_note": "Recorded."
+    },
+    {
+      "observation_id": "O5T-05",
+      "label": "The arm produced the campaign's most precise statement of the extras-marker defect, and it refines every earlier arm",
+      "detail": "Arm P established that get_head_locked removes tables[1..] with no exclusion of the merged table's own name. T80 identifies the exact ordering condition under which v0.44.0's guard fails to help: because segment files are content-addressed, if tables[0] is an ANCESTOR of tables[1] the merged table serializes to the same bytes and therefore the same name as tables[1]; save_table removes heads/<tables[0]> because the names differ and the guard does not fire, and the tables[1..] loop then removes heads/<tables[1]>, leaving heads/ empty with every segment blob intact. 'The 0.44.0 guard only protects the reverse ordering; readdir order decides.' The arm marks this as a refinement of the inherited child note, 'which asserted the loss without the ordering condition'. I verified the content-addressing it rests on (V-T3: save_in hashes the serialized buffer with Blake2b512 and persists it content-addressed). This came out of J0020-compare, which used 74 of 80 responses - it is not a turn-budget effect.",
+      "adjudicator_note": "Recorded as the arm's best single piece of work."
+    },
+    {
+      "observation_id": "O5T-06",
+      "label": "It also corrects Arm B's recommended remedy on the shared finding",
+      "detail": "Arm B's J0047 recommended '--at-op=@ --ignore-working-copy' as the non-mutating read mode, following jj's own CLI reference. T80's J0020 shows that is still not enough: --at-op=@ routes through resolve_op_for_load, whose @ resolver returns MultipleOperations rather than merging, but resolve_op_heads performs the ancestor-marker cleanup write BEFORE that resolver is reached. So @ is a divergence detector, not a read fence; only an explicit operation id avoids head resolution entirely. I verified this against jj-lib 0.44.0: the branch commented '// Return without creating a merge operation' still calls update_op_heads (lines 146-151), and the resolver is not called until line 155. Two arms, the same finding, and the later one is right.",
+      "adjudicator_note": "Recorded. Arm B's credit stands - the finding is correct - but its remedy is superseded."
+    },
+    {
+      "observation_id": "O5T-07",
+      "label": "T80 adds nothing to the campaign union",
+      "detail": "Every one of T80's 26 credits was already reached by an earlier arm. The nine-arm union stays at 62 of 110 and findings reached by no arm stay at 48. That is the expected result for a control: it was run to measure a limit, not to extend coverage, and its single finding over claude-hicap (F068) was already held by Arm B and the continuation-4 union arm.",
+      "adjudicator_note": "Recorded."
+    }
+  ]
+}

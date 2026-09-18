@@ -1,0 +1,987 @@
+{
+  "schema": "jj.continuation5.arm_findings.v1",
+  "arm": "b-breadth-compare",
+  "arm_kind": "Continuation 5 Arm B, cheap breadth then strong compare. Stage 1: muse-code/muse-spark-1.3-contributor reconciled 88 frozen leads in the frozen order under 30 admissions, delivering 54. Stage 2 (attempt 2, the scored result): claude-opus-5 at effort max compared 32 of those leads against the frozen Plans, in Muse's delivery order, WITH NO ACCESS TO ANY PREMIUM RECONCILE OUTPUT.",
+  "scored_attempt": "b-compare ATTEMPT 2 only, runs/jujutsu-b-compare-20260917-133734, manifest 17b32556b5d3491e526a2a84384ad048030a856f84d643e01305502149e550e0. Attempt 1 (runs/jujutsu-b-compare-20260917-123157, manifest 5b340f3ae1...) is archived and NOT scored; it delivered zero comparisons and wrote no notes.md in any job, so it contains no assertion document to score even in principle.",
+  "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm. Adjudicator and the compare-stage model share a family; every credit names its assertion and the passage it cites, and code facts are verified against pinned bytes.",
+  "stage_attribution": "EVERY credit is earned in the compare stage. The Muse breadth stage credited ZERO union findings, and could not have credited any: all 23 of its reconcile notes are headed 'external technical, no Plans comparison' and NONE of them cites a single Plans passage. See b-breadth-compare-scoring.json recall_by_stage.",
+  "credited": [
+    {
+      "finding_id": "F002",
+      "title": "Nominal reads may write",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0047-compare",
+      "delivery_positions_of_credited_job": [
+        1,
+        2,
+        3
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "The sharpest form of this proposition in the campaign, because it is aimed at the one place the corpus thought it was already safe. JJI-008 AC5 requires verification reads to be 'ignore-working-copy where required' and the schema assertion says such a read 'does not manufacture a JJ snapshot'. The arm shows that covers only half the effect: jj's own CLI reference says 'jj op log snapshots the current working-copy changes AND RECONCILES DIVERGENT OPERATIONS. Use --at-op=@ --ignore-working-copy to inspect the current state without mutation', and '--at-op=@ is pretty much the same as the default except that divergent operations will never be merged'. So a compliant restore drill can capture a two-head store, run an --ignore-working-copy read, silently merge the two heads into an operation that never existed in the source, and still record verified_on_disposable_copy. The repair extends AC5 to 'neither a hidden JJ snapshot NOR a new operation, including operation-head resolution/merge, op-head marker rewriting, or rebuild-on-read of derived state'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0047-compare/workspace/notes.md",
+          "sha256": "e6ea3a7fe2d9c62560b86da7bfb87bd9fbb752d9a88af19fbabed031687a45d4"
+        }
+      ],
+      "code_fact_verification": [
+        "V-B1 jj CLI reference (job receipts S00057/S00058, HTTP 200): ':2037 Like other commands, jj op log snapshots the current working-copy changes and reconciles divergent operations. Use --at-op=@ --ignore-working-copy to inspect the current state without mutation' and ':850 --at-op=@ is pretty much the same as the default except that divergent operations will never be merged.' VERIFIED VERBATIM in both receipts."
+      ]
+    },
+    {
+      "finding_id": "F004",
+      "title": "Writer authority is stronger than native locks",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0051-compare",
+      "delivery_positions_of_credited_job": [
+        9,
+        10,
+        11
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "Two jobs. J0051 records that the Plans are already stronger than the external comparator here - 'one repository writer (Plans stronger than a per-window worker)' - and J0056 F1 states the gap that remains: 'No foreign-JJ-writer model. The Plans' concurrency invariant is Git-vs-JJ (JJI-004). PM's writer lease is a PM-internal lease and cannot bind a Watchman trigger, a VisualJJ/IDE snapshot, a user's jj CLI, or a second jj git fetch. Upstream states plainly that such writers exist and that jj cannot prevent external Git tools either. No Plans passage anticipates ANOTHER JJ WRITER advancing the operation log during a PM-issued command.' Literal corpus searches for 'Watchman' and 'background snapshot' returned no matches.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0051-compare/workspace/notes.md",
+          "sha256": "af27f5636bc8c4f73264e27351814dc68fcb5647ae1b96c71064f15cb6cd5e78"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0056-compare/workspace/notes.md",
+          "sha256": "2aa3260de29d42f48505e97cf80693796c84f30265cbeb83579137b763e46e19"
+        }
+      ]
+    },
+    {
+      "finding_id": "F005",
+      "title": "Expected operation is not native compare-and-swap",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0056-compare",
+      "delivery_positions_of_credited_job": [
+        24,
+        25,
+        26
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": false,
+      "basis": "GAINED OVER claude-hicap. J0056 F2 states the proposition including its distinctive after-a-long-fetch clause: 'Precondition is checked at request time, never re-checked after the network phase. currentness_fence.expected_operation_id is stamped with checked_at_utc at request; nothing in JJI-003/\u00a73.3 or the schema requires the adapter to re-verify the operation head immediately before the import/ref-update phase of a fetch. This is exactly the window PR 9829 addresses.' It also disposes of the near-fit: SCS-015's 'execution rechecks it' is 'about the capability decision, not the operation fence, and it is a Source Control sentence, not a JJ transport obligation.'",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0056-compare/workspace/notes.md",
+          "sha256": "2aa3260de29d42f48505e97cf80693796c84f30265cbeb83579137b763e46e19"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0058-compare/workspace/notes.md",
+          "sha256": "8eece37fcbaae7f729c8ac86091ba5149397feb5a30605fd23bfd876c17a3a0d"
+        }
+      ]
+    },
+    {
+      "finding_id": "F006",
+      "title": "Exact durable identity and operation-local selectors",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0051-compare",
+      "delivery_positions_of_credited_job": [
+        9,
+        10,
+        11
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0051 records the identity separation against the external comparator and finds the Plans stricter: 'exact-commit admission (Plans stricter than GG's prefix rule)'. The arm keeps change identity, immutable commit identity and the operation-local selector distinct, and J0056's object-format work adds the width constraint - jujutsu_revision.commit_id must be full-length hex matching the repository's declared object_format, 'abbreviated or offset-bearing forms are invalid as identity (they may appear only as display text). change_id keeps its own native alphabet and is explicitly NOT a commit ID.'",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0051-compare/workspace/notes.md",
+          "sha256": "af27f5636bc8c4f73264e27351814dc68fcb5647ae1b96c71064f15cb6cd5e78"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0056-compare/workspace/notes.md",
+          "sha256": "2aa3260de29d42f48505e97cf80693796c84f30265cbeb83579137b763e46e19"
+        }
+      ]
+    },
+    {
+      "finding_id": "F007",
+      "title": "Process failure and cancellation are not no-effect proof",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0048-compare",
+      "delivery_positions_of_credited_job": [
+        4
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "Three independent statements. J0048 R3: 'A non-succeeded terminal result must disclose whether a native mutation occurred' - the frozen vocabulary requires a null after-revision only for effect_unknown, so 'failed and cancelled are silent about whether the repository changed', against the verified native behaviour that cmd_resolve rewrites the commit and awaits tx.finish BEFORE returning the partial-resolution error. J0048 R2 adds that a helper's own structured success signal - an HTTP 200 on a save endpoint, a zero exit code, a closed browser tab - is never the command's terminal result. J0053 supplies the cancellation half: cancellation is classified from an adapter-held signal record, never from exit status, and 'a kill sweep is not an effect proof'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0048-compare/workspace/notes.md",
+          "sha256": "0b5b6cc01cd2d7831ba19024108c3971489b1debe751be715796f0f2095cddff"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0053-compare/workspace/notes.md",
+          "sha256": "11d2dbe3be7283499d537f2b564dc675a68117248cd7d5af150e6be8da69bbca"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0052-compare/workspace/notes.md",
+          "sha256": "1dd33451de68f183489bd26cda3e5c190305181b139cb2bb23243b4ab68c496a"
+        }
+      ],
+      "code_fact_verification": [
+        "V-B6 cli/src/commands/resolve.rs @ f9588f37 - .set_tree(new_tree) at :120 and tx.finish( at :123, with 'if let Some(err) = partial_resolution_error' only at :145. The transaction finishes BEFORE the error is returned. VERIFIED.",
+        "V-B7 cli/src/merge_tools/external.rs - ToolAborted return at :422, snapshot_results at :443, so a nonzero tool exit returns before any output snapshot. VERIFIED."
+      ]
+    },
+    {
+      "finding_id": "F008",
+      "title": "Partial multi-file resolve",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0048-compare",
+      "delivery_positions_of_credited_job": [
+        4
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": false,
+      "basis": "J0048 R3 and J0053 state it from the verified native shape: run_mergetool_external returns a partially resolved tree plus MergeToolPartialResolutionError { resolved_count, source } when a LATER file fails, and cmd_resolve has already rewritten the commit and finished the transaction. The repair requires the terminal receipt to identify which units were applied rather than reporting the whole resolve as no-effect.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0048-compare/workspace/notes.md",
+          "sha256": "0b5b6cc01cd2d7831ba19024108c3971489b1debe751be715796f0f2095cddff"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0053-compare/workspace/notes.md",
+          "sha256": "11d2dbe3be7283499d537f2b564dc675a68117248cd7d5af150e6be8da69bbca"
+        }
+      ],
+      "code_fact_verification": [
+        "V-B5 cli/src/merge_tools/external.rs:372-374 - partial_resolution_error = Some(MergeToolPartialResolutionError { ..., resolved_count: i }). VERIFIED inside the claimed 337-382 range."
+      ]
+    },
+    {
+      "finding_id": "F010",
+      "title": "Native versus sidecar crash boundary",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0047-compare",
+      "delivery_positions_of_credited_job": [
+        1,
+        2,
+        3
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "Three jobs, and the sharpest line in the campaign for this proposition: J0047's 'presence and reachability are not integrity'. It shows a torn pack 'hashes identically on both sides, so a faithful copy of a corrupt store passes every existing check and is still certified complete', and that the corpus's capture-fidelity requirement proves the copy matches the source but not that the source object graph is intact. J0052 adds the recovery half - 'Native recovery is inadmissible in exactly the state that needs it' and 'No recovery path validates' because allowed_action_ids may be empty - and J0057 adds that crash damage is not a distinct recovery state and there is no 'preserve the damaged copy first' rule.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0047-compare/workspace/notes.md",
+          "sha256": "e6ea3a7fe2d9c62560b86da7bfb87bd9fbb752d9a88af19fbabed031687a45d4"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0052-compare/workspace/notes.md",
+          "sha256": "1dd33451de68f183489bd26cda3e5c190305181b139cb2bb23243b4ab68c496a"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0057-compare/workspace/notes.md",
+          "sha256": "999d0832b93d0e14ac9f6f99179d6f5353d2554521fb61a521f508b75c838017"
+        }
+      ]
+    },
+    {
+      "finding_id": "F011",
+      "title": "Native recovery has explicit scope",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0052-compare",
+      "delivery_positions_of_credited_job": [
+        12,
+        13,
+        14
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0052 states it as a disclosure obligation: 'No disclosure of what native JJ recovery does NOT restore.' The arm keeps undo, op restore, workspace path recovery and external-file recovery distinct and requires the contract to say which of them a given recovery route covers, rather than presenting native recovery as a single capability.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0052-compare/workspace/notes.md",
+          "sha256": "1dd33451de68f183489bd26cda3e5c190305181b139cb2bb23243b4ab68c496a"
+        }
+      ]
+    },
+    {
+      "finding_id": "F025",
+      "title": "Change evolution view",
+      "classification": "optional_capability",
+      "credited_job": "b-compare/J0055-compare",
+      "delivery_positions_of_credited_job": [
+        21,
+        22,
+        23
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "GAINED OVER claude-hicap AND Arm P. J0055's L-28f7a36f8557 is the proposition: 'Native change evolution distinguishes rewrites from source ancestry.' The arm establishes that the native model separates a change's evolution (predecessors, rewrites, abandoned versions) from commit ancestry, and that the corpus has no surface that renders the first - so a per-change evolution view is a distinct capability rather than a relabelling of history.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0055-compare/workspace/notes.md",
+          "sha256": "7346b6eb0ce91ccb9024d72b7793fabbcc703bcf17f66987b0174708aa6babec"
+        }
+      ]
+    },
+    {
+      "finding_id": "F027",
+      "title": "Persistent review marks",
+      "classification": "optional_capability",
+      "credited_job": "b-compare/J0054-compare",
+      "delivery_positions_of_credited_job": [
+        18,
+        19,
+        20
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "REACHED BY NO ARM IN THE ENTIRE CAMPAIGN BEFORE THIS ONE. J0054 Proposal P2: 'JJ review marks/notes keyed to content identity, not text similarity' - a review-state layer where a file's or hunk's reviewed state is keyed to the diff's blob-pair identity (old blob id, new blob id, path) plus the JJ revision fence, 'instead of text position/quote matching. Marks survive rebases/amends/squashes that preserve bytes and invalidate exactly the files whose bytes changed; a mark cannot attach to a different change's content because the key IS the content.' The stale-or-orphaned clause is stated as the defect it fixes: the corpus's existing quote matching 'at >=0.97 similarity will happily re-anchor onto a similar region of a divergent change; the existing negative constraint forbids silent DROPPING, not silent MIGRATION.' It is grounded in a shipped precedent rather than speculation: JayJay replaced mtime-keyed marks with blob-ID content identity, including the deleted-file case keyed on the parent's bytes.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0054-compare/workspace/notes.md",
+          "sha256": "ada1d05c4e6aafa3c1458b2aee7d41c37558c7fe826f9106ef7d348d5cfd85bd"
+        }
+      ]
+    },
+    {
+      "finding_id": "F029",
+      "title": "Hunk and editable diff safety",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0049-compare",
+      "delivery_positions_of_credited_job": [
+        5
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0049 binds the editable-diff save to identity and to complete matched selections: the validator 'binds NO content hash, session, repository or snapshot identity, so identical path names on a replacement server pass', and jj's own dispatch makes it PM's problem - 'jj split and jj squash both take [FILESETS]..., -i/--interactive is the default if no filesets are provided for split, and --tool <NAME> implies --interactive', so 'if Puppet Master's future Jujutsu adapter ever runs jj split or jj squash without a complete non-interactive selection, jj launches whatever the user has configured as ui.diff-editor, and every limitation above becomes Puppet Master's working-copy write path.'",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0049-compare/workspace/notes.md",
+          "sha256": "46edfb4dee42124bc1532a0389a5a4c10212e5b0672a4447e2db4fb04d769fff"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0048-compare/workspace/notes.md",
+          "sha256": "0b5b6cc01cd2d7831ba19024108c3971489b1debe751be715796f0f2095cddff"
+        }
+      ]
+    },
+    {
+      "finding_id": "F030",
+      "title": "Empty, absent and failed reads are distinct",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0049-compare",
+      "delivery_positions_of_credited_job": [
+        5
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0049 point 1 states it from source: FileEntry is 'Missing | Text(String) | Unsupported(String)' but save_unchecked receives an untyped IndexMap<String,String>, 'There is no delete operation, so an untouched deleted file is re-materialized as an empty regular file', with the tool's own TODO conceding that 'the webapp does not distinguish between empty and missing files'. Point 2 adds the failed-read half: WalkDir's filter_map(|e| e.ok()) 'drops traversal errors' and the symlink/directory filter carries an explicit TODO calling that 'not great ... should be a more prominent error'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0049-compare/workspace/notes.md",
+          "sha256": "46edfb4dee42124bc1532a0389a5a4c10212e5b0672a4447e2db4fb04d769fff"
+        }
+      ],
+      "code_fact_verification": [
+        "V-B2 diffedit3 src/types.rs:5-12 @ 0ae89095 - enum FileEntry { Missing, /* TODO: Track executable bit */ Text(String), Unsupported(String) }. VERIFIED.",
+        "V-B3 src/fs.rs:24-53 - save_unchecked takes IndexMap<String,String> with the two leading TODOs quoted by the arm, and contains no delete path. VERIFIED VERBATIM."
+      ]
+    },
+    {
+      "finding_id": "F031",
+      "title": "Diff text and metadata round-trip",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0049-compare",
+      "delivery_positions_of_credited_job": [
+        5
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": false,
+      "basis": "All three clauses from source. Untouched bytes: the save path writes strings back with no byte preservation. Deletion state: an untouched deleted file is re-materialized as an empty regular file. Metadata: FileEntry carries '// TODO: Track executable bit, other metadata perhaps' and save_unchecked's second TODO is 'Preserve the executable bit'. The arm sets this against FileSafe's manifest rule, which already records presence/deletion state, symlink target bytes without following the link, Git mode, the portable executable bit and POSIX mode - 'exactly the typed model the lead asks for'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0049-compare/workspace/notes.md",
+          "sha256": "46edfb4dee42124bc1532a0389a5a4c10212e5b0672a4447e2db4fb04d769fff"
+        }
+      ],
+      "code_fact_verification": [
+        "V-B2 and V-B3 as above. VERIFIED."
+      ]
+    },
+    {
+      "finding_id": "F033",
+      "title": "External editor path confinement",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0049-compare",
+      "delivery_positions_of_credited_job": [
+        5
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": false,
+      "basis": "J0049 point 3 quotes the validator's own doc comment naming the two threats it exists for, including 'A malicious frontend could try making the diff editor save to ../../../../home/$USER/.bashrc', and establishes it 'binds NO content hash, session, repository or snapshot identity'. J0048 R6 states the PM-side obligation: 'The output tree handed to an external tool must be type-fenced, and incidental rewrites must be disclosed', with J0048's cross-cutting finding that FileSafe's write-scope model is a pre-spawn path check that 'neither constrains where a spawned process writes afterwards, [n]or addresses a path that becomes a symlink between the check and the write'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0049-compare/workspace/notes.md",
+          "sha256": "46edfb4dee42124bc1532a0389a5a4c10212e5b0672a4447e2db4fb04d769fff"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0048-compare/workspace/notes.md",
+          "sha256": "0b5b6cc01cd2d7831ba19024108c3971489b1debe751be715796f0f2095cddff"
+        }
+      ]
+    },
+    {
+      "finding_id": "F034",
+      "title": "Partial external editor writes",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0049-compare",
+      "delivery_positions_of_credited_job": [
+        5
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": false,
+      "basis": "J0049 point 4 is the proposition: 'Save is not a transaction. create_dir_all + fs::write per path in request order, returning at the first IOError with no rollback', with the tool's own error enum carrying '// TODO: Collect the list of what files couldn't be saved'. Point 3 supplies the contrasting whole-request rejection: DataInterface::save rejects any submitted key outside the freshly rescanned set BEFORE save_unchecked, so validation rejection and mid-save I/O failure are already distinct outcomes upstream and must stay distinct in the receipt.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0049-compare/workspace/notes.md",
+          "sha256": "46edfb4dee42124bc1532a0389a5a4c10212e5b0672a4447e2db4fb04d769fff"
+        }
+      ],
+      "code_fact_verification": [
+        "V-B3 src/fs.rs:24-53 - per-path create_dir_all + write with no rollback. VERIFIED."
+      ]
+    },
+    {
+      "finding_id": "F035",
+      "title": "External diff and merge tool handoff",
+      "classification": "optional_capability",
+      "credited_job": "b-compare/J0049-compare",
+      "delivery_positions_of_credited_job": [
+        5
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0048 is the managed session in full, phase by phase: R1 requires ObservableWork with a typed 'waiting/user' reason for any command whose adapter invocation can block on a human, and requires the projected phases to distinguish 'adapter invoked -> helper process started -> helper reported ready -> user-facing surface reachable -> user finished -> native snapshot/transaction complete', with 'Reaching an earlier phase is never rendered as a later one.' R4 and R5 cover the remote and cleanup halves. J0049 adds that the tool is a documented jj diff editor with two experimental 3-pane presets, one of which 'always uses ports in between 17376-17380'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0048-compare/workspace/notes.md",
+          "sha256": "0b5b6cc01cd2d7831ba19024108c3971489b1debe751be715796f0f2095cddff"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0049-compare/workspace/notes.md",
+          "sha256": "46edfb4dee42124bc1532a0389a5a4c10212e5b0672a4447e2db4fb04d769fff"
+        }
+      ]
+    },
+    {
+      "finding_id": "F036",
+      "title": "External editor stale sessions",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0049-compare",
+      "delivery_positions_of_credited_job": [
+        5
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": false,
+      "basis": "J0049 point 3 states the proposition including its identical-filenames clause, from the validator's own doc comment: the two threats it is for are 'The frontend webapp could be connected to a DIFFERENT SERVER than it was started with' and the traversal case, and because the check 'binds no content hash, session, repository or snapshot identity, IDENTICAL PATH NAMES ON A REPLACEMENT SERVER PASS.'",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0049-compare/workspace/notes.md",
+          "sha256": "46edfb4dee42124bc1532a0389a5a4c10212e5b0672a4447e2db4fb04d769fff"
+        }
+      ]
+    },
+    {
+      "finding_id": "F037",
+      "title": "Bound reads before allocating",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0049-compare",
+      "delivery_positions_of_credited_job": [
+        5
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0049 point 2 states it from source with the upstream TODO as evidence: 'read_to_string runs in full BEFORE the contents.len() > MAX_FILE_LENGTH test; MAX_FILE_LENGTH is exactly 200_000 bytes, with TODOs \"read no more than MAX_FILE_LENGTH\"', and the preserved-error half is the same passage's filter_map(|e| e.ok()) dropping traversal errors. It also corrects the prose bound: 'The 200 KiB figure in release prose is imprecise; the code bound is 200,000.'",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0049-compare/workspace/notes.md",
+          "sha256": "46edfb4dee42124bc1532a0389a5a4c10212e5b0672a4447e2db4fb04d769fff"
+        }
+      ],
+      "code_fact_verification": [
+        "V-B4 diffedit3 src/fs.rs:101 const MAX_FILE_LENGTH: usize = 200_000; the read-before-test at :119-123 with the TODO at :119. VERIFIED."
+      ]
+    },
+    {
+      "finding_id": "F043",
+      "title": "Authenticated browser and local IPC",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0048-compare",
+      "delivery_positions_of_credited_job": [
+        4
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0048 R4 and R5 are the proposition. R4: 'An adapter-spawned helper that opens a listener must be declared, leased and authenticated, or refused.' R5: 'A helper UI must bind the Client that can actually reach it, not only the Execution Host' - which is the caller/repository binding clause applied to the case the corpus gets wrong, a loopback server reachable from a different client than the one that requested it.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0048-compare/workspace/notes.md",
+          "sha256": "0b5b6cc01cd2d7831ba19024108c3971489b1debe751be715796f0f2095cddff"
+        }
+      ]
+    },
+    {
+      "finding_id": "F044",
+      "title": "Adapter implementation shape",
+      "classification": "product_choice",
+      "credited_job": "b-compare/J0054-compare",
+      "delivery_positions_of_credited_job": [
+        18,
+        19,
+        20
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0054 Proposal P1 is the proposition, posed as an owner decision: 'adapter core linked against jj-lib, with a jj-lib-free layer below.' It keeps all consumers behind one owner and states the hybrid shape explicitly rather than choosing for the owner.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0054-compare/workspace/notes.md",
+          "sha256": "ada1d05c4e6aafa3c1458b2aee7d41c37558c7fe826f9106ef7d348d5cfd85bd"
+        }
+      ]
+    },
+    {
+      "finding_id": "F050",
+      "title": "Included tools and exact qualification",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0056-compare",
+      "delivery_positions_of_credited_job": [
+        24,
+        25,
+        26
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "Two instances. J0052: 'Version-compatible is asserted without a typed field. JJI-008 requires restore verification to be version-compatible' with nothing to check it against. J0056 supplies the object-format half with an additive correction the arm verified itself: the hash choice 'is structural inside jj, not only a display format' because GitBackend derives its root commit/tree IDs from repo.object_hash() and switches on object_hash().len_in_bytes(), 'So JJ commit IDs in a SHA-256 repository are 64-hex, not 40-hex.' The arm then shows object format is absent from the JJI-006 \u00a74.2 setup-row inventory, from jujutsu_revision and from the JJ currentness fence, while git_revision requires it.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0056-compare/workspace/notes.md",
+          "sha256": "2aa3260de29d42f48505e97cf80693796c84f30265cbeb83579137b763e46e19"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0052-compare/workspace/notes.md",
+          "sha256": "1dd33451de68f183489bd26cda3e5c190305181b139cb2bb23243b4ab68c496a"
+        }
+      ]
+    },
+    {
+      "finding_id": "F056",
+      "title": "Native conflict truth and supported shape",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0057-compare",
+      "delivery_positions_of_credited_job": [
+        27,
+        28,
+        29
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "Five numbered defects, the most complete statement in the campaign. (1) 'no_conflict_markers is an unsound test, and for Jujutsu it is a FORBIDDEN one' against JJI-005's own negative constraint. (2) 'The resolution vocabulary cannot express a jj conflict' - ours|theirs|both against a model with arbitrarily many sides. (3) 'There is no JJ conflict route at all. The 31-command inventory has no conflict command'. (4) 'git_available is the wrong gate' - the corpus's only conflict entrypoint is unreachable in a non-colocated JJ repository. (5) 'Byte fidelity is nowhere represented' - \u00a73.2 promises a conflict-state delta in receipts with no marker-style, side-count or byte requirement behind it.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0057-compare/workspace/notes.md",
+          "sha256": "999d0832b93d0e14ac9f6f99179d6f5353d2554521fb61a521f508b75c838017"
+        }
+      ]
+    },
+    {
+      "finding_id": "F057",
+      "title": "Exact-profile conflict byte regression",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0057-compare",
+      "delivery_positions_of_credited_job": [
+        27,
+        28,
+        29
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "GAINED OVER claude-hicap. J0057 names the exact-profile defect from the materialize/parse path rather than from release dating: 'materialization normalizes to a detected LF or CRLF and appends ... each term and then UNCONDITIONALLY pops a following \\r. A term whose genuine last byte is a bare \\r loses it on roundtrip', with the fix commit's own explanation of the consequence, and an acceptance fixture requiring that 'a term whose original content ends in a bare \\r roundtrips through materialize/parse'. The repair also requires the receipt to carry the active marker style, marker_len and detected_eol so the profile's fidelity is disclosed rather than assumed.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0057-compare/workspace/notes.md",
+          "sha256": "999d0832b93d0e14ac9f6f99179d6f5353d2554521fb61a521f508b75c838017"
+        }
+      ]
+    },
+    {
+      "finding_id": "F059",
+      "title": "Push targets and bookmark effects",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0055-compare",
+      "delivery_positions_of_credited_job": [
+        21,
+        22,
+        23
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "Two jobs covering both clauses. Preserve the state axes: J0055 Gap 1 is 'state flattening' - every typed bookmark surface in the corpus is a bare name - and Gap 2 is that 'conflicted bookmarks have no representation'. Preview the exact effects: J0050 B.2 is 'Remote scope is lost in results, receipts and confirmation text', and J0055 Gap 3 is that 'delete's remote effect is invisible'. The repair adds a typed bookmark reference, binds conflicted bookmarks before effect, separates the three intents in the contract rather than only in copy, and surfaces remote freshness separately from intent.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0055-compare/workspace/notes.md",
+          "sha256": "7346b6eb0ce91ccb9024d72b7793fabbcc703bcf17f66987b0174708aa6babec"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0050-compare/workspace/notes.md",
+          "sha256": "bfc749d330758ba59e3463fe0efdcfcd5fad2082ed6cfc0e4d2e75f66e7a6fb8"
+        }
+      ]
+    },
+    {
+      "finding_id": "F060",
+      "title": "Guided bookmark conflict resolution",
+      "classification": "optional_capability",
+      "credited_job": "b-compare/J0055-compare",
+      "delivery_positions_of_credited_job": [
+        21,
+        22,
+        23
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": false,
+      "hybrid_supported": true,
+      "basis": "GAINED OVER claude-hicap AND Arm P, AND REACHED BY NO CONTINUATION-4 ARM. J0055's repair item 2 is the proposition: 'Bind conflicted bookmarks before effect. Add bookmark_conflicted to both [vocabularies]' so a conflicted bookmark is admitted as a distinct state with its local and remote targets reviewable, rather than being flattened into a bare name and acted on blind.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0055-compare/workspace/notes.md",
+          "sha256": "7346b6eb0ce91ccb9024d72b7793fabbcc703bcf17f66987b0174708aa6babec"
+        }
+      ]
+    },
+    {
+      "finding_id": "F061",
+      "title": "Graph bounds, continuity and isolation",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0051-compare",
+      "delivery_positions_of_credited_job": [
+        9,
+        10,
+        11
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0051 states all four clauses against the owning contract. Bounded pages bound to identity and cursors isolated: 'nothing binds a cursor to what produced it, or forbids lost/duplicated nodes'. Geometry and selection preserved: the selection-anchor repair, '\"selection anchors survive pagination\" does not say what the anchor is'. Missing and partial edges exposed: 'a page boundary silently erases parent edges (off-page vs root is indistinguishable)' and '\"partial\" has no cause, so truncation-by-error is indistinguishable from end-of-history'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0051-compare/workspace/notes.md",
+          "sha256": "af27f5636bc8c4f73264e27351814dc68fcb5647ae1b96c71064f15cb6cd5e78"
+        }
+      ]
+    },
+    {
+      "finding_id": "F066",
+      "title": "Direct graph manipulation",
+      "classification": "optional_capability",
+      "credited_job": "b-compare/J0050-compare",
+      "delivery_positions_of_credited_job": [
+        6,
+        7,
+        8
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0050 A.3 and A.4 are the proposition, recorded as product proposals requiring approval: 'Direct graph manipulation (drag-to-rebase, drag-file-to-squash, range rebase)' and 'Target previews - NOT COVERED', with A.1 recording that keyboard and context-menu equivalents are already covered so the proposal is scoped to the gestures and their previews rather than restating owned behaviour.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0050-compare/workspace/notes.md",
+          "sha256": "bfc749d330758ba59e3463fe0efdcfcd5fad2082ed6cfc0e4d2e75f66e7a6fb8"
+        }
+      ]
+    },
+    {
+      "finding_id": "F068",
+      "title": "Description drafts survive refresh",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0051-compare",
+      "delivery_positions_of_credited_job": [
+        9,
+        10,
+        11
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "Both clauses, and a fuller statement than any earlier arm's. J0051 proposes 'Give an unsaved cmd.jujutsu.change.describe draft a durable record keyed by (repo_id, workspace_id, stable change id), surviving operations and app restart, discarded on successful describe or explicit discard' - the exact-identity refresh clause - 'AND SHOWN AS A DRAFT BADGE WHEN THE UNDERLYING CHANGE HAS BEEN REWRITTEN UNDER IT', which is the separate-drafts-from-committed-history clause the withdrawn glm53 credit lacked. It is grounded in an owned precedent: SP-169 'Unsaved Editor Recovery Required' already establishes that PM treats unsaved text as recoverable rather than disposable.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0051-compare/workspace/notes.md",
+          "sha256": "af27f5636bc8c4f73264e27351814dc68fcb5647ae1b96c71064f15cb6cd5e78"
+        }
+      ]
+    },
+    {
+      "finding_id": "F073",
+      "title": "Runtime evidence versus unused scaffolding",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0050-compare",
+      "delivery_positions_of_credited_job": [
+        6,
+        7,
+        8
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": false,
+      "hybrid_supported": true,
+      "basis": "J0050 C.2 is the proposition: 'Closure completeness is self-declared, never referentially checked.' J0051's drill repair is the second instance - the isolation assertion is a self-assertion that nothing verifies - and J0048 R2 supplies the general rule for a third-party signal: a helper's exit code, HTTP response or window close is not evidence of the command's terminal state.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0050-compare/workspace/notes.md",
+          "sha256": "bfc749d330758ba59e3463fe0efdcfcd5fad2082ed6cfc0e4d2e75f66e7a6fb8"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0051-compare/workspace/notes.md",
+          "sha256": "af27f5636bc8c4f73264e27351814dc68fcb5647ae1b96c71064f15cb6cd5e78"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0048-compare/workspace/notes.md",
+          "sha256": "0b5b6cc01cd2d7831ba19024108c3971489b1debe751be715796f0f2095cddff"
+        }
+      ]
+    },
+    {
+      "finding_id": "F079",
+      "title": "Complete retained native backup closure",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0047-compare",
+      "delivery_positions_of_credited_job": [
+        1,
+        2,
+        3
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "Four jobs. J0047 and J0056 carry the GC-fence and closure-contents half; J0051 adds that 'non-self-contained SOURCE object stores are undetected'; J0054 carries the retained-closure half. The arm's distinctive contribution is J0047's integrity axis: closure records 'carry the \"complete Git/JJ history\" claim but have NO object-integrity axis', so the repair adds closure_integrity_level with object_content_verified required for complete, and states the negative - 'matching ref tips, an \"already up to date\" transport negotiation, a zero exit status ..., a file-level hash match against the source, or a readable manifest are NOT object-closure evidence.'",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0047-compare/workspace/notes.md",
+          "sha256": "e6ea3a7fe2d9c62560b86da7bfb87bd9fbb752d9a88af19fbabed031687a45d4"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0051-compare/workspace/notes.md",
+          "sha256": "af27f5636bc8c4f73264e27351814dc68fcb5647ae1b96c71064f15cb6cd5e78"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0054-compare/workspace/notes.md",
+          "sha256": "ada1d05c4e6aafa3c1458b2aee7d41c37558c7fe826f9106ef7d348d5cfd85bd"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0056-compare/workspace/notes.md",
+          "sha256": "2aa3260de29d42f48505e97cf80693796c84f30265cbeb83579137b763e46e19"
+        }
+      ]
+    },
+    {
+      "finding_id": "F081",
+      "title": "Backup existence is not verified recovery",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0047-compare",
+      "delivery_positions_of_credited_job": [
+        1,
+        2,
+        3
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0047 requires the verification receipt to assert op-head set equality with the referenced closure record, with any difference forced to blocked_operation_mismatch and never verified_on_disposable_copy. J0051's repair 1 is the isolation half: 'the drill can pass while still reading the original stores.' Together they are the union's 'verify destination bytes, complete native object interpretation and an isolated selected historical-operation restore before activation'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0047-compare/workspace/notes.md",
+          "sha256": "e6ea3a7fe2d9c62560b86da7bfb87bd9fbb752d9a88af19fbabed031687a45d4"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0051-compare/workspace/notes.md",
+          "sha256": "af27f5636bc8c4f73264e27351814dc68fcb5647ae1b96c71064f15cb6cd5e78"
+        }
+      ]
+    },
+    {
+      "finding_id": "F082",
+      "title": "Extras head integrity and crash corruption",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0057-compare",
+      "delivery_positions_of_credited_job": [
+        27,
+        28,
+        29
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0057 states the extras-store defect and adds a finding no other arm reached: 'The two head stores under .jj disagree with each other' - SimpleOpHeadsStore::remove_op_head and the stacked-table head accessor have different damage semantics - alongside 'get_head creating an empty table on an empty heads/ directory', which is the do-not-call-everything-corruption clause: an empty marker directory reads as a fresh store rather than as damage. J0047 supplies the op-head marker mechanism from jj's own documentation, including that 'if the old file didn't get properly deleted, then future readers will take care of that'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0057-compare/workspace/notes.md",
+          "sha256": "999d0832b93d0e14ac9f6f99179d6f5353d2554521fb61a521f508b75c838017"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0047-compare/workspace/notes.md",
+          "sha256": "e6ea3a7fe2d9c62560b86da7bfb87bd9fbb752d9a88af19fbabed031687a45d4"
+        }
+      ],
+      "code_fact_verification": [
+        "V-B8 lib/src/stacked_table.rs:521-528 @ f9588f37 - get_head on an empty head set does MutableTable::full + save_table. VERIFIED."
+      ]
+    },
+    {
+      "finding_id": "F084",
+      "title": "Sanitized inactive restore configuration",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0047-compare",
+      "delivery_positions_of_credited_job": [
+        1,
+        2,
+        3
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": false,
+      "basis": "J0047's third lead states it precisely: 'repo-scoped configuration is a POINTER, not content.' A sanitizer that scans restored bytes finds nothing to sanitize because the repo config lives outside the repository and only the id file travels, so the restored copy can resolve that id on the restoring machine. The repair requires the sanitized-inactive disposition to cover out-of-repo configuration references rather than only bytes.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0047-compare/workspace/notes.md",
+          "sha256": "e6ea3a7fe2d9c62560b86da7bfb87bd9fbb752d9a88af19fbabed031687a45d4"
+        }
+      ]
+    },
+    {
+      "finding_id": "F086",
+      "title": "Clone completion and cleanup",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0055-compare",
+      "delivery_positions_of_credited_job": [
+        21,
+        22,
+        23
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "GAINED OVER claude-hicap AND Arm P. J0055's L-74d9d8b172d3 is the proposition: 'Clone has multiple success/cleanup boundaries.' The repair binds the clone terminal state to a typed cleanup disposition, constrains effect_state for clone the way the neutral clone is already constrained, requires the shared cancellation record rather than prose, schematises the receipt extension, and states the stage boundary in the owner prose - which is the union's 'track clone setup, fetch, preset writing, checkout and residual-directory cleanup with exact destination identity'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0055-compare/workspace/notes.md",
+          "sha256": "7346b6eb0ce91ccb9024d72b7793fabbcc703bcf17f66987b0174708aa6babec"
+        }
+      ]
+    },
+    {
+      "finding_id": "F089",
+      "title": "Partial clone and LFS/submodule eligibility",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0052-compare",
+      "delivery_positions_of_credited_job": [
+        12,
+        13,
+        14
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "Four numbered gaps, and the never-silently-hydrate clause is the centre of them: 'Nothing detects a filtered/promisor repository'; 'closure_state: complete can be satisfied by objects that are not local'; 'Capture and verification may SILENTLY HYDRATE AND AUTHENTICATE'; and 'No promised-absent vs damaged classification anywhere.' The arm grounds the mechanism in Git's own design document - a failed object lookup invokes the promisor remote and 'For efficiency reasons, no check as to whether the missing object is actually a promisor object is performed' - and notes that unhydrated content 'already has to be marked FOR LFS/SUBMODULES', so the corpus has the shape and applies it to the wrong subset.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0052-compare/workspace/notes.md",
+          "sha256": "1dd33451de68f183489bd26cda3e5c190305181b139cb2bb23243b4ab68c496a"
+        }
+      ]
+    },
+    {
+      "finding_id": "F094",
+      "title": "Operation metadata is not idempotency",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0058-compare",
+      "delivery_positions_of_credited_job": [
+        30,
+        31,
+        32
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "J0058's L-2ccd857addc8 is the proposition: native operation attributes can correlate work but are not an idempotency protocol. The arm keeps the durable command-instance identity on PM's side rather than inferring it from native operation metadata, and records that the native attributes are durable user-visible text inside the repository rather than a private correlation channel.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0058-compare/workspace/notes.md",
+          "sha256": "8eece37fcbaae7f729c8ac86091ba5149397feb5a30605fd23bfd876c17a3a0d"
+        }
+      ]
+    },
+    {
+      "finding_id": "F102",
+      "title": "Upstream narrative inconsistencies",
+      "classification": "unsupported_or_rejected",
+      "credited_job": "b-compare/J0047-compare",
+      "delivery_positions_of_credited_job": [
+        1,
+        2,
+        3
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "Sustained, and the flagship instance is a correction of the arm's OWN inherited reconcile. The Muse stage retained Dojjo's comment - 'Do not use --connectivity-only: it skips unreachable refs such as refs/jj/keep/*' - as explicitly unverified. J0047 fetched git-fsck's documentation and resolved it: 'the OPERATIONAL conclusion (use a full fsck) is right, but the stated REASON is wrong: refs - including refs/jj/keep/* - are reachability roots, so --connectivity-only neither skips them nor misses objects that are absent. What it misses is BYTE-LEVEL CORRUPTION inside objects, blobs especially. The transferable rule is \"presence and reachability are not integrity\", which is stronger and differently scoped than the Dojjo comment. Do not carry the Dojjo wording into PM material. This supersedes the \"retained as unverified\" status in the J0019 child note.' Eleven of the twelve compare jobs carry comparable correction sections.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0047-compare/workspace/notes.md",
+          "sha256": "e6ea3a7fe2d9c62560b86da7bfb87bd9fbb752d9a88af19fbabed031687a45d4"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0055-compare/workspace/notes.md",
+          "sha256": "7346b6eb0ce91ccb9024d72b7793fabbcc703bcf17f66987b0174708aa6babec"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0056-compare/workspace/notes.md",
+          "sha256": "2aa3260de29d42f48505e97cf80693796c84f30265cbeb83579137b763e46e19"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0057-compare/workspace/notes.md",
+          "sha256": "999d0832b93d0e14ac9f6f99179d6f5353d2554521fb61a521f508b75c838017"
+        }
+      ]
+    },
+    {
+      "finding_id": "F107",
+      "title": "Graph page consistency and adjacency bounds",
+      "classification": "correction",
+      "credited_job": "b-compare/J0051-compare",
+      "delivery_positions_of_credited_job": [
+        9,
+        10,
+        11
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": true,
+      "basis": "ALL FOUR CLAUSES, stated against the SourceGraph contract - the most complete statement of this correction in the campaign. Relational validation of emitted counts and page bounds: repair 3, 'nothing binds a cursor to what produced it, or forbids lost/duplicated nodes'. Usable continuation on a page claiming more data: repair 2, '\"partial\" has no cause, so truncation-by-error is indistinguishable from end-of-history'. Unambiguous node identity: the selection-anchor repair, '\"selection anchors survive pagination\" does not say what the anchor is'. Finite parent-reference expansion: repair 1, 'a page boundary silently erases parent edges (off-page vs root is indistinguishable)'.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0051-compare/workspace/notes.md",
+          "sha256": "af27f5636bc8c4f73264e27351814dc68fcb5647ae1b96c71064f15cb6cd5e78"
+        }
+      ],
+      "clause_coverage": "4 of 4 clauses. claude-hicap was credited at 4 of 4 and muse13 at 3 of 4 with the gap disclosed; this arm matches the fullest prior statement and reaches the parent-edge clause from the page-boundary direction rather than the schema direction."
+    },
+    {
+      "finding_id": "F110",
+      "title": "New-repository object-format selection",
+      "classification": "optional_capability",
+      "credited_job": "b-compare/J0056-compare",
+      "delivery_positions_of_credited_job": [
+        24,
+        25,
+        26
+      ],
+      "credited_stage": "compare (Opus 5). The Muse breadth stage credited nothing - see stage_attribution.",
+      "premium_supported": true,
+      "hybrid_supported": false,
+      "basis": "REACHED BY NO ARM IN THE ENTIRE CAMPAIGN BEFORE THIS ONE. J0056's L-a2ab9a454e58 establishes that object format is absent from every JJ-side surface - the JJI-006 \u00a74.2 setup rows, jujutsu_revision, the currentness fence, the transport command target, and both backup records - while git_revision requires it and constrains commit_oid width accordingly. R1 is the discovered-format clause: carry object_format on the JJ side and 'disclose it in the \u00a74.2 setup row inventory and in Technical Details. Detection is from the backing Git store, never from an ID's visual length.' R3 is the user-choice clause: 'cmd.jujutsu.git.clone requests carry the requested object_format (or an explicit \"inherit from config\" marker) and results record the effective format actually created plus the observed remote format', with a new closed code object_format_mismatch so the upstream must-match-remote failure has a truthful typed outcome.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0056-compare/workspace/notes.md",
+          "sha256": "2aa3260de29d42f48505e97cf80693796c84f30265cbeb83579137b763e46e19"
+        }
+      ],
+      "code_fact_verification": [
+        "Verified against the arm's own receipts: jj clone help 'Object hash algorithm for the local Git repository. Must match the remote's hash algorithm, otherwise the operation will fail'; jj init help 'Corresponds to git init's --object-format option ... the object hash cannot currently be changed for an existing repo'. Both quoted verbatim by the arm from S00061/S00064."
+      ],
+      "clause_coverage": "Credited on both clauses. Disclosed: the user-choice clause is delivered for cmd.jujutsu.git.clone, which creates a new JJ repository; jj init's --object-hash appears in the arm's evidence but the repair does not extend the choice to a non-clone init path."
+    }
+  ],
+  "partial_matches": [
+    {
+      "finding_id": "F090",
+      "title": "Authorized incomplete-object materialization",
+      "why_partial": "J0052 establishes that capture and verification may silently hydrate and that unhydrated content already has to be marked for LFS and submodules, which is credited as part of F089. It does not propose an explicitly authorized workflow to OBTAIN the missing promisor or LFS objects for inspection or for a complete retained-history backup, which is what this finding asks for. Arm P proposed exactly that and is credited.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0052-compare/workspace/notes.md",
+          "sha256": "1dd33451de68f183489bd26cda3e5c190305181b139cb2bb23243b4ab68c496a"
+        }
+      ]
+    },
+    {
+      "finding_id": "F022",
+      "title": "Divergent change convergence",
+      "why_partial": "J0051 proposes first-class divergent and hidden revisions - adding divergent and hidden to node_state and the GUI census, marking both nodes when two share a stable_change_ref, and allowing a specific one to be targeted for READ actions 'while leaving mutation admission exactly as JJI-002 already specifies'. That is representability, and it is explicitly not convergence. claude-hicap's near-miss was refused on the same ground in continuation 4.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0051-compare/workspace/notes.md",
+          "sha256": "af27f5636bc8c4f73264e27351814dc68fcb5647ae1b96c71064f15cb6cd5e78"
+        }
+      ]
+    },
+    {
+      "finding_id": "F074",
+      "title": "Process execution follows owner environment",
+      "why_partial": "J0053 states a real process-policy obligation - register-before-spawn under one lock, cancel the process group or tree rather than the leader, terminal outcome only after drain and reap, and Windows parity stated rather than assumed. But the proposition is about routing Git/SSH, signing, filters, hooks, configured tools and forge sidecars through the exact owner environment, which the arm does not address.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0053-compare/workspace/notes.md",
+          "sha256": "11d2dbe3be7283499d537f2b564dc675a68117248cd7d5af150e6be8da69bbca"
+        }
+      ]
+    },
+    {
+      "finding_id": "F080",
+      "title": "Snapshot omission and skipped checkout",
+      "why_partial": "J0049 establishes the external editor's lossy scan - traversal errors dropped, symlinks and directories skipped, the size bound applied after a full read - which is credited as F030 and F037. The native snapshot-omission set and the checkout-side skipped_files case, which are what this finding is about, are not reached: no lead in the compared 32 carried the working-copy snapshot material.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0049-compare/workspace/notes.md",
+          "sha256": "46edfb4dee42124bc1532a0389a5a4c10212e5b0672a4447e2db4fb04d769fff"
+        }
+      ]
+    },
+    {
+      "finding_id": "F051",
+      "title": "Colocated import/export stays fail-closed",
+      "why_partial": "J0056 records that the '0.44.0 interop gate remains effective-false' as established context for the fetch-race lead. It does not state the colocated import/export proposition as a finding - that explicit import/export stays unavailable by default and requires the exact certified preflight for any compatibility mutation. Both claude-hicap and Arm P state it; this arm's compared leads did not carry it.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-b-compare-20260917-133734/jobs/J0056-compare/workspace/notes.md",
+          "sha256": "2aa3260de29d42f48505e97cf80693796c84f30265cbeb83579137b763e46e19"
+        }
+      ]
+    }
+  ]
+}

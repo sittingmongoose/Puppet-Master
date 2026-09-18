@@ -1,0 +1,35 @@
+{
+  "label": "Continuation 5 T80 (turn-budget control, ceiling 80, attempt 2) adjudication against the continuation-3 union, 2026-09-17",
+  "root": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/adjudication/t80",
+  "frozen_at": "2026-09-17T21:20:27Z",
+  "file_count": 5,
+  "total_bytes": 109333,
+  "files": [
+    {
+      "path": "PROGRESS.md",
+      "bytes": 3182,
+      "sha256": "67f9aca4af3b4dee1fbd680e37675bec6dabfe405ea24cdd9cb5045e3a232292"
+    },
+    {
+      "path": "README.md",
+      "bytes": 27654,
+      "sha256": "20d14b4bfd32cd4e054334527f0100b001920bb29232590aa95c7d81ffa8bd80"
+    },
+    {
+      "path": "t80-candidates.json",
+      "bytes": 17268,
+      "sha256": "4881f11446461ebecb1b92d52ffd2292cf6c82da750a7b5c622da7b156d03c3f"
+    },
+    {
+      "path": "t80-findings.json",
+      "bytes": 37282,
+      "sha256": "30a726399452f7de1239c930acaba05cbc85c8acdb959963357bfb944f914056"
+    },
+    {
+      "path": "t80-scoring.json",
+      "bytes": 23947,
+      "sha256": "c2921e3733c486855157da033c4fc9d883064985143e3ff7895544c528143418"
+    }
+  ],
+  "manifest_sha256": "ba091eb34df666d00dc516b69d8d57a837aa68ed9a31c771a702f676f6d503fd"
+}

@@ -1,0 +1,122 @@
+{
+ "pv": {
+  "PV-01": [
+   "IterationReason publishes exactly seven values, bit-valued, with Push = 0: {Push=0, ForcePush=1, Create=2, Rebase=4, Unknown=8, Retarget=16, ResolveConflicts=32}",
+   "arm-s/runs/topic2-s-full-20260917-051531/jobs/J0014-reconcile/workspace/research-evidence/sources/S00009/text.txt:3107-3115"
+  ],
+  "PV-02": [
+   "The node client accumulator is `if (resultPart) { result |= resultPart; }`, so an unrecognised enum name contributes nothing and the result stays 0 = Push",
+   "arm-s/.../jobs/J0014-reconcile/workspace/research-evidence/sources/S00010/text.txt:273,289-291"
+  ],
+  "PV-03": [
+   "GitPullRequestIteration carries sourceRefCommit, targetRefCommit and commonRefCommit; commonRefCommit is the first common commit of BOTH refs",
+   "arm-s/.../jobs/J0015-compare/workspace/research-evidence/sources/S00035/text.txt:259-261"
+  ],
+  "PV-04": [
+   "Retarget carries newTargetRefName / oldTargetRefName and moves no head",
+   "arm-s/.../jobs/J0015-compare/workspace/research-evidence/sources/S00035/text.txt:276"
+  ],
+  "PV-05": [
+   "Build-validation policy expiry: \"After <n> hours if <branch name> has been updated: This option expires the current policy status when the protected branch updates ...\" - a staleness with no head change and no new iteration",
+   "arm-s/.../jobs/J0007-implementation/workspace/research-evidence/sources/S00034/text.txt:524-526"
+  ],
+  "PV-06": [
+   "Truncation conventions: hasMoreCommits, commitTooManyChanges, commentTruncated, and nextSkip/nextTop on the changes route",
+   "arm-s/.../jobs/J0015-compare/.../S00035/text.txt:269,181,175 and jobs/J0014-reconcile/.../S00009/text.txt:2018"
+  ],
+  "PV-07": [
+   "Threads - List takes $iteration (right side) and $baseIteration (left side) at api-version 7.1; CommentIterationContext and changeTrackingId are separate objects",
+   "arm-s/.../jobs/J0015-compare/.../S00052/text.txt:32 ; S00039/text.txt:215 ; jobs/J0008-history/.../S00055/text.txt:704"
+  ],
+  "PV-08": [
+   "\"If the PR being created contains more than 100,000 modified files ... that PR won't support iterations\"",
+   "arm-s/.../jobs/J0015-compare/.../S00041/text.txt:100"
+  ],
+  "PV-09": [
+   "Git Repositories security namespace 8adf73b7-389a-4276-b638-fe1653f7efc7 publishes PolicyExempt, EditPolicies and PullRequestBypassPolicy - all write/exempt/bypass, no read bit; policy/evaluations lists only vso.code",
+   "arm-s/.../jobs/J0012-reconcile/.../S00041/text.txt:118,127,131,135 ; jobs/J0015-compare/.../S00035/text.txt:88"
+  ],
+  "PV-10": [
+   "git/policy/configurations is api-version 7.1 with repositoryId, refName, policyType, $top, continuationToken; policy/evaluations is 7.1-preview.1 with artifactId, includeNotApplicable, $top, $skip",
+   "arm-s/.../jobs/J0016-compare/.../S00073/text.txt:33 ; arm-h2/.../jobs/J0020-compare/.../S00074/text.txt:33-35"
+  ],
+  "PV-11": [
+   "autoCompleteIgnoreConfigIds verbatim: \"List of any policy configuration Id's which auto-complete should not wait for. Only applies to optional policies (isBlocking == false). Auto-complete always waits for required policies (isBlocking == true).\"",
+   "arm-s/.../jobs/J0016-compare/.../S00094/text.txt:500-503"
+  ],
+  "PV-12": [
+   "PolicyEvaluationRecord = {_links, artifactId, completedDate, configuration, context, evaluationId, startedDate, status} - no commit, iteration or revision field; PolicyEvaluationStatus = queued|running|approved|rejected|notApplicable|broken",
+   "arm-h2/.../jobs/J0020-compare/.../S00031/text.txt:214-263"
+  ],
+  "PV-13": [
+   "GitStatusState.notApplicable is \"Bypasses policy requirement\" in the merge-gating table, against PolicyEvaluationStatus.notApplicable = \"The policy does not apply to this pull request\" - one wire word, two meanings",
+   "arm-h2/.../jobs/J0020-compare/.../S00041/text.txt:48 and S00042/text.txt:48 against S00031/text.txt:260-261"
+  ],
+  "PV-14": [
+   "Pull Request Iteration Statuses - List is released at api-version 7.1 on .../iterations/{iterationId}/statuses",
+   "arm-h2/.../jobs/J0020-compare/.../S00075/text.txt:30 ; arm-s/.../jobs/J0014-reconcile/.../S00023/text.txt:30"
+  ],
+  "PV-15": [
+   "The policy-evaluation Context interface carries lastMergeCommitId, lastMergeSourceCommitId, lastMergeTargetCommitId, plus buildIsNotCurrent, isExpired and wasAutoRequeued",
+   "arm-s/.../jobs/J0008-history/workspace/research-evidence/sources/S00074/text.txt:81-95"
+  ],
+  "PV-16": [
+   "configuration.url = \"The URL where the policy configuration can be retrieved\"; the evaluation record has no human-facing URL",
+   "arm-s/.../jobs/J0016-compare/.../S00072/text.txt:213"
+  ],
+  "PV-17": [
+   "IdentityRefWithVote[] on the PR; isReapprove = \"Indicates if this approve vote should still be handled even though vote didn't change\"",
+   "arm-s/.../jobs/J0015-compare/.../S00040/text.txt:67,152"
+  ],
+  "PV-18": [
+   "The policy artifact template is vstfs:///CodeReview/CodeReviewId/{projectId}/{pullRequestId}; renovate's own test asserts the literal \"vstfs:///CodeReview/CodeReviewId/undefined/${pullRequestIdMock}\"",
+   "arm-s/.../jobs/J0016-compare/.../S00072/text.txt:32 ; jobs/J0007-implementation/.../S00023/text.txt:1"
+  ],
+  "PV-19": [
+   "\"Specify the strategy used to merge the pull request during completion. If MergeStrategy is not set to any value, a no-FF merge will be created if SquashMerge == false ...\"",
+   "arm-s/.../jobs/J0016-compare/.../S00094/text.txt:225"
+  ],
+  "PV-20": [
+   "\"Although any policy evaluation can be requeued, at present only build policies perform any action in response. Requeueing a build policy will queue a new build to run (cancelling any existing build ...)\"",
+   "arm-h2/.../jobs/J0020-compare/.../S00044/text.txt:33-34"
+  ],
+  "PV-21": [
+   "PolicyConfiguration carries isBlocking, isEnabled, isDeleted, revision (number), id (number) and type",
+   "arm-s/.../jobs/J0008-history/.../S00074/text.txt:70-80"
+  ],
+  "PV-22": [
+   "REST API versioning page banner covers Azure DevOps Services | Azure DevOps Server | Azure DevOps Server 2022",
+   "arm-s/.../jobs/J0015-compare/.../S00041/text.txt:27 ; arm-h2/.../jobs/J0020-compare/.../S00039/text.txt:1"
+  ]
+ },
+ "evidence_hashes": {
+  "arm_s_J0015": "02ad7d5fdddb4476d8d3194f07ed9c5a0eea7909ecb56e89a75b7e9a232f90cc",
+  "arm_s_J0016": "77535d68f6d6728cd34939895575daad54d0f91c5476e7a4360b01af371fb027",
+  "arm_s_J0017": "4aa56396205aaf7fb00752a171fc01fe750097c1c2fcf7cab935b978944bfbaf",
+  "h2_J0019": "44c33e6f17006e3706a1555b422a2fee7dc5895cf31b340cc019113845a47356",
+  "h2_J0020": "d3ca42089d70d5354c818ba7312ea0a7d5d8d77254c9366e95945a576f735be7"
+ },
+ "evidence_match": {
+  "arm_s_J0015": true,
+  "arm_s_J0016": true,
+  "arm_s_J0017": true,
+  "h2_J0019": true,
+  "h2_J0020": true
+ },
+ "canon_hashes": {
+  "Plans/Azure_DevOps_Integration.md": "3ae59c0217219175051418df0482663b247888cc65db087f942158ca5887cc2d",
+  "Plans/azure_devops_integration_fixtures.json": "aaefd3b321d300d75aafed1871d9e7c32313220ee16e9da9edbd82c6a765ee72",
+  "Plans/forge_integration_contracts.schema.json": "9ccecc1c40af59cc7396a7f6851152308214cc9f6989fb08d1ee3a45dd69aef8",
+  "Plans/forge_integration_contract_fixtures.json": "8d123b215c20be0838e554b639fedc30b5b401a800663033ddb281178effc506",
+  "Plans/source_control_contracts.schema.json": "012a1640c7a84b21e06f705a308409d7892df19917493a7fc2eb9257fa71c2dd",
+  "Plans/Forge_Integrations.md": "4d13b2bd5fb5b77be4c3deb1814b04d1e5d1069ac3576cd4fe8f8a1816d6eb95",
+  "Plans/Source_Control_System.md": "07a8401d312980fbb30b7d6df0b24732e81f3de6e87624fe795e0c1bb1c3baff",
+  "Plans/FileSafe.md": "aafe2b1dae88e702340f53a1166c4c71f621ff80ecc9f4013742016589939339",
+  "Plans/UI_Command_Catalog.md": "4fb0eb751c66b8565aa82e5407a97b67c6efb582c9206cbc47ee5f538ed504a6",
+  "Plans/Wiring_Matrix.production.json": "ef3085adb3068257c35b7d848fdf5f16c30257980ec1b414f02c4041c4232bed",
+  "Plans/forge_backup_tsnet_acceptance.json": "b447098646a0e5de002da2e95d290511b7f47a259ee168df3b287dcecbdbbe0c",
+  "Plans/gitlab_integration_fixtures.json": "e07ebaff368627fe2aa68bf05ac0c2efdc380309b4e8a9c410386678aad2eb5d",
+  "Plans/bitbucket_integration_fixtures.json": "8b9bc95990d507bf0b9e45bf4f7d0e86839e89bcfcb934ab301f2d578498dd20"
+ },
+ "head": "4f5eda0d18a9deff2349b03ae573f0ffd706ed61"
+}

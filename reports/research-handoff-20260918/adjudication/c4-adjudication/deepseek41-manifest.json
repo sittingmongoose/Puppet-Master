@@ -1,0 +1,35 @@
+{
+  "label": "Arm deepseek41 adjudication against the continuation-3 union, revised after independent review 2026-09-17",
+  "root": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/adjudication/deepseek41",
+  "frozen_at": "2026-09-17T02:18:01Z",
+  "file_count": 5,
+  "total_bytes": 130094,
+  "files": [
+    {
+      "path": "PROGRESS.md",
+      "bytes": 9627,
+      "sha256": "69fc356dcf8e7642f43797190a29df30e0fcc2b240ec926edc045f0ac3c52165"
+    },
+    {
+      "path": "README.md",
+      "bytes": 20552,
+      "sha256": "052b4be96c26576c90426ae6e3a39816669b6ff66605a2bc3817e57c7a410ff1"
+    },
+    {
+      "path": "deepseek41-candidates.json",
+      "bytes": 15814,
+      "sha256": "a06310c4e63eabe7b983312074bf3474f5d75282947d6dd842062a303d52fa16"
+    },
+    {
+      "path": "deepseek41-findings.json",
+      "bytes": 61866,
+      "sha256": "b2c8700e3abe6a81d5b75fbad899d782a4268277c0546bf24db919eb493abf04"
+    },
+    {
+      "path": "deepseek41-scoring.json",
+      "bytes": 22235,
+      "sha256": "1e12e2adedfbd10ab64584d97f6af9a89fbe579696dfb557c2e13e20d288a99b"
+    }
+  ],
+  "manifest_sha256": "abaf7d6d41087c0a1b7202bfdce2370f9fdca0ce99fbf2ff9a0e3a9b2a709c94"
+}

@@ -1,0 +1,131 @@
+<title>Azure DevOps Decisions</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --paper: #F7F7F4; --ink: #1B1F1E; --muted: #5C6664; --rule: #D9DDDB;
+    --accent: #0F6E63; --wash: #E3F0EE; --soft: #EEF0EE;
+    --display: "Newsreader", Georgia, "Times New Roman", serif;
+    --body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+    --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --paper: #131716; --ink: #E7EAE8; --muted: #9AA5A2; --rule: #2A3230; --accent: #5FB7AA; --wash: #1B2826; --soft: #1C2120; color-scheme: dark; }
+  }
+  :root[data-theme="dark"] { --paper: #131716; --ink: #E7EAE8; --muted: #9AA5A2; --rule: #2A3230; --accent: #5FB7AA; --wash: #1B2826; --soft: #1C2120; color-scheme: dark; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; padding-inline: 20px; padding-block: 40px 80px; }
+  main { max-width: 720px; margin-inline: auto; }
+  .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; }
+  h1 { font-family: var(--display); font-weight: 500; font-size: clamp(32px, 5vw, 42px); line-height: 1.12; margin: 0 0 16px; text-wrap: balance; letter-spacing: -0.01em; }
+  .lede { font-family: var(--display); font-size: 20px; line-height: 1.4; margin: 0 0 40px; max-width: 60ch; }
+  article { border-top: 1px solid var(--rule); padding-top: 28px; margin-bottom: 44px; }
+  article h2 { font-family: var(--display); font-weight: 500; font-size: 26px; line-height: 1.2; margin: 0 0 18px; text-wrap: balance; }
+  dl { margin: 0; display: grid; grid-template-columns: 1fr; gap: 14px; }
+  dt { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  dd { margin: 0; max-width: 64ch; }
+  dd p { margin: 0 0 10px; } dd p:last-child { margin: 0; }
+  ol.options { margin: 0; padding-left: 22px; max-width: 64ch; } ol.options li { margin-bottom: 10px; }
+  .rec { background: var(--wash); padding: 14px 18px; margin-top: 6px; max-width: 64ch; }
+  .answer { border: 1px solid var(--rule); padding: 14px 18px; max-width: 64ch; color: var(--muted); }
+  code { font-family: var(--mono); font-size: 0.92em; background: var(--soft); padding: 1px 5px; }
+  footer { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--muted); max-width: 64ch; }
+  @media (max-width: 480px) { body { padding-block: 28px 60px; } .lede { font-size: 18px; } }
+</style>
+<main>
+<p class="eyebrow">Azure DevOps Integration research, 17 to 18 September 2026. Seven decisions for Jared</p>
+<h1>What the Azure DevOps research left for you to decide</h1>
+<p class="lede">Two full research arms on the Azure DevOps Integration plan produced 26 verified corrections, which land under the standing repair authorization. Seven things they found are not corrections, because the plans make no false promise about them yet. They are choices about what Puppet Master will do, and each records as a Decision Log entry.</p>
+
+<article>
+  <h2>1. Reading branch policies</h2>
+  <dl>
+    <dt>The question</dt><dd><p>Nothing in the 43-command forge set reads the branch policies that guard a branch on Azure DevOps; the plans only promise policy information on a pull request. Should the promise be narrowed to what the plans already say, or should a read of branch policies be added?</p></dd>
+    <dt>Why it came up</dt><dd><p>Both arms found the gap and disagreed on what to do about it. Azure exposes branch policies separately from pull requests, and a user looking at a branch has no way to learn what will block a merge until they open one.</p></dd>
+    <dt>What you get</dt><dd><p>Narrowing keeps the plans truthful with no new surface. Adding the read gives the branch view the same gate information the pull request view has, before a pull request exists.</p></dd>
+    <dt>What it costs</dt><dd><p>The read is a new command with its own contract, fixtures and a provider-neutral shape, since GitHub and GitLab expose the equivalent differently.</p></dd>
+    <dt>Options</dt><dd><ol class="options"><li>Narrow the promise to pull requests now; consider the branch read later.</li><li>Add the branch-policy read as a new command.</li></ol></dd>
+    <dt>Recommendation</dt><dd><div class="rec">Option 1. Truthful now, and the read can be added when the policies region in decision 4 exists to display it.</div></dd>
+    <dt>Your answer</dt><dd><div class="answer">Awaiting your answer.</div></dd>
+  </dl>
+</article>
+
+<article>
+  <h2>2. What a vote is attached to</h2>
+  <dl>
+    <dt>The question</dt><dd><p>No Azure DevOps vote carries a revision identity. Read literally, the plans' rule that an approval is bound to a revision makes every Azure approval stale at first observation. Should approvals be bound to the revision observed when Puppet Master read them, labelled as observed by Puppet Master, or treated as never attributable to a revision?</p></dd>
+    <dt>Why it came up</dt><dd><p>Azure records a reviewer's vote on the pull request, not on a specific iteration. Both arms found that the plans' staleness rule cannot be met by the provider as it is.</p></dd>
+    <dt>What you get</dt><dd><p>Observation-time binding gives users a usable staleness signal with an honest label. Never-attributable is strictly truthful but makes the two vote criteria in the Azure plan unmeetable and shows every approval as unbound.</p></dd>
+    <dt>What it costs</dt><dd><p>Observation-time binding needs a stored observation revision per vote and copy that says Puppet Master observed it. Never-attributable needs the two criteria rewritten.</p></dd>
+    <dt>Options</dt><dd><ol class="options"><li>Bind to the observed revision, labelled as observed by Puppet Master.</li><li>Treat Azure votes as never attributable to a revision.</li></ol></dd>
+    <dt>Recommendation</dt><dd><div class="rec">Option 1. It is what a careful human reviewer does with the same information, and the label keeps it honest.</div></dd>
+    <dt>Your answer</dt><dd><div class="answer">Awaiting your answer.</div></dd>
+  </dl>
+</article>
+
+<article>
+  <h2>3. Status checks and policy evaluations</h2>
+  <dl>
+    <dt>The question</dt><dd><p>On Azure, a status check is both an API surface and a policy type. Showing statuses only loses the requirement level; showing policy evaluations only misses statuses no policy watches; showing both naively shows one check twice in two states. Which should the checks view show?</p></dd>
+    <dt>Why it came up</dt><dd><p>The checks command as planned asks Azure for something it cannot return, and once that is repaired the display still has to pick a source. The arms note this may not be implementable until a join key between the two exists.</p></dd>
+    <dt>What you get</dt><dd><p>A checks view that agrees with what Azure will actually enforce, or one that is complete but ambiguous about enforcement.</p></dd>
+    <dt>What it costs</dt><dd><p>A joined view needs a documented key between a status and the policy that watches it, which Azure does not publish directly; the research could not confirm one exists.</p></dd>
+    <dt>Options</dt><dd><ol class="options"><li>Evaluations as the primary list, with unwatched statuses shown separately as informational.</li><li>Statuses only, with the requirement level left out.</li><li>Both, joined, once a key is established; until then, option 1.</li></ol></dd>
+    <dt>Recommendation</dt><dd><div class="rec">Option 3, which is option 1 now with the join as the stated end state. Undecided is better than decided wrongly, and this keeps enforcement visible today.</div></dd>
+    <dt>Your answer</dt><dd><div class="answer">Awaiting your answer.</div></dd>
+  </dl>
+</article>
+
+<article>
+  <h2>4. Where policies live in the interface</h2>
+  <dl>
+    <dt>The question</dt><dd><p>The Azure plan promises policies and checks, but the two consumer owners, Source Control and the final interface specification, name only "current checks". Should there be one gate list whose rows carry their source and an enforcement column, or a new provider-neutral policies region that amends both consumer owners?</p></dd>
+    <dt>Why it came up</dt><dd><p>Without a decision, the Azure promise has nowhere to render. Decisions 1 and 3 both need the answer.</p></dd>
+    <dt>What you get</dt><dd><p>One gate list is the smaller change and keeps checks where users already look. A policies region is clearer for providers with rich policy models but adds a surface to two owners.</p></dd>
+    <dt>What it costs</dt><dd><p>One list: a source column and an enforcement column, with fixtures. A region: new units in two consumer owners and the interface specification.</p></dd>
+    <dt>Options</dt><dd><ol class="options"><li>One gate list with a source and an enforcement column.</li><li>A new provider-neutral policies region amending both consumer owners.</li></ol></dd>
+    <dt>Recommendation</dt><dd><div class="rec">Option 1. It keeps one place for "what blocks this merge" and carries enforcement explicitly.</div></dd>
+    <dt>Your answer</dt><dd><div class="answer">Awaiting your answer.</div></dd>
+  </dl>
+</article>
+
+<article>
+  <h2>5. A merge strategy field</h2>
+  <dl>
+    <dt>The question</dt><dd><p>The merge command has no strategy field, and on Azure the omission silently selects no-fast-forward. The correction being landed states that in prose. Should the command gain a typed merge-strategy field so the choice is explicit?</p></dd>
+    <dt>Why it came up</dt><dd><p>The research found that omission reads as safety and is not; the provider makes a choice on the user's behalf.</p></dd>
+    <dt>What you get</dt><dd><p>An explicit, provider-neutral strategy the user sees before merging.</p></dd>
+    <dt>What it costs</dt><dd><p>A field on a closed command shape, a provider mapping for each forge, fixtures, and confirmation copy.</p></dd>
+    <dt>Options</dt><dd><ol class="options"><li>Add the typed strategy field, defaulting to the provider's default and always shown.</li><li>Leave the command as is, with the prose statement only.</li></ol></dd>
+    <dt>Recommendation</dt><dd><div class="rec">Option 1. A merge is the one action users cannot undo cheaply; the strategy should never be implicit.</div></dd>
+    <dt>Your answer</dt><dd><div class="answer">Awaiting your answer.</div></dd>
+  </dl>
+</article>
+
+<article>
+  <h2>6. Re-running a policy evaluation</h2>
+  <dl>
+    <dt>The question</dt><dd><p>Azure lets a user requeue a policy evaluation. Puppet Master has no command for it. Add one?</p></dd>
+    <dt>Why it came up</dt><dd><p>When a build policy fails for a transient reason, the only recovery on Azure is to requeue; without the command the user leaves Puppet Master to do it.</p></dd>
+    <dt>What you get</dt><dd><p>Recovery without leaving the workbench.</p></dd>
+    <dt>What it costs</dt><dd><p>A new command in the frozen forge set with permissions, a receipt and fixtures, and no equivalent on some providers, so it must degrade truthfully.</p></dd>
+    <dt>Options</dt><dd><ol class="options"><li>Add a requeue command, disabled with a typed reason where the provider has no equivalent.</li><li>Do not add it; link out.</li></ol></dd>
+    <dt>Recommendation</dt><dd><div class="rec">Option 1, after decision 3 settles what an evaluation is in the interface; it is small and it closes a real gap.</div></dd>
+    <dt>Your answer</dt><dd><div class="answer">Awaiting your answer.</div></dd>
+  </dl>
+</article>
+
+<article>
+  <h2>7. A vote and reviewer carrier</h2>
+  <dl>
+    <dt>The question</dt><dd><p>The Azure plan's two vote criteria promised things no contract shape could carry; the correction being landed amends those criteria. Should a vote, approval and reviewer carrier be added to the review contracts so the promise can return?</p></dd>
+    <dt>Why it came up</dt><dd><p>Every forge exposes votes or approvals, and Puppet Master's review view has no typed place for them.</p></dd>
+    <dt>What you get</dt><dd><p>Reviewer state in the review view, provider-neutral, with decision 2's binding rule applied.</p></dd>
+    <dt>What it costs</dt><dd><p>A new record family in the forge contracts with fixtures per provider and the interface rows to show it.</p></dd>
+    <dt>Options</dt><dd><ol class="options"><li>Add the carrier, provider-neutral, with decision 2's binding.</li><li>Leave votes out of the review view.</li></ol></dd>
+    <dt>Recommendation</dt><dd><div class="rec">Option 1. A review view without reviewer state is incomplete on every provider, not only Azure.</div></dd>
+    <dt>Your answer</dt><dd><div class="answer">Awaiting your answer.</div></dd>
+  </dl>
+</article>
+
+<footer>Sources: the Azure DevOps union and arm scoring in <code>reports/research-topic2-20260917/adjudication/</code>, the Part 1 candidate record of 17 September 2026, and its confirmation review. The 26 corrections land separately under the standing repair authorization. Answers record as Decision Log entries in both sections, then shards and index regenerate.</footer>
+</main>

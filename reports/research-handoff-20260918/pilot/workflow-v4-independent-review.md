@@ -1,0 +1,17 @@
+# Independent v4 transport review
+
+**Verdict: clean in the assigned scope; no blocking change found.** Reviewed the complete `pilot_v3.py` → `pilot_v4.py` diff and existing smoke/result. Ran `python3 v4-handoff-smoke.py` exactly once: exit 0, seven checks passed. No provider, Goal, campaign or broad test was run. The smoke refreshed its standard result artifact; code/protocols were not edited.
+
+Reviewed bytes:
+- `pilot_v4.py`: `781229341f64df14ca07a7fa0792bd0a709162f792b0453b5d393dbaf7421edc`
+- `v4-handoff-smoke.py`: `28ee7dce39cfa0f10c279f414dacd0fd367674853cca7e47d88010706d6c899d`
+
+The diff is confined to v4 run/protocol identity, shared-report transport/sizing and propagation of explicit adapter cancellation after outcome persistence. Prompts, model/effort choices, assignment guidance, timeout defaults/arguments and `research_shared_v3.py` selection are unchanged. Init still records the actual v4 script, v3 helper and base-helper hashes; jobs still copy and hash that helper as `research.py` and validate frozen inputs before execution. A 360-second job limit still requires the explicit configured value; v4 does not silently replace the 900-second default.
+
+`report_phases`/`report_ids` drive both handoff inclusion and batch sizing. Reconciliation receives implementation/history reports; comparison additionally receives reconciliation, excluding old comparisons. A report is transported once per source-job ID in each handoff, while every lead retains its complete body, heading and phase→job association. Different jobs with identical prose remain distinct. Shared-report accounting resets at batch boundaries, and oversized single-lead reports remain intact: 30,000 characters is a soft target, not truncation. The smoke's ten synthetic 200-character leads with one shared 20,000-character report changed from ten batches to one 23,377-character handoff, preserving all associations. This is a transport example, not a measured model speedup or semantic-quality result.
+
+AST comparison confirms `fingerprint`, `delivered`, `finish`, `recover`, `ready` and `ingest` are unchanged. Consequently the existing per-ID delivery, report-hash freshness, upstream fingerprint and successful-study rules still apply. Importing three completed research jobs can preserve these rules if their job/workspace/outcome/delivery bytes and lead bodies stay identical, and reconstructed `run.json` associations reference those same job IDs. Existing history/implementation fingerprints depend on lead bytes rather than run version. This review did not perform or certify the proposed real import; verify its byte identities and readiness after association reconstruction. New downstream jobs must use v4 inputs/hashes, and all four matched conditions must share that downstream protocol.
+
+Explicit `interrupted`, `cancelled` or `canceled` adapter results now persist `outcome.json` and raise `KeyboardInterrupt`, preventing subsequent scheduler admissions; ordinary error outcomes still return normally. The mock exercises each branch. Already admitted executor jobs can still finish while the executor unwinds; this is cancellation propagation, not proof of immediate cancellation of every concurrent process. Outcome-bearing unattached artifacts remain recoverable under the unchanged recovery rules.
+
+No new claim of complete discovery, source validity, native reliability, hard handoff size, immutable cache isolation or campaign completion follows. Existing v3 scope limits continue to apply.

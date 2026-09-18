@@ -1,0 +1,564 @@
+{
+  "schema": "jj.continuation4.arm_scoring.v1",
+  "arm": "muse13",
+  "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm; no model-family relationship with the reviewed model",
+  "run": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/runs/jujutsu-muse13-20260916-215801",
+    "terminal_stop_checked_first": "campaign-terminal.json and monitor-state.json both record 'Stop: admitted_attempt_cap' - a designed gate, not an exception. Confirmed before scoring, as instructed, and in contrast to the quarantined union and glm53 runs whose stop_reason is a Python FileNotFoundError.",
+    "manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/arm-outputs/muse13-manifest.json",
+    "manifest_sha256_internal": "c20aa3925d8a04521fe5314ff993b9a861b80c4c02ca6f1b500b9502659991d3",
+    "manifest_file_bytes_sha256": "2763e496eaf3d35ccb460a26befe499f243f659cd4445131bf58ad088efa2aa1",
+    "files": 11510,
+    "total_bytes": 227493876,
+    "verification": "Recomputed the internal digest from the 11,510 rows and independently re-hashed the whole tree; both match. Frozen since 2026-09-16T22:19:55Z."
+  },
+  "review_model": {
+    "model": "muse-code/muse-spark-1.3-contributor",
+    "effort": "xhigh",
+    "transport": "oh-my-pi 18.2.2",
+    "per_job_ceiling_responses": 40,
+    "per_job_budget_usd": null,
+    "per_job_timeout_seconds": 2400,
+    "workers": 3,
+    "admissions": 12,
+    "arm_cap_usd": 50
+  },
+  "inputs": {
+    "description": "the premium arm's frozen discovery, study and history artifacts, same starting state as Arm C",
+    "input_leads": 88,
+    "bound": "Same-input replacement of the review model; recall is bounded by what the premium arm's research artifacts contain."
+  },
+  "budget_truncated_caveat": {
+    "runner_caveat": "the oh-my-pi adapter labels any meter denial budget_truncated, including a plain response ceiling",
+    "independently_verified": true,
+    "evidence": [
+      "protocol/arm-budgets/muse13.json has no per-job money ceiling (only muse13_usd: 50)",
+      "arm cap $50 against $0.164390 captured; per-job maximum $0.0246",
+      "timing.json money_stop_reason: null",
+      "both budget_truncated jobs sit at 40 and 41 native responses while the ten completed jobs sit at 20-38"
+    ],
+    "conclusion": "Both budget_truncated outcomes are response-ceiling truncations. No job was money-truncated.",
+    "off_by_one": "J0020 recorded 41 responses against a 40 ceiling - the post-response boundary the runner documented in corrections.json item C3."
+  },
+  "job_table": [
+    {
+      "job": "J0017-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 146.467,
+      "native_responses": 30,
+      "receipts": 30,
+      "captured_usd": 0.013409,
+      "assigned_lead_ids": [
+        "L-80244e477912"
+      ],
+      "receipted_lead_deliveries": [
+        "L-80244e477912"
+      ],
+      "notes_present": true,
+      "notes_sha256": "af6131f4ac0779f5aed6238e8bdf6038776a42503371960f4775011e60116b2e",
+      "authored_lead_documents": [
+        "diffedit3-line-endings.md",
+        "diffedit3-symlink-confinement.md"
+      ],
+      "produced_any_assertion_document": true,
+      "source_locator_receipts": 36
+    },
+    {
+      "job": "J0018-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "budget_truncated",
+      "bound_by": "responses",
+      "elapsed_seconds": 123.636,
+      "native_responses": 40,
+      "receipts": 40,
+      "captured_usd": 0.016887,
+      "assigned_lead_ids": [
+        "L-7dc9a6726cf9"
+      ],
+      "receipted_lead_deliveries": [],
+      "notes_present": false,
+      "notes_sha256": null,
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": false,
+      "source_locator_receipts": 41
+    },
+    {
+      "job": "J0019-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 135.327,
+      "native_responses": 30,
+      "receipts": 30,
+      "captured_usd": 0.013144,
+      "assigned_lead_ids": [
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66",
+        "L-39a5001283f3"
+      ],
+      "receipted_lead_deliveries": [
+        "L-39a5001283f3",
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66"
+      ],
+      "notes_present": true,
+      "notes_sha256": "96b708f2bb4f3555b41cbc898c727d43f4a528322804591393827ec4977ae567",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "source_locator_receipts": 36
+    },
+    {
+      "job": "J0020-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "budget_truncated",
+      "bound_by": "responses",
+      "elapsed_seconds": 153.666,
+      "native_responses": 41,
+      "receipts": 41,
+      "captured_usd": 0.015955,
+      "assigned_lead_ids": [
+        "L-7dc9a6726cf9"
+      ],
+      "receipted_lead_deliveries": [
+        "L-7dc9a6726cf9"
+      ],
+      "notes_present": true,
+      "notes_sha256": "85d8123711e70e2df166104ddbbed0bf5ba6a83639ac070b3510a9ba8e737aca",
+      "authored_lead_documents": [
+        "diffedit3-no-edit-save-changes.md",
+        "diffedit3-symlink-write-through.md",
+        "jj-resolve-partial-commit.md"
+      ],
+      "produced_any_assertion_document": true,
+      "source_locator_receipts": 37
+    },
+    {
+      "job": "J0021-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 118.091,
+      "native_responses": 20,
+      "receipts": 20,
+      "captured_usd": 0.009782,
+      "assigned_lead_ids": [
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66",
+        "L-39a5001283f3"
+      ],
+      "receipted_lead_deliveries": [
+        "L-39a5001283f3",
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66"
+      ],
+      "notes_present": true,
+      "notes_sha256": "ba362c831c351f046ad487d59dcb75d9c3c2cad773f0dc7d8ba19dfd0df5654a",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "source_locator_receipts": 23
+    },
+    {
+      "job": "J0022-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 136.545,
+      "native_responses": 26,
+      "receipts": 26,
+      "captured_usd": 0.013997,
+      "assigned_lead_ids": [
+        "L-80244e477912"
+      ],
+      "receipted_lead_deliveries": [
+        "L-80244e477912"
+      ],
+      "notes_present": true,
+      "notes_sha256": "65ee541f8040a158a8f89fe30c9995621488b1dba3d5d832a24466fc90c7e891",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "source_locator_receipts": 64
+    },
+    {
+      "job": "J0023-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 104.638,
+      "native_responses": 22,
+      "receipts": 22,
+      "captured_usd": 0.008284,
+      "assigned_lead_ids": [
+        "L-c0c7178a160f",
+        "L-444f31e68545",
+        "L-0793ad1e2a78"
+      ],
+      "receipted_lead_deliveries": [
+        "L-0793ad1e2a78",
+        "L-444f31e68545",
+        "L-c0c7178a160f"
+      ],
+      "notes_present": true,
+      "notes_sha256": "42da417bb9e2267deb608c8361e6fdac8ad6c2d88c83af79f31d5b0b8491b079",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "source_locator_receipts": 17
+    },
+    {
+      "job": "J0024-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 126.822,
+      "native_responses": 25,
+      "receipts": 25,
+      "captured_usd": 0.013328,
+      "assigned_lead_ids": [
+        "L-7dc9a6726cf9"
+      ],
+      "receipted_lead_deliveries": [
+        "L-7dc9a6726cf9"
+      ],
+      "notes_present": true,
+      "notes_sha256": "ab455b724538368e08218cd226b94b02c69ee24715d570089a97ccbbd0bfbcbd",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "source_locator_receipts": 42
+    },
+    {
+      "job": "J0025-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 153.852,
+      "native_responses": 36,
+      "receipts": 36,
+      "captured_usd": 0.011989,
+      "assigned_lead_ids": [
+        "L-ad68a4ac94ad",
+        "L-2e0dc4dec29d",
+        "L-289201b4f4ec"
+      ],
+      "receipted_lead_deliveries": [
+        "L-289201b4f4ec",
+        "L-2e0dc4dec29d",
+        "L-ad68a4ac94ad"
+      ],
+      "notes_present": true,
+      "notes_sha256": "ef66d4abfbf20dd37a4feb8c87ec57c699c3cdfdea0b3c0f9813aa36af67dd2a",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "source_locator_receipts": 23
+    },
+    {
+      "job": "J0026-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 129.892,
+      "native_responses": 23,
+      "receipts": 23,
+      "captured_usd": 0.01212,
+      "assigned_lead_ids": [
+        "L-c0c7178a160f",
+        "L-444f31e68545",
+        "L-0793ad1e2a78"
+      ],
+      "receipted_lead_deliveries": [
+        "L-0793ad1e2a78",
+        "L-444f31e68545",
+        "L-c0c7178a160f"
+      ],
+      "notes_present": true,
+      "notes_sha256": "0452fd6e82d683bc95a5bccc7e67ce057bd823b436218769696466eae056a28d",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "source_locator_receipts": 37
+    },
+    {
+      "job": "J0027-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 145.54,
+      "native_responses": 38,
+      "receipts": 38,
+      "captured_usd": 0.010923,
+      "assigned_lead_ids": [
+        "L-732df4469871",
+        "L-3c0712b66649",
+        "L-0eb0bdc5ba1a"
+      ],
+      "receipted_lead_deliveries": [
+        "L-0eb0bdc5ba1a",
+        "L-3c0712b66649",
+        "L-732df4469871"
+      ],
+      "notes_present": true,
+      "notes_sha256": "0a081e5093cb585af6ff90d937ac47ba965d024a62d6df0ce0ce50ffdb40f189",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "source_locator_receipts": 33
+    },
+    {
+      "job": "J0028-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 219.441,
+      "native_responses": 35,
+      "receipts": 35,
+      "captured_usd": 0.024572,
+      "assigned_lead_ids": [
+        "L-ad68a4ac94ad",
+        "L-2e0dc4dec29d",
+        "L-289201b4f4ec"
+      ],
+      "receipted_lead_deliveries": [
+        "L-289201b4f4ec",
+        "L-2e0dc4dec29d",
+        "L-ad68a4ac94ad"
+      ],
+      "notes_present": true,
+      "notes_sha256": "89bc0d71671edc95c6e29694ffd0a24581a46329e01d2e68fc1344ddd9f840a9",
+      "authored_lead_documents": [],
+      "produced_any_assertion_document": true,
+      "source_locator_receipts": 64
+    }
+  ],
+  "stage_timing": {
+    "reconcile": {
+      "wall_seconds": 557.8014810085297,
+      "summed_job_seconds": 963.126,
+      "average_concurrency": 1.7266465450371802
+    },
+    "compare": {
+      "wall_seconds": 527.909882068634,
+      "summed_job_seconds": 730.7909999999999,
+      "average_concurrency": 1.3843101347835522
+    },
+    "arm_wall_seconds": 668.7462804317474,
+    "summed_terminal_job_seconds": 1693.917,
+    "average_concurrency": 2.5329740883289773
+  },
+  "cost": {
+    "captured_upper_usd": 0.16438999199999993,
+    "basis": "priced from 366 native receipts at the published tariff",
+    "unresolved_charge_usd": 0.0,
+    "job_end_reconciled_jobs": 12,
+    "job_end_unresolved_jobs": 0,
+    "cap_usd": 50,
+    "usd_per_credited_finding": 0.00411
+  },
+  "leads": {
+    "input_leads": 88,
+    "authored_lead_documents": 5,
+    "total_leads_at_terminal": 93,
+    "stage_counts": {
+      "discovered": 79,
+      "studied": 0,
+      "reconciled": 3,
+      "comparison_delivered": 11
+    }
+  },
+  "recall": {
+    "expanded_union_denominator": 110,
+    "credited": [
+      "F002",
+      "F004",
+      "F006",
+      "F007",
+      "F008",
+      "F010",
+      "F011",
+      "F029",
+      "F030",
+      "F031",
+      "F032",
+      "F033",
+      "F034",
+      "F035",
+      "F036",
+      "F037",
+      "F043",
+      "F050",
+      "F051",
+      "F053",
+      "F056",
+      "F059",
+      "F061",
+      "F062",
+      "F066",
+      "F072",
+      "F073",
+      "F074",
+      "F079",
+      "F080",
+      "F081",
+      "F082",
+      "F084",
+      "F087",
+      "F088",
+      "F089",
+      "F090",
+      "F092",
+      "F102",
+      "F107"
+    ],
+    "count": 40,
+    "recall_percent": 36.36,
+    "by_class": {
+      "correction": "1/5",
+      "optional_capability": "3/36",
+      "product_choice": "1/6",
+      "unsupported_or_rejected": "35/63"
+    },
+    "fixed_original_105_count": 39,
+    "fixed_original_105_recall_percent": 37.14,
+    "corrections_credited": [
+      "F107"
+    ],
+    "corrections_missed": [
+      "F001",
+      "F106",
+      "F108",
+      "F109"
+    ],
+    "partials": [
+      "F001",
+      "F022",
+      "F028",
+      "F044",
+      "F069",
+      "F076",
+      "F083",
+      "F094"
+    ]
+  },
+  "coverage_vs_other_arms": {
+    "premium_expanded": 78,
+    "hybrid_expanded": 90,
+    "claude": 18,
+    "deepseek41": 33,
+    "claude_hicap": 46,
+    "muse13": 40,
+    "shared_with_premium": 39,
+    "shared_with_hybrid": 31,
+    "premium_only": [
+      "F008",
+      "F031",
+      "F032",
+      "F033",
+      "F034",
+      "F036",
+      "F053",
+      "F084",
+      "F090"
+    ],
+    "hybrid_only": [
+      "F073"
+    ],
+    "unique_to_arm": [],
+    "held_by_premium_missed": 39,
+    "held_by_hybrid_missed": 59,
+    "vs_claude": {
+      "shared": 18,
+      "muse13_adds": 22,
+      "claude_only": []
+    },
+    "vs_deepseek41": {
+      "shared": 33,
+      "muse13_adds": [
+        "F043",
+        "F051",
+        "F073",
+        "F087",
+        "F088",
+        "F090",
+        "F107"
+      ],
+      "deepseek41_only": []
+    },
+    "vs_claude_hicap": {
+      "shared": 40,
+      "muse13_adds": [],
+      "hicap_only": [
+        "F001",
+        "F028",
+        "F044",
+        "F083",
+        "F094",
+        "F106"
+      ]
+    },
+    "nesting": "claude (18) and deepseek41 (33) are both proper subsets of muse13 (40), which is a proper subset of claude-hicap (46). claude and deepseek41 are not comparable with each other. The four-arm union is exactly claude-hicap's 46.",
+    "interpretation": "Nothing unique to the arm. Nine premium-only findings (the external-editor and diff-fidelity family plus F084 and F090) and one hybrid-only (F073).",
+    "post_review_note": "Recomputed after the independent review's withdrawals and addition."
+  },
+  "request_limited_coverage": {
+    "jobs_bound_by_the_response_ceiling": 2,
+    "jobs_that_finished": 10,
+    "money_truncated_jobs": 0,
+    "jobs_with_any_assertion_document": 11,
+    "jobs_with_none": [
+      "J0018-reconcile"
+    ],
+    "j0018_note": "J0018 spent 40 responses and 41 source-locator receipts and wrote nothing. Its lead L-7dc9a6726cf9 was re-attempted by J0020, which delivered notes.md plus three lead documents, so no lead was lost to it.",
+    "named_structural_loss": "The GitButler triple (L-732df4469871, L-3c0712b66649, L-0eb0bdc5ba1a) was reconciled in full by J0027 but never admitted to a compare job - the 12-admission cap ran out after five compare jobs. Its credits (F010, F011, F080, F089, F090, F102) therefore rest on reconcile-stage assertions, and no canon-contract correction came out of that lead group. deepseek41 lost the graph triple's compare the same way."
+  },
+  "reached_delivery_fraction": {
+    "input_leads": 88,
+    "distinct_leads_admitted_to_a_reconcile_job": 14,
+    "with_a_saved_reconcile_assertion": 14,
+    "distinct_leads_admitted_to_a_compare_job": 11,
+    "with_a_saved_comparison": 11,
+    "reconcile_rate": "14/14 = 100.0%",
+    "compare_rate": "11/11 = 100.0%",
+    "of_the_88_input_leads": {
+      "reached_a_saved_reconcile_assertion": "14/88 = 15.9%",
+      "reached_a_saved_comparison": "11/88 = 12.5%"
+    },
+    "comparison": "Arm C reached a comparison for 3 of 88 input leads, deepseek41 for 4, claude-hicap for 14, muse13 for 11. muse13 reached a saved reconcile assertion for every lead it admitted."
+  },
+  "assertion_corpus": {
+    "documents": 16,
+    "notes": 11,
+    "lead_documents": 5,
+    "total_bytes": 236309,
+    "jobs_with_assertions": "11 of 12",
+    "excluded_as_not_arm_authored": [
+      "workspace/handoff.md",
+      "workspace/navigation.md",
+      "workspace/brief.md",
+      "workspace/assignment.md",
+      "workspace/sources.md",
+      "workspace/tool-help.md",
+      "workspace/research.py"
+    ],
+    "excluded_as_locator_inventory": "workspace/research-evidence/sources/**"
+  },
+  "limits": [
+    "One frozen case; a same-input review replacement bounded by the premium arm's research artifacts.",
+    "Recall is against the adjudicated continuation-3 union, not an external exhaustive truth set.",
+    "'Unsupported or already-covered' is a union class, not a false-positive rate.",
+    "2 of 12 jobs were response-limited and one produced nothing; request-limited coverage is reported separately.",
+    "Cost is a captured upper valuation priced from native receipts at the published tariff, not a cash invoice.",
+    "This arm's per-job limits (40 responses, 2400 s) match Arm C's and deepseek41's, so its cost and duration ARE comparable with those two; they are NOT comparable with claude-hicap, which ran a deliberately different budget regime.",
+    "The arm admitted 14 of 88 input leads, so most of what it missed it was never given."
+  ],
+  "post_review_revision": {
+    "review": "Independent review REVIEW_ADJUDICATION_20260916.md (2026-09-17), verdict 'fix first'. Applied 2026-09-17.",
+    "verdict_for_this_arm": "S12: F092's half-coverage disclosed. No credit changed.",
+    "figures_after_review": {
+      "credited": 40,
+      "percent": 36.36,
+      "by_class": {
+        "correction": "1/5",
+        "optional_capability": "3/36",
+        "product_choice": "1/6",
+        "unsupported_or_rejected": "35/63"
+      }
+    }
+  }
+}

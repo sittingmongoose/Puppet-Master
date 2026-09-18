@@ -1,0 +1,35 @@
+{
+  "label": "Arm claude-hicap adjudication against the continuation-3 union, revised after independent review 2026-09-17",
+  "root": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation4/adjudication/claude-hicap",
+  "frozen_at": "2026-09-17T02:18:01Z",
+  "file_count": 5,
+  "total_bytes": 147857,
+  "files": [
+    {
+      "path": "PROGRESS.md",
+      "bytes": 9234,
+      "sha256": "db69db853458387184c0bd4e247712330a2cd19ee9a33c2517ad0e60f06159d2"
+    },
+    {
+      "path": "README.md",
+      "bytes": 18004,
+      "sha256": "a44d18fc1c91eea13f2aec2d5a2f12d6846807e771d74a185698c9041ea29afa"
+    },
+    {
+      "path": "claude-hicap-candidates.json",
+      "bytes": 18367,
+      "sha256": "65a1824175a93230ebe25b038546c8cd512b053396dfec8b763dff7bd189beef"
+    },
+    {
+      "path": "claude-hicap-findings.json",
+      "bytes": 78041,
+      "sha256": "ebd93baaeec734440cdf48eefbb036093d4639f4df7a703714e4298403c5080f"
+    },
+    {
+      "path": "claude-hicap-scoring.json",
+      "bytes": 24211,
+      "sha256": "92f3c4f57cdbb2ce36e9a868a852b1fc35e570bfe584b4cf895c3cd19de33b46"
+    }
+  ],
+  "manifest_sha256": "dcbf83c8178c430d91a681636c82bc0c19e71466d4f5f4aa432df12fe6a390fd"
+}

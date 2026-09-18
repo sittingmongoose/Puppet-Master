@@ -1,0 +1,762 @@
+{
+  "schema": "jj.continuation5.arm_scoring.v1",
+  "arm": "t80",
+  "adjudicator": "Opus 5 agent (claude-opus-5[1m]); ran no arm",
+  "arm_kind": "The turn-budget control below claude-hicap. Same model (claude-opus-5), same effort (xhigh), same premium artifacts and starting state, same FROZEN lead order, same 12 admissions, 3 workers and $20 per job. ONE variable: 80 responses per job instead of 160.",
+  "why_this_is_the_cleanest_comparison_in_the_campaign": "Every other arm pair differs in at least two ways. This pair differs in one. I confirmed the inputs matched by checking the lead sets job by job: jobs J0017 through J0025 carry IDENTICAL lead sets in both runs, and the three compare jobs J0026-J0028 carry the same three lead groups paired to different job numbers because reconcile completion order differed. So every credit difference is attributable to the ceiling, to the clock, or to run-to-run variance - and the decomposition below separates those three.",
+  "run": {
+    "directory": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation5/runs/jujutsu-t80-20260917-191342",
+    "manifest_sha256_internal": "b5498edb9f39ef4e444a109362c6233d1e1e7af0b5021436c9679facc33c448b",
+    "files": 13222,
+    "verified_three_ways": "internal digest recomputed from the sorted rows, matched the runner's quoted value, and an independent tree re-hash - all agree, zero differing files",
+    "terminal_stop": "Stop: admitted_attempt_cap, in campaign-terminal.json - a designed gate",
+    "attempt_1_excluded": {
+      "archive_directory_manifest": "472b5e5eaa9905ac991ca9c7f2b3fd8235fce2d5a81fb32493da4252c1a5ec4e",
+      "run_tree_output_manifest": "7b8c1ad07552c8e54082352525b39efe294a86fc8a3bb2d142cb2732c3503d97",
+      "note": "The coordinator quoted 472b5e5eaa..., which is the ARCHIVE DIRECTORY's manifest; the run tree's own output manifest is 7b8c1ad075.... Two different objects, both recorded.",
+      "why": "Cut by an earlier sentinel rule that fired on a seven-day allowed_warning at 0.25 utilization while the five-hour window was clean and spend was $36.68 of $150. Not money, not an arm limit."
+    }
+  },
+  "runner_figures_checked": {
+    "all_confirmed": true,
+    "checked": [
+      "12 own jobs (J0017-J0028), 6 reconcile and 6 compare",
+      "8 finished, 3 bound by the 80 ceiling (J0017, J0018, J0027) at exactly 80 receipts, 1 timeout (J0028)",
+      "responses 41-80",
+      "11 of 12 wrote notes.md; 25 deliveries; 11 of 88 leads compared",
+      "11 of 12 reconciled; J0028 alone is incomplete with gaps missing_native_result_record and missing_usage_sidecar, carrying the $12 unresolved",
+      "captured $76.4527"
+    ]
+  },
+  "job_table": [
+    {
+      "job": "J0017-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "budget_truncated",
+      "bound_by": "response_ceiling_80",
+      "elapsed_seconds": 817.8,
+      "native_responses": 80,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "lead_ids": [
+        "L-80244e477912"
+      ],
+      "delivered": 1,
+      "notes_bytes": 23141,
+      "document_ends_cleanly": true,
+      "authored_lead_documents": 2,
+      "credited_findings": []
+    },
+    {
+      "job": "J0018-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "budget_truncated",
+      "bound_by": "response_ceiling_80",
+      "elapsed_seconds": 928.1,
+      "native_responses": 80,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "lead_ids": [
+        "L-7dc9a6726cf9"
+      ],
+      "delivered": 1,
+      "notes_bytes": 28430,
+      "document_ends_cleanly": true,
+      "authored_lead_documents": 4,
+      "credited_findings": []
+    },
+    {
+      "job": "J0019-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 730.8,
+      "native_responses": 41,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "lead_ids": [
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66",
+        "L-39a5001283f3"
+      ],
+      "delivered": 3,
+      "notes_bytes": 36861,
+      "document_ends_cleanly": true,
+      "authored_lead_documents": 5,
+      "credited_findings": []
+    },
+    {
+      "job": "J0020-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 1019.3,
+      "native_responses": 74,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "lead_ids": [
+        "L-4f94a6cc2232",
+        "L-c89be7ac8a66",
+        "L-39a5001283f3"
+      ],
+      "delivered": 3,
+      "notes_bytes": 47589,
+      "document_ends_cleanly": true,
+      "authored_lead_documents": 5,
+      "credited_findings": [
+        "F002",
+        "F010",
+        "F073",
+        "F079",
+        "F081",
+        "F082",
+        "F102"
+      ]
+    },
+    {
+      "job": "J0021-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 870.6,
+      "native_responses": 61,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "lead_ids": [
+        "L-80244e477912"
+      ],
+      "delivered": 1,
+      "notes_bytes": 37468,
+      "document_ends_cleanly": true,
+      "authored_lead_documents": 3,
+      "credited_findings": [
+        "F029",
+        "F031",
+        "F033",
+        "F034",
+        "F035",
+        "F036",
+        "F056"
+      ]
+    },
+    {
+      "job": "J0022-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 762.1,
+      "native_responses": 56,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "lead_ids": [
+        "L-7dc9a6726cf9"
+      ],
+      "delivered": 1,
+      "notes_bytes": 41192,
+      "document_ends_cleanly": true,
+      "authored_lead_documents": 4,
+      "credited_findings": [
+        "F007",
+        "F008"
+      ]
+    },
+    {
+      "job": "J0023-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 950.5,
+      "native_responses": 79,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "lead_ids": [
+        "L-c0c7178a160f",
+        "L-444f31e68545",
+        "L-0793ad1e2a78"
+      ],
+      "delivered": 3,
+      "notes_bytes": 40659,
+      "document_ends_cleanly": true,
+      "authored_lead_documents": 4,
+      "credited_findings": []
+    },
+    {
+      "job": "J0024-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 771.2,
+      "native_responses": 67,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "lead_ids": [
+        "L-ad68a4ac94ad",
+        "L-2e0dc4dec29d",
+        "L-289201b4f4ec"
+      ],
+      "delivered": 3,
+      "notes_bytes": 37065,
+      "document_ends_cleanly": true,
+      "authored_lead_documents": 3,
+      "credited_findings": []
+    },
+    {
+      "job": "J0025-reconcile",
+      "phase": "reconcile",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 686.7,
+      "native_responses": 53,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "lead_ids": [
+        "L-732df4469871",
+        "L-3c0712b66649",
+        "L-0eb0bdc5ba1a"
+      ],
+      "delivered": 3,
+      "notes_bytes": 43084,
+      "document_ends_cleanly": true,
+      "authored_lead_documents": 7,
+      "credited_findings": []
+    },
+    {
+      "job": "J0026-compare",
+      "phase": "compare",
+      "runtime_status": "completed",
+      "bound_by": "finished",
+      "elapsed_seconds": 853.0,
+      "native_responses": 77,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "lead_ids": [
+        "L-732df4469871",
+        "L-3c0712b66649",
+        "L-0eb0bdc5ba1a"
+      ],
+      "delivered": 3,
+      "notes_bytes": 50905,
+      "document_ends_cleanly": true,
+      "authored_lead_documents": 0,
+      "credited_findings": [
+        "F011",
+        "F080",
+        "F089"
+      ]
+    },
+    {
+      "job": "J0027-compare",
+      "phase": "compare",
+      "runtime_status": "budget_truncated",
+      "bound_by": "response_ceiling_80",
+      "elapsed_seconds": 859.0,
+      "native_responses": 80,
+      "accounting_complete": true,
+      "accounting_gaps": [],
+      "lead_ids": [
+        "L-ad68a4ac94ad",
+        "L-2e0dc4dec29d",
+        "L-289201b4f4ec"
+      ],
+      "delivered": 3,
+      "notes_bytes": 67312,
+      "document_ends_cleanly": true,
+      "authored_lead_documents": 0,
+      "credited_findings": [
+        "F004",
+        "F006",
+        "F030",
+        "F061",
+        "F068",
+        "F084",
+        "F107"
+      ]
+    },
+    {
+      "job": "J0028-compare",
+      "phase": "compare",
+      "runtime_status": "timeout",
+      "bound_by": "job_time_limit_3600s",
+      "elapsed_seconds": 3600.6,
+      "native_responses": 60,
+      "accounting_complete": false,
+      "accounting_gaps": [
+        "missing_native_result_record",
+        "missing_usage_sidecar"
+      ],
+      "lead_ids": [
+        "L-c0c7178a160f",
+        "L-444f31e68545",
+        "L-0793ad1e2a78"
+      ],
+      "delivered": 0,
+      "notes_bytes": 0,
+      "document_ends_cleanly": false,
+      "authored_lead_documents": 0,
+      "credited_findings": []
+    }
+  ],
+  "the_capped_and_timed_out_jobs": {
+    "question": "Did the three capped jobs and the timed-out job lose findings that claude-hicap's corresponding jobs reached?",
+    "answer": "YES, 12 of them - but the decomposition matters more than the total, and two of the four cases are not ceiling effects at all.",
+    "per_job": [
+      {
+        "t80_job": "J0017-reconcile",
+        "hicap_counterpart": "J0017-reconcile",
+        "t80_limit": "turn-capped at 80",
+        "hicap_comparison": "hicap completed the SAME lead in 66",
+        "hicap_credits_on_these_leads": [
+          "F032"
+        ],
+        "t80_reached_from_anywhere": [],
+        "not_reached_by_t80": [
+          "F032"
+        ],
+        "count_lost": 1
+      },
+      {
+        "t80_job": "J0018-reconcile",
+        "hicap_counterpart": "J0018-reconcile",
+        "t80_limit": "turn-capped at 80",
+        "hicap_comparison": "hicap completed the SAME lead in 58",
+        "hicap_credits_on_these_leads": [
+          "F043"
+        ],
+        "t80_reached_from_anywhere": [],
+        "not_reached_by_t80": [
+          "F043"
+        ],
+        "count_lost": 1
+      },
+      {
+        "t80_job": "J0027-compare",
+        "hicap_counterpart": "J0026-compare",
+        "t80_limit": "turn-capped at 80",
+        "hicap_comparison": "hicap used 110 on the SAME leads",
+        "hicap_credits_on_these_leads": [
+          "F004",
+          "F006",
+          "F030",
+          "F061",
+          "F092",
+          "F094",
+          "F107"
+        ],
+        "t80_reached_from_anywhere": [
+          "F004",
+          "F006",
+          "F030",
+          "F061",
+          "F107"
+        ],
+        "not_reached_by_t80": [
+          "F092",
+          "F094"
+        ],
+        "count_lost": 2
+      },
+      {
+        "t80_job": "J0028-compare",
+        "hicap_counterpart": "J0027-compare",
+        "t80_limit": "TIMED OUT at 3600 s with 60 responses, zero output",
+        "hicap_comparison": "hicap completed the SAME leads in 78",
+        "hicap_credits_on_these_leads": [
+          "F050",
+          "F051",
+          "F059",
+          "F062",
+          "F066",
+          "F072",
+          "F082",
+          "F084",
+          "F087",
+          "F088"
+        ],
+        "t80_reached_from_anywhere": [
+          "F082",
+          "F084"
+        ],
+        "not_reached_by_t80": [
+          "F050",
+          "F051",
+          "F059",
+          "F062",
+          "F066",
+          "F072",
+          "F087",
+          "F088"
+        ],
+        "count_lost": 8
+      }
+    ],
+    "documents_end_cleanly": "All three CAPPED jobs wrote complete documents: J0017, J0018 and J0027 each end on a finished summary section, not mid-sentence. The ceiling ended the turn loop AFTER the conclusions were written, so nothing was lost to truncation of the document itself - what was lost is work never done. The TIMED-OUT job is different: J0028 wrote no notes.md at all and delivered nothing.",
+    "the_two_capped_reconciles_are_not_a_ceiling_result": "J0017 and J0018 were cut at exactly 80 - but claude-hicap COMPLETED THE SAME SINGLE LEADS in 66 and 58 responses. The same model at the same effort on the same lead took fewer turns in one run than the ceiling allowed in the other. So 80 was not structurally insufficient for those leads; these two runs simply took a longer path. Their two lost findings (F032, F043) are therefore confounded with variance and should not be charged to the ceiling.",
+    "the_capped_compare_IS_a_ceiling_result": "T80's J0027-compare was cut at 80 on the lead group hicap's J0026-compare spent 110 responses on - the only job in either run that genuinely wanted more than 80. It still reached FIVE of the seven findings hicap earned there (F004, F006, F030, F061, F107) and missed two (F092, F094). So the marginal 30 turns from 80 to 110 bought exactly 2 findings on the one job group that needed them.",
+    "the_timeout_is_a_clock_fault_not_a_ceiling_fault": "J0028-compare used only 60 of its 80 permitted responses and was killed by the 3,600 s wall. It is not a turn-budget result. It cost the most of anything in this arm: hicap earned TEN findings on that lead group and T80 reached only two of them from other leads, so the timeout alone accounts for 8 of the 20 findings lost against hicap."
+  },
+  "marginal_value_of_80_to_160_turns": {
+    "headline": "Small and concentrated, and much smaller than the raw 19-finding gap suggests.",
+    "decomposition_of_the_20_findings_lost_against_claude_hicap": {
+      "attributable_to_the_ceiling": {
+        "count": 2,
+        "ids": [
+          "F092",
+          "F094"
+        ],
+        "where": "T80 J0027-compare, capped at 80, against hicap's J0026-compare which used 110"
+      },
+      "attributable_to_the_job_time_limit_not_the_ceiling": {
+        "count": 8,
+        "ids": [
+          "F050",
+          "F051",
+          "F059",
+          "F062",
+          "F066",
+          "F072",
+          "F087",
+          "F088"
+        ],
+        "where": "T80 J0028-compare, killed at 3,600 s with 60 of 80 responses used, zero output"
+      },
+      "capped_but_confounded_with_variance": {
+        "count": 2,
+        "ids": [
+          "F032",
+          "F043"
+        ],
+        "where": "T80 J0017/J0018 capped at 80 while hicap completed the same leads in 66 and 58"
+      },
+      "lost_from_jobs_that_hit_NO_LIMIT_AT_ALL": {
+        "count": 8,
+        "ids": [
+          "F028",
+          "F037",
+          "F044",
+          "F053",
+          "F074",
+          "F083",
+          "F090",
+          "F106"
+        ],
+        "where": "T80's J0020, J0021, J0022 and J0026 all completed under every limit, on lead sets identical to hicap's, and still missed these"
+      }
+    },
+    "the_variance_floor": "THIS IS THE MOST USEFUL NUMBER IN THE ARM. Eight findings were lost from jobs that hit no limit whatsoever - same model, same effort, same leads, same inputs, no ceiling, no timeout, no money bound. Two runs of claude-opus-5 over identical inputs differ by 8 union findings through run-to-run variance alone. That is a floor on how much of ANY arm-to-arm difference in this campaign can be read as a real effect, and it is larger than the 2 findings the ceiling itself cost.",
+    "conclusion": "Raising the ceiling from 80 to 160 is worth about 2 findings on this workload, and only for the minority of jobs that want more than 80 turns (1 of 12 here). The 19-finding gap between T80 and claude-hicap is mostly NOT the ceiling: 8 came from one job lost to the clock and 8 are inside ordinary run-to-run variance."
+  },
+  "request_limited_coverage": {
+    "jobs_bound_by_the_80_response_ceiling": 3,
+    "ids": [
+      "J0017-reconcile",
+      "J0018-reconcile",
+      "J0027-compare"
+    ],
+    "jobs_bound_by_the_job_time_limit": 1,
+    "ids_time": [
+      "J0028-compare"
+    ],
+    "jobs_finished": 8,
+    "money_truncated": 0,
+    "rate_limited": 0,
+    "note": "The sentinel never fired and no admission hold was ever placed; the meter records zero hold events. Every limit here is a real one.",
+    "responses": "41-80, mean 67.3, against a 160 ceiling in claude-hicap where the maximum actually used was 110.",
+    "unresolved": "$12.00 retained from J0028, which was killed before its adapter wrote usage.json - the same shape as continuation 4's three union timeouts. 11 of 12 jobs reconciled."
+  },
+  "recall": {
+    "expanded_union_denominator": 110,
+    "credited": [
+      "F002",
+      "F004",
+      "F006",
+      "F007",
+      "F008",
+      "F010",
+      "F011",
+      "F029",
+      "F030",
+      "F031",
+      "F033",
+      "F034",
+      "F035",
+      "F036",
+      "F056",
+      "F061",
+      "F068",
+      "F073",
+      "F079",
+      "F080",
+      "F081",
+      "F082",
+      "F084",
+      "F089",
+      "F102",
+      "F107"
+    ],
+    "count": 26,
+    "recall_percent": 23.64,
+    "by_class": {
+      "correction": "1/5",
+      "optional_capability": "1/36",
+      "product_choice": "0/6",
+      "unsupported_or_rejected": "24/63"
+    },
+    "corrections_credited": [
+      "F107"
+    ],
+    "partials": [
+      "F037",
+      "F053",
+      "F028",
+      "F001",
+      "F022"
+    ],
+    "credited_in_a_turn_capped_job": [
+      "F004",
+      "F006",
+      "F030",
+      "F061",
+      "F068",
+      "F084",
+      "F107"
+    ],
+    "note_on_capped_jobs": "Seven of the 26 credits were earned in jobs the ceiling cut - including F068, the only finding this arm reaches that claude-hicap did not. A capped job is not an empty job."
+  },
+  "comparison": {
+    "claude_hicap": {
+      "credited": 45,
+      "gained": [
+        "F068"
+      ],
+      "lost": [
+        "F028",
+        "F032",
+        "F037",
+        "F043",
+        "F044",
+        "F050",
+        "F051",
+        "F053",
+        "F059",
+        "F062",
+        "F066",
+        "F072",
+        "F074",
+        "F083",
+        "F087",
+        "F088",
+        "F090",
+        "F092",
+        "F094",
+        "F106"
+      ],
+      "net": -19,
+      "leads_compared": {
+        "t80": 11,
+        "claude_hicap": 14
+      },
+      "subset": "T80's 11 compared leads are a STRICT SUBSET of claude-hicap's 14. The three it lacks are exactly the lead group its J0028-compare timed out on."
+    },
+    "arm_p": {
+      "credited": 32,
+      "gained": [
+        "F029",
+        "F031",
+        "F034",
+        "F036",
+        "F068",
+        "F107"
+      ],
+      "lost": [
+        "F005",
+        "F019",
+        "F044",
+        "F050",
+        "F051",
+        "F052",
+        "F054",
+        "F057",
+        "F064",
+        "F072",
+        "F090",
+        "F094"
+      ],
+      "net": -6
+    },
+    "arm_b": {
+      "credited": 39,
+      "gained": [
+        "F080"
+      ],
+      "lost": [
+        "F005",
+        "F025",
+        "F027",
+        "F037",
+        "F043",
+        "F044",
+        "F050",
+        "F057",
+        "F059",
+        "F060",
+        "F066",
+        "F086",
+        "F094",
+        "F110"
+      ],
+      "net": -13
+    },
+    "nine_arm_union": 62,
+    "adds_over_all_eight_prior_arms": [],
+    "reached_by_no_arm": 48
+  },
+  "cost": {
+    "captured_upper_usd": 76.4527,
+    "cap_usd": 150,
+    "unresolved_usd": 12.0,
+    "usd_per_credited_finding": 2.9405,
+    "comparison": {
+      "claude-hicap": "$82.52 / 45 = $1.83",
+      "arm_p": "$85.50 / 32 = $2.67",
+      "arm_b": "$102.56 / 39 = $2.63",
+      "t80": "$76.45 / 26 = $2.94"
+    },
+    "note": "T80 is the cheapest of the four and the worst value per finding. Lowering the ceiling saved $6 against claude-hicap and cost 19 findings."
+  },
+  "timing": {
+    "reconcile_wall_s": 2647.3,
+    "compare_wall_s": 5522.1,
+    "arm_wall_s": 6259.7,
+    "summed_job_s": 12850.0,
+    "average_concurrency": 2.05,
+    "target_s": 4500,
+    "inside_target": false,
+    "note": "104 min 20 s, 29 minutes OVER the 75-minute target - and the arm with the LOWEST turn ceiling is also the slowest of the four. The single 3,600 s timeout accounts for most of it: it held a worker for an hour while producing nothing."
+  },
+  "limits": [
+    "One frozen case, one ceiling comparison, one run at each ceiling. The variance floor measured here (8 findings) is itself a single-sample estimate.",
+    "The scored result is attempt 2; attempt 1 was cut by a since-corrected sentinel rule and is archived.",
+    "Recall is measured against continuation 3's fixed 110-finding union.",
+    "'Unsupported or already-covered' is a union class, not a false-positive rate.",
+    "Adjudicator and the reviewed model share a family; code facts were verified against pinned bytes."
+  ],
+  "four_arm_table": {
+    "note": "Published in README.md. All four ran on the same premium artifacts and the same frozen case with 12 admissions, 3 workers and $20 per job. T80 differs from claude-hicap in exactly one parameter: an 80-response ceiling instead of 160.",
+    "rows": {
+      "credited_of_110": {
+        "claude_hicap": 45,
+        "arm_p": 32,
+        "arm_b": 39,
+        "t80": 26
+      },
+      "recall_percent": {
+        "claude_hicap": 40.91,
+        "arm_p": 29.09,
+        "arm_b": 35.45,
+        "t80": 23.64
+      },
+      "corrections_of_5": {
+        "claude_hicap": 2,
+        "arm_p": 0,
+        "arm_b": 1,
+        "t80": 1
+      },
+      "optional_capability_of_36": {
+        "claude_hicap": 4,
+        "arm_p": 2,
+        "arm_b": 6,
+        "t80": 1
+      },
+      "product_choice_of_6": {
+        "claude_hicap": 3,
+        "arm_p": 1,
+        "arm_b": 1,
+        "t80": 0
+      },
+      "unsupported_or_covered_of_63": {
+        "claude_hicap": 36,
+        "arm_p": 29,
+        "arm_b": 31,
+        "t80": 24
+      },
+      "response_ceiling": {
+        "claude_hicap": 160,
+        "arm_p": 160,
+        "arm_b": 160,
+        "t80": 80
+      },
+      "max_responses_actually_used": {
+        "claude_hicap": 110,
+        "arm_p": 89,
+        "arm_b": 86,
+        "t80": 80
+      },
+      "leads_reaching_a_comparison_of_88": {
+        "claude_hicap": 14,
+        "arm_p": 16,
+        "arm_b": 32,
+        "t80": 11
+      },
+      "credits_per_compared_lead": {
+        "claude_hicap": 3.21,
+        "arm_p": 2.0,
+        "arm_b": 1.22,
+        "t80": 2.36
+      },
+      "admission_order": {
+        "claude_hicap": "frozen",
+        "arm_p": "Muse ranking",
+        "arm_b": "frozen (Muse delivery)",
+        "t80": "frozen"
+      },
+      "reconcile_model": {
+        "claude_hicap": "Opus 5",
+        "arm_p": "Opus 5",
+        "arm_b": "Muse Spark",
+        "t80": "Opus 5"
+      },
+      "jobs_bound_by_the_response_ceiling": {
+        "claude_hicap": 0,
+        "arm_p": 0,
+        "arm_b": 0,
+        "t80": 3
+      },
+      "jobs_cut_by_another_limit": {
+        "claude_hicap": 0,
+        "arm_p": "1 (account session limit)",
+        "arm_b": 0,
+        "t80": "1 (3,600 s timeout)"
+      },
+      "captured_cost_usd": {
+        "claude_hicap": 82.52,
+        "arm_p": 85.5,
+        "arm_b": 102.56,
+        "t80": 76.45
+      },
+      "usd_per_credited_finding": {
+        "claude_hicap": 1.83,
+        "arm_p": 2.67,
+        "arm_b": 2.63,
+        "t80": 2.94
+      },
+      "arm_wall_s": {
+        "claude_hicap": 3535,
+        "arm_p": 4193,
+        "arm_b": "5509 (two stages; compare stage 3981)",
+        "t80": 6260
+      },
+      "candidates_inside_a_continuation3_rejection": {
+        "claude_hicap": null,
+        "arm_p": "4 of 6",
+        "arm_b": "0 of 6",
+        "t80": "0 of 4, one half-flagged"
+      },
+      "new_to_the_campaign_union": {
+        "claude_hicap": null,
+        "arm_p": 0,
+        "arm_b": 3,
+        "t80": 0
+      }
+    }
+  }
+}
