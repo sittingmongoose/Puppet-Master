@@ -17,6 +17,10 @@
     {
       "sha": "2fee6616e5289770b94d9364944b8cc666900c38",
       "subject": "DL-059 to DL-065: the seven Azure decision-card answers of 2026-09-18, in both sections"
+    },
+    {
+      "sha": "001745678ee4e11f4b025ce13bd0d13550066d8d",
+      "subject": "Ledger pldg-20260918-001-azure-devops-corrections and the landing bundle"
     }
   ],
   "corrections_landed": [
@@ -394,5 +398,6 @@
     "branch": "plans/compile-repair-20260917",
     "detail": "That branch is editing Plans/Jujutsu_Integration.md, Plans/Source_Control_System.md, Plans/Backup_Restore_System.md and Plans/External_Research.md. This branch touches Plans/Source_Control_System.md in two places only: SCS-016, amended minimally for the nullable canonical URL, the Check status vocabulary and four pre-existing registry orphans, and one new unit SCS-023 appended at the end of the document. It touches no other SCS unit and no other document on that list. Whichever lands second rebases; the SCS-016 passage must be re-read against the current text before the edit is reapplied."
   },
-  "independent_review": "Not yet reviewed. The acceptance rule is deterministic checks pass plus one blind form-driven review with a cycle cap of two."
+  "independent_review": "Not yet reviewed. The acceptance rule is deterministic checks pass plus one blind form-driven review with a cycle cap of two.",
+  "commits_note": "This list was written after the ledger and bundle commit and before the single follow-up commit that records it, so the branch carries exactly one commit more than the list: the commit whose subject is \"bundle: record the ledger commit in the landing verification\". git log 4f5eda0d18..HEAD is authoritative."
 }
