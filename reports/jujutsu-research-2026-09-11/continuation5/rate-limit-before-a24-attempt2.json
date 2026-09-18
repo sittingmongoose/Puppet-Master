@@ -1,0 +1,36 @@
+{
+  "found": true,
+  "checked_at": "2026-09-17T23:38:54Z",
+  "source": "live probe",
+  "source_note": "live probe, exit 0",
+  "observed_at_utc": "2026-09-17T23:38:54Z",
+  "events_seen": 1,
+  "raw": {
+    "status": "allowed_warning",
+    "resetsAt": 1790251200,
+    "rateLimitType": "seven_day",
+    "utilization": 0.44,
+    "isUsingOverage": false
+  },
+  "status": "allowed_warning",
+  "status_is_allowed": false,
+  "gate_holds": false,
+  "gate_hold_reason": null,
+  "gate_rule": "five-hour allowed_warning blocks; seven-day informational unless utilization >= 0.75; isUsingOverage blocks",
+  "window_of_this_event": "seven_day",
+  "utilization_reported": 0.44,
+  "utilization_available": true,
+  "resets_at_epoch": 1790251200,
+  "resets_at_utc": "2026-09-24T12:00:00Z",
+  "window": "seven_day",
+  "overage_status": null,
+  "overage_disabled_reason": null,
+  "fields_present": [
+    "isUsingOverage",
+    "rateLimitType",
+    "resetsAt",
+    "status",
+    "utilization"
+  ],
+  "note": "CLI 2.1.226 emits no utilization or percentage field in the typed event; utilization_available=false means the number is not obtainable from the CLI, not that it is low."
+}

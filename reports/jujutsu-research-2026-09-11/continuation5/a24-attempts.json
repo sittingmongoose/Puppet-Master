@@ -1,5 +1,5 @@
 {
-  "note": "A24's first attempt is archived unscored. Its value is diagnostic: it is the evidence that an at-cap admission pin loses a race it cannot win by polling.",
+  "note": "A24 ran twice. Attempt 1 is archived unscored and is the evidence that an at-cap admission pin loses a race it cannot win by polling. Attempt 2, run with the race-free strict sentinel and as the only Opus arm admitting, is the scored result.",
   "attempts": [
     {
       "arm": "a24",
@@ -22,6 +22,29 @@
       "comparisons_delivered": 1,
       "why_archived": "Two independent faults, neither of them the arm's. (1) It launched 102 s after topic-2 H2-review resumed, so two Opus arms were admitting; I pinned it 13 s in. (2) The pin did not hold: the account session limit killed job after job in about 7 s each, and every $0 settlement reopened headroom between the maintainer's 3 s re-pins, so the campaign admitted through those windows and spent all 24 admissions. 21 of 24 jobs are cli_error.",
       "what_it_proved": "The at-cap pin loses a race it cannot win by polling: the maintainer re-pinned 18 times, held committed at exactly $300.00 every time, and admissions still passed through windows of $0.27 to $7.78. That is why hold_admissions gained a race-free `strict` mode."
+    },
+    {
+      "arm": "a24",
+      "attempt": 2,
+      "scored": true,
+      "run_directory": "runs/jujutsu-a24-20260917-233922",
+      "launched_at": "2026-09-17T23:39:34Z",
+      "terminal_at": "2026-09-18T01:29:51Z",
+      "stop_reason": "Stop: admitted_attempt_cap",
+      "admissions_used": 24,
+      "admissions_authorized": 24,
+      "comparisons_delivered": 26,
+      "captured_upper_usd": 162.1497,
+      "cap_usd": 300,
+      "unresolved_charge_usd": 0.0,
+      "bound_by": {
+        "finished": 21,
+        "budget": 3
+      },
+      "budget_rows_were": "the strict sentinel firing at a five-hour allowed_warning of 0.90 utilization, after all 24 admissions were already spent; it truncated three live jobs and cost no admissions. Nothing hit the 160-response ceiling or the 3600 s job limit.",
+      "output_manifest_sha256": "b08f251811a565eca2730ead9c256504da56fef3ace2bd361a6c333ef929f460",
+      "output_file_count": 18368,
+      "launch_gated_on": "rate-limit-before-a24-attempt2.json (seven-day 0.44, informational under the rule)"
     }
   ]
 }

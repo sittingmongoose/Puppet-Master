@@ -1,0 +1,15 @@
+{
+  "arm": "t320",
+  "status": "cancelled",
+  "cancelled_at": "2026-09-18",
+  "decided_by": "coordinator",
+  "authorized_limits": {
+    "max_model_requests": 320,
+    "job_seconds": 7200,
+    "job_budget_usd": 20,
+    "cap_usd": 250,
+    "admissions": 12
+  },
+  "reason": "The T80 adjudication decomposed the 19 findings separating an 80-response ceiling from a 160-response one into 2 attributable to the ceiling itself, 8 to the 3,600 s job limit and 8 to run-to-run variance on identical inputs. A 320-response arm would therefore be measuring noise, at a cost of about $150 of the shared rate-limit window.",
+  "state": "Patched into the protocol and gate-verified, but never staged, never granted and never spent anything. The Claude adapter's absolute ceilings remain raised to 320 responses / 7200 s from the sweep patch, which is inert without an arm that asks for them."
+}

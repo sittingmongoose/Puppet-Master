@@ -153,7 +153,7 @@ CLI-reported, of the $150 cap.
 
 **32 of the 88 leads reached a comparison — exactly Muse delivery-order positions 1 through 32, no gaps.**
 
-## What the three arms cost, and what they reached
+## What the arms cost, and what they reached
 
 | Arm | Ceiling | Leads compared, of 88 | Cost | Arm wall |
 |---|---|---|---|---|
@@ -161,20 +161,21 @@ CLI-reported, of the $150 cap.
 | **Arm P**, prioritized depth | 160 | **16** (ranks 1–16) | $85.51 | 4 193.3 s |
 | **Arm B**, cheap breadth then strong compare | 160 | **32** (delivery positions 1–32) | $108.86 | 5 508.9 s over two stages |
 | **T80**, claude-hicap at a lower ceiling | 80 | **11** | $76.45 | 6 259.7 s |
+| **A24**, claude-hicap with 24 admissions | 160 | **26** | $162.15 | 6 617.0 s |
 
-A24 (claude-hicap's ceilings with 24 admissions instead of 12) and T320 (a 320-response ceiling at 7 200 s)
-are the remaining sweep arms. A24's first attempt is archived unscored: it launched 102 seconds after
-topic-2's arm resumed, so two Opus arms were admitting, and the shape-3 pin placed 13 seconds later then
-lost the race described below — 21 of its 24 jobs are `cli_error` from the account session limit and one
-lead reached a comparison. `a24-attempts.json` records it.
+Read down that column and the finding is about **where** an admission is spent, not how many there are or
+how long each may run. A24 bought 26 leads by doubling the admissions and the money. Arm B bought 32 on
+half the admissions and two thirds of A24's cost, by moving reconciliation to a model that costs cents and
+letting every expensive admission buy a comparison. Arm P's prioritization is real but small by comparison:
+it put the admissions on exactly the leads it ranked highest, and moved recall 14 → 16. Lowering the
+ceiling to 80 (T80) cost recall and time without saving money. None of these outputs has been adjudicated,
+so this is reach, not quality.
 
 Arm B's gain is structural rather than clever: because Muse had already reconciled, **all twelve** of Opus 5's
-admissions bought comparisons, where Arm P spent six of its twelve on reconciliation and claude-hicap spent
-six as well. Arm P's prioritization did what it was built to do — the admissions landed on exactly the
-top-ranked leads — but choosing *better* leads inside the same budget moved recall from 14 to 16, while moving
-the cheap half of the work to a cheap model moved it to 32. Arm B's totals are not a free lunch: it cost 32%
-more than Arm P and its two stages together exceed the 75-minute target, though each stage on its own is
-inside it. None of these outputs has been adjudicated, so this table is reach, not quality.
+admissions bought comparisons, where Arm P and claude-hicap each spent six of twelve on reconciliation. Arm B
+is not a free lunch — it cost 32% more than Arm P, its breadth stage reached only 54 of the 88 leads within
+its 30 admissions, and its two stages together exceed the 75-minute target even though each stage alone is
+inside it.
 
 ## Sweep arm T80 — 80 responses is not enough
 
@@ -215,6 +216,52 @@ timed-out `J0028` was killed mid-job so its adapter never wrote `usage.json`, le
 receipted; 11 of 12 jobs wrote `notes.md`.
 
 **11 of the 88 leads reached a comparison** (Arm B 32, Arm P 16, claude-hicap 14).
+
+## Sweep arm A24 — more admissions buy recall, but not efficiently
+
+A24 repeats `claude-hicap` exactly — same artifacts and starting state, **frozen lead order**, Opus 5 at
+effort **xhigh**, claude-hicap's own per-job ceilings (160 responses, 3 600 s, $20) — with one authorized
+change: **24 admissions instead of 12**, at a $300 cap. Does doubling admissions double recall?
+
+It ran twice. **Attempt 1** is archived unscored: it launched 102 seconds after topic-2's arm resumed, so
+two Opus arms were admitting, and the admission pin placed 13 seconds later then lost the race described
+below. 21 of its 24 jobs are `cli_error` from the account session limit; one lead reached a comparison.
+**Attempt 2** (23:39:34 Z → 01:29:51 Z, `Stop: admitted_attempt_cap`) is the scored result, run as the only
+Opus arm admitting.
+
+| Stage | Jobs | Wall s | Summed job s | Avg concurrency |
+|---|---|---|---|---|
+| reconcile | 13 | 6 608.2 | 9 535.1 | 1.443 |
+| compare | 11 | 5 862.6 | 10 077.6 | 1.719 |
+| **arm** | **24** | **6 617.0** | **19 612.7** | **2.964** |
+
+**110 min 17 s — over the 75-minute target by 35 minutes.**
+
+| bound_by | Jobs | Detail |
+|---|---|---|
+| finished | 21 | ended on their own |
+| budget | 3 | **not money — the sentinel.** A five-hour `allowed_warning` at 0.90 utilization fired the strict pin after all 24 admissions were already spent, truncating three live jobs |
+
+**Nothing hit the 160-response ceiling or the 3 600 s job limit.** Responses per job 27–131 (mean 67.0),
+longest job 1 434.2 s of 3 600, dearest $13.91 of $20. Captured **$162.1497** of the $300 cap. The pin was
+released at the terminal, so the frozen journal is the arm's own accounting: 24 of 24 reconciled, receipts
+equal requests, **$0.00 unresolved**. 56 lead deliveries; 22 of 24 jobs wrote `notes.md`.
+
+**26 of the 88 leads reached a comparison.** Doubling admissions took recall from claude-hicap's 14 to 26 —
+close to linear — and still fell short of Arm B's 32, which reached more leads on *half* the admissions by
+spending all of them on comparison instead of half on reconciliation.
+
+The strict sentinel behaved as designed: one pin, no re-pinning, no leaked admission, and every truncated
+job still wrote a terminal receipt and reconciled.
+
+## T320 — cancelled
+
+T320 (a 320-response ceiling at 7 200 s, $250 cap) was cancelled before it ran. The T80 adjudication
+decomposed the 19 findings separating an 80-response ceiling from a 160-response one into **2 from the
+ceiling itself, 8 from the 3 600 s job limit, and 8 from run-to-run variance on identical inputs**, so a
+320-response arm would have been measuring noise at a cost of about $150 of the shared rate-limit window.
+It stays patched into the protocol and gate-verified, but was never staged, never granted and never spent
+anything. `t320-cancelled.json` records this.
 
 ## Rate limits, the gate rule, and the admission hold
 
@@ -299,6 +346,9 @@ verifiable rather than asserted. `runtime-identity.json` is taken from each job'
 | `arm-reports/b-breadth.json` | Arm B breadth stage, same per-job detail |
 | `arm-reports/b-compare.json` | Arm B compare stage, same per-job detail |
 | `arm-reports/t80.json` | Sweep arm T80 attempt 2, same per-job detail |
+| `arm-reports/a24.json` | Sweep arm A24 attempt 2, same per-job detail |
+| `a24-attempts.json` | Both A24 attempts; attempt 1 is the evidence for the admission-pin race |
+| `t320-cancelled.json` | Why T320 was cancelled, and its authorized limits |
 | `t80-attempts.json` | Both T80 attempts side by side, and why attempt 1 is not scored |
 | `arm-b-delivery-order.json` | The order b-breadth delivered its 54 reconciled leads in, which the compare stage admitted in |
 | `compare-isolation.json` | The pre-activation proof that the compare stage can only depend on Muse's reconcile deliveries |
@@ -311,12 +361,13 @@ verifiable rather than asserted. `runtime-identity.json` is taken from each job'
 | `p-rank-manifest.json` | The prioritization job's own file manifest |
 | `rate-limit-at-arm-p-terminal.json` | The typed rate-limit event at Arm P's terminal |
 
-## Still to run
+## What ran, and what is left
 
-**A24 and T320 are held.** The fresh probe taken after T80's terminal returned `allowed_warning` on the
-**seven-day** window at 0.25 utilization, resetting **2026-09-24T12:00:00 Z**, and the rule is to hold and
-report on a warning. The five-hour window was clean at the time (reset 23:30 Z), so waiting out five hours
-will not clear this: the seven-day warning persists for a week. Proceeding needs either that window to clear
-or a decision to gate on the five-hour window alone. T80 itself also has 5 unused admissions and could be
-regranted. All three sweep arms remain patched in and gate-verified; their limits and how each differs from
-goal 2 are recorded in each arm policy's `limits_note`.
+All five campaign arms are complete: Arm P (prioritization + depth), Arm B (breadth + compare), T80 and
+A24. T320 was cancelled. Four attempts are archived unscored and preserved with their manifests —
+b-compare attempt 1, T80 attempt 1, A24 attempt 1 — each cut by something outside the arm: the account's
+shared rate limit, a gate rule that was later corrected, or an admission pin that was later rebuilt.
+
+Nothing here is adjudicated. Adjudication uses the continuation-4 method with one standing addition
+authorized by Jared: every assertion of a code fact is verified against the pinned source in the arm's
+cache before credit, and the verification is recorded with the source lines.
