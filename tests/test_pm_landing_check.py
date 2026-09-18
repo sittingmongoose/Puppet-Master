@@ -10,6 +10,7 @@ from __future__ import annotations
 import importlib.util
 import json
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -61,6 +62,15 @@ PATH_REF = {
     "implementation_surface": "tests/fixtures/pm7_shared",
     "plan_unit_id": "ATS-037",
     "line": 744,
+}
+
+
+INDEX_FAILURE = {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "error": "implementation_surface_missing_or_untyped",
+    "plan_unit_id": "ATS-020",
+    "implementation_surface": "scratchpad/gone/runner.py",
+    "line": 727,
 }
 
 
@@ -622,25 +632,54 @@ class EndToEnd(unittest.TestCase):
         return subprocess.run(["git", *args], cwd=self.repo, capture_output=True, text=True, check=True).stdout
 
     def touch(self, name):
-        (self.repo / "Plans" / name).write_text("x\n", encoding="utf-8")
-        self.git("add", f"Plans/{name}")
-        self.git("commit", "-qm", name)
+        self.touch_path(f"Plans/{name}")
 
-    def stub_checks(self, gates_failures, migration_failures, gates_reported=None):
-        """Stand in for the three subprocess runs, so a test costs milliseconds, not ten minutes."""
-        sampled = len(gates_failures)
+    def touch_path(self, rel):
+        path = self.repo / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(path.read_text(encoding="utf-8") + "x\n" if path.exists() else "x\n", encoding="utf-8")
+        self.git("add", rel)
+        self.git("commit", "-qm", rel)
+
+    def write_index(self, owners):
+        index = self.repo / M.PLAN_UNITS_INDEX
+        index.parent.mkdir(parents=True, exist_ok=True)
+        index.write_text("".join(
+            json.dumps({"plan_unit_id": unit, "owner_doc": owner}) + "\n" for unit, owner in owners.items()
+        ), encoding="utf-8")
+        self.git("add", M.PLAN_UNITS_INDEX)
+        self.git("commit", "-qm", "index")
+
+    def stub_checks(self, gates_failures, migration_failures, gates_reported=None, root_in_failure=False):
+        """Stand in for the three subprocess runs, so a test costs milliseconds, not ten minutes.
+
+        `root_in_failure` reproduces what a crashing validator really emits: a traceback quoting the
+        absolute path of the checkout it ran in.
+        """
+        sampled = len(gates_failures) + (1 if root_in_failure else 0)
         reported = sampled if gates_reported is None else gates_reported
+        def build(root):
+            rows = list(gates_failures)
+            if root_in_failure:
+                rows.append({"error": "invalid_validator_output",
+                             "output": f"FileNotFoundError: '{root}/tests/fixtures/pm7_shared/x.json'"})
+            return rows
         reports = {
             "run-gates": {
-                "check": "run-gates", "status": "fail" if gates_failures else "pass",
-                "failures": [{"check": "verify_spec_lock", "failures": gates_failures}] if gates_failures else [],
+                "check": "run-gates", "status": "fail" if gates_failures or root_in_failure else "pass",
+                "failures": [{"check": "verify_spec_lock", "failures": gates_failures}] if gates_failures or root_in_failure else [],
                 "checks": {"verify_spec_lock": {"status": "fail", "failures": reported}},
             },
             "audit-governance": {"check": "audit-governance", "status": "pass", "failures": []},
             "plan-migration-validate": {
                 "status": "fail" if migration_failures else "pass", "failures": list(migration_failures)},
         }
-        self.module.run_check = lambda name, root, run_dir, timeout: reports[name]
+        def run_check(name, root, run_dir, timeout):
+            report = json.loads(json.dumps(reports[name]))
+            if name == "run-gates" and report["failures"]:
+                report["failures"][0]["failures"] = build(root)
+            return report
+        self.module.run_check = run_check
         self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
 
     def run_main(self, *argv):
@@ -761,6 +800,79 @@ class EndToEnd(unittest.TestCase):
         self.assertNotIn("_raw", out)
         self.assertEqual(code, 0, out)
 
+    def test_two_checkouts_produce_the_same_keys(self):
+        """A validator traceback names the tree it ran in. Record in one checkout, compare in
+        another: the failure is the same failure, so it must not read as new."""
+        self.stub_checks([STALE_HASH], [self.SPAN], root_in_failure=True)
+        self.record()
+        self.touch("Touched.md")
+        other = Path(self.scratch.name).parent / (Path(self.scratch.name).name + "-second")
+        shutil.copytree(self.repo, other)
+        self.addCleanup(shutil.rmtree, other, True)
+        code, out = self.run_main("--base", self.base, "--baseline", "baseline.json", "--root", str(other))
+        self.assertIn("New since the baseline: 0", out)
+        self.assertEqual(code, 0, out)
+        self.assertNotIn(str(self.repo), out)
+
+    def test_sample_churn_in_a_truncated_subcheck_is_not_new(self):
+        """The rows printed changed; nothing was added or removed. The control is the total, which
+        did not move, so the run has nothing to say."""
+        self.stub_checks([STALE_HASH], [self.SPAN], gates_reported=1552)
+        self.record()
+        self.touch("Touched.md")
+        churned = dict(STALE_HASH, path="Plans/SomeOther.md")
+        self.stub_checks([churned], [self.SPAN], gates_reported=1552)
+        code, out = self.compare()
+        self.assertIn("New since the baseline: 0", out)
+        self.assertIn("Gone since the baseline (nothing to do): 0", out)
+        self.assertIn("compared by their total only", out)
+        self.assertEqual(code, 0, out)
+
+    def test_the_same_churn_in_a_fully_printed_subcheck_is_new(self):
+        """The control for the control: where every failure is printed, a row that was not there
+        before really is a new failure."""
+        self.stub_checks([STALE_HASH], [self.SPAN])
+        self.record()
+        self.touch("Touched.md")
+        self.stub_checks([dict(STALE_HASH, path="Plans/SomeOther.md")], [self.SPAN])
+        code, out = self.compare()
+        self.assertIn("New since the baseline: 1", out)
+        self.assertEqual(code, 1, out)
+
+    def test_a_churned_row_that_names_a_branch_file_is_still_reported(self):
+        """Being compared by total does not take the sample out of the branch match."""
+        self.stub_checks([STALE_HASH], [self.SPAN], gates_reported=1552)
+        self.record()
+        self.touch("Touched.md")
+        self.stub_checks([dict(self.ON_BRANCH_NEW, path="Plans/Touched.md")], [self.SPAN], gates_reported=1552)
+        code, out = self.compare()
+        self.assertIn("New since the baseline: 0", out)
+        self.assertIn("Naming a path this branch touches: 1", out)
+        self.assertEqual(code, 2, out)
+
+    def test_a_regenerated_index_row_for_an_untouched_unit_does_not_stop_the_landing(self):
+        self.write_index({"ATS-020": "Plans/Untouched.md"})
+        self.stub_checks([STALE_HASH], [self.SPAN])
+        self.record()
+        self.touch("Touched.md")
+        self.touch_path("Plans/.plan_index/plan_units.jsonl")
+        self.stub_checks([STALE_HASH, INDEX_FAILURE], [self.SPAN])
+        code, out = self.compare()
+        self.assertIn("Naming a path this branch touches: 0", out)
+        self.assertIn("regenerated files are matched on the units they name", out)
+        self.assertEqual(code, 1, out)  # new, but on none of the branch's files
+
+    def test_a_regenerated_index_row_for_a_touched_unit_does(self):
+        self.write_index({"ATS-020": "Plans/Touched.md"})
+        self.stub_checks([STALE_HASH], [self.SPAN])
+        self.record()
+        self.touch("Touched.md")
+        self.touch_path("Plans/.plan_index/plan_units.jsonl")
+        self.stub_checks([STALE_HASH, INDEX_FAILURE], [self.SPAN])
+        code, out = self.compare()
+        self.assertIn("Naming a path this branch touches: 1", out)
+        self.assertEqual(code, 2, out)
+
     def test_a_missing_baseline_stops_before_running_anything(self):
         ran = []
         self.stub_checks([], [])
@@ -769,6 +881,98 @@ class EndToEnd(unittest.TestCase):
         code, _ = self.compare()
         self.assertEqual(code, 3)
         self.assertEqual(ran, [])
+
+
+class DerivedFilesAreMatchedOnUnits(unittest.TestCase):
+    """A branch that edits one owner document regenerates every shard and index row in the
+    repository. Matching on those paths made a failure about a unit the branch never opened stop its
+    landing: the author's own second trial matched 14 of them on plan_units.jsonl."""
+
+    TOUCHED = [
+        "Plans/Bootstrap_Planning_Migration.md",
+        "Plans/_shards/decision_log/003-entries.md",
+        "Plans/.plan_index/plan_units.jsonl",
+        "scripts/pm-landing-check.py",
+    ]
+
+    def test_the_derived_paths_are_taken_out_of_the_touched_set(self):
+        direct, derived = M.split_touched(self.TOUCHED)
+        self.assertEqual(direct, ["Plans/Bootstrap_Planning_Migration.md", "scripts/pm-landing-check.py"])
+        self.assertEqual(derived, ["Plans/_shards/decision_log/003-entries.md",
+                                   "Plans/.plan_index/plan_units.jsonl"])
+
+    def test_an_index_row_for_a_unit_the_branch_never_edited_does_not_match(self):
+        """The control: with plan_units.jsonl still in the touched set this failure matched."""
+        item = M.normalize("run-gates", "lint_path_refs", INDEX_FAILURE, CHECKOUT)
+        direct, _ = M.split_touched(self.TOUCHED)
+        self.assertEqual(M.names_branch_path(item, M.path_tokens(direct), CHECKOUT, {"OTH-001": "Plans/Other.md"}), [])
+        # the regression this fixes, shown rather than described:
+        self.assertEqual(
+            M.names_branch_path(item, M.path_tokens(self.TOUCHED), CHECKOUT),
+            ["Plans/.plan_index/plan_units.jsonl"],
+        )
+
+    def test_an_index_row_for_a_unit_of_a_touched_document_does_match(self):
+        item = M.normalize("run-gates", "lint_path_refs", INDEX_FAILURE, CHECKOUT)
+        direct, _ = M.split_touched(self.TOUCHED)
+        self.assertEqual(
+            M.names_branch_path(item, M.path_tokens(direct), CHECKOUT,
+                                {"ATS-020": "Plans/Bootstrap_Planning_Migration.md"}),
+            ["Plans/Bootstrap_Planning_Migration.md"],
+        )
+
+    def test_a_non_derived_failure_is_not_matched_on_units(self):
+        """Unit identity is the rule for generated indexes only, not a second way in everywhere."""
+        failure = {"path": "Plans/Other.md", "error": "e", "plan_unit_id": "ATS-020"}
+        item = M.normalize("run-gates", "s", failure, CHECKOUT)
+        self.assertEqual(M.names_branch_path(item, M.path_tokens(["Plans/Touched.md"]), CHECKOUT,
+                                             {"ATS-020": "Plans/Touched.md"}), [])
+
+    def test_a_derived_failure_naming_a_touched_path_in_its_text_still_matches(self):
+        failure = {"path": "Plans/.plan_index/plan_units.jsonl", "error": "e",
+                   "implementation_surface": "scripts/pm-landing-check.py"}
+        item = M.normalize("run-gates", "s", failure, CHECKOUT)
+        direct, _ = M.split_touched(self.TOUCHED)
+        self.assertEqual(M.names_branch_path(item, M.path_tokens(direct), CHECKOUT, {}),
+                         ["scripts/pm-landing-check.py"])
+
+    def test_the_owning_units_are_read_from_the_index(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            (root / "Plans" / ".plan_index").mkdir(parents=True)
+            (root / M.PLAN_UNITS_INDEX).write_text(
+                json.dumps({"plan_unit_id": "ATS-020", "owner_doc": "Plans/Touched.md"}) + "\n"
+                + json.dumps({"plan_unit_id": "OTH-001", "owner_doc": "Plans/Other.md"}) + "\n"
+                + "\n" + "{not json}\n", encoding="utf-8")
+            self.assertEqual(M.units_of_touched_docs(root, ["Plans/Touched.md"]),
+                             {"ATS-020": "Plans/Touched.md"})
+            self.assertEqual(M.units_of_touched_docs(root, ["scripts/x.py"]), {})
+            self.assertEqual(M.units_of_touched_docs(Path(scratch) / "nowhere", ["Plans/Touched.md"]), {})
+
+
+class SampledSubchecksAreComparedByTotal(unittest.TestCase):
+    """Which rows land inside a 50- or 100-row sample can change with nothing added or removed, so a
+    fingerprint first seen there means nothing. A peer build reported exactly this churn as new
+    failures."""
+
+    COUNTS = {"run-gates": {"validate_evidence": {"reported": 1552, "sampled": 50},
+                            "verify_spec_lock": {"reported": 35, "sampled": 35}}}
+    BASELINE = {"run-gates": {"subchecks": {"validate_evidence": {"reported": 1552, "sampled": 50},
+                                            "verify_spec_lock": {"reported": 35, "sampled": 35}}}}
+
+    def test_a_truncated_subcheck_is_named_from_either_side(self):
+        self.assertEqual(M.partial_subchecks(self.COUNTS, self.BASELINE),
+                         {("run-gates", "validate_evidence")})
+        full = {"run-gates": {"validate_evidence": {"reported": 50, "sampled": 50}}}
+        self.assertEqual(M.partial_subchecks(full, self.BASELINE), {("run-gates", "validate_evidence")})
+        self.assertEqual(M.partial_subchecks(self.COUNTS, {}), {("run-gates", "validate_evidence")})
+        self.assertEqual(M.partial_subchecks(full, {}), set())
+
+    def test_a_bucket_name_gives_back_its_check_and_subcheck(self):
+        self.assertEqual(M.bucket_subcheck("run-gates|validate_evidence|stale_hash|Plans/a|b"),
+                         ("run-gates", "validate_evidence"))
+        self.assertEqual(M.bucket_subcheck("plan-migration-validate||err|p|f"),
+                         ("plan-migration-validate", ""))
 
 
 class BaselineReading(unittest.TestCase):

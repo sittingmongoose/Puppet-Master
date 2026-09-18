@@ -62,6 +62,25 @@ truncated and how many failures that leaves unkeyed, and `--json` carries each c
 Excused items are counted by error kind, not just totalled, so a new failure kind arriving under a
 prefix that already excuses thousands shows up by name rather than as a slightly larger number.
 
+A truncated subcheck is compared **by its total only**. Which rows land inside a 50- or 100-row
+sample can change with no failure added or removed, and a fingerprint first seen there would
+otherwise read as a new failure at every landing. Its rows are still read for the branch match,
+which does not depend on the baseline. Where a subcheck prints every failure, a row that was not
+there before really is new, and is reported as such.
+
+## Which paths count as the branch's
+
+`Plans/_shards/**` and `Plans/.plan_index/**` are regenerated whole whenever any owner document
+changes, so every branch that edits canon rewrites the index row of every unit in the repository.
+They are kept out of the touched set: matching on them made a failure about a unit the branch never
+opened stop its landing, and the second trial here matched 14 such failures on `plan_units.jsonl`.
+
+A failure recorded against a generated index is matched on **unit identity** instead: the check
+reads `owner_doc` from `Plans/.plan_index/plan_units.jsonl`, collects the units owned by the
+documents the branch actually changed, and matches the failure only when the `plan_unit_id` in its
+record is one of those. Everything else is matched on paths exactly as before, and a derived-file
+failure that names a touched path in its own text still matches on that path.
+
 `baseline.json` is itself one of the files `run-gates` parses, because its `json_syntax` gate reads
 every `.json` and `.jsonl` file git knows about. It only has to stay valid JSON, which it is by
 construction, and it is not part of any hash census.
@@ -123,3 +142,8 @@ Four things that make the difference between a good baseline and a misleading on
 
 Takes about ten minutes. The run also ends at a new `current_run.json`, so the next landing check
 validates the new snapshot rather than the one it replaced.
+
+## Related branch
+
+`plans/acceptance-and-landing-baseline-20260917` records the decisions behind this rule, DL-059 and
+DL-060, and lands after this one.
