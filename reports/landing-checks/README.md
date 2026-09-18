@@ -21,6 +21,14 @@ staleness on files the branch edited or failures that are new but name none of t
 staleness, a bucket that grew whose error kind is not staleness, or a rise in a subcheck whose
 failures are truncated; 3 the check could not run.
 
+**It refuses a sparse worktree**, with exit 3, in both modes. The three checks read the whole
+repository, so every file outside a sparse cone reads as missing: a dry run at `ecb77f4e6c` on a
+worktree without `Concepts` and `tests` produced three blocking items and 76 new failures that were
+all the absent cone, in two truncated subchecks, and none of them about the branch. The tool was
+right to stop, but a lander would have read those as theirs. Run it in the shared checkout at
+landing or after `git sparse-checkout disable`; `--allow-sparse` overrides it for a deliberate
+partial run.
+
 The recorded `commit` is the branch's own first commit, not `main`. It has to be: the script that
 records a baseline must exist in the tree that records it. That commit adds only a script, a test,
 rule text and one `.gitignore` line, none of which any of the three checks reads, and the run taken
@@ -101,8 +109,12 @@ missing-file errors that a real landing never sees.
     tests/agent_packet_restrictions          (symlink into /mnt/Cursor/PuppetMaster-Evidence)
 
 Six of those seven are now tracked, each file named individually in `.gitignore` by the
-tests-tracking convention: the directories are opened only far enough to name their 29 files, so a
-fixture added later stays ignored until someone names it. The seventh, the
+tests-tracking convention, **including
+`tests/fixtures/governance/raw_evidence_capture_modes.schema.json`** at line 103 alongside its
+manifest: without that schema `json_syntax` reports `raw_capture_manifest_schema_unavailable`, so
+`run-gates` could not be clean in any fresh clone until this branch tracked it. Each directory is
+opened only far enough to name its files, 29 in all, so a fixture added later stays ignored until
+someone names it. The seventh, the
 `tests/agent_packet_restrictions` symlink, stays ignored on purpose and has to be recreated in any
 tree that records a baseline; the runbook below does that. The baseline records what it was taken
 with, in `untracked_inputs`.
