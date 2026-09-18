@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L941-L4338
+Source lines: L1125-L4919
 
-Source SHA256: `75566b5d9c502002f7d06ffa43a21cddd8066f4523f83a1a2a25de3f2b2136f6`
+Source SHA256: `7d05e52984903d8483e05bd23dcc36cca4a075b7e88fc43b3af49633d8fededd`
 
 ---
 
@@ -3282,6 +3282,403 @@ owner_hints:
   - Plans/Decision_Log.md
   - Plans/Jujutsu_Integration.md
   - Plans/Source_Control_System.md
+```
+
+### DL-059 - Branch Policies Are Shown On A Pull Request And The Branch Read Is Deferred
+
+```yaml
+plan_unit_id: DL-059
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered the first Azure DevOps decision card on 2026-09-18 by taking the recommendation, verbatim
+  "agree". Puppet Master's branch-policy promise is narrowed to what the plans already say: the branch policies
+  it shows are the ones evaluated on a pull request. Reading the policies configured on a branch is not offered,
+  and the closed forty-three-command forge set gains no command for it. The branch-policy read is deferred rather
+  than declined; it is deliberately not planned as a PlanUnit, because its natural home is the gate list DL-062
+  establishes and a read command before that region exists would produce rows with nowhere to render.
+gui_related: true
+gui_classification_reason: The decision settles what a person looking at a branch is told about the gates that will block a merge.
+split_recommended: false
+depends_on: [ADO-003, ADO-005]
+unblocks: []
+acceptance_criteria:
+  - The Azure owner states that the branch policies Puppet Master shows are the ones evaluated on a pull request, and that reading the policies configured on a branch is not offered.
+  - No command is added to the forge command set by this record, and the branch-policy read is recorded as deferred rather than declined.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds or build tasks are created by this record.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: unrenderable_branch_policy_promise
+reasoning_tier: high
+context_scope: azure_devops_branch_policy_scope
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Azure_DevOps_Integration.md
+node_compile_hint:
+  mode: owner_product_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections:q-001
+  - Plans/Decision_Log.md:DL-059-direction-2026-09-18
+  - Plans/Azure_DevOps_Integration.md#ADO-005
+preserved_exact_tokens:
+  - agree
+  - pull request
+  - deferred rather than declined
+negative_constraints:
+  - Do not add a branch-policy read command under this decision.
+  - Do not record the branch-policy read as declined.
+  - Do not present branch-scoped policy information that no command reads.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Azure_DevOps_Integration.md
+```
+
+### DL-060 - An Azure Vote Is Bound To The Revision Puppet Master Observed
+
+```yaml
+plan_unit_id: DL-060
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered the second Azure DevOps decision card on 2026-09-18 by taking the recommendation, verbatim
+  "agree". Azure attaches no revision identity to a vote, so an Azure vote is bound to the provider revision
+  Puppet Master read it against, and every surface that shows it states that the binding is observed by Puppet
+  Master rather than provider-asserted. A vote observed before a new provider revision is stale against that
+  revision and is shown as stale. A vote carrying neither a provider-asserted nor an observation-time binding is
+  not shown as current evidence. The alternative, treating Azure votes as never attributable, was rejected
+  because it leaves the Azure owner's two vote criteria unmeetable and shows every approval as unbound.
+gui_related: true
+gui_classification_reason: The label and the staleness state are what a person reads next to an approval before trusting it.
+split_recommended: false
+depends_on: [ADO-003, FGI-004]
+unblocks: [DL-065]
+acceptance_criteria:
+  - An Azure vote carries the provider revision it was observed against, and the surface states that the binding is observed by Puppet Master rather than provider-asserted.
+  - A vote observed against an earlier provider revision is shown as stale against the current one, and a vote with no binding of either kind is not shown as current evidence.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds or build tasks are created by this record.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: silently_transferred_approval_evidence
+reasoning_tier: high
+context_scope: azure_devops_vote_binding
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Azure_DevOps_Integration.md
+  - Plans/Forge_Integrations.md
+node_compile_hint:
+  mode: owner_product_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections:q-002
+  - Plans/Decision_Log.md:DL-060-direction-2026-09-18
+  - Plans/Azure_DevOps_Integration.md#ADO-006
+preserved_exact_tokens:
+  - agree
+  - observed by Puppet Master
+  - provider-asserted
+negative_constraints:
+  - Do not present an observation-time binding as a provider assertion.
+  - Do not show a vote with no binding as current evidence.
+  - Do not carry a vote across a new provider revision without restating its staleness.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Azure_DevOps_Integration.md
+  - Plans/Forge_Integrations.md
+```
+
+### DL-061 - The Checks View Leads With Evaluations And Separates Unwatched Statuses
+
+```yaml
+plan_unit_id: DL-061
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered the third Azure DevOps decision card on 2026-09-18 by taking the recommendation, verbatim
+  "agree". On Azure the checks view leads with policy evaluations, the list that agrees with what the provider
+  will enforce, and shows any status check no policy watches in a separate informational group that is never
+  presented as a gate. One check never appears twice. The single joined list is the stated end state and is
+  reached only once a documented key between a status check and the policy that watches it is established and
+  recorded as evidence; until then the two-group form is the shipped form and the absence of the key is stated
+  rather than worked around.
+gui_related: true
+gui_classification_reason: The decision settles what the checks region contains, in what order, and what is presented as a gate rather than as information.
+split_recommended: false
+depends_on: [ADO-003, FGI-005]
+unblocks: [DL-062]
+acceptance_criteria:
+  - Policy evaluations are the primary list; a status check no policy watches appears in a separate informational group and is not presented as a gate.
+  - One provider check never appears in both groups at once.
+  - The joined single list is admitted only on a documented and evidence-bearing key between a status check and the policy that watches it; without that key the two-group form stands and the missing key is stated.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds or build tasks are created by this record.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: duplicated_or_unenforced_check_presentation
+reasoning_tier: high
+context_scope: azure_devops_checks_view_composition
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Azure_DevOps_Integration.md
+node_compile_hint:
+  mode: owner_product_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections:q-003
+  - Plans/Decision_Log.md:DL-061-direction-2026-09-18
+  - Plans/Azure_DevOps_Integration.md#ADO-007
+preserved_exact_tokens:
+  - agree
+  - policy evaluations
+  - status check
+  - informational
+negative_constraints:
+  - Do not show one provider check in both groups at once.
+  - Do not present an unwatched status check as a gate.
+  - Do not join the two lists on an undocumented or inferred key.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Azure_DevOps_Integration.md
+```
+
+### DL-062 - One Gate List With A Source Column And An Enforcement Column
+
+```yaml
+plan_unit_id: DL-062
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered the fourth Azure DevOps decision card on 2026-09-18 by taking the recommendation, verbatim
+  "agree". Source Control's current checks region stays one region and becomes one gate list. Every row declares
+  the provider surface it came from and its enforcement, which is required, advisory, not enforced or unknown, so
+  the question "what blocks this merge" is answered in one place. No provider-neutral policies region is added
+  and no new section vocabulary is introduced, which is what Source Control's own rule against section
+  proliferation asks for. The final interface specification carries the same two columns.
+gui_related: true
+gui_classification_reason: The decision settles the columns and the region a person reads to find what will block a merge.
+split_recommended: false
+depends_on: [SCS-005, ADO-005]
+unblocks: [DL-059]
+acceptance_criteria:
+  - The current checks region is one gate list whose rows each carry a source and an enforcement value; no second policies region is added.
+  - Enforcement is stated rather than inferred, and a row whose enforcement the provider does not publish reads unknown rather than required or advisory.
+  - Source Control and the final interface specification name the same two columns.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds or build tasks are created by this record.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: section_proliferation_or_unstated_enforcement
+reasoning_tier: high
+context_scope: source_control_gate_list_presentation
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_product_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections:q-004
+  - Plans/Decision_Log.md:DL-062-direction-2026-09-18
+  - Plans/Source_Control_System.md#SCS-023
+  - Plans/FinalGUISpec.md#F3-561
+preserved_exact_tokens:
+  - agree
+  - current checks
+  - gate list
+  - enforcement
+negative_constraints:
+  - Do not add a second policies region or new section vocabulary under this decision.
+  - Do not infer an enforcement value the provider does not publish.
+  - Do not let the two consumer owners name different columns.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Source_Control_System.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-063 - The Merge Command Gains A Typed Strategy Field That Is Always Shown
+
+```yaml
+plan_unit_id: DL-063
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered the fifth Azure DevOps decision card on 2026-09-18 by taking the recommendation, verbatim
+  "agree". The forge merge request carries one provider-neutral typed merge strategy field. It defaults to the
+  provider's own default rather than to a Puppet Master preference, and it is always shown before the merge,
+  including when it is the default, because a strategy visible only when changed is a strategy nobody reads.
+  Where the effective policy permits only some strategies the forbidden ones are not offered, and a completion
+  the policy forbids is refused before the request rather than reported after it. This is the capability half of
+  the TA-035 correction, whose prose half states that on Azure an omitted strategy silently selects
+  no-fast-forward.
+gui_related: true
+gui_classification_reason: The strategy is a control a person sets and reads before the one action they cannot undo cheaply.
+split_recommended: false
+depends_on: [FGI-010, ADO-003]
+unblocks: []
+acceptance_criteria:
+  - The merge request carries one typed provider-neutral merge strategy field whose default is the provider's own default.
+  - The strategy is shown before every merge, including when it is the default.
+  - A strategy the effective policy forbids is not offered, and a completion naming one is refused before the request rather than reported after it.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds or build tasks are created by this record.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: implicit_merge_strategy_selection
+reasoning_tier: high
+context_scope: forge_merge_strategy
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Forge_Integrations.md
+node_compile_hint:
+  mode: owner_product_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections:q-005
+  - Plans/Decision_Log.md:DL-063-direction-2026-09-18
+  - Plans/Forge_Integrations.md#FGI-018
+preserved_exact_tokens:
+  - agree
+  - merge strategy
+  - no-fast-forward
+  - the provider's own default
+negative_constraints:
+  - Do not hide the strategy when it is the default.
+  - Do not default the strategy to a Puppet Master preference rather than the provider's own default.
+  - Do not offer a strategy the effective policy forbids.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Forge_Integrations.md
+```
+
+### DL-064 - A Requeue Command Disabled With A Typed Reason Where There Is No Equivalent
+
+```yaml
+plan_unit_id: DL-064
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered the sixth Azure DevOps decision card on 2026-09-18 by taking the recommendation, verbatim
+  "agree". A command that re-runs a policy evaluation is planned. Where the provider has no equivalent it is
+  disabled with a typed reason and never hidden. Where the provider would accept a requeue that does nothing,
+  because the evaluation is not a build policy, it is refused with a typed reason rather than reported as
+  success. Where it would cancel a build already running for that policy, the confirmation discloses the
+  cancellation and names the policy before dispatch, as an effect on a third object rather than a discovery
+  afterwards. The command follows DL-061, because the interface must settle what an evaluation is before a
+  control can re-run one.
+gui_related: true
+gui_classification_reason: The control, its disabled reason and its confirmation copy are what a person sees when a gate has failed for a transient reason.
+split_recommended: false
+depends_on: [FGI-005, ADO-004]
+unblocks: []
+acceptance_criteria:
+  - The requeue command is disabled with a typed reason, never hidden, where the provider has no equivalent.
+  - A requeue that the provider would accept but not act on is refused with a typed reason rather than reported as success.
+  - A requeue that cancels a build already running discloses the cancellation and names the policy in the confirmation before dispatch.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds or build tasks are created by this record.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: silent_no_op_or_undisclosed_build_cancellation
+reasoning_tier: high
+context_scope: forge_policy_evaluation_requeue
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Forge_Integrations.md
+node_compile_hint:
+  mode: owner_product_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections:q-006
+  - Plans/Decision_Log.md:DL-064-direction-2026-09-18
+  - Plans/Forge_Integrations.md#FGI-019
+preserved_exact_tokens:
+  - agree
+  - requeue
+  - build policy
+  - typed reason
+negative_constraints:
+  - Do not hide the control where the provider has no equivalent.
+  - Do not report a requeue that does nothing as success.
+  - Do not cancel a running build without disclosing it in the confirmation first.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Forge_Integrations.md
+```
+
+### DL-065 - A Provider Neutral Vote And Reviewer Carrier Bound The Way DL-060 Binds
+
+```yaml
+plan_unit_id: DL-065
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered the seventh Azure DevOps decision card on 2026-09-18 by taking the recommendation, verbatim
+  "agree". A provider-neutral vote and reviewer carrier is planned in the common forge contracts. It holds the
+  reviewer identity, the vote value from one closed vocabulary, whether that reviewer is required, and the
+  revision the vote is bound to together with how that binding was established. The binding rule is DL-060's: a
+  provider-asserted binding where the provider supplies one, and an observation-time binding labelled as
+  observed by Puppet Master where it does not. A vote with neither binding is not shown as current evidence. The
+  carrier is what lets the Azure owner's two vote acceptance criteria be restated as promises a shape can keep,
+  rather than removed.
+gui_related: true
+gui_classification_reason: Reviewer state, the vote value and the required marker are what a review view shows about who has approved what.
+split_recommended: false
+depends_on: [FGI-004, DL-060]
+unblocks: []
+acceptance_criteria:
+  - The carrier holds reviewer identity, a vote value from one closed vocabulary, a required-reviewer flag, the bound revision and the binding kind.
+  - The binding kind is provider-asserted or observed by Puppet Master, following DL-060, and a vote with neither is not shown as current evidence.
+  - The carrier is provider-neutral and is exercised by a fixture for more than one provider before it is claimed as common.
+  - No command, handler, event, or runtime behaviour is admitted, and no WorkNodes, NodeSeeds or build tasks are created by this record.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: unbindable_vote_promise
+reasoning_tier: high
+context_scope: forge_vote_and_reviewer_carrier
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Forge_Integrations.md
+  - Plans/Azure_DevOps_Integration.md
+node_compile_hint:
+  mode: owner_product_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections:q-007
+  - Plans/Decision_Log.md:DL-065-direction-2026-09-18
+  - Plans/Decision_Log.md#DL-060
+  - Plans/Forge_Integrations.md#FGI-020
+preserved_exact_tokens:
+  - agree
+  - vote value
+  - required reviewer
+  - observed by Puppet Master
+negative_constraints:
+  - Do not add a vote carrier that only one provider can populate.
+  - Do not show a vote with no binding of either kind as current evidence.
+  - Do not restore the Azure vote criteria before the carrier exists.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Forge_Integrations.md
+  - Plans/Azure_DevOps_Integration.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

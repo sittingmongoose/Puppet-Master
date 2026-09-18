@@ -259,7 +259,7 @@ Connect, auth, test and Details reuse shared `cmd.integration.connection.*` and 
 
 ## 4. Integration Surfaces
 
-Source Control may show Pull Requests, Versions/Threads, Policies/Checks, Builds/Pipelines, and provider health as capabilities permit. Settings routes **Source Control -> Hosting Services -> Azure DevOps** with Connection, Repositories, Security, Tools and Advanced, showing exact Services/Server hierarchy and access/currentness without raw credentials.
+Source Control may show Pull Requests, Versions/Threads, Policies/Checks, Builds/Pipelines, and provider health as capabilities permit. The branch policies Puppet Master shows are the ones evaluated on a pull request. Reading the policies configured on a branch is not offered and no command reads them, so a branch view shows no policies; DL-059 defers that read until the gate list DL-062 establishes exists to display it. Settings routes **Source Control -> Hosting Services -> Azure DevOps** with Connection, Repositories, Security, Tools and Advanced, showing exact Services/Server hierarchy and access/currentness without raw credentials.
 
 ## 5. Validation And Acceptance
 
@@ -275,7 +275,8 @@ Azure DevOps remains node-blocked until central registration, signed Server supp
 - `cmd.azure_devops.*`, a dedicated Azure panel, raw secret persistence, terminal prose scraping and omitted project identity are forbidden.
 - Boards/issues are optional capability projections and are not silently claimed by repository access.
 - TFVC is out of scope and is never emulated as Git. An Azure project can hold a TFVC container, and the first thing a new user of such a project meets is a container Puppet Master cannot serve. It is recognized from the provider's own repository-kind data, reported as `tfvc_container_unsupported`, and never inferred from a CLI failure string, a 403 body or an empty Git response.
-- Requeueing a branch-policy evaluation is not offered. The provider accepts a requeue on any evaluation, but only build policies act on it, and a build-policy requeue cancels the build already running for that policy. A requeue is therefore a destructive effect on a third object for some policy types and a silent no-op for the rest; if it is ever offered it must name the policy type, disclose the cancellation, and refuse rather than silently succeed where no action follows.
+- Reading the branch policies configured on a branch is deferred, not declined: the closed forge command set has no command that reads them, so the Azure owner promises policy information on a pull request only, and DL-059 records the deferral.
+- Requeueing a branch-policy evaluation is not offered today; DL-064 plans the command, and until it compiles this non-goal stands. The provider accepts a requeue on any evaluation, but only build policies act on it, and a build-policy requeue cancels the build already running for that policy. A requeue is therefore a destructive effect on a third object for some policy types and a silent no-op for the rest; if it is ever offered it must name the policy type, disclose the cancellation, and refuse rather than silently succeed where no action follows.
 - This owner does not define local Git/JJ, common forge shapes, shared lifecycle, plugin manifests, Settings geometry, command/event catalogs, storage or wiring.
 
 ### 7.1 Migration
@@ -287,3 +288,96 @@ Migration requires validated variant, host, stable account, organization/collect
 This owner compiles Azure DevOps portions of accepted `SCM-05`, `UI-01`, `UI-03`, `CT-01..02` and provider token inventories. Root-owned central registrations and governance outputs remain follow-up.
 
 ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/00-plans-index.md
+
+## DL-059 to DL-065 Accepted Azure Decision Planning Addendum - 2026-09-18
+
+This addendum compiles the seven accepted Azure DevOps decision-card answers of 2026-09-18 as accepted planning requirements. It does not change current command or provider enums, admit typed schema variants, register handlers or events, implement runtime behavior or claim readiness. Conditions remain acceptance criteria. The deferred branch-policy read receives no PlanUnit. Cross-owner command, GUI, wiring and contract amendments remain with their canonical owners.
+
+ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Forge_Integrations.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/FinalGUISpec.md
+
+### ADO-006 - Observed Revision Binding For Azure Votes And Policy Evidence
+
+```yaml
+plan_unit_id: ADO-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Azure_DevOps_Integration.md
+canonical_text: >-
+  Azure attaches no revision identity to a vote or to a policy evaluation, so that evidence is bound at
+  observation: Puppet Master records the provider revision it read the evidence against and labels the binding
+  observed by Puppet Master rather than provider-asserted. The observation revision is the whole provider
+  revision identity, so a target-branch move or a retarget makes an earlier observation stale exactly as a new
+  head does. Evidence observed against an earlier provider revision is shown as stale against the current one.
+  Evidence carrying neither a provider-asserted nor an observed-at binding is not shown as current. This is
+  DL-060's rule stated where the Azure adapter reads it, and it is the binding the provider-neutral carrier
+  planned as FGI-020 applies.
+gui_related: true
+gui_classification_reason: The observed-at label and the stale marker are what a person reads beside an approval or a policy result before trusting it.
+depends_on: [ADO-003, FGI-004]
+unblocks: []
+acceptance_criteria:
+  - Every Azure vote and policy evaluation Puppet Master shows carries the provider revision it was observed against and the label observed by Puppet Master.
+  - >-
+    Staleness is computed against the whole provider revision identity, so an observation taken before a target
+    move, a retarget or a merge-base change is stale even though the head did not move.
+  - Evidence with no binding of either kind is not shown as current, and is never silently carried to a new provider revision.
+  - No command, handler, event or runtime behaviour is admitted by this unit, and no WorkNode or NodeSeed is created.
+validation_surfaces:
+  - Plans/azure_devops_integration_fixtures.json
+  - >-
+    The Azure vote and policy-evaluation fixtures this unit will need do not exist yet, for the reason ADO-003
+    states: no Azure review, vote, policy or check fixture exists in any Plans fixture pack. This unit is planned
+    and is not yet falsifiable by a fixture.
+risk_class: silently_transferred_azure_approval_or_policy_evidence
+reasoning_tier: high
+context_scope: azure_devops_observed_revision_binding
+implementation_surfaces: [Plans/Azure_DevOps_Integration.md, Plans/Forge_Integrations.md, future Azure review adapter]
+node_compile_hint: {mode: azure_devops_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Decision_Log.md#DL-060, Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections:q-002]
+preserved_exact_tokens: [observed by Puppet Master, provider-asserted, provider revision, retarget]
+negative_constraints: [Do not present an observed-at binding as a provider assertion., Do not treat a head that did not move as evidence that an observation is still current., Do not show evidence with no binding as current.]
+owner_hints: [Plans/Azure_DevOps_Integration.md, Plans/Forge_Integrations.md]
+```
+
+### ADO-007 - Evaluations First Checks View With Unwatched Statuses Shown Separately
+
+```yaml
+plan_unit_id: ADO-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Azure_DevOps_Integration.md
+canonical_text: >-
+  On Azure a status check is both a separate API surface and a branch-policy type, so the checks view leads with
+  policy evaluations, the list that agrees with what the provider will enforce, and shows any status check that
+  no policy watches in a separate informational group that is never presented as a gate. One provider check never
+  appears in both groups at once. The single joined list is the stated end state and is admitted only once a
+  documented key between a status check and the policy that watches it is established and recorded as evidence;
+  until then the two-group form is what ships and the absent key is stated rather than worked around. Each row
+  carries the source and enforcement the gate list of DL-062 requires.
+gui_related: true
+gui_classification_reason: The composition, order and grouping of the checks region are what a person reads to see what will block a merge.
+depends_on: [ADO-003, ADO-004, FGI-005]
+unblocks: []
+acceptance_criteria:
+  - Policy evaluations are the primary list, and a status check no policy watches appears in a separate informational group that is not presented as a gate.
+  - One provider check never appears in both groups at once.
+  - >-
+    The joined single list is admitted only on a documented, evidence-bearing key between a status check and the
+    policy that watches it. Without that key the two-group form stands and the missing key is stated on the
+    surface rather than inferred or guessed.
+  - No command, handler, event or runtime behaviour is admitted by this unit, and no WorkNode or NodeSeed is created.
+validation_surfaces:
+  - Plans/azure_devops_integration_fixtures.json
+  - >-
+    The Azure policy-evaluation and status-check fixtures this unit will need do not exist yet, so it is planned
+    and not yet falsifiable by a fixture.
+risk_class: duplicated_or_unenforced_azure_check_presentation
+reasoning_tier: high
+context_scope: azure_devops_checks_view_composition
+implementation_surfaces: [Plans/Azure_DevOps_Integration.md, Plans/Source_Control_System.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: azure_devops_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Decision_Log.md#DL-061, Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections:q-003]
+preserved_exact_tokens: [policy evaluations, status check, informational, gate]
+negative_constraints: [Do not show one provider check in both groups at once., Do not present an unwatched status check as a gate., Do not join the two lists on an inferred key.]
+owner_hints: [Plans/Azure_DevOps_Integration.md, Plans/Source_Control_System.md]
+```

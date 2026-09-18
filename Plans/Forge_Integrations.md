@@ -1135,3 +1135,139 @@ owner_hints:
 preserved_exact_tokens:
 - Add only for a concrete user workflow and keep local history independent.
 ```
+
+## DL-063 to DL-065 Accepted Forge Capability Planning Addendum - 2026-09-18
+
+This addendum compiles the seven accepted Azure DevOps decision-card answers of 2026-09-18 as accepted planning requirements. It does not change current command or provider enums, admit typed schema variants, register handlers or events, implement runtime behavior or claim readiness. Conditions remain acceptance criteria. The deferred branch-policy read receives no PlanUnit. Cross-owner command, GUI, wiring and contract amendments remain with their canonical owners.
+
+ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Azure_DevOps_Integration.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/UI_Command_Catalog.md
+
+### FGI-018 - Typed Merge Strategy On The Forge Merge Request
+
+```yaml
+plan_unit_id: FGI-018
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: >-
+  The forge merge request carries one provider-neutral typed merge strategy field. Its default is the provider's
+  own default rather than a Puppet Master preference, and it is always shown before the merge, including when it
+  is the default, because a strategy visible only when changed is a strategy nobody reads. Omission is not
+  neutral on every provider: on Azure a completion that names no strategy selects a no-fast-forward merge, which
+  a repository policy may forbid. The effective policy's permitted strategies are therefore resolved before a
+  merge affordance is offered, a strategy the policy forbids is not offered, and a completion naming one is
+  refused before the request rather than reported after it. Each provider maps the neutral value to its own
+  parameter, and a provider with no equivalent for a value does not offer that value.
+gui_related: true
+gui_classification_reason: The strategy is a visible control and a line of confirmation copy on the one action a person cannot undo cheaply.
+depends_on: [FGI-005, FGI-010]
+unblocks: []
+acceptance_criteria:
+  - The merge request carries one typed provider-neutral merge strategy whose default is the provider's own default.
+  - The strategy is shown before every merge, including when it is the default.
+  - >-
+    The effective policy's permitted strategies are known before a merge affordance is offered; a forbidden
+    strategy is not offered and a completion naming one is refused before the request rather than reported after
+    it.
+  - A provider with no equivalent for a neutral value does not offer that value, and no value is silently mapped to a different one.
+  - No command is added, no handler or event is registered, and no WorkNode or NodeSeed is created by this unit.
+validation_surfaces:
+  - Plans/forge_integration_contracts.schema.json
+  - Plans/forge_integration_contract_fixtures.json
+  - python3 scripts/pm-new-contracts-verify.py
+  - future per-provider merge strategy mapping fixtures
+risk_class: implicit_merge_strategy_selection
+reasoning_tier: high
+context_scope: forge_merge_strategy
+implementation_surfaces: [Plans/Forge_Integrations.md, Plans/forge_integration_contracts.schema.json, future review adapters]
+node_compile_hint: {mode: forge_capability_planning_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Decision_Log.md#DL-063, Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections:q-005]
+preserved_exact_tokens: [merge strategy, no-fast-forward, the provider's own default]
+negative_constraints: [Do not hide the strategy when it is the default., Do not default the strategy to a Puppet Master preference., Do not offer a strategy the effective policy forbids., Do not silently map a neutral value to a different provider parameter.]
+owner_hints: [Plans/Forge_Integrations.md, Plans/Azure_DevOps_Integration.md]
+```
+
+### FGI-019 - Policy Evaluation Requeue That Degrades Truthfully
+
+```yaml
+plan_unit_id: FGI-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: >-
+  A command that re-runs one policy evaluation is accepted planning. It is disabled with a typed reason and never
+  hidden where the provider has no equivalent. Where the provider would accept a requeue that does nothing,
+  because the evaluation is not a build policy, the request is refused with a typed reason rather than reported
+  as success. Where a requeue cancels a build already running for that policy, the confirmation names the policy
+  and discloses the cancellation before dispatch, as an effect on a third object rather than a discovery
+  afterwards. The command targets one evaluation identity from the gate record rather than a whole policy set,
+  and it follows DL-061, because the interface has to settle what an evaluation is before a control can re-run
+  one. Nothing here admits the command to the central command set, the command catalog or production wiring;
+  those remain with their owners.
+gui_related: true
+gui_classification_reason: The control, its typed disabled reason and its confirmation copy are what a person meets when a gate has failed for a transient reason.
+depends_on: [FGI-005, FGI-010]
+unblocks: []
+acceptance_criteria:
+  - The requeue control is disabled with a typed reason and never hidden where the provider has no equivalent.
+  - A requeue the provider would accept but not act on is refused with a typed reason rather than reported as success.
+  - A requeue that cancels a build already running names the policy and discloses the cancellation in the confirmation before dispatch.
+  - The command targets one evaluation identity from the gate record, never a whole policy set.
+  - This unit admits no command to the central command set, the command catalog, production wiring or any event family, and creates no WorkNode or NodeSeed.
+validation_surfaces:
+  - Plans/forge_integration_contracts.schema.json
+  - Plans/forge_integration_contract_fixtures.json
+  - python3 scripts/pm-new-contracts-verify.py
+  - future requeue disabled-reason and confirmation fixtures
+risk_class: silent_no_op_or_undisclosed_build_cancellation
+reasoning_tier: high
+context_scope: forge_policy_evaluation_requeue
+implementation_surfaces: [Plans/Forge_Integrations.md, Plans/Azure_DevOps_Integration.md, future policy adapters]
+node_compile_hint: {mode: forge_capability_planning_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Decision_Log.md#DL-064, Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections:q-006]
+preserved_exact_tokens: [requeue, build policy, typed reason, gate record]
+negative_constraints: [Do not hide the control where the provider has no equivalent., Do not report a requeue that does nothing as success., Do not cancel a running build without disclosing it in the confirmation first., Do not admit this command to the central command set or production wiring under this unit.]
+owner_hints: [Plans/Forge_Integrations.md, Plans/Azure_DevOps_Integration.md, Plans/UI_Command_Catalog.md]
+```
+
+### FGI-020 - Provider Neutral Vote And Reviewer Carrier
+
+```yaml
+plan_unit_id: FGI-020
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: >-
+  A provider-neutral vote and reviewer carrier is accepted planning for the common forge contracts. It holds the
+  reviewer identity, the vote value from one closed vocabulary, whether that reviewer is a required reviewer, and
+  the revision the vote is bound to together with the binding kind that established it. The binding kind is
+  provider-asserted where the provider supplies a revision identity on the vote, and observed by Puppet Master
+  where it does not, which is DL-060's rule. A vote carrying neither binding is not shown as current evidence.
+  The carrier is what lets the Azure owner's two vote acceptance criteria be restated as promises a shape can
+  keep rather than removed, and it is exercised by fixtures for more than one provider before it is claimed as
+  common.
+gui_related: true
+gui_classification_reason: Reviewer identity, the vote value and the required-reviewer marker are what a review view shows about who has approved what.
+depends_on: [FGI-004, FGI-005]
+unblocks: []
+acceptance_criteria:
+  - The carrier holds reviewer identity, a vote value from one closed vocabulary, a required-reviewer flag, the bound revision and the binding kind.
+  - The binding kind is provider-asserted or observed by Puppet Master, and a vote with neither is not shown as current evidence.
+  - The carrier is exercised by a fixture for more than one provider before it is claimed as a common shape.
+  - A vote observed against an earlier provider revision is reported stale against the current one rather than carried silently.
+  - No command, handler, event or runtime behaviour is admitted by this unit, and no WorkNode or NodeSeed is created.
+validation_surfaces:
+  - Plans/forge_integration_contracts.schema.json
+  - Plans/forge_integration_contract_fixtures.json
+  - python3 scripts/pm-new-contracts-verify.py
+  - future per-provider vote and reviewer fixtures
+risk_class: unbindable_vote_promise
+reasoning_tier: high
+context_scope: forge_vote_and_reviewer_carrier
+implementation_surfaces: [Plans/Forge_Integrations.md, Plans/forge_integration_contracts.schema.json, Plans/Azure_DevOps_Integration.md]
+node_compile_hint: {mode: forge_capability_planning_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Decision_Log.md#DL-065, Plans/Decision_Log.md#DL-060, Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections:q-007]
+preserved_exact_tokens: [vote value, required reviewer, observed by Puppet Master, provider-asserted]
+negative_constraints: [Do not add a vote carrier only one provider can populate., Do not show a vote with no binding of either kind as current evidence., Do not restore the Azure vote criteria before the carrier exists.]
+owner_hints: [Plans/Forge_Integrations.md, Plans/Azure_DevOps_Integration.md]
+```

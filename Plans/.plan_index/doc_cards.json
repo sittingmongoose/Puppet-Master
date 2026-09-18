@@ -2113,31 +2113,36 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "True": 5
+        "True": 7
       },
-      "heading_count": 16,
+      "heading_count": 19,
       "implementation_surfaces": [
         "Plans/Azure_DevOps_Integration.md",
         "Plans/FinalGUISpec.md",
+        "Plans/Forge_Integrations.md",
         "Plans/Settings_System.md",
+        "Plans/Source_Control_System.md",
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.json",
         "Plans/forge_integration_contracts.schema.json",
         "future Azure adapter",
         "future Azure auth/API adapter",
         "future Azure pipeline/hook/API adapters",
+        "future Azure review adapter",
         "future Azure review/policy adapter",
         "future Source Control review UI"
       ],
-      "line_count": 289,
+      "line_count": 383,
       "path": "Plans/Azure_DevOps_Integration.md",
-      "plan_unit_count": 5,
+      "plan_unit_count": 7,
       "plan_unit_ids": [
         "ADO-001",
         "ADO-002",
         "ADO-003",
         "ADO-004",
-        "ADO-005"
+        "ADO-005",
+        "ADO-006",
+        "ADO-007"
       ],
       "reasoning_tiers": [
         "high"
@@ -2147,17 +2152,19 @@
         "azure_build_or_api_misrepresentation",
         "azure_container_identity_collapse",
         "azure_gui_command_or_migration_drift",
-        "azure_stale_pr_or_policy_evidence"
+        "azure_stale_pr_or_policy_evidence",
+        "duplicated_or_unenforced_azure_check_presentation",
+        "silently_transferred_azure_approval_or_policy_evidence"
       ],
-      "sha256": "ef99e9da8bac89bb06acd757a90c09b826b55a7ad68555b3ecc36c489f3a1dee",
+      "sha256": "73b108e1afc6599f26ce5cc738cfd11535356dcd5b186e628becf3d58dcfc5df",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 5
+        "accepted": 7
       },
       "title": "Azure DevOps Integration",
       "unit_type_counts": {
         "owner_boundary": 1,
-        "requirement": 3,
+        "requirement": 5,
         "validation": 1
       },
       "validation_surfaces": [
@@ -2166,7 +2173,9 @@
         "Azure capability fixtures",
         "Plans/azure_devops_integration_fixtures.json",
         "That pack holds the Services and Server adapter profiles and the repository-binding negatives and nothing else. The Azure Pull Request, Policies/Checks and Builds/Pipelines fixtures this unit's placement promise would need do not exist yet, so placement is stated here and is not yet falsifiable by a fixture.",
+        "The Azure policy-evaluation and status-check fixtures this unit will need do not exist yet, so it is planned and not yet falsifiable by a fixture.",
         "The Azure review, policy and check fixtures this unit needs do not exist yet. What exists is the Services and Server adapter profiles and the repository-binding negatives in Plans/azure_devops_integration_fixtures.json; no Azure review revision, thread, vote, policy evaluation or check fixture exists in any Plans fixture pack, so these criteria are stated and not yet falsifiable by a fixture. Writing them is separate work gated on the common gate-record contract.",
+        "The Azure vote and policy-evaluation fixtures this unit will need do not exist yet, for the reason ADO-003 states: no Azure review, vote, policy or check fixture exists in any Plans fixture pack. This unit is planned and is not yet falsifiable by a fixture.",
         "access/scope/version/license/rate matrices",
         "command/wiring census, GUI/accessibility fixtures, migration negatives",
         "future stale-head/vote tests, Draft capability tests",
@@ -5330,15 +5339,16 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 25,
-        "True": 30
+        "True": 37
       },
-      "heading_count": 116,
+      "heading_count": 130,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
         "AGENTS.md",
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
+        "Plans/Azure_DevOps_Integration.md",
         "Plans/Backup_Restore_System.md",
         "Plans/Bootstrap_Planning_Migration.md",
         "Plans/Commands_System.md",
@@ -5405,9 +5415,9 @@
         "scripts/pm-plans-verify.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 4366,
+      "line_count": 4947,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 55,
+      "plan_unit_count": 62,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5463,6 +5473,13 @@
         "DL-056",
         "DL-057",
         "DL-058",
+        "DL-059",
+        "DL-060",
+        "DL-061",
+        "DL-062",
+        "DL-063",
+        "DL-064",
+        "DL-065",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5491,6 +5508,7 @@
         "debug_evidence_capture_hygiene_gap",
         "decision_log_authority_drift",
         "decision_review_flow_drift",
+        "duplicated_or_unenforced_check_presentation",
         "event_authority_binding_scope_expansion",
         "event_authority_decision_drift",
         "extraction_mapping_overauthority",
@@ -5501,6 +5519,7 @@
         "graph_governance_semantics_drift",
         "graph_patch_lineage_loss",
         "help_cluster_alias_drift",
+        "implicit_merge_strategy_selection",
         "incomplete_parent_list_or_unreadable_expansion_freshness",
         "jujutsu_research_decision_drift",
         "lane_cleanup_retention_loss",
@@ -5516,26 +5535,31 @@
         "seal_claim_overreach_or_unrun_repository_gates",
         "seam_weak_integration_visibility_gap",
         "section_number_canonical_drift",
+        "section_proliferation_or_unstated_enforcement",
+        "silent_no_op_or_undisclosed_build_cancellation",
+        "silently_transferred_approval_evidence",
         "source_control_orchestrator_boundary_drift",
         "support_decision_state_drift",
         "terminal_input_protection_scope_bypass",
         "terminal_lock_persistence_identity_confusion",
         "terminal_research_decision_drift",
+        "unbindable_vote_promise",
         "unbounded_or_dishonest_parent_adjacency_in_a_bounded_page",
         "undefined_merge_editor_availability_or_unsafe_external_write_to_a_jujutsu_workspace",
         "undisclosed_remote_scope_on_a_destructive_bookmark_action",
+        "unrenderable_branch_policy_promise",
         "weak_integration_underclassification"
       ],
-      "sha256": "75566b5d9c502002f7d06ffa43a21cddd8066f4523f83a1a2a25de3f2b2136f6",
+      "sha256": "7d05e52984903d8483e05bd23dcc36cca4a075b7e88fc43b3af49633d8fededd",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 55
+        "accepted": 62
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 52
+        "requirement": 59
       },
       "validation_surfaces": [
         "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
@@ -6864,9 +6888,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 35,
-        "True": 525
+        "True": 526
       },
-      "heading_count": 922,
+      "heading_count": 924,
       "implementation_surfaces": [
         "Concepts/PMConcept7.html",
         "Concepts/chat-assistant-concepts/5.6 Pro/attachments.js",
@@ -6969,6 +6993,7 @@
         "future Settings > Health summary",
         "future Settings UI",
         "future Slint SecretReferenceControl and HumanStepUpDialog",
+        "future Source Control Slint components",
         "future Source Control and repository_automation Slint components",
         "future guided overlay",
         "future media generation controls",
@@ -6989,9 +7014,9 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 38155,
+      "line_count": 38198,
       "path": "Plans/FinalGUISpec.md",
-      "plan_unit_count": 560,
+      "plan_unit_count": 561,
       "plan_unit_ids": [
         "F3-501",
         "F3-502",
@@ -7552,7 +7577,8 @@
         "F3-557",
         "F3-558",
         "F3-559",
-        "F3-560"
+        "F3-560",
+        "F3-561"
       ],
       "reasoning_tiers": [
         "high",
@@ -7645,16 +7671,17 @@
         "teach_gui_underspecification",
         "terminal_research_consumer_or_acceptance_drift",
         "transcript_overflow_or_work_note_leakage",
+        "unstated_enforcement_or_duplicated_gate_presentation",
         "untyped_work_box_or_invalid_evidence_ref",
         "update_status_gui_noise",
         "user_visible_config_drift",
         "visualizer_script_policy_drift",
         "wand_overflow_or_demo_command_pollution"
       ],
-      "sha256": "159a3a21434eed3117a5b340250d28e36fc798eeca5545bffa5d5760462a8f8f",
+      "sha256": "1c8533ce825c035ad9b38759680854fc2c77f46d9c63c6fec2ed97aa1be82689",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 559,
+        "accepted": 560,
         "retired": 1
       },
       "title": "Puppet Master GUI Specification -- Slint Rewrite",
@@ -7664,7 +7691,7 @@
         "constraint": 72,
         "decision": 6,
         "gui_requirement": 13,
-        "integration_contract": 12,
+        "integration_contract": 13,
         "interaction_contract": 5,
         "requirement": 445,
         "security_constraint": 1,
@@ -7763,6 +7790,7 @@
         "future cached/offline, scoped-check, stale-return, remediation-return, accessibility, and eight-theme tests",
         "future eight-theme, Reduced Motion, interruption, reversal, and short-window film review",
         "future first-run provider wizard screen-order and copy fixtures",
+        "future gate-list responsive and accessibility fixtures",
         "future hover census, pointer/keyboard/Escape/grace/collision/zoom/theme/transparency/reduced-motion tests",
         "future legacy-panel migration/no-duplicate-occupant and provider-capability transition fixtures",
         "future mounted-owner handler observation, focus, Skip restoration, completion disposition, and film review",
@@ -7821,10 +7849,11 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 1,
-        "True": 16
+        "True": 19
       },
-      "heading_count": 43,
+      "heading_count": 47,
       "implementation_surfaces": [
+        "Plans/Azure_DevOps_Integration.md",
         "Plans/Commands_System.md",
         "Plans/FinalGUISpec.md",
         "Plans/Forge_Integrations.md",
@@ -7844,6 +7873,7 @@
         "future forge handlers",
         "future mirror coordinator",
         "future pipeline adapters",
+        "future policy adapters",
         "future provider adapters",
         "future qualified owner adapter and typed contract extensions",
         "future repository_automation Slint shell",
@@ -7851,9 +7881,9 @@
         "future signed provider catalog",
         "future webhook ingress"
       ],
-      "line_count": 1137,
+      "line_count": 1273,
       "path": "Plans/Forge_Integrations.md",
-      "plan_unit_count": 17,
+      "plan_unit_count": 20,
       "plan_unit_ids": [
         "FGI-001",
         "FGI-002",
@@ -7871,7 +7901,10 @@
         "FGI-014",
         "FGI-015",
         "FGI-016",
-        "FGI-017"
+        "FGI-017",
+        "FGI-018",
+        "FGI-019",
+        "FGI-020"
       ],
       "reasoning_tiers": [
         "high"
@@ -7888,17 +7921,20 @@
         "forge_parallel_owner_or_provider_overload",
         "forge_repository_create_phantom_handler_or_provider_split",
         "forge_secret_or_webhook_replay",
+        "implicit_merge_strategy_selection",
         "onboarding_forge_account_repository_or_provider_requirement_drift",
         "pipeline_mutation_or_progress_misrepresentation",
         "provider_parity_fabrication_mirror_duplicate_effect_or_platform_overclaim",
         "self_host_identity_automation_authority_or_shell_conflation",
+        "silent_no_op_or_undisclosed_build_cancellation",
         "split_brain_forge_authority",
-        "stale_review_evidence_or_agent_publication"
+        "stale_review_evidence_or_agent_publication",
+        "unbindable_vote_promise"
       ],
-      "sha256": "ad00e8f9031a3166582aaffea122aeecf0264876cd1d746175015e823f9823e3",
+      "sha256": "e596a563d95db42046e81d8ebf2420a732bd1f2ab36a7f1a35a28602c3005e90",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 17
+        "accepted": 20
       },
       "title": "Forge Integrations",
       "unit_type_counts": {
@@ -7906,7 +7942,7 @@
         "integration_contract": 6,
         "invariant": 1,
         "owner_boundary": 1,
-        "requirement": 5,
+        "requirement": 8,
         "validation": 1
       },
       "validation_surfaces": [
@@ -7934,9 +7970,12 @@
         "future Origin golden output",
         "future concrete-workflow owner admission checklist, local-offline independence, provider identity/scopes, timeout reconciliation and unsupported-provider negatives",
         "future exact-version positive and negative fixtures; static prose is not runtime proof",
+        "future per-provider merge strategy mapping fixtures",
+        "future per-provider vote and reviewer fixtures",
         "future protected-auth and repository-binding owner-return fixtures",
         "future provider matrix/trust/admin fixtures",
         "future push-success/review-failure, timeout-after-create, restart resume, rewritten stack, protected head, exact base mapping and Draft policy fixtures",
+        "future requeue disabled-reason and confirmation fixtures",
         "migration fixtures",
         "no-prose-scrape negatives",
         "no-unregistered-event check",
@@ -16897,9 +16936,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 2,
-        "True": 20
+        "True": 21
       },
-      "heading_count": 52,
+      "heading_count": 54,
       "implementation_surfaces": [
         "Plans/Commands_System.md",
         "Plans/FinalGUISpec.md",
@@ -16936,9 +16975,9 @@
         "future source-control facade",
         "future source-control migration"
       ],
-      "line_count": 1640,
+      "line_count": 1687,
       "path": "Plans/Source_Control_System.md",
-      "plan_unit_count": 22,
+      "plan_unit_count": 23,
       "plan_unit_ids": [
         "SCS-001",
         "SCS-002",
@@ -16961,7 +17000,8 @@
         "SCS-019",
         "SCS-020",
         "SCS-021",
-        "SCS-022"
+        "SCS-022",
+        "SCS-023"
       ],
       "reasoning_tiers": [
         "high"
@@ -16980,6 +17020,7 @@
         "permanent_repository_format_chosen_without_evidence_or_consent",
         "sanitized_diagnostic_export_and_optional_technical_log",
         "scm_baseline_absence_or_cross_domain_collision",
+        "section_proliferation_or_unstated_enforcement",
         "semantic_flattening_duplicate_external_effect_or_authority_escape",
         "source_control_backend_route_split_or_phantom_handler",
         "source_control_checkpoint_or_alias_authority_drift",
@@ -16990,17 +17031,17 @@
         "unbounded_graph_hydration_or_source_history_identity_conflation",
         "wrong_environment_or_stale_version_certification"
       ],
-      "sha256": "1ce26a7de5ed5e451a60f90bd21db44b37191c269c5f29642b0a99ce5997ed78",
+      "sha256": "94f423aa2d0241c333c9c29b9cdaadb45194af1f81814dd7e3042b4c260ebdfc",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 22
+        "accepted": 23
       },
       "title": "Source Control System",
       "unit_type_counts": {
         "command_binding": 2,
         "integration_contract": 12,
         "owner_boundary": 1,
-        "requirement": 6,
+        "requirement": 7,
         "validation": 1
       },
       "validation_surfaces": [
@@ -17046,6 +17087,7 @@
         "future exact-host setup, disabled-choice, cancellation and discovered-format tests; static prose is not runtime proof",
         "future exact-version positive and negative fixtures; static prose is not runtime proof",
         "future five-domain conflict positive/negative fixtures",
+        "future gate-list projection and accessibility fixtures",
         "future hidden-priority intersection, bounded invalid revset, stale completion, pin-on-rewrite, missing pin and untracked-file projection fixtures",
         "future included-baseline target matrix",
         "future live overlap and exact-environment fixtures",
@@ -17058,6 +17100,7 @@
         "prompt suppression tests",
         "python3 scripts/pm-new-contracts-verify.py",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 scripts/pm-touch-closure-verify.py --json",
         "remote fan-out",
         "repository_context schema fixtures",
@@ -19720,7 +19763,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-18T06:13:46Z",
+  "generated_at_utc": "2026-09-18T06:14:17Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19729,12 +19772,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3493,
-      "True": 3181
+      "True": 3195
     },
-    "plan_unit_count": 6674,
+    "plan_unit_count": 6688,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6483,
+      "accepted": 6497,
       "retired": 182,
       "superseded": 9
     },
@@ -19781,7 +19824,7 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 79,
+      "integration_contract": 80,
       "interaction_contract": 6,
       "invariant": 4,
       "migration_contract": 2,
@@ -19801,7 +19844,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5236,
+      "requirement": 5249,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

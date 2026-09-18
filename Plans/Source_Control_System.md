@@ -1638,3 +1638,50 @@ owner_hints:
   - Plans/Jujutsu_Integration.md
   - Plans/FinalGUISpec.md
 ```
+
+## DL-062 Accepted Gate List Planning Addendum - 2026-09-18
+
+This addendum compiles the seven accepted Azure DevOps decision-card answers of 2026-09-18 as accepted planning requirements. It does not change current command or provider enums, admit typed schema variants, register handlers or events, implement runtime behavior or claim readiness. Conditions remain acceptance criteria. The deferred branch-policy read receives no PlanUnit. Cross-owner command, GUI, wiring and contract amendments remain with their canonical owners.
+
+ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Azure_DevOps_Integration.md, ContractName:Plans/Forge_Integrations.md
+
+### SCS-023 - One Gate List With A Source Column And An Enforcement Column
+
+```yaml
+plan_unit_id: SCS-023
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: >-
+  The current checks region stays one region and is one gate list. Every row carries the provider surface it came
+  from and its enforcement, which is required, advisory, not enforced or unknown, so the question of what blocks
+  this merge is answered in one place. No provider-neutral policies region is added and no new section vocabulary
+  is introduced, which is what SCS-005's rule against a panel or section per backend already asks for. An
+  enforcement value the provider does not publish reads unknown rather than being inferred as required or
+  advisory. The final interface specification names the same two columns, and the Azure grouping of ADO-007 is a
+  composition of this one list rather than a second region.
+gui_related: true
+gui_classification_reason: The region, its columns and the words in them are what a person reads to find what will block a merge.
+depends_on: [SCS-005, SCS-016, FGI-005]
+unblocks: []
+acceptance_criteria:
+  - The current checks region is one gate list whose rows each carry a source and an enforcement value, and no second policies region is added.
+  - Enforcement is stated rather than inferred; a row whose enforcement the provider does not publish reads unknown.
+  - The final interface specification names the same source and enforcement columns, with no third vocabulary between the two owners.
+  - A truncated gate list is shown as truncated rather than as a complete one, on the flag-and-cursor rule this owner already states for a bounded list.
+  - No command, handler, event or runtime behaviour is admitted by this unit, and no WorkNode or NodeSeed is created.
+validation_surfaces:
+  - Plans/source_control_contracts.schema.json
+  - Plans/source_control_contract_fixtures.json
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - future gate-list projection and accessibility fixtures
+risk_class: section_proliferation_or_unstated_enforcement
+reasoning_tier: high
+context_scope: source_control_gate_list_presentation
+implementation_surfaces: [Plans/Source_Control_System.md, Plans/FinalGUISpec.md, future Source Control Slint components]
+node_compile_hint: {mode: static_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Decision_Log.md#DL-062, Plans/ledgers/v2/pldg-20260918-001-azure-devops-corrections:q-004]
+preserved_exact_tokens: [current checks, gate list, enforcement, required, advisory, not enforced, unknown]
+negative_constraints: [Do not add a second policies region or new section vocabulary under this decision., Do not infer an enforcement value the provider does not publish., Do not let the two consumer owners name different columns.]
+owner_hints: [Plans/Source_Control_System.md, Plans/FinalGUISpec.md, Plans/Azure_DevOps_Integration.md]
+```
