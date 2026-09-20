@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import argparse
 import hashlib
 import importlib.util
 import json
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -286,6 +288,109 @@ class EvidenceArtifactBindingModeTests(unittest.TestCase):
         )
 
         self.assertNotIn("forbidden_live_current_evidence_claim", {f.get("error") for f in failures})
+
+
+class RawCaptureSymlinkTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        base = Path(self.temp.name)
+        self.root = base / "repo"
+        self.root.mkdir()
+        subprocess.run(["git", "init", "-q", str(self.root)], check=True)
+        self.allowed = base / "PuppetMaster-Evidence"
+        self.captures = self.allowed / "tests/agent_packet_restrictions"
+        self.captures.mkdir(parents=True)
+        self.link = self.root / "tests/agent_packet_restrictions"
+        self.link.parent.mkdir()
+        self.link.symlink_to(self.captures, target_is_directory=True)
+        (self.root / ".gitignore").write_text("/tests/agent_packet_restrictions\n")
+        manifest_ref = "tests/fixtures/governance/raw_evidence_capture_modes.json"
+        schema_ref = "tests/fixtures/governance/raw_evidence_capture_modes.schema.json"
+        manifest_path = self.root / manifest_ref
+        manifest_path.parent.mkdir(parents=True)
+        schema_path = self.root / schema_ref
+        schema_path.write_bytes((REPO_ROOT / schema_ref).read_bytes())
+        manifest = json.loads((REPO_ROOT / manifest_ref).read_text())
+        manifest["entries"] = []
+        self.expected = set()
+        for index in range(16):
+            relative = f"case-{index}/capture.json"
+            capture = self.captures / relative
+            capture.parent.mkdir()
+            historical = index < 14
+            capture.write_bytes(b"\n" if historical else b"{}\n")
+            path_ref = f"tests/agent_packet_restrictions/{relative}"
+            entry = {
+                "path": path_ref,
+                "mode": "historical_snapshot" if historical else "live_current",
+                "sha256": sha256(capture),
+                "reason": "Read-only linked-capture regression fixture.",
+            }
+            if historical:
+                entry["parse_error_class"] = "json_decode_error"
+            manifest["entries"].append(entry)
+            self.expected.add(self.root / path_ref)
+        manifest_path.write_text(json.dumps(manifest))
+        for name, value in {
+            "ROOT": self.root,
+            "PLANS": self.root / "Plans",
+            "RAW_EVIDENCE_DIRECTORY": self.allowed,
+            "RAW_EVIDENCE_CAPTURE_MANIFEST": manifest_path,
+            "RAW_EVIDENCE_CAPTURE_MANIFEST_SCHEMA": schema_path,
+        }.items():
+            patcher = mock.patch.object(pm_plans_verify, name, value)
+            patcher.start()
+            self.addCleanup(patcher.stop)
+
+    def assert_capture_census(self) -> None:
+        before = {path: path.read_bytes() for path in self.expected}
+        files = pm_plans_verify.iter_repo_files()
+        self.assertTrue(self.expected.issubset(files))
+        self.assertEqual(len(files), len(set(files)))
+        report = pm_plans_verify.cmd_json_syntax(argparse.Namespace())
+        self.assertEqual(report["status"], "pass", report["failures"])
+        self.assertEqual(report["raw_capture_manifest_entry_count"], 16)
+        self.assertEqual(report["historical_snapshot_count"], 14)
+        self.assertEqual(report["live_current_count"], 2)
+        self.assertEqual(before, {path: path.read_bytes() for path in self.expected})
+
+    def test_manifest_referents_seen_through_ignored_evidence_link(self) -> None:
+        self.assert_capture_census()
+
+    def test_manifest_referents_seen_without_git(self) -> None:
+        with mock.patch.object(
+            pm_plans_verify.subprocess, "run",
+            return_value=subprocess.CompletedProcess([], 1, stdout=b""),
+        ):
+            self.assert_capture_census()
+
+    def test_other_and_nested_symlinks_are_not_followed(self) -> None:
+        outside = self.allowed.parent / "outside"
+        outside.mkdir()
+        bad_json = outside / "bad.json"
+        bad_json.write_text("not JSON")
+        (self.root / "elsewhere").symlink_to(outside, target_is_directory=True)
+        (self.root / "alias").symlink_to(self.captures, target_is_directory=True)
+        (self.root / "file.json").symlink_to(bad_json)
+        (self.captures / "escape").symlink_to(outside, target_is_directory=True)
+        (self.captures / "loop").symlink_to(self.captures, target_is_directory=True)
+        (self.captures / "file.json").symlink_to(bad_json)
+        files = pm_plans_verify.iter_repo_files()
+        self.assertNotIn(self.root / "elsewhere/bad.json", files)
+        self.assertNotIn(self.root / "alias/case-0/capture.json", files)
+        self.assertNotIn(self.root / "file.json", files)
+        self.assertNotIn(self.link / "escape/bad.json", files)
+        self.assertNotIn(self.link / "file.json", files)
+        self.assert_capture_census()
+
+    def test_named_capture_link_outside_evidence_directory_is_not_followed(self) -> None:
+        outside = self.allowed.with_name("PuppetMaster-Evidence-elsewhere")
+        outside.mkdir()
+        (outside / "capture.json").write_text("not JSON")
+        self.link.unlink()
+        self.link.symlink_to(outside, target_is_directory=True)
+        self.assertNotIn(self.link / "capture.json", pm_plans_verify.iter_repo_files())
 
 
 if __name__ == "__main__":

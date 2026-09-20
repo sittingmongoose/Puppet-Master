@@ -36,6 +36,7 @@ DEFAULT_PLAN_MIGRATION_RUN = PLANS / ".plan_migration/pds-20260611-002-atomize-p
 RAW_EVIDENCE_CAPTURE_MANIFEST = ROOT / "tests/fixtures/governance/raw_evidence_capture_modes.json"
 RAW_EVIDENCE_CAPTURE_MANIFEST_SCHEMA = ROOT / "tests/fixtures/governance/raw_evidence_capture_modes.schema.json"
 RAW_EVIDENCE_CAPTURE_ROOT = "tests/agent_packet_restrictions/"
+RAW_EVIDENCE_DIRECTORY = Path("/mnt/Cursor/PuppetMaster-Evidence")
 EVIDENCE_ARTIFACT_BINDING_MANIFEST = PLANS / "evidence_artifact_binding_modes.json"
 EVIDENCE_ARTIFACT_BINDING_MANIFEST_SCHEMA = PLANS / "evidence_artifact_binding_modes.schema.json"
 FORBIDDEN_LIVE_CURRENT_EVIDENCE_TOKENS = (
@@ -829,23 +830,41 @@ def iter_repo_files() -> list[Path]:
                 continue
             path = ROOT / raw.decode("utf-8")
             try:
-                if path.is_file():
+                if not path.is_symlink() and path.is_file():
                     files.append(path)
             except OSError:
                 continue
-        return files
-
-    for path in ROOT.rglob("*"):
-        try:
-            if not path.is_file():
+    else:
+        for path in ROOT.rglob("*"):
+            try:
+                if path.is_symlink() or not path.is_file():
+                    continue
+            except OSError:
                 continue
-        except OSError:
-            continue
-        parts = path.relative_to(ROOT).parts
-        if ".git" in parts:
-            continue
-        files.append(path)
-    return files
+            parts = path.relative_to(ROOT).parts
+            if ".git" not in parts:
+                files.append(path)
+
+    # Git intentionally ignores raw captures. Read through this one evidence
+    # directory link, preserving its repository path for manifest matching.
+    # Nested links are never followed, even when they point back into evidence.
+    capture_link = ROOT / RAW_EVIDENCE_CAPTURE_ROOT
+    try:
+        allowed = (
+            capture_link.is_symlink()
+            and capture_link.resolve(strict=True).is_relative_to(RAW_EVIDENCE_DIRECTORY)
+        )
+    except (OSError, RuntimeError):
+        allowed = False
+    if allowed:
+        for directory, dirs, names in os.walk(capture_link, followlinks=False):
+            parent = Path(directory)
+            dirs[:] = [name for name in dirs if name != ".git" and not (parent / name).is_symlink()]
+            for name in names:
+                path = parent / name
+                if not path.is_symlink() and path.is_file():
+                    files.append(path)
+    return sorted(set(files))
 
 
 def parse_json_or_jsonl(path: Path) -> int:
@@ -938,7 +957,7 @@ def cmd_json_syntax(args: argparse.Namespace) -> dict[str, Any]:
         if path.suffix not in {".json", ".jsonl"}:
             continue
         files_checked += 1
-        path_ref = rel(path)
+        path_ref = path.relative_to(ROOT).as_posix()
         capture = capture_modes.get(path_ref)
         if capture is not None:
             consumed_capture_paths.add(path_ref)
