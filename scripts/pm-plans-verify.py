@@ -20,7 +20,7 @@ from contextlib import contextmanager
 from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
-from typing import Any
+from typing import Any, Iterable
 from urllib.parse import urlparse
 
 if str(Path(__file__).resolve().parent) not in sys.path:
@@ -816,7 +816,7 @@ def validate_against_schema(instance_path: Path, schema_path: Path) -> list[str]
     return validate_schema(instance, schema, schema)
 
 
-def iter_repo_files() -> list[Path]:
+def iter_repo_files(capture_paths: Iterable[str] | None = None) -> list[Path]:
     files: list[Path] = []
     proc = subprocess.run(
         ["git", "-C", str(ROOT), "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
@@ -845,9 +845,9 @@ def iter_repo_files() -> list[Path]:
             if ".git" not in parts:
                 files.append(path)
 
-    # Git intentionally ignores raw captures. Read through this one evidence
-    # directory link, preserving its repository path for manifest matching.
-    # Nested links are never followed, even when they point back into evidence.
+    # Git intentionally ignores raw evidence. Add the manifest's exact referents
+    # through this one directory link, not the entire experimental archive.
+    # Keep repository paths for manifest matching; never follow nested links.
     capture_link = ROOT / RAW_EVIDENCE_CAPTURE_ROOT
     try:
         allowed = (
@@ -857,13 +857,23 @@ def iter_repo_files() -> list[Path]:
     except (OSError, RuntimeError):
         allowed = False
     if allowed:
-        for directory, dirs, names in os.walk(capture_link, followlinks=False):
-            parent = Path(directory)
-            dirs[:] = [name for name in dirs if name != ".git" and not (parent / name).is_symlink()]
-            for name in names:
-                path = parent / name
-                if not path.is_symlink() and path.is_file():
-                    files.append(path)
+        if capture_paths is None:
+            capture_paths, _ = load_raw_evidence_capture_modes()
+        for path_ref in capture_paths:
+            try:
+                parts = (ROOT / path_ref).relative_to(capture_link).parts
+                if ".." in parts:
+                    continue
+                path = capture_link
+                for part in parts:
+                    path = path / part
+                    if path.is_symlink():
+                        break
+                else:
+                    if path.is_file() and path.resolve(strict=True).is_relative_to(RAW_EVIDENCE_DIRECTORY):
+                        files.append(path)
+            except (OSError, RuntimeError, ValueError):
+                continue
     return sorted(set(files))
 
 
@@ -953,7 +963,7 @@ def cmd_json_syntax(args: argparse.Namespace) -> dict[str, Any]:
     consumed_capture_paths: set[str] = set()
     historical_snapshot_count = 0
     live_current_count = 0
-    for path in iter_repo_files():
+    for path in iter_repo_files(capture_modes):
         if path.suffix not in {".json", ".jsonl"}:
             continue
         files_checked += 1

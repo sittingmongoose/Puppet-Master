@@ -392,6 +392,26 @@ class RawCaptureSymlinkTests(unittest.TestCase):
         self.link.symlink_to(outside, target_is_directory=True)
         self.assertNotIn(self.link / "capture.json", pm_plans_verify.iter_repo_files())
 
+    def test_ignored_archive_files_outside_manifest_stay_outside_census(self) -> None:
+        (self.captures / "unlisted.json").write_text("unrelated experimental output")
+        self.assertNotIn(self.link / "unlisted.json", pm_plans_verify.iter_repo_files())
+        self.assert_capture_census()
+
+    def test_manifest_referent_cannot_follow_nested_symlink(self) -> None:
+        capture = self.captures / "case-0/capture.json"
+        outside = self.allowed.parent / "outside"
+        outside.mkdir()
+        (outside / "capture.json").write_bytes(capture.read_bytes())
+        capture.unlink()
+        capture.parent.rmdir()
+        capture.parent.symlink_to(outside, target_is_directory=True)
+        self.assertNotIn(self.link / "case-0/capture.json", pm_plans_verify.iter_repo_files())
+        report = pm_plans_verify.cmd_json_syntax(argparse.Namespace())
+        self.assertIn(
+            "raw_capture_manifest_entry_not_in_verifier_file_set",
+            {failure["error"] for failure in report["failures"]},
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
