@@ -11929,6 +11929,30 @@ button.qs-spine-slot.is-current::after{
 .bc-ref-chip b { color: var(--accent-2); font-weight: 700; }
 
 /* =========================================================================
+   6B. B20 — allow banner, stale rows, sim controls (theme tokens only)
+   ========================================================================= */
+.bc-allow-banner {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin-top: 6px; padding: 7px 10px;
+  border: 1px solid var(--warning); border-radius: 9px;
+  background: var(--surface-2); color: var(--text); font-size: 11px;
+}
+.bc-allow-banner .spacer, .bc-allow-banner span { flex: 1 1 auto; }
+.bc-sim-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.bc-list-row.is-stale { border-left: 2px solid var(--warning); padding-left: 5px; }
+.bc-list-chip {
+  font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--accent-2); border: 1px solid var(--border); border-radius: 999px;
+  padding: 1px 6px; white-space: nowrap;
+}
+.bc-list-instr {
+  flex: 1 1 90px; min-width: 70px; max-width: 100%;
+  font: inherit; font-size: 11px; color: var(--text);
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 7px;
+  padding: 3px 7px;
+}
+
+/* =========================================================================
    7. RESPONSIVE + REDUCED MOTION
    ========================================================================= */
 @media (max-width: 760px) {
@@ -38545,6 +38569,37 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  * `RT.composer.commitHooks.push(...)` (stamps `browser_context_refs` onto the message that
  * was just sent, so the ref chips this module renders via `messageAffordance` survive
  * the send). Renders no destination ribbon of its own.
+ *
+ * BATCH 20 — CURRENTNESS AT DISPATCH (BSTALE-001..012). Every component-send path
+ * revalidates immediately before admission through the shared `preSendValidators`
+ * owner mechanism (normal Send, keyboard Send, targeted send, deferred queue
+ * Send-now, /goal and Plan-revision all funnel through app.js `deliverSend`,
+ * which runs validators before any effect-claiming hook, so one validator
+ * covers them):
+ * - Compatibility is tag + role + component + source file + line/col + the bounded
+ *   fingerprint `bc-fp.v1` (whitespace-collapsed outerHTML with transient pick chrome
+ *   stripped). Recency never declares a capture fresh.
+ * - Refresh never mutates the retained capture: the original record is immutable
+ *   evidence and the refreshed dispatch context is recorded separately.
+ * - Revalidation resolves the RECORDED session (never the active one) and its own
+ *   surface. A surface that is merely unmounted (dialog closed, session backgrounded)
+ *   with an unchanged generation stays current, because no mutation is possible while
+ *   unmounted; an advanced generation without a live DOM is unverifiable (stale).
+ *   Dialog-open-but-surface-gone is a destroyed frame. Unknown session ids never fall
+ *   back to session one.
+ * - Late results are fenced by the selection epoch (bumped on pick/cancel/remove/
+ *   retarget/session change) and the ComposerBuffer revision.
+ * - Policy (screenshots/dom/console) is enforced at every capture/DevTools operation
+ *   including API entries: Off refuses, Ask holds for an explicit single-use allow,
+ *   and permission/policy changes between preparation and commit refuse.
+ * - Isolated sends route to the actual current destination through the collaboration
+ *   owner (run reference with exact recipient); ended/missing/unsupported destinations
+ *   refuse without redirecting to Assistant.
+ * - Scheduling a live ref is refused (shared scheduler); `bc-freeze-snapshots`
+ *   converts live refs to immutable `browser_snapshot` artifacts through the shared
+ *   artifact/attachment owners, and dispatch resolves retained bytes only.
+ * - Recapture reuses the same component picker (`cmd.browser.component.pick`); no
+ *   recapture command exists. Fixture images stay labeled fixtures throughout.
  */
 (function () {
   'use strict';
@@ -38634,10 +38689,10 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   var SESSION_FIXTURE = [
     { id: 'sess-ordinary', label: 'Ordinary internal browser', protectedAuth: false,
       url: 'https://app.internal/dashboards/query-performance', title: 'Query Performance — Dashboard',
-      frame: 'main', generation: 1, rowOrder: ROW_IDS_DEFAULT.slice() },
+      frame: 'main', generation: 1, rowOrder: ROW_IDS_DEFAULT.slice(), replaced: {}, duplicated: [] },
     { id: 'sess-auth', label: 'Protected authentication browser', protectedAuth: true,
       url: 'https://accounts.example.com/sso/login', title: 'Sign in — Example SSO',
-      frame: 'main', generation: 1, rowOrder: [] }
+      frame: 'main', generation: 1, rowOrder: [], replaced: {}, duplicated: [] }
   ];
 
   var POLICY_CAPS = [
@@ -38688,7 +38743,18 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     isolationChecks: [],
     policy: clone2(POLICY_STATES_DEFAULT),
     sessions: clone2(SESSION_FIXTURE),
-    lastRerenderNote: null
+    lastRerenderNote: null,
+    /* B20 (BSTALE-012/004/005/009): selection epoch, single-use policy grants,
+       recapture target, admission holds, per-context revalidation/refresh logs,
+       and the chip-prune log. All reset with the session like the rest of SEED. */
+    selectionEpoch: 0,
+    pendingAllow: null,
+    allowOnce: null,
+    recaptureRefId: null,
+    lastAdmissionHold: null,
+    revalidationLog: {},
+    refreshLog: {},
+    chipPruneLog: []
   };
   function clone2(v) { return JSON.parse(JSON.stringify(v)); }
   var BC0 = JSON.stringify(SEED);
@@ -38696,8 +38762,12 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   function P() { return RT.browserCapture; }
   function session(id) {
     var list = P().sessions;
-    for (var i = 0; i < list.length; i++) if (list[i].id === (id || P().activeSessionId)) return list[i];
-    return list[0];
+    var want = (id == null) ? P().activeSessionId : id;
+    for (var i = 0; i < list.length; i++) if (list[i].id === want) return list[i];
+    /* B20: an explicit unknown id never falls back to session one (that turned a
+       destroyed identity into an implicit ordinary session). The no-arg render path
+       keeps the old fallback so a corrupt active id cannot crash the dialog. */
+    return (id == null) ? list[0] : null;
   }
   function isProtected(sess) { return !!(sess || session()).protectedAuth; }
 
@@ -38784,7 +38854,55 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     }
     return out;
   }
-  function surfaceRoot() { return document.querySelector('[data-bc-surface="' + esc(P().activeSessionId) + '"]'); }
+  function surfaceRoot() { return surfaceFor(P().activeSessionId); }
+  /* B20: revalidation resolves the RECORDED session's own surface, never the active
+     one — a backgrounded session is unmounted, not destroyed. */
+  function surfaceFor(sid) {
+    if (sid == null) return null;
+    return document.querySelector('[data-bc-surface="' + esc(sid) + '"]');
+  }
+
+  /* B20 — bounded fingerprint policy `bc-fp.v1`. The fingerprint covers tag, role,
+     component identity, source file, and the whitespace-collapsed bounded outerHTML
+     with transient pick chrome stripped (the `is-bc-picked` class and the pick-mode
+     `data-action`/`tabindex`/`aria-label` this module adds at render time — the
+     fixture elements carry no authored aria-label, so stripping it cannot hide a
+     real accessible-name change here; `data-id` is pick chrome too, not the
+     stable `data-bc-id` locator. Source line/col are compared separately so a
+     same-file mapping drift reports as `source_mapping_changed` with the current
+     identity, not as a generic mismatch. */
+  var FP_POLICY = 'bc-fp.v1:tag|role|component|file|ws-collapsed-outerHTML-320';
+  function normalizedHtml(el) {
+    var c = el.cloneNode(true);
+    if (c.classList) c.classList.remove('is-bc-picked');
+    /* All pick-mode-only chrome is stripped: the fingerprint must be identical
+       whether the live surface currently renders with pick affordances or not
+       (dialog reopened, mode off), so mode changes never read as page change. */
+    c.removeAttribute('data-action'); c.removeAttribute('data-id');
+    c.removeAttribute('tabindex'); c.removeAttribute('aria-label');
+    var h = c.outerHTML || '';
+    h = h.replace(/\s+/g, ' ');
+    if (h.length > 320) h = h.slice(0, 320) + '…';
+    return h;
+  }
+  function fingerprintOf(el) {
+    var s = el.tagName.toLowerCase() + '|' + (el.getAttribute('role') || '')
+      + '|' + (el.getAttribute('data-bc-component') || '') + '|' + (el.getAttribute('data-bc-file') || '')
+      + '|' + normalizedHtml(el);
+    var h = 2166136261;
+    for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return 'fnv1a32:' + (h >>> 0).toString(16);
+  }
+  function liveRectOf(el) {
+    var r = el.getBoundingClientRect();
+    return { x: Math.round(r.left), y: Math.round(r.top), w: Math.round(r.width), h: Math.round(r.height) };
+  }
+  function liveStyleOf(el) {
+    if (!window.getComputedStyle) return null;
+    var cs = getComputedStyle(el);
+    return { display: cs.display, position: cs.position, color: cs.color, background: cs.backgroundColor,
+      font: cs.fontWeight + ' ' + cs.fontSize + ' ' + (cs.fontFamily || '').split(',')[0] };
+  }
 
   function buildElementContext(target) {
     var sess = session();
@@ -38819,7 +38937,10 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
       boundedHtml: html,
       crop: null,
       stableId: stableId,
-      freshness: 'current'
+      freshness: 'current',
+      /* B20: bounded identity fingerprint + the policy that defines it. */
+      fingerprint: fingerprintOf(target),
+      fingerprintPolicy: FP_POLICY
     };
     return rec;
   }
@@ -38838,59 +38959,155 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
      return typed `stale_capture` with a recapture action, and nothing is sent.
      Nearest-match heuristics are never used.
      ===================================================================== */
+  function logRevalidation(rec, out) {
+    if (!rec || !rec.id) return out;
+    P().revalidationLog = P().revalidationLog || {};
+    P().revalidationLog[rec.id] = { at: nowIso(), result: out.result, reason: out.reason,
+      captured_generation: out.captured_generation, current_generation: out.current_generation,
+      locator_result_count: out.locator_result_count };
+    P().lastRevalidation = out;
+    return out;
+  }
   function revalidateContext(rec) {
-    var sess = session();
     var out = {
       schema: 'pm.browser.component_revalidation_result.v1',
       attachment_id: rec && rec.id,
       captured_generation: rec && rec.session ? rec.session.generationAtCapture : null,
-      current_generation: sess ? sess.generation : null,
+      current_generation: null,
       locator_result_count: 0,
       identity_match: false,
       result: 'stale_capture',
       reason: null,
       recapture_action: 'cmd.browser.component.pick'
     };
-    if (!rec) { out.reason = 'no_capture'; return out; }
-    if (!sess || sess.id !== (rec.session && rec.session.id)) { out.reason = 'session_gone'; return out; }
-    var root = surfaceRoot();
-    if (!root) { out.reason = 'frame_or_page_destroyed'; return out; }
+    if (!rec) { out.reason = 'no_capture'; return logRevalidation(rec, out); }
+    /* B20: the RECORDED session is resolved strictly — never the active one, and
+       an unknown id never falls back to session one. */
+    var sess = session(rec.session && rec.session.id);
+    if (!sess) { out.reason = 'session_gone'; return logRevalidation(rec, out); }
+    out.current_generation = sess.generation;
     if (sess.frame !== (rec.page && rec.page.frame) || sess.url !== (rec.page && rec.page.url)) {
-      out.reason = 'page_or_frame_changed'; return out;
+      out.reason = 'page_or_frame_changed'; return logRevalidation(rec, out);
+    }
+    /* Defensive: a protected-session context can never be captured (picking is
+       refused there), so one that appears is refused outright. */
+    if (sess.protectedAuth) { out.reason = 'protected_session'; return logRevalidation(rec, out); }
+    /* B20-R01: recorded session mutations resolve independent of mounting. The
+       duplicate/replace fixtures record their mutation in session state, so a
+       known-ambiguous or known-replaced target holds even with the surface
+       unmounted (dialog closed or session backgrounded). Generation equality
+       alone never proves uniqueness. */
+    if (rec.stableId && sess.duplicated && sess.duplicated.indexOf(rec.stableId) >= 0) {
+      out.locator_result_count = 2;
+      out.reason = 'multiple_matches';
+      out.detail = 'The recorded page authority holds two live elements under this locator; the capture is ambiguous whether or not the browser surface is mounted.';
+      return logRevalidation(rec, out);
+    }
+    var replEntry = (rec.stableId && sess.replaced) ? sess.replaced[rec.stableId] : null;
+    var replApplies = !!replEntry && (replEntry.atGeneration == null || !rec.session
+      || rec.session.generationAtCapture == null || rec.session.generationAtCapture < replEntry.atGeneration);
+    if (replApplies) {
+      out.reason = 'identity_mismatch';
+      out.detail = 'The recorded page authority replaced this target after the capture; the old capture cannot resolve to it.';
+      return logRevalidation(rec, out);
+    }
+    var root = surfaceFor(sess.id);
+    if (!root) {
+      var dlg = null;
+      try { var c0 = ctxNow(); dlg = c0 && c0.state ? c0.state.dialog : null; } catch (e) { }
+      if (dlg && dlg.type === 'bc-browser' && P().activeSessionId === sess.id) {
+        out.reason = 'frame_or_page_destroyed'; return logRevalidation(rec, out);
+      }
+      /* B20-R3-F1: a directly observed failure is not cleared by unmounting.
+         When the last recorded observation for this capture failed and nothing
+         changed since (same captured/current generation), no new
+         compatible-target evidence exists, so the closed surface cannot
+         declare it fresh. It holds as unverified until a live re-resolution
+         succeeds or the user recaptures. Captures with no observed failure
+         keep the clean closed-session path below. */
+      var lastObs = (rec.id && P().revalidationLog) ? P().revalidationLog[rec.id] : null;
+      if (lastObs && lastObs.result === 'stale_capture'
+          && lastObs.captured_generation === out.captured_generation
+          && lastObs.current_generation === out.current_generation) {
+        out.reason = 'unverified_after_observed_failure';
+        out.detail = 'The last live check observed ' + String(lastObs.reason).replace(/_/g, ' ')
+          + '; closing the browser did not re-verify the target. Reopen the browser so the live element can be checked, or recapture.';
+        out.unmounted = true;
+        return logRevalidation(rec, out);
+      }
+      /* B20: the surface is merely unmounted (dialog closed or session
+         backgrounded). Recorded mutations were already resolved above, so only
+         a page with no recorded change and an unchanged generation stays
+         current; an advanced generation cannot be verified without the live
+         DOM and is stale, not guessed. */
+      if (out.captured_generation === out.current_generation) {
+        out.result = 'current'; out.reason = null; out.unmounted = true; out.identity_match = true;
+        return logRevalidation(rec, out);
+      }
+      out.reason = 'generation_unverifiable';
+      out.detail = 'The page advanced while its surface was not mounted; reopen the browser so the live element can be checked, or recapture.';
+      return logRevalidation(rec, out);
     }
     var matches = [];
     try { matches = Array.prototype.slice.call(root.querySelectorAll(rec.locator.value)); }
-    catch (e) { out.reason = 'locator_unusable'; return out; }
+    catch (e) { out.reason = 'locator_unusable'; return logRevalidation(rec, out); }
     out.locator_result_count = matches.length;
-    if (matches.length === 0) { out.reason = 'zero_matches'; return out; }
-    if (matches.length > 1) { out.reason = 'multiple_matches'; return out; }
-    /* Compatibility: tag, role, component identity, source file and a
-       fingerprint of the bounded HTML. All five, not "close enough". */
+    if (matches.length === 0) { out.reason = 'zero_matches'; return logRevalidation(rec, out); }
+    if (matches.length > 1) { out.reason = 'multiple_matches'; return logRevalidation(rec, out); }
+    /* Compatibility: tag, role, component identity, source reference and the
+       bounded fingerprint. All of them, not "close enough". */
     var el = matches[0];
     var sameTag = el.tagName.toLowerCase() === rec.tag;
     var sameRole = (el.getAttribute('role') || '') === rec.role;
     var sameComp = (el.getAttribute('data-bc-component') || '') === rec.component;
-    var sameFile = (el.getAttribute('data-bc-file') || null) === (rec.source ? rec.source.file : null);
     out.identity_match = sameTag && sameRole && sameComp;
-    if (!out.identity_match) { out.reason = 'identity_mismatch'; return out; }
+    if (!out.identity_match) { out.reason = 'identity_mismatch'; return logRevalidation(rec, out); }
     /* BSTALE-011: a source-map change is disclosed even when the DOM locator
-       still resolves -- the agent must not be handed a stale source line. */
-    if (!sameFile) {
+       still resolves -- the agent must not be handed a stale source line. The
+       same-file line/col case is included: an unchanged filename with an
+       invalidated mapping is still a changed mapping. This precedes the
+       fingerprint so a mapping drift reports with the current source identity
+       rather than as a generic substance mismatch. */
+    var liveFile = el.getAttribute('data-bc-file') || null;
+    var liveLine = el.getAttribute('data-bc-line') ? Number(el.getAttribute('data-bc-line')) : null;
+    var liveCol = el.getAttribute('data-bc-col') ? Number(el.getAttribute('data-bc-col')) : null;
+    var capSrc = rec.source || {};
+    if (liveFile !== (capSrc.file == null ? null : capSrc.file)
+        || liveLine !== (capSrc.line == null ? null : capSrc.line)
+        || liveCol !== (capSrc.col == null ? null : capSrc.col)) {
       out.result = 'stale_capture'; out.reason = 'source_mapping_changed';
-      out.current_source = { file: el.getAttribute('data-bc-file') || null,
-                             line: el.getAttribute('data-bc-line') ? Number(el.getAttribute('data-bc-line')) : null };
-      return out;
+      out.current_source = { file: liveFile, line: liveLine, col: liveCol };
+      out.detail = 'The captured source mapping no longer resolves; the agent receives the current source identity or a recapture requirement.';
+      return logRevalidation(rec, out);
+    }
+    /* B20: the fingerprint actually compared (previously only asserted). A
+       same-tag/role/component/source element with changed substance is stale. */
+    if (rec.fingerprint && fingerprintOf(el) !== rec.fingerprint) {
+      out.identity_match = false;
+      out.reason = 'fingerprint_mismatch';
+      out.detail = 'The live element differs under ' + FP_POLICY + '; recency alone never declares a capture fresh.';
+      return logRevalidation(rec, out);
     }
     if (out.captured_generation !== out.current_generation) {
       /* One compatible match, so the generation MAY be refreshed and the send
-         proceeds -- with the refresh disclosed rather than hidden. */
+         proceeds -- with the refresh disclosed rather than hidden. B20: the
+         retained capture is NOT mutated; the refreshed dispatch context is
+         recorded separately so old evidence never looks newly observed. */
       out.result = 'refreshed'; out.reason = 'generation_refreshed';
-      rec.session.generationAtCapture = sess.generation;
-      rec.freshness = 'current';
-      return out;
+      out.dispatched_context = {
+        generation: sess.generation,
+        rect: liveRectOf(el),
+        dom: normalizedHtml(el),
+        style: liveStyleOf(el),
+        source: { file: liveFile, line: liveLine, col: liveCol },
+        refreshedAt: nowIso()
+      };
+      P().refreshLog = P().refreshLog || {};
+      P().refreshLog[rec.id] = { at: nowIso(), from: out.captured_generation, to: sess.generation };
+      return logRevalidation(rec, out);
     }
     out.result = 'current'; out.reason = null;
-    return out;
+    return logRevalidation(rec, out);
   }
 
   /* BSTALE-012: late resolutions are fenced by the browser selection epoch and
@@ -38974,14 +39191,53 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
         composer-state.js already reserves for this). Distinct in the UI copy
         from state.sendQueue, which is the live follow-up queue.
      ===================================================================== */
+  /* B20: the numbered block carries list refs only. Inline chips live as tokens in
+     the surrounding text, not as block rows (previously a later list rebuild
+     silently absorbed inline refs into the numbering). */
+  function listRefsOf(refs) { return (refs || []).filter(function (r) { return r.kind !== 'inline'; }); }
+  function renumberListRefs(refs) {
+    var n = 0;
+    for (var i = 0; i < refs.length; i++) if (refs[i].kind !== 'inline') refs[i].number = ++n;
+  }
   function buildListBlock(refs) {
-    if (!refs || !refs.length) return '';
+    var list = listRefsOf(refs);
+    if (!list.length) return '';
     var lines = ['Referenced components:'];
-    for (var i = 0; i < refs.length; i++) {
-      var r = refs[i];
-      lines.push((i + 1) + '. ' + r.componentLabel + (r.instruction ? ' — ' + r.instruction : ' — (no instruction yet)'));
+    for (var i = 0; i < list.length; i++) {
+      var r = list[i];
+      lines.push((r.number || (i + 1)) + '. ' + r.componentLabel + (r.instruction ? ' — ' + r.instruction : ' — (no instruction yet)')
+        + (r.stale ? ' — STALE (' + String(r.stale.reason || 'stale').replace(/_/g, ' ') + ')' : ''));
     }
     return lines.join('\n');
+  }
+  /* B20 (BSTALE-006): a visible chip/token that the user deleted or changed must
+     not leave hidden context behind to be sent later. Inline refs whose exact
+     token is absent from both the sent payload and the live composer are
+     detached (logged, not sent). List refs are authoritative while their derived
+     block is intact; a hand-deleted or hand-rewritten block detaches the list,
+     because its rows no longer map to hidden refs. Ordinary typing around a
+     token never creates, duplicates or rebinds refs — this only ever removes. */
+  function pruneDetachedRefs(ctx, buf, raw) {
+    var refs = (buf && buf.browser_context_refs) || [];
+    if (!refs.length) return [];
+    var live = (ctx && ctx.state ? ctx.state.composer : '') || '';
+    var union = live + '\n' + (raw || '') + '\n' + (buf.text || '');
+    var block = buildListBlock(refs);
+    var blockGone = !!block && union.indexOf(block) < 0;
+    var kept = [], pruned = [];
+    for (var i = 0; i < refs.length; i++) {
+      var r = refs[i];
+      if (r.kind === 'inline') {
+        if (r.token && union.indexOf(r.token) < 0) { pruned.push(r); continue; }
+      } else if (blockGone) { pruned.push(r); continue; }
+      kept.push(r);
+    }
+    if (pruned.length) {
+      buf.browser_context_refs = kept;
+      P().chipPruneLog.push({ at: nowIso(), threadId: buf.thread_id || null,
+        pruned: pruned.map(function (r) { return { id: r.id, kind: r.kind || 'list', label: r.componentLabel }; }) });
+    }
+    return pruned;
   }
   /* Replaces the previously-rendered block with the newly-built one by comparing
      against a FRESH `buildListBlock(prevRefs)` of the refs as they stood immediately
@@ -38991,6 +39247,17 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
      has been reset. If the old block text is not found (hand-edited or never
      written), the new block is appended after whatever text already exists rather
      than silently discarded. */
+  /* B20-R05: the before-mutation refs as value snapshots, not a shallow slice.
+     Every list mutation below edits the SAME ref objects (instruction,
+     numbers, stale marks), so a slice still aliases the new state and the old
+     block can never be found for replacement. Only the fields the visible
+     block projects are snapshotted. */
+  function snapshotListRefs(refs) {
+    return (refs || []).map(function (r) {
+      return { kind: r.kind, number: r.number, componentLabel: r.componentLabel,
+        instruction: r.instruction, stale: r.stale ? { reason: r.stale.reason } : null };
+    });
+  }
   function applyListRefs(ctx, tid, prevRefs) {
     var buf = currentBuffer(ctx);
     if (!buf) return;
@@ -39010,21 +39277,41 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     var buf = currentBuffer(ctx);
     if (!buf) return;
     buf.browser_context_refs = buf.browser_context_refs || [];
-    var prevRefs = buf.browser_context_refs.slice();
+    var prevRefs = snapshotListRefs(buf.browser_context_refs);
     buf.browser_context_refs.push({
-      id: seq('bcref'), kind: 'list', number: buf.browser_context_refs.length + 1,
+      id: seq('bcref'), kind: 'list', number: 0,
       componentLabel: elCtx.component || ('<' + elCtx.tag + '>'), instruction: instruction || '',
       contextId: elCtx.id, addedAt: nowIso()
     });
+    renumberListRefs(buf.browser_context_refs);
     applyListRefs(ctx, tid, prevRefs);
   }
   function removeFromComposerList(ctx, refId) {
     var tid = ctx.state.selectedThread;
     var buf = currentBuffer(ctx);
     if (!buf || !buf.browser_context_refs) return;
-    var prevRefs = buf.browser_context_refs.slice();
-    buf.browser_context_refs = buf.browser_context_refs.filter(function (r) { return r.id !== refId; });
-    for (var i = 0; i < buf.browser_context_refs.length; i++) buf.browser_context_refs[i].number = i + 1;
+    var prevRefs = snapshotListRefs(buf.browser_context_refs);
+    var dropped = null;
+    buf.browser_context_refs = buf.browser_context_refs.filter(function (r) { if (r.id === refId) dropped = r; return r.id !== refId; });
+    if (!dropped) return;
+    renumberListRefs(buf.browser_context_refs);
+    /* B20: removing an inline ref also removes its exact token text, so no
+       visible token is left behind to suggest a context that is gone. */
+    if (dropped.kind === 'inline' && dropped.token && ctx.state.composer && ctx.state.composer.indexOf(dropped.token) >= 0) {
+      ctx.state.composer = ctx.state.composer.replace(dropped.token, '');
+      if (ctx.state.drafts) ctx.state.drafts[tid] = ctx.state.composer;
+    }
+    bumpSelectionEpoch();
+    applyListRefs(ctx, tid, prevRefs);
+  }
+  function editListInstruction(ctx, refId, instruction) {
+    var tid = ctx.state.selectedThread;
+    var buf = currentBuffer(ctx);
+    if (!buf || !buf.browser_context_refs) return;
+    var prevRefs = snapshotListRefs(buf.browser_context_refs);
+    for (var i = 0; i < buf.browser_context_refs.length; i++) {
+      if (buf.browser_context_refs[i].id === refId) buf.browser_context_refs[i].instruction = instruction;
+    }
     applyListRefs(ctx, tid, prevRefs);
   }
   function moveInComposerList(ctx, refId, dir) {
@@ -39032,13 +39319,18 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     var buf = currentBuffer(ctx);
     if (!buf || !buf.browser_context_refs) return;
     var list = buf.browser_context_refs;
-    var prevRefs = list.slice();
-    var i = -1;
-    for (var k = 0; k < list.length; k++) if (list[k].id === refId) { i = k; break; }
-    var j = i + dir;
-    if (i < 0 || j < 0 || j >= list.length) return;
-    var tmp = list[i]; list[i] = list[j]; list[j] = tmp;
-    for (var n = 0; n < list.length; n++) list[n].number = n + 1;
+    var prevRefs = snapshotListRefs(list);
+    /* B20: reorder moves within the list kind only; inline chips have no order. */
+    var spots = [];
+    for (var k = 0; k < list.length; k++) if (list[k].kind !== 'inline') spots.push(k);
+    var at = -1;
+    for (var s = 0; s < spots.length; s++) if (list[spots[s]].id === refId) at = s;
+    if (at < 0) return;
+    var other = at + dir;
+    if (other < 0 || other >= spots.length) return;
+    var tmp = list[spots[at]]; list[spots[at]] = list[spots[other]]; list[spots[other]] = tmp;
+    renumberListRefs(list);
+    bumpSelectionEpoch();
     applyListRefs(ctx, tid, prevRefs);
   }
 
@@ -39047,28 +39339,101 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
         structural guarantee. This function takes only local arguments; it
         must never gain a `ctx.state.composer` or textarea read.
      ===================================================================== */
+  /* B20: isolated sends route to the ACTUAL current destination through the shared
+     collaboration owner — not merely its display label. A workflow/participant
+     destination is validated (run exists, non-terminal, participant exists, room
+     turn rules pass, thread matches); anything else refuses with a stated reason
+     and never silently redirects to Assistant. Other destination kinds have no
+     isolated-delivery route in their owner and refuse honestly rather than fake
+     a delivery with a label. */
+  var TERMINAL_RUN = { completed: 1, canceled: 1, failed: 1 };
+  function resolveIsolatedDestination(ctx) {
+    var tid = ctx.state.selectedThread;
+    var buf = (RT.composer && typeof RT.composer.bufferFor === 'function') ? RT.composer.bufferFor(tid) : null;
+    var dest = (buf && buf.destination) || (RT.composer && RT.composer.destination) || null;
+    if (!dest || dest.kind === 'assistant') return { ok: true, assistant: true, label: 'Assistant', dest: null };
+    if (dest.kind !== 'workflow' && dest.kind !== 'participant') {
+      return { ok: false, error: 'destination_kind_unsupported',
+        detail: 'Isolated capture delivery to a ' + (dest.kind || 'detached') + ' destination has no route in its owner. The capture was not sent; pick a collaboration run or Assistant.' };
+    }
+    var COL = window.PM56_COLLAB;
+    var run = (COL && typeof COL.run === 'function') ? COL.run(dest.refId) : null;
+    if (!run) {
+      return { ok: false, error: 'destination_unavailable',
+        detail: 'The targeted collaboration run no longer exists. The capture was not sent and was not redirected to Assistant.' };
+    }
+    if (TERMINAL_RUN[run.status]) {
+      return { ok: false, error: 'destination_ended',
+        detail: 'The targeted run has ended (' + run.status + '). The capture was not sent and was not redirected to Assistant; retarget or clear the destination.' };
+    }
+    if (dest.participantId) {
+      var found = false;
+      for (var i = 0; i < (run.participants || []).length; i++) if (run.participants[i].id === dest.participantId) found = true;
+      if (!found) {
+        return { ok: false, error: 'participant_missing',
+          detail: 'The targeted participant is not on this run. The capture was not sent.' };
+      }
+    }
+    var ROOM = window.PM56_ROOM;
+    if (ROOM && typeof ROOM.owns === 'function' && ROOM.owns(run.id)) {
+      var pre = (typeof ROOM.canSend === 'function') ? ROOM.canSend(run.id, dest) : { ok: true };
+      if (!pre.ok) {
+        return { ok: false, error: pre.error || 'room_not_accepting',
+          detail: 'The room refuses a new turn now (' + (pre.error || 'not accepting') + '). The capture was not sent.' };
+      }
+      var thread = ctx.activeThread();
+      if (!thread || thread.id !== run.threadId) {
+        return { ok: false, error: 'wrong_thread',
+          detail: 'This room lives on another thread. The capture was not sent there from here.' };
+      }
+    }
+    return { ok: true, assistant: false, label: dest.label || 'Destination', dest: dest, run: run };
+  }
   function sendIsolatedCapture(ctx, payload) {
-    /* payload: {kind, image, w, h, label, sub, rect, instruction, elCtx} */
+    /* payload: {kind, image, w, h, label, sub, rect, instruction, elCtx, gate} */
+    /* B20: the effect boundary re-checks the gate the action took (or guards
+       directly when called without one, e.g. the isolation prover). */
+    if (payload.gate) {
+      if (!checkAttempt(ctx, payload.gate, 'Capture send')) return null;
+    } else if (!guardSession(ctx, 'Capture send', 'screenshots')) return null;
+    /* B20-R03: the final operation enforces the DOM grant itself before any
+       live re-read — a screenshots-only gate never authorizes DOM inspection.
+       A gate that already covers DOM is the operation's single-use
+       authorization (re-guarding would consume one grant twice); anything else
+       is fully guarded here, including direct API calls. */
+    var gateCaps = payload.gate ? (payload.gate.capabilities || [payload.gate.capability]) : [];
+    if (payload.elCtx && gateCaps.indexOf('dom') < 0 && !guardSession(ctx, 'Capture send', 'dom')) return null;
     /* BSTALE-001..003: a COMPONENT send revalidates immediately before
        dispatch and admits no message on a stale capture. Full and region
        screenshots carry no live locator, so they are exempt by construction
        rather than by an exception. */
+    var refreshNote = null;
     if (payload.elCtx) {
       var rv = revalidateContext(payload.elCtx);
       if (rv.result !== 'current' && rv.result !== 'refreshed') {
-        P().lastRevalidation = rv;
         ctx.toast('stale_capture — nothing sent',
           rv.reason.replace(/_/g, ' ') + '. Recapture through ' + rv.recapture_action +
           '; the component is never guessed and your composer is unchanged.');
+        ctx.addReceipt('bc-refused', 'stale_capture — nothing sent',
+          'Reason: ' + rv.reason + '. The selected component and instruction are preserved for recapture; the composer is unchanged.');
         return null;
       }
-      P().lastRevalidation = rv;
+      if (rv.result === 'refreshed') refreshNote = rv;
+    }
+    var route = resolveIsolatedDestination(ctx);
+    if (!route.ok) {
+      ctx.toast('Not sent — destination refused', route.detail);
+      ctx.addReceipt('bc-destination-refused', 'Not sent — destination refused', route.error + '. ' + route.detail);
+      return null;
     }
     var thread = ctx.activeThread();
+    var refBody = (payload.instruction ? payload.instruction + '\n' : '')
+      + '[Browser capture · ' + payload.kind + ' · ' + payload.label + ']';
     var msg = {
       id: seq('bc-msg'),
       role: 'user',
       type: 'bc-capture',
+      body: refBody,
       sentAt: nowIso(),
       kind: payload.kind,
       image: payload.image,
@@ -39078,18 +39443,57 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
       instruction: payload.instruction || '',
       rect: payload.rect || null,
       contextId: payload.elCtx ? payload.elCtx.id : null,
-      destinationLabel: destinationLabel(),
+      destinationLabel: route.label,
+      destinationRef: route.dest ? { kind: route.dest.kind, refId: route.dest.refId,
+        participantId: route.dest.participantId || null, runStatus: route.run.status } : null,
       /* BROWSER-002 / BSTALE-008: this payload is its own submission. The
          composer reconciler must not read it as a composer send, or an
          attachment sitting in the tray with no typed text is discarded. */
       isolatedSubmission: true,
       demo: true
     };
+    /* B20-R04: when this send validated a compatible refresh, the actual
+       refreshed dispatch DOM/style/geometry/source/generation is bound to the
+       admitted message under the same projection name the ordinary commit
+       hook uses — the original captured evidence stays immutable. */
+    if (refreshNote && refreshNote.dispatched_context && payload.elCtx) {
+      msg.browserDispatchedContexts = {};
+      msg.browserDispatchedContexts[payload.elCtx.id] = clone2(refreshNote.dispatched_context);
+    }
     ctx.appendMessage(msg, thread);
+    /* The thread message is written once; a collaboration destination receives
+       the reference through its own owner, mirroring the ordinary commit hook. */
+    if (route.run) {
+      var ROOM2 = window.PM56_ROOM;
+      var buf2 = (RT.composer && typeof RT.composer.bufferFor === 'function') ? RT.composer.bufferFor(thread.id) : null;
+      if (ROOM2 && typeof ROOM2.owns === 'function' && ROOM2.owns(route.run.id)) {
+        var got = ROOM2.receiveUser(route.run.id, msg, { destination: route.dest }, thread);
+        if (!got.ok) {
+          ctx.addReceipt('bc-destination-refused', 'Run reference not recorded',
+            'The room refused the reference (' + (got.error || 'refused') + ') after the thread message was written. The capture card above is intact; advance the room and resend.');
+        }
+      } else {
+        var COL2 = window.PM56_COLLAB;
+        COL2.appendMessage(route.run.id, { senderKind: 'user', senderName: 'You', messageType: 'message',
+          body: refBody + ' (capture ' + msg.id + (msg.contextId ? ', context ' + msg.contextId : '') + ')',
+          recipientIds: route.dest.participantId ? [route.dest.participantId] : [],
+          createdAt: msg.sentAt });
+        if (route.run.kind === 'chat_room' && route.run.chatRoom) {
+          var p0 = null;
+          for (var k = 0; k < (route.run.participants || []).length; k++) {
+            if (!route.dest.participantId || route.run.participants[k].id === route.dest.participantId) { p0 = route.run.participants[k]; break; }
+          }
+          if (p0) COL2.appendMessage(route.run.id, { senderKind: 'participant', senderId: p0.id, senderName: p0.name,
+            messageType: 'response', body: 'Noted — folding that into the current round rather than answering in isolation.' });
+        }
+      }
+    }
     var rec = {
       id: msg.id, kind: payload.kind, at: msg.sentAt, label: payload.label,
-      destinationLabel: msg.destinationLabel, threadId: thread ? thread.id : null,
-      contextId: msg.contextId, image: payload.image
+      destinationLabel: msg.destinationLabel, destinationRef: msg.destinationRef,
+      threadId: thread ? thread.id : null, contextId: msg.contextId, image: payload.image,
+      refreshed: refreshNote ? { from: refreshNote.captured_generation, to: refreshNote.current_generation } : null,
+      dispatched_context: (refreshNote && refreshNote.dispatched_context) ? clone2(refreshNote.dispatched_context) : null
     };
     P().captures.push(rec);
     return msg;
@@ -39102,26 +39506,40 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
         captured off these nodes later is a real measurement.
      ===================================================================== */
   function renderPageEl(def, mode, sess) {
+    /* B20: render-durable demo mutations. `replaced` swaps one element's live
+       component identity and content (same tag/locator/file); `duplicated`
+       renders a second live node under the same locator. Both survive renders
+       because they live in session state, not in hand-edited DOM. */
+    var ov = (sess && sess.replaced && sess.replaced[def.id]) || null;
+    var comp = ov ? ov.component : def.component;
     var picked = (P().pickedElId === def.id) ? ' is-bc-picked' : '';
-    var attrs = ' data-bc-el data-bc-id="' + esc(def.id) + '" data-bc-component="' + esc(def.component) + '"'
+    var attrs = ' data-bc-el data-bc-id="' + esc(def.id) + '" data-bc-component="' + esc(comp) + '"'
       + (def.file ? ' data-bc-file="' + esc(def.file) + '" data-bc-line="' + def.line + '" data-bc-col="' + def.col + '"' : '')
       + (def.role ? ' role="' + esc(def.role) + '"' : '');
     var pickAttr = (mode === 'component')
-      ? ' data-action="bc-pick-el" data-id="' + esc(def.id) + '" tabindex="0" aria-label="' + esc('Pick ' + (def.component || def.tag) + (def.text ? ': ' + def.text : '')) + '"'
+      ? ' data-action="bc-pick-el" data-id="' + esc(def.id) + '" tabindex="0" aria-label="' + esc('Pick ' + (comp || def.tag) + (def.text ? ': ' + def.text : '')) + '"'
       : '';
-    var inner = def.text ? '<span class="bc-el-text">' + esc(def.text) + '</span>' : '';
+    var inner = ov ? ov.html : (def.text ? '<span class="bc-el-text">' + esc(def.text) + '</span>' : '');
     if (def.id === 'el-chart') {
       inner += '<span class="bc-sparkline">' + [38, 62, 45, 82, 56, 91, 68].map(function (h) {
         return '<i style="height:' + h + '%"></i>';
       }).join('') + '</span>';
     }
-    if (def.isRowHost) {
-      var order = (sess.rowOrder && sess.rowOrder.length) ? sess.rowOrder : ROW_IDS_DEFAULT;
-      for (var i = 0; i < order.length; i++) { var child = ELEMENT_BY_ID[order[i]]; if (child) inner += renderPageEl(child, mode, sess); }
-    } else if (def.children && def.children.length) {
-      for (var j = 0; j < def.children.length; j++) inner += renderPageEl(def.children[j], mode, sess);
+    if (!ov) {
+      if (def.isRowHost) {
+        var order = (sess.rowOrder && sess.rowOrder.length) ? sess.rowOrder : ROW_IDS_DEFAULT;
+        for (var i = 0; i < order.length; i++) { var child = ELEMENT_BY_ID[order[i]]; if (child) inner += renderPageEl(child, mode, sess); }
+      } else if (def.children && def.children.length) {
+        for (var j = 0; j < def.children.length; j++) inner += renderPageEl(def.children[j], mode, sess);
+      }
     }
-    return '<' + def.tag + ' class="bc-el ' + esc(def.cls) + picked + '"' + attrs + pickAttr + '>' + inner + '</' + def.tag + '>';
+    var out = '<' + def.tag + ' class="bc-el ' + esc(def.cls) + picked + '"' + attrs + pickAttr + '>' + inner + '</' + def.tag + '>';
+    /* The duplicate twin keeps the same locator but takes no pick action of its
+       own, so one pick target stays while the locator itself is ambiguous. */
+    if (!ov && sess && sess.duplicated && sess.duplicated.indexOf(def.id) >= 0) {
+      out += '<' + def.tag + ' class="bc-el ' + esc(def.cls) + '"' + attrs + '>' + inner + '</' + def.tag + '>';
+    }
+    return out;
   }
 
   function renderAuthPage() {
@@ -39203,7 +39621,21 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
       + '<button class="bc-tool-btn' + (mode === 'devtools' ? ' is-armed' : '') + '" data-action="bc-toggle-devtools" aria-pressed="' + (mode === 'devtools' ? 'true' : 'false') + '"' + tip('bc-t-devtools', 'Policy-controlled agent DevTools access') + '>' + ctx.icon('terminal', 14) + '<span>DevTools</span></button>'
       + '</div>'
       + '<p class="bc-note">Full and Region send immediately as their own message. Anything already typed in the composer stays exactly as it is — '
-      + '<button class="text-button" data-action="bc-verify-isolation">Verify isolation</button>.</p>';
+      + '<button class="text-button" data-action="bc-verify-isolation">Verify isolation</button>.</p>'
+      + renderAllowBanner(ctx);
+  }
+  /* B20: the explicit single-use allow for Ask-held actions. */
+  function renderAllowBanner(ctx) {
+    var hold = P().pendingAllow;
+    if (!hold) return '';
+    var heldCaps = hold.capabilities || [hold.capability];
+    var heldLabel = heldCaps.map(function (c) { return CAP_LABEL[c] || c; }).join(' + ');
+    return '<div class="bc-allow-banner" data-k="bc-allow-banner" role="alert">'
+      + ctx.icon('lock', 12)
+      + '<span><b>Held for approval</b> — ' + esc(hold.actionLabel) + ' (' + esc(heldLabel) + ' policy is Ask). Nothing was captured or sent.</span>'
+      + '<button class="primary-button" data-action="bc-allow-once">Allow once</button>'
+      + '<button class="soft-button" data-action="bc-deny-allow">Deny</button>'
+      + '</div>';
   }
 
   /* =====================================================================
@@ -39254,16 +39686,26 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   }
   function renderContextFields(ctx, rec) {
     if (!rec) return '<p class="bc-empty">No component selected yet. Use Select Component, or open a capture from the Captures tab.</p>';
-    var liveGen = session(rec.session.id).generation;
-    var stale = rec.session.generationAtCapture < liveGen;
+    /* B20: an unknown recorded session is shown as gone, never as session one. */
+    var liveSess = session(rec.session.id);
+    var gone = !liveSess;
+    var liveGen = gone ? null : liveSess.generation;
+    var stale = !gone && rec.session.generationAtCapture < liveGen;
+    var lastRv = (P().revalidationLog || {})[rec.id];
+    var refresh = (P().refreshLog || {})[rec.id];
     return '<div class="bc-context-card" data-k="bc-context-card-' + esc(rec.id) + '">'
       + row('Component', esc(rec.component || ('<' + rec.tag + '>')))
       + row('Tag / role', esc(rec.tag) + (rec.role ? ' · ' + esc(rec.role) : ''))
       + row('Name / text', esc(rec.name || rec.text || '(none)'))
-      + row('Session', esc(rec.session.label))
+      + row('Session', esc(rec.session.label) + (gone ? ' <span class="bc-stale-tag">session gone</span>' : ''))
       + '<div class="bc-context-row"><label>Page</label><b>' + esc(rec.page.title) + '</b><span>' + esc(rec.page.url) + '</span></div>'
       + '<div class="bc-context-row"><label>Generation</label><b>' + rec.session.generationAtCapture + '</b>'
-      + (stale ? '<span class="bc-stale-tag">stale — page is now generation ' + liveGen + '</span>' : '<span class="bc-fresh-tag">current</span>') + '</div>'
+      + (gone ? '<span class="bc-stale-tag">session gone — no live generation</span>'
+        : stale ? '<span class="bc-stale-tag">stale — page is now generation ' + liveGen + '</span>' : '<span class="bc-fresh-tag">current</span>') + '</div>'
+      + row('Captured', esc(rec.capturedAt || 'unknown'))
+      + row('Fingerprint', esc(rec.fingerprint || 'not recorded') + (rec.fingerprintPolicy ? ' <span class="bc-sub">' + esc(rec.fingerprintPolicy) + '</span>' : ''))
+      + row('Last revalidation', lastRv ? esc(lastRv.result + (lastRv.reason ? ' · ' + lastRv.reason : '') + ' · gen ' + lastRv.captured_generation + '→' + lastRv.current_generation) : 'not yet revalidated')
+      + (refresh ? row('Refreshed', 'generation ' + refresh.from + '→' + refresh.to + ' — original evidence kept; dispatch used a separately recorded context') : '')
       + row('Rect', rec.rect.w + '×' + rec.rect.h + ' @ (' + rec.rect.x + ',' + rec.rect.y + ')')
       + row('Source', rec.source.file ? esc(rec.source.file) + ':' + rec.source.line + ':' + rec.source.col : 'not reported')
       + row('Parent path', esc(rec.parentPath.join(' › ')))
@@ -39273,7 +39715,9 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
       + '<div class="bc-context-row"><label>Bounded HTML</label><div class="code-block bc-html-block">' + esc(rec.boundedHtml) + '</div></div>'
       + row('Crop', rec.crop ? rec.crop.w + '×' + rec.crop.h : 'none — full element')
       + '<p class="bc-sub">demo:true — rect, style and HTML above are live measurements off the rendered fixture page; component/source labels are authored fixture metadata.</p>'
-      + '<button class="soft-button" data-action="bc-simulate-rerender">' + ctx.icon('refresh', 12) + ' Simulate re-render</button>'
+      + '<div class="bc-sim-row"><button class="soft-button" data-action="bc-simulate-rerender">' + ctx.icon('refresh', 12) + ' Simulate re-render</button>'
+      + '<button class="soft-button" data-action="bc-simulate-replace" title="Replace the live element with an incompatible component (same tag and locator)">Replace live target</button>'
+      + '<button class="soft-button" data-action="bc-simulate-duplicate" title="Render a second live node under the same locator">Duplicate locator</button></div>'
       + (P().lastRerenderNote ? '<div class="bc-rerender-note ' + (P().lastRerenderNote.resolved ? 'ok' : 'fail') + '" data-k="bc-rerender-note">' + esc(P().lastRerenderNote.text) + '</div>' : '')
       + '</div>';
     function row(label, val) { return '<div class="bc-context-row"><label>' + esc(label) + '</label><b>' + val + '</b></div>'; }
@@ -39317,17 +39761,25 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     var buf = currentBuffer(ctx);
     var refs = (buf && buf.browser_context_refs) || [];
     if (!refs.length) return '';
+    var list = listRefsOf(refs);
     return '<div class="bc-list-manager" data-k="bc-list-manager">'
       + '<div class="bc-list-manager-head"><b>Composer list</b><span>' + refs.length + ' item' + (refs.length === 1 ? '' : 's') + ' in this draft — not the live follow-up queue</span></div>'
-      + refs.map(function (r, i) {
-        return '<div class="bc-list-row" data-k="bc-list-row-' + esc(r.id) + '">'
-          + '<span class="bc-list-num">' + (r.number || (i + 1)) + '</span>'
+      + refs.map(function (r) {
+        var inline = r.kind === 'inline';
+        var at = inline ? -1 : list.indexOf(r);
+        var staleTag = r.stale ? '<span class="bc-stale-tag" title="' + esc(r.stale.detail || r.stale.reason) + '">stale · ' + esc(String(r.stale.reason || '').replace(/_/g, ' ')) + '</span>' : '';
+        return '<div class="bc-list-row' + (r.stale ? ' is-stale' : '') + '" data-k="bc-list-row-' + esc(r.id) + '">'
+          + (inline ? '<span class="bc-list-chip">chip</span>' : '<span class="bc-list-num">' + (r.number || '') + '</span>')
           + '<span class="bc-list-label">' + esc(r.componentLabel) + '</span>'
-          + '<button class="icon-button" data-action="bc-list-move" data-id="' + esc(r.id) + '" data-dir="-1"' + (i === 0 ? ' disabled' : '') + ' aria-label="Move up">' + ctx.icon('up', 11) + '</button>'
-          + '<button class="icon-button" data-action="bc-list-move" data-id="' + esc(r.id) + '" data-dir="1"' + (i === refs.length - 1 ? ' disabled' : '') + ' aria-label="Move down">' + ctx.icon('down', 11) + '</button>'
+          + staleTag
+          + (r.stale ? '<button class="soft-button" data-action="bc-recapture-ref" data-id="' + esc(r.id) + '">Recapture</button>' : '')
+          + (!inline ? '<input class="bc-list-instr" data-bc-input="list-instr" data-id="' + esc(r.id) + '" type="text" value="' + esc(r.instruction || '') + '" placeholder="Instruction" aria-label="Instruction for ' + esc(r.componentLabel) + '">' : '')
+          + (!inline ? '<button class="icon-button" data-action="bc-list-move" data-id="' + esc(r.id) + '" data-dir="-1"' + (at <= 0 ? ' disabled' : '') + ' aria-label="Move up">' + ctx.icon('up', 11) + '</button>' : '')
+          + (!inline ? '<button class="icon-button" data-action="bc-list-move" data-id="' + esc(r.id) + '" data-dir="1"' + (at < 0 || at >= list.length - 1 ? ' disabled' : '') + ' aria-label="Move down">' + ctx.icon('down', 11) + '</button>' : '')
           + '<button class="icon-button" data-action="bc-list-remove" data-id="' + esc(r.id) + '" aria-label="Remove">' + ctx.icon('close', 11) + '</button>'
           + '</div>';
       }).join('')
+      + '<button class="soft-button" data-action="bc-freeze-snapshots" title="Freeze every live reference into an immutable snapshot for scheduling">Freeze ' + refs.length + ' for scheduling</button>'
       + '</div>';
   }
 
@@ -39427,7 +39879,13 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   function clampNum(n, min, max) { return Math.max(min, Math.min(max, n)); }
   function findContext(id) { var l = P().contexts; for (var i = 0; i < l.length; i++) if (l[i].id === id) return l[i]; return null; }
 
-  function clearPick() { P().picked = null; P().pickedElId = null; P().promptInstruction = ''; P().promptMenuOpen = false; }
+  /* B20: clearing a selection supersedes it — the epoch advances so late results
+     from the abandoned selection are discarded, not dispatched. */
+  function clearPick() {
+    P().picked = null; P().pickedElId = null; P().promptInstruction = ''; P().promptMenuOpen = false;
+    P().recaptureRefId = null;
+    bumpSelectionEpoch();
+  }
   function cancelDrag() {
     if (drag) {
       if (drag.onMove) document.removeEventListener('mousemove', drag.onMove);
@@ -39440,16 +39898,128 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
 
   /* BROWSER-009 — the protected session refuses with a stated reason. Called at the
      moment of an actual attempt (drag-start, pick-click, full-shot click, DevTools
-     open), never used to silently disable a control ahead of time. */
-  function guardSession(ctx, actionLabel) {
+     open), never used to silently disable a control ahead of time.
+     B20 (BROWSER-008): ordinary sessions are gated by the per-capability policy at
+     the same boundary. Off refuses; Ask holds for one explicit single-use allow;
+     a permission or policy change between preparation and commit refuses. */
+  var CAP_LABEL = { screenshots: 'Screenshots / recording', dom: 'DOM and components', console: 'Console' };
+  function guardSession(ctx, actionLabel, capId) {
     var sess = session();
-    if (!isProtected(sess)) return true;
+    if (!isProtected(sess)) return guardPolicy(ctx, actionLabel, capId || 'screenshots');
     var reason = 'The protected authentication browser is human-only. ' + actionLabel + ' is refused here — it is excluded from agent capture, DevTools, Back Seat Driver review, and persistence.';
     ctx.toast('Refused — human-only session', reason);
     ctx.addReceipt('bc-refused', 'Refused · ' + actionLabel, reason);
     P().refusals.push({ id: seq('bcref-x'), at: nowIso(), actionLabel: actionLabel, reason: reason, sessionId: sess.id });
     ctx.renderApp();
     return false;
+  }
+  function guardPolicy(ctx, actionLabel, capId) {
+    var v = (P().policy || {})[capId];
+    if (v == null) v = 'on';
+    if (v === 'on') return true;
+    if (v === 'off') {
+      var reason = (CAP_LABEL[capId] || capId) + ' policy is Off. ' + actionLabel + ' is refused — change the policy in the DevTools tab to run it.';
+      ctx.toast('Refused — policy Off', reason);
+      ctx.addReceipt('bc-refused', 'Refused · ' + actionLabel, reason);
+      P().refusals.push({ id: seq('bcref-x'), at: nowIso(), actionLabel: actionLabel, capability: capId, reason: reason, sessionId: session().id });
+      ctx.renderApp();
+      return false;
+    }
+    /* Ask: a live single-use grant is consumed silently; otherwise hold for an
+       explicit allow. The hold records its preparation so a permission or policy
+       change before the allow expires it. B20-R3-F2: grants are a per-capability
+       set (null when empty) so sibling approvals never overwrite each other;
+       holds carry the full outstanding set with single-cap aliases kept. */
+    if (P().allowOnce && P().allowOnce[capId]) {
+      delete P().allowOnce[capId];
+      if (!Object.keys(P().allowOnce).length) P().allowOnce = null;
+      return true;
+    }
+    var already = P().pendingAllow && (P().pendingAllow.capability === capId
+      || (P().pendingAllow.capabilities && P().pendingAllow.capabilities.indexOf(capId) >= 0));
+    P().pendingAllow = { capability: capId, capabilities: [capId], actionLabel: actionLabel, at: nowIso(),
+      permissions: ctx.state.permissions, policy: v, policies: {} };
+    P().pendingAllow.policies[capId] = v;
+    ctx.toast('Approval needed', actionLabel + ' needs a one-time allow (' + (CAP_LABEL[capId] || capId) + ' policy is Ask). Use Allow once below, then run the action again.');
+    if (!already) ctx.addReceipt('bc-allow-hold', 'Held · ' + actionLabel, 'Policy Ask holds this action until you explicitly allow it once. Nothing was captured or sent.');
+    ctx.renderApp();
+    return false;
+  }
+  /* A gate snapshot is taken by an action right after its guard passes and handed
+     to the effect helper, which re-checks it at the commit boundary. */
+  function gateSnapshot(ctx, capId) {
+    return { capability: capId, permissions: ctx.state.permissions,
+      policy: (P().policy || {})[capId] == null ? 'on' : P().policy[capId] };
+  }
+  function checkAttempt(ctx, gate, actionLabel) {
+    if (!gate) return true;
+    /* B20-R03: gates may cover one capability (legacy single shape) or the
+       full intersection an operation needs. Every covered capability and the
+       permission identity must be unchanged since preparation. */
+    var caps = gate.capabilities || [gate.capability];
+    var cur = gateSnapshotCaps(ctx, caps);
+    var same = cur.permissions === gate.permissions && caps.every(function (c) {
+      var before = gate.policies ? gate.policies[c] : gate.policy;
+      return cur.policies[c] === before;
+    });
+    if (!same) {
+      var reason = 'Permissions or policy changed between preparation and commit. ' + actionLabel + ' is refused — run it again under the current settings.';
+      ctx.toast('Refused — settings changed', reason);
+      ctx.addReceipt('bc-refused', 'Refused · ' + actionLabel, reason);
+      P().refusals.push({ id: seq('bcref-x'), at: nowIso(), actionLabel: actionLabel, capability: caps.join('+'), reason: reason, sessionId: session().id });
+      ctx.renderApp();
+      return false;
+    }
+    return true;
+  }
+  /* B20-R03: guard every capability an operation actually needs. A screenshots
+     grant is not a DOM grant: component dispatch re-reads and shares live DOM
+     content, so DOM Off/Ask governs it however screenshots is set.
+     B20-R3-F2: one operation resolves its FULL required set together. Off
+     refuses terminally; Ask caps without a grant hold as one set; grants are
+     consumed only after every cap passes, at this successful admission
+     boundary — never one-by-one before the sibling approval exists. */
+  function guardSessionCaps(ctx, actionLabel, capIds) {
+    var sess = session();
+    if (isProtected(sess)) return guardSession(ctx, actionLabel, capIds[0]);
+    if (capIds.length === 1) return guardPolicy(ctx, actionLabel, capIds[0]);
+    var i, v;
+    for (i = 0; i < capIds.length; i++) {
+      v = (P().policy || {})[capIds[i]];
+      if (v == null) v = 'on';
+      if (v === 'off') { guardPolicy(ctx, actionLabel, capIds[i]); return false; }
+    }
+    var missing = capIds.filter(function (c) {
+      var pv = (P().policy || {})[c];
+      if (pv == null) pv = 'on';
+      if (pv !== 'ask') return false;
+      return !(P().allowOnce && P().allowOnce[c]);
+    });
+    if (missing.length) {
+      var prev = P().pendingAllow;
+      var sameHold = prev && prev.capabilities && prev.capabilities.length === missing.length
+        && missing.every(function (c) { return prev.capabilities.indexOf(c) >= 0; });
+      var labels = missing.map(function (c) { return CAP_LABEL[c] || c; }).join(' + ');
+      P().pendingAllow = { capability: missing[0], capabilities: missing.slice(), actionLabel: actionLabel,
+        at: nowIso(), permissions: ctx.state.permissions, policy: 'ask', policies: {} };
+      missing.forEach(function (c) { P().pendingAllow.policies[c] = 'ask'; });
+      ctx.toast('Approval needed', actionLabel + ' needs a one-time allow (' + labels + ' policy is Ask). Use Allow once below, then run the action again.');
+      if (!sameHold) ctx.addReceipt('bc-allow-hold', 'Held · ' + actionLabel, 'Policy Ask holds this action until you explicitly allow it once. Nothing was captured or sent.');
+      ctx.renderApp();
+      return false;
+    }
+    if (P().allowOnce) {
+      capIds.forEach(function (c) { delete P().allowOnce[c]; });
+      if (!Object.keys(P().allowOnce).length) P().allowOnce = null;
+    }
+    return true;
+  }
+  function gateSnapshotCaps(ctx, capIds) {
+    var g = { capabilities: capIds.slice(), permissions: ctx.state.permissions, policies: {} };
+    for (var i = 0; i < capIds.length; i++) {
+      g.policies[capIds[i]] = (P().policy || {})[capIds[i]] == null ? 'on' : P().policy[capIds[i]];
+    }
+    return g;
   }
 
   function insertComponentAtCursor(ctx, rec) {
@@ -39464,22 +40034,41 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     if (buf) {
       buf.browser_context_refs = buf.browser_context_refs || [];
       buf.browser_context_refs.push({ id: seq('bcref'), kind: 'inline', number: null,
-        componentLabel: rec.component || ('<' + rec.tag + '>'), instruction: '', contextId: rec.id, addedAt: nowIso() });
+        componentLabel: rec.component || ('<' + rec.tag + '>'), instruction: '', contextId: rec.id, addedAt: nowIso(),
+        token: token });
     }
     writeComposerText(ctx, tid, next, start + token.length);
   }
 
-  function finishRegionDrag(ctx, left, top, w, h) {
+  function finishRegionDrag(ctx, left, top, w, h, prep) {
     if (w < 6 || h < 6) return;   /* too small to be an intentional crop */
+    /* B20: the drag spans time, so the commit re-checks the preparation gate
+       and the epoch/revision fence. A stale result is discarded, not sent. */
+    if (prep && !checkAttempt(ctx, prep.gate, 'Region Screenshot')) { P().mode = null; ctx.renderApp(); return; }
+    if (prep) {
+      var fence = acceptLateResolution({ epoch: prep.epoch, threadId: prep.threadId, bufferRevision: prep.rev });
+      if (!fence.ok) {
+        ctx.toast('Region result discarded', 'The selection or composer changed mid-drag (' + fence.error.replace(/_/g, ' ') + '). Nothing was sent.');
+        ctx.addReceipt('bc-discarded', 'Region result discarded', 'Stale asynchronous result discarded, not dispatched: ' + fence.error + '.');
+        P().mode = null;
+        ctx.renderApp();
+        return;
+      }
+    }
     var scale = w > 480 ? 480 / w : 1;
     var iw = Math.max(60, Math.round(w * scale)), ih = Math.max(40, Math.round(h * scale));
     var sub = Math.round(w) + '×' + Math.round(h) + ' px crop at (' + Math.round(left) + ',' + Math.round(top) + ')';
     var image = fixtureImage({ w: iw, h: ih, label: 'Region Screenshot', sub: sub, stamp: new Date().toLocaleTimeString() });
-    sendIsolatedCapture(ctx, { kind: 'region', image: image, w: iw, h: ih, label: 'Region Screenshot', sub: sub,
-      rect: { x: Math.round(left), y: Math.round(top), w: Math.round(w), h: Math.round(h) } });
+    var sent = sendIsolatedCapture(ctx, { kind: 'region', image: image, w: iw, h: ih, label: 'Region Screenshot', sub: sub,
+      rect: { x: Math.round(left), y: Math.round(top), w: Math.round(w), h: Math.round(h) },
+      gate: (prep && prep.gate) || gateSnapshot(ctx, 'screenshots') });
     P().mode = null;
     ctx.renderApp();
-    ctx.toast('Region screenshot sent', 'Sent to ' + destinationLabel() + '.');
+    if (sent) ctx.toast('Region screenshot sent', 'Sent to ' + sent.destinationLabel + '.');
+  }
+  function bufferRevisionOf(tid) {
+    var CS = window.PM56_COMPOSER_STATE;
+    return (CS && typeof CS.revision === 'function') ? CS.revision(tid) : null;
   }
 
   /* =====================================================================
@@ -39516,7 +40105,8 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   });
   EXT.action('bc-full-shot', function (ctx, btn) {
     P().fullMenuOpen = false;
-    if (!guardSession(ctx, 'Full Screenshot')) return true;
+    if (!guardSession(ctx, 'Full Screenshot', 'screenshots')) return true;
+    var gate = gateSnapshot(ctx, 'screenshots');
     var which = (btn.dataset.which === 'page') ? 'page' : 'visible';
     var vp = document.querySelector('[data-k="bc-viewport"]');
     var surf = surfaceRoot();
@@ -39528,10 +40118,10 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     var label = which === 'page' ? 'Full Screenshot · Full Scrollable Page' : 'Full Screenshot · Visible Browser';
     var sub = Math.round(W) + '×' + Math.round(H) + ' px · ' + session().url;
     var image = fixtureImage({ w: iw, h: ih, label: label, sub: Math.round(W) + '×' + Math.round(H) + ' px', stamp: new Date().toLocaleTimeString() });
-    sendIsolatedCapture(ctx, { kind: which, image: image, w: iw, h: ih, label: label, sub: sub, rect: { x: 0, y: 0, w: Math.round(W), h: Math.round(H) } });
+    var sent = sendIsolatedCapture(ctx, { kind: which, image: image, w: iw, h: ih, label: label, sub: sub, rect: { x: 0, y: 0, w: Math.round(W), h: Math.round(H) }, gate: gate });
     P().mode = null;
     ctx.renderApp();
-    ctx.toast('Full screenshot sent', 'Sent to ' + destinationLabel() + '.');
+    if (sent) ctx.toast('Full screenshot sent', 'Sent to ' + sent.destinationLabel + '.');
     return true;
   });
   EXT.action('bc-arm-region', function (ctx) {
@@ -39548,7 +40138,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   });
   EXT.action('bc-toggle-devtools', function (ctx) {
     if (P().mode === 'devtools') { P().mode = null; ctx.renderApp(); return true; }
-    if (!guardSession(ctx, 'DevTools')) return true;
+    if (!guardSession(ctx, 'DevTools', 'console')) return true;
     cancelTransient();
     P().mode = 'devtools';
     P().railTab = 'devtools';
@@ -39557,7 +40147,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   });
   EXT.action('bc-pick-el', function (ctx, btn) {
     if (P().mode !== 'component') return true;
-    if (!guardSession(ctx, 'Select Component')) return true;
+    if (!guardSession(ctx, 'Select Component', 'dom')) return true;
     var id = btn.dataset.id;
     var target = document.querySelector('[data-bc-id="' + cssEsc(id) + '"]');
     if (!target) return true;
@@ -39565,10 +40155,12 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     P().contexts.push(rec);
     P().picked = rec;
     P().pickedElId = id;
-    P().promptInstruction = '';
+    /* A recapture preserves the stale item's instruction; a fresh pick starts empty. */
+    if (!P().recaptureRefId) P().promptInstruction = '';
     P().promptMenuOpen = false;
     P().viewingContextId = null;
     P().railTab = 'details';
+    bumpSelectionEpoch();
     ctx.renderApp();
     return true;
   });
@@ -39586,29 +40178,94 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     ctx.renderApp();
     return true;
   });
+  /* B20 (BSTALE-004): a recapture replaces the stale ref's identity in place —
+     same list number or same chip position — instead of appending a duplicate. */
+  function replaceRefForRecapture(ctx, refId, elCtx, instruction) {
+    var tid = ctx.state.selectedThread;
+    var buf = currentBuffer(ctx);
+    if (!buf || !buf.browser_context_refs) return false;
+    var prevRefs = snapshotListRefs(buf.browser_context_refs);
+    var at = -1;
+    for (var i = 0; i < buf.browser_context_refs.length; i++) {
+      if (buf.browser_context_refs[i].id === refId) { at = i; break; }
+    }
+    if (at < 0) return false;
+    var ref = buf.browser_context_refs[at];
+    ref.contextId = elCtx.id;
+    ref.componentLabel = elCtx.component || ('<' + elCtx.tag + '>');
+    if (instruction) ref.instruction = instruction;
+    delete ref.stale;
+    if (ref.kind === 'inline') {
+      var next = '[' + (elCtx.component || ('<' + elCtx.tag + '>')) + (elCtx.name ? ' "' + elCtx.name + '"' : '') + ']';
+      if (ref.token && ctx.state.composer && ctx.state.composer.indexOf(ref.token) >= 0) {
+        ctx.state.composer = ctx.state.composer.replace(ref.token, next);
+        if (ctx.state.drafts) ctx.state.drafts[tid] = ctx.state.composer;
+      }
+      ref.token = next;
+    }
+    P().recaptureRefId = null;
+    bumpSelectionEpoch();
+    applyListRefs(ctx, tid, prevRefs);
+    return true;
+  }
   EXT.action('bc-prompt-run', function (ctx) {
     var picked = P().picked;
     if (!picked) return true;
     var mode = P().componentMode;
     if (mode === 'send') {
-      if (!guardSession(ctx, 'Send Now')) return true;
+      /* B20-R03: a component send re-reads live DOM and shares it, so it needs
+         the DOM grant as well as the screenshots grant. */
+      if (!guardSessionCaps(ctx, 'Send Now', ['dom', 'screenshots'])) return true;
       var target = document.querySelector('[data-bc-id="' + cssEsc(picked.stableId) + '"]');
       var rect = target ? target.getBoundingClientRect() : null;
       var rw = rect ? Math.round(rect.width) : picked.rect.w, rh = rect ? Math.round(rect.height) : picked.rect.h;
       var image = fixtureImage({ w: 240, h: 140, label: 'Component · ' + (picked.component || picked.tag), sub: rw + '×' + rh + ' px', stamp: new Date().toLocaleTimeString() });
-      sendIsolatedCapture(ctx, { kind: 'component', image: image, w: 240, h: 140,
+      var sent = sendIsolatedCapture(ctx, { kind: 'component', image: image, w: 240, h: 140,
         label: 'Component · ' + (picked.component || picked.tag), sub: picked.name || picked.text || '',
-        instruction: P().promptInstruction, rect: picked.rect, elCtx: picked });
-      ctx.toast('Component sent', 'Sent to ' + destinationLabel() + '.');
+        instruction: P().promptInstruction, rect: picked.rect, elCtx: picked,
+        gate: gateSnapshotCaps(ctx, ['dom', 'screenshots']) });
+      /* B20: success feedback follows the accepted result only. A refusal keeps
+         the selected component and instruction for recapture. */
+      if (!sent) { ctx.renderApp(); return true; }
+      ctx.toast('Component sent', 'Sent to ' + sent.destinationLabel + '.');
     } else if (mode === 'list') {
-      addToComposerList(ctx, picked, P().promptInstruction);
-      var buf = currentBuffer(ctx);
-      ctx.toast('Added to composer list', 'Item #' + (buf ? buf.browser_context_refs.length : '?') + ' — not sent yet, and not the live follow-up queue.');
+      if (P().recaptureRefId && replaceRefForRecapture(ctx, P().recaptureRefId, picked, P().promptInstruction)) {
+        ctx.toast('Recaptured', 'The stale item now points at the component you just picked. Nothing was sent yet.');
+      } else {
+        addToComposerList(ctx, picked, P().promptInstruction);
+        var buf = currentBuffer(ctx);
+        var n = buf ? listRefsOf(buf.browser_context_refs).length : '?';
+        ctx.toast('Added to composer list', 'Item #' + n + ' — not sent yet, and not the live follow-up queue.');
+      }
     } else if (mode === 'insert') {
-      insertComponentAtCursor(ctx, picked);
-      ctx.toast('Inserted at cursor', 'A component reference was inserted. Nothing was sent.');
+      if (P().recaptureRefId && replaceRefForRecapture(ctx, P().recaptureRefId, picked, P().promptInstruction)) {
+        ctx.toast('Recaptured', 'The stale chip now points at the component you just picked. Nothing was sent yet.');
+      } else {
+        insertComponentAtCursor(ctx, picked);
+        ctx.toast('Inserted at cursor', 'A component reference was inserted. Nothing was sent.');
+      }
     }
     clearPick();
+    ctx.renderApp();
+    return true;
+  });
+  /* B20 (BSTALE-004): recapture reuses the one component picker — no
+     `cmd.browser.component.recapture` is minted. The stale item's instruction
+     and position are preserved; the re-pick replaces its identity. */
+  EXT.action('bc-recapture-ref', function (ctx, btn) {
+    var buf = currentBuffer(ctx);
+    var refs = (buf && buf.browser_context_refs) || [];
+    var ref = null;
+    for (var i = 0; i < refs.length; i++) if (refs[i].id === btn.dataset.id) ref = refs[i];
+    if (!ref) return true;
+    cancelTransient();
+    P().recaptureRefId = ref.id;
+    P().promptInstruction = ref.instruction || '';
+    if (!ctx.state.dialog || ctx.state.dialog.type !== 'bc-browser') ctx.openDialog({ type: 'bc-browser' });
+    P().mode = 'component';
+    P().railTab = 'details';
+    bumpSelectionEpoch();
+    ctx.toast('Recapture', 'Pick the component again in the same picker; your instruction is kept and nothing is sent until you run it.');
     ctx.renderApp();
     return true;
   });
@@ -39632,7 +40289,12 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     return true;
   });
   EXT.action('bc-simulate-rerender', function (ctx) {
+    if (!guardSession(ctx, 'Simulate re-render', 'dom')) return true;
     var sess = session();
+    /* A fresh render restores authored content, clearing earlier demo
+       replacements/duplications so the page is exercisable again. */
+    var clearedDemo = (sess.replaced && Object.keys(sess.replaced).length) || (sess.duplicated && sess.duplicated.length);
+    sess.replaced = {}; sess.duplicated = [];
     var order = sess.rowOrder.slice();
     if (order.length > 1) {
       var before = order.join(',');
@@ -39647,8 +40309,12 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
       sess.rowOrder = order;
     }
     sess.generation += 1;
+    var epoch = selectionEpoch();
     ctx.renderApp();
     requestAnimationFrame(function () {
+      /* B20: the late note is fenced — a superseded selection must not have a
+         stale resolution narrative attached to it. */
+      if (epoch !== selectionEpoch()) return;
       var rec = currentDetailsRecord();
       var note;
       if (rec && rec.stableId) {
@@ -39660,7 +40326,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
           note = { resolved: false, text: 'The stable locator did not resolve after the re-render. That would be a defect in this demo.' };
         }
       } else {
-        note = { resolved: true, text: 'Page re-rendered: row order shuffled and generation advanced to ' + sess.generation + '. Pick a component to see its locator re-resolve.' };
+        note = { resolved: true, text: 'Page re-rendered: row order shuffled and generation advanced to ' + sess.generation + '.' + (clearedDemo ? ' Earlier demo replacements/duplications were cleared.' : '') + ' Pick a component to see its locator re-resolve.' };
       }
       P().lastRerenderNote = note;
       var c = ctxNow();
@@ -39668,6 +40334,236 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     });
     return true;
   });
+  /* B20: ordinary fixture controls that make the CURRENT record's target
+     incompatible (replaced component) or ambiguous (duplicated locator) in the
+     live DOM, so re-render/hold/recapture flows are exercisable through normal
+     controls. They mutate only the demo page, never the retained capture. */
+  EXT.action('bc-simulate-replace', function (ctx) {
+    if (!guardSession(ctx, 'Simulate component replace', 'dom')) return true;
+    var rec = currentDetailsRecord();
+    if (!rec || !rec.stableId) { ctx.toast('Nothing to replace', 'Pick a component first.'); return true; }
+    var sess = session();
+    sess.replaced = sess.replaced || {};
+    sess.generation += 1;
+    sess.replaced[rec.stableId] = { component: '<ReplacedComponent>', atGeneration: sess.generation,
+      html: '<span class="bc-el-text">Replaced at generation ' + sess.generation + '</span>' };
+    bumpSelectionEpoch();
+    ctx.toast('Component replaced', 'The live element kept its tag and locator but is now a different component. Sends against the old capture will hold as stale.');
+    ctx.renderApp();
+    return true;
+  });
+  EXT.action('bc-simulate-duplicate', function (ctx) {
+    if (!guardSession(ctx, 'Simulate duplicate locator', 'dom')) return true;
+    var rec = currentDetailsRecord();
+    if (!rec || !rec.stableId) { ctx.toast('Nothing to duplicate', 'Pick a component first.'); return true; }
+    var sess = session();
+    sess.duplicated = sess.duplicated || [];
+    if (sess.duplicated.indexOf(rec.stableId) < 0) sess.duplicated.push(rec.stableId);
+    /* B20-R01: duplicating the locator mutates the page, so the recorded
+       generation advances like every other page mutation. */
+    sess.generation += 1;
+    bumpSelectionEpoch();
+    ctx.toast('Locator duplicated', 'Two live elements now share the locator. Sends against the capture will hold as ambiguous until the page changes.');
+    ctx.renderApp();
+    return true;
+  });
+  /* B20: the explicit single-use allow for Ask-held actions. The hold's
+     preparation is re-checked: a permission or policy change expires it. */
+  EXT.action('bc-allow-once', function (ctx) {
+    var hold = P().pendingAllow;
+    if (!hold) return true;
+    /* B20-R3-F2: one explicit allow grants the whole held set together, so a
+       two-capability operation can complete; every held cap is still fenced by
+       the permission/policy identity recorded at hold time. */
+    var caps = hold.capabilities || [hold.capability];
+    var expired = ctx.state.permissions !== hold.permissions || caps.some(function (c) {
+      var before = hold.policies ? hold.policies[c] : hold.policy;
+      return ((P().policy || {})[c] || 'on') !== before;
+    });
+    if (expired) {
+      P().pendingAllow = null;
+      ctx.toast('Approval expired', 'Permissions or policy changed while the action was held. Run it again to hold a fresh approval.');
+      ctx.renderApp();
+      return true;
+    }
+    P().pendingAllow = null;
+    P().allowOnce = P().allowOnce || {};
+    caps.forEach(function (c) { P().allowOnce[c] = { at: nowIso() }; });
+    ctx.toast('Allowed once', hold.actionLabel + ' may run one time. Run the action again; the grant is consumed, not blanket.');
+    ctx.renderApp();
+    return true;
+  });
+  EXT.action('bc-deny-allow', function (ctx) {
+    P().pendingAllow = null;
+    ctx.toast('Not allowed', 'The held action stays refused. Nothing was captured or sent.');
+    ctx.renderApp();
+    return true;
+  });
+  /* B20 (BSTALE-007): freeze live refs into immutable snapshots through the
+     shared artifact owner. Whole-selection bound: every ref must resolve to a
+     current (or refreshably compatible) context or nothing is frozen. A live
+     selector is never scheduled; the schedule form keeps refusing live refs. */
+  EXT.action('bc-freeze-snapshots', function (ctx) {
+    /* B20-R03: freezing retains live DOM and a capture preview, so it needs
+       the DOM grant as well as the screenshots grant. */
+    if (!guardSessionCaps(ctx, 'Freeze browser snapshots', ['dom', 'screenshots'])) return true;
+    var prepGate = gateSnapshotCaps(ctx, ['dom', 'screenshots']);
+    var tid = ctx.state.selectedThread;
+    var buf = currentBuffer(ctx);
+    var refs = (buf && buf.browser_context_refs) || [];
+    if (!refs.length) { ctx.toast('Nothing to freeze', 'The composer holds no browser references.'); return true; }
+    var A = window.PM56_ARTIFACTS;
+    var scope = (window.PM56_GOAL && typeof window.PM56_GOAL.scope === 'function') ? window.PM56_GOAL.scope(tid) : null;
+    if (!A || !scope) {
+      ctx.toast('Freeze unavailable', 'The shared artifact owner or thread scope is missing; live refs stay live and unscheduled.');
+      return true;
+    }
+    var prevRefs = snapshotListRefs(refs);
+    var items = [];
+    for (var i = 0; i < refs.length; i++) {
+      var ref = refs[i];
+      var rec = ref.contextId ? findContext(ref.contextId) : null;
+      if (!rec) {
+        ctx.toast('Freeze refused', (ref.componentLabel || 'A reference') + ' no longer has its captured context in this session. Recapture it first; nothing was frozen.');
+        ctx.addReceipt('bc-freeze-refused', 'Freeze refused — context missing', 'Nothing was frozen and the composer is unchanged.');
+        return true;
+      }
+      if (rec.session && rec.session.id && session(rec.session.id) && session(rec.session.id).protectedAuth) {
+        ctx.toast('Freeze refused', 'Protected-session content is never frozen. Nothing was frozen.');
+        return true;
+      }
+      var rv = revalidateContext(rec);
+      if (rv.result !== 'current' && rv.result !== 'refreshed') {
+        ctx.toast('Freeze refused — stale reference', (ref.componentLabel || 'A reference') + ' is ' + rv.reason.replace(/_/g, ' ') + '. Recapture it first; nothing was frozen and no partial snapshot was kept.');
+        ctx.addReceipt('bc-freeze-refused', 'Freeze refused — stale reference', 'Reason: ' + rv.reason + '. Recapture through ' + rv.recapture_action + ', then freeze again. Nothing was frozen.');
+        return true;
+      }
+      items.push({ ref: ref, rec: rec, rv: rv });
+    }
+    if (!checkAttempt(ctx, prepGate, 'Freeze browser snapshots')) return true;
+    /* B20-R07: the multi-publish commits inside the existing shared command
+       transaction. Each publish joins the open transaction, so any refusal
+       rolls back only this operation's new artifacts and a clean retry works. */
+    var TX = window.PM56_TX;
+    if (!TX || typeof TX.run !== 'function') {
+      ctx.toast('Freeze unavailable', 'The shared command transaction is missing; live refs stay live and unscheduled rather than freezing partially.');
+      return true;
+    }
+    var frozen = TX.run(function () {
+      var staged = [];
+      for (var k = 0; k < items.length; k++) {
+        var it = items[k], fresh = it.rv.result === 'refreshed' && it.rv.dispatched_context ? it.rv.dispatched_context : null;
+      /* The tray chip keeps the full descriptive name. Its hover chrome
+         measures 226px exactly like every B19 chip (shared tray owner); the
+         resulting narrow-composer overflow is the carried inherited failure,
+         pinned exactly by the schedule narrow shots, not a B20 regression. */
+      var aid = 'snapshot:' + tid + ':' + it.ref.id;
+      var payload = {
+        schema: 'pm.concept.browser_snapshot.v1',
+        frozen_at: nowIso(),
+        ref_kind: it.ref.kind || 'list',
+        instruction: it.ref.instruction || '',
+        frozen_session: { id: it.rec.session.id, label: it.rec.session.label },
+        frozen_page: { url: it.rec.page.url, title: it.rec.page.title, frame: it.rec.page.frame },
+        frozen_generation: fresh ? fresh.generation : it.rec.session.generationAtCapture,
+        locator: it.rec.locator,
+        tag: it.rec.tag, role: it.rec.role, component: it.rec.component,
+        source: fresh ? fresh.source : it.rec.source,
+        rect: fresh ? fresh.rect : it.rec.rect,
+        style: fresh ? fresh.style : it.rec.style,
+        parent_path: it.rec.parentPath,
+        /* Real measurements retained: the bounded DOM, not pixels. The fixture
+           preview below carries the same honesty label as every capture. */
+        frozen_dom: fresh ? fresh.dom : normalizedHtmlForRecord(it.rec),
+        fingerprint: it.rec.fingerprint || null,
+        fingerprint_policy: FP_POLICY,
+        captured_at: it.rec.capturedAt,
+        fixture_preview: {
+          disclosure: 'FIXTURE IMAGE — not a real screenshot',
+          image: fixtureImage({ w: 240, h: 140, label: 'Frozen · ' + (it.rec.component || it.rec.tag), sub: 'retained snapshot', stamp: new Date().toLocaleTimeString() })
+        }
+      };
+      var record = { artifact_id: aid, artifact_version: 1, project_id: scope.projectId, thread_id: scope.threadId,
+        renderer_kind: 'browser_snapshot', title: 'Browser snapshot · ' + (it.ref.componentLabel || it.rec.component || it.rec.tag),
+        payload: payload, source_ref: { browser_ref_id: it.ref.id, context_id: it.rec.id, source: 'frozen_live_browser_context' },
+        scan_status: 'not_scanned' };
+        var pub = A.publish(record);
+        if (!pub.ok) TX.fail(pub.error || 'freeze_publish_refused');
+        var sref = { artifact_id: aid, artifact_version: 1, project_id: scope.projectId, thread_id: scope.threadId };
+        staged.push({ id: 'bcsnap-' + it.ref.id, name: record.title, kind: 'capture', origin: 'browser_capture',
+          command: 'cmd.chat.attachment.add', source_path: 'browser_freeze', semantic_kind: 'file',
+          process_state: 'ready', snapshot_ref: sref, artifact_ref: { artifact_id: aid, artifact_version: 1, project_id: scope.projectId, thread_id: scope.threadId },
+          content_hash: pub.revision.content_key, folder_manifest_hash: null, browser_snapshot: true,
+          frozen_browser_ref: { ref_id: it.ref.id, kind: it.ref.kind || 'list', instruction: it.ref.instruction || '' } });
+      }
+      return { ok: true, attachments: staged };
+    });
+    if (!frozen.ok) {
+      var rolledBack = !frozen.rollback || frozen.rollback.complete !== false;
+      ctx.toast('Freeze failed — rolled back', 'The shared artifact owner refused a snapshot (' + (frozen.error || 'refused') + '). '
+        + (rolledBack ? 'Nothing was kept and the composer is unchanged; retry the same freeze.' : 'Rollback reported conflicts; inspect retained artifacts before retrying.'));
+      ctx.addReceipt('bc-freeze-failed', 'Freeze failed — rolled back',
+        'Reason: ' + (frozen.error || 'refused') + '. ' + (rolledBack ? 'No partial snapshot was kept; live refs and the composer are unchanged.' : 'Rollback conflicts: ' + JSON.stringify((frozen.rollback || {}).conflicts || [])));
+      ctx.renderApp();
+      return true;
+    }
+    var attachments = frozen.attachments;
+    /* All snapshots published: convert the buffer (live refs out, retained
+       attachments in) and remove the derived block text and inline tokens. */
+    var oldText = ctx.state.composer || '';
+    for (var t = 0; t < refs.length; t++) {
+      if (refs[t].kind === 'inline' && refs[t].token && oldText.indexOf(refs[t].token) >= 0) {
+        oldText = oldText.replace(refs[t].token, '');
+      }
+    }
+    ctx.state.composer = oldText;
+    if (ctx.state.drafts) ctx.state.drafts[tid] = oldText;
+    buf.browser_context_refs = [];
+    buf.attachments = (buf.attachments || []).concat(attachments);
+    bumpSelectionEpoch();
+    applyListRefs(ctx, tid, prevRefs);
+    var trimmed = (ctx.state.composer || '').replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').replace(/\s+$/, '');
+    if (trimmed !== ctx.state.composer) writeComposerText(ctx, tid, trimmed, trimmed.length);
+    ctx.toast('Browser snapshots frozen', attachments.length + ' retained snapshot' + (attachments.length === 1 ? '' : 's') + ' ready. Open Schedule Message to commit; dispatch resolves these bytes only.');
+    ctx.addReceipt('bc-frozen', 'Browser snapshots frozen', attachments.length + ' immutable snapshot(s) retained in the shared artifact owner: '
+      + attachments.map(function (a) { return a.snapshot_ref.artifact_id; }).join(', ') + '. Live refs are cleared; dispatch never re-resolves a live selector.');
+    ctx.renderApp();
+    return true;
+  });
+  /* The retained DOM for a never-refreshed record is its captured bounded HTML
+     (already a plain string); refreshed records carry the live rebuild. */
+  function normalizedHtmlForRecord(rec) { return rec.boundedHtml || ''; }
+  /* B20: the shared artifact owner renders and exports frozen browser snapshots.
+     Retained bytes are the measured DOM/source/rect — never a live re-resolve —
+     and the preview keeps its fixture disclosure. */
+  (function registerBrowserSnapshotRenderer() {
+    var A = window.PM56_ARTIFACTS;
+    if (!A || !A.registerRenderer || A.kinds().indexOf('browser_snapshot') >= 0) return;
+    A.registerRenderer('browser_snapshot', function (q) {
+      var p = q.payload || {};
+      var src = p.source || {};
+      function ro(k, v) { return '<div class="bc-context-row"><label>' + esc(k) + '</label><b>' + v + '</b></div>'; }
+      return '<p class="snapshot-note">Frozen browser context · retained ' + esc(p.frozen_at || 'unknown time') + ' · no live selector is resolved at dispatch</p>'
+        + '<div class="bc-context-card">'
+        + ro('Component', esc(p.component || ('<' + (p.tag || '?') + '>')))
+        + ro('Page', esc((p.frozen_page || {}).title || '') + ' · ' + esc((p.frozen_page || {}).url || ''))
+        + ro('Generation', esc(String(p.frozen_generation == null ? '?' : p.frozen_generation)))
+        + ro('Locator', '<span class="bc-mono">' + esc((p.locator || {}).value || '') + '</span>')
+        + ro('Source', src.file ? esc(src.file) + ':' + src.line + ':' + src.col : 'not reported')
+        + ro('Rect', p.rect ? (p.rect.w + '×' + p.rect.h + ' @ (' + p.rect.x + ',' + p.rect.y + ')') : 'none')
+        + (p.instruction ? ro('Instruction', esc(p.instruction)) : '')
+        + '<div class="bc-context-row"><label>Retained DOM</label><div class="code-block bc-html-block">' + esc(p.frozen_dom || '') + '</div></div>'
+        + '</div>'
+        + (p.fixture_preview && p.fixture_preview.image ? '<img class="bc-capture-img" src="' + p.fixture_preview.image + '" alt="Frozen browser preview" width="240" height="140"><p class="bc-fixture-note">Fixture image — not a real screenshot.</p>' : '');
+    });
+    A.registerExporter('browser_snapshot', function (q) {
+      var text = JSON.stringify({ schema: 'pm.concept.browser_snapshot_bundle.v1', snapshot: q }, null, 2);
+      /* B20-R06: real UTF-8 encoding through the shared artifact owner. The old
+         per-code-unit low-byte truncation destroyed every non-ASCII character. */
+      var bytes = new TextEncoder().encode(text);
+      return { name: 'browser-snapshot-v' + q.artifact_version + '.json', bytes: bytes, mime: 'application/json' };
+    });
+  })();
   EXT.action('bc-list-remove', function (ctx, btn) { removeFromComposerList(ctx, btn.dataset.id); ctx.renderApp(); return true; });
   EXT.action('bc-list-move', function (ctx, btn) { moveInComposerList(ctx, btn.dataset.id, Number(btn.dataset.dir)); ctx.renderApp(); return true; });
 
@@ -39675,11 +40571,19 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
      path with a synthetic fixture and records the composer text before/after as a
      durable, re-readable receipt rather than asking anyone to trust a comment. */
   EXT.action('bc-verify-isolation', function (ctx) {
+    /* B20: this API entry enforces the same gate as the buttons. */
+    if (!guardSession(ctx, 'Verify isolation', 'screenshots')) return true;
     var ta = composerEl();
     var before = ta ? ta.value : (ctx.state.composer || '');
     var image = fixtureImage({ w: 220, h: 130, tone: themeAccent2(), label: 'Isolation check', sub: 'synthetic capture', stamp: new Date().toLocaleTimeString() });
-    sendIsolatedCapture(ctx, { kind: 'visible', image: image, w: 220, h: 130,
-      label: 'Isolation check — synthetic capture', sub: 'Produced only to prove the send path never reads the composer.', rect: null });
+    var proved = sendIsolatedCapture(ctx, { kind: 'visible', image: image, w: 220, h: 130,
+      label: 'Isolation check — synthetic capture', sub: 'Produced only to prove the send path never reads the composer.', rect: null,
+      gate: gateSnapshot(ctx, 'screenshots') });
+    if (!proved) {
+      P().isolationChecks.push({ id: seq('bciso'), at: nowIso(), before: before, after: before, unchanged: true, note: 'not run — the send was refused (see refusal above)' });
+      ctx.renderApp();
+      return true;
+    }
     var afterTa = composerEl();
     var after = afterTa ? afterTa.value : (ctx.state.composer || '');
     var unchanged = before === after;
@@ -39731,12 +40635,15 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     var layer = e.target && e.target.closest ? e.target.closest('[data-bc-region]') : null;
     if (!layer) return;
     var c = ctxNow(); if (!c) return;
-    if (!guardSession(c, 'Region Screenshot')) return;
+    if (!guardSession(c, 'Region Screenshot', 'screenshots')) return;
     var surface = layer.parentElement;
     var sr = surface.getBoundingClientRect();
     var box = layer.querySelector('[data-k="bc-sel-box"]');
     var x0 = clampNum(e.clientX - sr.left, 0, sr.width), y0 = clampNum(e.clientY - sr.top, 0, sr.height);
-    drag = { x0: x0, y0: y0, sr: sr, box: box };
+    /* B20: snapshot the gate + fence at drag-start; the mouseup commit verifies. */
+    drag = { x0: x0, y0: y0, sr: sr, box: box,
+      gate: gateSnapshot(c, 'screenshots'), epoch: selectionEpoch(),
+      threadId: c.state.selectedThread, rev: bufferRevisionOf(c.state.selectedThread) };
     if (box) { box.hidden = false; box.style.left = x0 + 'px'; box.style.top = y0 + 'px'; box.style.width = '0px'; box.style.height = '0px'; }
     e.preventDefault();
     drag.onMove = function (ev) {
@@ -39758,7 +40665,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
       drag = null;
       if (d.box) d.box.hidden = true;
       var cc = ctxNow(); if (!cc) return;
-      finishRegionDrag(cc, left, top, w, h);
+      finishRegionDrag(cc, left, top, w, h, d);
     };
     document.addEventListener('mousemove', drag.onMove);
     document.addEventListener('mouseup', drag.onUp);
@@ -39822,10 +40729,93 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     if (!t || !t.getAttribute) return;
     if (t.getAttribute('data-bc-input') === 'prompt') { P().promptInstruction = t.value; }
   });
+  /* B20: list instruction edits commit on change (blur/Enter), not per keystroke,
+     so the block rebuild never fights the caret. */
+  document.addEventListener('change', function (e) {
+    var t = e.target;
+    if (!t || !t.getAttribute || t.getAttribute('data-bc-input') !== 'list-instr') return;
+    var c = ctxNow(); if (!c) return;
+    editListInstruction(c, t.getAttribute('data-id'), t.value);
+    var c2 = ctxNow(); if (c2) c2.renderApp();
+  });
 
   /* =====================================================================
      17. COMPOSER CONTRACT HOOKS
      ===================================================================== */
+  /* B20 (BSTALE-001..006): the pre-admission veto. Every ordinary send path funnels
+     through app.js `deliverSend` (Send button, Cmd/Ctrl+Enter, targeted send,
+     deferred queue Send-now, /goal, Plan revision), which consults validators
+     BEFORE any admission. Each
+     hidden ref is revalidated independently; one stale item blocks the whole
+     submission (a partial list is never sent without an explicit recapture or
+     removal), stays visible and marked, and the composer is preserved. */
+  function preSendVeto(ctx, thread, raw) {
+    var tid = thread && thread.id;
+    var buf = (RT.composer && typeof RT.composer.bufferFor === 'function') ? RT.composer.bufferFor(tid) : null;
+    var refs = (buf && buf.browser_context_refs) || [];
+    if (!refs.length) return false;
+    /* B20-R03: admitting refs re-reads and shares live DOM content, so the DOM
+       grant is enforced here too. Policy-only (not session-based): refs span
+       recorded sessions, and protected content is refused per-ref below. */
+    if (!guardPolicy(ctx, 'Send with browser references', 'dom')) {
+      return { claimed: true, preserveComposer: true };
+    }
+    pruneDetachedRefs(ctx, buf, raw);
+    refs = buf.browser_context_refs || [];
+    if (!refs.length) return false;
+    var results = refs.map(function (r) {
+      var rec = r.contextId ? findContext(r.contextId) : null;
+      var res = rec ? revalidateContext(rec) : {
+        schema: 'pm.browser.component_revalidation_result.v1', attachment_id: r.contextId || null,
+        captured_generation: null, current_generation: null, locator_result_count: 0,
+        identity_match: false, result: 'stale_capture', reason: 'context_missing',
+        detail: 'The captured context is no longer in this session (for example after a reload). Recapture the component.',
+        recapture_action: 'cmd.browser.component.pick'
+      };
+      return { ref: r, rec: rec, res: res, ok: res.result === 'current' || res.result === 'refreshed' };
+    });
+    var bad = results.filter(function (x) { return !x.ok; });
+    if (!bad.length) {
+      /* All current: carry refreshed dispatch contexts to the commit stamp. */
+      P().pendingDispatchContexts = {};
+      results.forEach(function (x) {
+        if (x.res.result === 'refreshed' && x.res.dispatched_context) {
+          P().pendingDispatchContexts[x.ref.id] = x.res.dispatched_context;
+        }
+        if (x.ref.stale) delete x.ref.stale;
+      });
+      return false;
+    }
+    /* Hold: snapshot the block BEFORE marking (so the marked rebuild replaces
+       the exact current text), mark each stale item, clear marks that healed. */
+    var prevRefs = snapshotListRefs(refs);
+    bad.forEach(function (x) {
+      x.ref.stale = { reason: x.res.reason, detail: x.res.detail || null, at: nowIso() };
+    });
+    results.forEach(function (x) { if (x.ok && x.ref.stale) delete x.ref.stale; });
+    /* A deferred (queue) send arrives with the text in `raw`, not the composer;
+       the spliced queue entry is gone, so the held text is restored to the
+       composer here rather than lost. Normal sends are already identical. */
+    if (raw && ctx.state.composer.indexOf(raw) < 0) {
+      ctx.state.composer = ctx.state.composer ? ctx.state.composer + '\n' + raw : raw;
+      if (ctx.state.drafts) ctx.state.drafts[tid] = ctx.state.composer;
+    }
+    /* B20-R3-F3: capture visibility BEFORE applyListRefs re-marks the block
+       below (markers change the block's exact bytes while preserving the
+       user's text). At this point the held input is verbatim in the composer,
+       so deferred dispatch must not also keep the queue entry. */
+    var heldVisible = !raw || ctx.state.composer.indexOf(raw) >= 0;
+    applyListRefs(ctx, tid, prevRefs);
+    P().lastAdmissionHold = { at: nowIso(), threadId: tid, total: refs.length,
+      blocked: bad.map(function (x) { return { id: x.ref.id, label: x.ref.componentLabel, reason: x.res.reason }; }) };
+    var names = bad.map(function (x) { return (x.ref.componentLabel || 'component') + ' (' + x.res.reason.replace(/_/g, ' ') + ')'; }).join('; ');
+    ctx.toast('Send held — stale browser context', names + '. Recapture or remove the marked items; nothing was sent and your draft is intact.');
+    ctx.addReceipt('bc-admission-hold', 'Send held — stale browser context',
+      bad.length + ' of ' + refs.length + ' referenced components are stale: ' + names
+      + '. Nothing was sent, no partial list went out, and the draft is unchanged. Recapture through the component picker or remove the marked items, then send again.');
+    ctx.renderApp();
+    return { claimed: true, preserveComposer: true, textPreserved: heldVisible };
+  }
   if (RT.composer) {
     RT.composer.historyBlockers = RT.composer.historyBlockers || [];
     RT.composer.historyBlockers.push(function () {
@@ -39833,14 +40823,25 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
          component prompt bar both mean Up/Down recall would be surprising. */
       return P().mode === 'region' || !!drag || !!P().picked;
     });
+    /* B20-R02: the veto is an unconditional validator, not one more claim hook:
+       deliverSend runs validators before any hook can admit the submission, so
+       hook order can never bypass capture validation again. */
+    RT.composer.preSendValidators = RT.composer.preSendValidators || [];
+    RT.composer.preSendValidators.push(preSendVeto);
     RT.composer.commitHooks = RT.composer.commitHooks || [];
     RT.composer.commitHooks.push(function (ctx, thread, message, buffer) {
       if (buffer && buffer.browser_context_refs && buffer.browser_context_refs.length) {
-        if (message) message.browserContextRefs = buffer.browser_context_refs.slice();
+        if (message) {
+          message.browserContextRefs = buffer.browser_context_refs.slice();
+          if (P().pendingDispatchContexts) message.browserDispatchedContexts = P().pendingDispatchContexts;
+        }
+        P().pendingDispatchContexts = null;
         /* This module is the only writer of browser_context_refs; composer-state.js
            reserves the field but does not clear it on commit, so this module clears
            its own field once the refs have been stamped onto the sent message. */
         buffer.browser_context_refs = [];
+      } else {
+        P().pendingDispatchContexts = null;
       }
     });
   }
@@ -47820,7 +48821,13 @@ recommended path                  migration 0043 + rollback</div></div></section
     const q=queueOf();
     if(!q.length) return;
     const next=q.shift();
-    deliverSend(next.text);
+    const outcome=deliverSend(next.text);
+    /* B20-R3-F3: a held automatic flush keeps its queue entry unless the held
+       input is already visible again (restored to the composer by the hold
+       path). Flush runs only at work completion, so a restored entry waits
+       for manual dispatch instead of retry-looping. Refs and destination are
+       untouched: only the queue slot is preserved. */
+    if(outcome && outcome.admitted!==true && outcome.restoreQueue===true){ q.unshift(next); renderApp(); }
   }
   function stopCurrentWork(){
     stopWorkTimer(true);
@@ -47839,15 +48846,49 @@ recommended path                  migration 0043 + rollback</div></div></section
        so no module has to reopen this function. */
     const RTc = (window.PM56_RUNTIME||{}).composer;
     const beforeSendCount=t.messages.length;
+    /* B20-R02: unconditional validators run before ANY effect-claiming hook.
+       A validator (e.g. browser-reference currentness) must see every
+       submission — including /goal, Plan-revision and targeted/deferred sends
+       that funnel here — before an earlier hook can admit it. A validator that
+       throws fails closed: nothing is admitted and the draft is preserved. */
+    if(RTc && RTc.preSendValidators && RTc.preSendValidators.length){
+      for(let i=0;i<RTc.preSendValidators.length;i++){
+        let claimed=false,decision=null;
+        try{ decision=RTc.preSendValidators[i](extCtx(),t,raw);claimed=decision===true||decision?.claimed===true; }
+        catch(err){ console.error('PM56 preSendValidator threw', err);
+          try{ const vc=extCtx(); vc.toast('Send held — validation error','A pre-send check failed before anything was admitted. Nothing was sent and your draft is intact.'); vc.addReceipt('send-held','Send held — validation error','A pre-send validator threw (see console). No message, Goal, Plan revision or composer change occurred.'); }catch(e2){}
+          renderApp();return {admitted:false,restoreQueue:true,reason:'validator_exception'}; }
+        if(claimed){
+          let admittedMsg=null;
+          if(!decision?.preserveComposer){state.composer='';clearComposerField();
+            admittedMsg=t.messages.slice(beforeSendCount).find(m=>m.role==='user'&&!m.isolatedSubmission&&String(m.body||'').trim()===raw);
+            if(admittedMsg) RTc.commitAccepted?.(extCtx(),t,admittedMsg);
+          }
+          renderApp();
+          /* B20-R3-F3: report the hold so deferred dispatch can keep the queue
+             entry when the held input is visible nowhere else. A validator that
+             visibly restored the text (stale refs land back in the composer)
+             opts out via textPreserved; anything else fails safe to restore. */
+          return {admitted:!!admittedMsg,restoreQueue:!admittedMsg&&decision?.textPreserved!==true,reason:'validator_hold'};
+        }
+      }
+    }
     if(RTc && RTc.preSendHooks && RTc.preSendHooks.length){
       for(let i=0;i<RTc.preSendHooks.length;i++){
         let claimed=false,decision=null;
         try{ decision=RTc.preSendHooks[i](extCtx(),t,raw);claimed=decision===true||decision?.claimed===true; }
         catch(err){ console.error('PM56 preSendHook threw', err); }
-        if(claimed){ if(!decision?.preserveComposer){state.composer='';clearComposerField();
-          const admitted=t.messages.slice(beforeSendCount).find(m=>m.role==='user'&&!m.isolatedSubmission&&String(m.body||'').trim()===raw);
-          if(admitted) RTc.commitAccepted?.(extCtx(),t,admitted);
-        } renderApp();return; }
+        if(claimed){
+          let admittedMsg=null;
+          if(!decision?.preserveComposer){state.composer='';clearComposerField();
+            admittedMsg=t.messages.slice(beforeSendCount).find(m=>m.role==='user'&&!m.isolatedSubmission&&String(m.body||'').trim()===raw);
+            if(admittedMsg) RTc.commitAccepted?.(extCtx(),t,admittedMsg);
+          }
+          renderApp();
+          /* B20-R3-F3: a claiming hook owns the text (MODAL-012), so deferred
+             dispatch must not duplicate it back into the queue. */
+          return {admitted:!!admittedMsg,restoreQueue:false,reason:'hook_claim'};
+        }
       }
     }
     state.draftHistory[t.id]??=[];state.draftHistory[t.id].push(raw);state.composer='';
@@ -47884,6 +48925,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     RTc?.commitAccepted?.(extCtx(),t,admittedMessage);
     renderApp();
     scrollTranscriptToEnd();
+    return {admitted:true,restoreQueue:false,reason:'sent'};
   }
 
   /* 15e: nineteen Demo Studio triggers used to funnel through one
@@ -48139,7 +49181,14 @@ recommended path                  migration 0043 + rollback</div></div></section
     }
     if(a==='queue-send-now'){
       const q=queueOf(); const i=q.findIndex(x=>x.id===btn.dataset.id); if(i<0)return;
-      const [entry]=q.splice(i,1); deliverSend(entry.text); return;
+      const [entry]=q.splice(i,1);
+      const outcome=deliverSend(entry.text);
+      /* B20-R3-F3: a veto or validator exception keeps the queue entry in its
+         slot unless the held input is already visible again (restored to the
+         composer by the hold path). Never overwrites another draft and never
+         touches refs, destination or entry identity. */
+      if(outcome && outcome.admitted!==true && outcome.restoreQueue===true){ q.splice(Math.min(i,q.length),0,entry); renderApp(); }
+      return;
     }
     if(a==='demo-trigger'){runDemoTrigger(btn.dataset.trigger);return;}
     if(a==='jump-search-result'){state.menu=null;switchThread(btn.dataset.thread);setTimeout(()=>{const el=document.querySelector(`[data-message-id="${CSS.escape(btn.dataset.message)}"]`);el?.scrollIntoView({block:'center',behavior:'smooth'});},50);return;}

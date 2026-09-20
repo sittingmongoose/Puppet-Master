@@ -428,6 +428,30 @@
 .bc-ref-chip b { color: var(--accent-2); font-weight: 700; }
 
 /* =========================================================================
+   6B. B20 — allow banner, stale rows, sim controls (theme tokens only)
+   ========================================================================= */
+.bc-allow-banner {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin-top: 6px; padding: 7px 10px;
+  border: 1px solid var(--warning); border-radius: 9px;
+  background: var(--surface-2); color: var(--text); font-size: 11px;
+}
+.bc-allow-banner .spacer, .bc-allow-banner span { flex: 1 1 auto; }
+.bc-sim-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.bc-list-row.is-stale { border-left: 2px solid var(--warning); padding-left: 5px; }
+.bc-list-chip {
+  font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--accent-2); border: 1px solid var(--border); border-radius: 999px;
+  padding: 1px 6px; white-space: nowrap;
+}
+.bc-list-instr {
+  flex: 1 1 90px; min-width: 70px; max-width: 100%;
+  font: inherit; font-size: 11px; color: var(--text);
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 7px;
+  padding: 3px 7px;
+}
+
+/* =========================================================================
    7. RESPONSIVE + REDUCED MOTION
    ========================================================================= */
 @media (max-width: 760px) {

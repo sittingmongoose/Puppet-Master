@@ -1,0 +1,740 @@
+{
+ "schema": "pm.concept.batch_coverage.v1",
+ "batch": 20,
+ "pinned_main": "dd1df59d63",
+ "html_sha256": "b7c86828bf9daf9898992e15bf50280474f78242bc50aaa7cecfeb4afeb70332",
+ "scope_count": 21,
+ "historical_full_wording_available": false,
+ "accepted": false,
+ "user_accepted": false,
+ "formal_audit": false,
+ "native_verified": false,
+ "revision": 3,
+ "revision_note": "R3 residuals: F1 closed-after-observed-failure holds (2 cases), F2 dual-Ask set grants for Send Now and Freeze (2 cases), F3 deferred Off/Ask/exception/autoflush visible preservation (4 cases); original 7 probes plus 5 R2-followup probes pass on these bytes. Metadata closeout: outcome_evidence now cites the R3 receipts (b20r3-handlers-full2/cases/RESULT.json, b20r3-surfaces/RUN.json, b20r3-record/RUN.json); R2 paths retained per-row as explicit history only.",
+ "owner_clause_reconciliation": "v4 rows cite grouped live owner clauses from Plans/Section15 at packet source_ref 129c9c68; canon may have moved since packet cut.",
+ "rows": [
+  {
+   "requirement_id": "v2:BROWSER-001",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "Browser supports visible full screenshot, explicit full-scroll-page screenshot, region screenshot and component selection.",
+   "wording_provenance": "Wording lineage only (mirrored exact v2 statement); not original-packet recovery and not a test verdict.",
+   "wording_custody": "mirrored_exact_v2_statement",
+   "implementation": [
+    "browser-capture.js component mode menu (send/list/insert)",
+    "browser-capture.js isolated capture-send contract"
+   ],
+   "handler_cases": [
+    "capture_modes_send_isolated_payloads"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/capture-1440-orbit/06-component-sent.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/capture-1440-orbit/06-component-sent.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Surfaces capture-1440/900/700 orbit; record capture-1440 + capture-900-simple pass. Full-scroll uses the dialog control; native scroll-capture fidelity is not claimed."
+  },
+  {
+   "requirement_id": "v2:BROWSER-002",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "Full/region screenshots immediately send an isolated payload to current destination without unrelated composer text.",
+   "wording_provenance": "Wording lineage only (mirrored exact v2 statement); not original-packet recovery and not a test verdict.",
+   "wording_custody": "mirrored_exact_v2_statement",
+   "implementation": [
+    "browser-capture.js COMPONENT pre-dispatch revalidation gate",
+    "browser-capture.js revalidateContext typed stale_capture schema pm.browser.component_revalidation_result.v1",
+    "app.js deliverSend preSendValidators run before every effect-claiming hook (B20-R02)"
+   ],
+   "handler_cases": [
+    "capture_modes_send_isolated_payloads",
+    "isolated_send_routes_to_exact_run"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/capture-1440-orbit/06-component-sent.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/capture-1440-orbit/06-component-sent.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Isolation asserted at handler entry and by the Verify-isolation prover; pixel proof is screenshot-level."
+  },
+  {
+   "requirement_id": "v2:BROWSER-003",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "Component selection shows adjacent instruction bar with Send, menu and persisted last mode.",
+   "wording_provenance": "Wording lineage only (mirrored exact v2 statement); not original-packet recovery and not a test verdict.",
+   "wording_custody": "mirrored_exact_v2_statement",
+   "implementation": [
+    "browser-capture.js component mode menu (send/list/insert)",
+    "browser-capture.js isolated capture-send contract"
+   ],
+   "handler_cases": [
+    "mode_toggle_never_reads_as_page_change"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/capture-1440-orbit/09-mode-persisted.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/capture-1440-orbit/09-mode-persisted.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Mode toggle asserted not to read as page change; persistence across reload is session-state, not native durability."
+  },
+  {
+   "requirement_id": "v2:BROWSER-004",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "Component modes are Send Now, Add To Composer List and Insert Component At Cursor.",
+   "wording_provenance": "Wording lineage only (mirrored exact v2 statement); not original-packet recovery and not a test verdict.",
+   "wording_custody": "mirrored_exact_v2_statement",
+   "implementation": [
+    "browser-capture.js component mode menu (send/list/insert)",
+    "browser-capture.js isolated capture-send contract"
+   ],
+   "handler_cases": [
+    "capture_modes_send_isolated_payloads"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/capture-1440-orbit/06-component-sent.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/capture-1440-orbit/06-component-sent.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "All three modes exercised through ordinary dialog controls."
+  },
+  {
+   "requirement_id": "v2:BROWSER-005",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "Add To Composer List creates numbered visible instructions with stable hidden component refs and is distinct from live follow-up queue.",
+   "wording_provenance": "Wording lineage only (mirrored exact v2 statement); not original-packet recovery and not a test verdict.",
+   "wording_custody": "mirrored_exact_v2_statement",
+   "implementation": [
+    "browser-capture.js numbered composer list with hidden refs; snapshotListRefs value snapshots keep visible/hidden correspondence (B20-R05)"
+   ],
+   "handler_cases": [
+    "stale_list_blocks_ordinary_send",
+    "mixed_list_never_partially_sends",
+    "deleted_chip_token_drops_hidden_ref",
+    "r05_list_projection_correspondence"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/currentness-900-orbit/04-held-stale.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/currentness-900-orbit/04-held-stale.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Hidden-ref correspondence asserted via DOM/state across edit/reorder/remove/recapture, not pixels."
+  },
+  {
+   "requirement_id": "v2:BROWSER-006",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "Insert Component At Cursor sends nothing.",
+   "wording_provenance": "Wording lineage only (mirrored exact v2 statement); not original-packet recovery and not a test verdict.",
+   "wording_custody": "mirrored_exact_v2_statement",
+   "implementation": [
+    "browser-capture.js numbered composer list with hidden refs; snapshotListRefs value snapshots keep visible/hidden correspondence (B20-R05)"
+   ],
+   "handler_cases": [
+    "stale_chip_blocks_keyboard_send"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/currentness-900-orbit/06-chip-send.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/currentness-900-orbit/06-chip-send.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Insertion sends nothing; chip send path revalidates like a list item."
+  },
+  {
+   "requirement_id": "v2:BROWSER-007",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "BrowserElementContext retains session/page/frame/generation, locator, DOM/component/source/style/rect and optional crop.",
+   "wording_provenance": "Wording lineage only (mirrored exact v2 statement); not original-packet recovery and not a test verdict.",
+   "wording_custody": "mirrored_exact_v2_statement",
+   "implementation": [
+    "browser-capture.js BrowserElementContext stable locator plus fragile path; recorded-duplicate/replace authority resolves unmounted (B20-R01)",
+    "browser-capture.js isolated sends bind refreshed dispatched_context to the message (B20-R04)"
+   ],
+   "handler_cases": [
+    "selection_epoch_wired_to_transitions",
+    "compatible_refresh_keeps_evidence",
+    "r04_refreshed_context_bound_to_isolated_send"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/currentness-900-orbit/05-recaptured-send.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/currentness-900-orbit/05-recaptured-send.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Context retention is concept-state; refreshed dispatch context bound per message; no native DOM-handle persistence claim."
+  },
+  {
+   "requirement_id": "v2:BROWSER-008",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "Agent has policy-controlled full ordinary internal browser and DevTools access.",
+   "wording_provenance": "Wording lineage only (mirrored exact v2 statement); not original-packet recovery and not a test verdict.",
+   "wording_custody": "mirrored_exact_v2_statement",
+   "implementation": [
+    "browser-capture.js guardSessionCaps/gateSnapshotCaps capability intersection at Send Now, freeze, ordinary and isolated dispatch (B20-R03)"
+   ],
+   "handler_cases": [
+    "policy_off_refuses_at_operation",
+    "policy_ask_holds_for_explicit_allow",
+    "permission_change_revalidated_at_commit",
+    "r03_dom_policy_guards_component_dispatch",
+    "r3_f2_dual_ask_send_now_sends",
+    "r3_f2_dual_ask_freeze_retains"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/capture-1440-orbit/07-destination-refused.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/capture-1440-orbit/07-destination-refused.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Capability intersection enforced at operation entries and final dispatch boundaries; no OS policy integration."
+  },
+  {
+   "requirement_id": "v2:BROWSER-009",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "Protected authentication browser is always human-only and excluded from capture, DevTools, BSD and persistence.",
+   "wording_provenance": "Wording lineage only (mirrored exact v2 statement); not original-packet recovery and not a test verdict.",
+   "wording_custody": "mirrored_exact_v2_statement",
+   "implementation": [
+    "browser-capture.js protected-auth tab human-only; freeze/send refuse protected-session content"
+   ],
+   "handler_cases": [
+    "protected_auth_excluded_everywhere"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/capture-1440-orbit/08-protected-refused.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/capture-1440-orbit/08-protected-refused.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Dummy canaries only; no real credentials used; exclusion asserted across capture/freeze/DevTools/persistence."
+  },
+  {
+   "requirement_id": "v4:BSTALE-001",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "### BSTALE-001..003 \u2014 Revalidate, then send \u2014 see grouped live owner clause; individual historical per-ID wording not available and not invented.",
+   "wording_provenance": "Grouped live owner clause; individual historical wording unavailable by packet custody.",
+   "wording_custody": "grouped_live_owner_clause",
+   "implementation": [
+    "browser-capture.js COMPONENT pre-dispatch revalidation gate",
+    "browser-capture.js revalidateContext typed stale_capture schema pm.browser.component_revalidation_result.v1",
+    "app.js deliverSend preSendValidators run before every effect-claiming hook (B20-R02)"
+   ],
+   "handler_cases": [
+    "zero_matches_refuse",
+    "multiple_matches_refuse",
+    "destroyed_frame_refuses",
+    "unknown_session_never_falls_back",
+    "fingerprint_mismatch_refuses",
+    "no_success_after_stale_refusal",
+    "r01_closed_recorded_ambiguity_holds",
+    "r02_goal_send_validates_first",
+    "r02_plan_revision_validates_first",
+    "r3_f1_unmounted_observed_ambiguity_holds",
+    "r3_f1_clean_closed_send_admits"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/currentness-900-orbit/04-held-stale.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/currentness-900-orbit/04-held-stale.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Exact-resolution table covered per arm; recorded ambiguity resolves unmounted; validators precede /goal and revision admission."
+  },
+  {
+   "requirement_id": "v4:BSTALE-002",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "### BSTALE-001..003 \u2014 Revalidate, then send \u2014 see grouped live owner clause; individual historical per-ID wording not available and not invented.",
+   "wording_provenance": "Grouped live owner clause; individual historical wording unavailable by packet custody.",
+   "wording_custody": "grouped_live_owner_clause",
+   "implementation": [
+    "browser-capture.js COMPONENT pre-dispatch revalidation gate",
+    "browser-capture.js revalidateContext typed stale_capture schema pm.browser.component_revalidation_result.v1",
+    "app.js deliverSend preSendValidators run before every effect-claiming hook (B20-R02)"
+   ],
+   "handler_cases": [
+    "same_file_source_drift_disclosed",
+    "recency_never_declares_fresh",
+    "targeted_send_revalidates_before_routing",
+    "deferred_queue_send_revalidates",
+    "r02_goal_send_validates_first",
+    "r02_plan_revision_validates_first",
+    "r3_f3_deferred_off_hold_preserves",
+    "r3_f3_deferred_ask_hold_preserves",
+    "r3_f3_deferred_exception_preserves",
+    "r3_f3_deferred_autoflush_preserves"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/currentness-900-orbit/04-held-stale.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/currentness-900-orbit/04-held-stale.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Deferred/targeted/goal/revision paths validate before admission; recency never declares fresh."
+  },
+  {
+   "requirement_id": "v4:BSTALE-003",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "### BSTALE-001..003 \u2014 Revalidate, then send \u2014 see grouped live owner clause; individual historical per-ID wording not available and not invented.",
+   "wording_provenance": "Grouped live owner clause; individual historical wording unavailable by packet custody.",
+   "wording_custody": "grouped_live_owner_clause",
+   "implementation": [
+    "browser-capture.js COMPONENT pre-dispatch revalidation gate",
+    "browser-capture.js revalidateContext typed stale_capture schema pm.browser.component_revalidation_result.v1",
+    "app.js deliverSend preSendValidators run before every effect-claiming hook (B20-R02)",
+    "browser-capture.js BrowserElementContext stable locator plus fragile path; recorded-duplicate/replace authority resolves unmounted (B20-R01)"
+   ],
+   "handler_cases": [
+    "compatible_refresh_keeps_evidence",
+    "no_success_after_stale_refusal",
+    "r04_refreshed_context_bound_to_isolated_send",
+    "r01_recapture_after_recorded_replace_sends"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/currentness-900-orbit/05-recaptured-send.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/currentness-900-orbit/05-recaptured-send.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Compatible single match refreshes generation and binds the new context; recorded replacement binds pre-replace captures only."
+  },
+  {
+   "requirement_id": "v4:BSTALE-004",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "### BSTALE-004 \u2014 Recapture reuses the picker \u2014 see grouped live owner clause; individual historical per-ID wording not available and not invented.",
+   "wording_provenance": "Grouped live owner clause; individual historical wording unavailable by packet custody.",
+   "wording_custody": "named_live_owner_subsection",
+   "implementation": [
+    "browser-capture.js COMPONENT pre-dispatch revalidation gate",
+    "browser-capture.js revalidateContext typed stale_capture schema pm.browser.component_revalidation_result.v1",
+    "app.js deliverSend preSendValidators run before every effect-claiming hook (B20-R02)"
+   ],
+   "handler_cases": [
+    "recapture_reuses_the_picker",
+    "r05_list_projection_correspondence",
+    "r01_recapture_after_recorded_replace_sends"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/currentness-900-orbit/05-recaptured-send.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/currentness-900-orbit/05-recaptured-send.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "One selection flow owns identity; stale items are never silently dropped or swapped."
+  },
+  {
+   "requirement_id": "v4:BSTALE-005",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "### BSTALE-005..006 \u2014 Lists and chips keep structured identity \u2014 see grouped live owner clause; individual historical per-ID wording not available and not invented.",
+   "wording_provenance": "Grouped live owner clause; individual historical wording unavailable by packet custody.",
+   "wording_custody": "grouped_live_owner_clause",
+   "implementation": [
+    "browser-capture.js numbered composer list with hidden refs; snapshotListRefs value snapshots keep visible/hidden correspondence (B20-R05)"
+   ],
+   "handler_cases": [
+    "stale_list_blocks_ordinary_send",
+    "mixed_list_never_partially_sends",
+    "r05_list_projection_correspondence"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/currentness-900-orbit/04-held-stale.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/currentness-900-orbit/04-held-stale.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Stale list items stay visible and individually marked; valid siblings retained."
+  },
+  {
+   "requirement_id": "v4:BSTALE-006",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "### BSTALE-005..006 \u2014 Lists and chips keep structured identity \u2014 see grouped live owner clause; individual historical per-ID wording not available and not invented.",
+   "wording_provenance": "Grouped live owner clause; individual historical wording unavailable by packet custody.",
+   "wording_custody": "grouped_live_owner_clause",
+   "implementation": [
+    "browser-capture.js numbered composer list with hidden refs; snapshotListRefs value snapshots keep visible/hidden correspondence (B20-R05)"
+   ],
+   "handler_cases": [
+    "stale_chip_blocks_keyboard_send",
+    "deleted_chip_token_drops_hidden_ref",
+    "r05_list_projection_correspondence"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/currentness-900-orbit/06-chip-send.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/currentness-900-orbit/06-chip-send.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Chip identity is structured; deletion drops the hidden ref exactly."
+  },
+  {
+   "requirement_id": "v4:BSTALE-007",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "### BSTALE-007 \u2014 Scheduling requires a frozen snapshot \u2014 see grouped live owner clause; individual historical per-ID wording not available and not invented.",
+   "wording_provenance": "Grouped live owner clause; individual historical wording unavailable by packet custody.",
+   "wording_custody": "named_live_owner_subsection",
+   "implementation": [
+    "browser-capture.js bc-freeze-snapshots publishes inside the shared PM56_TX transaction with rollback (B20-R07)",
+    "browser-capture.js browser_snapshot exporter encodes real UTF-8 (B20-R06)"
+   ],
+   "handler_cases": [
+    "schedule_refuses_live_refs_without_freeze",
+    "frozen_snapshot_schedules_and_dispatches_retained",
+    "missing_retained_bytes_hold_without_fetch",
+    "r06_snapshot_export_valid_utf8",
+    "r07_failed_freeze_rolls_back"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/schedule-700-orbit/03-frozen.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/schedule-700-orbit/03-frozen.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Atomic freeze with rollback and clean retry; exact UTF-8 export; no native scheduler or durable-timer claim."
+  },
+  {
+   "requirement_id": "v4:BSTALE-008",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "### BSTALE-008 \u2014 Capture sends are isolated payloads \u2014 see grouped live owner clause; individual historical per-ID wording not available and not invented.",
+   "wording_provenance": "Grouped live owner clause; individual historical wording unavailable by packet custody.",
+   "wording_custody": "named_live_owner_subsection",
+   "implementation": [
+    "browser-capture.js COMPONENT pre-dispatch revalidation gate",
+    "browser-capture.js revalidateContext typed stale_capture schema pm.browser.component_revalidation_result.v1",
+    "app.js deliverSend preSendValidators run before every effect-claiming hook (B20-R02)"
+   ],
+   "handler_cases": [
+    "capture_modes_send_isolated_payloads",
+    "isolated_send_routes_to_exact_run",
+    "ended_destination_refuses_without_redirect",
+    "r04_refreshed_context_bound_to_isolated_send"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/capture-1440-orbit/07-destination-refused.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/capture-1440-orbit/07-destination-refused.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Ended destinations refuse without redirect; payloads route to the exact run with refreshed context bound."
+  },
+  {
+   "requirement_id": "v4:BSTALE-009",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "### BSTALE-009..012 \u2014 Details, generation identity, source maps, and late callbacks \u2014 see grouped live owner clause; individual historical per-ID wording not available and not invented.",
+   "wording_provenance": "Grouped live owner clause; individual historical wording unavailable by packet custody.",
+   "wording_custody": "grouped_live_owner_clause",
+   "implementation": [
+    "browser-capture.js BrowserElementContext stable locator plus fragile path; recorded-duplicate/replace authority resolves unmounted (B20-R01)"
+   ],
+   "handler_cases": [
+    "compatible_refresh_keeps_evidence",
+    "selection_epoch_wired_to_transitions",
+    "r04_refreshed_context_bound_to_isolated_send"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/currentness-900-orbit/05-recaptured-send.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/currentness-900-orbit/05-recaptured-send.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Details/generation identity asserted via state; late callbacks fenced by revision."
+  },
+  {
+   "requirement_id": "v4:BSTALE-010",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "### BSTALE-009..012 \u2014 Details, generation identity, source maps, and late callbacks \u2014 see grouped live owner clause; individual historical per-ID wording not available and not invented.",
+   "wording_provenance": "Grouped live owner clause; individual historical wording unavailable by packet custody.",
+   "wording_custody": "grouped_live_owner_clause",
+   "implementation": [
+    "browser-capture.js COMPONENT pre-dispatch revalidation gate",
+    "browser-capture.js revalidateContext typed stale_capture schema pm.browser.component_revalidation_result.v1",
+    "app.js deliverSend preSendValidators run before every effect-claiming hook (B20-R02)"
+   ],
+   "handler_cases": [
+    "same_file_source_drift_disclosed"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/currentness-900-orbit/04-held-stale.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/currentness-900-orbit/04-held-stale.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Source-map/line-column drift detected even when the filename is unchanged."
+  },
+  {
+   "requirement_id": "v4:BSTALE-011",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "### BSTALE-009..012 \u2014 Details, generation identity, source maps, and late callbacks \u2014 see grouped live owner clause; individual historical per-ID wording not available and not invented.",
+   "wording_provenance": "Grouped live owner clause; individual historical wording unavailable by packet custody.",
+   "wording_custody": "grouped_live_owner_clause",
+   "implementation": [
+    "browser-capture.js BrowserElementContext stable locator plus fragile path; recorded-duplicate/replace authority resolves unmounted (B20-R01)"
+   ],
+   "handler_cases": [
+    "composer_revision_fences_late_results"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/currentness-900-orbit/05-recaptured-send.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/currentness-900-orbit/05-recaptured-send.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Late results fenced by composer revision; stale results never applied."
+  },
+  {
+   "requirement_id": "v4:BSTALE-012",
+   "membership": "SOURCE_REQUIREMENTS.json batch 20 scope (Concepts/chat-assistant-concepts/5.6 Pro/DEMO_REMAINING_WORKLIST.json#batches[number=20])",
+   "source_wording": "### BSTALE-009..012 \u2014 Details, generation identity, source maps, and late callbacks \u2014 see grouped live owner clause; individual historical per-ID wording not available and not invented.",
+   "wording_provenance": "Grouped live owner clause; individual historical wording unavailable by packet custody.",
+   "wording_custody": "grouped_live_owner_clause",
+   "implementation": [
+    "browser-capture.js BrowserElementContext stable locator plus fragile path; recorded-duplicate/replace authority resolves unmounted (B20-R01)",
+    "browser-capture.js COMPONENT pre-dispatch revalidation gate",
+    "browser-capture.js revalidateContext typed stale_capture schema pm.browser.component_revalidation_result.v1",
+    "app.js deliverSend preSendValidators run before every effect-claiming hook (B20-R02)"
+   ],
+   "handler_cases": [
+    "recency_never_declares_fresh",
+    "compatible_refresh_keeps_evidence"
+   ],
+   "outcome_evidence": {
+    "status": "pass",
+    "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r3-handlers-full2/cases/RESULT.json",
+    "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r3-surfaces/RUN.json",
+    "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/RUN.json",
+    "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r3-record/currentness-900-orbit/05-recaptured-send.png",
+    "historical_r2_evidence": {
+     "note": "R2 (d0c9507b) evidence, superseded by the R3 receipts above; preserved as history only, not a current verdict on these bytes.",
+     "evidence": "/home/sittingmongoose/pm-b20-evidence/b20r-handlers-full2/RESULT.json",
+     "surfaces": "/home/sittingmongoose/pm-b20-evidence/b20r-surfaces2/RUN.json",
+     "record_run": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/RUN.json",
+     "screenshot": "/home/sittingmongoose/pm-b20-evidence/b20r-record2/currentness-900-orbit/05-recaptured-send.png"
+    }
+   },
+   "disposition": "bounded_concept_coverage_with_limitations",
+   "full_original_clause_closed": false,
+   "native_verified": false,
+   "limitation": "Generation identity plus recency rules combined; no wall-clock freshness claim."
+  }
+ ]
+}

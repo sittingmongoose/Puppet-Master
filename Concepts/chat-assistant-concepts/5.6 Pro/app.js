@@ -3101,7 +3101,13 @@ recommended path                  migration 0043 + rollback</div></div></section
     const q=queueOf();
     if(!q.length) return;
     const next=q.shift();
-    deliverSend(next.text);
+    const outcome=deliverSend(next.text);
+    /* B20-R3-F3: a held automatic flush keeps its queue entry unless the held
+       input is already visible again (restored to the composer by the hold
+       path). Flush runs only at work completion, so a restored entry waits
+       for manual dispatch instead of retry-looping. Refs and destination are
+       untouched: only the queue slot is preserved. */
+    if(outcome && outcome.admitted!==true && outcome.restoreQueue===true){ q.unshift(next); renderApp(); }
   }
   function stopCurrentWork(){
     stopWorkTimer(true);
@@ -3120,15 +3126,49 @@ recommended path                  migration 0043 + rollback</div></div></section
        so no module has to reopen this function. */
     const RTc = (window.PM56_RUNTIME||{}).composer;
     const beforeSendCount=t.messages.length;
+    /* B20-R02: unconditional validators run before ANY effect-claiming hook.
+       A validator (e.g. browser-reference currentness) must see every
+       submission — including /goal, Plan-revision and targeted/deferred sends
+       that funnel here — before an earlier hook can admit it. A validator that
+       throws fails closed: nothing is admitted and the draft is preserved. */
+    if(RTc && RTc.preSendValidators && RTc.preSendValidators.length){
+      for(let i=0;i<RTc.preSendValidators.length;i++){
+        let claimed=false,decision=null;
+        try{ decision=RTc.preSendValidators[i](extCtx(),t,raw);claimed=decision===true||decision?.claimed===true; }
+        catch(err){ console.error('PM56 preSendValidator threw', err);
+          try{ const vc=extCtx(); vc.toast('Send held — validation error','A pre-send check failed before anything was admitted. Nothing was sent and your draft is intact.'); vc.addReceipt('send-held','Send held — validation error','A pre-send validator threw (see console). No message, Goal, Plan revision or composer change occurred.'); }catch(e2){}
+          renderApp();return {admitted:false,restoreQueue:true,reason:'validator_exception'}; }
+        if(claimed){
+          let admittedMsg=null;
+          if(!decision?.preserveComposer){state.composer='';clearComposerField();
+            admittedMsg=t.messages.slice(beforeSendCount).find(m=>m.role==='user'&&!m.isolatedSubmission&&String(m.body||'').trim()===raw);
+            if(admittedMsg) RTc.commitAccepted?.(extCtx(),t,admittedMsg);
+          }
+          renderApp();
+          /* B20-R3-F3: report the hold so deferred dispatch can keep the queue
+             entry when the held input is visible nowhere else. A validator that
+             visibly restored the text (stale refs land back in the composer)
+             opts out via textPreserved; anything else fails safe to restore. */
+          return {admitted:!!admittedMsg,restoreQueue:!admittedMsg&&decision?.textPreserved!==true,reason:'validator_hold'};
+        }
+      }
+    }
     if(RTc && RTc.preSendHooks && RTc.preSendHooks.length){
       for(let i=0;i<RTc.preSendHooks.length;i++){
         let claimed=false,decision=null;
         try{ decision=RTc.preSendHooks[i](extCtx(),t,raw);claimed=decision===true||decision?.claimed===true; }
         catch(err){ console.error('PM56 preSendHook threw', err); }
-        if(claimed){ if(!decision?.preserveComposer){state.composer='';clearComposerField();
-          const admitted=t.messages.slice(beforeSendCount).find(m=>m.role==='user'&&!m.isolatedSubmission&&String(m.body||'').trim()===raw);
-          if(admitted) RTc.commitAccepted?.(extCtx(),t,admitted);
-        } renderApp();return; }
+        if(claimed){
+          let admittedMsg=null;
+          if(!decision?.preserveComposer){state.composer='';clearComposerField();
+            admittedMsg=t.messages.slice(beforeSendCount).find(m=>m.role==='user'&&!m.isolatedSubmission&&String(m.body||'').trim()===raw);
+            if(admittedMsg) RTc.commitAccepted?.(extCtx(),t,admittedMsg);
+          }
+          renderApp();
+          /* B20-R3-F3: a claiming hook owns the text (MODAL-012), so deferred
+             dispatch must not duplicate it back into the queue. */
+          return {admitted:!!admittedMsg,restoreQueue:false,reason:'hook_claim'};
+        }
       }
     }
     state.draftHistory[t.id]??=[];state.draftHistory[t.id].push(raw);state.composer='';
@@ -3165,6 +3205,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     RTc?.commitAccepted?.(extCtx(),t,admittedMessage);
     renderApp();
     scrollTranscriptToEnd();
+    return {admitted:true,restoreQueue:false,reason:'sent'};
   }
 
   /* 15e: nineteen Demo Studio triggers used to funnel through one
@@ -3420,7 +3461,14 @@ recommended path                  migration 0043 + rollback</div></div></section
     }
     if(a==='queue-send-now'){
       const q=queueOf(); const i=q.findIndex(x=>x.id===btn.dataset.id); if(i<0)return;
-      const [entry]=q.splice(i,1); deliverSend(entry.text); return;
+      const [entry]=q.splice(i,1);
+      const outcome=deliverSend(entry.text);
+      /* B20-R3-F3: a veto or validator exception keeps the queue entry in its
+         slot unless the held input is already visible again (restored to the
+         composer by the hold path). Never overwrites another draft and never
+         touches refs, destination or entry identity. */
+      if(outcome && outcome.admitted!==true && outcome.restoreQueue===true){ q.splice(Math.min(i,q.length),0,entry); renderApp(); }
+      return;
     }
     if(a==='demo-trigger'){runDemoTrigger(btn.dataset.trigger);return;}
     if(a==='jump-search-result'){state.menu=null;switchThread(btn.dataset.thread);setTimeout(()=>{const el=document.querySelector(`[data-message-id="${CSS.escape(btn.dataset.message)}"]`);el?.scrollIntoView({block:'center',behavior:'smooth'});},50);return;}
