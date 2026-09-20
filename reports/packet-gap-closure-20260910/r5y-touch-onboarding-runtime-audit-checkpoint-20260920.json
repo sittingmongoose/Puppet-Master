@@ -1,0 +1,496 @@
+{
+  "schema_id": "pm.packet_audit_checkpoint.v1",
+  "status": "PARTIAL_AUDIT_PROGRESS_NOT_OVERALL_CLOSURE",
+  "reviewer": "codex-root-packet-audit",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "initial_comparison_commit": "29f9cf9a3ef09b07457d84492f95c12802f82d10",
+  "current_qualification_commit": "dd1df59d6307952d82a5c93be9ad4083a5bc0773",
+  "published_review_comparison_commit": "29f9cf9a3ef09b07457d84492f95c12802f82d10",
+  "landing_base_commit": "dd1df59d6307952d82a5c93be9ad4083a5bc0773",
+  "new_batch": {
+    "case_count": 1040,
+    "touch_rows": 80,
+    "dimensions_per_row": 13,
+    "row_ranges": [
+      "TOUCH-FGI-012..TOUCH-FGI-037",
+      "TOUCH-ONB-001..TOUCH-ONB-013",
+      "TOUCH-TOUR-001..TOUCH-TOUR-010",
+      "TOUCH-TPER-001",
+      "TOUCH-TCHAT-001..TOUCH-TCHAT-002",
+      "TOUCH-DOC-001..TOUCH-DOC-007",
+      "TOUCH-PLUG-001..TOUCH-PLUG-012",
+      "TOUCH-PERF-001..TOUCH-PERF-003",
+      "TOUCH-USE-001",
+      "TOUCH-INST-001..TOUCH-INST-005"
+    ],
+    "status_counts": {
+      "pass": 400,
+      "fail": 71,
+      "partial": 569
+    },
+    "applicability_counts": {
+      "retained": 1040
+    },
+    "chunks": [
+      "chunk-00114",
+      "chunk-00115",
+      "chunk-00116",
+      "chunk-00117",
+      "chunk-00118",
+      "chunk-00119",
+      "chunk-00120",
+      "chunk-00121"
+    ],
+    "authored_judgment_files": 7,
+    "evidence_groups": 1040,
+    "dimension_status_counts": {
+      "requirement_and_packet_refs": {
+        "pass": 80
+      },
+      "canonical_owner_and_plan_unit": {
+        "pass": 80
+      },
+      "single_dry_contract": {
+        "pass": 80
+      },
+      "command_or_typed_ui_action": {
+        "pass": 80
+      },
+      "payload_result_error_availability_permissions_disabled_reason": {
+        "fail": 27,
+        "partial": 53
+      },
+      "single_handler_owner": {
+        "pass": 80
+      },
+      "production_or_concept_wiring": {
+        "partial": 80
+      },
+      "gui_trigger_and_return_route": {
+        "partial": 80
+      },
+      "reverse_consumer_coverage": {
+        "partial": 77,
+        "fail": 3
+      },
+      "events_receipts_observable_work": {
+        "partial": 78,
+        "fail": 2
+      },
+      "persistence_and_migration": {
+        "partial": 80
+      },
+      "tests_and_evidence": {
+        "fail": 39,
+        "partial": 41
+      },
+      "disposition_and_residual_risk": {
+        "partial": 80
+      }
+    },
+    "method": "Root individually authored all 1040 findings, residuals and status cells against complete original rows/profiles and exact source/evidence. Currentness is a separately pinned root qualification, not a rewrite or relabelling of historical capture. Helpers serialize literal judgments, compare declared objects and validate custody; they do not generate audit verdicts."
+  },
+  "cumulative_r5": {
+    "publication_state": "PUBLISHED_PARTIAL_AUDIT_PROGRESS",
+    "expected_cases": 13416,
+    "before_publication": {
+      "reviewed_cases": 8567,
+      "result_files": 113,
+      "remaining_cases": 4849
+    },
+    "reviewed_cases": 9607,
+    "remaining_cases": 3809,
+    "result_files": 121,
+    "remaining_result_files": 30,
+    "status_counts": {
+      "partial": 7316,
+      "not_applicable": 7,
+      "blocked": 39,
+      "fail": 332,
+      "pass": 1913
+    },
+    "validation_failures": 0,
+    "duplicate_cases": 0,
+    "unexpected_result_files": 0,
+    "prior_result_files_preserved_byte_for_byte": 113,
+    "remaining_scope": {
+      "touch_closure_dimensions": 3809
+    },
+    "complete": false,
+    "implementation_verdict": "not_inferred"
+  },
+  "failed_case_groups": [
+    {
+      "rows": "TOUCH-FGI-012..TOUCH-FGI-037 excluding TOUCH-FGI-019 and TOUCH-FGI-037",
+      "dimension": "payload_result_error_availability_permissions_disabled_reason",
+      "cases": 24,
+      "finding": "Selected Forge permission-scope schema mutations admit wrong-scope alternatives. Exact current replay preserves these 24 command findings and the bounded checkout/reauthorize exceptions. This is a scope/schema binding gap, not an observed native authorization exploit."
+    },
+    {
+      "rows": [
+        "TOUCH-TCHAT-002"
+      ],
+      "dimension": "payload_result_error_availability_permissions_disabled_reason",
+      "cases": 1,
+      "finding": "The exact assistant_chat_contracts.schema.json path cited for the Chat ELI5 request/result remains absent. The missing declared contract is not proof of a runtime failure."
+    },
+    {
+      "rows": [
+        "TOUCH-DOC-003",
+        "TOUCH-DOC-007"
+      ],
+      "dimension": "payload_result_error_availability_permissions_disabled_reason",
+      "cases": 2,
+      "finding": "The byte-qualified historical Doctor probes retain the null target/currentness and null semantic_owner_result_ref gaps. They remain historical schema observations, not fresh native probe or repair execution."
+    },
+    {
+      "rows": [
+        "TOUCH-ONB-008",
+        "TOUCH-ONB-009",
+        "TOUCH-ONB-010"
+      ],
+      "dimension": "reverse_consumer_coverage",
+      "cases": 3,
+      "finding": "F3-520 still forces init_git:true for the selected new-local-project consumer while PJCT-007 forbids a consumer forcing Git. Current owner/copy/late-commit law is not implemented by the legacy v1 concept helper."
+    },
+    {
+      "rows": [
+        "TOUCH-FGI-029",
+        "TOUCH-FGI-030"
+      ],
+      "dimension": "events_receipts_observable_work",
+      "cases": 2,
+      "finding": "Both nonempty event_refs mutations remain accepted although no selected Forge EventRecord is admitted. Static schema acceptance establishes the bounded contract gap, not actual event emission."
+    },
+    {
+      "rows": [
+        "TOUCH-FGI-012..TOUCH-FGI-037",
+        "TOUCH-ONB-001..TOUCH-ONB-013"
+      ],
+      "dimension": "tests_and_evidence",
+      "cases": 39,
+      "forge_cases": 26,
+      "onboarding_cases": 13,
+      "finding": "All 39 rows inherit the referenced Onboarding suite's one physical-family census failure among 42 tests: current 282 versus expected 90, separately preserved from the historical 280 observation. These are 39 dimension findings from one common suite failure, not 39 independent observed native failures or permission to remove other owners' registrations."
+    }
+  ],
+  "narrow_pass_boundary": "The 400 passes establish 80 requirement links, 80 owner/PlanUnit assignments, 80 DRY contract references, 80 command or typed-UI-action identities and 80 sole declared handler owners. They do not establish executable handlers, complete runtime authorization, provider effects, durable owner outcomes or native UI. Every selected D13 disposition remains partial.",
+  "currentness": {
+    "selected_touch_count": 80,
+    "selected_command_count": 50,
+    "selected_profile_count": 10,
+    "selected_schema_reference_count": 47,
+    "event_registry_match_counts": {
+      "old": 0,
+      "new": 0
+    },
+    "captured_dependency_count": 1318,
+    "captured_changed_count": 201,
+    "captured_unchanged_count": 1117,
+    "effective_snapshot_count": 3273,
+    "selected_owner_spans": 26,
+    "same_text_same_position_spans": 24,
+    "same_text_shifted_spans": {
+      "count": 1,
+      "owner": "Plans/assistant-chat-design.md",
+      "unit": "ACD-426",
+      "line_shift": 32,
+      "current_start_line": 23158,
+      "current_end_line": 23393
+    },
+    "changed_span": {
+      "count": 1,
+      "owner": "Plans/Forge_Integrations.md",
+      "qualification": "See the exact root Forge qualifier below; file or span changes alone do not imply changes to every selected command."
+    },
+    "selected_touch_rows_unchanged": 80,
+    "selected_profiles_unchanged": 10,
+    "selected_command_comparisons_unchanged": 50,
+    "inventory_boundary": "The 1318 prior captured dependencies include 201 changed and 1117 unchanged paths. The 3273-path expanded inventory is broad deterministic source/check support, not observed dynamic dependency tracing or proof of all runtime reads.",
+    "historical_lineage": "The original 29f9cf9a review, 37 check receipts and probes retain their original identity. Current dd1df59d source comparison, 37 newly executed check receipts and exact Forge probe replays provide separate qualification. Historical Doctor probes are reused only with unchanged relevant dependencies; no historical execution is relabelled as current.",
+    "root_boundary": "Root qualification of the existing 1040 individually authored B45 judgments against current main, not a rewrite of historical capture dates, source snapshots, findings or status cells. Retain 400 pass, 569 partial and 71 fail. All 113 previously published results remain immutable. Byte inventory and helper mappings are supporting observations, not semantic or runtime proof. Fresh 37 check outcomes and exact Forge probe replays support the current qualification; no native, live-provider, visual, deployment, migration-drill, event-emission, governance-seal or complete global packet-audit claim is made. The 3273-path inventory is broad deterministic check support, not observed dynamic dependency tracing. The current Onboarding failure is 282 versus expected 90 physical families, superseding the earlier captured count of 280 without changing that suite's failing outcome.",
+    "root_cohort_qualifiers": {
+      "forge": {
+        "touch_ids": [
+          "TOUCH-FGI-012",
+          "TOUCH-FGI-013",
+          "TOUCH-FGI-014",
+          "TOUCH-FGI-015",
+          "TOUCH-FGI-016",
+          "TOUCH-FGI-017",
+          "TOUCH-FGI-018",
+          "TOUCH-FGI-019",
+          "TOUCH-FGI-020",
+          "TOUCH-FGI-021",
+          "TOUCH-FGI-022",
+          "TOUCH-FGI-023",
+          "TOUCH-FGI-024",
+          "TOUCH-FGI-025",
+          "TOUCH-FGI-026",
+          "TOUCH-FGI-027",
+          "TOUCH-FGI-028",
+          "TOUCH-FGI-029",
+          "TOUCH-FGI-030",
+          "TOUCH-FGI-031",
+          "TOUCH-FGI-032",
+          "TOUCH-FGI-033",
+          "TOUCH-FGI-034",
+          "TOUCH-FGI-035",
+          "TOUCH-FGI-036",
+          "TOUCH-FGI-037"
+        ],
+        "qualifier": "Retain all 26 selected Forge commands' judgments. Current owner changes refine capability scopes, review revision/completeness and thread anchors, typed gate provenance, review-bound versus revision-bound checks, policy membership fencing, endpoint versions and auth field ownership. New FGI-018/019/020 material is planning, not admitted command/runtime proof. The changed command_request conditionals select review.checks and policy.preview/apply, none of this cohort; added target fields and pipeline pagination do not enforce the selected commands' permission scopes or prove dispatch. Exact current replay uses the same 30 fixture values and 171 mutations: all baselines valid; 147 scope alternatives accepted and 15 rejected, preserving the 24 wrong-scope command failures and the bounded checkout/reauthorize exceptions. Both nonempty event_refs mutations remain accepted; no selected Forge EventRecord is admitted. The six guessed comment_body_ref mutations remain negative observations, not an owner-prescribed spelling. handler_unavailable is still rejected by the owner availability enum (now also containing policy_set_partial); CV-333 separately covers pre-dispatch handler absence. The required Onboarding suite still fails its census. Fresh all-contract/provider checks remain static evidence and do not repair those exact gaps or establish native/live-provider success."
+      },
+      "onboarding": {
+        "touch_ids": [
+          "TOUCH-ONB-001",
+          "TOUCH-ONB-002",
+          "TOUCH-ONB-003",
+          "TOUCH-ONB-004",
+          "TOUCH-ONB-005",
+          "TOUCH-ONB-006",
+          "TOUCH-ONB-007",
+          "TOUCH-ONB-008",
+          "TOUCH-ONB-009",
+          "TOUCH-ONB-010",
+          "TOUCH-ONB-011",
+          "TOUCH-ONB-012",
+          "TOUCH-ONB-013"
+        ],
+        "qualifier": "Retain all thirteen Onboarding judgments. PWIZ-021..025 and the selected Settings, Project, account, Models and storage passages are byte-identical. The actual v2 owner draft/copy/late-commit law is not implemented by the legacy v1 concept helper. F3-520 still forces init_git:true for the selected new-local-project consumer while PJCT-007 forbids a consumer forcing Git; preserve D09 failures for ONB-008/009/010. Fresh 42-test Onboarding suite still has 41 passes and one physical-family census failure (282 versus 90), preserving thirteen D12 failures. No new schema or browser/native acceptance is inferred from current unrelated External Research or source-graph additions."
+      },
+      "tour_persona_chat": {
+        "touch_ids": [
+          "TOUCH-TOUR-001",
+          "TOUCH-TOUR-002",
+          "TOUCH-TOUR-003",
+          "TOUCH-TOUR-004",
+          "TOUCH-TOUR-005",
+          "TOUCH-TOUR-006",
+          "TOUCH-TOUR-007",
+          "TOUCH-TOUR-008",
+          "TOUCH-TOUR-009",
+          "TOUCH-TOUR-010",
+          "TOUCH-TPER-001",
+          "TOUCH-TCHAT-001",
+          "TOUCH-TCHAT-002"
+        ],
+        "qualifier": "Retain ten Tour, one Teacher Persona and two Chat judgments. Selected PWIZ, Persona, Final GUI and concept spans remain byte-identical; ACD-426 moves by 32 lines to 23158..23393 without text change. Current source-control transport/auth clarification and External Research consumer additions do not implement Tour/Chat. The v3 concept safe-checkpoint refuses resume/replay/start/finish after reload without original snapshots; same-page behavior is not durable recovery proof. Persona/select and Chat/send remain existing catalog primaries notwithstanding missing Commands table mirrors. The exact Chat schema path cited for TCHAT-002 remains absent, preserving its D05 failure. Persona/chat wiring event names still have no matched admitted family. Fresh Tour 19, Final GUI 4 and Full Thread 15 static tests pass, without proving native handler, scoped local-provider isolation, event admission or restart migration."
+      },
+      "doctor": {
+        "touch_ids": [
+          "TOUCH-DOC-001",
+          "TOUCH-DOC-002",
+          "TOUCH-DOC-003",
+          "TOUCH-DOC-004",
+          "TOUCH-DOC-005",
+          "TOUCH-DOC-006",
+          "TOUCH-DOC-007"
+        ],
+        "qualifier": "Retain seven Doctor judgments. Selected N2-151..156 owner span, action schemas/fixtures, source projections and concept spans remain byte-identical. Thus the exact prior null target/currentness and null semantic_owner_result_ref observations remain applicable, with D05 failures only for DOC-003 and DOC-007. Neither fresh generic schema success nor concept timer callbacks prove native probes, applied owner outcomes or exact target isolation. No new Doctor event admission is found. Historical probes remain explicitly historical byte-qualified evidence, not falsely labeled a fresh execution."
+      },
+      "plugins": {
+        "touch_ids": [
+          "TOUCH-PLUG-001",
+          "TOUCH-PLUG-002",
+          "TOUCH-PLUG-003",
+          "TOUCH-PLUG-004",
+          "TOUCH-PLUG-005",
+          "TOUCH-PLUG-006",
+          "TOUCH-PLUG-007",
+          "TOUCH-PLUG-008",
+          "TOUCH-PLUG-009",
+          "TOUCH-PLUG-010",
+          "TOUCH-PLUG-011",
+          "TOUCH-PLUG-012"
+        ],
+        "qualifier": "Retain twelve Plugin judgments. Selected owner, schema definitions, commands, wiring, concept controls and Final GUI consumer text are unchanged. The real PluginCommandDisabledReasonCode definition exists; the reference extractor's trailing-period token must not be promoted into a false missing-enum failure. Concept disabled-action explanation is not native plugin dispatch, package/revision enforcement, bounded execution or durable migration evidence. No admitted selected plugin EventRecord is found; generic contract and wiring checks do not provide native closure."
+      },
+      "runtime_usage_installation": {
+        "touch_ids": [
+          "TOUCH-PERF-001",
+          "TOUCH-PERF-002",
+          "TOUCH-PERF-003",
+          "TOUCH-USE-001",
+          "TOUCH-INST-001",
+          "TOUCH-INST-002",
+          "TOUCH-INST-003",
+          "TOUCH-INST-004",
+          "TOUCH-INST-005"
+        ],
+        "qualifier": "Retain the three runtime/performance actions, usage navigation and five installation actions. All four selected Shared Runtime spans, usage owner/CV-333/CV-313/UCC-109, installation schema references and exact selected commands/wiring remain unchanged. New upstream alias wording and appended replay/private graph units do not supply native execution of these selected actions. Usage remains object-first through its existing owner, not a new command inferred from a missing mirrored table row. Fresh Full Thread, vocabulary, runtime identity and installation-preference tests stay passing static evidence; no worker-scope convergence, release lifecycle, update admission, durable restart or migration drill is proved. No selected installation/environment event family is admitted by the current prefix query."
+      }
+    }
+  },
+  "verification": {
+    "comparison_commit": "dd1df59d6307952d82a5c93be9ad4083a5bc0773",
+    "named_checks": {
+      "total": 37,
+      "passing": 30,
+      "failing": 7,
+      "failed_names": [
+        "whole-command-inspection",
+        "github-project-tests",
+        "onboarding-phases-tests",
+        "browser-event-admission",
+        "browser-event-tests",
+        "testing-session-event-admission",
+        "testing-session-event-tests"
+      ]
+    },
+    "failed_check_reported_outcomes": {
+      "whole-command-inspection": {
+        "exit_code": 1
+      },
+      "github-project-tests": {
+        "exit_code": 1,
+        "reported_test_count": 15,
+        "reported_result_line": "FAILED (failures=3)",
+        "reported_outcome_counts": {
+          "failures": 3
+        },
+        "unique_failure_error_method_count": 3
+      },
+      "onboarding-phases-tests": {
+        "exit_code": 1,
+        "reported_test_count": 42,
+        "reported_result_line": "FAILED (failures=1)",
+        "reported_outcome_counts": {
+          "failures": 1
+        },
+        "unique_failure_error_method_count": 1
+      },
+      "browser-event-admission": {
+        "exit_code": 1
+      },
+      "browser-event-tests": {
+        "exit_code": 1,
+        "reported_test_count": 30,
+        "reported_result_line": "FAILED (failures=30)",
+        "reported_outcome_counts": {
+          "failures": 30
+        },
+        "unique_failure_error_method_count": 25
+      },
+      "testing-session-event-admission": {
+        "exit_code": 1
+      },
+      "testing-session-event-tests": {
+        "exit_code": 1,
+        "reported_test_count": 10,
+        "reported_result_line": "FAILED (failures=2)",
+        "reported_outcome_counts": {
+          "failures": 2
+        },
+        "unique_failure_error_method_count": 2
+      }
+    },
+    "onboarding_physical_family_census": {
+      "historical_actual": 280,
+      "current_actual": 282,
+      "expected": 90,
+      "reported_tests": 42,
+      "reported_failures": 1
+    },
+    "forge_probe_replay": {
+      "same_baseline_values": 30,
+      "same_mutations": 171,
+      "all_baselines_valid": true,
+      "scope_alternatives_accepted": 147,
+      "scope_alternatives_rejected": 15,
+      "nonempty_event_refs_mutations_accepted": 2,
+      "boundary": "The root qualifier preserves exact scope and event-reference gaps. Six guessed comment_body_ref mutations are negative observations, not an owner-prescribed field spelling. CV-333 pre-dispatch unavailability remains distinct from owner availability."
+    },
+    "test_count_boundary": "Reported test totals, failure outcomes and unique failing methods are distinct. Browser tests report 30 tests and 30 failure outcomes across 25 unique failing methods; no runtime successes are inferred.",
+    "result_structure_identity_and_evidence_refs": {
+      "status": "validated_before_publication",
+      "cases": 1040,
+      "structural_validation_errors": [],
+      "validation_mode": "The single authorized --publish invocation performed full prepublication validation; no separate preflight run or receipt was created."
+    },
+    "formal_audit_dry_run": {
+      "status": "incomplete",
+      "exit_code": 1,
+      "source_census_valid": true,
+      "structurally_valid": false,
+      "completed_report_present": false,
+      "failure_count": 1,
+      "failures": [
+        "audit_report.completed.json is required for final validation; audit_report.template.json is not completion evidence"
+      ],
+      "implementation_verdict": "not_run"
+    },
+    "post_fast_forward_shared_governance": {
+      "status": "not_part_of_prelanding_capture",
+      "recording": "Required shared-checkout landing checks will be captured separately from these 37 named review checks.",
+      "commands": [
+        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py audit-governance",
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/<run named by current_run.json>"
+      ]
+    },
+    "common_boundary": "Source/schema/fixture/structure checks and exact custody only. No native Rust/Slint execution, live provider effect, rendered visual/motion acceptance, migration drill, event admission, readiness, WorkNode, governance seal, suite verdict or global packet completion is claimed."
+  },
+  "evidence": {
+    "report_metadata": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-onboarding1040-review-20260914-3RkvIPQ2/current-main-refresh/report-metadata.json",
+      "sha256": "963c8f40916eeef36f7b510a20b59f77b784a07204699af9369f1d486ca7a86e"
+    },
+    "root_currentness_adjudication": {
+      "path": "/mnt/Cursor/PM-Experiments/r5-touch-onboarding1040-review-20260914-SMj1mtdW/root-currentness-adjudication.json",
+      "sha256": "f8a35b3bb0573b9e7c23cc64c48358e3c57b71c6df16bde2f9ca4d5ddacc0431"
+    },
+    "root_review": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-onboarding1040-review-20260914-3RkvIPQ2/touch-1040-root-review.json",
+      "sha256": "8776c786be10f2efd402d36e7998dc441ce23e17dec1183828df6b7501df166f"
+    },
+    "assembly": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-onboarding1040-review-20260914-3RkvIPQ2/assembly-summary.json",
+      "sha256": "542a186c5f6865fdbd94e931a05d2cc2ee63ea75c43eab3b089316d58589d02a"
+    },
+    "source_refresh": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-onboarding1040-review-20260914-3RkvIPQ2/current-main-refresh/summary.json",
+      "sha256": "12f64ba415b15c13ba696d66c5b2e14f84abf7fe1a3848725172feefe6d6d942"
+    },
+    "checks": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-onboarding1040-review-20260914-3RkvIPQ2/current-main-refresh/checks/summary.json",
+      "sha256": "a3ab98ccdf644e3f9a2d2355a1b180891c2f1b390f5e977618f3be8819791ee7"
+    },
+    "mapping": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-onboarding1040-review-20260914-3RkvIPQ2/current-main-refresh/selected-map.json",
+      "sha256": "cdab5184c68704b9c1b9226d979a24e8949ad785c2827fc9e043f47d883a861b"
+    },
+    "forge_probes": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-onboarding1040-review-20260914-3RkvIPQ2/current-main-refresh/forge-probes/probes.json",
+      "sha256": "fc2cb6d9eee8c209f272965686b14e0c49800fc660ba3fa85c62c80351e5c6a1"
+    },
+    "refreshed_assembly": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-onboarding1040-review-20260914-3RkvIPQ2/current-main-refresh/refreshed-assembly-summary.json",
+      "sha256": "f9173c15c1c615ae84b3a5c239be77ce6181db15fec499be9cf219c3fde3f450"
+    },
+    "refreshed_root_review": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-onboarding1040-review-20260914-3RkvIPQ2/current-main-refresh/refreshed-full-root-review.json",
+      "sha256": "b9975d99dbfc13e62409cfbb538303e2460dd3c774c452ffb76ef0cabc6963b8"
+    },
+    "publication": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-onboarding1040-review-20260914-3RkvIPQ2/publication-summary.json",
+      "sha256": "fe201a6323ef960ba7c13a58925b85b8c8c92eb08603482fcb7b1fdb08f95536"
+    },
+    "publication_after": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-onboarding1040-review-20260914-3RkvIPQ2/publication-after-results.json",
+      "sha256": "8996ec5ffe37d352e1d56f301e519e794fdb915686dcd5e1500c243752e59c79"
+    },
+    "formal_dry_run": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-onboarding1040-review-20260914-3RkvIPQ2/publication-formal-audit.json",
+      "sha256": "23044bee22fd6edf398393a776d80d22e04d9ba9f0733c8135d32b345a64741c"
+    },
+    "historical_doctor_probes": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-onboarding1040-review-20260914-3RkvIPQ2/doctor-probes/probes.json",
+      "sha256": "9a9a419a5ffbf082141b4957357c74286d95f0d8f919aab30a88243a91fca800"
+    }
+  },
+  "boundary": "Published audit checkpoint for report-only landing. Earlier 113 published results and all earlier reports remain immutable. Only a finalized compact report may be landed; raw evidence and helpers remain external. Canonical Plans, concepts, registrations, governance artifacts and implementation are unchanged. Remaining cases and final evidence-backed synthesis remain required.",
+  "publication_qualification_commit": "dd1df59d6307952d82a5c93be9ad4083a5bc0773"
+}
