@@ -1,0 +1,53 @@
+{
+  "schema": "shape.evaluation_preparation_report.v1",
+  "campaign_id": "phase1-20260921",
+  "status": "method_and_source_checks_recorded_before_first_semantic_score",
+  "evaluator": "root_astra_high",
+  "participant_scoring_performed": false,
+  "configuration_mapping_accessed": false,
+  "comparison_tool_tests_passed": 17,
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/SCORING.md",
+      "sha256": "aa1e2c7aab9128bd1b9e4b2f5c62f7325cc3ff39b6fcdd5d68818742169806bd"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/reference/fixed-reference.json",
+      "sha256": "54fdca6a4aa9a6356da545a0c195c835557c2a8b1fe16feb9356d0d09a83fbde"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/score-freeze.json",
+      "sha256": "e7a2541385f8707afe4d83dde33b3fd90e389c489f5fa264b067514db0b0792f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/pinned-checks/ome-spec.json",
+      "sha256": "d3450954499d8ea5f0902e38a00a28c350057b3c0562b4bb717d49d2f344024d"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/pinned-checks/ome-python.json",
+      "sha256": "8a9975ff8b3232843423f96d0f99d32001303a11ecebd385f6017f65090b900a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/pinned-checks/jujutsu-gc.json",
+      "sha256": "a4ecae93eb8470c0b5821067ee0f347ce3150d2f569c7741b0f4886d00c671f0"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/pinned-checks/jujutsu-terminal-receipts.json",
+      "sha256": "e28e8cc39a95774f2628a8b22e1d9ac918a62f8ef3770d5031c6ebe22a209093"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/jujutsu-coverage-inventory.json",
+      "sha256": "8917c9ff438b59245a20e70a6c79cad08d3ccffa4aed899bc2d1ad23b26e0487"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/comparison-tools-validation.json",
+      "sha256": "a3d69e06368617f375a6dc1a5a67f8b5e6a8bb95749bb33dfedaf15ae290a6ca"
+    }
+  ],
+  "limits": [
+    "Source checks establish only the inspected pinned propositions; they assign no participant credit.",
+    "Mechanical tests validate exact-set and nullable-economics processing; they do not certify semantic quality or experimental results.",
+    "The parent evaluator has not read configuration mapping or real run economics.",
+    "Historical prelaunch preparation remains a separate checkpoint; neither file is a completed-results report."
+  ]
+}
