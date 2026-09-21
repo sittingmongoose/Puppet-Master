@@ -5500,12 +5500,15 @@
     {
       "profile_id": "TCP-PERMISSIONS",
       "requirement_refs": [
-        "Plans/Permissions_System.md#PS-130",
+        "Plans/Permissions_System.md#PS-065",
+        "Plans/Permissions_System.md#PS-072",
+        "Plans/Permissions_System.md#Permissions-UI-Commands-And-Error-States",
+        "Plans/Permissions_System.md#TOML-Persistence-Failure-And-Atomicity-Rules",
         "Plans/UI_Command_Catalog.md#UCC-113",
         "Plans/Settings_System.md#SSYS-023"
       ],
       "owner_plan": "Plans/Permissions_System.md",
-      "plan_unit": "PS-130",
+      "plan_unit": "PS-065",
       "dry_contract_ref": "Plans/Permissions_System.md#Permissions-UI-Commands-And-Error-States",
       "payload_schema_ref": "typed rule identity, scope, draft, order, loaded_config_hash and idempotency",
       "result_schema_ref": "typed validation or atomic permission-rule result",

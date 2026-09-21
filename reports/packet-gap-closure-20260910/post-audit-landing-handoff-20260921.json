@@ -1,0 +1,72 @@
+{
+  "schema_id": "pm.post_audit_landing_handoff.v1",
+  "date": "2026-09-21",
+  "status": "main_push_blocked",
+  "checked_head": "44172dbfb1bfc660c342f7adb33057c7b67d468e",
+  "remote_main_at_check": "478cd2aa0fa5a5660961f351918739d43643bbac",
+  "published_landing_branch": "audit/touch-connections-landing-20260921",
+  "following_repair_branch": "fix/post-audit-contract-repair-20260921",
+  "state": "Shared main was fast-forwarded to checked_head for the required pre-push check. That check exited 2, so main was not pushed. The reviewed audit/repair commits are published on the landing branch to both configured remotes; no reset, forced push, baseline refresh, or governance reseal was performed.",
+  "evidence": {
+    "landing_capture": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-landing-20260921-44172dbf/summary.json",
+      "sha256": "7ce30b941476ede1b65dc014174950936876f74c5cbc2f013d13d2af119361dd"
+    },
+    "landing_output": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-landing-20260921-44172dbf/landing-check.stdout",
+      "sha256": "061ed32b90e48b1f5cca64fc8569ca678785fd007996305a1a466ef960e2c0cd"
+    },
+    "diagnosis": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-readiness-diagnosis-20260921-3zr4yujv/classification.json",
+      "sha256": "1f77037667006e6d7872949bdfc876a059e81a97fdf3a96a2b3d0b80aa2b3fdc"
+    },
+    "diagnosis_details": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-readiness-diagnosis-20260921-3zr4yujv/diagnosis.json",
+      "sha256": "cd76ae76d7d7258ef4d467973103afc2c674025fa8a9248c3f2d62d8af51ab52"
+    },
+    "full_readiness_output": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-readiness-diagnosis-20260921-3zr4yujv/validate.stdout",
+      "sha256": "c89dde44e992beadae35d3a712c8ac0b74892d29c296e748d76901407808f95e"
+    }
+  },
+  "landing_result": {
+    "exit_code": 2,
+    "blocking_items": 5,
+    "shard_check_exit_code": 0,
+    "shard_documents": 99,
+    "shards": 2691,
+    "blocking_reasons": [
+      "Two truncated implementation-readiness subcheck totals rose from 124 to 218.",
+      "Three on-branch non-excused samples name event_authority_currentness_source_drift: Commands_System.md in both aggregates and UI_Command_Catalog.md in audit-governance."
+    ],
+    "new_nonblocking_touch_finding": "The optional historical central map still classifies ui.project.restore_archived as a typed local action, whereas PJCT-002/003, UCC-151 and WM-050 require a pre-gate adapter to cmd.project.unarchive. A separate follow-up repair checks the exact successor instead of reinstating a peer action; this handoff does not claim a rerun of the shared aggregate.",
+    "governance_staleness": "Migration snapshot and ordinary owner/evidence hashes remain stale. They were not refreshed by this work."
+  },
+  "diagnosis": {
+    "both_command_documents_already_drift_at_remote_main": true,
+    "shared_ignored_event_authority_audit_present": true,
+    "baseline_observation": "One event_authority_currentness_audit_unavailable failure was recorded in the sampled baseline.",
+    "current_observation": {
+      "source_drift": 92,
+      "direct_plan_source_set_drift": 1,
+      "validator_drift": 1,
+      "live_registry_drift": 1,
+      "total": 95
+    },
+    "numeric_increase_over_one_unavailable_record": 94,
+    "baseline_equivalence_proven": false,
+    "qualification": "The numerical explanation is not proof of all unseen baseline rows or of why the baseline audit was unavailable. The truncated-total rule still stops this landing. Do not delete or hide audit inputs or refresh a baseline merely to pass.",
+    "checkpoint_boundary": "The currentness helper expects 40 kernel rows/revision 2026-09-11.1 while the live registry has 42/revision 2026-09-11.2. This is a designated-owner currentness/approval-lineage issue, not authority for this task to advance the checkpoint or claim Event Authority closure."
+  },
+  "required_handoff": [
+    "The designated Plans/Event Authority owner must review audit custody and currentness, checkpoint approval lineage, readiness ownership and consistent input availability for the landing baseline.",
+    "Resolve the blocker through the authorized governance workflow; do not weaken the landing gate, rewrite historical audit judgments, or treat existing registry rows as fresh checkpoint approval.",
+    "Re-fetch and re-evaluate any intervening canonical changes before landing the follow-up branch. Rerun the shared shard and landing checks before any main push.",
+    "After an authorized landing and successful push, remove the task's landed worktrees and local landing branches; publication on a branch is not represented as main completion."
+  ],
+  "unchanged_boundaries": [
+    "The formal R5 audit is complete for 13,416 retained cases and remains implementation FAIL.",
+    "Static repairs do not establish native handlers, provider/permission enforcement, durable recovery, visual acceptance or closure of 643 Touch runtime residuals.",
+    "Deferred Settings/Tour/Onboarding visual work and other agents' edits remain untouched."
+  ]
+}
