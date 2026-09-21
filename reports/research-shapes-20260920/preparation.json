@@ -1,0 +1,34 @@
+{
+  "schema": "shape.screen_preparation_report.v1",
+  "campaign_id": "phase1-20260921",
+  "status": "preparation_only",
+  "report_branch": "research/shapes-screen-20260921",
+  "initial_head": "977ae12f9e91b459f70d7f287f60a087160dbf8a",
+  "origin_main_at_creation": "977ae12f9e91b459f70d7f287f60a087160dbf8a",
+  "sparse_checkout": [
+    "reports"
+  ],
+  "original_lab_freeze_file_sha256": "add7ad9d4a6a9b243b2b908c1e073bab1334eed8e3c902c50400c3921884c8d1",
+  "baseline_content_sha256": "a95d3b6800f05b69e80e42ad0e02a78ac55e92bf457e32e74f5f335f9f4217dd",
+  "baseline_verification": "verified",
+  "input_file_count": 1343,
+  "physical_copy_file_count_including_freeze": 1344,
+  "physical_copy_bytes": 108933920,
+  "source_files_modified": false,
+  "cost_policy_sha256": "d262b0e53d925b97cd68b846559d67fc05050c92dbdb336aa6499db9da964d0b",
+  "custody_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/preparation/worktree.json",
+      "sha256": "c1351ac67d763581b28e1808d67e494649184b3e094d4520d0672a488627a429"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/preparation/baseline-copy.json",
+      "sha256": "72de243243ea78fb9a684698f779ab2b45cf78db016a2972a85b41d6652be3d5"
+    }
+  ],
+  "sanitization": "Account identifiers, credentials, process/session identifiers, disk/device telemetry, and local Git internals are excluded from this report projection. Original custody remains external, identified by path and hash.",
+  "scoring_performed": false,
+  "blind_mapping_created": false,
+  "native_launch_qualification": "pending",
+  "canonical_case_original_copies_verified": true
+}
