@@ -1,0 +1,1681 @@
+{
+  "schema_id": "pm.packet_audit_checkpoint.v1",
+  "status": "PARTIAL_AUDIT_PROGRESS_NOT_OVERALL_CLOSURE",
+  "reviewer": "Codex root B46 source-contract audit",
+  "intended_repository_path": "reports/packet-gap-closure-20260910/r5z-touch-connections-runtime-audit-checkpoint-20260921.json",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "initial_comparison_commit": "977ae12f9e91b459f70d7f287f60a087160dbf8a",
+  "published_review_comparison_commit": "977ae12f9e91b459f70d7f287f60a087160dbf8a",
+  "current_qualification_commit": "8e27ca6832ce7f469c60b55ad6dc74cba3760060",
+  "landing_base_commit": null,
+  "continuity": {
+    "prior_report": "reports/packet-gap-closure-20260910/r5y-touch-onboarding-runtime-audit-checkpoint-20260920.json",
+    "prior_report_sha256": "0faf08f19f86bec309af2e39052d6cff616cb4a80bb6631f69080c8865b28d30",
+    "boundary": "Prior reports and all 121 earlier result files remain immutable. This batch adds eight result files only."
+  },
+  "new_batch": {
+    "case_count": 1040,
+    "touch_rows": 80,
+    "dimensions_per_row": 13,
+    "touch_ids": [
+      "TOUCH-ICONN-001",
+      "TOUCH-ICONN-006",
+      "TOUCH-ICONN-002",
+      "TOUCH-ICONN-003",
+      "TOUCH-ICONN-004",
+      "TOUCH-ICONN-005",
+      "TOUCH-CONNDRAFT-001",
+      "TOUCH-CONNDRAFT-002",
+      "TOUCH-CONNDRAFT-003",
+      "TOUCH-CONNDRAFT-004",
+      "TOUCH-CONNDRAFT-005",
+      "TOUCH-CONNDRAFT-006",
+      "TOUCH-CONNDRAFT-007",
+      "TOUCH-AUTHPR-001",
+      "TOUCH-AUTHPR-002",
+      "TOUCH-AUTHPR-003",
+      "TOUCH-AUTHPR-004",
+      "TOUCH-AUTHPR-005",
+      "TOUCH-AUTHPR-006",
+      "TOUCH-AUTHPR-007",
+      "TOUCH-AUTHPR-008",
+      "TOUCH-BSD-001",
+      "TOUCH-GHPR-001",
+      "TOUCH-FGIPR-001",
+      "TOUCH-FGIPR-002",
+      "TOUCH-SETLOC-001",
+      "TOUCH-SETLOC-002",
+      "TOUCH-SETLOC-003",
+      "TOUCH-PSLOC-001",
+      "TOUCH-PSLOC-002",
+      "TOUCH-PSLOC-003",
+      "TOUCH-PSLOC-004",
+      "TOUCH-PSLOC-005",
+      "TOUCH-PSLOC-006",
+      "TOUCH-PSLOC-007",
+      "TOUCH-PSLOC-008",
+      "TOUCH-PSLOC-009",
+      "TOUCH-PSLOC-010",
+      "TOUCH-PSLOC-011",
+      "TOUCH-PSLOC-012",
+      "TOUCH-PSLOC-013",
+      "TOUCH-PSLOC-014",
+      "TOUCH-PSLOC-015",
+      "TOUCH-PSLOC-016",
+      "TOUCH-PSLOC-017",
+      "TOUCH-PSLOC-018",
+      "TOUCH-PSLOC-019",
+      "TOUCH-PSLOC-020",
+      "TOUCH-CAPLOC-001",
+      "TOUCH-NPLOC-001",
+      "TOUCH-ORILOC-001",
+      "TOUCH-PERFLOC-001",
+      "TOUCH-PWLOC-001",
+      "TOUCH-GNAV-001",
+      "TOUCH-GPAN-001",
+      "TOUCH-GPAN-002",
+      "TOUCH-GPAN-003",
+      "TOUCH-GWID-001",
+      "TOUCH-GWID-002",
+      "TOUCH-GWID-003",
+      "TOUCH-GWID-004",
+      "TOUCH-GWID-005",
+      "TOUCH-GLAY-001",
+      "TOUCH-GLAY-002",
+      "TOUCH-GLAY-003",
+      "TOUCH-GLAY-004",
+      "TOUCH-HOVER-001",
+      "TOUCH-HOVER-002",
+      "TOUCH-HOVER-003",
+      "TOUCH-HOVER-004",
+      "TOUCH-ACCT-001",
+      "TOUCH-ARTIFACT-001",
+      "TOUCH-MEMORY-001",
+      "TOUCH-MEMORY-002",
+      "TOUCH-INST-006",
+      "TOUCH-LSP-001",
+      "TOUCH-NOTIFY-001",
+      "TOUCH-PERM-001",
+      "TOUCH-PERM-002",
+      "TOUCH-PERM-003"
+    ],
+    "status_counts": {
+      "pass": 415,
+      "partial": 589,
+      "fail": 29,
+      "blocked": 7
+    },
+    "applicability_counts": {
+      "retained": 1040
+    },
+    "chunks": [
+      "chunk-00122",
+      "chunk-00123",
+      "chunk-00124",
+      "chunk-00125",
+      "chunk-00126",
+      "chunk-00127",
+      "chunk-00128",
+      "chunk-00129"
+    ],
+    "authored_judgment_files": 1,
+    "dimension_status_counts": {
+      "requirement_and_packet_refs": {
+        "pass": 80
+      },
+      "canonical_owner_and_plan_unit": {
+        "pass": 79,
+        "blocked": 1
+      },
+      "single_dry_contract": {
+        "pass": 57,
+        "fail": 2,
+        "partial": 20,
+        "blocked": 1
+      },
+      "command_or_typed_ui_action": {
+        "pass": 74,
+        "fail": 5,
+        "blocked": 1
+      },
+      "payload_result_error_availability_permissions_disabled_reason": {
+        "fail": 9,
+        "partial": 70,
+        "blocked": 1
+      },
+      "single_handler_owner": {
+        "pass": 79,
+        "blocked": 1
+      },
+      "production_or_concept_wiring": {
+        "partial": 72,
+        "fail": 7,
+        "blocked": 1
+      },
+      "gui_trigger_and_return_route": {
+        "partial": 79,
+        "fail": 1
+      },
+      "reverse_consumer_coverage": {
+        "partial": 75,
+        "fail": 5
+      },
+      "events_receipts_observable_work": {
+        "partial": 45,
+        "pass": 35
+      },
+      "persistence_and_migration": {
+        "partial": 69,
+        "pass": 11
+      },
+      "tests_and_evidence": {
+        "partial": 80
+      },
+      "disposition_and_residual_risk": {
+        "partial": 79,
+        "blocked": 1
+      }
+    },
+    "method": "Root-authored literal judgments mechanically expanded and validated against exact source/evidence. This checkpoint copies their status/finding/residual cells without assigning new verdicts."
+  },
+  "cumulative_r5": {
+    "publication_state": "PUBLISHED_PARTIAL_AUDIT_PROGRESS",
+    "expected_cases": 13416,
+    "before_publication": {
+      "reviewed_cases": 9607,
+      "result_files": 121,
+      "remaining_cases": 3809
+    },
+    "reviewed_cases": 10647,
+    "remaining_cases": 2769,
+    "result_files": 129,
+    "remaining_result_files": 22,
+    "status_counts": {
+      "partial": 7905,
+      "not_applicable": 7,
+      "blocked": 46,
+      "fail": 361,
+      "pass": 2328
+    },
+    "validation_failures": 0,
+    "duplicate_cases": 0,
+    "unexpected_result_files": 0,
+    "prior_result_files_preserved_byte_for_byte": 121,
+    "complete": false,
+    "implementation_verdict": "not_inferred"
+  },
+  "failed_and_blocked_dimension_cases": [
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-ICONN-001/payload_result_error_availability_permissions_disabled_reason",
+      "source_identifier": "TOUCH-ICONN-001",
+      "status": "fail",
+      "finding": "cmd.integration.connection.add: a valid inactive-draft result remains schema-valid after only connection_state becomes ready.",
+      "residual": "SIR reserves ready/ready-with-limits activation for the separate activate operation; this is static schema inconsistency, not an observed provider activation."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-CONNDRAFT-001/payload_result_error_availability_permissions_disabled_reason",
+      "source_identifier": "TOUCH-CONNDRAFT-001",
+      "status": "fail",
+      "finding": "cmd.connection.draft.create normalizes to add, whose result accepts ready despite the canonical inactive-draft/separate-activation boundary.",
+      "residual": "The target schema defect carries through the alias; no separate alias probe or actual activation was executed."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-AUTHPR-002/payload_result_error_availability_permissions_disabled_reason",
+      "source_identifier": "TOUCH-AUTHPR-002",
+      "status": "fail",
+      "finding": "cmd.auth_profile.sign_out: completed authentication_state_changed result remains valid after projected_auth_state changes from signed_out to verified.",
+      "residual": "MACS requires ending/revoking authentication for the exact profile; static result consistency gap only, with no observed credential revocation or live session."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-AUTHPR-006/payload_result_error_availability_permissions_disabled_reason",
+      "source_identifier": "TOUCH-AUTHPR-006",
+      "status": "fail",
+      "finding": "cmd.auth_profile.submit_code: allow decision with required protected_input_submit/auth_operation_control still validates with granted_scopes=[].",
+      "residual": "Exact-scope permission-record consistency is not enforced by this schema; no runtime permission bypass or protected input submission was observed."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-AUTHPR-007/payload_result_error_availability_permissions_disabled_reason",
+      "source_identifier": "TOUCH-AUTHPR-007",
+      "status": "fail",
+      "finding": "cmd.auth_profile.open_official_page: valid external-handoff result accepts effect_kind=profile_selection_changed.",
+      "residual": "MACS restricts this action to external-handoff lifecycle and assigns selection separately; no actual profile change was observed."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-BSD-001/single_dry_contract",
+      "source_identifier": "TOUCH-BSD-001",
+      "status": "fail",
+      "finding": "cmd.bsd.set: profile and sole wiring use shared_runtime_command_contracts, while the revised central row points to absent back_seat_driver_contracts.schema.json.",
+      "residual": "Reconcile the revised central reference with the actual owner contract; no competing handler is established."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-BSD-001/payload_result_error_availability_permissions_disabled_reason",
+      "source_identifier": "TOUCH-BSD-001",
+      "status": "fail",
+      "finding": "cmd.bsd.set: the existing request permits only global/project/run scope kinds, omitting BSD-021's assignment/workflow/stage extension; the revised pointed-to schema is absent.",
+      "residual": "Current machine coverage does not encode all accepted owner scopes; no native policy behavior tested."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-BSD-001/reverse_consumer_coverage",
+      "source_identifier": "TOUCH-BSD-001",
+      "status": "fail",
+      "finding": "cmd.bsd.set: revised Commands/Catalog contract references diverge from the shared-runtime profile/wiring references.",
+      "residual": "The in-place owner reconciliation must retain one route while resolving the contract-reference drift."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-PSLOC-001/command_or_typed_ui_action",
+      "source_identifier": "TOUCH-PSLOC-001",
+      "status": "fail",
+      "finding": "ui.settings.project_sync.client.inspect is retained as inventory, while T46 explicitly binds the visible client control to ui.client.open_details.",
+      "residual": "The old action row is not an exact current client-control binding; no successor native execution is implied."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-PSLOC-001/production_or_concept_wiring",
+      "source_identifier": "TOUCH-PSLOC-001",
+      "status": "fail",
+      "finding": "The old client.inspect token remains only in the retained constant; the traced control/handler uses ui.client.open_details.",
+      "residual": "Retained inventory is not live wiring; T50 reachability is separately unproved."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-PSLOC-010/command_or_typed_ui_action",
+      "source_identifier": "TOUCH-PSLOC-010",
+      "status": "fail",
+      "finding": "ui.settings.project_sync.location.preview_add is explicitly replaced at the control by cmd.project.source_location.add.",
+      "residual": "Do not count a retained preview inventory ID as the current canonical owner command."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-PSLOC-010/production_or_concept_wiring",
+      "source_identifier": "TOUCH-PSLOC-010",
+      "status": "fail",
+      "finding": "The Add location control source binds the canonical source_location.add command rather than the retained preview_add ID.",
+      "residual": "No actual location mutation or native dispatch was performed."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-PSLOC-011/command_or_typed_ui_action",
+      "source_identifier": "TOUCH-PSLOC-011",
+      "status": "fail",
+      "finding": "ui.settings.project_sync.location.preview_edit is explicitly replaced at the control by cmd.project.source_location.update.",
+      "residual": "The retained preview identity is not the current update binding."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-PSLOC-011/production_or_concept_wiring",
+      "source_identifier": "TOUCH-PSLOC-011",
+      "status": "fail",
+      "finding": "The Edit location control source binds source_location.update; its preview_edit inventory spelling is not that control's exact identity.",
+      "residual": "No actual location update or native dispatch was performed."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-PSLOC-012/command_or_typed_ui_action",
+      "source_identifier": "TOUCH-PSLOC-012",
+      "status": "fail",
+      "finding": "ui.settings.project_sync.project.preview_copy is replaced by the separate duplicate_configuration/duplicate_with_history owner commands.",
+      "residual": "Do not collapse the two owner operations into the old preview spelling."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-PSLOC-012/production_or_concept_wiring",
+      "source_identifier": "TOUCH-PSLOC-012",
+      "status": "fail",
+      "finding": "The traced copy controls bind canonical Project duplicate operations, not project.preview_copy.",
+      "residual": "No actual copy, persistence or native dispatch was performed."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-PSLOC-013/command_or_typed_ui_action",
+      "source_identifier": "TOUCH-PSLOC-013",
+      "status": "fail",
+      "finding": "ui.settings.project_sync.project.preview_move is replaced by ui.project.move.open_details and the preflight/start owner commands.",
+      "residual": "Local details, preflight and execution remain distinct authorities."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-PSLOC-013/production_or_concept_wiring",
+      "source_identifier": "TOUCH-PSLOC-013",
+      "status": "fail",
+      "finding": "The retained preview_move constant is not the exact binding of the traced move details/preflight/start controls.",
+      "residual": "No move, filesystem effect or native dispatch was performed."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-GNAV-001/payload_result_error_availability_permissions_disabled_reason",
+      "source_identifier": "TOUCH-GNAV-001",
+      "status": "fail",
+      "finding": "ui.guided_tour.focus_route: current request requires guided_tour.workspace.heading, but both applied and disabled result schemas require guided_tour.usage.heading.",
+      "residual": "Both single-field workspace result mutations were rejected after three valid baselines; these are separate fixtures, not a correlated runtime execution."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-GNAV-001/gui_trigger_and_return_route",
+      "source_identifier": "TOUCH-GNAV-001",
+      "status": "fail",
+      "finding": "ui.guided_tour.focus_route: exact return-focus identity disagrees across current request, result schema and source helper.",
+      "residual": "Reconcile the workspace-vs-Usage contract before claiming exact return; no browser/native focus observed."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-GNAV-001/reverse_consumer_coverage",
+      "source_identifier": "TOUCH-GNAV-001",
+      "status": "fail",
+      "finding": "ui.guided_tour.focus_route: PWIZ-023's current workspace tour and request schema are not consistently consumed by the result schema/source helper.",
+      "residual": "No blanket tour or consumer closure from separately passing fixtures."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-GPAN-002/payload_result_error_availability_permissions_disabled_reason",
+      "source_identifier": "TOUCH-GPAN-002",
+      "status": "fail",
+      "finding": "cmd.panel.undock: catalog requires panel_id/current_host, but Home moveSurface and drag source emit surface_instance_id/source_host without those fields.",
+      "residual": "The command and commit builders merge payload without translation; source-shape mismatch only, not an observed dispatch or native rejection."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-GPAN-002/production_or_concept_wiring",
+      "source_identifier": "TOUCH-GPAN-002",
+      "status": "fail",
+      "finding": "Home undock paths select cmd.panel.undock but construct a surface-shaped payload that omits catalog-required panel_id/current_host.",
+      "residual": "The same declaration is retained in tracked HTML; this is not live reachability or browser/native acceptance proof."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-GPAN-002/reverse_consumer_coverage",
+      "source_identifier": "TOUCH-GPAN-002",
+      "status": "fail",
+      "finding": "Home's undock consumer payload does not conform to the unchanged canonical panel-field contract.",
+      "residual": "Multiple Home control rows still share one handler; the issue is payload drift, not duplicate semantic ownership."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-GPAN-003/payload_result_error_availability_permissions_disabled_reason",
+      "source_identifier": "TOUCH-GPAN-003",
+      "status": "fail",
+      "finding": "cmd.panel.redock: catalog requires panel_id/target_host, but Home moveSurface and drag source emit surface_instance_id plus target_host and omit panel_id.",
+      "residual": "The builders merge the payload without a panel identity translation; no actual dispatch or native rejection was observed."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-GPAN-003/production_or_concept_wiring",
+      "source_identifier": "TOUCH-GPAN-003",
+      "status": "fail",
+      "finding": "Home redock paths select cmd.panel.redock while constructing a surface-shaped payload without the catalog-required panel_id.",
+      "residual": "Tracked HTML source retention does not prove live execution or native acceptance."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-GPAN-003/reverse_consumer_coverage",
+      "source_identifier": "TOUCH-GPAN-003",
+      "status": "fail",
+      "finding": "Home's redock consumer payload omits the canonical panel identity field.",
+      "residual": "This is source-contract drift, not a second handler or an observed layout mutation."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-ARTIFACT-001/canonical_owner_and_plan_unit",
+      "source_identifier": "TOUCH-ARTIFACT-001",
+      "status": "blocked",
+      "finding": "cmd.artifacts.open_panel: no canonical artifact-owner admission is supplied by the Settings packet spelling.",
+      "residual": "Owner admission is still required; Settings cannot assume artifact/filesystem/navigation authority."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-ARTIFACT-001/single_dry_contract",
+      "source_identifier": "TOUCH-ARTIFACT-001",
+      "status": "blocked",
+      "finding": "cmd.artifacts.open_panel: exact canonical request/result contract remains absent_pending_canonical_catalog_admission.",
+      "residual": "Do not synthesize a peer contract from a route-like name."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-ARTIFACT-001/command_or_typed_ui_action",
+      "source_identifier": "TOUCH-ARTIFACT-001",
+      "status": "blocked",
+      "finding": "cmd.artifacts.open_panel: prose mention is intentionally not canonical command registration.",
+      "residual": "Always surface command_not_registered until owner admission exists."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-ARTIFACT-001/payload_result_error_availability_permissions_disabled_reason",
+      "source_identifier": "TOUCH-ARTIFACT-001",
+      "status": "blocked",
+      "finding": "cmd.artifacts.open_panel: unavailable state and command_not_registered/handler_unavailable are specified; an admitted payload/result/error contract is absent.",
+      "residual": "No dispatch or simulated success is permitted."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-ARTIFACT-001/single_handler_owner",
+      "source_identifier": "TOUCH-ARTIFACT-001",
+      "status": "blocked",
+      "finding": "cmd.artifacts.open_panel: no sole artifact handler is admitted.",
+      "residual": "No Settings-local substitute may mutate or navigate artifact state."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-ARTIFACT-001/production_or_concept_wiring",
+      "source_identifier": "TOUCH-ARTIFACT-001",
+      "status": "blocked",
+      "finding": "cmd.artifacts.open_panel: command production wiring is intentionally absent while owner admission is blocked.",
+      "residual": "Do not add an executable route from prose alone."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-ARTIFACT-001/disposition_and_residual_risk",
+      "source_identifier": "TOUCH-ARTIFACT-001",
+      "status": "blocked",
+      "finding": "cmd.artifacts.open_panel: preserve the explicit blocked owner/catalog/contract/handler gap.",
+      "residual": "No artifact admission, implementation or runtime closure is claimed."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-INST-006/single_dry_contract",
+      "source_identifier": "TOUCH-INST-006",
+      "status": "fail",
+      "finding": "cmd.installation.update: the shared touch profile points to InstallationSelect request/result, but the actual update catalog/wiring uses installation_lifecycle_command_request/result.",
+      "residual": "This is a row/profile contract misbinding, not absence of the canonical lifecycle update contract."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-INST-006/reverse_consumer_coverage",
+      "source_identifier": "TOUCH-INST-006",
+      "status": "fail",
+      "finding": "cmd.installation.update: Touch Closure select-profile pointers do not match the lifecycle update contract used by its central owner/wiring consumers.",
+      "residual": "Earlier published Install cases remain immutable; this batch records the current update row discrepancy."
+    }
+  ],
+  "dimension_case_count_boundary": "29 failed dimension cases and 7 blocked dimension cases; these are not 29 distinct defects or 29 observed runtime failures. One source issue may appear in multiple dimensions or alias rows.",
+  "qualified_partial_case_extracts": [
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-ICONN-006/payload_result_error_availability_permissions_disabled_reason",
+      "source_identifier": "TOUCH-ICONN-006",
+      "status": "partial",
+      "finding": "cmd.integration.connection.activate: schema accepts its permission record after required_scopes becomes installation_select instead of connection_activate.",
+      "residual": "The missing command/scope binding is observed; owner prose requires current permission but no resolved snapshot or unauthorized activation was demonstrated."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-ICONN-005/payload_result_error_availability_permissions_disabled_reason",
+      "source_identifier": "TOUCH-ICONN-005",
+      "status": "partial",
+      "finding": "cmd.integration.connection.open_details: result conditionals force outcome=no_effect and error=null for all results, excluding typed failures.",
+      "residual": "The rejected test used an activation-specific error donor; whether read failures intentionally travel elsewhere needs adjudication, not an asserted owner violation."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-CONNDRAFT-002/payload_result_error_availability_permissions_disabled_reason",
+      "source_identifier": "TOUCH-CONNDRAFT-002",
+      "status": "partial",
+      "finding": "cmd.connection.activate normalizes to activation; the target permission schema accepts an installation_select scope declaration.",
+      "residual": "Missing machine command/scope binding is not proof that an executor authorizes the operation."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-CONNDRAFT-006/payload_result_error_availability_permissions_disabled_reason",
+      "source_identifier": "TOUCH-CONNDRAFT-006",
+      "status": "partial",
+      "finding": "cmd.connection.open_details normalizes to a read-only result type that unconditionally forces no_effect and error=null.",
+      "residual": "Actual failed-read representation needs owner adjudication; the activation-error donor is not a clean authored read failure."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-AUTHPR-001/payload_result_error_availability_permissions_disabled_reason",
+      "source_identifier": "TOUCH-AUTHPR-001",
+      "status": "partial",
+      "finding": "cmd.auth_profile.sign_in: mutating an accepted existing-profile awaiting_human/external_handoff result to completed with null profile/account is schema-valid.",
+      "residual": "This is not an authored completed-authentication or MACS-005 first-time-success baseline; stronger identity-success violation is not established by this probe."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-PSLOC-006/production_or_concept_wiring",
+      "source_identifier": "TOUCH-PSLOC-006",
+      "status": "partial",
+      "finding": "ui.settings.project_sync.continuity.preview_edit is reused on T50 continuity switches through PM51.toggle; handler updates concept-local state.",
+      "residual": "No native continuity policy, durable owner update or live control execution."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-PSLOC-014/production_or_concept_wiring",
+      "source_identifier": "TOUCH-PSLOC-014",
+      "status": "partial",
+      "finding": "ui.settings.project_sync.remote.preview_add is reused by the T50 Add SSH folder section action.",
+      "residual": "Source helper binding does not prove a live control, SSH connection or durable folder creation."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-PSLOC-015/production_or_concept_wiring",
+      "source_identifier": "TOUCH-PSLOC-015",
+      "status": "partial",
+      "finding": "ui.settings.project_sync.remote.preview_edit is reused on the T50 SSH-folder More menu trigger, not directly on its Edit leaf.",
+      "residual": "Do not claim a one-to-one direct Edit control or live menu execution."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-PSLOC-015/gui_trigger_and_return_route",
+      "source_identifier": "TOUCH-PSLOC-015",
+      "status": "partial",
+      "finding": "The reused remote.preview_edit identity opens a More menu containing Edit and Remove options.",
+      "residual": "Exact leaf binding/focus return is not established by the trigger's identity."
+    },
+    {
+      "case_ref": "touch_closure_dimensions/TOUCH-PSLOC-016/production_or_concept_wiring",
+      "source_identifier": "TOUCH-PSLOC-016",
+      "status": "partial",
+      "finding": "ui.settings.project_sync.remote.preview_import is reused by the T50 Import from an SSH folder button; source save callback reports example-data-only preview.",
+      "residual": "No actual workspace import, SSH access or native execution."
+    }
+  ],
+  "narrow_pass_boundary": "415 literal pass cells establish only their individually stated source/contract/owner or no-effect boundaries. Native runtime acceptance is not established. Other cells remain 589 partial, 29 fail and 7 blocked; no aggregate implementation pass follows.",
+  "currentness": {
+    "status": "ROOT_QUALIFIED_SOURCE_AND_STATIC_CHECKS_ONLY",
+    "captured_comparison_commit": "977ae12f9e91b459f70d7f287f60a087160dbf8a",
+    "qualified_current_commit": "8e27ca6832ce7f469c60b55ad6dc74cba3760060",
+    "source_path_count": 7204,
+    "changed_source_path_count": 63,
+    "unchanged_source_path_count": 7141,
+    "selected_span_count": 587,
+    "same_text_same_position_span_count": 587,
+    "changed_or_shifted_span_count": 0,
+    "delta_scope": "The scoped inventory records 13 changed previously captured non-shard paths, 21 changed governance-owner shard paths, and 29 additions (the landing checker and 28 newly tracked governance/PM7/usage fixtures). Changes affect landing rules, governance owners/indexes and validation support, not the selected owner passages, schemas, command/wiring definitions or concept producers. The source inventory is deterministic support, not observed dynamic dependency tracing or a claim to cover every runtime read.",
+    "root_qualification": "Retain the 1040 published B46 judgments unchanged: 415 pass, 589 partial, 29 fail and 7 blocked. Root reviewed the changed validator code and exact changed-path/span observations. None of these changes resolves the recorded connection/auth result inconsistencies, BSD contract-reference/scope drift, replaced Settings action identities, Guided Tour focus inconsistency, Home panel payload mismatch, installation-update profile misbinding, or blocked artifact admission. Newly tracked fixtures do not repair unchanged producers or establish native execution.",
+    "separate_fresh_checks": {
+      "comparison_commit": "8e27ca6832ce7f469c60b55ad6dc74cba3760060",
+      "named_checks": 5,
+      "exit_zero": 4,
+      "exit_one": 1,
+      "outcomes": "Fixture validation, wiring validation, 37 touch-source tests and the 99-document/2691-shard check pass. PRD/runtime schema-reference validation still reports exactly the same 1240 unresolved_local_ref failures as the historical run. These five fresh observations neither overwrite historical receipts nor assign new case verdicts."
+    },
+    "historical_evidence_qualification": "The other nine original checks, the separate resolved-launcher diagnostic, connection/auth schema probes and Guided Tour focus probes retain their original 977ae12 attribution. No changed relevant input was identified for those retained observations in the scoped source comparison; they were not rerun or relabelled as current execution. The original fourteen checks remain ten exit-zero and four exit-one, with the launcher diagnostic kept separate and no additive unique-test total.",
+    "preservation": "All 129 published result files remain byte-identical. No result, suite/overall metadata, completed report, canonical Plan, concept implementation or governance seal was changed by this qualification.",
+    "boundary": "Root semantic qualification is limited to the existing source/contract findings and the stated static check evidence. It is not native Rust/Slint, provider, browser/visual, permission-enforcement, persistence, migration, event-emission, readiness or full-audit acceptance. The 7204-path comparison is not dynamic dependency tracing. Another 2769 cases in 22 chunks remain unreviewed.",
+    "landing_delta_evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/currentness-five-check-refresh/source-currentness.json",
+      "sha256": "b3f444d99b6a12b31404786cd4aa0716a9e485214343d54b3274de6bcf3fd336"
+    }
+  },
+  "verification": {
+    "comparison_commit": "977ae12f9e91b459f70d7f287f60a087160dbf8a",
+    "initial_named_checks": {
+      "total": 14,
+      "exit_code_counts": {
+        "0": 10,
+        "1": 4
+      },
+      "nonzero_exit_names": [
+        "onboarding-phases",
+        "whole-command-inspection",
+        "prd-runtime-schema-refs",
+        "provenance-launcher-selftest"
+      ]
+    },
+    "reported_check_outcomes": {
+      "fixture-schema-validation": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks/fixture-schema-validation/receipt.json",
+          "sha256": "c9b94151393b76926c3ebb02f4cace5e72442c20ac4472f3c56ae2b63ec9c12f"
+        },
+        "exit_code": 0,
+        "timed_out": false,
+        "unittest": null,
+        "stdout_numeric_object_fields": {},
+        "stdout_top_level_list_lengths": {
+          "failures": 0
+        },
+        "reported_scalar_fields": {
+          "check": "validate-new-contracts",
+          "status": "pass"
+        },
+        "assertion_lines": []
+      },
+      "protected-auth-fixtures": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks/protected-auth-fixtures/receipt.json",
+          "sha256": "49f4f301d05e55913fc0480306f1fdd239bf7abe2ae8627142d645685ec2c8a2"
+        },
+        "exit_code": 0,
+        "timed_out": false,
+        "unittest": null,
+        "stdout_numeric_object_fields": {
+          "/cross_schema_positive_control_count": 3,
+          "/cross_schema_rejection_count": 3,
+          "/invalid_fixture_count": 27,
+          "/valid_fixture_count": 19
+        },
+        "stdout_top_level_list_lengths": {
+          "failures": 0
+        },
+        "reported_scalar_fields": {
+          "cross_schema_positive_control_count": 3,
+          "cross_schema_rejection_count": 3,
+          "invalid_fixture_count": 27,
+          "passed": true,
+          "schema_id": "pm.protected_auth_browser_contract_validation.v1",
+          "scope": "pre_build_static_contract_only",
+          "valid_fixture_count": 19
+        },
+        "assertion_lines": []
+      },
+      "onboarding-phases": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks/onboarding-phases/receipt.json",
+          "sha256": "54c2c038dec01926205299b84f67709be98a52dc19e4cf30dfa8241cb25099e2"
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "unittest": null,
+        "stdout_numeric_object_fields": null,
+        "stdout_top_level_list_lengths": null,
+        "reported_scalar_fields": null,
+        "assertion_lines": [
+          "AssertionError: 282 != 90"
+        ]
+      },
+      "forge-alias-consumer": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks/forge-alias-consumer/receipt.json",
+          "sha256": "4b16f1b1c2405d183ec34be159ea12ffe4b97a7b6609adc590c4c93a9230d527"
+        },
+        "exit_code": 0,
+        "timed_out": false,
+        "unittest": null,
+        "stdout_numeric_object_fields": null,
+        "stdout_top_level_list_lengths": null,
+        "reported_scalar_fields": null,
+        "assertion_lines": []
+      },
+      "wiring-matrix": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks/wiring-matrix/receipt.json",
+          "sha256": "929e99652575d2f0b899c8e1138863ef9959b109bb6b88594e39c2e541ac5464"
+        },
+        "exit_code": 0,
+        "timed_out": false,
+        "unittest": null,
+        "stdout_numeric_object_fields": {
+          "/generic_forge_row_count": 46,
+          "/vocabulary_review_profile_count": 12,
+          "/wiring_provider_literal_hit_count": 0,
+          "/wiring_provider_literal_row_count": 0
+        },
+        "stdout_top_level_list_lengths": {
+          "failures": 0
+        },
+        "reported_scalar_fields": {
+          "check": "validate-wiring-matrix",
+          "generated_at_utc": "2026-09-21T00:30:08Z",
+          "generic_forge_row_count": 46,
+          "status": "pass",
+          "vocabulary_review_profile_count": 12,
+          "wiring_provider_literal_hit_count": 0,
+          "wiring_provider_literal_row_count": 0
+        },
+        "assertion_lines": []
+      },
+      "touch-closure": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks/touch-closure/receipt.json",
+          "sha256": "0cbadafe0c66bba84468192077db4486483e5c37c81ec7a420f05804267a2079"
+        },
+        "exit_code": 0,
+        "timed_out": false,
+        "unittest": null,
+        "stdout_numeric_object_fields": {
+          "/action_kind_counts/command": 466,
+          "/action_kind_counts/command_alias": 65,
+          "/action_kind_counts/presentation": 7,
+          "/action_kind_counts/ui_action": 105,
+          "/actionable_primary_command_count": 465,
+          "/actionable_primary_commands_with_one_handler_identity": 465,
+          "/actionable_primary_commands_with_production_wiring": 465,
+          "/alias_binding_count": 65,
+          "/alias_peer_production_wiring_count": 0,
+          "/alias_target_count": 32,
+          "/blocked_primary_command_count": 1,
+          "/disposition_counts/blocked": 1,
+          "/disposition_counts/partial": 642,
+          "/excluded_token_count": 58,
+          "/failure_count": 0,
+          "/open_residual_count": 643,
+          "/profile_count": 133,
+          "/resolved_denominators/alias_binding_count": 65,
+          "/resolved_denominators/excluded_token_count": 58,
+          "/resolved_denominators/production_wiring_entry_count": 1142,
+          "/resolved_denominators/profile_count": 133,
+          "/resolved_denominators/row_count": 643,
+          "/resolved_handler_status_counts/absent": 2,
+          "/resolved_handler_status_counts/specified": 641,
+          "/resolved_wiring_status_counts/absent": 2,
+          "/resolved_wiring_status_counts/concept_simulated": 97,
+          "/resolved_wiring_status_counts/specified": 544,
+          "/row_count": 643,
+          "/server_gap_adjudication/alias_source_count": 43,
+          "/server_gap_adjudication/alias_target_count": 19,
+          "/server_gap_adjudication/disposition_counts/approved_alias_to_exact": 43,
+          "/server_gap_adjudication/disposition_counts/new_canonical_required": 87,
+          "/server_gap_adjudication/disposition_counts/rejected_with_reason": 3,
+          "/server_gap_adjudication/disposition_counts/typed_local_ui_action": 38,
+          "/server_gap_adjudication/required_excluded_source_count": 41,
+          "/server_gap_adjudication/row_count": 171,
+          "/server_gap_adjudication/sir_disposition_counts/approved_alias_to_exact": 33,
+          "/server_gap_adjudication/sir_disposition_counts/new_canonical_required": 44,
+          "/server_gap_adjudication/sir_disposition_counts/typed_local_ui_action": 14,
+          "/server_gap_adjudication/unique_token_count": 171
+        },
+        "stdout_top_level_list_lengths": {
+          "external_disposition_registries": 1,
+          "failures": 0
+        },
+        "reported_scalar_fields": {
+          "actionable_primary_command_count": 465,
+          "actionable_primary_commands_with_one_handler_identity": 465,
+          "actionable_primary_commands_with_production_wiring": 465,
+          "adjudication_path": "/home/sittingmongoose/pm-worktrees/touch-connections-source-audit-20260921/Plans/server_command_gap_adjudication.json",
+          "alias_binding_count": 65,
+          "alias_peer_production_wiring_count": 0,
+          "alias_target_count": 32,
+          "blocked_primary_command_count": 1,
+          "central_map_crosscheck": "not_present",
+          "excluded_token_count": 58,
+          "failure_count": 0,
+          "open_residual_count": 643,
+          "production_wiring_path": "/home/sittingmongoose/pm-worktrees/touch-connections-source-audit-20260921/Plans/Wiring_Matrix.production.json",
+          "profile_count": 133,
+          "registry_path": "/home/sittingmongoose/pm-worktrees/touch-connections-source-audit-20260921/Plans/touch_closure.json",
+          "row_count": 643,
+          "schema_id": "pm.touch_closure.validation_result.v3",
+          "schema_path": "/home/sittingmongoose/pm-worktrees/touch-connections-source-audit-20260921/Plans/touch_closure.schema.json",
+          "valid": true
+        },
+        "assertion_lines": []
+      },
+      "whole-command-inspection": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks/whole-command-inspection/receipt.json",
+          "sha256": "d5074056d4694340a64441a674232131027ac6e0a7588c1a7f4cf342bd4d6d6a"
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "unittest": null,
+        "stdout_numeric_object_fields": {
+          "/whole_wiring_inventory/command_count": 1078,
+          "/whole_wiring_inventory/wiring_row_count": 1142,
+          "/whole_wiring_inventory/commands_in_packet_touch": 465,
+          "/whole_wiring_inventory/commands_without_packet_touch": 613,
+          "/whole_wiring_inventory/rows_with_request_and_result_pointers": 400,
+          "/browser_successor_admission_check/required_event_families": 53,
+          "/browser_successor_admission_check/admitted_scoped_event_families": 2,
+          "/browser_successor_admission_check/prepared_scoped_event_families": 51,
+          "/browser_successor_admission_check/registry_family_count": 42,
+          "/browser_successor_admission_check/positive_cases": 53,
+          "/browser_successor_admission_check/negative_cases": 576,
+          "/browser_successor_admission_check/command_event_bindings_checked": 15
+        },
+        "stdout_top_level_list_lengths": {
+          "commands": 32,
+          "review_dimensions": 13,
+          "errors": 18,
+          "browser_events_pending_registry_admission": 51,
+          "browser_candidate_dispositions": 53
+        },
+        "reported_scalar_fields": {
+          "schema_id": "pm.assistant_contract_inspection.v1",
+          "status": "gaps_found",
+          "formal_packet_audit_completed": false,
+          "native_runtime_proven": false,
+          "independent_semantic_review_performed": false,
+          "claim_boundary": "This checker inspects actual source structure and references. It does not replace per-case review, receipt resolution, native producer tests, or Event Authority admission."
+        },
+        "assertion_lines": []
+      },
+      "shards": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks/shards/receipt.json",
+          "sha256": "1594cef1f118db296ea69965b82929371714b5978277a9904edff82415811938"
+        },
+        "exit_code": 0,
+        "timed_out": false,
+        "unittest": null,
+        "stdout_numeric_object_fields": {
+          "/docs_checked": 99,
+          "/shards_checked": 2691,
+          "/source_count": 99
+        },
+        "stdout_top_level_list_lengths": {
+          "failures": 0
+        },
+        "reported_scalar_fields": {
+          "docs_checked": 99,
+          "shards_checked": 2691,
+          "source_count": 99,
+          "status": "pass"
+        },
+        "assertion_lines": []
+      },
+      "touch-source-tests": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks/touch-source-tests/receipt.json",
+          "sha256": "708e4d523a301ee1b154039425a8951c6889096f16fde3c677dc4c35288b63fa"
+        },
+        "exit_code": 0,
+        "timed_out": false,
+        "unittest": null,
+        "stdout_numeric_object_fields": null,
+        "stdout_top_level_list_lengths": null,
+        "reported_scalar_fields": null,
+        "assertion_lines": []
+      },
+      "settings-draft-transfer-tests": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks/settings-draft-transfer-tests/receipt.json",
+          "sha256": "6f6acea1715f1097981486c2b838c1e90ebe8e8d623b9ec38784cf7ff63cf6e4"
+        },
+        "exit_code": 0,
+        "timed_out": false,
+        "unittest": null,
+        "stdout_numeric_object_fields": null,
+        "stdout_top_level_list_lengths": null,
+        "reported_scalar_fields": null,
+        "assertion_lines": []
+      },
+      "finalgui-tour-v3-tests": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks/finalgui-tour-v3-tests/receipt.json",
+          "sha256": "76c1f5e7e7c3a3ff9f4a468bdb152d365f748cdcf60770e0567f8230441af70e"
+        },
+        "exit_code": 0,
+        "timed_out": false,
+        "unittest": null,
+        "stdout_numeric_object_fields": null,
+        "stdout_top_level_list_lengths": null,
+        "reported_scalar_fields": null,
+        "assertion_lines": []
+      },
+      "prd-runtime-schema-refs": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks/prd-runtime-schema-refs/receipt.json",
+          "sha256": "29849191514580f480910f9443fbdbd1c32afd430e574fe754f6fd0a33b239e7"
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "unittest": null,
+        "stdout_numeric_object_fields": {},
+        "stdout_top_level_list_lengths": {
+          "failures": 1240
+        },
+        "reported_scalar_fields": {
+          "check": "validate-prd-planning-runtime-contracts",
+          "status": "fail"
+        },
+        "assertion_lines": []
+      },
+      "provenance-launcher-selftest": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks/provenance-launcher-selftest/receipt.json",
+          "sha256": "aabb1c5c50a31b98a81849a715d9fe4881dae3cd702be7791df3a09dbcf8f58b"
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "unittest": null,
+        "stdout_numeric_object_fields": {
+          "/failed": 1,
+          "/passed": 5,
+          "/tests": 6
+        },
+        "stdout_top_level_list_lengths": {
+          "failures": 1
+        },
+        "reported_scalar_fields": {
+          "browser_launched": false,
+          "child_launched": false,
+          "failed": 1,
+          "passed": 5,
+          "schema_id": "pm.browser_verifier_provenance_launcher_selftest.v2",
+          "tests": 6
+        },
+        "assertion_lines": []
+      },
+      "provenance-envelope-selftest": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks/provenance-envelope-selftest/receipt.json",
+          "sha256": "4adcfb74c3247373dc8f4426d8863f2b1527fd715e5635c3a2f32d52418ffe62"
+        },
+        "exit_code": 0,
+        "timed_out": false,
+        "unittest": null,
+        "stdout_numeric_object_fields": {
+          "/tests": 13,
+          "/passed": 13,
+          "/failed": 0,
+          "/resealed_invalid_envelope_denominator": 29,
+          "/exact_independent_invalid_envelope_denominator": 29,
+          "/required_policy_probe_denominator": 13
+        },
+        "stdout_top_level_list_lengths": {
+          "exact_independent_attack_ids": 29,
+          "failures": 0
+        },
+        "reported_scalar_fields": {
+          "schema_id": "pm.browser_verifier_provenance_selftest.v2",
+          "browser_launched": false,
+          "tests": 13,
+          "passed": 13,
+          "failed": 0,
+          "resealed_invalid_envelope_denominator": 29,
+          "exact_independent_invalid_envelope_denominator": 29,
+          "required_policy_probe_denominator": 13
+        },
+        "assertion_lines": []
+      }
+    },
+    "separate_resolved_launcher_diagnostic": {
+      "receipt": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks-diagnostic-launcher-resolved/receipt.json",
+        "sha256": "5b1366da3c5cd27f680f5e53dea77db0f5c984532b3bffa7f463a92c5ffab275"
+      },
+      "argv": [
+        "/usr/bin/python3.13",
+        "Concepts/pm7-tools/verify/browser_verifier_provenance_launcher_selftest.py"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "launch_error": null,
+      "stdout": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks-diagnostic-launcher-resolved/stdout.log",
+        "sha256": "c8af2d04f750ce7950debcab8bed3b6ff7f95b4182762ccdc22c43228189adb0"
+      },
+      "stderr": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks-diagnostic-launcher-resolved/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout_bytes": 191,
+      "stderr_bytes": 0,
+      "unittest": null,
+      "stdout_numeric_object_fields": {
+        "/failed": 0,
+        "/passed": 6,
+        "/tests": 6
+      },
+      "stdout_top_level_list_lengths": {
+        "failures": 0
+      },
+      "reported_scalar_fields": {
+        "browser_launched": false,
+        "child_launched": false,
+        "failed": 0,
+        "passed": 6,
+        "schema_id": "pm.browser_verifier_provenance_launcher_selftest.v2",
+        "tests": 6
+      },
+      "assertion_lines": [],
+      "boundary": "Separate rerun of the same launcher self-test; original failure retained. Do not add its six checks to unique tests or initial passing-check totals."
+    },
+    "schema_probe_observations": {
+      "reported_status_counts": {
+        "baseline_unavailable": 12,
+        "mutation_validated": 12
+      },
+      "observations": [
+        {
+          "probe_id": "sir.add.result.ready",
+          "status": "mutation_validated",
+          "baseline_validation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          },
+          "schema_observation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          }
+        },
+        {
+          "probe_id": "sir.permission.installation_scope.add",
+          "status": "baseline_unavailable",
+          "baseline_validation": null,
+          "schema_observation": null
+        },
+        {
+          "probe_id": "sir.permission.installation_scope.activate",
+          "status": "mutation_validated",
+          "baseline_validation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          },
+          "schema_observation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          }
+        },
+        {
+          "probe_id": "sir.permission.installation_scope.update",
+          "status": "baseline_unavailable",
+          "baseline_validation": null,
+          "schema_observation": null
+        },
+        {
+          "probe_id": "sir.permission.installation_scope.test",
+          "status": "baseline_unavailable",
+          "baseline_validation": null,
+          "schema_observation": null
+        },
+        {
+          "probe_id": "sir.permission.installation_scope.remove",
+          "status": "baseline_unavailable",
+          "baseline_validation": null,
+          "schema_observation": null
+        },
+        {
+          "probe_id": "sir.permission.installation_scope.open_details",
+          "status": "baseline_unavailable",
+          "baseline_validation": null,
+          "schema_observation": null
+        },
+        {
+          "probe_id": "sir.open_details.result.failed",
+          "status": "mutation_validated",
+          "baseline_validation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          },
+          "schema_observation": {
+            "errors": [
+              {
+                "cause": null,
+                "context": [],
+                "instance_pointer": "/outcome",
+                "message": "'no_effect' was expected",
+                "relative_instance_pointer": "/outcome",
+                "relative_schema_pointer": "/allOf/5/then/properties/outcome/const",
+                "schema_pointer": "/allOf/5/then/properties/outcome/const",
+                "validator": "const",
+                "validator_value": "no_effect"
+              }
+            ],
+            "schema_accepted": false,
+            "status": "validation_completed",
+            "validator_error": null
+          }
+        },
+        {
+          "probe_id": "auth.permission.empty_grants.sign_in",
+          "status": "baseline_unavailable",
+          "baseline_validation": null,
+          "schema_observation": null
+        },
+        {
+          "probe_id": "auth.permission.empty_grants.sign_out",
+          "status": "baseline_unavailable",
+          "baseline_validation": null,
+          "schema_observation": null
+        },
+        {
+          "probe_id": "auth.permission.empty_grants.verify",
+          "status": "baseline_unavailable",
+          "baseline_validation": null,
+          "schema_observation": null
+        },
+        {
+          "probe_id": "auth.permission.empty_grants.cancel",
+          "status": "baseline_unavailable",
+          "baseline_validation": null,
+          "schema_observation": null
+        },
+        {
+          "probe_id": "auth.permission.empty_grants.retry",
+          "status": "baseline_unavailable",
+          "baseline_validation": null,
+          "schema_observation": null
+        },
+        {
+          "probe_id": "auth.permission.empty_grants.submit_code",
+          "status": "mutation_validated",
+          "baseline_validation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          },
+          "schema_observation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          }
+        },
+        {
+          "probe_id": "auth.permission.empty_grants.open_official_page",
+          "status": "baseline_unavailable",
+          "baseline_validation": null,
+          "schema_observation": null
+        },
+        {
+          "probe_id": "auth.permission.empty_grants.select",
+          "status": "baseline_unavailable",
+          "baseline_validation": null,
+          "schema_observation": null
+        },
+        {
+          "probe_id": "auth.sign_in.completed_null_identities_transition",
+          "status": "mutation_validated",
+          "baseline_validation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          },
+          "schema_observation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          }
+        },
+        {
+          "probe_id": "auth.sign_out.completed_verified_state",
+          "status": "mutation_validated",
+          "baseline_validation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          },
+          "schema_observation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          }
+        },
+        {
+          "probe_id": "auth.official_page.selection_effect",
+          "status": "mutation_validated",
+          "baseline_validation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          },
+          "schema_observation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          }
+        },
+        {
+          "probe_id": "control.request.unknown_property",
+          "status": "mutation_validated",
+          "baseline_validation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          },
+          "schema_observation": {
+            "errors": [
+              {
+                "cause": null,
+                "context": [],
+                "instance_pointer": "",
+                "message": "Additional properties are not allowed ('b46_unknown_property' was unexpected)",
+                "relative_instance_pointer": "",
+                "relative_schema_pointer": "/additionalProperties",
+                "schema_pointer": "/additionalProperties",
+                "validator": "additionalProperties",
+                "validator_value": false
+              }
+            ],
+            "schema_accepted": false,
+            "status": "validation_completed",
+            "validator_error": null
+          }
+        },
+        {
+          "probe_id": "control.result.unknown_property",
+          "status": "mutation_validated",
+          "baseline_validation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          },
+          "schema_observation": {
+            "errors": [
+              {
+                "cause": null,
+                "context": [],
+                "instance_pointer": "",
+                "message": "Additional properties are not allowed ('b46_unknown_property' was unexpected)",
+                "relative_instance_pointer": "",
+                "relative_schema_pointer": "/additionalProperties",
+                "schema_pointer": "/additionalProperties",
+                "validator": "additionalProperties",
+                "validator_value": false
+              }
+            ],
+            "schema_accepted": false,
+            "status": "validation_completed",
+            "validator_error": null
+          }
+        },
+        {
+          "probe_id": "control.request.command_operation_mismatch",
+          "status": "mutation_validated",
+          "baseline_validation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          },
+          "schema_observation": {
+            "errors": [
+              {
+                "cause": null,
+                "context": [],
+                "instance_pointer": "/operation",
+                "message": "'sign_in' was expected",
+                "relative_instance_pointer": "/operation",
+                "relative_schema_pointer": "/allOf/0/then/properties/operation/const",
+                "schema_pointer": "/allOf/0/then/properties/operation/const",
+                "validator": "const",
+                "validator_value": "sign_in"
+              }
+            ],
+            "schema_accepted": false,
+            "status": "validation_completed",
+            "validator_error": null
+          }
+        },
+        {
+          "probe_id": "control.request.protected_automation",
+          "status": "mutation_validated",
+          "baseline_validation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          },
+          "schema_observation": {
+            "errors": [
+              {
+                "cause": null,
+                "context": [
+                  {
+                    "cause": null,
+                    "context": [],
+                    "instance_pointer": "/payload/protected_auth_boundary/automation_allowed",
+                    "message": "False was expected",
+                    "relative_instance_pointer": "/automation_allowed",
+                    "relative_schema_pointer": "/0/properties/automation_allowed/const",
+                    "schema_pointer": "/properties/payload/properties/protected_auth_boundary/oneOf/0/properties/automation_allowed/const",
+                    "validator": "const",
+                    "validator_value": false
+                  },
+                  {
+                    "cause": null,
+                    "context": [],
+                    "instance_pointer": "/payload/protected_auth_boundary",
+                    "message": "{'owner_contract_ref': 'SchemaID:pm.protected_auth_browser_contracts.schema.v1#/$defs/protected_auth_browser_lifecycle_projection', 'human_only': True, 'ephemeral': True, 'content_observation_allowed': False, 'persistence_allowed': False, 'recording_allowed': False, 'inspection_allowed': False, 'export_allowed': False, 'agent_access_allowed': False, 'adapter_access_allowed': False, 'tool_access_allowed': False, 'automation_allowed': True, 'browser_program_access_allowed': False, 'capture_allowed': False, 'ordinary_browser_navigation_allowed': False, 'storage_state_access_allowed': False, 'initiating_client_policy': 'initiating_active_client_only'} is not of type 'null'",
+                    "relative_instance_pointer": "",
+                    "relative_schema_pointer": "/1/type",
+                    "schema_pointer": "/properties/payload/properties/protected_auth_boundary/oneOf/1/type",
+                    "validator": "type",
+                    "validator_value": "null"
+                  }
+                ],
+                "instance_pointer": "/payload/protected_auth_boundary",
+                "message": "{'owner_contract_ref': 'SchemaID:pm.protected_auth_browser_contracts.schema.v1#/$defs/protected_auth_browser_lifecycle_projection', 'human_only': True, 'ephemeral': True, 'content_observation_allowed': False, 'persistence_allowed': False, 'recording_allowed': False, 'inspection_allowed': False, 'export_allowed': False, 'agent_access_allowed': False, 'adapter_access_allowed': False, 'tool_access_allowed': False, 'automation_allowed': True, 'browser_program_access_allowed': False, 'capture_allowed': False, 'ordinary_browser_navigation_allowed': False, 'storage_state_access_allowed': False, 'initiating_client_policy': 'initiating_active_client_only'} is not valid under any of the given schemas",
+                "relative_instance_pointer": "/payload/protected_auth_boundary",
+                "relative_schema_pointer": "/properties/payload/properties/protected_auth_boundary/oneOf",
+                "schema_pointer": "/properties/payload/properties/protected_auth_boundary/oneOf",
+                "validator": "oneOf",
+                "validator_value": [
+                  {
+                    "$ref": "#/$defs/ProtectedAuthBoundary"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              {
+                "cause": null,
+                "context": [],
+                "instance_pointer": "/payload/protected_auth_boundary/automation_allowed",
+                "message": "False was expected",
+                "relative_instance_pointer": "/payload/protected_auth_boundary/automation_allowed",
+                "relative_schema_pointer": "/allOf/0/then/properties/payload/properties/protected_auth_boundary/properties/automation_allowed/const",
+                "schema_pointer": "/allOf/0/then/properties/payload/properties/protected_auth_boundary/properties/automation_allowed/const",
+                "validator": "const",
+                "validator_value": false
+              }
+            ],
+            "schema_accepted": false,
+            "status": "validation_completed",
+            "validator_error": null
+          }
+        },
+        {
+          "probe_id": "control.request.replayed_input",
+          "status": "mutation_validated",
+          "baseline_validation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          },
+          "schema_observation": {
+            "errors": [
+              {
+                "cause": null,
+                "context": [
+                  {
+                    "cause": null,
+                    "context": [],
+                    "instance_pointer": "/payload/protected_input_contract/replay_status",
+                    "message": "'fresh' was expected",
+                    "relative_instance_pointer": "/replay_status",
+                    "relative_schema_pointer": "/0/properties/replay_status/const",
+                    "schema_pointer": "/properties/payload/properties/protected_input_contract/oneOf/0/properties/replay_status/const",
+                    "validator": "const",
+                    "validator_value": "fresh"
+                  },
+                  {
+                    "cause": null,
+                    "context": [],
+                    "instance_pointer": "/payload/protected_input_contract",
+                    "message": "{'generation': 1, 'expires_at_utc': '2026-09-01T00:45:00Z', 'input_currentness': 'current', 'replay_status': 'replayed', 'use_policy': 'one_use_consume_and_zeroize', 'replay_policy': 'reject_replay', 'binding_ref': 'binding:auth-operation:codex:1', 'persistence_allowed': False} is not of type 'null'",
+                    "relative_instance_pointer": "",
+                    "relative_schema_pointer": "/1/type",
+                    "schema_pointer": "/properties/payload/properties/protected_input_contract/oneOf/1/type",
+                    "validator": "type",
+                    "validator_value": "null"
+                  }
+                ],
+                "instance_pointer": "/payload/protected_input_contract",
+                "message": "{'generation': 1, 'expires_at_utc': '2026-09-01T00:45:00Z', 'input_currentness': 'current', 'replay_status': 'replayed', 'use_policy': 'one_use_consume_and_zeroize', 'replay_policy': 'reject_replay', 'binding_ref': 'binding:auth-operation:codex:1', 'persistence_allowed': False} is not valid under any of the given schemas",
+                "relative_instance_pointer": "/payload/protected_input_contract",
+                "relative_schema_pointer": "/properties/payload/properties/protected_input_contract/oneOf",
+                "schema_pointer": "/properties/payload/properties/protected_input_contract/oneOf",
+                "validator": "oneOf",
+                "validator_value": [
+                  {
+                    "$ref": "#/$defs/ProtectedInputContract"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              {
+                "cause": null,
+                "context": [],
+                "instance_pointer": "/payload/protected_input_contract/replay_status",
+                "message": "'fresh' was expected",
+                "relative_instance_pointer": "/payload/protected_input_contract/replay_status",
+                "relative_schema_pointer": "/allOf/6/then/properties/payload/properties/protected_input_contract/properties/replay_status/const",
+                "schema_pointer": "/allOf/6/then/properties/payload/properties/protected_input_contract/properties/replay_status/const",
+                "validator": "const",
+                "validator_value": "fresh"
+              }
+            ],
+            "schema_accepted": false,
+            "status": "validation_completed",
+            "validator_error": null
+          }
+        }
+      ],
+      "unavailable_baseline_slots": 12,
+      "boundary": "Schema acceptance/rejection of exact fixture mutations only. Root statements are hypotheses, not machine adjudications. Baseline absence and validator errors are not schema rejections. No provider requests, protected content, secrets, UI/native execution, permission enforcement, persistence, executor-failure claim, per-case verdict, or readiness inference. No full gate suite is run."
+    },
+    "guided_focus_observations": {
+      "baselines": [
+        {
+          "name": "focus_route_is_typed_local_presentation",
+          "fixture_pointer": "#/valid/10",
+          "validation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          }
+        },
+        {
+          "name": "focus_route_result_is_local_and_nonpersistent",
+          "fixture_pointer": "#/valid/11",
+          "validation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          }
+        },
+        {
+          "name": "focus_route_disabled_uses_page_router_error",
+          "fixture_pointer": "#/valid/12",
+          "validation": {
+            "errors": [],
+            "schema_accepted": true,
+            "status": "validation_completed",
+            "validator_error": null
+          }
+        }
+      ],
+      "mutations": [
+        {
+          "baseline_pointer": "#/valid/11",
+          "exact_diff": [
+            {
+              "after": "guided_tour.workspace.heading",
+              "before": "guided_tour.usage.heading",
+              "pointer": "/return_focus_id"
+            }
+          ],
+          "schema_observation": {
+            "errors": [
+              {
+                "cause": null,
+                "context": [],
+                "instance_pointer": "/return_focus_id",
+                "message": "'guided_tour.usage.heading' was expected",
+                "schema_pointer": "/properties/return_focus_id/const",
+                "validator": "const",
+                "validator_value": "guided_tour.usage.heading"
+              }
+            ],
+            "schema_accepted": false,
+            "status": "validation_completed",
+            "validator_error": null
+          }
+        },
+        {
+          "baseline_pointer": "#/valid/12",
+          "exact_diff": [
+            {
+              "after": "guided_tour.workspace.heading",
+              "before": "guided_tour.usage.heading",
+              "pointer": "/return_focus_id"
+            }
+          ],
+          "schema_observation": {
+            "errors": [
+              {
+                "cause": null,
+                "context": [],
+                "instance_pointer": "/return_focus_id",
+                "message": "'guided_tour.usage.heading' was expected",
+                "schema_pointer": "/properties/return_focus_id/const",
+                "validator": "const",
+                "validator_value": "guided_tour.usage.heading"
+              }
+            ],
+            "schema_accepted": false,
+            "status": "validation_completed",
+            "validator_error": null
+          }
+        }
+      ],
+      "boundary": "Narrow schema compatibility observations and literal source declarations only. Fixture request/result sessions are separate authored examples, not a correlated execution. Concept text is not active-path proof. No browser/native focus observation, redesign, runtime effect, acceptance judgment, or closure claim."
+    },
+    "test_count_boundary": "Mechanical counts of literal judgments and explicitly reported observations only. Schema acceptance/rejection is not a new product verdict. Original 14-check outcomes remain unchanged; the resolved-launcher run is a separate diagnostic, not extra test coverage and not a replacement pass. No additive actual-tests total is calculated. No execution, runtime, implementation, suite, overall or readiness verdict is inferred.",
+    "result_structure_identity_and_evidence_refs": {
+      "status": "validated_before_publication",
+      "cases": 1040,
+      "receipt": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/publication-assembler-validation.json",
+        "sha256": "1bd12b8c8d2ebfbc8b89fdfa452581a61158cbb5648aec38d653d71eb1f36b8a"
+      }
+    },
+    "formal_audit_dry_run": {
+      "status": "not_run_by_this_batch_publisher"
+    },
+    "post_fast_forward_shared_governance": {
+      "status": "not_part_of_snapshot_capture",
+      "recording": "Landing checks and any later currentness review require separate evidence; none is inferred here."
+    },
+    "common_boundary": "No native Rust/Slint run, live provider/security effect, browser/visual acceptance, migration drill, new event admission, governance seal, suite verdict or completed packet audit is established.",
+    "separate_currentness_refresh": {
+      "comparison_commit": "8e27ca6832ce7f469c60b55ad6dc74cba3760060",
+      "summary": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/currentness-five-check-refresh/summary.json",
+        "sha256": "9fd6433b40d3c14a0121591fffcb3068a77878423da1a31cee707297f8e2afd2"
+      },
+      "source_currentness": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/currentness-five-check-refresh/source-currentness.json",
+        "sha256": "b3f444d99b6a12b31404786cd4aa0716a9e485214343d54b3274de6bcf3fd336"
+      },
+      "checks": {
+        "fixture-schema-validation": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/currentness-five-check-refresh/fixture-schema-validation/receipt.json",
+          "sha256": "7ad46d430d239c9f969e349b21ff32236bf7b44ce76e523d2e52ce47b9d25264"
+        },
+        "wiring-matrix": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/currentness-five-check-refresh/wiring-matrix/receipt.json",
+          "sha256": "fbdd9a4347f67faf778d90dd44163f624ba0a9e0fcc3c93b9f29ef6223b1d3fa"
+        },
+        "prd-runtime-schema-refs": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/currentness-five-check-refresh/prd-runtime-schema-refs/receipt.json",
+          "sha256": "7a104d43ece2561c9ae8a238cd2fabc1bdc165d83469005223f246fb0a51e90f"
+        },
+        "touch-source-tests": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/currentness-five-check-refresh/touch-source-tests/receipt.json",
+          "sha256": "b4ee1051a63ed3895467a68c808dbf02838228bbb575ea5c4915be19e2990c17"
+        },
+        "shards": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/currentness-five-check-refresh/shards/receipt.json",
+          "sha256": "bdc4e5ea35c1ec861bd3e98d131d71ba96faacac7430b1748d2f38a31bd641e0"
+        }
+      },
+      "root_qualification": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/root-currentness-qualification.json",
+        "sha256": "1a2d755b496b2d4e5dc8054bcddcb621b42893e7f75d956639865f0a4b5244c2"
+      },
+      "boundary": "Separate five-check capture; historical fourteen-check outcomes retain their original attribution. Semantic qualification is authored only in the pinned root qualification."
+    }
+  },
+  "evidence": {
+    "report_metadata": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/report-metadata.json",
+      "sha256": "f90c487ccac8085b07ff890ff30ce3fef12a2a975c62b424f290e8506dfe8a38"
+    },
+    "assembly": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/assembly-summary.json",
+      "sha256": "77d9f07d0750529a895a51c30243daf1d7d625db76848861c4c3fc4d6000e450"
+    },
+    "root_review": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/touch-1040-root-review.json",
+      "sha256": "3fff19b6796ab1f0189f99725eae568ec51eef30a82bbfb98f2419e346b1af38"
+    },
+    "publication": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/publication-summary.json",
+      "sha256": "9551af98bccab6700894ac96891d9f749a77d1dceb1d270df426ac13b2d75407"
+    },
+    "checks": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks/summary.json",
+      "sha256": "3c35dc5aa5d7c08087c0b8f8c02dfd1bc7197f8e9ec17ff0ba33a86a69d53d52"
+    },
+    "diagnostic": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks-diagnostic-launcher-resolved/receipt.json",
+      "sha256": "5b1366da3c5cd27f680f5e53dea77db0f5c984532b3bffa7f463a92c5ffab275"
+    },
+    "probes": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/schema-probes/probes.json",
+      "sha256": "4ece2de22bd2d3c6d25a61590d48b2505650a4a5f42f04423d64f0edd8dcb195"
+    },
+    "guided": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/guided-focus-probe/probe.json",
+      "sha256": "8a47f38f2c563975663a953d103b0543f47e0723fd987cbeb392f16a5f4dbec9"
+    },
+    "input_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/input-custody.generated.json",
+      "sha256": "faca7816ed19cdd0766a29e34217afac37a0b58c2e4a116fc666c48fe7fbaf1d"
+    },
+    "selected_evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/selected-review-evidence.generated.json",
+      "sha256": "ef39df3adce7f928fb6aa552c8a3e9efc555eda8bc40831a78c360759baa028f"
+    },
+    "root_configuration": {
+      "path": "/mnt/Cursor/PM-Experiments/r5-touch-connections1040-review-20260921-wPi2uWUd/root-selection-config.json",
+      "sha256": "73bf5a8d8344fc4cabaeefbca61ed41e28f028751bd49b06f566a9600a377839"
+    },
+    "publication_after": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/publication-after-results.json",
+      "sha256": "c5375c5c7dfb0bc54596b4e255fed2a6cad12c8cf1aa476f22c409c02509e477"
+    },
+    "status_capture": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/publication-work-status.json",
+      "sha256": "bcef04b1fdb5593ba183163780b280d2315fe7f52f6fa60118ca12f361756ef8"
+    },
+    "assembler_validation": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/publication-assembler-validation.json",
+      "sha256": "1bd12b8c8d2ebfbc8b89fdfa452581a61158cbb5648aec38d653d71eb1f36b8a"
+    },
+    "supplement_structure": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/structure/selected-structure.generated.json",
+      "sha256": "bb88805c8d994c0535819d16f7d6c347adfc178f51ec9b191933ac3364f502ca"
+    },
+    "supplement_schema_probe_summary": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/schema-probes/summary.json",
+      "sha256": "8323701c898f857225fefda017392c5db2158fd7d21a49ea072c5faa39368371"
+    },
+    "supplement_schema_probes": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/schema-probes/probes.json",
+      "sha256": "4ece2de22bd2d3c6d25a61590d48b2505650a4a5f42f04423d64f0edd8dcb195"
+    },
+    "supplement_guided_focus_summary": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/guided-focus-probe/summary.json",
+      "sha256": "644b9a28e21bf87acefd83fb5c70b11952036d7e0005054c334bfce9a215af23"
+    },
+    "supplement_guided_focus_probe": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/guided-focus-probe/probe.json",
+      "sha256": "8a47f38f2c563975663a953d103b0543f47e0723fd987cbeb392f16a5f4dbec9"
+    },
+    "supplement_local_action_source_trace": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/local-action-source-trace.json",
+      "sha256": "aa7eaff6d529749771b6238df8eb9209bca63e542cfed655a2b8c426a4a8e52a"
+    },
+    "supplement_owner_passage_routing": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/owner-passage-routing.json",
+      "sha256": "b8b39f0fcbfa0a4634ffa3ad7b1431c4be749cb5c9a29951f9df326cc23d0946"
+    },
+    "supplement_support_read_map": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/owner-support-read-map.json",
+      "sha256": "7d8355a14ddee756a9012f3772f6fe296cb2c9263e3a98bf1acb630e4409128e"
+    },
+    "supplement_command_read_map": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/command-wiring-read-map.json",
+      "sha256": "293621b492c251e8a5882a5199523492b46fe21fbfaf92136193444e2656d3c3"
+    },
+    "supplement_launcher_resolved_diagnostic": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/checks-diagnostic-launcher-resolved/receipt.json",
+      "sha256": "5b1366da3c5cd27f680f5e53dea77db0f5c984532b3bffa7f463a92c5ffab275"
+    },
+    "supplement_root_judgment_expansion_receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/root-judgment-expansion.json",
+      "sha256": "acc35f82617f03cebbb236abce7f7be62ce60f7cb49b37320ea87acf7255dc03"
+    },
+    "draft_helper": {
+      "path": "/mnt/Cursor/PM-Experiments/r5-touch-connections1040-review-20260921-wPi2uWUd/draft_report.py",
+      "sha256": "bf9ade3022c7c44c48773f00f4ab419431e076037830e1e22fa647fa670691f2"
+    },
+    "source_draft": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/r5z-touch-connections-runtime-audit-checkpoint-20260921.draft.json",
+      "sha256": "60aa91fcf06e566505ff23250084dda45374c6920bd2cb11c7dd99c4a7f21d9a"
+    },
+    "currentness_refresh": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/currentness-five-check-refresh/summary.json",
+      "sha256": "9fd6433b40d3c14a0121591fffcb3068a77878423da1a31cee707297f8e2afd2"
+    },
+    "source_currentness": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/currentness-five-check-refresh/source-currentness.json",
+      "sha256": "b3f444d99b6a12b31404786cd4aa0716a9e485214343d54b3274de6bcf3fd336"
+    },
+    "root_currentness_qualification": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-connections1040-review-20260921-jsH9pVJU/root-currentness-qualification.json",
+      "sha256": "1a2d755b496b2d4e5dc8054bcddcb621b42893e7f75d956639865f0a4b5244c2"
+    },
+    "final_checkpoint_helper": {
+      "path": "/mnt/Cursor/PM-Experiments/r5-touch-connections1040-review-20260921-wPi2uWUd/final_checkpoint.py",
+      "sha256": "6379c17bc83669c2a0d3c64348710b1979b010bc3d3201e9e948e34c326204ce"
+    }
+  },
+  "boundary": "Published partial-audit branch checkpoint only, prepared against committed revision 8e27ca6; shared-main publication and landing checks are still pending. This report adds evidence-backed audit progress without editing canonical Plans, Concepts, implementation or governance artifacts. The original 121 results and eight new results remain immutable. The remaining 2769 cases and final evidence-backed synthesis stay open; no suite/overall verdict, completed packet audit, native implementation pass or readiness claim is made.",
+  "prepared_base_commit": "8e27ca6832ce7f469c60b55ad6dc74cba3760060",
+  "landing_status": "pending_shared_main_publish_and_landing_checks"
+}
