@@ -26,10 +26,12 @@ MODULES=['command-transaction','activity-panel','activity-bar','goals','context'
          'transcript','lens-protocol','lens','orbit','threadops','questions',
          # Assistant-redesign wave (2026-09-03). One owner per file; each registers
          # through window.PM56_EXT and owns a bounded feature family, so app.js does
-         # not grow a branch per feature. composer-state loads FIRST of the new set
-         # because attachments, plans, collaboration and browser-capture all read and
+         # not grow a branch per feature. module-shell (2026-09-21) loads first of
+         # all: it defines the PM56_SHELL dialog-grammar builders the wand-module
+         # dialogs share. composer-state loads FIRST of the wave set because
+         # attachments, plans, collaboration and browser-capture all read and
          # write the composer destination it owns.
-         'composer-state','attachments','artifact-revisions','attachment-snapshots','attachment-batch19','question-budget-protocol','plans','todos','collaboration','bsd-protocol','bsd',
+         'module-shell','composer-state','attachments','artifact-revisions','attachment-snapshots','attachment-batch19','question-budget-protocol','plans','todos','collaboration','bsd-protocol','bsd',
          'scheduling-time','scheduling','browser-capture','assistant-features','delivery-polish','transcript-records','repair-demos','narrow-review','plan-demo-batch1','plan-demo-batch2','review-protocol','review-demo-batch3','brainstorm-protocol','brainstorm-demo-batch4','crew-protocol','crew-demo-batch5','room-protocol','room-demo-batch6','teach-protocol','teach-demo-batch7','memory-protocol','memory-demo-batch8','batch8-polish','debug-protocol','debug-demo-batch9','revert-protocol','revert-demo-batch10','eli5-preferences','eli5-demo-batch11','bsd-demo-batch12','wonderer-protocol','lens-wonderer-batch13','deep-plan-protocol','deep-plan-batch14','goal-work-batch15','todo-work-batch16','plan-work-batch17','schedule-demo-batch18','schedule-completion-demo','attachment-demo-batch19']
 
 def read(name):
