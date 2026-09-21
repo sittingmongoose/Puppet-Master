@@ -1,6 +1,6 @@
 # Phase 1 screen — qualified prelaunch checkpoint
 
-> Latest blind update: [checkpoint 004](BLIND_SCORE_CHECKPOINT_004.md) records 3/16 score locks; the third coherent delivery has 3 retained and 5 narrowed fixed references while its terminal partial accounting failure remains preserved. Fourth slot was native-live at `2026-09-21T05:00:31.485183+00:00`; no fifth launch was authorized then. Earlier checkpoints and prelaunch details below remain historical.
+> Latest operational update: [checkpoint 005](OPERATIONAL_CHECKPOINT_005.md) records the external usage recovery and the fourth slot still native-live at `2026-09-21T05:20:06.724452+00:00`: 3/16 score locks, no fifth authorized. Unknown usage remains explicit. [Blind score checkpoint 004](BLIND_SCORE_CHECKPOINT_004.md) and earlier details remain historical.
 
 The reports-only branch is `research/shapes-screen-20260921`, based on `977ae12f9e91b459f70d7f287f60a087160dbf8a`; this checkpoint is pushed and not landed. The previous input universe was physically copied into the external baseline: 1,343 frozen inputs plus the original freeze record, totaling 108,933,920 bytes. Original and copied baseline manifests and every listed input hash were verified; content SHA-256 is `a95d3b6800f05b69e80e42ad0e02a78ac55e92bf457e32e74f5f335f9f4217dd`. The campaign has not modified the original source inputs.
 

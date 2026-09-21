@@ -1,0 +1,97 @@
+{
+  "schema": "shape.operational_checkpoint_manifest.v1",
+  "checkpoint": 5,
+  "observed_at": "2026-09-21T05:20:06.724452+00:00",
+  "report_files": [
+    {
+      "path": "reports/research-shapes-20260920/OPERATIONAL_CHECKPOINT_005.md",
+      "sha256": "4d8413b1ff91aa2a0c1fc7cefd3b5984d3774a980ca7f7c95c7bffe16fc11e7c"
+    },
+    {
+      "path": "reports/research-shapes-20260920/operational-checkpoint-005.json",
+      "sha256": "6f4462127be2da6cb077addac9f0f4a90885650422c7afa9aeb6a6d94283b40d"
+    },
+    {
+      "path": "reports/research-shapes-20260920/STATUS.md",
+      "sha256": "30988ccbef26c068080e878472b46ba337a953847333bc782d1c9495b8dc70d7"
+    }
+  ],
+  "historical_checkpoint": {
+    "path": "reports/research-shapes-20260920/blind-score-checkpoint-004.json",
+    "sha256": "17e4af1228b6b345f48c8c1bf322711918732c4b25cf54b24ccb7bfafb4c3d61"
+  },
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/blind-safe-fourth-live-usage-import-rejection-01.json",
+      "sha256": "732e2deaa7d2f6a40de4996c28615276d99d1a64358e4d9049dba7544086b33f",
+      "content_review": "blind_safe_content_read"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/blind-safe-external-overlap-audit.json",
+      "sha256": "41645d4ea2e18dc0c9f6b2ca28fb0fd1adfbcb4ba4cb5d14eab9527ff068c2c2",
+      "content_review": "blind_safe_content_read"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/blind-safe-external-overlap-recovery-proposal.json",
+      "sha256": "d3d4f457c2b3a92778accd165d991889dd3db5a029bbb9405d9dbaddb4784f64",
+      "content_review": "blind_safe_content_read"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/blind-safe-external-overlap-supplement.json",
+      "sha256": "acb33669388da9ebea6384e3dfbb6bd0a723b8cb28381ed391a2728ce024aab0",
+      "content_review": "blind_safe_content_read"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/root-external-overlap-recovery-approval.json",
+      "sha256": "fdae2d93b8c805aead1d4b24f0ba5688b08d5ea015f83f33200046c759913ba4",
+      "content_review": "blind_safe_content_read"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/blind-safe-external-overlap-recovery-application.json",
+      "sha256": "48666b85a7da487907fa706c6eab13f44515109bbf73608894a5c7ae8b618437",
+      "content_review": "blind_safe_content_read"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/root-external-recovery-checkpoint.json",
+      "sha256": "1f6e7eaf012f8eaa2011b049b54f4131fab1bd1892df1e5ea6b417a504512382",
+      "content_review": "blind_safe_content_read"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/private-external-overlap-proof.json",
+      "sha256": "130d7ed947d4bc3778f60b33a4b5b847bb3c07f2faedc0fb606d4d64e142a472",
+      "content_review": "hash_only_not_parsed"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/private-external-epoch-before-budget.json",
+      "sha256": "b138a494f2a9c61bb444730785f2cf4959a60594a1ecc29e3751d79139ae799b",
+      "content_review": "hash_only_not_parsed"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/development-usage/20260921T050818161834Z-per-response.json",
+      "sha256": "f7fedb047e6c47ec904be671aa707f70a972a3a9c0d3325cebf9bfd8817521ff",
+      "content_review": "hash_only_not_parsed"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/private-external-epoch-partition-application.json",
+      "sha256": "61faaf7b04dba42aa0b86dd047da611df6e52a1eed40de6e221dfaa86eacde64",
+      "content_review": "hash_only_not_parsed"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/private-external-epoch-import-result.json",
+      "sha256": "8e335df9a557fb683fe445aa6e62a6991506d0a73b43d84284c5b3d6e9ca6408",
+      "content_review": "hash_only_not_parsed"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/screen_lab/budget.py",
+      "sha256": "ac25dce49d68880560f63a07a5040a60a8066d7da562b3827ef8073a47c4ffce",
+      "content_review": "hash_only_not_parsed"
+    }
+  ],
+  "verification": {
+    "all_listed_path_hash_bindings_verified": true,
+    "recovery_proposal_approval_application_chain_matches": true,
+    "private_artifacts_hash_only_never_parsed": true,
+    "prior_reports_unchanged": true,
+    "private_economic_or_semantic_inputs_read": false
+  }
+}

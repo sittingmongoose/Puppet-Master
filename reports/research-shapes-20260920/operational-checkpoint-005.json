@@ -1,0 +1,57 @@
+{
+  "schema": "shape.operational_report_checkpoint.v1",
+  "campaign_id": "phase1-20260921",
+  "checkpoint": 5,
+  "observed_at": "2026-09-21T05:20:06.724452+00:00",
+  "status_as_of_recorded_timestamp_only": true,
+  "bundle_status": "provisional_reports_branch_not_landed",
+  "public_run_observation": {
+    "blind_run_id": "R-c1b39b04e92a73f97285",
+    "case_id": "ome-zarr-thin",
+    "ordinal": 4,
+    "packet_sealed": false,
+    "phase": "main",
+    "score_locked": false,
+    "status": "running"
+  },
+  "native_live": true,
+  "unknown_handles": false,
+  "score_locks_recorded": 3,
+  "scheduled_main_component_slots": 16,
+  "fifth_authorized": false,
+  "mapping_reveal_allowed": false,
+  "external_import_recovery": {
+    "initial_rejection_before_save": true,
+    "initial_rejection_reason": "Overlapping external native counter intervals",
+    "raw_cumulative_counter_reset_reuses_numeric_ranges": true,
+    "epochs_independently_defined_from_raw_counter_decrease": true,
+    "historical_comparison_metadata_only_partitioned": true,
+    "native_session_identity_preserves_true_session_hash": true,
+    "receipt_ids_measurement_keys_categories_and_charges_preserved": true,
+    "original_captures_unchanged": true,
+    "source_identity_and_native_event_bindings_preserved": true,
+    "exact_rejected_capture_imported_once": true,
+    "frozen_importer_unchanged": true,
+    "concurrent_native_state_preserved_under_lock": true,
+    "same_fourth_attempt_retained": true,
+    "unknown_external_usage_retained": true,
+    "known_cap_exceeded_at_application": false,
+    "absolute_cap_completeness_unknown": true,
+    "native_or_account_hold_caused_by_rejected_import": false,
+    "native_retry_performed": false,
+    "blanket_future_exception_authorized": false
+  },
+  "review_authority": {
+    "root": "Read blind-safe records and verified referenced hashes; did not parse private accounting proof or captures.",
+    "private_operational_auditor": "Verified raw event positions, independent counter epochs, native evidence and charge preservation.",
+    "report_writer": "Mechanical hash/binding verification and faithful summary only; no private artifact contents parsed."
+  },
+  "limitations": [
+    "Known captured plus reserved usage remained within the cap at application; unresolved external usage prevents asserting absolute completeness.",
+    "The recorded after-state digest is an application snapshot; the live budget can advance afterward.",
+    "A future counter reset can require a separately proved and approved partition; this recovery is not blanket authorization.",
+    "No current private token/response counts, costs, clocks or configuration labels are disclosed or inferred.",
+    "No result after the recorded live snapshot is asserted; the fifth launch was not authorized then.",
+    "Earlier score and operational checkpoints remain historical and unchanged."
+  ]
+}
