@@ -1,0 +1,102 @@
+{
+  "status": "SOURCE_CONTRACT_ONLY_NATIVE_NOT_RUN",
+  "stages": [
+    {
+      "id": "S0",
+      "value": "FirstAttemptAdmissionSource",
+      "depends_on": [],
+      "contents": "Complete genuine before-birth native request/current and independently supplied complete current Goal argument, original queued dispatch and prior capture, permission/runtime/unit, policy/budget and prior capture, complete scheduler/capacity source, actual scalar reservation. No own future issued rows."
+    },
+    {
+      "id": "S1",
+      "value": "AttemptStartAdmission",
+      "depends_on": [
+        "S0"
+      ],
+      "contents": "Whole source plus exact source-only and separate whole-Goal commitments and actual original native admission owner/operation/transaction/time; no output capture/origin/birth/control/dispatch."
+    },
+    {
+      "id": "S2",
+      "value": "OriginalInputCapture",
+      "depends_on": [
+        "S1"
+      ],
+      "contents": "Exact original native-codec admitted payload hash plus original source identity; actual native capture issuance."
+    },
+    {
+      "id": "S3",
+      "value": "PublicationOrigin for capture",
+      "depends_on": [
+        "S2"
+      ],
+      "contents": "Actual complete capture-key/physical-hash and original capture issuer operation; no downstream birth."
+    },
+    {
+      "id": "S4",
+      "value": "AttemptRecord",
+      "depends_on": [
+        "S0"
+      ],
+      "contents": "Full original native record derived from admitted before-state, frozen budget and prior policy capture; no self birth binding."
+    },
+    {
+      "id": "S5",
+      "value": "AttemptBirth",
+      "depends_on": [
+        "S2",
+        "S3",
+        "S4"
+      ],
+      "contents": "Original admission capture binding and physical AttemptRecord hash; original reserved scalar identity."
+    },
+    {
+      "id": "S6",
+      "value": "AttemptControl/native result/origin and D01 attempt registration union",
+      "depends_on": [
+        "S5"
+      ],
+      "contents": "Complete authentic first-birth joint publication. Exact original record/control/result/origin/registration selectors; no effect dispatch yet."
+    },
+    {
+      "id": "S7",
+      "value": "DispatchInvocation and DispatchAdmission/MutationOrigin",
+      "depends_on": [
+        "S6"
+      ],
+      "contents": "Whole original postbirth effect-dispatch inputs, actual current permission/capacity and independent lower guards. Genuine birth/control selectors now available."
+    },
+    {
+      "id": "S8",
+      "value": "effect-owner acceptance and HandoffAck",
+      "depends_on": [
+        "S7"
+      ],
+      "contents": "Actual effect-owner acceptance under original Stop/currentness/capability fence; full original acknowledgement only after real acceptance."
+    }
+  ],
+  "whole_existing_postbirth_definitions": [
+    "DispatchInvocation",
+    "DispatchAdmission",
+    "DispatchMember",
+    "DispatchCurrent",
+    "HandoffAck"
+  ],
+  "target_prebirth_absence_paths": [
+    "NativeMutationRequest.expected_attempt_id",
+    "NativeMutationRequest.expected_attempt_revision",
+    "NativeCurrentSnapshot.attempt",
+    "NativeCurrentSnapshot.attempt_selector",
+    "NativeCurrentSnapshot.attempt_control",
+    "NativeCurrentSnapshot.attempt_control_selector",
+    "NativeCurrentSnapshot.worknode_control.current_attempt",
+    "NativeCurrentSnapshot.worknode.attempts",
+    "native target original birth/registration and dispatch census"
+  ],
+  "no_prospective_source_rule": "Actual native owner checks every source record/capture/origin and duplicated CurrentSource against authentic pre-operation issuance; same-operation future output cannot masquerade as prior source. Other targets genuine prior histories remain full.",
+  "source_hash_roots": [
+    "FirstAttemptAdmissionSource",
+    "AttemptStartAdmission under original native payload codec",
+    "BeginAttemptSource nested within complete OriginalExecutionSource"
+  ],
+  "candidate_validation": "Every complete candidate independently derived and compared at native, capture, BeginAttempt, Workflow publication and D01 lower boundaries; candidates are excluded from source hashes by typed roots only."
+}

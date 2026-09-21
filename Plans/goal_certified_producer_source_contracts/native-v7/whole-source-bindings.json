@@ -1,0 +1,102 @@
+{
+  "schema_resources": [
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/assignment-invocation.v1.schema.json",
+      "sha256": "37d7482694855e6505b860358dbee074b69c51bba6662a172e24df2689ab37cd",
+      "rule": "Whole unchanged source semantic resource"
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/original-sources.v1.schema.json",
+      "sha256": "6b19f24a3d923923a70084d5f1a16a2b3fc4af62fa211ef8e7f39a0c867187cf",
+      "rule": "Whole unchanged source semantic resource"
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/producer-source.v1.schema.json",
+      "sha256": "6c552dbe5556163397ef40b9377831bda27d2455220f61f5d79214ebe1368284",
+      "rule": "Whole unchanged source semantic resource"
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/producer-submission.v1.schema.json",
+      "sha256": "24300fe310faeec412a362a39128d870f57a4b19ba82affce7f7c1a59daccc0e",
+      "rule": "Whole unchanged source semantic resource"
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/resolver-references.v1.schema.json",
+      "sha256": "ecaf63c9c68140ee698e219c02cb953b0900bc5cd082e5f8a9c2c7498593b704",
+      "rule": "Whole unchanged source semantic resource"
+    }
+  ],
+  "native_successor_resources": [
+    {
+      "before": "Plans/workflow_standard_source_contracts/preinstallation-originals/6cf8c0ae3342ad7d28670b85f81aa46d4847f815aeea7b09e7d2bc03c81d461d/workflow-cancel-start-profile.v5.schema.json",
+      "before_sha256": "6cf8c0ae3342ad7d28670b85f81aa46d4847f815aeea7b09e7d2bc03c81d461d",
+      "after": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-start-profile.v6.schema.json",
+      "after_sha256": "747100bb06ed4c718f4f38a0fee7133b1e45d10a3c04c5d8f25a3bfd7683386c",
+      "whole_resource": true
+    },
+    {
+      "before": "Plans/workflow_standard_source_contracts/preinstallation-originals/1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358/workflow-original-start.v5.schema.json",
+      "before_sha256": "1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358",
+      "after": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-original-start.v6.schema.json",
+      "after_sha256": "8e82034b4874fa7397c3ea44d7785b290ed2253281731648846505516914d376",
+      "whole_resource": true
+    },
+    {
+      "before": "Plans/workflow_standard_source_contracts/schemas/workflow-standard-certification-argument.v3.schema.json",
+      "before_sha256": "fcc25e198114eadc357c8696b750d2d5afb21e80d57bca8febe8a17580b91e4d",
+      "after": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-certification-argument.v4.schema.json",
+      "after_sha256": "830d20024033a6e1edc32c847363a523a44fe47acd2abcd84413f8a58f4131fa",
+      "whole_resource": true
+    },
+    {
+      "before": "Plans/workflow_standard_source_contracts/schemas/workflow-standard-current-source.v3.schema.json",
+      "before_sha256": "c7a11a744312518b78cbd70f7f5ee6228004e213df1174f87afe8ac00164ff72",
+      "after": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-current-source.v4.schema.json",
+      "after_sha256": "7bd88c4a7cc2b7f32af173d18c470d64e13e296170e358fcd39fe8e64b6bbbb0",
+      "whole_resource": true
+    },
+    {
+      "before": "Plans/workflow_standard_source_contracts/schemas/workflow-standard-event-prerequisite.v3.schema.json",
+      "before_sha256": "91724e64f651821794bf0848d4579445f112d7b8b17fde6246085c767e546513",
+      "after": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-event-prerequisite.v4.schema.json",
+      "after_sha256": "ab8350e1f7b60c2c8b37fcb3ddb29da43a003d5b032aef145a0b220ef47f6274",
+      "whole_resource": true
+    },
+    {
+      "before": "Plans/workflow_standard_source_contracts/schemas/workflow-start-arguments.v5.schema.json",
+      "before_sha256": "664bb18f0dfd46144120b78b05dcf217128dce4ae644534a86f40723631e90a2",
+      "after": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-arguments.v6.schema.json",
+      "after_sha256": "3f9b2fc8d768d462db1b4ac950854e0d7f2fc13982e0bbc1422e5ecb81bdbd88",
+      "whole_resource": true
+    },
+    {
+      "before": "Plans/workflow_standard_source_contracts/schemas/workflow-start-custody.v5.schema.json",
+      "before_sha256": "d40e0c82b8ba03dec7631d2d9bc80d51a82b1adff6a1f3e900b4dab1e13916b8",
+      "after": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-custody.v6.schema.json",
+      "after_sha256": "9209a5b923cb279c4176ccf3b648a8381c4afae541220cd397329558db5266d2",
+      "whole_resource": true
+    },
+    {
+      "before": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-positive-arguments.v1.schema.json",
+      "before_sha256": "8064368badc33286a0a871695b670c854e7bcde30090da5c3389c3ec174bda63",
+      "after": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-positive-arguments.v2.schema.json",
+      "after_sha256": "ec8c346caffabb0bbb06285197e5ed04bfb44ffa8b6dfa02a038aef8a5b9bdd8",
+      "whole_resource": true,
+      "additional_companion": true
+    },
+    {
+      "before": "Plans/executor_cancellation_contracts/schemas/safestop-start-arguments.v1.schema.json",
+      "before_sha256": "8d8b15144fdbf04adba95ab6992767fb0450b3f980a886fc0366f34fd3221637",
+      "after": "Plans/workflow_standard_source_contracts/native-v7/schemas/safestop-start-arguments.v2.schema.json",
+      "after_sha256": "5431b28e798b726aef7994ae46e51df164ed4c1719317f14bc2a07fda544f24a",
+      "whole_resource": true,
+      "additional_companion": true
+    }
+  ],
+  "predecessor_methods": {
+    "path": "Plans/goal_certified_producer_source_contracts/methods.json",
+    "sha256": "93507a913f1c68bb6ad5b388db9721292d53f63513b8e324e5d8b0f3cf673ff7"
+  },
+  "new_method": "owner.workflow.certified_producer_source.prepare.v2",
+  "old_method_unchanged": "owner.workflow.certified_producer_source.prepare.v1"
+}

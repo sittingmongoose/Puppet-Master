@@ -1,0 +1,102 @@
+[
+  {
+    "path": "Plans/goal_certified_producer_source_contracts/protocol.md",
+    "sha256": "71e143d36bfb77cd9db6b6a2bc1fd24631af60006aa9336eb441106cfc313534",
+    "bytes": 27787,
+    "rule": "Entire unchanged dependency; every original source/candidate/entry/final/phase/numeric/lifetime/physical predicate survives"
+  },
+  {
+    "path": "Plans/goal_certified_producer_source_contracts/methods.json",
+    "sha256": "93507a913f1c68bb6ad5b388db9721292d53f63513b8e324e5d8b0f3cf673ff7",
+    "bytes": 33334,
+    "rule": "Entire unchanged dependency; every original source/candidate/entry/final/phase/numeric/lifetime/physical predicate survives"
+  },
+  {
+    "path": "Plans/goal_certified_producer_source_contracts/native-participants.json",
+    "sha256": "d0bddd86f2ea4c91c7898c08d1110995f08e2dfd62084913d316b463dbc64748",
+    "bytes": 5805,
+    "rule": "Entire unchanged dependency; every original source/candidate/entry/final/phase/numeric/lifetime/physical predicate survives"
+  },
+  {
+    "path": "Plans/goal_certified_producer_source_contracts/physical-retention-install.json",
+    "sha256": "7384988a5eef52fc00bbc6d34a9c5fe0ae400954fca70c517db111329d4ea67d",
+    "bytes": 1955,
+    "rule": "Entire unchanged dependency; every original source/candidate/entry/final/phase/numeric/lifetime/physical predicate survives"
+  },
+  {
+    "path": "Plans/goal_certified_producer_source_contracts/whole-field-bindings.json",
+    "sha256": "17289d7fd6a5a47c6a5e6f6f04845ae99e7b333f1c451502d9628fa8f072cc20",
+    "bytes": 70234,
+    "rule": "Entire unchanged dependency; every original source/candidate/entry/final/phase/numeric/lifetime/physical predicate survives"
+  },
+  {
+    "path": "Plans/goal_certified_producer_source_contracts/frozen-installed-profile.json",
+    "sha256": "e6184271a0b8129af84bc7481217edbaddfffbc0171643c486adde825a19dc0b",
+    "bytes": 2765,
+    "rule": "Entire unchanged dependency; every original source/candidate/entry/final/phase/numeric/lifetime/physical predicate survives",
+    "original_scope_dispatch": {
+      "path": "Plans/goal_certified_original_scope_dispatch.json",
+      "sha256": "b3a95da247c8588a11fa4345ad41e05d9fb1deeee82b9d20bf9d228ca70c7787",
+      "source_scope_id": "original-scope:sha256:3da211acb41fe9562b819d64b3b61e008a09038d99d755e0a389e0ab6387c5fe",
+      "source_member_path": "installed-profile.json",
+      "rule": "Whole operative predecessor with exact original scope and recursively dispatched complete child dependencies; no current host/path rebasing or old-header admission."
+    }
+  },
+  {
+    "path": "Plans/workflow_standard_source_contracts/protocol.md",
+    "sha256": "df228389fe435056ea84b9038c525aa5a9661460b68bc4cf445cf42a2937b51c",
+    "bytes": 69892,
+    "rule": "Entire unchanged dependency; every original source/candidate/entry/final/phase/numeric/lifetime/physical predicate survives"
+  },
+  {
+    "path": "Plans/workflow_standard_source_contracts/methods.json",
+    "sha256": "e835aa4fcfaa0b560751ac7b359899b42613745038b7b0aa6f9ce0660c1165a5",
+    "bytes": 26246,
+    "rule": "Entire unchanged dependency; every original source/candidate/entry/final/phase/numeric/lifetime/physical predicate survives"
+  },
+  {
+    "path": "Plans/workflow_standard_source_contracts/fresh-profile-methods.json",
+    "sha256": "a5b19f77fa43d30e9949f986cf0fc6ce9c440538aa7234bf0c44ddd1657106ff",
+    "bytes": 181130,
+    "rule": "Entire unchanged dependency; every original source/candidate/entry/final/phase/numeric/lifetime/physical predicate survives"
+  },
+  {
+    "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/06310d70ceced923656d6c328f0556bdf1b5f4f6e96cb273bb97795718bf9444/installed-profile.json",
+    "sha256": "06310d70ceced923656d6c328f0556bdf1b5f4f6e96cb273bb97795718bf9444",
+    "bytes": 2756,
+    "rule": "Entire unchanged dependency; every original source/candidate/entry/final/phase/numeric/lifetime/physical predicate survives",
+    "original_scope_dispatch": {
+      "path": "Plans/goal_certified_original_scope_dispatch.json",
+      "sha256": "b3a95da247c8588a11fa4345ad41e05d9fb1deeee82b9d20bf9d228ca70c7787",
+      "source_scope_id": "original-scope:sha256:cef7ae13c2aaf84300b16cf27a91d89487ff42feb7b0b0aba9a53f7005b6725b",
+      "source_member_path": "after/Plans/workflow_standard_source_contracts/installed-profile.json",
+      "rule": "Whole operative predecessor with exact original scope and recursively dispatched complete child dependencies; no current host/path rebasing or old-header admission."
+    }
+  },
+  {
+    "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/29f110a733d6fb5dd313c605881b0e85760fc593e1bfcfee020b644951557eac/installation-composition.json",
+    "sha256": "29f110a733d6fb5dd313c605881b0e85760fc593e1bfcfee020b644951557eac",
+    "bytes": 41766,
+    "rule": "Entire unchanged dependency; every original source/candidate/entry/final/phase/numeric/lifetime/physical predicate survives",
+    "original_scope_dispatch": {
+      "path": "Plans/goal_certified_original_scope_dispatch.json",
+      "sha256": "b3a95da247c8588a11fa4345ad41e05d9fb1deeee82b9d20bf9d228ca70c7787",
+      "source_scope_id": "original-scope:sha256:cef7ae13c2aaf84300b16cf27a91d89487ff42feb7b0b0aba9a53f7005b6725b",
+      "source_member_path": "after/Plans/workflow_standard_source_contracts/installation-composition.json",
+      "rule": "Whole operative predecessor with exact original scope and recursively dispatched complete child dependencies; no current host/path rebasing or old-header admission."
+    }
+  },
+  {
+    "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/580b6b349bd41f7361aee6982ef7632f4b46fe4a61c806d294fb3a44a81ef757/stored-profile-routes.json",
+    "sha256": "580b6b349bd41f7361aee6982ef7632f4b46fe4a61c806d294fb3a44a81ef757",
+    "bytes": 60837,
+    "rule": "Entire unchanged dependency; every original source/candidate/entry/final/phase/numeric/lifetime/physical predicate survives",
+    "original_scope_dispatch": {
+      "path": "Plans/goal_certified_original_scope_dispatch.json",
+      "sha256": "b3a95da247c8588a11fa4345ad41e05d9fb1deeee82b9d20bf9d228ca70c7787",
+      "source_scope_id": "original-scope:sha256:cef7ae13c2aaf84300b16cf27a91d89487ff42feb7b0b0aba9a53f7005b6725b",
+      "source_member_path": "after/Plans/workflow_standard_source_contracts/stored-profile-routes.json",
+      "rule": "Whole operative predecessor with exact original scope and recursively dispatched complete child dependencies; no current host/path rebasing or old-header admission."
+    }
+  }
+]

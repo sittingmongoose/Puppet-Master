@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15606,
+    "depends_on_edge_count": 15632,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18305,
-    "node_count": 6696,
+    "edge_count": 18331,
+    "node_count": 6709,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-23T14:52:20Z",
+  "generated_at_utc": "2026-09-23T14:53:43Z",
   "gui_related_units": {
     "count": 3195,
     "units": [
@@ -35169,10 +35169,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6696,
+  "plan_unit_count": 6709,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2147,
+      "high": 2160,
       "low": 5,
       "medium": 8,
       "standard": 4536
@@ -37232,6 +37232,8 @@
       "original_cancelled_source_or_combined_projection_currentness_drift": 4,
       "original_goal_inspection_source_or_disclosure_drift": 3,
       "original_goal_workflow_source_custody_or_native_admission_drift": 4,
+      "original_source_authority_and_installation_scope": 5,
+      "original_source_authority_native_transaction_and_lifetime": 8,
       "original_started_source_or_projection_currentness_drift": 4,
       "original_workflow_source_custody_or_native_admission_drift": 4,
       "orphan_control_or_inaccessible_hover_overlay": 1,
@@ -39014,7 +39016,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6505,
+      "accepted": 6518,
       "retired": 182,
       "superseded": 9
     },
@@ -39081,7 +39083,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5255,
+      "requirement": 5268,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -39152,7 +39154,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "1972a6aa6ef168a46091be5347bc9cff657985a1c21ab1b84665b9ed96c1ed3a",
+        "expected": "0be544181eda423dcea4d8661206e7da6d066fdcf51913d5962f1a283635c842",
         "source_path": "Plans/event_family_registry.json"
       },
       {
@@ -39170,7 +39172,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "08759243578675179a1cceda7e36cf2e7a6a71f1c73fb33929b13d0a616fe04b",
+        "expected": "ae0909a32a6e5b41e12512a25271e5dc4a7ed6efd82a7b1533607bb494c536f9",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -39188,13 +39190,13 @@
       {
         "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
         "error": "pnc019_source_hash_stale",
-        "expected": "b80f03742b3a6673b5c1fa876a1e797288f8154e6ea3491b3062872109d532db",
+        "expected": "53125b0e45132356d0d316a172676cde8e6737c78c43012c9713e34fcd303c89",
         "source_path": "Plans/Executor_Protocol.md"
       },
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "70569719bc07737e40db631a2674684f9be71c079dc2dd6d3cdb8b6a31cbe2f2",
+        "expected": "ccedade9fde5fdf69f10fca4fb7d67eec1869e2d52364f010f95e80c06dcd863",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {
@@ -39206,7 +39208,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "fb6f34def3f7a1d1cd3afaad4126cae095641c00cbddf1d8498755758caa2157",
+        "expected": "8c6415acf4cc3d87c760cc8c2f15fd124ffa45b509d7c37d10a3a7f9f795298a",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {

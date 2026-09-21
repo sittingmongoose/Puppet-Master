@@ -1,0 +1,1356 @@
+{
+  "methods": [
+    {
+      "method": "owner.workflow.certified_event.derive_original_identity.v1",
+      "phase": "identity",
+      "arguments": [
+        {
+          "name": "request",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Request"
+        },
+        {
+          "name": "identity_input",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_identity.v1.schema.json#/$defs/IdentityInput"
+        },
+        {
+          "name": "original_certification_source",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalCertificationSource"
+        },
+        {
+          "name": "current_goal",
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        },
+        {
+          "name": "durable_standard",
+          "realm": "standard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json#/$defs/DurableStandardRead"
+        },
+        {
+          "name": "assignment",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/AssignmentSource"
+        },
+        {
+          "name": "invocation",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/InvocationSource"
+        },
+        {
+          "name": "resolver",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_resolver_references.v1.schema.json#/$defs/ResolverGraphSource"
+        },
+        {
+          "name": "references",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_resolver_references.v1.schema.json#/$defs/ReferenceSource"
+        },
+        {
+          "name": "causal",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/CausalSource"
+        },
+        {
+          "name": "original_storage_partition_and_route",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "identity_admitted",
+          "results": [
+            {
+              "name": "identity_result",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_identity.v1.schema.json#/$defs/IdentityResult"
+            }
+          ]
+        },
+        {
+          "outcome": "no_append",
+          "results": [
+            {
+              "name": "classification",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/NoAppend"
+            }
+          ]
+        },
+        {
+          "outcome": "pending_unknown",
+          "results": [
+            {
+              "name": "classification",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "F0",
+        "I0",
+        "F2",
+        "I1"
+      ],
+      "final_post_all_helpers_predicates": [
+        "F0",
+        "I0",
+        "F2",
+        "I1"
+      ],
+      "full_input_output_predicate": "F0 plus entire phase predicate and exact complete output derivation; pure under actual held participants; no returning helper, callback, await or logger before own commit/disclosure",
+      "native_participants": "native-participants.json",
+      "publication": "read-only original identity issuance within actual original invocation; no Event receipt or business effect",
+      "native": "NOT_RUN"
+    },
+    {
+      "method": "owner.workflow.certified_event.prepare.v1",
+      "phase": "prepare",
+      "arguments": [
+        {
+          "name": "request",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Request"
+        },
+        {
+          "name": "original_certification_source",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalCertificationSource"
+        },
+        {
+          "name": "current_goal",
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        },
+        {
+          "name": "durable_standard",
+          "realm": "standard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json#/$defs/DurableStandardRead"
+        },
+        {
+          "name": "whole_producer_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_source.v1.schema.json#/$defs/WholeProducerSource"
+        },
+        {
+          "name": "identity_result",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_identity.v1.schema.json#/$defs/IdentityResult"
+        },
+        {
+          "name": "whole_native_candidate",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/CertificationCandidateResult"
+        },
+        {
+          "name": "producer25",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_submission.v1.schema.json"
+        },
+        {
+          "name": "complete_preappend_storage_source",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json#/$defs/NativeCurrentEventSource"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "prepared",
+          "results": [
+            {
+              "name": "prepared",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Prepared"
+            },
+            {
+              "name": "whole_native_candidate",
+              "realm": "native",
+              "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/CertificationCandidateResult"
+            },
+            {
+              "name": "producer25",
+              "realm": "event",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_submission.v1.schema.json"
+            }
+          ]
+        },
+        {
+          "outcome": "no_append",
+          "results": [
+            {
+              "name": "classification",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/NoAppend"
+            }
+          ]
+        },
+        {
+          "outcome": "pending_unknown",
+          "results": [
+            {
+              "name": "classification",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "F0",
+        "F1",
+        "F2",
+        "F3"
+      ],
+      "final_post_all_helpers_predicates": [
+        "F0",
+        "F1",
+        "F2",
+        "F3"
+      ],
+      "full_input_output_predicate": "F0 plus entire phase predicate and exact complete output derivation; pure under actual held participants; no returning helper, callback, await or logger before own commit/disclosure",
+      "native_participants": "native-participants.json",
+      "publication": "none",
+      "native": "NOT_RUN"
+    },
+    {
+      "method": "owner.storage.certified_event.arm.v1",
+      "phase": "arm",
+      "arguments": [
+        {
+          "name": "request",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Request"
+        },
+        {
+          "name": "original_certification_source",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalCertificationSource"
+        },
+        {
+          "name": "current_goal",
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        },
+        {
+          "name": "durable_standard",
+          "realm": "standard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json#/$defs/DurableStandardRead"
+        },
+        {
+          "name": "whole_producer_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_source.v1.schema.json#/$defs/WholeProducerSource"
+        },
+        {
+          "name": "identity_result",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_identity.v1.schema.json#/$defs/IdentityResult"
+        },
+        {
+          "name": "whole_native_candidate",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/CertificationCandidateResult"
+        },
+        {
+          "name": "producer25",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_submission.v1.schema.json"
+        },
+        {
+          "name": "complete_preappend_storage_source",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json#/$defs/NativeCurrentEventSource"
+        },
+        {
+          "name": "prepared",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Prepared"
+        },
+        {
+          "name": "before_control",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageControl"
+        },
+        {
+          "name": "birth",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageBirth"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "armed",
+          "results": [
+            {
+              "name": "intent",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageIntent"
+            },
+            {
+              "name": "control",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageControl"
+            }
+          ]
+        },
+        {
+          "outcome": "no_append",
+          "results": [
+            {
+              "name": "classification",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/NoAppend"
+            }
+          ]
+        },
+        {
+          "outcome": "pending_unknown",
+          "results": [
+            {
+              "name": "classification",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "F0",
+        "F1",
+        "F2",
+        "F3",
+        "F4"
+      ],
+      "final_post_all_helpers_predicates": [
+        "F0",
+        "F1",
+        "F2",
+        "F3",
+        "F4"
+      ],
+      "full_input_output_predicate": "F0 plus entire phase predicate and exact complete output derivation; pure under actual held participants; no returning helper, callback, await or logger before own commit/disclosure",
+      "native_participants": "native-participants.json",
+      "publication": "one redb arm transaction; no Event or native Workflow mutation",
+      "native": "NOT_RUN"
+    },
+    {
+      "method": "owner.storage.certified_event.append_held.v1",
+      "phase": "append",
+      "arguments": [
+        {
+          "name": "request",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Request"
+        },
+        {
+          "name": "original_certification_source",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalCertificationSource"
+        },
+        {
+          "name": "current_goal",
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        },
+        {
+          "name": "durable_standard",
+          "realm": "standard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json#/$defs/DurableStandardRead"
+        },
+        {
+          "name": "whole_producer_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_source.v1.schema.json#/$defs/WholeProducerSource"
+        },
+        {
+          "name": "identity_result",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_identity.v1.schema.json#/$defs/IdentityResult"
+        },
+        {
+          "name": "whole_native_candidate",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/CertificationCandidateResult"
+        },
+        {
+          "name": "producer25",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_submission.v1.schema.json"
+        },
+        {
+          "name": "complete_preappend_storage_source",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json#/$defs/NativeCurrentEventSource"
+        },
+        {
+          "name": "intent",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageIntent"
+        },
+        {
+          "name": "control",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageControl"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "event_durable_held",
+          "results": [
+            {
+              "name": "appended",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendedHeld"
+            },
+            {
+              "name": "whole_original_event_source",
+              "realm": "event",
+              "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json#/$defs/OriginalEventPrerequisite"
+            }
+          ]
+        },
+        {
+          "outcome": "no_append",
+          "results": [
+            {
+              "name": "classification",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/NoAppend"
+            }
+          ]
+        },
+        {
+          "outcome": "pending_unknown",
+          "results": [
+            {
+              "name": "classification",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "F0",
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5a"
+      ],
+      "final_post_all_helpers_predicates": [
+        "F0",
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5d"
+      ],
+      "full_input_output_predicate": "F0 plus entire phase predicate and exact complete output derivation; pure under actual held participants; no returning helper, callback, await or logger before own commit/disclosure",
+      "native_participants": "native-participants.json",
+      "publication": "original seglog append and both barriers; original all-member first custody; compact EventPhase/control only after native Storage readback",
+      "native": "NOT_RUN",
+      "phase_boundaries": "phase-boundaries.json#append_held"
+    },
+    {
+      "method": "owner.workflow.certified_event.commit_native.v1",
+      "phase": "native_commit",
+      "arguments": [
+        {
+          "name": "request",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Request"
+        },
+        {
+          "name": "original_certification_source",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalCertificationSource"
+        },
+        {
+          "name": "current_goal",
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        },
+        {
+          "name": "durable_standard",
+          "realm": "standard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json#/$defs/DurableStandardRead"
+        },
+        {
+          "name": "whole_producer_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_source.v1.schema.json#/$defs/WholeProducerSource"
+        },
+        {
+          "name": "identity_result",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_identity.v1.schema.json#/$defs/IdentityResult"
+        },
+        {
+          "name": "whole_native_candidate",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/CertificationCandidateResult"
+        },
+        {
+          "name": "producer25",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_submission.v1.schema.json"
+        },
+        {
+          "name": "complete_preappend_storage_source",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json#/$defs/NativeCurrentEventSource"
+        },
+        {
+          "name": "intent",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageIntent"
+        },
+        {
+          "name": "event_phase",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageEventPhase"
+        },
+        {
+          "name": "control",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageControl"
+        },
+        {
+          "name": "whole_original_event_source",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json#/$defs/OriginalEventPrerequisite"
+        },
+        {
+          "name": "all_member_append_evidence",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendEvidence"
+        },
+        {
+          "name": "coordinator_candidates",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/NativeCandidates"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "native_committed_held",
+          "results": [
+            {
+              "name": "published_native_held",
+              "realm": "native",
+              "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/PublishedWorkflow"
+            },
+            {
+              "name": "commit",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageCommit"
+            },
+            {
+              "name": "origin",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageOrigin"
+            },
+            {
+              "name": "control",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageControl"
+            },
+            {
+              "name": "whole_original_event_source",
+              "realm": "event",
+              "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json#/$defs/OriginalEventPrerequisite"
+            },
+            {
+              "name": "all_member_append_evidence",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendEvidence"
+            }
+          ]
+        },
+        {
+          "outcome": "pending_unknown",
+          "results": [
+            {
+              "name": "classification",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "F0",
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6"
+      ],
+      "final_post_all_helpers_predicates": [
+        "F0",
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6"
+      ],
+      "full_input_output_predicate": "F0 plus entire phase predicate and exact complete output derivation; pure under actual held participants; no returning helper, callback, await or logger before own commit/disclosure",
+      "native_participants": "native-participants.json",
+      "publication": "single real Workflow/D01 redb transaction plus compact commit/origin/control; observers still fenced",
+      "native": "NOT_RUN"
+    },
+    {
+      "method": "owner.storage.certified_event.readback_held.v1",
+      "phase": "readback",
+      "arguments": [
+        {
+          "name": "request",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Request"
+        },
+        {
+          "name": "original_certification_source",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalCertificationSource"
+        },
+        {
+          "name": "current_goal",
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        },
+        {
+          "name": "durable_standard",
+          "realm": "standard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json#/$defs/DurableStandardRead"
+        },
+        {
+          "name": "whole_producer_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_source.v1.schema.json#/$defs/WholeProducerSource"
+        },
+        {
+          "name": "identity_result",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_identity.v1.schema.json#/$defs/IdentityResult"
+        },
+        {
+          "name": "whole_native_candidate",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/CertificationCandidateResult"
+        },
+        {
+          "name": "producer25",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_submission.v1.schema.json"
+        },
+        {
+          "name": "intent",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageIntent"
+        },
+        {
+          "name": "event_phase",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageEventPhase"
+        },
+        {
+          "name": "commit",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageCommit"
+        },
+        {
+          "name": "origin",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageOrigin"
+        },
+        {
+          "name": "control",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageControl"
+        },
+        {
+          "name": "published_native",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/PublishedWorkflow"
+        },
+        {
+          "name": "whole_original_event_source",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json#/$defs/OriginalEventPrerequisite"
+        },
+        {
+          "name": "all_member_append_evidence",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendEvidence"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "native_committed_held",
+          "results": [
+            {
+              "name": "published_native",
+              "realm": "native",
+              "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/PublishedWorkflow"
+            },
+            {
+              "name": "whole_original_event_source",
+              "realm": "event",
+              "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json#/$defs/OriginalEventPrerequisite"
+            },
+            {
+              "name": "all_member_append_evidence",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendEvidence"
+            },
+            {
+              "name": "commit",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageCommit"
+            },
+            {
+              "name": "origin",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageOrigin"
+            }
+          ]
+        },
+        {
+          "outcome": "pending_unknown",
+          "results": [
+            {
+              "name": "classification",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "F0",
+        "F2",
+        "F4",
+        "F5",
+        "F7"
+      ],
+      "final_post_all_helpers_predicates": [
+        "F0",
+        "F2",
+        "F4",
+        "F5",
+        "F7"
+      ],
+      "full_input_output_predicate": "F0 plus entire phase predicate and exact complete output derivation; pure under actual held participants; no returning helper, callback, await or logger before own commit/disclosure",
+      "native_participants": "native-participants.json",
+      "publication": "read-only private original held invocation",
+      "native": "NOT_RUN"
+    },
+    {
+      "method": "owner.workflow.certified_event.release.v1",
+      "phase": "release",
+      "arguments": [
+        {
+          "name": "request",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Request"
+        },
+        {
+          "name": "original_certification_source",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalCertificationSource"
+        },
+        {
+          "name": "current_goal",
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        },
+        {
+          "name": "durable_standard",
+          "realm": "standard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json#/$defs/DurableStandardRead"
+        },
+        {
+          "name": "whole_producer_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_source.v1.schema.json#/$defs/WholeProducerSource"
+        },
+        {
+          "name": "identity_result",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_identity.v1.schema.json#/$defs/IdentityResult"
+        },
+        {
+          "name": "whole_native_candidate",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/CertificationCandidateResult"
+        },
+        {
+          "name": "producer25",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_submission.v1.schema.json"
+        },
+        {
+          "name": "intent",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageIntent"
+        },
+        {
+          "name": "event_phase",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageEventPhase"
+        },
+        {
+          "name": "commit",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageCommit"
+        },
+        {
+          "name": "origin",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageOrigin"
+        },
+        {
+          "name": "control",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageControl"
+        },
+        {
+          "name": "published_native",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/PublishedWorkflow"
+        },
+        {
+          "name": "whole_original_event_source",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json#/$defs/OriginalEventPrerequisite"
+        },
+        {
+          "name": "all_member_append_evidence",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendEvidence"
+        },
+        {
+          "name": "release_candidates",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/ReleaseCandidates"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "original_complete",
+          "results": [
+            {
+              "name": "published_native",
+              "realm": "native",
+              "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/PublishedWorkflow"
+            },
+            {
+              "name": "whole_original_event_source",
+              "realm": "event",
+              "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json#/$defs/OriginalEventPrerequisite"
+            },
+            {
+              "name": "all_member_append_evidence",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendEvidence"
+            },
+            {
+              "name": "retained",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/RetainedAuthority"
+            },
+            {
+              "name": "control",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageControl"
+            }
+          ]
+        },
+        {
+          "outcome": "pending_unknown",
+          "results": [
+            {
+              "name": "classification",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "F0",
+        "F2",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "final_post_all_helpers_predicates": [
+        "F0",
+        "F2",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "full_input_output_predicate": "F0 plus entire phase predicate and exact complete output derivation; pure under actual held participants; no returning helper, callback, await or logger before own commit/disclosure",
+      "native_participants": "native-participants.json",
+      "publication": "redb Release/control transaction; logical certification release only after full original readback",
+      "native": "NOT_RUN"
+    },
+    {
+      "method": "owner.workflow.certified_event.read_current.v1",
+      "phase": "current",
+      "arguments": [
+        {
+          "name": "request",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Request"
+        },
+        {
+          "name": "original_certification_source",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalCertificationSource"
+        },
+        {
+          "name": "current_goal",
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        },
+        {
+          "name": "durable_standard",
+          "realm": "standard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json#/$defs/DurableStandardRead"
+        },
+        {
+          "name": "whole_producer_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_source.v1.schema.json#/$defs/WholeProducerSource"
+        },
+        {
+          "name": "identity_result",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_identity.v1.schema.json#/$defs/IdentityResult"
+        },
+        {
+          "name": "whole_native_candidate",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/CertificationCandidateResult"
+        },
+        {
+          "name": "producer25",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_submission.v1.schema.json"
+        },
+        {
+          "name": "intent",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageIntent"
+        },
+        {
+          "name": "event_phase",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageEventPhase"
+        },
+        {
+          "name": "commit",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageCommit"
+        },
+        {
+          "name": "origin",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageOrigin"
+        },
+        {
+          "name": "control",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageControl"
+        },
+        {
+          "name": "published_native",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/PublishedWorkflow"
+        },
+        {
+          "name": "whole_original_event_source",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json#/$defs/OriginalEventPrerequisite"
+        },
+        {
+          "name": "all_member_append_evidence",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendEvidence"
+        },
+        {
+          "name": "release",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageRelease"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "current_complete",
+          "results": [
+            {
+              "name": "published_native",
+              "realm": "native",
+              "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/PublishedWorkflow"
+            },
+            {
+              "name": "whole_original_event_source",
+              "realm": "event",
+              "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json#/$defs/OriginalEventPrerequisite"
+            },
+            {
+              "name": "all_member_append_evidence",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendEvidence"
+            },
+            {
+              "name": "retained",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/RetainedAuthority"
+            }
+          ]
+        },
+        {
+          "outcome": "pending_unknown",
+          "results": [
+            {
+              "name": "classification",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "F0",
+        "F2",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "final_post_all_helpers_predicates": [
+        "F0",
+        "F2",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "full_input_output_predicate": "F0 plus entire phase predicate and exact complete output derivation; pure under actual held participants; no returning helper, callback, await or logger before own commit/disclosure",
+      "native_participants": "native-participants.json",
+      "publication": "no mutation; full current sources mandatory, no use as certified projector",
+      "native": "NOT_RUN"
+    },
+    {
+      "method": "owner.workflow.certified_event.recover_original.v1",
+      "phase": "retained",
+      "arguments": [
+        {
+          "name": "request",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/RecoveryRequest"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "original_complete",
+          "results": [
+            {
+              "name": "retained",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/CompleteMetadata"
+            },
+            {
+              "name": "native_retained_metadata",
+              "realm": "native",
+              "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/RetainedWorkflowResult"
+            },
+            {
+              "name": "standard_retained_metadata",
+              "realm": "standard",
+              "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json#/$defs/RetainedStandardRead"
+            },
+            {
+              "name": "standard_capture_origin",
+              "realm": "standard",
+              "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json#/$defs/StorageStandardCaptureOrigin"
+            },
+            {
+              "name": "original_event_custody",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2"
+            },
+            {
+              "name": "original_event_full_value_result",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
+            }
+          ]
+        },
+        {
+          "outcome": "no_append",
+          "results": [
+            {
+              "name": "classification",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/NoAppend"
+            }
+          ]
+        },
+        {
+          "outcome": "pending_unknown",
+          "results": [
+            {
+              "name": "classification",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "F0",
+        "R1",
+        "R2",
+        "R3"
+      ],
+      "final_post_all_helpers_predicates": [
+        "F0",
+        "R1",
+        "R2",
+        "R3"
+      ],
+      "full_input_output_predicate": "F0 plus entire phase predicate and exact complete output derivation; pure under actual held participants; no returning helper, callback, await or logger before own commit/disclosure",
+      "native_participants": "native-participants.json",
+      "publication": "no mutation, no source reacquisition or hidden append/native/release completion",
+      "native": "NOT_RUN"
+    },
+    {
+      "method": "owner.workflow.certified_event.read_retained.v1",
+      "phase": "retained",
+      "arguments": [
+        {
+          "name": "request",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/RecoveryRequest"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "original_complete",
+          "results": [
+            {
+              "name": "retained",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/CompleteMetadata"
+            },
+            {
+              "name": "native_retained_metadata",
+              "realm": "native",
+              "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/RetainedWorkflowResult"
+            },
+            {
+              "name": "standard_retained_metadata",
+              "realm": "standard",
+              "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json#/$defs/RetainedStandardRead"
+            },
+            {
+              "name": "standard_capture_origin",
+              "realm": "standard",
+              "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json#/$defs/StorageStandardCaptureOrigin"
+            },
+            {
+              "name": "original_event_custody",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2"
+            },
+            {
+              "name": "original_event_full_value_result",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
+            }
+          ]
+        },
+        {
+          "outcome": "no_append",
+          "results": [
+            {
+              "name": "classification",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/NoAppend"
+            }
+          ]
+        },
+        {
+          "outcome": "pending_unknown",
+          "results": [
+            {
+              "name": "classification",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "F0",
+        "R1",
+        "R2",
+        "R3"
+      ],
+      "final_post_all_helpers_predicates": [
+        "F0",
+        "R1",
+        "R2",
+        "R3"
+      ],
+      "full_input_output_predicate": "F0 plus entire phase predicate and exact complete output derivation; pure under actual held participants; no returning helper, callback, await or logger before own commit/disclosure",
+      "native_participants": "native-participants.json",
+      "publication": "no mutation, no source reacquisition or hidden append/native/release completion",
+      "native": "NOT_RUN"
+    },
+    {
+      "method": "owner.executor.certified_event.enroll_fresh_birth.v1",
+      "phase": "birth",
+      "arguments": [
+        {
+          "name": "request",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/BirthRequest"
+        },
+        {
+          "name": "whole_original_birth_argument",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v6.schema.json#/$defs/OriginalBirthArgument"
+        },
+        {
+          "name": "whole_birth_goal",
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/BirthGoalArgument"
+        },
+        {
+          "name": "whole_original_goal_binding",
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/BindingLowerArgument"
+        },
+        {
+          "name": "candidates",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/BirthCandidates"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "born",
+          "results": [
+            {
+              "name": "whole_original_birth_publication",
+              "realm": "native",
+              "schema_ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowBirthPublication"
+            },
+            {
+              "name": "birth",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageBirth"
+            },
+            {
+              "name": "control",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageControl"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "producer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Unavailable"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "F0",
+        "B1"
+      ],
+      "final_post_all_helpers_predicates": [
+        "F0",
+        "B1"
+      ],
+      "full_input_output_predicate": "F0 plus entire phase predicate and exact complete output derivation; pure under actual held participants; no returning helper, callback, await or logger before own commit/disclosure",
+      "native_participants": "native-participants.json",
+      "publication": "coissue actual original native Workflow birth plus new compact Birth/empty Control in same real redb transaction before run birth; no Standard or Event",
+      "native": "NOT_RUN"
+    },
+    {
+      "method": "owner.storage.certified_event.read_guard.v1",
+      "phase": "guard_read",
+      "arguments": [
+        {
+          "name": "request",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/GuardReadRequest"
+        },
+        {
+          "name": "actual_storage_source",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/GuardStoreSource"
+        },
+        {
+          "name": "whole_original_current_disclosure_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "guard_result",
+          "results": [
+            {
+              "name": "whole_guard_result",
+              "realm": "coordinator",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/GuardReadResult"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "F0",
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "final_post_all_helpers_predicates": [
+        "F0",
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "full_input_output_predicate": "Independent pure complete actual Storage selection/bytes/owner-origin/profile/current-disclosure and full result check after all helpers under actual native snapshot/owner/reader fence; no helper/callback/await gap",
+      "native_participants": "Actual original Storage root/read-snapshot/issuance and current disclosure participants; nonserializable authenticated native owner handles, never a caller source object",
+      "publication": "read only; genuine actual source acquisition and exact complete result; missing/null control is never no-operation authority",
+      "native": "NOT_RUN"
+    }
+  ],
+  "all_arguments_required": true,
+  "realm_rule": "Each method/return validates whole operands in declared exact isolated resource realm; schemas are not extracted or substituted.",
+  "outcome_rule": "NoAppend only with native authenticated complete absence proof before append attempt; every other incomplete or uncertain phase is PendingUnknown. Standard receipt is prior durable fact on this coordinator path."
+}

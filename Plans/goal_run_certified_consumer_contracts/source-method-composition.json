@@ -1,0 +1,26 @@
+{
+  "coordinator_manifest": {
+    "path": "external-source-evidence:sha256:19822a42be34079b5b0816613d646e54bf04cff72e5b22e661a5847fc7b716cf",
+    "sha256": "19822a42be34079b5b0816613d646e54bf04cff72e5b22e661a5847fc7b716cf",
+    "status": "ACCEPTED_BOUNDED_CORRECTED_COORDINATOR_SOURCE_NOT_INSTALLED"
+  },
+  "whole_original_methods": [
+    {
+      "path": "Plans/goal_run_started_consumer_contracts/methods.json",
+      "sha256": "5d7be8fd03edec5c736b82815a097df86b0b1ba13e6731cf378cb55f71272434"
+    },
+    {
+      "path": "Plans/goal_run_cancelled_consumer_contracts/methods.json",
+      "sha256": "5a44e6eafffb116ee0210c2decf199734d7699dd2d8a15a5afd44bb571b7d6d2"
+    }
+  ],
+  "native_current_complete_method": {
+    "path": "Plans/goal_certified_event_coordinator_contracts/methods.json",
+    "method": "owner.workflow.certified_event.read_current.v1",
+    "participant_supplements": "Plans/goal_certified_event_coordinator_contracts/participant-method-tuples.json"
+  },
+  "native_profile_change": false,
+  "consumer_profile": "goal_run_started_cancelled_certified_projector.v1",
+  "native_profile": "owner.executor.workflow_source.all_writers.v7",
+  "installation": "Passive derived consumer uses existing native current/guard APIs with genuine Storage read-source registration; does not enter or modify closed native writer roster. Installation independently qualifies complete consumer owner and lower Storage methods before any consumer service. No automatic enrolled run or old checkpoint cast."
+}

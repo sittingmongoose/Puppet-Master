@@ -1,0 +1,268 @@
+{
+  "status": "AUTHENTICATED_OWNER_SELECTIONS_NOT_CONTRACT_ADOPTION",
+  "base": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+  "facts": [
+    {
+      "id": "C01",
+      "path": "Plans/Goal_Runtime_System.md",
+      "base": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+      "whole_sha256": "ccedade9fde5fdf69f10fca4fb7d67eec1869e2d52364f010f95e80c06dcd863",
+      "start_line": 7443,
+      "end_line": 7443,
+      "text": "SP-214 and D-R20 require the durable GoalRun projection role. This route materializes that role with exactly one versioned derived row per original Workflow run and its own complete generation checkpoint under SP-311. It does not replace the role with a native-body pointer or passive none_required. The five exact source methods are read_retained_native, inspect_original, project_prefix, read_historical and read_current under `owner.goal_run.started.<method>.v1`. The first two and the two final readers have no durable effects/cursor/checkpoint; that zero-effect disposition is specific to those passive methods. project_prefix alone owns its complete projection/checkpoint transaction and is never exempt.\n",
+      "passage_sha256": "a0a544dca8f6b926127db8fef86dd69db2809d5f34665e50bf8f103919035a03",
+      "whole_source_path": "Plans/Goal_Runtime_System.md",
+      "original_source_lineage": {
+        "scope": "original-source-at-13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+        "path": "Plans/Goal_Runtime_System.md",
+        "sha256": "70569719bc07737e40db631a2674684f9be71c079dc2dd6d3cdb8b6a31cbe2f2",
+        "purpose": "Complete immutable original source/citation retained independently; current whole selection hashes final transformed owner or registry."
+      }
+    },
+    {
+      "id": "C02",
+      "path": "Plans/Goal_Runtime_System.md",
+      "base": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+      "whole_sha256": "ccedade9fde5fdf69f10fca4fb7d67eec1869e2d52364f010f95e80c06dcd863",
+      "start_line": 7510,
+      "end_line": 7510,
+      "text": "The combined reducer supports exactly the already adopted original started-v3 and this positive cancelled-v3. It preserves every original started source/transition/current-read predicate through explicit versioned composition. Known outside-run events count as no-ops only after full generic original validation. Same-run replanned, blocked, certified, stopped, incompatible v2/v3 profile or any other unsupported GoalRun event halts before its row; unknown or malformed generic source also prevents coverage. The native D06's legal source-state breadth is not narrowed: a genuine cancellation after an unsupported event may be passively inspected while this bounded current projector cannot cross the earlier row. No status is inferred from event name, silence or an empty filtered scan.\n",
+      "passage_sha256": "e288773c8db8085903600eac77d73651301b07f57e0380e31f39628e27ba1326",
+      "whole_source_path": "Plans/Goal_Runtime_System.md",
+      "original_source_lineage": {
+        "scope": "original-source-at-13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+        "path": "Plans/Goal_Runtime_System.md",
+        "sha256": "70569719bc07737e40db631a2674684f9be71c079dc2dd6d3cdb8b6a31cbe2f2",
+        "purpose": "Complete immutable original source/citation retained independently; current whole selection hashes final transformed owner or registry."
+      }
+    },
+    {
+      "id": "C03",
+      "path": "Plans/Goal_Runtime_System.md",
+      "base": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+      "whole_sha256": "ccedade9fde5fdf69f10fca4fb7d67eec1869e2d52364f010f95e80c06dcd863",
+      "start_line": 6089,
+      "end_line": 6089,
+      "text": "After genuine admission, SP-289's retained reader returns exact original content-free certification metadata from actual canonical custody without reacquiring disposed original Workflow controls or deleted Goal text. Current permission to disclose and native row origin remain required; original permission to issue is retained as evidence, not current action permission. Existing generic views may read the exact compatibility component without claiming Standard proof. Receipt loss cannot be repaired into success from raw events or generic accepted markers. DL-047 body/content lifetime and the existing receipt authority lifetime remain separate; refs create no new content hold.\n",
+      "passage_sha256": "969883ebfdb61b170c4bef90529af77cfa2e13854890e66e78b8b99f03c200b1",
+      "whole_source_path": "Plans/Goal_Runtime_System.md",
+      "original_source_lineage": {
+        "scope": "original-source-at-13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+        "path": "Plans/Goal_Runtime_System.md",
+        "sha256": "70569719bc07737e40db631a2674684f9be71c079dc2dd6d3cdb8b6a31cbe2f2",
+        "purpose": "Complete immutable original source/citation retained independently; current whole selection hashes final transformed owner or registry."
+      }
+    },
+    {
+      "id": "C04",
+      "path": "Plans/Goal_Runtime_System.md",
+      "base": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+      "whole_sha256": "ccedade9fde5fdf69f10fca4fb7d67eec1869e2d52364f010f95e80c06dcd863",
+      "start_line": 6083,
+      "end_line": 6083,
+      "text": "The broad generic v1 receipt grammar and all original kinds/tiers keep their own meaning. A string `accepted`, a receipt kind, worker success, a body mutation receipt, a projected state or an event observation is not the original Standard receipt. Actual original receipt durability precedes D-R18's eventual `provisional_success|verifying -> certified` GoalRun transition/event; projection follows append. This prerequisite performs neither transition nor event append.\n",
+      "passage_sha256": "af1d4dbff9ddc5e70cbde556d5992ef301b5e652634005af251c81ab445b195a",
+      "whole_source_path": "Plans/Goal_Runtime_System.md",
+      "original_source_lineage": {
+        "scope": "original-source-at-13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+        "path": "Plans/Goal_Runtime_System.md",
+        "sha256": "70569719bc07737e40db631a2674684f9be71c079dc2dd6d3cdb8b6a31cbe2f2",
+        "purpose": "Complete immutable original source/citation retained independently; current whole selection hashes final transformed owner or registry."
+      }
+    },
+    {
+      "id": "C05",
+      "path": "Plans/Goal_Runtime_System.md",
+      "base": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+      "whole_sha256": "ccedade9fde5fdf69f10fca4fb7d67eec1869e2d52364f010f95e80c06dcd863",
+      "start_line": 6081,
+      "end_line": 6081,
+      "text": "The newly bound route is exactly `certification_tier = standard`, `final_certifier_decision = certified`, truthful label `certified`, no unresolved risks or exception approvals, and passing validators. The existing D-R18 branch `certified_with_approved_exception`, approval/residual-risk evidence and truthful `completed_with_approved_verification_exception` remain semantically preserved in CV-340. They are excluded from this Standard writer. An approved testing restriction or incomplete-item disposition alone supplies neither an original final Workflow decision nor an automated pass. The selected Plans-to-Code source has no exception decision; the exact original exception/waiver owner route remains separately unbound. This prerequisite does not invent it, widen the source enum or revoke D-R18's already specified distinction.\n",
+      "passage_sha256": "628f27e629c25d709396f209810950058e7e357595dcf9de387078cdae15337e",
+      "whole_source_path": "Plans/Goal_Runtime_System.md",
+      "original_source_lineage": {
+        "scope": "original-source-at-13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+        "path": "Plans/Goal_Runtime_System.md",
+        "sha256": "70569719bc07737e40db631a2674684f9be71c079dc2dd6d3cdb8b6a31cbe2f2",
+        "purpose": "Complete immutable original source/citation retained independently; current whole selection hashes final transformed owner or registry."
+      }
+    },
+    {
+      "id": "C06",
+      "path": "Plans/storage-plan.md",
+      "base": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+      "whole_sha256": "328858615bc5badb18c227e89e721c6ae18e244e0a13ae49b692000e9c15add7",
+      "start_line": 25827,
+      "end_line": 25827,
+      "text": "Registered events outside this run are verified no-ops only after complete generic validation. For this run the exact reviewed started-v3 and positive cancelled-v3 events are supported. A v2 sibling is not upconverted. Replanned, blocked, certified, stopped, every other same-run GoalRun event, and unknown relevant schema are UNSUPPORTED_RELEVANT_EVENT and halt immediately before the row. They are never no-ops. This remains bounded even though the native D06 may cancel any legal nonterminal status: a genuine original cancellation after an unsupported same-run event may be inspectable, while this current projector cannot cross the unsupported event.\n",
+      "passage_sha256": "aafdd0e21493e18273a82f69b5e1b75f0e079efd8247ae3bf32ba0cfc6a05d82",
+      "whole_source_path": "Plans/storage-plan.md",
+      "original_source_lineage": {
+        "scope": "original-source-at-13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+        "path": "Plans/storage-plan.md",
+        "sha256": "22a4999b40b1ca103d62ca6562d897897d476a249fd02070fd2684d3eae02341",
+        "purpose": "Complete immutable original source/citation retained independently; current whole selection hashes final transformed owner or registry."
+      }
+    },
+    {
+      "id": "C07",
+      "path": "Plans/storage-plan.md",
+      "base": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+      "whole_sha256": "328858615bc5badb18c227e89e721c6ae18e244e0a13ae49b692000e9c15add7",
+      "start_line": 25831,
+      "end_line": 25831,
+      "text": "CancelledProjection derives scope, cancelled status, original activation, both full native commitments, entire original Event, all original D06/D01/D05/Start selectors, exact original whole-value commitment, producer digest and first receipt exclusively from authenticated originals. Its original_start_cause contains metadata selectors only; it does not embed the earlier full started Event. That allows genuine retained Start metadata to support cancellation after a legally expired started Event without pretending the full started event remains readable. A started row still requires the complete original started Event under its own lifetime. Reprocessing equal complete verified inputs produces byte-equal rows.\n",
+      "passage_sha256": "f3c2f24d0da4eb96a0aa713c69bdc92862b78d52040588126c6a910b3e96e082",
+      "whole_source_path": "Plans/storage-plan.md",
+      "original_source_lineage": {
+        "scope": "original-source-at-13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+        "path": "Plans/storage-plan.md",
+        "sha256": "22a4999b40b1ca103d62ca6562d897897d476a249fd02070fd2684d3eae02341",
+        "purpose": "Complete immutable original source/citation retained independently; current whole selection hashes final transformed owner or registry."
+      }
+    },
+    {
+      "id": "C08",
+      "path": "Plans/storage-plan.md",
+      "base": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+      "whole_sha256": "328858615bc5badb18c227e89e721c6ae18e244e0a13ae49b692000e9c15add7",
+      "start_line": 25849,
+      "end_line": 25849,
+      "text": "Original started remains RP-RUNTIME-365D: 31,536,000 seconds from run completion with existing caps, rollover, holds and compaction. Original cancelled remains RP-AUTHORITY-INDEFINITE subject to its actual deletion/hold/backup rules. D06/D05/Start/D01/Goal/FileSafe/process original metadata and journals retain their existing owner policies, without new archive, refreshed TTL or guarantee of indefinite availability. Losing any required full original value or actual original custody makes that method unavailable. Full effect journals may be unavailable after lawful disposal; compact selectors do not replace them.\n",
+      "passage_sha256": "7d56e17ad4e5bd5327f2e8320752500d037bc48c50c0f29aa057b5d3af15e706",
+      "whole_source_path": "Plans/storage-plan.md",
+      "original_source_lineage": {
+        "scope": "original-source-at-13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+        "path": "Plans/storage-plan.md",
+        "sha256": "22a4999b40b1ca103d62ca6562d897897d476a249fd02070fd2684d3eae02341",
+        "purpose": "Complete immutable original source/citation retained independently; current whole selection hashes final transformed owner or registry."
+      }
+    },
+    {
+      "id": "C09",
+      "path": "Plans/storage-plan.md",
+      "base": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+      "whole_sha256": "328858615bc5badb18c227e89e721c6ae18e244e0a13ae49b692000e9c15add7",
+      "start_line": 25845,
+      "end_line": 25845,
+      "text": "Both current methods require processed prefix to equal genuine complete current generic frontier, with all gaps proved and no unsupported relevant event, pending native transaction, stale generic token or later incompatible native update. Revalidate actual root/frontier, current native owners/epochs, Goal Stop/binding/current controls and applicable original disclosure sources immediately before return under the coordinated held read fence. Different later state returns unavailable, never a stale running/cancelled view. Methods return only their matching success branch even though the shared success schema is a union. Serialized current results confer no action capability.\n",
+      "passage_sha256": "219622a6dfd1f2bab041fbf359fd85783fed49a778dc91ebe5ac3233fceea1bc",
+      "whole_source_path": "Plans/storage-plan.md",
+      "original_source_lineage": {
+        "scope": "original-source-at-13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+        "path": "Plans/storage-plan.md",
+        "sha256": "22a4999b40b1ca103d62ca6562d897897d476a249fd02070fd2684d3eae02341",
+        "purpose": "Complete immutable original source/citation retained independently; current whole selection hashes final transformed owner or registry."
+      }
+    },
+    {
+      "id": "C10",
+      "path": "Plans/Backup_Restore_System.md",
+      "base": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+      "whole_sha256": "c4f00ec4f86bee8f080b7defebc6d49311e86d1c4dc6a7bc66c827087a4e16c7",
+      "start_line": 1640,
+      "end_line": 1640,
+      "text": "Original non-rebuildable D06/D05/D01/Start/Goal/Storage/effect authority keeps its existing exact family keys, full schemas, native provenance and mandatory backup/disclosure rules under BRS025 and its original owners. The new two combined projection/checkpoint families are disposable derived state with optional coherent derivative backup. Their registration does not make original source backup optional, enlarge an authority or require a historical mutable Workflow/Goal-body archive. All 27 retention-policy objects remain exact.\n",
+      "passage_sha256": "4e81ef49d6c5855f26a89691bdbb9840e58cc9b6284d761ca84efd05fcc7607c",
+      "whole_source_path": "Plans/Backup_Restore_System.md",
+      "original_source_lineage": {
+        "scope": "original-source-at-13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+        "path": "Plans/Backup_Restore_System.md",
+        "sha256": "42c7a278a65355e1b686b993723e9f93c098db6d2a88c53f763816707043f043",
+        "purpose": "Complete immutable original source/citation retained independently; current whole selection hashes final transformed owner or registry."
+      }
+    },
+    {
+      "id": "C11",
+      "path": "Plans/Backup_Restore_System.md",
+      "base": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+      "whole_sha256": "c4f00ec4f86bee8f080b7defebc6d49311e86d1c4dc6a7bc66c827087a4e16c7",
+      "start_line": 1648,
+      "end_line": 1648,
+      "text": "The existing RP-PROJECTION-3GEN@1.0.0 governs exactly the new generation lifecycle: maximum three including staged/current/retired; current no TTL; original retirement plus 604800 seconds subject to authentic holds/references; immutable first preparation/activation/retirement/successor facts; governed rebuild on expiry/overflow. Whole root/dataset binding, generation anchor and advancing frontier must remain coherent. Checkpoint loss permits only a new isolated derived rebuild from actual complete generic retained source and authentic original causal records, never original Event/native/receipt/origin/capability repair. Actual source retention gaps require the full Storage owner proof; an empty survivor scan is not never-started or never-cancelled. Unsupported relevant events halt before the row and incomplete staged coverage cannot cut over as current.\n",
+      "passage_sha256": "9a7278936fe9d52b0b618b4834b1639f35c7e492321e264843b3186c4512832c",
+      "whole_source_path": "Plans/Backup_Restore_System.md",
+      "original_source_lineage": {
+        "scope": "original-source-at-13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+        "path": "Plans/Backup_Restore_System.md",
+        "sha256": "42c7a278a65355e1b686b993723e9f93c098db6d2a88c53f763816707043f043",
+        "purpose": "Complete immutable original source/citation retained independently; current whole selection hashes final transformed owner or registry."
+      }
+    },
+    {
+      "id": "C12",
+      "path": "Plans/Backup_Restore_System.md",
+      "base": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+      "whole_sha256": "c4f00ec4f86bee8f080b7defebc6d49311e86d1c4dc6a7bc66c827087a4e16c7",
+      "start_line": 1650,
+      "end_line": 1650,
+      "text": "If backed up, optional derived root/generation/dataset values form one coherent unit with exact physical names, complete bytes/codecs, anchors/frontiers, lifecycle facts and actual hold references. Restore first honors current tombstones, deletion, permissions and holds, then independently revalidates actual generic source/current frontier, original custody and source availability. Stale or incomplete derivative state is refused or rebuilt; it cannot overwrite native/Goal controls, claim currentness from an old root, revive source content or substitute for missing mandatory authority. Original authority loss keeps its owner data-loss/unavailable disclosure; disposable projection loss is a different condition.\n",
+      "passage_sha256": "dfe947543677e5c1ab9ff4e032d1c823e7321c195a883ef28edc2414fc276488",
+      "whole_source_path": "Plans/Backup_Restore_System.md",
+      "original_source_lineage": {
+        "scope": "original-source-at-13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+        "path": "Plans/Backup_Restore_System.md",
+        "sha256": "42c7a278a65355e1b686b993723e9f93c098db6d2a88c53f763816707043f043",
+        "purpose": "Complete immutable original source/citation retained independently; current whole selection hashes final transformed owner or registry."
+      }
+    },
+    {
+      "id": "C13",
+      "path": "Plans/event_family_registry.json",
+      "base": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+      "whole_sha256": "0be544181eda423dcea4d8661206e7da6d066fdcf51913d5962f1a283635c842",
+      "array_key": "families",
+      "index": 2,
+      "value": {
+        "family_id": "event-family-goal-run-certified",
+        "family_revision": "2.0.0",
+        "event_type": "goal_run.certified",
+        "scope_policy": "project_only",
+        "semantic_owner_doc": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+        "payload_owner_doc": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+        "payload_schema_id": "pm.goal_runtime_event.goal_run_certified.schema.v2",
+        "payload_schema_ref": {
+          "path": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+          "json_pointer": "#",
+          "schema_id": "pm.goal_runtime_event.goal_run_certified.schema.v2"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json#",
+          "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+          "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-AUTHORITY-INDEFINITE",
+          "policy_version": "1.0.0"
+        }
+      },
+      "whole_source_path": "Plans/event_family_registry.json",
+      "original_source_lineage": {
+        "scope": "original-source-at-13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+        "path": "Plans/event_family_registry.json",
+        "sha256": "1972a6aa6ef168a46091be5347bc9cff657985a1c21ab1b84665b9ed96c1ed3a",
+        "purpose": "Complete immutable original source/citation retained independently; current whole selection hashes final transformed owner or registry."
+      },
+      "original_cited_value_scope": "Captured original certified-v2 Event registry row remains exact source evidence. Current full registry selected above has the explicit certified-v3 payload-selection delta owned by GRS-084; never treat this captured row as the current route."
+    }
+  ]
+}

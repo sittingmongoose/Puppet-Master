@@ -1,0 +1,2116 @@
+{
+  "composition_id": "pm.goal_certified_family.source_placement.20260921.v1",
+  "status": "COMPLETE_CANONICAL_SOURCE_CANDIDATE_UNINSTALLED_NATIVE_NOT_RUN",
+  "conditional_base": "07f069185b28e1b91d602e81a36f80e31243b173",
+  "native_profile": "pm.executor.workflow_source.all_writers.v7",
+  "producer_source_profile": "pm.goal_run_certified.producer_source.v2",
+  "passive_consumer_profile": "goal_run_started_cancelled_certified_projector.v1",
+  "members": [
+    {
+      "path": "Plans/00-plans-index.md",
+      "sha256": "e96a1e1e98d8ee589d1bae0c6bc6ee52e71c92b722f0291f6d98682cb2868481",
+      "bytes": 442341
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "sha256": "8c6415acf4cc3d87c760cc8c2f15fd124ffa45b509d7c37d10a3a7f9f795298a",
+      "bytes": 459283
+    },
+    {
+      "path": "Plans/Backup_Restore_System.md",
+      "sha256": "c4f00ec4f86bee8f080b7defebc6d49311e86d1c4dc6a7bc66c827087a4e16c7",
+      "bytes": 187757
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "sha256": "9753361f6702fae3b897aa0d1791de664b1f4f0cac04959935ca948fe721862d",
+      "bytes": 1299402
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "sha256": "53125b0e45132356d0d316a172676cde8e6737c78c43012c9713e34fcd303c89",
+      "bytes": 607059
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "sha256": "ccedade9fde5fdf69f10fca4fb7d67eec1869e2d52364f010f95e80c06dcd863",
+      "bytes": 629170
+    },
+    {
+      "path": "Plans/event_family_registry.json",
+      "sha256": "0be544181eda423dcea4d8661206e7da6d066fdcf51913d5962f1a283635c842",
+      "bytes": 89096
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/commitment-domains.json",
+      "sha256": "0382f823c4db4a4a6137071354344ebead91513a66a557ea659d5612472360b6",
+      "bytes": 4393
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/correction-evidence.json",
+      "sha256": "2059dae541d9a3202e43d8578493f558f7cdad8efd2b1ace56a5eea05285d502",
+      "bytes": 1178
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/dependencies.json",
+      "sha256": "c4939c4f7bbc65c9b28fc2587c8473fb7b043492d8d356d47c0c483a2b6c0781",
+      "bytes": 840
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/installed-profile-digest.txt",
+      "sha256": "f7ccef73dc5fa18bc57b7eeddb4ed91bb932f43e497969887bbcdc2f643ff148",
+      "bytes": 65
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/installed-profile.json",
+      "sha256": "0f71cf4a5fa992489ca217c110417f126d63b46e26e92eb95e2ab48a233517f5",
+      "bytes": 10417
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/method-root-bindings.json",
+      "sha256": "1f0aa40617d56bfb4bfad8306f69232425e55b6bebdfdec9caae52a2fae3d0f1",
+      "bytes": 445734
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/methods.json",
+      "sha256": "aa6d683e414cc7a0119acd6f7bf630f3533db6a94113be081945bf0c4c0e257d",
+      "bytes": 54713
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/native-participants.json",
+      "sha256": "d55fd2a116d4a4c1b7da37134901e13063cd2b1aeb9c7b35715ce9b4b103f354",
+      "bytes": 10262
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/original-reference-routing.json",
+      "sha256": "abbbd9624103eb50b763c6e45d53fe62647d363402eb5460b607b4d3dd54b911",
+      "bytes": 3375
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/owner-source-custody-map.json",
+      "sha256": "4cf5d5a10cb749d34689904a051d2f0a8269c4b747c58effd3bea9e59765b830",
+      "bytes": 10588
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/participant-method-tuples.json",
+      "sha256": "0d7f51b0f254f5f1ff3a93439c74e3e512fc296ac1f7795d1e5dc1186e83086c",
+      "bytes": 382137
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/phase-boundaries.json",
+      "sha256": "2051bdf65c434e4a385c48717c7d3eb469bfa23227ea2e554b98f63dad478887",
+      "bytes": 19199
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/physical-retention-install.json",
+      "sha256": "5e833fdc231c55380190cbf2472c79d70546aef57b441a4a149cbc3f0293b180",
+      "bytes": 7875
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/protocol.md",
+      "sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a",
+      "bytes": 39451
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/resource-realms.json",
+      "sha256": "86498dd16e4966d2a7e6924746a1bab28cab533ca78e1bf4907b4ce39ab024a7",
+      "bytes": 314410
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/schemas/append-phase.v1.schema.json",
+      "sha256": "81958febf169253ce6349c29ddf2bde98df5182df1c2aa74a01d7be72ac316fd",
+      "bytes": 2435
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/schemas/coordinator.v1.schema.json",
+      "sha256": "274bb7363140e13769bd75a1fdf6eaa6688f2d8699b271182fc90bce0ee88140",
+      "bytes": 54273
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/schemas/identity.v1.schema.json",
+      "sha256": "c684141ada201397dce84c6f738c89b15d5951466804b185308e3edc92e12212",
+      "bytes": 4222
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/whole-inherited-contracts.json",
+      "sha256": "b624023488cb57fd9951b338f9fcfeebc301bd502ba34f9e9af72f23a2d886ac",
+      "bytes": 6555
+    },
+    {
+      "path": "Plans/goal_certified_original_scope_dispatch.json",
+      "sha256": "b3a95da247c8588a11fa4345ad41e05d9fb1deeee82b9d20bf9d228ca70c7787",
+      "bytes": 2901560
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/README.md",
+      "sha256": "27f67390b9ec643ad9d2e3b7b857a69765af8148af704cbf6f6b135d8ecaccc8",
+      "bytes": 6296
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/adoption-deltas.json",
+      "sha256": "f6330fc5aeaf0c4d87e8d1a52cf884a0e6419e4dd969088e1955ca0632bc8cf6",
+      "bytes": 123393
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/commitment-domains.json",
+      "sha256": "3ceb8b8e3d2b2ae846cf4801526f966761a22fc0819baf3c334bb7e336bb1701",
+      "bytes": 2846
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/dependencies.json",
+      "sha256": "d401684e2b4311bc8c1c754be191948aa8a73b2c6ab2f934f80ac5e39feb740d",
+      "bytes": 1834
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/frozen-installed-profile-digest.txt",
+      "sha256": "9b09c7d4f33fac4f2711fe25f5154589e2e2a7d116193285dd104c18ed3867db",
+      "bytes": 65
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/frozen-installed-profile.json",
+      "sha256": "e6184271a0b8129af84bc7481217edbaddfffbc0171643c486adde825a19dc0b",
+      "bytes": 2765
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/installation-composition-digest.txt",
+      "sha256": "57351c13375b2158272cc489b989c2963a1c167b66c885b07421406d716d7de4",
+      "bytes": 65
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/installation-composition.json",
+      "sha256": "80875c4bb1687d7aefb00ef4aacf2bb3e4acbf26b2b5a37a54c59fb96b834d3b",
+      "bytes": 102727
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/installed-profile-digest.txt",
+      "sha256": "89d56fc067bff83701ca48f815b11ec5a03671017a3a9f2475636743b18da2c7",
+      "bytes": 65
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/installed-profile.json",
+      "sha256": "e4f1ae800506a76c56f7d8a1aaedf355c74e031b65a79149473ab62f7401bac0",
+      "bytes": 3163
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/methods.json",
+      "sha256": "93507a913f1c68bb6ad5b388db9721292d53f63513b8e324e5d8b0f3cf673ff7",
+      "bytes": 33334
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/native-participants.json",
+      "sha256": "d0bddd86f2ea4c91c7898c08d1110995f08e2dfd62084913d316b463dbc64748",
+      "bytes": 5805
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/installed-profile-digest.txt",
+      "sha256": "44b5edce277ac56e00443c922ba2098eee4eb52dd0c163ccffa81eccb285a11a",
+      "bytes": 65
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/installed-profile.json",
+      "sha256": "fc776660042f0257053554f5da6a5ba25ce7a3e9ed9edd29c346174cb755e22f",
+      "bytes": 6002
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/methods.json",
+      "sha256": "bf82bcf31ba15a10ccb33cebecae6e89e217bdf706b6dc7bc007ce7acbf02877",
+      "bytes": 33513
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/protocol.md",
+      "sha256": "02434e35116950935b412a0b0b1b0c414e811d3259d4f69d756028a09fc0ab1d",
+      "bytes": 28898
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/whole-source-bindings.json",
+      "sha256": "b4491085b3cb24ade2241a965afc3fcb3aa300a025da23c4fc895cb8418f5464",
+      "bytes": 6069
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/physical-retention-install.json",
+      "sha256": "7384988a5eef52fc00bbc6d34a9c5fe0ae400954fca70c517db111329d4ea67d",
+      "bytes": 1955
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/preinstallation-originals/06b6d88ef89bcfb391c89b4f99ec8ddc74266c96438424291c880e789f0757f6/resource-realms.json",
+      "sha256": "06b6d88ef89bcfb391c89b4f99ec8ddc74266c96438424291c880e789f0757f6",
+      "bytes": 132483
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/preinstallation-originals/0e7fd5d528b226b5932efc06e3b1cf7a53cfa0977f2956e427d0a2ae2e1f7782/dependencies.json",
+      "sha256": "0e7fd5d528b226b5932efc06e3b1cf7a53cfa0977f2956e427d0a2ae2e1f7782",
+      "bytes": 895
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/preinstallation-originals/254e95192ad2fbd1147a75dbf3d53e82190ccc47f1b995aa7bbbf1b61de6e1c4/whole-inherited-contracts.json",
+      "sha256": "254e95192ad2fbd1147a75dbf3d53e82190ccc47f1b995aa7bbbf1b61de6e1c4",
+      "bytes": 3987
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/preinstallation-originals/3e5c0607e05739633b089a836058f47cc558de87946ddfb990a1382755a1896e/whole-field-bindings.json",
+      "sha256": "3e5c0607e05739633b089a836058f47cc558de87946ddfb990a1382755a1896e",
+      "bytes": 77181
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/protocol.md",
+      "sha256": "71e143d36bfb77cd9db6b6a2bc1fd24631af60006aa9336eb441106cfc313534",
+      "bytes": 27787
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/resource-realms.json",
+      "sha256": "a1f03a5322010e49dbfb8c83030d6859b1fa78c131ae9331d05eb9717bd004b0",
+      "bytes": 113672
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/assignment-invocation.v1.schema.json",
+      "sha256": "37d7482694855e6505b860358dbee074b69c51bba6662a172e24df2689ab37cd",
+      "bytes": 34675
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/original-sources.v1.schema.json",
+      "sha256": "6b19f24a3d923923a70084d5f1a16a2b3fc4af62fa211ef8e7f39a0c867187cf",
+      "bytes": 23104
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/producer-source.v1.schema.json",
+      "sha256": "6c552dbe5556163397ef40b9377831bda27d2455220f61f5d79214ebe1368284",
+      "bytes": 11623
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/producer-submission.v1.schema.json",
+      "sha256": "24300fe310faeec412a362a39128d870f57a4b19ba82affce7f7c1a59daccc0e",
+      "bytes": 8725
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/resolver-references.v1.schema.json",
+      "sha256": "ecaf63c9c68140ee698e219c02cb953b0900bc5cd082e5f8a9c2c7498593b704",
+      "bytes": 35316
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/source-manifest-reference.json",
+      "sha256": "1212d1e9e78f22e549bbc40799d345aa69e7176006540a9da8f2084057ca7b00",
+      "bytes": 1073
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/whole-field-bindings.json",
+      "sha256": "17289d7fd6a5a47c6a5e6f6f04845ae99e7b333f1c451502d9628fa8f072cc20",
+      "bytes": 70234
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/whole-inherited-contracts.json",
+      "sha256": "6e25d68e6f270985964381c693c85f19950200d146df2077da8b049872084cf2",
+      "bytes": 3761
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/commitment-domains.json",
+      "sha256": "629e94ab68998fb68c8c287d197b181c4fd813689ae346cc87a070adc75cc933",
+      "bytes": 1583
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/companion-differences.json",
+      "sha256": "819d15ed88c7d0c53b27f1d1d134cfa5bd40e274c295b601e75a216739d5a96f",
+      "bytes": 82296
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/companions/cancelled-cancelled-causal-arguments.schema.json",
+      "sha256": "f812e4a93393919f0145f58eb93d1ca35f232e4680272c6bfe9eb6275de3d66c",
+      "bytes": 15538
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/companions/cancelled-consumer.schema.json",
+      "sha256": "4243a63bb14118f9cd22e7348c18908fb3e2d0707ffd85fdef723e1fab0cd2b0",
+      "bytes": 56415
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/companions/started-consumer.schema.json",
+      "sha256": "b725b4370ebcf48d6db5c6c2c0b48513341cbbbed33beff3e8326dfad2b4c6b4",
+      "bytes": 29012
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/dependencies.json",
+      "sha256": "d88997f5451c6d19beff8bfc88bdc8927e8326e988eb2978e674fa306b9054ea",
+      "bytes": 2087
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/imports.json",
+      "sha256": "d05f12ed624f2d50bd42659e5ee38670a7a88d24b1ec76a3415341c58fdf500e",
+      "bytes": 266356
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/installed-profile-digest.txt",
+      "sha256": "6fb013def0c64e4478530bffb330a5b18b157220b9783d7c109fb03af47c5d8d",
+      "bytes": 65
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/installed-profile.json",
+      "sha256": "b571539a82bbbc2c3bb05764c9412765bc3f04f529f131669ace4ef3ef644fca",
+      "bytes": 3957
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/methods.json",
+      "sha256": "e053ca3c675304b837ff599108fdb06c02b0c8bd33ac220b1320c7817063a0a1",
+      "bytes": 75543
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/owner-sources.json",
+      "sha256": "29b302a4176e218f54cc98af37691bfc6387b949f3479ae414d86dd3c62048ea",
+      "bytes": 3280
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/physical-retention-install.json",
+      "sha256": "844fb6f8ee94bcc7199f6f1dd6c8169e91cb893ca9a73025d19fc00099644b24",
+      "bytes": 4313
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/protocol.md",
+      "sha256": "a9d2717ada5b5c131d3613f44035b145fc8b2f69a9e79e44b1a0d9e23f3da8c4",
+      "bytes": 30201
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/resource-realms.json",
+      "sha256": "37bbb87f92c86add8555e8f35498b4e609bd270fe38941396ff2fba72896ea66",
+      "bytes": 504684
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/schemas/consumer.v1.schema.json",
+      "sha256": "7231019585f5b0ad2d1453fc1df3b8525baaa1b979eb616757d6f7307a75936a",
+      "bytes": 44636
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/source-citations.json",
+      "sha256": "b7c282b7b264160ff428472ff221c0985cb3244481ccc0108a1ce4cae265a789",
+      "bytes": 21411
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/source-method-composition.json",
+      "sha256": "5a145d1b2a6d34ee6dc653dd6c36c0b10430342db2f0b91898ad50085f4f745d",
+      "bytes": 1506
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/source-variants.json",
+      "sha256": "c03c72bb2aafacce0085075b42bea11854daf4a8b44b7d9ed3f26950ce725664",
+      "bytes": 2797
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "328858615bc5badb18c227e89e721c6ae18e244e0a13ae49b692000e9c15add7",
+      "bytes": 2290205
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "ae0909a32a6e5b41e12512a25271e5dc4a7ed6efd82a7b1533607bb494c536f9",
+      "bytes": 4201575
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/installation-composition-digest.txt",
+      "sha256": "ae64daef5010a876212df506bf9c39cce7021ecafca30ee56523fbadb7a6b69a",
+      "bytes": 65
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/installation-composition.json",
+      "sha256": "6af326f10973146433a549752241781d7274afbd384af2d347824090d13f9d04",
+      "bytes": 44624
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/commitment-domains.json",
+      "sha256": "b4b54fa50a0da4c2c0fd0cb7a800e85add86ae056ffec357364f0476f7f2ad13",
+      "bytes": 9231
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/first-attempt-stage-map.json",
+      "sha256": "3f75795716df0c1aea3691e4d8a7ebc487210fa46ac8958c6b39f12d6d9e144d",
+      "bytes": 4160
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/fresh-profile-methods.json",
+      "sha256": "f23bee216c0871c7d5205c85bf2706eedc8c778a59fc84958199709dcf981cea",
+      "bytes": 181220
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/identity-map.json",
+      "sha256": "c4cd8ab7e877791838a93f20ed836ccb78cbb13bf9726896bc91a3282f19e601",
+      "bytes": 13388
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/literal-resource-realms.json",
+      "sha256": "dca277d68babd320edc87793caed8ea483b641842775c1ca9510c73991a03949",
+      "bytes": 309993
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/methods.json",
+      "sha256": "b701cbab89146fb5103e957d7173e55ced79f91c318524d4e627c2b823042bc0",
+      "bytes": 26208
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/native-field-map.json",
+      "sha256": "3dd640512f1472457a75fae3094e885d3165b66959500048851e5a040ec81cce",
+      "bytes": 21952
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/physical-contracts.json",
+      "sha256": "d7b7fee9c1bb95b72877430e0887fc316ecde1f570a3ca7c0a0e4aecbc3d8b15",
+      "bytes": 8803
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
+      "sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054",
+      "bytes": 71464
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/safestop-start-arguments.v2.schema.json",
+      "sha256": "5431b28e798b726aef7994ae46e51df164ed4c1719317f14bc2a07fda544f24a",
+      "bytes": 1968
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-positive-arguments.v2.schema.json",
+      "sha256": "ec8c346caffabb0bbb06285197e5ed04bfb44ffa8b6dfa02a038aef8a5b9bdd8",
+      "bytes": 4910
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-start-profile.v6.schema.json",
+      "sha256": "747100bb06ed4c718f4f38a0fee7133b1e45d10a3c04c5d8f25a3bfd7683386c",
+      "bytes": 38600
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-original-start.v6.schema.json",
+      "sha256": "8e82034b4874fa7397c3ea44d7785b290ed2253281731648846505516914d376",
+      "bytes": 79884
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-certification-argument.v4.schema.json",
+      "sha256": "830d20024033a6e1edc32c847363a523a44fe47acd2abcd84413f8a58f4131fa",
+      "bytes": 6672
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-current-source.v4.schema.json",
+      "sha256": "7bd88c4a7cc2b7f32af173d18c470d64e13e296170e358fcd39fe8e64b6bbbb0",
+      "bytes": 101666
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-event-prerequisite.v4.schema.json",
+      "sha256": "ab8350e1f7b60c2c8b37fcb3ddb29da43a003d5b032aef145a0b220ef47f6274",
+      "bytes": 6581
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-arguments.v6.schema.json",
+      "sha256": "3f9b2fc8d768d462db1b4ac950854e0d7f2fc13982e0bbc1422e5ecb81bdbd88",
+      "bytes": 4120
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-custody.v6.schema.json",
+      "sha256": "9209a5b923cb279c4176ccf3b648a8381c4afae541220cd397329558db5266d2",
+      "bytes": 44259
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/stored-profile-routes.json",
+      "sha256": "d0c0572a2c19228487795df4b28cbb4fc8115aa2e91efe2ce6510462f61b1757",
+      "bytes": 60889
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/06310d70ceced923656d6c328f0556bdf1b5f4f6e96cb273bb97795718bf9444/installed-profile.json",
+      "sha256": "06310d70ceced923656d6c328f0556bdf1b5f4f6e96cb273bb97795718bf9444",
+      "bytes": 2756
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358/workflow-original-start.v5.schema.json",
+      "sha256": "1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358",
+      "bytes": 79884
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/29f110a733d6fb5dd313c605881b0e85760fc593e1bfcfee020b644951557eac/installation-composition.json",
+      "sha256": "29f110a733d6fb5dd313c605881b0e85760fc593e1bfcfee020b644951557eac",
+      "bytes": 41766
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/29f47cab60fa7af5ee6e3f5e86453338f6743472b474957d9be26cd5f6c7a068/relocation-map.json",
+      "sha256": "29f47cab60fa7af5ee6e3f5e86453338f6743472b474957d9be26cd5f6c7a068",
+      "bytes": 225516
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/3fc8eabf40ae0a3cca7e40a369ddecd8734ba940eddd94e524450c75d66b0e1a/README.md",
+      "sha256": "3fc8eabf40ae0a3cca7e40a369ddecd8734ba940eddd94e524450c75d66b0e1a",
+      "bytes": 4477
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/580b6b349bd41f7361aee6982ef7632f4b46fe4a61c806d294fb3a44a81ef757/stored-profile-routes.json",
+      "sha256": "580b6b349bd41f7361aee6982ef7632f4b46fe4a61c806d294fb3a44a81ef757",
+      "bytes": 60837
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/6cf8c0ae3342ad7d28670b85f81aa46d4847f815aeea7b09e7d2bc03c81d461d/workflow-cancel-start-profile.v5.schema.json",
+      "sha256": "6cf8c0ae3342ad7d28670b85f81aa46d4847f815aeea7b09e7d2bc03c81d461d",
+      "bytes": 38464
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/85172c4c4883a4fd4da20059f62305f376a8c6e138778ebd0189d2ecd3567449/literal-resource-realms.json",
+      "sha256": "85172c4c4883a4fd4da20059f62305f376a8c6e138778ebd0189d2ecd3567449",
+      "bytes": 93500
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/bd9732437e80525f8cc91ed25473a867bad0a8e76372e1c11c1e9b3a71315372/installed-contract-digest.txt",
+      "sha256": "bd9732437e80525f8cc91ed25473a867bad0a8e76372e1c11c1e9b3a71315372",
+      "bytes": 65
+    }
+  ],
+  "current_native_correction_prerequisites": [
+    {
+      "path": "Plans/workflow_standard_source_contracts/README.md",
+      "sha256": "603e4b9879e33b4abb923e0246282e582405ad7bece34a4008ef0487bd07b44c",
+      "bytes": 5599
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/header-correction-inverse.json",
+      "sha256": "113eb2f08827d804c9175b094ea14184bac874f72fae675da498bbc9f9e4f421",
+      "bytes": 4966
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/installed-contract-digest.txt",
+      "sha256": "d0f1a7b2cf5290926320976f060ee5bc3e9468ec28c7e6190fc74a1f8d075d4c",
+      "bytes": 65
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/installed-profile.json",
+      "sha256": "71779885edfaf2a49e2957f262bdc08f7545ff5bc821f9e81100edf3886eb096",
+      "bytes": 2900
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/literal-resource-realms.json",
+      "sha256": "e6eb88ae8f906f58dcc985a814a989b81305d7b1ac268002f15e4203182a0ee0",
+      "bytes": 93500
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/relocation-map.json",
+      "sha256": "ceba99aa41ea3333e16a8dd15aed3622edef4f1b84c1ec35a76dc6bd9897a8c8",
+      "bytes": 225516
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/schemas/workflow-cancel-start-profile.v5.schema.json",
+      "sha256": "d20fc80a868571f199adf073b0170f82aebbebd90f2fc3b7b78121e410e3c923",
+      "bytes": 38464
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/schemas/workflow-original-start.v5.schema.json",
+      "sha256": "2bdc45357fa5955640b93160ec0cce17e59b3879e20227a2f087630c73608824",
+      "bytes": 79884
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/stored-profile-routes.json",
+      "sha256": "c7530419e643e1ac611f1aed5031bd44301bd43378fc7ae871917d4cc97f10a4",
+      "bytes": 60837
+    }
+  ],
+  "component_profiles": [
+    {
+      "path": "Plans/workflow_standard_source_contracts/installed-profile.json",
+      "sha256": "71779885edfaf2a49e2957f262bdc08f7545ff5bc821f9e81100edf3886eb096",
+      "bytes": 2900,
+      "value_digest": "3e2b3017bd048f0c5666c547b9ae1d8d9db1db256f865cb2993fac96a267620f",
+      "value_digest_recipe": "SHA256_SORTED_KEY_COMPACT_UTF8_NO_PREFIX_NO_LF"
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/installation-composition.json",
+      "sha256": "6af326f10973146433a549752241781d7274afbd384af2d347824090d13f9d04",
+      "bytes": 44624,
+      "value_digest": "2ad49eb83563126df8f33393efab017a06f49f603fe2c069d8e7787df97e317f",
+      "value_digest_recipe": "SHA256_SORTED_KEY_COMPACT_UTF8_NO_PREFIX_NO_LF"
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/installed-profile.json",
+      "sha256": "e4f1ae800506a76c56f7d8a1aaedf355c74e031b65a79149473ab62f7401bac0",
+      "bytes": 3163,
+      "value_digest": "36f6502cf7b354a077c936fd57e37bb9ff4593f4eff40139c7a46ab2f5af720c",
+      "value_digest_recipe": "SHA256_SORTED_KEY_COMPACT_UTF8_NO_PREFIX_NO_LF"
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/installation-composition.json",
+      "sha256": "80875c4bb1687d7aefb00ef4aacf2bb3e4acbf26b2b5a37a54c59fb96b834d3b",
+      "bytes": 102727,
+      "value_digest": "25b7236c7e18141d9ea2efd0bf660c74f5e13d7c7bcab84bf1aaeadffe563cbf",
+      "value_digest_recipe": "SHA256_SORTED_KEY_COMPACT_UTF8_NO_PREFIX_NO_LF"
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/installed-profile.json",
+      "sha256": "fc776660042f0257053554f5da6a5ba25ce7a3e9ed9edd29c346174cb755e22f",
+      "bytes": 6002,
+      "value_digest": "599315856a4ed180623b7b7ac68e64eaa8ae92c8be2c0f0fcc44d2eab94f97cc",
+      "value_digest_recipe": "SHA256_SORTED_KEY_COMPACT_UTF8_NO_PREFIX_NO_LF"
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/installed-profile.json",
+      "sha256": "0f71cf4a5fa992489ca217c110417f126d63b46e26e92eb95e2ab48a233517f5",
+      "bytes": 10417,
+      "value_digest": "0055de6c0e113173d2c4f1a1b2a3d9268681241b528ab6f24304fcfb4b163845",
+      "value_digest_recipe": "SHA256_SORTED_KEY_COMPACT_UTF8_NO_PREFIX_NO_LF"
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/installed-profile.json",
+      "sha256": "b571539a82bbbc2c3bb05764c9412765bc3f04f529f131669ace4ef3ef644fca",
+      "bytes": 3957,
+      "value_digest": "0b2dc2351c200de2529cfd9f7090ebcb940892ff2c3ec0de81c4f8576454618f",
+      "value_digest_recipe": "SHA256_SORTED_KEY_COMPACT_UTF8_NO_PREFIX_NO_LF"
+    }
+  ],
+  "original_scope_dispatch": {
+    "path": "Plans/goal_certified_original_scope_dispatch.json",
+    "sha256": "b3a95da247c8588a11fa4345ad41e05d9fb1deeee82b9d20bf9d228ca70c7787",
+    "bytes": 2901560
+  },
+  "component_path_scopes": [
+    {
+      "component": "Plans/goal_certified_producer_source_contracts",
+      "canonical_metadata": "Explicit Plans/ paths are repository-relative; other current producer-v1 resource/member paths are relative to this component root. Frozen original profile and custody bodies use only explicit original scope dispatch.",
+      "source_text_scope": "Original source v1 qualification remains scoped to that uninstalled edition. Complete v2 native binding is separate under native-v7/; no extension of a closed v1 profile."
+    },
+    {
+      "component": "Plans/goal_certified_event_coordinator_contracts",
+      "canonical_metadata": "All relocated explicit whole-file paths, declaration-file coordinates and method-root file coordinates are repository-relative. Literal schema URIs and JSON pointers remain unchanged.",
+      "original_source_text_aliases": {
+        "native-v7/": "Plans/workflow_standard_source_contracts/native-v7/",
+        "producer-v2/": "Plans/goal_certified_producer_source_contracts/native-v7/",
+        "schemas/": "Plans/goal_certified_event_coordinator_contracts/schemas/"
+      },
+      "rule": "Only this exact original component alias mapping applies to unchanged source protocol/method text; no host lookup, arbitrary prefix inference or cross-realm merge."
+    },
+    {
+      "component": "Plans/workflow_standard_source_contracts/native-v7",
+      "inherited_method_metadata_prefixes": {
+        "inputs/": "Plans/workflow_standard_source_contracts/inputs/",
+        "predecessor/": "Plans/workflow_standard_source_contracts/predecessor/"
+      },
+      "rule": "These unchanged whole-inherited native method metadata references retain their original native source component scope, not the new native-v7 directory. Other explicit relocated Plans/ fields are repository-relative. Whole schemas resolve only through isolated bank identities."
+    },
+    {
+      "component": "Plans/goal_run_certified_consumer_contracts",
+      "canonical_metadata": "All relocated explicit whole-file resource/member/source citations are repository-relative. Full original legacy method/resource dependencies retain distinct literal banks and exact original scope.",
+      "rule": "Consumer imports only the explicitly declared exact cross-bank edges; genuine nested owner GuardReadRequest/Result and Q1-Q4 methods remain whole."
+    }
+  ],
+  "registry_selection": {
+    "event_family_id": "event-family-goal-run-certified",
+    "event_family_count": 42,
+    "added_event_families": 0,
+    "payload_path": "Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+    "payload_root": "#",
+    "payload_schema_id": "pm.goal_runtime_event.goal_run_certified.schema.v3",
+    "storage_original_families": 285,
+    "storage_final_families": 294,
+    "storage_new_compact_authority_families": 7,
+    "storage_new_derived_families": 2,
+    "retention_policy_count": 27,
+    "three_existing_workflow_standard_rows": "Unchanged actual conditional-base rows and default wrapper selections. Eleven v7 wrapper routes apply only to genuine fresh born v7 roles."
+  },
+  "source_qualification": {
+    "original_source_acquisition": "Complete genuine owner entry/final source, independent Goal and guard boundaries remain mandatory; transport data, source census, role strings or hashes are not native capabilities.",
+    "birth": "Pure candidate/preimage order followed by one actual original B1 transaction coissuing native birth, compact Birth and initial empty epoch0 Control; no separately durable or visible intermediate birth.",
+    "append_release": "F5a before actual barriers/append custody F5b/F5c and F5d; atomic native result/origin+D01+compact Commit/Origin, then exact held release; equal original dedupe only.",
+    "passive_consumer": "No consumer read/projection issues original sources, native actions, append, commit, release or repair. P0-P8 and full original branches remain normative.",
+    "historical_scopes": "Operative original predecessor bodies stay complete with explicit scope dispatch. No header rollback, old birth enrollment, newest-ID substitution or original absolute host fallback.",
+    "retention": "Exact unchanged policies; no mutable source/body archive, source-lifetime extension or deleted/expired original reconstruction.",
+    "native": "NOT_RUN",
+    "codec": "NOT_RUN",
+    "transactions_durability_recovery": "NOT_RUN",
+    "event_depth": "NOT_ESTABLISHED",
+    "governance_readiness": "NOT_ESTABLISHED",
+    "executable_nodes_created": false
+  },
+  "source_reviews": [
+    {
+      "role": "placement",
+      "manifest_ref": "external-source-evidence:sha256:41a4d703b475c2668b243b043934bf0e3a0f22f33c1e663b339aa1aa2395099c"
+    },
+    {
+      "role": "placement_root",
+      "manifest_ref": "external-source-evidence:sha256:00981271bf2b645c3610804251ce240f83f3d121ab2c654b0fe98b3c5396909c"
+    },
+    {
+      "role": "accepted_header",
+      "manifest_ref": "external-source-evidence:sha256:dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe"
+    },
+    {
+      "role": "producer_repin",
+      "manifest_ref": "external-source-evidence:sha256:ad4c49b5e1fb43425a390c9cb666a95503483699779dfdb860ec770d2e06376a"
+    },
+    {
+      "role": "consumer_repin",
+      "manifest_ref": "external-source-evidence:sha256:e6f9be4094e68b5d690e93db45ba3199ccff20a1c72fe93264aadf822ed1896d"
+    },
+    {
+      "role": "repin_root",
+      "manifest_ref": "external-source-evidence:sha256:44d592225ed027f3bf37c716ae52e6811cee2ed104309925ac0f8d7841f08675"
+    },
+    {
+      "role": "custody_supplement",
+      "manifest_ref": "external-source-evidence:sha256:eea9b6781588b8177cec3cd901bebb5a793550d02a59f9454267d434c316f55c"
+    },
+    {
+      "role": "custody_supplement_root",
+      "manifest_ref": "external-source-evidence:sha256:c4e5afe1488322dda4bfc911b67b4816565461ba5b75a3c21dd063680d6d2e28"
+    }
+  ],
+  "counts": {
+    "current_after_members": 109,
+    "unchanged_header_prerequisite_members": 9,
+    "full_unique_path_union_including_this_composition": 119,
+    "new_family_owner_units": 8,
+    "producer_owner_units": 5,
+    "original_custody_leaves": 13
+  },
+  "digest_codec": "SHA-256 of entire sorted-key compact UTF-8 JSON without prefix or trailing LF; external manifest/digest never in own preimage.",
+  "unchanged_native_original_scope_bindings": [
+    {
+      "path": "Plans/workflow_standard_source_contracts/methods.json",
+      "sha256": "e835aa4fcfaa0b560751ac7b359899b42613745038b7b0aa6f9ce0660c1165a5",
+      "bytes": 26246,
+      "original_scope_id": "original-scope:sha256:cef7ae13c2aaf84300b16cf27a91d89487ff42feb7b0b0aba9a53f7005b6725b",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/methods.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/fresh-profile-methods.json",
+      "sha256": "a5b19f77fa43d30e9949f986cf0fc6ce9c440538aa7234bf0c44ddd1657106ff",
+      "bytes": 181130,
+      "original_scope_id": "original-scope:sha256:cef7ae13c2aaf84300b16cf27a91d89487ff42feb7b0b0aba9a53f7005b6725b",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/fresh-profile-methods.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/methods.json",
+      "sha256": "cd24a81a13977ce343f270c253923d194ba3a660024f671d330e4fcc7bb19727",
+      "bytes": 80353,
+      "original_scope_id": "original-scope:sha256:d564f4c2958f4666a88272369f1996e57330e2585abe94173e5b0d488633a238",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/methods.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/methods.json",
+      "sha256": "0fbb8d53064eaffd091cb0a1f071453e8cf9e460f897a41369f2b284b1cc08d1",
+      "bytes": 181130,
+      "original_scope_id": "original-scope:sha256:2aae622b25659c234ddf41a05e024af601bf1f9fb35e1aff206ccb40c54c8e90",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/methods.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/schemas/workflow-start-custody.v5.schema.json",
+      "sha256": "d40e0c82b8ba03dec7631d2d9bc80d51a82b1adff6a1f3e900b4dab1e13916b8",
+      "bytes": 44259,
+      "original_scope_id": "original-scope:sha256:4f0030fb9cbc6a1d4eb0e3ecf140bbc4e95e1c5299d5a23d496efff479250d67",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/schemas/workflow-start-custody.v5.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/schemas/workflow-standard-current-source.v3.schema.json",
+      "sha256": "c7a11a744312518b78cbd70f7f5ee6228004e213df1174f87afe8ac00164ff72",
+      "bytes": 101666,
+      "original_scope_id": "original-scope:sha256:4f0030fb9cbc6a1d4eb0e3ecf140bbc4e95e1c5299d5a23d496efff479250d67",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/schemas/workflow-standard-current-source.v3.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/schemas/workflow-standard-certification-argument.v3.schema.json",
+      "sha256": "fcc25e198114eadc357c8696b750d2d5afb21e80d57bca8febe8a17580b91e4d",
+      "bytes": 6672,
+      "original_scope_id": "original-scope:sha256:4f0030fb9cbc6a1d4eb0e3ecf140bbc4e95e1c5299d5a23d496efff479250d67",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/schemas/workflow-standard-certification-argument.v3.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/current/Plans/source_control_contracts.schema.json",
+      "sha256": "4070038bcaef4539d6d669f2a57618599487e73b2588d79e122fde2b41ed8518",
+      "bytes": 152594,
+      "original_scope_id": "original-scope:sha256:a052a1ede5b36460d1f18279b20d0f037df5d9008e252b588061d29b02907fc3",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/current/Plans/source_control_contracts.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/commitment-domains.json",
+      "sha256": "9a3abfdc1e85fd8db26071dd8f5a65fd5105ae2077c8e5bce3a808ead6104553",
+      "bytes": 9231,
+      "original_scope_id": "original-scope:sha256:cef7ae13c2aaf84300b16cf27a91d89487ff42feb7b0b0aba9a53f7005b6725b",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/commitment-domains.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/first-attempt-stage-map.json",
+      "sha256": "3f75795716df0c1aea3691e4d8a7ebc487210fa46ac8958c6b39f12d6d9e144d",
+      "bytes": 4160,
+      "original_scope_id": "original-scope:sha256:cef7ae13c2aaf84300b16cf27a91d89487ff42feb7b0b0aba9a53f7005b6725b",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/first-attempt-stage-map.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/frozen-installed-profile.json",
+      "sha256": "e9ac273abf0f7cb5d226af5dcdd6b2c5fc8bd996de9105d70f5832f4d400e4e3",
+      "bytes": 2751,
+      "original_scope_id": "original-scope:sha256:cef7ae13c2aaf84300b16cf27a91d89487ff42feb7b0b0aba9a53f7005b6725b",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/frozen-installed-profile.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/identity-map.json",
+      "sha256": "eea25b4510983f2f31c16666144076992bd386f7dbecc0bc1da664bdd6ae45b5",
+      "bytes": 8509,
+      "original_scope_id": "original-scope:sha256:cef7ae13c2aaf84300b16cf27a91d89487ff42feb7b0b0aba9a53f7005b6725b",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/identity-map.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/input-pins.json",
+      "sha256": "b7e0d6d8d2bfac9dc9c681865d30125c9967871e05429ee33a60644967cc377a",
+      "bytes": 46430,
+      "original_scope_id": "original-scope:sha256:cef7ae13c2aaf84300b16cf27a91d89487ff42feb7b0b0aba9a53f7005b6725b",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/input-pins.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/event_append_receipt_contracts.schema.json",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+      "bytes": 15668,
+      "original_scope_id": "original-scope:sha256:35973308ab1b34e658783f8b6dc39ca8d9a6f726ed4e4f7c83171efcc0ef8b52",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/event_append_receipt_contracts.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+      "bytes": 23864,
+      "original_scope_id": "original-scope:sha256:de2f18947ba68197367d56604cc26902eeb87bafb520cc45f894c8f2e5d61550",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+      "sha256": "a4144dd0476b9a1dfdbc23b406a243cf3d4381a778902457d60b82b34592c38f",
+      "bytes": 22201,
+      "original_scope_id": "original-scope:sha256:de2f18947ba68197367d56604cc26902eeb87bafb520cc45f894c8f2e5d61550",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+      "bytes": 9344,
+      "original_scope_id": "original-scope:sha256:35973308ab1b34e658783f8b6dc39ca8d9a6f726ed4e4f7c83171efcc0ef8b52",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/event_record.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/event_record_index_checkpoint.schema.json",
+      "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+      "bytes": 92199,
+      "original_scope_id": "original-scope:sha256:35973308ab1b34e658783f8b6dc39ca8d9a6f726ed4e4f7c83171efcc0ef8b52",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/event_record_index_checkpoint.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/evidence.schema.json",
+      "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86",
+      "bytes": 42851,
+      "original_scope_id": "original-scope:sha256:35973308ab1b34e658783f8b6dc39ca8d9a6f726ed4e4f7c83171efcc0ef8b52",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/evidence.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/execution_unit_context.schema.json",
+      "sha256": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
+      "bytes": 5717,
+      "original_scope_id": "original-scope:sha256:35973308ab1b34e658783f8b6dc39ca8d9a6f726ed4e4f7c83171efcc0ef8b52",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/execution_unit_context.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+      "sha256": "d9414fc79ed8c3c7c14d70f0f120ad0378e2efb11de8c2126ab22e4a72771e7f",
+      "bytes": 20104,
+      "original_scope_id": "original-scope:sha256:1bc5a48df252d5c0db01431662f61632eb28cd6c1bda420557d0566427b11269",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+      "sha256": "2cba0de288750206d9fd7c38f1498f16314fda508d7e866b036e2a0f50a67e0f",
+      "bytes": 19855,
+      "original_scope_id": "original-scope:sha256:1bc5a48df252d5c0db01431662f61632eb28cd6c1bda420557d0566427b11269",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-activation.v1.schema.json",
+      "sha256": "35516ed8fd894bb1538112fb54190cc7059081afd605fadbf4ff728ebaeba525",
+      "bytes": 38651,
+      "original_scope_id": "original-scope:sha256:1bc5a48df252d5c0db01431662f61632eb28cd6c1bda420557d0566427b11269",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-activation.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+      "sha256": "3764857827d36270b40c8adecbd2ce8ce4cb87f2e88803d35f953f32a42e1839",
+      "bytes": 9284,
+      "original_scope_id": "original-scope:sha256:1bc5a48df252d5c0db01431662f61632eb28cd6c1bda420557d0566427b11269",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-start-profile.v2.schema.json",
+      "sha256": "563eb6b8df611954690a6bb306d1f43f26b4371331358361e9246c29563073aa",
+      "bytes": 38527,
+      "original_scope_id": "original-scope:sha256:1bc5a48df252d5c0db01431662f61632eb28cd6c1bda420557d0566427b11269",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-start-profile.v2.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-current-activation-arguments.v1.schema.json",
+      "sha256": "cf46eb1bf60b7879d5e8574633a3f2d4f7e02aaef6c6a2867ac8423399340ab7",
+      "bytes": 3976,
+      "original_scope_id": "original-scope:sha256:1bc5a48df252d5c0db01431662f61632eb28cd6c1bda420557d0566427b11269",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-current-activation-arguments.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-current-activation.v1.schema.json",
+      "sha256": "db896adf069bb321e7ae87535dbd2ef4a4df9b4516f7865716510be6f8e9a4dc",
+      "bytes": 75266,
+      "original_scope_id": "original-scope:sha256:1bc5a48df252d5c0db01431662f61632eb28cd6c1bda420557d0566427b11269",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-current-activation.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-original-start.v2.schema.json",
+      "sha256": "9e0b863dde63528b1ea44f7bbc22f2483b78baac3ccc7b0e1b9242946de72b81",
+      "bytes": 77027,
+      "original_scope_id": "original-scope:sha256:1bc5a48df252d5c0db01431662f61632eb28cd6c1bda420557d0566427b11269",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-original-start.v2.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-arguments.v2.schema.json",
+      "sha256": "9d7ec810e213ac46b1fcdcc5367cd1ca69ed763a8719ae3b2bf21ead70beb0dd",
+      "bytes": 3897,
+      "original_scope_id": "original-scope:sha256:1bc5a48df252d5c0db01431662f61632eb28cd6c1bda420557d0566427b11269",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-arguments.v2.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+      "sha256": "99c81558695d812761a9a108657134b4caf3652f33124db675b88e6959897406",
+      "bytes": 44305,
+      "original_scope_id": "original-scope:sha256:1bc5a48df252d5c0db01431662f61632eb28cd6c1bda420557d0566427b11269",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/full_thread_runtime_contracts.schema.json",
+      "sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea",
+      "bytes": 22855,
+      "original_scope_id": "original-scope:sha256:35973308ab1b34e658783f8b6dc39ca8d9a6f726ed4e4f7c83171efcc0ef8b52",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/full_thread_runtime_contracts.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/goal_body_custody.schema.json",
+      "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8",
+      "bytes": 19156,
+      "original_scope_id": "original-scope:sha256:35973308ab1b34e658783f8b6dc39ca8d9a6f726ed4e4f7c83171efcc0ef8b52",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/goal_body_custody.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/goal_run_started_consumer_contracts/consumer.schema.json",
+      "sha256": "626cfe1aff57bbfcf67c2ab70a3b12c55ca4e137bfbe2c0fd54a3534bc359392",
+      "bytes": 28772,
+      "original_scope_id": "original-scope:sha256:92cdcf832008c475582395b4510066b879070017ab9d349b39b3f467f9ddd46a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/goal_run_started_consumer_contracts/consumer.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+      "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+      "bytes": 126196,
+      "original_scope_id": "original-scope:sha256:35973308ab1b34e658783f8b6dc39ca8d9a6f726ed4e4f7c83171efcc0ef8b52",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/project_plan_node.schema.json",
+      "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15",
+      "bytes": 7356,
+      "original_scope_id": "original-scope:sha256:35973308ab1b34e658783f8b6dc39ca8d9a6f726ed4e4f7c83171efcc0ef8b52",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/project_plan_node.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/requested_effective_runtime.schema.json",
+      "sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "bytes": 15878,
+      "original_scope_id": "original-scope:sha256:35973308ab1b34e658783f8b6dc39ca8d9a6f726ed4e4f7c83171efcc0ef8b52",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/requested_effective_runtime.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60",
+      "bytes": 115695,
+      "original_scope_id": "original-scope:sha256:35973308ab1b34e658783f8b6dc39ca8d9a6f726ed4e4f7c83171efcc0ef8b52",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_runtime_command_contracts.schema.json",
+      "sha256": "7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b",
+      "bytes": 69256,
+      "original_scope_id": "original-scope:sha256:35973308ab1b34e658783f8b6dc39ca8d9a6f726ed4e4f7c83171efcc0ef8b52",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/shared_runtime_command_contracts.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/source_control_contracts.schema.json",
+      "sha256": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a",
+      "bytes": 130860,
+      "original_scope_id": "original-scope:sha256:35973308ab1b34e658783f8b6dc39ca8d9a6f726ed4e4f7c83171efcc0ef8b52",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/source_control_contracts.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/storage_compaction_native_contracts.schema.json",
+      "sha256": "d979220b712f1eb58c9bb83b039aacb71269912eac66f6869da464ce7ade6f0f",
+      "bytes": 281395,
+      "original_scope_id": "original-scope:sha256:35973308ab1b34e658783f8b6dc39ca8d9a6f726ed4e4f7c83171efcc0ef8b52",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/storage_compaction_native_contracts.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/ui_command_response.schema.json",
+      "sha256": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37",
+      "bytes": 11470,
+      "original_scope_id": "original-scope:sha256:35973308ab1b34e658783f8b6dc39ca8d9a6f726ed4e4f7c83171efcc0ef8b52",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/ui_command_response.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/activation-read-result.v4.schema.json",
+      "sha256": "743645f5c9a8430fbca1963fbc072a9ac206419a9ebfc1b1c825ed7020e36ddf",
+      "bytes": 5064,
+      "original_scope_id": "original-scope:sha256:e04dc875f2bbde0a9fa0babe82b5f9b419e73a5cacd1434d8ac0a53e263dc450",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/activation-read-result.v4.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/activation-recovery-views.v1.schema.json",
+      "sha256": "bd13ecb4e2581262b9e09353d03dd19a3c8858681175d3c317ca281fe84727e4",
+      "bytes": 6587,
+      "original_scope_id": "original-scope:sha256:e04dc875f2bbde0a9fa0babe82b5f9b419e73a5cacd1434d8ac0a53e263dc450",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/activation-recovery-views.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/aggregate-live-input.v1.schema.json",
+      "sha256": "cd55ad417c9ae11097fe2f0655755b63bef5c887b88486c4dc468b21b26d0522",
+      "bytes": 22087,
+      "original_scope_id": "original-scope:sha256:e04dc875f2bbde0a9fa0babe82b5f9b419e73a5cacd1434d8ac0a53e263dc450",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/aggregate-live-input.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/compiler-live-inputs.v1.schema.json",
+      "sha256": "0d3b50752870853d7fbaac6b5673ffdccded6328ba49a92eb82a22ed13046c9c",
+      "bytes": 39676,
+      "original_scope_id": "original-scope:sha256:e04dc875f2bbde0a9fa0babe82b5f9b419e73a5cacd1434d8ac0a53e263dc450",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/compiler-live-inputs.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json",
+      "sha256": "fdf7cd63359aeae8284121395e464cd8b6547204abe1d7aab45a858439fb525d",
+      "bytes": 14463,
+      "original_scope_id": "original-scope:sha256:e04dc875f2bbde0a9fa0babe82b5f9b419e73a5cacd1434d8ac0a53e263dc450",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+      "sha256": "cc5d84b7c6f402cd26269f4621f5fda1122c1643032c7944957c4117c889830c",
+      "bytes": 120821,
+      "original_scope_id": "original-scope:sha256:e04dc875f2bbde0a9fa0babe82b5f9b419e73a5cacd1434d8ac0a53e263dc450",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/models-request-live.v1.schema.json",
+      "sha256": "c11a123590b8d281f2b3682f591268af6fd719c9ef8b52037a7b15a7852bbad7",
+      "bytes": 36170,
+      "original_scope_id": "original-scope:sha256:e04dc875f2bbde0a9fa0babe82b5f9b419e73a5cacd1434d8ac0a53e263dc450",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/models-request-live.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+      "sha256": "d1bc87d558af05c5645cd46cadf340dd7d4451732d6714abd711d0307780cd79",
+      "bytes": 102607,
+      "original_scope_id": "original-scope:sha256:e04dc875f2bbde0a9fa0babe82b5f9b419e73a5cacd1434d8ac0a53e263dc450",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+      "sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+      "bytes": 100283,
+      "original_scope_id": "original-scope:sha256:e04dc875f2bbde0a9fa0babe82b5f9b419e73a5cacd1434d8ac0a53e263dc450",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json",
+      "sha256": "5a876253a29cc83ee5eadc4ae4da5b7cffc001711f27fb9b2b98627286a3e8ec",
+      "bytes": 76101,
+      "original_scope_id": "original-scope:sha256:e04dc875f2bbde0a9fa0babe82b5f9b419e73a5cacd1434d8ac0a53e263dc450",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json",
+      "sha256": "30cc5fc70474d8ce069be8d776519c2d2354d4e5635de0140d7e612fee3097c2",
+      "bytes": 29348,
+      "original_scope_id": "original-scope:sha256:e04dc875f2bbde0a9fa0babe82b5f9b419e73a5cacd1434d8ac0a53e263dc450",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/source-control-receipt-custody.v1.schema.json",
+      "sha256": "2c64fd916ec26aff73d09bcd7532f2cb690951cc9437509c2b2650b2bd708b06",
+      "bytes": 53965,
+      "original_scope_id": "original-scope:sha256:e04dc875f2bbde0a9fa0babe82b5f9b419e73a5cacd1434d8ac0a53e263dc450",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/source-control-receipt-custody.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+      "sha256": "5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed",
+      "bytes": 111008,
+      "original_scope_id": "original-scope:sha256:e04dc875f2bbde0a9fa0babe82b5f9b419e73a5cacd1434d8ac0a53e263dc450",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json",
+      "sha256": "80597d53aada9af04c84ac7f501d22516a797c0240f85bdd610287a7e82d01f0",
+      "bytes": 121377,
+      "original_scope_id": "original-scope:sha256:e04dc875f2bbde0a9fa0babe82b5f9b419e73a5cacd1434d8ac0a53e263dc450",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
+      "sha256": "7c13a5e166aca2d2545e39561f904d2ea1134d690f192d76443a8871c8588fa4",
+      "bytes": 18197,
+      "original_scope_id": "original-scope:sha256:e04dc875f2bbde0a9fa0babe82b5f9b419e73a5cacd1434d8ac0a53e263dc450",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/inputs/Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-field-map.json",
+      "sha256": "3dd640512f1472457a75fae3094e885d3165b66959500048851e5a040ec81cce",
+      "bytes": 21952,
+      "original_scope_id": "original-scope:sha256:cef7ae13c2aaf84300b16cf27a91d89487ff42feb7b0b0aba9a53f7005b6725b",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/native-field-map.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/physical-contracts.json",
+      "sha256": "5ffe1f62e0fcee9e56e09b780907853886a603984f49be8658b655b7203c3a8e",
+      "bytes": 8801,
+      "original_scope_id": "original-scope:sha256:cef7ae13c2aaf84300b16cf27a91d89487ff42feb7b0b0aba9a53f7005b6725b",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/physical-contracts.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/commitment-domains.json",
+      "sha256": "442388262a7460752e3c68bf02156843e0c86a705c23158116dee2e5fa5b4ea8",
+      "bytes": 8191,
+      "original_scope_id": "original-scope:sha256:08a42eabc3c85c9694f5be5897133435ff60e9aac8e5b4e2667ebd9f7229f8dc",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/commitment-domains.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/fresh-profile-methods.json",
+      "sha256": "51be2287259979dd9e993ae686562e8cb18e3ceb9776183a5e8ede7e9b1ad727",
+      "bytes": 181130,
+      "original_scope_id": "original-scope:sha256:08a42eabc3c85c9694f5be5897133435ff60e9aac8e5b4e2667ebd9f7229f8dc",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/fresh-profile-methods.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/identity-map.json",
+      "sha256": "d3d256b5717045ab34b764d0bea84aa09b3ee17b381275d64af79b7add82c97f",
+      "bytes": 10272,
+      "original_scope_id": "original-scope:sha256:08a42eabc3c85c9694f5be5897133435ff60e9aac8e5b4e2667ebd9f7229f8dc",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/identity-map.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/installed-profile.json",
+      "sha256": "9b6168967f1ba62a892a2c1222cf5d60e22f9aa8c94bac70dbca8547393e170c",
+      "bytes": 2609,
+      "original_scope_id": "original-scope:sha256:08a42eabc3c85c9694f5be5897133435ff60e9aac8e5b4e2667ebd9f7229f8dc",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/installed-profile.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/literal-resource-realms.json",
+      "sha256": "8cedd34a25eed3ea3cdb23ffe8f2610bd41a9debd28b6d382aa03582cb5d57b6",
+      "bytes": 91713,
+      "original_scope_id": "original-scope:sha256:08a42eabc3c85c9694f5be5897133435ff60e9aac8e5b4e2667ebd9f7229f8dc",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/literal-resource-realms.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/methods.json",
+      "sha256": "02d50020cb91458d04f95de7ec66b3c4cb381bcc17ed9165d6a4aa37ce1c7fa3",
+      "bytes": 23991,
+      "original_scope_id": "original-scope:sha256:08a42eabc3c85c9694f5be5897133435ff60e9aac8e5b4e2667ebd9f7229f8dc",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/methods.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/native-field-map.json",
+      "sha256": "3dd640512f1472457a75fae3094e885d3165b66959500048851e5a040ec81cce",
+      "bytes": 21952,
+      "original_scope_id": "original-scope:sha256:08a42eabc3c85c9694f5be5897133435ff60e9aac8e5b4e2667ebd9f7229f8dc",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/native-field-map.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/physical-contracts.json",
+      "sha256": "bca7cfeaef5d127e2ef49c569c297c9b658691abb51ba9eae449a7d1d10b322a",
+      "bytes": 8794,
+      "original_scope_id": "original-scope:sha256:08a42eabc3c85c9694f5be5897133435ff60e9aac8e5b4e2667ebd9f7229f8dc",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/physical-contracts.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/fresh-profile-method-delta.json",
+      "sha256": "7d804293f5378ad54af2b53be2696402219f5e032f928dd718832c513f184a5d",
+      "bytes": 55591,
+      "original_scope_id": "original-scope:sha256:2987f5abc879cdde7d410a41cfe40c9be84685260c0a5a94aecb0ca106def3c5",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/fresh-profile-method-delta.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/fresh-profile-methods.json",
+      "sha256": "41d65a844fa0901e5d1edec356cd2107416326d04dd1e184bc67e0dfb4b86aab",
+      "bytes": 181130,
+      "original_scope_id": "original-scope:sha256:2987f5abc879cdde7d410a41cfe40c9be84685260c0a5a94aecb0ca106def3c5",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/fresh-profile-methods.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/input-pins.json",
+      "sha256": "8596a10880995849ff028328d017743296456bbc98a85e81507db459812789db",
+      "bytes": 36455,
+      "original_scope_id": "original-scope:sha256:2987f5abc879cdde7d410a41cfe40c9be84685260c0a5a94aecb0ca106def3c5",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/input-pins.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/event_append_receipt_contracts.schema.json",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+      "bytes": 15668,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/event_append_receipt_contracts.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+      "bytes": 23864,
+      "original_scope_id": "original-scope:sha256:c3511dd98b5c2b22dcfe707e9ff55bf583cfe2df251f79d924fad2671a9b7f43",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/event_payloads/goal_runtime/goal_created.schema.json",
+      "sha256": "415829ee3d73099aaa879a989f8300c37062e999d4cb19a65cebd2591a43c841",
+      "bytes": 26235,
+      "original_scope_id": "original-scope:sha256:c3511dd98b5c2b22dcfe707e9ff55bf583cfe2df251f79d924fad2671a9b7f43",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/event_payloads/goal_runtime/goal_created.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+      "sha256": "4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea",
+      "bytes": 27560,
+      "original_scope_id": "original-scope:sha256:c3511dd98b5c2b22dcfe707e9ff55bf583cfe2df251f79d924fad2671a9b7f43",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+      "bytes": 9344,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/event_record.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/event_record_index_checkpoint.schema.json",
+      "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+      "bytes": 92199,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/event_record_index_checkpoint.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/evidence.schema.json",
+      "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86",
+      "bytes": 42851,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/evidence.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/execution_unit_context.schema.json",
+      "sha256": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
+      "bytes": 5717,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/execution_unit_context.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+      "sha256": "d9414fc79ed8c3c7c14d70f0f120ad0378e2efb11de8c2126ab22e4a72771e7f",
+      "bytes": 20104,
+      "original_scope_id": "original-scope:sha256:3542bc5a697229a729b671b25f2cb70dbd2c6e2714c9bdc5870487028f21eb48",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+      "sha256": "2cba0de288750206d9fd7c38f1498f16314fda508d7e866b036e2a0f50a67e0f",
+      "bytes": 19855,
+      "original_scope_id": "original-scope:sha256:3542bc5a697229a729b671b25f2cb70dbd2c6e2714c9bdc5870487028f21eb48",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+      "sha256": "91656f1e79355ad7ac7b6144ead1724c46222aea054fefdc07f4b56a49f87ed9",
+      "bytes": 9069,
+      "original_scope_id": "original-scope:sha256:3542bc5a697229a729b671b25f2cb70dbd2c6e2714c9bdc5870487028f21eb48",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-activation.v1.schema.json",
+      "sha256": "35516ed8fd894bb1538112fb54190cc7059081afd605fadbf4ff728ebaeba525",
+      "bytes": 38651,
+      "original_scope_id": "original-scope:sha256:3542bc5a697229a729b671b25f2cb70dbd2c6e2714c9bdc5870487028f21eb48",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-activation.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-controls.v3.schema.json",
+      "sha256": "c75fb9f9f8596182b667c38239feac604a09d489326fd0034833ce1058c4730e",
+      "bytes": 1397,
+      "original_scope_id": "original-scope:sha256:3542bc5a697229a729b671b25f2cb70dbd2c6e2714c9bdc5870487028f21eb48",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-controls.v3.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+      "sha256": "3764857827d36270b40c8adecbd2ce8ce4cb87f2e88803d35f953f32a42e1839",
+      "bytes": 9284,
+      "original_scope_id": "original-scope:sha256:3542bc5a697229a729b671b25f2cb70dbd2c6e2714c9bdc5870487028f21eb48",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-start-profile.v2.schema.json",
+      "sha256": "563eb6b8df611954690a6bb306d1f43f26b4371331358361e9246c29563073aa",
+      "bytes": 38527,
+      "original_scope_id": "original-scope:sha256:3542bc5a697229a729b671b25f2cb70dbd2c6e2714c9bdc5870487028f21eb48",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-start-profile.v2.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-current-activation-arguments.v1.schema.json",
+      "sha256": "cf46eb1bf60b7879d5e8574633a3f2d4f7e02aaef6c6a2867ac8423399340ab7",
+      "bytes": 3976,
+      "original_scope_id": "original-scope:sha256:3542bc5a697229a729b671b25f2cb70dbd2c6e2714c9bdc5870487028f21eb48",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-current-activation-arguments.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-current-activation.v1.schema.json",
+      "sha256": "db896adf069bb321e7ae87535dbd2ef4a4df9b4516f7865716510be6f8e9a4dc",
+      "bytes": 75266,
+      "original_scope_id": "original-scope:sha256:3542bc5a697229a729b671b25f2cb70dbd2c6e2714c9bdc5870487028f21eb48",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-current-activation.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-original-start.v2.schema.json",
+      "sha256": "9e0b863dde63528b1ea44f7bbc22f2483b78baac3ccc7b0e1b9242946de72b81",
+      "bytes": 77027,
+      "original_scope_id": "original-scope:sha256:3542bc5a697229a729b671b25f2cb70dbd2c6e2714c9bdc5870487028f21eb48",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-original-start.v2.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-arguments.v2.schema.json",
+      "sha256": "9d7ec810e213ac46b1fcdcc5367cd1ca69ed763a8719ae3b2bf21ead70beb0dd",
+      "bytes": 3897,
+      "original_scope_id": "original-scope:sha256:3542bc5a697229a729b671b25f2cb70dbd2c6e2714c9bdc5870487028f21eb48",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-arguments.v2.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+      "sha256": "99c81558695d812761a9a108657134b4caf3652f33124db675b88e6959897406",
+      "bytes": 44305,
+      "original_scope_id": "original-scope:sha256:3542bc5a697229a729b671b25f2cb70dbd2c6e2714c9bdc5870487028f21eb48",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-goal-argument.v2.schema.json",
+      "sha256": "aefd025c4b463c1b3e886cae93370b19e66094854a03a65ba724b8f23ef41a8e",
+      "bytes": 690,
+      "original_scope_id": "original-scope:sha256:3542bc5a697229a729b671b25f2cb70dbd2c6e2714c9bdc5870487028f21eb48",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-goal-argument.v2.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/full_thread_runtime_contracts.schema.json",
+      "sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea",
+      "bytes": 22855,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/full_thread_runtime_contracts.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_body_custody.schema.json",
+      "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8",
+      "bytes": 19156,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_body_custody.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_cancel_command_custody.schema.json",
+      "sha256": "3a9477a8a41b273f589e6fc12a492a04a20ac2af5c0382d0ba0445c9a35799e8",
+      "bytes": 120132,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_cancel_command_custody.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_certification_custody.schema.json",
+      "sha256": "50687ee0c5d335898ce9ce98fe6e258ac69f344ab3ba7086dba787623201c00b",
+      "bytes": 19088,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_certification_custody.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_execution_binding_custody.schema.json",
+      "sha256": "b866b72ac1831891cd605360e84e4e97a281b5f352f8b8176d7862e90def746a",
+      "bytes": 59526,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_execution_binding_custody.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_runtime_contracts.schema.json",
+      "sha256": "381df40c03f16a4224d44731465c7c0ba4be0071d910b7cf9d0d935e7b60e36e",
+      "bytes": 8032,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_runtime_contracts.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_runtime_events.schema.json",
+      "sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e",
+      "bytes": 2796,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_runtime_events.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_start_command_custody.schema.json",
+      "sha256": "098df8efeedf9ccbd41f276e931b64fa9469a8d61656a5be7f240b9935064a74",
+      "bytes": 55242,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_start_command_custody.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_update_command_custody.schema.json",
+      "sha256": "eaa2358de37467ec51ad039f52342900b80b6a7c70f98ad9b0b87a6e9eac2988",
+      "bytes": 72154,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_update_command_custody.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/plans_to_code_handoff.schema.json",
+      "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+      "bytes": 126196,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/plans_to_code_handoff.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/project_plan_node.schema.json",
+      "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15",
+      "bytes": 7356,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/project_plan_node.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/requested_effective_runtime.schema.json",
+      "sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "bytes": 15878,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/requested_effective_runtime.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60",
+      "bytes": 115695,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_command_contracts.schema.json",
+      "sha256": "7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b",
+      "bytes": 69256,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_command_contracts.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+      "sha256": "680d47fb8e6226aaa26046bcaa971d4a312da6c81949b4a7bb75208b90e97a59",
+      "bytes": 78670,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/source_control_contracts.schema.json",
+      "sha256": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a",
+      "bytes": 130860,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/source_control_contracts.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/storage_compaction_native_contracts.schema.json",
+      "sha256": "d979220b712f1eb58c9bb83b039aacb71269912eac66f6869da464ce7ade6f0f",
+      "bytes": 281395,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/storage_compaction_native_contracts.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/ui_command_response.schema.json",
+      "sha256": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37",
+      "bytes": 11470,
+      "original_scope_id": "original-scope:sha256:e332961d221d16df9557eaac4003e152badf440f08de2b51a1ec47ff0a357f1a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/ui_command_response.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/activation-read-result.v4.schema.json",
+      "sha256": "743645f5c9a8430fbca1963fbc072a9ac206419a9ebfc1b1c825ed7020e36ddf",
+      "bytes": 5064,
+      "original_scope_id": "original-scope:sha256:36fd6a20b754ddbab2c973eaa28fc0c6fee1ac85bc67065fe404882e8da0da36",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/activation-read-result.v4.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/activation-recovery-views.v1.schema.json",
+      "sha256": "bd13ecb4e2581262b9e09353d03dd19a3c8858681175d3c317ca281fe84727e4",
+      "bytes": 6587,
+      "original_scope_id": "original-scope:sha256:36fd6a20b754ddbab2c973eaa28fc0c6fee1ac85bc67065fe404882e8da0da36",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/activation-recovery-views.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/aggregate-live-input.v1.schema.json",
+      "sha256": "cd55ad417c9ae11097fe2f0655755b63bef5c887b88486c4dc468b21b26d0522",
+      "bytes": 22087,
+      "original_scope_id": "original-scope:sha256:36fd6a20b754ddbab2c973eaa28fc0c6fee1ac85bc67065fe404882e8da0da36",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/aggregate-live-input.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/compiler-live-inputs.v1.schema.json",
+      "sha256": "0d3b50752870853d7fbaac6b5673ffdccded6328ba49a92eb82a22ed13046c9c",
+      "bytes": 39676,
+      "original_scope_id": "original-scope:sha256:36fd6a20b754ddbab2c973eaa28fc0c6fee1ac85bc67065fe404882e8da0da36",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/compiler-live-inputs.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/current-goal-guard.v1.schema.json",
+      "sha256": "8a4f2af3db93c882656a0777dc87a188611ada9e2b5874d069203dba0d85d9d5",
+      "bytes": 4603,
+      "original_scope_id": "original-scope:sha256:36fd6a20b754ddbab2c973eaa28fc0c6fee1ac85bc67065fe404882e8da0da36",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/current-goal-guard.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json",
+      "sha256": "fdf7cd63359aeae8284121395e464cd8b6547204abe1d7aab45a858439fb525d",
+      "bytes": 14463,
+      "original_scope_id": "original-scope:sha256:36fd6a20b754ddbab2c973eaa28fc0c6fee1ac85bc67065fe404882e8da0da36",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json",
+      "sha256": "777ff3bc17c153fa7310c749b624664002164e27e2b6fa1d894a7d9566eed874",
+      "bytes": 18053,
+      "original_scope_id": "original-scope:sha256:36fd6a20b754ddbab2c973eaa28fc0c6fee1ac85bc67065fe404882e8da0da36",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+      "sha256": "cc5d84b7c6f402cd26269f4621f5fda1122c1643032c7944957c4117c889830c",
+      "bytes": 120821,
+      "original_scope_id": "original-scope:sha256:36fd6a20b754ddbab2c973eaa28fc0c6fee1ac85bc67065fe404882e8da0da36",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/models-request-live.v1.schema.json",
+      "sha256": "c11a123590b8d281f2b3682f591268af6fd719c9ef8b52037a7b15a7852bbad7",
+      "bytes": 36170,
+      "original_scope_id": "original-scope:sha256:36fd6a20b754ddbab2c973eaa28fc0c6fee1ac85bc67065fe404882e8da0da36",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/models-request-live.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+      "sha256": "d1bc87d558af05c5645cd46cadf340dd7d4451732d6714abd711d0307780cd79",
+      "bytes": 102607,
+      "original_scope_id": "original-scope:sha256:36fd6a20b754ddbab2c973eaa28fc0c6fee1ac85bc67065fe404882e8da0da36",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+      "sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+      "bytes": 100283,
+      "original_scope_id": "original-scope:sha256:36fd6a20b754ddbab2c973eaa28fc0c6fee1ac85bc67065fe404882e8da0da36",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json",
+      "sha256": "5a876253a29cc83ee5eadc4ae4da5b7cffc001711f27fb9b2b98627286a3e8ec",
+      "bytes": 76101,
+      "original_scope_id": "original-scope:sha256:36fd6a20b754ddbab2c973eaa28fc0c6fee1ac85bc67065fe404882e8da0da36",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json",
+      "sha256": "30cc5fc70474d8ce069be8d776519c2d2354d4e5635de0140d7e612fee3097c2",
+      "bytes": 29348,
+      "original_scope_id": "original-scope:sha256:36fd6a20b754ddbab2c973eaa28fc0c6fee1ac85bc67065fe404882e8da0da36",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/source-control-receipt-custody.v1.schema.json",
+      "sha256": "2c64fd916ec26aff73d09bcd7532f2cb690951cc9437509c2b2650b2bd708b06",
+      "bytes": 53965,
+      "original_scope_id": "original-scope:sha256:36fd6a20b754ddbab2c973eaa28fc0c6fee1ac85bc67065fe404882e8da0da36",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/source-control-receipt-custody.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+      "sha256": "5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed",
+      "bytes": 111008,
+      "original_scope_id": "original-scope:sha256:36fd6a20b754ddbab2c973eaa28fc0c6fee1ac85bc67065fe404882e8da0da36",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json",
+      "sha256": "80597d53aada9af04c84ac7f501d22516a797c0240f85bdd610287a7e82d01f0",
+      "bytes": 121377,
+      "original_scope_id": "original-scope:sha256:36fd6a20b754ddbab2c973eaa28fc0c6fee1ac85bc67065fe404882e8da0da36",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
+      "sha256": "7c13a5e166aca2d2545e39561f904d2ea1134d690f192d76443a8871c8588fa4",
+      "bytes": 18197,
+      "original_scope_id": "original-scope:sha256:36fd6a20b754ddbab2c973eaa28fc0c6fee1ac85bc67065fe404882e8da0da36",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/installed-profile.json",
+      "sha256": "d9775020c12e372825b2b0b9fce8055cf4b389040a36bd33347d6c82f41873e7",
+      "bytes": 2699,
+      "original_scope_id": "original-scope:sha256:2987f5abc879cdde7d410a41cfe40c9be84685260c0a5a94aecb0ca106def3c5",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/installed-profile.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/literal-resource-realms.json",
+      "sha256": "bb3c040b65f7dec1571280556a2b246ef95399e5dd552665f9269471cfbf2e8b",
+      "bytes": 72001,
+      "original_scope_id": "original-scope:sha256:2987f5abc879cdde7d410a41cfe40c9be84685260c0a5a94aecb0ca106def3c5",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/literal-resource-realms.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/methods.json",
+      "sha256": "599297d0f940623650360d025ba42ae690b672ca750517bf3162b44cbaea1a41",
+      "bytes": 21547,
+      "original_scope_id": "original-scope:sha256:2987f5abc879cdde7d410a41cfe40c9be84685260c0a5a94aecb0ca106def3c5",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/methods.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/native-field-map.json",
+      "sha256": "3dd640512f1472457a75fae3094e885d3165b66959500048851e5a040ec81cce",
+      "bytes": 21952,
+      "original_scope_id": "original-scope:sha256:2987f5abc879cdde7d410a41cfe40c9be84685260c0a5a94aecb0ca106def3c5",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/native-field-map.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/physical-contracts.json",
+      "sha256": "57142e8f2b172fef0c0f92f0697b968c343547ebb931e2402616031d5c21ab12",
+      "bytes": 6088,
+      "original_scope_id": "original-scope:sha256:2987f5abc879cdde7d410a41cfe40c9be84685260c0a5a94aecb0ca106def3c5",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/physical-contracts.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/profile-delta.json",
+      "sha256": "871e9a0486a909dfc5ff20d24734a00b61f1c8e53705be9789a83a58ae3ee40c",
+      "bytes": 4657,
+      "original_scope_id": "original-scope:sha256:2987f5abc879cdde7d410a41cfe40c9be84685260c0a5a94aecb0ca106def3c5",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/profile-delta.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-cancel-start-profile.v3.schema.json",
+      "sha256": "1fddd9157dc3c533a1c22107aab88dbed3007ed3ecaf2670b29be0c180acbd2a",
+      "bytes": 38464,
+      "original_scope_id": "original-scope:sha256:85b7633c190fa2b21bece6b794be231804f9cc1005d997fd5ee6eec2e883df8a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-cancel-start-profile.v3.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-original-start.v3.schema.json",
+      "sha256": "fc0e1aa5a9ee0b6279c7064022bc4e320c0cc9576b282e0a6252f429bfdc4f19",
+      "bytes": 79884,
+      "original_scope_id": "original-scope:sha256:85b7633c190fa2b21bece6b794be231804f9cc1005d997fd5ee6eec2e883df8a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-original-start.v3.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-standard-certification-argument.v1.schema.json",
+      "sha256": "750091bdd8f887dec4419f7433226c3b72a2ff0d26d234f895838a74a8c8a364",
+      "bytes": 4690,
+      "original_scope_id": "original-scope:sha256:85b7633c190fa2b21bece6b794be231804f9cc1005d997fd5ee6eec2e883df8a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-standard-certification-argument.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-standard-current-source.v1.schema.json",
+      "sha256": "cff78bb3d196f3da4c8a51033d6e305c259ccc42fe0126be6cba13bcdee9c9ea",
+      "bytes": 68869,
+      "original_scope_id": "original-scope:sha256:85b7633c190fa2b21bece6b794be231804f9cc1005d997fd5ee6eec2e883df8a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-standard-current-source.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-standard-event-prerequisite.v1.schema.json",
+      "sha256": "fbba3b4c681708806d715b15b71d3de9dee919ceed9153ededd1b86e9b68a251",
+      "bytes": 1369,
+      "original_scope_id": "original-scope:sha256:85b7633c190fa2b21bece6b794be231804f9cc1005d997fd5ee6eec2e883df8a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-standard-event-prerequisite.v1.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-start-arguments.v3.schema.json",
+      "sha256": "ecb20cfb502c47b70acc6ade2a399d03b095e05db6ef5896ef7026b82b441072",
+      "bytes": 4120,
+      "original_scope_id": "original-scope:sha256:85b7633c190fa2b21bece6b794be231804f9cc1005d997fd5ee6eec2e883df8a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-start-arguments.v3.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-start-custody.v3.schema.json",
+      "sha256": "5b724806700cb6f9fe5b513b6769f67e1f1be717001e6464fd3d30b431e0d543",
+      "bytes": 44259,
+      "original_scope_id": "original-scope:sha256:85b7633c190fa2b21bece6b794be231804f9cc1005d997fd5ee6eec2e883df8a",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-start-custody.v3.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/schemas/goal-run-certified.v3.schema.json",
+      "sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "bytes": 22240,
+      "original_scope_id": "original-scope:sha256:411c465f016b1dba3dc45a5fbdd38a81c098e30b967a85b0750c834c6f91e9a5",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/schemas/goal-run-certified.v3.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/schemas/workflow-cancel-start-profile.v4.schema.json",
+      "sha256": "5724a172b9bb20308a61483754b882dc8ff8c5f89b3149843ac29939657723ee",
+      "bytes": 38464,
+      "original_scope_id": "original-scope:sha256:411c465f016b1dba3dc45a5fbdd38a81c098e30b967a85b0750c834c6f91e9a5",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/schemas/workflow-cancel-start-profile.v4.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/schemas/workflow-original-start.v4.schema.json",
+      "sha256": "f2271dd552f39686144c89e9082c758bd97ed4e5106f478c98fd19ddc067cadb",
+      "bytes": 79884,
+      "original_scope_id": "original-scope:sha256:411c465f016b1dba3dc45a5fbdd38a81c098e30b967a85b0750c834c6f91e9a5",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/schemas/workflow-original-start.v4.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/schemas/workflow-standard-certification-argument.v2.schema.json",
+      "sha256": "6273554f789e06b25211b1dbcffa751110616f5b1d5ceaec4a2a43a3513ce539",
+      "bytes": 6672,
+      "original_scope_id": "original-scope:sha256:411c465f016b1dba3dc45a5fbdd38a81c098e30b967a85b0750c834c6f91e9a5",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/schemas/workflow-standard-certification-argument.v2.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/schemas/workflow-standard-current-source.v2.schema.json",
+      "sha256": "be3c1e8a1d08fddc3df085022a2733ed4f6121e8bc1d4769f75a8d69c51b51f2",
+      "bytes": 82617,
+      "original_scope_id": "original-scope:sha256:411c465f016b1dba3dc45a5fbdd38a81c098e30b967a85b0750c834c6f91e9a5",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/schemas/workflow-standard-current-source.v2.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/schemas/workflow-standard-event-prerequisite.v2.schema.json",
+      "sha256": "921ec65cac187bc4f1d278dabba6fe1c771401e26d72a7cda64c5476990bba74",
+      "bytes": 6581,
+      "original_scope_id": "original-scope:sha256:411c465f016b1dba3dc45a5fbdd38a81c098e30b967a85b0750c834c6f91e9a5",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/schemas/workflow-standard-event-prerequisite.v2.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/schemas/workflow-start-arguments.v4.schema.json",
+      "sha256": "7fff15c2ae45f9c488dd32df17bfadc97c13612772cb361b6aef45857098eabe",
+      "bytes": 4120,
+      "original_scope_id": "original-scope:sha256:411c465f016b1dba3dc45a5fbdd38a81c098e30b967a85b0750c834c6f91e9a5",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/schemas/workflow-start-arguments.v4.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/schemas/workflow-start-custody.v4.schema.json",
+      "sha256": "4fa25b6111842fed62966c480cd38df75b4734c13550836df25cc4eecbbcee17",
+      "bytes": 44259,
+      "original_scope_id": "original-scope:sha256:411c465f016b1dba3dc45a5fbdd38a81c098e30b967a85b0750c834c6f91e9a5",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/predecessor/v2/schemas/workflow-start-custody.v4.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/reversible-deltas.json",
+      "sha256": "32ebd02fd79a8dea581813324b2d3d3f8e8e9aa291cdc7c9857eb660219b39a3",
+      "bytes": 400542,
+      "original_scope_id": "original-scope:sha256:cef7ae13c2aaf84300b16cf27a91d89487ff42feb7b0b0aba9a53f7005b6725b",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/reversible-deltas.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "bytes": 22240,
+      "original_scope_id": "original-scope:sha256:4f0030fb9cbc6a1d4eb0e3ecf140bbc4e95e1c5299d5a23d496efff479250d67",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/schemas/workflow-standard-event-prerequisite.v3.schema.json",
+      "sha256": "91724e64f651821794bf0848d4579445f112d7b8b17fde6246085c767e546513",
+      "bytes": 6581,
+      "original_scope_id": "original-scope:sha256:4f0030fb9cbc6a1d4eb0e3ecf140bbc4e95e1c5299d5a23d496efff479250d67",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/schemas/workflow-standard-event-prerequisite.v3.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/schemas/workflow-start-arguments.v5.schema.json",
+      "sha256": "664bb18f0dfd46144120b78b05dcf217128dce4ae644534a86f40723631e90a2",
+      "bytes": 4120,
+      "original_scope_id": "original-scope:sha256:4f0030fb9cbc6a1d4eb0e3ecf140bbc4e95e1c5299d5a23d496efff479250d67",
+      "original_member_path": "after/Plans/workflow_standard_source_contracts/schemas/workflow-start-arguments.v5.schema.json",
+      "rule": "Explicit unchanged original native source-coordinate scope. Exact source-body/pointer dispatch remains mandatory; no scope inferred from matching hash or schema ID."
+    }
+  ],
+  "registry_schema_resolution_bindings": [
+    {
+      "family_id": "goal_certified_event_birth",
+      "registry_value_schema_pointer": "/families/285/value_schema",
+      "normative_whole_root_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageBirth",
+      "resource_bank": {
+        "path": "Plans/goal_certified_event_coordinator_contracts/resource-realms.json",
+        "sha256": "86498dd16e4966d2a7e6924746a1bab28cab533ca78e1bf4907b4ce39ab024a7",
+        "bytes": 314410,
+        "realm": "coordinator"
+      },
+      "exact_cross_bank_routing": {
+        "path": "Plans/goal_certified_event_coordinator_contracts/original-reference-routing.json",
+        "sha256": "abbbd9624103eb50b763c6e45d53fe62647d363402eb5460b607b4d3dd54b911",
+        "bytes": 3375
+      },
+      "rule": "The unchanged normative whole-root reference and every copied property/ref sibling use this exact same original component realm and only its explicitly declared cross-bank routes. No ordinary global registry, same-ID replacement, implicit merge or network/host fallback. Full referenced root remains normative; visible exact redundant root cannot weaken or change accepted values."
+    },
+    {
+      "family_id": "goal_certified_event_control",
+      "registry_value_schema_pointer": "/families/286/value_schema",
+      "normative_whole_root_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageControl",
+      "resource_bank": {
+        "path": "Plans/goal_certified_event_coordinator_contracts/resource-realms.json",
+        "sha256": "86498dd16e4966d2a7e6924746a1bab28cab533ca78e1bf4907b4ce39ab024a7",
+        "bytes": 314410,
+        "realm": "coordinator"
+      },
+      "exact_cross_bank_routing": {
+        "path": "Plans/goal_certified_event_coordinator_contracts/original-reference-routing.json",
+        "sha256": "abbbd9624103eb50b763c6e45d53fe62647d363402eb5460b607b4d3dd54b911",
+        "bytes": 3375
+      },
+      "rule": "The unchanged normative whole-root reference and every copied property/ref sibling use this exact same original component realm and only its explicitly declared cross-bank routes. No ordinary global registry, same-ID replacement, implicit merge or network/host fallback. Full referenced root remains normative; visible exact redundant root cannot weaken or change accepted values."
+    },
+    {
+      "family_id": "goal_certified_event_intent",
+      "registry_value_schema_pointer": "/families/287/value_schema",
+      "normative_whole_root_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageIntent",
+      "resource_bank": {
+        "path": "Plans/goal_certified_event_coordinator_contracts/resource-realms.json",
+        "sha256": "86498dd16e4966d2a7e6924746a1bab28cab533ca78e1bf4907b4ce39ab024a7",
+        "bytes": 314410,
+        "realm": "coordinator"
+      },
+      "exact_cross_bank_routing": {
+        "path": "Plans/goal_certified_event_coordinator_contracts/original-reference-routing.json",
+        "sha256": "abbbd9624103eb50b763c6e45d53fe62647d363402eb5460b607b4d3dd54b911",
+        "bytes": 3375
+      },
+      "rule": "The unchanged normative whole-root reference and every copied property/ref sibling use this exact same original component realm and only its explicitly declared cross-bank routes. No ordinary global registry, same-ID replacement, implicit merge or network/host fallback. Full referenced root remains normative; visible exact redundant root cannot weaken or change accepted values."
+    },
+    {
+      "family_id": "goal_certified_event_eventphase",
+      "registry_value_schema_pointer": "/families/288/value_schema",
+      "normative_whole_root_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageEventPhase",
+      "resource_bank": {
+        "path": "Plans/goal_certified_event_coordinator_contracts/resource-realms.json",
+        "sha256": "86498dd16e4966d2a7e6924746a1bab28cab533ca78e1bf4907b4ce39ab024a7",
+        "bytes": 314410,
+        "realm": "coordinator"
+      },
+      "exact_cross_bank_routing": {
+        "path": "Plans/goal_certified_event_coordinator_contracts/original-reference-routing.json",
+        "sha256": "abbbd9624103eb50b763c6e45d53fe62647d363402eb5460b607b4d3dd54b911",
+        "bytes": 3375
+      },
+      "rule": "The unchanged normative whole-root reference and every copied property/ref sibling use this exact same original component realm and only its explicitly declared cross-bank routes. No ordinary global registry, same-ID replacement, implicit merge or network/host fallback. Full referenced root remains normative; visible exact redundant root cannot weaken or change accepted values."
+    },
+    {
+      "family_id": "goal_certified_event_commit",
+      "registry_value_schema_pointer": "/families/289/value_schema",
+      "normative_whole_root_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageCommit",
+      "resource_bank": {
+        "path": "Plans/goal_certified_event_coordinator_contracts/resource-realms.json",
+        "sha256": "86498dd16e4966d2a7e6924746a1bab28cab533ca78e1bf4907b4ce39ab024a7",
+        "bytes": 314410,
+        "realm": "coordinator"
+      },
+      "exact_cross_bank_routing": {
+        "path": "Plans/goal_certified_event_coordinator_contracts/original-reference-routing.json",
+        "sha256": "abbbd9624103eb50b763c6e45d53fe62647d363402eb5460b607b4d3dd54b911",
+        "bytes": 3375
+      },
+      "rule": "The unchanged normative whole-root reference and every copied property/ref sibling use this exact same original component realm and only its explicitly declared cross-bank routes. No ordinary global registry, same-ID replacement, implicit merge or network/host fallback. Full referenced root remains normative; visible exact redundant root cannot weaken or change accepted values."
+    },
+    {
+      "family_id": "goal_certified_event_origin",
+      "registry_value_schema_pointer": "/families/290/value_schema",
+      "normative_whole_root_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageOrigin",
+      "resource_bank": {
+        "path": "Plans/goal_certified_event_coordinator_contracts/resource-realms.json",
+        "sha256": "86498dd16e4966d2a7e6924746a1bab28cab533ca78e1bf4907b4ce39ab024a7",
+        "bytes": 314410,
+        "realm": "coordinator"
+      },
+      "exact_cross_bank_routing": {
+        "path": "Plans/goal_certified_event_coordinator_contracts/original-reference-routing.json",
+        "sha256": "abbbd9624103eb50b763c6e45d53fe62647d363402eb5460b607b4d3dd54b911",
+        "bytes": 3375
+      },
+      "rule": "The unchanged normative whole-root reference and every copied property/ref sibling use this exact same original component realm and only its explicitly declared cross-bank routes. No ordinary global registry, same-ID replacement, implicit merge or network/host fallback. Full referenced root remains normative; visible exact redundant root cannot weaken or change accepted values."
+    },
+    {
+      "family_id": "goal_certified_event_release",
+      "registry_value_schema_pointer": "/families/291/value_schema",
+      "normative_whole_root_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageRelease",
+      "resource_bank": {
+        "path": "Plans/goal_certified_event_coordinator_contracts/resource-realms.json",
+        "sha256": "86498dd16e4966d2a7e6924746a1bab28cab533ca78e1bf4907b4ce39ab024a7",
+        "bytes": 314410,
+        "realm": "coordinator"
+      },
+      "exact_cross_bank_routing": {
+        "path": "Plans/goal_certified_event_coordinator_contracts/original-reference-routing.json",
+        "sha256": "abbbd9624103eb50b763c6e45d53fe62647d363402eb5460b607b4d3dd54b911",
+        "bytes": 3375
+      },
+      "rule": "The unchanged normative whole-root reference and every copied property/ref sibling use this exact same original component realm and only its explicitly declared cross-bank routes. No ordinary global registry, same-ID replacement, implicit merge or network/host fallback. Full referenced root remains normative; visible exact redundant root cannot weaken or change accepted values."
+    },
+    {
+      "family_id": "goal_run_started_cancelled_certified_projection",
+      "registry_value_schema_pointer": "/families/292/value_schema",
+      "normative_whole_root_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/StorageProjection",
+      "resource_bank": {
+        "path": "Plans/goal_run_certified_consumer_contracts/resource-realms.json",
+        "sha256": "37bbb87f92c86add8555e8f35498b4e609bd270fe38941396ff2fba72896ea66",
+        "bytes": 504684,
+        "realm": "consumer"
+      },
+      "exact_cross_bank_routing": {
+        "path": "Plans/goal_run_certified_consumer_contracts/imports.json",
+        "sha256": "d05f12ed624f2d50bd42659e5ee38670a7a88d24b1ec76a3415341c58fdf500e",
+        "bytes": 266356
+      },
+      "rule": "The unchanged normative whole-root reference and every copied property/ref sibling use this exact same original component realm and only its explicitly declared cross-bank routes. No ordinary global registry, same-ID replacement, implicit merge or network/host fallback. Full referenced root remains normative; visible exact redundant root cannot weaken or change accepted values."
+    },
+    {
+      "family_id": "goal_run_started_cancelled_certified_checkpoint",
+      "registry_value_schema_pointer": "/families/293/value_schema",
+      "normative_whole_root_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Checkpoint",
+      "resource_bank": {
+        "path": "Plans/goal_run_certified_consumer_contracts/resource-realms.json",
+        "sha256": "37bbb87f92c86add8555e8f35498b4e609bd270fe38941396ff2fba72896ea66",
+        "bytes": 504684,
+        "realm": "consumer"
+      },
+      "exact_cross_bank_routing": {
+        "path": "Plans/goal_run_certified_consumer_contracts/imports.json",
+        "sha256": "d05f12ed624f2d50bd42659e5ee38670a7a88d24b1ec76a3415341c58fdf500e",
+        "bytes": 266356
+      },
+      "rule": "The unchanged normative whole-root reference and every copied property/ref sibling use this exact same original component realm and only its explicitly declared cross-bank routes. No ordinary global registry, same-ID replacement, implicit merge or network/host fallback. Full referenced root remains normative; visible exact redundant root cannot weaken or change accepted values."
+    }
+  ]
+}

@@ -1,0 +1,1006 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json",
+  "title": "Puppet Master original certified assignment invocation source contract",
+  "description": "Newly authored whole private owner source contract. Native NOT_RUN; no Event coordinator/registry/consumer admission. Full prior sources and prospective candidates remain separate.",
+  "oneOf": [
+    {
+      "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/AssignmentReadArgument"
+    },
+    {
+      "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/AssignmentReadResult"
+    },
+    {
+      "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/InvocationReadArgument"
+    },
+    {
+      "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/InvocationReadResult"
+    },
+    {
+      "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/CausalReadArgument"
+    },
+    {
+      "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/CausalReadResult"
+    }
+  ],
+  "$defs": {
+    "AssignmentSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "owner",
+        "complete_original_assignment_request",
+        "complete_original_assignment_decision",
+        "complete_original_owner_allocation",
+        "complete_original_policies",
+        "complete_original_authority_decisions",
+        "assigned_actor",
+        "original_assignment_ref",
+        "original_assignment_revision",
+        "original_assignment_issued_at_utc",
+        "execution_context",
+        "whole_assignment_request",
+        "whole_assignment_decision"
+      ],
+      "properties": {
+        "target": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Target"
+        },
+        "owner": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OwnerBinding"
+        },
+        "complete_original_assignment_request": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "complete_original_assignment_decision": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "complete_original_owner_allocation": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "complete_original_policies": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalValue"
+          },
+          "minItems": 1
+        },
+        "complete_original_authority_decisions": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+          },
+          "minItems": 1
+        },
+        "assigned_actor": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Actor"
+        },
+        "original_assignment_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_assignment_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_assignment_issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "execution_context": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/ExecutionContext"
+        },
+        "whole_assignment_request": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/OriginalAssignmentRequestRecord"
+        },
+        "whole_assignment_decision": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/OriginalAssignmentDecisionRecord"
+        }
+      }
+    },
+    "AssignmentReadArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_assignment_ref",
+        "target",
+        "whole_original_source",
+        "current"
+      ],
+      "properties": {
+        "original_assignment_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Target"
+        },
+        "whole_original_source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/AssignmentSource"
+        },
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/CurrentObservation"
+        }
+      }
+    },
+    "AssignmentReadAvailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outcome",
+        "source",
+        "current",
+        "action_authority"
+      ],
+      "properties": {
+        "outcome": {
+          "const": "available_original_assignment"
+        },
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/AssignmentSource"
+        },
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/CurrentObservation"
+        },
+        "action_authority": {
+          "const": "source_only_no_publication"
+        }
+      }
+    },
+    "AssignmentReadResult": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/AssignmentReadAvailable"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Unavailable"
+        }
+      ]
+    },
+    "OriginalCauseAbsent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relationship",
+        "complete_original_context",
+        "original_absence_decision"
+      ],
+      "properties": {
+        "relationship": {
+          "const": "absent"
+        },
+        "complete_original_context": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "original_absence_decision": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        }
+      }
+    },
+    "OriginalCausePresent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relationship",
+        "event_id",
+        "event_ref",
+        "complete_original_context",
+        "complete_original_relationship_decision",
+        "complete_original_event",
+        "complete_original_event_custody",
+        "complete_original_reference_binding",
+        "whole_event",
+        "whole_original_full_value_result"
+      ],
+      "properties": {
+        "relationship": {
+          "const": "present"
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "complete_original_context": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "complete_original_relationship_decision": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "complete_original_event": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "complete_original_event_custody": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "complete_original_reference_binding": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "whole_event": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+        },
+        "whole_original_full_value_result": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
+        }
+      }
+    },
+    "CausalRelationship": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/OriginalCauseAbsent"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/OriginalCausePresent"
+        }
+      ]
+    },
+    "CausalSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner",
+        "target",
+        "original_context",
+        "correlation_id",
+        "correlation_original",
+        "causation",
+        "parent",
+        "producer_sequence_id",
+        "producer_sequence_original",
+        "whole_causal_context"
+      ],
+      "properties": {
+        "owner": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OwnerBinding"
+        },
+        "target": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Target"
+        },
+        "original_context": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "correlation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "correlation_original": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "causation": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/CausalRelationship"
+        },
+        "parent": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/CausalRelationship"
+        },
+        "producer_sequence_id": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "producer_sequence_original": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "whole_causal_context": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/OriginalCausalContextRecord"
+        }
+      }
+    },
+    "InvocationSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "owner",
+        "assignment",
+        "complete_original_invocation_request",
+        "complete_original_invocation_input_sources",
+        "complete_original_invocation_result",
+        "complete_original_invocation_origin",
+        "actual_actor",
+        "execution_context",
+        "causal_source",
+        "original_producer_occurrence_source",
+        "occurred_at_utc",
+        "original_final_decision_ref",
+        "original_final_decision_sha256",
+        "original_operation_id",
+        "original_transaction_id",
+        "whole_producer_context",
+        "whole_invocation_request",
+        "whole_invocation_result"
+      ],
+      "properties": {
+        "target": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Target"
+        },
+        "owner": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OwnerBinding"
+        },
+        "assignment": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/AssignmentSource"
+        },
+        "complete_original_invocation_request": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "complete_original_invocation_input_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalValue"
+          },
+          "minItems": 1
+        },
+        "complete_original_invocation_result": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "complete_original_invocation_origin": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "actual_actor": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Actor"
+        },
+        "execution_context": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/ExecutionContext"
+        },
+        "causal_source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/CausalSource"
+        },
+        "original_producer_occurrence_source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "original_final_decision_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_final_decision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "whole_producer_context": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/OriginalProducerContextRecord"
+        },
+        "whole_invocation_request": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/OriginalInvocationRequestRecord"
+        },
+        "whole_invocation_result": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/OriginalInvocationResultRecord"
+        }
+      }
+    },
+    "InvocationReadArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "original_operation_id",
+        "whole_original_source",
+        "current"
+      ],
+      "properties": {
+        "target": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Target"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "whole_original_source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/InvocationSource"
+        },
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/CurrentObservation"
+        }
+      }
+    },
+    "InvocationReadAvailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outcome",
+        "source",
+        "current",
+        "action_authority"
+      ],
+      "properties": {
+        "outcome": {
+          "const": "available_original_invocation"
+        },
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/InvocationSource"
+        },
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/CurrentObservation"
+        },
+        "action_authority": {
+          "const": "source_only_no_publication"
+        }
+      }
+    },
+    "InvocationReadResult": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/InvocationReadAvailable"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Unavailable"
+        }
+      ]
+    },
+    "CausalReadArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "original_operation_id",
+        "whole_original_source",
+        "current"
+      ],
+      "properties": {
+        "target": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Target"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "whole_original_source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/CausalSource"
+        },
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/CurrentObservation"
+        }
+      }
+    },
+    "CausalReadAvailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outcome",
+        "source",
+        "current",
+        "action_authority"
+      ],
+      "properties": {
+        "outcome": {
+          "const": "available_original_causal_context"
+        },
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/CausalSource"
+        },
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/CurrentObservation"
+        },
+        "action_authority": {
+          "const": "source_only_no_publication"
+        }
+      }
+    },
+    "CausalReadResult": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/CausalReadAvailable"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Unavailable"
+        }
+      ]
+    },
+    "OriginalProducerContextRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "context_id",
+        "target",
+        "event_thread_id",
+        "event_node_id",
+        "event_attempt_id",
+        "occurred_at_utc",
+        "producer_sequence_id",
+        "correlation_id",
+        "payload_ref",
+        "redaction_profile",
+        "migration",
+        "whole_original_applicability_decision",
+        "whole_original_occurrence",
+        "whole_original_payload_disclosure",
+        "whole_original_migration",
+        "issuing_owner",
+        "original_operation_id",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "context_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Target"
+        },
+        "event_thread_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_node_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_attempt_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "producer_sequence_id": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "correlation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "payload_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "redaction_profile": {
+          "enum": [
+            "no_secrets",
+            "redacted",
+            "secret_refs_only"
+          ]
+        },
+        "migration": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/migration"
+        },
+        "whole_original_applicability_decision": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "whole_original_occurrence": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "whole_original_payload_disclosure": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "whole_original_migration": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "issuing_owner": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OwnerBinding"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "OriginalAssignmentRequestRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_id",
+        "target",
+        "execution_context",
+        "requesting_owner",
+        "requested_assignment_kind",
+        "complete_original_allocation_inputs",
+        "complete_original_policy_inputs",
+        "requested_at_utc"
+      ],
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Target"
+        },
+        "execution_context": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/ExecutionContext"
+        },
+        "requesting_owner": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OwnerBinding"
+        },
+        "requested_assignment_kind": {
+          "enum": [
+            "owning_workflow_controller",
+            "assigned_canonical_artifact_owner"
+          ]
+        },
+        "complete_original_allocation_inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalValue"
+          },
+          "minItems": 1
+        },
+        "complete_original_policy_inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalValue"
+          },
+          "minItems": 1
+        },
+        "requested_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "OriginalAssignmentDecisionRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assignment_id",
+        "assignment_revision",
+        "target",
+        "original_request_id",
+        "original_request_sha256",
+        "assignment_kind",
+        "assigned_actor",
+        "decision",
+        "complete_original_authority",
+        "complete_original_allocation",
+        "policy_sources",
+        "valid_from_utc",
+        "valid_until_utc",
+        "issuing_owner",
+        "original_operation_id",
+        "original_transaction_id",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "assignment_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assignment_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "target": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Target"
+        },
+        "original_request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "assignment_kind": {
+          "enum": [
+            "owning_workflow_controller",
+            "assigned_canonical_artifact_owner"
+          ]
+        },
+        "assigned_actor": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Actor"
+        },
+        "decision": {
+          "enum": [
+            "authorized",
+            "denied"
+          ]
+        },
+        "complete_original_authority": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "complete_original_allocation": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "policy_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalValue"
+          },
+          "minItems": 1
+        },
+        "valid_from_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "valid_until_utc": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "issuing_owner": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OwnerBinding"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "OriginalInvocationRequestRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "invocation_id",
+        "target",
+        "assignment",
+        "actual_actor",
+        "execution_context",
+        "complete_original_request",
+        "complete_original_input_set",
+        "original_causal_context",
+        "requested_at_utc"
+      ],
+      "properties": {
+        "invocation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Target"
+        },
+        "assignment": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/OriginalAssignmentDecisionRecord"
+        },
+        "actual_actor": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Actor"
+        },
+        "execution_context": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/ExecutionContext"
+        },
+        "complete_original_request": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "complete_original_input_set": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalValue"
+          },
+          "minItems": 1
+        },
+        "original_causal_context": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/OriginalCausalContextRecord"
+        },
+        "requested_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "OriginalInvocationResultRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "invocation_id",
+        "target",
+        "original_request_sha256",
+        "assignment_id",
+        "assignment_revision",
+        "actual_actor",
+        "execution_context",
+        "original_final_decision_ref",
+        "original_final_decision_sha256",
+        "original_producer_occurrence",
+        "original_occurrence_source",
+        "original_operation_id",
+        "original_transaction_id",
+        "issuing_owner",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "invocation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Target"
+        },
+        "original_request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "assignment_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assignment_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "actual_actor": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Actor"
+        },
+        "execution_context": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/ExecutionContext"
+        },
+        "original_final_decision_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_final_decision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_producer_occurrence": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "original_occurrence_source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issuing_owner": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OwnerBinding"
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "OriginalCausalContextRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "causal_context_id",
+        "target",
+        "originating_operation_id",
+        "complete_original_originating_request",
+        "correlation_id",
+        "causation_event_id",
+        "parent_event_id",
+        "producer_sequence_id",
+        "whole_original_relationship_inputs",
+        "issuing_owner",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "causal_context_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Target"
+        },
+        "originating_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "complete_original_originating_request": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "correlation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "causation_event_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "parent_event_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "producer_sequence_id": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "whole_original_relationship_inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalValue"
+          },
+          "minItems": 1
+        },
+        "issuing_owner": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OwnerBinding"
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

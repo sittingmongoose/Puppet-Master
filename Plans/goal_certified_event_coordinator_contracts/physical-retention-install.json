@@ -1,0 +1,83 @@
+{
+  "status": "CANONICAL_SOURCE_PHYSICAL_FAMILY_CONTRACT_NATIVE_NOT_RUN",
+  "key_codec": "project_hex/run_hex/operation_hex are exact valid nonempty UTF-8 bytes encoded lowercase even-length hex, no normalization; owner validates exact reversible identity and encoded key",
+  "value_codec": "Canonical MessagePack under unchanged Storage value rules; complete closed wrapper and header in schemas/coordinator.v1.schema.json; source JSON digest is a different commitment",
+  "families": [
+    {
+      "name": "goal_certified_event_birth.v1",
+      "key": "goal_certified_event_birth.v1:{project_hex}:{run_hex}",
+      "schema": "schemas/coordinator.v1.schema.json#/$defs/StorageBirth",
+      "mutable": false,
+      "writer": "owner.executor.certified_event.enroll_fresh_birth.v1",
+      "retention": "Existing authority/receipt metadata policy RP-AUTHORITY-INDEFINITE; no new body retention or horizon; backup with original phase-complete custody",
+      "contents": "Only content-free IDs/selectors/clocks/commitments/issuance metadata; never mutable body, producer payload, original source bytes, raw Event frames or schema packet archive",
+      "backup": "Mandatory original bytes and original native issuance at its actual phase; partial restored authority is unavailable, never reconstructed"
+    },
+    {
+      "name": "goal_certified_event_control.v1",
+      "key": "goal_certified_event_control.v1:{project_hex}:{run_hex}",
+      "schema": "schemas/coordinator.v1.schema.json#/$defs/StorageControl",
+      "mutable": true,
+      "writer": "only declared born/arm/append/commit/release transaction participant",
+      "retention": "Existing authority/receipt metadata policy RP-AUTHORITY-INDEFINITE; no new body retention or horizon; backup with original phase-complete custody",
+      "contents": "Only content-free IDs/selectors/clocks/commitments/issuance metadata; never mutable body, producer payload, original source bytes, raw Event frames or schema packet archive",
+      "backup": "Mandatory original bytes and original native issuance at its actual phase; partial restored authority is unavailable, never reconstructed"
+    },
+    {
+      "name": "goal_certified_event_intent.v1",
+      "key": "goal_certified_event_intent.v1:{project_hex}:{run_hex}:{operation_hex}",
+      "schema": "schemas/coordinator.v1.schema.json#/$defs/StorageIntent",
+      "mutable": false,
+      "writer": "owner.storage.certified_event.arm.v1",
+      "retention": "Existing authority/receipt metadata policy RP-AUTHORITY-INDEFINITE; no new body retention or horizon; backup with original phase-complete custody",
+      "contents": "Only content-free IDs/selectors/clocks/commitments/issuance metadata; never mutable body, producer payload, original source bytes, raw Event frames or schema packet archive",
+      "backup": "Mandatory original bytes and original native issuance at its actual phase; partial restored authority is unavailable, never reconstructed"
+    },
+    {
+      "name": "goal_certified_event_eventphase.v1",
+      "key": "goal_certified_event_eventphase.v1:{project_hex}:{run_hex}:{operation_hex}",
+      "schema": "schemas/coordinator.v1.schema.json#/$defs/StorageEventPhase",
+      "mutable": false,
+      "writer": "owner.storage.certified_event.append_held.v1",
+      "retention": "Existing authority/receipt metadata policy RP-AUTHORITY-INDEFINITE; no new body retention or horizon; backup with original phase-complete custody",
+      "contents": "Only content-free IDs/selectors/clocks/commitments/issuance metadata; never mutable body, producer payload, original source bytes, raw Event frames or schema packet archive",
+      "backup": "Mandatory original bytes and original native issuance at its actual phase; partial restored authority is unavailable, never reconstructed"
+    },
+    {
+      "name": "goal_certified_event_commit.v1",
+      "key": "goal_certified_event_commit.v1:{project_hex}:{run_hex}:{operation_hex}",
+      "schema": "schemas/coordinator.v1.schema.json#/$defs/StorageCommit",
+      "mutable": false,
+      "writer": "owner.workflow.certified_event.commit_native.v1",
+      "retention": "Existing authority/receipt metadata policy RP-AUTHORITY-INDEFINITE; no new body retention or horizon; backup with original phase-complete custody",
+      "contents": "Only content-free IDs/selectors/clocks/commitments/issuance metadata; never mutable body, producer payload, original source bytes, raw Event frames or schema packet archive",
+      "backup": "Mandatory original bytes and original native issuance at its actual phase; partial restored authority is unavailable, never reconstructed"
+    },
+    {
+      "name": "goal_certified_event_origin.v1",
+      "key": "goal_certified_event_origin.v1:{project_hex}:{run_hex}:{operation_hex}",
+      "schema": "schemas/coordinator.v1.schema.json#/$defs/StorageOrigin",
+      "mutable": false,
+      "writer": "owner.workflow.certified_event.commit_native.v1",
+      "retention": "Existing authority/receipt metadata policy RP-AUTHORITY-INDEFINITE; no new body retention or horizon; backup with original phase-complete custody",
+      "contents": "Only content-free IDs/selectors/clocks/commitments/issuance metadata; never mutable body, producer payload, original source bytes, raw Event frames or schema packet archive",
+      "backup": "Mandatory original bytes and original native issuance at its actual phase; partial restored authority is unavailable, never reconstructed"
+    },
+    {
+      "name": "goal_certified_event_release.v1",
+      "key": "goal_certified_event_release.v1:{project_hex}:{run_hex}:{operation_hex}",
+      "schema": "schemas/coordinator.v1.schema.json#/$defs/StorageRelease",
+      "mutable": false,
+      "writer": "owner.workflow.certified_event.release.v1",
+      "retention": "Existing authority/receipt metadata policy RP-AUTHORITY-INDEFINITE; no new body retention or horizon; backup with original phase-complete custody",
+      "contents": "Only content-free IDs/selectors/clocks/commitments/issuance metadata; never mutable body, producer payload, original source bytes, raw Event frames or schema packet archive",
+      "backup": "Mandatory original bytes and original native issuance at its actual phase; partial restored authority is unavailable, never reconstructed"
+    }
+  ],
+  "existing_families": "Whole original Standard receipt/capture-origin, Event/custody/all-member group, Workflow result/origin/body/control/D01 and original birth families retain their exact original keys, codecs, schema headers, mutation and lifetime policies.",
+  "temporary_values": "Full original source arguments, producer25, native candidates/readback, Event/current frame/group values exist only under their original live operation/source lifetimes. This package adds no full-body physical family.",
+  "profile": "pm.executor.workflow_source.all_writers.v7",
+  "initialization": "Complete combined descriptor installed and authenticated before genuine fresh original Workflow birth. Native original birth is constructed first, then compact Birth selecting it, then empty epoch0 Control selecting Birth; all coissued in same native birth transaction. Birth records initial control key/epoch/phase rather than its future hash, preventing a cycle.",
+  "old_birth": "No backfill/enroll/adoption of any already born profile. Whole native-v7 successor and explicit producer-v2 prepare.v2 tuple are selected at actual fresh birth; native v6 and producer v1 remain closed unchanged predecessors. New all_writers.v7 descriptor binds complete new native/source/coordinator definitions and real participants before lifecycle.",
+  "release_and_backup": "Release is immutable original completion metadata, not a reconstructed source or a projector checkpoint. Rebuildability of generic Event indexes does not make compact original receipt/certification custody rebuildable."
+}

@@ -1,0 +1,1065 @@
+{
+  "status": "DOCUMENTATION_NOT_SCHEMA_RESOURCE",
+  "field_bindings": [
+    {
+      "field": "schema_id",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/schema_id",
+      "original_rule": "Complete owner-selected installed schema header; no latest-ID substitution.",
+      "new_complete_source_location": "whole current EventRecord constant",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "schema_version",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/schema_version",
+      "original_rule": "Exact owning schema version; frozen compatibility and pending successor remain distinct.",
+      "new_complete_source_location": "whole current EventRecord constant",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "scope_kind",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/scope_kind",
+      "original_rule": "Certified GoalRun project scope from original target authority; never inferred from UI focus.",
+      "new_complete_source_location": "whole project route and target",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "event_id",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/event_id",
+      "original_rule": "Stable genuine original occurrence identity under the later exact certified recipe. Recipe remains coordinator authoring; no allocation by this plan.",
+      "new_complete_source_location": "identity_admission.event_id",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "event_type",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/event_type",
+      "original_rule": "Original goal_run.certified event identity under a separately adopted route; source mapping does not select its registry.",
+      "new_complete_source_location": "whole certified source route",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "project_id",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/project_id",
+      "original_rule": "Same actual Project across original assignment, current Goal/Workflow, receipt and producer.",
+      "new_complete_source_location": "target.project_id",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "thread_id",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/thread_id",
+      "original_rule": "Actual originating thread when applicable; preserve required-present outer null and optional payload grammar, no UI-focused thread substitution.",
+      "new_complete_source_location": "invocation.whole_producer_context.event_thread_id",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "run_id",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/run_id",
+      "original_rule": "Outer Event run_id is target Workflow GoalRun; any actual certifier execution runtime run_id remains separately scoped and explicitly joined, never silently equated.",
+      "new_complete_source_location": "target.goal_run_id",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "node_id",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/node_id",
+      "original_rule": "Actual Event target context if applicable, otherwise required-present null. No representative WorkNode chosen for convenience.",
+      "new_complete_source_location": "invocation.whole_producer_context.event_node_id",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "attempt_id",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/attempt_id",
+      "original_rule": "Actual Event context if applicable, otherwise required-present null. The certifier provider-attempt identity is separately joined, not automatically copied here.",
+      "new_complete_source_location": "invocation.whole_producer_context.event_attempt_id",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "actor_ref",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/actor_ref",
+      "original_rule": "Owner-authenticated reference of actual assigned certifier invocation; not provider label, Persona, worker/Auditor string, receipt-only certifier_ref or hardcoded runtime controller.",
+      "new_complete_source_location": "invocation.actual_actor.actor_ref + references actor binding",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "requested_account_ref",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/requested_account_ref",
+      "original_rule": "Genuine non-secret reference bound to full original account subject/binding/policy/identity resolution. Runtime null does not become a sentinel/nonempty payload ref. Common payload requires nonempty refs; unavailable mapping refuses producer.",
+      "new_complete_source_location": "references.bindings[reference_role=requested_account].reference",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "effective_account_ref",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/effective_account_ref",
+      "original_rule": "Genuine non-secret effective account reference and actual subject/provider identity; original switch evidence when changed. Outer nullable syntax cannot weaken common required nonempty reference.",
+      "new_complete_source_location": "references.bindings[reference_role=effective_account].reference",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "occurred_at_utc",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/occurred_at_utc",
+      "original_rule": "Actual original certification producer invocation occurrence under eventual exact owner semantics; no Start, readback, capture, retry or current wall-clock substitution.",
+      "new_complete_source_location": "invocation.whole_producer_context.occurred_at_utc + original invocation result occurrence",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "producer_sequence_id",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/producer_sequence_id",
+      "original_rule": "Real upstream monotonic source sequence when one exists, else schema-permitted null; no counter inferred from Goal revision or event adjacency.",
+      "new_complete_source_location": "causal.producer_sequence_id + whole producer context",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "correlation_id",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/correlation_id",
+      "original_rule": "Genuine original correlation with its originating context/owner; duplication must agree.",
+      "new_complete_source_location": "causal.correlation_id + whole producer context",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "causation_event_id",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/causation_event_id",
+      "original_rule": "Actual original cause and its authentic Event identity/relationship, or owner-valid absence. Receipt ref, last Event, same GoalRun or Start is not proof of cause.",
+      "new_complete_source_location": "causal.causation actual present event_id or genuine absent source",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "parent_event_id",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/parent_event_id",
+      "original_rule": "Genuine parent relationship or owner-valid null, independently of cause; no parent inferred from Goal ancestry or time ordering.",
+      "new_complete_source_location": "causal.parent actual present event_id or genuine absent source",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "idempotency_key",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/idempotency_key",
+      "original_rule": "Later exact certified recipe must bind genuine semantic identity and native before/after clocks under separate version/domain. Same original inner/common and outer key; this plan neither allocates nor installs recipe.",
+      "new_complete_source_location": "identity_admission.idempotency_key",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "payload_schema_id",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/payload_schema_id",
+      "original_rule": "Select only separately adopted complete payload schema; pending v3 is not active registry authority.",
+      "new_complete_source_location": "whole pending v3 payload literal ID, not registry selection",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "payload",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/payload",
+      "original_rule": "Whole common payload and its complete six-field inner object; never only the six fields as the outer Event payload.",
+      "new_complete_source_location": "complete pending common payload from all whole producer/native/Goal/Standard sources, with entire six-field inner object",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "payload_ref",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/payload_ref",
+      "original_rule": "Actual separately governed complete payload/detail reference when applicable or permitted null; preserve original redaction and ownership.",
+      "new_complete_source_location": "invocation.whole_producer_context.payload_ref + original payload owner decision",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "redaction_profile",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/redaction_profile",
+      "original_rule": "Actual admitted redaction posture; never embed raw secrets or trim a required complete source into apparent validity.",
+      "new_complete_source_location": "invocation.whole_producer_context.redaction_profile + actual original disclosure owner",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "replay_policy",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/replay_policy",
+      "original_rule": "Exact authorized append policy. projector_replay_only cannot authorize producer append; no chosen convenience policy.",
+      "new_complete_source_location": "identity_admission.replay_policy",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "field": "migration",
+      "whole_candidate_schema": "schemas/producer-submission.v1.schema.json",
+      "candidate_pointer": "/properties/migration",
+      "original_rule": "Full four-field original migration object; a new producer does not impersonate historical provenance. Preserve required-present nullable members.",
+      "new_complete_source_location": "invocation.whole_producer_context.migration + full original migration decision",
+      "native_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "actor_ref",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/actor_ref",
+      "original_rule": "Owner-authenticated reference of actual assigned certifier invocation; not provider label, Persona, worker/Auditor string, receipt-only certifier_ref or hardcoded runtime controller.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "approval_refs",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/approval_refs",
+      "original_rule": "Optional historical grammar stays exact. Successful Standard branch has no exceptions/waivers; do not invent approval refs or use testing restrictions as certification exception.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "artifact_refs",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/artifact_refs",
+      "original_rule": "Complete actual original artifact set and owner-valid ref identities; no unrelated files or projection-only closure.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "block_refs",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/block_refs",
+      "original_rule": "Truthful applicable original blocker references; optional grammar cannot excuse actual blockers or unknown blocker inventory.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "causation_event_ref",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/causation_event_ref",
+      "original_rule": "Authentic original causal ref and explicit mapping to outer event ID; distinct null/omission grammar preserved. No reference string inversion.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "correlation_id",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/correlation_id",
+      "original_rule": "Genuine original correlation with its originating context/owner; duplication must agree.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "effective_account_ref",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/effective_account_ref",
+      "original_rule": "Genuine non-secret effective account reference and actual subject/provider identity; original switch evidence when changed. Outer nullable syntax cannot weaken common required nonempty reference.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "effective_model_ref",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/effective_model_ref",
+      "original_rule": "Original complete actual effective model decision, fallback/reasons/capability proofs and ref mapping; one dispatch model ref does not prove requested pair.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "effective_provider_ref",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/effective_provider_ref",
+      "original_rule": "Full original effective platform/provider resolution, capability/fallback and mapping; current catalog does not rewrite historical selection.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "event_name",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/event_name",
+      "original_rule": "Must agree with outer event_type and exact whole payload route.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "evidence_refs",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/evidence_refs",
+      "original_rule": "Complete actual original evidence set and current access/provenance for claimed action; no sampled records or invented empty list.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "execution_role",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/execution_role",
+      "original_rule": "Actual admitted role in the existing enum; no certifier token exists. Do not hardcode runtime_controller or coerce unsupported original roles.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "goal_id",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/goal_id",
+      "original_rule": "Exact original target Goal and current binding; no unrelated native actor Goal substituted.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "goal_revision",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/goal_revision",
+      "original_rule": "Observed original current Goal revision remains unchanged by Workflow certification; never increment to satisfy retained v2 CAS grammar.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "idempotency_key",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/idempotency_key",
+      "original_rule": "Later exact certified recipe must bind genuine semantic identity and native before/after clocks under separate version/domain. Same original inner/common and outer key; this plan neither allocates nor installs recipe.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "occurred_at_utc",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/occurred_at_utc",
+      "original_rule": "Actual original certification producer invocation occurrence under eventual exact owner semantics; no Start, readback, capture, retry or current wall-clock substitution.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "payload",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/payload",
+      "original_rule": "Whole common payload and its complete six-field inner object; never only the six fields as the outer Event payload.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "project_id",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/project_id",
+      "original_rule": "Same actual Project across original assignment, current Goal/Workflow, receipt and producer.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "requested_account_ref",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/requested_account_ref",
+      "original_rule": "Genuine non-secret reference bound to full original account subject/binding/policy/identity resolution. Runtime null does not become a sentinel/nonempty payload ref. Common payload requires nonempty refs; unavailable mapping refuses producer.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "requested_model_ref",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/requested_model_ref",
+      "original_rule": "Original requested canonical provider_id/model_id plus complete request policy/Persona/override sources and authentic model-ref mapping.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "requested_provider_ref",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/requested_provider_ref",
+      "original_rule": "Full original requested platform/provider/model resolution plus genuine owner non-secret ref mapping. Provider display/prefix or runtime platform string is not the reference authority.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "schema_version",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/schema_version",
+      "original_rule": "Exact owning schema version; frozen compatibility and pending successor remain distinct.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "thread_id",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/thread_id",
+      "original_rule": "Actual originating thread when applicable; preserve required-present outer null and optional payload grammar, no UI-focused thread substitution.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "expected_goal_run_revision",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/expected_goal_run_revision",
+      "original_rule": "Whole actual Workflow before revision from pending source dependency; availability/installation not assumed.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "common_v3_pending",
+      "field": "goal_run_revision",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/properties/goal_run_revision",
+      "original_rule": "Whole derived Workflow certified after revision; must satisfy original transition/CAS and does not change Goal revision.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "inner_v3_pending",
+      "field": "certification_receipt_ref",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/$defs/event_payload/properties/certification_receipt_ref",
+      "original_rule": "Reference to genuinely issued full original Standard receipt and coissued origin; receipt durability precedes future Event append.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "inner_v3_pending",
+      "field": "final_certifier_decision",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/$defs/event_payload/properties/final_certifier_decision",
+      "original_rule": "Actual original Standard certified decision and all eight gates; Worker/Auditor output is evidence only, no exception branch admitted.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "inner_v3_pending",
+      "field": "goal_run_id",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/$defs/event_payload/properties/goal_run_id",
+      "original_rule": "Same exact target GoalRun as outer run_id and authentic original final decision/receipt.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "inner_v3_pending",
+      "field": "unresolved_risk_refs",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/$defs/event_payload/properties/unresolved_risk_refs",
+      "original_rule": "Actually empty for this Standard success; no unknown/hidden risk converted to empty.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "inner_v3_pending",
+      "field": "validator_outputs",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/$defs/event_payload/properties/validator_outputs",
+      "original_rule": "Full original complete expected validators mapped from passed source records with actual evidence; no flags, omissions, failed/waived branch conversion.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "inner_v3_pending",
+      "field": "worknode_receipt_refs",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/lineage/pending-native-draft/after/Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "original_whole_schema_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+      "original_schema_pointer": "/$defs/event_payload/properties/worknode_receipt_refs",
+      "original_rule": "Exact complete original WorkNode set and genuine receipts, no duplicate/foreign/omitted member.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "account_switch_reason",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/account_switch_reason",
+      "original_rule": "Whole original subject class, stable nullable IDs, binding/policy, provider identity, genuine selection/switch and nonsecret auth evidence. Nonaccount-backed null/null stays null/null; payload reference availability is separately proven, never coerced.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "auth_resolution_ref",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/auth_resolution_ref",
+      "original_rule": "Whole original subject class, stable nullable IDs, binding/policy, provider identity, genuine selection/switch and nonsecret auth evidence. Nonaccount-backed null/null stays null/null; payload reference availability is separately proven, never coerced.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "capability_snapshot_ref",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/capability_snapshot_ref",
+      "original_rule": "Resolve complete original capability source, actual provider/platform/operation applicability and provenance; one ref or Models subset is insufficient.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "created_at_utc",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/created_at_utc",
+      "original_rule": "Complete original snapshot identity, full-record canonical hash/key/ref and actual issuance chronology; never newly create a runtime to backfill the certifier source.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "effective_account_id",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/effective_account_id",
+      "original_rule": "Whole original subject class, stable nullable IDs, binding/policy, provider identity, genuine selection/switch and nonsecret auth evidence. Nonaccount-backed null/null stays null/null; payload reference availability is separately proven, never coerced.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "effective_mode_overlay",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/effective_mode_overlay",
+      "original_rule": "Complete actual requested/effective mode/overlay/strategy and original deterministic reason/policy; preserve required-present nullable strategy and exact vocabulary. Does not mint certifier actor or causal context.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "effective_model",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/effective_model",
+      "original_rule": "Complete original request/output, exact canonical platform/model mapping and full historical policy/capability/fallback provenance. models_resolution_ref resolves whole genuine source; no display/prefix inference.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "effective_persona",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/effective_persona",
+      "original_rule": "Canonical lower-kebab requested/effective Persona and actual immutable override/fallback evidence; Persona is neither actor_ref nor execution_role.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "effective_platform",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/effective_platform",
+      "original_rule": "Complete original request/output, exact canonical platform/model mapping and full historical policy/capability/fallback provenance. models_resolution_ref resolves whole genuine source; no display/prefix inference.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "effective_provider_identity",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/effective_provider_identity",
+      "original_rule": "Whole original subject class, stable nullable IDs, binding/policy, provider identity, genuine selection/switch and nonsecret auth evidence. Nonaccount-backed null/null stays null/null; payload reference availability is separately proven, never coerced.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "models_resolution_ref",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/models_resolution_ref",
+      "original_rule": "Complete original request/output, exact canonical platform/model mapping and full historical policy/capability/fallback provenance. models_resolution_ref resolves whole genuine source; no display/prefix inference.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "multi_account_resolution_ref",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/multi_account_resolution_ref",
+      "original_rule": "Whole original subject class, stable nullable IDs, binding/policy, provider identity, genuine selection/switch and nonsecret auth evidence. Nonaccount-backed null/null stays null/null; payload reference availability is separately proven, never coerced.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "persona_resolution_ref",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/persona_resolution_ref",
+      "original_rule": "Canonical lower-kebab requested/effective Persona and actual immutable override/fallback evidence; Persona is neither actor_ref nor execution_role.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "project_id",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/project_id",
+      "original_rule": "Bind actual runtime scope to original certification invocation and separately join its target GoalRun. Runtime run_id can denote actor execution, not automatically the target Workflow run; preserve real null thread.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "requested_account_binding",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/requested_account_binding",
+      "original_rule": "Whole original subject class, stable nullable IDs, binding/policy, provider identity, genuine selection/switch and nonsecret auth evidence. Nonaccount-backed null/null stays null/null; payload reference availability is separately proven, never coerced.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "requested_account_id",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/requested_account_id",
+      "original_rule": "Whole original subject class, stable nullable IDs, binding/policy, provider identity, genuine selection/switch and nonsecret auth evidence. Nonaccount-backed null/null stays null/null; payload reference availability is separately proven, never coerced.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "requested_account_policy",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/requested_account_policy",
+      "original_rule": "Whole original subject class, stable nullable IDs, binding/policy, provider identity, genuine selection/switch and nonsecret auth evidence. Nonaccount-backed null/null stays null/null; payload reference availability is separately proven, never coerced.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "requested_mode_overlay",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/requested_mode_overlay",
+      "original_rule": "Complete actual requested/effective mode/overlay/strategy and original deterministic reason/policy; preserve required-present nullable strategy and exact vocabulary. Does not mint certifier actor or causal context.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "requested_model",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/requested_model",
+      "original_rule": "Complete original request/output, exact canonical platform/model mapping and full historical policy/capability/fallback provenance. models_resolution_ref resolves whole genuine source; no display/prefix inference.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "requested_persona",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/requested_persona",
+      "original_rule": "Canonical lower-kebab requested/effective Persona and actual immutable override/fallback evidence; Persona is neither actor_ref nor execution_role.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "requested_platform",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/requested_platform",
+      "original_rule": "Complete original request/output, exact canonical platform/model mapping and full historical policy/capability/fallback provenance. models_resolution_ref resolves whole genuine source; no display/prefix inference.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "requested_runtime_mode",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/requested_runtime_mode",
+      "original_rule": "Complete actual requested/effective mode/overlay/strategy and original deterministic reason/policy; preserve required-present nullable strategy and exact vocabulary. Does not mint certifier actor or causal context.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "requested_strategy",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/requested_strategy",
+      "original_rule": "Complete actual requested/effective mode/overlay/strategy and original deterministic reason/policy; preserve required-present nullable strategy and exact vocabulary. Does not mint certifier actor or causal context.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "run_id",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/run_id",
+      "original_rule": "Bind actual runtime scope to original certification invocation and separately join its target GoalRun. Runtime run_id can denote actor execution, not automatically the target Workflow run; preserve real null thread.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "run_modes_resolution_ref",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/run_modes_resolution_ref",
+      "original_rule": "Complete actual requested/effective mode/overlay/strategy and original deterministic reason/policy; preserve required-present nullable strategy and exact vocabulary. Does not mint certifier actor or causal context.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "runtime_mode",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/runtime_mode",
+      "original_rule": "Complete actual requested/effective mode/overlay/strategy and original deterministic reason/policy; preserve required-present nullable strategy and exact vocabulary. Does not mint certifier actor or causal context.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "schema_id",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/schema_id",
+      "original_rule": "Complete original snapshot identity, full-record canonical hash/key/ref and actual issuance chronology; never newly create a runtime to backfill the certifier source.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "schema_version",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/schema_version",
+      "original_rule": "Complete original snapshot identity, full-record canonical hash/key/ref and actual issuance chronology; never newly create a runtime to backfill the certifier source.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "snapshot_id",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/snapshot_id",
+      "original_rule": "Complete original snapshot identity, full-record canonical hash/key/ref and actual issuance chronology; never newly create a runtime to backfill the certifier source.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "snapshot_ref",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/snapshot_ref",
+      "original_rule": "Complete original snapshot identity, full-record canonical hash/key/ref and actual issuance chronology; never newly create a runtime to backfill the certifier source.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "snapshot_sha256",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/snapshot_sha256",
+      "original_rule": "Complete original snapshot identity, full-record canonical hash/key/ref and actual issuance chronology; never newly create a runtime to backfill the certifier source.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "strategy",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/strategy",
+      "original_rule": "Complete actual requested/effective mode/overlay/strategy and original deterministic reason/policy; preserve required-present nullable strategy and exact vocabulary. Does not mint certifier actor or causal context.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "strategy_resolution_reason",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/strategy_resolution_reason",
+      "original_rule": "Complete actual requested/effective mode/overlay/strategy and original deterministic reason/policy; preserve required-present nullable strategy and exact vocabulary. Does not mint certifier actor or causal context.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    },
+    {
+      "layer": "whole_runtime",
+      "field": "thread_id",
+      "original_whole_schema_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/current/Plans/requested_effective_runtime.schema.json",
+      "original_whole_schema_sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "original_schema_pointer": "/properties/thread_id",
+      "original_rule": "Bind actual runtime scope to original certification invocation and separately join its target GoalRun. Runtime run_id can denote actor execution, not automatically the target Workflow run; preserve real null thread.",
+      "new_complete_source_location": "Full invocation/resolver/reference/causal producer source plus separate complete native original source/result/candidate, Standard durable read and CurrentGoalArgument; P8/P9 perform all original equalities, never extracted replacement values."
+    }
+  ]
+}

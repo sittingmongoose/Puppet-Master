@@ -1,0 +1,42 @@
+[
+  {
+    "role": "coordinator",
+    "path": "external-source-evidence:sha256:19822a42be34079b5b0816613d646e54bf04cff72e5b22e661a5847fc7b716cf",
+    "sha256": "19822a42be34079b5b0816613d646e54bf04cff72e5b22e661a5847fc7b716cf",
+    "bytes": 15385,
+    "review": "ACCEPTED_BOUNDED_CORRECTED_COORDINATOR_SOURCE_NOT_INSTALLED"
+  },
+  {
+    "role": "owner_map",
+    "path": "external-source-evidence:sha256:9c386de8c14b1764666bec20c1852a4d97b3909d8d7c46c4550bef7b7092cd34",
+    "sha256": "9c386de8c14b1764666bec20c1852a4d97b3909d8d7c46c4550bef7b7092cd34",
+    "bytes": 963
+  },
+  {
+    "role": "bounded_coordinator_source_review",
+    "path": "external-source-evidence:sha256:9967108077aa65546f7a72a474bbd054a6b092ef6dc479ebabd45e97a889049f",
+    "sha256": "9967108077aa65546f7a72a474bbd054a6b092ef6dc479ebabd45e97a889049f",
+    "bytes": 875,
+    "review_scope": "Original coordinator phase/source contract before narrow header integrity correction; immutable historical review, not acceptance of a new consumer repin."
+  },
+  {
+    "role": "bounded_coordinator_source_review",
+    "path": "external-source-evidence:sha256:009388bc485de118f10dbffae1b6853ea79416ba90964ab4697797ead9d866d7",
+    "sha256": "009388bc485de118f10dbffae1b6853ea79416ba90964ab4697797ead9d866d7",
+    "bytes": 1507,
+    "review_scope": "Original coordinator phase/source contract before narrow header integrity correction; immutable historical review, not acceptance of a new consumer repin."
+  },
+  {
+    "role": "native_header_correction",
+    "path": "external-source-evidence:sha256:dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe",
+    "sha256": "dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe",
+    "bytes": 36425,
+    "status": "ACCEPTED_BOUNDED_HEADER_V3_SOURCE_NOT_INSTALLED"
+  },
+  {
+    "role": "bounded_header_delta_review",
+    "path": "external-source-evidence:sha256:214aea65be73b362d49cd3a7e75adadc875de032db37fd19b2bd795ab76c4ec4",
+    "sha256": "214aea65be73b362d49cd3a7e75adadc875de032db37fd19b2bd795ab76c4ec4",
+    "status": "ACCEPTED_BOUNDED_SOURCE_ONLY"
+  }
+]

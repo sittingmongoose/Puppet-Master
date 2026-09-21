@@ -1,0 +1,833 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json",
+  "title": "Puppet Master original certified original sources source contract",
+  "description": "Newly authored whole private owner source contract. Native NOT_RUN; no Event coordinator/registry/consumer admission. Full prior sources and prospective candidates remain separate.",
+  "oneOf": [
+    {
+      "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalValue"
+    },
+    {
+      "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/CurrentObservation"
+    },
+    {
+      "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/RetainedRequest"
+    },
+    {
+      "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/RetainedResult"
+    }
+  ],
+  "$defs": {
+    "Target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "goal_id",
+        "goal_run_id",
+        "workgraph_id",
+        "workgraph_revision",
+        "workgraph_sha256"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "workgraph_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "ExecutionContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "thread_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "operation_id",
+        "execution_host_ref",
+        "execution_environment_ref"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "run_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "node_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "execution_host_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "execution_environment_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "SourceScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "run_id",
+        "node_id",
+        "attempt_id"
+      ],
+      "properties": {
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "thread_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "run_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "node_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            },
+            "required": [
+              "scope_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "project"
+              }
+            },
+            "required": [
+              "scope_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SourceIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_ref",
+        "owner_epoch",
+        "owner_method",
+        "original_operation_id",
+        "original_transaction_id",
+        "source_ref",
+        "source_revision",
+        "issued_at_utc",
+        "source_codec",
+        "source_sha256"
+      ],
+      "properties": {
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "owner_method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_codec": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "WholeBytes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bytes_base64",
+        "byte_count",
+        "sha256"
+      ],
+      "properties": {
+        "bytes_base64": {
+          "type": "string",
+          "contentEncoding": "base64"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "WholeSchemaResource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "literal_uri",
+        "whole_schema",
+        "original_definition_pointer",
+        "installed_source_role"
+      ],
+      "properties": {
+        "literal_uri": {
+          "type": "string",
+          "minLength": 1
+        },
+        "whole_schema": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/WholeBytes"
+        },
+        "original_definition_pointer": {
+          "type": "string"
+        },
+        "installed_source_role": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "OriginalStructuredValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_kind",
+        "identity",
+        "scope",
+        "schema_resource",
+        "complete_value"
+      ],
+      "properties": {
+        "source_kind": {
+          "const": "structured_original"
+        },
+        "identity": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/SourceIdentity"
+        },
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/SourceScope"
+        },
+        "schema_resource": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/WholeSchemaResource"
+        },
+        "complete_value": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/WholeBytes"
+        }
+      }
+    },
+    "OriginalArtifactValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_kind",
+        "identity",
+        "scope",
+        "media_type",
+        "original_artifact_role",
+        "complete_value"
+      ],
+      "properties": {
+        "source_kind": {
+          "const": "original_byte_artifact"
+        },
+        "identity": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/SourceIdentity"
+        },
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/SourceScope"
+        },
+        "media_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_artifact_role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "complete_value": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/WholeBytes"
+        }
+      }
+    },
+    "OriginalValue": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalArtifactValue"
+        }
+      ]
+    },
+    "OwnerBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_ref",
+        "owner_epoch",
+        "registered_owner_role",
+        "original_issuer_method",
+        "reader_method",
+        "installed_profile_ref",
+        "installed_profile_sha256",
+        "original_registration"
+      ],
+      "properties": {
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "registered_owner_role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_issuer_method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reader_method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "installed_profile_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "installed_profile_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_registration": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        }
+      }
+    },
+    "Actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actor_ref",
+        "principal_kind",
+        "principal_ref",
+        "execution_role",
+        "actor_original",
+        "actor_reference_original"
+      ],
+      "properties": {
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "principal_kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "principal_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "execution_role": {
+          "enum": [
+            "user",
+            "worker",
+            "planner",
+            "evaluator",
+            "reducer",
+            "verifier",
+            "adjudicator",
+            "runtime_controller"
+          ]
+        },
+        "actor_original": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "actor_reference_original": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        }
+      }
+    },
+    "CurrentObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "execution_context",
+        "actual_owner_binding",
+        "current_assignment_source",
+        "current_permission_decision",
+        "current_policy_sources",
+        "current_stop_source",
+        "current_cancel_source",
+        "current_writer_generation_source",
+        "current_source_inventory",
+        "current_hold_deletion_sources",
+        "observation_identity",
+        "observed_at_utc"
+      ],
+      "properties": {
+        "target": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Target"
+        },
+        "execution_context": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/ExecutionContext"
+        },
+        "actual_owner_binding": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OwnerBinding"
+        },
+        "current_assignment_source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "current_permission_decision": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "current_policy_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalValue"
+          },
+          "minItems": 1
+        },
+        "current_stop_source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "current_cancel_source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "current_writer_generation_source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "current_source_inventory": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "current_hold_deletion_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+          },
+          "minItems": 1
+        },
+        "observation_identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Unavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outcome",
+        "reason",
+        "operation_id",
+        "target",
+        "original_effects_preserved",
+        "evidence_sources",
+        "action_authority"
+      ],
+      "properties": {
+        "outcome": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "enum": [
+            "original_source_missing",
+            "original_source_unavailable",
+            "wrong_original_owner",
+            "wrong_target_or_scope",
+            "original_schema_or_codec_unavailable",
+            "source_bytes_mismatch",
+            "source_revision_changed",
+            "current_permission_refused",
+            "effective_stop_or_cancel",
+            "owner_or_writer_generation_changed",
+            "source_disposed_or_held",
+            "incomplete_original_graph",
+            "unsupported_original_role",
+            "account_reference_unrepresentable",
+            "causal_source_unavailable",
+            "profile_not_installed",
+            "v3_identity_route_unbound",
+            "original_outcome_unknown"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Target"
+        },
+        "original_effects_preserved": {
+          "const": true
+        },
+        "evidence_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalValue"
+          },
+          "minItems": 0
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "DisclosureObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "actual_owner_binding",
+        "current_disclosure_permission",
+        "current_retained_origin_inventory",
+        "current_hold_deletion_sources",
+        "disclosure_operation_id",
+        "observed_at_utc"
+      ],
+      "properties": {
+        "target": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Target"
+        },
+        "actual_owner_binding": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OwnerBinding"
+        },
+        "current_disclosure_permission": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "current_retained_origin_inventory": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "current_hold_deletion_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+          },
+          "minItems": 1
+        },
+        "disclosure_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "RetainedRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_operation_id",
+        "target",
+        "requested_original_sources",
+        "actual_current_disclosure"
+      ],
+      "properties": {
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Target"
+        },
+        "requested_original_sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "actual_current_disclosure": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/DisclosureObservation"
+        }
+      }
+    },
+    "RetainedMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outcome",
+        "original_operation_id",
+        "target",
+        "original_sources",
+        "original_actor_ref",
+        "original_correlation_id",
+        "original_result_ref",
+        "original_result_sha256",
+        "actual_retained_origin",
+        "action_authority"
+      ],
+      "properties": {
+        "outcome": {
+          "const": "retained_metadata"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Target"
+        },
+        "original_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/SourceIdentity"
+          },
+          "minItems": 1
+        },
+        "original_actor_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_correlation_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_result_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_result_sha256": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actual_retained_origin": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "RetainedResult": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/RetainedMetadata"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Unavailable"
+        }
+      ]
+    }
+  }
+}

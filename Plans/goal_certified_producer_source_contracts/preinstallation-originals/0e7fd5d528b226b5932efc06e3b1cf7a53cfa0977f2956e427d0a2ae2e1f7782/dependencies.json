@@ -1,0 +1,20 @@
+[
+  {
+    "role": "pending_native_source",
+    "manifest_path": "/home/sittingmongoose/PM-Experiments/goal-certified-canonical-draft-20260920/v2/manifest.json",
+    "sha256": "741faa4e0122c0ba63fc39b8676ded82a9eda4d8515cf658e2974eda0bd52b63",
+    "status": "pending dependency; not installed"
+  },
+  {
+    "role": "current_source_plan",
+    "manifest_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/v1/manifest.json",
+    "sha256": "f4963fed8640f2b3cfa27b8d882d9eb3f4a0466f322309304af2893913f19c47",
+    "status": "authenticated source lineage"
+  },
+  {
+    "role": "citation_erratum",
+    "manifest_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-current-plan-20260920/erratum-001/manifest.json",
+    "sha256": "c3836b9f0db0f3fed4415b043d4312331993290a1ae4936c2f64299a2564f71a",
+    "status": "authenticated source lineage"
+  }
+]

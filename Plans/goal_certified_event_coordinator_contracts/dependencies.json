@@ -1,0 +1,20 @@
+[
+  {
+    "role": "producer",
+    "path": "external-source-evidence:sha256:909076c30ddf146bc254dca904021009a9cb36f3aee0e60718a61275c16492d7",
+    "sha256": "909076c30ddf146bc254dca904021009a9cb36f3aee0e60718a61275c16492d7",
+    "status": "frozen independent review pending; immutable"
+  },
+  {
+    "role": "native",
+    "path": "external-source-evidence:sha256:741faa4e0122c0ba63fc39b8676ded82a9eda4d8515cf658e2974eda0bd52b63",
+    "sha256": "741faa4e0122c0ba63fc39b8676ded82a9eda4d8515cf658e2974eda0bd52b63",
+    "status": "pending canonical source; native NOT_RUN"
+  },
+  {
+    "role": "current_source_plan",
+    "path": "external-source-evidence:sha256:f4963fed8640f2b3cfa27b8d882d9eb3f4a0466f322309304af2893913f19c47",
+    "sha256": "f4963fed8640f2b3cfa27b8d882d9eb3f4a0466f322309304af2893913f19c47",
+    "status": "lineage only"
+  }
+]

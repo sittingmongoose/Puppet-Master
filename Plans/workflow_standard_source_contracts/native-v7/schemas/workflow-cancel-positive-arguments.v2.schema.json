@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v2.schema.json",
+  "$comment": "Private full original or fresh current arguments only, with separate full Goal argument. Not persistent snapshots, caller selectors or native capabilities.",
+  "$defs": {
+    "ControlPlaneAdmission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "phase",
+        "original_domain_birth",
+        "registered_terminal_writer",
+        "original_terminal_boundary"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "phase": {
+          "enum": [
+            "prepare",
+            "publish",
+            "recover_original"
+          ]
+        },
+        "original_domain_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/DomainBirth"
+        },
+        "registered_terminal_writer": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WriterRegistration"
+        },
+        "original_terminal_boundary": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary"
+        }
+      }
+    },
+    "OriginalAdmission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "d06",
+        "current_start",
+        "control_plane"
+      ],
+      "properties": {
+        "d06": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json#/$defs/AdmittedInput"
+        },
+        "current_start": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v2.schema.json#/$defs/CurrentStartArgument"
+        },
+        "control_plane": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v2.schema.json#/$defs/ControlPlaneAdmission"
+        }
+      }
+    },
+    "OriginalPublication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "d06",
+        "current_start",
+        "control_plane"
+      ],
+      "properties": {
+        "d06": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json#/$defs/PreparedMutation"
+        },
+        "current_start": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v2.schema.json#/$defs/CurrentStartArgument"
+        },
+        "control_plane": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v2.schema.json#/$defs/ControlPlaneAdmission"
+        }
+      }
+    },
+    "CurrentRead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "d06_current",
+        "whole_safe_stop",
+        "current_start"
+      ],
+      "properties": {
+        "d06_current": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json#/$defs/CurrentSource"
+        },
+        "whole_safe_stop": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/SuccessfulReadback"
+        },
+        "current_start": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v2.schema.json#/$defs/CurrentStartArgument"
+        }
+      }
+    },
+    "CurrentSuccessfulReadback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "d06_readback",
+        "current_start"
+      ],
+      "properties": {
+        "d06_readback": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json#/$defs/SuccessfulReadback"
+        },
+        "current_start": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v2.schema.json#/$defs/CurrentStartArgument"
+        }
+      }
+    },
+    "D01CoissuedPublication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_d06",
+        "d01_transition"
+      ],
+      "properties": {
+        "original_d06": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v2.schema.json#/$defs/OriginalPublication"
+        },
+        "d01_transition": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowTransitionInput"
+        }
+      }
+    }
+  }
+}

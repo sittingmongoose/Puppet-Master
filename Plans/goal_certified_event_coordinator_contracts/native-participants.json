@@ -1,0 +1,109 @@
+{
+  "status": "NEW_COMPLETE_NATIVE_INTERFACE_CONTRACT_UNINSTALLED_NOT_RUN",
+  "participants": [
+    {
+      "role": "Workflow Standard",
+      "actual_owner": "actual original Workflow certification source/final decision/native publisher",
+      "original_entry": "owner.workflow.standard.publish_certified_joint.v1",
+      "additional_predicates": "F1-F3,F6,F7",
+      "capability": "Nonserializable native service/root/current-transaction/source-operation handle authenticated by fixed actual installation, never a JSON token",
+      "complete_arguments": "Exact complete original declaration occurrence and typed guard/source supplements in participant-method-tuples.json; complete source acquisition GuardStoreSource through owner.storage.certified_event.read_guard.v1 and Q1-Q4; every own original entry/final predicate remains required",
+      "final": "Independent pure full-input/full-output guard after all helpers under native held fence, then immediate own commit/disclosure"
+    },
+    {
+      "role": "D01",
+      "actual_owner": "actual original Workflow source native writer and all lineage readers",
+      "original_entry": "owner.executor.workflow_source.update_workflow.v3",
+      "additional_predicates": "F0,F4,F6,F7",
+      "capability": "Nonserializable native service/root/current-transaction/source-operation handle authenticated by fixed actual installation, never a JSON token",
+      "complete_arguments": "Exact complete original declaration occurrence and typed guard/source supplements in participant-method-tuples.json; complete source acquisition GuardStoreSource through owner.storage.certified_event.read_guard.v1 and Q1-Q4; every own original entry/final predicate remains required",
+      "final": "Independent pure full-input/full-output guard after all helpers under native held fence, then immediate own commit/disclosure"
+    },
+    {
+      "role": "Goal",
+      "actual_owner": "actual complete Goal source/currentness/reservation/Stop owner",
+      "original_entry": "whole inherited CurrentGoalArgument method graph",
+      "additional_predicates": "F1,F2,F7,F8",
+      "capability": "Nonserializable native service/root/current-transaction/source-operation handle authenticated by fixed actual installation, never a JSON token",
+      "complete_arguments": "Exact complete original declaration occurrence and typed guard/source supplements in participant-method-tuples.json; complete source acquisition GuardStoreSource through owner.storage.certified_event.read_guard.v1 and Q1-Q4; every own original entry/final predicate remains required",
+      "final": "Independent pure full-input/full-output guard after all helpers under native held fence, then immediate own commit/disclosure"
+    },
+    {
+      "role": "Standard Storage",
+      "actual_owner": "actual original durable receipt and capture-origin owner",
+      "original_entry": "owner.storage.workflow_standard.read_current.v1",
+      "additional_predicates": "F1,F2,F7",
+      "capability": "Nonserializable native service/root/current-transaction/source-operation handle authenticated by fixed actual installation, never a JSON token",
+      "complete_arguments": "Exact complete original declaration occurrence and typed guard/source supplements in participant-method-tuples.json; complete source acquisition GuardStoreSource through owner.storage.certified_event.read_guard.v1 and Q1-Q4; every own original entry/final predicate remains required",
+      "final": "Independent pure full-input/full-output guard after all helpers under native held fence, then immediate own commit/disclosure"
+    },
+    {
+      "role": "Producer",
+      "actual_owner": "actual original assignment/invocation/resolver/reference/causality/identity source owners",
+      "original_entry": "entire producer methods.json",
+      "additional_predicates": "F1-F3,I1",
+      "capability": "Nonserializable native service/root/current-transaction/source-operation handle authenticated by fixed actual installation, never a JSON token",
+      "complete_arguments": "Exact complete original declaration occurrence and typed guard/source supplements in participant-method-tuples.json; complete source acquisition GuardStoreSource through owner.storage.certified_event.read_guard.v1 and Q1-Q4; every own original entry/final predicate remains required",
+      "final": "Independent pure full-input/full-output guard after all helpers under native held fence, then immediate own commit/disclosure"
+    },
+    {
+      "role": "Event append",
+      "actual_owner": "actual app-global append/dedupe writer and seglog/manifest barrier owners",
+      "original_entry": "whole inherited EventRecord and append contracts",
+      "additional_predicates": "F0,F4,F5",
+      "capability": "Nonserializable native service/root/current-transaction/source-operation handle authenticated by fixed actual installation, never a JSON token",
+      "complete_arguments": "Exact complete original declaration occurrence and typed guard/source supplements in participant-method-tuples.json; complete source acquisition GuardStoreSource through owner.storage.certified_event.read_guard.v1 and Q1-Q4; every own original entry/final predicate remains required",
+      "final": "Independent pure full-input/full-output guard after all helpers under native held fence, then immediate own commit/disclosure"
+    },
+    {
+      "role": "First custody",
+      "actual_owner": "actual complete group membership and immutable first-append custody owner",
+      "original_entry": "whole original event_append_receipt_contracts.schema.json",
+      "additional_predicates": "F0,F5",
+      "capability": "Nonserializable native service/root/current-transaction/source-operation handle authenticated by fixed actual installation, never a JSON token",
+      "complete_arguments": "Exact complete original declaration occurrence and typed guard/source supplements in participant-method-tuples.json; complete source acquisition GuardStoreSource through owner.storage.certified_event.read_guard.v1 and Q1-Q4; every own original entry/final predicate remains required",
+      "final": "Independent pure full-input/full-output guard after all helpers under native held fence, then immediate own commit/disclosure"
+    },
+    {
+      "role": "Current frame",
+      "actual_owner": "actual complete Storage CURRENT/manifest/segment/index/token readers",
+      "original_entry": "whole NativeCurrentEventSource graph",
+      "additional_predicates": "F0,F5,F7",
+      "capability": "Nonserializable native service/root/current-transaction/source-operation handle authenticated by fixed actual installation, never a JSON token",
+      "complete_arguments": "Exact complete original declaration occurrence and typed guard/source supplements in participant-method-tuples.json; complete source acquisition GuardStoreSource through owner.storage.certified_event.read_guard.v1 and Q1-Q4; every own original entry/final predicate remains required",
+      "final": "Independent pure full-input/full-output guard after all helpers under native held fence, then immediate own commit/disclosure"
+    },
+    {
+      "role": "Observers",
+      "actual_owner": "all native current readers and writer admissions for this Workflow and certified Event",
+      "original_entry": "owner.workflow.certified_event.read_current.v1 plus every inherited current method",
+      "additional_predicates": "F0,F2,F7,F8",
+      "capability": "Nonserializable native service/root/current-transaction/source-operation handle authenticated by fixed actual installation, never a JSON token",
+      "complete_arguments": "Exact complete original declaration occurrence and typed guard/source supplements in participant-method-tuples.json; complete source acquisition GuardStoreSource through owner.storage.certified_event.read_guard.v1 and Q1-Q4; every own original entry/final predicate remains required",
+      "final": "Independent pure full-input/full-output guard after all helpers under native held fence, then immediate own commit/disclosure"
+    },
+    {
+      "role": "Birth",
+      "actual_owner": "actual original fresh Workflow birth issuer",
+      "original_entry": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+      "additional_predicates": "B1",
+      "capability": "Nonserializable native service/root/current-transaction/source-operation handle authenticated by fixed actual installation, never a JSON token",
+      "complete_arguments": "Exact complete original declaration occurrence and typed guard/source supplements in participant-method-tuples.json; complete source acquisition GuardStoreSource through owner.storage.certified_event.read_guard.v1 and Q1-Q4; every own original entry/final predicate remains required",
+      "final": "Independent pure full-input/full-output guard after all helpers under native held fence, then immediate own commit/disclosure"
+    }
+  ],
+  "held_fence_contract": {
+    "acquire_order": [
+      "app-storage-root and append writer",
+      "Goal and Workflow operation admission/current Stop/permission",
+      "D01 native writer transaction participant",
+      "original producer and Standard source reservations",
+      "current source selection and observer admission"
+    ],
+    "all_native_queues": "Seal/drain actual conflicting participants in this order; detect alias/root identity; refusal rather than partial acquisition success. Capability/queue exclusion implementation NOT_RUN.",
+    "ownership": "Actual same redb instance and write transaction required for native+D01+compact commit. Seglog and first custody remain prior distinct durability phases.",
+    "observer_gate": "Every enrolled native/current observer or ordinary writer checks exact original Control/Release before treating certification complete. Lower raw Event source readers may only supply held original pending evidence, not completed certification.",
+    "after_final": "No returning helper/callback/await/logger or source refresh; native commit/disclosure instruction under retained fence is next.",
+    "failure": "Preserve every earlier actual effect; classify no_append only before any append attempt with complete authentic proof, otherwise pending_unknown unless full original release is proved."
+  }
+}

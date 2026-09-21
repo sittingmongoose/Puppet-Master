@@ -1,0 +1,86 @@
+{
+  "profile": "pm.goal_run_certified.producer_source.v1",
+  "status": "CANONICAL_SOURCE_CONTRACT_UNINSTALLED_NATIVE_NOT_RUN",
+  "base_commit": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+  "native_source_dependency_manifest_sha256": "dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe",
+  "members": [
+    {
+      "path": "protocol.md",
+      "sha256": "71e143d36bfb77cd9db6b6a2bc1fd24631af60006aa9336eb441106cfc313534",
+      "bytes": 27787
+    },
+    {
+      "path": "methods.json",
+      "sha256": "93507a913f1c68bb6ad5b388db9721292d53f63513b8e324e5d8b0f3cf673ff7",
+      "bytes": 33334
+    },
+    {
+      "path": "resource-realms.json",
+      "sha256": "a1f03a5322010e49dbfb8c83030d6859b1fa78c131ae9331d05eb9717bd004b0",
+      "bytes": 113672
+    },
+    {
+      "path": "native-participants.json",
+      "sha256": "d0bddd86f2ea4c91c7898c08d1110995f08e2dfd62084913d316b463dbc64748",
+      "bytes": 5805
+    },
+    {
+      "path": "physical-retention-install.json",
+      "sha256": "7384988a5eef52fc00bbc6d34a9c5fe0ae400954fca70c517db111329d4ea67d",
+      "bytes": 1955
+    },
+    {
+      "path": "commitment-domains.json",
+      "sha256": "3ceb8b8e3d2b2ae846cf4801526f966761a22fc0819baf3c334bb7e336bb1701",
+      "bytes": 2846
+    },
+    {
+      "path": "whole-field-bindings.json",
+      "sha256": "17289d7fd6a5a47c6a5e6f6f04845ae99e7b333f1c451502d9628fa8f072cc20",
+      "bytes": 70234
+    },
+    {
+      "path": "dependencies.json",
+      "sha256": "d401684e2b4311bc8c1c754be191948aa8a73b2c6ab2f934f80ac5e39feb740d",
+      "bytes": 1834
+    },
+    {
+      "path": "whole-inherited-contracts.json",
+      "sha256": "6e25d68e6f270985964381c693c85f19950200d146df2077da8b049872084cf2",
+      "bytes": 3761
+    },
+    {
+      "path": "schemas/assignment-invocation.v1.schema.json",
+      "sha256": "37d7482694855e6505b860358dbee074b69c51bba6662a172e24df2689ab37cd",
+      "bytes": 34675
+    },
+    {
+      "path": "schemas/original-sources.v1.schema.json",
+      "sha256": "6b19f24a3d923923a70084d5f1a16a2b3fc4af62fa211ef8e7f39a0c867187cf",
+      "bytes": 23104
+    },
+    {
+      "path": "schemas/producer-source.v1.schema.json",
+      "sha256": "6c552dbe5556163397ef40b9377831bda27d2455220f61f5d79214ebe1368284",
+      "bytes": 11623
+    },
+    {
+      "path": "schemas/producer-submission.v1.schema.json",
+      "sha256": "24300fe310faeec412a362a39128d870f57a4b19ba82affce7f7c1a59daccc0e",
+      "bytes": 8725
+    },
+    {
+      "path": "schemas/resolver-references.v1.schema.json",
+      "sha256": "ecaf63c9c68140ee698e219c02cb953b0900bc5cd082e5f8a9c2c7498593b704",
+      "bytes": 35316
+    }
+  ],
+  "event_v3_identity_recipe": "UNBOUND_SEPARATE_DEPENDENCY",
+  "event_coordinator": false,
+  "event_registry": false,
+  "consumer": false,
+  "source_edition": "canonical_source_placement_with_reviewed_preinstallation_native_header_dependency",
+  "runtime_installation": "UNINSTALLED_NATIVE_V6_HEADER_CORRECTED_NO_OLD_BIRTH_CAST",
+  "frozen_source_profile_digest": "769c456b93c4d633ae5a4947c8229ebd008a12c1fe2531a1012b37722fa46231",
+  "original_native_source_manifest_sha256": "741faa4e0122c0ba63fc39b8676ded82a9eda4d8515cf658e2974eda0bd52b63"
+}

@@ -1,0 +1,113 @@
+{
+  "codec": {
+    "name": "pm.workflow.standard_argument_json.v2",
+    "value_domain": "null,bool,arbitrary-precision integer,valid Unicode string,array,string-keyed map; reject float including integral float/-0, NaN/infinity, duplicate keys, surrogates, malformed/unencodable values; retain original schema limits",
+    "bytes": "UTF-8 without BOM/normalization; keys sorted by UTF-8 bytes; arrays retain order; shortest exact decimal integers; JSON punctuation without whitespace; quote/backslash and C0 escaping exactly CV-340 source JSON rules; no domain prefix and no trailing LF",
+    "digest": "lowercase SHA-256 of complete validated root bytes",
+    "original_source_codecs": "CV-340 receipt semantics, native OriginalInputCapture original_payload_codec, original evidence bytes, Goal body codecs, Event JCS/full-value MessagePack and SP-278 binding MessagePack remain separate and unchanged"
+  },
+  "native_source_argument_roots": [
+    {
+      "method": "owner.workflow.standard.publish_execution.v1",
+      "field": "original_source_argument_sha256",
+      "realm": "native",
+      "root": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalExecutionSource",
+      "argument_pointer": "/source",
+      "includes": "complete root, every original current value and original source field; source contains no proposed publication result/origin/candidate_lineage or prospective capture-origin",
+      "excludes_by_typed_root": "enclosing method argument and separate complete candidates; these remain mandatory independently validated final guard inputs"
+    },
+    {
+      "method": "owner.workflow.standard.publish_provisional_success.v1",
+      "field": "original_source_argument_sha256",
+      "realm": "native",
+      "root": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalProvisionalSource",
+      "argument_pointer": "/source",
+      "includes": "complete root, every original current value and original source field; source contains no proposed publication result/origin/candidate_lineage or prospective capture-origin",
+      "excludes_by_typed_root": "enclosing method argument and separate complete candidates; these remain mandatory independently validated final guard inputs"
+    },
+    {
+      "method": "owner.workflow.standard.issue_final_decision.v1",
+      "field": "original_source_argument_sha256",
+      "realm": "native",
+      "root": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalFinalDecisionSource",
+      "argument_pointer": "/source",
+      "includes": "complete root, every original current value and original source field; source contains no proposed publication result/origin/candidate_lineage or prospective capture-origin",
+      "excludes_by_typed_root": "enclosing method argument and separate complete candidates; these remain mandatory independently validated final guard inputs"
+    },
+    {
+      "method": "owner.workflow.standard.publish_certified_joint.v1",
+      "field": "original_source_argument_sha256",
+      "realm": "native",
+      "root": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalCertificationSource",
+      "argument_pointer": "/source",
+      "includes": "complete root, every original current value and original source field; source contains no proposed publication result/origin/candidate_lineage or prospective capture-origin",
+      "excludes_by_typed_root": "enclosing method argument and separate complete candidates; these remain mandatory independently validated final guard inputs"
+    },
+    {
+      "method": "owner.executor.workflow_standard.update_execution.v1",
+      "field": "original_source_argument_sha256",
+      "realm": "native",
+      "root": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalExecutionSource",
+      "argument_pointer": "/source",
+      "includes": "complete root, every original current value and original source field; source contains no proposed publication result/origin/candidate_lineage or prospective capture-origin",
+      "excludes_by_typed_root": "enclosing method argument and separate complete candidates; these remain mandatory independently validated final guard inputs"
+    },
+    {
+      "method": "owner.executor.workflow_standard.update_provisional.v1",
+      "field": "original_source_argument_sha256",
+      "realm": "native",
+      "root": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalProvisionalSource",
+      "argument_pointer": "/source",
+      "includes": "complete root, every original current value and original source field; source contains no proposed publication result/origin/candidate_lineage or prospective capture-origin",
+      "excludes_by_typed_root": "enclosing method argument and separate complete candidates; these remain mandatory independently validated final guard inputs"
+    },
+    {
+      "method": "owner.executor.workflow_standard.update_certified.v1",
+      "field": "original_source_argument_sha256",
+      "realm": "native",
+      "root": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalCertificationSource",
+      "argument_pointer": "/source",
+      "includes": "complete root, every original current value and original source field; source contains no proposed publication result/origin/candidate_lineage or prospective capture-origin",
+      "excludes_by_typed_root": "enclosing method argument and separate complete candidates; these remain mandatory independently validated final guard inputs"
+    },
+    {
+      "method": "storage.goal_receipt.capture_standard.v2",
+      "field": "original_source_argument_sha256",
+      "realm": "native",
+      "root": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalStandardCaptureNativeSource",
+      "argument_pointer": "/source",
+      "includes": "complete root, every original current value and original source field; source contains no proposed publication result/origin/candidate_lineage or prospective capture-origin",
+      "excludes_by_typed_root": "enclosing method argument and separate complete candidates; these remain mandatory independently validated final guard inputs"
+    }
+  ],
+  "goal_source_argument": {
+    "field": "original_goal_argument_sha256",
+    "realm": "goal",
+    "root": "complete separate CurrentGoalArgument",
+    "includes": "entire original current Goal argument; no candidate projection"
+  },
+  "standard_capture_source_argument": {
+    "field": "original_standard_argument_sha256",
+    "realm": "standard",
+    "root": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json#/$defs/OriginalStandardSource",
+    "argument_pointer": "/source",
+    "includes": "entire original_standard plus entire original_generic_component",
+    "excludes_by_typed_root": "prospective durable receipt/capture-origin; both fully validated independently"
+  },
+  "capture_payload": {
+    "field": "OriginalInputCapture.original_payload_sha256",
+    "preimage": "exact original_payload_bytes_base64 decoded bytes from authenticated actual source owner; verify actual original codec and full typed value independently before hashing; do not hash capture/capture-origin/enclosing argument or change old codec",
+    "source_root": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalInputSource"
+  },
+  "physical_hashes": "Each physical output/origin is hashed only after its complete record is independently derived. Origin selects result; D01 selects both; neither result/origin source commitment includes downstream D01 hashes. Current source may contain genuinely earlier issued origins but never the prospective output of this operation.",
+  "standard_semantic_hash": "Existing CV-340 complete original_certification and original Workflow receipt recipes remain exactly their own declared sources; capture origin itself is not a semantic-hash preimage.",
+  "first_attempt_admission_source": {
+    "method": "owner.executor.native.admit_first_attempt.v1",
+    "field": "AttemptStartAdmission.original_source_argument_sha256",
+    "root": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/FirstAttemptAdmissionSource",
+    "argument_pointer": "/source",
+    "codec": "pm.workflow.standard_argument_json.v2",
+    "includes": "entire genuine prebirth source, current source/queued dispatch/permission/runtime/budget/complete scheduler candidates and capacity sources/reserved scalar attempt identity; never own future birth/control/DispatchCurrent or output capture/origin",
+    "capture_payload": "The genuinely derived whole AttemptStartAdmission including source and original issuer operation/transaction/time is encoded under the actual original pm.executor.native_source_json.v1 codec; SHA-256 covers those exact decoded payload bytes. Candidate capture/origin and later AttemptBirth are excluded by root, not projected away from a larger root."
+  }
+}

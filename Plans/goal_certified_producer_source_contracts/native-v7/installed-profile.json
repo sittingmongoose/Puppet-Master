@@ -1,0 +1,134 @@
+{
+  "profile": "pm.goal_run_certified.producer_source.v2",
+  "status": "CANONICAL_COMPLETE_SOURCE_PROFILE_NOT_INSTALLED",
+  "changed_method": "owner.workflow.certified_producer_source.prepare.v2",
+  "members": [
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/methods.json",
+      "sha256": "bf82bcf31ba15a10ccb33cebecae6e89e217bdf706b6dc7bc007ce7acbf02877",
+      "bytes": 33513
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/protocol.md",
+      "sha256": "02434e35116950935b412a0b0b1b0c414e811d3259d4f69d756028a09fc0ab1d",
+      "bytes": 28898
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/whole-source-bindings.json",
+      "sha256": "b4491085b3cb24ade2241a965afc3fcb3aa300a025da23c4fc895cb8418f5464",
+      "bytes": 6069
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/assignment-invocation.v1.schema.json",
+      "sha256": "37d7482694855e6505b860358dbee074b69c51bba6662a172e24df2689ab37cd",
+      "bytes": 34675
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/original-sources.v1.schema.json",
+      "sha256": "6b19f24a3d923923a70084d5f1a16a2b3fc4af62fa211ef8e7f39a0c867187cf",
+      "bytes": 23104
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/producer-source.v1.schema.json",
+      "sha256": "6c552dbe5556163397ef40b9377831bda27d2455220f61f5d79214ebe1368284",
+      "bytes": 11623
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/producer-submission.v1.schema.json",
+      "sha256": "24300fe310faeec412a362a39128d870f57a4b19ba82affce7f7c1a59daccc0e",
+      "bytes": 8725
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/resolver-references.v1.schema.json",
+      "sha256": "ecaf63c9c68140ee698e219c02cb953b0900bc5cd082e5f8a9c2c7498593b704",
+      "bytes": 35316
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/native-participants.json",
+      "sha256": "d0bddd86f2ea4c91c7898c08d1110995f08e2dfd62084913d316b463dbc64748",
+      "bytes": 5805
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/physical-retention-install.json",
+      "sha256": "7384988a5eef52fc00bbc6d34a9c5fe0ae400954fca70c517db111329d4ea67d",
+      "bytes": 1955
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/commitment-domains.json",
+      "sha256": "3ceb8b8e3d2b2ae846cf4801526f966761a22fc0819baf3c334bb7e336bb1701",
+      "bytes": 2846
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/whole-field-bindings.json",
+      "sha256": "17289d7fd6a5a47c6a5e6f6f04845ae99e7b333f1c451502d9628fa8f072cc20",
+      "bytes": 70234
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/safestop-start-arguments.v2.schema.json",
+      "sha256": "5431b28e798b726aef7994ae46e51df164ed4c1719317f14bc2a07fda544f24a",
+      "bytes": 1968
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-positive-arguments.v2.schema.json",
+      "sha256": "ec8c346caffabb0bbb06285197e5ed04bfb44ffa8b6dfa02a038aef8a5b9bdd8",
+      "bytes": 4910
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-start-profile.v6.schema.json",
+      "sha256": "747100bb06ed4c718f4f38a0fee7133b1e45d10a3c04c5d8f25a3bfd7683386c",
+      "bytes": 38600
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-original-start.v6.schema.json",
+      "sha256": "8e82034b4874fa7397c3ea44d7785b290ed2253281731648846505516914d376",
+      "bytes": 79884
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-certification-argument.v4.schema.json",
+      "sha256": "830d20024033a6e1edc32c847363a523a44fe47acd2abcd84413f8a58f4131fa",
+      "bytes": 6672
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-current-source.v4.schema.json",
+      "sha256": "7bd88c4a7cc2b7f32af173d18c470d64e13e296170e358fcd39fe8e64b6bbbb0",
+      "bytes": 101666
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-event-prerequisite.v4.schema.json",
+      "sha256": "ab8350e1f7b60c2c8b37fcb3ddb29da43a003d5b032aef145a0b220ef47f6274",
+      "bytes": 6581
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-arguments.v6.schema.json",
+      "sha256": "3f9b2fc8d768d462db1b4ac950854e0d7f2fc13982e0bbc1422e5ecb81bdbd88",
+      "bytes": 4120
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-custody.v6.schema.json",
+      "sha256": "9209a5b923cb279c4176ccf3b648a8381c4afae541220cd397329558db5266d2",
+      "bytes": 44259
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/methods.json",
+      "sha256": "b701cbab89146fb5103e957d7173e55ced79f91c318524d4e627c2b823042bc0",
+      "bytes": 26208
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/fresh-profile-methods.json",
+      "sha256": "f23bee216c0871c7d5205c85bf2706eedc8c778a59fc84958199709dcf981cea",
+      "bytes": 181220
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
+      "sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054",
+      "bytes": 71464
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/resource-realms.json",
+      "sha256": "86498dd16e4966d2a7e6924746a1bab28cab533ca78e1bf4907b4ce39ab024a7",
+      "bytes": 314410
+    }
+  ],
+  "native_binding": "Exact leaf schemas/methods only here. Actual native capability must independently authenticate full all_writers.v7 descriptor at birth. No enclosing profile or manifest digest in this preimage.",
+  "native": "NOT_RUN"
+}

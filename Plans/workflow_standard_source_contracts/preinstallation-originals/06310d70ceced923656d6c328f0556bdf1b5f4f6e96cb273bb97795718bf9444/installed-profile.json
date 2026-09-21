@@ -1,0 +1,76 @@
+{
+  "status": "CANONICAL_SOURCE_CONTRACT_NATIVE_NOT_RUN",
+  "profile": "pm.executor.workflow_source.all_writers.v6",
+  "base_commit": "dd1df59d6307952d82a5c93be9ad4083a5bc0773",
+  "members": [
+    {
+      "path": "protocol.md",
+      "sha256": "df228389fe435056ea84b9038c525aa5a9661460b68bc4cf445cf42a2937b51c"
+    },
+    {
+      "path": "methods.json",
+      "sha256": "e835aa4fcfaa0b560751ac7b359899b42613745038b7b0aa6f9ce0660c1165a5"
+    },
+    {
+      "path": "fresh-profile-methods.json",
+      "sha256": "a5b19f77fa43d30e9949f986cf0fc6ce9c440538aa7234bf0c44ddd1657106ff"
+    },
+    {
+      "path": "native-field-map.json",
+      "sha256": "3dd640512f1472457a75fae3094e885d3165b66959500048851e5a040ec81cce"
+    },
+    {
+      "path": "physical-contracts.json",
+      "sha256": "5ffe1f62e0fcee9e56e09b780907853886a603984f49be8658b655b7203c3a8e"
+    },
+    {
+      "path": "identity-map.json",
+      "sha256": "eea25b4510983f2f31c16666144076992bd386f7dbecc0bc1da664bdd6ae45b5"
+    },
+    {
+      "path": "commitment-domains.json",
+      "sha256": "9a3abfdc1e85fd8db26071dd8f5a65fd5105ae2077c8e5bce3a808ead6104553"
+    },
+    {
+      "path": "first-attempt-stage-map.json",
+      "sha256": "3f75795716df0c1aea3691e4d8a7ebc487210fa46ac8958c6b39f12d6d9e144d"
+    },
+    {
+      "path": "literal-resource-realms.json",
+      "sha256": "85172c4c4883a4fd4da20059f62305f376a8c6e138778ebd0189d2ecd3567449"
+    },
+    {
+      "path": "schemas/goal-run-certified.v3.schema.json",
+      "sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895"
+    },
+    {
+      "path": "schemas/workflow-cancel-start-profile.v5.schema.json",
+      "sha256": "6cf8c0ae3342ad7d28670b85f81aa46d4847f815aeea7b09e7d2bc03c81d461d"
+    },
+    {
+      "path": "schemas/workflow-original-start.v5.schema.json",
+      "sha256": "1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358"
+    },
+    {
+      "path": "schemas/workflow-standard-certification-argument.v3.schema.json",
+      "sha256": "fcc25e198114eadc357c8696b750d2d5afb21e80d57bca8febe8a17580b91e4d"
+    },
+    {
+      "path": "schemas/workflow-standard-current-source.v3.schema.json",
+      "sha256": "c7a11a744312518b78cbd70f7f5ee6228004e213df1174f87afe8ac00164ff72"
+    },
+    {
+      "path": "schemas/workflow-standard-event-prerequisite.v3.schema.json",
+      "sha256": "91724e64f651821794bf0848d4579445f112d7b8b17fde6246085c767e546513"
+    },
+    {
+      "path": "schemas/workflow-start-arguments.v5.schema.json",
+      "sha256": "664bb18f0dfd46144120b78b05dcf217128dce4ae644534a86f40723631e90a2"
+    },
+    {
+      "path": "schemas/workflow-start-custody.v5.schema.json",
+      "sha256": "d40e0c82b8ba03dec7631d2d9bc80d51a82b1adff6a1f3e900b4dab1e13916b8"
+    }
+  ],
+  "native": "NOT_RUN"
+}

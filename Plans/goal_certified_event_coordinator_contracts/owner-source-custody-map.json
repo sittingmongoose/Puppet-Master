@@ -1,0 +1,176 @@
+{
+  "original_whole_resource_map": "Plans/executor_cancellation_schema_resources.json",
+  "sha256": "b8497da06f2937146f0ef8f44af74be177765bf82345a8d3f6e07ef481e938fb",
+  "copied_missing_whole_resources": [
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v2.schema.json",
+      "sha256": "f03fb4a96cc262274ce9d6413daf368fcaae93a7f8c797bb2990a1f69304d453",
+      "bytes": 45553,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v2.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v3.schema.json",
+      "sha256": "2b5107675393d694299efb0de9acbf2f19de169dfed2dcd53b0013328129fc54",
+      "bytes": 79478,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v3.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-disposition.v3.schema.json",
+      "sha256": "44bae9a5df18ca8e368b276c6e167645705dc63d6ec2f71c7aaa2f7e2c2aea9e",
+      "bytes": 39356,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-disposition.v3.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/filesafe-effect-sources.v2.schema.json",
+      "sha256": "cb4e863836060ba06c8c17c8a3c3cc791aae93409a0cdc339984278cbb128354",
+      "bytes": 39616,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/filesafe-effect-sources.v2.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point.v1.schema.json",
+      "sha256": "062e302fe0805f330c99c470df5c20cc247de7032cb424eecca2844b1b2f700e",
+      "bytes": 3002,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-safe-point.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point-restore-transaction.v1.schema.json",
+      "sha256": "b6d192c96c552880e7f5e8041c12888e2c3f016076c3aeaef7661c74dbca1e47",
+      "bytes": 5203,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-safe-point-restore-transaction.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/process-shutdown-sources.v1.schema.json",
+      "sha256": "e0dcd4d5e782cd6344a3039b922a61fddf560a2bd9ec76b7ca2fdcda648959e0",
+      "bytes": 98084,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/process-shutdown-sources.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-event-append-custody.v2.schema.json",
+      "sha256": "505bdb5d702546637b80dfddc1d7f32abe411665f88ca193ca5af105c6b69a31",
+      "bytes": 20165,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-event-append-custody.v2.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-mcp-lifecycle.v1.schema.json",
+      "sha256": "081d50dbaef96ce8c5e56b8bc743752943920b9727fdba03583592c6904dcef6",
+      "bytes": 5646,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-mcp-lifecycle.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-seglog-current.v1.schema.json",
+      "sha256": "f5b1f19aee3876e6c8fdc4ac8418c10941f13e7a56741f31056d2eb37bac9c7f",
+      "bytes": 922,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-seglog-current.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-seglog-manifest.v1.schema.json",
+      "sha256": "51b95bc7346c643a21a7f10791c2f78258dfad95d4e44777abba2ba238b02c49",
+      "bytes": 17685,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-seglog-manifest.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/filesafe-injective-key-sources.v1.schema.json",
+      "sha256": "8a42fa18bbe6ffb9d3a87f037b85c3fa380e0aae0269a0aa4aa9dd713f52eec0",
+      "bytes": 40008,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/filesafe-injective-key-sources.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/safestop-original-start.v1.schema.json",
+      "sha256": "a738fbb17ad658417a472a1d670205d2c401be236dd6865af5c5d5b4f797de18",
+      "bytes": 108702,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/safestop-original-start.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/safestop-start-arguments.v1.schema.json",
+      "sha256": "8d8b15144fdbf04adba95ab6992767fb0450b3f980a886fc0366f34fd3221637",
+      "bytes": 1968,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/safestop-start-arguments.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-positive-safestop.v1.schema.json",
+      "sha256": "46b7e64d3c2fbfafcc5d66ab28c3f12d91b6523bdf57a31ac53db5eb2c6a9d90",
+      "bytes": 38658,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-positive-safestop.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-positive-arguments.v1.schema.json",
+      "sha256": "8064368badc33286a0a871695b670c854e7bcde30090da5c3389c3ec174bda63",
+      "bytes": 4885,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-positive-arguments.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/safestop-current-goal-arguments.v1.schema.json",
+      "sha256": "3eaa8578efff917e8665efee8bd808a47d18c4e87704b11c75aafe45acafa39e",
+      "bytes": 2441,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/safestop-current-goal-arguments.v1.schema.json"
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/historical-plans-to-code-handoff.schema.json",
+      "sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "bytes": 125623,
+      "original_declared_path": "Plans/workflow_activation_contracts/schemas/historical-plans-to-code-handoff.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/bounded-safestop.v2.schema.json",
+      "sha256": "a500726cbf15548663c03f80a13353a9674f5677201e4018fc0a5b90cc54d338",
+      "bytes": 107719,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/bounded-safestop.v2.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/process-normalized-producer.v1.schema.json",
+      "sha256": "a1e9a055f48c4917adcbce9fe9cf240363e429a5d0fd9dd3806eaaf0a7ecfd47",
+      "bytes": 9080,
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/process-normalized-producer.v1.schema.json"
+    }
+  ],
+  "raw_copy_bytes": 793794,
+  "preserved_cross_realm_byte_variants": [
+    {
+      "realm": "current_d05_source",
+      "retrieval_uri": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json",
+      "preserved_original": {
+        "path": "Plans/workflow_standard_source_contracts/inputs/Plans/source_control_contracts.schema.json",
+        "sha256": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a",
+        "retrieval_uri": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json",
+        "json_pointer": "",
+        "original_declared_path": "Plans/source_control_contracts.schema.json"
+      },
+      "separate_native_original": {
+        "path": "Plans/source_control_contracts.schema.json",
+        "sha256": "4070038bcaef4539d6d669f2a57618599487e73b2588d79e122fde2b41ed8518",
+        "retrieval_uri": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json",
+        "json_pointer": "",
+        "original_source_relative_path": "current/Plans/source_control_contracts.schema.json"
+      },
+      "parsed_whole_schema_equal": false,
+      "rule": "Keep every exact original byte/hash and real shape difference in its own bank. Native source is admitted only in native; full D05 source is separately admitted only in current_d05_source. Never validate D05 source using native current SourceControl or vice versa."
+    },
+    {
+      "realm": "current_d05_source",
+      "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/inputs/Plans/source_control_contracts.schema.json",
+      "preserved_original": {
+        "path": "Plans/workflow_standard_source_contracts/inputs/Plans/source_control_contracts.schema.json",
+        "sha256": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/inputs/Plans/source_control_contracts.schema.json",
+        "json_pointer": "",
+        "original_declared_path": "Plans/source_control_contracts.schema.json"
+      },
+      "separate_native_original": {
+        "path": "Plans/source_control_contracts.schema.json",
+        "sha256": "4070038bcaef4539d6d669f2a57618599487e73b2588d79e122fde2b41ed8518",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/inputs/Plans/source_control_contracts.schema.json",
+        "json_pointer": "",
+        "original_source_relative_path": "current/Plans/source_control_contracts.schema.json"
+      },
+      "parsed_whole_schema_equal": false,
+      "rule": "Keep every exact original byte/hash and real shape difference in its own bank. Native source is admitted only in native; full D05 source is separately admitted only in current_d05_source. Never validate D05 source using native current SourceControl or vice versa."
+    }
+  ],
+  "rule": "All source bytes verified against original pinned whole map; copied only missing whole files, no generated/extracted schemas or old URI rebinding.",
+  "original_resource_map_scope": {
+    "path": "Plans/goal_certified_original_scope_dispatch.json",
+    "sha256": "b3a95da247c8588a11fa4345ad41e05d9fb1deeee82b9d20bf9d228ca70c7787",
+    "source_scope_id": "original-scope:sha256:3bce9331be27f2e31ef4c0921db3caf813c9fe3915231e0a204d52fe1def1c44",
+    "source_member_path": "Plans/executor_cancellation_schema_resources.json"
+  }
+}

@@ -1,0 +1,28 @@
+[
+  {
+    "role": "pending_native_source",
+    "manifest_path": "external-source-manifest:sha256:dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe",
+    "sha256": "dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe",
+    "status": "whole current native v6 corrected before installation; accepted bounded header source, native NOT_RUN",
+    "canonical_contract_path": "Plans/workflow_standard_source_contracts/installation-composition.json",
+    "canonical_contract_sha256": "6af326f10973146433a549752241781d7274afbd384af2d347824090d13f9d04",
+    "conditional_commit": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+    "original_source_manifest_ref": "external-source-manifest:sha256:741faa4e0122c0ba63fc39b8676ded82a9eda4d8515cf658e2974eda0bd52b63",
+    "original_source_manifest_sha256": "741faa4e0122c0ba63fc39b8676ded82a9eda4d8515cf658e2974eda0bd52b63",
+    "header_correction_manifest_ref": "external-source-manifest:sha256:dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe",
+    "current_native_profile_value_digest": "3e2b3017bd048f0c5666c547b9ae1d8d9db1db256f865cb2993fac96a267620f",
+    "current_native_composition_value_digest": "2ad49eb83563126df8f33393efab017a06f49f603fe2c069d8e7787df97e317f"
+  },
+  {
+    "role": "current_source_plan",
+    "manifest_path": "external-source-manifest:sha256:f4963fed8640f2b3cfa27b8d882d9eb3f4a0466f322309304af2893913f19c47",
+    "sha256": "f4963fed8640f2b3cfa27b8d882d9eb3f4a0466f322309304af2893913f19c47",
+    "status": "authenticated source lineage"
+  },
+  {
+    "role": "citation_erratum",
+    "manifest_path": "external-source-manifest:sha256:c3836b9f0db0f3fed4415b043d4312331993290a1ae4936c2f64299a2564f71a",
+    "sha256": "c3836b9f0db0f3fed4415b043d4312331993290a1ae4936c2f64299a2564f71a",
+    "status": "authenticated source lineage"
+  }
+]

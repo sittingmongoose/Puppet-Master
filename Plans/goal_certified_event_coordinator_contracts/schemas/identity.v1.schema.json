@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/goal_certified_event_identity.v1.schema.json",
+  "$defs": {
+    "Recipe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recipe_id",
+        "schema_version",
+        "scope",
+        "event_type",
+        "payload_schema_id",
+        "replay_policy",
+        "tuple_fields",
+        "key_codec",
+        "event_id_codec"
+      ],
+      "properties": {
+        "recipe_id": {
+          "const": "pm.goal_run.certified.identity.v3"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "const": "project"
+        },
+        "event_type": {
+          "const": "goal_run.certified"
+        },
+        "payload_schema_id": {
+          "const": "pm.goal_runtime_event.goal_run_certified.schema.v3"
+        },
+        "replay_policy": {
+          "const": "dedupe_by_idempotency_key"
+        },
+        "tuple_fields": {
+          "const": [
+            "goal_run_id",
+            "certification_receipt_ref",
+            "final_certifier_decision",
+            "expected_goal_run_revision",
+            "goal_run_revision"
+          ]
+        },
+        "key_codec": {
+          "const": "length_prefixed_utf8_v1"
+        },
+        "event_id_codec": {
+          "const": "sha256_domain_scoped_key_v1"
+        }
+      }
+    },
+    "IdentityInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "recipe",
+        "original_storage_partition_owner",
+        "original_invocation_operation_id",
+        "certification_receipt_ref",
+        "final_certifier_decision",
+        "expected_goal_run_revision",
+        "goal_run_revision",
+        "installed_profile_sha256"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope"
+        },
+        "recipe": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_event_identity.v1.schema.json#/$defs/Recipe"
+        },
+        "original_storage_partition_owner": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner"
+        },
+        "original_invocation_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "certification_receipt_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "final_certifier_decision": {
+          "const": "certified"
+        },
+        "expected_goal_run_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "goal_run_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "installed_profile_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "IdentityResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input",
+        "event_id",
+        "idempotency_key",
+        "replay_policy",
+        "recipe_sha256",
+        "whole_input_sha256"
+      ],
+      "properties": {
+        "input": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_event_identity.v1.schema.json#/$defs/IdentityInput"
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "replay_policy": {
+          "const": "dedupe_by_idempotency_key"
+        },
+        "recipe_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "whole_input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "IdentityOutcome": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_event_identity.v1.schema.json#/$defs/IdentityResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/NoAppend"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "status": "SOURCE_ONLY_NO_EVENT_RECIPE_INSTALLATION",
+  "whole_bytes_sha256": "SHA-256 exact decoded full original bytes; byte_count is decoded count, base64 strictly canonical. Whole original schema bytes separately hashed and compared with actual installed original owner resource.",
+  "original_source_schema": "Full schema resource plus original complete-record definition selected by the actual owner registration; no caller-selected validator, extracted schema or field projection.",
+  "source_commitments": {
+    "producer_source_sha256": "SHA-256 canonical JSON of complete WholeProducerSource, excluding every prospective producer/result/candidate field because none belongs to this source type. Preserve exact original raw bytes in their lossless carriers.",
+    "whole_native_original_source_sha256": "Existing native original source canonical JSON codec over complete OriginalFinalDecisionSource.",
+    "whole_native_final_decision_sha256": "Same codec over complete genuinely issued FinalDecisionResult; never a prospective result.",
+    "whole_standard_durable_read_sha256": "Same explicit canonical source JSON over complete genuinely issued DurableStandardRead in its separate realm.",
+    "whole_current_goal_argument_sha256": "Same explicit canonical source JSON over complete original CurrentGoalArgument in Goal realm.",
+    "installed_source_profile_sha256": "Exact whole installed profile value digest, sorted-key compact UTF-8 JSON without prefix/trailing LF."
+  },
+  "event_candidate_sha256": "SHA-256 pm.goal.certified_producer_source_json.v1 over all 25 producer-owned outer candidate fields, including complete payload and all required-present nulls. This full-candidate digest is distinct from Contracts_V0 producer_semantic_digest, whose exact original narrower field domain remains unchanged.",
+  "numeric_rule": "Decode/validate integer and canonical codec domains losslessly, never IEEE754 truncation or inferred coercion. Preserve original spelling where its original raw-byte/time codec owns it.",
+  "acyclic_order": [
+    "Genuine original assignment and actual owner inputs",
+    "Genuine original resolution/causal context and invocation issuance",
+    "Genuine original final Workflow decision and separately durable Standard read",
+    "Complete current authentic source arguments",
+    "Complete independently derived prospective producer candidate",
+    "Read-only preparation result commitments"
+  ],
+  "event_identity_recipe": "UNBOUND for current native-clock certified v3 until separately owned genuine complete recipe/admission exists. Current old v2 registry and Start recipe are not reused. The complete IdentityAdmissionSource carries actual original request, recipe, complete derivation sources and original owner decision when genuinely installed; strings/hashes alone cannot satisfy it."
+}

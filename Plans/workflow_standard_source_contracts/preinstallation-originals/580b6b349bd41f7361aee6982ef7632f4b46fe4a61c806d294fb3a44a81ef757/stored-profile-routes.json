@@ -1,0 +1,1010 @@
+{
+  "profile": "pm.executor.workflow_source.all_writers.v6",
+  "routes": [
+    {
+      "family_id": "executor_workflow_workflow_birth",
+      "installed_native_profile": "pm.executor.workflow_source.all_writers.v6",
+      "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v7",
+      "schema_version": "7.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v5.schema.json#/$defs/StorageWorkflowBirth",
+      "whole_schema_path": "Plans/workflow_standard_source_contracts/schemas/workflow-original-start.v5.schema.json",
+      "whole_schema_sha256": "1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358",
+      "original_registry_row": {
+        "family_id": "executor_workflow_workflow_birth",
+        "storage_kind": "redb",
+        "status": "materialized",
+        "tier": "later_gui_or_feature_projection",
+        "key_shape": "executor_workflow_workflow_birth.v4:R",
+        "compatibility_key_shapes": [],
+        "value_schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+        "value_schema_ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowBirth",
+        "owner_doc": "Plans/storage-plan.md",
+        "producer": [
+          "owner.executor.workflow_source.enroll_workflow_birth.v3"
+        ],
+        "consumers": [
+          "owner.workflow.executor_cancel.read_current.v2",
+          "owner.executor.workflow_source.read_stop.v1",
+          "owner.executor.workflow_source.recover_pending.v1",
+          "Storage original coherent backup/restore and hold/deletion boundary; concrete family-scoped extension required before installation"
+        ],
+        "schema_version": "4.0.0",
+        "encoding": "json_canonical",
+        "required_fields": [
+          "schema_id",
+          "schema_version",
+          "record"
+        ],
+        "optional_fields": [],
+        "nullable_fields": [],
+        "replay_behavior": "Read exact full original wrapper and its authentic original operation/origin and current independent native source boundary. Immutable unequal same-key bytes conflict; mutable rows require entire original beforeimage/current owner CAS and original companion custody. No reader-issued origin, missing-row completion, replayed effect, recreated historical source or late profile adoption. owner.executor.workflow_source.recover_pending.v1 is same-original recovery only; its original failure/pending semantics persist.",
+        "migration": "Only exact already-original source custody under original owner/StorageMigrationCoordinator with actual key/codec/profile/backup registration. No old-profile migration, backfill, schema re-interpretation, guessed keys/identities, recreated origin or native capability. FileSafe old raw .v2 keys are not compatibility aliases.",
+        "migration_disposition": {
+          "mode": "store_coordinator",
+          "canonical_write_key_only": true,
+          "compatibility_keys_read_only": false,
+          "ambiguity_policy": "fail_closed",
+          "source_refs": [
+            "Plans/Executor_Protocol.md",
+            "Plans/Goal_Runtime_System.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ]
+        },
+        "restore_disposition": {
+          "mode": "mandatory_backup",
+          "transaction_family_id": null,
+          "outcome_owner_ref": null,
+          "mutation_fence_on_unresolved": true,
+          "source_refs": [
+            "Plans/Executor_Protocol.md",
+            "Plans/Goal_Runtime_System.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ]
+        },
+        "retention_compaction": "Explicit existing RP-AUTHORITY-INDEFINITE@1.0.0 assignment for the whole closed original authority/control/receipt value. Preserve every typed value and text field; current mutable state plus compact immutable original transition custody, no full historical body archive. Referenced sources/raw content retain their existing independent owner lifetimes. No unknown-policy default; storage pressure fails closed.",
+        "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+        "redaction_no_secret_rule": "Preserve the entire typed original schema and admitted value; metadata is not presumed content-free. Actual original owner rejects unsafe secret/raw material before issuance, never trims a full required source to obtain success. No raw file/log/provider/output or historical native body archive is introduced. Existing referenced owners retain their own permissions, holds and lifetime.",
+        "legacy_canonical_crosswalk_status": "NEW external physical integration proposal; status=materialized describes intended physical contract classification only. No canonical registration, native installation, runtime execution or legacy migration is established. Exact original source protocols and before-birth/admission installation gates remain mandatory.",
+        "recovery_disposition": {
+          "authority_class": "canonical_non_rebuildable",
+          "strategy": "restore_from_mandatory_backup",
+          "source_family_ids": [],
+          "source_refs": [
+            "Plans/Executor_Protocol.md",
+            "Plans/Goal_Runtime_System.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ],
+          "backup_required": true,
+          "data_loss_if_unavailable": true,
+          "user_disclosure_required": true
+        },
+        "value_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "record"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.storage_value.executor_workflow_workflow_birth.v4"
+            },
+            "schema_version": {
+              "const": "4.0.0"
+            },
+            "record": {
+              "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirth"
+            }
+          }
+        }
+      },
+      "proposal_predecessor": {
+        "file": "workflow-original-start.v5.schema.json",
+        "definition": "StorageWorkflowBirth",
+        "before_schema_id": "pm.storage_value.executor_workflow_workflow_birth.v6",
+        "before_version": "6.0.0",
+        "after_schema_id": "pm.storage_value.executor_workflow_workflow_birth.v7",
+        "after_version": "7.0.0",
+        "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+      },
+      "key_rule": "Existing original exact owner family key and codec remain mandatory; schema/profile version never chooses a new key or enrolls an existing birth.",
+      "native_installation": "NOT_RUN"
+    },
+    {
+      "family_id": "executor_workflow_workflow_head",
+      "installed_native_profile": "pm.executor.workflow_source.all_writers.v6",
+      "schema_id": "pm.storage_value.executor_workflow_workflow_head.v7",
+      "schema_version": "7.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v5.schema.json#/$defs/StorageWorkflowHead",
+      "whole_schema_path": "Plans/workflow_standard_source_contracts/schemas/workflow-original-start.v5.schema.json",
+      "whole_schema_sha256": "1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358",
+      "original_registry_row": {
+        "family_id": "executor_workflow_workflow_head",
+        "storage_kind": "redb",
+        "status": "materialized",
+        "tier": "later_gui_or_feature_projection",
+        "key_shape": "executor_workflow_workflow_head.v4:R:decimal(revision)",
+        "compatibility_key_shapes": [],
+        "value_schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+        "value_schema_ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowHead",
+        "owner_doc": "Plans/storage-plan.md",
+        "producer": [
+          "owner.executor.workflow_source.enroll_workflow_birth.v3",
+          "owner.executor.workflow_source.update_workflow.v3"
+        ],
+        "consumers": [
+          "owner.workflow.executor_cancel.read_current.v2",
+          "owner.executor.workflow_source.read_stop.v1",
+          "owner.executor.workflow_source.recover_pending.v1",
+          "Storage original coherent backup/restore and hold/deletion boundary; concrete family-scoped extension required before installation"
+        ],
+        "schema_version": "4.0.0",
+        "encoding": "json_canonical",
+        "required_fields": [
+          "schema_id",
+          "schema_version",
+          "record"
+        ],
+        "optional_fields": [],
+        "nullable_fields": [],
+        "replay_behavior": "Read exact full original wrapper and its authentic original operation/origin and current independent native source boundary. Immutable unequal same-key bytes conflict; mutable rows require entire original beforeimage/current owner CAS and original companion custody. No reader-issued origin, missing-row completion, replayed effect, recreated historical source or late profile adoption. owner.executor.workflow_source.recover_pending.v1 is same-original recovery only; its original failure/pending semantics persist.",
+        "migration": "Only exact already-original source custody under original owner/StorageMigrationCoordinator with actual key/codec/profile/backup registration. No old-profile migration, backfill, schema re-interpretation, guessed keys/identities, recreated origin or native capability. FileSafe old raw .v2 keys are not compatibility aliases.",
+        "migration_disposition": {
+          "mode": "store_coordinator",
+          "canonical_write_key_only": true,
+          "compatibility_keys_read_only": false,
+          "ambiguity_policy": "fail_closed",
+          "source_refs": [
+            "Plans/Executor_Protocol.md",
+            "Plans/Goal_Runtime_System.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ]
+        },
+        "restore_disposition": {
+          "mode": "mandatory_backup",
+          "transaction_family_id": null,
+          "outcome_owner_ref": null,
+          "mutation_fence_on_unresolved": true,
+          "source_refs": [
+            "Plans/Executor_Protocol.md",
+            "Plans/Goal_Runtime_System.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ]
+        },
+        "retention_compaction": "Explicit existing RP-AUTHORITY-INDEFINITE@1.0.0 assignment for the whole closed original authority/control/receipt value. Preserve every typed value and text field; current mutable state plus compact immutable original transition custody, no full historical body archive. Referenced sources/raw content retain their existing independent owner lifetimes. No unknown-policy default; storage pressure fails closed.",
+        "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+        "redaction_no_secret_rule": "Preserve the entire typed original schema and admitted value; metadata is not presumed content-free. Actual original owner rejects unsafe secret/raw material before issuance, never trims a full required source to obtain success. No raw file/log/provider/output or historical native body archive is introduced. Existing referenced owners retain their own permissions, holds and lifetime.",
+        "legacy_canonical_crosswalk_status": "NEW external physical integration proposal; status=materialized describes intended physical contract classification only. No canonical registration, native installation, runtime execution or legacy migration is established. Exact original source protocols and before-birth/admission installation gates remain mandatory.",
+        "recovery_disposition": {
+          "authority_class": "canonical_non_rebuildable",
+          "strategy": "restore_from_mandatory_backup",
+          "source_family_ids": [],
+          "source_refs": [
+            "Plans/Executor_Protocol.md",
+            "Plans/Goal_Runtime_System.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ],
+          "backup_required": true,
+          "data_loss_if_unavailable": true,
+          "user_disclosure_required": true
+        },
+        "value_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "record"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.storage_value.executor_workflow_workflow_head.v4"
+            },
+            "schema_version": {
+              "const": "4.0.0"
+            },
+            "record": {
+              "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowHead"
+            }
+          }
+        }
+      },
+      "proposal_predecessor": {
+        "file": "workflow-original-start.v5.schema.json",
+        "definition": "StorageWorkflowHead",
+        "before_schema_id": "pm.storage_value.executor_workflow_workflow_head.v6",
+        "before_version": "6.0.0",
+        "after_schema_id": "pm.storage_value.executor_workflow_workflow_head.v7",
+        "after_version": "7.0.0",
+        "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+      },
+      "key_rule": "Existing original exact owner family key and codec remain mandatory; schema/profile version never chooses a new key or enrolls an existing birth.",
+      "native_installation": "NOT_RUN"
+    },
+    {
+      "family_id": "executor_workflow_workflow_update",
+      "installed_native_profile": "pm.executor.workflow_source.all_writers.v6",
+      "schema_id": "pm.storage_value.executor_workflow_workflow_update.v7",
+      "schema_version": "7.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v5.schema.json#/$defs/StorageWorkflowUpdate",
+      "whole_schema_path": "Plans/workflow_standard_source_contracts/schemas/workflow-original-start.v5.schema.json",
+      "whole_schema_sha256": "1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358",
+      "original_registry_row": {
+        "family_id": "executor_workflow_workflow_update",
+        "storage_kind": "redb",
+        "status": "materialized",
+        "tier": "later_gui_or_feature_projection",
+        "key_shape": "executor_workflow_workflow_update.v4:R:H(operation_id)",
+        "compatibility_key_shapes": [],
+        "value_schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+        "value_schema_ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowUpdate",
+        "owner_doc": "Plans/storage-plan.md",
+        "producer": [
+          "owner.executor.workflow_source.enroll_workflow_birth.v3",
+          "owner.executor.workflow_source.update_workflow.v3"
+        ],
+        "consumers": [
+          "owner.workflow.executor_cancel.read_current.v2",
+          "owner.executor.workflow_source.read_stop.v1",
+          "owner.executor.workflow_source.recover_pending.v1",
+          "Storage original coherent backup/restore and hold/deletion boundary; concrete family-scoped extension required before installation"
+        ],
+        "schema_version": "4.0.0",
+        "encoding": "json_canonical",
+        "required_fields": [
+          "schema_id",
+          "schema_version",
+          "record"
+        ],
+        "optional_fields": [],
+        "nullable_fields": [],
+        "replay_behavior": "Read exact full original wrapper and its authentic original operation/origin and current independent native source boundary. Immutable unequal same-key bytes conflict; mutable rows require entire original beforeimage/current owner CAS and original companion custody. No reader-issued origin, missing-row completion, replayed effect, recreated historical source or late profile adoption. owner.executor.workflow_source.recover_pending.v1 is same-original recovery only; its original failure/pending semantics persist.",
+        "migration": "Only exact already-original source custody under original owner/StorageMigrationCoordinator with actual key/codec/profile/backup registration. No old-profile migration, backfill, schema re-interpretation, guessed keys/identities, recreated origin or native capability. FileSafe old raw .v2 keys are not compatibility aliases.",
+        "migration_disposition": {
+          "mode": "store_coordinator",
+          "canonical_write_key_only": true,
+          "compatibility_keys_read_only": false,
+          "ambiguity_policy": "fail_closed",
+          "source_refs": [
+            "Plans/Executor_Protocol.md",
+            "Plans/Goal_Runtime_System.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ]
+        },
+        "restore_disposition": {
+          "mode": "mandatory_backup",
+          "transaction_family_id": null,
+          "outcome_owner_ref": null,
+          "mutation_fence_on_unresolved": true,
+          "source_refs": [
+            "Plans/Executor_Protocol.md",
+            "Plans/Goal_Runtime_System.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ]
+        },
+        "retention_compaction": "Explicit existing RP-AUTHORITY-INDEFINITE@1.0.0 assignment for the whole closed original authority/control/receipt value. Preserve every typed value and text field; current mutable state plus compact immutable original transition custody, no full historical body archive. Referenced sources/raw content retain their existing independent owner lifetimes. No unknown-policy default; storage pressure fails closed.",
+        "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+        "redaction_no_secret_rule": "Preserve the entire typed original schema and admitted value; metadata is not presumed content-free. Actual original owner rejects unsafe secret/raw material before issuance, never trims a full required source to obtain success. No raw file/log/provider/output or historical native body archive is introduced. Existing referenced owners retain their own permissions, holds and lifetime.",
+        "legacy_canonical_crosswalk_status": "NEW external physical integration proposal; status=materialized describes intended physical contract classification only. No canonical registration, native installation, runtime execution or legacy migration is established. Exact original source protocols and before-birth/admission installation gates remain mandatory.",
+        "recovery_disposition": {
+          "authority_class": "canonical_non_rebuildable",
+          "strategy": "restore_from_mandatory_backup",
+          "source_family_ids": [],
+          "source_refs": [
+            "Plans/Executor_Protocol.md",
+            "Plans/Goal_Runtime_System.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ],
+          "backup_required": true,
+          "data_loss_if_unavailable": true,
+          "user_disclosure_required": true
+        },
+        "value_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "record"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.storage_value.executor_workflow_workflow_update.v4"
+            },
+            "schema_version": {
+              "const": "4.0.0"
+            },
+            "record": {
+              "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowUpdate"
+            }
+          }
+        }
+      },
+      "proposal_predecessor": {
+        "file": "workflow-original-start.v5.schema.json",
+        "definition": "StorageWorkflowUpdate",
+        "before_schema_id": "pm.storage_value.executor_workflow_workflow_update.v6",
+        "before_version": "6.0.0",
+        "after_schema_id": "pm.storage_value.executor_workflow_workflow_update.v7",
+        "after_version": "7.0.0",
+        "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+      },
+      "key_rule": "Existing original exact owner family key and codec remain mandatory; schema/profile version never chooses a new key or enrolls an existing birth.",
+      "native_installation": "NOT_RUN"
+    },
+    {
+      "family_id": "executor_workflow_lineage_origin",
+      "installed_native_profile": "pm.executor.workflow_source.all_writers.v6",
+      "schema_id": "pm.storage_value.executor_workflow_lineage_origin.v7",
+      "schema_version": "7.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v5.schema.json#/$defs/StorageWorkflowMutationOrigin",
+      "whole_schema_path": "Plans/workflow_standard_source_contracts/schemas/workflow-original-start.v5.schema.json",
+      "whole_schema_sha256": "1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358",
+      "original_registry_row": {
+        "family_id": "executor_workflow_lineage_origin",
+        "storage_kind": "redb",
+        "status": "materialized",
+        "tier": "later_gui_or_feature_projection",
+        "key_shape": "executor_workflow_lineage_origin.v4:R:H(operation_id):H(method)",
+        "compatibility_key_shapes": [],
+        "value_schema_id": "pm.storage_value.executor_workflow_lineage_origin.v4",
+        "value_schema_ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowMutationOrigin",
+        "owner_doc": "Plans/storage-plan.md",
+        "producer": [
+          "owner.executor.workflow_source.enroll_workflow_birth.v3",
+          "owner.executor.workflow_source.begin_coverage.v3",
+          "owner.executor.workflow_source.update_workflow.v3"
+        ],
+        "consumers": [
+          "owner.workflow.executor_cancel.read_current.v2",
+          "owner.executor.workflow_source.read_stop.v1",
+          "owner.executor.workflow_source.recover_pending.v1",
+          "Storage original coherent backup/restore and hold/deletion boundary; concrete family-scoped extension required before installation"
+        ],
+        "schema_version": "4.0.0",
+        "encoding": "json_canonical",
+        "required_fields": [
+          "schema_id",
+          "schema_version",
+          "record"
+        ],
+        "optional_fields": [],
+        "nullable_fields": [],
+        "replay_behavior": "Read exact full original wrapper and its authentic original operation/origin and current independent native source boundary. Immutable unequal same-key bytes conflict; mutable rows require entire original beforeimage/current owner CAS and original companion custody. No reader-issued origin, missing-row completion, replayed effect, recreated historical source or late profile adoption. owner.executor.workflow_source.recover_pending.v1 is same-original recovery only; its original failure/pending semantics persist.",
+        "migration": "Only exact already-original source custody under original owner/StorageMigrationCoordinator with actual key/codec/profile/backup registration. No old-profile migration, backfill, schema re-interpretation, guessed keys/identities, recreated origin or native capability. FileSafe old raw .v2 keys are not compatibility aliases.",
+        "migration_disposition": {
+          "mode": "store_coordinator",
+          "canonical_write_key_only": true,
+          "compatibility_keys_read_only": false,
+          "ambiguity_policy": "fail_closed",
+          "source_refs": [
+            "Plans/Executor_Protocol.md",
+            "Plans/Goal_Runtime_System.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ]
+        },
+        "restore_disposition": {
+          "mode": "mandatory_backup",
+          "transaction_family_id": null,
+          "outcome_owner_ref": null,
+          "mutation_fence_on_unresolved": true,
+          "source_refs": [
+            "Plans/Executor_Protocol.md",
+            "Plans/Goal_Runtime_System.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ]
+        },
+        "retention_compaction": "Explicit existing RP-AUTHORITY-INDEFINITE@1.0.0 assignment for the whole closed original authority/control/receipt value. Preserve every typed value and text field; current mutable state plus compact immutable original transition custody, no full historical body archive. Referenced sources/raw content retain their existing independent owner lifetimes. No unknown-policy default; storage pressure fails closed.",
+        "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+        "redaction_no_secret_rule": "Preserve the entire typed original schema and admitted value; metadata is not presumed content-free. Actual original owner rejects unsafe secret/raw material before issuance, never trims a full required source to obtain success. No raw file/log/provider/output or historical native body archive is introduced. Existing referenced owners retain their own permissions, holds and lifetime.",
+        "legacy_canonical_crosswalk_status": "NEW external physical integration proposal; status=materialized describes intended physical contract classification only. No canonical registration, native installation, runtime execution or legacy migration is established. Exact original source protocols and before-birth/admission installation gates remain mandatory.",
+        "recovery_disposition": {
+          "authority_class": "canonical_non_rebuildable",
+          "strategy": "restore_from_mandatory_backup",
+          "source_family_ids": [],
+          "source_refs": [
+            "Plans/Executor_Protocol.md",
+            "Plans/Goal_Runtime_System.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ],
+          "backup_required": true,
+          "data_loss_if_unavailable": true,
+          "user_disclosure_required": true
+        },
+        "value_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "record"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.storage_value.executor_workflow_lineage_origin.v4"
+            },
+            "schema_version": {
+              "const": "4.0.0"
+            },
+            "record": {
+              "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowMutationOrigin"
+            }
+          }
+        }
+      },
+      "proposal_predecessor": {
+        "file": "workflow-original-start.v5.schema.json",
+        "definition": "StorageWorkflowMutationOrigin",
+        "before_schema_id": "pm.storage_value.executor_workflow_lineage_origin.v6",
+        "before_version": "6.0.0",
+        "after_schema_id": "pm.storage_value.executor_workflow_lineage_origin.v7",
+        "after_version": "7.0.0",
+        "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+      },
+      "key_rule": "Existing original exact owner family key and codec remain mandatory; schema/profile version never chooses a new key or enrolls an existing birth.",
+      "native_installation": "NOT_RUN"
+    },
+    {
+      "family_id": "workflow_start_candidate",
+      "installed_native_profile": "pm.executor.workflow_source.all_writers.v6",
+      "schema_id": "pm.storage_value.workflow_start_candidate.v5",
+      "schema_version": "5.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v5.schema.json#/$defs/StorageCandidate",
+      "whole_schema_path": "Plans/workflow_standard_source_contracts/schemas/workflow-start-custody.v5.schema.json",
+      "whole_schema_sha256": "d40e0c82b8ba03dec7631d2d9bc80d51a82b1adff6a1f3e900b4dab1e13916b8",
+      "original_registry_row": {
+        "family_id": "workflow_start_candidate",
+        "storage_kind": "redb",
+        "status": "materialized",
+        "tier": "later_gui_or_feature_projection",
+        "key_shape": "workflow_start_candidate.v2:R:H(operation_id)",
+        "compatibility_key_shapes": [],
+        "value_schema_id": "pm.storage_value.workflow_start_candidate.v2",
+        "value_schema_ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageCandidate",
+        "owner_doc": "Plans/storage-plan.md",
+        "producer": [
+          "owner.workflow.activation.commit_start.v2"
+        ],
+        "consumers": [
+          "owner.workflow.activation.commit_start.v2",
+          "owner.storage.workflow_start.commit_original.v2",
+          "Storage coherent original start/cancellation backup, restore and hold/deletion boundary"
+        ],
+        "schema_version": "2.0.0",
+        "encoding": "json_canonical",
+        "required_fields": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "physical_key",
+          "record"
+        ],
+        "optional_fields": [],
+        "nullable_fields": [],
+        "replay_behavior": "Exact compact original workflow_start_original.v2 custody under the installed-before-birth owner profile. Initial StartControl belongs to the genuine existing begin transaction and authentic unchanged A4 original issuer; original start publication requires both complete isolated source arguments and the entire event/first-receipt/native/start/D01 atomic outcome. Whole producer and native candidates are transient. Later full original commit replay is unsupported; current read returns compact original commitment/custody with genuinely current native sources and no action capability. Recovery classifies only the same genuine original outcome; no independent append/native repair/receipt/dispatch.",
+        "migration": "New exact original-start compact custody installed before original Workflow birth. No old run/profile backfill, rekey, stored intent reinterpretation, native body archive, recreated origin or capability. Existing prepared A4 outbox stays literal v1/v2 source and unchanged.",
+        "migration_disposition": {
+          "mode": "store_coordinator",
+          "canonical_write_key_only": true,
+          "compatibility_keys_read_only": false,
+          "ambiguity_policy": "fail_closed",
+          "source_refs": [
+            "Plans/Goal_Runtime_System.md",
+            "Plans/Executor_Protocol.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ]
+        },
+        "restore_disposition": {
+          "mode": "mandatory_backup",
+          "transaction_family_id": null,
+          "outcome_owner_ref": null,
+          "mutation_fence_on_unresolved": true,
+          "source_refs": [
+            "Plans/Goal_Runtime_System.md",
+            "Plans/Executor_Protocol.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ]
+        },
+        "retention_compaction": "Explicit existing RP-AUTHORITY-INDEFINITE@1.0.0 for compact original start selector/hash/control/origin/first-receipt custody. No complete producer submission, EventRecord or native Body/Control snapshot is persisted here. The original goal_run.started EventRecord retains its own existing RP-RUNTIME-365D@1.0.0 lifetime; compact start custody does not extend it or reconstruct disposed content. Exact original deletion/hold/tombstone and source permission boundaries remain mandatory.",
+        "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+        "redaction_no_secret_rule": "Retain the complete closed typed compact original metadata without trimming/null substitution. Whole producer/native candidates are original-phase transient sources, not an added archive. The actual original producer/source owners enforce secret/redaction admission; referenced raw content and original event retain their own policies.",
+        "legacy_canonical_crosswalk_status": "NEW compact original-start physical source proposal under workflow_start_original.v2; intended contract status/tier does not establish installed native coordinator or execution. Candidate/Origin physical v2 explicitly replace superseded unadopted snapshot-bearing proposals; no migration of an original deployed value.",
+        "recovery_disposition": {
+          "authority_class": "canonical_non_rebuildable",
+          "strategy": "restore_from_mandatory_backup",
+          "source_family_ids": [],
+          "source_refs": [
+            "Plans/Goal_Runtime_System.md",
+            "Plans/Executor_Protocol.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ],
+          "backup_required": true,
+          "data_loss_if_unavailable": true,
+          "user_disclosure_required": true
+        },
+        "value_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "storage_instance_id",
+            "physical_key",
+            "record"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.storage_value.workflow_start_candidate.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "physical_key": {
+              "type": "string",
+              "minLength": 1
+            },
+            "record": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Candidate"
+            }
+          }
+        }
+      },
+      "proposal_predecessor": {
+        "file": "workflow-start-custody.v5.schema.json",
+        "definition": "StorageCandidate",
+        "before_schema_id": "pm.storage_value.workflow_start_candidate.v4",
+        "before_version": "4.0.0",
+        "after_schema_id": "pm.storage_value.workflow_start_candidate.v5",
+        "after_version": "5.0.0",
+        "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+      },
+      "key_rule": "Existing original exact owner family key and codec remain mandatory; schema/profile version never chooses a new key or enrolls an existing birth.",
+      "native_installation": "NOT_RUN"
+    },
+    {
+      "family_id": "workflow_start_origin",
+      "installed_native_profile": "pm.executor.workflow_source.all_writers.v6",
+      "schema_id": "pm.storage_value.workflow_start_origin.v5",
+      "schema_version": "5.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v5.schema.json#/$defs/StorageOrigin",
+      "whole_schema_path": "Plans/workflow_standard_source_contracts/schemas/workflow-start-custody.v5.schema.json",
+      "whole_schema_sha256": "d40e0c82b8ba03dec7631d2d9bc80d51a82b1adff6a1f3e900b4dab1e13916b8",
+      "original_registry_row": {
+        "family_id": "workflow_start_origin",
+        "storage_kind": "redb",
+        "status": "materialized",
+        "tier": "later_gui_or_feature_projection",
+        "key_shape": "workflow_start_origin.v2:R:H(operation_id)",
+        "compatibility_key_shapes": [],
+        "value_schema_id": "pm.storage_value.workflow_start_origin.v2",
+        "value_schema_ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageOrigin",
+        "owner_doc": "Plans/storage-plan.md",
+        "producer": [
+          "owner.workflow.activation.commit_start.v2"
+        ],
+        "consumers": [
+          "owner.workflow.activation.commit_start.v2",
+          "owner.storage.workflow_start.commit_original.v2",
+          "owner.workflow.activation.read_started_current.v2",
+          "owner.workflow.activation.recover_start.v2",
+          "Storage coherent original start/cancellation backup, restore and hold/deletion boundary"
+        ],
+        "schema_version": "2.0.0",
+        "encoding": "json_canonical",
+        "required_fields": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "physical_key",
+          "record"
+        ],
+        "optional_fields": [],
+        "nullable_fields": [],
+        "replay_behavior": "Exact compact original workflow_start_original.v2 custody under the installed-before-birth owner profile. Initial StartControl belongs to the genuine existing begin transaction and authentic unchanged A4 original issuer; original start publication requires both complete isolated source arguments and the entire event/first-receipt/native/start/D01 atomic outcome. Whole producer and native candidates are transient. Later full original commit replay is unsupported; current read returns compact original commitment/custody with genuinely current native sources and no action capability. Recovery classifies only the same genuine original outcome; no independent append/native repair/receipt/dispatch.",
+        "migration": "New exact original-start compact custody installed before original Workflow birth. No old run/profile backfill, rekey, stored intent reinterpretation, native body archive, recreated origin or capability. Existing prepared A4 outbox stays literal v1/v2 source and unchanged.",
+        "migration_disposition": {
+          "mode": "store_coordinator",
+          "canonical_write_key_only": true,
+          "compatibility_keys_read_only": false,
+          "ambiguity_policy": "fail_closed",
+          "source_refs": [
+            "Plans/Goal_Runtime_System.md",
+            "Plans/Executor_Protocol.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ]
+        },
+        "restore_disposition": {
+          "mode": "mandatory_backup",
+          "transaction_family_id": null,
+          "outcome_owner_ref": null,
+          "mutation_fence_on_unresolved": true,
+          "source_refs": [
+            "Plans/Goal_Runtime_System.md",
+            "Plans/Executor_Protocol.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ]
+        },
+        "retention_compaction": "Explicit existing RP-AUTHORITY-INDEFINITE@1.0.0 for compact original start selector/hash/control/origin/first-receipt custody. No complete producer submission, EventRecord or native Body/Control snapshot is persisted here. The original goal_run.started EventRecord retains its own existing RP-RUNTIME-365D@1.0.0 lifetime; compact start custody does not extend it or reconstruct disposed content. Exact original deletion/hold/tombstone and source permission boundaries remain mandatory.",
+        "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+        "redaction_no_secret_rule": "Retain the complete closed typed compact original metadata without trimming/null substitution. Whole producer/native candidates are original-phase transient sources, not an added archive. The actual original producer/source owners enforce secret/redaction admission; referenced raw content and original event retain their own policies.",
+        "legacy_canonical_crosswalk_status": "NEW compact original-start physical source proposal under workflow_start_original.v2; intended contract status/tier does not establish installed native coordinator or execution. Candidate/Origin physical v2 explicitly replace superseded unadopted snapshot-bearing proposals; no migration of an original deployed value.",
+        "recovery_disposition": {
+          "authority_class": "canonical_non_rebuildable",
+          "strategy": "restore_from_mandatory_backup",
+          "source_family_ids": [],
+          "source_refs": [
+            "Plans/Goal_Runtime_System.md",
+            "Plans/Executor_Protocol.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ],
+          "backup_required": true,
+          "data_loss_if_unavailable": true,
+          "user_disclosure_required": true
+        },
+        "value_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "storage_instance_id",
+            "physical_key",
+            "record"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.storage_value.workflow_start_origin.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "physical_key": {
+              "type": "string",
+              "minLength": 1
+            },
+            "record": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Origin"
+            }
+          }
+        }
+      },
+      "proposal_predecessor": {
+        "file": "workflow-start-custody.v5.schema.json",
+        "definition": "StorageOrigin",
+        "before_schema_id": "pm.storage_value.workflow_start_origin.v4",
+        "before_version": "4.0.0",
+        "after_schema_id": "pm.storage_value.workflow_start_origin.v5",
+        "after_version": "5.0.0",
+        "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+      },
+      "key_rule": "Existing original exact owner family key and codec remain mandatory; schema/profile version never chooses a new key or enrolls an existing birth.",
+      "native_installation": "NOT_RUN"
+    },
+    {
+      "family_id": "workflow_cancel_result",
+      "installed_native_profile": "pm.executor.workflow_source.all_writers.v6",
+      "schema_id": "pm.storage_value.workflow_cancel_result.v6",
+      "schema_version": "6.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v5.schema.json#/$defs/StorageResult",
+      "whole_schema_path": "Plans/workflow_standard_source_contracts/schemas/workflow-cancel-start-profile.v5.schema.json",
+      "whole_schema_sha256": "6cf8c0ae3342ad7d28670b85f81aa46d4847f815aeea7b09e7d2bc03c81d461d",
+      "original_registry_row": {
+        "family_id": "workflow_cancel_result",
+        "storage_kind": "redb",
+        "status": "materialized",
+        "tier": "later_gui_or_feature_projection",
+        "key_shape": "workflow_cancel_result.v3:R:H(operation_id)",
+        "compatibility_key_shapes": [],
+        "value_schema_id": "pm.storage_value.workflow_cancel_result.v3",
+        "value_schema_ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/StorageResult",
+        "owner_doc": "Plans/storage-plan.md",
+        "producer": [
+          "owner.workflow.executor_cancel.publish_disposition.v3"
+        ],
+        "consumers": [
+          "owner.workflow.executor_cancel.read_current_disposition.v3",
+          "owner.workflow.executor_cancel.read_disposition.v3",
+          "owner.workflow.executor_cancel.read_retained_disposition.v3",
+          "owner.workflow.executor_cancel.recover_disposition.v3",
+          "Storage original coherent backup/restore and hold/deletion boundary; concrete family-scoped extension required before installation"
+        ],
+        "schema_version": "3.0.0",
+        "encoding": "json_canonical",
+        "required_fields": [
+          "schema_id",
+          "schema_version",
+          "record"
+        ],
+        "optional_fields": [],
+        "nullable_fields": [],
+        "replay_behavior": "Read exact full original wrapper and its authentic original operation/origin and current independent native source boundary. Immutable unequal same-key bytes conflict; mutable rows require entire original beforeimage/current owner CAS and original companion custody. No reader-issued origin, missing-row completion, replayed effect, recreated historical source or late profile adoption. owner.workflow.executor_cancel.recover_disposition.v3 is same-original recovery only; its original failure/pending semantics persist. Positive admission additionally requires the whole original_bounded_safe_stop_terminal_publication.v1 source companions, independent current Goal/Start/native/D05 union and genuine original terminal owner fences. No revoked work capability, detached successful readback or schema-shaped source authorizes terminal publication.",
+        "migration": "Only exact already-original source custody under original owner/StorageMigrationCoordinator with actual key/codec/profile/backup registration. No old-profile migration, backfill, schema re-interpretation, guessed keys/identities, recreated origin or native capability. FileSafe old raw .v2 keys are not compatibility aliases.",
+        "migration_disposition": {
+          "mode": "store_coordinator",
+          "canonical_write_key_only": true,
+          "compatibility_keys_read_only": false,
+          "ambiguity_policy": "fail_closed",
+          "source_refs": [
+            "Plans/Goal_Runtime_System.md",
+            "Plans/Executor_Protocol.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ]
+        },
+        "restore_disposition": {
+          "mode": "mandatory_backup",
+          "transaction_family_id": null,
+          "outcome_owner_ref": null,
+          "mutation_fence_on_unresolved": true,
+          "source_refs": [
+            "Plans/Goal_Runtime_System.md",
+            "Plans/Executor_Protocol.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ]
+        },
+        "retention_compaction": "Explicit existing RP-AUTHORITY-INDEFINITE@1.0.0 assignment for the whole closed original authority/control/receipt value. Preserve every typed value and text field; current mutable state plus compact immutable original transition custody, no full historical body archive. Referenced sources/raw content retain their existing independent owner lifetimes. No unknown-policy default; storage pressure fails closed.",
+        "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+        "redaction_no_secret_rule": "Preserve the entire typed original schema and admitted value; metadata is not presumed content-free. Actual original owner rejects unsafe secret/raw material before issuance, never trims a full required source to obtain success. No raw file/log/provider/output or historical native body archive is introduced. Existing referenced owners retain their own permissions, holds and lifetime.",
+        "legacy_canonical_crosswalk_status": "NEW external physical integration proposal; status=materialized describes intended physical contract classification only. No canonical registration, native installation, runtime execution or legacy migration is established. Exact original source protocols and before-birth/admission installation gates remain mandatory.",
+        "recovery_disposition": {
+          "authority_class": "canonical_non_rebuildable",
+          "strategy": "restore_from_mandatory_backup",
+          "source_family_ids": [],
+          "source_refs": [
+            "Plans/Goal_Runtime_System.md",
+            "Plans/Executor_Protocol.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ],
+          "backup_required": true,
+          "data_loss_if_unavailable": true,
+          "user_disclosure_required": true
+        },
+        "value_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "record"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.storage_value.workflow_cancel_result.v3"
+            },
+            "schema_version": {
+              "const": "3.0.0"
+            },
+            "record": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Result"
+            }
+          }
+        }
+      },
+      "proposal_predecessor": {
+        "file": "workflow-cancel-start-profile.v5.schema.json",
+        "definition": "StorageResult",
+        "before_schema_id": "pm.storage_value.workflow_cancel_result.v5",
+        "before_version": "5.0.0",
+        "after_schema_id": "pm.storage_value.workflow_cancel_result.v6",
+        "after_version": "6.0.0",
+        "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+      },
+      "key_rule": "Existing original exact owner family key and codec remain mandatory; schema/profile version never chooses a new key or enrolls an existing birth.",
+      "native_installation": "NOT_RUN"
+    },
+    {
+      "family_id": "workflow_cancel_origin",
+      "installed_native_profile": "pm.executor.workflow_source.all_writers.v6",
+      "schema_id": "pm.storage_value.workflow_cancel_origin.v6",
+      "schema_version": "6.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v5.schema.json#/$defs/StorageOrigin",
+      "whole_schema_path": "Plans/workflow_standard_source_contracts/schemas/workflow-cancel-start-profile.v5.schema.json",
+      "whole_schema_sha256": "6cf8c0ae3342ad7d28670b85f81aa46d4847f815aeea7b09e7d2bc03c81d461d",
+      "original_registry_row": {
+        "family_id": "workflow_cancel_origin",
+        "storage_kind": "redb",
+        "status": "materialized",
+        "tier": "later_gui_or_feature_projection",
+        "key_shape": "workflow_cancel_origin.v3:R:H(operation_id):H(issuer_method)",
+        "compatibility_key_shapes": [],
+        "value_schema_id": "pm.storage_value.workflow_cancel_origin.v3",
+        "value_schema_ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/StorageOrigin",
+        "owner_doc": "Plans/storage-plan.md",
+        "producer": [
+          "owner.workflow.executor_cancel.prepare_disposition.v3",
+          "owner.workflow.executor_cancel.publish_disposition.v3"
+        ],
+        "consumers": [
+          "owner.workflow.executor_cancel.read_current_disposition.v3",
+          "owner.workflow.executor_cancel.read_disposition.v3",
+          "owner.workflow.executor_cancel.read_retained_disposition.v3",
+          "owner.workflow.executor_cancel.recover_disposition.v3",
+          "Storage original coherent backup/restore and hold/deletion boundary; concrete family-scoped extension required before installation"
+        ],
+        "schema_version": "3.0.0",
+        "encoding": "json_canonical",
+        "required_fields": [
+          "schema_id",
+          "schema_version",
+          "record"
+        ],
+        "optional_fields": [],
+        "nullable_fields": [],
+        "replay_behavior": "Read exact full original wrapper and its authentic original operation/origin and current independent native source boundary. Immutable unequal same-key bytes conflict; mutable rows require entire original beforeimage/current owner CAS and original companion custody. No reader-issued origin, missing-row completion, replayed effect, recreated historical source or late profile adoption. owner.workflow.executor_cancel.recover_disposition.v3 is same-original recovery only; its original failure/pending semantics persist. Positive admission additionally requires the whole original_bounded_safe_stop_terminal_publication.v1 source companions, independent current Goal/Start/native/D05 union and genuine original terminal owner fences. No revoked work capability, detached successful readback or schema-shaped source authorizes terminal publication.",
+        "migration": "Only exact already-original source custody under original owner/StorageMigrationCoordinator with actual key/codec/profile/backup registration. No old-profile migration, backfill, schema re-interpretation, guessed keys/identities, recreated origin or native capability. FileSafe old raw .v2 keys are not compatibility aliases.",
+        "migration_disposition": {
+          "mode": "store_coordinator",
+          "canonical_write_key_only": true,
+          "compatibility_keys_read_only": false,
+          "ambiguity_policy": "fail_closed",
+          "source_refs": [
+            "Plans/Goal_Runtime_System.md",
+            "Plans/Executor_Protocol.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ]
+        },
+        "restore_disposition": {
+          "mode": "mandatory_backup",
+          "transaction_family_id": null,
+          "outcome_owner_ref": null,
+          "mutation_fence_on_unresolved": true,
+          "source_refs": [
+            "Plans/Goal_Runtime_System.md",
+            "Plans/Executor_Protocol.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ]
+        },
+        "retention_compaction": "Explicit existing RP-AUTHORITY-INDEFINITE@1.0.0 assignment for the whole closed original authority/control/receipt value. Preserve every typed value and text field; current mutable state plus compact immutable original transition custody, no full historical body archive. Referenced sources/raw content retain their existing independent owner lifetimes. No unknown-policy default; storage pressure fails closed.",
+        "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+        "redaction_no_secret_rule": "Preserve the entire typed original schema and admitted value; metadata is not presumed content-free. Actual original owner rejects unsafe secret/raw material before issuance, never trims a full required source to obtain success. No raw file/log/provider/output or historical native body archive is introduced. Existing referenced owners retain their own permissions, holds and lifetime.",
+        "legacy_canonical_crosswalk_status": "NEW external physical integration proposal; status=materialized describes intended physical contract classification only. No canonical registration, native installation, runtime execution or legacy migration is established. Exact original source protocols and before-birth/admission installation gates remain mandatory.",
+        "recovery_disposition": {
+          "authority_class": "canonical_non_rebuildable",
+          "strategy": "restore_from_mandatory_backup",
+          "source_family_ids": [],
+          "source_refs": [
+            "Plans/Goal_Runtime_System.md",
+            "Plans/Executor_Protocol.md",
+            "Plans/storage-plan.md",
+            "Plans/Backup_Restore_System.md"
+          ],
+          "backup_required": true,
+          "data_loss_if_unavailable": true,
+          "user_disclosure_required": true
+        },
+        "value_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "record"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.storage_value.workflow_cancel_origin.v3"
+            },
+            "schema_version": {
+              "const": "3.0.0"
+            },
+            "record": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin"
+            }
+          }
+        }
+      },
+      "proposal_predecessor": {
+        "file": "workflow-cancel-start-profile.v5.schema.json",
+        "definition": "StorageOrigin",
+        "before_schema_id": "pm.storage_value.workflow_cancel_origin.v5",
+        "before_version": "5.0.0",
+        "after_schema_id": "pm.storage_value.workflow_cancel_origin.v6",
+        "after_version": "6.0.0",
+        "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+      },
+      "key_rule": "Existing original exact owner family key and codec remain mandatory; schema/profile version never chooses a new key or enrolls an existing birth.",
+      "native_installation": "NOT_RUN"
+    },
+    {
+      "family_id": "workflow_standard_result",
+      "installed_native_profile": "pm.executor.workflow_source.all_writers.v6",
+      "schema_id": "pm.storage_value.workflow_standard_result.v3",
+      "schema_version": "3.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json#/$defs/StorageWorkflowResult",
+      "whole_schema_path": "Plans/workflow_standard_source_contracts/schemas/workflow-standard-current-source.v3.schema.json",
+      "whole_schema_sha256": "c7a11a744312518b78cbd70f7f5ee6228004e213df1174f87afe8ac00164ff72",
+      "original_registry_row": null,
+      "proposal_predecessor": {
+        "file": "workflow-standard-current-source.v3.schema.json",
+        "definition": "StorageWorkflowResult",
+        "before_schema_id": "pm.storage_value.workflow_standard_result.v2",
+        "before_version": "2.0.0",
+        "after_schema_id": "pm.storage_value.workflow_standard_result.v3",
+        "after_version": "3.0.0",
+        "key_codec": "unchanged proposed v1 family key; fresh exact role only, no overwrite or old-row reinterpretation"
+      },
+      "key_rule": "Existing original exact owner family key and codec remain mandatory; schema/profile version never chooses a new key or enrolls an existing birth.",
+      "native_installation": "NOT_RUN"
+    },
+    {
+      "family_id": "workflow_standard_origin",
+      "installed_native_profile": "pm.executor.workflow_source.all_writers.v6",
+      "schema_id": "pm.storage_value.workflow_standard_origin.v3",
+      "schema_version": "3.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json#/$defs/StorageWorkflowOrigin",
+      "whole_schema_path": "Plans/workflow_standard_source_contracts/schemas/workflow-standard-current-source.v3.schema.json",
+      "whole_schema_sha256": "c7a11a744312518b78cbd70f7f5ee6228004e213df1174f87afe8ac00164ff72",
+      "original_registry_row": null,
+      "proposal_predecessor": {
+        "file": "workflow-standard-current-source.v3.schema.json",
+        "definition": "StorageWorkflowOrigin",
+        "before_schema_id": "pm.storage_value.workflow_standard_origin.v2",
+        "before_version": "2.0.0",
+        "after_schema_id": "pm.storage_value.workflow_standard_origin.v3",
+        "after_version": "3.0.0",
+        "key_codec": "unchanged proposed v1 family key; fresh exact role only, no overwrite or old-row reinterpretation"
+      },
+      "key_rule": "Existing original exact owner family key and codec remain mandatory; schema/profile version never chooses a new key or enrolls an existing birth.",
+      "native_installation": "NOT_RUN"
+    },
+    {
+      "family_id": "workflow_standard_capture_origin",
+      "installed_native_profile": "pm.executor.workflow_source.all_writers.v6",
+      "schema_id": "pm.storage_value.workflow_standard_capture_origin.v3",
+      "schema_version": "3.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v3.schema.json#/$defs/StorageStandardCaptureOrigin",
+      "whole_schema_path": "Plans/workflow_standard_source_contracts/schemas/workflow-standard-certification-argument.v3.schema.json",
+      "whole_schema_sha256": "fcc25e198114eadc357c8696b750d2d5afb21e80d57bca8febe8a17580b91e4d",
+      "original_registry_row": null,
+      "proposal_predecessor": {
+        "file": "workflow-standard-certification-argument.v3.schema.json",
+        "definition": "StorageStandardCaptureOrigin",
+        "before_schema_id": "pm.storage_value.workflow_standard_capture_origin.v2",
+        "before_version": "2.0.0",
+        "after_schema_id": "pm.storage_value.workflow_standard_capture_origin.v3",
+        "after_version": "3.0.0",
+        "key_codec": "unchanged proposed original capture-origin v1 key; exact new role only"
+      },
+      "key_rule": "Existing original exact owner family key and codec remain mandatory; schema/profile version never chooses a new key or enrolls an existing birth.",
+      "native_installation": "NOT_RUN"
+    }
+  ],
+  "unchanged_generic_profiles": [
+    "attempt_record.v1",
+    "execution_unit_context_store",
+    "attempt_receipt",
+    "goal_receipt generic v1 and Standard v2 original role routes"
+  ],
+  "rule": "Each route supplements the unchanged existing registry role under a complete fresh native installation descriptor; no registry root replacement or old-profile reinterpretation. Actual key, encoding, retention, owner, transaction and backup installation remain necessary and NOT_RUN."
+}

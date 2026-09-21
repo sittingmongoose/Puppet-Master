@@ -1,0 +1,93 @@
+{
+  "profile": "goal_run_started_cancelled_certified_projector.v1",
+  "status": "CANONICAL_COMPLETE_PASSIVE_SOURCE_PROFILE_NOT_INSTALLED",
+  "members": [
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/protocol.md",
+      "sha256": "a9d2717ada5b5c131d3613f44035b145fc8b2f69a9e79e44b1a0d9e23f3da8c4",
+      "bytes": 30201
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/methods.json",
+      "sha256": "e053ca3c675304b837ff599108fdb06c02b0c8bd33ac220b1320c7817063a0a1",
+      "bytes": 75543
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/source-method-composition.json",
+      "sha256": "5a145d1b2a6d34ee6dc653dd6c36c0b10430342db2f0b91898ad50085f4f745d",
+      "bytes": 1506
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/imports.json",
+      "sha256": "d05f12ed624f2d50bd42659e5ee38670a7a88d24b1ec76a3415341c58fdf500e",
+      "bytes": 266356
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/resource-realms.json",
+      "sha256": "37bbb87f92c86add8555e8f35498b4e609bd270fe38941396ff2fba72896ea66",
+      "bytes": 504684
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/source-variants.json",
+      "sha256": "c03c72bb2aafacce0085075b42bea11854daf4a8b44b7d9ed3f26950ce725664",
+      "bytes": 2797
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/owner-sources.json",
+      "sha256": "29b302a4176e218f54cc98af37691bfc6387b949f3479ae414d86dd3c62048ea",
+      "bytes": 3280
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/source-citations.json",
+      "sha256": "b7c282b7b264160ff428472ff221c0985cb3244481ccc0108a1ce4cae265a789",
+      "bytes": 21411
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/physical-retention-install.json",
+      "sha256": "844fb6f8ee94bcc7199f6f1dd6c8169e91cb893ca9a73025d19fc00099644b24",
+      "bytes": 4313
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/commitment-domains.json",
+      "sha256": "629e94ab68998fb68c8c287d197b181c4fd813689ae346cc87a070adc75cc933",
+      "bytes": 1583
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/companion-differences.json",
+      "sha256": "819d15ed88c7d0c53b27f1d1d134cfa5bd40e274c295b601e75a216739d5a96f",
+      "bytes": 82296
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/dependencies.json",
+      "sha256": "d88997f5451c6d19beff8bfc88bdc8927e8326e988eb2978e674fa306b9054ea",
+      "bytes": 2087
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/schemas/consumer.v1.schema.json",
+      "sha256": "7231019585f5b0ad2d1453fc1df3b8525baaa1b979eb616757d6f7307a75936a",
+      "bytes": 44636
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/companions/cancelled-cancelled-causal-arguments.schema.json",
+      "sha256": "f812e4a93393919f0145f58eb93d1ca35f232e4680272c6bfe9eb6275de3d66c",
+      "bytes": 15538
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/companions/cancelled-consumer.schema.json",
+      "sha256": "4243a63bb14118f9cd22e7348c18908fb3e2d0707ffd85fdef723e1fab0cd2b0",
+      "bytes": 56415
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/companions/started-consumer.schema.json",
+      "sha256": "b725b4370ebcf48d6db5c6c2c0b48513341cbbbed33beff3e8326dfad2b4c6b4",
+      "bytes": 29012
+    }
+  ],
+  "required_original_native_profile": "pm.executor.workflow_source.all_writers.v7",
+  "required_original_native_profile_digest": "0055de6c0e113173d2c4f1a1b2a3d9268681241b528ab6f24304fcfb4b163845",
+  "consumer_owner": "GoalRuntime",
+  "physical_owner": "Storage",
+  "native_writer_roster_changed": false,
+  "source_admission": "Actual original registered readers and current guard APIs independently acquire complete graphs; passive projector is not a native writer/terminal capability",
+  "runtime": "NOT_RUN"
+}

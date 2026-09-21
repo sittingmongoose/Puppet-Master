@@ -1,0 +1,32 @@
+{
+  "predecessor_manifest": {
+    "path": "external-source-evidence:sha256:c1c24889facde1e2ba2140b728298f11f866ea693283f7aaef8e30d1ae3f9f67",
+    "sha256": "c1c24889facde1e2ba2140b728298f11f866ea693283f7aaef8e30d1ae3f9f67"
+  },
+  "reviews": [
+    {
+      "path": "external-source-evidence:sha256:f1117610411683030d3ce38e020697dab684f70834be50a1b89d3de620192c74",
+      "sha256": "f1117610411683030d3ce38e020697dab684f70834be50a1b89d3de620192c74"
+    },
+    {
+      "path": "external-source-evidence:sha256:be7bebe25380e09f22a9a3ec578462ecbf173d37fc6fa0d3ffbe3a5a88cf5207",
+      "sha256": "be7bebe25380e09f22a9a3ec578462ecbf173d37fc6fa0d3ffbe3a5a88cf5207"
+    }
+  ],
+  "findings": [
+    {
+      "id": "C-R01",
+      "repair": "I0 complete preidentity source/candidate predicate; P1-P10 begins at preparation"
+    },
+    {
+      "id": "C-R02",
+      "repair": "F5a/b/c/d genuine preappend, barriers, custody, EventPhase/disclosure chronology; F5 complete postappend stays later"
+    },
+    {
+      "id": "C-R03",
+      "repair": "One complete Q1-Q4 section retained verbatim; duplicate removed"
+    }
+  ],
+  "new_native_profile_family": false,
+  "approved_or_installed": false
+}

@@ -1,0 +1,575 @@
+{
+  "status": "NEW_COMPLETE_PRIVATE_SOURCE_METHOD_CONTRACT_NATIVE_NOT_RUN",
+  "methods": [
+    {
+      "method": "owner.workflow.certified_producer_source.expose_original_assignment.v1",
+      "owner": "actual Workflow/controller assignment owner",
+      "arguments": [
+        {
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/AssignmentReadArgument"
+        }
+      ],
+      "result": {
+        "realm": "producer",
+        "schema_ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/AssignmentReadResult"
+      },
+      "phase_rule": "expose_original executes within the genuine original owner operation result boundary, using its actual full input/result and issuance. read_current independently reads those exact genuine originals, never re-executes the operation. Neither a fabricated JSON argument nor expose_original called later can backfill origin.",
+      "profile": "pm.goal_run_certified.producer_source.v1",
+      "native_participant": "Actual nonserializable original owner operation/record handles, registered source-schema/codec roles, current permission/Stop/cancel/writer/hold guards and held read/CAS participants; not JSON fields.",
+      "entry_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P7",
+        "P10"
+      ],
+      "final_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P7",
+        "P10"
+      ],
+      "after_helpers_boundary": "Repeat complete independently derived full-source/full-output predicate after every returning helper, immediately before own source disclosure; no returning helper/callback/logger/async gap.",
+      "native": "NOT_RUN",
+      "publication": "none: original source disclosure only; no new original business operation, capture row, Event or native Workflow mutation",
+      "phase_source_rule": "Only complete real inputs for this original phase are required; no later invocation/result/runtime/native-final/producer candidate is required before its genuine lifecycle point. Each independently callable owner fully authenticates its own actual source/input inventory; later composition checks add, never replace, these predicates."
+    },
+    {
+      "method": "owner.workflow.certified_producer_source.read_current_assignment.v1",
+      "owner": "actual Workflow/controller assignment owner",
+      "arguments": [
+        {
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/AssignmentReadArgument"
+        }
+      ],
+      "result": {
+        "realm": "producer",
+        "schema_ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/AssignmentReadResult"
+      },
+      "phase_rule": "expose_original executes within the genuine original owner operation result boundary, using its actual full input/result and issuance. read_current independently reads those exact genuine originals, never re-executes the operation. Neither a fabricated JSON argument nor expose_original called later can backfill origin.",
+      "profile": "pm.goal_run_certified.producer_source.v1",
+      "native_participant": "Actual nonserializable original owner operation/record handles, registered source-schema/codec roles, current permission/Stop/cancel/writer/hold guards and held read/CAS participants; not JSON fields.",
+      "entry_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P7",
+        "P10"
+      ],
+      "final_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P7",
+        "P10"
+      ],
+      "after_helpers_boundary": "Repeat complete independently derived full-source/full-output predicate after every returning helper, immediately before own source disclosure; no returning helper/callback/logger/async gap.",
+      "native": "NOT_RUN",
+      "publication": "none: original source disclosure only; no new original business operation, capture row, Event or native Workflow mutation",
+      "phase_source_rule": "Only complete real inputs for this original phase are required; no later invocation/result/runtime/native-final/producer candidate is required before its genuine lifecycle point. Each independently callable owner fully authenticates its own actual source/input inventory; later composition checks add, never replace, these predicates."
+    },
+    {
+      "method": "owner.workflow.certified_producer_source.expose_original_invocation.v1",
+      "owner": "actual assigned certifier invocation owner",
+      "arguments": [
+        {
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/InvocationReadArgument"
+        }
+      ],
+      "result": {
+        "realm": "producer",
+        "schema_ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/InvocationReadResult"
+      },
+      "phase_rule": "expose_original executes within the genuine original owner operation result boundary, using its actual full input/result and issuance. read_current independently reads those exact genuine originals, never re-executes the operation. Neither a fabricated JSON argument nor expose_original called later can backfill origin.",
+      "profile": "pm.goal_run_certified.producer_source.v1",
+      "native_participant": "Actual nonserializable original owner operation/record handles, registered source-schema/codec roles, current permission/Stop/cancel/writer/hold guards and held read/CAS participants; not JSON fields.",
+      "entry_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P6_causality",
+        "P7",
+        "P10"
+      ],
+      "final_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P6_causality",
+        "P7",
+        "P10"
+      ],
+      "after_helpers_boundary": "Repeat complete independently derived full-source/full-output predicate after every returning helper, immediately before own source disclosure; no returning helper/callback/logger/async gap.",
+      "native": "NOT_RUN",
+      "publication": "none: original source disclosure only; no new original business operation, capture row, Event or native Workflow mutation",
+      "phase_source_rule": "Only complete real inputs for this original phase are required; no later invocation/result/runtime/native-final/producer candidate is required before its genuine lifecycle point. Each independently callable owner fully authenticates its own actual source/input inventory; later composition checks add, never replace, these predicates."
+    },
+    {
+      "method": "owner.workflow.certified_producer_source.read_current_invocation.v1",
+      "owner": "actual assigned certifier invocation owner",
+      "arguments": [
+        {
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/InvocationReadArgument"
+        }
+      ],
+      "result": {
+        "realm": "producer",
+        "schema_ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/InvocationReadResult"
+      },
+      "phase_rule": "expose_original executes within the genuine original owner operation result boundary, using its actual full input/result and issuance. read_current independently reads those exact genuine originals, never re-executes the operation. Neither a fabricated JSON argument nor expose_original called later can backfill origin.",
+      "profile": "pm.goal_run_certified.producer_source.v1",
+      "native_participant": "Actual nonserializable original owner operation/record handles, registered source-schema/codec roles, current permission/Stop/cancel/writer/hold guards and held read/CAS participants; not JSON fields.",
+      "entry_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P6_causality",
+        "P7",
+        "P10"
+      ],
+      "final_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P6_causality",
+        "P7",
+        "P10"
+      ],
+      "after_helpers_boundary": "Repeat complete independently derived full-source/full-output predicate after every returning helper, immediately before own source disclosure; no returning helper/callback/logger/async gap.",
+      "native": "NOT_RUN",
+      "publication": "none: original source disclosure only; no new original business operation, capture row, Event or native Workflow mutation",
+      "phase_source_rule": "Only complete real inputs for this original phase are required; no later invocation/result/runtime/native-final/producer candidate is required before its genuine lifecycle point. Each independently callable owner fully authenticates its own actual source/input inventory; later composition checks add, never replace, these predicates."
+    },
+    {
+      "method": "owner.workflow.certified_producer_source.expose_original_causality.v1",
+      "owner": "actual originating request/causal owner with original Event Storage",
+      "arguments": [
+        {
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/CausalReadArgument"
+        }
+      ],
+      "result": {
+        "realm": "producer",
+        "schema_ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/CausalReadResult"
+      },
+      "phase_rule": "expose_original executes within the genuine original owner operation result boundary, using its actual full input/result and issuance. read_current independently reads those exact genuine originals, never re-executes the operation. Neither a fabricated JSON argument nor expose_original called later can backfill origin.",
+      "profile": "pm.goal_run_certified.producer_source.v1",
+      "native_participant": "Actual nonserializable original owner operation/record handles, registered source-schema/codec roles, current permission/Stop/cancel/writer/hold guards and held read/CAS participants; not JSON fields.",
+      "entry_predicates": [
+        "P1",
+        "P2",
+        "P6_causality",
+        "P7",
+        "P10"
+      ],
+      "final_predicates": [
+        "P1",
+        "P2",
+        "P6_causality",
+        "P7",
+        "P10"
+      ],
+      "after_helpers_boundary": "Repeat complete independently derived full-source/full-output predicate after every returning helper, immediately before own source disclosure; no returning helper/callback/logger/async gap.",
+      "native": "NOT_RUN",
+      "publication": "none: original source disclosure only; no new original business operation, capture row, Event or native Workflow mutation",
+      "phase_source_rule": "Only complete real inputs for this original phase are required; no later invocation/result/runtime/native-final/producer candidate is required before its genuine lifecycle point. Each independently callable owner fully authenticates its own actual source/input inventory; later composition checks add, never replace, these predicates."
+    },
+    {
+      "method": "owner.workflow.certified_producer_source.read_current_causality.v1",
+      "owner": "actual originating request/causal owner with original Event Storage",
+      "arguments": [
+        {
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/CausalReadArgument"
+        }
+      ],
+      "result": {
+        "realm": "producer",
+        "schema_ref": "https://puppetmaster.local/proposals/goal_certified_assignment_invocation.v1.schema.json#/$defs/CausalReadResult"
+      },
+      "phase_rule": "expose_original executes within the genuine original owner operation result boundary, using its actual full input/result and issuance. read_current independently reads those exact genuine originals, never re-executes the operation. Neither a fabricated JSON argument nor expose_original called later can backfill origin.",
+      "profile": "pm.goal_run_certified.producer_source.v1",
+      "native_participant": "Actual nonserializable original owner operation/record handles, registered source-schema/codec roles, current permission/Stop/cancel/writer/hold guards and held read/CAS participants; not JSON fields.",
+      "entry_predicates": [
+        "P1",
+        "P2",
+        "P6_causality",
+        "P7",
+        "P10"
+      ],
+      "final_predicates": [
+        "P1",
+        "P2",
+        "P6_causality",
+        "P7",
+        "P10"
+      ],
+      "after_helpers_boundary": "Repeat complete independently derived full-source/full-output predicate after every returning helper, immediately before own source disclosure; no returning helper/callback/logger/async gap.",
+      "native": "NOT_RUN",
+      "publication": "none: original source disclosure only; no new original business operation, capture row, Event or native Workflow mutation",
+      "phase_source_rule": "Only complete real inputs for this original phase are required; no later invocation/result/runtime/native-final/producer candidate is required before its genuine lifecycle point. Each independently callable owner fully authenticates its own actual source/input inventory; later composition checks add, never replace, these predicates."
+    },
+    {
+      "method": "owner.workflow.certified_producer_source.expose_original_resolution.v1",
+      "owner": "actual Prompt Pipeline and all original resolver owners",
+      "arguments": [
+        {
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_resolver_references.v1.schema.json#/$defs/ResolverReadArgument"
+        }
+      ],
+      "result": {
+        "realm": "producer",
+        "schema_ref": "https://puppetmaster.local/proposals/goal_certified_resolver_references.v1.schema.json#/$defs/ResolverReadResult"
+      },
+      "phase_rule": "expose_original executes within the genuine original owner operation result boundary, using its actual full input/result and issuance. read_current independently reads those exact genuine originals, never re-executes the operation. Neither a fabricated JSON argument nor expose_original called later can backfill origin.",
+      "profile": "pm.goal_run_certified.producer_source.v1",
+      "native_participant": "Actual nonserializable original owner operation/record handles, registered source-schema/codec roles, current permission/Stop/cancel/writer/hold guards and held read/CAS participants; not JSON fields.",
+      "entry_predicates": [
+        "P1",
+        "P2",
+        "P4",
+        "P5",
+        "P7",
+        "P10"
+      ],
+      "final_predicates": [
+        "P1",
+        "P2",
+        "P4",
+        "P5",
+        "P7",
+        "P10"
+      ],
+      "after_helpers_boundary": "Repeat complete independently derived full-source/full-output predicate after every returning helper, immediately before own source disclosure; no returning helper/callback/logger/async gap.",
+      "native": "NOT_RUN",
+      "publication": "none: original source disclosure only; no new original business operation, capture row, Event or native Workflow mutation",
+      "phase_source_rule": "Only complete real inputs for this original phase are required; no later invocation/result/runtime/native-final/producer candidate is required before its genuine lifecycle point. Each independently callable owner fully authenticates its own actual source/input inventory; later composition checks add, never replace, these predicates."
+    },
+    {
+      "method": "owner.workflow.certified_producer_source.read_current_resolution.v1",
+      "owner": "actual Prompt Pipeline and all original resolver owners",
+      "arguments": [
+        {
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_resolver_references.v1.schema.json#/$defs/ResolverReadArgument"
+        }
+      ],
+      "result": {
+        "realm": "producer",
+        "schema_ref": "https://puppetmaster.local/proposals/goal_certified_resolver_references.v1.schema.json#/$defs/ResolverReadResult"
+      },
+      "phase_rule": "expose_original executes within the genuine original owner operation result boundary, using its actual full input/result and issuance. read_current independently reads those exact genuine originals, never re-executes the operation. Neither a fabricated JSON argument nor expose_original called later can backfill origin.",
+      "profile": "pm.goal_run_certified.producer_source.v1",
+      "native_participant": "Actual nonserializable original owner operation/record handles, registered source-schema/codec roles, current permission/Stop/cancel/writer/hold guards and held read/CAS participants; not JSON fields.",
+      "entry_predicates": [
+        "P1",
+        "P2",
+        "P4",
+        "P5",
+        "P7",
+        "P10"
+      ],
+      "final_predicates": [
+        "P1",
+        "P2",
+        "P4",
+        "P5",
+        "P7",
+        "P10"
+      ],
+      "after_helpers_boundary": "Repeat complete independently derived full-source/full-output predicate after every returning helper, immediately before own source disclosure; no returning helper/callback/logger/async gap.",
+      "native": "NOT_RUN",
+      "publication": "none: original source disclosure only; no new original business operation, capture row, Event or native Workflow mutation",
+      "phase_source_rule": "Only complete real inputs for this original phase are required; no later invocation/result/runtime/native-final/producer candidate is required before its genuine lifecycle point. Each independently callable owner fully authenticates its own actual source/input inventory; later composition checks add, never replace, these predicates."
+    },
+    {
+      "method": "owner.workflow.certified_producer_source.expose_original_references.v1",
+      "owner": "actual original actor/provider/model/account/Event reference owners",
+      "arguments": [
+        {
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_resolver_references.v1.schema.json#/$defs/ReferenceReadArgument"
+        }
+      ],
+      "result": {
+        "realm": "producer",
+        "schema_ref": "https://puppetmaster.local/proposals/goal_certified_resolver_references.v1.schema.json#/$defs/ReferenceReadResult"
+      },
+      "phase_rule": "expose_original executes within the genuine original owner operation result boundary, using its actual full input/result and issuance. read_current independently reads those exact genuine originals, never re-executes the operation. Neither a fabricated JSON argument nor expose_original called later can backfill origin.",
+      "profile": "pm.goal_run_certified.producer_source.v1",
+      "native_participant": "Actual nonserializable original owner operation/record handles, registered source-schema/codec roles, current permission/Stop/cancel/writer/hold guards and held read/CAS participants; not JSON fields.",
+      "entry_predicates": [
+        "P1",
+        "P2",
+        "P6_references",
+        "P7",
+        "P10"
+      ],
+      "final_predicates": [
+        "P1",
+        "P2",
+        "P6_references",
+        "P7",
+        "P10"
+      ],
+      "after_helpers_boundary": "Repeat complete independently derived full-source/full-output predicate after every returning helper, immediately before own source disclosure; no returning helper/callback/logger/async gap.",
+      "native": "NOT_RUN",
+      "publication": "none: original source disclosure only; no new original business operation, capture row, Event or native Workflow mutation",
+      "phase_source_rule": "Only complete real inputs for this original phase are required; no later invocation/result/runtime/native-final/producer candidate is required before its genuine lifecycle point. Each independently callable owner fully authenticates its own actual source/input inventory; later composition checks add, never replace, these predicates."
+    },
+    {
+      "method": "owner.workflow.certified_producer_source.read_current_references.v1",
+      "owner": "actual original actor/provider/model/account/Event reference owners",
+      "arguments": [
+        {
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_resolver_references.v1.schema.json#/$defs/ReferenceReadArgument"
+        }
+      ],
+      "result": {
+        "realm": "producer",
+        "schema_ref": "https://puppetmaster.local/proposals/goal_certified_resolver_references.v1.schema.json#/$defs/ReferenceReadResult"
+      },
+      "phase_rule": "expose_original executes within the genuine original owner operation result boundary, using its actual full input/result and issuance. read_current independently reads those exact genuine originals, never re-executes the operation. Neither a fabricated JSON argument nor expose_original called later can backfill origin.",
+      "profile": "pm.goal_run_certified.producer_source.v1",
+      "native_participant": "Actual nonserializable original owner operation/record handles, registered source-schema/codec roles, current permission/Stop/cancel/writer/hold guards and held read/CAS participants; not JSON fields.",
+      "entry_predicates": [
+        "P1",
+        "P2",
+        "P6_references",
+        "P7",
+        "P10"
+      ],
+      "final_predicates": [
+        "P1",
+        "P2",
+        "P6_references",
+        "P7",
+        "P10"
+      ],
+      "after_helpers_boundary": "Repeat complete independently derived full-source/full-output predicate after every returning helper, immediately before own source disclosure; no returning helper/callback/logger/async gap.",
+      "native": "NOT_RUN",
+      "publication": "none: original source disclosure only; no new original business operation, capture row, Event or native Workflow mutation",
+      "phase_source_rule": "Only complete real inputs for this original phase are required; no later invocation/result/runtime/native-final/producer candidate is required before its genuine lifecycle point. Each independently callable owner fully authenticates its own actual source/input inventory; later composition checks add, never replace, these predicates."
+    },
+    {
+      "method": "owner.workflow.certified_producer_source.expose_original_identity_admission.v1",
+      "owner": "actual original certified producer identity-admission owner; pending v3 route not claimed installed",
+      "arguments": [
+        {
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_source.v1.schema.json#/$defs/IdentityReadArgument"
+        }
+      ],
+      "result": {
+        "realm": "producer",
+        "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_source.v1.schema.json#/$defs/IdentityReadResult"
+      },
+      "phase_rule": "expose_original executes within the genuine original owner operation result boundary, using its actual full input/result and issuance. read_current independently reads those exact genuine originals, never re-executes the operation. Neither a fabricated JSON argument nor expose_original called later can backfill origin.",
+      "profile": "pm.goal_run_certified.producer_source.v1",
+      "native_participant": "Actual nonserializable original owner operation/record handles, registered source-schema/codec roles, current permission/Stop/cancel/writer/hold guards and held read/CAS participants; not JSON fields.",
+      "entry_predicates": [
+        "P1",
+        "P2",
+        "P9_identity",
+        "P7",
+        "P10"
+      ],
+      "final_predicates": [
+        "P1",
+        "P2",
+        "P9_identity",
+        "P7",
+        "P10"
+      ],
+      "after_helpers_boundary": "Repeat complete independently derived full-source/full-output predicate after every returning helper, immediately before own source disclosure; no returning helper/callback/logger/async gap.",
+      "native": "NOT_RUN",
+      "publication": "none: original source disclosure only; no new original business operation, capture row, Event or native Workflow mutation",
+      "phase_source_rule": "Only complete real inputs for this original phase are required; no later invocation/result/runtime/native-final/producer candidate is required before its genuine lifecycle point. Each independently callable owner fully authenticates its own actual source/input inventory; later composition checks add, never replace, these predicates."
+    },
+    {
+      "method": "owner.workflow.certified_producer_source.read_current_identity_admission.v1",
+      "owner": "actual original certified producer identity-admission owner; pending v3 route not claimed installed",
+      "arguments": [
+        {
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_source.v1.schema.json#/$defs/IdentityReadArgument"
+        }
+      ],
+      "result": {
+        "realm": "producer",
+        "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_source.v1.schema.json#/$defs/IdentityReadResult"
+      },
+      "phase_rule": "expose_original executes within the genuine original owner operation result boundary, using its actual full input/result and issuance. read_current independently reads those exact genuine originals, never re-executes the operation. Neither a fabricated JSON argument nor expose_original called later can backfill origin.",
+      "profile": "pm.goal_run_certified.producer_source.v1",
+      "native_participant": "Actual nonserializable original owner operation/record handles, registered source-schema/codec roles, current permission/Stop/cancel/writer/hold guards and held read/CAS participants; not JSON fields.",
+      "entry_predicates": [
+        "P1",
+        "P2",
+        "P9_identity",
+        "P7",
+        "P10"
+      ],
+      "final_predicates": [
+        "P1",
+        "P2",
+        "P9_identity",
+        "P7",
+        "P10"
+      ],
+      "after_helpers_boundary": "Repeat complete independently derived full-source/full-output predicate after every returning helper, immediately before own source disclosure; no returning helper/callback/logger/async gap.",
+      "native": "NOT_RUN",
+      "publication": "none: original source disclosure only; no new original business operation, capture row, Event or native Workflow mutation",
+      "phase_source_rule": "Only complete real inputs for this original phase are required; no later invocation/result/runtime/native-final/producer candidate is required before its genuine lifecycle point. Each independently callable owner fully authenticates its own actual source/input inventory; later composition checks add, never replace, these predicates."
+    },
+    {
+      "method": "owner.workflow.certified_producer_source.prepare.v1",
+      "owner": "actual original Workflow/controller producer source owner with every joined original participant",
+      "arguments": [
+        {
+          "name": "producer_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_source.v1.schema.json#/$defs/PrepareArgument"
+        },
+        {
+          "name": "native_original_source",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json#/$defs/OriginalFinalDecisionSource"
+        },
+        {
+          "name": "native_final_decision",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json#/$defs/FinalDecisionResult"
+        },
+        {
+          "name": "standard_durable_read",
+          "realm": "standard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v3.schema.json#/$defs/DurableStandardRead"
+        },
+        {
+          "name": "current_goal_argument",
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        },
+        {
+          "name": "native_certification_candidate",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json#/$defs/CertificationCandidateResult"
+        },
+        {
+          "name": "complete_producer_candidate",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_submission.v1.schema.json"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "prepared_source",
+          "results": [
+            {
+              "name": "source_result",
+              "realm": "producer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_source.v1.schema.json#/$defs/PreparedSourceResult"
+            },
+            {
+              "name": "native_certification_candidate",
+              "realm": "native",
+              "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json#/$defs/CertificationCandidateResult"
+            },
+            {
+              "name": "complete_producer_candidate",
+              "realm": "event",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_submission.v1.schema.json"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "source_result",
+              "realm": "producer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/Unavailable"
+            }
+          ]
+        }
+      ],
+      "phase_rule": "Arguments carry prior authentic original facts separately from the whole prospective producer candidate. Preparation writes no record and grants no action authority. Actual Event/Workflow publication remains separately unbound.",
+      "profile": "pm.goal_run_certified.producer_source.v1",
+      "native_participant": "Actual nonserializable original owner operation/record handles, registered source-schema/codec roles, current permission/Stop/cancel/writer/hold guards and held read/CAS participants; not JSON fields.",
+      "entry_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ],
+      "final_predicates": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ],
+      "after_helpers_boundary": "Repeat complete independently derived full-source/full-output predicate after every returning helper, immediately before own source disclosure; no returning helper/callback/logger/async gap.",
+      "native": "NOT_RUN",
+      "publication": "none: original source disclosure only; no new original business operation, capture row, Event or native Workflow mutation"
+    },
+    {
+      "method": "owner.workflow.certified_producer_source.read_retained.v1",
+      "owner": "actual original source owner and current disclosure owner",
+      "arguments": [
+        {
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/RetainedRequest"
+        }
+      ],
+      "result": {
+        "realm": "producer",
+        "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/RetainedResult"
+      },
+      "phase_rule": "Use R1-R5 retained-only predicates; require actual surviving original metadata/origin and current disclosure authority, not current original invocation/body/runtime sources. No action authority and no source reacquisition.",
+      "profile": "pm.goal_run_certified.producer_source.v1",
+      "native_participant": "Actual nonserializable original owner operation/record handles, registered source-schema/codec roles, current permission/Stop/cancel/writer/hold guards and held read/CAS participants; not JSON fields.",
+      "entry_predicates": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ],
+      "final_predicates": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ],
+      "after_helpers_boundary": "Repeat complete independently derived full-source/full-output predicate after every returning helper, immediately before own source disclosure; no returning helper/callback/logger/async gap.",
+      "native": "NOT_RUN",
+      "publication": "none: original source disclosure only; no new original business operation, capture row, Event or native Workflow mutation"
+    }
+  ],
+  "all_declared_arguments_required": true,
+  "source_shape_rule": "Complete typed originals plus exact full underlying native owner values/schema resources; provided bytes and schema IDs alone never confer source authority.",
+  "event_coordinator": "UNBOUND_SEPARATE_WORK",
+  "event_registry": "UNCHANGED",
+  "consumer": "UNCHANGED"
+}

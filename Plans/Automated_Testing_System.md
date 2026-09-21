@@ -4991,3 +4991,193 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/workflow_standard_source_contracts/protocol.md, ContractName:Plans/workflow_standard_source_contracts/methods.json, ContractName:Plans/workflow_standard_source_contracts/fresh-profile-methods.json, ContractName:Plans/workflow_standard_source_contracts/literal-resource-realms.json, ContractName:Plans/workflow_standard_source_contracts/stored-profile-routes.json, ContractName:Plans/workflow_standard_source_contracts/installation-composition.json
+
+
+## ATS-056 — Certified producer source validation and native proof separation (2026-09-21)
+
+```yaml
+plan_unit_id: ATS-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: 'Require full member/passage/schema/realm/method/field preservation checks and separate genuine
+  native acceptance for original owner capability, phase-specific final held predicates, source loss, account reference
+  refusal, no coercion, exact causality, retained/current separation and fresh installation. Static/source PASS
+  does not prove native operations, Event identity/coordinator, registry/consumer depth, durability or readiness.
+  Acceptance requires separately executed original-owner capability, final-held-boundary, codec, source-loss, fresh-installation
+  and retention/currentness evidence before any native qualification. The complete source contract is Plans/goal_certified_producer_source_contracts/protocol.md
+  together with all fourteen whole methods, five complete schemas, original native participants, commitment domains
+  and the five isolated resource banks. Every applicable original owner source, complete candidate, independent
+  phase entry and final pure held predicate remains mandatory. This canonical source placement is uninstalled: fixed
+  pm.executor.workflow_source.all_writers.v6 is unchanged, old births cannot enroll, and live support requires a
+  separately reviewed fresh native successor and complete producer binding. No certified-v3 identity recipe, Event/native/D01
+  coordinator, Event registry selection, certified consumer/checkpoint, new physical family or archive is supplied.
+  Native execution, codec/transaction/durability/recovery and end-to-end qualification remain NOT_RUN.'
+gui_related: false
+source_lineage:
+- external-producer-source:sha256:909076c30ddf146bc254dca904021009a9cb36f3aee0e60718a61275c16492d7
+- independent-source-review:sha256:eb362a198cdcb566bc8ae61d2a85c53d99f6f557f5d56ecb376e803acc0c3366
+- conditional-native-base:13e7dbc0f1c36c9883420dd3d0fabd6758e54a60
+- owner-placement-manifest:sha256:4273d4aa14486c7e0c553a8de7b08819615befa95cac1f52c0a91f7af94c0a02
+depends_on:
+- ATS-055
+- PDS-003
+unblocks: []
+acceptance_criteria:
+- All accepted complete source methods/schemas/native participants and final predicates survive without replacement
+  projections.
+- Source v1 remains uninstalled on closed native v6; any fresh native successor receives its own whole schema/role/digest
+  review.
+- No original policy, owner choice, Event identity/registration/coordinator/consumer, native proof or governance
+  gate is manufactured.
+validation_surfaces:
+- Plans/goal_certified_producer_source_contracts/installation-composition.json
+- Plans/goal_certified_producer_source_contracts/resource-realms.json
+- independent complete original-source/schema/role preservation audit
+- Plans/goal_certified_producer_source_contracts/methods.json
+- Plans/goal_certified_producer_source_contracts/resource-realms.json
+- Plans/goal_certified_producer_source_contracts/native-participants.json
+risk_class: original_source_authority_and_installation_scope
+reasoning_tier: high
+context_scope: ats-056_certified_producer_source
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/goal_certified_producer_source_contracts
+node_compile_hint:
+  mode: source_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+gui_classification_reason: Original source, authority, custody and installation contracts; no new visual presentation.
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-056, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_producer_source_contracts/protocol.md, ContractName:Plans/goal_certified_producer_source_contracts/methods.json, ContractName:Plans/goal_certified_producer_source_contracts/installation-composition.json
+
+
+## ATS-057 — Twelve complete source-to-native acceptance facets with truthful NOT_RUN boundaries (2026-09-21)
+
+```yaml
+plan_unit_id: ATS-057
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: 'Acceptance covers twelve separate facets CF-01 through CF-12: whole wire/identity and exact original
+  field equality; genuine producer assignment/invocation/resolver acquisition; successful native/required-node/D01
+  chain; fresh profile/resource/method/route closure; I0 pure candidate chronology and one joint B1 birth; F5 append
+  barriers/complete group/exact dedupe; atomic native/D01 commit and held release; actual independent source/Goal/Guard
+  boundaries; separate retained/full Event/historical/current reads; contiguous global prefix and deterministic
+  reducer; atomic checkpoint/CAS/generation cutover; exact source lifetimes/coherent restore. Every facet needs
+  complete positive and negative whole values with original source coordinates and exact expected outcomes. Static
+  schema/ref/mapping checks establish source shape only. Synthetic source-equality snapshots, deterministic reducers
+  and in-memory transaction adapters must be labeled TEST_ONLY and cannot establish authentic owner issuance, production
+  native transactions, codec, durability, recovery, Event depth or readiness. Native installation, real source acquisition,
+  barrier/transaction interruption/crash/CAS, expiry/holds/deletion and restore evidence remain NOT_RUN until separately
+  executed. Preserve all 285 original Storage rows, all 27 policy objects and 41 Event siblings; prove the sole
+  certified row delta and complete owner prefixes/citations. Derive and independently check the actual final whole-file/logical-value
+  hash graph after final owner and registry bytes freeze; reject missing edges, stale hashes, scope ambiguity, self/back
+  edges and any owner-to-consuming-descriptor hash cycle. This version-scoped complete family supplies the previously
+  unbound certified-v3 identity/coordinator/Event selection and passive consumer source roles only for a genuine
+  fresh pm.executor.workflow_source.all_writers.v7 birth and pm.goal_run_certified.producer_source.v2 prepare.v2
+  binding. Earlier native-v6 and producer-v1 source editions and old started/cancelled branches retain their original
+  closed scope; no existing birth is enrolled or cast. The complete methods, protocols, schemas, phase and participant
+  tuples, isolated resource banks and physical/lifetime contracts under Plans/goal_certified_event_coordinator_contracts/,
+  Plans/workflow_standard_source_contracts/native-v7/, Plans/goal_certified_producer_source_contracts/ (including
+  native-v7/) and Plans/goal_run_certified_consumer_contracts/ are normative together. Source acceptance and registry
+  classification establish neither installed native authority nor execution, codec, transaction, durability, recovery,
+  Event-depth or readiness proof. All such native evidence remains NOT_RUN. No WorkNode or NodeSeed is created.'
+gui_related: false
+source_lineage:
+- certified-family-placement:sha256:41a4d703b475c2668b243b043934bf0e3a0f22f33c1e663b339aa1aa2395099c
+- root-placement-review:sha256:00981271bf2b645c3610804251ce240f83f3d121ab2c654b0fe98b3c5396909c
+- accepted-header-source:sha256:dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe
+- producer-repin-source:sha256:ad4c49b5e1fb43425a390c9cb666a95503483699779dfdb860ec770d2e06376a
+- consumer-repin-source:sha256:e6f9be4094e68b5d690e93db45ba3199ccff20a1c72fe93264aadf822ed1896d
+depends_on:
+- PDS-003
+- ATS-056
+unblocks: []
+acceptance_criteria:
+- Preserve the complete scoped source and every original entry/final/phase/type/lifetime predicate.
+- Use complete canonical resources and exact isolated original retrieval scopes; prove full inverse metadata and
+  actual final acyclic hash graph.
+- Native installation, authentic original source capabilities, execution, codec/transaction/durability/recovery
+  and end-to-end readiness remain NOT_RUN.
+- 'CF-01 Whole wire and identity: Validate whole v3 Event with required-present null payload_ref and exact original
+  source-to-field equality; reproduce identity domain preimage including Unicode and numeric boundaries. Negative:
+  Reject absent nullable fields, alternate number representation, normalization, altered ID/time/actor/cause, extension
+  properties and partial payload witnesses. Evidence: Complete source-shape vectors plus independently recomputed
+  exact bytes/hash; native original identity issuance remains NOT_RUN.'
+- 'CF-02 Producer assignment and invocation: Acquire complete actual assignment, invocation, requested/effective
+  resolver and causality sources; all original own-entry/final checks and whole producer output succeed. Negative:
+  Reject one-field selectors, caller-issued source census as capability, mismatched effective model/provider, stale
+  invocation, unbound cause or source drift at final boundary. Evidence: Whole original root validation and semantic
+  mapping; real reader admission and native issuance separately required.'
+- 'CF-03 Native successful chain: Original native Workflow successful result, required nodes, D01 evidence and retained
+  original operation/origin all validate together. Negative: Reject missing node, failed/cancelled/waived node,
+  stale D01, manufactured origin or exception shortcut. Evidence: Full positive/negative native argument roots plus
+  actual owner-native evidence before readiness.'
+- 'CF-04 Fresh profile and exact resource closure: Bind all actual participants before genuine all_writers.v7 birth;
+  every complete method root resolves in its original bank including exact historical Handoff. Negative: Reject
+  old birth enrollment, v6-as-v7 header cast, schema fragment packets, missing whole owner resource and historical
+  URI routed to current distinct body. Evidence: Machine resource/method/route closure and actual digest DAG, separately
+  genuine birth installation NOT_RUN.'
+- 'CF-05 Preidentity chronology: Construct native birth then compact Birth and initial empty Control in pure candidate/preimage
+  dependency order only; B1 then coissues all three in ONE actual original native birth transaction. No sequential
+  durable births or intermediate published birth/control. Negative: Reject requirement for future P9/certified append
+  custody in I0, cyclic birth/control commitments or identity from unissued caller values. Reject any separately
+  durable native birth, compact Birth or initial Control, or partial visibility before joint B1 commit. Evidence:
+  Whole I0 typed roots and chronology witness; actual original source capability proof required.'
+- 'CF-06 Append barriers and exact dedupe: Run pre-append validation, actual barriers, original all-member append
+  custody, then full EventPhase; retry equal original tuple dedupes exactly. Negative: Reject future custody at
+  F5a, no barrier, unequal retry, partial member group, manufactured append receipt or unheld append. Evidence:
+  Complete phase witnesses and transaction/barrier interruption matrix; native append/barriers NOT_RUN.'
+- 'CF-07 Joint native D01 commit and release: Native result/origin, D01 and compact commit custody publish atomically;
+  required held phases remain unavailable until exact release. Negative: Reject visible certified pending record,
+  release before commit, partial native/D01 commit, duplicate conflict or repair from projector reads. Evidence:
+  Native transaction crash/fault evidence with complete original before/after custody, NOT_RUN until executed.'
+- 'CF-08 Actual source/Goal/guard boundary: Every source method independently obtains full native, separate Goal
+  and guard values at own entry and final boundary; complete guard same-boundary success. Negative: Reject guard
+  omitted by helper, borrowed reader authority, stale guard epoch, cross-Goal cause or mutable source drift between
+  acquisition and use. Evidence: Complete typed argument census plus real owner issuance/currentness proof, no test-only
+  snapshot authority upgrade.'
+- 'CF-09 Retained, full Event and historical reads: Retained original receipt read and full Event inspection remain
+  separate; historical whole original graph is immutable; current reads require actual live graphs. Negative: Reject
+  payload-only Event inspection, mutable reacquisition for historical claim, missing/expired original source or
+  passive read causing append/release/repair. Evidence: Whole complete root witnesses and bounded semantics plus
+  later native sources.'
+- 'CF-10 Global prefix and deterministic reducer: Validate exact global contiguous prefix including off-run generic
+  Events, supported same-run started/cancelled/certified transitions, deterministic output. Negative: Reject gap/reorder,
+  malformed off-run frame, unsupported same-run replanned/blocked/stopped, conflicting lifecycle or scope. Evidence:
+  Whole generic Event and legacy method-root witnesses; complete old/current branch adapters, no single-field placeholders.'
+- 'CF-11 Atomic checkpoint and generation cutover: Publish row and own complete checkpoint in one actual CAS transaction;
+  bound generation stage, replay frontier and cutover are coherent under exact 3GEN. Negative: Reject stale root
+  CAS, checkpoint-ahead row, partial staging, premature cutover, fourth generation or unchecked replay frontier.
+  Evidence: Bounded synthetic transaction examples only for source; actual crash/CAS/isolation evidence NOT_RUN.'
+- 'CF-12 Lifetime and coherent restore: Keep exact authority and source-coupled Event lifetime, original Start expiry,
+  mandatory original custody; restore optional derived root/generation/dataset coherently after holds/deletion/permissions
+  and current-source checks. Negative: Reject certified-indefinite copy of expired Start, full-body archive, rebuilt
+  authority, partial backup generation, deleted source resurrection or holds bypass. Evidence: Exact unchanged 27
+  policy values/285 rows and whole backup/source witnesses; real restore native execution NOT_RUN.'
+validation_surfaces:
+- Plans/goal_certified_event_coordinator_contracts/protocol.md
+- Plans/goal_certified_event_coordinator_contracts/phase-boundaries.json
+- Plans/goal_certified_event_coordinator_contracts/participant-method-tuples.json
+- Plans/goal_run_certified_consumer_contracts/protocol.md
+- Plans/goal_certified_family_composition.json
+risk_class: original_source_authority_native_transaction_and_lifetime
+reasoning_tier: high
+context_scope: ats-057_whole_certified_family
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/goal_certified_event_coordinator_contracts
+- Plans/goal_certified_producer_source_contracts
+- Plans/workflow_standard_source_contracts/native-v7
+- Plans/goal_run_certified_consumer_contracts
+node_compile_hint:
+  mode: source_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+gui_classification_reason: Original source, native authority/custody, schema, storage or passive consumer contract;
+  no new visual presentation.
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-057, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json

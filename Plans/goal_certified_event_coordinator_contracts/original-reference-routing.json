@@ -1,0 +1,88 @@
+{
+  "status": "PASS",
+  "proof": "WHOLE_SOURCE_LITERAL_REFERENCE_CLOSURE_ONLY",
+  "implementation": "Direct original scoped Registry dispatch. No resource or instance is rewritten. Inverse identity preserves original bank/retrieval/schema location. Target retained bank has its own complete checked dependency closure.",
+  "new_explicit_edges": [
+    {
+      "from_realms": [
+        "native",
+        "current_d05_source"
+      ],
+      "unresolved_retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+      "to_realm": "retained_original_d05",
+      "to_retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+      "whole_target_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "rule": "Exact missing original edge only; nested resolution remains retained_original_d05; all current admission/source predicates remain current; no merged banks, rewritten strings, namespace copies, network or host filesystem retrieval",
+      "adjudication_manifest": "external-source-evidence:sha256:841d64af878be8a8305af9d0a9ae88ff7b398b4c556ead3748792d3c67a86069",
+      "adjudication_manifest_sha256": "841d64af878be8a8305af9d0a9ae88ff7b398b4c556ead3748792d3c67a86069"
+    }
+  ],
+  "realms": {
+    "native": {
+      "resources": 139,
+      "reference_locations": 15118,
+      "cross_realm_locations": 22
+    },
+    "goal": {
+      "resources": 41,
+      "reference_locations": 3393,
+      "cross_realm_locations": 0
+    },
+    "standard": {
+      "resources": 5,
+      "reference_locations": 477,
+      "cross_realm_locations": 0
+    },
+    "event": {
+      "resources": 78,
+      "reference_locations": 9266,
+      "cross_realm_locations": 0
+    },
+    "producer": {
+      "resources": 8,
+      "reference_locations": 749,
+      "cross_realm_locations": 0
+    },
+    "coordinator": {
+      "resources": 5,
+      "reference_locations": 210,
+      "cross_realm_locations": 0
+    },
+    "current_d05_source": {
+      "resources": 139,
+      "reference_locations": 14994,
+      "cross_realm_locations": 22
+    },
+    "current_goal_control": {
+      "resources": 42,
+      "reference_locations": 3402,
+      "cross_realm_locations": 0
+    },
+    "retained_original_d05": {
+      "resources": 71,
+      "reference_locations": 6702,
+      "cross_realm_locations": 0
+    },
+    "filesafe_injective_owner": {
+      "resources": 71,
+      "reference_locations": 6724,
+      "cross_realm_locations": 0
+    },
+    "start_retained_original_d01_d06": {
+      "resources": 48,
+      "reference_locations": 5245,
+      "cross_realm_locations": 0
+    }
+  },
+  "dynamic_semantics": "No dynamic/recursive reference or anchor occurs anywhere in selected closure",
+  "errors": [],
+  "native": "NOT_RUN",
+  "instances": "NOT_RUN",
+  "complete_per_location_evidence": {
+    "path": "external-source-evidence:sha256:2987d65a9e5e99ced9c280b4e8c0d3f44ba599c6c8fce5f20c645fd023ed3ae6",
+    "sha256": "2987d65a9e5e99ced9c280b4e8c0d3f44ba599c6c8fce5f20c645fd023ed3ae6",
+    "bytes": 99119559,
+    "reference_locations": 66280,
+    "scope_dialect_anchor_observations": 1238
+  }
+}

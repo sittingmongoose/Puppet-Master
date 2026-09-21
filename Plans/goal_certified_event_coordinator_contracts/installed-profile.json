@@ -1,0 +1,224 @@
+{
+  "profile": "pm.executor.workflow_source.all_writers.v7",
+  "status": "CANONICAL_COMPLETE_SOURCE_FAMILY_NOT_INSTALLED",
+  "predecessor_native_profile": "pm.executor.workflow_source.all_writers.v6",
+  "predecessor_native_profile_whole_sha256": "06310d70ceced923656d6c328f0556bdf1b5f4f6e96cb273bb97795718bf9444",
+  "producer_source_profile": "pm.goal_run_certified.producer_source.v2",
+  "producer_source_profile_digest": "599315856a4ed180623b7b7ac68e64eaa8ae92c8be2c0f0fcc44d2eab94f97cc",
+  "members": [
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/commitment-domains.json",
+      "sha256": "0382f823c4db4a4a6137071354344ebead91513a66a557ea659d5612472360b6",
+      "bytes": 4393
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/correction-evidence.json",
+      "sha256": "2059dae541d9a3202e43d8578493f558f7cdad8efd2b1ace56a5eea05285d502",
+      "bytes": 1178
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/dependencies.json",
+      "sha256": "c4939c4f7bbc65c9b28fc2587c8473fb7b043492d8d356d47c0c483a2b6c0781",
+      "bytes": 840
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/method-root-bindings.json",
+      "sha256": "1f0aa40617d56bfb4bfad8306f69232425e55b6bebdfdec9caae52a2fae3d0f1",
+      "bytes": 445734
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/methods.json",
+      "sha256": "aa6d683e414cc7a0119acd6f7bf630f3533db6a94113be081945bf0c4c0e257d",
+      "bytes": 54713
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/native-participants.json",
+      "sha256": "d55fd2a116d4a4c1b7da37134901e13063cd2b1aeb9c7b35715ce9b4b103f354",
+      "bytes": 10262
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/commitment-domains.json",
+      "sha256": "b4b54fa50a0da4c2c0fd0cb7a800e85add86ae056ffec357364f0476f7f2ad13",
+      "bytes": 9231
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/first-attempt-stage-map.json",
+      "sha256": "3f75795716df0c1aea3691e4d8a7ebc487210fa46ac8958c6b39f12d6d9e144d",
+      "bytes": 4160
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/fresh-profile-methods.json",
+      "sha256": "f23bee216c0871c7d5205c85bf2706eedc8c778a59fc84958199709dcf981cea",
+      "bytes": 181220
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/identity-map.json",
+      "sha256": "c4cd8ab7e877791838a93f20ed836ccb78cbb13bf9726896bc91a3282f19e601",
+      "bytes": 13388
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/literal-resource-realms.json",
+      "sha256": "dca277d68babd320edc87793caed8ea483b641842775c1ca9510c73991a03949",
+      "bytes": 309993
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/methods.json",
+      "sha256": "b701cbab89146fb5103e957d7173e55ced79f91c318524d4e627c2b823042bc0",
+      "bytes": 26208
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/native-field-map.json",
+      "sha256": "3dd640512f1472457a75fae3094e885d3165b66959500048851e5a040ec81cce",
+      "bytes": 21952
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/physical-contracts.json",
+      "sha256": "d7b7fee9c1bb95b72877430e0887fc316ecde1f570a3ca7c0a0e4aecbc3d8b15",
+      "bytes": 8803
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
+      "sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054",
+      "bytes": 71464
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/safestop-start-arguments.v2.schema.json",
+      "sha256": "5431b28e798b726aef7994ae46e51df164ed4c1719317f14bc2a07fda544f24a",
+      "bytes": 1968
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-positive-arguments.v2.schema.json",
+      "sha256": "ec8c346caffabb0bbb06285197e5ed04bfb44ffa8b6dfa02a038aef8a5b9bdd8",
+      "bytes": 4910
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-start-profile.v6.schema.json",
+      "sha256": "747100bb06ed4c718f4f38a0fee7133b1e45d10a3c04c5d8f25a3bfd7683386c",
+      "bytes": 38600
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-original-start.v6.schema.json",
+      "sha256": "8e82034b4874fa7397c3ea44d7785b290ed2253281731648846505516914d376",
+      "bytes": 79884
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-certification-argument.v4.schema.json",
+      "sha256": "830d20024033a6e1edc32c847363a523a44fe47acd2abcd84413f8a58f4131fa",
+      "bytes": 6672
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-current-source.v4.schema.json",
+      "sha256": "7bd88c4a7cc2b7f32af173d18c470d64e13e296170e358fcd39fe8e64b6bbbb0",
+      "bytes": 101666
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-event-prerequisite.v4.schema.json",
+      "sha256": "ab8350e1f7b60c2c8b37fcb3ddb29da43a003d5b032aef145a0b220ef47f6274",
+      "bytes": 6581
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-arguments.v6.schema.json",
+      "sha256": "3f9b2fc8d768d462db1b4ac950854e0d7f2fc13982e0bbc1422e5ecb81bdbd88",
+      "bytes": 4120
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-custody.v6.schema.json",
+      "sha256": "9209a5b923cb279c4176ccf3b648a8381c4afae541220cd397329558db5266d2",
+      "bytes": 44259
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/native-v7/stored-profile-routes.json",
+      "sha256": "d0c0572a2c19228487795df4b28cbb4fc8115aa2e91efe2ce6510462f61b1757",
+      "bytes": 60889
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/original-reference-routing.json",
+      "sha256": "abbbd9624103eb50b763c6e45d53fe62647d363402eb5460b607b4d3dd54b911",
+      "bytes": 3375
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/owner-source-custody-map.json",
+      "sha256": "4cf5d5a10cb749d34689904a051d2f0a8269c4b747c58effd3bea9e59765b830",
+      "bytes": 10588
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/participant-method-tuples.json",
+      "sha256": "0d7f51b0f254f5f1ff3a93439c74e3e512fc296ac1f7795d1e5dc1186e83086c",
+      "bytes": 382137
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/phase-boundaries.json",
+      "sha256": "2051bdf65c434e4a385c48717c7d3eb469bfa23227ea2e554b98f63dad478887",
+      "bytes": 19199
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/physical-retention-install.json",
+      "sha256": "5e833fdc231c55380190cbf2472c79d70546aef57b441a4a149cbc3f0293b180",
+      "bytes": 7875
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/installed-profile-digest.txt",
+      "sha256": "44b5edce277ac56e00443c922ba2098eee4eb52dd0c163ccffa81eccb285a11a",
+      "bytes": 65
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/installed-profile.json",
+      "sha256": "fc776660042f0257053554f5da6a5ba25ce7a3e9ed9edd29c346174cb755e22f",
+      "bytes": 6002
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/methods.json",
+      "sha256": "bf82bcf31ba15a10ccb33cebecae6e89e217bdf706b6dc7bc007ce7acbf02877",
+      "bytes": 33513
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/protocol.md",
+      "sha256": "02434e35116950935b412a0b0b1b0c414e811d3259d4f69d756028a09fc0ab1d",
+      "bytes": 28898
+    },
+    {
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/whole-source-bindings.json",
+      "sha256": "b4491085b3cb24ade2241a965afc3fcb3aa300a025da23c4fc895cb8418f5464",
+      "bytes": 6069
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/protocol.md",
+      "sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a",
+      "bytes": 39451
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/resource-realms.json",
+      "sha256": "86498dd16e4966d2a7e6924746a1bab28cab533ca78e1bf4907b4ce39ab024a7",
+      "bytes": 314410
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/schemas/append-phase.v1.schema.json",
+      "sha256": "81958febf169253ce6349c29ddf2bde98df5182df1c2aa74a01d7be72ac316fd",
+      "bytes": 2435
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/schemas/coordinator.v1.schema.json",
+      "sha256": "274bb7363140e13769bd75a1fdf6eaa6688f2d8699b271182fc90bce0ee88140",
+      "bytes": 54273
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/schemas/identity.v1.schema.json",
+      "sha256": "c684141ada201397dce84c6f738c89b15d5951466804b185308e3edc92e12212",
+      "bytes": 4222
+    },
+    {
+      "path": "Plans/goal_certified_event_coordinator_contracts/whole-inherited-contracts.json",
+      "sha256": "b624023488cb57fd9951b338f9fcfeebc301bd502ba34f9e9af72f23a2d886ac",
+      "bytes": 6555
+    },
+    {
+      "path": "Plans/goal_certified_original_scope_dispatch.json",
+      "sha256": "b3a95da247c8588a11fa4345ad41e05d9fb1deeee82b9d20bf9d228ca70c7787",
+      "bytes": 2901560
+    }
+  ],
+  "birth_rule": "Actual native WorkflowBirth.writer_contract is exactly all_writers.v7; installed_contract_digest equals SHA-256 of this entire sorted-key compact UTF-8 JSON preimage with no prefix or trailing LF. It contains all native/producer/coordinator leaves and producer subprofile. No constituent preimage hashes this enclosing descriptor or manifest. All real participants and queues must be installed before fresh birth.",
+  "registry_selection": "Plans/event_family_registry.json existing event-family-goal-run-certified selects whole certified-v3 payload under GRS-084; actual native append admission remains NOT_RUN",
+  "consumer": "Plans/goal_run_certified_consumer_contracts/installed-profile.json is separate passive component; complete actual installation/source/currentness required before admission, native NOT_RUN",
+  "native": "NOT_RUN"
+}

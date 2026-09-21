@@ -1,0 +1,38 @@
+{
+  "source_json_codec": "pm.goal.certified_producer_source_json.v1 as fully specified in protocol.md; exact integers and no floats",
+  "native_source_json_codec": "pm.goal.certification_source_json.v1 unchanged in whole native-v7 commitment-domains.json",
+  "selector_sha256": "SHA-256 exact original physical bytes at the named key under that family's original codec; new compact family wrappers use messagepack_canonical, never source-JSON substituted for physical bytes",
+  "prepared_intent_sha256": "SHA-256 exact full prospective StorageIntent wrapper physical bytes, constructed from entire Intent. No Intent or source field contains this hash or enclosing Prepared result.",
+  "whole_producer25_sha256": "SHA-256 source_json_codec of entire producer-owned 25-field candidate, including schema_id/schema_version/event_id/replay_policy and all required-present nulls",
+  "producer_semantic_digest": {
+    "codec": "RFC8785 canonical JSON followed by SHA-256, unchanged CV-1029",
+    "fields": ["event_type", "scope_kind", "project_id", "thread_id", "run_id", "node_id", "attempt_id", "actor_ref", "requested_account_ref", "effective_account_ref", "occurred_at_utc", "producer_sequence_id", "correlation_id", "causation_event_id", "parent_event_id", "idempotency_key", "payload_schema_id", "payload", "payload_ref", "redaction_profile", "migration"]
+  },
+  "new_phase_commitments": {
+    "whole_first_append_receipt_sha256": "source_json_codec over complete genuinely issued first AppendReceipt; does not replace original receipt owner commitments",
+    "original_full_value_result_sha256": "source_json_codec over complete original three-field full_value_result",
+    "original_event_value_sha256": "the genuine original_event_value_commitment's original stored-value SHA field under its original canonical MessagePack domain",
+    "active_group_sha256": "source_json_codec over complete original active_durable_group; does not replace original group_digest",
+    "all_member_custody_sha256": "source_json_codec over ordered complete AppendEvidence.members, including each full Event, custody and full_value_result; committed hash does not retain those mutable/full source values",
+    "whole_native_published_union_sha256": "source_json_codec over whole authentic PublishedWorkflow result, including its complete result/origin/lineage/current at original issuance; stored hash does not retain full old native values",
+    "whole_post_native_readback_sha256": "source_json_codec over ordered array [complete actual PublishedWorkflow, entire OriginalEventPrerequisite, entire AppendEvidence] at genuine post-native held readback",
+    "whole_release_current_sources_sha256": "source_json_codec over ordered array [whole OriginalCertificationSource as originally held, whole unchanged current Goal argument, whole genuine DurableStandardRead, whole original producer source, whole IdentityResult, entire post-native current PublishedWorkflow, entire current OriginalEventPrerequisite, entire AppendEvidence] with phase-aware independent currentness checks"
+  },
+  "schema_instance_check": "NOT_RUN",
+  "acyclic_runtime_order": [
+    {"node": "original_source", "depends_on": []},
+    {"node": "durable_standard", "depends_on": ["original_source"]},
+    {"node": "identity", "depends_on": ["original_source", "durable_standard"]},
+    {"node": "whole_producer_source", "depends_on": ["original_source", "identity"]},
+    {"node": "full_candidates", "depends_on": ["original_source", "durable_standard", "whole_producer_source"]},
+    {"node": "intent", "depends_on": ["full_candidates", "original_source", "whole_producer_source"]},
+    {"node": "event_and_first_custody", "depends_on": ["intent", "full_candidates", "durable_standard"]},
+    {"node": "event_phase", "depends_on": ["intent", "event_and_first_custody"]},
+    {"node": "native_result", "depends_on": ["original_source", "durable_standard", "event_and_first_custody", "full_candidates"]},
+    {"node": "native_origin", "depends_on": ["native_result"]},
+    {"node": "d01_lineage", "depends_on": ["native_result", "native_origin"]},
+    {"node": "commit", "depends_on": ["intent", "event_phase", "native_result", "native_origin", "d01_lineage"]},
+    {"node": "origin", "depends_on": ["commit"]},
+    {"node": "release", "depends_on": ["commit", "origin", "event_phase", "native_result", "native_origin", "d01_lineage"]}
+  ]
+}

@@ -830,13 +830,58 @@
       "path": "Plans/workflow_standard_source_contracts/header-correction-inverse.json",
       "sha256": "113eb2f08827d804c9175b094ea14184bac874f72fae675da498bbc9f9e4f421",
       "bytes": 4966
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/06310d70ceced923656d6c328f0556bdf1b5f4f6e96cb273bb97795718bf9444/installed-profile.json",
+      "sha256": "06310d70ceced923656d6c328f0556bdf1b5f4f6e96cb273bb97795718bf9444",
+      "bytes": 2756
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358/workflow-original-start.v5.schema.json",
+      "sha256": "1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358",
+      "bytes": 79884
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/29f110a733d6fb5dd313c605881b0e85760fc593e1bfcfee020b644951557eac/installation-composition.json",
+      "sha256": "29f110a733d6fb5dd313c605881b0e85760fc593e1bfcfee020b644951557eac",
+      "bytes": 41766
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/29f47cab60fa7af5ee6e3f5e86453338f6743472b474957d9be26cd5f6c7a068/relocation-map.json",
+      "sha256": "29f47cab60fa7af5ee6e3f5e86453338f6743472b474957d9be26cd5f6c7a068",
+      "bytes": 225516
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/3fc8eabf40ae0a3cca7e40a369ddecd8734ba940eddd94e524450c75d66b0e1a/README.md",
+      "sha256": "3fc8eabf40ae0a3cca7e40a369ddecd8734ba940eddd94e524450c75d66b0e1a",
+      "bytes": 4477
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/580b6b349bd41f7361aee6982ef7632f4b46fe4a61c806d294fb3a44a81ef757/stored-profile-routes.json",
+      "sha256": "580b6b349bd41f7361aee6982ef7632f4b46fe4a61c806d294fb3a44a81ef757",
+      "bytes": 60837
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/6cf8c0ae3342ad7d28670b85f81aa46d4847f815aeea7b09e7d2bc03c81d461d/workflow-cancel-start-profile.v5.schema.json",
+      "sha256": "6cf8c0ae3342ad7d28670b85f81aa46d4847f815aeea7b09e7d2bc03c81d461d",
+      "bytes": 38464
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/85172c4c4883a4fd4da20059f62305f376a8c6e138778ebd0189d2ecd3567449/literal-resource-realms.json",
+      "sha256": "85172c4c4883a4fd4da20059f62305f376a8c6e138778ebd0189d2ecd3567449",
+      "bytes": 93500
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/bd9732437e80525f8cc91ed25473a867bad0a8e76372e1c11c1e9b3a71315372/installed-contract-digest.txt",
+      "sha256": "bd9732437e80525f8cc91ed25473a867bad0a8e76372e1c11c1e9b3a71315372",
+      "bytes": 65
     }
   ],
   "realms_separate": true,
   "native": "NOT_RUN",
   "event_admission": false,
   "counts": {
-    "package_members": 165,
+    "package_members": 174,
     "resource_selections": 207,
     "new_methods": 18,
     "stored_profile_deltas": 11,

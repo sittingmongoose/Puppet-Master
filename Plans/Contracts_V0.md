@@ -23238,3 +23238,143 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/workflow_standard_source_contracts/protocol.md, ContractName:Plans/workflow_standard_source_contracts/methods.json, ContractName:Plans/workflow_standard_source_contracts/fresh-profile-methods.json, ContractName:Plans/workflow_standard_source_contracts/literal-resource-realms.json, ContractName:Plans/workflow_standard_source_contracts/stored-profile-routes.json, ContractName:Plans/workflow_standard_source_contracts/installation-composition.json
+
+
+## CV-351 — Whole certified producer schema transport and isolated source realms (2026-09-21)
+
+```yaml
+plan_unit_id: CV-351
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'Adopt the five complete source schemas, all fourteen complete methods, original semantic and encoded
+  source equality, exact codecs and acyclic commitments. Preserve all five isolated literal resource banks and actual
+  native fixed-owner whole-source registration. Whole schema/value carriers confer no authority. Retain complete
+  source and prospective result domains separately, exact narrower Event semantic digest and required-present nulls;
+  no schema extraction or same-ID rebinding. The complete source contract is Plans/goal_certified_producer_source_contracts/protocol.md
+  together with all fourteen whole methods, five complete schemas, original native participants, commitment domains
+  and the five isolated resource banks. Every applicable original owner source, complete candidate, independent
+  phase entry and final pure held predicate remains mandatory. This canonical source placement is uninstalled: fixed
+  pm.executor.workflow_source.all_writers.v6 is unchanged, old births cannot enroll, and live support requires a
+  separately reviewed fresh native successor and complete producer binding. No certified-v3 identity recipe, Event/native/D01
+  coordinator, Event registry selection, certified consumer/checkpoint, new physical family or archive is supplied.
+  Native execution, codec/transaction/durability/recovery and end-to-end qualification remain NOT_RUN.'
+gui_related: false
+source_lineage:
+- external-producer-source:sha256:909076c30ddf146bc254dca904021009a9cb36f3aee0e60718a61275c16492d7
+- independent-source-review:sha256:eb362a198cdcb566bc8ae61d2a85c53d99f6f557f5d56ecb376e803acc0c3366
+- conditional-native-base:13e7dbc0f1c36c9883420dd3d0fabd6758e54a60
+- owner-placement-manifest:sha256:4273d4aa14486c7e0c553a8de7b08819615befa95cac1f52c0a91f7af94c0a02
+depends_on:
+- CV-350
+- PDS-003
+unblocks: []
+acceptance_criteria:
+- All accepted complete source methods/schemas/native participants and final predicates survive without replacement
+  projections.
+- Source v1 remains uninstalled on closed native v6; any fresh native successor receives its own whole schema/role/digest
+  review.
+- No original policy, owner choice, Event identity/registration/coordinator/consumer, native proof or governance
+  gate is manufactured.
+validation_surfaces:
+- Plans/goal_certified_producer_source_contracts/installation-composition.json
+- Plans/goal_certified_producer_source_contracts/resource-realms.json
+- independent complete original-source/schema/role preservation audit
+- Plans/goal_certified_producer_source_contracts/methods.json
+- Plans/goal_certified_producer_source_contracts/resource-realms.json
+- Plans/goal_certified_producer_source_contracts/native-participants.json
+risk_class: original_source_authority_and_installation_scope
+reasoning_tier: high
+context_scope: cv-351_certified_producer_source
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/goal_certified_producer_source_contracts
+node_compile_hint:
+  mode: source_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+gui_classification_reason: Original source, authority, custody and installation contracts; no new visual presentation.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-351, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_producer_source_contracts/protocol.md, ContractName:Plans/goal_certified_producer_source_contracts/methods.json, ContractName:Plans/goal_certified_producer_source_contracts/installation-composition.json
+
+
+## CV-352 — Exact whole identity/coordinator/consumer schema roots, method tuple closure and isolated literal resource banks (2026-09-21)
+
+```yaml
+plan_unit_id: CV-352
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Bind complete whole resources for coordinator Identity, AppendPhase, all seven closed storage wrappers,
+  native-v7 current/Start/cancel/Standard schemas, producer original-sources/assignment/invocation/submission/resolver
+  schemas, all ninety field mappings, consumer schema and three complete legacy structural companions. Every private
+  argument/result method root resolves in its declared isolated bank; preserve each literal URI, whole-resource
+  hash, original complete-record pointer and original source scope, including historical Handoff variants. No extracted
+  defs packet, cross-bank merge, fallback network/host path, newest-same-ID substitution, selector-only guard/source
+  witness or caller-issued capability is accepted. Frozen literal file retrieval URIs remain offline identities
+  with explicit whole-resource rows. Canonical metadata paths select exact complete files; separately named original
+  lineage never substitutes for an operative dependency. Both producer-v2 members/11 and coordinator whole-inherited-contracts/4
+  bind the entire accepted transformed ninety-field producer map. Consumer owner/source citations bind final complete
+  owner/registry bytes while separately preserving authenticated complete originals and unchanged cited passages.
+  Profile digests are SHA-256 of the entire sorted-key compact UTF-8 JSON preimage without prefix or trailing LF.
+  They differ from whole-file hashes and CV339 native value encoding. Descriptors follow the actual acyclic dependency
+  graph and never hash an enclosing future digest. Plans/goal_certified_original_scope_dispatch.json binds every
+  operative original predecessor source scope, complete source-body hash, exact pointer and original literal-value
+  hash to its complete canonical child and distinct original target scope. The eight supplementary metadata bodies
+  and five native original leaves remain byte-identical. Never infer target scope from matching schema IDs/hashes,
+  rebase an original relative reference under its new custody directory, use an original absolute host path as runtime
+  fallback or re-enable a broken historical selector header. Active original-source methods select the accepted
+  corrected current native bodies. The original adopted native and producer descriptors remain operative complete
+  contracts; only preexisting explicitly qualified input-pin/raw-frozen-source/reversal provenance retains its documented
+  original evidence scope. This version-scoped complete family supplies the previously unbound certified-v3 identity/coordinator/Event
+  selection and passive consumer source roles only for a genuine fresh pm.executor.workflow_source.all_writers.v7
+  birth and pm.goal_run_certified.producer_source.v2 prepare.v2 binding. Earlier native-v6 and producer-v1 source
+  editions and old started/cancelled branches retain their original closed scope; no existing birth is enrolled
+  or cast. The complete methods, protocols, schemas, phase and participant tuples, isolated resource banks and physical/lifetime
+  contracts under Plans/goal_certified_event_coordinator_contracts/, Plans/workflow_standard_source_contracts/native-v7/,
+  Plans/goal_certified_producer_source_contracts/ (including native-v7/) and Plans/goal_run_certified_consumer_contracts/
+  are normative together. Source acceptance and registry classification establish neither installed native authority
+  nor execution, codec, transaction, durability, recovery, Event-depth or readiness proof. All such native evidence
+  remains NOT_RUN. No WorkNode or NodeSeed is created.
+gui_related: false
+source_lineage:
+- certified-family-placement:sha256:41a4d703b475c2668b243b043934bf0e3a0f22f33c1e663b339aa1aa2395099c
+- root-placement-review:sha256:00981271bf2b645c3610804251ce240f83f3d121ab2c654b0fe98b3c5396909c
+- accepted-header-source:sha256:dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe
+- producer-repin-source:sha256:ad4c49b5e1fb43425a390c9cb666a95503483699779dfdb860ec770d2e06376a
+- consumer-repin-source:sha256:e6f9be4094e68b5d690e93db45ba3199ccff20a1c72fe93264aadf822ed1896d
+depends_on:
+- PDS-003
+- CV-351
+unblocks: []
+acceptance_criteria:
+- Preserve the complete scoped source and every original entry/final/phase/type/lifetime predicate.
+- Use complete canonical resources and exact isolated original retrieval scopes; prove full inverse metadata and
+  actual final acyclic hash graph.
+- Native installation, authentic original source capabilities, execution, codec/transaction/durability/recovery
+  and end-to-end readiness remain NOT_RUN.
+validation_surfaces:
+- Plans/goal_certified_event_coordinator_contracts/protocol.md
+- Plans/goal_certified_event_coordinator_contracts/phase-boundaries.json
+- Plans/goal_certified_event_coordinator_contracts/participant-method-tuples.json
+- Plans/goal_run_certified_consumer_contracts/protocol.md
+- Plans/goal_certified_family_composition.json
+risk_class: original_source_authority_native_transaction_and_lifetime
+reasoning_tier: high
+context_scope: cv-352_whole_certified_family
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/goal_certified_event_coordinator_contracts
+- Plans/goal_certified_producer_source_contracts
+- Plans/workflow_standard_source_contracts/native-v7
+- Plans/goal_run_certified_consumer_contracts
+node_compile_hint:
+  mode: source_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+gui_classification_reason: Original source, native authority/custody, schema, storage or passive consumer contract;
+  no new visual presentation.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-352, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json

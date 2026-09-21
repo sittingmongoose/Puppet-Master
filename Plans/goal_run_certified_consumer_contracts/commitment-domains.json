@@ -1,0 +1,43 @@
+{
+  "source_profile": {
+    "domain": "entire installed-profile.json sortedkey compact UTF8 JSON with no prefix or LF",
+    "algorithm": "SHA-256",
+    "excludes": [
+      "own digest",
+      "provenance manifest",
+      "runtime generation/row/checkpoint values"
+    ]
+  },
+  "generation_anchor": {
+    "domain": "goal_run_started_cancelled_certified_anchor.v1",
+    "codec": "original CV339 canonical MessagePack",
+    "ordered_preimage": [
+      "domain",
+      "storage_instance_id",
+      "scope",
+      "profile",
+      "profile_digest",
+      "seed_hex",
+      "source_token_at_birth"
+    ],
+    "generation_id": "grsccg_ plus anchor_sha256"
+  },
+  "advancing_frontier": {
+    "domain": "goal_run_started_cancelled_certified_frontier.v1",
+    "codec": "original CV339 canonical MessagePack",
+    "ordered_preimage": [
+      "domain",
+      "anchor_sha256",
+      "frontier_revision",
+      "prior_frontier_sha256",
+      "processed",
+      "last_transaction_id"
+    ]
+  },
+  "derived_row": "SHA-256 of whole CV339 MessagePack StorageProjection bytes",
+  "coverage": "SHA-256 canonical ordered complete index-row/original full-value-commitment pairs",
+  "gaps": "SHA-256 canonical ordered complete genuine gap dispositions",
+  "native_birth": "exact coordinator v2 all_writers.v7 descriptor digest remains distinct; consumer digest never replaces it",
+  "identity": "exact coordinator issued certifiedv3 recipe only; no Start or legacyv2 inference",
+  "test_adapter": "synthetic fixture JSON equality hashes are test-only and never asserted to implement these native codecs"
+}

@@ -7736,3 +7736,205 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/workflow_standard_source_contracts/protocol.md, ContractName:Plans/workflow_standard_source_contracts/methods.json, ContractName:Plans/workflow_standard_source_contracts/fresh-profile-methods.json, ContractName:Plans/workflow_standard_source_contracts/literal-resource-realms.json, ContractName:Plans/workflow_standard_source_contracts/stored-profile-routes.json, ContractName:Plans/workflow_standard_source_contracts/installation-composition.json
+
+
+## GRS-083 — Original certified producer composition and source-only authority (2026-09-21)
+
+```yaml
+plan_unit_id: GRS-083
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: 'Adopt complete assignment/invocation/causal/reference/resolution/identity source composition and
+  whole producer preparation as technical source contracts for the genuine controller or assigned artifact owner.
+  Preserve original complete Standard final decision and durable receipt, separate current Goal and native candidates,
+  unchanged Goal clock, complete Event candidate and exact original actor/occurrence/context. Identity v3 recipe
+  and Event coordinator remain unbound; no worker/Auditor/Start inference or publication authority. The complete
+  source contract is Plans/goal_certified_producer_source_contracts/protocol.md together with all fourteen whole
+  methods, five complete schemas, original native participants, commitment domains and the five isolated resource
+  banks. Every applicable original owner source, complete candidate, independent phase entry and final pure held
+  predicate remains mandatory. This canonical source placement is uninstalled: fixed pm.executor.workflow_source.all_writers.v6
+  is unchanged, old births cannot enroll, and live support requires a separately reviewed fresh native successor
+  and complete producer binding. No certified-v3 identity recipe, Event/native/D01 coordinator, Event registry selection,
+  certified consumer/checkpoint, new physical family or archive is supplied. Native execution, codec/transaction/durability/recovery
+  and end-to-end qualification remain NOT_RUN.'
+gui_related: false
+source_lineage:
+- external-producer-source:sha256:909076c30ddf146bc254dca904021009a9cb36f3aee0e60718a61275c16492d7
+- independent-source-review:sha256:eb362a198cdcb566bc8ae61d2a85c53d99f6f557f5d56ecb376e803acc0c3366
+- conditional-native-base:13e7dbc0f1c36c9883420dd3d0fabd6758e54a60
+- owner-placement-manifest:sha256:4273d4aa14486c7e0c553a8de7b08819615befa95cac1f52c0a91f7af94c0a02
+depends_on:
+- GRS-082
+- PDS-003
+unblocks: []
+acceptance_criteria:
+- All accepted complete source methods/schemas/native participants and final predicates survive without replacement
+  projections.
+- Source v1 remains uninstalled on closed native v6; any fresh native successor receives its own whole schema/role/digest
+  review.
+- No original policy, owner choice, Event identity/registration/coordinator/consumer, native proof or governance
+  gate is manufactured.
+validation_surfaces:
+- Plans/goal_certified_producer_source_contracts/installation-composition.json
+- Plans/goal_certified_producer_source_contracts/resource-realms.json
+- independent complete original-source/schema/role preservation audit
+- Plans/goal_certified_producer_source_contracts/methods.json
+- Plans/goal_certified_producer_source_contracts/resource-realms.json
+- Plans/goal_certified_producer_source_contracts/native-participants.json
+risk_class: original_source_authority_and_installation_scope
+reasoning_tier: high
+context_scope: grs-083_certified_producer_source
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+- Plans/goal_certified_producer_source_contracts
+node_compile_hint:
+  mode: source_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+gui_classification_reason: Original source, authority, custody and installation contracts; no new visual presentation.
+```
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-083, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_producer_source_contracts/protocol.md, ContractName:Plans/goal_certified_producer_source_contracts/methods.json, ContractName:Plans/goal_certified_producer_source_contracts/installation-composition.json
+
+
+## GRS-084 — Whole certified v3 Event identity, released custody, native/event/history distinction and passive current consumers (2026-09-21)
+
+```yaml
+plan_unit_id: GRS-084
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: 'Certified admission selects the entire goal-run-certified.v3 payload schema and the complete coordinator
+  identity EventRecord root; the original twenty-five-field payload, required-present null payload_ref, exact typed
+  owner values and canonical identity preimage are mandatory. Actor/cause/time/Event identity, Unicode bytes and
+  numeric representations are not normalized or reconstructed. The existing goal_run.certified Event family remains
+  the same family with its existing scope, alias/redaction and authority retention semantics; only its explicit
+  version/payload selection and corresponding source refs advance. Receipt/native retention, full Event inspection,
+  historical graph disclosure and live-current consumer reads are separate whole methods. Retained native receipt
+  disclosure requires surviving original custody and current permission, but does not imply surviving full Event
+  content or grant action authority. Full Event inspection authenticates the whole original frame, payload, append
+  group, operation, original origin, release and current visibility. Historical reads validate the whole immutable
+  original graph without reacquiring mutable source history; current reads independently obtain the complete current
+  native, separate Goal and Guard sources. All consumer methods are passive: no append, native mutation, source
+  reissuance, missing-row repair, commit, release or inherited reader capability. This version-scoped complete family
+  supplies the previously unbound certified-v3 identity/coordinator/Event selection and passive consumer source
+  roles only for a genuine fresh pm.executor.workflow_source.all_writers.v7 birth and pm.goal_run_certified.producer_source.v2
+  prepare.v2 binding. Earlier native-v6 and producer-v1 source editions and old started/cancelled branches retain
+  their original closed scope; no existing birth is enrolled or cast. The complete methods, protocols, schemas,
+  phase and participant tuples, isolated resource banks and physical/lifetime contracts under Plans/goal_certified_event_coordinator_contracts/,
+  Plans/workflow_standard_source_contracts/native-v7/, Plans/goal_certified_producer_source_contracts/ (including
+  native-v7/) and Plans/goal_run_certified_consumer_contracts/ are normative together. Source acceptance and registry
+  classification establish neither installed native authority nor execution, codec, transaction, durability, recovery,
+  Event-depth or readiness proof. All such native evidence remains NOT_RUN. No WorkNode or NodeSeed is created.'
+gui_related: false
+source_lineage:
+- certified-family-placement:sha256:41a4d703b475c2668b243b043934bf0e3a0f22f33c1e663b339aa1aa2395099c
+- root-placement-review:sha256:00981271bf2b645c3610804251ce240f83f3d121ab2c654b0fe98b3c5396909c
+- accepted-header-source:sha256:dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe
+- producer-repin-source:sha256:ad4c49b5e1fb43425a390c9cb666a95503483699779dfdb860ec770d2e06376a
+- consumer-repin-source:sha256:e6f9be4094e68b5d690e93db45ba3199ccff20a1c72fe93264aadf822ed1896d
+depends_on:
+- PDS-003
+- GRS-083
+unblocks: []
+acceptance_criteria:
+- Preserve the complete scoped source and every original entry/final/phase/type/lifetime predicate.
+- Use complete canonical resources and exact isolated original retrieval scopes; prove full inverse metadata and
+  actual final acyclic hash graph.
+- Native installation, authentic original source capabilities, execution, codec/transaction/durability/recovery
+  and end-to-end readiness remain NOT_RUN.
+validation_surfaces:
+- Plans/goal_certified_event_coordinator_contracts/protocol.md
+- Plans/goal_certified_event_coordinator_contracts/phase-boundaries.json
+- Plans/goal_certified_event_coordinator_contracts/participant-method-tuples.json
+- Plans/goal_run_certified_consumer_contracts/protocol.md
+- Plans/goal_certified_family_composition.json
+risk_class: original_source_authority_native_transaction_and_lifetime
+reasoning_tier: high
+context_scope: grs-084_whole_certified_family
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+- Plans/goal_certified_event_coordinator_contracts
+- Plans/goal_certified_producer_source_contracts
+- Plans/workflow_standard_source_contracts/native-v7
+- Plans/goal_run_certified_consumer_contracts
+node_compile_hint:
+  mode: source_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+gui_classification_reason: Original source, native authority/custody, schema, storage or passive consumer contract;
+  no new visual presentation.
+```
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-084, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json
+
+
+## GRS-085 — Mandatory started/cancelled/certified prefix projection, scope validation, halt rules and source lifetime (2026-09-21)
+
+```yaml
+plan_unit_id: GRS-085
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: The mandatory started/cancelled/certified per-Workflow-run projection consumes the complete actual
+  contiguous global Event prefix, including authenticated generic off-run frames as no-ops. It validates full EventRecord
+  shape, source scope and original custody before interpreting a supported same-run started, positive-D06 cancelled
+  or certified transition. Gaps, reordering, malformed off-run frames, unsupported same-run replanned/blocked/stopped
+  profiles, conflicting lifecycle or mismatched scope halt before that row; they do not silently advance checkpoint.
+  Preserve the whole original started/cancelled methods and schemas in their original isolated banks and complete
+  structural companions, including nested GuardReadRequest/GuardReadResult and their own native/Goal/guard final
+  held boundary. P0-P8 define complete source census, reducer, publication, current/historical admission, generation
+  and lifetime behavior. Deterministic reduction grants no native success or action authority, and earlier started-only/started-cancelled
+  routes retain their original boundaries. Current consumers independently verify the actual generic frontier and
+  fresh complete owner graphs, not an old derived selector or payload alone. This version-scoped complete family
+  supplies the previously unbound certified-v3 identity/coordinator/Event selection and passive consumer source
+  roles only for a genuine fresh pm.executor.workflow_source.all_writers.v7 birth and pm.goal_run_certified.producer_source.v2
+  prepare.v2 binding. Earlier native-v6 and producer-v1 source editions and old started/cancelled branches retain
+  their original closed scope; no existing birth is enrolled or cast. The complete methods, protocols, schemas,
+  phase and participant tuples, isolated resource banks and physical/lifetime contracts under Plans/goal_certified_event_coordinator_contracts/,
+  Plans/workflow_standard_source_contracts/native-v7/, Plans/goal_certified_producer_source_contracts/ (including
+  native-v7/) and Plans/goal_run_certified_consumer_contracts/ are normative together. Source acceptance and registry
+  classification establish neither installed native authority nor execution, codec, transaction, durability, recovery,
+  Event-depth or readiness proof. All such native evidence remains NOT_RUN. No WorkNode or NodeSeed is created.
+gui_related: false
+source_lineage:
+- certified-family-placement:sha256:41a4d703b475c2668b243b043934bf0e3a0f22f33c1e663b339aa1aa2395099c
+- root-placement-review:sha256:00981271bf2b645c3610804251ce240f83f3d121ab2c654b0fe98b3c5396909c
+- accepted-header-source:sha256:dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe
+- producer-repin-source:sha256:ad4c49b5e1fb43425a390c9cb666a95503483699779dfdb860ec770d2e06376a
+- consumer-repin-source:sha256:e6f9be4094e68b5d690e93db45ba3199ccff20a1c72fe93264aadf822ed1896d
+depends_on:
+- PDS-003
+- GRS-084
+unblocks: []
+acceptance_criteria:
+- Preserve the complete scoped source and every original entry/final/phase/type/lifetime predicate.
+- Use complete canonical resources and exact isolated original retrieval scopes; prove full inverse metadata and
+  actual final acyclic hash graph.
+- Native installation, authentic original source capabilities, execution, codec/transaction/durability/recovery
+  and end-to-end readiness remain NOT_RUN.
+validation_surfaces:
+- Plans/goal_certified_event_coordinator_contracts/protocol.md
+- Plans/goal_certified_event_coordinator_contracts/phase-boundaries.json
+- Plans/goal_certified_event_coordinator_contracts/participant-method-tuples.json
+- Plans/goal_run_certified_consumer_contracts/protocol.md
+- Plans/goal_certified_family_composition.json
+risk_class: original_source_authority_native_transaction_and_lifetime
+reasoning_tier: high
+context_scope: grs-085_whole_certified_family
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+- Plans/goal_certified_event_coordinator_contracts
+- Plans/goal_certified_producer_source_contracts
+- Plans/workflow_standard_source_contracts/native-v7
+- Plans/goal_run_certified_consumer_contracts
+node_compile_hint:
+  mode: source_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+gui_classification_reason: Original source, native authority/custody, schema, storage or passive consumer contract;
+  no new visual presentation.
+```
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-085, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json

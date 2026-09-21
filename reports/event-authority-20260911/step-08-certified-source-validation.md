@@ -1,6 +1,6 @@
 # Step 08 — Certified Workflow source contracts
 
-Current disposition (2026-09-21): source acceptance is reopened for a confirmed positive selector/header mismatch; see the [source hold](step-08-certified-family-source-hold-20260921.md). The checks below remain the original bounded snapshot and do not clear that later finding.
+Current disposition (2026-09-21): the confirmed positive selector/header mismatch and downstream family integration findings have received reviewed source corrections; see the [complete family integration report](step-08-certified-family-integration-20260921.md). Main remains held. The checks and policy wording below retain the original bounded snapshot; current landing follows the September 21 working rules and still requires the landing check.
 
 This branch adds the reviewed original Standard-certification source contracts: full native Workflow and scheduler admission, original decision and Standard receipt capture, and current versus retained read boundaries. Five owner PlanUnits (EP-122, GRS-082, CV-350, SP-314 and ATS-055) bind the package. Three physical source families and eleven explicit stored-version routes support the source contract. The complete participant profile must exist before a genuine original fresh birth; existing runs cannot be enrolled later. This is source authoring only. Native execution, certified Event admission, producer-envelope and causality binding, the certified coordinator and consumer remain unproved or separate pending work.
 

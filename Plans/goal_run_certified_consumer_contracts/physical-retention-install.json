@@ -1,0 +1,73 @@
+{
+  "status": "CANONICAL_SOURCE_PHYSICAL_FAMILY_CONTRACT_NATIVE_NOT_RUN",
+  "families": [
+    {
+      "family_id": "goal_run_started_cancelled_certified_projection",
+      "schema_id": "pm.goal_run_projection.started_cancelled_certified.v5",
+      "schema_version": "5.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/StorageProjection",
+      "table": "goal_run_projection.v5@<generation_id>",
+      "key": "goal_run_projection.v5:K(project_id):K(goal_run_id)",
+      "owner": "GoalRuntime semantic projector; Storage physical publication",
+      "writer": "owner.storage.goal_run.started_cancelled_certified.publish.v1",
+      "initiator": "owner.goal_run.started_cancelled_certified.project_prefix.v1",
+      "mutation": "one deterministic row per original Workflow run and bound generation; only atomic own checkpoint transaction",
+      "codec": "unchanged CV339 canonical MessagePack whole value"
+    },
+    {
+      "family_id": "goal_run_started_cancelled_certified_checkpoint",
+      "schema_id": "pm.goal_run_started_cancelled_certified_checkpoint.v1",
+      "schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Checkpoint",
+      "table": "checkpoints",
+      "key": "goal_run_started_cancelled_certified_checkpoint.v1:K(storage_instance_id):K(project_id):K(goal_id):K(goal_run_id)",
+      "owner": "GoalRuntime semantic projector; Storage physical publication",
+      "writer": "owner.storage.goal_run.started_cancelled_certified.publish.v1",
+      "mutation": "entire coherent root/generation/frontier in same actual transaction as affected row",
+      "codec": "unchanged CV339 canonical MessagePack whole value"
+    }
+  ],
+  "key_codec": "K is unpadded base64url exact valid UTF8 bytes, no normalization; actual source scope binds every component",
+  "retention_policy_exact": {
+    "policy_id": "RP-PROJECTION-3GEN",
+    "retention_mode": "current_plus_history",
+    "anchor_kind": "terminal_transition",
+    "retain_indefinitely": false,
+    "ttl_seconds": 604800,
+    "source_policy_ref": null,
+    "max_cardinality": 3,
+    "cardinality_scope": "logical_key",
+    "additional_cardinality_limits": [],
+    "max_bytes": null,
+    "overflow_action": "rebuild_projection",
+    "hold_eligible": true,
+    "expiry_action": "rebuild",
+    "policy_version": "1.0.0"
+  },
+  "retention_policy_whole_source": {
+    "path": "Plans/storage_value_registry.json",
+    "sha256": "ae0909a32a6e5b41e12512a25271e5dc4a7ed6efd82a7b1533607bb494c536f9",
+    "bytes": 4201575,
+    "original_source_lineage": {
+      "scope": "original-source-at-13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "08759243578675179a1cceda7e36cf2e7a6a71f1c73fb33929b13d0a616fe04b",
+      "purpose": "Complete immutable original source/citation retained independently; current whole selection hashes final transformed owner or registry."
+    }
+  },
+  "retention_application": "P8 exact current no TTL; maximum 3 including staged/current/retired; original retirement plus604800seconds subject to actual holds/references; governed rebuild only. Event bytes source-coupled across every generation.",
+  "source_lifetimes": {
+    "started": "original RP-RUNTIME-365D unchanged,31536000seconds from run completion",
+    "certified": "original RP-AUTHORITY-INDEFINITE unchanged under actual deletion/holds",
+    "cancelled": "original RP-AUTHORITY-INDEFINITE unchanged under actual deletion/holds",
+    "all_other_sources": "actual owner lifetime unchanged; no original mutable body/archive/journal extension"
+  },
+  "backup": {
+    "original": "mandatory original whole authority/custody and genuine original issuance under original owners",
+    "derived": "optional coherent root/generation/dataset whole unit; actual tombstones/deletion/permission/hold controls first, then full original/source/current-frontier validation"
+  },
+  "installed_consumer_profile": "goal_run_started_cancelled_certified_projector.v1",
+  "native_profile_changed": false,
+  "old_roots": "entire original started/cancelled physical-families.json and schema/method/generation contracts remain exact",
+  "native": "NOT_RUN"
+}

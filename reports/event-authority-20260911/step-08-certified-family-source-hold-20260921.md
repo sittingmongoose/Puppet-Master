@@ -1,6 +1,6 @@
 # Step 08 — Certified family source hold, 2026-09-21
 
-Current status: the exact native header/provenance correction is applied on the held branch and reviewed in [the correction report](step-08-native-header-correction-20260921.md). This earlier hold remains historical evidence; downstream dependency review and the separate landing-policy hold remain open.
+Current status: the exact native header/provenance correction and complete downstream family source integration are applied on the held branch; see [the correction report](step-08-native-header-correction-20260921.md) and [the family integration report](step-08-certified-family-integration-20260921.md). This earlier source hold remains historical evidence. The separate Replan Stop work, native proof and landing-policy failures remain open.
 
 Step 08 remains open. Review of Replan integration exposed an impossible positive source join in the held native v6 package and external certified native v7: Workflow birth/update afterimage selectors require v4 headers while the actual selected wrappers require v7 and v8 respectively. Cancellation publication has the same class of mismatch: its result selector requires v3 while the actual wrappers require v6 and v7. There are six confirmed selector/header pairs per profile. The unchanged current-pointer v2 is not a finding. Whole-schema shape and reference-closure checks did not establish these cross-value equalities. Source acceptance is reopened; the family candidate and landing remain held while a narrow correction and independent full-role audit proceed.
 

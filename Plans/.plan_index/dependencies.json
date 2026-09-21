@@ -6595,6 +6595,7 @@
     "F3-525",
     "SSYS-017",
     "EP-121",
+    "EP-123",
     "GRS-082",
     "BRS-025",
     "GRS-078",
@@ -6605,7 +6606,9 @@
     "UIW-018",
     "F3-526",
     "SSYS-026",
+    "EP-124",
     "CV-350",
+    "GRS-083",
     "SIR-052",
     "SP-310",
     "BRS-027",
@@ -6618,7 +6621,9 @@
     "UIW-019",
     "F3-528",
     "SSYS-027",
+    "CV-351",
     "SP-314",
+    "GRS-084",
     "BRS-026",
     "SP-313",
     "BRS-028",
@@ -6632,8 +6637,12 @@
     "C-052",
     "F3-529",
     "SSYS-028",
+    "CV-352",
     "ATS-055",
+    "SP-315",
+    "GRS-085",
     "GRS-081",
+    "BRS-029",
     "UIW-021",
     "UIW-022",
     "WM-055",
@@ -6646,6 +6655,8 @@
     "F3-561",
     "SCS-017",
     "SSYS-029",
+    "ATS-056",
+    "SP-316",
     "SIR-053",
     "F3-545",
     "F3-547",
@@ -6660,6 +6671,8 @@
     "JJI-017",
     "JJI-018",
     "SSYS-030",
+    "ATS-057",
+    "SP-317",
     "DL-053",
     "DL-054",
     "F3-531",
@@ -12774,6 +12787,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "ATS-056",
+      "to": "ATS-055"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-056",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-057",
+      "to": "ATS-056"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-057",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "BBI-001",
       "to": "FGI-001"
     },
@@ -13431,6 +13464,16 @@
       "edge_type": "depends_on",
       "from": "BRS-028",
       "to": "SP-312"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-029",
+      "to": "BRS-028"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-029",
+      "to": "PDS-003"
     },
     {
       "edge_type": "depends_on",
@@ -21779,6 +21822,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-351",
+      "to": "CV-350"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-351",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-352",
+      "to": "CV-351"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-352",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CW-003",
       "to": "CW-002"
     },
@@ -24706,6 +24769,26 @@
       "edge_type": "depends_on",
       "from": "EP-122",
       "to": "GRS-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-123",
+      "to": "EP-122"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-123",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-124",
+      "to": "EP-123"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-124",
+      "to": "PDS-003"
     },
     {
       "edge_type": "depends_on",
@@ -29776,6 +29859,36 @@
       "edge_type": "depends_on",
       "from": "GRS-082",
       "to": "GRS-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-083",
+      "to": "GRS-082"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-083",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-084",
+      "to": "GRS-083"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-084",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-085",
+      "to": "GRS-084"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-085",
+      "to": "PDS-003"
     },
     {
       "edge_type": "depends_on",
@@ -69174,6 +69287,36 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-315",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-315",
+      "to": "SP-314"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-316",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-316",
+      "to": "SP-315"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-317",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-317",
+      "to": "SP-316"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -98228,7 +98371,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-23T14:52:20Z",
+  "generated_at_utc": "2026-09-23T14:53:43Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -111219,6 +111362,40 @@
       "unit_type": "validation_criterion"
     },
     {
+      "context_scope": "ats-056_certified_producer_source",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-056",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_and_installation_scope",
+      "source_location": {
+        "heading": "ATS-056 — Certified producer source validation and native proof separation (2026-09-21)",
+        "heading_level": 2,
+        "heading_line": 4996,
+        "line": 4998,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ats-057_whole_certified_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-057",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "ATS-057 — Twelve complete source-to-native acceptance facets with truthful NOT_RUN boundaries (2026-09-21)",
+        "heading_level": 2,
+        "heading_line": 5056,
+        "line": 5058,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "bitbucket_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Bitbucket_Integration.md",
@@ -111931,6 +112108,23 @@
       },
       "status": "accepted",
       "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "brs-029_whole_certified_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "plan_unit_id": "BRS-029",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "BRS-029 — Mandatory original phase custody; optional coherent derived generation, source lifetime and restore ordering (2026-09-21)",
+        "heading_level": 2,
+        "heading_line": 1701,
+        "line": 1703,
+        "path": "Plans/Backup_Restore_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "plan_standardization",
@@ -123340,6 +123534,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "cv-351_certified_producer_source",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-351",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_and_installation_scope",
+      "source_location": {
+        "heading": "CV-351 — Whole certified producer schema transport and isolated source realms (2026-09-21)",
+        "heading_level": 2,
+        "heading_line": 23243,
+        "line": 23245,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "cv-352_whole_certified_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-352",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "CV-352 — Exact whole identity/coordinator/consumer schema roots, method tuple closure and isolated literal resource banks (2026-09-21)",
+        "heading_level": 2,
+        "heading_line": 23302,
+        "line": 23304,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/chain-wizard.md",
@@ -131783,6 +132011,40 @@
         "heading_level": 2,
         "heading_line": 8450,
         "line": 8452,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ep-123_certified_producer_source",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-123",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_and_installation_scope",
+      "source_location": {
+        "heading": "EP-123 — Original certified producer source hooks and fresh installation boundary (2026-09-21)",
+        "heading_level": 2,
+        "heading_line": 8549,
+        "line": 8551,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ep-124_whole_certified_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-124",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "EP-124 — Fresh all_writers.v7 before-birth installation and exact producer prepare.v2; whole native participants, original source acquisition, Q1–Q4 and joint certification lifecycle (2026-09-21)",
+        "heading_level": 2,
+        "heading_line": 8609,
+        "line": 8611,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -151061,6 +151323,57 @@
         "heading_level": 2,
         "heading_line": 7644,
         "line": 7646,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "grs-083_certified_producer_source",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-083",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_and_installation_scope",
+      "source_location": {
+        "heading": "GRS-083 — Original certified producer composition and source-only authority (2026-09-21)",
+        "heading_level": 2,
+        "heading_line": 7741,
+        "line": 7743,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "grs-084_whole_certified_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-084",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "GRS-084 — Whole certified v3 Event identity, released custody, native/event/history distinction and passive current consumers (2026-09-21)",
+        "heading_level": 2,
+        "heading_line": 7801,
+        "line": 7803,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "grs-085_whole_certified_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-085",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "GRS-085 — Mandatory started/cancelled/certified prefix projection, scope validation, halt rules and source lifetime (2026-09-21)",
+        "heading_level": 2,
+        "heading_line": 7873,
+        "line": 7875,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -198905,6 +199218,57 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "sp-315_certified_producer_source",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-315",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_and_installation_scope",
+      "source_location": {
+        "heading": "SP-315 — Certified producer current and retained source disclosure (2026-09-21)",
+        "heading_level": 2,
+        "heading_line": 26171,
+        "line": 26173,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "sp-316_whole_certified_family",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-316",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "SP-316 — Seven compact authority families, eleven v7 profile-qualified wrapper routes and atomic native/Event release (2026-09-21)",
+        "heading_level": 2,
+        "heading_line": 26231,
+        "line": 26233,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "sp-317_whole_certified_family",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-317",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "SP-317 — Two projection/checkpoint families and exact RP-PROJECTION-3GEN transaction/generation/cutover obligations (2026-09-21)",
+        "heading_level": 2,
+        "heading_line": 26304,
+        "line": 26306,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -212069,10 +212433,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15606,
+    "depends_on_edge_count": 15632,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18305,
-    "node_count": 6696,
+    "edge_count": 18331,
+    "node_count": 6709,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
