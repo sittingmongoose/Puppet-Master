@@ -22,6 +22,42 @@ ROOT = Path(__file__).resolve().parents[1]
 IDENTITIES = ("project_id", "thread_id", "run_id", "node_id", "attempt_id")
 MAX_PAYLOAD_BYTES = 65536
 
+# SP-262 pins the preparation landing, not a prohibition on later Goal owner
+# adoptions. SMPFS-166's historical rows retain their original hash authority.
+ORIGINAL39_SHA256 = "f548a2977dc4f1c51dc0a4976940a0a3562de6281a707a96fbd5cee67f618c0e"
+ORIGINAL40_SHA256 = "4f701c9598003d7c01a405f18f7991b373379eca8b182cf6222540a4746d1756"
+COMPACTION_FAMILY = "event-family-context-compaction-completed"
+# Whole-row pins independently taken from each adoption commit, never generated
+# from the live registry. Historical pins are from b09294e44b. No sibling or
+# field-level exemption follows from these exact five owner adoptions.
+REVIEWED_GOAL_SUCCESSORS = {
+    "event-family-goal-created": (
+        "b659581816da0131ee0bb3883e05d4bc4e72d833fb41fc60648d9a7777bee93b",
+        "616062aa35bd00d4d2193253e1bcfa25d3664b2c37aa0c6296c8c3fb319f2ec7",
+        "3890d86c70", "Plans/Contracts_V0.md#CV-341",
+    ),
+    "event-family-goal-updated": (
+        "88ced20e631e37262ca286f84c39e1cad02bba82aab48a49a87ab149cfa06fbd",
+        "2a99605e467237c2e9fd1b3c9b1ce435a43e45edb401711f1f376f31df0baeef",
+        "5fc9747b6f", "Plans/Contracts_V0.md#CV-342",
+    ),
+    "event-family-goal-cancelled": (
+        "9b2150b0fffdabe5752ba1c4323677b1c06231531d8081a6069a129141ef7c16",
+        "61ca9065d712ddd15c2093e581f24007f3a10f8063cb5d103bf4e32f4f23d1b7",
+        "1136661ddc", "Plans/Contracts_V0.md#CV-347",
+    ),
+    "event-family-goal-run-started": (
+        "27b86920f969ab3143cd9a9c632f18765e69854b80d0b746573a2e7e8c196aac",
+        "3b6a4abd54c88b343cd9bf4a15ee55cbfa3394f6cb8814dfb6a08cd7d809daeb",
+        "e686963ad5", "Plans/Goal_Runtime_System.md#GRS-079",
+    ),
+    "event-family-goal-run-cancelled": (
+        "befcf90338898beeef80b6a96c154fdff3bdd990b277e848026d55660c33ec25",
+        "f60bbabf5cd822c1e59ac39d33ef0eed0007226457fdade4dc0a3a811166af6b",
+        "a3c511657f", "Plans/Goal_Runtime_System.md#GRS-080",
+    ),
+}
+
 
 @lru_cache(maxsize=1)
 def envelope_oracle():
@@ -67,6 +103,83 @@ def load_json(path):
 
 def fingerprint(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+
+def historical_preexisting_rows(rows):
+    """Reconstruct retained preparation bytes only after whole-row pin checks.
+
+    This returns an isolated comparison value, never a registry rewrite. Both
+    the original rows and reviewed successors are usable in historical tests;
+    an unknown change is rejected before any historical fields are restored.
+    """
+    historical = copy.deepcopy(rows)
+    for row in historical:
+        pins = REVIEWED_GOAL_SUCCESSORS.get(row["family_id"])
+        if pins is None:
+            continue
+        if fingerprint(row) not in pins[:2]:
+            raise ValueError("unreviewed_preexisting_successor: " + row["family_id"])
+        stem = row["event_type"].replace(".", "_")
+        path = "Plans/event_payloads/goal_runtime/" + stem + ".schema.json"
+        schema_id = "pm.goal_runtime_event." + stem + ".schema.v2"
+        row.update({
+            "family_revision": "2.0.0",
+            "semantic_owner_doc": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+            "payload_owner_doc": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+            "payload_schema_id": schema_id,
+            "payload_schema_ref": {"path": path, "json_pointer": "#", "schema_id": schema_id},
+            "source_refs": [path + "#", "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+                            "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration"],
+        })
+        if fingerprint(row) != pins[0]:
+            raise ValueError("historical_preexisting_row_reconstruction: " + row["family_id"])
+    return historical
+
+
+def preexisting_preservation(admission, registry_rows, *, allow_historical=False):
+    """Verify historical39/40 lineage and require the active successor rows.
+
+    Historical comparison is opt-in for isolated tests, never a CLI mode or
+    permission to downgrade an active registry row to its retained reader.
+    """
+    ids = admission["preexisting_family_ids"]
+    original_ids = set(ids)
+    existing = [row for row in registry_rows if row["family_id"] in original_ids]
+    upstream = [row for row in registry_rows if row["family_id"] in original_ids | {COMPACTION_FAMILY}]
+    failures = []
+    try:
+        historical = historical_preexisting_rows(upstream)
+    except ValueError as error:
+        failures.append({"error": "preexisting_family_rows_changed", "detail": str(error)})
+        historical = []
+    historical39 = [row for row in historical if row["family_id"] != COMPACTION_FAMILY]
+    preserved39 = (len(historical39) == 39 and fingerprint(historical39) == ORIGINAL39_SHA256
+                   and admission["preexisting_family_rows_sha256"] == ORIGINAL39_SHA256
+                   and [row["family_id"] for row in historical39] == ids)
+    preserved40 = len(historical) == 40 and fingerprint(historical) == ORIGINAL40_SHA256
+    if not preserved39 or not preserved40:
+        failures.append({"error": "historical_preexisting_baseline_mismatch"})
+    # Do not let unrelated additions disappear through the baseline filter.
+    browser_pairs = {(row["family_id"], row["event_type"]) for row in admission["rows"]}
+    if any(row["family_id"] not in original_ids | {COMPACTION_FAMILY}
+           and (row["family_id"], row["event_type"]) not in browser_pairs for row in registry_rows):
+        failures.append({"error": "unexpected_central_event_family"})
+    if len({row["family_id"] for row in registry_rows}) != len(registry_rows):
+        failures.append({"error": "duplicate_central_family_id"})
+    adopted = [row["family_id"] for row in existing
+               if row["family_id"] in REVIEWED_GOAL_SUCCESSORS
+               and fingerprint(row) == REVIEWED_GOAL_SUCCESSORS[row["family_id"]][1]]
+    missing_successors = sorted(set(REVIEWED_GOAL_SUCCESSORS) - set(adopted))
+    if missing_successors and not allow_historical:
+        failures.append({"error": "required_preexisting_successors_missing", "family_ids": missing_successors})
+    return {
+        "historical_baseline_verified": preserved39 and preserved40,
+        "historical_original39_verified": preserved39,
+        "historical_original40_verified": preserved40,
+        "preexisting_family_rows_unchanged": len(existing) == 39 and fingerprint(existing) == ORIGINAL39_SHA256,
+        "current_preexisting_rows_match_reviewed_successors": not failures and set(adopted) == set(REVIEWED_GOAL_SUCCESSORS),
+        "reviewed_preexisting_successor_family_ids": adopted,
+    }, failures
 
 
 def pointer(value, path):
@@ -369,9 +482,8 @@ def validate(*, payloads_only=False):
     if len({row["payload_schema_ref"]["schema_id"] for row in rows}) != len(rows):
         failures.append({"error": "duplicate_prepared_payload_schema_id"})
     registry = load_json("Plans/event_family_registry.json")
-    existing = [row for row in registry["families"] if row["family_id"] in admission["preexisting_family_ids"]]
-    if len(existing) != 39 or fingerprint(existing) != admission["preexisting_family_rows_sha256"]:
-        failures.append({"error": "preexisting_family_rows_changed"})
+    preservation, preservation_failures = preexisting_preservation(admission, registry["families"])
+    failures.extend(preservation_failures)
     families = {row["event_type"]: row for row in registry["families"]}
     if len(families) != len(registry["families"]):
         failures.append({"error": "duplicate_central_event_family"})
@@ -474,7 +586,7 @@ def validate(*, payloads_only=False):
         "prepared_scoped_event_families": len(prepared_events),
         "admission_complete": not payloads_only and not failures and admitted_events == required_events,
         "claim_boundary": "Pass means prepared-contract and exact admitted-subset consistency, not completion of pending family admission, root review, native execution, currentness or seal.",
-        "registry_family_count": len(registry["families"]), "preexisting_family_rows_unchanged": len(existing) == 39 and fingerprint(existing) == admission["preexisting_family_rows_sha256"],
+        "registry_family_count": len(registry["families"]), **preservation,
         "positive_cases": len(fixtures["valid"]), "negative_cases": len(fixtures["invalid"]),
         "command_event_bindings_checked": len(command_bindings),
         "single_family_authority_reports": authority_reports,
