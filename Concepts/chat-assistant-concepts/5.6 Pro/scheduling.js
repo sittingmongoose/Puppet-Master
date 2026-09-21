@@ -481,7 +481,7 @@
           resumes_run_id: null, stops_on_terminal: true,
           exact_target_version: 2, exact_target_hash: demoHash('ap-auth:2'),
           schedule_kind: 'one_time',
-          timezone: 'America/Chicago', local_start: '01:00', local_pause: null,
+          timezone: 'America/Chicago', local_start: '01:00', local_pause: null, scheduled_at_utc: '2026-09-03T06:00:00Z',
           days_of_week: [],
           wind_down_seconds: 600, missed_policy: 'hold', auto_resume_next_window: false,
           state: 'invalidated',
@@ -526,7 +526,7 @@
           resumes_run_id: null, stops_on_terminal: true,
           exact_target_version: 1, exact_target_hash: demoHash('ap-embeds:1'),
           schedule_kind: 'one_time',
-          timezone: 'America/Chicago', local_start: '23:30', local_pause: null,
+          timezone: 'America/Chicago', local_start: '23:30', local_pause: null, scheduled_at_utc: '2026-09-04T04:30:00Z',
           days_of_week: [],
           wind_down_seconds: 600, missed_policy: 'hold', auto_resume_next_window: false,
           state: 'active', revision: 1, invalidated_reason: null,
@@ -557,7 +557,7 @@
           resumes_run_id: null, stops_on_terminal: true,
           exact_target_version: 1, exact_target_hash: demoHash('ap-flags:1'),
           schedule_kind: 'one_time',
-          timezone: 'America/Chicago', local_start: '02:15', local_pause: null,
+          timezone: 'America/Chicago', local_start: '02:15', local_pause: null, scheduled_at_utc: '2026-09-03T07:15:00Z',
           days_of_week: [],
           wind_down_seconds: 600, missed_policy: 'hold', auto_resume_next_window: false,
           state: 'held',
@@ -613,6 +613,14 @@
       if (!b.runPhase) b.runPhase = 'idle';
       if (!b.demoClockIso) b.demoClockIso = nowIso();
       if (!b.log) b.log = [];
+      /* A one_time record persisted before scheduled_at_utc existed would
+         render "Invalid time value"; derive it from the local wall time. */
+      if (b.schedule_kind === 'one_time' && !Number.isFinite(Date.parse(b.scheduled_at_utc || ''))) {
+        var hh = parseHHMM(b.local_start);
+        var from = Date.parse(b.createdAt || b.demoClockIso || nowIso()) - 60000;
+        var at = Number.isFinite(from) ? nextOccurrenceUTC(b.timezone, [0, 1, 2, 3, 4, 5, 6], hh.h, hh.m, from) : null;
+        if (at) b.scheduled_at_utc = new Date(at).toISOString();
+      }
     });
   })();
 
@@ -1418,9 +1426,13 @@
     var plan=window.PM56_PLANS?.get(b.target_id),id=esc(b.schedule_id),label=BLD_STATE_LABEL[b.state]||b.state;
     var one=b.schedule_kind==='one_time';
     var when=one?whenLabel(b.scheduled_at_utc,b.timezone):daysSummary(b.days_of_week)+' · '+to12h(b.local_start)+'–'+to12h(b.local_pause)+' · '+zoneName(b.timezone);
-    var next= b.state==='active'?(one?Date.parse(b.scheduled_at_utc):computeNextOccurrence(b,b.clock_ms??Date.now())):null;
-    var nextIso=typeof next==='number'?new Date(next).toISOString():next?.startMs?new Date(next.startMs).toISOString():null;
-    return '<article class="schedule-item" data-k="build-window-'+id+'"><div class="schedule-item-head"><span class="schedule-item-icon">'+ctx.icon('document',17)+'</span><div class="schedule-item-copy"><strong>'+esc(plan?.title||b.target_id)+'</strong><span>V'+b.exact_target_version+' · '+esc(when)+'</span></div>'+chip(label,BLD_STATE_TONE[b.state]||'idle')+'</div>'+
+    var nextMs=null;
+    if(b.state==='active'){
+      if(one){var p1=Date.parse(b.scheduled_at_utc||'');if(Number.isFinite(p1))nextMs=p1;}
+      else{var nx=computeNextOccurrence(b,b.clock_ms??Date.now());if(typeof nx==='number'&&Number.isFinite(nx))nextMs=nx;}
+    }
+    var nextIso=nextMs===null?null:new Date(nextMs).toISOString();
+    return '<article class="schedule-item" data-k="sched-bld-'+id+'"><div class="schedule-item-head"><span class="schedule-item-icon">'+ctx.icon('document',17)+'</span><div class="schedule-item-copy"><strong>'+esc(plan?.title||b.target_id)+'</strong><span>V'+b.exact_target_version+' · '+esc(when)+'</span></div>'+chip(label,BLD_STATE_TONE[b.state]||'idle')+'</div>'+
       (b.state==='invalidated'?'<div class="schedule-attention">'+ctx.icon('warning',13)+'<span>Plan changed to V'+esc(b.pendingVersion)+'. Review before scheduling.</span></div>':'<div class="schedule-item-destination">'+esc(b.dispatchReceipt?(plan?.status==='completed'?'Build completed':'Build started'):(one&&b.runPhase==='idle'?'Waiting for scheduled time':PHASE_LABEL[b.runPhase]||b.runPhase||'Waiting'))+(nextIso&&!one?' · Next '+esc(whenLabel(nextIso,b.timezone)):'')+'</div>')+
       (b.held_reason?'<div class="schedule-attention">'+esc(b.held_reason)+'</div>':'')+'<div class="schedule-item-controls"><button class="soft-button" data-action="pd-info" data-id="'+esc(b.target_id)+'">Open plan</button>'+
       (b.state==='invalidated'?'<button class="soft-button" data-action="sched-rebind-build" data-id="'+id+'" data-version="'+esc(b.pendingVersion)+'" data-hash="'+esc(b.pendingHash)+'" data-revision="'+b.revision+'">Use V'+esc(b.pendingVersion)+'</button>':'')+
