@@ -1,0 +1,72 @@
+{
+  "schema": "shape.blind_checkpoint_manifest.v1",
+  "blind_run_id": "R-4c6e04224ae0c159ed69",
+  "checkpoint": 1,
+  "report_files": [
+    {
+      "path": "reports/research-shapes-20260920/BLIND_SCORE_CHECKPOINT_001.md",
+      "sha256": "567c36d94fe1b67707ff46c928bc5f333aeb1040a4cb4545775591a2200cccbf"
+    },
+    {
+      "path": "reports/research-shapes-20260920/blind-score-checkpoint-001.json",
+      "sha256": "1ae6775bd4c2ef4c556d0340239dac940790a06f502a0e2e47a0531b81e9587e"
+    },
+    {
+      "path": "reports/research-shapes-20260920/STATUS.md",
+      "sha256": "7f3e5693f35db106051031ccbacc9f8e635cd63f5b54c0021cfb5728addffd80"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-4c6e04224ae0c159ed69/score.json",
+      "sha256": "c6994d5b8a27330a0aada3b016c0d193c153cffcac44f83f2a82f859b845a690"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-4c6e04224ae0c159ed69/semantic-pass.json",
+      "sha256": "05aa23bbb6390fdf42808f0095c8e2ef7ffab15ef09eb88ab8ead62a334a69c9"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-4c6e04224ae0c159ed69/semantic-pass-lock.json",
+      "sha256": "b18057392e76669bf7c094454efd165a25c0b06ad91a56db1360f1a7bfe3d1af"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-4c6e04224ae0c159ed69/upstream-review.json",
+      "sha256": "64dd48afa4a69b87d5037adae4a4214e982fdd9539cc7823ce641b1f668bd099"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-4c6e04224ae0c159ed69/source-reference-validation.json",
+      "sha256": "d795d02b48f0c2dbcd1ae2f490920870b4ddc265222791d0da9eeac8827ecccf"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-4c6e04224ae0c159ed69/score-lock-receipt.json",
+      "sha256": "a8b6e3a25fcc31e8319aa29217b63ad71b5f4ac670eda82e5eb741e769c53777"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/schedule.json",
+      "sha256": "e2df6472e404589847866e76a516c81d49caf4248061669695fca04f657d0f43"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-4c6e04224ae0c159ed69/decision-burden-supplement.json",
+      "sha256": "f05a84b0bfb1b321496b661901585429c72c1afdd7a701854edcf63f25b84d2f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/harness-compaction-scope-limitation.json",
+      "sha256": "1cd53c424698a70485513b23f13ba62edb526d8ba0b094abb5200d8b82946dbf"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/accounting-reconciliations/5ca0e6bb95a8236ce4c971d8767c84d907aae6e714d61ac40c4f9baea5639244.json",
+      "sha256": "5d946a0a4d0d8eebbd89348f9b23d82a63d8f87557d1ebd546dc69638e19ad98"
+    }
+  ],
+  "verification": {
+    "json_parsed": true,
+    "score_matches_root_expected_sha256": true,
+    "immutable_semantic_fields_unchanged": true,
+    "semantic_lock_and_upstream_receipt_bindings_match": true,
+    "registry_disposition": "unscorable",
+    "private_inputs_read": false,
+    "decision_burden_supplement_bound_to_score": true,
+    "accounting_reconciliation_receipt_hash_verified": true
+  },
+  "checkpoint_at_utc": "2026-09-21T03:02:04.959793+00:00"
+}

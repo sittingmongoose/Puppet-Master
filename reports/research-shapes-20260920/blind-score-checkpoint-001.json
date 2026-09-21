@@ -1,0 +1,119 @@
+{
+  "schema": "shape.blind_score_checkpoint.v1",
+  "campaign_id": "phase1-20260921",
+  "checkpoint": 1,
+  "scope": "First locked blind slot only; no cross-run comparison or configuration reveal.",
+  "score_locks_recorded": 1,
+  "scheduled_main_component_slots": 16,
+  "controller_status": "reconciliation_applied_next_launch_not_confirmed_at_checkpoint",
+  "next_run_launch_claimed": false,
+  "slot": {
+    "blind_run_id": "R-4c6e04224ae0c159ed69",
+    "case_id": "ome-zarr-thin",
+    "ordinal": 1,
+    "phase": "main"
+  },
+  "score_lock_disposition": "unscorable",
+  "root_score_sha256": "c6994d5b8a27330a0aada3b016c0d193c153cffcac44f83f2a82f859b845a690",
+  "delivery": {
+    "status": "absent",
+    "artifact": null,
+    "reason": "The sealed final packet reports no coherent delivered artifact. Root verified packet integrity and process quiescence. This scheduled attempt is unscorable; upstream artifacts will not be substituted."
+  },
+  "arm_measurements": {
+    "status": "unscorable",
+    "retained": null,
+    "narrowed": null,
+    "lost": null,
+    "contradicted": null,
+    "unsupported_assertions": null,
+    "novel_supported": null,
+    "correct_non_findings": null,
+    "reason": "No coherent delivered artifact. Empty arrays in the locked score represent no assigned measurement, not measured zero counts or lost-reference sets."
+  },
+  "delivered_decision_burden": {
+    "blocking_count": null,
+    "nonblocking_count": null,
+    "clarification_question_count": null,
+    "redundant_count": null,
+    "reason": "Absent coherent delivery; these are unavailable, not zero."
+  },
+  "supplemental_upstream_inspection": {
+    "arm_credit": false,
+    "inventory_counts": {
+      "questions": 27,
+      "investigated_questions": 25,
+      "deferred_questions": 1,
+      "reported_environment_blocked_questions": 1,
+      "observations": 20,
+      "assessments": 15
+    },
+    "coverage": {
+      "status": "reviewed_as_upstream_only",
+      "investigated_question_count": 25,
+      "investigated_family_count": 7,
+      "unreached_entries_count": 6,
+      "source_limitation_entries_count": 4
+    },
+    "handoff": {
+      "status": "reviewed",
+      "reference_facet_entries": 8,
+      "delivered_status": "unscorable"
+    },
+    "source_reference_validation": {
+      "status": "matched",
+      "structured_reference_occurrences": 501,
+      "unique_reference_objects": 41,
+      "unique_source_count": 11,
+      "unique_range_count": 37,
+      "mismatch_count": 0
+    }
+  },
+  "boundaries": [
+    "Root semantic fields are preserved exactly in the external locked score; this report assigns no semantic credit.",
+    "Coverage, inventory and handoff counts describe supplemental upstream inspection only; they do not substitute for delivery.",
+    "No retained, narrowed, lost or contradicted sets are inferred from absent delivery. Delivered decision burden is unavailable, not zero.",
+    "No configuration mapping, private run artifacts, current economics or execution clocks were read for this checkpoint.",
+    "The other fifteen scheduled slots are not reported here; no subsequent launch or execution status is asserted."
+  ],
+  "decision_burden_supplement": {
+    "blind_id": "R-4c6e04224ae0c159ed69",
+    "blocking_decisions": {
+      "count": null,
+      "items": null
+    },
+    "clarification_questions": {
+      "count": null,
+      "items": null
+    },
+    "delivery_status": "absent",
+    "evaluator": "root_astra_high",
+    "nonblocking_choices": {
+      "count": null,
+      "items": null
+    },
+    "reason": "There is no coherent delivered artifact to impose decisions or questions on the user. All delivered burden measures are unavailable, not measured zero. Upstream research-intake questions are not delivered user questions and receive no burden count.",
+    "redundant_questions": {
+      "count": null,
+      "items": null
+    },
+    "schema": "shape.decision_burden_supplement.v1",
+    "score_sha256": "c6994d5b8a27330a0aada3b016c0d193c153cffcac44f83f2a82f859b845a690"
+  },
+  "root_harness_limitation": {
+    "id": "HARNESS-COMPACTION-AGGREGATE-SCOPE",
+    "interpretation": "This observed terminal failure has a shared-harness accounting-scope cause. It is not a measured participant finding-quality failure and cannot establish a candidate-specific deficiency while configurations remain blinded. Architecture-dependent exposure or other outcomes are not inferred. The failed run and absent delivery remain retained.",
+    "frozen_harness_modified": false,
+    "participant_score_changed": false,
+    "observed_runtime_finding": "For this terminal run, authoritative native usage includes lifecycle-bound context compaction excluded from the aggregate, and all four categories including compaction were already charged. Identity coverage and accounting chains pass; no missing or conflicting native usage was found."
+  },
+  "checkpoint_at_utc": "2026-09-21T03:02:04.959793+00:00",
+  "accounting_reconciliation": {
+    "status": "applied",
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/accounting-reconciliations/5ca0e6bb95a8236ce4c971d8767c84d907aae6e714d61ac40c4f9baea5639244.json",
+      "sha256": "5d946a0a4d0d8eebbd89348f9b23d82a63d8f87557d1ebd546dc69638e19ad98"
+    },
+    "next_launch_confirmed_at_checkpoint": false
+  }
+}

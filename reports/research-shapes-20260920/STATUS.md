@@ -1,5 +1,7 @@
 # Phase 1 screen — qualified prelaunch checkpoint
 
+> Latest blind update: [checkpoint 001](BLIND_SCORE_CHECKPOINT_001.md) records the first score lock (1/16): absent delivery, unscorable, with supplemental upstream review kept separate from arm credit. Reconciliation is applied; a subsequent launch is not yet confirmed at the checkpoint instant `2026-09-21T03:02:04.959793+00:00`. The prelaunch details below remain historical.
+
 The reports-only branch is `research/shapes-screen-20260921`, based on `977ae12f9e91b459f70d7f287f60a087160dbf8a`; this checkpoint is pushed and not landed. The previous input universe was physically copied into the external baseline: 1,343 frozen inputs plus the original freeze record, totaling 108,933,920 bytes. Original and copied baseline manifests and every listed input hash were verified; content SHA-256 is `a95d3b6800f05b69e80e42ad0e02a78ac55e92bf457e32e74f5f335f9f4217dd`. The campaign has not modified the original source inputs.
 
 The root accepted native qualification after the complete offline suite passed **134 tests**. The production native freeze binds **1,400 files**, and qualification binds that freeze as well. The scoring freeze and four component bundles are fixed. The blinded schedule was initialized once; its public commitment and all proof paths/hashes are in preparation.json. At this checkpoint, **zero research-provider calls** have been made, and no candidate score or result exists.
