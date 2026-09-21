@@ -1,6 +1,6 @@
 # Phase 1 screen — qualified prelaunch checkpoint
 
-> Latest blind update: [checkpoint 002](BLIND_SCORE_CHECKPOINT_002.md) records 2/16 score locks, both absent and unscorable. Root reports a warning hold at second termination and no third launch. A later account-level read reports no warning; controller recovery and native readiness remain unestablished. [Checkpoint 001](BLIND_SCORE_CHECKPOINT_001.md) and the prelaunch details below remain historical.
+> Latest operational update: [checkpoint 003](OPERATIONAL_CHECKPOINT_003.md) records the third slot live at `2026-09-21T03:48:40.444165+00:00` after controlled account recovery; no later outcome is asserted. Still 2/16 score locks, both absent and unscorable; [blind score checkpoint 002](BLIND_SCORE_CHECKPOINT_002.md) and the prelaunch details below remain historical.
 
 The reports-only branch is `research/shapes-screen-20260921`, based on `977ae12f9e91b459f70d7f287f60a087160dbf8a`; this checkpoint is pushed and not landed. The previous input universe was physically copied into the external baseline: 1,343 frozen inputs plus the original freeze record, totaling 108,933,920 bytes. Original and copied baseline manifests and every listed input hash were verified; content SHA-256 is `a95d3b6800f05b69e80e42ad0e02a78ac55e92bf457e32e74f5f335f9f4217dd`. The campaign has not modified the original source inputs.
 

@@ -62,5 +62,31 @@
     "source_artifacts_bound": 4,
     "scope": "Synthetic evaluation projection and comparison only. No participant runtime changed, no production economics or configuration mapping accessed.",
     "historical_preparation_above_unchanged": true
-  }
+  },
+  "subsequent_token_count_tools_validation": {
+    "recorded_at": "2026-09-21T03:45:35.779861+00:00",
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/economics-tools-validation-token-counts.json",
+      "sha256": "15d1c6867293024727e535a6a270fc1e6662b673d0e51bd83c705d37c5b1656a"
+    },
+    "tests_passed": 48,
+    "normalizer_tests": 31,
+    "comparison_tests": 17,
+    "source_artifacts_bound": 4,
+    "scope": "Synthetic evaluation projection and comparison only. No participant runtime changed, no production economics or configuration mapping accessed.",
+    "earlier_validation_retained_as_historical": true
+  },
+  "subsequent_source_only_preparation": [
+    {
+      "recorded_at": "2026-09-21T03:48:04.223301+00:00",
+      "reference_id": "F008",
+      "receipt": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/pinned-checks/jujutsu-partial-resolve.json",
+        "sha256": "73481288c053010942891297dc8d2df1395bd7333eabec7cf256ef781de6f48a"
+      },
+      "root_adjudication": "F008 remains supported as a command-specific native partial-effect example, and its proposed general safety obligation is already covered by the frozen Plan. Retain the distinction between partial edited files and fully resolved conflicts, between unpublished and published operations, and between a possible persisted partial effect and an unconditional guarantee. Exact supported-version/runtime qualification remains unproved. No arm credit is assigned by this source-only preparation.",
+      "candidate_credit": false,
+      "runtime_execution_performed": false
+    }
+  ]
 }

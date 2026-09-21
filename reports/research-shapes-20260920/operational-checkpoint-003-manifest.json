@@ -1,0 +1,104 @@
+{
+  "schema": "shape.operational_checkpoint_manifest.v1",
+  "checkpoint": 3,
+  "observed_at": "2026-09-21T03:48:40.444165+00:00",
+  "report_files": [
+    {
+      "path": "reports/research-shapes-20260920/OPERATIONAL_CHECKPOINT_003.md",
+      "sha256": "e436f9061544b60fb554b75db108047da2c77ce71381593e09523d528cc9cc9b"
+    },
+    {
+      "path": "reports/research-shapes-20260920/operational-checkpoint-003.json",
+      "sha256": "af8910c52fd01fa266e86d28a04be3a5208e8fbb8beffc9da6bb23aef215fa62"
+    },
+    {
+      "path": "reports/research-shapes-20260920/STATUS.md",
+      "sha256": "706fb009592df282d89a385844322dce9ea469753bcacb629deb93321450d7c3"
+    },
+    {
+      "path": "reports/research-shapes-20260920/evaluation-preparation.json",
+      "sha256": "f1eafb1c71bcafad0d51af44c054d74b60100fce4087e0e5cd5cbccf012a3a77"
+    }
+  ],
+  "historical_checkpoint": {
+    "path": "reports/research-shapes-20260920/blind-score-checkpoint-002.json",
+    "sha256": "0fc75fc2ce61b26d43a8886bdb56548cb5da745362d7f0175503935389156ba4"
+  },
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/root-third-run-live-checkpoint.json",
+      "sha256": "6505fe26c21c4c34459d6c9c73fb6ff573c46a0f837ba5dd0505f56d846f13a2"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/account-recovery-20260921-0342/application-receipt.json",
+      "sha256": "804537a4f4d895adabb95ac87dd864ecfe509b9b6d617656094d7310e9709918"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/economics-tools-validation-token-counts.json",
+      "sha256": "15d1c6867293024727e535a6a270fc1e6662b673d0e51bd83c705d37c5b1656a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/pinned-checks/jujutsu-partial-resolve.json",
+      "sha256": "73481288c053010942891297dc8d2df1395bd7333eabec7cf256ef781de6f48a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/evaluation_tools/normalize_economics.py",
+      "sha256": "02fcda5140324f3a2a67bbf1e8bdc1c320108fdf382a27d93cd6724d2cac91ce"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/evaluation_tools/tests/test_normalize_economics.py",
+      "sha256": "ddafecb17589b5d1e7f09d0f4bcb05f09999f5f8769dee8c135bb2c22e399baf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/evaluation_tools/compare_results.py",
+      "sha256": "73ee5675ddf6d0aac05d43304fed9c4cf99571a0e5aa5909ed56b714c999625b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/evaluation_tools/tests/test_compare_results.py",
+      "sha256": "17102e417199c2f459a5d7a5b67ffe26f137ff6b1e6b3900d00659784ac22d97"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/jujutsu-88/source_catalog.json",
+      "sha256": "34a4645b8e3d4e9504d2cc0c7c1e16866fe979aa740c6f3fb93d5c5eae9c7cf6"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/reference/fixed-reference.json",
+      "sha256": "54fdca6a4aa9a6356da545a0c195c835557c2a8b1fe16feb9356d0d09a83fbde"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/economics-tools-validation.json",
+      "sha256": "6b00abbce125b8ee035c8ccb6bb6ac98e46185adeae5a19ac1c03c525837ac42"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/jujutsu-88/source_blobs/77e28e6bbf8d88583c273caa62a4019590d88e6e7cf90c4253575fc8c615b97b.txt",
+      "sha256": "77e28e6bbf8d88583c273caa62a4019590d88e6e7cf90c4253575fc8c615b97b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/jujutsu-88/source_blobs/a0046e9a642f3398fa257078826f7d079154a4260b09bb1cac27642bb3445866.txt",
+      "sha256": "a0046e9a642f3398fa257078826f7d079154a4260b09bb1cac27642bb3445866"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/jujutsu-88/source_blobs/f5d5547d58ec211ea3182b8abb799f013b436c42dd9f3e983e225278879a337c.txt",
+      "sha256": "f5d5547d58ec211ea3182b8abb799f013b436c42dd9f3e983e225278879a337c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/jujutsu-88/source_blobs/ee1eb31d16c0b5a920ea80ad2f73ff4183b83450013f63dacb8402f2f77f1e2d.txt",
+      "sha256": "ee1eb31d16c0b5a920ea80ad2f73ff4183b83450013f63dacb8402f2f77f1e2d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/jujutsu-88/source_blobs/5db42607e443b46ccd1a7069cc4fb966b6f570df5b2e774baefbc1ce31a65418.txt",
+      "sha256": "5db42607e443b46ccd1a7069cc4fb966b6f570df5b2e774baefbc1ce31a65418"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/jujutsu-88/source_blobs/90285d608c9d46fb00ab4b226656f3475a4afb114bfb7558eead35d096076deb.txt",
+      "sha256": "90285d608c9d46fb00ab4b226656f3475a4afb114bfb7558eead35d096076deb"
+    }
+  ],
+  "verification": {
+    "all_path_hash_bindings_verified": true,
+    "source_excerpt_hashes_verified": 10,
+    "immutable_prior_checkpoints_preserved": true,
+    "private_inputs_read": false,
+    "scope": "Root recorded facts and mechanical source/hash verification only; no new scoring or experimental actions."
+  }
+}

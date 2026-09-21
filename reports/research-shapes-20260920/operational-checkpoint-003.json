@@ -1,0 +1,84 @@
+{
+  "schema": "shape.operational_report_checkpoint.v1",
+  "campaign_id": "phase1-20260921",
+  "checkpoint": 3,
+  "observed_at": "2026-09-21T03:48:40.444165+00:00",
+  "status_as_of_recorded_timestamp_only": true,
+  "score_locks_recorded": 2,
+  "scheduled_main_component_slots": 16,
+  "prior_locked_slots": [
+    {
+      "ordinal": 1,
+      "blind_run_id": "R-4c6e04224ae0c159ed69",
+      "delivery_status": "absent",
+      "disposition": "unscorable",
+      "score_sha256": "c6994d5b8a27330a0aada3b016c0d193c153cffcac44f83f2a82f859b845a690"
+    },
+    {
+      "ordinal": 2,
+      "blind_run_id": "R-2e79d257457dad242e8a",
+      "delivery_status": "absent",
+      "disposition": "unscorable",
+      "score_sha256": "6f03b1229d469574fa6e93fc0dc46735bc98e35a7e2ab12dda5c44a2a83eb04d"
+    }
+  ],
+  "active_slot": {
+    "blind_run_id": "R-db37e67db3f881fbd650",
+    "case_id": "ome-zarr-thin",
+    "phase": "main",
+    "ordinal": 3,
+    "status": "running",
+    "packet_sealed": false,
+    "score_locked": false
+  },
+  "recorded_process_observation": {
+    "native_or_metadata_process_live": true,
+    "process_identity_unknown": false
+  },
+  "prior_failed_attempts_unchanged": true,
+  "configuration_mapping_accessed": false,
+  "real_economics_accessed": false,
+  "account_recovery": {
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/account-recovery-20260921-0342/application-receipt.json",
+      "sha256": "804537a4f4d895adabb95ac87dd864ecfe509b9b6d617656094d7310e9709918"
+    },
+    "applied_at": "2026-09-21T03:38:56.692710+00:00",
+    "status_transition": {
+      "from": "held",
+      "to": "paused"
+    },
+    "terminal_runs_resumed_or_retried": false,
+    "freezes_unchanged": true,
+    "all_existing_run_registry_score_packet_and_charge_bytes_preserved": true,
+    "paid_launch_performed_by_recovery_application": false
+  },
+  "evaluation_tools_validation": {
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/economics-tools-validation-token-counts.json",
+      "sha256": "15d1c6867293024727e535a6a270fc1e6662b673d0e51bd83c705d37c5b1656a"
+    },
+    "tests_passed": 48,
+    "normalizer_tests": 31,
+    "comparison_tests": 17,
+    "source_artifacts_bound": 4,
+    "production_export_performed": false
+  },
+  "source_only_preparation": {
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/pinned-checks/jujutsu-partial-resolve.json",
+      "sha256": "73481288c053010942891297dc8d2df1395bd7333eabec7cf256ef781de6f48a"
+    },
+    "reference_id": "F008",
+    "root_adjudication": "F008 remains supported as a command-specific native partial-effect example, and its proposed general safety obligation is already covered by the frozen Plan. Retain the distinction between partial edited files and fully resolved conflicts, between unpublished and published operations, and between a possible persisted partial effect and an unconditional guarantee. Exact supported-version/runtime qualification remains unproved. No arm credit is assigned by this source-only preparation.",
+    "candidate_credit": false,
+    "runtime_execution_performed": false
+  },
+  "boundaries": [
+    "Third slot was live at the recorded timestamp; no later outcome or score is asserted.",
+    "First two absent/unscorable deliveries remain preserved; no upstream material substitutes for delivery.",
+    "Recovery application paused the held controller without a paid launch; the later checkpoint separately records the third live slot.",
+    "Scorer remains blind; no private configuration mapping or current economics were read.",
+    "Source-only F008 preparation does not assign participant credit or establish supported-version/runtime qualification."
+  ]
+}
