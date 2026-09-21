@@ -842,9 +842,17 @@
   "native_execution": "NOT_RUN",
   "event_admission": false,
   "full_event_depth_clearance": false,
-  "step9_started": false,
   "governance_seal": false,
   "validator_edits": false,
   "B01_approval": false,
-  "cost": "Source authoring, independent review and repository checks; monetary attribution unavailable."
+  "cost": "Source authoring, independent review and repository checks; monetary attribution unavailable.",
+  "new_step9_campaign_work_in_this_slice": false,
+  "prior_step9_partial_work": {
+    "report": "reports/event-authority-20260911/step-09-review-packet.md",
+    "registered": 0,
+    "excluded": 6,
+    "carded": 20,
+    "remaining": 226,
+    "note": "Existing partial inventory/dispositions; this source adoption does not advance the campaign."
+  }
 }
