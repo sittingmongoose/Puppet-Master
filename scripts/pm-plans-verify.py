@@ -3973,6 +3973,8 @@ def validate_wiring_vocabulary(entries: dict[str, Any], forge_fixtures: dict[str
 
 
 def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
+    from pm_primary_command_catalog import validate_primary_command_catalog
+
     failures: list[dict[str, Any]] = []
     matrix_path = PLANS / "Wiring_Matrix.production.json"
     schema_path = PLANS / "Wiring_Matrix.schema.json"
@@ -4002,6 +4004,7 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
         excluded_tokens = []
 
     catalog_text = catalog_path.read_text(encoding="utf-8")
+    failures.extend(validate_primary_command_catalog(ROOT, entries))
     usage_provider_disposition_tokens = [
         "cmd.provider.usage.open_management receives no primary catalog row and no alias",
         "Provider/account/presentation-panel aggregate details remain local and dispatch no UICommand",
