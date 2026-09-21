@@ -1,0 +1,1006 @@
+{
+  "schema_id": "pm.packet_audit.final_report_checkpoint.v1",
+  "checkpoint_id": "r5-b47-final-packet-audit-20260921",
+  "status": "coverage_complete_formal_completion_success",
+  "reviewer": "codex-root-packet-audit",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "review_comparison_commit": "8704c1d63371825fc78ec53c7f86790d6f63a256",
+  "scope_and_authority": [
+    "Final B47 individual root-authored review covers 213 retained Touch rows across 13 dimensions, chunks 00130 through 00151. Helpers capture and serialize literal judgments; no semantic verdict is inferred from coverage or fixtures.",
+    "Compact final audit checkpoint; canonical product prose, concepts, governance locks, readiness artifacts and historical judgments remain unchanged. Full case results and raw evidence remain external at the cited paths.",
+    "Formal merge and audit validation completed successfully. The root-authored implementation verdict remains fail independently of the structurally valid report. Visual/design work remains deferred; this audit authorizes no repair."
+  ],
+  "new_batch": {
+    "chunk_ids": [
+      "chunk-00130",
+      "chunk-00131",
+      "chunk-00132",
+      "chunk-00133",
+      "chunk-00134",
+      "chunk-00135",
+      "chunk-00136",
+      "chunk-00137",
+      "chunk-00138",
+      "chunk-00139",
+      "chunk-00140",
+      "chunk-00141",
+      "chunk-00142",
+      "chunk-00143",
+      "chunk-00144",
+      "chunk-00145",
+      "chunk-00146",
+      "chunk-00147",
+      "chunk-00148",
+      "chunk-00149",
+      "chunk-00150",
+      "chunk-00151"
+    ],
+    "case_count": 2769,
+    "touch_row_count": 213,
+    "dimension_count": 13,
+    "status_counts": {
+      "pass": 1140,
+      "fail": 32,
+      "partial": 1597
+    },
+    "complete_for_review_scope": true,
+    "implementation_complete": false,
+    "fail_cell_qualification": "32 failing dimension cells are not 32 unique defects: two wrong-owner-unit references, fourteen reviewed command/alias rows each affecting contract and tests/evidence dimensions, and two selected local concept wiring mismatches. Several aliases share the same exact target and observed defect.",
+    "fail_case_navigation": [
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-PERM-004/canonical_owner_and_plan_unit",
+        "finding": "cmd.permissions.delete_rule: the profile names PS-130, whose text owns normalized runtime/tool approval leases, not the selected rule-editing UI contract.",
+        "residual": "The correct Permissions UI Commands and Error States plus TOML atomicity passages exist at lines 8968-8989; this is a specific PlanUnit routing mismatch, not absence of a Permissions owner."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-PERM-005/canonical_owner_and_plan_unit",
+        "finding": "cmd.permissions.validate_rule: the profile names PS-130, whose text owns normalized runtime/tool approval leases, not the selected rule-editing UI contract.",
+        "residual": "The correct Permissions UI Commands and Error States plus TOML atomicity passages exist at lines 8968-8989; this is a specific PlanUnit routing mismatch, not absence of a Permissions owner."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPCMD-002/payload_result_error_availability_permissions_disabled_reason",
+        "finding": "cmd.auth_profile.rename: a completed rename result still validates after effect_kind is changed from profile_metadata_changed to profile_revoked, contradicting MA-071's rename-versus-revoke boundary.",
+        "residual": "This is an in-record result-contract contradiction, not an observed revocation or native permission bypass."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPCMD-002/tests_and_evidence",
+        "finding": "cmd.auth_profile.rename: the fresh single-field wrong-effect probe passes the schema and receives no applicable semantic rejection.",
+        "residual": "Authored positive/negative shape coverage does not enforce this exact operation/effect relationship."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPCMD-018/payload_result_error_availability_permissions_disabled_reason",
+        "finding": "cmd.client.access.update: the composed ClientTrustCommandRoundTrip accepts a result command_instance_id different from its request despite its explicit equality invariant; separately the result admits succeeded/changed plus stale currentness.",
+        "residual": "The round trip was newly composed from authored components. Stale projection is not proof of stale execution, and no Client trust mutation occurred."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPCMD-018/tests_and_evidence",
+        "finding": "cmd.client.access.update: both exact mutations validate, and the named Client round-trip route receives no applicable equality rejection.",
+        "residual": "The lowercase Remote Access dispatcher does not enforce this different named contract; native session preservation and exact return remain unproved."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPCMD-034/payload_result_error_availability_permissions_disabled_reason",
+        "finding": "cmd.credential_attachment.revoke_active: the result accepts succeeded/currentness_verified with operation_generation=1 and observed_operation_generation=0, contrary to SIR's explicit conflicting-generation-success exclusion.",
+        "residual": "fixture_claim remains shape_only_no_native_success; no credential was revoked or stale operation dispatched."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPCMD-034/tests_and_evidence",
+        "finding": "cmd.credential_attachment.revoke_active: fresh exact in-record generation-conflict mutation is schema-accepted and not rejected by the existing dispatcher.",
+        "residual": "Static family fixtures do not enforce this correlation; native permissions and credential effects remain unproved."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPCMD-064/payload_result_error_availability_permissions_disabled_reason",
+        "finding": "cmd.execution_environment.stop: succeeded/currentness_verified accepts observed_operation_generation=0 against operation_generation=1, violating SIR's explicit generation-conflict exclusion; setting currentness_verified=false is correctly rejected.",
+        "residual": "The negative control protects only that boolean condition, not the conflicting numeric generations. No environment stop occurred."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPCMD-064/tests_and_evidence",
+        "finding": "cmd.execution_environment.stop: fresh paired controls distinguish accepted generation mismatch from rejected false-currentness success.",
+        "residual": "No applicable semantic correlation rejection or native environment/work/resource-governor effect was observed."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPCMD-078/payload_result_error_availability_permissions_disabled_reason",
+        "finding": "cmd.goal.continue_on_host: the composed GoalHandoffCommandRoundTrip accepts a changed result invocation_token despite its explicit return equality invariant; its separate result also accepts succeeded/changed/running with stale currentness.",
+        "residual": "The composition is a new probe, not an authored round-trip fixture. Projection freshness does not establish stale continuation execution."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPCMD-078/tests_and_evidence",
+        "finding": "cmd.goal.continue_on_host: focused equality mutation validates with no applicable semantic rejection, although all 21 positive and 9 negative standalone Goal fixtures behaved as authored.",
+        "residual": "Goal fixtures are not enrolled in the closed aggregate; negative examples with other invalid fields do not prove exact-return equality."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPCMD-109/payload_result_error_availability_permissions_disabled_reason",
+        "finding": "cmd.project.move.cancel: the composed ProjectMoveCommandRoundTrip accepts a different result command_instance_id despite its explicit equality invariant; the separate cancel result also admits resulting_generation=0 beside positive expected generations.",
+        "residual": "The generic resulting generation's exact namespace is not established, so no particular Project/source/destination generation regression or live move is claimed."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPCMD-109/tests_and_evidence",
+        "finding": "cmd.project.move.cancel: the focused command-instance mismatch validates without applicable semantic rejection; standalone Project Sync fixtures do not close it.",
+        "residual": "The composition is newly assembled from authored components; the Project Sync pack is not enrolled in the aggregate and no move state was executed."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPCMD-125/payload_result_error_availability_permissions_disabled_reason",
+        "finding": "cmd.project.source_location.set_primary: succeeded/currentness_verified accepts observed_operation_generation=0 against operation_generation=1 despite the SIR common exclusion of conflicting-generation success.",
+        "residual": "The shape-only fixture does not establish an actual Source Location binding mutation or change to Home Server/execution placement."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPCMD-125/tests_and_evidence",
+        "finding": "cmd.project.source_location.set_primary: the exact generation-conflict mutation remains schema-accepted with no applicable semantic correlation rejection.",
+        "residual": "Static source tests do not supply native binding, permission or recovery enforcement."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPALIAS-010/payload_result_error_availability_permissions_disabled_reason",
+        "finding": "cmd.auth_session.open_official_page: the exact cmd.auth_profile.open_official_page target accepts effect_kind=profile_selection_changed instead of external_handoff_started, violating its external-handoff-only boundary.",
+        "residual": "This does not affect the separate submit_returned_code/resume mapping and does not prove an actual profile selection or browser handoff."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPALIAS-010/tests_and_evidence",
+        "finding": "cmd.auth_session.open_official_page: fresh target wrong-effect mutation validates; empty dispatcher fallback provides no dedicated effect correlation.",
+        "residual": "Target contract evidence is current; earlier result statuses were not reused."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPALIAS-023/payload_result_error_availability_permissions_disabled_reason",
+        "finding": "cmd.cluster_connection.add: exact normalization targets cmd.integration.connection.add; its fresh target result accepts connection_state=ready although the owner limits add to an inactive draft and reserves readiness for activation.",
+        "residual": "This target result-contract gap is not an alias normalization defect, and no connection was created or activated."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPALIAS-023/tests_and_evidence",
+        "finding": "cmd.cluster_connection.add: the fresh exact-target ready-state mutation validates; the dispatcher returns an empty fallback, not dedicated semantic enforcement.",
+        "residual": "Historical target verdicts were not inherited; the witness applies to this exact add alias only."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPALIAS-136/payload_result_error_availability_permissions_disabled_reason",
+        "finding": "cmd.registry_connection.add: exact normalization targets cmd.integration.connection.add; its fresh result accepts ready despite the owner's inactive-add versus explicit-activation boundary.",
+        "residual": "No registry connection was added or activated, and no update/test/remove alias inherits this witness."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPALIAS-136/tests_and_evidence",
+        "finding": "cmd.registry_connection.add: the freshly repeated target ready-state mutation validates with an explicitly unimplemented target-specific semantic route.",
+        "residual": "This is exact-target static evidence, not a copied prior verdict or executed compatibility input."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPALIAS-143/payload_result_error_availability_permissions_disabled_reason",
+        "finding": "cmd.runtime_connection.add: exact normalization targets cmd.integration.connection.add; its fresh result admits ready although add owns only the inactive draft before activation.",
+        "residual": "No runtime connection, authentication or activation occurred; the gap is in target result correlation."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SGAPALIAS-143/tests_and_evidence",
+        "finding": "cmd.runtime_connection.add: fresh exact-target ready-state mutation validates and returns dispatcher fallback [], which is not semantic proof.",
+        "residual": "No historical verdict is inherited and unrelated connection aliases receive no transferred outcome."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-FGI-040/payload_result_error_availability_permissions_disabled_reason",
+        "finding": "cmd.forge.repository.policy.apply: the full policy.apply request accepts different permission and confirmation target_binding_sha256 values while retaining its policy preview/scope/revision/member set, contrary to target-bound confirmation consistency.",
+        "residual": "Neither hash was recomputed from the authoritative target; this is an in-request binding contradiction, not an executed provider mutation."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-FGI-040/tests_and_evidence",
+        "finding": "cmd.forge.repository.policy.apply: the one-field confirmation hash mutation validates without a semantic target-binding rejection.",
+        "residual": "Acceptance-manifest custody and shape fixtures do not enforce this exact request correlation or prove provider execution."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-FGI-042/payload_result_error_availability_permissions_disabled_reason",
+        "finding": "cmd.forge.pipeline.approve: available pipeline.approve accepts expected_binding_generation=3 with currentness.binding_generation=0, state current and mutation_safety verified; changing state to stale is correctly rejected.",
+        "residual": "The independent expected_automation_binding_generation=5 is unchanged; this is repository-binding correlation, not an automation-generation mismatch or actual approval."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-FGI-042/tests_and_evidence",
+        "finding": "cmd.forge.pipeline.approve: fresh paired probes show numeric expected/current binding mismatch accepted while the stale-state control is rejected.",
+        "residual": "Existing fixture/manifest checks do not establish execution-time generation lookup or provider approval."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-REPLOCAL-002/production_or_concept_wiring",
+        "finding": "ui.repository_automation.binding.select: the exact marked, non-displaced controller renders an eight-option fixture picker including No automation service and passes a provider slug into setService, rather than the owner's already-authorized binding candidate/currentness selection envelope.",
+        "residual": "This concrete concept contract mismatch is not a provider mutation, live binding selection or a claim that the slug is schema-invalid by prefix."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-REPLOCAL-003/production_or_concept_wiring",
+        "finding": "ui.source_control.backup_history.open: the exact marked controller calls PM12_KIMI.navigate(system,backup) after opening Settings with no revision/deep-link/identity arguments; the reviewed navigation wrappers do not supply those required values.",
+        "residual": "No previously constructed request is shown losing a revision: the concrete call never carries that envelope. This is navigation underspecification, not a restore invocation."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SIRPOSTAUTH-002/payload_result_error_availability_permissions_disabled_reason",
+        "finding": "cmd.auth_session.submit_code: exact normalization to cmd.auth_profile.submit_code correctly rejects dispatch to authentication.resume, but the target permission record accepts decision=allow with nonempty required_scopes and empty granted_scopes.",
+        "residual": "The target required/granted permission contradiction is distinct from alias normalization; no protected code was submitted and no runtime authority widening was observed."
+      },
+      {
+        "case_ref": "touch_closure_dimensions/TOUCH-SIRPOSTAUTH-002/tests_and_evidence",
+        "finding": "cmd.auth_session.submit_code: fresh target empty-grants mutation validates with dispatcher fallback []; the separate wrong-target normalization control is rejected.",
+        "residual": "Do not transfer this finding to submit_returned_code, which targets authentication.resume, or infer a live permission bypass."
+      }
+    ]
+  },
+  "cumulative_r5": {
+    "expected_cases": 13416,
+    "reviewed_cases": 13416,
+    "not_reviewed_cases": 0,
+    "expected_chunks": 151,
+    "valid_result_files": 151,
+    "missing_result_files": 0,
+    "duplicate_cases": 0,
+    "validation_failures": 0,
+    "status_counts": {
+      "partial": 9502,
+      "not_applicable": 7,
+      "blocked": 46,
+      "fail": 393,
+      "pass": 3468
+    },
+    "coverage_complete": true,
+    "root_authored_implementation_verdict": "fail",
+    "prior_result_files_preserved": 129,
+    "new_result_files": 22
+  },
+  "suite_scope_verdicts": {
+    "settings": {
+      "case_count": 694,
+      "status_counts": {
+        "partial": 478,
+        "not_applicable": 3,
+        "blocked": 21,
+        "pass": 163,
+        "fail": 29
+      },
+      "verdict": "fail",
+      "evidence_refs": [
+        "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/exceptional-cases-read-map.proposal.json sha256=a3335c0ffb43e8aefe8507d89500bdfe067e8194fd2559ffb89b6bed9136ba6b; /source_groups/settings_final_decision_coverage, /source_groups/settings_final_manager_matrix, /source_groups/settings_seven_test_matrix"
+      ],
+      "residual_risk": "Fail on retained concrete concept-source contradictions: Settings Copy re-reads changed source instead of applying its confirmed preview; provider-owned CLI OAuth is described as PM approval; Memory copy conflates rules with Gists and offers Crew sharing; Permissions explanation chooses first instead of last matching rule; Goals project retired phases. Duplicate packet requirements are not distinct bugs. The 694 scoped cases include 29 fail, 21 blocked and 478 partial. No native authorization bypass, persistence execution or rendered theme/width/motion acceptance is claimed. Reference-review blockers remain; visual/design work is outside this non-design integration pass."
+    },
+    "onboarding": {
+      "case_count": 400,
+      "status_counts": {
+        "partial": 393,
+        "pass": 2,
+        "fail": 1,
+        "not_applicable": 4
+      },
+      "verdict": "fail",
+      "evidence_refs": [
+        "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/exceptional-cases-read-map.proposal.json sha256=a3335c0ffb43e8aefe8507d89500bdfe067e8194fd2559ffb89b6bed9136ba6b; /cases/onboarding_doctor_requirements~1ONB-028"
+      ],
+      "residual_risk": "ONB-028 records the selected update-frequency inventory/placement contradicting the owner-required simple update controls and no-user-schedule rule. Of 400 scoped cases, 393 remain partial; static late-commit, selected-source auth and onboarding contracts do not execute the complete journey, durable recovery or native provider setup. This verdict concerns the retained batch snapshots, not a fresh global current-main assessment."
+    },
+    "guided_tour": {
+      "case_count": 314,
+      "status_counts": {
+        "partial": 306,
+        "pass": 2,
+        "not_applicable": 4,
+        "fail": 2
+      },
+      "verdict": "fail",
+      "evidence_refs": [
+        "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/exceptional-cases-read-map.proposal.json sha256=a3335c0ffb43e8aefe8507d89500bdfe067e8194fd2559ffb89b6bed9136ba6b; /source_groups/sep03_guided_tour_rebuild_detail"
+      ],
+      "residual_risk": "The published source retains only a small step marker and restarts without the original owner snapshot; missing targets are centered/marked rather than paused with prerequisite recovery. Those two concrete source failures prevent acceptance. Of 314 scoped cases, 306 are partial; neither static v3 story/action fixtures nor source reading proves safe reload, all manual/Show Me paths, state restoration or rendered motion."
+    },
+    "doctor": {
+      "case_count": 296,
+      "status_counts": {
+        "partial": 281,
+        "fail": 7,
+        "pass": 4,
+        "not_applicable": 4
+      },
+      "verdict": "fail",
+      "evidence_refs": [
+        "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/exceptional-cases-read-map.proposal.json sha256=a3335c0ffb43e8aefe8507d89500bdfe067e8194fd2559ffb89b6bed9136ba6b; /cases/onboarding_doctor_requirements~1DOC-021, /source_groups/sep03_doctor_check_fields"
+      ],
+      "residual_risk": "Seven retained failures concern the active Doctor scenario's superseded hosted/Headscale Serve/Funnel framing against RAS-015/N2-156 connector/private/Funnel/PM-health ownership. These are related requirement failures, not seven independent live defects. Of 296 scoped cases, 281 remain partial. Fixture acceptance and synthetic callback observations do not execute a domain router, freshness clock, durable receipt or native health checks."
+    },
+    "onboarding_doctor_overall": {
+      "case_count": 295,
+      "status_counts": {
+        "partial": 287,
+        "fail": 2,
+        "pass": 2,
+        "not_applicable": 4
+      },
+      "verdict": "fail",
+      "evidence_refs": [
+        "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/exceptional-cases-read-map.proposal.json sha256=a3335c0ffb43e8aefe8507d89500bdfe067e8194fd2559ffb89b6bed9136ba6b; /source_groups/onboarding_doctor_requirements"
+      ],
+      "residual_risk": "The combined source suite is not the union or sum of the three product verdict scopes. Its 295 source-bound cases retain ONB-028 update-policy conflict and DOC-021 retired active Doctor route semantics, plus 287 partial cases. Full journey, recovery, provider, security and visual evidence remains unproved. Product scope overlap is intentional and cannot be summed into a denominator."
+    },
+    "full_thread_performance": {
+      "case_count": 104,
+      "status_counts": {
+        "blocked": 18,
+        "fail": 2,
+        "partial": 84
+      },
+      "verdict": "fail",
+      "evidence_refs": [
+        "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/exceptional-cases-read-map.proposal.json sha256=a3335c0ffb43e8aefe8507d89500bdfe067e8194fd2559ffb89b6bed9136ba6b; /source_groups/full_thread_topics, /source_groups/full_thread_performance_scenarios"
+      ],
+      "residual_risk": "The retained combined governance/static-check requirement has observed failures, so this is fail rather than a performance pass. Eighteen named performance scenarios are blocked for missing native workload, hardware/platform, failure-injection, 24-hour soak and package-size evidence; 84 of 104 cases are partial. Governance counts belong to their recorded snapshots, not today's live baseline. No benchmark result is inferred from specified limits or short static tests."
+    },
+    "server_wan_backup": {
+      "case_count": 2034,
+      "status_counts": {
+        "partial": 1956,
+        "fail": 71,
+        "pass": 7
+      },
+      "verdict": "fail",
+      "evidence_refs": [
+        "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/exceptional-cases-read-map.proposal.json sha256=a3335c0ffb43e8aefe8507d89500bdfe067e8194fd2559ffb89b6bed9136ba6b; /source_groups/server_command_candidates, /source_groups/sep01_forge_backup_requirements, /source_groups/sep01_tsnet_negative_requirements"
+      ],
+      "residual_risk": "The retained 71 failing requirements include missing own primary metadata for seven command targets, user-schedule versus hidden update policy, retired active Doctor route framing, accepted unavailable headless callback admission, and concrete backup concept errors in immutable selection, snapshot-specific verification, saved-kit claims, default restore mode and independent readiness. Related packet repetitions are not independent defects. Of 2034 cases, 1956 remain partial. No real backup/restore, credential use, remote connection, headless login, network/security or native durability proof was produced."
+    },
+    "egolite_browser_scm_origin": {
+      "case_count": 672,
+      "status_counts": {
+        "partial": 647,
+        "fail": 16,
+        "pass": 9
+      },
+      "verdict": "fail",
+      "evidence_refs": [
+        "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/exceptional-cases-read-map.proposal.json sha256=a3335c0ffb43e8aefe8507d89500bdfe067e8194fd2559ffb89b6bed9136ba6b; /source_groups/egolite_command_alias_tokens, /source_groups/egolite_plan_references, /source_groups/egolite_validation_security_negatives"
+      ],
+      "residual_risk": "Six absent own primary metadata edges, new-owner authoring-profile noncompliance, missing governed references/PM7 fixture and recorded governance failures prevent acceptance. Frozen Browser output-budget acceptance is retained as a historical failure; the recorded current successor rejects the same oversized bytes, so it is not represented as an unresolved current vulnerability. Of 672 cases, 647 remain partial. Static Browser event admission, screenshot routing and source-control contracts are not native dispatch, browser isolation, provider execution or visual proof."
+    },
+    "dependency_correction": {
+      "case_count": 933,
+      "status_counts": {
+        "partial": 874,
+        "pass": 59
+      },
+      "verdict": "blocked",
+      "evidence_refs": [
+        "/mnt/Cursor/PuppetMaster/reports/packet-gap-closure-20260910/r5i-dependency-correction-audit-checkpoint-20260912.json sha256=9afd96687d3af990c8f8459366fa2950182d593eaab44e05855308500ec25760",
+        "/mnt/Cursor/PuppetMaster/reports/packet-gap-closure-20260910/r5j-onboarding-correction-audit-checkpoint-20260912.json sha256=1806a0164a143e7acf24c7b0d4270a4a27163ab4b31dfb3daea3d8853b35ebc6"
+      ],
+      "residual_risk": "Root adjudication is blocked, not fail: these 933 cases contain 59 bounded documentary/package/policy passes and 874 partial results, with no fail or blocked case rows. The requested full correction acceptance requires evidence absent from this review: native acquisition/auth/consent enforcement, actual scheduling/progress and resource benchmarks, durable recovery, platform/remote-Client behavior, rendered GUI/motion and the separately named older return-handoff bundle. Historical self-report and static fixture success do not supply those missing proofs. This suite-level evidence blocker does not relabel any individual case."
+    },
+    "touch_closure": {
+      "case_count": 8359,
+      "status_counts": {
+        "pass": 3226,
+        "partial": 4861,
+        "blocked": 7,
+        "fail": 265
+      },
+      "verdict": "fail",
+      "evidence_refs": [
+        "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/nonpass-case-details.generated.json sha256=5c49bddad90e0344fa41944c7ffe6e30bc630b81cc1777ad7742096490f9126e",
+        "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/touch-2769-root-review.json sha256=fb0fc56dfdfacf06c78b586792717e10edd8c95832b4ca1a3f60213b09293631"
+      ],
+      "residual_risk": "All 8359 Touch dimension cases were reviewed, with 265 fail, 7 blocked, 4861 partial and 3226 bounded passes. Failures preserve exact owner/consumer, command registration, contract correlation and selected concept contradictions at each batch identity. The final 2769 cases add 32 failing cells, not 32 unique bugs: two wrong-unit references, fourteen contract targets each affecting contract/test dimensions, and two local concept mismatches. Empty semantic-dispatch fallback is not dedicated enforcement. Stale components/free scope tokens/generation namespace limitations remain qualified partials where no direct owner contradiction was established. No native handler, storage migration, event delivery, permission bypass or runtime behavior is inferred."
+    },
+    "overall": {
+      "case_count": 13416,
+      "status_counts": {
+        "partial": 9502,
+        "fail": 393,
+        "pass": 3468,
+        "blocked": 46,
+        "not_applicable": 7
+      },
+      "verdict": "fail",
+      "evidence_refs": [
+        "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/publication-summary.json sha256=5b73b241a27382588aea1640c6cea3b202df156cb0e48ac69d9a3bed066ee7d0",
+        "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/coverage-inspection.generated.json sha256=41fb05f03a488d40ba2e50b063ab71fe51f62c86fe03d4db299f152075b5b335"
+      ],
+      "residual_risk": "Review coverage is complete, but implementation acceptance fails: 13416 unique cases comprise 3468 pass, 9502 partial, 393 fail, 46 blocked and 7 not_applicable. These are case judgments, not unique-bug counts; the eleven source-identity scopes overlap. All 151 result files and their original snapshot qualifications are preserved. Receipt custody checks do not recursively rehash or re-adjudicate every historical case source. Formal report completion cannot certify native implementation, visual design, readiness, a governance seal or current-main closure."
+    }
+  },
+  "scope_count_boundary": "Eleven source-identity scopes overlap. Onboarding/Guided Tour/Doctor product scopes and onboarding_doctor_overall are not interchangeable unions. Never sum scoped counts into a unique case total; the distinct total is 13416.",
+  "root_authored_blockers": [
+    "Missing native implementation/execution evidence for dispatch, authentication and consent isolation, persistence/recovery, backup/restore, remote routes, provider behavior and measured resource/performance workloads prevents implementation acceptance; dependency_correction is suite-level blocked on these unproved obligations.",
+    "The historical /mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/reference-review-report.json sha256=c0447a403194e11f37cc6a4f9b6a06b65172b46bbcd48d0535909e681ea6e3c6 remains immutable and blocked for Settings and Onboarding/Doctor reference/visual evidence. Its September 11 coverage-incomplete statements are superseded only by this completed case coverage, not by new visual or runtime acceptance.",
+    "Whole-repository governance/currentness and named missing-reference/fixture obligations are not a clean acceptance gate. The designated Plans agent owns governance resealing; this report neither refreshes the baseline nor unlocks PNC-019, WorkNodes or buildability."
+  ],
+  "root_authored_unresolved_findings": [
+    "Retain all 393 fail and 46 blocked case identities, literal findings and residuals in /mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/nonpass-case-details.generated.json sha256=5c49bddad90e0344fa41944c7ffe6e30bc630b81cc1777ad7742096490f9126e and every partial case in the original results. This is an unresolved audit record, not a claim that each historical failure still reproduces on current main.",
+    "Concrete retained families include own primary command metadata omissions; contract command/effect, generation, scope, confirmation and round-trip identity enforcement gaps; wrong owner-unit references; update-policy and Doctor successor conflicts; and Settings/Tour/Backup/Repository concept-source mismatches. Any repair needs a currentness check and its own evidence; this completion does not rewrite old judgments.",
+    "Final-batch currentness checks retain 18 whole-command failures (one Browser preserved-row guard plus 17 cascading event associations), 1240 unresolved PRD tokens, and one broad storage-registry assertion expecting 84 families but observing 282. These are dated observations at the recorded comparison, not silently repaired or substituted for the formal audit verdict.",
+    "Visual/design changes remain deferred under the non-design scope. Structural validation, bounded source passes, fixture success and synthetic negative probes do not close the 9502 partial cases or establish full rendered/native behavior."
+  ],
+  "reviewers": [
+    "Codex root /root",
+    "Codex root B46 source-contract audit",
+    "codex-root-packet-audit"
+  ],
+  "currentness_and_proof_boundaries": [
+    "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/implementation-freeze.json sha256=edd844986b19196956e4a3b0919736baf619734769c47e0864d813993e48d75c. This is the original frozen implementation identity, not a claim that all reviews concern current main. Per-batch frozen/current comparison identities remain literal in the 151 original result files and their review receipts, indexed by /mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/coverage-inspection.generated.json sha256=41fb05f03a488d40ba2e50b063ab71fe51f62c86fe03d4db299f152075b5b335. Final batch and formal orchestration comparison commit: 8704c1d63371825fc78ec53c7f86790d6f63a256. Earlier findings have not been globally re-adjudicated against this commit.",
+    "Earlier batches preserve their own frozen/comparison identities. Coverage inspection hashes 151 top-level review receipts and retains literal snapshot fields; it does not recursively rehash or independently re-adjudicate every historical case source. Historical failures are not all claimed current or unfixed.",
+    "Frozen Browser output-budget acceptance remains a historical finding; its recorded current successor rejects the same oversized bytes. No unresolved current vulnerability is asserted from that historical failure.",
+    "Static schema acceptance and empty existing semantic-dispatch fallback are bounded observations, not native permission bypasses, production handlers, actual effect execution, provider/network/credential use, persistence/recovery, visual acceptance or readiness.",
+    "The original reference-review report remains immutable and blocked. Completed case coverage supersedes only its historical coverage-incomplete statements, not its missing implementation/reference/visual proof.",
+    "No governance reseal, clean global integration claim, WorkNode admission, PNC-019 unlock or buildability follows from formal audit completion."
+  ],
+  "fresh_b47_static_checks": {
+    "comparison_commit": "8704c1d63371825fc78ec53c7f86790d6f63a256",
+    "named_command_count": 12,
+    "status_counts": {
+      "pass_static_command": 9,
+      "fail_static_command": 3
+    },
+    "checks": {
+      "touch-closure": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/checks/touch-closure/receipt.json",
+          "sha256": "40920edbfa9ef89125ad8b2ff21206d9d1bb7ee962d411ad3d0ab5eb14f33e64"
+        },
+        "exit_code": 0,
+        "status": "pass_static_command",
+        "timed_out": false,
+        "scope": "Static retained touch inventory/source closure; no per-case audit judgment."
+      },
+      "wiring-matrix": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/checks/wiring-matrix/receipt.json",
+          "sha256": "eca56a491a959b7029645f82a24f563c59694a949179bb9cbc218d6fbefcb3c8"
+        },
+        "exit_code": 0,
+        "status": "pass_static_command",
+        "timed_out": false,
+        "scope": "Declared central wiring rows and vocabulary; no production handler execution."
+      },
+      "fixture-schema-validation": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/checks/fixture-schema-validation/receipt.json",
+          "sha256": "5d304c6a7a1b8d620c39ad5b592f5badfea5f7d9011229f9c41dd17d1b4b9dd4"
+        },
+        "exit_code": 0,
+        "status": "pass_static_command",
+        "timed_out": false,
+        "scope": "Existing closed aggregate manifest and its existing semantic checks; not runtime."
+      },
+      "whole-command-inspection": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/checks/whole-command-inspection/receipt.json",
+          "sha256": "8156f21a18f3431ecc7462079cc23b04335723c177da68c06ee1fe153385bf28"
+        },
+        "exit_code": 1,
+        "status": "fail_static_command",
+        "timed_out": false,
+        "scope": "Existing assistant contract/command/event/wiring inspection; no repair or native admission."
+      },
+      "protected-auth-fixtures": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/checks/protected-auth-fixtures/receipt.json",
+          "sha256": "441e0e19ecc1c38d1136960cdcf5cc59a95fed7183ff61aa794ef1f44aa6faa3"
+        },
+        "exit_code": 0,
+        "status": "pass_static_command",
+        "timed_out": false,
+        "scope": "Existing protected-auth authored static fixtures; no browser or live authentication."
+      },
+      "source-contract-tests": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/checks/source-contract-tests/receipt.json",
+          "sha256": "e4e3304c5e78e1843de2590c0c24aad58a7af865c26bf8d5fdcc86c0edbbd996"
+        },
+        "exit_code": 1,
+        "status": "fail_static_command",
+        "timed_out": false,
+        "scope": "Nine exact unittest modules; overlap with named validators remains explicit, never an additive unique-test total."
+      },
+      "forge-backup-september-acceptance": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/checks/forge-backup-september-acceptance/receipt.json",
+          "sha256": "33592bb3c71e24f5d2b6c3aa634322e0cde6b2dfea800330508b7c7736305792"
+        },
+        "exit_code": 0,
+        "status": "pass_static_command",
+        "timed_out": false,
+        "scope": "September packet custody validator only; acceptance scenarios are NOT executed."
+      },
+      "prd-runtime-schema-refs": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/checks/prd-runtime-schema-refs/receipt.json",
+          "sha256": "56d25f0b5bd08a1c66fba0c71bac225dc0b7574370192689e26649a44550fcde"
+        },
+        "exit_code": 1,
+        "status": "fail_static_command",
+        "timed_out": false,
+        "scope": "Existing PRD/runtime validator, including its top-level schema-reference scan."
+      },
+      "provenance-launcher-selftest": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/checks/provenance-launcher-selftest/receipt.json",
+          "sha256": "1e3bb29d813eea619c18eec4ad2f5a145888b5c179c4541f4291fe31791e85bf"
+        },
+        "exit_code": 0,
+        "status": "pass_static_command",
+        "timed_out": false,
+        "scope": "Authored launcher path/receipt tests with temporary fixtures; no child/browser/namespace/network launch. Resolved Python executable is explicit."
+      },
+      "provenance-envelope-selftest": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/checks/provenance-envelope-selftest/receipt.json",
+          "sha256": "d1722602e8b3154af0d9bb57f5ae8398ee437f399d93ffaa7c0f7a10610386ab"
+        },
+        "exit_code": 0,
+        "status": "pass_static_command",
+        "timed_out": false,
+        "scope": "Authored synthetic provenance tests plus one loopback immutable HTTP transport test; no browser, Playwright, provisioning or external-provider request."
+      },
+      "goal-handoff-authored-fixtures": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/checks/goal-handoff-authored-fixtures/receipt.json",
+          "sha256": "a0b335c96af924857f834d21983530ce419150286b61d63afe9b9fb711cb5d05"
+        },
+        "exit_code": 0,
+        "status": "pass_static_command",
+        "timed_out": false,
+        "scope": "Exact authored 21 positive/9 negative fixture records against named definitions through existing validator_for; no new semantic executor or aggregate enrollment claim."
+      },
+      "project-sync-authored-fixtures": {
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/checks/project-sync-authored-fixtures/receipt.json",
+          "sha256": "87ae9aaa68234032f7a9894aefb5bfdc842a41b594254d41073ad1bcd06d5a98"
+        },
+        "exit_code": 0,
+        "status": "pass_static_command",
+        "timed_out": false,
+        "scope": "Exact authored 39 positive/18 negative fixture records against named definitions through existing validator_for; no new semantic executor or aggregate enrollment claim."
+      }
+    },
+    "diagnostics": {
+      "whole_command_errors": 18,
+      "whole_command_qualification": "One Browser preexisting_family_rows_changed preservation guard plus 17 cascading event associations; retain exact diagnostic identities in the pinned stdout, not 18 independent native defects.",
+      "prd_unresolved_local_reference_failures": 1240,
+      "source_contract_unittest_modules": 9,
+      "source_contract_unittest_tests": 117,
+      "source_contract_unittest_failures": 1,
+      "source_contract_unittest_failure": "test_registry_has_exact_family_and_status_counts: expected 84 families, observed 282. No registry/schema repair performed.",
+      "protected_auth_valid": 19,
+      "protected_auth_invalid": 27,
+      "protected_auth_positive_discriminator_pairs": 3,
+      "provenance_launcher_tests": 6,
+      "provenance_envelope_tests": 13,
+      "goal_handoff_fixture_positive": 21,
+      "goal_handoff_fixture_negative": 9,
+      "project_sync_fixture_positive": 39,
+      "project_sync_fixture_negative": 18,
+      "forge_backup": {
+        "all_requirement_joins_not_run": true,
+        "all_scenarios_not_run": true,
+        "empty_scenario_join_count": 46,
+        "executed_scenario_count": 0,
+        "optional_source_comparison": "not_requested",
+        "owner_plan_unit_ref_count": 61,
+        "requirement_count": 132,
+        "requirement_join_count": 132,
+        "scenario_count": 67,
+        "scenario_evidence_count": 0,
+        "scenario_join_edge_count": 116,
+        "static_custody_only": true,
+        "unique_requirement_count": 132,
+        "unique_requirement_join_count": 132,
+        "unique_scenario_count": 67
+      }
+    },
+    "boundary": "Fresh static observations only; no inferred audit statuses or inherited verdicts. No browser/native/provider execution, governance generation, publication or readiness claim. Temporary fixtures are created under external TMPDIR and may be cleaned by their authored tests; stdout/stderr and custody are retained externally; this is not an OS sandbox or an all-process-write-confinement claim. Overlapping validators/selftests are not summed into a unique actual-test total."
+  },
+  "fresh_focused_observations": {
+    "schema_probe_count": 30,
+    "schema_probes": [
+      {
+        "id": "auth-rename-wrong-effect",
+        "touch_id": "TOUCH-SGAPCMD-002",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "no_router_branch",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "auth-apply-generation-regression",
+        "touch_id": "TOUCH-SGAPCMD-004",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "no_router_branch",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "client-success-stale",
+        "touch_id": "TOUCH-SGAPCMD-018",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "server_remote_named_family_fallthrough",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "client-roundtrip-instance",
+        "touch_id": "TOUCH-SGAPCMD-018",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "server_remote_named_family_fallthrough",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "credential-permission-wrong-scope",
+        "touch_id": "TOUCH-SGAPCMD-036",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "expansion_schema_only",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "credential-operation-generation",
+        "touch_id": "TOUCH-SGAPCMD-034",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "expansion_schema_only",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "topology-operation-generation",
+        "touch_id": "TOUCH-SGAPCMD-064",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "expansion_schema_only",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "topology-currentness-control",
+        "touch_id": "TOUCH-SGAPCMD-064",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": false,
+        "dispatcher_route": "expansion_schema_only",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "topology-permission-wrong-scope",
+        "touch_id": "TOUCH-SGAPCMD-073",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "expansion_schema_only",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "goal-success-stale",
+        "touch_id": "TOUCH-SGAPCMD-078",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "no_router_branch",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "goal-roundtrip-return",
+        "touch_id": "TOUCH-SGAPCMD-078",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "no_router_branch",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "move-success-generation-regression",
+        "touch_id": "TOUCH-SGAPCMD-109",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "no_router_branch",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "move-roundtrip-instance",
+        "touch_id": "TOUCH-SGAPCMD-109",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "no_router_branch",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "composition-template-success-stale",
+        "touch_id": "TOUCH-SGAPCMD-129",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "no_router_branch",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "app-install-success-stale",
+        "touch_id": "TOUCH-SGAPCMD-161",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "no_router_branch",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "content-activation-success-stale",
+        "touch_id": "TOUCH-SGAPCMD-167",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "no_router_branch",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "project-topology-operation-generation",
+        "touch_id": "TOUCH-SGAPCMD-125",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "expansion_schema_only",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "checkpoint-restore-inspect-permission",
+        "touch_id": "TOUCH-SGAPCMD-152",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "source_control_projection_only",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "forge-policy-confirmation-binding",
+        "touch_id": "TOUCH-FGI-040",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "no_router_branch",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "forge-approval-generation-binding",
+        "touch_id": "TOUCH-FGI-042",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "no_router_branch",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "forge-currentness-negative-control",
+        "touch_id": "TOUCH-FGI-042",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": false,
+        "dispatcher_route": "no_router_branch",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "backup-recovery-export-step-up-control",
+        "touch_id": "TOUCH-BRS-035",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": false,
+        "dispatcher_route": "backup_restore_semantics_not_general_command_join",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "backup-prune-lease-control",
+        "touch_id": "TOUCH-BRS-028",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": false,
+        "dispatcher_route": "backup_restore_semantics_not_general_command_join",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "sir-submit-code-wrong-dispatch-control",
+        "touch_id": "TOUCH-SIRPOSTAUTH-002",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": false,
+        "dispatcher_route": "expansion_schema_only",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "sir-credential-add-target-permission",
+        "touch_id": "TOUCH-SIRPOSTAUTH-003",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "expansion_schema_only",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "remote-link-exact-return-semantic-control",
+        "touch_id": "TOUCH-SGAPALIAS-142",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "server_remote_lowercase_roundtrip",
+        "dispatcher_failures": [
+          "exact_return_context"
+        ]
+      },
+      {
+        "id": "remote-serve-fixed-scope-control",
+        "touch_id": "TOUCH-RAS-051",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": false,
+        "dispatcher_route": "server_remote_alias_no_extra_semantics",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "sir-local-domain-mutation-control",
+        "touch_id": "TOUCH-SGAPLOCAL-007",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": false,
+        "dispatcher_route": "expansion_schema_only",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "repository-picker-wrong-selected-binding",
+        "touch_id": "TOUCH-REPLOCAL-002",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": true,
+        "dispatcher_route": "no_router_branch",
+        "dispatcher_failures": []
+      },
+      {
+        "id": "repository-picker-mutation-control",
+        "touch_id": "TOUCH-REPLOCAL-002",
+        "probe_state": "isolated_mutation_observed",
+        "baseline_schema_accepted": true,
+        "mutated_schema_accepted": false,
+        "dispatcher_route": "no_router_branch",
+        "dispatcher_failures": []
+      }
+    ],
+    "exact_alias_target_replays": [
+      {
+        "probe_id": "sir.add.result.ready",
+        "exact_target": "cmd.integration.connection.add",
+        "source_aliases": [
+          "cmd.cluster_connection.add",
+          "cmd.registry_connection.add",
+          "cmd.runtime_connection.add"
+        ],
+        "mutation_schema_accepted": true,
+        "semantic_dispatcher": {
+          "dispatcher_error": null,
+          "qualification": "These two schemas reach existing dispatcher default []; no dedicated target semantic invariant is tested.",
+          "returned_failures": [],
+          "target_specific_route_present": false
+        }
+      },
+      {
+        "probe_id": "auth.official_page.selection_effect",
+        "exact_target": "cmd.auth_profile.open_official_page",
+        "source_aliases": [
+          "cmd.auth_session.open_official_page"
+        ],
+        "mutation_schema_accepted": true,
+        "semantic_dispatcher": {
+          "dispatcher_error": null,
+          "qualification": "These two schemas reach existing dispatcher default []; no dedicated target semantic invariant is tested.",
+          "returned_failures": [],
+          "target_specific_route_present": false
+        }
+      },
+      {
+        "probe_id": "auth.permission.empty_grants.submit_code",
+        "exact_target": "cmd.auth_profile.submit_code",
+        "source_aliases": [
+          "cmd.auth_session.submit_code"
+        ],
+        "mutation_schema_accepted": true,
+        "semantic_dispatcher": {
+          "dispatcher_error": null,
+          "qualification": "These two schemas reach existing dispatcher default []; no dedicated target semantic invariant is tested.",
+          "returned_failures": [],
+          "target_specific_route_present": false
+        }
+      }
+    ],
+    "qualification": "Fresh probes distinguish direct owner/contract contradictions from partial free-scope strings, stale-component acceptance, namespace differences, missing dedicated correlation and fixture limits. Root-authored dispositions remain authoritative. Passing negative controls and schema fixtures are not native policy/effect proof."
+  },
+  "formal_completion": {
+    "status": "SUCCESS",
+    "preflight_receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/formal-preflight/preflight.json",
+      "sha256": "c4b43658ac98fd6046adadf0c207dd0e63680773a6400f83e5705b88d19395c1"
+    },
+    "finalization_receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/formal-finalize/finalization.json",
+      "sha256": "1ec6d18798518138156d3fd25406139b0a5e66369ff31543b6f9da9794c7faa6"
+    },
+    "completed_report": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/audit_report.completed.json",
+      "sha256": "e4f4820e334da9592b772b4e2780cfa5fe2eb3d8062ee9dd8a5aee5a0d25220d"
+    },
+    "audit_validation_receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/audit-validation.generated.json",
+      "sha256": "c0b1fb33bddae1fb7965b58bc4c8e00ba13540602cbe77c6c9618ced7359baa7"
+    },
+    "metadata_copy": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/audit_report.metadata.json",
+      "sha256": "b7e3c99d9a2cfcdf164591fcefc829aa547192fc43612e46f36a72c12c546b1b"
+    },
+    "merge_exit_code": 0,
+    "validate_exit_code": 0,
+    "structurally_valid": true,
+    "validation_failure_count": 0,
+    "all_151_results_preserved": true,
+    "reference_review_preserved": true,
+    "implementation_verdict": "fail",
+    "boundary": "Successful formal completion establishes structural validity and complete retained case coverage only. Literal root-authored implementation and suite verdicts remain separate. No historical judgment is promoted; no native, runtime, provider, visual, readiness or governance acceptance follows."
+  },
+  "evidence": {
+    "root_metadata": {
+      "path": "/mnt/Cursor/PM-Experiments/r5-touch-remaining2769-review-20260921-OPUU59dA/final-audit-metadata.json",
+      "sha256": "b7e3c99d9a2cfcdf164591fcefc829aa547192fc43612e46f36a72c12c546b1b"
+    },
+    "root_review": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/touch-2769-root-review.json",
+      "sha256": "fb0fc56dfdfacf06c78b586792717e10edd8c95832b4ca1a3f60213b09293631"
+    },
+    "publication": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/publication-summary.json",
+      "sha256": "5b73b241a27382588aea1640c6cea3b202df156cb0e48ac69d9a3bed066ee7d0"
+    },
+    "coverage_inspection": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/coverage-inspection.generated.json",
+      "sha256": "41fb05f03a488d40ba2e50b063ab71fe51f62c86fe03d4db299f152075b5b335"
+    },
+    "exceptional_case_navigation": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/exceptional-cases-read-map.proposal.json",
+      "sha256": "a3335c0ffb43e8aefe8507d89500bdfe067e8194fd2559ffb89b6bed9136ba6b"
+    },
+    "nonpass_details": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/finalization/nonpass-case-details.generated.json",
+      "sha256": "5c49bddad90e0344fa41944c7ffe6e30bc630b81cc1777ad7742096490f9126e"
+    },
+    "assembly": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/assembly-summary.json",
+      "sha256": "e03e8ddf32730a0a9c93124e5f48e506b2e49e77e2bb1f8be3d06b8371383d61"
+    },
+    "selected_evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/selected-review-evidence.generated.json",
+      "sha256": "64fb258e3c6d87513fc4b1b6ba1c224b049b9d248ec2b0f4130c8d3e6bb9f3bc"
+    },
+    "input_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/input-custody.generated.json",
+      "sha256": "eb3f2b5eb80e65b32e468c9ddea799df662e663ded88b6a224acf4a54bc13527"
+    },
+    "passage_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/review-passage-custody.generated.json",
+      "sha256": "93eea5fa47d9e62a20c5927c3d0b115c901c8d0044a52870f4a3566053de6e45"
+    },
+    "static_checks": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/checks/summary.json",
+      "sha256": "dcf5447a4bc44cd52664587ff9afa78534178a06b6b1c623c72ac77738abced5"
+    },
+    "schema_probes": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/schema-probes/observations.generated.json",
+      "sha256": "fd9545aadd0a305578f377b13035ef77b96d59fbaf1c6bdd067aab7f7d66b37a"
+    },
+    "alias_target_probes": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/alias-target-probes/observations.json",
+      "sha256": "b2187d4ee2b919560c7e062897da865b3c49bc5a7ecf5944be9aedb489dd02b9"
+    },
+    "implementation_freeze": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/implementation-freeze.json",
+      "sha256": "edd844986b19196956e4a3b0919736baf619734769c47e0864d813993e48d75c"
+    },
+    "historical_reference_review": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/reference-review-report.json",
+      "sha256": "c0447a403194e11f37cc6a4f9b6a06b65172b46bbcd48d0535909e681ea6e3c6"
+    },
+    "manifest": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/audit_manifest.json",
+      "sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb"
+    },
+    "template": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/audit_report.template.json",
+      "sha256": "3919df515fc6d3f27b9b048d0dd8540e0750c4776cb20c32f79eb52a1a0f6636"
+    }
+  }
+}
