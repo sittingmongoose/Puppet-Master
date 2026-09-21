@@ -55568,7 +55568,25 @@
       "redaction_no_secret_rule": "Existing Goal/Storage redaction and external-secret-custody gates apply before admission. Do not persist raw credentials, secret values or machine-local credential paths. Exact accepted semantic record bytes are preserved; audit receipt stores no objective or source text.",
       "legacy_canonical_crosswalk_status": "New explicitly versioned physical family for the Goal Runtime semantic record. Existing goal_runtime_lineage_record and goal_receipt retain their independent schemas/policies; no alias, implicit migration, alternate Goal field or additional event.",
       "value_schema": {
-        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2"
+        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.goal_body_control.v2"
+          },
+          "schema_version": {
+            "const": "2.0.0"
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/BodyControlV2"
+          }
+        }
       },
       "compatibility_key_shapes": [],
       "recovery_disposition": {
@@ -93275,7 +93293,25 @@
         ]
       },
       "value_schema": {
-        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageSourceAudit"
+        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageSourceAudit",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.goal_cancel_source_audit.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/SourceAudit"
+          }
+        }
       }
     },
     {
@@ -93349,7 +93385,25 @@
         ]
       },
       "value_schema": {
-        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopControl"
+        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopControl",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.goal_host_stop_control.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl"
+          }
+        }
       }
     },
     {
@@ -93424,7 +93478,25 @@
         ]
       },
       "value_schema": {
-        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopReceipt"
+        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopReceipt",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.goal_cancel_stop_receipt.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopReceipt"
+          }
+        }
       }
     },
     {
@@ -93500,7 +93572,25 @@
         ]
       },
       "value_schema": {
-        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageCancellationReceipt"
+        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageCancellationReceipt",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.goal_cancel_receipt.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/CancellationReceipt"
+          }
+        }
       }
     },
     {
