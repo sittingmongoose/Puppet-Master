@@ -1,0 +1,79 @@
+{
+  "schema_id": "pm.post_audit_currentness_report.v1",
+  "date": "2026-09-21",
+  "scope": "Read-only verification of the post-audit Browser and primary-command repairs after rebasing onto current main.",
+  "verified_commit": "c14e2ffe49d6fc31a9847f2dece1d3cc943cdfb5",
+  "main_base": "478cd2aa0fa5a5660961f351918739d43643bbac",
+  "rebase": {
+    "prior_published_repair_commit": "c353be83c08ace8750e39b395969d6b425405d12",
+    "range_diff": "All three audit/report/repair commits compare equal after rebase; the prior published branch remains preserved.",
+    "incoming_changes": "No owner-doc changes. Main added a read-only PlanUnit-retention check, its tests, workflow/test allowlist changes, and landing documentation.",
+    "new_validator_rechecked": true
+  },
+  "evidence": {
+    "summary": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-rebased-20260921-c14e2ffe/summary.json",
+      "sha256": "09866afcb98ae998e08b8e616bca6e31c0045587acf9b446f6f93dc5256aae0f"
+    },
+    "inputs_before": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-rebased-20260921-c14e2ffe/inputs.before.json",
+      "sha256": "783c07b196064fab3c1259536c8673f25fe5187d1700e0c4dadc4484f475aa57"
+    },
+    "inputs_after": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-rebased-20260921-c14e2ffe/inputs.after.json",
+      "sha256": "783c07b196064fab3c1259536c8673f25fe5187d1700e0c4dadc4484f475aa57"
+    },
+    "source_stable": true
+  },
+  "assistant_contract": {
+    "argv": ["/usr/bin/python3.13", "scripts/pm-assistant-contract-check.py"],
+    "exit_code": 1,
+    "status": "gaps_found",
+    "errors": [],
+    "structural_error_count_before": 18,
+    "structural_error_count_after": 0,
+    "prior_evidence": "reports/packet-gap-closure-20260910/post-audit-browser-catalog-repair-20260921.json#/verification/prior_whole_command_observation",
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-rebased-20260921-c14e2ffe/assistant-contract.result.json",
+      "sha256": "90f0f8e70514a0b502fca5e9cce5173a713ac9c5266ee43ffbeb5b2ed2fd5139"
+    },
+    "stdout": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-rebased-20260921-c14e2ffe/assistant-contract.stdout",
+      "sha256": "89261f90eafe8efd4acdae1818ded0b4a1d2d8dc3e41eedd7476c1138c904fd5"
+    },
+    "remaining_browser_families_prepared_not_admitted": 51,
+    "browser_families_admitted": 2,
+    "successor_admission_check_status": "pass",
+    "whole_wiring_command_count": 1078,
+    "whole_wiring_row_count": 1142,
+    "whole_wiring_rows_with_request_and_result_pointers": 400,
+    "qualification": "The identical checker now reports zero structural errors. Its exit remains 1 because planned Browser families remain pending; this is not an all-clear, native execution proof, or authority to admit those families. Its hardcoded formal_packet_audit_completed=false is a checker scope boundary, not a reversal of the separate completed formal audit."
+  },
+  "plan_index": {
+    "exit_code": 0,
+    "status": "pass",
+    "plan_units": 6688,
+    "acceptance_units": 26075,
+    "node_readiness_status": "blocked_runtime_certification_incomplete",
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-rebased-20260921-c14e2ffe/plan-index.result.json",
+      "sha256": "18e1b09fd57b7c20e3db1a3dd744f608e6e634e67e438ea7de5d54e4344ab013"
+    }
+  },
+  "shards": {
+    "exit_code": 0,
+    "status": "pass",
+    "documents": 99,
+    "shards": 2691,
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-rebased-20260921-c14e2ffe/shard-check.result.json",
+      "sha256": "54c4acdda2b1496be52507317a8291d5eafd353d039b1db9f78e440e7f85b556"
+    }
+  },
+  "non_claims": [
+    "No rewrite of historical audit evidence or the implementation FAIL verdict",
+    "No closure of 643 native Touch residuals",
+    "No new Event Authority admission, native runtime proof, readiness unlock, or governance reseal",
+    "No shared-main landing or push asserted by this pre-landing report"
+  ]
+}
