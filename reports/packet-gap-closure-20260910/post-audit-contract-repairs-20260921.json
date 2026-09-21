@@ -1,0 +1,291 @@
+{
+  "schema_id": "pm.post_audit_contract_repair_report.v1",
+  "date": "2026-09-21",
+  "status": "static_repairs_verified_branch_publication_not_main_acceptance",
+  "base_commit": "44172dbfb1bfc660c342f7adb33057c7b67d468e",
+  "branch": "fix/post-audit-contract-repair-20260921",
+  "authority": "The user's instruction to continue the non-design integration fixes; existing canonical owner semantics determine these repairs. The completed audit is evidence, not new product or governance authority.",
+  "changes": [
+    {
+      "area": "auth_profile_result_effects",
+      "owner_refs": [
+        "Plans/Multi-Account.md#MA-071",
+        "Plans/Multi-Account_Connection_Spec.md#MACS-001",
+        "Plans/Multi-Account_Connection_Spec.md#MACS-003"
+      ],
+      "commands": {
+        "cmd.auth_profile.rename": [
+          "no_effect",
+          "profile_metadata_changed"
+        ],
+        "cmd.auth_profile.open_official_page": [
+          "no_effect",
+          "external_handoff_started"
+        ]
+      },
+      "repair": "Constrain only these two existing AuthProfileCommandResult branches. Reject rename reporting profile_revoked and official-page handoff reporting profile_selection_changed, without changing the other command branches or legitimate no-effect outcomes.",
+      "historical_cases": [
+        "TOUCH-SGAPCMD-002",
+        "TOUCH-SGAPALIAS-010"
+      ],
+      "fixture_result": {
+        "positive_cases": 33,
+        "negative_cases_before": 34,
+        "negative_cases_after": 36,
+        "positive_roster_preserved": true
+      },
+      "tests": {
+        "unit_tests": 4,
+        "effect_outcome_combinations": 112,
+        "explicit_no_effect_context_cases": 12
+      },
+      "limitation": "No native auth, permission, provider or general request/result correlation proof; this does not close other commands' generation/grant/round-trip findings."
+    },
+    {
+      "area": "permissions_rule_owner_reference",
+      "profile": "TCP-PERMISSIONS",
+      "previous_primary": "Plans/Permissions_System.md#PS-130",
+      "current_primary": "Plans/Permissions_System.md#PS-065",
+      "required_precise_refs": [
+        "Plans/Permissions_System.md#PS-072",
+        "Plans/Permissions_System.md#Permissions-UI-Commands-And-Error-States",
+        "Plans/Permissions_System.md#TOML-Persistence-Failure-And-Atomicity-Rules",
+        "Plans/UI_Command_Catalog.md#UCC-113",
+        "Plans/Settings_System.md#SSYS-023"
+      ],
+      "repair": "PS-130 is an approval-lease unit. PS-065 identifies the granular editor only; the exact command/error and TOML contracts remain explicit and mandatory. A bounded validator and six regression tests reject wrong primary ownership, missing contracts, duplicate/missing obligations and premature readiness claims.",
+      "affected_rows": [
+        "TOUCH-PERM-001",
+        "TOUCH-PERM-002",
+        "TOUCH-PERM-003",
+        "TOUCH-PERM-004",
+        "TOUCH-PERM-005"
+      ],
+      "preservation": "Only the shared profile's plan_unit and requirement_refs changed. Every Touch row, all five partial dispositions/runtime residuals, and every other profile remain identical to base."
+    },
+    {
+      "area": "legacy_central_map_project_adapter",
+      "owner_refs": [
+        "Plans/Project_System.md#PJCT-002",
+        "Plans/Project_System.md#PJCT-003",
+        "Plans/UI_Command_Catalog.md#UCC-151",
+        "Plans/Wiring_Matrix.md#WM-050"
+      ],
+      "source": "ui.project.restore_archived",
+      "target": "cmd.project.unarchive",
+      "repair": "Reconcile the historical extraction's local-action spelling only when the exact current partial Project command, Project/PJCT-002 profile, sole production target and existing request/result schema refs are present. Reject Touch/production UI peers, missing or wrong successors, and unknown UI tokens. No stale-token exemption, new alias, action, registry row or native writer.",
+      "new_regression_tests": 7,
+      "legacy_input": {
+        "path": "/mnt/Cursor/PuppetMaster/scratchpad/approval-gated-touch-closure-packet-custody-20260831-001/central-contract-map/central-contract-map.json",
+        "sha256": "9b1362b49496ec742f053d7ed4fb227afe886f6f8d180bbaa544eeb4ced309c1"
+      },
+      "qualification": "This optional historical file exists in the shared checkout but not by default in the worktree. The final capture explicitly supplies the same immutable bytes with --central-map. This fixes a static cross-check, not the governance landing blocker."
+    }
+  ],
+  "source_pins": {
+    "before": {
+      "Plans/multi_account_contracts.schema.json": "149da3a2af84f2dd2a07f9fa18ca19682d8325dfe40a2dc42af5b513cf687ef9",
+      "Plans/multi_account_contract_fixtures.json": "f7d58ac4c6821f44b96be2be6a5e1b878a81d20bb2271b2d7f6f48fac9aa7ec0",
+      "Plans/touch_closure.json": "f0aa478f081ed86005d4818466cdce879a658f98ec4f0abcd61df5e18a158e05",
+      "scripts/pm-touch-closure-verify.py": "7340f67677e4f8de3286a3d9552bfb78b473200153b479e32d5f2ba7c1b02a83",
+      "tests/test_pm_touch_closure_source.py": "80d8df9f83b82632708b46244369ae0766ec28b662f8c6d6b3c3c52d215bf321"
+    },
+    "after": {
+      "Plans/multi_account_contracts.schema.json": "7b3e959890a1bc1db99b1c4d124d75da88947dd60b18d4cdf56aa2766140b624",
+      "Plans/multi_account_contract_fixtures.json": "8827e1e617413a3bb7e2693482aee0377bd64ab936ab078ad2081bfc63ad75b5",
+      "Plans/touch_closure.json": "afe3f802b1ab67a2461ba59f912054574baa4a36e78217ca77aaed72387f4321",
+      "scripts/pm-touch-closure-verify.py": "97ce1b64a78197ff63c998ec8f9630cf52181cfdb102a4da98ae206ba36b2dbe",
+      "tests/test_pm_touch_closure_source.py": "e73d1a6e60c09f4acea3420719ed5f8d62114165b4ab8c60b3525ec0a9f93b84",
+      "tests/test_pm_auth_profile_effect_contracts.py": "e632f921582a9b7b52e6a8d6f91e4d13421141111676eb69d4914dcc9f7d3987"
+    },
+    "new_file": "tests/test_pm_auth_profile_effect_contracts.py"
+  },
+  "verification": {
+    "capture": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/summary.json",
+      "sha256": "9fdf6ec557879b4f118002ce5efde84e4ecbee9f4f126fcc6139ee2ec33ea4fa"
+    },
+    "preliminary_capture": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-20260921-44172dbf/summary.json",
+      "sha256": "d75d7ab07bbf33d6b3837a081fcbe64ebb0ce84314c79fe0b4f00336d5f86950"
+    },
+    "all_six_exit_codes_zero": true,
+    "source_guards_identical": 13,
+    "initial_sources": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/initial.sources.json",
+      "sha256": "88565bbd5763e484b549e04b75c45cb8d9af37d9b55c6bdd105b0fcd25f8c43b"
+    },
+    "final_sources": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/after-shard-check.sources.json",
+      "sha256": "88565bbd5763e484b549e04b75c45cb8d9af37d9b55c6bdd105b0fcd25f8c43b"
+    },
+    "checks": [
+      {
+        "argv": [
+          "python3",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_pm_auth_profile_effect_contracts.py"
+        ],
+        "exit_code": 0,
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/auth-effects-tests.command.json",
+          "sha256": "f865d4bfbf39cf8b2eee9087d0b860fdb72d0ceb09141e29304d3f9a9fe2d4c5"
+        },
+        "stdout": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/auth-effects-tests.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/auth-effects-tests.stderr",
+          "sha256": "f15df2ab6073fe222637d358f0c74b1ef0655946583b9b962bcd77aca22119d2"
+        }
+      },
+      {
+        "argv": [
+          "python3",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_pm_touch_closure_source.py"
+        ],
+        "exit_code": 0,
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/touch-source-tests.command.json",
+          "sha256": "a4d9f8e4df27836bb76572dcfce09831dcd7f367eb4f6d47587a34e31ccf1ea5"
+        },
+        "stdout": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/touch-source-tests.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/touch-source-tests.stderr",
+          "sha256": "bec3960ada463b755b7d5025bc68f9697d98b17361d2c2e450911f34e62b8924"
+        }
+      },
+      {
+        "argv": [
+          "python3",
+          "scripts/pm-new-contracts-verify.py"
+        ],
+        "exit_code": 0,
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/new-contracts.command.json",
+          "sha256": "9b822ff4bfbe801ff70b04bf4bfab5d2320d233da8772e076a882233ac2d0691"
+        },
+        "stdout": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/new-contracts.stdout",
+          "sha256": "628e21e4633ca6b27e16eddd3e78dff60aaec263c3f368a9b2f2380a0af8f05e"
+        },
+        "stderr": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/new-contracts.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "python3",
+          "scripts/pm-touch-closure-verify.py",
+          "--json"
+        ],
+        "exit_code": 0,
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/touch-closure.command.json",
+          "sha256": "38915a68e2862c6b86e67e548700d313a139f5de1d7f806b0b28cdb3eac99867"
+        },
+        "stdout": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/touch-closure.stdout",
+          "sha256": "70c5b8bf81bf869b80e88ba23a5871ea0d813023547e698cb5079e49983a47eb"
+        },
+        "stderr": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/touch-closure.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "python3",
+          "scripts/pm-touch-closure-verify.py",
+          "--json",
+          "--central-map",
+          "/mnt/Cursor/PuppetMaster/scratchpad/approval-gated-touch-closure-packet-custody-20260831-001/central-contract-map/central-contract-map.json"
+        ],
+        "exit_code": 0,
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/touch-closure-legacy-map.command.json",
+          "sha256": "cdc5139ab559412011cb55346e5971272c94f0e0cdd199f0af36f97cdbe2f8d6"
+        },
+        "stdout": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/touch-closure-legacy-map.stdout",
+          "sha256": "0a8015e2ca2395cae48d384653a0f6175de973457568027918603be7e3e035e4"
+        },
+        "stderr": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/touch-closure-legacy-map.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "python3",
+          "scripts/pm-shard-plans.py",
+          "--check",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "exit_code": 0,
+        "receipt": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/shard-check.command.json",
+          "sha256": "44be482f026ae85be4bb3737f7572fc84dfad8adacb8d823a6fed4e4a93323b6"
+        },
+        "stdout": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/shard-check.stdout",
+          "sha256": "534319d2387e70d9797a678b1f4c366d0d35a31b8e2604d0b0ea1fb6f03ad69a"
+        },
+        "stderr": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-contract-repairs-legacy-20260921-44172dbf/shard-check.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    ],
+    "focused_tests": {
+      "auth_profile": 4,
+      "touch_source": 50
+    },
+    "new_contracts": {
+      "contract_pairs": 31,
+      "positive_cases_valid": 1067,
+      "negative_cases_rejected": 3479,
+      "internal_self_tests_passed": 12,
+      "failures": []
+    },
+    "touch_closure": {
+      "failures": [],
+      "rows": 643,
+      "profiles": 133,
+      "production_wiring_entries": 1142,
+      "open_residuals": 643,
+      "with_legacy_map": "pass",
+      "without_optional_map": "pass"
+    },
+    "shards": {
+      "documents": 99,
+      "shards": 2691,
+      "failures": []
+    }
+  },
+  "landing": "Main remains held at the earlier 44172dbf snapshot because the required shared landing check exited 2. See post-audit-landing-handoff-20260921.json. This branch must not be represented as landed or governance-approved.",
+  "non_claims": [
+    "No native handler, dispatcher, authentication, permission, storage/recovery or rendered GUI proof.",
+    "No amendment of the formal 13,416-case audit or its implementation FAIL verdict.",
+    "No new command, EventRecord, schema family, readiness unlock, WorkNode or governance reseal.",
+    "No Plans markdown changed, so no derived shard/index generation was needed or performed.",
+    "Other current contract findings and all 643 runtime residuals remain open."
+  ]
+}
