@@ -1,0 +1,365 @@
+{
+  "schema": "shape.blind_score_checkpoint.v1",
+  "campaign_id": "phase1-20260921",
+  "checkpoint": 4,
+  "checkpoint_at_utc": "2026-09-21T05:00:31.485183+00:00",
+  "score_locks_recorded": 3,
+  "scheduled_main_component_slots": 16,
+  "prior_locked_slots": [
+    {
+      "ordinal": 1,
+      "blind_run_id": "R-4c6e04224ae0c159ed69",
+      "delivery_status": "absent",
+      "disposition": "unscorable",
+      "score_sha256": "c6994d5b8a27330a0aada3b016c0d193c153cffcac44f83f2a82f859b845a690"
+    },
+    {
+      "ordinal": 2,
+      "blind_run_id": "R-2e79d257457dad242e8a",
+      "delivery_status": "absent",
+      "disposition": "unscorable",
+      "score_sha256": "6f03b1229d469574fa6e93fc0dc46735bc98e35a7e2ab12dda5c44a2a83eb04d"
+    }
+  ],
+  "slot": {
+    "blind_run_id": "R-db37e67db3f881fbd650",
+    "ordinal": 3,
+    "phase": "main",
+    "case_id": "ome-zarr-thin"
+  },
+  "score_lock_disposition": "scored",
+  "root_score_sha256": "5097749ce4235f40699d1c2f0899f9d401a676ba04372e8adf74338863b9445f",
+  "delivery": {
+    "artifact": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-db37e67db3f881fbd650/delivered.md",
+      "sha256": "373b5ff39dd303fa5a40269b624cae06e8fdf4b2e0188fd6e59333fe76c4f26c"
+    },
+    "reason": "One complete structured verifier report is present. Coherence is judged on that artifact; the run remains terminal partial due to a preserved accounting hold and is not thereby promoted to a verified successful run.",
+    "status": "coherent"
+  },
+  "execution_status": "terminal_partial_accounting_failure_preserved",
+  "verified_success_clock_inferred": false,
+  "exact_sets": {
+    "contradicted": [],
+    "lost": [],
+    "narrowed": [
+      "OME05-C02",
+      "OME05-C03",
+      "OME05-C06",
+      "OME05-C07",
+      "OME05-C08"
+    ],
+    "retained": [
+      "OME05-C01",
+      "OME05-C04",
+      "OME05-C05"
+    ]
+  },
+  "reference_findings": [
+    {
+      "finding_id": "OME05-C01",
+      "missing_facets": [],
+      "reason": "Explicit version/namespace/hierarchy admission and truthful support envelope survive, with concrete producer/sample validation and no implicit legacy reinterpretation.",
+      "reference_adjudication": null,
+      "retained_facets": [
+        "Zarr3/attributes.ome/string version consistency",
+        "Explicit supported version/dtype/codec admission and unsupported-versus-corrupt feedback"
+      ],
+      "status": "retained"
+    },
+    {
+      "finding_id": "OME05-C02",
+      "missing_facets": [
+        "Absent-versus-length-one axis semantics in controls and slicing; no invented sliders/coordinates"
+      ],
+      "reason": "Axis rank/order/name validation and mismatch checks survive. The report does not carry the distinction between an absent axis and a length-one axis through navigation/slicing or control eligibility.",
+      "reference_adjudication": null,
+      "retained_facets": [
+        "Variable2-5 dimensions and arbitrary names/types",
+        "Declared axis order and dimension_names mismatch validation",
+        "Custom presentation explicitly a choice"
+      ],
+      "status": "narrowed"
+    },
+    {
+      "finding_id": "OME05-C03",
+      "missing_facets": [
+        "Resolve each dataset path relative to its containing group",
+        "Highest-resolution-first orientation of the declared list"
+      ],
+      "reason": "Declared dataset path order, arbitrary names, nonuniform reductions, per-level physical-point validation and unavailable-array feedback survive. Group-relative resolution and the highest-resolution-first meaning of that list are not stated; these are consequential path/selection constraints.",
+      "reference_adjudication": null,
+      "retained_facets": [
+        "Declared dataset path order over numeric/lexical names",
+        "Anisotropic/non2x geometry and preserving a physical point across levels",
+        "Unavailable referenced-array feedback; partial-level fallback remains explicit choice"
+      ],
+      "status": "narrowed"
+    },
+    {
+      "finding_id": "OME05-C04",
+      "missing_facets": [],
+      "reason": "Ordered dataset then group scale/translation and honest missing calibration survive with a numerical check:5*(2*4+3)+7=62. Conditional code example preserves no-parent scope. Binary-path conflict stays honestly unresolved.",
+      "reference_adjudication": null,
+      "retained_facets": [
+        "Composition order and offsets",
+        "Unknown units/relative downsampling",
+        "Concrete offset-sensitive numerical validation",
+        "Conditional pinned reader mechanism; no runtime claim"
+      ],
+      "status": "retained"
+    },
+    {
+      "finding_id": "OME05-C05",
+      "missing_facets": [],
+      "reason": "Declared label/image roles, nested paths, explicit relative association/default, level matching and coordinate alignment survive with controlled unsupported geometry and distinguishing fixtures.",
+      "reference_adjudication": null,
+      "retained_facets": [
+        "Nested paths and relative source.image association/default",
+        "Level count and corresponding geometry/coordinates",
+        "Singleton dimensions and translated-label fixtures",
+        "Controlled incompatible-geometry feedback"
+      ],
+      "status": "retained"
+    },
+    {
+      "finding_id": "OME05-C06",
+      "missing_facets": [
+        "General label-value keyed identity for BOTH colors and properties, independent of metadata-array position/order"
+      ],
+      "reason": "Exact integer width/precision, noninterpolating categorical sampling, color keys and supplied RGBA survive. The full color/property label-value identity independent of metadata list order does not; heterogeneous property inspection is not that general rule.",
+      "reference_adjudication": null,
+      "retained_facets": [
+        "Categorical integer IDs and declared exact supported width",
+        "Avoid aliasing and interpolation-generated identities",
+        "Integer color keys/RGBA and optional palette recommendation",
+        "Visible-zero and adjacent-large-ID fixtures"
+      ],
+      "status": "narrowed"
+    },
+    {
+      "finding_id": "OME05-C07",
+      "missing_facets": [
+        "Reverse codec-chain and transpose/layout semantics with decisive admitted evidence",
+        "Chosen-reader implementation qualification for actual pipeline/endian behavior"
+      ],
+      "reason": "Concrete codec/sharding metadata and an explicit support boundary survive, as do proposed known-value checks. Full reverse pipeline, transpose/layout and endian-sensitive decoding are not established. Decisive standalone Zarr core/codec sources are absent from this admitted corpus; retain the ID and limitation.",
+      "reference_adjudication": null,
+      "retained_facets": [
+        "Real sharding/codec chain compatibility case",
+        "Explicit supported versions/dtypes/codecs and unsupported feedback",
+        "Known-value and endian-sensitive validation proposed, not claimed passed"
+      ],
+      "status": "narrowed"
+    },
+    {
+      "finding_id": "OME05-C08",
+      "missing_facets": [
+        "Established absent/fill versus read/decode/cancellation predicate for a chosen backend; decisive core/store evidence is unavailable"
+      ],
+      "reason": "Read-only plan coverage, bounded reader-side enforcement checks and failure discrimination survive. Legal unwritten fill versus unavailable/truncated chunks remains an explicitly unresolved backend/core question; do not promote it to an established researched contract.",
+      "reference_adjudication": null,
+      "retained_facets": [
+        "Read-only sources/session settings and write-attempt/content comparison proposals",
+        "Inspected r-mode path with Store/mode limitations",
+        "Explicit missing-chunk/failure distinction question and truthful feedback"
+      ],
+      "status": "narrowed"
+    }
+  ],
+  "unsupported_assertions": [],
+  "novel_supported": [
+    {
+      "classification": "correction",
+      "id": "N01",
+      "proposition": "Metadata-driven multi-image collection and HCS discovery.",
+      "reason": "Distinct from per-image pyramid/label references: preserves plate/XML/series precedence, sparse fields/acquisitions, identities and valid siblings. Conditional pinned napari XML/path mechanism supports the risk without asserting a Slide Scout defect."
+    },
+    {
+      "classification": "product_choice",
+      "id": "N02",
+      "proposition": "Explicit named-multiscales representation selection.",
+      "reason": "A representation choice within one image differs from discovering collection images and pyramid levels. First-entry fallback is permitted; switching is a reviewable product choice."
+    },
+    {
+      "classification": "product_choice",
+      "id": "N03",
+      "proposition": "OMERO rendering hints and bounded fallback policy.",
+      "reason": "Distinct optional rendering policy: active/color/contrast/default handling is investigated and session-only; start/end are not min/max or dtype limits. Does not claim universal parity."
+    },
+    {
+      "classification": "correction",
+      "id": "N04",
+      "proposition": "Measurable responsiveness across the complete large-data pipeline.",
+      "reason": "Concrete acceptance refinement to existing background/cancellation promises: retained work, stale result identity, memory and latency across decode/cache/contrast/upload. AGAVE provides a documented counterexample to assuming default level fits memory; no benchmark or mandatory UI inferred."
+    },
+    {
+      "classification": "optional_capability",
+      "id": "N05",
+      "proposition": "Optional auxiliary inspection tools: label properties, plate montage, memory estimates and manual region selection.",
+      "reason": "One explicitly grouped opportunity set, not four extra acceptance-clause credits. Properties and plate metadata support inspection opportunities; AGAVE documents estimates and region selection. Each remains a separate decision in the burden list; no added mandate or implemented Slide Scout capability."
+    }
+  ],
+  "correct_non_findings": [
+    {
+      "id": "NF01",
+      "proposition": "A new read-only product mandate is unnecessary; it is already in the Plan.",
+      "reason": "Plan line9 is decisive. Reader-mode qualification and proposed write tracing remain useful acceptance work, not proof of a new requirement or universal library enforcement."
+    },
+    {
+      "id": "NF02",
+      "proposition": "Do not import AGAVE restrictions or claim complete support from its historical v3 PR/dependency pin.",
+      "reason": "HELP conflicts with guide/README on formats,dtypes,time; four channels remains a documented AGAVE cap. PR and dependency pin establish limited historical evidence, not Slide Scout scope or full current decoder behavior."
+    },
+    {
+      "id": "NF03",
+      "proposition": "Historical Windows FSStore failure is not blanket current incompatibility.",
+      "reason": "Exact reported versions plus later release notes support a scoped historical finding;0.8.1, not merely0.8.0 wording, explicitly removes the dependency. Installed resolution and semantic correctness remain untested."
+    },
+    {
+      "id": "NF04",
+      "proposition": "No unconditional zero-label transparency defect was established in the pinned napari path.",
+      "reason": "Actual integer color/RGBA path preserves supplied alpha; normative visible zero is allowed. This negative is code-supported, not based on a missing read. It does not fill the lost general property-key facet."
+    },
+    {
+      "id": "NF05",
+      "proposition": "BFF automatic handoff report does not establish local decode failure or a verified general fix.",
+      "reason": "Manual URL success and tentative later comment are decisive limits. External handoff is outside the thin local viewer scope, so deferral is appropriate."
+    }
+  ],
+  "N05_counting_rule": "One grouped opportunity set containing four optional opportunities; not four additional novel findings.",
+  "delivered_decision_counts": {
+    "blocking_product_decision_count": 2,
+    "nonblocking_choice_count": 10,
+    "clarification_question_count": 2,
+    "redundant_question_count": 0
+  },
+  "decision_burden": {
+    "blocking": [
+      "Supported admission envelope: versions, codec configurations and exact dtype/label-width range.",
+      "Measurable responsiveness acceptance: declared hardware, latency/memory/work budgets and cancellation granularity."
+    ],
+    "nonblocking": [
+      "Named multiscales: identifiable first entry or switching.",
+      "Custom-axis presentation within supported dimensions.",
+      "Fallback label colors when optional colors are absent.",
+      "Direct label-root opening support.",
+      "Which OMERO hints/defaults/manual controls and bounded contrast fallback to expose.",
+      "Partial-level fallback versus controlled unavailable-level feedback.",
+      "Label-property inspection.",
+      "Plate montage.",
+      "Memory estimates with named memory domains.",
+      "Manual region selection."
+    ],
+    "reason": "Two distinct acceptance decisions and ten nonblocking choices are explicitly left open. Technical evidence questions about binary paths and backend behavior are recorded separately, not counted as product decisions. Existing read-only/background/cancellation promises are not reopened.",
+    "redundant": []
+  },
+  "decision_burden_supplement": {
+    "blind_run_id": "R-db37e67db3f881fbd650",
+    "blocking_product_decision_count": 2,
+    "clarification_question_count": 2,
+    "clarification_questions": [
+      {
+        "delivery_line": 57,
+        "id": "CQ01",
+        "proposition": "Resolve authoritative applicability and payload semantics for binary-path transform form."
+      },
+      {
+        "delivery_line": 58,
+        "id": "CQ02",
+        "proposition": "Establish the chosen backend/core behavior across fill versus failed reads, codecs/layout/endian and exact wide-ID precision."
+      }
+    ],
+    "counting_rule": "Count delivery decision obligations, not every research-store question. Backend binding and behavior form one explicitly multifaceted evidence clarification; numeric responsiveness thresholds and supported dtype/codec envelope are product acceptance decisions. Existing read-only/background/cancellation requirements are not reopened.",
+    "evaluator": "root_astra_high",
+    "nonblocking_choice_count": 10,
+    "redundant_question_count": 0,
+    "schema": "shape.root_decision_burden_supplement.v1",
+    "score": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-db37e67db3f881fbd650/score.json",
+      "sha256": "5097749ce4235f40699d1c2f0899f9d401a676ba04372e8adf74338863b9445f"
+    }
+  },
+  "source_and_authentication": {
+    "delivered_reference_semantic_bindings_matched": 35,
+    "original_target_digests_matched_by_operational_helper": 30,
+    "verifier_check_verdicts": {
+      "confirm": 25,
+      "qualify": 2,
+      "unresolved": 3,
+      "reject": 0
+    },
+    "root_semantic_first_pass_unchanged_after_handoff": true,
+    "private_provenance_content_read_by_root": false,
+    "original_REF_binding_authentication": "Operational helper audits original private receipts; root rechecks exported semantic source/excerpt hashes. Full original REF objects are not present in the neutral export.",
+    "original_target_authentication": "Operational helper audits original envelopes; altered neutral-projection digests are not used.",
+    "all_152_catalog_inspection_independently_certified": false,
+    "per_turn_context_visibility": "unknown",
+    "complete_action_chronology": "not independently observable from neutral projection"
+  },
+  "accounting_and_recovery": {
+    "audit_receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/blind-safe-audit-receipt-v2.json",
+      "sha256": "f68edc9e12793bbfc0968515d5aa72114fe742a3e203fb928470b51cf83ad77c"
+    },
+    "independent_audit_passed": true,
+    "all_native_usage_including_compaction_already_priced_once": true,
+    "genuinely_missing_usage_found": false,
+    "genuinely_conflicting_usage_found": false,
+    "application_receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/application-receipt.json",
+      "sha256": "589de430fbb2f7fd8db43471c373ddb0e69de76fcf7b4afe74bbe9a2098c4898"
+    },
+    "original_native_audit_failure_preserved": true,
+    "retry_or_resume_performed": false,
+    "freezes_unchanged": true,
+    "paid_launch_performed_by_recovery_application": false
+  },
+  "fourth_run_observation": {
+    "blind_run_id": "R-c1b39b04e92a73f97285",
+    "fifth_authorized": false,
+    "locked_scores": 3,
+    "mapping_reveal_allowed": false,
+    "native_live": true,
+    "observed_at": "2026-09-21T05:00:31.485183+00:00",
+    "public_row": {
+      "blind_run_id": "R-c1b39b04e92a73f97285",
+      "case_id": "ome-zarr-thin",
+      "ordinal": 4,
+      "packet_sealed": false,
+      "phase": "main",
+      "score_locked": false,
+      "status": "running"
+    },
+    "required_score_locks": 16,
+    "schema": "shape.blind_safe_operational_checkpoint.v1",
+    "third_recovery_application": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/application-receipt.json",
+      "sha256": "589de430fbb2f7fd8db43471c373ddb0e69de76fcf7b4afe74bbe9a2098c4898"
+    },
+    "unknown_handles": false
+  },
+  "source_only_preparation": {
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/pinned-checks/jujutsu-operation-selector.json",
+      "sha256": "1458244a6aadf8fdf12aedd43cdff32e0b6f433c663b94766ed176ccf0eae029"
+    },
+    "reference_id": "F005",
+    "scope": "Partial source-chain preparation only, not complete reference adjudication or runtime proof.",
+    "root_assessment": "The selector/load and transaction-parent mechanisms support distinguishing historical selection from the Plan required expected-operation comparison. Frozen canon already requires the latter; native CLI documentation permits historical mutations. The admitted catalog does not contain an op_heads_store implementation, so complete publication/concurrency behavior has not been certified by this inspection. Fetch currentness behavior and open native fixes were not assessed.",
+    "full_reference_adjudication": false,
+    "arm_credit": false
+  },
+  "limitations": [
+    "One coherent delivered.md supplies all arm credit; immutable first-pass semantic fields preserved exactly. Run remains terminal partial because its accounting failure is preserved; scoring a coherent artifact does not establish a successful native verification endpoint.",
+    "Code claims were checked by root against exact pinned implementation branches/callers. Documentation/history remain those evidence types; no runtime success inferred.",
+    "Reference C07/C08 decisive standalone Zarr sources unavailable; fixed IDs and denominator unchanged, no oracle answer supplied.",
+    "N05 is one grouped optional opportunity set with four independently visible nonblocking choices; no extra acceptance-clause credits or net score.",
+    "Coverage includes7 investigated-status questions plus explicit partial/open/deferred/blocked limits; all152 catalog inspection and complete action chronology are not independently observable from neutral semantic projections.",
+    "REF identity and original target-envelope authenticity rely on bound private operational audits; semantic source/excerpt checks are independently repeated without configuration exposure. One additional check-only REF is not a delivered citation and remains outside that export.",
+    "Full interpretation/generalization for label color/property identity never appears in inspected semantic history, despite acquired decisive excerpts. Actual per-turn context visibility remains unknown.",
+    "Configuration/cost/time mapping remains blinded until all16 main/component score or explicit-unscorable locks.",
+    "Fourth-slot activity is reported only at the bound timestamp; no later outcome is asserted. Fifth launch was not authorized at that checkpoint.",
+    "No production economics exported and no private costs, model/arm labels, or configuration mapping read."
+  ]
+}

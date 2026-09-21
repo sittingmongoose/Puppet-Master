@@ -1,0 +1,152 @@
+{
+  "schema": "shape.blind_checkpoint_manifest.v1",
+  "checkpoint": 4,
+  "blind_run_id": "R-db37e67db3f881fbd650",
+  "checkpoint_at_utc": "2026-09-21T05:00:31.485183+00:00",
+  "report_files": [
+    {
+      "path": "reports/research-shapes-20260920/BLIND_SCORE_CHECKPOINT_004.md",
+      "sha256": "07646e61fb96a6bf71e02b07a196c2e5ca24c806fdae5d006e6da2a4a6dc28fe"
+    },
+    {
+      "path": "reports/research-shapes-20260920/blind-score-checkpoint-004.json",
+      "sha256": "17e4af1228b6b345f48c8c1bf322711918732c4b25cf54b24ccb7bfafb4c3d61"
+    },
+    {
+      "path": "reports/research-shapes-20260920/STATUS.md",
+      "sha256": "09627825bbf05931353830c92f1b08c4d6bef6f572647ba38d688e5a4155077b"
+    },
+    {
+      "path": "reports/research-shapes-20260920/evaluation-preparation.json",
+      "sha256": "c206991fe58e52eb97a694feba90acf4c3b9c043286adf6cc8c756cc09d15c51"
+    }
+  ],
+  "historical_checkpoints": [
+    {
+      "path": "reports/research-shapes-20260920/blind-score-checkpoint-001.json",
+      "sha256": "1ae6775bd4c2ef4c556d0340239dac940790a06f502a0e2e47a0531b81e9587e"
+    },
+    {
+      "path": "reports/research-shapes-20260920/blind-score-checkpoint-002.json",
+      "sha256": "0fc75fc2ce61b26d43a8886bdb56548cb5da745362d7f0175503935389156ba4"
+    },
+    {
+      "path": "reports/research-shapes-20260920/operational-checkpoint-003.json",
+      "sha256": "af8910c52fd01fa266e86d28a04be3a5208e8fbb8beffc9da6bb23aef215fa62"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-db37e67db3f881fbd650/delivered-source-index.json",
+      "sha256": "9f0e79db54b731072c47cc6e987bb4a98fb7ef75f3b319197c576d33396b925f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-db37e67db3f881fbd650/delivered-root-source-checks.json",
+      "sha256": "bee47d596644b06f2b91f99093bd745c00827bb587804da4fb4c4bd5e3d59c53"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-db37e67db3f881fbd650/upstream-mechanical-index.json",
+      "sha256": "0390b0b89ccd504741efbda9dd54e23aa8d80a56ccac4e13cf0310803ccd5735"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-db37e67db3f881fbd650/upstream-root-review.json",
+      "sha256": "fd0e8d9f32da71797c4e2eb6245ee5b850f018691cd4e2575400d783b0fe5433"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-db37e67db3f881fbd650/neutral-delivered-ref-receipts.json",
+      "sha256": "917c89a6ddaff0fbf6eb351734df494c33db8162f0cf329b486d1ba6584725f3"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-db37e67db3f881fbd650/upstream-ref-authentication-supplement.json",
+      "sha256": "695fc3f9a0553e6e9e9c4a9a2d9873eb3d0bce35bd0826f8c0e580a7bd6b3fd3"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-db37e67db3f881fbd650/neutral-original-target-digest-audit.json",
+      "sha256": "91533b355e9112192aaddaf2f286e754017a632da8ef5ea8ff59d278b1a8a6db"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-db37e67db3f881fbd650/decision-burden-supplement.json",
+      "sha256": "69883e782e7bc2b91de35447042273238cba44a65d5a6b5e20446052f1c06e5a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-db37e67db3f881fbd650/semantic-first-pass.json",
+      "sha256": "455b7f87742fd293e89a9f1c99a6b7aebf3ad379c4c70c30e29fe78c3c423ef7"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-db37e67db3f881fbd650/semantic-first-pass.lock.json",
+      "sha256": "5aaf30b24eca414f76aae3f0a400d04a85c1a1b65fca541de3589a35367e84f3"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-db37e67db3f881fbd650/score.json",
+      "sha256": "5097749ce4235f40699d1c2f0899f9d401a676ba04372e8adf74338863b9445f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-db37e67db3f881fbd650/score-validation.json",
+      "sha256": "c4b827af2f38a48f3abdbb39d126f8322b4eb75d103f3fec9c2741e5a4eb33ad"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-db37e67db3f881fbd650/score-lock.json",
+      "sha256": "54a9c5584e9042083a28d8f457fc4c1eab6aad874f8eb52cab0a702d0bb36483"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/root-fourth-run-live-checkpoint.json",
+      "sha256": "f59979402483f0efc7b73863eb95f1516c5dc2eb9ba8eaaf6a2fba8419ac8380"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/application-receipt.json",
+      "sha256": "589de430fbb2f7fd8db43471c373ddb0e69de76fcf7b4afe74bbe9a2098c4898"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/blind-safe-audit-receipt-v2.json",
+      "sha256": "f68edc9e12793bbfc0968515d5aa72114fe742a3e203fb928470b51cf83ad77c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/pinned-checks/jujutsu-operation-selector.json",
+      "sha256": "1458244a6aadf8fdf12aedd43cdff32e0b6f433c663b94766ed176ccf0eae029"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-db37e67db3f881fbd650/final.json",
+      "sha256": "427a62ecaa6832d69fa4df17cdcf2ff6957afae10b4928a9a4d67b84abfa7536"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-db37e67db3f881fbd650/handoff.json",
+      "sha256": "d7ecf234c532626a0ca1d8fcc9ce0e3cb2a62afe6e0f7814176d294f2bb65f8a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-db37e67db3f881fbd650/delivered.md",
+      "sha256": "373b5ff39dd303fa5a40269b624cae06e8fdf4b2e0188fd6e59333fe76c4f26c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-db37e67db3f881fbd650/artifacts/H0001.txt",
+      "sha256": "781b3a04e53d338a5ecc6b864542d0ef4981aebef9f22cea0375de41bf6e5df6"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-db37e67db3f881fbd650/artifacts/H0002.txt",
+      "sha256": "1fb20f9edf6a0963e693a54ef715cd60aca33545c5bdc084159ffd6473864e81"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-db37e67db3f881fbd650/artifacts/H0003.txt",
+      "sha256": "95b49960cd12e792f30bfc7cb1494604975eab3bd568b407a56c92184ef93465"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-db37e67db3f881fbd650/artifacts/H0004.txt",
+      "sha256": "4af41c62989b7a35f301e9409c83088fe7c953f4eff0c102d5b0e3afb5ecf5cc"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-db37e67db3f881fbd650/artifacts/H0005.txt",
+      "sha256": "c35c5a87a66b69b8cf6443ac59c6201f6acdc513cb87a77ba1cb6d3a74e7ba81"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-db37e67db3f881fbd650/artifacts/H0006.txt",
+      "sha256": "2183563b71587e0efbade2357bb2c37aa58948b12b09d78a100f890798247ef3"
+    }
+  ],
+  "verification": {
+    "all_listed_hashes_verified": true,
+    "exact_score_and_lock_bindings_match": true,
+    "immutable_first_pass_semantic_fields_equal": true,
+    "private_provenance_not_opened": true,
+    "prior_checkpoints_unchanged": true,
+    "no_new_semantic_adjudication": true
+  }
+}

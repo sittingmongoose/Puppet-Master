@@ -87,6 +87,19 @@
       "root_adjudication": "F008 remains supported as a command-specific native partial-effect example, and its proposed general safety obligation is already covered by the frozen Plan. Retain the distinction between partial edited files and fully resolved conflicts, between unpublished and published operations, and between a possible persisted partial effect and an unconditional guarantee. Exact supported-version/runtime qualification remains unproved. No arm credit is assigned by this source-only preparation.",
       "candidate_credit": false,
       "runtime_execution_performed": false
+    },
+    {
+      "recorded_at": "2026-09-21T03:56:55.427205+00:00",
+      "reference_id": "F005",
+      "receipt": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/pinned-checks/jujutsu-operation-selector.json",
+        "sha256": "1458244a6aadf8fdf12aedd43cdff32e0b6f433c663b94766ed176ccf0eae029"
+      },
+      "scope": "Partial source-chain preparation only, not complete reference adjudication or runtime proof.",
+      "root_assessment": "The selector/load and transaction-parent mechanisms support distinguishing historical selection from the Plan required expected-operation comparison. Frozen canon already requires the latter; native CLI documentation permits historical mutations. The admitted catalog does not contain an op_heads_store implementation, so complete publication/concurrency behavior has not been certified by this inspection. Fetch currentness behavior and open native fixes were not assessed.",
+      "full_reference_adjudication": false,
+      "candidate_credit": false,
+      "runtime_execution_performed": false
     }
   ]
 }
