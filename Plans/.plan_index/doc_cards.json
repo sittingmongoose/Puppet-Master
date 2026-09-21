@@ -3495,7 +3495,7 @@
         "False": 34,
         "True": 46
       },
-      "heading_count": 190,
+      "heading_count": 191,
       "implementation_surfaces": [
         "Plans/BinaryLocator_Spec.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -3546,7 +3546,7 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 6325,
+      "line_count": 6347,
       "path": "Plans/Commands_System.md",
       "plan_unit_count": 80,
       "plan_unit_ids": [
@@ -3718,7 +3718,7 @@
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "7b049569c0eb5a055014ab53fdd15a2bc7d3a74cb2b2200d480b7aae164d7f04",
+      "sha256": "0bc116b1fe31e387db534f872f9b4900540fcc19107cc442096f3145ce4e7a76",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 80
@@ -18419,7 +18419,7 @@
         "False": 20,
         "True": 144
       },
-      "heading_count": 322,
+      "heading_count": 323,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Concepts/pm7-tools/onboarding_cinematic_source.py",
@@ -18471,7 +18471,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 13251,
+      "line_count": 13273,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 164,
       "plan_unit_ids": [
@@ -18706,7 +18706,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "4fb0eb751c66b8565aa82e5407a97b67c6efb582c9206cbc47ee5f538ed504a6",
+      "sha256": "1866213d2640b13255a7638544c4c5e7dc0c2c74e93fe0b08ef9200268ca71f1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 163,
@@ -19772,7 +19772,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-21T00:48:54Z",
+  "generated_at_utc": "2026-09-21T03:39:47Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

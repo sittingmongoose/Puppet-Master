@@ -1,0 +1,561 @@
+{
+  "schema_id": "pm.post_audit_browser_catalog_maintenance_report.v1",
+  "report_date": "2026-09-21",
+  "status": "verified_static_repairs_not_runtime",
+  "authority": "The user's original instruction to fix gaps and perform non-design integration authorizes these bounded repairs. The metadata audit itself is diagnostic evidence, not implementation authority.",
+  "scope": [
+    "Browser admission validator maintenance for five already adopted Goal event rows",
+    "Seven previously accepted command primary metadata registrations and focused catalog guard"
+  ],
+  "historical_audit": {
+    "disposition": "preserved",
+    "note": "No historical verdict, denominator, audit capture, or evidence hash is rewritten. This is a separate post-audit maintenance record."
+  },
+  "source": {
+    "before_commit": "8704c1d63371825fc78ec53c7f86790d6f63a256",
+    "observed_worktree_head": "796e2b3dba8dfc1360074dd38e1f7ea15baa3118",
+    "pin_status": "Formal capture inputs before and after match; every recorded file SHA-256 was rechecked against the stable working snapshot before installing this report.",
+    "before_pins": [
+      {
+        "path": "Plans/Commands_System.md",
+        "sha256": "7b049569c0eb5a055014ab53fdd15a2bc7d3a74cb2b2200d480b7aae164d7f04"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "sha256": "4fb0eb751c66b8565aa82e5407a97b67c6efb582c9206cbc47ee5f538ed504a6"
+      },
+      {
+        "path": "scripts/pm-plans-verify.py",
+        "sha256": "d10c009eceea4fcc66de4e55e9db3fabe1226425c3713e66e70a7f0bb55c1ca0"
+      },
+      {
+        "path": "scripts/pm-browser-event-admission.py",
+        "sha256": "38e515f5d118708e2e3cba132c7f443f6cb7d2f3bdd6b46a41bc197ef092ba15"
+      },
+      {
+        "path": "tests/test_pm_browser_event_admission.py",
+        "sha256": "c021521de83e4ae1c54bb07762142106373a3a0052a3f087924071b01798d9c0"
+      }
+    ],
+    "repair_identity": "Commit containing this report; reviewed dirty snapshot HEAD 796e2b3dba8dfc1360074dd38e1f7ea15baa3118 plus the captured file pins.",
+    "after_pins": [
+      {
+        "bytes": 24639257,
+        "path": "Plans/.plan_index/acceptance_units.jsonl",
+        "sha256": "aa8561aa4d43020f849541d6a9373a2f4d355a40c3ffad6f927dd535a5f0b42f"
+      },
+      {
+        "bytes": 47705,
+        "path": "Plans/.plan_index/coverage_report.json",
+        "sha256": "d7772a73f006b2a4049123199ce6e6a10f788ee8a649b9214c61aee7cff2c8ce"
+      },
+      {
+        "bytes": 5513755,
+        "path": "Plans/.plan_index/dependencies.json",
+        "sha256": "944341d0c5b6804e8ef54ff0608002ec43af9815a9c8aa00019bdbe7a546fd64"
+      },
+      {
+        "bytes": 723217,
+        "path": "Plans/.plan_index/doc_cards.json",
+        "sha256": "0afc679461ff36e0baffbc0ae85cef53f3a84c230febdb4015174bf85f4ceec4"
+      },
+      {
+        "bytes": 1305360,
+        "path": "Plans/.plan_index/node_readiness_report.json",
+        "sha256": "951cbcbbcc8be48be64198a0992feda8a74d8ba52dd6ff887957d924b79ca50a"
+      },
+      {
+        "bytes": 19636215,
+        "path": "Plans/.plan_index/plan_units.jsonl",
+        "sha256": "612c62ed1381ccc1d8509252355f3955bc5d8b9a58858c279c977b6c5146a98c"
+      },
+      {
+        "bytes": 577282,
+        "path": "Plans/Commands_System.md",
+        "sha256": "0bc116b1fe31e387db534f872f9b4900540fcc19107cc442096f3145ce4e7a76"
+      },
+      {
+        "bytes": 1006827,
+        "path": "Plans/UI_Command_Catalog.md",
+        "sha256": "1866213d2640b13255a7638544c4c5e7dc0c2c74e93fe0b08ef9200268ca71f1"
+      },
+      {
+        "bytes": 5271482,
+        "path": "Plans/Wiring_Matrix.production.json",
+        "sha256": "ef3085adb3068257c35b7d848fdf5f16c30257980ec1b414f02c4041c4232bed"
+      },
+      {
+        "bytes": 215531,
+        "path": "Plans/browser_event_admission.json",
+        "sha256": "0179cb7bd5edb35faaea181864951cd777ac220cd1939c1fb5d238a5878bf46a"
+      },
+      {
+        "bytes": 9272,
+        "path": "Plans/browser_event_admission.schema.json",
+        "sha256": "c6896b57a9dad5ab205d647bbbf4d69e29cfe094b33deea17408ba36db6b7cb1"
+      },
+      {
+        "bytes": 275253,
+        "path": "Plans/browser_event_admission_fixtures.json",
+        "sha256": "9a4052eac69b1e544c9c14d610b83025169e53ed0302f535d0505cf234cce032"
+      },
+      {
+        "bytes": 214165,
+        "path": "Plans/browser_event_payloads.schema.json",
+        "sha256": "329f7794326afef1e8a528130877fd1f817e109c254a976fdd7d9062a96e378f"
+      },
+      {
+        "bytes": 88942,
+        "path": "Plans/event_family_registry.json",
+        "sha256": "1972a6aa6ef168a46091be5347bc9cff657985a1c21ab1b84665b9ed96c1ed3a"
+      },
+      {
+        "bytes": 705380,
+        "path": "Plans/server_command_gap_adjudication.json",
+        "sha256": "b17220f3fb91e3f0f4ebece1b1f9928dfe385b1d0416a475639863b19a1ce9ae"
+      },
+      {
+        "bytes": 712326,
+        "path": "Plans/touch_closure.json",
+        "sha256": "f0aa478f081ed86005d4818466cdce879a658f98ec4f0abcd61df5e18a158e05"
+      },
+      {
+        "bytes": 8539,
+        "path": "Plans/touch_closure.schema.json",
+        "sha256": "c896279d7047837d43b46b1617b5ae09a3517151346515d0d8d344399123df53"
+      },
+      {
+        "bytes": 35370,
+        "path": "scripts/pm-browser-event-admission.py",
+        "sha256": "5211836d23d2f24a807b206f8f9ec41efa34eac8fdb187f9cb31799b64e99d5d"
+      },
+      {
+        "bytes": 71733,
+        "path": "scripts/pm-plan-index.py",
+        "sha256": "29c9eb0c5c57d52867b0b0f956a3ff6e3e54d1cb46dc11cc4c1a0d0b4939600d"
+      },
+      {
+        "bytes": 393954,
+        "path": "scripts/pm-plans-verify.py",
+        "sha256": "e678cdf975dc77beceed5b9a85ad0e10de85fc2f53782516847afceb96281c39"
+      },
+      {
+        "bytes": 87783,
+        "path": "scripts/pm-touch-closure-verify.py",
+        "sha256": "7340f67677e4f8de3286a3d9552bfb78b473200153b479e32d5f2ba7c1b02a83"
+      },
+      {
+        "bytes": 27752,
+        "path": "scripts/pm_browser_workspace_created.py",
+        "sha256": "f27da85961cde0b1955fd77133abb0cb2278579f9bc8b14157a031fba2fb9c9c"
+      },
+      {
+        "bytes": 41279,
+        "path": "scripts/pm_browser_workspace_reset.py",
+        "sha256": "a04bbcc3ee218439e56876a8749e408b638814cf106cb41c89202b7f2101648d"
+      },
+      {
+        "bytes": 12116,
+        "path": "scripts/pm_primary_command_catalog.py",
+        "sha256": "4f0b21f02d574a4d4e697a12fe5226ca13d5e56da9fd0af59d3fd6bd37a5e359"
+      },
+      {
+        "bytes": 32784,
+        "path": "tests/test_pm_browser_event_admission.py",
+        "sha256": "d2d8a2b72aa9cfa5e74254ae8eab446b635a74c79457bba48cc98e3eec0f9b6a"
+      },
+      {
+        "bytes": 19787,
+        "path": "tests/test_pm_browser_workspace_created.py",
+        "sha256": "4591b7be1a65898c098ef1e1c129ce27eadb28fa1e6a6d31cc84023f251d33b4"
+      },
+      {
+        "bytes": 49203,
+        "path": "tests/test_pm_browser_workspace_reset.py",
+        "sha256": "0530435e8495685200ad5ec0c743c5dfb21ae9b2c741690bdf82d4f29a37f1ae"
+      },
+      {
+        "bytes": 12893,
+        "path": "tests/test_pm_primary_command_catalog.py",
+        "sha256": "3c0489b4ae06131020ed18735acd2ce1b9b28f19e4b40caaae334d95735b356c"
+      },
+      {
+        "bytes": 9084,
+        "path": "/mnt/Cursor/PM-Experiments/r5-touch-remaining2769-review-20260921-OPUU59dA/run_post_audit_maintenance_checks.py",
+        "sha256": "1cec0f853c324f6937a497bc483e0efe86e8f1333fbba8d8b609029e412f792a"
+      }
+    ],
+    "capture_inputs_before": {
+      "bytes": 7301,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/inputs.before.json",
+      "sha256": "9564d66ff97a0332d4b68ca5a459c35a9ebf70332182cf36c440da3b6ed2a122"
+    },
+    "capture_inputs_after": {
+      "bytes": 7301,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/inputs.after.json",
+      "sha256": "9564d66ff97a0332d4b68ca5a459c35a9ebf70332182cf36c440da3b6ed2a122"
+    }
+  },
+  "browser_maintenance": {
+    "browser_admitted_rows": 2,
+    "reviewed_existing_goal_adoptions": [
+      {
+        "family": "goal.created",
+        "owner": "Plans/Contracts_V0.md#CV-341",
+        "adoption_commit": "3890d86c70"
+      },
+      {
+        "family": "goal.updated",
+        "owner": "Plans/Contracts_V0.md#CV-342",
+        "adoption_commit": "5fc9747b6f"
+      },
+      {
+        "family": "goal.cancelled",
+        "owner": "Plans/Contracts_V0.md#CV-347",
+        "adoption_commit": "1136661ddc"
+      },
+      {
+        "family": "goal_run.started",
+        "owner": "Plans/Goal_Runtime_System.md#GRS-079",
+        "adoption_commit": "e686963ad5"
+      },
+      {
+        "family": "goal_run.cancelled",
+        "owner": "Plans/Goal_Runtime_System.md#GRS-080",
+        "adoption_commit": "a3c511657f"
+      }
+    ],
+    "historical_baseline_owners": [
+      "Plans/storage-plan.md#SP-262",
+      "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-166"
+    ],
+    "behavior": "Default current validation requires all five reviewed successor rows using independent whole-row pins from their adoption commits. Original 39/40-row baselines remain intact for isolated historical comparison. Default validation rejects predecessor-v2 rollback; no broad field/sibling exemptions or live-registry self-blessing.",
+    "diagnosis": {
+      "path": "/mnt/Cursor/PM-Experiments/r5-touch-remaining2769-review-20260921-OPUU59dA/browser-admission-currentness-diagnosis.proposal.json",
+      "sha256": "6a5f090637822f08ee3ff17546dd062b1c3426354fe583bf751b1b613fa1db03"
+    },
+    "browser_prepared_rows": 51,
+    "captured_outcome": {
+      "status": "pass",
+      "failures": [],
+      "admission_complete": false,
+      "runtime_producer_proven": false,
+      "governance_sealed": false,
+      "global_event_denominator": "UNKNOWN_OPEN",
+      "historical_original39_verified": true,
+      "historical_original40_verified": true,
+      "current_preexisting_rows_match_reviewed_successors": true,
+      "positive_cases": 53,
+      "negative_cases": 576
+    }
+  },
+  "primary_registration": {
+    "command_ids": [
+      "cmd.auth_profile.open_official_page",
+      "cmd.integration.connection.add",
+      "cmd.integration.connection.update",
+      "cmd.integration.connection.test",
+      "cmd.integration.connection.remove",
+      "cmd.integration.connection.open_details",
+      "cmd.remote_access.route.test"
+    ],
+    "owner_refs": [
+      "Plans/Multi-Account_Connection_Spec.md#MACS-003",
+      "Plans/Shared_Integration_Runtime.md#SIR-019",
+      "Plans/Shared_Integration_Runtime.md#SIR-029",
+      "Plans/Shared_Integration_Runtime.md#SIR-035",
+      "Plans/Remote_Access_System.md#RAS-009",
+      "Plans/Commands_System.md#CS-073",
+      "Plans/UI_Command_Catalog.md#UCC-151"
+    ],
+    "repair": "Materialize exact primary records with labels, descriptions, preconditions, direct domain_action normalization, existing typed schema/handler references and reverse consumers. Guard validates primary definitions rather than accepting token occurrences or alias targets as registration.",
+    "census": {
+      "section_primary_rows_before": 93,
+      "section_primary_rows_after": 100,
+      "reused_authentication_primary_rows": 3,
+      "reused_authentication_owners": [
+        "Plans/Commands_System.md#CS-066",
+        "Plans/UI_Command_Catalog.md#UCC-145"
+      ],
+      "unique_central_obligations": 103,
+      "packet_rows": 171,
+      "packet_primary_denominator": 93,
+      "qualification": "100 local definitions plus three already defined authentication start/cancel/resume primaries; no duplicate authentication registrations and no new product commands."
+    },
+    "availability": "handler_unavailable",
+    "expected_event_types": []
+  },
+  "verification": {
+    "status": "passed_static_checks",
+    "summary": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/summary.json",
+      "sha256": "2772d996f15445eabfe28c9e653731182164dc235d3949dc6fa7e8bf5c6064cc"
+    },
+    "started_at_utc": "2026-09-21T03:41:48.937949+00:00",
+    "finished_at_utc": "2026-09-21T03:44:23.860659+00:00",
+    "source_stable": true,
+    "all_seven_exit_codes_zero": true,
+    "checks": [
+      {
+        "name": "browser-admission",
+        "argv": [
+          "/usr/bin/python3",
+          "scripts/pm-browser-event-admission.py"
+        ],
+        "returncode": 0,
+        "source_stable": true,
+        "receipt": {
+          "bytes": 1235,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/browser-admission.result.json",
+          "sha256": "f8a83111f696be80cdf8c1958c3a89e2afaea9a0db1bc9506291dba7ce045fd4"
+        },
+        "stdout": {
+          "bytes": 2187,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/browser-admission.stdout",
+          "sha256": "4f8a7793413addef602f9f3d5f25bd72d08e14dfb130c14723bfd6723e757694"
+        },
+        "stderr": {
+          "bytes": 0,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/browser-admission.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "name": "browser-admission-tests",
+        "argv": [
+          "/usr/bin/python3",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_pm_browser_event_admission.py"
+        ],
+        "returncode": 0,
+        "source_stable": true,
+        "receipt": {
+          "bytes": 1329,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/browser-admission-tests.result.json",
+          "sha256": "e50495d78752c09959df0a71c6174eca65a832b1924a4cfd872a82447149bd68"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/browser-admission-tests.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "bytes": 137,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/browser-admission-tests.stderr",
+          "sha256": "a8a85f7caa3c14510fa766d2940fd1531c6a28735badec748b1d4a07eea58743"
+        },
+        "test_count": 37
+      },
+      {
+        "name": "browser-workspace-tests",
+        "argv": [
+          "/usr/bin/python3",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_pm_browser_workspace_*.py"
+        ],
+        "returncode": 0,
+        "source_stable": true,
+        "receipt": {
+          "bytes": 1327,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/browser-workspace-tests.result.json",
+          "sha256": "e372004298a34a330348e819a269dafd006808211ed1e8c55a02101e25fd2250"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/browser-workspace-tests.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "bytes": 187,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/browser-workspace-tests.stderr",
+          "sha256": "4c564a28a1caf7900e083b26c7d27fd4950de8602e72713e92f34f2465a97bc4"
+        },
+        "test_count": 87
+      },
+      {
+        "name": "primary-command-catalog-tests",
+        "argv": [
+          "/usr/bin/python3",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_pm_primary_command_catalog.py"
+        ],
+        "returncode": 0,
+        "source_stable": true,
+        "receipt": {
+          "bytes": 1355,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/primary-command-catalog-tests.result.json",
+          "sha256": "b59a65434e34cf9cfcc2b00532bd7a988ce0809f7243bc51d6a599f5b254eb11"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/primary-command-catalog-tests.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "bytes": 119,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/primary-command-catalog-tests.stderr",
+          "sha256": "37f7bc91e162e36e37a2c46d1173b6034daed462375eda65e372c5317735cbd6"
+        },
+        "test_count": 19
+      },
+      {
+        "name": "wiring-matrix",
+        "argv": [
+          "/usr/bin/python3",
+          "scripts/pm-plans-verify.py",
+          "validate-wiring-matrix"
+        ],
+        "returncode": 0,
+        "source_stable": true,
+        "receipt": {
+          "bytes": 1238,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/wiring-matrix.result.json",
+          "sha256": "1ad34ea13e26f0ed8c57b3093752ae95ab5008c60e266bbf03e52ac24a3bd401"
+        },
+        "stdout": {
+          "bytes": 691,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/wiring-matrix.stdout",
+          "sha256": "9cf41241db9ca8a09d4e359e757c21a80b9942629dc89742ad2c3a066709e81e"
+        },
+        "stderr": {
+          "bytes": 0,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/wiring-matrix.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "name": "touch-closure",
+        "argv": [
+          "/usr/bin/python3",
+          "scripts/pm-touch-closure-verify.py",
+          "--json"
+        ],
+        "returncode": 0,
+        "source_stable": true,
+        "receipt": {
+          "bytes": 1230,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/touch-closure.result.json",
+          "sha256": "90fc98333d936d0d8082a87ab529c735d0f70b5064c6de81a90ee7417f3dc027"
+        },
+        "stdout": {
+          "bytes": 2960,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/touch-closure.stdout",
+          "sha256": "6c3fa9b52be2b076435ca659c2a7baa8d36f01461aa039efa820dbb6022734f7"
+        },
+        "stderr": {
+          "bytes": 0,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/touch-closure.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "name": "plan-index",
+        "argv": [
+          "/usr/bin/python3",
+          "scripts/pm-plan-index.py",
+          "validate"
+        ],
+        "returncode": 0,
+        "source_stable": true,
+        "receipt": {
+          "bytes": 1210,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/plan-index.result.json",
+          "sha256": "6c3c1378d14adeccd25a0f935384d38aee4d0f6dc264df1c76bb2f5148418990"
+        },
+        "stdout": {
+          "bytes": 328,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/plan-index.stdout",
+          "sha256": "c89abc848b733abdf7ec9571bf6e1c4aa014e8df198cbf7bfa515990411566c7"
+        },
+        "stderr": {
+          "bytes": 0,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-maintenance-20260921-509nINOd/plan-index.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    ],
+    "prior_whole_command_observation": {
+      "comparison_commit": "8704c1d63371825fc78ec53c7f86790d6f63a256",
+      "command": [
+        "/usr/bin/python3.13",
+        "scripts/pm-assistant-contract-check.py"
+      ],
+      "receipt": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/checks/whole-command-inspection/receipt.json",
+        "sha256": "8156f21a18f3431ecc7462079cc23b04335723c177da68c06ee1fe153385bf28"
+      },
+      "stdout": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-remaining2769-review-20260921-ZFW1xQKe/checks/whole-command-inspection/stdout.log",
+        "sha256": "f959f3c549ea7a51c14b1a84f05f248eb2a164359e20bb0ee7122d0d7c9f1c04"
+      },
+      "exit_code": 1,
+      "error_count": 18,
+      "error_breakdown": {
+        "successor_admission_not_valid": 1,
+        "event_not_admitted": 17
+      },
+      "qualification": "Historical assistant-contract inspection, preserved without rewriting. The seven fresh checks do not rerun this identical whole-command inspection; the current wiring result below uses a different checker and must not be represented as an identical-command 18-to-0 result."
+    },
+    "current_wiring": {
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-wiring-matrix"
+      ],
+      "status": "pass",
+      "failures": [],
+      "failure_count": 0
+    },
+    "touch_closure": {
+      "valid": true,
+      "profile_count": 133,
+      "row_count": 643,
+      "production_wiring_entry_count": 1142,
+      "failure_count": 0,
+      "open_residual_count": 643,
+      "resolved_handler_status_counts": {
+        "absent": 2,
+        "specified": 641
+      },
+      "qualification": "643 open residuals remain; static registry validation does not close native execution obligations."
+    },
+    "plan_index": {
+      "status": "pass",
+      "failures": [],
+      "acceptance_unit_count": 26075,
+      "coverage_status": "pass",
+      "node_readiness_status": "blocked_runtime_certification_incomplete",
+      "plan_unit_count": 6688
+    },
+    "local_shard_check": {
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+      "root_observed_status": "pass",
+      "documents": 99,
+      "shards": 2691,
+      "evidence_qualification": "Root-reported local observation; not one of the seven externally captured checks and no external receipt is claimed."
+    }
+  },
+  "non_claims": [
+    "No native handler or dispatcher execution",
+    "No visual or native Slint proof",
+    "No provider or network execution",
+    "No Event Authority admission or new EventRecord family",
+    "No schema, registry, alias namespace, or product command additions",
+    "No readiness unlock, WorkNode creation, or governance reseal"
+  ]
+}
