@@ -1,0 +1,107 @@
+{
+  "format": "exact_preinstallation_header_scalar_inverse_v1",
+  "status": "source_provenance_no_native_authority",
+  "coordinate_dispatch": {
+    "before": "Resolve exact immutable Git object by commit/repository_path and independently verify git_blob_oid plus whole sha256. Never substitute the adopted current document.",
+    "after": "Resolve path relative to the directory containing THIS header-correction-inverse.json; authenticate complete selected current resource before applying any inverse. No external original root and no implicit overlay."
+  },
+  "records": [
+    {
+      "before": {
+        "coordinate_system": "immutable_git_blob",
+        "commit": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+        "repository_path": "Plans/workflow_standard_source_contracts/schemas/workflow-cancel-start-profile.v5.schema.json",
+        "git_blob_oid": "9b0d6aeb4d86ee495e648a390c0503031b92b271",
+        "sha256": "6cf8c0ae3342ad7d28670b85f81aa46d4847f815aeea7b09e7d2bc03c81d461d",
+        "bytes": 38464
+      },
+      "after": {
+        "coordinate_system": "containing_package_directory",
+        "path": "schemas/workflow-cancel-start-profile.v5.schema.json",
+        "sha256": "d20fc80a868571f199adf073b0170f82aebbebd90f2fc3b7b78121e410e3c923",
+        "bytes": 38464
+      },
+      "changes": [
+        {
+          "pointer": "/$defs/PublishAfterimages/properties/result/allOf/1/properties/schema_id/const",
+          "before": "pm.storage_value.workflow_cancel_result.v3",
+          "after": "pm.storage_value.workflow_cancel_result.v6"
+        },
+        {
+          "pointer": "/$defs/PublishAfterimages/properties/result/allOf/1/properties/schema_version/const",
+          "before": "3.0.0",
+          "after": "6.0.0"
+        }
+      ]
+    },
+    {
+      "before": {
+        "coordinate_system": "immutable_git_blob",
+        "commit": "13e7dbc0f1c36c9883420dd3d0fabd6758e54a60",
+        "repository_path": "Plans/workflow_standard_source_contracts/schemas/workflow-original-start.v5.schema.json",
+        "git_blob_oid": "fc1c3d573cdf04645bcf0708ad43bd57bfc43cd4",
+        "sha256": "1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358",
+        "bytes": 79884
+      },
+      "after": {
+        "coordinate_system": "containing_package_directory",
+        "path": "schemas/workflow-original-start.v5.schema.json",
+        "sha256": "2bdc45357fa5955640b93160ec0cce17e59b3879e20227a2f087630c73608824",
+        "bytes": 79884
+      },
+      "changes": [
+        {
+          "pointer": "/$defs/WorkflowBirthAfterimages/properties/workflow_birth/allOf/1/properties/schema_id/const",
+          "before": "pm.storage_value.executor_workflow_workflow_birth.v4",
+          "after": "pm.storage_value.executor_workflow_workflow_birth.v7"
+        },
+        {
+          "pointer": "/$defs/WorkflowBirthAfterimages/properties/workflow_birth/allOf/1/properties/schema_version/const",
+          "before": "4.0.0",
+          "after": "7.0.0"
+        },
+        {
+          "pointer": "/$defs/WorkflowBirthAfterimages/properties/workflow_head/allOf/1/properties/schema_id/const",
+          "before": "pm.storage_value.executor_workflow_workflow_head.v4",
+          "after": "pm.storage_value.executor_workflow_workflow_head.v7"
+        },
+        {
+          "pointer": "/$defs/WorkflowBirthAfterimages/properties/workflow_head/allOf/1/properties/schema_version/const",
+          "before": "4.0.0",
+          "after": "7.0.0"
+        },
+        {
+          "pointer": "/$defs/WorkflowUpdateAfterimages/properties/workflow_head/allOf/1/properties/schema_id/const",
+          "before": "pm.storage_value.executor_workflow_workflow_head.v4",
+          "after": "pm.storage_value.executor_workflow_workflow_head.v7"
+        },
+        {
+          "pointer": "/$defs/WorkflowUpdateAfterimages/properties/workflow_head/allOf/1/properties/schema_version/const",
+          "before": "4.0.0",
+          "after": "7.0.0"
+        },
+        {
+          "pointer": "/$defs/WorkflowBirthAfterimages/properties/workflow_update/allOf/1/properties/schema_id/const",
+          "before": "pm.storage_value.executor_workflow_workflow_update.v4",
+          "after": "pm.storage_value.executor_workflow_workflow_update.v7"
+        },
+        {
+          "pointer": "/$defs/WorkflowBirthAfterimages/properties/workflow_update/allOf/1/properties/schema_version/const",
+          "before": "4.0.0",
+          "after": "7.0.0"
+        },
+        {
+          "pointer": "/$defs/WorkflowUpdateAfterimages/properties/workflow_update/allOf/1/properties/schema_id/const",
+          "before": "pm.storage_value.executor_workflow_workflow_update.v4",
+          "after": "pm.storage_value.executor_workflow_workflow_update.v7"
+        },
+        {
+          "pointer": "/$defs/WorkflowUpdateAfterimages/properties/workflow_update/allOf/1/properties/schema_version/const",
+          "before": "4.0.0",
+          "after": "7.0.0"
+        }
+      ]
+    }
+  ],
+  "native": "NOT_RUN"
+}

@@ -37,7 +37,7 @@
     },
     {
       "path": "literal-resource-realms.json",
-      "sha256": "85172c4c4883a4fd4da20059f62305f376a8c6e138778ebd0189d2ecd3567449"
+      "sha256": "e6eb88ae8f906f58dcc985a814a989b81305d7b1ac268002f15e4203182a0ee0"
     },
     {
       "path": "schemas/goal-run-certified.v3.schema.json",
@@ -45,11 +45,11 @@
     },
     {
       "path": "schemas/workflow-cancel-start-profile.v5.schema.json",
-      "sha256": "6cf8c0ae3342ad7d28670b85f81aa46d4847f815aeea7b09e7d2bc03c81d461d"
+      "sha256": "d20fc80a868571f199adf073b0170f82aebbebd90f2fc3b7b78121e410e3c923"
     },
     {
       "path": "schemas/workflow-original-start.v5.schema.json",
-      "sha256": "1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358"
+      "sha256": "2bdc45357fa5955640b93160ec0cce17e59b3879e20227a2f087630c73608824"
     },
     {
       "path": "schemas/workflow-standard-certification-argument.v3.schema.json",
@@ -70,6 +70,10 @@
     {
       "path": "schemas/workflow-start-custody.v5.schema.json",
       "sha256": "d40e0c82b8ba03dec7631d2d9bc80d51a82b1adff6a1f3e900b4dab1e13916b8"
+    },
+    {
+      "path": "header-correction-inverse.json",
+      "sha256": "113eb2f08827d804c9175b094ea14184bac874f72fae675da498bbc9f9e4f421"
     }
   ],
   "native": "NOT_RUN"

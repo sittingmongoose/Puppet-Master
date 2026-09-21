@@ -8,7 +8,7 @@
       "schema_version": "7.0.0",
       "schema_ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v5.schema.json#/$defs/StorageWorkflowBirth",
       "whole_schema_path": "Plans/workflow_standard_source_contracts/schemas/workflow-original-start.v5.schema.json",
-      "whole_schema_sha256": "1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358",
+      "whole_schema_sha256": "2bdc45357fa5955640b93160ec0cce17e59b3879e20227a2f087630c73608824",
       "original_registry_row": {
         "family_id": "executor_workflow_workflow_birth",
         "storage_kind": "redb",
@@ -121,7 +121,7 @@
       "schema_version": "7.0.0",
       "schema_ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v5.schema.json#/$defs/StorageWorkflowHead",
       "whole_schema_path": "Plans/workflow_standard_source_contracts/schemas/workflow-original-start.v5.schema.json",
-      "whole_schema_sha256": "1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358",
+      "whole_schema_sha256": "2bdc45357fa5955640b93160ec0cce17e59b3879e20227a2f087630c73608824",
       "original_registry_row": {
         "family_id": "executor_workflow_workflow_head",
         "storage_kind": "redb",
@@ -235,7 +235,7 @@
       "schema_version": "7.0.0",
       "schema_ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v5.schema.json#/$defs/StorageWorkflowUpdate",
       "whole_schema_path": "Plans/workflow_standard_source_contracts/schemas/workflow-original-start.v5.schema.json",
-      "whole_schema_sha256": "1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358",
+      "whole_schema_sha256": "2bdc45357fa5955640b93160ec0cce17e59b3879e20227a2f087630c73608824",
       "original_registry_row": {
         "family_id": "executor_workflow_workflow_update",
         "storage_kind": "redb",
@@ -349,7 +349,7 @@
       "schema_version": "7.0.0",
       "schema_ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v5.schema.json#/$defs/StorageWorkflowMutationOrigin",
       "whole_schema_path": "Plans/workflow_standard_source_contracts/schemas/workflow-original-start.v5.schema.json",
-      "whole_schema_sha256": "1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358",
+      "whole_schema_sha256": "2bdc45357fa5955640b93160ec0cce17e59b3879e20227a2f087630c73608824",
       "original_registry_row": {
         "family_id": "executor_workflow_lineage_origin",
         "storage_kind": "redb",
@@ -714,7 +714,7 @@
       "schema_version": "6.0.0",
       "schema_ref": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v5.schema.json#/$defs/StorageResult",
       "whole_schema_path": "Plans/workflow_standard_source_contracts/schemas/workflow-cancel-start-profile.v5.schema.json",
-      "whole_schema_sha256": "6cf8c0ae3342ad7d28670b85f81aa46d4847f815aeea7b09e7d2bc03c81d461d",
+      "whole_schema_sha256": "d20fc80a868571f199adf073b0170f82aebbebd90f2fc3b7b78121e410e3c923",
       "original_registry_row": {
         "family_id": "workflow_cancel_result",
         "storage_kind": "redb",
@@ -828,7 +828,7 @@
       "schema_version": "6.0.0",
       "schema_ref": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v5.schema.json#/$defs/StorageOrigin",
       "whole_schema_path": "Plans/workflow_standard_source_contracts/schemas/workflow-cancel-start-profile.v5.schema.json",
-      "whole_schema_sha256": "6cf8c0ae3342ad7d28670b85f81aa46d4847f815aeea7b09e7d2bc03c81d461d",
+      "whole_schema_sha256": "d20fc80a868571f199adf073b0170f82aebbebd90f2fc3b7b78121e410e3c923",
       "original_registry_row": {
         "family_id": "workflow_cancel_origin",
         "storage_kind": "redb",

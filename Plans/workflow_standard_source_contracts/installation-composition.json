@@ -4,12 +4,12 @@
   "base_commit": "dd1df59d6307952d82a5c93be9ad4083a5bc0773",
   "source_manifest_sha256": "664723cf1af8d3deee4a2e71c63d664aa22d4809c31f3f5246bd99e7c5a67c08",
   "frozen_profile_digest": "5cb8cc2d429940d6894b99d94c090c10b8ccd269b773d184ed60a52d11b4f388",
-  "adopted_profile_digest": "2741f7462cf91a061185156027e328ef2966211bb43bc9980b781a2e6ad48ea3",
+  "adopted_profile_digest": "3e2b3017bd048f0c5666c547b9ae1d8d9db1db256f865cb2993fac96a267620f",
   "members": [
     {
       "path": "Plans/workflow_standard_source_contracts/README.md",
-      "sha256": "3fc8eabf40ae0a3cca7e40a369ddecd8734ba940eddd94e524450c75d66b0e1a",
-      "bytes": 4477
+      "sha256": "603e4b9879e33b4abb923e0246282e582405ad7bece34a4008ef0487bd07b44c",
+      "bytes": 5599
     },
     {
       "path": "Plans/workflow_standard_source_contracts/commitment-domains.json",
@@ -278,17 +278,17 @@
     },
     {
       "path": "Plans/workflow_standard_source_contracts/installed-contract-digest.txt",
-      "sha256": "bd9732437e80525f8cc91ed25473a867bad0a8e76372e1c11c1e9b3a71315372",
+      "sha256": "d0f1a7b2cf5290926320976f060ee5bc3e9468ec28c7e6190fc74a1f8d075d4c",
       "bytes": 65
     },
     {
       "path": "Plans/workflow_standard_source_contracts/installed-profile.json",
-      "sha256": "06310d70ceced923656d6c328f0556bdf1b5f4f6e96cb273bb97795718bf9444",
-      "bytes": 2756
+      "sha256": "71779885edfaf2a49e2957f262bdc08f7545ff5bc821f9e81100edf3886eb096",
+      "bytes": 2900
     },
     {
       "path": "Plans/workflow_standard_source_contracts/literal-resource-realms.json",
-      "sha256": "85172c4c4883a4fd4da20059f62305f376a8c6e138778ebd0189d2ecd3567449",
+      "sha256": "e6eb88ae8f906f58dcc985a814a989b81305d7b1ac268002f15e4203182a0ee0",
       "bytes": 93500
     },
     {
@@ -773,7 +773,7 @@
     },
     {
       "path": "Plans/workflow_standard_source_contracts/relocation-map.json",
-      "sha256": "29f47cab60fa7af5ee6e3f5e86453338f6743472b474957d9be26cd5f6c7a068",
+      "sha256": "ceba99aa41ea3333e16a8dd15aed3622edef4f1b84c1ec35a76dc6bd9897a8c8",
       "bytes": 225516
     },
     {
@@ -788,12 +788,12 @@
     },
     {
       "path": "Plans/workflow_standard_source_contracts/schemas/workflow-cancel-start-profile.v5.schema.json",
-      "sha256": "6cf8c0ae3342ad7d28670b85f81aa46d4847f815aeea7b09e7d2bc03c81d461d",
+      "sha256": "d20fc80a868571f199adf073b0170f82aebbebd90f2fc3b7b78121e410e3c923",
       "bytes": 38464
     },
     {
       "path": "Plans/workflow_standard_source_contracts/schemas/workflow-original-start.v5.schema.json",
-      "sha256": "1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358",
+      "sha256": "2bdc45357fa5955640b93160ec0cce17e59b3879e20227a2f087630c73608824",
       "bytes": 79884
     },
     {
@@ -823,15 +823,20 @@
     },
     {
       "path": "Plans/workflow_standard_source_contracts/stored-profile-routes.json",
-      "sha256": "580b6b349bd41f7361aee6982ef7632f4b46fe4a61c806d294fb3a44a81ef757",
+      "sha256": "c7530419e643e1ac611f1aed5031bd44301bd43378fc7ae871917d4cc97f10a4",
       "bytes": 60837
+    },
+    {
+      "path": "Plans/workflow_standard_source_contracts/header-correction-inverse.json",
+      "sha256": "113eb2f08827d804c9175b094ea14184bac874f72fae675da498bbc9f9e4f421",
+      "bytes": 4966
     }
   ],
   "realms_separate": true,
   "native": "NOT_RUN",
   "event_admission": false,
   "counts": {
-    "package_members": 164,
+    "package_members": 165,
     "resource_selections": 207,
     "new_methods": 18,
     "stored_profile_deltas": 11,
