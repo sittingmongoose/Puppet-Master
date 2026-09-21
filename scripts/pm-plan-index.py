@@ -13,6 +13,7 @@ import hashlib
 import importlib.util
 import json
 import re
+import subprocess
 import sys
 from bisect import bisect_left
 from collections import Counter, defaultdict, deque
@@ -1242,6 +1243,131 @@ def dependency_graph_health_failures(path: str, graph: dict[str, Any]) -> list[d
     return failures
 
 
+def plan_unit_removal_decisions() -> tuple[set[str], list[dict[str, Any]]]:
+    """Read explicit, accepted, current removal decisions from v2 ledgers."""
+    approved: set[str] = set()
+    failures: list[dict[str, Any]] = []
+    for path in sorted((PLANS / "ledgers/v2").glob("*/records/decisions.jsonl")):
+        ledger_id = path.parent.parent.name
+        try:
+            records = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+            if any(not isinstance(row, dict) for row in records):
+                raise ValueError("decision records must be JSON objects")
+            record_ids = [row.get("record_id") for row in records]
+            if any(not isinstance(rid, str) or not rid.strip() for rid in record_ids):
+                raise ValueError("decision records require nonempty record_id strings")
+            if len(record_ids) != len(set(record_ids)):
+                raise ValueError("duplicate decision record_id")
+            for row in records:
+                if "decision_id" in row and (not isinstance(row["decision_id"], str) or not row["decision_id"].strip()):
+                    raise ValueError(f"{row['record_id']}: decision_id must be a nonempty string")
+                for field in ("supersedes", "superseded_by"):
+                    refs = row.get(field, [])
+                    if not isinstance(refs, list) or any(not isinstance(ref, str) for ref in refs):
+                        raise ValueError(f"{row['record_id']}: {field} must be a string array")
+        except (OSError, UnicodeError, ValueError) as exc:
+            failures.append({"path": rel(path), "error": "plan_unit_removal_ledger_invalid", "detail": str(exc)})
+            continue
+
+        superseded = {
+            ref
+            for row in records
+            if row.get("record_type") == "decision" and row.get("status") == "accepted"
+            for ref in row.get("supersedes", [])
+        }
+        for row in records:
+            if (
+                row.get("record_type") != "decision"
+                or row.get("status") != "accepted"
+                or row.get("decision_type") != "plan_unit_removal"
+                or row.get("superseded_by")
+                or row["record_id"] in superseded
+                or row.get("decision_id") in superseded
+            ):
+                continue
+            ids = row.get("removed_plan_unit_ids")
+            source_refs = row.get("source_refs")
+            reason = row.get("reason") or row.get("summary")
+            valid = (
+                row.get("schema_id") == "pm.bootstrap_ledger_record.v1"
+                and row.get("ledger_id") == ledger_id
+                and re.fullmatch(r"pldg-[0-9]{8}-[0-9]{3}-[a-z0-9-]+", ledger_id) is not None
+                and all(isinstance(row.get(key), str) and row[key].strip() for key in ("created_at_utc", "updated_at_utc"))
+                and isinstance(reason, str) and bool(reason.strip())
+                and isinstance(source_refs, list) and bool(source_refs)
+                and all(isinstance(ref, str) and ref.strip() for ref in source_refs)
+                and isinstance(ids, list) and bool(ids)
+                and all(isinstance(uid, str) and uid.strip() == uid and bool(uid) for uid in ids)
+            )
+            if not valid:
+                failures.append({
+                    "path": rel(path), "record_id": row["record_id"],
+                    "error": "plan_unit_removal_decision_invalid",
+                })
+                continue
+            approved.update(ids)
+    return approved, failures
+
+
+def plan_unit_retention_failures(live_units: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Compare with Git's origin/main index, which regeneration cannot rewrite."""
+    baseline_ref = "origin/main"
+    index_path = "Plans/.plan_index/plan_units.jsonl"
+    try:
+        result = subprocess.run(
+            ["git", "show", f"{baseline_ref}:{index_path}"],
+            cwd=ROOT, capture_output=True, text=True, encoding="utf-8", check=False,
+        )
+    except (OSError, UnicodeError) as exc:
+        return [{
+            "path": index_path, "error": "plan_unit_retention_baseline_unavailable",
+            "baseline_ref": baseline_ref, "detail": str(exc),
+        }]
+    if result.returncode:
+        return [{
+            "path": index_path, "error": "plan_unit_retention_baseline_unavailable",
+            "baseline_ref": baseline_ref, "detail": result.stderr.strip(),
+        }]
+
+    baseline: dict[str, dict[str, Any]] = {}
+    try:
+        for line_no, line in enumerate(result.stdout.splitlines(), 1):
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            uid = row.get("plan_unit_id") if isinstance(row, dict) else None
+            if not isinstance(uid, str) or not uid or uid.strip() != uid:
+                raise ValueError(f"line {line_no}: missing or invalid plan_unit_id")
+            if uid in baseline:
+                raise ValueError(f"line {line_no}: duplicate plan_unit_id {uid}")
+            owner = row.get("owner_doc")
+            if not isinstance(owner, str) or not owner.strip():
+                raise ValueError(f"line {line_no}: missing or invalid owner_doc for {uid}")
+            baseline[uid] = row
+        if not baseline:
+            raise ValueError("baseline index is empty")
+    except ValueError as exc:
+        return [{
+            "path": index_path, "error": "plan_unit_retention_baseline_invalid",
+            "baseline_ref": baseline_ref, "detail": str(exc),
+        }]
+
+    removed_ids = sorted(set(baseline) - {unit_id(unit) for unit in live_units})
+    if not removed_ids:
+        return []
+    approved, failures = plan_unit_removal_decisions()
+    for uid in removed_ids:
+        if uid not in approved:
+            failures.append({
+                "path": baseline[uid]["owner_doc"],
+                "owner_doc": baseline[uid]["owner_doc"],
+                "plan_unit_id": uid,
+                "error": "plan_unit_removed_without_ledger_decision",
+                "baseline_ref": baseline_ref,
+            })
+    return failures
+
+
 def validate() -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     required = [
@@ -1267,6 +1393,7 @@ def validate() -> dict[str, Any]:
     coverage = read_json(INDEX_DIR / "coverage_report.json")
     readiness = read_json(INDEX_DIR / "node_readiness_report.json")
     live_units, live_parse_errors, live_docs = extract_plan_units()
+    failures.extend(plan_unit_retention_failures(live_units))
     expected_units = sorted(live_units, key=unit_id)
     expected_issues = collect_validation_issues(expected_units, live_parse_errors, live_docs)
     expected_deps = dependency_graph(expected_units)
