@@ -108710,7 +108710,35 @@
       "optional_fields": [],
       "nullable_fields": [],
       "value_schema": {
-        "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json#/$defs/StorageWorkflowResult"
+        "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json#/$defs/StorageWorkflowResult",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "physical_key",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.workflow_standard_result.v3"
+          },
+          "schema_version": {
+            "const": "3.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "physical_key": {
+            "type": "string",
+            "pattern": "^workflow_standard_result\\.v1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+$"
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json#/$defs/WorkflowResult"
+          }
+        }
       },
       "replay_behavior": "Only genuine original issued immutable result/origin; unequal same-key bytes conflict. Current action independently authenticates complete current sources and original authority. Retained reads disclose authentic surviving originals under current permission and grant no action authority.",
       "migration": "Fresh all_writers.v6 original birth only under the installed complete composition. No old-profile enrollment, header upgrade, backfill, source recapture or reconstruction of disposed mutable bodies.",
@@ -108785,7 +108813,35 @@
       "optional_fields": [],
       "nullable_fields": [],
       "value_schema": {
-        "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json#/$defs/StorageWorkflowOrigin"
+        "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json#/$defs/StorageWorkflowOrigin",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "physical_key",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.workflow_standard_origin.v3"
+          },
+          "schema_version": {
+            "const": "3.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "physical_key": {
+            "type": "string",
+            "pattern": "^workflow_standard_origin\\.v1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+$"
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json#/$defs/WorkflowOrigin"
+          }
+        }
       },
       "replay_behavior": "Only genuine original issued immutable result/origin; unequal same-key bytes conflict. Current action independently authenticates complete current sources and original authority. Retained reads disclose authentic surviving originals under current permission and grant no action authority.",
       "migration": "Fresh all_writers.v6 original birth only under the installed complete composition. No old-profile enrollment, header upgrade, backfill, source recapture or reconstruction of disposed mutable bodies.",
@@ -108860,7 +108916,35 @@
       "optional_fields": [],
       "nullable_fields": [],
       "value_schema": {
-        "$ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v3.schema.json#/$defs/StorageStandardCaptureOrigin"
+        "$ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v3.schema.json#/$defs/StorageStandardCaptureOrigin",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "physical_key",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.workflow_standard_capture_origin.v3"
+          },
+          "schema_version": {
+            "const": "3.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "physical_key": {
+            "type": "string",
+            "pattern": "^workflow_standard_capture_origin\\.v1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+$"
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v3.schema.json#/$defs/OriginalStandardCaptureOrigin"
+          }
+        }
       },
       "replay_behavior": "Only genuine original issued immutable result/origin; unequal same-key bytes conflict. Current action independently authenticates complete current sources and original authority. Retained reads disclose authentic surviving originals under current permission and grant no action authority.",
       "migration": "Fresh all_writers.v6 original birth only under the installed complete composition. No old-profile enrollment, header upgrade, backfill, source recapture or reconstruction of disposed mutable bodies.",

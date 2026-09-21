@@ -338,12 +338,12 @@
     },
     {
       "path": "Plans/goal_run_certified_consumer_contracts/installed-profile-digest.txt",
-      "sha256": "6fb013def0c64e4478530bffb330a5b18b157220b9783d7c109fb03af47c5d8d",
+      "sha256": "bda5053e103ac3af33eb6fb02203aefdc03a20b10f1c708837b53b3e4a1880fb",
       "bytes": 65
     },
     {
       "path": "Plans/goal_run_certified_consumer_contracts/installed-profile.json",
-      "sha256": "b571539a82bbbc2c3bb05764c9412765bc3f04f529f131669ace4ef3ef644fca",
+      "sha256": "ea23224e9c227acd4f141c8f7827184e8fe004e6352eb469ef61bdb7159682d5",
       "bytes": 3957
     },
     {
@@ -353,12 +353,12 @@
     },
     {
       "path": "Plans/goal_run_certified_consumer_contracts/owner-sources.json",
-      "sha256": "29b302a4176e218f54cc98af37691bfc6387b949f3479ae414d86dd3c62048ea",
+      "sha256": "310ca5f3c19de6b473a1ef247b3b9ab42b7d6a65ac252b12de8c6af141ba8244",
       "bytes": 3280
     },
     {
       "path": "Plans/goal_run_certified_consumer_contracts/physical-retention-install.json",
-      "sha256": "844fb6f8ee94bcc7199f6f1dd6c8169e91cb893ca9a73025d19fc00099644b24",
+      "sha256": "eba4c35c664cd5c3ffb66d51cbb1e9f08d07886e42f2513ab93bfe6acda08560",
       "bytes": 4313
     },
     {
@@ -398,8 +398,8 @@
     },
     {
       "path": "Plans/storage_value_registry.json",
-      "sha256": "ae0909a32a6e5b41e12512a25271e5dc4a7ed6efd82a7b1533607bb494c536f9",
-      "bytes": 4201575
+      "sha256": "927c51a2f12485c16ed20184aa7eaa7dc90b5978c528f740d2916d6ee08ac2ee",
+      "bytes": 4204258
     },
     {
       "path": "Plans/workflow_standard_source_contracts/installation-composition-digest.txt",
@@ -644,9 +644,9 @@
     },
     {
       "path": "Plans/goal_run_certified_consumer_contracts/installed-profile.json",
-      "sha256": "b571539a82bbbc2c3bb05764c9412765bc3f04f529f131669ace4ef3ef644fca",
+      "sha256": "ea23224e9c227acd4f141c8f7827184e8fe004e6352eb469ef61bdb7159682d5",
       "bytes": 3957,
-      "value_digest": "0b2dc2351c200de2529cfd9f7090ebcb940892ff2c3ec0de81c4f8576454618f",
+      "value_digest": "4889958a8fbcaadc5ee06281f68bbc04160dbc6eecec5fee7df46c1e5df725e3",
       "value_digest_recipe": "SHA256_SORTED_KEY_COMPACT_UTF8_NO_PREFIX_NO_LF"
     }
   ],
@@ -2111,6 +2111,60 @@
         "bytes": 266356
       },
       "rule": "The unchanged normative whole-root reference and every copied property/ref sibling use this exact same original component realm and only its explicitly declared cross-bank routes. No ordinary global registry, same-ID replacement, implicit merge or network/host fallback. Full referenced root remains normative; visible exact redundant root cannot weaken or change accepted values."
+    },
+    {
+      "family_id": "workflow_standard_result",
+      "registry_value_schema_pointer": "/families/282/value_schema",
+      "scope": "EXISTING_DEFAULT_FRESH_ALL_WRITERS_V6_ROUTE_ONLY",
+      "installed_native_profile": "pm.executor.workflow_source.all_writers.v6",
+      "normative_whole_root_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json#/$defs/StorageWorkflowResult",
+      "resource_bank": {
+        "path": "Plans/workflow_standard_source_contracts/literal-resource-realms.json",
+        "sha256": "e6eb88ae8f906f58dcc985a814a989b81305d7b1ac268002f15e4203182a0ee0",
+        "realm": "native"
+      },
+      "whole_source": {
+        "path": "Plans/workflow_standard_source_contracts/schemas/workflow-standard-current-source.v3.schema.json",
+        "sha256": "c7a11a744312518b78cbd70f7f5ee6228004e213df1174f87afe8ac00164ff72",
+        "root_pointer": "/$defs/StorageWorkflowResult"
+      },
+      "rule": "Normative whole-root reference and every redundant copied sibling resolve under this same exact original default realm. This is not a profile union and not an additional envelope applied to separately selected v7 or predecessor/generic routes."
+    },
+    {
+      "family_id": "workflow_standard_origin",
+      "registry_value_schema_pointer": "/families/283/value_schema",
+      "scope": "EXISTING_DEFAULT_FRESH_ALL_WRITERS_V6_ROUTE_ONLY",
+      "installed_native_profile": "pm.executor.workflow_source.all_writers.v6",
+      "normative_whole_root_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json#/$defs/StorageWorkflowOrigin",
+      "resource_bank": {
+        "path": "Plans/workflow_standard_source_contracts/literal-resource-realms.json",
+        "sha256": "e6eb88ae8f906f58dcc985a814a989b81305d7b1ac268002f15e4203182a0ee0",
+        "realm": "native"
+      },
+      "whole_source": {
+        "path": "Plans/workflow_standard_source_contracts/schemas/workflow-standard-current-source.v3.schema.json",
+        "sha256": "c7a11a744312518b78cbd70f7f5ee6228004e213df1174f87afe8ac00164ff72",
+        "root_pointer": "/$defs/StorageWorkflowOrigin"
+      },
+      "rule": "Normative whole-root reference and every redundant copied sibling resolve under this same exact original default realm. This is not a profile union and not an additional envelope applied to separately selected v7 or predecessor/generic routes."
+    },
+    {
+      "family_id": "workflow_standard_capture_origin",
+      "registry_value_schema_pointer": "/families/284/value_schema",
+      "scope": "EXISTING_DEFAULT_FRESH_ALL_WRITERS_V6_ROUTE_ONLY",
+      "installed_native_profile": "pm.executor.workflow_source.all_writers.v6",
+      "normative_whole_root_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v3.schema.json#/$defs/StorageStandardCaptureOrigin",
+      "resource_bank": {
+        "path": "Plans/workflow_standard_source_contracts/literal-resource-realms.json",
+        "sha256": "e6eb88ae8f906f58dcc985a814a989b81305d7b1ac268002f15e4203182a0ee0",
+        "realm": "standard"
+      },
+      "whole_source": {
+        "path": "Plans/workflow_standard_source_contracts/schemas/workflow-standard-certification-argument.v3.schema.json",
+        "sha256": "fcc25e198114eadc357c8696b750d2d5afb21e80d57bca8febe8a17580b91e4d",
+        "root_pointer": "/$defs/StorageStandardCaptureOrigin"
+      },
+      "rule": "Normative whole-root reference and every redundant copied sibling resolve under this same exact original default realm. This is not a profile union and not an additional envelope applied to separately selected v7 or predecessor/generic routes."
     }
   ]
 }
