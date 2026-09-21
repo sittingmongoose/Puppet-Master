@@ -1,0 +1,187 @@
+{
+  "schema": "shape.operational_checkpoint_manifest.v1",
+  "checkpoint": 6,
+  "observed_at": "2026-09-21T06:21:54.302323+00:00",
+  "report_files": [
+    {
+      "path": "reports/research-shapes-20260920/OPERATIONAL_CHECKPOINT_006.md",
+      "sha256": "6071e9e2582d7c04176f18d4d1f240ee84969ab7ed606d669b2c25c97ed78787"
+    },
+    {
+      "path": "reports/research-shapes-20260920/operational-checkpoint-006.json",
+      "sha256": "af0415e2d4d1329b25c13fc1396184fad289ed7fe63f25791e30f6e077b90fec"
+    },
+    {
+      "path": "reports/research-shapes-20260920/STATUS.md",
+      "sha256": "f292407c2ba3b653aae89edfa919087111a78547ce8489d2979dcf9ae3370122"
+    },
+    {
+      "path": "reports/research-shapes-20260920/evaluation-preparation.json",
+      "sha256": "916e2f96a3d7753c9528d2ba5d98abb76d8d938f2a3781a0a5319b6273173f81"
+    }
+  ],
+  "historical_checkpoint": {
+    "path": "reports/research-shapes-20260920/operational-checkpoint-005.json",
+    "sha256": "6f4462127be2da6cb077addac9f0f4a90885650422c7afa9aeb6a6d94283b40d"
+  },
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/root-operational-checkpoint-006.json",
+      "sha256": "08c0389fdcc15da97fa6a6b466ea845f82d7d39e66a4ea1321a3af73b71b1f48",
+      "content_review": "neutral_content_read"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/blind-safe-fourth-live-usage-import-02.json",
+      "sha256": "96c84d0ed0d63c42a60c581c38a2bb7d50d91e2ab21a8b480e6da5f14f7194ce",
+      "content_review": "neutral_content_read"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/blind-safe-fourth-live-usage-import-03.json",
+      "sha256": "0468a1ff25ff2e1e403e80a4947cc251c03ef008ea3acfc57630af0ffb56deee",
+      "content_review": "neutral_content_read"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/component-entry-static-review.json",
+      "sha256": "6d6bafac5ba495330f964a53bc7c76f53d3ffcc3ed9588671ed605e3361609e2",
+      "content_review": "neutral_content_read"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/private-fourth-live-usage-import-02.json",
+      "sha256": "3e01b76660cecc6c22cf0f7ad3f4434bb33e2c0ed102a3c7f6bc721b93b5a69e",
+      "content_review": "private_hash_only_never_parsed"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/private-fourth-live-usage-import-03.json",
+      "sha256": "73f398011ce53f819e37cdaf8dc4cdd52d51c37d70ca9f9f4ee1e07f8c52d911",
+      "content_review": "private_hash_only_never_parsed"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/specs/components.md",
+      "sha256": "4aaa58b97401aee4608c1c47dabd21eb024dd721477be1f6ca0ddd2d40b2c722",
+      "content_review": "frozen_file_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/components/ablation.json",
+      "sha256": "d5a6adb85496fec27297453cd1b541c2440ba6e9d94948611bcf5cf29ccff7b1",
+      "content_review": "frozen_file_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/components/label-metadata.json",
+      "sha256": "e2abbb3b59fba30fed73fc36ea8dc79d7436e5946c4af4ab9313a4f8948ed65d",
+      "content_review": "frozen_file_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/components/terminal-receipts.json",
+      "sha256": "09994e5484c12a9e1f022a0a882abe347badd23d1a029ad7e1e678d37d795a52",
+      "content_review": "frozen_file_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/components/gc-retention.json",
+      "sha256": "1ced21bef10d57204568ce8b537e8531a9954bba724fd0467c513a0f0ad8e4ed",
+      "content_review": "frozen_file_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/prompts/ablation_reconcile.md",
+      "sha256": "706e3ef28e79fb67e937c8489edda4caafdcb4be1e3f9d422b3cca2016d8ab05",
+      "content_review": "frozen_file_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/prompts/ablation_compare.md",
+      "sha256": "0a55aab54638f890d2020d1c225812c4bb1c3e5399d83d9cf21e05c85a59455c",
+      "content_review": "frozen_file_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/prompts/ablation_combined.md",
+      "sha256": "1ac26868fa3b9920f5afc71fe4ec28f5a80fc3c2646f2c2ef26368591815849f",
+      "content_review": "frozen_file_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/prompts/diagnostic.md",
+      "sha256": "23ed1d6c2845c41e5f026ffafa73a49e5240c85c738c7159be9d90895c8687eb",
+      "content_review": "frozen_file_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/screen_lab/component_schedule.py",
+      "sha256": "31258dce5c559ea2f3d24c4c8f33a46fee018b33c2b39ee16a1256121f5925b7",
+      "content_review": "frozen_file_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/screen_lab/launch_screen.py",
+      "sha256": "18167f94d56ff5f4b0c4cd26cb9b0f7750f057d9021af6dd795318e7d4c049bd",
+      "content_review": "frozen_file_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/screen_lab/runner.py",
+      "sha256": "67943cba3ca286f877daaddc0cf33d0e9bd27966eb1805e1c234482f0113d317",
+      "content_review": "frozen_file_hash_only"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/preparation/native-freeze.json",
+      "sha256": "89e07ef2d5f215e9229d3fd234acfab42abc6f20e96306a7af6d72fa8d857b6c",
+      "content_review": "frozen_file_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/ome-zarr-thin/source_catalog.json",
+      "sha256": "32950592cd2483ebfb08e3da1aa768621a46c62b985250bb50fa431dd2e93b22",
+      "content_review": "frozen_source_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/ome-zarr-thin/source_blobs/5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d.txt",
+      "sha256": "5f4d4db8e1f07c16278f15c9fd6bf827360867e61a56d917367e7e3b551d222d",
+      "content_review": "frozen_source_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/ome-zarr-thin/source_blobs/5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de.txt",
+      "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de",
+      "content_review": "frozen_source_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/ome-zarr-thin/source_blobs/82b61d30f62d6eddd81ff63b43146fd4f7be93be767ae5561b74a99951c24eca.txt",
+      "sha256": "82b61d30f62d6eddd81ff63b43146fd4f7be93be767ae5561b74a99951c24eca",
+      "content_review": "frozen_source_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/ome-zarr-thin/source_blobs/c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4.txt",
+      "sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4",
+      "content_review": "frozen_source_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/jujutsu-88/source_catalog.json",
+      "sha256": "34a4645b8e3d4e9504d2cc0c7c1e16866fe979aa740c6f3fb93d5c5eae9c7cf6",
+      "content_review": "frozen_source_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/jujutsu-88/source_blobs/90285d608c9d46fb00ab4b226656f3475a4afb114bfb7558eead35d096076deb.txt",
+      "sha256": "90285d608c9d46fb00ab4b226656f3475a4afb114bfb7558eead35d096076deb",
+      "content_review": "frozen_source_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/jujutsu-88/source_blobs/91d9c6de5b227cbe649a3d41f0cc9c8449d6dea4a0ebaf7b5e484c3a2679d041.txt",
+      "sha256": "91d9c6de5b227cbe649a3d41f0cc9c8449d6dea4a0ebaf7b5e484c3a2679d041",
+      "content_review": "frozen_source_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/jujutsu-88/source_blobs/5db42607e443b46ccd1a7069cc4fb966b6f570df5b2e774baefbc1ce31a65418.txt",
+      "sha256": "5db42607e443b46ccd1a7069cc4fb966b6f570df5b2e774baefbc1ce31a65418",
+      "content_review": "frozen_source_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/jujutsu-88/source_blobs/02f495ae00c9cfbcef364fd13b75992a8b82b4f8f346135eda454c2a02581c6f.txt",
+      "sha256": "02f495ae00c9cfbcef364fd13b75992a8b82b4f8f346135eda454c2a02581c6f",
+      "content_review": "frozen_source_hash_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/jujutsu-88/source_blobs/a42ce0f6208002fc26c5796af00240b7e8b64b9b52957cc64446fc5b2ce610da.txt",
+      "sha256": "a42ce0f6208002fc26c5796af00240b7e8b64b9b52957cc64446fc5b2ce610da",
+      "content_review": "frozen_source_hash_only"
+    }
+  ],
+  "verification": {
+    "all_path_hash_bindings_verified": true,
+    "selected_source_ranges_verified": 12,
+    "complete_ablation_texts_verified": 4,
+    "private_proof_content_never_parsed": true,
+    "historical_preparation_entries_unchanged": true,
+    "no_new_tests_or_experimental_actions": true
+  }
+}

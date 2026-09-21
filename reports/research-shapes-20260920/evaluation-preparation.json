@@ -101,5 +101,32 @@
       "candidate_credit": false,
       "runtime_execution_performed": false
     }
-  ]
+  ],
+  "subsequent_component_entry_static_review": {
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/component-entry-static-review.json",
+      "sha256": "6d6bafac5ba495330f964a53bc7c76f53d3ffcc3ed9588671ed605e3361609e2"
+    },
+    "reviewed_at": "2026-09-21T05:29:15.938985+00:00",
+    "frozen_files_bound": 12,
+    "source_selections_bound": 12,
+    "complete_ablation_source_texts": 4,
+    "sufficient_and_organization_same_raw_selected_bundle": true,
+    "root_selected_inputs_unchanged_since_prelaunch": true,
+    "observations": [
+      "The predeclared four ablation slots use RC twice and COMBINED twice against the same four complete source texts; the configuration has no initial lead IDs and uses the common independent verifier.",
+      "The three predeclared diagnostic subjects each have normal, sufficient and organization modes. Normal receives no evaluator-selected source preload; sufficient and organization receive the same raw selected excerpts. Organization adds only the generic output-format/cross-check instruction.",
+      "Runner preload validates every source selection against a successful current-job acquisition receipt, exact identity and excerpt hash. Launcher binds the ablation config hash before the first component claim and requires frozen diagnostic configs.",
+      "Component model, effort and source configs remain identical to the prelaunch freeze. This review has not modified prompts, selections, budget, schedules or runtime."
+    ],
+    "limitations": [
+      "Static inspection and byte/range verification only; no component or diagnostic native run, source preload or runtime acceptance is established by this record.",
+      "No diagnostic output, answer key, main configuration mapping, private run data or economics was read. Subject/config contents are the root-authored predeclared inputs, not observed diagnostic results.",
+      "Source sufficiency and every eventual semantic conclusion must still be assessed against the delivered diagnostic output; byte matching alone grants no semantic credit.",
+      "Actual component/diagnostic entry remains subject to the frozen serial schedule, account, usage and allowance gates."
+    ],
+    "new_native_run_established": false,
+    "runtime_acceptance_established": false,
+    "new_tests_run": false
+  }
 }

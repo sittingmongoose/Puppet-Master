@@ -1,0 +1,112 @@
+{
+  "schema": "shape.operational_report_checkpoint.v1",
+  "campaign_id": "phase1-20260921",
+  "checkpoint": 6,
+  "observed_at": "2026-09-21T06:21:54.302323+00:00",
+  "status_as_of_recorded_timestamp_only": true,
+  "bundle_status": "provisional_reports_branch_not_landed",
+  "public_rows": [
+    {
+      "blind_run_id": "R-c1b39b04e92a73f97285",
+      "case_id": "ome-zarr-thin",
+      "ordinal": 4,
+      "packet_sealed": false,
+      "phase": "main",
+      "score_locked": false,
+      "status": "running"
+    },
+    {
+      "blind_run_id": "R-d3406b4f4c1b66daadc1",
+      "case_id": "ome-zarr-thin",
+      "ordinal": 5,
+      "packet_sealed": false,
+      "phase": "main",
+      "score_locked": false,
+      "status": "pending"
+    }
+  ],
+  "fourth_native_live": true,
+  "unknown_handles": false,
+  "score_locks_recorded": 3,
+  "scheduled_main_component_slots": 16,
+  "mapping_reveal_allowed": false,
+  "fifth_authorization": {
+    "condition": "Only a clean completed fourth result with sealed packet, quiescence, no controller/account/accounting/allowance hold, followed by a fresh external capture/import, Budget/reserve/freeze checks and native typed account gate permits one fifth slot via max-runs 1. Any partial result, failure, hold or rejected import stops for root review.",
+    "conditional": true,
+    "sixth_authorized": false
+  },
+  "external_imports": [
+    {
+      "receipt": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/blind-safe-fourth-live-usage-import-02.json",
+        "sha256": "96c84d0ed0d63c42a60c581c38a2bb7d50d91e2ab21a8b480e6da5f14f7194ce"
+      },
+      "capture_import_succeeded": true,
+      "root_and_helpers_autoenumerated": true,
+      "native_participant_sessions_excluded": true,
+      "policy_and_runtime_unchanged": true,
+      "same_evaluation_boundary": true,
+      "prior_transitions_deduplicated": true,
+      "unknown_tail_and_scopes_retained": true,
+      "known_campaign_cap_exceeded_with_new_usage": false,
+      "absolute_cap_completeness_unknown": true,
+      "attempt_restarted": false
+    },
+    {
+      "receipt": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/blind-safe-fourth-live-usage-import-03.json",
+        "sha256": "0468a1ff25ff2e1e403e80a4947cc251c03ef008ea3acfc57630af0ffb56deee"
+      },
+      "capture_import_succeeded": true,
+      "root_and_helpers_autoenumerated": true,
+      "native_participant_sessions_excluded": true,
+      "policy_and_runtime_unchanged": true,
+      "same_evaluation_boundary": true,
+      "prior_transitions_deduplicated": true,
+      "unknown_tail_and_scopes_retained": true,
+      "known_campaign_cap_exceeded_with_new_usage": false,
+      "absolute_cap_completeness_unknown": true,
+      "attempt_restarted": false
+    }
+  ],
+  "component_entry_static_review": {
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/component-entry-static-review.json",
+      "sha256": "6d6bafac5ba495330f964a53bc7c76f53d3ffcc3ed9588671ed605e3361609e2"
+    },
+    "reviewed_at": "2026-09-21T05:29:15.938985+00:00",
+    "frozen_files_bound": 12,
+    "source_selections_bound": 12,
+    "complete_ablation_source_texts": 4,
+    "sufficient_and_organization_same_raw_selected_bundle": true,
+    "root_selected_inputs_unchanged_since_prelaunch": true,
+    "observations": [
+      "The predeclared four ablation slots use RC twice and COMBINED twice against the same four complete source texts; the configuration has no initial lead IDs and uses the common independent verifier.",
+      "The three predeclared diagnostic subjects each have normal, sufficient and organization modes. Normal receives no evaluator-selected source preload; sufficient and organization receive the same raw selected excerpts. Organization adds only the generic output-format/cross-check instruction.",
+      "Runner preload validates every source selection against a successful current-job acquisition receipt, exact identity and excerpt hash. Launcher binds the ablation config hash before the first component claim and requires frozen diagnostic configs.",
+      "Component model, effort and source configs remain identical to the prelaunch freeze. This review has not modified prompts, selections, budget, schedules or runtime."
+    ],
+    "limitations": [
+      "Static inspection and byte/range verification only; no component or diagnostic native run, source preload or runtime acceptance is established by this record.",
+      "No diagnostic output, answer key, main configuration mapping, private run data or economics was read. Subject/config contents are the root-authored predeclared inputs, not observed diagnostic results.",
+      "Source sufficiency and every eventual semantic conclusion must still be assessed against the delivered diagnostic output; byte matching alone grants no semantic credit.",
+      "Actual component/diagnostic entry remains subject to the frozen serial schedule, account, usage and allowance gates."
+    ],
+    "new_native_run_established": false,
+    "runtime_acceptance_established": false,
+    "new_tests_run": false
+  },
+  "review_authority": {
+    "root": "Reviewed neutral state, blind-safe import receipts and predeclared static inputs; private proof hashes checked without parsing.",
+    "private_operational_auditor": "Verified raw accounting, deduplication, preservation and known-cap flags.",
+    "report_writer": "Verified bound bytes and twelve selected source ranges, without private accounting contents or new tests."
+  },
+  "limitations": [
+    "Root inspected only neutral public run/handle state and blind-safe accounting receipts; private accounting artifacts were verified by hash without parsing. Accounting preservation and known-cap flags rely on the designated operational auditor.",
+    "The static component review verifies predeclared files and selected source bytes against the prelaunch freeze; it establishes no actual component or diagnostic run.",
+    "Known captured usage plus reserves is below the cap in both bound import receipts, but unresolved external usage remains unknown; no absolute completeness claim.",
+    "This records one observation instant. A running native process and advancing provider activity are not a sealed result or a completed semantic score.",
+    "Imports 02 and 03 do not constitute a new counter reset or recovery; checkpoint 005 preserves that earlier event.",
+    "No component/diagnostic results, configuration mapping, current private economics or outcome after the snapshot are reported."
+  ]
+}
