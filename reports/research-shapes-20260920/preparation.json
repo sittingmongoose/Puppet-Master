@@ -1,7 +1,7 @@
 {
   "schema": "shape.screen_preparation_report.v1",
   "campaign_id": "phase1-20260921",
-  "status": "preparation_only",
+  "status": "qualified_prelaunch_checkpoint",
   "report_branch": "research/shapes-screen-20260921",
   "initial_head": "977ae12f9e91b459f70d7f287f60a087160dbf8a",
   "origin_main_at_creation": "977ae12f9e91b459f70d7f287f60a087160dbf8a",
@@ -15,7 +15,7 @@
   "physical_copy_file_count_including_freeze": 1344,
   "physical_copy_bytes": 108933920,
   "source_files_modified": false,
-  "cost_policy_sha256": "d262b0e53d925b97cd68b846559d67fc05050c92dbdb336aa6499db9da964d0b",
+  "cost_policy_sha256": "cdc224d5e52f122b52381259ff960735807e8c3bbceb81bbd37721bbbb56f0a3",
   "custody_evidence": [
     {
       "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/preparation/worktree.json",
@@ -24,11 +24,97 @@
     {
       "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/preparation/baseline-copy.json",
       "sha256": "72de243243ea78fb9a684698f779ab2b45cf78db016a2972a85b41d6652be3d5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/preparation/serial-launcher-implementation.json",
+      "sha256": "e037a66db7ed49cd29e77dd3b5e75e0e14587c8c0e3d76afbccdef4fac8f2073"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/development-usage/20260921T013227Z-per-response.json",
+      "sha256": "660c242fcec0b6a0521abdc9661a12c2eb5e2568d422f17ece29756418f02c7a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/score-freeze.json",
+      "sha256": "e7a2541385f8707afe4d83dde33b3fd90e389c489f5fa264b067514db0b0792f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/runtime_inputs/model-catalog.json",
+      "sha256": "d7f244eb553d98b779da2311c4e17f7c36d9f37218eca8f5465ee9eec980893e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/runtime_inputs/model-catalog-source.json",
+      "sha256": "d47ddd738b9aa868a6192ae42a5efbbcd83a90443343446b1ae21135512b3d13"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/runtime_inputs/catalog-diff-provenance.json",
+      "sha256": "c4d47eeaa14ac406c7e2409abef477dcbb8eb888e650ccef7f80c3960964ddba"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/development-usage/20260921T014409007229Z-per-response.json",
+      "sha256": "b62d7d156ac8250593481c14eef5f5be41b6eee50836c9fded079d4c7fe6e68d"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/preparation/native-freeze.json",
+      "sha256": "89e07ef2d5f215e9229d3fd234acfab42abc6f20e96306a7af6d72fa8d857b6c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/preparation/native-qualification.json",
+      "sha256": "20588522d7d41a97e68f6878b025927492e7ad4b011e3d9bcb48892690810805"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/preparation/root-offline-acceptance.json",
+      "sha256": "9838a3c3ebb210ba138d2da9f69a3040aaf1b8902f8e8ffd8e0648f59081142a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/preparation/final-whole-suite.log",
+      "sha256": "81d55f40cfb66dea3572a4a90a629aac66807558610cec5e58bffd173c6c5236"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scope-boundary.json",
+      "sha256": "93894ae6e5090c953e1b7921508aedc2d74bbb72d77a2c485a53f6e7527675b4"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/schedule.json",
+      "sha256": "e2df6472e404589847866e76a516c81d49caf4248061669695fca04f657d0f43"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/development-usage/20260921T015003048729Z-per-response.json",
+      "sha256": "82b416dacd8d96740321b0908bdbe1d5c38e1d89d92e64b42955f70a1f31890b"
     }
   ],
   "sanitization": "Account identifiers, credentials, process/session identifiers, disk/device telemetry, and local Git internals are excluded from this report projection. Original custody remains external, identified by path and hash.",
   "scoring_performed": false,
-  "blind_mapping_created": false,
-  "native_launch_qualification": "pending",
-  "canonical_case_original_copies_verified": true
+  "blind_mapping_created": true,
+  "native_launch_qualification": "accepted",
+  "canonical_case_original_copies_verified": true,
+  "checkpoint_utc": "2026-09-21T01:51:16.494781+00:00",
+  "research_provider_calls": 0,
+  "production_native_freeze": "verified",
+  "component_input_bundle_count": 4,
+  "offline_owned_tests_passed": 33,
+  "development_usage": {
+    "native_token_count_increments_total": 657,
+    "known_development_usd": "104.931258",
+    "known_evaluation_usd": "1.366620",
+    "captured_priced_usage_usd": "106.297878",
+    "uncaptured_later_evaluation_usage_usd": null,
+    "valuation": "frozen historical experimental rates; native token-count increments, not physical-response count or cash invoice",
+    "boundary": "First increment completed after2026-09-21T00:35:04Z may include pre-Goal in-flight work and is conservatively included; at/after frozen evaluation boundary all root/helper use is evaluation",
+    "import_status": "657 unique cumulative intervals imported into overall campaign allowance before first run; historical overlapping snapshots are not additionally charged"
+  },
+  "shared_harness_model_catalog": {
+    "status": "job-local fixed input; final native qualification pending",
+    "metadata_changes": {
+      "tool_mode": null,
+      "multi_agent_version": null,
+      "experimental_supported_tools": []
+    },
+    "original_cache_modified": false,
+    "provider_payload_rewriting": false,
+    "generalization_limit": "Results apply to this frozen shared harness configuration"
+  },
+  "execution_cadence": "One scheduled slot per invocation, with fresh unique development/evaluation native increment import before each launch",
+  "evaluation_scope_boundary": "2026-09-21T01:47:53.897442+00:00",
+  "offline_whole_suite_tests_passed": 134,
+  "registry_commitment": "21b3839559bde1dd3ff27257f8eb4fe5a82bd452bb6aa09bf7975b82864495cd"
 }

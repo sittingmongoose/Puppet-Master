@@ -36,9 +36,12 @@
     "start_to_verified"
   ],
   "pricing_basis": "Captured native tokens valued under the frozen historical experimental pricing convention in baseline/protocol/cost_watch.py; API-equivalent policy metric, not a verified current public tariff, cash invoice, or subscription-credit conversion.",
-  "native_launch_qualified": false,
-  "qualification_state": "preparation; user spend authority recorded, no provider launched",
+  "native_launch_qualified": true,
+  "qualification_state": "Root accepted offline production runtime and metadata boundary plus full 134-test suite; real provider acceptance is measured by first scheduled attempt, not assumed.",
   "native_job_concurrency": 1,
   "automatic_paid_retries": 0,
-  "processing_time_definition": "Union of active run wall intervals, including controller and tool work; account warning terminalizes active run and holds remaining schedule. Development/evaluation timing reported separately."
+  "processing_time_definition": "Union of active run wall intervals, including controller and tool work; account warning terminalizes active run and holds remaining schedule. Development/evaluation timing reported separately.",
+  "external_accounting_rule": "Captured and priceable development/evaluation native usage counts against the overall allowance; incomplete external capture remains explicit and does not receive a fabricated reserve. Research-response unknown usage retains its reserve and holds further dispatch.",
+  "harness_tool_surface": "Eight host research functions plus three qualified inert declarations (functions.request_user_input, skills.list, skills.read); default model metadata tool routing is overridden identically for all slots, with unchanged provider request bodies.",
+  "three_clocks_definition": "Active processing is the run wall interval while the workflow is active; waiting submeasures include account-probe and between-job/controller intervals and are labeled nonadditive. Start-to-verified requires an actual coherent verifier delivery and completion of required checks; otherwise null with start-to-stop and reason. Native elapsed is not called pure inference."
 }
