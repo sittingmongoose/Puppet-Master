@@ -1101,6 +1101,24 @@
   ],
   "negative_cases": [
     {
+      "name": "rename_cannot_report_profile_revoked",
+      "target_def": "AuthProfileCommandResult",
+      "base_positive_case": "server_gap_rename_result",
+      "patch": {
+        "effect_kind": "profile_revoked"
+      },
+      "expected_invalid_reason": "MA-071 rename preserves profile authority and cannot report revocation"
+    },
+    {
+      "name": "official_page_cannot_report_profile_selection_changed",
+      "target_def": "AuthProfileCommandResult",
+      "base_positive_case": "result_open_official_page_settles_return_context",
+      "patch": {
+        "effect_kind": "profile_selection_changed"
+      },
+      "expected_invalid_reason": "MACS-003 official-page handoff cannot report profile selection"
+    },
+    {
       "name": "agent_cannot_start_protected_auth",
       "target_def": "AuthProfileCommandRequest",
       "base_positive_case": "sign_in_protected_human_only",
@@ -1967,7 +1985,7 @@
       "cmd.auth_profile.transfer.preview"
     ],
     "request_case_count": 12,
-    "negative_case_count": 34,
+    "negative_case_count": 36,
     "human_only_boundary_covered": true,
     "non_recordable_boundary_covered": true,
     "non_inspectable_boundary_covered": true,

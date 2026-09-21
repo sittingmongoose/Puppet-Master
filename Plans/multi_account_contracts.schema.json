@@ -1816,6 +1816,12 @@
               "operation": {
                 "const": "open_official_page"
               },
+              "effect_kind": {
+                "enum": [
+                  "no_effect",
+                  "external_handoff_started"
+                ]
+              },
               "official_source_proof_ref": {
                 "$ref": "#/$defs/NonSecretRef"
               }
@@ -1943,6 +1949,12 @@
             "properties": {
               "operation": {
                 "const": "rename"
+              },
+              "effect_kind": {
+                "enum": [
+                  "no_effect",
+                  "profile_metadata_changed"
+                ]
               }
             },
             "required": [
