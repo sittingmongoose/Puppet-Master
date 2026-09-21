@@ -8304,7 +8304,7 @@ button.qs-spine-slot.is-current::after{
 .mdl-title strong{font-size:14px;font-weight:680;letter-spacing:-.1px;color:var(--text);}
 .mdl-title span{font-size:11.5px;line-height:1.45;color:var(--muted);}
 .mdl-body{min-height:0;overflow:auto;padding:16px 20px;display:grid;gap:12px;align-content:start;}
-.mdl-section{border:1px solid var(--border);border-radius:12px;background:color-mix(in srgb,var(--surface-2) 72%,transparent);overflow:hidden;}
+.mdl-section{border:1px solid var(--border);border-radius:12px;background:color-mix(in srgb,var(--surface-2) 72%,transparent);overflow:hidden;align-self:start;}
 .mdl-section-head{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border);
   background:color-mix(in srgb,var(--surface-3) 55%,transparent);}
 .mdl-section-head svg{color:var(--subtle);flex:none;}
@@ -8336,6 +8336,7 @@ button.qs-spine-slot.is-current::after{
 .mdl-chip[data-tone=positive]{color:var(--positive);border-color:color-mix(in srgb,var(--positive) 45%,var(--border));}
 .mdl-chip[data-tone=warning]{color:var(--warning);border-color:color-mix(in srgb,var(--warning) 45%,var(--border));}
 .mdl-chip[data-tone=danger]{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 45%,var(--border));}
+.mdl .shared-picker-button{min-width:0;width:100%;}
 .mdl-rows>div{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--border);font-size:11.5px;}
 .mdl-rows>div:first-child{border-top:0;}
 .mdl-rows span{color:var(--muted);}
@@ -11268,15 +11269,10 @@ button.qs-spine-slot.is-current::after{
 /* Batch 12: scoped native cards, no decorative left-edge treatment. */
 .bsd12-dialog {width:min(610px,calc(100vw - 28px));max-height:calc(100vh - 32px);display:flex;flex-direction:column;overflow:hidden;}
 .bsd12-dialog .dialog-body {min-height:0;overflow:auto;padding:16px;}
-.bsd12-dialog h3 {font-size:13px;margin:20px 0 10px;}
-.bsd12-label {display:block;font-size:12px;margin:8px 0;}
 .bsd12-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
 .bsd12-grid label,.bsd12-disclosure label {display:flex;flex-direction:column;gap:7px;font-size:12px;min-width:0;}
-.bsd12-dialog input[type=number] {width:100%;box-sizing:border-box;background:var(--surface-2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:8px;}
-.bsd12-dialog .shared-picker-button {min-width:0;width:100%;}
 .bsd12-muted {color:var(--muted);font-size:11px;line-height:1.5;}
 .bsd12-error {color:var(--danger,var(--text));font-size:12px;min-height:1em;}
-.bsd12-footer {padding:16px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;}
 .bsd12-actions {display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
 .bsd12-actions .active {outline:1px solid var(--accent);}
 .bsd12-metrics {display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin:10px 0;}
@@ -11294,15 +11290,12 @@ button.qs-spine-slot.is-current::after{
 .bsd12-finding strong {display:block;font-size:12px;margin-top:7px;}
 .bsd12-finding p {font-size:11px;line-height:1.5;}
 .bsd12-badge {font-size:10px;background:var(--surface-2);border-radius:20px;border:1px solid var(--border);padding:2px 7px;}
-.bsd12-stages {display:grid;gap:8px;margin-top:12px;}
-.bsd12-stages>div {display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;}
-.bsd12-checkbox {display:flex!important;flex-direction:row!important;align-items:center;margin-bottom:12px;}
 .bsd12-raw,.bsd12-evidence pre {font-size:11px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%;}
 .bsd12-advice {max-width:100%;}
 .bsd12-advice .event-copy {min-width:0;}
 .bsd12-advice small {color:var(--muted);display:block;line-height:1.5;}
 .bsd12-advice .bsd12-actions {margin-top:7px;}
-@media(max-width:740px){.bsd12-grid{grid-template-columns:1fr}.bsd12-dialog{width:calc(100vw - 20px)}.bsd12-footer>*{min-width:0}.bsd12-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:740px){.bsd12-grid{grid-template-columns:1fr}.bsd12-dialog{width:calc(100vw - 20px)}.bsd12-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* Pure time arithmetic has no UI styles. */
 
@@ -36602,7 +36595,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
  */
 (function(){
  'use strict';const E=window.PM56_EXT,D=window.PM56_DATA,K=window.PM56_BSD_ENGINE;if(!E||!D||!K)return;
- const {clone}=K;const disclosures=new Map();const opened=k=>disclosures.get(k)?' open':'';document.addEventListener('toggle',e=>{const d=e.target;if(d.isConnected&&d.matches?.('.bsd12-disclosure[data-k]')&&!d.closest('.bsd12-work'))disclosures.set(d.dataset.k,d.open);},true);document.addEventListener('click',e=>{const sm=e.target.closest?.('.bsd12-disclosure[data-k]>summary'),d=sm?.parentElement;if(d&&!d.closest('.bsd12-work'))disclosures.set(d.dataset.k,!d.open);},true);let draft=null,renderQueued=false,openFinding=null;
+ const {clone}=K;const disclosures=new Map();const opened=k=>disclosures.get(k)?' open':'';document.addEventListener('toggle',e=>{const d=e.target;if(d.isConnected&&d.matches?.('.bsd12-disclosure[data-k],.mdl-disclosure[data-k]')&&!d.closest('.bsd12-work'))disclosures.set(d.dataset.k,d.open);},true);document.addEventListener('click',e=>{const sm=e.target.closest?.('.bsd12-disclosure[data-k]>summary,.mdl-disclosure[data-k]>summary'),d=sm?.parentElement;if(d&&!d.closest('.bsd12-work'))disclosures.set(d.dataset.k,!d.open);},true);let draft=null,renderQueued=false,openFinding=null;
  const engine=new K.Engine({onChange:refresh});
  function thread(id){return E.ctx().state.threads.find(t=>t.id===id);}
  function project(t){return t?.projectId||'concept:pm';}
@@ -36628,7 +36621,18 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
  function currentDraft(){return draft&&thread(draft.threadId)&&E.ctx().thread.id===draft.threadId&&project(thread(draft.threadId))===draft.projectId;}
  function choices(c,key,labelText,opts,current){return '<label>'+c.esc(labelText)+'<button type="button" class="shared-picker-button" data-action="bsd-choice" data-field="'+key+'" data-menu-anchor="bsd-'+key+'"><span class="shared-picker-copy"><strong>'+c.esc(opts.find(x=>x.value===current)?.label||current)+'</strong></span>'+c.icon('down',11)+'</button></label>';}
  const options={sensitivity:[['conservative','Conservative','Fewer elastic triggers. Safety boundaries stay eligible.'],['balanced','Balanced','Useful signals with fewer low-value checks.'],['frequent','Frequent','More elastic triggers, never more authority.']].map(([value,label,description])=>({value,label,description})),catchUpSeconds:[0,15,30,60].map(value=>({value,label:value?value+' seconds':'Never wait',description:'Maximum catch-up at an eligible frozen boundary.'})),workflowMode:['inherit','off','auto','on'].map(value=>({value,label:value==='inherit'?'Use project mode':value[0].toUpperCase()+value.slice(1),description:'Frozen when a workflow binding is committed.'})),stage:['inherit','off','auto','on'].map(value=>({value,label:value[0].toUpperCase()+value.slice(1),description:value==='inherit'?'Follow workflow, then project policy.':'Explicit mode for this stage.'}))};
- function config(c){if(!draft)return '';const d=draft.values,pick=window.PM56_PICKERS,stale=!currentDraft();return '<section class="dialog bsd12-dialog bsd-configure" role="dialog" aria-modal="true" aria-label="Configure Back Seat Driver"><div class="drawer-head"><strong>Back Seat Driver</strong><span class="spacer"></span>'+action(c,'bsd-close-dialog','Cancel',draft.threadId,'','text-button')+'</div><div class="dialog-body"><p class="bsd12-muted">Read-only advisor · session preview, not saved Settings</p><label class="bsd12-label">Project mode</label><div class="bsd12-actions">'+['off','auto','on'].map(v=>action(c,'bsd-config-mode',v[0].toUpperCase()+v.slice(1),draft.threadId,'data-value="'+v+'" aria-pressed="'+(d.mode===v)+'"','soft-button '+(d.mode===v?'active':''))).join('')+'</div><h3>Who advises</h3><div class="bsd12-grid"><label>Model'+pick.modelButton('bsd-pick-model','bsd-model',d.modelId)+'</label><label>Persona'+pick.personaButton('bsd-pick-persona','bsd-persona',d.persona)+'</label></div><p class="bsd12-muted">Changing model, account, or Persona starts a fresh advisor session.</p><h3>When to advise</h3><div class="bsd12-grid">'+choices(c,'sensitivity','Sensitivity',options.sensitivity,d.sensitivity)+choices(c,'catchUpSeconds','Catch-up cap',options.catchUpSeconds,d.catchUpSeconds)+'<label>Cooldown · turns<input type="number" data-bsd-field="cooldownTurns" min="0" max="100" value="'+d.cooldownTurns+'"></label></div><details class="bsd12-disclosure" data-k="bsd12-stage-draft"'+opened('bsd12-stage-draft')+'><summary>Where it watches <span>10 stages</span></summary>'+choices(c,'workflowMode','Workflow mode',options.workflowMode,d.workflowMode)+'<div class="bsd12-stages">'+d.stages.map(s=>'<div><span>'+c.esc(s.label)+'</span><button class="soft-button" data-action="bsd-stage-choice" data-stage="'+s.id+'" data-menu-anchor="bsd-stage-'+s.id+'">'+c.esc(s.mode[0].toUpperCase()+s.mode.slice(1))+'</button></div>').join('')+'</div></details><details class="bsd12-disclosure" data-k="bsd12-advanced-draft"'+opened('bsd12-advanced-draft')+'><summary>Advanced</summary><label class="bsd12-checkbox"><input type="checkbox" data-bsd-field="retainTranscript" '+(d.retainTranscript?'checked':'')+'>Retain advisor transcript</label><label>Self-compaction threshold · %<input type="number" data-bsd-field="selfCompactThreshold" min="10" max="95" step="5" value="'+Math.round(d.selfCompactThreshold*100)+'"></label><p class="bsd12-muted">Advisor context is separate. Held findings and closures survive its self-compaction. No fallback is silently substituted.</p><p class="bsd12-muted">Local maintenance uses a 20,000-character stand-in window; provider tokens are unknown. Native dispatch remains unavailable: command_not_registered.</p></details><p class="bsd12-error" role="alert">'+c.esc(stale?'Source conversation changed. Cancel and reopen here.':draft.error||'')+'</p></div><footer class="bsd12-footer">'+action(c,'bsd-close-dialog','Cancel',draft.threadId)+action(c,'bsd-save-config',draft.assignmentId?'Reconfigure advisor':'Save session configuration',draft.threadId,stale?'disabled':'','primary-button')+'</footer></section>';}
+ function config(c){if(!draft)return '';const d=draft.values,pick=window.PM56_PICKERS,S=window.PM56_SHELL,stale=!currentDraft();
+  const MODE_NOTE={off:'BSD stays silent for this conversation.',auto:'Intervenes only when a finding is material.',on:'Reviews every substantial turn.'};
+  const choiceBtn=(key)=>S.pickerButton({action:'bsd-choice',anchor:'bsd-'+key,strong:c.esc(options[key].find(x=>x.value===d[key])?.label||d[key]),extra:'data-field="'+key+'"',iconHtml:c.icon('down',11)});
+  const body=
+   S.section({iconHtml:c.icon('settings',12),label:'Mode',body:S.seg([['off','Off'],['auto','Auto'],['on','On']],d.mode,'bsd-config-mode')+S.note(c.esc(MODE_NOTE[d.mode]||''))})+
+   S.section({iconHtml:c.icon('user',12),label:'Advisor identity',body:S.grid2(S.field('Model',pick.modelButton('bsd-pick-model','bsd-model',d.modelId))+S.field('Persona',pick.personaButton('bsd-pick-persona','bsd-persona',d.persona)))+S.note('Changing model, account, or Persona starts a fresh advisor session.')})+
+   S.section({iconHtml:c.icon('clock',12),label:'When to advise',body:S.grid2(S.field('Sensitivity',choiceBtn('sensitivity'))+S.field('Catch-up cap',choiceBtn('catchUpSeconds'))+S.field('Cooldown · turns','<input type="number" data-bsd-field="cooldownTurns" min="0" max="100" value="'+d.cooldownTurns+'">'))})+
+   S.disclosure('bsd12-stage-draft','Where it watches · '+d.stages.length+' stages',S.field('Workflow mode',choiceBtn('workflowMode'))+'<div class="mdl-rows">'+d.stages.map(s=>'<div><span>'+c.esc(s.label)+'</span><strong>'+S.pickerButton({action:'bsd-stage-choice',anchor:'bsd-stage-'+s.id,strong:c.esc(s.mode[0].toUpperCase()+s.mode.slice(1)),extra:'data-stage="'+c.esc(s.id)+'"',iconHtml:c.icon('down',11)})+'</strong></div>').join('')+'</div>',opened('bsd12-stage-draft'))+
+   S.disclosure('bsd12-advanced-draft','Advanced',S.check('Retain advisor transcript',d.retainTranscript,' data-bsd-field="retainTranscript"')+S.field('Self-compaction threshold · %','<input type="number" data-bsd-field="selfCompactThreshold" min="10" max="95" step="5" value="'+Math.round(d.selfCompactThreshold*100)+'">')+S.note('Advisor context is separate. Held findings and closures survive its self-compaction. No fallback is silently substituted.')+S.note('Local maintenance uses a 20,000-character stand-in window; provider tokens are unknown. Native dispatch remains unavailable: command_not_registered.'),opened('bsd12-advanced-draft'));
+  const foot=S.foot((stale||draft.error)?S.note(c.esc(stale?'Source conversation changed. Cancel and reopen here.':draft.error),'danger'):'',action(c,'bsd-close-dialog','Cancel',draft.threadId)+'<button class="primary-button" data-action="bsd-save-config"'+attrs(draft.threadId)+(stale?' disabled':'')+'>'+c.esc(draft.assignmentId?'Reconfigure advisor':'Save session configuration')+'</button>');
+  return S.dialog({iconHtml:c.icon('eye',15),title:'Back Seat Driver',sub:'A passive read-only advisor. It watches the work and speaks only when something material is wrong — it never edits, runs, or refuses on your behalf.',pill:d.mode[0].toUpperCase()+d.mode.slice(1),width:640,body:body,foot:foot,closeAction:'bsd-close-dialog'});
+ }
  function error(c,r){if(!r.ok)c.toast('Advisor unchanged',r.error);}
  E.slot('contextBsdRow',compact);E.slot('contextBsdSection',details);
  E.slot('wandRows',c=>'<button class="menu-item" data-submenu="bsd-v2"><span class="menu-icon">'+c.icon('eye',13)+'</span><span class="menu-copy"><strong>Back Seat Driver</strong><span>Passive read-only advisor</span></span><span class="shortcut">'+c.esc(view(c.thread.id).mode)+'</span></button>');
