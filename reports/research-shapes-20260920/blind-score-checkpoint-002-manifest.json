@@ -1,0 +1,99 @@
+{
+  "schema": "shape.blind_checkpoint_manifest.v1",
+  "blind_run_id": "R-2e79d257457dad242e8a",
+  "checkpoint": 2,
+  "checkpoint_at_utc": "2026-09-21T03:33:29.152872+00:00",
+  "report_files": [
+    {
+      "path": "reports/research-shapes-20260920/BLIND_SCORE_CHECKPOINT_002.md",
+      "sha256": "16faa096d8ab0a75b1fc84995d468c9e155dade0eeb9d48777eced3763be9a0c"
+    },
+    {
+      "path": "reports/research-shapes-20260920/blind-score-checkpoint-002.json",
+      "sha256": "0fc75fc2ce61b26d43a8886bdb56548cb5da745362d7f0175503935389156ba4"
+    },
+    {
+      "path": "reports/research-shapes-20260920/STATUS.md",
+      "sha256": "58923b1603c85aa1a29e9ef23b40a1229874c1029dd0043b2672e129e243b396"
+    },
+    {
+      "path": "reports/research-shapes-20260920/evaluation-preparation.json",
+      "sha256": "ebdbc414a4f7ff133c8bef6a814a5adc14e5f97ae2c3d7caa383a256f6ed9641"
+    }
+  ],
+  "historical_checkpoint": {
+    "path": "reports/research-shapes-20260920/blind-score-checkpoint-001.json",
+    "sha256": "1ae6775bd4c2ef4c556d0340239dac940790a06f502a0e2e47a0531b81e9587e"
+  },
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-2e79d257457dad242e8a/score.json",
+      "sha256": "6f03b1229d469574fa6e93fc0dc46735bc98e35a7e2ab12dda5c44a2a83eb04d"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-2e79d257457dad242e8a/semantic-pass.json",
+      "sha256": "d6f3563de5e5229a8d115aab7824a9b9c3736eeb22644932e7ca599f1612ca08"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-2e79d257457dad242e8a/semantic-pass-lock.json",
+      "sha256": "a0bf93c7f251ce69bfeaeb881a679f43f493c607685483baea77f8c09b6ee258"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-2e79d257457dad242e8a/upstream-review.json",
+      "sha256": "e9f51b4cc8c14713f8d2e51c389c7650bd47fb43f1cc9f8bd6d15d13d5b525eb"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-2e79d257457dad242e8a/source-reference-validation.json",
+      "sha256": "33ffaf75d70fe5d587660644d18346a2c8b815c7b42a0dd9b52df77f5e40ce36"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-2e79d257457dad242e8a/score-lock-receipt.json",
+      "sha256": "c89e7f0210c9cb5a5c1c040a3544d6c466a89d5cd4e02cb4e5ee244c527b2d9d"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-2e79d257457dad242e8a/decision-burden-supplement.json",
+      "sha256": "207be914d68faa7cb7f9cb10414805f64684f3b191d3fd5f1bf5852554f01058"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/schedule.json",
+      "sha256": "e2df6472e404589847866e76a516c81d49caf4248061669695fca04f657d0f43"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/economics-tools-validation.json",
+      "sha256": "6b00abbce125b8ee035c8ccb6bb6ac98e46185adeae5a19ac1c03c525837ac42"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/evaluation_tools/normalize_economics.py",
+      "sha256": "7038c5a0bf2561499e86b707357332ec6a61effa1344e092b3a5a2a4a83f7d14"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/evaluation_tools/tests/test_normalize_economics.py",
+      "sha256": "bd40e9c5f6abd92e0721f40e8ea698d1eac69a1628ea5ba816ba42a1d23fdcc2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/evaluation_tools/compare_results.py",
+      "sha256": "73ee5675ddf6d0aac05d43304fed9c4cf99571a0e5aa5909ed56b714c999625b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/evaluation_tools/tests/test_compare_results.py",
+      "sha256": "17102e417199c2f459a5d7a5b67ffe26f137ff6b1e6b3900d00659784ac22d97"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/root-account-snapshot-20260921-0330.json",
+      "sha256": "04251fa14663cf118df768120d6f698fcc0e64aae08146badf66807ee79ac433"
+    }
+  ],
+  "verification": {
+    "json_parsed": true,
+    "all_evidence_hashes_verified": true,
+    "score_matches_root_expected_sha256": true,
+    "immutable_semantic_fields_unchanged": true,
+    "semantic_lock_and_upstream_receipt_bindings_match": true,
+    "registry_disposition": "unscorable",
+    "private_inputs_read": false,
+    "decision_burden_supplement_bound_to_score": true,
+    "source_artifacts_verified": 4,
+    "reported_tests_passed": 43
+  },
+  "controller_status_authority": "Root checkpoint report for termination/quiescence/recovery status; later account-level snapshot independently hash-bound. No private controller state read."
+}

@@ -49,5 +49,18 @@
     "Mechanical tests validate exact-set and nullable-economics processing; they do not certify semantic quality or experimental results.",
     "The parent evaluator has not read configuration mapping or real run economics.",
     "Historical prelaunch preparation remains a separate checkpoint; neither file is a completed-results report."
-  ]
+  ],
+  "subsequent_tools_validation": {
+    "recorded_at": "2026-09-21T03:28:46.411169+00:00",
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/economics-tools-validation.json",
+      "sha256": "6b00abbce125b8ee035c8ccb6bb6ac98e46185adeae5a19ac1c03c525837ac42"
+    },
+    "tests_passed": 43,
+    "normalizer_tests": 26,
+    "comparison_tests": 17,
+    "source_artifacts_bound": 4,
+    "scope": "Synthetic evaluation projection and comparison only. No participant runtime changed, no production economics or configuration mapping accessed.",
+    "historical_preparation_above_unchanged": true
+  }
 }

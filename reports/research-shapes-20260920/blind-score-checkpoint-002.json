@@ -1,0 +1,150 @@
+{
+  "schema": "shape.blind_score_checkpoint.v1",
+  "campaign_id": "phase1-20260921",
+  "checkpoint": 2,
+  "checkpoint_at_utc": "2026-09-21T03:33:29.152872+00:00",
+  "scope": "Second locked blind slot with cumulative lock count only; no cross-run quality/economic comparison or mapping reveal.",
+  "score_locks_recorded": 2,
+  "scheduled_main_component_slots": 16,
+  "locked_slots": [
+    {
+      "ordinal": 1,
+      "blind_run_id": "R-4c6e04224ae0c159ed69",
+      "delivery_status": "absent",
+      "disposition": "unscorable",
+      "score_sha256": "c6994d5b8a27330a0aada3b016c0d193c153cffcac44f83f2a82f859b845a690"
+    },
+    {
+      "ordinal": 2,
+      "blind_run_id": "R-2e79d257457dad242e8a",
+      "delivery_status": "absent",
+      "disposition": "unscorable",
+      "score_sha256": "6f03b1229d469574fa6e93fc0dc46735bc98e35a7e2ab12dda5c44a2a83eb04d"
+    }
+  ],
+  "controller_checkpoint": {
+    "status": "termination_account_hold_recovery_not_authorized",
+    "reason": "typed_account_warning_at_second_termination",
+    "third_run_launched": false,
+    "next_step": "await_qualified_native_account_gates_and_audited_controller_recovery",
+    "authority": "Root task report at checkpoint preparation; no private controller files read.",
+    "latest_account_snapshot": {
+      "receipt": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/root-account-snapshot-20260921-0330.json",
+        "sha256": "04251fa14663cf118df768120d6f698fcc0e64aae08146badf66807ee79ac433"
+      },
+      "observed_at": "2026-09-21 03:32:46 UTC",
+      "warning_reported": false,
+      "continuation_authorization": false,
+      "native_readiness_established": false
+    },
+    "recorded_second_run_handles_quiescent": true
+  },
+  "slot": {
+    "blind_run_id": "R-2e79d257457dad242e8a",
+    "case_id": "ome-zarr-thin",
+    "ordinal": 2,
+    "phase": "main"
+  },
+  "score_lock_disposition": "unscorable",
+  "root_score_sha256": "6f03b1229d469574fa6e93fc0dc46735bc98e35a7e2ab12dda5c44a2a83eb04d",
+  "delivery": {
+    "status": "absent",
+    "artifact": null,
+    "reason": "The sealed final packet reports no coherent delivered artifact. Root verified packet integrity and process quiescence. This scheduled attempt is unscorable; upstream artifacts will not be substituted."
+  },
+  "arm_measurements": {
+    "status": "unscorable",
+    "retained": null,
+    "narrowed": null,
+    "lost": null,
+    "contradicted": null,
+    "unsupported_assertions": null,
+    "novel_supported": null,
+    "correct_non_findings": null,
+    "reason": "No coherent delivered artifact. Empty arrays in the locked score represent no assigned measurement, not measured zero counts or lost-reference sets."
+  },
+  "delivered_decision_burden": {
+    "blocking_count": null,
+    "nonblocking_count": null,
+    "clarification_question_count": null,
+    "redundant_count": null,
+    "reason": "Absent coherent delivery; these are unavailable, not zero."
+  },
+  "decision_burden_supplement": {
+    "blind_id": "R-2e79d257457dad242e8a",
+    "blocking_decisions": {
+      "count": null,
+      "items": null
+    },
+    "clarification_questions": {
+      "count": null,
+      "items": null
+    },
+    "delivery_status": "absent",
+    "evaluator": "root_astra_high",
+    "nonblocking_choices": {
+      "count": null,
+      "items": null
+    },
+    "reason": "There is no coherent delivered artifact to impose decisions or questions on the user. All delivered burden measures are unavailable, not measured zero. Upstream research-intake questions are not delivered user questions and receive no burden count.",
+    "redundant_questions": {
+      "count": null,
+      "items": null
+    },
+    "schema": "shape.decision_burden_supplement.v1",
+    "score_sha256": "6f03b1229d469574fa6e93fc0dc46735bc98e35a7e2ab12dda5c44a2a83eb04d"
+  },
+  "supplemental_upstream_inspection": {
+    "arm_credit": false,
+    "inventory_counts": {
+      "events": 52,
+      "questions": 25,
+      "questions_open": 23,
+      "questions_explicitly_investigated": 2,
+      "questions_with_observations": 11,
+      "observations": 12,
+      "assessments": 0,
+      "coverage": 8
+    },
+    "coverage": {
+      "status": "reviewed_as_upstream_only",
+      "source_linked_question_count": 11,
+      "investigated_family_count": 8,
+      "unreached_entries_count": 20,
+      "source_limitation_entries_count": 6
+    },
+    "handoff": {
+      "status": "reviewed",
+      "reference_facet_entries": 8,
+      "delivered_status": "unscorable"
+    },
+    "source_reference_validation": {
+      "status": "matched",
+      "structured_reference_occurrences": 105,
+      "unique_reference_objects": 12,
+      "unique_source_count": 11,
+      "unique_range_count": 12,
+      "mismatch_count": 0
+    }
+  },
+  "evaluation_tools_validation": {
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/economics-tools-validation.json",
+      "sha256": "6b00abbce125b8ee035c8ccb6bb6ac98e46185adeae5a19ac1c03c525837ac42"
+    },
+    "tests_passed": 43,
+    "normalizer_tests": 26,
+    "comparison_tests": 17,
+    "source_artifacts_bound": 4,
+    "production_economics_exported": false
+  },
+  "boundaries": [
+    "Question state and source linkage are distinct; partial sourced investigation does not resolve a whole question.",
+    "Upstream-only observations, questions, coverage, and handoff receive no delivered arm credit.",
+    "Absent-delivery sets and delivered burden remain unavailable, not zero or inferred lost findings.",
+    "The typed account warning is reported without assigning a participant-quality or accounting cause to the second absent delivery.",
+    "The first checkpoint remains historical; its harness finding is not generalized to this attempt.",
+    "No private configuration mapping, current costs, native logs, or execution clocks were read for this report."
+  ]
+}
