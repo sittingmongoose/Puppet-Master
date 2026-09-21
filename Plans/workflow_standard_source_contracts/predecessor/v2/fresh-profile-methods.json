@@ -1,0 +1,2179 @@
+{
+  "schema_id": "pm.executor_cancellation_owner_methods.v1",
+  "status": "canonical_source_contract_native_installation_not_run",
+  "owner_refs": [
+    "Plans/Executor_Protocol.md#EP-118",
+    "Plans/Executor_Protocol.md#EP-119",
+    "Plans/storage-plan.md#SP-309"
+  ],
+  "entry_boundary_ref": "Plans/executor_cancellation_contracts/realm-entry-boundaries.json",
+  "native_authority_rule": "An installed original native descriptor fixes the complete source profile and actual owner entry before its original lifecycle begins. Matching method/schema/profile strings and serialized handles confer no authority. Every directly callable upper/lower/helper/reader independently validates whole authentic sources and derives the complete candidate before returning helpers, then repeats the whole pure final predicate with no returning helper, callback, logger or mutable gap before its own commit or disclosure. The outer coordinator also validates the entire joined transaction; authentic readback precedes dependent release.",
+  "complete_argument_rule": "All declarations and phase arguments for the same actual method are required together. An additional Goal/Start/control argument never replaces the full original native input, candidate, effect owner, or original result. Actual native phase and installed registration choose the fixed entry; the caller cannot select a realm or phase.",
+  "runtime_availability": "NOT_RUN. Workflow v3 payload schemas are complete source dependencies only; both event families retain active v2 registry rows until separately adopted original v3 consumers, projectors, checkpoints and registry selection. Outer Goal Workflow settlement/append ordering remains a separate source dependency.",
+  "workflow_source_methods": {
+    "status": "canonical_source_contract_native_installation_not_run",
+    "methods": [
+      {
+        "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+        "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+        "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/WorkflowBirthInput",
+        "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/WorkflowBirthResult",
+        "boundary": "enroll_workflow_birth",
+        "protocol": "Plans/Executor_Protocol.md#EP-118",
+        "caller_supplied_afterimages": false,
+        "publication_only_full_result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/WorkflowBirthPublication",
+        "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+      },
+      {
+        "method": "owner.executor.workflow_source.begin_coverage.v3",
+        "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+        "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CoverageInput",
+        "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+        "boundary": "begin_coverage",
+        "protocol": "Plans/Executor_Protocol.md#EP-118",
+        "caller_supplied_afterimages": false,
+        "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+      },
+      {
+        "method": "owner.executor.workflow_source.update_workflow.v3",
+        "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+        "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/WorkflowTransitionInput",
+        "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/WorkflowLineageResult",
+        "boundary": "update_workflow",
+        "protocol": "Plans/Executor_Protocol.md#EP-118",
+        "caller_supplied_afterimages": false,
+        "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+      },
+      {
+        "method": "owner.executor.workflow_source.register_materialization.v1",
+        "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+        "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+        "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+        "boundary": "register_materialization",
+        "protocol": "Plans/Executor_Protocol.md#EP-118",
+        "caller_supplied_afterimages": false,
+        "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+      },
+      {
+        "method": "owner.executor.workflow_source.register_attempt.v1",
+        "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+        "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+        "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+        "boundary": "register_attempt",
+        "protocol": "Plans/Executor_Protocol.md#EP-118",
+        "caller_supplied_afterimages": false,
+        "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+      },
+      {
+        "method": "owner.executor.workflow_source.record_wake.v1",
+        "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+        "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+        "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+        "boundary": "record_wake",
+        "protocol": "Plans/Executor_Protocol.md#EP-118",
+        "caller_supplied_afterimages": false,
+        "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+      },
+      {
+        "method": "owner.executor.workflow_source.consume_wake.v1",
+        "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+        "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+        "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+        "boundary": "consume_wake",
+        "protocol": "Plans/Executor_Protocol.md#EP-118",
+        "caller_supplied_afterimages": false,
+        "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+      },
+      {
+        "method": "owner.executor.workflow_source.record_delay.v1",
+        "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+        "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+        "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+        "boundary": "record_delay",
+        "protocol": "Plans/Executor_Protocol.md#EP-118",
+        "caller_supplied_afterimages": false,
+        "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+      },
+      {
+        "method": "owner.executor.workflow_source.release_delay.v1",
+        "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+        "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+        "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+        "boundary": "release_delay",
+        "protocol": "Plans/Executor_Protocol.md#EP-118",
+        "caller_supplied_afterimages": false,
+        "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+      },
+      {
+        "method": "owner.executor.workflow_source.reserve_capacity.v1",
+        "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+        "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+        "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+        "boundary": "reserve_capacity",
+        "protocol": "Plans/Executor_Protocol.md#EP-118",
+        "caller_supplied_afterimages": false,
+        "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+      },
+      {
+        "method": "owner.executor.workflow_source.release_capacity.v1",
+        "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+        "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+        "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+        "boundary": "release_capacity",
+        "protocol": "Plans/Executor_Protocol.md#EP-118",
+        "caller_supplied_afterimages": false,
+        "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+      },
+      {
+        "method": "owner.executor.workflow_source.admit_dispatch.v1",
+        "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+        "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+        "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+        "boundary": "admit_dispatch",
+        "protocol": "Plans/Executor_Protocol.md#EP-118",
+        "caller_supplied_afterimages": false,
+        "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+      },
+      {
+        "method": "owner.executor.workflow_source.ack_handoff.v1",
+        "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+        "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+        "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+        "boundary": "ack_handoff",
+        "protocol": "Plans/Executor_Protocol.md#EP-118",
+        "caller_supplied_afterimages": false,
+        "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+      },
+      {
+        "method": "owner.executor.workflow_source.record_stop.v1",
+        "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+        "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+        "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/StopResult",
+        "boundary": "record_stop",
+        "protocol": "Plans/Executor_Protocol.md#EP-118",
+        "caller_supplied_afterimages": false,
+        "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+      },
+      {
+        "method": "owner.executor.workflow_source.recover_pending.v1",
+        "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+        "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+        "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+        "boundary": "recover_pending",
+        "protocol": "Plans/Executor_Protocol.md#EP-118",
+        "caller_supplied_afterimages": false,
+        "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+      },
+      {
+        "method": "owner.workflow.executor_cancel.read_current.v2",
+        "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+        "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+        "caller_supplied_afterimages": false,
+        "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+      },
+      {
+        "method": "owner.executor.workflow_source.read_stop.v1",
+        "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+        "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/StopResult",
+        "caller_supplied_afterimages": false,
+        "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+      }
+    ]
+  },
+  "workflow_source_phase_arguments": {
+    "status": "canonical_source_contract_native_installation_not_run",
+    "methods": [
+      {
+        "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+        "existing_complete_method": {
+          "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+          "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+          "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/WorkflowBirthInput",
+          "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/WorkflowBirthResult",
+          "boundary": "enroll_workflow_birth",
+          "protocol": "Plans/Executor_Protocol.md#EP-118",
+          "caller_supplied_afterimages": false,
+          "publication_only_full_result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/WorkflowBirthPublication",
+          "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/BirthControlPublication",
+        "companion_role": "derived joint original birth output, not future preexisting authority",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/BirthGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": [
+          {
+            "original_method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "native_boundary": "owner.workflow.activation.begin.v1",
+            "source_argument": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v4.schema.json#/$defs/OriginalBirthArgument",
+            "separate_goal_argument": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/BindingLowerArgument",
+            "phase": "actual original T1 only; no full B0/W0 demand during later readback"
+          }
+        ],
+        "goal_role": "held original T1 before+prepared union, never future CurrentAssociatedGoalRead"
+      },
+      {
+        "method": "owner.executor.workflow_source.begin_coverage.v3",
+        "existing_complete_method": {
+          "method": "owner.executor.workflow_source.begin_coverage.v3",
+          "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+          "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CoverageInput",
+          "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+          "boundary": "begin_coverage",
+          "protocol": "Plans/Executor_Protocol.md#EP-118",
+          "caller_supplied_afterimages": false,
+          "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": [
+          {
+            "original_method": "owner.executor.workflow_source.begin_coverage.v3",
+            "native_boundary": "owner.executor.activation.materialize.v1",
+            "source_argument": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v4.schema.json#/$defs/OriginalFirstCoverageArgument",
+            "separate_goal_argument": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/CurrentAssociatedGoalRead",
+            "phase": "actual original first T2 only; complete fresh native six-family/A4 union"
+          }
+        ]
+      },
+      {
+        "method": "owner.executor.workflow_source.update_workflow.v3",
+        "existing_complete_method": {
+          "method": "owner.executor.workflow_source.update_workflow.v3",
+          "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+          "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/WorkflowTransitionInput",
+          "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/WorkflowLineageResult",
+          "boundary": "update_workflow",
+          "protocol": "Plans/Executor_Protocol.md#EP-118",
+          "caller_supplied_afterimages": false,
+          "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": [
+          {
+            "original_method": "owner.executor.workflow_source.update_workflow.v3",
+            "native_boundary": "owner.workflow.activation.commit_materialized.v1",
+            "source_argument": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v4.schema.json#/$defs/OriginalMaterializedWorkflowUpdateArgument",
+            "separate_goal_argument": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/CurrentAssociatedGoalRead",
+            "phase": "same actual original first T2 transaction"
+          },
+          {
+            "original_method": "owner.executor.workflow_source.update_workflow.v3",
+            "native_boundaries": [
+              "owner.workflow.activation.stage_entrypoints.v1",
+              "owner.workflow.activation.prepare_start.v1",
+              "owner.workflow.activation.cancel_before_mutation.v1"
+            ],
+            "source_argument": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v4.schema.json#/$defs/OriginalPrestartWorkflowUpdateArgument",
+            "separate_goal_argument": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/CurrentAssociatedGoalRead",
+            "phase": "actual original admitted prestart writer; full current source chain, independently derived complete candidate/artifacts and all original final checks"
+          },
+          {
+            "native_boundary": "owner.workflow.activation.commit_start.v2",
+            "source_argument": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/OriginalD01StartPublicationArgument",
+            "separate_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/OriginalGoalArgument",
+            "phase": "same held original start coordinator: whole true prestart inputs plus complete coissued transition candidates; never future committed CurrentStartSource or lineage as preexisting input"
+          }
+        ]
+      },
+      {
+        "method": "owner.executor.workflow_source.register_materialization.v1",
+        "existing_complete_method": {
+          "method": "owner.executor.workflow_source.register_materialization.v1",
+          "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+          "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+          "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+          "boundary": "register_materialization",
+          "protocol": "Plans/Executor_Protocol.md#EP-118",
+          "caller_supplied_afterimages": false,
+          "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.executor.workflow_source.register_attempt.v1",
+        "existing_complete_method": {
+          "method": "owner.executor.workflow_source.register_attempt.v1",
+          "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+          "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+          "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+          "boundary": "register_attempt",
+          "protocol": "Plans/Executor_Protocol.md#EP-118",
+          "caller_supplied_afterimages": false,
+          "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.executor.workflow_source.record_wake.v1",
+        "existing_complete_method": {
+          "method": "owner.executor.workflow_source.record_wake.v1",
+          "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+          "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+          "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+          "boundary": "record_wake",
+          "protocol": "Plans/Executor_Protocol.md#EP-118",
+          "caller_supplied_afterimages": false,
+          "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.executor.workflow_source.consume_wake.v1",
+        "existing_complete_method": {
+          "method": "owner.executor.workflow_source.consume_wake.v1",
+          "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+          "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+          "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+          "boundary": "consume_wake",
+          "protocol": "Plans/Executor_Protocol.md#EP-118",
+          "caller_supplied_afterimages": false,
+          "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.executor.workflow_source.record_delay.v1",
+        "existing_complete_method": {
+          "method": "owner.executor.workflow_source.record_delay.v1",
+          "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+          "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+          "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+          "boundary": "record_delay",
+          "protocol": "Plans/Executor_Protocol.md#EP-118",
+          "caller_supplied_afterimages": false,
+          "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.executor.workflow_source.release_delay.v1",
+        "existing_complete_method": {
+          "method": "owner.executor.workflow_source.release_delay.v1",
+          "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+          "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+          "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+          "boundary": "release_delay",
+          "protocol": "Plans/Executor_Protocol.md#EP-118",
+          "caller_supplied_afterimages": false,
+          "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.executor.workflow_source.reserve_capacity.v1",
+        "existing_complete_method": {
+          "method": "owner.executor.workflow_source.reserve_capacity.v1",
+          "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+          "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+          "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+          "boundary": "reserve_capacity",
+          "protocol": "Plans/Executor_Protocol.md#EP-118",
+          "caller_supplied_afterimages": false,
+          "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.executor.workflow_source.release_capacity.v1",
+        "existing_complete_method": {
+          "method": "owner.executor.workflow_source.release_capacity.v1",
+          "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+          "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+          "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+          "boundary": "release_capacity",
+          "protocol": "Plans/Executor_Protocol.md#EP-118",
+          "caller_supplied_afterimages": false,
+          "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.executor.workflow_source.admit_dispatch.v1",
+        "existing_complete_method": {
+          "method": "owner.executor.workflow_source.admit_dispatch.v1",
+          "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+          "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+          "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+          "boundary": "admit_dispatch",
+          "protocol": "Plans/Executor_Protocol.md#EP-118",
+          "caller_supplied_afterimages": false,
+          "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.executor.workflow_source.ack_handoff.v1",
+        "existing_complete_method": {
+          "method": "owner.executor.workflow_source.ack_handoff.v1",
+          "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+          "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+          "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+          "boundary": "ack_handoff",
+          "protocol": "Plans/Executor_Protocol.md#EP-118",
+          "caller_supplied_afterimages": false,
+          "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.executor.workflow_source.record_stop.v1",
+        "existing_complete_method": {
+          "method": "owner.executor.workflow_source.record_stop.v1",
+          "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+          "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+          "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/StopResult",
+          "boundary": "record_stop",
+          "protocol": "Plans/Executor_Protocol.md#EP-118",
+          "caller_supplied_afterimages": false,
+          "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.executor.workflow_source.recover_pending.v1",
+        "existing_complete_method": {
+          "method": "owner.executor.workflow_source.recover_pending.v1",
+          "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+          "private_source_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/CurrentSource",
+          "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+          "boundary": "recover_pending",
+          "protocol": "Plans/Executor_Protocol.md#EP-118",
+          "caller_supplied_afterimages": false,
+          "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.workflow.executor_cancel.read_current.v2",
+        "existing_complete_method": {
+          "method": "owner.workflow.executor_cancel.read_current.v2",
+          "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+          "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/ReadResult",
+          "caller_supplied_afterimages": false,
+          "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.executor.workflow_source.read_stop.v1",
+        "existing_complete_method": {
+          "method": "owner.executor.workflow_source.read_stop.v1",
+          "request_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Request",
+          "result_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/StopResult",
+          "caller_supplied_afterimages": false,
+          "original_historical_selection_rule": "mutable output selections are issuance commitments; only current native full bodies are read at later current boundary"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.workflow.executor_cancel.read_current_disposition.v3",
+        "existing_complete_method": {
+          "method": "owner.workflow.executor_cancel.read_current_disposition.v3",
+          "request": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/Request",
+          "private_input": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/CurrentSource",
+          "output": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/ReadResult",
+          "successful_effect_admission": "complete authentic D05; nonterminal uses explicit original v3 Workflow revision join; prepared input never requires future append custody",
+          "native_argument_realm": "start_current_workflow_native_activation",
+          "current_controls_argument": "https://puppetmaster.local/proposals/workflow_cancel_current_controls_argument.v3.schema.json",
+          "current_controls_realm": "start_current_goal_controls",
+          "join": "complete independent native and current-control arguments joined by genuine original owner at final boundary; never merged schema registries",
+          "historical_body_lifetime": "full beforeimages at original publication only; immutable original transition/candidate custody plus full current native values at later readback"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.workflow.executor_cancel.prepare_disposition.v3",
+        "existing_complete_method": {
+          "method": "owner.workflow.executor_cancel.prepare_disposition.v3",
+          "request": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/Request",
+          "private_input": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/AdmittedInput",
+          "output": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/ReadResult",
+          "successful_effect_admission": "complete authentic D05; nonterminal uses explicit original v3 Workflow revision join; prepared input never requires future append custody",
+          "native_argument_realm": "start_current_workflow_native_activation",
+          "current_controls_argument": "https://puppetmaster.local/proposals/workflow_cancel_current_controls_argument.v3.schema.json",
+          "current_controls_realm": "start_current_goal_controls",
+          "join": "complete independent native and current-control arguments joined by genuine original owner at final boundary; never merged schema registries",
+          "historical_body_lifetime": "full beforeimages at original publication only; immutable original transition/candidate custody plus full current native values at later readback"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.workflow.executor_cancel.publish_disposition.v3",
+        "existing_complete_method": {
+          "method": "owner.workflow.executor_cancel.publish_disposition.v3",
+          "request": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/Request",
+          "private_input": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/PreparedMutation",
+          "output": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/ReadResult",
+          "successful_effect_admission": "complete authentic D05; nonterminal uses explicit original v3 Workflow revision join; prepared input never requires future append custody",
+          "native_argument_realm": "start_current_workflow_native_activation",
+          "current_controls_argument": "https://puppetmaster.local/proposals/workflow_cancel_current_controls_argument.v3.schema.json",
+          "current_controls_realm": "start_current_goal_controls",
+          "join": "complete independent native and current-control arguments joined by genuine original owner at final boundary; never merged schema registries",
+          "historical_body_lifetime": "full beforeimages at original publication only; immutable original transition/candidate custody plus full current native values at later readback"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.workflow.executor_cancel.recover_disposition.v3",
+        "existing_complete_method": {
+          "method": "owner.workflow.executor_cancel.recover_disposition.v3",
+          "request": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/Request",
+          "private_input": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/AdmittedInput",
+          "output": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/ReadResult",
+          "successful_effect_admission": "complete authentic D05; nonterminal uses explicit original v3 Workflow revision join; prepared input never requires future append custody",
+          "native_argument_realm": "start_current_workflow_native_activation",
+          "current_controls_argument": "https://puppetmaster.local/proposals/workflow_cancel_current_controls_argument.v3.schema.json",
+          "current_controls_realm": "start_current_goal_controls",
+          "join": "complete independent native and current-control arguments joined by genuine original owner at final boundary; never merged schema registries",
+          "historical_body_lifetime": "full beforeimages at original publication only; immutable original transition/candidate custody plus full current native values at later readback"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.workflow.executor_cancel.read_disposition.v3",
+        "existing_complete_method": {
+          "method": "owner.workflow.executor_cancel.read_disposition.v3",
+          "request": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/Request",
+          "private_input": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/CurrentSource",
+          "output": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/ReadResult",
+          "successful_effect_admission": "complete authentic D05; nonterminal uses explicit original v3 Workflow revision join; prepared input never requires future append custody",
+          "native_argument_realm": "start_current_workflow_native_activation",
+          "current_controls_argument": "https://puppetmaster.local/proposals/workflow_cancel_current_controls_argument.v3.schema.json",
+          "current_controls_realm": "start_current_goal_controls",
+          "join": "complete independent native and current-control arguments joined by genuine original owner at final boundary; never merged schema registries",
+          "historical_body_lifetime": "full beforeimages at original publication only; immutable original transition/candidate custody plus full current native values at later readback"
+        },
+        "mandatory_start_companion": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "companion_role": "actual complete private current source; precoverage only before coverage; original start requires complete covered source",
+        "mandatory_goal_argument": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      },
+      {
+        "method": "owner.workflow.executor_cancel.read_retained_disposition.v3",
+        "existing_complete_method": {
+          "method": "owner.workflow.executor_cancel.read_retained_disposition.v3",
+          "request": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/Request",
+          "private_input": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/Request",
+          "output": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json#/$defs/RetainedResult",
+          "successful_effect_admission": "complete authentic D05; nonterminal uses explicit original v3 Workflow revision join; prepared input never requires future append custody",
+          "native_argument_realm": "start_current_workflow_native_activation",
+          "current_controls_argument": null,
+          "current_controls_realm": "start_current_goal_controls",
+          "join": "complete independent native and current-control arguments joined by genuine original owner at final boundary; never merged schema registries",
+          "historical_body_lifetime": "full beforeimages at original publication only; immutable original transition/candidate custody plus full current native values at later readback"
+        },
+        "mandatory_start_companion": null,
+        "companion_role": "unchanged original retained metadata-only audit; no live start control/current native/current Goal prerequisite or action authority",
+        "mandatory_goal_argument": null,
+        "goal_realm": "start_current_goal_controls",
+        "source_realm": "start_current_workflow_native_activation",
+        "caller_capability": false,
+        "activation_source_phase_arguments": []
+      }
+    ],
+    "phase_rule": "birth derives initial control in original transaction; precoverage uses full WorkflowCurrent; postcoverage uses full CurrentSource; start requires postcoverage; current after start uses full StartCommit/Origin/Control plus present native chain, never overwritten historical native values"
+  },
+  "workflow_start_methods": {
+    "status": "canonical_source_contract_native_installation_not_run",
+    "coordinator_profile": "workflow_start_original.v2",
+    "methods": [
+      {
+        "method": "owner.workflow.activation.commit_start.v2",
+        "request_schema": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/Request",
+        "private_arguments": [
+          {
+            "realm": "start_current_workflow_native_activation",
+            "schema": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/OriginalCommitArgument"
+          },
+          {
+            "realm": "start_current_goal_controls",
+            "schema": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/OriginalGoalArgument"
+          }
+        ],
+        "result_schema": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/PublicationResult",
+        "final_fence": "Plans/Executor_Protocol.md#EP-118",
+        "caller_supplied_afterimages": false,
+        "result_phase": "full PublicationResult only while the actual original invocation holds its complete original values; later committed replay is unsupported and never reuses prestart source arguments"
+      },
+      {
+        "method": "owner.storage.workflow_start.commit_original.v2",
+        "callable_only_by": "owner.workflow.activation.commit_start.v2",
+        "private_arguments": [
+          {
+            "realm": "start_current_workflow_native_activation",
+            "schema": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/OriginalCommitArgument"
+          },
+          {
+            "realm": "start_current_goal_controls",
+            "schema": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/OriginalGoalArgument"
+          }
+        ],
+        "result_schema": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/PublicationResult",
+        "final_fence": "identical original coordinated fence; no append-alone success",
+        "caller_supplied_afterimages": false,
+        "result_phase": "full PublicationResult only while the actual original invocation holds its complete original values; later committed replay is unsupported and never reuses prestart source arguments"
+      },
+      {
+        "method": "owner.workflow.activation.read_started_current.v2",
+        "request_schema": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/Request",
+        "private_arguments": [
+          {
+            "realm": "start_current_workflow_native_activation",
+            "schema": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument"
+          },
+          {
+            "realm": "start_current_goal_controls",
+            "schema": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+          }
+        ],
+        "effects": "none; complete source only or unavailable",
+        "result_schema": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument",
+        "unavailable_schema": "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json#/$defs/Unavailable",
+        "result_phase": "separate complete current read: compact original start commitments and genuinely current native bodies; no full original PublicationResult or action capability"
+      },
+      {
+        "method": "owner.workflow.activation.recover_start.v2",
+        "request_schema": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/Request",
+        "private_arguments": [
+          {
+            "realm": "start_current_workflow_native_activation",
+            "schema": "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json#/$defs/CurrentSourceArgument"
+          },
+          {
+            "realm": "start_current_goal_controls",
+            "schema": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+          }
+        ],
+        "effects": "classify original coordinator outcome only; never independent event append/native repair/new receipt/dispatch"
+      }
+    ]
+  },
+  "bounded_safestop_original_methods": {
+    "status": "canonical_source_contract_native_installation_not_run",
+    "methods": [
+      {
+        "method": "executor.bounded_safestop.join_original_compile.v2",
+        "original_boundary": "Inside authentic owner.workflow.compile.issue_native.v1 publication after original NativeCompileSource and OwnerIssueOrigin issuance",
+        "result": "Immutable CompileReservationJoin, Origin and head CAS, complete original reservation equality"
+      },
+      {
+        "method": "executor.bounded_safestop.join_original_workflow_birth.v2",
+        "original_boundary": "Inside genuine corrected C Workflow birth after original birth and WorkflowMutationOrigin issuance",
+        "result": "Immutable WorkflowReservationJoin, Origin and head CAS; exact original compile/allocation/birth joins"
+      },
+      {
+        "method": "executor.bounded_safestop.admit_original_pre_attempt_effect.v2",
+        "original_boundary": "Every actual reserved-run external-effect handoff before legitimate original C attempt/admission, under native capability exclusion before release",
+        "result": "Immutable PreAttemptEffectAdmission, Origin and append-only head; every such member unsupported in this positive profile"
+      },
+      {
+        "method": "owner.workflow.launch.reserve_execution_identity.v1",
+        "original_boundary": "Genuine original native LaunchIdentityReservation allocation/admission, after authentic native namespace absence/same-operation and whole original parent/Goal/Stop/permission read, before first reserved-run capability release; no future NativeCompileSource or Workflow input",
+        "result": "Original ReservationAllocation, DomainBirth, authentic Origin and head durable together; uninstalled precise native integration, no public Goal or ID creation route"
+      },
+      {
+        "method": "executor.bounded_safestop.register_capability.v2",
+        "original_boundary": "Actual native owner issues a capability behind its pre-effect gate",
+        "result": "CapabilityBirth and authentic original Origin before release"
+      },
+      {
+        "method": "executor.bounded_safestop.record_capability_disposition.v2",
+        "original_boundary": "Actual original revoke/drain/terminal capability operation",
+        "result": "Immutable CapabilityDisposition, complete DomainCut and Origin/head; no caller-selected revoke claim"
+      },
+      {
+        "method": "executor.bounded_safestop.register_required_obligation.v2",
+        "original_boundary": "Actual existing owner requirement becomes due before its triggering transition/effect can outrun custody",
+        "result": "Immutable ObligationBirth plus Origin/head; no new policy"
+      },
+      {
+        "method": "executor.bounded_safestop.admit_core_event.v2",
+        "original_boundary": "Original selected-run producer/normalizer before actual queue release",
+        "result": "CoreEventAdmission and original Origin; actual event remains in existing owner source"
+      },
+      {
+        "method": "executor.bounded_safestop.observe_stopped_domain.v2",
+        "original_boundary": "Actual original coordinator holding Goal Stop, native cancel, SchedulerStop/inventory and complete owner domain",
+        "result": "Original complete DomainCut; unresolved retained"
+      },
+      {
+        "method": "executor.bounded_safestop.flush_original_final.v2",
+        "original_boundary": "Actual original queue seals/drains and Storage durability barriers before final outcome",
+        "result": "CoreWriterCut and compact FinalFlushRecord/origins, private full original event/custody/current readbacks"
+      },
+      {
+        "method": "executor.bounded_safestop.issue_original_safe_stop.v2",
+        "original_boundary": "Genuine original Executor aggregate after exact supported input and final pure native fence",
+        "result": "Immutable AggregateResult/Origin and actual head CAS; no new event or Workflow status"
+      },
+      {
+        "method": "executor.bounded_safestop.read_original_safe_stop.v2",
+        "original_boundary": "Independent read at original result key with actual full current owner/Goal/Stop/census/source boundary",
+        "result": "SuccessfulReadback or truthful unavailable; no effects/replay writes"
+      },
+      {
+        "method": "executor.bounded_safestop.recover_original_safe_stop.v2",
+        "original_boundary": "Actual original coordinator recovery, preserving immutable original operation identity",
+        "result": "Same original result or authentic Recovery/pending; crash without done remains crash_recovered"
+      }
+    ]
+  },
+  "bounded_safestop_phase_arguments": {
+    "status": "canonical_source_contract_native_installation_not_run",
+    "source_realm": "current_d05_source",
+    "original_role_owner_realm": "retained_original_d05",
+    "mandatory_protocol": "Plans/Executor_Protocol.md#EP-119",
+    "routes": [
+      {
+        "original_method": "executor.bounded_safestop.join_original_compile.v2",
+        "preserved_original_declaration": {
+          "method": "executor.bounded_safestop.join_original_compile.v2",
+          "original_boundary": "Inside authentic owner.workflow.compile.issue_native.v1 publication after original NativeCompileSource and OwnerIssueOrigin issuance",
+          "result": "Immutable CompileReservationJoin, Origin and head CAS, complete original reservation equality"
+        },
+        "separate_argument_realm": "current_goal_control",
+        "original_goal_argument": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/OriginalLaunchGoalRead",
+        "phase": "genuine original allocation or native compile issuance; whole B0 current, no future Workflow/StopReceipt prerequisite",
+        "unchanged_original_full_native_input_required": true,
+        "same_original_boundary_before_and_after_all_returning_helpers": true,
+        "public_request_changed": false,
+        "new_native_authority": false,
+        "start_argument_realm": "current_d05_source",
+        "start_phase_binding": {
+          "before_original_workflow_birth": null,
+          "rule": "actual original absence/prebirth owner sources only; no future StartControl, Workflow or start argument"
+        }
+      },
+      {
+        "original_method": "executor.bounded_safestop.join_original_workflow_birth.v2",
+        "preserved_original_declaration": {
+          "method": "executor.bounded_safestop.join_original_workflow_birth.v2",
+          "original_boundary": "Inside genuine corrected C Workflow birth after original birth and WorkflowMutationOrigin issuance",
+          "result": "Immutable WorkflowReservationJoin, Origin and head CAS; exact original compile/allocation/birth joins"
+        },
+        "separate_argument_realm": "current_goal_control",
+        "original_goal_argument": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/OriginalWorkflowBirthGoalArgument",
+        "phase": "actual T1 only, with entire current C OriginalBirthArgument and canonical joint Goal/native participants",
+        "unchanged_original_full_native_input_required": true,
+        "same_original_boundary_before_and_after_all_returning_helpers": true,
+        "public_request_changed": false,
+        "new_native_authority": false,
+        "start_argument_realm": "current_d05_source",
+        "start_phase_binding": {
+          "actual_original_t1_output": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/BirthStartOutput",
+          "rule": "whole actual co-issued start control and genuine begin origin; same held original T1, never future preexisting authority"
+        }
+      },
+      {
+        "original_method": "executor.bounded_safestop.admit_original_pre_attempt_effect.v2",
+        "preserved_original_declaration": {
+          "method": "executor.bounded_safestop.admit_original_pre_attempt_effect.v2",
+          "original_boundary": "Every actual reserved-run external-effect handoff before legitimate original C attempt/admission, under native capability exclusion before release",
+          "result": "Immutable PreAttemptEffectAdmission, Origin and append-only head; every such member unsupported in this positive profile"
+        },
+        "separate_argument_realm": "current_goal_control",
+        "actual_native_owner_phase_arguments": {
+          "before_association": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/OriginalLaunchGoalRead",
+          "permitted_associated_pre_stop": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentAssociatedGoalArgument",
+          "after_actual_stop_latch": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+          "actual_original_t1": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/OriginalWorkflowBirthGoalArgument",
+          "actual_original_start": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/OriginalGoalArgument"
+        },
+        "phase": "Actual original native lifecycle determines the entire argument, including dedicated actual_original_t1; no serialized phase selector. A phase route supplies an argument only where the complete original owner contract already permits this method in that actual phase; otherwise unavailable, with no new T1 writer or authority.",
+        "unchanged_original_full_native_input_required": true,
+        "same_original_boundary_before_and_after_all_returning_helpers": true,
+        "public_request_changed": false,
+        "new_native_authority": false,
+        "start_argument_realm": "current_d05_source",
+        "start_phase_binding": {
+          "before_original_workflow_birth": null,
+          "actual_original_t1_output": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/BirthStartOutput",
+          "actual_original_start": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/OriginalStartArgument",
+          "current_after_birth": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument",
+          "rule": "actual original owner phase only where its unchanged full method permits it; start input is true held prestart argument, later full current arguments never historical original images; no new T1/start writer"
+        }
+      },
+      {
+        "original_method": "owner.workflow.launch.reserve_execution_identity.v1",
+        "preserved_original_declaration": {
+          "method": "owner.workflow.launch.reserve_execution_identity.v1",
+          "original_boundary": "Genuine original native LaunchIdentityReservation allocation/admission, after authentic native namespace absence/same-operation and whole original parent/Goal/Stop/permission read, before first reserved-run capability release; no future NativeCompileSource or Workflow input",
+          "result": "Original ReservationAllocation, DomainBirth, authentic Origin and head durable together; uninstalled precise native integration, no public Goal or ID creation route"
+        },
+        "separate_argument_realm": "current_goal_control",
+        "original_goal_argument": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/OriginalLaunchGoalRead",
+        "phase": "genuine original allocation or native compile issuance; whole B0 current, no future Workflow/StopReceipt prerequisite",
+        "unchanged_original_full_native_input_required": true,
+        "same_original_boundary_before_and_after_all_returning_helpers": true,
+        "public_request_changed": false,
+        "new_native_authority": false,
+        "start_argument_realm": "current_d05_source",
+        "start_phase_binding": {
+          "before_original_workflow_birth": null,
+          "rule": "actual original absence/prebirth owner sources only; no future StartControl, Workflow or start argument"
+        }
+      },
+      {
+        "original_method": "executor.bounded_safestop.register_capability.v2",
+        "preserved_original_declaration": {
+          "method": "executor.bounded_safestop.register_capability.v2",
+          "original_boundary": "Actual native owner issues a capability behind its pre-effect gate",
+          "result": "CapabilityBirth and authentic original Origin before release"
+        },
+        "separate_argument_realm": "current_goal_control",
+        "actual_native_owner_phase_arguments": {
+          "before_association": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/OriginalLaunchGoalRead",
+          "permitted_associated_pre_stop": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentAssociatedGoalArgument",
+          "after_actual_stop_latch": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+          "actual_original_t1": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/OriginalWorkflowBirthGoalArgument",
+          "actual_original_start": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/OriginalGoalArgument"
+        },
+        "phase": "Actual original native lifecycle determines the entire argument, including dedicated actual_original_t1; no serialized phase selector. A phase route supplies an argument only where the complete original owner contract already permits this method in that actual phase; otherwise unavailable, with no new T1 writer or authority.",
+        "unchanged_original_full_native_input_required": true,
+        "same_original_boundary_before_and_after_all_returning_helpers": true,
+        "public_request_changed": false,
+        "new_native_authority": false,
+        "start_argument_realm": "current_d05_source",
+        "start_phase_binding": {
+          "before_original_workflow_birth": null,
+          "actual_original_t1_output": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/BirthStartOutput",
+          "actual_original_start": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/OriginalStartArgument",
+          "current_after_birth": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument",
+          "rule": "actual original owner phase only where its unchanged full method permits it; start input is true held prestart argument, later full current arguments never historical original images; no new T1/start writer"
+        }
+      },
+      {
+        "original_method": "executor.bounded_safestop.record_capability_disposition.v2",
+        "preserved_original_declaration": {
+          "method": "executor.bounded_safestop.record_capability_disposition.v2",
+          "original_boundary": "Actual original revoke/drain/terminal capability operation",
+          "result": "Immutable CapabilityDisposition, complete DomainCut and Origin/head; no caller-selected revoke claim"
+        },
+        "separate_argument_realm": "current_goal_control",
+        "actual_native_owner_phase_arguments": {
+          "before_association": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/OriginalLaunchGoalRead",
+          "permitted_associated_pre_stop": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentAssociatedGoalArgument",
+          "after_actual_stop_latch": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+          "actual_original_t1": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/OriginalWorkflowBirthGoalArgument",
+          "actual_original_start": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/OriginalGoalArgument"
+        },
+        "phase": "Actual original native lifecycle determines the entire argument, including dedicated actual_original_t1; no serialized phase selector. A phase route supplies an argument only where the complete original owner contract already permits this method in that actual phase; otherwise unavailable, with no new T1 writer or authority.",
+        "unchanged_original_full_native_input_required": true,
+        "same_original_boundary_before_and_after_all_returning_helpers": true,
+        "public_request_changed": false,
+        "new_native_authority": false,
+        "start_argument_realm": "current_d05_source",
+        "start_phase_binding": {
+          "before_original_workflow_birth": null,
+          "actual_original_t1_output": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/BirthStartOutput",
+          "actual_original_start": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/OriginalStartArgument",
+          "current_after_birth": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument",
+          "rule": "actual original owner phase only where its unchanged full method permits it; start input is true held prestart argument, later full current arguments never historical original images; no new T1/start writer"
+        }
+      },
+      {
+        "original_method": "executor.bounded_safestop.register_required_obligation.v2",
+        "preserved_original_declaration": {
+          "method": "executor.bounded_safestop.register_required_obligation.v2",
+          "original_boundary": "Actual existing owner requirement becomes due before its triggering transition/effect can outrun custody",
+          "result": "Immutable ObligationBirth plus Origin/head; no new policy"
+        },
+        "separate_argument_realm": "current_goal_control",
+        "actual_native_owner_phase_arguments": {
+          "before_association": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/OriginalLaunchGoalRead",
+          "permitted_associated_pre_stop": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentAssociatedGoalArgument",
+          "after_actual_stop_latch": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+          "actual_original_t1": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/OriginalWorkflowBirthGoalArgument",
+          "actual_original_start": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/OriginalGoalArgument"
+        },
+        "phase": "Actual original native lifecycle determines the entire argument, including dedicated actual_original_t1; no serialized phase selector. A phase route supplies an argument only where the complete original owner contract already permits this method in that actual phase; otherwise unavailable, with no new T1 writer or authority.",
+        "unchanged_original_full_native_input_required": true,
+        "same_original_boundary_before_and_after_all_returning_helpers": true,
+        "public_request_changed": false,
+        "new_native_authority": false,
+        "start_argument_realm": "current_d05_source",
+        "start_phase_binding": {
+          "before_original_workflow_birth": null,
+          "actual_original_t1_output": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/BirthStartOutput",
+          "actual_original_start": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/OriginalStartArgument",
+          "current_after_birth": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument",
+          "rule": "actual original owner phase only where its unchanged full method permits it; start input is true held prestart argument, later full current arguments never historical original images; no new T1/start writer"
+        }
+      },
+      {
+        "original_method": "executor.bounded_safestop.admit_core_event.v2",
+        "preserved_original_declaration": {
+          "method": "executor.bounded_safestop.admit_core_event.v2",
+          "original_boundary": "Original selected-run producer/normalizer before actual queue release",
+          "result": "CoreEventAdmission and original Origin; actual event remains in existing owner source"
+        },
+        "separate_argument_realm": "current_goal_control",
+        "actual_native_owner_phase_arguments": {
+          "before_association": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/OriginalLaunchGoalRead",
+          "permitted_associated_pre_stop": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentAssociatedGoalArgument",
+          "after_actual_stop_latch": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+          "actual_original_t1": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/OriginalWorkflowBirthGoalArgument",
+          "actual_original_start": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/OriginalGoalArgument"
+        },
+        "phase": "Actual original native lifecycle determines the entire argument, including dedicated actual_original_t1; no serialized phase selector. A phase route supplies an argument only where the complete original owner contract already permits this method in that actual phase; otherwise unavailable, with no new T1 writer or authority.",
+        "unchanged_original_full_native_input_required": true,
+        "same_original_boundary_before_and_after_all_returning_helpers": true,
+        "public_request_changed": false,
+        "new_native_authority": false,
+        "start_argument_realm": "current_d05_source",
+        "start_phase_binding": {
+          "before_original_workflow_birth": null,
+          "actual_original_t1_output": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/BirthStartOutput",
+          "actual_original_start": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/OriginalStartArgument",
+          "current_after_birth": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument",
+          "rule": "actual original owner phase only where its unchanged full method permits it; start input is true held prestart argument, later full current arguments never historical original images; no new T1/start writer"
+        }
+      },
+      {
+        "original_method": "executor.bounded_safestop.observe_stopped_domain.v2",
+        "preserved_original_declaration": {
+          "method": "executor.bounded_safestop.observe_stopped_domain.v2",
+          "original_boundary": "Actual original coordinator holding Goal Stop, native cancel, SchedulerStop/inventory and complete owner domain",
+          "result": "Original complete DomainCut; unresolved retained"
+        },
+        "separate_argument_realm": "current_goal_control",
+        "original_goal_argument": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+        "phase": "actual original stopped post-materialization aggregate/current-read boundary; fresh full current controls and original audit every time",
+        "unchanged_original_full_native_input_required": true,
+        "same_original_boundary_before_and_after_all_returning_helpers": true,
+        "public_request_changed": false,
+        "new_native_authority": false,
+        "start_argument_realm": "current_d05_source",
+        "start_phase_binding": {
+          "current_stopped_post_materialization": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument",
+          "whole_aggregate_pair": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/StoppedAggregateArgument",
+          "whole_current_boundary_pair": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/StoppedCurrentBoundaryArgument",
+          "rule": "full required current companion joined to every AggregateInput/SupportedInput and CurrentBoundary instance at this boundary; only prestart/original_started, no precoverage for post-materialization success"
+        }
+      },
+      {
+        "original_method": "executor.bounded_safestop.flush_original_final.v2",
+        "preserved_original_declaration": {
+          "method": "executor.bounded_safestop.flush_original_final.v2",
+          "original_boundary": "Actual original queue seals/drains and Storage durability barriers before final outcome",
+          "result": "CoreWriterCut and compact FinalFlushRecord/origins, private full original event/custody/current readbacks"
+        },
+        "separate_argument_realm": "current_goal_control",
+        "original_goal_argument": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+        "phase": "actual original stopped post-materialization aggregate/current-read boundary; fresh full current controls and original audit every time",
+        "unchanged_original_full_native_input_required": true,
+        "same_original_boundary_before_and_after_all_returning_helpers": true,
+        "public_request_changed": false,
+        "new_native_authority": false,
+        "start_argument_realm": "current_d05_source",
+        "start_phase_binding": {
+          "current_stopped_post_materialization": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument",
+          "whole_aggregate_pair": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/StoppedAggregateArgument",
+          "whole_current_boundary_pair": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/StoppedCurrentBoundaryArgument",
+          "rule": "full required current companion joined to every AggregateInput/SupportedInput and CurrentBoundary instance at this boundary; only prestart/original_started, no precoverage for post-materialization success"
+        }
+      },
+      {
+        "original_method": "executor.bounded_safestop.issue_original_safe_stop.v2",
+        "preserved_original_declaration": {
+          "method": "executor.bounded_safestop.issue_original_safe_stop.v2",
+          "original_boundary": "Genuine original Executor aggregate after exact supported input and final pure native fence",
+          "result": "Immutable AggregateResult/Origin and actual head CAS; no new event or Workflow status"
+        },
+        "separate_argument_realm": "current_goal_control",
+        "original_goal_argument": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+        "phase": "actual original stopped post-materialization aggregate/current-read boundary; fresh full current controls and original audit every time",
+        "unchanged_original_full_native_input_required": true,
+        "same_original_boundary_before_and_after_all_returning_helpers": true,
+        "public_request_changed": false,
+        "new_native_authority": false,
+        "start_argument_realm": "current_d05_source",
+        "start_phase_binding": {
+          "current_stopped_post_materialization": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument",
+          "whole_aggregate_pair": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/StoppedAggregateArgument",
+          "whole_current_boundary_pair": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/StoppedCurrentBoundaryArgument",
+          "rule": "full required current companion joined to every AggregateInput/SupportedInput and CurrentBoundary instance at this boundary; only prestart/original_started, no precoverage for post-materialization success"
+        }
+      },
+      {
+        "original_method": "executor.bounded_safestop.read_original_safe_stop.v2",
+        "preserved_original_declaration": {
+          "method": "executor.bounded_safestop.read_original_safe_stop.v2",
+          "original_boundary": "Independent read at original result key with actual full current owner/Goal/Stop/census/source boundary",
+          "result": "SuccessfulReadback or truthful unavailable; no effects/replay writes"
+        },
+        "separate_argument_realm": "current_goal_control",
+        "original_goal_argument": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+        "phase": "actual original stopped post-materialization aggregate/current-read boundary; fresh full current controls and original audit every time",
+        "unchanged_original_full_native_input_required": true,
+        "same_original_boundary_before_and_after_all_returning_helpers": true,
+        "public_request_changed": false,
+        "new_native_authority": false,
+        "start_argument_realm": "current_d05_source",
+        "start_phase_binding": {
+          "current_stopped_post_materialization": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument",
+          "whole_aggregate_pair": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/StoppedAggregateArgument",
+          "whole_current_boundary_pair": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/StoppedCurrentBoundaryArgument",
+          "rule": "full required current companion joined to every AggregateInput/SupportedInput and CurrentBoundary instance at this boundary; only prestart/original_started, no precoverage for post-materialization success"
+        }
+      },
+      {
+        "original_method": "executor.bounded_safestop.recover_original_safe_stop.v2",
+        "preserved_original_declaration": {
+          "method": "executor.bounded_safestop.recover_original_safe_stop.v2",
+          "original_boundary": "Actual original coordinator recovery, preserving immutable original operation identity",
+          "result": "Same original result or authentic Recovery/pending; crash without done remains crash_recovered"
+        },
+        "separate_argument_realm": "current_goal_control",
+        "original_goal_argument": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+        "phase": "actual original stopped post-materialization aggregate/current-read boundary; fresh full current controls and original audit every time",
+        "unchanged_original_full_native_input_required": true,
+        "same_original_boundary_before_and_after_all_returning_helpers": true,
+        "public_request_changed": false,
+        "new_native_authority": false,
+        "start_argument_realm": "current_d05_source",
+        "start_phase_binding": {
+          "current_stopped_post_materialization": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument",
+          "whole_aggregate_pair": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/StoppedAggregateArgument",
+          "whole_current_boundary_pair": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/StoppedCurrentBoundaryArgument",
+          "rule": "full required current companion joined to every AggregateInput/SupportedInput and CurrentBoundary instance at this boundary; only prestart/original_started, no precoverage for post-materialization success"
+        }
+      }
+    ],
+    "runtime_phase_selection": "actual original owner state and native capability; never caller-selected shape or enum",
+    "historical_audit_rule": "original_source_audit_selection must resolve separate complete current-owner StorageSourceAudit; never accept selector without full source or demand historical incompatible SourceAudit",
+    "filesafe_original_owner_realm": "filesafe_injective_owner",
+    "filesafe_source_profile": "filesafe_original_injective_keys.v1",
+    "filesafe_original_profile_guard": "mandatory actual original installation before binding admission/preparation/mutation and all later original boundaries; old or mixed profile retained unsupported; no migration",
+    "mandatory_protocols": [
+      "Plans/Executor_Protocol.md#EP-119",
+      "Plans/Executor_Protocol.md#EP-119",
+      "Plans/Executor_Protocol.md#EP-119"
+    ],
+    "start_source_profile": "workflow_start_original.v2"
+  },
+  "positive_workflow_cancel_methods": {
+    "status": "canonical_source_contract_native_installation_not_run",
+    "methods": [
+      {
+        "method": "owner.workflow.executor_cancel.read_current_disposition.v3",
+        "request": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Request",
+        "private_input": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/CurrentSource",
+        "output": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/ReadResult",
+        "successful_effect_admission": "complete authentic D05; nonterminal uses explicit original v3 Workflow revision join; prepared input never requires future append custody",
+        "native_argument_realm": "current_d05_source",
+        "current_controls_argument": "https://puppetmaster.local/proposals/workflow_cancel_current_controls_argument.v3.schema.json",
+        "current_controls_realm": "current_goal_control",
+        "join": "complete independent native and current-control arguments joined by genuine original owner at final boundary; never merged schema registries",
+        "historical_body_lifetime": "full beforeimages at original publication only; immutable original transition/candidate custody plus full current native values at later readback",
+        "positive_source_companion": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v1.schema.json#/$defs/CurrentRead",
+        "positive_source_realm": "current_d05_source",
+        "positive_goal_companion": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+        "positive_goal_realm": "current_goal_control",
+        "positive_successful_current_result": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v1.schema.json#/$defs/CurrentSuccessfulReadback",
+        "positive_admission": "actual installed original terminal owner source profile, complete held D05/current Start/Goal/native union and both final fences; no sealed work capability reused",
+        "source_profile": "original_bounded_safe_stop_terminal_publication.v1"
+      },
+      {
+        "method": "owner.workflow.executor_cancel.prepare_disposition.v3",
+        "request": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Request",
+        "private_input": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/AdmittedInput",
+        "output": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/ReadResult",
+        "successful_effect_admission": "complete authentic D05; nonterminal uses explicit original v3 Workflow revision join; prepared input never requires future append custody",
+        "native_argument_realm": "current_d05_source",
+        "current_controls_argument": "https://puppetmaster.local/proposals/workflow_cancel_current_controls_argument.v3.schema.json",
+        "current_controls_realm": "current_goal_control",
+        "join": "complete independent native and current-control arguments joined by genuine original owner at final boundary; never merged schema registries",
+        "historical_body_lifetime": "full beforeimages at original publication only; immutable original transition/candidate custody plus full current native values at later readback",
+        "positive_source_companion": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v1.schema.json#/$defs/OriginalAdmission",
+        "positive_source_realm": "current_d05_source",
+        "positive_goal_companion": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+        "positive_goal_realm": "current_goal_control",
+        "positive_successful_current_result": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v1.schema.json#/$defs/CurrentSuccessfulReadback",
+        "positive_admission": "actual installed original terminal owner source profile, complete held D05/current Start/Goal/native union and both final fences; no sealed work capability reused",
+        "source_profile": "original_bounded_safe_stop_terminal_publication.v1"
+      },
+      {
+        "method": "owner.workflow.executor_cancel.publish_disposition.v3",
+        "request": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Request",
+        "private_input": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PreparedMutation",
+        "output": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/ReadResult",
+        "successful_effect_admission": "complete authentic D05; nonterminal uses explicit original v3 Workflow revision join; prepared input never requires future append custody",
+        "native_argument_realm": "current_d05_source",
+        "current_controls_argument": "https://puppetmaster.local/proposals/workflow_cancel_current_controls_argument.v3.schema.json",
+        "current_controls_realm": "current_goal_control",
+        "join": "complete independent native and current-control arguments joined by genuine original owner at final boundary; never merged schema registries",
+        "historical_body_lifetime": "full beforeimages at original publication only; immutable original transition/candidate custody plus full current native values at later readback",
+        "positive_source_companion": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v1.schema.json#/$defs/OriginalPublication",
+        "positive_source_realm": "current_d05_source",
+        "positive_goal_companion": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+        "positive_goal_realm": "current_goal_control",
+        "positive_successful_current_result": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v1.schema.json#/$defs/CurrentSuccessfulReadback",
+        "positive_admission": "actual installed original terminal owner source profile, complete held D05/current Start/Goal/native union and both final fences; no sealed work capability reused",
+        "source_profile": "original_bounded_safe_stop_terminal_publication.v1"
+      },
+      {
+        "method": "owner.workflow.executor_cancel.recover_disposition.v3",
+        "request": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Request",
+        "private_input": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/AdmittedInput",
+        "output": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/ReadResult",
+        "successful_effect_admission": "complete authentic D05; nonterminal uses explicit original v3 Workflow revision join; prepared input never requires future append custody",
+        "native_argument_realm": "current_d05_source",
+        "current_controls_argument": "https://puppetmaster.local/proposals/workflow_cancel_current_controls_argument.v3.schema.json",
+        "current_controls_realm": "current_goal_control",
+        "join": "complete independent native and current-control arguments joined by genuine original owner at final boundary; never merged schema registries",
+        "historical_body_lifetime": "full beforeimages at original publication only; immutable original transition/candidate custody plus full current native values at later readback",
+        "positive_source_companion": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v1.schema.json#/$defs/OriginalAdmission",
+        "positive_source_realm": "current_d05_source",
+        "positive_goal_companion": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+        "positive_goal_realm": "current_goal_control",
+        "positive_successful_current_result": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v1.schema.json#/$defs/CurrentSuccessfulReadback",
+        "positive_admission": "actual installed original terminal owner source profile, complete held D05/current Start/Goal/native union and both final fences; no sealed work capability reused",
+        "source_profile": "original_bounded_safe_stop_terminal_publication.v1"
+      },
+      {
+        "method": "owner.workflow.executor_cancel.read_disposition.v3",
+        "request": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Request",
+        "private_input": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/CurrentSource",
+        "output": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/ReadResult",
+        "successful_effect_admission": "complete authentic D05; nonterminal uses explicit original v3 Workflow revision join; prepared input never requires future append custody",
+        "native_argument_realm": "current_d05_source",
+        "current_controls_argument": "https://puppetmaster.local/proposals/workflow_cancel_current_controls_argument.v3.schema.json",
+        "current_controls_realm": "current_goal_control",
+        "join": "complete independent native and current-control arguments joined by genuine original owner at final boundary; never merged schema registries",
+        "historical_body_lifetime": "full beforeimages at original publication only; immutable original transition/candidate custody plus full current native values at later readback",
+        "positive_source_companion": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v1.schema.json#/$defs/CurrentRead",
+        "positive_source_realm": "current_d05_source",
+        "positive_goal_companion": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+        "positive_goal_realm": "current_goal_control",
+        "positive_successful_current_result": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v1.schema.json#/$defs/CurrentSuccessfulReadback",
+        "positive_admission": "actual installed original terminal owner source profile, complete held D05/current Start/Goal/native union and both final fences; no sealed work capability reused",
+        "source_profile": "original_bounded_safe_stop_terminal_publication.v1"
+      },
+      {
+        "method": "owner.workflow.executor_cancel.read_retained_disposition.v3",
+        "request": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Request",
+        "private_input": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Request",
+        "output": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/RetainedResult",
+        "successful_effect_admission": "complete authentic D05; nonterminal uses explicit original v3 Workflow revision join; prepared input never requires future append custody",
+        "native_argument_realm": "current_d05_source",
+        "current_controls_argument": null,
+        "current_controls_realm": "current_goal_control",
+        "join": "complete independent native and current-control arguments joined by genuine original owner at final boundary; never merged schema registries",
+        "historical_body_lifetime": "full beforeimages at original publication only; immutable original transition/candidate custody plus full current native values at later readback",
+        "positive_source_companion": null,
+        "positive_goal_companion": null,
+        "positive_admission": "unchanged original retained metadata-only audit, no current source or action permission",
+        "source_profile": "original_bounded_safe_stop_terminal_publication.v1"
+      }
+    ]
+  },
+  "filesafe_process_original_methods": {
+    "status": "canonical_source_contract_native_installation_not_run",
+    "authority": "New explicit private original FileSafe and Process source methods under EP-119 and SP-309. They bind only the complete existing bounded effect recipes and original native ownership. They create no public command, product outcome, retention policy, executable queue or runtime installation.",
+    "complete_source_documents": {
+      "filesafe": {
+        "path": "Plans/executor_cancellation_contracts/schemas/filesafe-injective-key-sources.v1.schema.json",
+        "sha256": "8a42fa18bbe6ffb9d3a87f037b85c3fa380e0aae0269a0aa4aa9dd713f52eec0"
+      },
+      "process": {
+        "path": "Plans/executor_cancellation_contracts/schemas/process-shutdown-sources.v1.schema.json",
+        "sha256": "e0dcd4d5e782cd6344a3039b922a61fddf560a2bd9ec76b7ca2fdcda648959e0"
+      },
+      "process_normalized_producer_submission": {
+        "path": "Plans/executor_cancellation_contracts/schemas/process-normalized-producer.v1.schema.json",
+        "sha256": "a1e9a055f48c4917adcbce9fe9cf240363e429a5d0fd9dd3806eaaf0a7ecfd47"
+      }
+    },
+    "call_contract": "Inputs named native_owner_type are exact private original owner operations/boundaries, not serializable tokens. Referenced schema inputs/outputs are entire definitions in complete pinned documents. Physical committed outputs may be plural where one native transaction issues several immutable records; each distinct source write has its own original origin operation ID and sequence. Unavailable is the complete original typed branch. Output source schemas preserve their original values; no new wrapper or header is added.",
+    "filesafe_methods": [
+      {
+        "method_id": "owner.filesafe.original_source.admit_binding.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "FileSafe original command/mutation owner and Storage",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "dispatch_admission",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchAdmission",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "dispatch_origin",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/MutationOrigin",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "invocation",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocation",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "original_command_payload",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "original_permission_snapshot",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalPermissionSnapshot",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "original_safe_point",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalSafePointRecord",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "complete_original_initial_journal_candidate",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestoreTransaction",
+              "source_requirement": "Whole original FileSafe preparation candidate independently derived from genuine original command and equality/preparation sources inside this admission; not caller afterimage and not a future durable journal selector."
+            },
+            {
+              "argument": "OriginalFileSafeAdmissionBoundary",
+              "native_owner_type": "OriginalFileSafeAdmissionBoundary",
+              "contract": "Actual original command, blocked-attempt, Goal Stop/current permission and C capability-handoff sources; native FileSafe owner lease/epoch, storage instance, host/root/location, original operation and transaction IDs, native source/codec/retention/backup/hold/deletion registrations; filesafe_original_injective_keys.v1 authentically installed before this admission. Genuine absence or exact same-original-operation custody for all binding/journal/head/origin keys; new initial candidate is not a future committed source. Native original preparation and binding acceptance share the single actual original acceptance/journal transaction.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/BindingValue",
+            "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalValue",
+            "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginValue",
+            "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/HeadValue"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "Single original FileSafe acceptance/journal-preparation transaction after C admission, before mutation and C acknowledgment",
+        "physical_write_participants": [
+          "executor_filesafe_invocation_binding",
+          "safe_point_restore_transaction (existing exact original family)",
+          "executor_filesafe_journal_origin",
+          "executor_filesafe_journal_head"
+        ],
+        "ordered_requirements": [
+          "Resolve exact native command, whole genuine safe-point and permission sources, already-durable C admission/origin; join full invocation and all canonical payload identities without narrowing IDs.",
+          "Independently derive and validate entire original initial journal candidate inside original FileSafe preparation; genuine absent initial keys substitute for nonexistent preimages, not caller-supplied future origins.",
+          "Prepare complete binding under .v2.k1 key; initial journal revision is 1 with null prior selectors. Compute issued_journal_commitment from complete original journal bytes, serialize immutable first origin, then head selecting that already-prepared origin. None of these prepared candidates alone is installed authority.",
+          "Atomically commit binding, original journal, first immutable origin and head together in the single actual original acceptance/journal transaction before any mutation capability release. No intermediate binding-only commit. Immutable unequal same-key bytes conflict.",
+          "Only after this complete authentic transaction may original mutation capability be released and C acknowledgment select already-issued complete acceptance/binding/origin custody. Crash with unknown commit preserves C unknown membership and authentic same-operation readback only."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "filesafe-original"
+      },
+      {
+        "method_id": "owner.filesafe.original_source.publish_journal.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "FileSafe native original journal writer and Storage",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "original_binding",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/BindingValue",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "complete_original_journal_candidate",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestoreTransaction",
+              "source_requirement": "Whole original writer candidate, not a public cancellation-reader input or authority"
+            },
+            {
+              "argument": "OriginalFileSafeJournalWriteBoundary",
+              "native_owner_type": "OriginalFileSafeJournalWriteBoundary",
+              "contract": "Actual registered original FileSafe mutation/reconciliation/result-link operation, equality sources where applicable, lock and original transaction; entire current preimage journal/head/origin, prior immutable origin chain and first resolution origin if any; installed original key profile; actual owner, permissions, all writer capabilities, codec/retention/holds/backup/deletion before and after helpers. Initial creation belongs exclusively to admit_binding.v1 all-four transaction.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalValue",
+            "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/HeadValue",
+            "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginValue"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "Every subsequent original journal write: progress, first resolution or permitted result-link, after the initial all-four acceptance commit",
+        "physical_write_participants": [
+          "safe_point_restore_transaction (existing exact original family)",
+          "executor_filesafe_journal_head",
+          "executor_filesafe_journal_origin"
+        ],
+        "ordered_requirements": [
+          "All calls validate whole actual prior journal/head/origin and owner-lease CAS; increment revision exactly once, retain prior journal commitment rather than full prior body.",
+          "First original terminal resolution must execute canonical full equality and store terminal core using exact FileSafe2 recipe plus exact two journal_link_fields; never infer from process exit or metadata.",
+          "Subsequent result links may change exactly result_event_ref and updated_at_utc; validate complete current/candidate journal and identical terminal core, store exact link fields and immutable first resolution reference.",
+          "Own operation/transaction IDs and committed selectors come from this native write; no self-hashing origin and no reader-issued origin or fabricated prior revision."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "filesafe-original"
+      },
+      {
+        "method_id": "owner.filesafe.original_source.read_current.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "FileSafe current native source owner and Storage",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "request",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeReadRequest",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "CurrentFileSafeReadBoundary",
+              "native_owner_type": "CurrentFileSafeReadBoundary",
+              "contract": "Privately resolve original admission, installed original key profile, real exhaustive writer domain and native FileSafe/source/permission/hold/backup/codec owner fence; acquire independently on every call.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeReadResult"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "Read-only original current disposition",
+        "physical_write_participants": [],
+        "ordered_requirements": [
+          "Resolve whole OriginalFileSafeSources including binding, complete original C admission/origin, current full journal/head/origin, first resolution origin, entire origin chain, original safe point and permission; no caller-chosen path.",
+          "Validate all exact byte hashes and physical families/codecs, operation and full identity joins; historical journal commitments are not read selectors.",
+          "Repeat owner/root/location/permission/Stop and source-head/writer/hold/deletion/backup/codec checks after every decoding/hash/native helper and before release.",
+          "Full first-resolution custody plus allowed link chain/current terminal core and all writers revoked_terminal is necessary for resolved; recovery fence or unknown result stays unresolved."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "filesafe-original"
+      },
+      {
+        "method_id": "owner.filesafe.original_source.recover_same_operation.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "FileSafe original recovery owner and Storage",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "request",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeReadRequest",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "OriginalFileSafeRecoveryBoundary",
+              "native_owner_type": "OriginalFileSafeRecoveryBoundary",
+              "contract": "Actual persistent original FileSafe recovery operation, original key-profile admission, original command and pending transaction custody under restored current owner and source registrations; no new restore/dispatch/operation identity.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeReadResult"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "Restart or interrupted admission/journal commit readback",
+        "physical_write_participants": [],
+        "ordered_requirements": [
+          "Read exact original committed binding/journal/origins under independent full boundary; never install missing or old-profile rows.",
+          "If native reconciliation is still required, only its original mutation owner may continue its existing operation using its full original retained inputs/holds and publish_journal.v1; this readback method itself has no writes.",
+          "Missing known acceptance preserves unacknowledged C membership; unknown effects cannot be recast as absent or clean.",
+          "Return original result unchanged only when complete current boundary and original terminal custody validate; no new observed-at timestamp, terminal core or success receipt."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "filesafe-original"
+      }
+    ],
+    "process_methods": [
+      {
+        "method_id": "owner.executor.process_source.admit_probe.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "Original Executor/MCP native supervisor and Storage",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "dispatch_admission",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchAdmission",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "dispatch_origin",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/MutationOrigin",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "original_lifecycle",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalMcpLifecycle",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "OriginalProbeLaunchBoundary",
+              "native_owner_type": "OriginalProbeLaunchBoundary",
+              "contract": "Actual preauthorized disposable probe command/input capture and C capability-handoff fence; own root process reservation/native containment birth and exactly stdout/stderr stream birth facts. No later ProbeBirth required as an input.",
+              "wire_serializable_authority": false
+            },
+            {
+              "argument": "OriginalProcessOperationBoundary",
+              "native_owner_type": "OriginalProcessOperationBoundary",
+              "contract": "Actual originally registered disposable local Unix MCP stdio probe native.process_scope, private operation/transaction identity and durable original source chain, genuine host/boot/namespace/process handles, complete membership/writer/descriptor/callback registry, original capability gates, current C Stop/census and own invocation sources, owner/permission/source/codec/retention/holds/backup/deletion fences. Child remains pre-exec gated until its original admission/birth durable; plain PID/PGID or caller list is insufficient.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProbeBirthPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalWriteOriginPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessSourceHeadPhysical"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "After genuine C admission, before launch capability release",
+        "physical_write_participants": [
+          "executor_process_probe_birth",
+          "executor_process_source_origin",
+          "executor_process_source_head"
+        ],
+        "ordered_requirements": [
+          "Accept only originally admitted disposable PM-managed local Unix MCP stdio probe, no outside beneficiaries; pooled/default/shared/remote/CLI/Windows routes unavailable.",
+          "Issue authentic ProbeBirth from native reservation; first origin has null probe_birth and null priors, sequence 1; origin hashes issued full wrapper then head selects origin.",
+          "Commit wrapper+origin+head atomically before capability release; C acknowledgment follows actual acceptance."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "process-original"
+      },
+      {
+        "method_id": "owner.executor.process_source.record_process_birth.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "Original Executor/MCP native supervisor and Storage",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "probe_birth",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProbeBirthPhysical",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "dispatch_admission",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchAdmission",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "dispatch_origin",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/MutationOrigin",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "OriginalProcessOperationBoundary",
+              "native_owner_type": "OriginalProcessOperationBoundary",
+              "contract": "Actual originally registered disposable local Unix MCP stdio probe native.process_scope, private operation/transaction identity and durable original source chain, genuine host/boot/namespace/process handles, complete membership/writer/descriptor/callback registry, original capability gates, current C Stop/census and own invocation sources, owner/permission/source/codec/retention/holds/backup/deletion fences. Child remains pre-exec gated until its original admission/birth durable; plain PID/PGID or caller list is insufficient.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessBirthPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/MembershipHeadPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalWriteOriginPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessSourceHeadPhysical"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "Every root or nested child before any effect-capable execution",
+        "physical_write_participants": [
+          "executor_process_member_birth",
+          "executor_process_membership",
+          "executor_process_source_origin",
+          "executor_process_source_head"
+        ],
+        "ordered_requirements": [
+          "Each child has its own complete genuine C DispatchInvocation/admission/origin, retained kernel identity, native containment attachment and pre-exec gate.",
+          "Reserve distinct original source-write IDs for ProcessBirth and membership; each full row gets its own successive origin, committed together with head under native original transaction.",
+          "Release child only after durable birth/membership; enforce escape/spawn/descriptor capabilities. No late scan enrollment."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "process-original"
+      },
+      {
+        "method_id": "owner.executor.process_source.record_membership.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "Original Executor/MCP native supervisor and Storage",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "probe_birth",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProbeBirthPhysical",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "prior_membership",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/MembershipHeadPhysical",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "OriginalMembershipMutation",
+              "native_owner_type": "OriginalMembershipMutation",
+              "contract": "Actual complete native membership transition and original transaction; children require already genuine gated original process birth; output writers/callbacks/terminal members remain exhaustive.",
+              "wire_serializable_authority": false
+            },
+            {
+              "argument": "OriginalProcessOperationBoundary",
+              "native_owner_type": "OriginalProcessOperationBoundary",
+              "contract": "Actual originally registered disposable local Unix MCP stdio probe native.process_scope, private operation/transaction identity and durable original source chain, genuine host/boot/namespace/process handles, complete membership/writer/descriptor/callback registry, original capability gates, current C Stop/census and own invocation sources, owner/permission/source/codec/retention/holds/backup/deletion fences. Child remains pre-exec gated until its original admission/birth durable; plain PID/PGID or caller list is insufficient.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/MembershipHeadPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalWriteOriginPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessSourceHeadPhysical"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "Every original native membership change before changed capability release",
+        "physical_write_participants": [
+          "executor_process_membership",
+          "executor_process_source_origin",
+          "executor_process_source_head"
+        ],
+        "ordered_requirements": [
+          "Validate previous head and exhaustive native registry; issue immutable membership revision exactly next.",
+          "Commit complete membership+origin+head CAS atomically; no omission of terminal/escaped/untracked members and no caller subset."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "process-original"
+      },
+      {
+        "method_id": "owner.executor.process_source.admit_shutdown.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "Original Executor/MCP native supervisor and Storage",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "original_stop",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/StopSource",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "probe_birth",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProbeBirthPhysical",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "membership_head",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/MembershipHeadPhysical",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "native_membership",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NativeMembership",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "OriginalProcessOperationBoundary",
+              "native_owner_type": "OriginalProcessOperationBoundary",
+              "contract": "Actual originally registered disposable local Unix MCP stdio probe native.process_scope, private operation/transaction identity and durable original source chain, genuine host/boot/namespace/process handles, complete membership/writer/descriptor/callback registry, original capability gates, current C Stop/census and own invocation sources, owner/permission/source/codec/retention/holds/backup/deletion fences. Child remains pre-exec gated until its original admission/birth durable; plain PID/PGID or caller list is insufficient.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ShutdownAdmissionPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalWriteOriginPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessSourceHeadPhysical"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "Original once-owned supervisor shutdown entry",
+        "physical_write_participants": [
+          "executor_process_shutdown_admission",
+          "executor_process_source_origin",
+          "executor_process_source_head"
+        ],
+        "ordered_requirements": [
+          "Join root cancellation and own per-probe shutdown IDs distinctly; original Once key prevents duplicate initial shutdown.",
+          "Revoke spawn/exec/reconnect/subscription/tool/state-changing callback admissions before signal; drain-only capabilities remain bounded.",
+          "Issue original monotonic three-second grace admission, preserving Goal stop time and root delivery semantics."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "process-original"
+      },
+      {
+        "method_id": "owner.executor.process_source.record_signal.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "Original Executor/MCP native supervisor and Storage",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "shutdown",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ShutdownAdmissionPhysical",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "membership",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NativeMembership",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "OriginalSignalOperation",
+              "native_owner_type": "OriginalSignalOperation",
+              "contract": "Actual SIGTERM or SIGKILL operation against retained native group birth; original monotonic clock/deadline and before_force original flush for escalation, or genuine already-terminal wait. No caller-fabricated syscall observation.",
+              "wire_serializable_authority": false
+            },
+            {
+              "argument": "OriginalProcessOperationBoundary",
+              "native_owner_type": "OriginalProcessOperationBoundary",
+              "contract": "Actual originally registered disposable local Unix MCP stdio probe native.process_scope, private operation/transaction identity and durable original source chain, genuine host/boot/namespace/process handles, complete membership/writer/descriptor/callback registry, original capability gates, current C Stop/census and own invocation sources, owner/permission/source/codec/retention/holds/backup/deletion fences. Child remains pre-exec gated until its original admission/birth durable; plain PID/PGID or caller list is insufficient.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/SignalResultPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalWriteOriginPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessSourceHeadPhysical"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "Actual original signal/escalation result",
+        "physical_write_participants": [
+          "executor_process_signal_result",
+          "executor_process_source_origin",
+          "executor_process_source_head"
+        ],
+        "ordered_requirements": [
+          "Only original group identity; no PID reuse inference or ESRCH-to-success.",
+          "SIGKILL requires original grace deadline and before_force flush attempt; failed required flush stays done.crashed although reclamation may proceed.",
+          "Persist original syscall result exactly once; duplicate original operation reads same bytes."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "process-original"
+      },
+      {
+        "method_id": "owner.executor.process_source.record_wait.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "Original Executor/MCP native supervisor and Storage",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "process_birth",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessBirthPhysical",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "shutdown",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ShutdownAdmissionPhysical",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "OriginalNativeWait",
+              "native_owner_type": "OriginalNativeWait",
+              "contract": "Actual terminal/nonterminal native wait result bound to retained process handle/boot/namespace/kernel birth and original wait operation.",
+              "wire_serializable_authority": false
+            },
+            {
+              "argument": "OriginalProcessOperationBoundary",
+              "native_owner_type": "OriginalProcessOperationBoundary",
+              "contract": "Actual originally registered disposable local Unix MCP stdio probe native.process_scope, private operation/transaction identity and durable original source chain, genuine host/boot/namespace/process handles, complete membership/writer/descriptor/callback registry, original capability gates, current C Stop/census and own invocation sources, owner/permission/source/codec/retention/holds/backup/deletion fences. Child remains pre-exec gated until its original admission/birth durable; plain PID/PGID or caller list is insufficient.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/WaitResultPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalWriteOriginPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessSourceHeadPhysical"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "Each actual original process wait",
+        "physical_write_participants": [
+          "executor_process_wait_result",
+          "executor_process_source_origin",
+          "executor_process_source_head"
+        ],
+        "ordered_requirements": [
+          "Preserve native observed status, exit/signal/core-dump distinctions and explicit nulls.",
+          "Unknown/nonterminal/identity-unavailable result cannot establish terminal membership; every actual member needs own matching terminal wait."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "process-original"
+      },
+      {
+        "method_id": "owner.executor.process_source.admit_normalized_event.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "Original stream/normalizer owner and Storage",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "probe_birth",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProbeBirthPhysical",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "whole_original_normalized_producer_submission",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_normalized_producer_submission.v1.schema.json",
+              "source_requirement": "Complete genuine original normalized producer submission before enqueue; exact original EventRecord2 producer grammar excludes only future Storage sequence_id, observed_at_utc and persisted_at_utc. Its payload also validates against the exact original native normalizer-selected payload schema; no invented event type or source."
+            },
+            {
+              "argument": "OriginalNormalizationAdmission",
+              "native_owner_type": "OriginalNormalizationAdmission",
+              "contract": "Actual original stream parser operation with complete normalized producer submission and exact original payload-schema admission, byte interval, semantic digest, zero-based ordinal and previous original admission; real enqueue capability and original normalized source. No final EventRecord, sequence_id, observed_at_utc, persisted_at_utc, append receipt, first custody or full_value_result exists or is required before enqueue.",
+              "wire_serializable_authority": false
+            },
+            {
+              "argument": "OriginalProcessOperationBoundary",
+              "native_owner_type": "OriginalProcessOperationBoundary",
+              "contract": "Actual originally registered disposable local Unix MCP stdio probe native.process_scope, private operation/transaction identity and durable original source chain, genuine host/boot/namespace/process handles, complete membership/writer/descriptor/callback registry, original capability gates, current C Stop/census and own invocation sources, owner/permission/source/codec/retention/holds/backup/deletion fences. Child remains pre-exec gated until its original admission/birth durable; plain PID/PGID or caller list is insufficient.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NormalizedAdmissionPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalWriteOriginPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessSourceHeadPhysical"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "Before each normalized event can be released toward Storage",
+        "physical_write_participants": [
+          "executor_process_normalized_admission",
+          "executor_process_source_origin",
+          "executor_process_source_head"
+        ],
+        "ordered_requirements": [
+          "Start actual byte/ordinal chain at zero; every interval and ordinal accounted, no gaps/duplicates.",
+          "Issue original immutable admission before enqueue release; contains commitments/refs only, not raw output/EventRecord archive.",
+          "Only actual later Storage append adds sequence_id, observed_at_utc and persisted_at_utc. Required flush subsequently requires the whole true EventRecord and original receipt/full-value custody; this pre-enqueue producer signature never substitutes for that post-append readback."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "process-original"
+      },
+      {
+        "method_id": "owner.executor.process_source.record_writer_cut.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "Original normalizer/queue and Storage append owners",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "probe_birth",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProbeBirthPhysical",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "OriginalWriterQueueCut",
+              "native_owner_type": "OriginalWriterQueueCut",
+              "contract": "Actual exhaustive original probe contributing queue membership and in-flight normalizers under shared queue/admission fences; before_force or before_final_outcome stage, complete original admitted-item chain and real writer identity.",
+              "wire_serializable_authority": false
+            },
+            {
+              "argument": "OriginalProcessOperationBoundary",
+              "native_owner_type": "OriginalProcessOperationBoundary",
+              "contract": "Actual originally registered disposable local Unix MCP stdio probe native.process_scope, private operation/transaction identity and durable original source chain, genuine host/boot/namespace/process handles, complete membership/writer/descriptor/callback registry, original capability gates, current C Stop/census and own invocation sources, owner/permission/source/codec/retention/holds/backup/deletion fences. Child remains pre-exec gated until its original admission/birth durable; plain PID/PGID or caller list is insufficient.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/WriterCutPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalWriteOriginPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessSourceHeadPhysical"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "Original pre-force or final flush queue cut",
+        "physical_write_participants": [
+          "executor_process_writer_cut",
+          "executor_process_source_origin",
+          "executor_process_source_head"
+        ],
+        "ordered_requirements": [
+          "Keep before_force prefix distinct from final seal; late output remains admitted and included at final stage.",
+          "Final cut requires both finalized streams, sealed producer/normalizer admission and drained probe queues; no filtered matching-row maximum.",
+          "Scope capability revocation never revokes shared app Storage or another run."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "process-original"
+      },
+      {
+        "method_id": "owner.executor.process_source.finalize_stream.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "Original stream/normalizer owner and Storage",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "probe_birth",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProbeBirthPhysical",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "OriginalStreamFinalizer",
+              "native_owner_type": "OriginalStreamFinalizer",
+              "contract": "Actual original pipe and complete inherited writer domain; EOF, full byte accounting and all parser jobs/partial-input error disposition; exact original normalized admissions and native gate. No historical raw stream recreation.",
+              "wire_serializable_authority": false
+            },
+            {
+              "argument": "OriginalProcessOperationBoundary",
+              "native_owner_type": "OriginalProcessOperationBoundary",
+              "contract": "Actual originally registered disposable local Unix MCP stdio probe native.process_scope, private operation/transaction identity and durable original source chain, genuine host/boot/namespace/process handles, complete membership/writer/descriptor/callback registry, original capability gates, current C Stop/census and own invocation sources, owner/permission/source/codec/retention/holds/backup/deletion fences. Child remains pre-exec gated until its original admission/birth durable; plain PID/PGID or caller list is insufficient.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/StreamFinalizationPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalWriteOriginPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessSourceHeadPhysical"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "Independent original stdout and stderr finalizers",
+        "physical_write_participants": [
+          "executor_process_stream_finalization",
+          "executor_process_source_origin",
+          "executor_process_source_head"
+        ],
+        "ordered_requirements": [
+          "EOF requires all original producers closed; complete parser jobs and partial input follow actual owner error/event path.",
+          "Lost buffered input, failed parser/read, unknown writer or missing original result cannot yield eof_and_parser_finalized.",
+          "Record authentic finalizer while holding native writer domain; zero items valid only with complete native zero chain."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "process-original"
+      },
+      {
+        "method_id": "owner.executor.process_source.commit_required_flush.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "Original normalizer and Storage append/receipt owners",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "shutdown",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ShutdownAdmissionPhysical",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "writer_cut",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/WriterCutPhysical",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "OriginalRequiredFlushOperation",
+              "native_owner_type": "OriginalRequiredFlushOperation",
+              "contract": "Actual original before_force or before_final_outcome Storage operation with every whole current EventRecord+registered payload, SP-286 first custody/full_value_result, whole CURRENT/manifest and complete read_token under append/maintenance fence; complete arrays of original cuts where several writers contribute.",
+              "wire_serializable_authority": false
+            },
+            {
+              "argument": "OriginalProcessOperationBoundary",
+              "native_owner_type": "OriginalProcessOperationBoundary",
+              "contract": "Actual originally registered disposable local Unix MCP stdio probe native.process_scope, private operation/transaction identity and durable original source chain, genuine host/boot/namespace/process handles, complete membership/writer/descriptor/callback registry, original capability gates, current C Stop/census and own invocation sources, owner/permission/source/codec/retention/holds/backup/deletion fences. Child remains pre-exec gated until its original admission/birth durable; plain PID/PGID or caller list is insufficient.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/RequiredFlushRecordPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalWriteOriginPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessSourceHeadPhysical"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "Actual mandatory durability stage",
+        "physical_write_participants": [
+          "executor_process_required_flush",
+          "executor_process_source_origin",
+          "executor_process_source_head"
+        ],
+        "ordered_requirements": [
+          "Execute source frame writes+segment sync, manifest watermark promotion+required directory sync and original first-receipt custody durable commit.",
+          "Read full original/current sources via actual Storage boundary; respect original receipt coordinates vs current frontier/compaction translation.",
+          "Persist compact commitments only. Any required failure is sticky done.crashed; preserve diagnostic persistence failure. Empty stage invokes true durability boundary with real controls, no marker event/cursor-zero invention."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "process-original"
+      },
+      {
+        "method_id": "owner.executor.process_source.record_termination.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "Original Executor/MCP native supervisor and Storage",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "shutdown",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ShutdownAdmissionPhysical",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "native_membership",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/NativeMembership",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "OriginalTerminationInputs",
+              "native_owner_type": "OriginalTerminationInputs",
+              "contract": "Complete original SignalResultPhysical set, terminal WaitResultPhysical for every actual member, before_force RequiredFlushRecordPhysical iff escalated, genuine original monotonic clock and enforced current containment/writer registry.",
+              "wire_serializable_authority": false
+            },
+            {
+              "argument": "OriginalProcessOperationBoundary",
+              "native_owner_type": "OriginalProcessOperationBoundary",
+              "contract": "Actual originally registered disposable local Unix MCP stdio probe native.process_scope, private operation/transaction identity and durable original source chain, genuine host/boot/namespace/process handles, complete membership/writer/descriptor/callback registry, original capability gates, current C Stop/census and own invocation sources, owner/permission/source/codec/retention/holds/backup/deletion fences. Child remains pre-exec gated until its original admission/birth durable; plain PID/PGID or caller list is insufficient.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/TerminationResultPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalWriteOriginPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessSourceHeadPhysical"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "Original group termination assessment",
+        "physical_write_participants": [
+          "executor_process_termination_result",
+          "executor_process_source_origin",
+          "executor_process_source_head"
+        ],
+        "ordered_requirements": [
+          "Require terminal waits for every actual process, no outside/untracked/escaped capability and current containment quiescence; root exit alone insufficient.",
+          "Preserve original grace/force references and sticky failures; unresolved member stays unresolved."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "process-original"
+      },
+      {
+        "method_id": "owner.executor.process_source.commit_shutdown_result.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "Original Executor/MCP native supervisor and Storage",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "shutdown",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ShutdownAdmissionPhysical",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "termination",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/TerminationResultPhysical",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "OriginalShutdownResultInputs",
+              "native_owner_type": "OriginalShutdownResultInputs",
+              "contract": "Exactly both original stream finalizations and all original required flush records plus full FlushResult readbacks, whole current native capability/membership sources and complete original origin chain.",
+              "wire_serializable_authority": false
+            },
+            {
+              "argument": "OriginalProcessOperationBoundary",
+              "native_owner_type": "OriginalProcessOperationBoundary",
+              "contract": "Actual originally registered disposable local Unix MCP stdio probe native.process_scope, private operation/transaction identity and durable original source chain, genuine host/boot/namespace/process handles, complete membership/writer/descriptor/callback registry, original capability gates, current C Stop/census and own invocation sources, owner/permission/source/codec/retention/holds/backup/deletion fences. Child remains pre-exec gated until its original admission/birth durable; plain PID/PGID or caller list is insufficient.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessShutdownResultPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalWriteOriginPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessSourceHeadPhysical"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "Original process prerequisite result publication",
+        "physical_write_participants": [
+          "executor_process_shutdown_result",
+          "executor_process_source_origin",
+          "executor_process_source_head"
+        ],
+        "ordered_requirements": [
+          "Resolved only with original group terminal, all capabilities revoked, both streams authentic EOF-finalized, final flush durable and pre-force flush durable iff forced, no crash/failure branch.",
+          "Required flush failure remains done.crashed; genuinely clean cancelled path requires done.cancelled even if force occurred; no Workflow/Goal done emission.",
+          "Persist unchanged first original result/origin; this result does not resolve external FileSafe/tool/remote effects."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "process-original"
+      },
+      {
+        "method_id": "owner.executor.process_source.record_crash_recovery.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "Original Run Modes crash owner and Storage recovery owner",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "probe_birth",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProbeBirthPhysical",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "OriginalCrashRecoveryInputs",
+              "native_owner_type": "OriginalCrashRecoveryInputs",
+              "contract": "Actual unfinished original run and pending shutdown custody, old/current native hosts, original result if it exists, last durable whole Storage recovery state and canonical terminal EventRecord if present; actual original Run Modes recovery owner authority.",
+              "wire_serializable_authority": false
+            },
+            {
+              "argument": "OriginalProcessOperationBoundary",
+              "native_owner_type": "OriginalProcessOperationBoundary",
+              "contract": "Actual originally registered disposable local Unix MCP stdio probe native.process_scope, private operation/transaction identity and durable original source chain, genuine host/boot/namespace/process handles, complete membership/writer/descriptor/callback registry, original capability gates, current C Stop/census and own invocation sources, owner/permission/source/codec/retention/holds/backup/deletion fences. Child remains pre-exec gated until its original admission/birth durable; plain PID/PGID or caller list is insufficient.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/RecoverySourcePhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalWriteOriginPhysical",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessSourceHeadPhysical"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "Original unfinished-run recovery",
+        "physical_write_participants": [
+          "executor_process_shutdown_recovery",
+          "executor_process_source_origin",
+          "executor_process_source_head"
+        ],
+        "ordered_requirements": [
+          "No canonical terminal implies done.crashed/crash_recovered; unknown Storage loss and flush failure remain sticky.",
+          "Authenticate original native scope using persistent owner/OS authority; no PID scan success or new process/old-birth fabrication.",
+          "Existing result read unchanged only with whole current boundary; lost raw input cannot be reconstructed."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "process-original"
+      },
+      {
+        "method_id": "owner.executor.process_source.read_current.v1",
+        "status": "canonical_source_contract_native_installation_not_run",
+        "owner": "Original current process/MCP supervisor and Storage",
+        "signature": {
+          "inputs": [
+            {
+              "argument": "request",
+              "complete_schema_ref": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ShutdownReadRequest",
+              "source_requirement": "Genuine whole original-owner source resolved under this operation; never caller-asserted afterimage"
+            },
+            {
+              "argument": "CurrentProcessReadBoundary",
+              "native_owner_type": "CurrentProcessReadBoundary",
+              "contract": "Independently acquire genuine current supervisor/source/permission/retention/codec/backup/hold/deletion, root/Stop/census and membership/capability fences; privately resolve source from each genuine root/child admission.",
+              "wire_serializable_authority": false
+            }
+          ],
+          "committed_outputs": [
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ShutdownReadResult",
+            "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessShutdownAssessment"
+          ],
+          "unavailable_output": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Unavailable"
+        },
+        "original_phase": "Read-only process prerequisite disposition",
+        "physical_write_participants": [],
+        "ordered_requirements": [
+          "Resolve whole ProcessShutdownSources and every physical source/origin/current head plus all complete C admissions/origins/Stop and whole original/current Storage readback.",
+          "Validate complete immutable sequence no gap/fork, exact key codec/hash, all invocation/host/process/operation joins and every stop census member owned by group.",
+          "Repeat complete native/source/owner/Stop/permission/hold/backup/codec/deletion boundary before and after all helpers and immediately before release; prior result is not transferable authority.",
+          "Return unresolved/unavailable for missing original/current sources or unsupported route; resolved assessment gives no action authority or whole-workflow safeStop."
+        ],
+        "pending_unavailable": "No committed output is fabricated. Failed/unknown original commit or changed native boundary returns the complete Unavailable branch; genuinely committed intermediate records keep their exact nonterminal status and never imply effect resolution. Preserve original pending operation and unknown inventory membership; same-operation recovery only.",
+        "boundary_profile": "process-original"
+      }
+    ]
+  }
+}

@@ -1,0 +1,1447 @@
+{
+  "native": {
+    "original_realm": "start_current_workflow_native_activation",
+    "network_fallback": false,
+    "merge_with_other_realms": false,
+    "resources": [
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json",
+        "sha256": "80597d53aada9af04c84ac7f501d22516a797c0240f85bdd610287a7e82d01f0",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/models-request-live.v1.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/models-request-live.v1.schema.json",
+        "sha256": "c11a123590b8d281f2b3682f591268af6fd719c9ef8b52037a7b15a7852bbad7",
+        "retrieval_uri": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/activation-read-result.v4.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/activation-read-result.v4.schema.json",
+        "sha256": "743645f5c9a8430fbca1963fbc072a9ac206419a9ebfc1b1c825ed7020e36ddf",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_current_reader.v4.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/activation-recovery-views.v1.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/activation-recovery-views.v1.schema.json",
+        "sha256": "bd13ecb4e2581262b9e09353d03dd19a3c8858681175d3c317ca281fe84727e4",
+        "retrieval_uri": "https://puppetmaster.local/proposals/activation_original_recovery_views.v1.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+        "sha256": "5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/compiler-live-inputs.v1.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/compiler-live-inputs.v1.schema.json",
+        "sha256": "0d3b50752870853d7fbaac6b5673ffdccded6328ba49a92eb82a22ed13046c9c",
+        "retrieval_uri": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/aggregate-live-input.v1.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/aggregate-live-input.v1.schema.json",
+        "sha256": "cd55ad417c9ae11097fe2f0655755b63bef5c887b88486c4dc468b21b26d0522",
+        "retrieval_uri": "https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json",
+        "sha256": "30cc5fc70474d8ce069be8d776519c2d2354d4e5635de0140d7e612fee3097c2",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/plans_to_code_handoff.schema.json",
+        "canonical_path": "Plans/plans_to_code_handoff.schema.json",
+        "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+        "retrieval_uri": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/requested_effective_runtime.schema.json",
+        "canonical_path": "Plans/requested_effective_runtime.schema.json",
+        "sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+        "retrieval_uri": "https://puppetmaster.local/schemas/requested_effective_runtime/1.0.0/requested_effective_runtime.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+        "sha256": "5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed",
+        "retrieval_uri": "https://puppetmaster.local/proposals/activation/activation-source.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/plans_to_code_handoff.schema.json",
+        "canonical_path": "Plans/plans_to_code_handoff.schema.json",
+        "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+        "retrieval_uri": "https://puppetmaster.local/proposals/inputs/Plans/plans_to_code_handoff.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+        "sha256": "5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed",
+        "retrieval_uri": "https://puppetmaster.local/proposals/compiler-routes/activation/activation-source.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/execution_unit_context.schema.json",
+        "canonical_path": "Plans/execution_unit_context.schema.json",
+        "sha256": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
+        "retrieval_uri": "https://puppetmaster.local/schemas/execution_unit_context.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+        "sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/native-worknode.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "current/Plans/source_control_contracts.schema.json",
+        "canonical_path": "Plans/source_control_contracts.schema.json",
+        "sha256": "4070038bcaef4539d6d669f2a57618599487e73b2588d79e122fde2b41ed8518",
+        "retrieval_uri": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/source-control-receipt-custody.v1.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/source-control-receipt-custody.v1.schema.json",
+        "sha256": "2c64fd916ec26aff73d09bcd7532f2cb690951cc9437509c2b2650b2bd708b06",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json",
+        "sha256": "5a876253a29cc83ee5eadc4ae4da5b7cffc001711f27fb9b2b98627286a3e8ec",
+        "retrieval_uri": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+        "sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/pm.executor.native_worknode_custody.proposed.v1",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+        "sha256": "5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/activation/activation-source.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/project_plan_node.schema.json",
+        "canonical_path": "Plans/project_plan_node.schema.json",
+        "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/project_plan_node.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/evidence.schema.json",
+        "canonical_path": "Plans/evidence.schema.json",
+        "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/evidence.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/plans_to_code_handoff.schema.json",
+        "canonical_path": "Plans/plans_to_code_handoff.schema.json",
+        "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/goal_body_custody.schema.json",
+        "canonical_path": "Plans/goal_body_custody.schema.json",
+        "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/cancellation/inputs/Plans/goal_body_custody.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+        "sha256": "cc5d84b7c6f402cd26269f4621f5fda1122c1643032c7944957c4117c889830c",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/cancellation/proposed/Plans/goal_cancel_command_custody.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/execution_unit_context.schema.json",
+        "canonical_path": "Plans/execution_unit_context.schema.json",
+        "sha256": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/execution_unit_context.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+        "sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/native-worknode.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "current/Plans/source_control_contracts.schema.json",
+        "canonical_path": "Plans/source_control_contracts.schema.json",
+        "sha256": "4070038bcaef4539d6d669f2a57618599487e73b2588d79e122fde2b41ed8518",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/inputs/Plans/source_control_contracts.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/plans_to_code_handoff.schema.json",
+        "canonical_path": "Plans/plans_to_code_handoff.schema.json",
+        "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/inputs/Plans/plans_to_code_handoff.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/execution_unit_context.schema.json",
+        "canonical_path": "Plans/execution_unit_context.schema.json",
+        "sha256": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/inputs/Plans/execution_unit_context.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json",
+        "sha256": "30cc5fc70474d8ce069be8d776519c2d2354d4e5635de0140d7e612fee3097c2",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/preflight/live-input.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/project_plan_node.schema.json",
+        "canonical_path": "Plans/project_plan_node.schema.json",
+        "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/pm.project-plan-node.v1",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/evidence.schema.json",
+        "canonical_path": "Plans/evidence.schema.json",
+        "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/pm.evidence.schema.v1",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/goal_body_custody.schema.json",
+        "canonical_path": "Plans/goal_body_custody.schema.json",
+        "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8",
+        "retrieval_uri": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+        "sha256": "cc5d84b7c6f402cd26269f4621f5fda1122c1643032c7944957c4117c889830c",
+        "retrieval_uri": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/full_thread_runtime_contracts.schema.json",
+        "canonical_path": "Plans/full_thread_runtime_contracts.schema.json",
+        "sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea",
+        "retrieval_uri": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_append_receipt_contracts.schema.json",
+        "canonical_path": "Plans/event_append_receipt_contracts.schema.json",
+        "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/ui_command_response.schema.json",
+        "canonical_path": "Plans/ui_command_response.schema.json",
+        "sha256": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37",
+        "retrieval_uri": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_record.schema.json",
+        "canonical_path": "Plans/event_record.schema.json",
+        "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "canonical_path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_cancelled.schema.v3",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_record_index_checkpoint.schema.json",
+        "canonical_path": "Plans/event_record_index_checkpoint.schema.json",
+        "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+        "sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/pm.executor.native_worknode_custody.proposed.v1",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+        "sha256": "5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/activation/activation-source.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/project_plan_node.schema.json",
+        "canonical_path": "Plans/project_plan_node.schema.json",
+        "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/inputs/Plans/project_plan_node.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/evidence.schema.json",
+        "canonical_path": "Plans/evidence.schema.json",
+        "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/inputs/Plans/evidence.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/plans_to_code_handoff.schema.json",
+        "canonical_path": "Plans/plans_to_code_handoff.schema.json",
+        "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/inputs/Plans/plans_to_code_handoff.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/goal_body_custody.schema.json",
+        "canonical_path": "Plans/goal_body_custody.schema.json",
+        "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/cancellation/inputs/Plans/goal_body_custody.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+        "sha256": "cc5d84b7c6f402cd26269f4621f5fda1122c1643032c7944957c4117c889830c",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/cancellation/proposed/Plans/goal_cancel_command_custody.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_command_contracts.schema.json",
+        "canonical_path": "Plans/shared_runtime_command_contracts.schema.json",
+        "sha256": "7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b",
+        "retrieval_uri": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/project_plan_node.schema.json",
+        "canonical_path": "Plans/project_plan_node.schema.json",
+        "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/inputs/Plans/pm.project-plan-node.v1",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/evidence.schema.json",
+        "canonical_path": "Plans/evidence.schema.json",
+        "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/inputs/Plans/pm.evidence.schema.v1",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "canonical_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60",
+        "retrieval_uri": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+        "sha256": "d1bc87d558af05c5645cd46cadf340dd7d4451732d6714abd711d0307780cd79",
+        "retrieval_uri": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json",
+        "sha256": "fdf7cd63359aeae8284121395e464cd8b6547204abe1d7aab45a858439fb525d",
+        "retrieval_uri": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
+        "sha256": "7c13a5e166aca2d2545e39561f904d2ea1134d690f192d76443a8871c8588fa4",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-current-activation.v1.schema.json",
+        "canonical_path": "Plans/executor_cancellation_contracts/schemas/workflow-current-activation.v1.schema.json",
+        "sha256": "db896adf069bb321e7ae87535dbd2ef4a4df9b4516f7865716510be6f8e9a4dc",
+        "retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_current_activation_source.v1.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-activation.v1.schema.json",
+        "canonical_path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-activation.v1.schema.json",
+        "sha256": "35516ed8fd894bb1538112fb54190cc7059081afd605fadbf4ff728ebaeba525",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_cancel_current_activation_source.v1.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-current-activation-arguments.v1.schema.json",
+        "canonical_path": "Plans/executor_cancellation_contracts/schemas/workflow-current-activation-arguments.v1.schema.json",
+        "sha256": "cf46eb1bf60b7879d5e8574633a3f2d4f7e02aaef6c6a2867ac8423399340ab7",
+        "retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_current_activation_arguments.v1.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+        "canonical_path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+        "sha256": "3764857827d36270b40c8adecbd2ce8ce4cb87f2e88803d35f953f32a42e1839",
+        "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v3/producer-submission.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_record.schema.json",
+        "canonical_path": "Plans/event_record.schema.json",
+        "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_record.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_append_receipt_contracts.schema.json",
+        "canonical_path": "Plans/event_append_receipt_contracts.schema.json",
+        "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+        "canonical_path": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+        "sha256": "d9414fc79ed8c3c7c14d70f0f120ad0378e2efb11de8c2126ab22e4a72771e7f",
+        "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/goal_run_cancelled.v3.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+        "canonical_path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+        "sha256": "3764857827d36270b40c8adecbd2ce8ce4cb87f2e88803d35f953f32a42e1839",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_cancel_producer_submission.v1.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+        "canonical_path": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+        "sha256": "d9414fc79ed8c3c7c14d70f0f120ad0378e2efb11de8c2126ab22e4a72771e7f",
+        "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/pm.goal_runtime_event.goal_run_cancelled.schema.v3",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-original-start.v2.schema.json",
+        "canonical_path": "Plans/executor_cancellation_contracts/schemas/workflow-original-start.v2.schema.json",
+        "sha256": "9e0b863dde63528b1ea44f7bbc22f2483b78baac3ccc7b0e1b9242946de72b81",
+        "retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-start-profile.v2.schema.json",
+        "canonical_path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-start-profile.v2.schema.json",
+        "sha256": "563eb6b8df611954690a6bb306d1f43f26b4371331358361e9246c29563073aa",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+        "canonical_path": "Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+        "sha256": "99c81558695d812761a9a108657134b4caf3652f33124db675b88e6959897406",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+        "canonical_path": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+        "sha256": "2cba0de288750206d9fd7c38f1498f16314fda508d7e866b036e2a0f50a67e0f",
+        "retrieval_uri": "pm.goal_runtime_event.goal_run_started.schema.v3",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_append_receipt_contracts.schema.json",
+        "canonical_path": "Plans/event_append_receipt_contracts.schema.json",
+        "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+        "canonical_path": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+        "sha256": "2cba0de288750206d9fd7c38f1498f16314fda508d7e866b036e2a0f50a67e0f",
+        "retrieval_uri": "https://puppetmaster.local/proposals/pm.goal_runtime_event.goal_run_started.schema.v3",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-arguments.v2.schema.json",
+        "canonical_path": "Plans/executor_cancellation_contracts/schemas/workflow-start-arguments.v2.schema.json",
+        "sha256": "9d7ec810e213ac46b1fcdcc5367cd1ca69ed763a8719ae3b2bf21ead70beb0dd",
+        "retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v2.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "canonical_path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_cancelled.schema.v2",
+        "json_pointer": "#/legacy_v2_reader"
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json",
+        "path": "predecessor/v2/predecessor/v1/schemas/workflow-start-custody.v3.schema.json",
+        "json_pointer": "",
+        "sha256": "5b724806700cb6f9fe5b513b6769f67e1f1be717001e6464fd3d30b431e0d543"
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json",
+        "path": "predecessor/v2/predecessor/v1/schemas/workflow-standard-current-source.v1.schema.json",
+        "json_pointer": "",
+        "sha256": "cff78bb3d196f3da4c8a51033d6e305c259ccc42fe0126be6cba13bcdee9c9ea"
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v3.schema.json",
+        "path": "predecessor/v2/predecessor/v1/schemas/workflow-start-arguments.v3.schema.json",
+        "json_pointer": "",
+        "sha256": "ecb20cfb502c47b70acc6ade2a399d03b095e05db6ef5896ef7026b82b441072"
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json",
+        "path": "predecessor/v2/predecessor/v1/schemas/workflow-cancel-start-profile.v3.schema.json",
+        "json_pointer": "",
+        "sha256": "1fddd9157dc3c533a1c22107aab88dbed3007ed3ecaf2670b29be0c180acbd2a"
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json",
+        "path": "predecessor/v2/predecessor/v1/schemas/workflow-original-start.v3.schema.json",
+        "json_pointer": "",
+        "sha256": "fc0e1aa5a9ee0b6279c7064022bc4e320c0cc9576b282e0a6252f429bfdc4f19"
+      },
+      {
+        "retrieval_uri": "pm.evidence.schema.v1",
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/evidence.schema.json",
+        "json_pointer": "",
+        "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86"
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/schemas/storage_value/permission_snapshot_record/1.0.0/permission_snapshot_record.schema.json",
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+        "json_pointer": "",
+        "sha256": "91656f1e79355ad7ac7b6144ead1724c46222aea054fefdc07f4b56a49f87ed9"
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v5.schema.json",
+        "path": "schemas/workflow-original-start.v5.schema.json",
+        "json_pointer": "",
+        "sha256": "1cdb779d5dadc83d99c3f5cd3910784998a25d926cb3fc0b4eae8ee08273a358"
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json",
+        "path": "schemas/workflow-standard-current-source.v3.schema.json",
+        "json_pointer": "",
+        "sha256": "c7a11a744312518b78cbd70f7f5ee6228004e213df1174f87afe8ac00164ff72"
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v5.schema.json",
+        "path": "schemas/workflow-start-arguments.v5.schema.json",
+        "json_pointer": "",
+        "sha256": "664bb18f0dfd46144120b78b05dcf217128dce4ae644534a86f40723631e90a2"
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v5.schema.json",
+        "path": "schemas/workflow-cancel-start-profile.v5.schema.json",
+        "json_pointer": "",
+        "sha256": "6cf8c0ae3342ad7d28670b85f81aa46d4847f815aeea7b09e7d2bc03c81d461d"
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_start_original_custody.v5.schema.json",
+        "path": "schemas/workflow-start-custody.v5.schema.json",
+        "json_pointer": "",
+        "sha256": "d40e0c82b8ba03dec7631d2d9bc80d51a82b1adff6a1f3e900b4dab1e13916b8"
+      }
+    ],
+    "whole_sources_preserved": true
+  },
+  "goal": {
+    "original_realm": "start_current_goal_controls",
+    "network_fallback": false,
+    "merge_with_other_realms": false,
+    "resources": [
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_append_receipt_contracts.schema.json",
+        "canonical_path": "Plans/event_append_receipt_contracts.schema.json",
+        "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "canonical_path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_cancelled.schema.v3",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_payloads/goal_runtime/goal_created.schema.json",
+        "canonical_path": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+        "sha256": "415829ee3d73099aaa879a989f8300c37062e999d4cb19a65cebd2591a43c841",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_created.schema.v3",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+        "canonical_path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+        "sha256": "4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_updated.schema.v3",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_record.schema.json",
+        "canonical_path": "Plans/event_record.schema.json",
+        "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_record_index_checkpoint.schema.json",
+        "canonical_path": "Plans/event_record_index_checkpoint.schema.json",
+        "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/full_thread_runtime_contracts.schema.json",
+        "canonical_path": "Plans/full_thread_runtime_contracts.schema.json",
+        "sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea",
+        "retrieval_uri": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/goal_body_custody.schema.json",
+        "canonical_path": "Plans/goal_body_custody.schema.json",
+        "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8",
+        "retrieval_uri": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/goal_cancel_command_custody.schema.json",
+        "canonical_path": "Plans/goal_cancel_command_custody.schema.json",
+        "sha256": "3a9477a8a41b273f589e6fc12a492a04a20ac2af5c0382d0ba0445c9a35799e8",
+        "retrieval_uri": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/goal_execution_binding_custody.schema.json",
+        "canonical_path": "Plans/goal_execution_binding_custody.schema.json",
+        "sha256": "b866b72ac1831891cd605360e84e4e97a281b5f352f8b8176d7862e90def746a",
+        "retrieval_uri": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/goal_runtime_contracts.schema.json",
+        "canonical_path": "Plans/goal_runtime_contracts.schema.json",
+        "sha256": "381df40c03f16a4224d44731465c7c0ba4be0071d910b7cf9d0d935e7b60e36e",
+        "retrieval_uri": "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/goal_runtime_events.schema.json",
+        "canonical_path": "Plans/goal_runtime_events.schema.json",
+        "sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e",
+        "retrieval_uri": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/pm.goal_runtime_events.schema.v1",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/goal_start_command_custody.schema.json",
+        "canonical_path": "Plans/goal_start_command_custody.schema.json",
+        "sha256": "098df8efeedf9ccbd41f276e931b64fa9469a8d61656a5be7f240b9935064a74",
+        "retrieval_uri": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/goal_update_command_custody.schema.json",
+        "canonical_path": "Plans/goal_update_command_custody.schema.json",
+        "sha256": "eaa2358de37467ec51ad039f52342900b80b6a7c70f98ad9b0b87a6e9eac2988",
+        "retrieval_uri": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "canonical_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60",
+        "retrieval_uri": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_command_contracts.schema.json",
+        "canonical_path": "Plans/shared_runtime_command_contracts.schema.json",
+        "sha256": "7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b",
+        "retrieval_uri": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+        "canonical_path": "Plans/shared_runtime_contracts.schema.json",
+        "sha256": "680d47fb8e6226aaa26046bcaa971d4a312da6c81949b4a7bb75208b90e97a59",
+        "retrieval_uri": "https://puppetmaster.local/schemas/shared_runtime/1.0.0/shared_runtime_contracts.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/storage_compaction_native_contracts.schema.json",
+        "canonical_path": "Plans/storage_compaction_native_contracts.schema.json",
+        "sha256": "d979220b712f1eb58c9bb83b039aacb71269912eac66f6869da464ce7ade6f0f",
+        "retrieval_uri": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/ui_command_response.schema.json",
+        "canonical_path": "Plans/ui_command_response.schema.json",
+        "sha256": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37",
+        "retrieval_uri": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/current-goal-guard.v1.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/current-goal-guard.v1.schema.json",
+        "sha256": "8a4f2af3db93c882656a0777dc87a188611ada9e2b5874d069203dba0d85d9d5",
+        "retrieval_uri": "https://puppetmaster.local/proposals/activation_operational_current_goal_guard.v1.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json",
+        "canonical_path": "Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json",
+        "sha256": "777ff3bc17c153fa7310c749b624664002164e27e2b6fa1d894a7d9566eed874",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-controls.v3.schema.json",
+        "canonical_path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-controls.v3.schema.json",
+        "sha256": "c75fb9f9f8596182b667c38239feac604a09d489326fd0034833ce1058c4730e",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_cancel_current_controls_argument.v3.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-controls.v3.schema.json",
+        "canonical_path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-controls.v3.schema.json",
+        "sha256": "c75fb9f9f8596182b667c38239feac604a09d489326fd0034833ce1058c4730e",
+        "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v3/current-controls-argument.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/goal_execution_binding_custody.schema.json",
+        "canonical_path": "Plans/goal_execution_binding_custody.schema.json",
+        "sha256": "b866b72ac1831891cd605360e84e4e97a281b5f352f8b8176d7862e90def746a",
+        "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/goal_execution_binding_custody.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/goal_cancel_command_custody.schema.json",
+        "canonical_path": "Plans/goal_cancel_command_custody.schema.json",
+        "sha256": "3a9477a8a41b273f589e6fc12a492a04a20ac2af5c0382d0ba0445c9a35799e8",
+        "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/goal_cancel_command_custody.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/full_thread_runtime_contracts.schema.json",
+        "canonical_path": "Plans/full_thread_runtime_contracts.schema.json",
+        "sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea",
+        "retrieval_uri": "file:///mnt/Cursor/PuppetMaster/Plans/full_thread_runtime_contracts.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_append_receipt_contracts.schema.json",
+        "canonical_path": "Plans/event_append_receipt_contracts.schema.json",
+        "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_record.schema.json",
+        "canonical_path": "Plans/event_record.schema.json",
+        "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_record.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/ui_command_response.schema.json",
+        "canonical_path": "Plans/ui_command_response.schema.json",
+        "sha256": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37",
+        "retrieval_uri": "file:///mnt/Cursor/PuppetMaster/Plans/ui_command_response.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_command_contracts.schema.json",
+        "canonical_path": "Plans/shared_runtime_command_contracts.schema.json",
+        "sha256": "7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b",
+        "retrieval_uri": "file:///mnt/Cursor/PuppetMaster/Plans/shared_runtime_command_contracts.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "canonical_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60",
+        "retrieval_uri": "file:///mnt/Cursor/PuppetMaster/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/goal_body_custody.schema.json",
+        "canonical_path": "Plans/goal_body_custody.schema.json",
+        "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8",
+        "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/goal_body_custody.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "canonical_path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+        "retrieval_uri": "file:///mnt/Cursor/PuppetMaster/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_record_index_checkpoint.schema.json",
+        "canonical_path": "Plans/event_record_index_checkpoint.schema.json",
+        "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+        "retrieval_uri": "file:///mnt/Cursor/PuppetMaster/Plans/event_record_index_checkpoint.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/storage_compaction_native_contracts.schema.json",
+        "canonical_path": "Plans/storage_compaction_native_contracts.schema.json",
+        "sha256": "d979220b712f1eb58c9bb83b039aacb71269912eac66f6869da464ce7ade6f0f",
+        "retrieval_uri": "file:///mnt/Cursor/PuppetMaster/Plans/storage_compaction_native_contracts.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "canonical_path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+        "retrieval_uri": "file:///mnt/Cursor/PuppetMaster/Plans/event_payloads/goal_runtime/pm.goal_runtime_event.goal_cancelled.schema.v3",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-goal-argument.v2.schema.json",
+        "canonical_path": "Plans/executor_cancellation_contracts/schemas/workflow-start-goal-argument.v2.schema.json",
+        "sha256": "aefd025c4b463c1b3e886cae93370b19e66094854a03a65ba724b8f23ef41a8e",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "canonical_path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_cancelled.schema.v2",
+        "json_pointer": "#/legacy_v2_reader"
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_payloads/goal_runtime/goal_created.schema.json",
+        "canonical_path": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+        "sha256": "415829ee3d73099aaa879a989f8300c37062e999d4cb19a65cebd2591a43c841",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_created.schema.v2",
+        "json_pointer": "#/$defs/legacy_v2_reader"
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+        "canonical_path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+        "sha256": "4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_updated.schema.v2",
+        "json_pointer": "#/$defs/legacy_v2_reader"
+      },
+      {
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "canonical_path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+        "retrieval_uri": "file:///mnt/Cursor/PuppetMaster/Plans/event_payloads/goal_runtime/pm.goal_runtime_event.goal_cancelled.schema.v2",
+        "json_pointer": "#/legacy_v2_reader"
+      }
+    ],
+    "whole_sources_preserved": true
+  },
+  "standard": {
+    "resources": [
+      {
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v1.schema.json",
+        "path": "predecessor/v2/predecessor/v1/schemas/workflow-standard-certification-argument.v1.schema.json",
+        "json_pointer": "",
+        "sha256": "750091bdd8f887dec4419f7433226c3b72a2ff0d26d234f895838a74a8c8a364"
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/schemas/goal_certification_custody/1.0.0",
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/goal_certification_custody.schema.json",
+        "json_pointer": "",
+        "sha256": "50687ee0c5d335898ce9ce98fe6e258ac69f344ab3ba7086dba787623201c00b"
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json",
+        "path": "predecessor/v2/predecessor/v1/inputs/Plans/plans_to_code_handoff.schema.json",
+        "json_pointer": "",
+        "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2"
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v3.schema.json",
+        "path": "schemas/workflow-standard-certification-argument.v3.schema.json",
+        "json_pointer": "",
+        "sha256": "fcc25e198114eadc357c8696b750d2d5afb21e80d57bca8febe8a17580b91e4d"
+      }
+    ],
+    "network_fallback": false,
+    "merge_with_other_realms": false,
+    "whole_sources_preserved": true
+  },
+  "event": {
+    "network_fallback": false,
+    "merge_with_other_realms": false,
+    "resources": [
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json",
+        "sha256": "80597d53aada9af04c84ac7f501d22516a797c0240f85bdd610287a7e82d01f0",
+        "binding_basis": "exact frozen activation source resource",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/models-request-live.v1.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json",
+        "sha256": "c11a123590b8d281f2b3682f591268af6fd719c9ef8b52037a7b15a7852bbad7",
+        "binding_basis": "exact frozen activation source resource",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/activation-read-result.v4.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_current_reader.v4.schema.json",
+        "sha256": "743645f5c9a8430fbca1963fbc072a9ac206419a9ebfc1b1c825ed7020e36ddf",
+        "binding_basis": "exact frozen activation source resource",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/activation-recovery-views.v1.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/activation_original_recovery_views.v1.schema.json",
+        "sha256": "bd13ecb4e2581262b9e09353d03dd19a3c8858681175d3c317ca281fe84727e4",
+        "binding_basis": "exact frozen activation source resource",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json",
+        "sha256": "5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed",
+        "binding_basis": "exact frozen activation source resource",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/compiler-live-inputs.v1.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json",
+        "sha256": "0d3b50752870853d7fbaac6b5673ffdccded6328ba49a92eb82a22ed13046c9c",
+        "binding_basis": "exact frozen activation source resource",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/aggregate-live-input.v1.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json",
+        "sha256": "cd55ad417c9ae11097fe2f0655755b63bef5c887b88486c4dc468b21b26d0522",
+        "binding_basis": "exact frozen activation source resource",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0",
+        "sha256": "30cc5fc70474d8ce069be8d776519c2d2354d4e5635de0140d7e612fee3097c2",
+        "binding_basis": "exact frozen activation source resource",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/plans_to_code_handoff.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json",
+        "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+        "binding_basis": "exact frozen activation source resource",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/requested_effective_runtime.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/schemas/requested_effective_runtime/1.0.0/requested_effective_runtime.schema.json",
+        "sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+        "binding_basis": "exact frozen activation source resource",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/activation/activation-source.schema.json",
+        "sha256": "5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed",
+        "binding_basis": "exact frozen activation source resource",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/plans_to_code_handoff.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/inputs/Plans/plans_to_code_handoff.schema.json",
+        "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+        "binding_basis": "exact frozen activation source resource",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/compiler-routes/activation/activation-source.schema.json",
+        "sha256": "5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed",
+        "binding_basis": "exact frozen activation source resource",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/execution_unit_context.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/schemas/execution_unit_context.schema.json",
+        "sha256": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
+        "binding_basis": "exact frozen C complete resource",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/native-worknode.schema.json",
+        "sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+        "binding_basis": "exact frozen C complete resource",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/source_control_contracts.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json",
+        "sha256": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a",
+        "binding_basis": "exact frozen C complete resource",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/source-control-receipt-custody.v1.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0",
+        "sha256": "2c64fd916ec26aff73d09bcd7532f2cb690951cc9437509c2b2650b2bd708b06",
+        "binding_basis": "exact frozen C complete resource",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json",
+        "sha256": "5a876253a29cc83ee5eadc4ae4da5b7cffc001711f27fb9b2b98627286a3e8ec",
+        "binding_basis": "selected new complete custody schema",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/pm.executor.native_worknode_custody.proposed.v1",
+        "sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+        "binding_basis": "complete original document effective $id under explicit retrieval URI",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/activation/activation-source.schema.json",
+        "sha256": "5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed",
+        "binding_basis": "exact original relative reference frozen/source-control/completion/native-worknode.schema.json -> activation/activation-source.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/project_plan_node.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/project_plan_node.schema.json",
+        "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15",
+        "binding_basis": "exact original relative reference frozen/source-control/completion/native-worknode.schema.json -> inputs/Plans/project_plan_node.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/evidence.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/evidence.schema.json",
+        "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86",
+        "binding_basis": "exact original relative reference frozen/source-control/completion/native-worknode.schema.json -> inputs/Plans/evidence.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/plans_to_code_handoff.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json",
+        "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+        "binding_basis": "exact original relative reference frozen/source-control/completion/native-worknode.schema.json -> inputs/Plans/plans_to_code_handoff.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/goal_body_custody.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/cancellation/inputs/Plans/goal_body_custody.schema.json",
+        "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8",
+        "binding_basis": "exact original relative reference frozen/source-control/completion/native-worknode.schema.json -> cancellation/inputs/Plans/goal_body_custody.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/cancellation/proposed/Plans/goal_cancel_command_custody.schema.json",
+        "sha256": "cc5d84b7c6f402cd26269f4621f5fda1122c1643032c7944957c4117c889830c",
+        "binding_basis": "exact original relative reference frozen/source-control/completion/native-worknode.schema.json -> cancellation/proposed/Plans/goal_cancel_command_custody.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/execution_unit_context.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/execution_unit_context.schema.json",
+        "sha256": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
+        "binding_basis": "exact original relative reference frozen/source-control/completion/native-worknode.schema.json -> inputs/Plans/execution_unit_context.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/native-worknode.schema.json",
+        "sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+        "binding_basis": "exact original relative reference frozen/source-control/source-routes.schema.json -> completion/native-worknode.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/source_control_contracts.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/inputs/Plans/source_control_contracts.schema.json",
+        "sha256": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a",
+        "binding_basis": "exact original relative reference frozen/source-control/source-routes.schema.json -> inputs/Plans/source_control_contracts.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/plans_to_code_handoff.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/inputs/Plans/plans_to_code_handoff.schema.json",
+        "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+        "binding_basis": "exact original relative reference frozen/source-control/source-routes.schema.json -> inputs/Plans/plans_to_code_handoff.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/execution_unit_context.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/inputs/Plans/execution_unit_context.schema.json",
+        "sha256": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
+        "binding_basis": "exact original relative reference frozen/source-control/source-routes.schema.json -> completion/inputs/Plans/execution_unit_context.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/preflight/live-input.schema.json",
+        "sha256": "30cc5fc70474d8ce069be8d776519c2d2354d4e5635de0140d7e612fee3097c2",
+        "binding_basis": "exact original relative reference frozen/source-control/source-routes.schema.json -> preflight/live-input.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/project_plan_node.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/pm.project-plan-node.v1",
+        "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15",
+        "binding_basis": "complete original document effective $id under explicit retrieval URI",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/evidence.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/pm.evidence.schema.v1",
+        "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86",
+        "binding_basis": "complete original document effective $id under explicit retrieval URI",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/goal_body_custody.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json",
+        "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8",
+        "binding_basis": "complete original document effective $id under explicit retrieval URI",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json",
+        "sha256": "cc5d84b7c6f402cd26269f4621f5fda1122c1643032c7944957c4117c889830c",
+        "binding_basis": "complete original document effective $id under explicit retrieval URI",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/full_thread_runtime_contracts.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json",
+        "sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea",
+        "binding_basis": "non-conflicting complete canonical support schema required by inherited source reference",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/event_append_receipt_contracts.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0",
+        "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "binding_basis": "non-conflicting complete canonical support schema required by inherited source reference",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/ui_command_response.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json",
+        "sha256": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37",
+        "binding_basis": "non-conflicting complete canonical support schema required by inherited source reference",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/event_record.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json",
+        "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "binding_basis": "non-conflicting complete canonical support schema required by inherited source reference",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_cancelled.schema.v3",
+        "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+        "binding_basis": "non-conflicting complete canonical support schema required by inherited source reference",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/event_record_index_checkpoint.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json",
+        "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+        "binding_basis": "non-conflicting complete canonical support schema required by inherited source reference",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/pm.executor.native_worknode_custody.proposed.v1",
+        "sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+        "binding_basis": "complete original document effective $id under explicit retrieval URI",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/activation/activation-source.schema.json",
+        "sha256": "5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed",
+        "binding_basis": "exact original relative reference frozen/source-control/completion/native-worknode.schema.json -> activation/activation-source.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/project_plan_node.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/inputs/Plans/project_plan_node.schema.json",
+        "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15",
+        "binding_basis": "exact original relative reference frozen/source-control/completion/native-worknode.schema.json -> inputs/Plans/project_plan_node.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/evidence.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/inputs/Plans/evidence.schema.json",
+        "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86",
+        "binding_basis": "exact original relative reference frozen/source-control/completion/native-worknode.schema.json -> inputs/Plans/evidence.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/plans_to_code_handoff.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/inputs/Plans/plans_to_code_handoff.schema.json",
+        "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+        "binding_basis": "exact original relative reference frozen/source-control/completion/native-worknode.schema.json -> inputs/Plans/plans_to_code_handoff.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/goal_body_custody.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/cancellation/inputs/Plans/goal_body_custody.schema.json",
+        "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8",
+        "binding_basis": "exact original relative reference frozen/source-control/completion/native-worknode.schema.json -> cancellation/inputs/Plans/goal_body_custody.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/cancellation/proposed/Plans/goal_cancel_command_custody.schema.json",
+        "sha256": "cc5d84b7c6f402cd26269f4621f5fda1122c1643032c7944957c4117c889830c",
+        "binding_basis": "exact original relative reference frozen/source-control/completion/native-worknode.schema.json -> cancellation/proposed/Plans/goal_cancel_command_custody.schema.json",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/shared_runtime_command_contracts.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json",
+        "sha256": "7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b",
+        "binding_basis": "non-conflicting complete canonical support schema required by inherited source reference",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/project_plan_node.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/inputs/Plans/pm.project-plan-node.v1",
+        "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15",
+        "binding_basis": "complete original document effective $id under explicit retrieval URI",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/evidence.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/completion/inputs/Plans/pm.evidence.schema.v1",
+        "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86",
+        "binding_basis": "complete original document effective $id under explicit retrieval URI",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json",
+        "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60",
+        "binding_basis": "non-conflicting complete canonical support schema required by inherited source reference",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json",
+        "sha256": "d1bc87d558af05c5645cd46cadf340dd7d4451732d6714abd711d0307780cd79",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json",
+        "sha256": "fdf7cd63359aeae8284121395e464cd8b6547204abe1d7aab45a858439fb525d",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json",
+        "sha256": "7c13a5e166aca2d2545e39561f904d2ea1134d690f192d76443a8871c8588fa4",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_cancelled.schema.v2",
+        "json_pointer": "#/legacy_v2_reader",
+        "complete_document_sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+        "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb"
+      },
+      {
+        "path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-current-activation.v1.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_current_activation_source.v1.schema.json",
+        "sha256": "db896adf069bb321e7ae87535dbd2ef4a4df9b4516f7865716510be6f8e9a4dc",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-activation.v1.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_cancel_current_activation_source.v1.schema.json",
+        "sha256": "35516ed8fd894bb1538112fb54190cc7059081afd605fadbf4ff728ebaeba525",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-current-activation-arguments.v1.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_current_activation_arguments.v1.schema.json",
+        "sha256": "cf46eb1bf60b7879d5e8574633a3f2d4f7e02aaef6c6a2867ac8423399340ab7",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+        "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v3/producer-submission.schema.json",
+        "sha256": "3764857827d36270b40c8adecbd2ce8ce4cb87f2e88803d35f953f32a42e1839",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/event_record.schema.json",
+        "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_record.schema.json",
+        "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/event_append_receipt_contracts.schema.json",
+        "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json",
+        "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+        "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/goal_run_cancelled.v3.schema.json",
+        "sha256": "d9414fc79ed8c3c7c14d70f0f120ad0378e2efb11de8c2126ab22e4a72771e7f",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_cancel_producer_submission.v1.schema.json",
+        "sha256": "3764857827d36270b40c8adecbd2ce8ce4cb87f2e88803d35f953f32a42e1839",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+        "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/pm.goal_runtime_event.goal_run_cancelled.schema.v3",
+        "sha256": "d9414fc79ed8c3c7c14d70f0f120ad0378e2efb11de8c2126ab22e4a72771e7f",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-original-start.v2.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json",
+        "sha256": "9e0b863dde63528b1ea44f7bbc22f2483b78baac3ccc7b0e1b9242946de72b81",
+        "binding_basis": "new uninstalled original start profile or unchanged canonical receipt",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-start-profile.v2.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json",
+        "sha256": "563eb6b8df611954690a6bb306d1f43f26b4371331358361e9246c29563073aa",
+        "binding_basis": "new uninstalled original start profile or unchanged canonical receipt",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json",
+        "sha256": "99c81558695d812761a9a108657134b4caf3652f33124db675b88e6959897406",
+        "binding_basis": "new uninstalled original start profile or unchanged canonical receipt",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+        "retrieval_uri": "pm.goal_runtime_event.goal_run_started.schema.v3",
+        "sha256": "2cba0de288750206d9fd7c38f1498f16314fda508d7e866b036e2a0f50a67e0f",
+        "binding_basis": "new uninstalled original start profile or unchanged canonical receipt",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/event_append_receipt_contracts.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0",
+        "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "binding_basis": "new uninstalled original start profile or unchanged canonical receipt",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/pm.goal_runtime_event.goal_run_started.schema.v3",
+        "sha256": "2cba0de288750206d9fd7c38f1498f16314fda508d7e866b036e2a0f50a67e0f",
+        "binding_basis": "explicit standard relative $id resolution; same whole proposed payload bytes",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-arguments.v2.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v2.schema.json",
+        "sha256": "9d7ec810e213ac46b1fcdcc5367cd1ca69ed763a8719ae3b2bf21ead70beb0dd",
+        "binding_basis": "complete six original activation arguments with new D01 target only",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/goal_run_started_consumer_contracts/consumer.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json",
+        "sha256": "626cfe1aff57bbfcf67c2ab70a3b12c55ca4e137bfbe2c0fd54a3534bc359392",
+        "json_pointer": ""
+      },
+      {
+        "path": "inputs/Plans/event_record_index_checkpoint.schema.json",
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json",
+        "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+        "json_pointer": ""
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v3.schema.json",
+        "path": "schemas/workflow-standard-event-prerequisite.v3.schema.json",
+        "json_pointer": "",
+        "sha256": "91724e64f651821794bf0848d4579445f112d7b8b17fde6246085c767e546513"
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/proposals/pm.goal_runtime_event.goal_run_certified.schema.v3",
+        "path": "schemas/goal-run-certified.v3.schema.json",
+        "json_pointer": "",
+        "sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895"
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json",
+        "path": "inputs/Plans/storage_compaction_native_contracts.schema.json",
+        "json_pointer": "",
+        "sha256": "d979220b712f1eb58c9bb83b039aacb71269912eac66f6869da464ce7ade6f0f"
+      },
+      {
+        "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_run_certified.schema.v2",
+        "path": "inputs/Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+        "json_pointer": "",
+        "sha256": "a4144dd0476b9a1dfdbc23b406a243cf3d4381a778902457d60b82b34592c38f"
+      }
+    ],
+    "scope": "whole current native Event/source realm, not Goal current control realm and not a started consumer adoption"
+  }
+}

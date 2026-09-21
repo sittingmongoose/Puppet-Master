@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/workflow_cancel_current_controls_argument.v3.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "binding",
+    "association",
+    "goal_body",
+    "goal_control",
+    "goal_stop"
+  ],
+  "properties": {
+    "binding": {
+      "$ref": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/goal_execution_binding_custody.schema.json#/$defs/BindingReadCurrent"
+    },
+    "association": {
+      "$ref": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/goal_execution_binding_custody.schema.json#/$defs/WorkflowAssociation"
+    },
+    "goal_body": {
+      "$ref": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/goal_body_custody.schema.json#/$defs/body"
+    },
+    "goal_control": {
+      "$ref": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/goal_cancel_command_custody.schema.json#/$defs/BodyControlV2"
+    },
+    "goal_stop": {
+      "$ref": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/goal_cancel_command_custody.schema.json#/$defs/StopReceipt"
+    }
+  }
+}

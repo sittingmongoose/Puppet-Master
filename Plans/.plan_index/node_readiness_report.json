@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15585,
+    "depends_on_edge_count": 15606,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18274,
-    "node_count": 6691,
+    "edge_count": 18305,
+    "node_count": 6696,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2689,
+    "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-23T03:37:46Z",
+  "generated_at_utc": "2026-09-23T14:52:20Z",
   "gui_related_units": {
     "count": 3195,
     "units": [
@@ -35169,10 +35169,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6691,
+  "plan_unit_count": 6696,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2142,
+      "high": 2147,
       "low": 5,
       "medium": 8,
       "standard": 4536
@@ -37228,6 +37228,7 @@
       "origin_stale_review_or_agent_publication": 1,
       "origin_visibility_overclaim_or_partial_api_data_loss": 1,
       "origin_webhook_replay_or_api_drift": 1,
+      "original_authority_currentness_and_false_runtime_claim": 5,
       "original_cancelled_source_or_combined_projection_currentness_drift": 4,
       "original_goal_inspection_source_or_disclosure_drift": 3,
       "original_goal_workflow_source_custody_or_native_admission_drift": 4,
@@ -39013,7 +39014,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6500,
+      "accepted": 6505,
       "retired": 182,
       "superseded": 9
     },
@@ -39080,7 +39081,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5251,
+      "requirement": 5255,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -39106,7 +39107,7 @@
       "ui_wiring_rule": 1,
       "validation": 13,
       "validation_contract": 1,
-      "validation_criterion": 27,
+      "validation_criterion": 28,
       "validation_requirement": 3,
       "validation_rule": 24,
       "variant_contract": 2,
@@ -39169,7 +39170,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "a3944c3fa8447887a6fb32a1b11f1b711a4b2a34acd0d34df7ca4c428836c821",
+        "expected": "08759243578675179a1cceda7e36cf2e7a6a71f1c73fb33929b13d0a616fe04b",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -39187,13 +39188,13 @@
       {
         "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
         "error": "pnc019_source_hash_stale",
-        "expected": "f9859b9c1c413bf547e524701feb57ac6662a2e254fa7ef6c15730c6cb91c32f",
+        "expected": "b80f03742b3a6673b5c1fa876a1e797288f8154e6ea3491b3062872109d532db",
         "source_path": "Plans/Executor_Protocol.md"
       },
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "7820c4976279d68787ad662e324aa0c2c921b83fadcbca87be88f70b761b984d",
+        "expected": "70569719bc07737e40db631a2674684f9be71c079dc2dd6d3cdb8b6a31cbe2f2",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {
@@ -39205,7 +39206,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "588b2cad9f74f2aebd496cc766198665a8197a65fa75db41e224ab2cbe58343f",
+        "expected": "fb6f34def3f7a1d1cd3afaad4126cae095641c00cbddf1d8498755758caa2157",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -39239,12 +39240,388 @@
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {
-        "error": "pnc019_source_hash_path_missing",
+        "actual": null,
+        "error": "pnc019_source_hash_stale",
+        "expected": "021612b76503ecbeee9b2eaf7f7a32279f956345074a9a5d462e610a4e6f0ff5",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
-        "detail": "[Errno 2] No such file or directory: 'Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
-        "error": "event_authority_currentness_audit_unavailable"
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/00-plans-index.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Assistant_Plan_Runtime.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Automated_Testing_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Azure_DevOps_Integration.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Back_Seat_Driver.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Backup_Restore_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Bootstrap_Planning_Migration.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Collaborative_Workflows.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Commands_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Containers_Registry_and_Unraid.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Contracts_V0.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Crosswalk.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Cursor_Origin_Integration.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Decision_Log.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Executor_Protocol.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/FileManager.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/FileSafe.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/FinalGUISpec.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Forge_Integrations.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/GitHub_Integration.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Glossary.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Goal_Runtime_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Jujutsu_Integration.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/LSPSupport.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Models_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Multi-Account_Connection_Spec.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Orchestrator_Page.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Permissions_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Plan_To_Node_Compilation.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Planning_Ledger_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Planning_Wizard.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Project_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Prompt_Pipeline.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Release_Supply_Chain.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Run_Graph_View.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Server_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Settings_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Shared_Integration_Runtime.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Source_Control_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Spec_Lock.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/ToDo_Runtime.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Tools.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/UI_Command_Catalog.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/UI_Wiring_Rules.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Wiring_Matrix.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Wiring_Matrix.production.exclusions.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Wiring_Matrix.production.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Wiring_Matrix.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/assistant-chat-design.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/egolite_retained_requirement_contract_fixtures.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/egolite_retained_requirement_contracts.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_family_registry.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_completed.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_created.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_progressed.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_replanned.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_started.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/ledgers/v2/ledger_registry.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/newtools.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/orchestrator-subagent-integration.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/path_reference_registry.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/plans_to_code_handoff.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/server_command_gap_adjudication.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/settings_inventory.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/sharding_config.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/shared_runtime_contracts.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/storage-plan.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/storage_value_registry.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/storage_value_registry.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/touch_closure.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/usage-feature.md"
+      },
+      {
+        "error": "event_authority_currentness_direct_plans_source_set_drift"
+      },
+      {
+        "error": "event_authority_currentness_validator_drift",
+        "validator_path": "scripts/pm-event-authority-currentness.py"
+      },
+      {
+        "error": "event_authority_currentness_live_registry_drift"
       },
       {
         "actual_checkpoint": {

@@ -1,0 +1,155 @@
+{
+  "whole_successor_resource_ids": {
+    "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v4.schema.json": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v5.schema.json",
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v4.schema.json": "https://puppetmaster.local/proposals/executor_workflow_original_start.v5.schema.json",
+    "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v2.schema.json": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v3.schema.json",
+    "https://puppetmaster.local/proposals/workflow_standard_current_source.v2.schema.json": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json",
+    "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v2.schema.json": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v3.schema.json",
+    "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v4.schema.json": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v5.schema.json",
+    "https://puppetmaster.local/proposals/workflow_start_original_custody.v4.schema.json": "https://puppetmaster.local/proposals/workflow_start_original_custody.v5.schema.json"
+  },
+  "whole_successor_paths": {
+    "goal-run-certified.v3.schema.json": "goal-run-certified.v3.schema.json",
+    "workflow-cancel-start-profile.v4.schema.json": "workflow-cancel-start-profile.v5.schema.json",
+    "workflow-original-start.v4.schema.json": "workflow-original-start.v5.schema.json",
+    "workflow-standard-certification-argument.v2.schema.json": "workflow-standard-certification-argument.v3.schema.json",
+    "workflow-standard-current-source.v2.schema.json": "workflow-standard-current-source.v3.schema.json",
+    "workflow-standard-event-prerequisite.v2.schema.json": "workflow-standard-event-prerequisite.v3.schema.json",
+    "workflow-start-arguments.v4.schema.json": "workflow-start-arguments.v5.schema.json",
+    "workflow-start-custody.v4.schema.json": "workflow-start-custody.v5.schema.json"
+  },
+  "unchanged_whole_payload": "schemas/goal-run-certified.v3.schema.json",
+  "fresh_profile": "pm.executor.workflow_source.all_writers.v6",
+  "prior_profile_preserved": "pm.executor.workflow_source.all_writers.v5",
+  "stored_profile_deltas": [
+    {
+      "file": "workflow-original-start.v5.schema.json",
+      "definition": "StorageWorkflowBirth",
+      "before_schema_id": "pm.storage_value.executor_workflow_workflow_birth.v6",
+      "before_version": "6.0.0",
+      "after_schema_id": "pm.storage_value.executor_workflow_workflow_birth.v7",
+      "after_version": "7.0.0",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "file": "workflow-original-start.v5.schema.json",
+      "definition": "StorageWorkflowHead",
+      "before_schema_id": "pm.storage_value.executor_workflow_workflow_head.v6",
+      "before_version": "6.0.0",
+      "after_schema_id": "pm.storage_value.executor_workflow_workflow_head.v7",
+      "after_version": "7.0.0",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "file": "workflow-original-start.v5.schema.json",
+      "definition": "StorageWorkflowUpdate",
+      "before_schema_id": "pm.storage_value.executor_workflow_workflow_update.v6",
+      "before_version": "6.0.0",
+      "after_schema_id": "pm.storage_value.executor_workflow_workflow_update.v7",
+      "after_version": "7.0.0",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "file": "workflow-original-start.v5.schema.json",
+      "definition": "StorageWorkflowMutationOrigin",
+      "before_schema_id": "pm.storage_value.executor_workflow_lineage_origin.v6",
+      "before_version": "6.0.0",
+      "after_schema_id": "pm.storage_value.executor_workflow_lineage_origin.v7",
+      "after_version": "7.0.0",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "file": "workflow-start-custody.v5.schema.json",
+      "definition": "StorageCandidate",
+      "before_schema_id": "pm.storage_value.workflow_start_candidate.v4",
+      "before_version": "4.0.0",
+      "after_schema_id": "pm.storage_value.workflow_start_candidate.v5",
+      "after_version": "5.0.0",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "file": "workflow-start-custody.v5.schema.json",
+      "definition": "StorageOrigin",
+      "before_schema_id": "pm.storage_value.workflow_start_origin.v4",
+      "before_version": "4.0.0",
+      "after_schema_id": "pm.storage_value.workflow_start_origin.v5",
+      "after_version": "5.0.0",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "file": "workflow-cancel-start-profile.v5.schema.json",
+      "definition": "StorageResult",
+      "before_schema_id": "pm.storage_value.workflow_cancel_result.v5",
+      "before_version": "5.0.0",
+      "after_schema_id": "pm.storage_value.workflow_cancel_result.v6",
+      "after_version": "6.0.0",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "file": "workflow-cancel-start-profile.v5.schema.json",
+      "definition": "StorageOrigin",
+      "before_schema_id": "pm.storage_value.workflow_cancel_origin.v5",
+      "before_version": "5.0.0",
+      "after_schema_id": "pm.storage_value.workflow_cancel_origin.v6",
+      "after_version": "6.0.0",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "file": "workflow-standard-current-source.v3.schema.json",
+      "definition": "StorageWorkflowResult",
+      "before_schema_id": "pm.storage_value.workflow_standard_result.v2",
+      "before_version": "2.0.0",
+      "after_schema_id": "pm.storage_value.workflow_standard_result.v3",
+      "after_version": "3.0.0",
+      "key_codec": "unchanged proposed v1 family key; fresh exact role only, no overwrite or old-row reinterpretation"
+    },
+    {
+      "file": "workflow-standard-current-source.v3.schema.json",
+      "definition": "StorageWorkflowOrigin",
+      "before_schema_id": "pm.storage_value.workflow_standard_origin.v2",
+      "before_version": "2.0.0",
+      "after_schema_id": "pm.storage_value.workflow_standard_origin.v3",
+      "after_version": "3.0.0",
+      "key_codec": "unchanged proposed v1 family key; fresh exact role only, no overwrite or old-row reinterpretation"
+    },
+    {
+      "file": "workflow-standard-certification-argument.v3.schema.json",
+      "definition": "StorageStandardCaptureOrigin",
+      "before_schema_id": "pm.storage_value.workflow_standard_capture_origin.v2",
+      "before_version": "2.0.0",
+      "after_schema_id": "pm.storage_value.workflow_standard_capture_origin.v3",
+      "after_version": "3.0.0",
+      "key_codec": "unchanged proposed original capture-origin v1 key; exact new role only"
+    }
+  ],
+  "first_attempt_stage_delta": {
+    "predecessor_admission_properties": [
+      "request",
+      "current",
+      "permission",
+      "runtime",
+      "execution_unit",
+      "dispatch",
+      "dispatch_admission",
+      "frozen_attempt_budget",
+      "rollback_policy",
+      "original_budget_policy"
+    ],
+    "preserved_prebirth_fields": [
+      "request",
+      "current",
+      "permission",
+      "runtime",
+      "execution_unit",
+      "dispatch",
+      "frozen_attempt_budget",
+      "rollback_policy",
+      "original_budget_policy"
+    ],
+    "replaced_prebirth_dependency": "dispatch_admission: whole DispatchCurrent belongs to actual postbirth effect dispatch",
+    "removed_BeginAttemptSource_field": "current_dispatch_admission",
+    "original_admission_value": "AttemptStartAdmission/source contains the complete FirstAttemptAdmissionSource; source-only and no own birth/control/dispatch output",
+    "new_owner_method": "owner.executor.native.admit_first_attempt.v1",
+    "postbirth_whole_definition": "https://puppetmaster.local/proposals/executor_workflow_original_start.v5.schema.json#/$defs/DispatchCurrent"
+  }
+}

@@ -1,0 +1,2407 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json",
+  "title": "Proposed original Goal execution association and cancellation assignment custody",
+  "$comment": "Source definitions only. Behavioral original ownership, exhaustive scope, all-helper predicates and native registration are not established by validation.",
+  "$defs": {
+    "Scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "PhysicalSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "codec_id",
+        "complete_value_sha256"
+      ],
+      "properties": {
+        "family_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "codec_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "complete_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "OriginalTransaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_method",
+        "original_owner_ref",
+        "original_owner_epoch",
+        "original_operation_id",
+        "original_transaction_id",
+        "original_permission_source",
+        "original_causation_ref",
+        "committed_at"
+      ],
+      "properties": {
+        "owner_method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_permission_source": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "original_causation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "committed_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "WriterRegistration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "original_owner_ref",
+        "original_owner_epoch",
+        "method_id",
+        "method_contract_sha256",
+        "schema_resources_sha256",
+        "original_registration_ref",
+        "disposition"
+      ],
+      "properties": {
+        "operation": {
+          "enum": [
+            "goal_birth",
+            "plan_goal_birth_or_attach",
+            "workflow_attach",
+            "binding_owner_transfer",
+            "binding_migration",
+            "binding_restore",
+            "binding_content_delete"
+          ]
+        },
+        "original_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "method_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "method_contract_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "schema_resources_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_registration_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "disposition": {
+          "enum": [
+            "participating",
+            "disabled_at_original_dispatch"
+          ]
+        }
+      }
+    },
+    "NativeWriterDescriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "native_handler_id",
+        "original_owner_ref",
+        "original_owner_epoch",
+        "storage_instance_id",
+        "storage_family_ids",
+        "route_schema_ids",
+        "native_binding_generation",
+        "original_registration_ref",
+        "disposition"
+      ],
+      "properties": {
+        "operation": {
+          "enum": [
+            "goal_birth",
+            "plan_goal_birth_or_attach",
+            "workflow_attach",
+            "binding_owner_transfer",
+            "binding_migration",
+            "binding_restore",
+            "binding_content_delete"
+          ]
+        },
+        "native_handler_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_family_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "route_schema_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "native_binding_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_registration_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "disposition": {
+          "enum": [
+            "participating",
+            "disabled_at_original_dispatch"
+          ]
+        }
+      }
+    },
+    "SchemaResourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "complete_resource_sha256",
+        "codec_id",
+        "complete_codec_contract_sha256",
+        "original_registration_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "complete_resource_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "codec_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "complete_codec_contract_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_registration_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "DispatchCommitmentInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "domain",
+        "storage_instance_id",
+        "native_root_identity",
+        "complete_descriptors"
+      ],
+      "properties": {
+        "domain": {
+          "const": "pm.goal.execution_dispatch.v1"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_root_identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "complete_descriptors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NativeWriterDescriptor"
+          },
+          "minItems": 7
+        }
+      }
+    },
+    "ResourceCommitmentInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "domain",
+        "complete_resources"
+      ],
+      "properties": {
+        "domain": {
+          "const": "pm.goal.execution_resources.v1"
+        },
+        "complete_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SchemaResourceBinding"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "WriterDomain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "domain_generation",
+        "native_root_identity",
+        "schema_resources_sha256",
+        "complete_original_dispatch_registration_sha256",
+        "writers",
+        "original_installation"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "domain_generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "native_root_identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_resources_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "complete_original_dispatch_registration_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "writers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WriterRegistration"
+          },
+          "minItems": 7,
+          "maxItems": 7,
+          "allOf": [
+            {
+              "contains": {
+                "properties": {
+                  "operation": {
+                    "const": "goal_birth"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "operation": {
+                    "const": "plan_goal_birth_or_attach"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "operation": {
+                    "const": "workflow_attach"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "operation": {
+                    "const": "binding_owner_transfer"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "operation": {
+                    "const": "binding_migration"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "operation": {
+                    "const": "binding_restore"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "operation": {
+                    "const": "binding_content_delete"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            }
+          ]
+        },
+        "original_installation": {
+          "$ref": "#/$defs/OriginalTransaction"
+        }
+      }
+    },
+    "WriterDomainHead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "domain_generation",
+        "domain",
+        "original_installation_transaction_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "domain_generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "domain": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "original_installation_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "GoalPlanBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "goal_id",
+        "assistant_plan_id",
+        "plan_version",
+        "plan_hash",
+        "plan_run_id",
+        "todo_list_ref",
+        "planunit_bundle_ref"
+      ],
+      "properties": {
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assistant_plan_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "plan_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "plan_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "todo_list_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "planunit_bundle_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "PlanAssociation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "association_kind",
+        "binding",
+        "original_binding_source",
+        "original_plan_run_source",
+        "execution_owner_ref",
+        "execution_owner_epoch",
+        "original_binding_transaction_id"
+      ],
+      "properties": {
+        "association_kind": {
+          "const": "assistant_plan"
+        },
+        "binding": {
+          "$ref": "#/$defs/GoalPlanBinding"
+        },
+        "original_binding_source": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "original_plan_run_source": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "execution_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "execution_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_binding_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "WorkflowAssociation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "association_kind",
+        "active_run_ref",
+        "original_run_source",
+        "execution_owner_ref",
+        "execution_owner_epoch",
+        "original_binding_transaction_id"
+      ],
+      "properties": {
+        "association_kind": {
+          "const": "workflow"
+        },
+        "active_run_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_run_source": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "execution_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "execution_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_binding_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "Association": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PlanAssociation"
+        },
+        {
+          "$ref": "#/$defs/WorkflowAssociation"
+        }
+      ]
+    },
+    "BindingRevision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "binding_revision",
+        "previous_revision",
+        "active_run_ref",
+        "associations",
+        "host_execution_owner_ref",
+        "host_execution_owner_epoch",
+        "writer_domain",
+        "original_goal_birth_or_binding_operation"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "binding_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "previous_revision": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/PhysicalSelection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "active_run_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "associations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Association"
+          },
+          "minItems": 0,
+          "maxItems": 1
+        },
+        "host_execution_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "host_execution_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "writer_domain": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "original_goal_birth_or_binding_operation": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "associations": {
+                "maxItems": 0
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "active_run_ref": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "active_run_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "BindingOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "binding_revision",
+        "issued_revision_key",
+        "issued_revision_sha256",
+        "before_control_sha256",
+        "original_goal_body_sha256",
+        "original_goal_control_sha256",
+        "original_stop_control_sha256",
+        "original_source_members",
+        "issuer"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "binding_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "issued_revision_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "before_control_sha256": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_goal_body_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_goal_control_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_stop_control_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_source_members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PhysicalSelection"
+          },
+          "minItems": 0
+        },
+        "issuer": {
+          "$ref": "#/$defs/OriginalTransaction"
+        }
+      }
+    },
+    "BindingPending": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "operation",
+        "expected_control_sha256",
+        "expected_goal_body_sha256",
+        "expected_goal_control_sha256",
+        "expected_stop_control_sha256",
+        "expected_writer_domain",
+        "candidate",
+        "original_owner_ref",
+        "original_owner_epoch"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation": {
+          "enum": [
+            "plan_goal_birth_or_attach",
+            "workflow_attach",
+            "binding_owner_transfer",
+            "binding_migration"
+          ]
+        },
+        "expected_control_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_goal_body_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_goal_control_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_stop_control_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_writer_domain": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "candidate": {
+          "$ref": "#/$defs/BindingRevision"
+        },
+        "original_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "BindingControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "control_epoch",
+        "binding_revision",
+        "current_revision",
+        "current_origin",
+        "writer_domain",
+        "pending"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "control_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "current_revision": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "current_origin": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "writer_domain": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "pending": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BindingPending"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "BindingSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "original_command_instance_id",
+        "original_dispatch_id",
+        "binding_control",
+        "binding_revision",
+        "binding_origin",
+        "writer_domain_head",
+        "writer_domain",
+        "original_goal_body_sha256",
+        "original_goal_control_sha256",
+        "original_stop_control_sha256",
+        "actual_active_run_ref",
+        "original_pending_binding_operation_id",
+        "original_pending_binding_candidate_sha256",
+        "association_count",
+        "disposition",
+        "original_reader"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_dispatch_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "binding_control": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "binding_revision": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "binding_origin": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "writer_domain_head": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "writer_domain": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "original_goal_body_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_goal_control_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_stop_control_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "actual_active_run_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_pending_binding_operation_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_pending_binding_candidate_sha256": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "association_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "disposition": {
+          "enum": [
+            "no_execution_association",
+            "bound_plan_requires_owner_settlement",
+            "workflow_requires_owner_disposition"
+          ]
+        },
+        "original_reader": {
+          "$ref": "#/$defs/OriginalTransaction"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "disposition": {
+                "const": "no_execution_association"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "association_count": {
+                "const": 0
+              },
+              "actual_active_run_ref": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "association_count": {
+                "const": 1
+              },
+              "actual_active_run_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "original_pending_binding_operation_id": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_pending_binding_candidate_sha256": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "original_pending_binding_candidate_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "BindingPendingResolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "pending_operation_id",
+        "cancellation_operation_id",
+        "original_pending_candidate_sha256",
+        "before_control_sha256",
+        "after_control_sha256",
+        "unchanged_binding_revision",
+        "original_latched_stop",
+        "no_original_association_effect",
+        "disposition",
+        "original_resolver"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "pending_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cancellation_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_pending_candidate_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "before_control_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "after_control_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "unchanged_binding_revision": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "original_latched_stop": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "no_original_association_effect": {
+          "const": true
+        },
+        "disposition": {
+          "const": "aborted_uncommitted_original_binding"
+        },
+        "original_resolver": {
+          "$ref": "#/$defs/OriginalTransaction"
+        }
+      }
+    },
+    "BindingReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "purpose",
+        "operation_id",
+        "expected_selection"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "purpose": {
+          "enum": [
+            "current_for_cancel",
+            "retained_selection_audit"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_selection": {
+          "$ref": "#/$defs/PhysicalSelection"
+        }
+      }
+    },
+    "BindingReadCurrent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "control",
+        "revision",
+        "origin",
+        "domain",
+        "original_execution_binding",
+        "selection"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "control": {
+          "$ref": "#/$defs/BindingControl"
+        },
+        "revision": {
+          "$ref": "#/$defs/BindingRevision"
+        },
+        "origin": {
+          "$ref": "#/$defs/BindingOrigin"
+        },
+        "domain": {
+          "$ref": "#/$defs/WriterDomain"
+        },
+        "original_execution_binding": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding"
+        },
+        "selection": {
+          "$ref": "#/$defs/BindingSelection"
+        }
+      }
+    },
+    "BindingReadUnavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reason"
+      ],
+      "properties": {
+        "reason": {
+          "enum": [
+            "missing_original_source",
+            "foreign_original_source",
+            "pending_binding",
+            "source_changed",
+            "unsupported_original_owner",
+            "permission_denied",
+            "content_deleted"
+          ]
+        }
+      }
+    },
+    "BindingReadAudit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_selection",
+        "original_revision",
+        "original_origin",
+        "observation"
+      ],
+      "properties": {
+        "original_selection": {
+          "$ref": "#/$defs/BindingSelection"
+        },
+        "original_revision": {
+          "$ref": "#/$defs/BindingRevision"
+        },
+        "original_origin": {
+          "$ref": "#/$defs/BindingOrigin"
+        },
+        "observation": {
+          "const": "historical_binding_selection_only"
+        }
+      }
+    },
+    "BindingReadResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/BindingReadCurrent"
+        },
+        {
+          "$ref": "#/$defs/BindingReadAudit"
+        },
+        {
+          "$ref": "#/$defs/BindingReadUnavailable"
+        }
+      ]
+    },
+    "EncodingTerm": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/LiteralNull"
+        },
+        {
+          "$ref": "#/$defs/LiteralBoolean"
+        },
+        {
+          "$ref": "#/$defs/LiteralInteger"
+        },
+        {
+          "$ref": "#/$defs/LiteralString"
+        },
+        {
+          "$ref": "#/$defs/TemplateArray"
+        },
+        {
+          "$ref": "#/$defs/TemplateMap"
+        },
+        {
+          "$ref": "#/$defs/RuntimeHash"
+        },
+        {
+          "$ref": "#/$defs/RuntimeTimestamp"
+        }
+      ]
+    },
+    "LiteralNull": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "term"
+      ],
+      "properties": {
+        "term": {
+          "const": "null"
+        }
+      }
+    },
+    "LiteralBoolean": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "term",
+        "value"
+      ],
+      "properties": {
+        "term": {
+          "const": "boolean"
+        },
+        "value": {
+          "type": "boolean"
+        }
+      }
+    },
+    "LiteralInteger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "term",
+        "value"
+      ],
+      "properties": {
+        "term": {
+          "const": "integer"
+        },
+        "value": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "LiteralString": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "term",
+        "value"
+      ],
+      "properties": {
+        "term": {
+          "const": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "TemplateArray": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "term",
+        "items"
+      ],
+      "properties": {
+        "term": {
+          "const": "array"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EncodingTerm"
+          },
+          "minItems": 0
+        }
+      }
+    },
+    "TemplateMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "value"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "#/$defs/EncodingTerm"
+        }
+      }
+    },
+    "TemplateMap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "term",
+        "members"
+      ],
+      "properties": {
+        "term": {
+          "const": "map"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TemplateMember"
+          },
+          "minItems": 0
+        }
+      }
+    },
+    "RuntimeHash": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "term",
+        "source_slot",
+        "encoded_utf8_bytes"
+      ],
+      "properties": {
+        "term": {
+          "const": "original_sha256"
+        },
+        "source_slot": {
+          "enum": [
+            "cancellation_receipt_sha256"
+          ]
+        },
+        "encoded_utf8_bytes": {
+          "const": 64
+        }
+      }
+    },
+    "RuntimeTimestamp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "term",
+        "source_slot"
+      ],
+      "properties": {
+        "term": {
+          "const": "original_timestamp"
+        },
+        "source_slot": {
+          "enum": [
+            "event.observed_at_utc",
+            "event.persisted_at_utc"
+          ]
+        }
+      }
+    },
+    "IntegerDomain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minimum",
+        "maximum",
+        "step"
+      ],
+      "properties": {
+        "minimum": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maximum": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "step": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "NumericDerivation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "source_role",
+        "source_json_pointer",
+        "additive_offsets"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "original_integer_plus_offsets",
+            "original_reserved_domain",
+            "original_finite_progress_set"
+          ]
+        },
+        "source_role": {
+          "enum": [
+            "source_audit",
+            "original_goal_control",
+            "original_sir_outcome",
+            "append_reservation",
+            "assignment_input"
+          ]
+        },
+        "source_json_pointer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "additive_offsets": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "NumericPathDomain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "schema_branch",
+        "json_pointer",
+        "values",
+        "original_derivation"
+      ],
+      "properties": {
+        "target": {
+          "enum": [
+            "producer_semantic_digest",
+            "event_value",
+            "goal_cancel_result",
+            "command_outcome",
+            "command_response"
+          ]
+        },
+        "schema_branch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "json_pointer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/IntegerDomain"
+          },
+          "minItems": 1
+        },
+        "original_derivation": {
+          "$ref": "#/$defs/NumericDerivation"
+        }
+      }
+    },
+    "CodecResource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "purpose",
+        "codec_id",
+        "codec_version",
+        "actual_schema_id",
+        "actual_schema_version",
+        "original_resource_sha256",
+        "original_registration_ref",
+        "original_owner_ref",
+        "original_owner_epoch"
+      ],
+      "properties": {
+        "purpose": {
+          "enum": [
+            "goal_json",
+            "producer_jcs",
+            "event_msgpack",
+            "sir_result_jcs"
+          ]
+        },
+        "codec_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "codec_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_schema_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_resource_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_registration_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "AppendSourceRead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current",
+        "manifest",
+        "sequence_allocator",
+        "current_selection",
+        "manifest_selection",
+        "sequence_selection"
+      ],
+      "properties": {
+        "current": {
+          "$ref": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json#/$defs/current"
+        },
+        "manifest": {
+          "$ref": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json#/$defs/manifest"
+        },
+        "sequence_allocator": {
+          "$ref": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json#/$defs/sequence_lease_control"
+        },
+        "current_selection": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "manifest_selection": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "sequence_selection": {
+          "$ref": "#/$defs/PhysicalSelection"
+        }
+      }
+    },
+    "AppendReservationSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "original_operation_id",
+        "original_native_boot_session_ref",
+        "original_append_owner_ref",
+        "original_append_owner_epoch",
+        "original_exclusive_fence_id",
+        "current",
+        "manifest",
+        "sequence_allocator",
+        "original_lease_id",
+        "reserved_sequence_id",
+        "selected_segment_generation",
+        "selected_manifest_generation",
+        "selected_segment_name",
+        "selected_segment_physical_id",
+        "byte_offset",
+        "exact_header_byte_length",
+        "event_value_byte_length_domain",
+        "frame_byte_length_domain",
+        "durable_end_offset_domain",
+        "complete_original_active_sink_sha256",
+        "original_reservation_transaction_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_native_boot_session_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_append_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_append_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_exclusive_fence_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "manifest": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "sequence_allocator": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "original_lease_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reserved_sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "selected_segment_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "selected_manifest_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "selected_segment_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selected_segment_physical_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "byte_offset": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "exact_header_byte_length": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "event_value_byte_length_domain": {
+          "$ref": "#/$defs/IntegerDomain"
+        },
+        "frame_byte_length_domain": {
+          "$ref": "#/$defs/IntegerDomain"
+        },
+        "durable_end_offset_domain": {
+          "$ref": "#/$defs/IntegerDomain"
+        },
+        "complete_original_active_sink_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_reservation_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "AssignmentAudit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "assignment_attempt",
+        "source_audit",
+        "binding_selection",
+        "original_acknowledged_outcome_source",
+        "original_acknowledged_outcome",
+        "original_append_reservation",
+        "exact_event_encoding_template",
+        "numeric_path_domains",
+        "codec_resources",
+        "complete_original_input_commitment",
+        "original_initial_control_epoch",
+        "original_pending_resolution_count",
+        "original_fixed_progress_epochs",
+        "original_issuer"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assignment_attempt": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_audit": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "binding_selection": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "original_acknowledged_outcome_source": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "original_acknowledged_outcome": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/NonterminalOutcome"
+            },
+            {
+              "properties": {
+                "outcome": {
+                  "enum": [
+                    "acknowledged",
+                    "executing"
+                  ]
+                },
+                "acknowledgement_receipt_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "acknowledgement_frame_offset": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          ]
+        },
+        "original_append_reservation": {
+          "$ref": "#/$defs/AppendReservationSource"
+        },
+        "exact_event_encoding_template": {
+          "$ref": "#/$defs/EncodingTerm"
+        },
+        "numeric_path_domains": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NumericPathDomain"
+          },
+          "minItems": 1
+        },
+        "codec_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CodecResource"
+          },
+          "minItems": 4,
+          "maxItems": 4,
+          "allOf": [
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "goal_json"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "producer_jcs"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "event_msgpack"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "sir_result_jcs"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            }
+          ]
+        },
+        "complete_original_input_commitment": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_initial_control_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_pending_resolution_count": {
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "original_fixed_progress_epochs": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minItems": 1,
+          "const": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        "original_issuer": {
+          "$ref": "#/$defs/OriginalTransaction"
+        }
+      }
+    },
+    "AssignmentInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "assignment_attempt",
+        "source_audit",
+        "binding_selection",
+        "original_acknowledged_outcome_source",
+        "original_acknowledged_outcome",
+        "original_append_reservation",
+        "exact_event_encoding_template",
+        "numeric_path_domains",
+        "codec_resources",
+        "original_initial_control_epoch",
+        "original_pending_resolution_count",
+        "original_fixed_progress_epochs"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assignment_attempt": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_audit": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "binding_selection": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "original_acknowledged_outcome_source": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "original_acknowledged_outcome": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/NonterminalOutcome"
+            },
+            {
+              "properties": {
+                "outcome": {
+                  "enum": [
+                    "acknowledged",
+                    "executing"
+                  ]
+                },
+                "acknowledgement_receipt_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "acknowledgement_frame_offset": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          ]
+        },
+        "original_append_reservation": {
+          "$ref": "#/$defs/AppendReservationSource"
+        },
+        "exact_event_encoding_template": {
+          "$ref": "#/$defs/EncodingTerm"
+        },
+        "numeric_path_domains": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NumericPathDomain"
+          },
+          "minItems": 1
+        },
+        "codec_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CodecResource"
+          },
+          "minItems": 4,
+          "maxItems": 4,
+          "allOf": [
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "goal_json"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "producer_jcs"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "event_msgpack"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "sir_result_jcs"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            }
+          ]
+        },
+        "original_initial_control_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_pending_resolution_count": {
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "original_fixed_progress_epochs": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minItems": 1,
+          "const": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        }
+      }
+    },
+    "DomainCommitmentInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assignment",
+        "numeric_path_domains",
+        "codec_resources",
+        "exact_event_encoding_template"
+      ],
+      "properties": {
+        "assignment": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "numeric_path_domains": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NumericPathDomain"
+          },
+          "minItems": 1
+        },
+        "codec_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CodecResource"
+          },
+          "minItems": 4
+        },
+        "exact_event_encoding_template": {
+          "$ref": "#/$defs/EncodingTerm"
+        }
+      }
+    },
+    "AssignmentAdmission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assignment",
+        "full_domain_sha256",
+        "native_fence_identity",
+        "original_operation_id",
+        "codec_route"
+      ],
+      "properties": {
+        "assignment": {
+          "$ref": "#/$defs/PhysicalSelection"
+        },
+        "full_domain_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "native_fence_identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "codec_route": {
+          "enum": [
+            "exact_existing_codec_route",
+            "unsupported_existing_codec_route"
+          ]
+        }
+      }
+    },
+    "StorageWriterDomain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_execution_writer_domain.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/WriterDomain"
+        }
+      }
+    },
+    "StorageWriterDomainHead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_execution_writer_domain_head.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/WriterDomainHead"
+        }
+      }
+    },
+    "StorageBindingRevision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_execution_binding_revision.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/BindingRevision"
+        }
+      }
+    },
+    "StorageBindingOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_execution_binding_origin.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/BindingOrigin"
+        }
+      }
+    },
+    "StorageGoalPlanBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_plan_binding.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/GoalPlanBinding"
+        }
+      }
+    },
+    "StorageBindingControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_execution_binding_control.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/BindingControl"
+        }
+      }
+    },
+    "StorageBindingPendingResolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_execution_binding_pending_resolution.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/BindingPendingResolution"
+        }
+      }
+    },
+    "StorageBindingSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_cancel_binding_selection.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/BindingSelection"
+        }
+      }
+    },
+    "StorageAssignmentAudit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_cancel_assignment_audit.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/AssignmentAudit"
+        }
+      }
+    }
+  }
+}

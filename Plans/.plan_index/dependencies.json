@@ -6586,6 +6586,7 @@
     "WM-051",
     "SSYS-024",
     "EP-120",
+    "EP-122",
     "SP-309",
     "SRV-014",
     "CS-078",
@@ -6594,6 +6595,7 @@
     "F3-525",
     "SSYS-017",
     "EP-121",
+    "GRS-082",
     "BRS-025",
     "GRS-078",
     "SP-311",
@@ -6603,6 +6605,7 @@
     "UIW-018",
     "F3-526",
     "SSYS-026",
+    "CV-350",
     "SIR-052",
     "SP-310",
     "BRS-027",
@@ -6615,6 +6618,7 @@
     "UIW-019",
     "F3-528",
     "SSYS-027",
+    "SP-314",
     "BRS-026",
     "SP-313",
     "BRS-028",
@@ -6628,6 +6632,7 @@
     "C-052",
     "F3-529",
     "SSYS-028",
+    "ATS-055",
     "GRS-081",
     "UIW-021",
     "UIW-022",
@@ -12746,6 +12751,26 @@
       "edge_type": "depends_on",
       "from": "ATS-054",
       "to": "ATS-046"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-055",
+      "to": "CV-350"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-055",
+      "to": "EP-122"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-055",
+      "to": "GRS-082"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-055",
+      "to": "SP-314"
     },
     {
       "edge_type": "depends_on",
@@ -21734,6 +21759,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-350",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-350",
+      "to": "CV-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-350",
+      "to": "EP-122"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-350",
+      "to": "GRS-082"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CW-003",
       "to": "CW-002"
     },
@@ -24641,6 +24686,26 @@
       "edge_type": "depends_on",
       "from": "EP-121",
       "to": "EP-120"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-122",
+      "to": "EP-117"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-122",
+      "to": "EP-118"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-122",
+      "to": "EP-119"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-122",
+      "to": "GRS-075"
     },
     {
       "edge_type": "depends_on",
@@ -29691,6 +29756,26 @@
       "edge_type": "depends_on",
       "from": "GRS-081",
       "to": "SP-313"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-082",
+      "to": "EP-122"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-082",
+      "to": "GRS-065"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-082",
+      "to": "GRS-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-082",
+      "to": "GRS-077"
     },
     {
       "edge_type": "depends_on",
@@ -69064,6 +69149,31 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-314",
+      "to": "CV-350"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-314",
+      "to": "SP-214"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-314",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-314",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-314",
+      "to": "SP-289"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -91849,6 +91959,16 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "CV-350",
+      "to": "ATS-055"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-350",
+      "to": "SP-314"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "CW-002",
       "to": "CW-003"
     },
@@ -93369,6 +93489,26 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "EP-122",
+      "to": "ATS-055"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "EP-122",
+      "to": "CV-350"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "EP-122",
+      "to": "GRS-082"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "EP-122",
+      "to": "SP-314"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "ERS-001",
       "to": "ERS-002"
     },
@@ -94346,6 +94486,21 @@
       "edge_type": "unblocks",
       "from": "GRS-050",
       "to": "GRS-051"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "GRS-082",
+      "to": "ATS-055"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "GRS-082",
+      "to": "CV-350"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "GRS-082",
+      "to": "SP-314"
     },
     {
       "edge_type": "unblocks",
@@ -96619,6 +96774,11 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "SP-314",
+      "to": "ATS-055"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "SQR-001",
       "to": "SQR-005"
     },
@@ -98068,7 +98228,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-23T03:37:46Z",
+  "generated_at_utc": "2026-09-23T14:52:20Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -111042,6 +111202,23 @@
       "unit_type": "validation_criterion"
     },
     {
+      "context_scope": "whole_successful_native_source_and_isolated_owner_realms",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-055",
+      "reasoning_tier": "high",
+      "risk_class": "original_authority_currentness_and_false_runtime_claim",
+      "source_location": {
+        "heading": "ATS-055 — Successful native source contract preservation and acceptance obligations (2026-09-20)",
+        "heading_level": 2,
+        "heading_line": 4902,
+        "line": 4904,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_criterion"
+    },
+    {
       "context_scope": "bitbucket_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Bitbucket_Integration.md",
@@ -123146,6 +123323,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "whole_successful_native_source_and_isolated_owner_realms",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-350",
+      "reasoning_tier": "high",
+      "risk_class": "original_authority_currentness_and_false_runtime_claim",
+      "source_location": {
+        "heading": "CV-350 — Whole versioned successful source composition and authority boundaries (2026-09-20)",
+        "heading_level": 2,
+        "heading_line": 23146,
+        "line": 23148,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/chain-wizard.md",
@@ -131576,6 +131770,23 @@
       },
       "status": "accepted",
       "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "whole_successful_native_source_and_isolated_owner_realms",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-122",
+      "reasoning_tier": "high",
+      "risk_class": "original_authority_currentness_and_false_runtime_claim",
+      "source_location": {
+        "heading": "EP-122 — Original successful native lifecycle source and prebirth admission (2026-09-20)",
+        "heading_level": 2,
+        "heading_line": 8450,
+        "line": 8452,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "external_research",
@@ -150837,6 +151048,23 @@
       },
       "status": "accepted",
       "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "whole_successful_native_source_and_isolated_owner_realms",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-082",
+      "reasoning_tier": "high",
+      "risk_class": "original_authority_currentness_and_false_runtime_claim",
+      "source_location": {
+        "heading": "GRS-082 — Fresh Standard Workflow certification original source (2026-09-20)",
+        "heading_level": 2,
+        "heading_line": 7644,
+        "line": 7646,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "residual_plan_standardization",
@@ -198660,6 +198888,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "whole_successful_native_source_and_isolated_owner_realms",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-314",
+      "reasoning_tier": "high",
+      "risk_class": "original_authority_currentness_and_false_runtime_claim",
+      "source_location": {
+        "heading": "SP-314 — Original Standard authority families and fresh whole stored profiles (2026-09-20)",
+        "heading_level": 2,
+        "heading_line": 26073,
+        "line": 26075,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -211824,12 +212069,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15585,
+    "depends_on_edge_count": 15606,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18274,
-    "node_count": 6691,
+    "edge_count": 18305,
+    "node_count": 6696,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2689,
+    "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

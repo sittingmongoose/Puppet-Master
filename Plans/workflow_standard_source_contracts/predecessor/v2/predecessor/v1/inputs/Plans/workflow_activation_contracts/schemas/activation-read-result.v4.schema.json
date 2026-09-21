@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/workflow_activation_current_reader.v4.schema.json",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result",
+        "value",
+        "origin"
+      ],
+      "properties": {
+        "result": {
+          "const": "available"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/PreMutationCancellationPhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/NativeCompileSourcePhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/NativeRequestSourcePhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/CertifiedGraphSourcePhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/NativeIntakeSourcePhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ProvisioningReceiptPhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ActivationDecisionSourcePhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/CompletionRequirementSourcePhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/BornWorkNodeRecordPhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/WorkNodeMaterializationReceiptPhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/InstalledWorkGraphPhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RequiredSetPhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBodyPhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControlPhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ActivationTransitionReceiptPhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/EntryPointStagingPhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ActivationReceiptPhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/StartOutboxIntentPhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OriginalInputCapturePhysical"
+            }
+          ]
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result",
+        "value",
+        "origin"
+      ],
+      "properties": {
+        "result": {
+          "const": "available"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/NativeSourceControlPhysical"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+            }
+          ]
+        },
+        "origin": {
+          "type": "null"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result",
+        "value",
+        "origin"
+      ],
+      "properties": {
+        "result": {
+          "const": "unavailable"
+        },
+        "value": {
+          "type": "null"
+        },
+        "origin": {
+          "type": "null"
+        }
+      }
+    }
+  ],
+  "$comment": "Complete native custody/currentness/retention and final no-gap predicates mandatory. Schema validity is not original source authentication."
+}

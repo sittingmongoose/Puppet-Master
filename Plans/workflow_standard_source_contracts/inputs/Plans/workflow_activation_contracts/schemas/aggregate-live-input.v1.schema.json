@@ -1,0 +1,836 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json",
+  "$comment": "Source-only exact live Executor aggregate intake input; private original operation capability is not a serialized view. Existing mandatory-backup per-request recovery remains required.",
+  "$defs": {
+    "Scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "plan_compile_run_id",
+        "activation_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_compile_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "activation_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "Owner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_ref",
+        "owner_epoch",
+        "server_id",
+        "server_claim_epoch"
+      ],
+      "properties": {
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_claim_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "OriginalAggregate": {
+      "$ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/executor_intake_report"
+    },
+    "OriginalGraph": {
+      "$ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/workgraph_draft"
+    },
+    "OriginalRequest": {
+      "$ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_request"
+    },
+    "OriginalPerRequestResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "request_id",
+        "intake_id",
+        "intake_status",
+        "graph_integrity_result",
+        "source_control_result",
+        "test_binding_result",
+        "model_routing_result",
+        "authority_result",
+        "readiness_result",
+        "scheduler_metadata_result",
+        "created_at_utc",
+        "redaction_profile"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_intake_report.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "intake_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "intake_status": {
+          "type": "string",
+          "enum": [
+            "accepted",
+            "rejected",
+            "blocked"
+          ]
+        },
+        "graph_integrity_result": {
+          "type": "object"
+        },
+        "source_control_result": {
+          "type": "object"
+        },
+        "test_binding_result": {
+          "type": "object"
+        },
+        "model_routing_result": {
+          "type": "object"
+        },
+        "authority_result": {
+          "type": "object"
+        },
+        "readiness_result": {
+          "type": "object"
+        },
+        "scheduler_metadata_result": {
+          "type": "object"
+        },
+        "created_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "type": "string",
+          "enum": [
+            "no_secrets",
+            "redacted_refs_only"
+          ]
+        },
+        "blocked_reason_code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rejected_reason_code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "accepted_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "execution_unit_context_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "OriginalPerRequestBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "source"
+      ],
+      "properties": {
+        "value": {
+          "$ref": "#/$defs/OriginalPerRequestResult"
+        },
+        "source": {
+          "$ref": "compiler-routes/activation/activation-source.schema.json#/$defs/OriginalSourceBinding"
+        }
+      }
+    },
+    "OriginalOperationView": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "owner",
+        "original_operation_id",
+        "original_operation_revision",
+        "intake_revision",
+        "identity",
+        "report",
+        "graph",
+        "graph_source",
+        "requests",
+        "request_sources",
+        "request_results"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_operation_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "intake_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "identity": {
+          "$ref": "compiler-routes/activation/activation-source.schema.json#/$defs/RunIdentity"
+        },
+        "report": {
+          "$ref": "#/$defs/OriginalAggregate"
+        },
+        "graph": {
+          "$ref": "#/$defs/OriginalGraph"
+        },
+        "graph_source": {
+          "$ref": "compiler-routes/activation/activation-source.schema.json#/$defs/OriginalSourceBinding"
+        },
+        "requests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalRequest"
+          }
+        },
+        "request_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "compiler-routes/activation/activation-source.schema.json#/$defs/OriginalSourceBinding"
+          }
+        },
+        "request_results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalPerRequestBinding"
+          }
+        }
+      }
+    },
+    "Binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_kind",
+        "capture"
+      ],
+      "properties": {
+        "input_kind": {
+          "const": "aggregate_intake"
+        },
+        "capture": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source",
+            "origin"
+          ],
+          "properties": {
+            "source": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "storage_instance_id",
+                "family_id",
+                "physical_key",
+                "schema_id",
+                "schema_version",
+                "physical_value_sha256"
+              ],
+              "properties": {
+                "storage_instance_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "family_id": {
+                  "const": "workflow_aggregate_intake_live_capture"
+                },
+                "physical_key": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.workflow_aggregate_intake_live_capture.v1"
+                },
+                "schema_version": {
+                  "const": "1.0.0"
+                },
+                "physical_value_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            "origin": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "storage_instance_id",
+                "family_id",
+                "physical_key",
+                "schema_id",
+                "schema_version",
+                "physical_value_sha256"
+              ],
+              "properties": {
+                "storage_instance_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "family_id": {
+                  "const": "workflow_aggregate_intake_live_capture_origin"
+                },
+                "physical_key": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.workflow_aggregate_intake_live_capture_origin.v1"
+                },
+                "schema_version": {
+                  "const": "1.0.0"
+                },
+                "physical_value_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Capture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "input_kind",
+        "input_schema_ref",
+        "capture_id",
+        "owner",
+        "original_operation_id",
+        "original_operation_revision",
+        "intake_revision",
+        "original_intake_id",
+        "original_input_semantic_sha256",
+        "original_graph_source_physical_sha256",
+        "original_request_set_semantic_sha256",
+        "original_request_results_semantic_sha256",
+        "original_transaction_id",
+        "captured_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "input_kind": {
+          "const": "aggregate_intake"
+        },
+        "input_schema_ref": {
+          "const": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/executor_intake_report"
+        },
+        "capture_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_operation_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "intake_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_intake_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_input_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_graph_source_physical_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_request_set_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_request_results_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "captured_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "CaptureOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "owner",
+        "issuer_method",
+        "original_operation_id",
+        "original_transaction_id",
+        "issued_capture_key",
+        "issued_capture_record_sha256",
+        "captured_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "issuer_method": {
+          "const": "owner.executor.intake.publish_aggregate_input.v1"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_capture_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_capture_record_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "captured_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "StorageCapture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_aggregate_intake_live_capture.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/Capture"
+        }
+      }
+    },
+    "StorageCaptureOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_aggregate_intake_live_capture_origin.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/CaptureOrigin"
+        }
+      }
+    },
+    "AggregateIntakeMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intake_id",
+        "workgraph_ref",
+        "worknode_request_refs",
+        "accepted_refs",
+        "rejected_refs",
+        "blockers",
+        "status",
+        "source_control_receipt_refs",
+        "test_receipt_refs",
+        "model_resolution_receipt_refs",
+        "authority_refs",
+        "evidence_refs",
+        "complete_input"
+      ],
+      "properties": {
+        "intake_id": {
+          "type": "string"
+        },
+        "workgraph_ref": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref"
+        },
+        "worknode_request_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "accepted_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "rejected_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "$ref": "compiler-routes/activation/activation-source.schema.json#/$defs/BlockerDecisionMetadata"
+          },
+          "minItems": 0
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "accepted",
+            "rejected",
+            "blocked",
+            "mixed"
+          ]
+        },
+        "source_control_receipt_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "test_receipt_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "model_resolution_receipt_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "authority_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "evidence_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "complete_input": {
+          "$ref": "#/$defs/Binding"
+        }
+      }
+    },
+    "NativeIntakeSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activation_id",
+        "identity",
+        "aggregate_intake",
+        "request_results",
+        "source_graph",
+        "source_requests"
+      ],
+      "properties": {
+        "activation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity": {
+          "$ref": "compiler-routes/activation/activation-source.schema.json#/$defs/RunIdentity"
+        },
+        "request_results": {
+          "type": "array",
+          "items": {
+            "$ref": "compiler-routes/activation/activation-source.schema.json#/$defs/NativeRequestIntakeResult"
+          },
+          "minItems": 1
+        },
+        "source_graph": {
+          "$ref": "compiler-routes/activation/activation-source.schema.json#/$defs/OriginalSourceBinding"
+        },
+        "source_requests": {
+          "type": "array",
+          "items": {
+            "$ref": "compiler-routes/activation/activation-source.schema.json#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        },
+        "aggregate_intake": {
+          "$ref": "#/$defs/AggregateIntakeMetadata"
+        }
+      }
+    },
+    "NativeIntakeSourcePhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_native_intake_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/NativeIntakeSource"
+        }
+      }
+    },
+    "PublicationCandidates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original",
+        "capture",
+        "capture_origin",
+        "source",
+        "source_origin"
+      ],
+      "properties": {
+        "original": {
+          "$ref": "#/$defs/OriginalOperationView"
+        },
+        "capture": {
+          "$ref": "#/$defs/StorageCapture"
+        },
+        "capture_origin": {
+          "$ref": "#/$defs/StorageCaptureOrigin"
+        },
+        "source": {
+          "$ref": "#/$defs/NativeIntakeSourcePhysical"
+        },
+        "source_origin": {
+          "$ref": "compiler-routes/activation/activation-source.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    },
+    "ReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "binding",
+        "expected_original_operation_id",
+        "expected_original_operation_revision"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "binding": {
+          "$ref": "#/$defs/Binding"
+        },
+        "expected_original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_original_operation_revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "LiveResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "input_kind",
+        "input",
+        "capture",
+        "origin",
+        "action_authority"
+      ],
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "input_kind": {
+          "const": "aggregate_intake"
+        },
+        "input": {
+          "$ref": "#/$defs/OriginalAggregate"
+        },
+        "capture": {
+          "$ref": "#/$defs/StorageCapture"
+        },
+        "origin": {
+          "$ref": "#/$defs/StorageCaptureOrigin"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "AuditResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "input_kind",
+        "capture",
+        "origin",
+        "action_authority"
+      ],
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "input_kind": {
+          "const": "aggregate_intake"
+        },
+        "capture": {
+          "$ref": "#/$defs/StorageCapture"
+        },
+        "origin": {
+          "$ref": "#/$defs/StorageCaptureOrigin"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "Unavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "reason",
+        "input",
+        "capture",
+        "origin",
+        "action_authority"
+      ],
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "enum": [
+            "original_operation_unavailable",
+            "original_input_changed",
+            "scope_mismatch",
+            "owner_or_permission_changed",
+            "source_custody_lost",
+            "required_backup_recovery",
+            "original_aggregate_recovery_unbound",
+            "role_not_installed",
+            "codec_unavailable"
+          ]
+        },
+        "input": {
+          "type": "null"
+        },
+        "capture": {
+          "type": "null"
+        },
+        "origin": {
+          "type": "null"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    }
+  }
+}

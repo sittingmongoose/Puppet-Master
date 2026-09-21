@@ -1,0 +1,697 @@
+{
+  "$id": "https://puppetmaster.local/schemas/requested_effective_runtime/1.0.0/requested_effective_runtime.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "oneOf": [
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "none"
+            },
+            "requested_mode_overlay": {
+              "const": "none"
+            },
+            "requested_runtime_mode": {
+              "const": "ask"
+            },
+            "runtime_mode": {
+              "const": "ask"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "none"
+            },
+            "requested_mode_overlay": {
+              "const": "none"
+            },
+            "requested_runtime_mode": {
+              "const": "plan"
+            },
+            "runtime_mode": {
+              "const": "plan"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "plan"
+            },
+            "requested_mode_overlay": {
+              "const": "plan"
+            },
+            "requested_runtime_mode": {
+              "const": "plan"
+            },
+            "runtime_mode": {
+              "const": "plan"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "deep_plan"
+            },
+            "requested_mode_overlay": {
+              "const": "deep_plan"
+            },
+            "requested_runtime_mode": {
+              "const": "plan"
+            },
+            "runtime_mode": {
+              "const": "plan"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "none"
+            },
+            "requested_mode_overlay": {
+              "const": "none"
+            },
+            "requested_runtime_mode": {
+              "const": "regular"
+            },
+            "runtime_mode": {
+              "const": "regular"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "debug"
+            },
+            "requested_mode_overlay": {
+              "const": "debug"
+            },
+            "requested_runtime_mode": {
+              "const": "regular"
+            },
+            "runtime_mode": {
+              "const": "regular"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "interview"
+            },
+            "requested_mode_overlay": {
+              "const": "interview"
+            },
+            "requested_runtime_mode": {
+              "const": "regular"
+            },
+            "runtime_mode": {
+              "const": "regular"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "brainstorm"
+            },
+            "requested_mode_overlay": {
+              "const": "brainstorm"
+            },
+            "requested_runtime_mode": {
+              "const": "regular"
+            },
+            "runtime_mode": {
+              "const": "regular"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "crew"
+            },
+            "requested_mode_overlay": {
+              "const": "crew"
+            },
+            "requested_runtime_mode": {
+              "const": "regular"
+            },
+            "runtime_mode": {
+              "const": "regular"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "none"
+            },
+            "requested_mode_overlay": {
+              "const": "none"
+            },
+            "requested_runtime_mode": {
+              "const": "yolo"
+            },
+            "runtime_mode": {
+              "const": "yolo"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "debug"
+            },
+            "requested_mode_overlay": {
+              "const": "debug"
+            },
+            "requested_runtime_mode": {
+              "const": "yolo"
+            },
+            "runtime_mode": {
+              "const": "yolo"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "interview"
+            },
+            "requested_mode_overlay": {
+              "const": "interview"
+            },
+            "requested_runtime_mode": {
+              "const": "yolo"
+            },
+            "runtime_mode": {
+              "const": "yolo"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "brainstorm"
+            },
+            "requested_mode_overlay": {
+              "const": "brainstorm"
+            },
+            "requested_runtime_mode": {
+              "const": "yolo"
+            },
+            "runtime_mode": {
+              "const": "yolo"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "crew"
+            },
+            "requested_mode_overlay": {
+              "const": "crew"
+            },
+            "requested_runtime_mode": {
+              "const": "yolo"
+            },
+            "runtime_mode": {
+              "const": "yolo"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "oneOf": [
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": null
+            },
+            "runtime_mode": {
+              "const": "ask"
+            },
+            "strategy": {
+              "const": "hte"
+            },
+            "strategy_resolution_reason": {
+              "const": "read_only_mode_forces_hte"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": "hte"
+            },
+            "runtime_mode": {
+              "const": "ask"
+            },
+            "strategy": {
+              "const": "hte"
+            },
+            "strategy_resolution_reason": {
+              "const": "read_only_mode_forces_hte"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": null
+            },
+            "runtime_mode": {
+              "const": "plan"
+            },
+            "strategy": {
+              "const": "hte"
+            },
+            "strategy_resolution_reason": {
+              "const": "read_only_mode_forces_hte"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": "hte"
+            },
+            "runtime_mode": {
+              "const": "plan"
+            },
+            "strategy": {
+              "const": "hte"
+            },
+            "strategy_resolution_reason": {
+              "const": "read_only_mode_forces_hte"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": null
+            },
+            "runtime_mode": {
+              "const": "regular"
+            },
+            "strategy": {
+              "const": "hte"
+            },
+            "strategy_resolution_reason": {
+              "const": "regular_hte_default"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": "hte"
+            },
+            "runtime_mode": {
+              "const": "regular"
+            },
+            "strategy": {
+              "const": "hte"
+            },
+            "strategy_resolution_reason": {
+              "const": "regular_hte_requested"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": "dae"
+            },
+            "runtime_mode": {
+              "const": "regular"
+            },
+            "strategy": {
+              "const": "dae"
+            },
+            "strategy_resolution_reason": {
+              "const": "regular_dae_allowed"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": "dae"
+            },
+            "runtime_mode": {
+              "const": "regular"
+            },
+            "strategy": {
+              "const": "hte"
+            },
+            "strategy_resolution_reason": {
+              "const": "regular_dae_disallowed"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": null
+            },
+            "runtime_mode": {
+              "const": "yolo"
+            },
+            "strategy": {
+              "const": "dae"
+            },
+            "strategy_resolution_reason": {
+              "const": "yolo_requires_dae"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": "dae"
+            },
+            "runtime_mode": {
+              "const": "yolo"
+            },
+            "strategy": {
+              "const": "dae"
+            },
+            "strategy_resolution_reason": {
+              "const": "yolo_requires_dae"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "oneOf": [
+        {
+          "properties": {
+            "account_switch_reason": {
+              "type": "null"
+            },
+            "effective_account_id": {
+              "type": "null"
+            },
+            "requested_account_id": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "account_switch_reason": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "effective_account_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "requested_account_id": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "account_switch_reason": {
+              "anyOf": [
+                {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "effective_account_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "requested_account_id": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "properties": {
+    "account_switch_reason": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "auth_resolution_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "capability_snapshot_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "created_at_utc": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "effective_account_id": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "effective_mode_overlay": {
+      "enum": [
+        "none",
+        "plan",
+        "deep_plan",
+        "debug",
+        "interview",
+        "brainstorm",
+        "crew"
+      ]
+    },
+    "effective_model": {
+      "pattern": "^[^/]+/.+$",
+      "type": "string"
+    },
+    "effective_persona": {
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "type": "string"
+    },
+    "effective_platform": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "effective_provider_identity": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "models_resolution_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "multi_account_resolution_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "persona_resolution_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "project_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "requested_account_binding": {
+      "enum": [
+        "none",
+        "preferred",
+        "required"
+      ]
+    },
+    "requested_account_id": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "requested_account_policy": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "requested_mode_overlay": {
+      "enum": [
+        "none",
+        "plan",
+        "deep_plan",
+        "debug",
+        "interview",
+        "brainstorm",
+        "crew"
+      ]
+    },
+    "requested_model": {
+      "pattern": "^[^/]+/.+$",
+      "type": "string"
+    },
+    "requested_persona": {
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "type": "string"
+    },
+    "requested_platform": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "requested_runtime_mode": {
+      "enum": [
+        "ask",
+        "plan",
+        "regular",
+        "yolo"
+      ]
+    },
+    "requested_strategy": {
+      "anyOf": [
+        {
+          "enum": [
+            "hte",
+            "dae"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "run_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "run_modes_resolution_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "runtime_mode": {
+      "enum": [
+        "ask",
+        "plan",
+        "regular",
+        "yolo"
+      ]
+    },
+    "schema_id": {
+      "const": "pm.requested_effective_runtime"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "snapshot_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "type": "string"
+    },
+    "snapshot_ref": {
+      "pattern": "^requested_effective_runtime\\.v1:project~[A-Za-z0-9_-]+:[A-Za-z0-9][A-Za-z0-9._-]{0,127}:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "snapshot_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "strategy": {
+      "enum": [
+        "hte",
+        "dae"
+      ]
+    },
+    "strategy_resolution_reason": {
+      "enum": [
+        "read_only_mode_forces_hte",
+        "regular_hte_default",
+        "regular_hte_requested",
+        "regular_dae_allowed",
+        "regular_dae_disallowed",
+        "yolo_requires_dae"
+      ]
+    },
+    "thread_id": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "schema_id",
+    "schema_version",
+    "snapshot_id",
+    "snapshot_ref",
+    "snapshot_sha256",
+    "project_id",
+    "run_id",
+    "thread_id",
+    "created_at_utc",
+    "requested_runtime_mode",
+    "runtime_mode",
+    "requested_mode_overlay",
+    "effective_mode_overlay",
+    "requested_strategy",
+    "strategy",
+    "strategy_resolution_reason",
+    "requested_platform",
+    "effective_platform",
+    "requested_model",
+    "effective_model",
+    "requested_account_id",
+    "requested_account_binding",
+    "requested_account_policy",
+    "effective_account_id",
+    "effective_provider_identity",
+    "account_switch_reason",
+    "requested_persona",
+    "effective_persona",
+    "run_modes_resolution_ref",
+    "models_resolution_ref",
+    "capability_snapshot_ref",
+    "multi_account_resolution_ref",
+    "persona_resolution_ref",
+    "auth_resolution_ref"
+  ],
+  "type": "object"
+}

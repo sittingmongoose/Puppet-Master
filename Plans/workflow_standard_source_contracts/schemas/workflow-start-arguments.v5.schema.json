@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v5.schema.json",
+  "$defs": {
+    "OriginalBirthArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "d01_original_source",
+        "original_workflow_birth"
+      ],
+      "properties": {
+        "d01_original_source": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v5.schema.json#/$defs/WorkflowBirthInput"
+        },
+        "original_workflow_birth": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/WorkflowBirthLowerArgument"
+        }
+      }
+    },
+    "OriginalFirstCoverageArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "d01_original_source",
+        "original_materialization"
+      ],
+      "properties": {
+        "d01_original_source": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v5.schema.json#/$defs/CoverageInput"
+        },
+        "original_materialization": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/WorkflowMaterializationLowerArgument"
+        }
+      }
+    },
+    "OriginalMaterializedWorkflowUpdateArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "d01_original_transition",
+        "original_materialization"
+      ],
+      "properties": {
+        "d01_original_transition": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v5.schema.json#/$defs/WorkflowTransitionInput"
+        },
+        "original_materialization": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/WorkflowMaterializationLowerArgument"
+        }
+      }
+    },
+    "OriginalPrestartWorkflowUpdateArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "d01_original_transition",
+        "current_original_activation_chain"
+      ],
+      "properties": {
+        "d01_original_transition": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v5.schema.json#/$defs/WorkflowTransitionInput"
+        },
+        "current_original_activation_chain": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/CurrentWorkflowLaunchChainRead"
+        }
+      }
+    },
+    "CurrentPreCoverageWorkflowReadArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "d01_workflow_current",
+        "current_original_activation_chain"
+      ],
+      "properties": {
+        "d01_workflow_current": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v5.schema.json#/$defs/WorkflowCurrent"
+        },
+        "current_original_activation_chain": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/CurrentWorkflowLaunchChainRead"
+        }
+      }
+    },
+    "CurrentPrestartReadArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "d01_current_source",
+        "current_original_activation_chain"
+      ],
+      "properties": {
+        "d01_current_source": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v5.schema.json#/$defs/CurrentSource"
+        },
+        "current_original_activation_chain": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/CurrentWorkflowLaunchChainRead"
+        }
+      }
+    }
+  },
+  "$comment": "External whole successor proposal. Original whole schemas remain active at their unchanged IDs. See protocol.md, profile-delta.json and literal-resource-realms.json. No runtime or canonical adoption claim."
+}

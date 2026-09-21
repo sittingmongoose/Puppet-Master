@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json",
+  "$defs": {
+    "BirthGoalArgument": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/BindingLowerArgument"
+    },
+    "OriginalGoalArgument": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/CurrentAssociatedGoalRead"
+    },
+    "CurrentGoalArgument": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/CurrentAssociatedGoalRead"
+    }
+  }
+}

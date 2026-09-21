@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v2.schema.json",
+  "$defs": {
+    "OriginalStandardArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "candidates"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v2.schema.json#/$defs/OriginalStandardSource"
+        },
+        "candidates": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v2.schema.json#/$defs/StandardCaptureCandidates"
+        }
+      }
+    },
+    "DurableStandardRead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "physical_receipt",
+        "original_issuance"
+      ],
+      "properties": {
+        "physical_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/goal_certification_custody/1.0.0#/$defs/current_standard_certification_custody_v2"
+        },
+        "original_issuance": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v2.schema.json#/$defs/StorageStandardCaptureOrigin"
+        }
+      }
+    },
+    "RetainedStandardRequest": {
+      "$ref": "https://puppetmaster.local/schemas/goal_certification_custody/1.0.0#/$defs/standard_read_request"
+    },
+    "RetainedStandardRead": {
+      "$ref": "https://puppetmaster.local/schemas/goal_certification_custody/1.0.0#/$defs/standard_certification"
+    },
+    "RetainedGenericRead": {
+      "$ref": "https://puppetmaster.local/schemas/goal_certification_custody/1.0.0#/$defs/legacy_goal_receipt_v1"
+    },
+    "RetainedStandardPhysical": {
+      "$ref": "https://puppetmaster.local/schemas/goal_certification_custody/1.0.0#/$defs/standard_certification_custody_v2"
+    },
+    "OriginalStandardCaptureOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "physical_key",
+        "original_operation_id",
+        "original_transaction_id",
+        "original_owner_ref",
+        "original_owner_epoch",
+        "original_source_argument_sha256",
+        "original_goal_argument_sha256",
+        "original_standard_argument_sha256",
+        "physical_sha256",
+        "source_semantic_sha256",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_source_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_goal_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_standard_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "physical_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "StorageStandardCaptureOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_standard_capture_origin.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "pattern": "^workflow_standard_capture_origin\\.v1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+$"
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v2.schema.json#/$defs/OriginalStandardCaptureOrigin"
+        }
+      }
+    },
+    "OriginalStandardSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_standard",
+        "original_generic_component"
+      ],
+      "properties": {
+        "original_standard": {
+          "$ref": "https://puppetmaster.local/schemas/goal_certification_custody/1.0.0#/$defs/current_standard_certification"
+        },
+        "original_generic_component": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_certification_custody/1.0.0#/$defs/legacy_goal_receipt_v1"
+            },
+            {
+              "required": [
+                "goal_run_id"
+              ],
+              "properties": {
+                "goal_run_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "receipt_kind": {
+                  "const": "goal_run_certification"
+                },
+                "certification_tier": {
+                  "const": "standard"
+                },
+                "final_certifier_decision": {
+                  "const": "accepted"
+                },
+                "unresolved_risks": {
+                  "maxItems": 0
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "StandardCaptureCandidates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt",
+        "capture_origin"
+      ],
+      "properties": {
+        "receipt": {
+          "$ref": "https://puppetmaster.local/schemas/goal_certification_custody/1.0.0#/$defs/current_standard_certification_custody_v2"
+        },
+        "capture_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v2.schema.json#/$defs/StorageStandardCaptureOrigin"
+        }
+      }
+    },
+    "CurrentStandardReadRequest": {
+      "$ref": "https://puppetmaster.local/schemas/goal_certification_custody/1.0.0#/$defs/standard_read_request"
+    }
+  }
+}

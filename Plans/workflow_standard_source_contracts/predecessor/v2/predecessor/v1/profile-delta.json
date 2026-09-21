@@ -1,0 +1,102 @@
+{
+  "status": "external_source_proposal",
+  "original_files": [
+    {
+      "path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-original-start.v2.schema.json",
+      "sha256": "9e0b863dde63528b1ea44f7bbc22f2483b78baac3ccc7b0e1b9242946de72b81"
+    },
+    {
+      "path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+      "sha256": "99c81558695d812761a9a108657134b4caf3652f33124db675b88e6959897406"
+    },
+    {
+      "path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-arguments.v2.schema.json",
+      "sha256": "9d7ec810e213ac46b1fcdcc5367cd1ca69ed763a8719ae3b2bf21ead70beb0dd"
+    },
+    {
+      "path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-start-profile.v2.schema.json",
+      "sha256": "563eb6b8df611954690a6bb306d1f43f26b4371331358361e9246c29563073aa"
+    }
+  ],
+  "id_replacements": {
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json",
+    "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json",
+    "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v2.schema.json": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v3.schema.json",
+    "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json"
+  },
+  "stored_header_deltas": [
+    {
+      "source": "workflow-original-start",
+      "definition": "StorageWorkflowBirth",
+      "old_schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+      "old_schema_version": "4.0.0",
+      "new_schema_id": "pm.storage_value.executor_workflow_workflow_birth.v5",
+      "new_schema_version": "5.0.0"
+    },
+    {
+      "source": "workflow-original-start",
+      "definition": "StorageWorkflowHead",
+      "old_schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+      "old_schema_version": "4.0.0",
+      "new_schema_id": "pm.storage_value.executor_workflow_workflow_head.v5",
+      "new_schema_version": "5.0.0"
+    },
+    {
+      "source": "workflow-original-start",
+      "definition": "StorageWorkflowUpdate",
+      "old_schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+      "old_schema_version": "4.0.0",
+      "new_schema_id": "pm.storage_value.executor_workflow_workflow_update.v5",
+      "new_schema_version": "5.0.0"
+    },
+    {
+      "source": "workflow-original-start",
+      "definition": "StorageWorkflowMutationOrigin",
+      "old_schema_id": "pm.storage_value.executor_workflow_lineage_origin.v4",
+      "old_schema_version": "4.0.0",
+      "new_schema_id": "pm.storage_value.executor_workflow_lineage_origin.v5",
+      "new_schema_version": "5.0.0"
+    },
+    {
+      "source": "workflow-start-custody",
+      "definition": "StorageCandidate",
+      "old_schema_id": "pm.storage_value.workflow_start_candidate.v2",
+      "old_schema_version": "2.0.0",
+      "new_schema_id": "pm.storage_value.workflow_start_candidate.v3",
+      "new_schema_version": "3.0.0"
+    },
+    {
+      "source": "workflow-start-custody",
+      "definition": "StorageOrigin",
+      "old_schema_id": "pm.storage_value.workflow_start_origin.v2",
+      "old_schema_version": "2.0.0",
+      "new_schema_id": "pm.storage_value.workflow_start_origin.v3",
+      "new_schema_version": "3.0.0"
+    },
+    {
+      "source": "workflow-cancel-start-profile",
+      "definition": "StorageResult",
+      "old_schema_id": "pm.storage_value.workflow_cancel_result.v3",
+      "old_schema_version": "3.0.0",
+      "new_schema_id": "pm.storage_value.workflow_cancel_result.v4",
+      "new_schema_version": "4.0.0"
+    },
+    {
+      "source": "workflow-cancel-start-profile",
+      "definition": "StorageOrigin",
+      "old_schema_id": "pm.storage_value.workflow_cancel_origin.v3",
+      "old_schema_version": "3.0.0",
+      "new_schema_id": "pm.storage_value.workflow_cancel_origin.v4",
+      "new_schema_version": "4.0.0"
+    }
+  ],
+  "semantic_deltas": [
+    "fresh WorkflowBirth writer_contract all_writers.v4",
+    "three closed owner-bound transition rules and exact cause conditionals",
+    "standard original source branch plus original lineage origin branch",
+    "new Start coordinator_profile workflow_start_standard_source.v3",
+    "$comment external scope"
+  ],
+  "unchanged_original_ids_retained": true,
+  "runtime": "NOT_RUN"
+}

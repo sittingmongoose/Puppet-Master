@@ -1,0 +1,2037 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json",
+  "$comment": "Native source argument realm. Methods additionally require a separate whole current Goal argument and, for certification, a whole Standard argument in isolated realms. JSON values are not capabilities. Normative predicates in protocol.md. No runtime qualification.",
+  "$defs": {
+    "Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "causation_ref"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/RunScope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "causation_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "OriginalIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "source_ref",
+        "owner_ref",
+        "owner_epoch",
+        "owner_method",
+        "operation_id",
+        "transaction_id",
+        "source_revision",
+        "source_sha256",
+        "source_codec",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/RunScope"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "owner_method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_codec": {
+          "enum": [
+            "pm.goal.certification_source_json.v1",
+            "sha256.raw_bytes.v1",
+            "sha256.outer_messagepack.v1"
+          ]
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "OriginalArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "artifact_kind",
+        "media_type",
+        "bytes_base64",
+        "byte_count"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalIdentity"
+        },
+        "artifact_kind": {
+          "enum": [
+            "canonical_plan",
+            "requirement_authority",
+            "changed_artifact",
+            "source_evidence",
+            "canonical_plan_evidence",
+            "process_evidence",
+            "governance_evidence",
+            "test_evidence",
+            "source_control_evidence",
+            "completion_receipt",
+            "summary",
+            "document_source",
+            "document_index",
+            "document_manifest",
+            "document_shard",
+            "document_audit",
+            "authority_policy",
+            "validator_stdout",
+            "validator_stderr"
+          ]
+        },
+        "media_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bytes_base64": {
+          "type": "string",
+          "contentEncoding": "base64"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "CurrentArtifactInventory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "owner_ref",
+        "owner_epoch",
+        "revision",
+        "complete_original_artifacts",
+        "current_inventory_sha256",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/RunScope"
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "complete_original_artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalArtifact"
+          },
+          "minItems": 0
+        },
+        "current_inventory_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "RequirementSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "seven_original_inputs",
+        "original_activation_sources",
+        "installed_graph",
+        "required_set",
+        "completion_requirements",
+        "original_requirement_authority_values",
+        "original_requests",
+        "current_original_workgraph"
+      ],
+      "properties": {
+        "seven_original_inputs": {
+          "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/SevenDurableOriginalInputs"
+        },
+        "original_activation_sources": {
+          "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/OriginalActivationSources"
+        },
+        "installed_graph": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/InstalledWorkGraphPhysical"
+        },
+        "required_set": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RequiredSetPhysical"
+        },
+        "completion_requirements": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/CompletionRequirementSourcePhysical"
+        },
+        "original_requirement_authority_values": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalArtifact"
+          },
+          "minItems": 1
+        },
+        "original_requests": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/worknode_request"
+          },
+          "minItems": 1
+        },
+        "current_original_workgraph": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/workgraph_draft"
+        }
+      }
+    },
+    "OriginalAuthorityDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "target_ref",
+        "certifier_ref",
+        "authority",
+        "complete_original_policy",
+        "original_permission_snapshot",
+        "effective_runtime",
+        "decision",
+        "valid_from_utc",
+        "valid_until_utc"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalIdentity"
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "certifier_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/authority"
+        },
+        "complete_original_policy": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalArtifact"
+        },
+        "effective_runtime": {
+          "$ref": "https://puppetmaster.local/schemas/requested_effective_runtime/1.0.0/requested_effective_runtime.schema.json"
+        },
+        "decision": {
+          "enum": [
+            "authorized",
+            "denied"
+          ]
+        },
+        "valid_from_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "valid_until_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_permission_snapshot": {
+          "$ref": "https://puppetmaster.local/schemas/storage_value/permission_snapshot_record/1.0.0/permission_snapshot_record.schema.json"
+        }
+      }
+    },
+    "CriterionEvaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "original_criterion",
+        "original_request",
+        "disposition",
+        "complete_evidence",
+        "original_authority",
+        "evaluated_worknode_ids",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalIdentity"
+        },
+        "original_criterion": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OriginalCriterionBinding"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/worknode_request"
+        },
+        "disposition": {
+          "enum": [
+            "satisfied",
+            "not_applicable",
+            "unsatisfied"
+          ]
+        },
+        "complete_evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalArtifact"
+          },
+          "minItems": 0
+        },
+        "original_authority": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalAuthorityDecision"
+        },
+        "evaluated_worknode_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "ValidatorEvaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "original_requirement",
+        "original_request",
+        "outcome",
+        "complete_test_receipts",
+        "complete_evidence",
+        "capture",
+        "capture_origin"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalIdentity"
+        },
+        "original_requirement": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OriginalValidatorBinding"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/worknode_request"
+        },
+        "outcome": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/validator_outcome"
+        },
+        "complete_test_receipts": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_run_receipt"
+          },
+          "minItems": 0
+        },
+        "complete_evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalArtifact"
+          },
+          "minItems": 0
+        },
+        "capture": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginalInputCapture"
+        },
+        "capture_origin": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/PublicationOrigin"
+        }
+      }
+    },
+    "DocumentShard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "order",
+        "filename",
+        "start_line",
+        "end_line",
+        "sha256",
+        "byte_count",
+        "original_bytes"
+      ],
+      "properties": {
+        "order": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "filename": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start_line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end_line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_bytes": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalArtifact"
+        }
+      }
+    },
+    "DocumentAudit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "audit_id",
+        "audit_kind",
+        "source_path",
+        "source_sha256",
+        "status",
+        "generated_at",
+        "details",
+        "complete_inputs",
+        "complete_outputs"
+      ],
+      "properties": {
+        "audit_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "audit_kind": {
+          "enum": [
+            "A_reconstruction_line_accounting_idempotency",
+            "B_index_manifest_consistency",
+            "C_clean_room_byte_equivalence"
+          ]
+        },
+        "source_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "details": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalArtifact"
+        },
+        "complete_inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalArtifact"
+          },
+          "minItems": 1
+        },
+        "complete_outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalArtifact"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "DocumentSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_path",
+        "source_sha256",
+        "source_line_count",
+        "split_rules",
+        "fence_parameters",
+        "source",
+        "index",
+        "manifest",
+        "ordered_shards",
+        "audits"
+      ],
+      "properties": {
+        "source_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_line_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "split_rules": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalArtifact"
+        },
+        "fence_parameters": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalArtifact"
+        },
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalArtifact"
+        },
+        "index": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalArtifact"
+        },
+        "manifest": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalArtifact"
+        },
+        "ordered_shards": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/DocumentShard"
+          },
+          "minItems": 1
+        },
+        "audits": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/DocumentAudit"
+          },
+          "minItems": 3
+        }
+      }
+    },
+    "OriginalInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capture",
+        "capture_origin",
+        "value"
+      ],
+      "properties": {
+        "capture": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginalInputCapture"
+        },
+        "capture_origin": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/PublicationOrigin"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "verifier_result"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginalVerifierResult"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "evidence_bundle"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/evidence.schema.json"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "worknode_completion_receipt"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/worknode_completion_receipt"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "worknode_dispatch_receipt"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/worknode_dispatch_receipt"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "worknode_change_receipt"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/worknode_change_receipt"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "test_run_receipt"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_run_receipt"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "auditor_verification_receipt"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/auditor_verification_receipt"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "auditor_cycle_report"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/auditor_cycle_report"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "source_control_receipt"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/source_control_receipt"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "source_control_finalization_receipt"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/source_control_finalization_receipt"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "validator_outcome"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/validator_outcome"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "repair_attempt_receipt"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/repair_attempt_receipt"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "merge_or_promotion_receipt"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/merge_or_promotion_receipt"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "model_resolution_receipt"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/model_resolution_receipt"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "attempt_start_admission"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/AttemptStartAdmission"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "source_control_preflight_receipt"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/source_control_preflight_receipt"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "safe_point_receipt"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/safe_point_receipt"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "complete_value"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "run_budget"
+                },
+                "complete_value": {
+                  "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalRunBudgetPolicy"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "NativePublication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current",
+        "result",
+        "origin",
+        "transition",
+        "attempt_birth",
+        "attempt_receipt",
+        "completion",
+        "input_captures"
+      ],
+      "properties": {
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/NativeCurrentSnapshot"
+        },
+        "result": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/NativeOperationResult"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/PublicationOrigin"
+        },
+        "transition": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/TransitionPublication"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_birth": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/AttemptBirth"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_receipt": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/CompletionAttemptReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "completion": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/WorkNodeCompletionPublication"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "input_captures": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalInput"
+          },
+          "minItems": 0
+        }
+      }
+    },
+    "CompletedWorkNodeSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_native_completion",
+        "original_completion_inputs",
+        "source_control_originals",
+        "original_dispatch",
+        "original_model",
+        "original_permission_snapshot",
+        "original_criterion_evaluations",
+        "original_validator_evaluations"
+      ],
+      "properties": {
+        "original_native_completion": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/NativePublication"
+        },
+        "original_completion_inputs": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginalCompletionInput"
+        },
+        "source_control_originals": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/PreflightOriginalOutputStage"
+              },
+              {
+                "$ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/SafePointOriginalOutputStage"
+              },
+              {
+                "$ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/SourceControlOriginalOutputStage"
+              },
+              {
+                "$ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/FinalizationOriginalOutputStage"
+              },
+              {
+                "$ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/PromotionOriginalOutputStage"
+              }
+            ]
+          },
+          "minItems": 0
+        },
+        "original_dispatch": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/DispatchCurrent"
+        },
+        "original_model": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/model_resolution_receipt"
+        },
+        "original_permission_snapshot": {
+          "$ref": "https://puppetmaster.local/schemas/storage_value/permission_snapshot_record/1.0.0/permission_snapshot_record.schema.json"
+        },
+        "original_criterion_evaluations": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/CriterionEvaluation"
+          },
+          "minItems": 0
+        },
+        "original_validator_evaluations": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/ValidatorEvaluation"
+          },
+          "minItems": 0
+        }
+      }
+    },
+    "GateSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "all_required_worknodes",
+        "current_artifacts",
+        "document_sets",
+        "required_auditor_verifications",
+        "original_auditor_cycles",
+        "current_authority_decisions",
+        "final_source_control_context",
+        "source_control_operations",
+        "source_control_permissions",
+        "source_control_leases",
+        "source_control_original_outputs",
+        "complete_summary",
+        "current_blockers"
+      ],
+      "properties": {
+        "required": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/RequirementSources"
+        },
+        "all_required_worknodes": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/CompletedWorkNodeSource"
+          },
+          "minItems": 1
+        },
+        "current_artifacts": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/CurrentArtifactInventory"
+        },
+        "document_sets": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/DocumentSet"
+          },
+          "minItems": 0
+        },
+        "current_authority_decisions": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalAuthorityDecision"
+          },
+          "minItems": 1
+        },
+        "final_source_control_context": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/source_control_context"
+        },
+        "source_control_operations": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/operation_receipt"
+          },
+          "minItems": 0
+        },
+        "source_control_permissions": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_permission_decision"
+          },
+          "minItems": 0
+        },
+        "source_control_leases": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/writer_lease"
+          },
+          "minItems": 0
+        },
+        "source_control_original_outputs": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/PreflightOriginalOutputStage"
+              },
+              {
+                "$ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/SafePointOriginalOutputStage"
+              },
+              {
+                "$ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/SourceControlOriginalOutputStage"
+              },
+              {
+                "$ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/FinalizationOriginalOutputStage"
+              },
+              {
+                "$ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/PromotionOriginalOutputStage"
+              }
+            ]
+          },
+          "minItems": 0
+        },
+        "complete_summary": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalArtifact"
+        },
+        "current_blockers": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/CurrentBlockerSource"
+        },
+        "required_auditor_verifications": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/auditor_verification_receipt"
+          },
+          "minItems": 1
+        },
+        "original_auditor_cycles": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/auditor_cycle_report"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "CurrentWorkflowSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "original_start",
+        "requirements",
+        "all_native_current"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/Request"
+        },
+        "original_start": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentStartSource"
+        },
+        "requirements": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/RequirementSources"
+        },
+        "all_native_current": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/NativePublication"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "BeginAttemptArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current",
+        "request",
+        "original_permission",
+        "original_runtime",
+        "original_execution_unit",
+        "original_dispatch",
+        "original_dispatch_capture",
+        "current_dispatch_admission",
+        "candidate_attempt",
+        "candidate_attempt_control",
+        "candidate_birth",
+        "candidate_native",
+        "candidate_inventory",
+        "candidate_attempt_member",
+        "original_start_admission",
+        "original_budget_capture"
+      ],
+      "properties": {
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/CurrentWorkflowSource"
+        },
+        "request": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/NativeMutationRequest"
+        },
+        "original_permission": {
+          "$ref": "https://puppetmaster.local/schemas/storage_value/permission_snapshot_record/1.0.0/permission_snapshot_record.schema.json"
+        },
+        "original_runtime": {
+          "$ref": "https://puppetmaster.local/schemas/requested_effective_runtime/1.0.0/requested_effective_runtime.schema.json"
+        },
+        "original_execution_unit": {
+          "$ref": "https://puppetmaster.local/schemas/execution_unit_context.schema.json"
+        },
+        "original_dispatch": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/worknode_dispatch_receipt"
+        },
+        "original_dispatch_capture": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalInput"
+        },
+        "current_dispatch_admission": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/DispatchCurrent"
+        },
+        "candidate_attempt": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/AttemptRecord"
+        },
+        "candidate_attempt_control": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/AttemptControl"
+        },
+        "candidate_birth": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/AttemptBirth"
+        },
+        "candidate_native": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/NativePublication"
+        },
+        "candidate_inventory": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/InventoryHead"
+        },
+        "candidate_attempt_member": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/AttemptMember"
+        },
+        "original_start_admission": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalInput"
+        },
+        "original_budget_capture": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalInput"
+        }
+      }
+    },
+    "SubmitVerificationArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current",
+        "request",
+        "original_inputs",
+        "candidate_native"
+      ],
+      "properties": {
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/CurrentWorkflowSource"
+        },
+        "request": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/NativeMutationRequest"
+        },
+        "original_inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalInput"
+          },
+          "minItems": 1
+        },
+        "candidate_native": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/NativePublication"
+        }
+      }
+    },
+    "RecordVerifiedArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current",
+        "request",
+        "original_verifier",
+        "original_inputs",
+        "candidate_native"
+      ],
+      "properties": {
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/CurrentWorkflowSource"
+        },
+        "request": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/NativeMutationRequest"
+        },
+        "original_verifier": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginalVerifierInput"
+        },
+        "original_inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalInput"
+          },
+          "minItems": 1
+        },
+        "candidate_native": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/NativePublication"
+        }
+      }
+    },
+    "CompleteWorkNodeArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current",
+        "finalization",
+        "original_inputs",
+        "candidate_native"
+      ],
+      "properties": {
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/CurrentWorkflowSource"
+        },
+        "finalization": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/NativeFinalizationWitness"
+        },
+        "original_inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalInput"
+          },
+          "minItems": 1
+        },
+        "candidate_native": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/NativePublication"
+        }
+      }
+    },
+    "ExecutionPublicationArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "current",
+        "original_native",
+        "candidate_workflow",
+        "candidate_lineage"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/Request"
+        },
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/CurrentWorkflowSource"
+        },
+        "original_native": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/BeginAttemptArgument"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/SubmitVerificationArgument"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/RecordVerifiedArgument"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/CompleteWorkNodeArgument"
+            }
+          ]
+        },
+        "candidate_workflow": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentNativeValues"
+        },
+        "candidate_lineage": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/WorkflowTransitionInput"
+        }
+      }
+    },
+    "ProvisionalSuccessArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current",
+        "gates",
+        "candidate_workflow",
+        "candidate_lineage"
+      ],
+      "properties": {
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/CurrentWorkflowSource"
+        },
+        "gates": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/GateSources"
+        },
+        "candidate_workflow": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentNativeValues"
+        },
+        "candidate_lineage": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/WorkflowTransitionInput"
+        }
+      }
+    },
+    "FinalDecisionArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current",
+        "gates",
+        "candidate_workflow_receipt"
+      ],
+      "properties": {
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/CurrentWorkflowSource"
+        },
+        "gates": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/GateSources"
+        },
+        "candidate_workflow_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/goal_completion_receipt"
+        }
+      }
+    },
+    "WorkflowResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "transaction_id",
+        "owner",
+        "operation",
+        "before",
+        "after",
+        "original_source_argument_sha256",
+        "original_goal_argument_sha256",
+        "workflow_receipt",
+        "standard_receipt",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/RunScope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Owner"
+        },
+        "operation": {
+          "enum": [
+            "execution_progress",
+            "provisional_success",
+            "standard_certification"
+          ]
+        },
+        "before": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Selector"
+        },
+        "after": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Selector"
+        },
+        "original_source_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_goal_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "workflow_receipt": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OriginalSourceBinding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "standard_receipt": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OriginalSourceBinding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "WorkflowOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "owner",
+        "issuer_method",
+        "operation_id",
+        "transaction_id",
+        "result",
+        "original_source_argument_sha256",
+        "original_goal_argument_sha256",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/RunScope"
+        },
+        "owner": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Owner"
+        },
+        "issuer_method": {
+          "enum": [
+            "owner.workflow.standard.publish_execution.v1",
+            "owner.workflow.standard.publish_provisional_success.v1",
+            "owner.workflow.standard.publish_certified_joint.v1"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Selector"
+        },
+        "original_source_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_goal_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "StorageWorkflowResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_standard_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "pattern": "^workflow_standard_result\\.v1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+$"
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/WorkflowResult"
+        }
+      }
+    },
+    "StorageWorkflowOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_standard_origin.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "pattern": "^workflow_standard_origin\\.v1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+$"
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/WorkflowOrigin"
+        }
+      }
+    },
+    "PublishedWorkflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result",
+        "origin",
+        "lineage",
+        "current"
+      ],
+      "properties": {
+        "result": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/StorageWorkflowResult"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/StorageWorkflowOrigin"
+        },
+        "lineage": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/WorkflowLineageResult"
+        },
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/CurrentWorkflowSource"
+        }
+      }
+    },
+    "FinalDecisionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_identity",
+        "complete_receipt",
+        "original_source_argument_sha256",
+        "original_goal_argument_sha256"
+      ],
+      "properties": {
+        "original_identity": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalIdentity"
+        },
+        "complete_receipt": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/goal_completion_receipt"
+            },
+            {
+              "properties": {
+                "all_worknodes_terminal": {
+                  "const": true
+                },
+                "all_tests_passed_or_dispositioned": {
+                  "const": true
+                },
+                "source_control_receipts_valid": {
+                  "const": true
+                },
+                "no_active_blockers": {
+                  "const": true
+                },
+                "rollback_requirements_satisfied": {
+                  "const": true
+                },
+                "safe_point_requirements_satisfied": {
+                  "const": true
+                },
+                "no_stale_plan_workgraph_currentness_mismatch": {
+                  "const": true
+                },
+                "auditor_passed": {
+                  "const": true
+                },
+                "final_certifier_decision": {
+                  "const": "certified"
+                },
+                "final_source_state": {
+                  "enum": [
+                    "clean",
+                    "intentionally_preserved"
+                  ]
+                },
+                "unresolved_risks": {
+                  "maxItems": 0
+                },
+                "child_receipt_refs": {
+                  "maxItems": 0
+                }
+              }
+            }
+          ]
+        },
+        "original_source_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_goal_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "CertificationNativeArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current",
+        "gates",
+        "original_final_decision",
+        "candidate_workflow",
+        "candidate_lineage"
+      ],
+      "properties": {
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/CurrentWorkflowSource"
+        },
+        "gates": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/GateSources"
+        },
+        "original_final_decision": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/FinalDecisionResult"
+        },
+        "candidate_workflow": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentNativeValues"
+        },
+        "candidate_lineage": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/WorkflowTransitionInput"
+        }
+      }
+    },
+    "RetainedWorkflowRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "result"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/RunScope"
+        },
+        "result": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Selector"
+        }
+      }
+    },
+    "RetainedWorkflowResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result",
+        "origin",
+        "action_authority"
+      ],
+      "properties": {
+        "result": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/StorageWorkflowResult"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/StorageWorkflowOrigin"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "Unavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "reason",
+        "action_authority"
+      ],
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "enum": [
+            "missing_original_source",
+            "current_mismatch",
+            "owner_mismatch",
+            "unsupported_branch",
+            "gate_failed",
+            "missing_joint_publication_contract"
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "AttemptStartAdmission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "current",
+        "permission",
+        "runtime",
+        "execution_unit",
+        "dispatch",
+        "dispatch_admission",
+        "frozen_attempt_budget",
+        "rollback_policy",
+        "original_budget_policy"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/NativeMutationRequest"
+        },
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/NativeCurrentSnapshot"
+        },
+        "permission": {
+          "$ref": "https://puppetmaster.local/schemas/storage_value/permission_snapshot_record/1.0.0/permission_snapshot_record.schema.json"
+        },
+        "runtime": {
+          "$ref": "https://puppetmaster.local/schemas/requested_effective_runtime/1.0.0/requested_effective_runtime.schema.json"
+        },
+        "execution_unit": {
+          "$ref": "https://puppetmaster.local/schemas/execution_unit_context.schema.json"
+        },
+        "dispatch": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/worknode_dispatch_receipt"
+        },
+        "dispatch_admission": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/DispatchCurrent"
+        },
+        "frozen_attempt_budget": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/FrozenAttemptBudget"
+        },
+        "rollback_policy": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RollbackPolicy"
+        },
+        "original_budget_policy": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalRunBudgetPolicy"
+        }
+      }
+    },
+    "CertificationCandidateResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_final_decision",
+        "candidate_workflow",
+        "candidate_lineage",
+        "action_authority"
+      ],
+      "properties": {
+        "original_final_decision": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/FinalDecisionResult"
+        },
+        "candidate_workflow": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentNativeValues"
+        },
+        "candidate_lineage": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/WorkflowTransitionInput"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "CurrentBlockerSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "complete_active_blockers",
+        "complete_unresolved_findings",
+        "complete_unresolved_risks",
+        "original_owner_records",
+        "native_control_revision",
+        "native_control_sha256"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalIdentity"
+        },
+        "complete_active_blockers": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/blocker"
+          },
+          "minItems": 0
+        },
+        "complete_unresolved_findings": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/auditor_finding"
+          },
+          "minItems": 0
+        },
+        "complete_unresolved_risks": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/risk_record"
+          },
+          "minItems": 0
+        },
+        "original_owner_records": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalArtifact"
+          },
+          "minItems": 0
+        },
+        "native_control_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "native_control_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "OriginalCaptureArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "current",
+        "original_input"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/Request"
+        },
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/CurrentWorkflowSource"
+        },
+        "original_input": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalInput"
+        }
+      }
+    },
+    "CaptureStandardNativeArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_argument",
+        "original_result"
+      ],
+      "properties": {
+        "original_argument": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/FinalDecisionArgument"
+        },
+        "original_result": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/FinalDecisionResult"
+        }
+      }
+    },
+    "OriginalRunBudgetPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "parameters"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v1.schema.json#/$defs/OriginalIdentity"
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "max_nesting_depth",
+            "max_total_spawned_agents",
+            "max_tool_rounds",
+            "max_wall_ms",
+            "max_estimated_tokens",
+            "max_same_shell_failure",
+            "max_write_thrashing",
+            "max_retryable_errors",
+            "task_timeout_ms",
+            "parent_remaining_wall_ms",
+            "warn_budget_pct"
+          ],
+          "properties": {
+            "max_nesting_depth": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "max_total_spawned_agents": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "max_tool_rounds": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "max_wall_ms": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "max_estimated_tokens": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "max_same_shell_failure": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "max_write_thrashing": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "max_writes",
+                "window_ms"
+              ],
+              "properties": {
+                "max_writes": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "window_ms": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "max_retryable_errors": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "task_timeout_ms": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "parent_remaining_wall_ms": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "warn_budget_pct": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            }
+          }
+        }
+      }
+    }
+  }
+}

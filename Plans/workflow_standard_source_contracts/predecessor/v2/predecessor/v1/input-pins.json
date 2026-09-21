@@ -1,0 +1,749 @@
+{
+  "base_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+  "prior_map_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/goal-run-certified-source-map-20260914/v1/manifest.json",
+    "sha256": "52cdf0a9d65407861e057c030323bd00b4c0dd11f3a263ec0e88670fc045b238"
+  },
+  "files": [
+    {
+      "path": "Plans/00-plans-index.md",
+      "snapshot_path": "inputs/Plans/00-plans-index.md",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+      "bytes": 431648,
+      "source_map_previous_sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "snapshot_path": "inputs/Plans/Goal_Runtime_System.md",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "7d8c007ecdf30ed23e917899114be94b5e84ecb01b6bc5a1ecf205b40ce0b590",
+      "bytes": 584463,
+      "source_map_previous_sha256": "26e495c464b61ce9292702720e6d333f4f6eff6e5b6f604917360eddd35112d2",
+      "same_as_prior_map": false
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "snapshot_path": "inputs/Plans/Executor_Protocol.md",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "50fdcfe6be6bf8c9d2accc195c89ca0398668cb2e9010e851c8c930b430e6cbc",
+      "bytes": 576094,
+      "source_map_previous_sha256": "50fdcfe6be6bf8c9d2accc195c89ca0398668cb2e9010e851c8c930b430e6cbc",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "snapshot_path": "inputs/Plans/Contracts_V0.md",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "f51aafa68444acedecad08f0c3964b2786b822377c25745d01bf96f31ef0f9a1",
+      "bytes": 1282878,
+      "source_map_previous_sha256": "f51aafa68444acedecad08f0c3964b2786b822377c25745d01bf96f31ef0f9a1",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "snapshot_path": "inputs/Plans/storage-plan.md",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "34e3b477366799070da38d143cd9966c9b4e24ce0eb4af75d05ea72bedd42c93",
+      "bytes": 2181125,
+      "source_map_previous_sha256": "6f5e4a274dc571abd4cdfb0a3f87e5a5d03c0076459c0bb78a0a416b7fc1b378",
+      "same_as_prior_map": false
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "snapshot_path": "inputs/Plans/Orchestrator_Page.md",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "ac2b4e5b3e867049a18e838c874eb45aa731cbfa5ae40f8bc38746c5f6f25f8f",
+      "bytes": 167689,
+      "source_map_previous_sha256": "ac2b4e5b3e867049a18e838c874eb45aa731cbfa5ae40f8bc38746c5f6f25f8f",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/goal_certification_custody.schema.json",
+      "snapshot_path": "inputs/Plans/goal_certification_custody.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "50687ee0c5d335898ce9ce98fe6e258ac69f344ab3ba7086dba787623201c00b",
+      "bytes": 19088,
+      "source_map_previous_sha256": "50687ee0c5d335898ce9ce98fe6e258ac69f344ab3ba7086dba787623201c00b",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/goal_receipt_version_routes.json",
+      "snapshot_path": "inputs/Plans/goal_receipt_version_routes.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "28a41733a52e700b24b20654d953250e0fb2e4d2140ffb3c4fcf4faf3c579a87",
+      "bytes": 4096,
+      "source_map_previous_sha256": "28a41733a52e700b24b20654d953250e0fb2e4d2140ffb3c4fcf4faf3c579a87",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/plans_to_code_handoff.schema.json",
+      "snapshot_path": "inputs/Plans/plans_to_code_handoff.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+      "bytes": 126196,
+      "source_map_previous_sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+      "snapshot_path": "inputs/Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "a4144dd0476b9a1dfdbc23b406a243cf3d4381a778902457d60b82b34592c38f",
+      "bytes": 22201,
+      "source_map_previous_sha256": "a4144dd0476b9a1dfdbc23b406a243cf3d4381a778902457d60b82b34592c38f",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/event_family_registry.json",
+      "snapshot_path": "inputs/Plans/event_family_registry.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "7337830736f02184ff97f0a4a7cf358cf9e34ae9aada68986d6440feda3c8b96",
+      "bytes": 88068,
+      "source_map_previous_sha256": "7337830736f02184ff97f0a4a7cf358cf9e34ae9aada68986d6440feda3c8b96",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "snapshot_path": "inputs/Plans/storage_value_registry.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "0885c0b6f6168b82e6e9bb7ca786b7f5ecb85cb32c6f8909e07871b53a1fb7d1",
+      "bytes": 4100923,
+      "source_map_previous_sha256": "3f28948c718e01ff42744ecbb4a791ab66a9d249f7487b21e3f2cbeef6a2f199",
+      "same_as_prior_map": false
+    },
+    {
+      "path": "Plans/goal_body_custody.schema.json",
+      "snapshot_path": "inputs/Plans/goal_body_custody.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8",
+      "bytes": 19156,
+      "source_map_previous_sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/event_record.schema.json",
+      "snapshot_path": "inputs/Plans/event_record.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+      "bytes": 9344,
+      "source_map_previous_sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/event_append_receipt_contracts.schema.json",
+      "snapshot_path": "inputs/Plans/event_append_receipt_contracts.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+      "bytes": 15668,
+      "source_map_previous_sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/event_record_index_checkpoint.schema.json",
+      "snapshot_path": "inputs/Plans/event_record_index_checkpoint.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+      "bytes": 92199,
+      "source_map_previous_sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "80597d53aada9af04c84ac7f501d22516a797c0240f85bdd610287a7e82d01f0",
+      "bytes": 121377,
+      "source_map_previous_sha256": "80597d53aada9af04c84ac7f501d22516a797c0240f85bdd610287a7e82d01f0",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "5a876253a29cc83ee5eadc4ae4da5b7cffc001711f27fb9b2b98627286a3e8ec",
+      "bytes": 76101,
+      "source_map_previous_sha256": "5a876253a29cc83ee5eadc4ae4da5b7cffc001711f27fb9b2b98627286a3e8ec",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "fdf7cd63359aeae8284121395e464cd8b6547204abe1d7aab45a858439fb525d",
+      "bytes": 14463,
+      "source_map_previous_sha256": "fdf7cd63359aeae8284121395e464cd8b6547204abe1d7aab45a858439fb525d",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "d1bc87d558af05c5645cd46cadf340dd7d4451732d6714abd711d0307780cd79",
+      "bytes": 102607,
+      "source_map_previous_sha256": "d1bc87d558af05c5645cd46cadf340dd7d4451732d6714abd711d0307780cd79",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/methods.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/methods.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "cd24a81a13977ce343f270c253923d194ba3a660024f671d330e4fcc7bb19727",
+      "bytes": 80353,
+      "source_map_previous_sha256": "cd24a81a13977ce343f270c253923d194ba3a660024f671d330e4fcc7bb19727",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/workflow_activation_schema_resources.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_schema_resources.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "007b94da4e1184f497d5e2760ad211073c7e0e1b9cf0b90c953f1784aac6123d",
+      "bytes": 64438,
+      "source_map_previous_sha256": "007b94da4e1184f497d5e2760ad211073c7e0e1b9cf0b90c953f1784aac6123d",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-original-start.v2.schema.json",
+      "snapshot_path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-original-start.v2.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "9e0b863dde63528b1ea44f7bbc22f2483b78baac3ccc7b0e1b9242946de72b81",
+      "bytes": 77027,
+      "source_map_previous_sha256": "9e0b863dde63528b1ea44f7bbc22f2483b78baac3ccc7b0e1b9242946de72b81",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+      "snapshot_path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "99c81558695d812761a9a108657134b4caf3652f33124db675b88e6959897406",
+      "bytes": 44305,
+      "source_map_previous_sha256": "99c81558695d812761a9a108657134b4caf3652f33124db675b88e6959897406",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/methods.json",
+      "snapshot_path": "inputs/Plans/executor_cancellation_contracts/methods.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "0fbb8d53064eaffd091cb0a1f071453e8cf9e460f897a41369f2b284b1cc08d1",
+      "bytes": 181130,
+      "source_map_previous_sha256": "0fbb8d53064eaffd091cb0a1f071453e8cf9e460f897a41369f2b284b1cc08d1",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/executor_cancellation_schema_resources.json",
+      "snapshot_path": "inputs/Plans/executor_cancellation_schema_resources.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "b8497da06f2937146f0ef8f44af74be177765bf82345a8d3f6e07ef481e938fb",
+      "bytes": 165212,
+      "source_map_previous_sha256": "b8497da06f2937146f0ef8f44af74be177765bf82345a8d3f6e07ef481e938fb",
+      "same_as_prior_map": true
+    },
+    {
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "snapshot_path": "inputs/Plans/Shared_Integration_Runtime.md",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "acd20bc89dc65b5e73c0589a891d2c96cc56cf7b816f318baa7f10e320d5794a",
+      "bytes": 309303,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/Planning_Wizard.md",
+      "snapshot_path": "inputs/Plans/Planning_Wizard.md",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "ac582b97a7bf56c06d7b7f9b6dc72ba773b4da659e1de5cd6c3872e2b541b0b0",
+      "bytes": 166734,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/Progression_Gates.md",
+      "snapshot_path": "inputs/Plans/Progression_Gates.md",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33",
+      "bytes": 178264,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/Document_Packaging_Policy.md",
+      "snapshot_path": "inputs/Plans/Document_Packaging_Policy.md",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "c70b4b215f421cf69ac503698088fb46278c038f80df19f94d50ae87d6bd77bd",
+      "bytes": 80206,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/Project_Output_Artifacts.md",
+      "snapshot_path": "inputs/Plans/Project_Output_Artifacts.md",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "f26aaf82474af8d25a284a9515fae5789162c320bc40129358312da00915367d",
+      "bytes": 187423,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/Permissions_System.md",
+      "snapshot_path": "inputs/Plans/Permissions_System.md",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "268972ec2c2406fd01166c743dcd8bbac9848781c4d5ae53876f7742f3e40582",
+      "bytes": 490814,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/WorktreeGitImprovement.md",
+      "snapshot_path": "inputs/Plans/WorktreeGitImprovement.md",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "a91952094251ba92ee185e07d897f219d7f8a47942834c70e88d45e77fe6a5fb",
+      "bytes": 315818,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/Plan_To_Node_Compilation.md",
+      "snapshot_path": "inputs/Plans/Plan_To_Node_Compilation.md",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "f31d88c4b35996d247054ac9faffae91c07489df4d1bed10e6555f2824fcdb12",
+      "bytes": 128896,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "snapshot_path": "inputs/Plans/Automated_Testing_System.md",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "28490147bb124e5570be20c9bbd239b2ff5cea8137461652074b9e33e796257b",
+      "bytes": 431928,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "snapshot_path": "inputs/Plans/Models_System.md",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "018c37767997cac4e20f76cebc19a39c42985f28d5a738fc12e397b0ce0abf66",
+      "bytes": 496741,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/plan_graph.schema.json",
+      "snapshot_path": "inputs/Plans/plan_graph.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "dd95e5f644f860e28d88fb78e3f0b0b76cca018951e659a9991ef2c3731e5b7d",
+      "bytes": 11603,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/project_plan_node.schema.json",
+      "snapshot_path": "inputs/Plans/project_plan_node.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15",
+      "bytes": 7356,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/source_control_contracts.schema.json",
+      "snapshot_path": "inputs/Plans/source_control_contracts.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a",
+      "bytes": 130860,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/evidence.schema.json",
+      "snapshot_path": "inputs/Plans/evidence.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86",
+      "bytes": 42851,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/requested_effective_runtime.schema.json",
+      "snapshot_path": "inputs/Plans/requested_effective_runtime.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "bytes": 15878,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/execution_unit_context.schema.json",
+      "snapshot_path": "inputs/Plans/execution_unit_context.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
+      "bytes": 5717,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+      "snapshot_path": "inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "91656f1e79355ad7ac7b6144ead1724c46222aea054fefdc07f4b56a49f87ed9",
+      "bytes": 9069,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "scripts/pm-implementation-readiness.py",
+      "snapshot_path": "inputs/scripts/pm-implementation-readiness.py",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "7101cbd81f9c8670c20c2824f77db1708001ad36213a77d3f383aa5e42c4579f",
+      "bytes": 392431,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/models-request-live.v1.schema.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/schemas/models-request-live.v1.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "c11a123590b8d281f2b3682f591268af6fd719c9ef8b52037a7b15a7852bbad7",
+      "bytes": 36170,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/activation-read-result.v4.schema.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/schemas/activation-read-result.v4.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "743645f5c9a8430fbca1963fbc072a9ac206419a9ebfc1b1c825ed7020e36ddf",
+      "bytes": 5064,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/activation-recovery-views.v1.schema.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/schemas/activation-recovery-views.v1.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "bd13ecb4e2581262b9e09353d03dd19a3c8858681175d3c317ca281fe84727e4",
+      "bytes": 6587,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed",
+      "bytes": 111008,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/compiler-live-inputs.v1.schema.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/schemas/compiler-live-inputs.v1.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "0d3b50752870853d7fbaac6b5673ffdccded6328ba49a92eb82a22ed13046c9c",
+      "bytes": 39676,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/aggregate-live-input.v1.schema.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/schemas/aggregate-live-input.v1.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "cd55ad417c9ae11097fe2f0655755b63bef5c887b88486c4dc468b21b26d0522",
+      "bytes": 22087,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "30cc5fc70474d8ce069be8d776519c2d2354d4e5635de0140d7e612fee3097c2",
+      "bytes": 29348,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+      "bytes": 100283,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/source-control-receipt-custody.v1.schema.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/schemas/source-control-receipt-custody.v1.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "2c64fd916ec26aff73d09bcd7532f2cb690951cc9437509c2b2650b2bd708b06",
+      "bytes": 53965,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "cc5d84b7c6f402cd26269f4621f5fda1122c1643032c7944957c4117c889830c",
+      "bytes": 120821,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/full_thread_runtime_contracts.schema.json",
+      "snapshot_path": "inputs/Plans/full_thread_runtime_contracts.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea",
+      "bytes": 22855,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/ui_command_response.schema.json",
+      "snapshot_path": "inputs/Plans/ui_command_response.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37",
+      "bytes": 11470,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "snapshot_path": "inputs/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+      "bytes": 23864,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/shared_runtime_command_contracts.schema.json",
+      "snapshot_path": "inputs/Plans/shared_runtime_command_contracts.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b",
+      "bytes": 69256,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "snapshot_path": "inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60",
+      "bytes": 115695,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "7c13a5e166aca2d2545e39561f904d2ea1134d690f192d76443a8871c8588fa4",
+      "bytes": 18197,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-current-activation.v1.schema.json",
+      "snapshot_path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-current-activation.v1.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "db896adf069bb321e7ae87535dbd2ef4a4df9b4516f7865716510be6f8e9a4dc",
+      "bytes": 75266,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-activation.v1.schema.json",
+      "snapshot_path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-activation.v1.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "35516ed8fd894bb1538112fb54190cc7059081afd605fadbf4ff728ebaeba525",
+      "bytes": 38651,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-current-activation-arguments.v1.schema.json",
+      "snapshot_path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-current-activation-arguments.v1.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "cf46eb1bf60b7879d5e8574633a3f2d4f7e02aaef6c6a2867ac8423399340ab7",
+      "bytes": 3976,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+      "snapshot_path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "3764857827d36270b40c8adecbd2ce8ce4cb87f2e88803d35f953f32a42e1839",
+      "bytes": 9284,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+      "snapshot_path": "inputs/Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "d9414fc79ed8c3c7c14d70f0f120ad0378e2efb11de8c2126ab22e4a72771e7f",
+      "bytes": 20104,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-start-profile.v2.schema.json",
+      "snapshot_path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-start-profile.v2.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "563eb6b8df611954690a6bb306d1f43f26b4371331358361e9246c29563073aa",
+      "bytes": 38527,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+      "snapshot_path": "inputs/Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "2cba0de288750206d9fd7c38f1498f16314fda508d7e866b036e2a0f50a67e0f",
+      "bytes": 19855,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-start-arguments.v2.schema.json",
+      "snapshot_path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-arguments.v2.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "9d7ec810e213ac46b1fcdcc5367cd1ca69ed763a8719ae3b2bf21ead70beb0dd",
+      "bytes": 3897,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+      "snapshot_path": "inputs/Plans/event_payloads/goal_runtime/goal_created.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "415829ee3d73099aaa879a989f8300c37062e999d4cb19a65cebd2591a43c841",
+      "bytes": 26235,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+      "snapshot_path": "inputs/Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea",
+      "bytes": 27560,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/goal_cancel_command_custody.schema.json",
+      "snapshot_path": "inputs/Plans/goal_cancel_command_custody.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "3a9477a8a41b273f589e6fc12a492a04a20ac2af5c0382d0ba0445c9a35799e8",
+      "bytes": 120132,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/goal_execution_binding_custody.schema.json",
+      "snapshot_path": "inputs/Plans/goal_execution_binding_custody.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "b866b72ac1831891cd605360e84e4e97a281b5f352f8b8176d7862e90def746a",
+      "bytes": 59526,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/goal_runtime_contracts.schema.json",
+      "snapshot_path": "inputs/Plans/goal_runtime_contracts.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "381df40c03f16a4224d44731465c7c0ba4be0071d910b7cf9d0d935e7b60e36e",
+      "bytes": 8032,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/goal_runtime_events.schema.json",
+      "snapshot_path": "inputs/Plans/goal_runtime_events.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e",
+      "bytes": 2796,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/goal_start_command_custody.schema.json",
+      "snapshot_path": "inputs/Plans/goal_start_command_custody.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "098df8efeedf9ccbd41f276e931b64fa9469a8d61656a5be7f240b9935064a74",
+      "bytes": 55242,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/goal_update_command_custody.schema.json",
+      "snapshot_path": "inputs/Plans/goal_update_command_custody.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "eaa2358de37467ec51ad039f52342900b80b6a7c70f98ad9b0b87a6e9eac2988",
+      "bytes": 72154,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/shared_runtime_contracts.schema.json",
+      "snapshot_path": "inputs/Plans/shared_runtime_contracts.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "680d47fb8e6226aaa26046bcaa971d4a312da6c81949b4a7bb75208b90e97a59",
+      "bytes": 78670,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/storage_compaction_native_contracts.schema.json",
+      "snapshot_path": "inputs/Plans/storage_compaction_native_contracts.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "d979220b712f1eb58c9bb83b039aacb71269912eac66f6869da464ce7ade6f0f",
+      "bytes": 281395,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/current-goal-guard.v1.schema.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/schemas/current-goal-guard.v1.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "8a4f2af3db93c882656a0777dc87a188611ada9e2b5874d069203dba0d85d9d5",
+      "bytes": 4603,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json",
+      "snapshot_path": "inputs/Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "777ff3bc17c153fa7310c749b624664002164e27e2b6fa1d894a7d9566eed874",
+      "bytes": 18053,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-controls.v3.schema.json",
+      "snapshot_path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-controls.v3.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "c75fb9f9f8596182b667c38239feac604a09d489326fd0034833ce1058c4730e",
+      "bytes": 1397,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-start-goal-argument.v2.schema.json",
+      "snapshot_path": "inputs/Plans/executor_cancellation_contracts/schemas/workflow-start-goal-argument.v2.schema.json",
+      "git_commit": "de87b6dfc314f0132c4b73632aae3e24721475b5",
+      "sha256": "aefd025c4b463c1b3e886cae93370b19e66094854a03a65ba724b8f23ef41a8e",
+      "bytes": 690,
+      "source_map_previous_sha256": null,
+      "same_as_prior_map": null
+    }
+  ],
+  "canonical_edits": false,
+  "new_schema_instances": 0
+}

@@ -1,0 +1,859 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json",
+  "$defs": {
+    "body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "goal_id",
+        "project_id",
+        "thread_id",
+        "objective_text",
+        "revision",
+        "state",
+        "blocked_reason_ref",
+        "active_run_ref",
+        "created_at",
+        "updated_at",
+        "currentness_hash"
+      ],
+      "properties": {
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "objective_text": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "state": {
+          "enum": [
+            "active",
+            "paused",
+            "blocked",
+            "completed"
+          ]
+        },
+        "blocked_reason_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "active_run_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "blocked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "blocked_reason_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "revision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "goal_id",
+        "revision",
+        "objective_text",
+        "change_source",
+        "source_message_id",
+        "approval_id",
+        "prior_revision_hash",
+        "revision_hash",
+        "created_at"
+      ],
+      "properties": {
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "objective_text": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "change_source": {
+          "enum": [
+            "user_direct",
+            "agent_proposed_user_approved"
+          ]
+        },
+        "source_message_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "approval_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prior_revision_hash": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "revision_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "change_source": {
+                "const": "user_direct"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "approval_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "approval_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "change_source": {
+                "const": "user_direct"
+              },
+              "revision": {
+                "minimum": 2
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "source_message_id": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "goal_id",
+        "goal_revision",
+        "origin_kind",
+        "source_message_refs",
+        "source_context_manifest_ref",
+        "bound_plan_ref",
+        "owning_workflow_ref"
+      ],
+      "properties": {
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "origin_kind": {
+          "enum": [
+            "user_request",
+            "agent_created_at_user_request",
+            "plan_build",
+            "internal_workflow"
+          ]
+        },
+        "source_message_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "source_context_manifest_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bound_plan_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owning_workflow_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "origin_kind": {
+                "const": "plan_build"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "bound_plan_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "bound_plan_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "origin_kind": {
+                "const": "internal_workflow"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "owning_workflow_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "owning_workflow_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "pending": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "owner_ref",
+        "owner_epoch",
+        "operation_kind",
+        "expected_revision",
+        "expected_currentness_hash",
+        "expected_stop_epoch",
+        "intent_sha256",
+        "after_record",
+        "accepted_revision",
+        "origin",
+        "original_change_authority_ref",
+        "external_authority_ref"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "operation_kind": {
+          "enum": [
+            "objective_update",
+            "metadata_update"
+          ]
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expected_currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "intent_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "after_record": {
+          "$ref": "#/$defs/body"
+        },
+        "accepted_revision": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/revision"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "origin": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/origin"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_change_authority_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "external_authority_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "body_key",
+        "body_sha256",
+        "current_revision",
+        "currentness_hash",
+        "latest_objective_revision",
+        "latest_revision_hash",
+        "origin_key",
+        "control_epoch",
+        "cancellation_receipt_ref",
+        "pending"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.body_control.v1"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "body_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "body_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "current_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "latest_objective_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "latest_revision_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "origin_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "control_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cancellation_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pending": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/pending"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "operation_id",
+        "intent_sha256",
+        "owner_ref",
+        "authority_ref",
+        "before_revision",
+        "before_currentness_hash",
+        "after_revision",
+        "after_currentness_hash",
+        "accepted_objective_revision",
+        "accepted_revision_hash",
+        "committed_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.body_mutation_receipt.v1"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "intent_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authority_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "before_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "before_currentness_hash": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "after_currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "accepted_objective_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accepted_revision_hash": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "committed_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "before_revision": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "before_currentness_hash": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "before_currentness_hash": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "accepted_objective_revision": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "accepted_revision_hash": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "accepted_revision_hash": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "before_revision": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "after_revision": {
+                "const": 1
+              },
+              "accepted_objective_revision": {
+                "const": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "receipt_read_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reader_binding",
+        "storage_instance_id",
+        "project_id",
+        "goal_id",
+        "operation_id",
+        "intent_sha256"
+      ],
+      "properties": {
+        "reader_binding": {
+          "const": "reader.goal.body_mutation_receipt@1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "intent_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "storage_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_body_record.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/body"
+        }
+      }
+    },
+    "storage_revision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_objective_revision.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/revision"
+        }
+      }
+    },
+    "storage_origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_objective_origin.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/origin"
+        }
+      }
+    },
+    "storage_control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_body_control.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/control"
+        }
+      }
+    },
+    "storage_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_body_mutation_receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/receipt"
+        }
+      }
+    }
+  },
+  "title": "Goal semantic records and versioned physical custody"
+}

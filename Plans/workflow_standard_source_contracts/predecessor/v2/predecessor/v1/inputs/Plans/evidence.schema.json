@@ -1,0 +1,1644 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.evidence.schema.v1",
+  "title": "Puppet Master Evidence Bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "evidence_id",
+    "created_at_utc",
+    "node",
+    "summary",
+    "commands_run",
+    "tool_calls",
+    "events",
+    "files_changed",
+    "contract_refs_satisfied",
+    "reproducibility",
+    "artifacts",
+    "checks"
+  ],
+  "properties": {
+    "schema_id": {
+      "type": "string",
+      "const": "pm.evidence.schema.v1"
+    },
+    "web_activity": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional evidence for web/provider activity captured by a run, including websearch, webfetch/read, webextract, webresearch, deep_research, crawl, and map receipts.",
+      "properties": {
+        "websearch": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "query",
+            "invocation",
+            "results"
+          ],
+          "description": "websearch query: string returns a results array.",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "query: string"
+            },
+            "invocation": {
+              "$ref": "#/$defs/InvocationProvenance"
+            },
+            "results": {
+              "type": "array",
+              "description": "results array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  },
+                  "snippet": {
+                    "type": "string"
+                  },
+                  "source_type": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "provider_configuration": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "enabled"
+          ],
+          "description": "Provider configuration evidence preserves enabled: boolean and api_key?: string while keeping keys in global user settings, NOT project-scoped evidence content. enabled defaults false when not configured.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "enabled: boolean; default false when provider configuration is absent."
+            },
+            "api_key_configured": {
+              "type": "boolean",
+              "description": "api_key?: string is stored in global user settings, NOT project-scoped; evidence records only whether a cloud key is configured, never the raw secret."
+            },
+            "api_key_ref": {
+              "type": "string",
+              "description": "Optional non-secret reference to the global user setting that stores api_key?: string."
+            },
+            "base_url": {
+              "type": "string"
+            }
+          }
+        },
+        "provider_routing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "provider_fallback_occurred"
+          ],
+          "description": "Provider routing evidence preserves adapter_selection_reason and provider_fallback_occurred.",
+          "properties": {
+            "adapter_selection_reason": {
+              "type": "string"
+            },
+            "provider_fallback_occurred": {
+              "type": "boolean"
+            },
+            "provider_fallback_summary": {
+              "type": "string"
+            }
+          }
+        },
+        "webfetch": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "web_operation",
+            "tool_id",
+            "url",
+            "formats",
+            "invocation"
+          ],
+          "description": "webfetch evidence is the normalized read receipt for URL reads; legacy read invocations normalize to web_operation=read and tool_id=webfetch.",
+          "properties": {
+            "web_operation": {
+              "type": "string",
+              "const": "read"
+            },
+            "tool_id": {
+              "type": "string",
+              "const": "webfetch"
+            },
+            "invocation": {
+              "$ref": "#/$defs/InvocationProvenance"
+            },
+            "requested_adapter_id": {
+              "type": "string"
+            },
+            "effective_adapter_id": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string",
+              "description": "Validated requested URL."
+            },
+            "final_url": {
+              "type": "string",
+              "description": "Final URL after approved redirects."
+            },
+            "status": {
+              "type": "integer",
+              "minimum": 100,
+              "maximum": 599
+            },
+            "formats": {
+              "type": "array",
+              "description": "Requested and returned PM markdown, HTML, rawHtml, screenshot, PDF, summary, link, image, or structured output mappings.",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "markdown",
+                      "html",
+                      "rawHtml",
+                      "screenshot",
+                      "pdf",
+                      "summary",
+                      "links",
+                      "images",
+                      "structured"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "markdown",
+                          "html",
+                          "rawHtml",
+                          "screenshot",
+                          "pdf",
+                          "summary",
+                          "links",
+                          "images",
+                          "structured"
+                        ]
+                      },
+                      "content_ref": {
+                        "type": "string"
+                      },
+                      "artifact_ref": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "parsers": {
+              "type": "array",
+              "description": "Parser entries represent requested parser output formats such as pdf.",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "pdf",
+                      "html",
+                      "markdown",
+                      "structured"
+                    ]
+                  }
+                }
+              }
+            },
+            "content_ref": {
+              "type": "string"
+            },
+            "page_representation_ref": {
+              "type": "string"
+            },
+            "browser_session_id": {
+              "type": "string"
+            },
+            "cache": {
+              "$ref": "#/$defs/CacheRecord"
+            },
+            "read_receipts": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ReadReceipt"
+              }
+            },
+            "citations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/CitationRecord"
+              }
+            },
+            "warnings": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "change_tracking": {
+              "type": "boolean",
+              "description": "change_tracking?: boolean; default false; when true, returns a diff against the previous fetch of the same URL."
+            },
+            "pdf_artifact": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "pdf_artifact?: { ref: string, page_count: number }",
+              "required": [
+                "ref",
+                "page_count"
+              ],
+              "properties": {
+                "ref": {
+                  "type": "string"
+                },
+                "page_count": {
+                  "type": "integer",
+                  "description": "page_count",
+                  "minimum": 0
+                }
+              }
+            }
+          }
+        },
+        "webextract": {
+          "$ref": "#/$defs/WebActionResult"
+        },
+        "webresearch": {
+          "$ref": "#/$defs/ResearchRun"
+        },
+        "deep_research": {
+          "$ref": "#/$defs/DeepResearchRun"
+        },
+        "webcrawl": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "invocation",
+            "pages"
+          ],
+          "description": "webcrawl evidence preserves scope_summary?: string and pages: Array<{ url: string, title?: string, content_ref?: string, change_status?: string }>",
+          "properties": {
+            "invocation": {
+              "$ref": "#/$defs/InvocationProvenance"
+            },
+            "scope_summary": {
+              "type": "string",
+              "description": "scope_summary?: string"
+            },
+            "pages": {
+              "type": "array",
+              "description": "pages: Array<{ url: string, title?: string, content_ref?: string, change_status?: string }>",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "url"
+                ],
+                "properties": {
+                  "url": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "content_ref": {
+                    "type": "string"
+                  },
+                  "change_status": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "change_summary": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "new": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "changed": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "same": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "removed": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          }
+        },
+        "webmap": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "links",
+            "invocation"
+          ],
+          "description": "webmap evidence preserves map_ref?: string, map_ref, links: Array<{ url: string, title?: string, description?: string }>, and discovered URLs.",
+          "properties": {
+            "invocation": {
+              "$ref": "#/$defs/InvocationProvenance"
+            },
+            "map_ref": {
+              "type": "string",
+              "description": "map_ref?: string"
+            },
+            "links": {
+              "type": "array",
+              "description": "links: Array<{ url: string, title?: string, description?: string }>",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "url"
+                ],
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "URLs"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "runtime_route_action_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional route/action evidence for Run Graph, widget, workspace isolation, HITL, gate/audit, confirmation, and manual natural-language surfaces.",
+      "properties": {
+        "hitl_action_args": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Run Graph HITL actions consume Plans/Run_Graph_View.md and /Run_Graph_View.md command evidence: cmd.graph.approve_hitl and cmd.graph.deny_hitl use { node_id: string, rationale: string }.",
+          "properties": {
+            "node_id": {"type": "string"},
+            "rationale": {"type": "string"}
+          }
+        },
+        "widget_route_args": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "cmd.widget and cmd.widget.* must migrate away from generic page: string routing when native-surface vocabulary is available.",
+          "properties": {
+            "page": {"type": "string", "description": "page: string compatibility field"},
+            "native_surface": {"type": "string", "description": "native-surface target name"}
+          }
+        },
+        "workspace_isolation": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Workspace isolation evidence preserves lane_id, worktree_id, workspace_ref, and snapshot_ref.",
+          "properties": {
+            "lane_id": {"type": "string"},
+            "worktree_id": {"type": "string"},
+            "workspace_ref": {"type": "string"},
+            "snapshot_ref": {"type": "string"}
+          }
+        },
+        "runtime_native_hitl": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Slint GraphNodeUI evidence must retire tier_type UI assumptions and hitl_action(node_id, action, rationale) callbacks in favor of runtime-native blocked action targets.",
+          "properties": {
+            "node_id": {"type": "string"},
+            "tier_type": {"type": "string"},
+            "hitl_action": {"type": "string", "description": "hitl_action(node_id, action, rationale) compatibility callback"}
+          }
+        },
+        "shared_payload_fields": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Shared payload fields include /surface, project_id, focused_run_id, /gate, /audit, trace-through, /artifacts/history, light and strong confirmation, /manual user-driven natural-language request evidence.",
+          "properties": {
+            "project_id": {"type": "string"},
+            "focused_run_id": {"type": "string"},
+            "surface": {"type": "string"},
+            "confirmation_strength": {"type": "string", "enum": ["light", "strong"]},
+            "manual_request": {"type": "boolean", "description": "/manual user-driven natural-language request"}
+          }
+        }
+      }
+    },
+    "evidence_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at_utc": {
+      "type": "string",
+      "minLength": 1
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node_id"
+      ],
+      "properties": {
+        "node_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "graph_id": {
+          "type": "string"
+        },
+        "graph_scope": {
+          "type": "string"
+        }
+      }
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "commands_run": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "cmd",
+          "exit_code"
+        ],
+        "properties": {
+          "cmd": {
+            "type": "string"
+          },
+          "exit_code": {
+            "type": "integer"
+          },
+          "stdout_excerpt": {
+            "type": "string"
+          },
+          "stderr_excerpt": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tool_calls": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tool_id",
+          "count"
+        ],
+        "properties": {
+          "tool_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "denied_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "error_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "events": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_refs"
+      ],
+      "properties": {
+        "event_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source",
+              "ref"
+            ],
+            "properties": {
+              "source": {
+                "type": "string",
+                "enum": [
+                  "seglog",
+                  "jsonl",
+                  "other"
+                ]
+              },
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "files_changed": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "change_type"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "change_type": {
+            "type": "string",
+            "enum": [
+              "added",
+              "modified",
+              "deleted",
+              "renamed"
+            ]
+          },
+          "additions": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "deletions": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "contract_refs_satisfied": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "reproducibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "snapshot_ref"
+      ],
+      "properties": {
+        "snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "result"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "PASS",
+              "FAIL"
+            ]
+          },
+          "details": {
+            "type": "string"
+          },
+          "contract_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "route_aware_verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gate_id",
+        "result",
+        "wiring_matrix_ref",
+        "route_args_verified",
+        "wrapper_normalization_verified",
+        "stale_revalidation_verified",
+        "admissibility_verified",
+        "correlation_passthrough_verified",
+        "details"
+      ],
+      "properties": {
+        "gate_id": {
+          "type": "string",
+          "const": "GATE-010"
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "wiring_matrix_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "route_args_verified": {
+          "type": "boolean"
+        },
+        "wrapper_normalization_verified": {
+          "type": "boolean"
+        },
+        "stale_revalidation_verified": {
+          "type": "boolean"
+        },
+        "admissibility_verified": {
+          "type": "boolean"
+        },
+        "correlation_passthrough_verified": {
+          "type": "boolean"
+        },
+        "details": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "route_args",
+            "wrapper_normalization",
+            "stale_revalidation",
+            "admissibility",
+            "correlation_passthrough"
+          ],
+          "properties": {
+            "route_args": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "wrapper_normalization": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "stale_revalidation": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "admissibility": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "correlation_passthrough": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "notes": {
+              "type": "string"
+            },
+            "contract_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "InvocationProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "invocation_source": {
+                "enum": [
+                  "agent_initiated",
+                  "goal",
+                  "prd",
+                  "planning_wizard",
+                  "subagent"
+                ]
+              }
+            },
+            "required": [
+              "invocation_source"
+            ]
+          },
+          "then": {
+            "required": [
+              "agent_reason"
+            ]
+          }
+        }
+      ],
+      "required": [
+        "invocation_source"
+      ],
+      "properties": {
+        "invocation_source": {
+          "type": "string",
+          "enum": [
+            "slash",
+            "palette",
+            "nl_user",
+            "agent_initiated",
+            "goal",
+            "prd",
+            "planning_wizard",
+            "subagent"
+          ]
+        },
+        "agent_reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_user_message_id": {
+          "type": "string"
+        },
+        "source_goal_id": {
+          "type": "string"
+        },
+        "source_subagent_id": {
+          "type": "string"
+        },
+        "source_prd_id": {
+          "type": "string"
+        },
+        "source_planning_run_id": {
+          "type": "string"
+        }
+      }
+    },
+    "CacheRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "cache_state": {
+                "const": "stored"
+              }
+            },
+            "required": [
+              "cache_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "ttl_seconds",
+              "no_secret_verified",
+              "redaction_profile_id"
+            ],
+            "properties": {
+              "no_secret_verified": {
+                "const": true
+              }
+            }
+          }
+        }
+      ],
+      "required": [
+        "cache_state"
+      ],
+      "properties": {
+        "cache_state": {
+          "type": "string",
+          "enum": [
+            "hit",
+            "miss",
+            "bypassed",
+            "stored",
+            "not_stored"
+          ]
+        },
+        "cache_ref": {
+          "type": "string"
+        },
+        "content_hash": {
+          "type": "string"
+        },
+        "ttl_seconds": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "no_secret_verified": {
+          "type": "boolean"
+        },
+        "redaction_profile_id": {
+          "type": "string"
+        }
+      }
+    },
+    "ReadReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "url",
+        "web_operation",
+        "tool_id",
+        "content_ref",
+        "read_at_utc"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "web_operation": {
+          "type": "string",
+          "const": "read"
+        },
+        "tool_id": {
+          "type": "string",
+          "const": "webfetch"
+        },
+        "content_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "page_representation_ref": {
+          "type": "string"
+        },
+        "browser_session_id": {
+          "type": "string"
+        },
+        "read_at_utc": {
+          "type": "string",
+          "minLength": 1
+        },
+        "redaction_profile_id": {
+          "type": "string"
+        },
+        "content_hash": {
+          "type": "string"
+        }
+      }
+    },
+    "CitationRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "evidence_kind": {
+                "const": "extract"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "extract_receipt_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "evidence_kind": {
+                "enum": [
+                  "read",
+                  "browser_snapshot",
+                  "browser_screenshot",
+                  "provider_native_read"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "read_receipt_ref"
+            ]
+          }
+        }
+      ],
+      "required": [
+        "citation_id",
+        "url",
+        "source_ref",
+        "evidence_kind",
+        "snippet_only"
+      ],
+      "properties": {
+        "citation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "read_receipt_ref": {
+          "type": "string"
+        },
+        "extract_receipt_ref": {
+          "type": "string"
+        },
+        "evidence_kind": {
+          "type": "string",
+          "enum": [
+            "read",
+            "extract",
+            "browser_snapshot",
+            "browser_screenshot",
+            "provider_native_read"
+          ]
+        },
+        "quoted_span_ref": {
+          "type": "string"
+        },
+        "snippet_only": {
+          "type": "boolean",
+          "const": false
+        }
+      }
+    },
+    "WebOperationJob": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "completed",
+                  "failed",
+                  "cancelled",
+                  "timeout"
+                ]
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "finished_at_utc"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "failed",
+                  "timeout"
+                ]
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "failure_reason_code"
+            ]
+          }
+        }
+      ],
+      "required": [
+        "job_id",
+        "web_operation",
+        "tool_id",
+        "invocation",
+        "status",
+        "created_at_utc",
+        "not_runtime_queue"
+      ],
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "web_operation": {
+          "type": "string",
+          "enum": [
+            "search",
+            "read",
+            "extract",
+            "research",
+            "deep_research",
+            "crawl",
+            "map"
+          ]
+        },
+        "tool_id": {
+          "type": "string",
+          "enum": [
+            "websearch",
+            "webfetch",
+            "webextract",
+            "webresearch",
+            "webcrawl",
+            "webmap"
+          ]
+        },
+        "invocation": {
+          "$ref": "#/$defs/InvocationProvenance"
+        },
+        "provider_job_id": {
+          "type": "string"
+        },
+        "provider_adapter_id": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "queued",
+            "polling",
+            "running",
+            "partial",
+            "completed",
+            "failed",
+            "cancelled",
+            "timeout",
+            "denied"
+          ]
+        },
+        "status_source": {
+          "type": "string",
+          "enum": [
+            "pm_composed",
+            "provider_poll",
+            "provider_webhook",
+            "browser_runtime"
+          ]
+        },
+        "poll_ref": {
+          "type": "string"
+        },
+        "progress_ref": {
+          "type": "string"
+        },
+        "partial_result_ref": {
+          "type": "string"
+        },
+        "result_ref": {
+          "type": "string"
+        },
+        "permission_snapshot_id": {
+          "type": "string"
+        },
+        "cache_ref": {
+          "type": "string"
+        },
+        "redaction_profile_id": {
+          "type": "string"
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "created_at_utc": {
+          "type": "string",
+          "minLength": 1
+        },
+        "updated_at_utc": {
+          "type": "string"
+        },
+        "finished_at_utc": {
+          "type": "string"
+        },
+        "failure_reason_code": {
+          "type": "string"
+        },
+        "cancelled": {
+          "type": "boolean"
+        },
+        "not_runtime_queue": {
+          "type": "boolean",
+          "const": true
+        }
+      }
+    },
+    "WebActionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"web_operation": {"const": "search"}}},
+          "then": {"properties": {"tool_id": {"const": "websearch"}, "operation_input": {"properties": {"web_operation": {"const": "search"}, "tool_id": {"const": "websearch"}}}}}
+        },
+        {
+          "if": {"properties": {"web_operation": {"const": "read"}}},
+          "then": {"properties": {"tool_id": {"const": "webfetch"}, "operation_input": {"properties": {"web_operation": {"const": "read"}, "tool_id": {"const": "webfetch"}}}}}
+        },
+        {
+          "if": {"properties": {"web_operation": {"const": "extract"}}},
+          "then": {"properties": {"tool_id": {"const": "webextract"}, "operation_input": {"properties": {"web_operation": {"const": "extract"}, "tool_id": {"const": "webextract"}}}}}
+        },
+        {
+          "if": {"properties": {"web_operation": {"const": "research"}}},
+          "then": {"properties": {"tool_id": {"const": "webresearch"}, "operation_input": {"properties": {"web_operation": {"const": "research"}, "tool_id": {"const": "webresearch"}}}}}
+        },
+        {
+          "if": {"properties": {"web_operation": {"const": "deep_research"}}},
+          "then": {"properties": {"tool_id": {"const": "webresearch"}, "operation_input": {"properties": {"web_operation": {"const": "deep_research"}, "tool_id": {"const": "webresearch"}}}}}
+        },
+        {
+          "if": {"properties": {"web_operation": {"const": "crawl"}}},
+          "then": {"properties": {"tool_id": {"const": "webcrawl"}, "operation_input": {"properties": {"web_operation": {"const": "crawl"}, "tool_id": {"const": "webcrawl"}}}}}
+        },
+        {
+          "if": {"properties": {"web_operation": {"const": "map"}}},
+          "then": {"properties": {"tool_id": {"const": "webmap"}, "operation_input": {"properties": {"web_operation": {"const": "map"}, "tool_id": {"const": "webmap"}}}}}
+        }
+      ],
+      "required": [
+        "web_operation",
+        "tool_id",
+        "invocation",
+        "operation_input",
+        "success",
+        "provider_fallback_occurred"
+      ],
+      "properties": {
+        "web_operation": {
+          "type": "string",
+          "enum": [
+            "search",
+            "read",
+            "extract",
+            "research",
+            "deep_research",
+            "crawl",
+            "map"
+          ]
+        },
+        "tool_id": {
+          "type": "string",
+          "enum": [
+            "websearch",
+            "webfetch",
+            "webextract",
+            "webresearch",
+            "webcrawl",
+            "webmap"
+          ]
+        },
+        "invocation": {
+          "$ref": "#/$defs/InvocationProvenance"
+        },
+        "operation_input": {
+          "type": "object",
+          "minProperties": 1,
+          "required": [
+            "web_operation",
+            "tool_id"
+          ]
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "provider_fallback_occurred": {
+          "type": "boolean"
+        },
+        "denial_reason_code": {
+          "type": "string"
+        },
+        "content_ref": {
+          "type": "string"
+        },
+        "sources_ref": {
+          "type": "string"
+        },
+        "read_receipt_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "citation_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "job_ref": {
+          "type": "string"
+        },
+        "job": {
+          "$ref": "#/$defs/WebOperationJob"
+        }
+      }
+    },
+    "ResearchSource": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "source_id",
+        "url",
+        "selection_reason",
+        "read_state"
+      ],
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selection_reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "read_state": {
+          "type": "string",
+          "enum": [
+            "selected",
+            "read",
+            "extracted",
+            "skipped",
+            "failed",
+            "denied"
+          ]
+        }
+      }
+    },
+    "ResearchSynthesisStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "step_id",
+        "step_kind",
+        "input_source_refs",
+        "output_ref",
+        "created_at_utc"
+      ],
+      "properties": {
+        "step_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "step_kind": {
+          "type": "string",
+          "enum": [
+            "source_selection",
+            "read",
+            "extract",
+            "subquestion",
+            "compare",
+            "synthesize",
+            "closure_check"
+          ]
+        },
+        "input_source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "read_receipt_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "citation_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "output_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at_utc": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ResearchSubagentRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subagent_record_id",
+        "assignment",
+        "status",
+        "created_at_utc"
+      ],
+      "properties": {
+        "subagent_record_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_subagent_id": {
+          "type": "string"
+        },
+        "assignment": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_scope_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "assigned",
+            "running",
+            "completed",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "result_ref": {
+          "type": "string"
+        },
+        "failure_reason_code": {
+          "type": "string"
+        },
+        "created_at_utc": {
+          "type": "string",
+          "minLength": 1
+        },
+        "finished_at_utc": {
+          "type": "string"
+        }
+      }
+    },
+    "ResearchRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "invocation": {
+                "properties": {
+                  "invocation_source": {
+                    "enum": [
+                      "prd",
+                      "planning_wizard"
+                    ]
+                  }
+                },
+                "required": [
+                  "invocation_source"
+                ]
+              }
+            },
+            "required": [
+              "invocation"
+            ]
+          },
+          "then": {
+            "anyOf": [
+              {
+                "required": [
+                  "ledger_source_evidence_ref"
+                ]
+              },
+              {
+                "required": [
+                  "plan_source_evidence_ref"
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "required": [
+        "research_run_id",
+        "mode",
+        "task",
+        "invocation",
+        "sources",
+        "read_receipts",
+        "citations",
+        "closure_state"
+      ],
+      "properties": {
+        "research_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "standard",
+            "deep"
+          ]
+        },
+        "task": {
+          "type": "string",
+          "minLength": 1
+        },
+        "invocation": {
+          "$ref": "#/$defs/InvocationProvenance"
+        },
+        "provider_mode": {
+          "type": "string",
+          "enum": [
+            "pm_composed",
+            "provider_autonomous"
+          ]
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/ResearchSource"
+          }
+        },
+        "read_receipts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/ReadReceipt"
+          }
+        },
+        "citations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/CitationRecord"
+          }
+        },
+        "synthesis_steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResearchSynthesisStep"
+          }
+        },
+        "subagent_records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResearchSubagentRecord"
+          }
+        },
+        "closure_state": {
+          "type": "string",
+          "enum": [
+            "sufficient",
+            "partial",
+            "failed",
+            "denied",
+            "cancelled"
+          ]
+        },
+        "subagent_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "subquestion_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "coverage_report_ref": {
+          "type": "string"
+        },
+        "failure_reason_code": {
+          "type": "string"
+        },
+        "ledger_source_evidence_ref": {
+          "type": "string"
+        },
+        "plan_source_evidence_ref": {
+          "type": "string"
+        }
+      }
+    },
+    "DeepResearchRun": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/ResearchRun"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "deep"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

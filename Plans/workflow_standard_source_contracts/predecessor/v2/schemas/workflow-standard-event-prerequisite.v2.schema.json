@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v2.schema.json",
+  "$defs": {
+    "OriginalEventPrerequisite": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "complete_original_event",
+        "complete_certified_payload",
+        "first_append_receipt",
+        "complete_original_value_commitment",
+        "original_full_value",
+        "exact_original_custody",
+        "complete_current_source"
+      ],
+      "properties": {
+        "complete_original_event": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+        },
+        "complete_certified_payload": {
+          "$ref": "https://puppetmaster.local/proposals/pm.goal_runtime_event.goal_run_certified.schema.v3"
+        },
+        "first_append_receipt": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "properties": {
+                "durability_class": {
+                  "const": "barrier"
+                }
+              }
+            }
+          ]
+        },
+        "complete_original_value_commitment": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+        },
+        "original_full_value": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
+        },
+        "exact_original_custody": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2"
+        },
+        "complete_current_source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v2.schema.json#/$defs/NativeCurrentEventSource"
+        }
+      }
+    },
+    "NativeCurrentEventSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "original_native_read_id",
+        "current",
+        "current_bytes_base64",
+        "manifest",
+        "manifest_bytes_base64",
+        "source_selection",
+        "selected_entry",
+        "segment_bytes",
+        "frames",
+        "sequence_gaps",
+        "generic"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_native_read_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current": {
+          "$ref": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json#/$defs/current_image"
+        },
+        "current_bytes_base64": {
+          "type": "string",
+          "contentEncoding": "base64"
+        },
+        "manifest": {
+          "$ref": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json#/$defs/manifest_image"
+        },
+        "manifest_bytes_base64": {
+          "type": "string",
+          "contentEncoding": "base64"
+        },
+        "source_selection": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/source_selection"
+        },
+        "selected_entry": {
+          "$ref": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json#/$defs/selection_entry"
+        },
+        "segment_bytes": {
+          "$ref": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json#/$defs/native_source_view/properties/segment_bytes"
+        },
+        "frames": {
+          "$ref": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json#/$defs/native_source_view/properties/frames"
+        },
+        "sequence_gaps": {
+          "$ref": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json#/$defs/native_source_view/properties/sequence_gaps"
+        },
+        "generic": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v2.schema.json#/$defs/CurrentGenericSnapshot"
+        }
+      }
+    },
+    "CurrentGenericOriginalValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event",
+        "first_append_receipt",
+        "full_value_result",
+        "exact_custody"
+      ],
+      "properties": {
+        "event": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+        },
+        "first_append_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+        },
+        "full_value_result": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
+        },
+        "exact_custody": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2"
+        }
+      }
+    },
+    "CurrentGenericFrame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "index_row",
+        "frame_bytes_base64",
+        "original_value"
+      ],
+      "properties": {
+        "index_row": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/GenericIndexRow"
+        },
+        "frame_bytes_base64": {
+          "type": "string",
+          "contentEncoding": "base64"
+        },
+        "original_value": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v2.schema.json#/$defs/CurrentGenericOriginalValue"
+        }
+      }
+    },
+    "CurrentGenericSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checkpoint",
+        "token",
+        "frames"
+      ],
+      "properties": {
+        "checkpoint": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/checkpoint"
+        },
+        "token": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+        },
+        "frames": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v2.schema.json#/$defs/CurrentGenericFrame"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1584 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json",
+  "title": "Puppet Master shared runtime command contracts",
+  "description": "Pre-build typed requests, results, errors, cancellation, and idempotency for the 26 canonical shared-runtime commands plus the retained remote reconnect wrapper. Fixture-only PM7 interaction and Context-compaction trace definitions validate local-preview versus settled-result behavior and authorize no command or EventRecord producer.",
+  "oneOf": [
+    {"$ref": "#/$defs/environment_connection_command_request"},
+    {"$ref": "#/$defs/thread_outbox_retry_request"},
+    {"$ref": "#/$defs/thread_outbox_cancel_request"},
+    {"$ref": "#/$defs/thread_request_command_request"},
+    {"$ref": "#/$defs/thread_spawn_command_request"},
+    {"$ref": "#/$defs/thread_await_command_request"},
+    {"$ref": "#/$defs/capability_ensure_request"},
+    {"$ref": "#/$defs/tool_discover_request"},
+    {"$ref": "#/$defs/tool_select_request"},
+    {"$ref": "#/$defs/installation_lifecycle_command_request"},
+    {"$ref": "#/$defs/authentication_command_request"},
+    {"$ref": "#/$defs/eval_session_command_request"},
+    {"$ref": "#/$defs/mcp_server_lifecycle_command_request"},
+    {"$ref": "#/$defs/runtime_resource_inspect_request"},
+    {"$ref": "#/$defs/back_seat_driver_mode_set_request"},
+    {"$ref": "#/$defs/remote_reconnect_wrapper_request"},
+    {"$ref": "#/$defs/environment_connection_command_result"},
+    {"$ref": "#/$defs/thread_outbox_command_result"},
+    {"$ref": "#/$defs/thread_request_command_result"},
+    {"$ref": "#/$defs/thread_spawn_command_result"},
+    {"$ref": "#/$defs/thread_await_command_result"},
+    {"$ref": "#/$defs/capability_ensure_result"},
+    {"$ref": "#/$defs/tool_discover_result"},
+    {"$ref": "#/$defs/tool_select_result"},
+    {"$ref": "#/$defs/installation_lifecycle_command_result"},
+    {"$ref": "#/$defs/authentication_command_result"},
+    {"$ref": "#/$defs/eval_session_command_result"},
+    {"$ref": "#/$defs/mcp_server_lifecycle_command_result"},
+    {"$ref": "#/$defs/runtime_resource_inspect_result"},
+    {"$ref": "#/$defs/back_seat_driver_mode_set_result"},
+    {"$ref": "#/$defs/command_error"},
+    {"$ref": "#/$defs/command_cancellation"},
+    {"$ref": "#/$defs/command_idempotency"}
+  ],
+  "$defs": {
+    "non_empty_string": {"type": "string", "minLength": 1},
+    "home_workspace_layout_event_command_id": {
+      "type": "string",
+      "enum": [
+        "cmd.browser.open_workspace_preview",
+        "cmd.editor.close_panel",
+        "cmd.editor.open_panel",
+        "cmd.file.open",
+        "cmd.panel.switch",
+        "cmd.panel.undock",
+        "cmd.terminal.move_workgroup",
+        "cmd.terminal.split_pane",
+        "cmd.workspace_layout.move_surface",
+        "cmd.workspace_layout.reset",
+        "cmd.workspace_layout.resize_surface",
+        "cmd.workspace_layout.set_collapsed"
+      ]
+    },
+    "nullable_non_empty_string": {"oneOf": [{"$ref": "#/$defs/non_empty_string"}, {"type": "null"}]},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "nullable_timestamp": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "non_secret_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "environment_connection_command_request": {
+      "allOf": [
+        {"$ref": "#/$defs/command_request_envelope"},
+        {
+          "type": "object",
+          "required": ["action", "environment_id", "expected_supervisor_generation", "expected_connection_epoch", "reason", "drain_policy"],
+          "properties": {
+            "command_id": {"enum": ["cmd.environment.connect", "cmd.environment.reconnect", "cmd.environment.disconnect"]},
+            "action": {"enum": ["connect", "reconnect", "disconnect"]},
+            "environment_id": {"$ref": "#/$defs/non_empty_string"},
+            "expected_supervisor_generation": {"type": "integer", "minimum": 0},
+            "expected_connection_epoch": {"type": "integer", "minimum": 0},
+            "reason": {"$ref": "#/$defs/nullable_non_empty_string"},
+            "drain_policy": {"oneOf": [{"enum": ["drain_bounded", "cancel_pending", "fail_if_busy"]}, {"type": "null"}]}
+          }
+        },
+        {"if": {"properties": {"command_id": {"const": "cmd.environment.connect"}}}, "then": {"properties": {"action": {"const": "connect"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.environment.reconnect"}}}, "then": {"properties": {"action": {"const": "reconnect"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.environment.disconnect"}}}, "then": {"properties": {"action": {"const": "disconnect"}}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "thread_outbox_retry_request": {
+      "allOf": [
+        {"$ref": "#/$defs/command_request_envelope"},
+        {
+          "type": "object",
+          "required": ["outbox_entry_id", "expected_outbox_revision", "expected_target_generation"],
+          "properties": {
+            "command_id": {"const": "cmd.thread.outbox.retry"},
+            "thread_id": {"$ref": "#/$defs/non_empty_string"},
+            "outbox_entry_id": {"$ref": "#/$defs/non_empty_string"},
+            "expected_outbox_revision": {"type": "integer", "minimum": 0},
+            "expected_target_generation": {"type": "integer", "minimum": 0}
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "thread_outbox_cancel_request": {
+      "allOf": [
+        {"$ref": "#/$defs/command_request_envelope"},
+        {
+          "type": "object",
+          "required": ["outbox_entry_id", "expected_outbox_revision", "cancellation_reason"],
+          "properties": {
+            "command_id": {"const": "cmd.thread.outbox.cancel"},
+            "thread_id": {"$ref": "#/$defs/non_empty_string"},
+            "outbox_entry_id": {"$ref": "#/$defs/non_empty_string"},
+            "expected_outbox_revision": {"type": "integer", "minimum": 0},
+            "cancellation_reason": {"$ref": "#/$defs/non_empty_string"}
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "thread_request_command_request": {
+      "allOf": [
+        {"$ref": "#/$defs/command_request_envelope"},
+        {
+          "type": "object",
+          "required": ["request_id", "parent_thread_id", "requested_thread_kind", "bounded_request_ref", "target_generation"],
+          "properties": {
+            "command_id": {"const": "cmd.thread.request"},
+            "request_id": {"$ref": "#/$defs/non_empty_string"},
+            "parent_thread_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+            "requested_thread_kind": {"enum": ["foreground", "background", "branch", "agent_child"]},
+            "bounded_request_ref": {"$ref": "#/$defs/non_secret_ref"},
+            "target_generation": {"type": "integer", "minimum": 0}
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "thread_spawn_command_request": {
+      "allOf": [
+        {"$ref": "#/$defs/command_request_envelope"},
+        {
+          "type": "object",
+          "required": ["spawn_request_id", "parent_thread_id", "requested_role", "bounded_context_ref", "target_generation"],
+          "properties": {
+            "command_id": {"const": "cmd.thread.spawn"},
+            "spawn_request_id": {"$ref": "#/$defs/non_empty_string"},
+            "parent_thread_id": {"$ref": "#/$defs/non_empty_string"},
+            "requested_role": {"$ref": "#/$defs/non_empty_string"},
+            "bounded_context_ref": {"$ref": "#/$defs/non_secret_ref"},
+            "target_generation": {"type": "integer", "minimum": 0}
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "thread_await_command_request": {
+      "allOf": [
+        {"$ref": "#/$defs/command_request_envelope"},
+        {
+          "type": "object",
+          "required": ["await_request_id", "condition_ref", "timeout_utc", "target_generation"],
+          "properties": {
+            "command_id": {"const": "cmd.thread.await"},
+            "thread_id": {"$ref": "#/$defs/non_empty_string"},
+            "await_request_id": {"$ref": "#/$defs/non_empty_string"},
+            "condition_ref": {"$ref": "#/$defs/non_secret_ref"},
+            "timeout_utc": {"$ref": "#/$defs/timestamp"},
+            "target_generation": {"type": "integer", "minimum": 0}
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "capability_ensure_request": {
+      "allOf": [
+        {"$ref": "#/$defs/command_request_envelope"},
+        {
+          "type": "object",
+          "required": ["capability_id", "provisioning_mode", "requirement_ref", "origin_operation_id"],
+          "properties": {
+            "command_id": {"const": "cmd.capability.ensure"},
+            "capability_id": {"$ref": "#/$defs/non_empty_string"},
+            "provisioning_mode": {"enum": ["Off", "Auto", "On"]},
+            "requirement_ref": {"$ref": "#/$defs/non_secret_ref"},
+            "origin_operation_id": {"$ref": "#/$defs/non_empty_string"}
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "tool_discover_request": {
+      "allOf": [
+        {"$ref": "#/$defs/command_request_envelope"},
+        {
+          "type": "object",
+          "required": ["capability_query_ref", "stage_limit", "expected_registry_generation"],
+          "properties": {
+            "command_id": {"const": "cmd.tool.discover"},
+            "capability_query_ref": {"$ref": "#/$defs/non_secret_ref"},
+            "stage_limit": {"enum": ["installed", "project_enabled", "policy_available", "selected_for_request", "invoked"]},
+            "expected_registry_generation": {"type": "integer", "minimum": 0}
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "tool_select_request": {
+      "allOf": [
+        {"$ref": "#/$defs/command_request_envelope"},
+        {
+          "type": "object",
+          "required": ["selection_id", "tool_refs", "expected_registry_generation", "policy_snapshot_ref"],
+          "properties": {
+            "command_id": {"const": "cmd.tool.select"},
+            "selection_id": {"$ref": "#/$defs/non_empty_string"},
+            "tool_refs": {"$ref": "#/$defs/ref_list"},
+            "expected_registry_generation": {"type": "integer", "minimum": 0},
+            "policy_snapshot_ref": {"$ref": "#/$defs/non_secret_ref"}
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "nullable_non_secret_ref": {"oneOf": [{"$ref": "#/$defs/non_secret_ref"}, {"type": "null"}]},
+    "ref_list": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}},
+    "canonical_command_id": {
+      "enum": [
+        "cmd.environment.connect",
+        "cmd.environment.reconnect",
+        "cmd.environment.disconnect",
+        "cmd.thread.outbox.retry",
+        "cmd.thread.outbox.cancel",
+        "cmd.thread.request",
+        "cmd.thread.spawn",
+        "cmd.thread.await",
+        "cmd.capability.ensure",
+        "cmd.tool.discover",
+        "cmd.tool.select",
+        "cmd.installation.install",
+        "cmd.installation.update",
+        "cmd.installation.repair",
+        "cmd.installation.rollback",
+        "cmd.installation.verify",
+        "cmd.authentication.start",
+        "cmd.authentication.cancel",
+        "cmd.authentication.resume",
+        "cmd.eval.session.start",
+        "cmd.eval.session.execute",
+        "cmd.eval.session.stop",
+        "cmd.mcp.server.connect",
+        "cmd.mcp.server.reconnect",
+        "cmd.resource.inspect",
+        "cmd.bsd.set"
+      ]
+    },
+    "command_idempotency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "idempotency_key", "scope_ref", "binding_sha256", "replay_policy", "conflict_behavior"],
+      "properties": {
+        "schema_id": {"const": "pm.shared_runtime.command_idempotency.v1"},
+        "idempotency_key": {"$ref": "#/$defs/non_empty_string"},
+        "scope_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "binding_sha256": {"$ref": "#/$defs/sha256"},
+        "replay_policy": {"enum": ["return_original_result", "join_inflight_same_binding", "reject_after_terminal"]},
+        "conflict_behavior": {"const": "reject_same_key_different_binding"},
+        "original_operation_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+        "original_result_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+      }
+    },
+    "command_request_envelope": {
+      "type": "object",
+      "required": [
+        "schema_id", "schema_version", "command_id", "command_instance_id", "idempotency",
+        "project_id", "project_home_server_id", "execution_host_id", "execution_environment_id",
+        "source_location_id", "topology_generation", "actor_ref", "permission_snapshot_ref",
+        "goal_id", "plan_id", "run_id", "thread_id", "agent_id", "crew_id",
+        "deadline_utc", "recovery_of_operation_id"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.shared_runtime.command_request.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"$ref": "#/$defs/canonical_command_id"},
+        "command_instance_id": {"$ref": "#/$defs/non_empty_string"},
+        "idempotency": {"$ref": "#/$defs/command_idempotency"},
+        "project_id": {"$ref": "#/$defs/non_empty_string"},
+        "project_home_server_id": {"$ref": "#/$defs/non_empty_string"},
+        "execution_host_id": {"$ref": "#/$defs/non_empty_string"},
+        "execution_environment_id": {"$ref": "#/$defs/non_empty_string"},
+        "source_location_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+        "topology_generation": {"type": "integer", "minimum": 0},
+        "actor_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "permission_snapshot_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "goal_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+        "plan_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+        "run_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+        "thread_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+        "agent_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+        "crew_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+        "deadline_utc": {"$ref": "#/$defs/nullable_timestamp"},
+        "recovery_of_operation_id": {"$ref": "#/$defs/nullable_non_empty_string"}
+      }
+    },
+    "disabled_reason": {
+      "enum": [
+        "already_in_state", "approval_required", "auth_state_mismatch", "breaker_open",
+        "capability_unavailable", "deadline_expired", "host_environment_mismatch",
+        "lease_conflict", "official_source_unverified", "operation_in_progress",
+        "outbox_state_mismatch", "permission_required", "policy_denied", "resource_blocked",
+        "session_state_mismatch", "setup_required", "stale_projection", "target_missing",
+        "topology_unavailable", "unsupported"
+      ]
+    },
+    "command_error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "category", "code", "retryability", "safe_user_message", "detail_ref"],
+      "properties": {
+        "schema_id": {"const": "pm.shared_runtime.command_error.v1"},
+        "category": {"enum": ["validation", "stale_state", "permission", "policy", "resource", "topology", "capability", "external_dependency", "recovery", "internal_fail_closed"]},
+        "code": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]*$"},
+        "retryability": {"enum": ["not_retryable", "retry_after_state_change", "retry_after_backoff", "resume_same_operation", "manual_recovery_required"]},
+        "safe_user_message": {"type": "string", "minLength": 1, "maxLength": 512},
+        "detail_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+      }
+    },
+    "command_result_envelope": {
+      "type": "object",
+      "required": [
+        "schema_id", "schema_version", "result_type", "command_id", "operation_id",
+        "command_instance_id", "outcome", "observable_work_id", "current_revision_or_epoch",
+        "projection_ref", "receipt_refs", "artifact_refs", "disabled_reason", "error",
+        "recovery_actions", "replayed", "original_operation_id", "terminal_owner_result_ref", "command_outcome_ref"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.shared_runtime.command_result.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "result_type": {"type": "string", "minLength": 1},
+        "command_id": {"$ref": "#/$defs/canonical_command_id"},
+        "operation_id": {"$ref": "#/$defs/non_empty_string"},
+        "command_instance_id": {"$ref": "#/$defs/non_empty_string"},
+        "command_outcome_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "outcome": {"enum": ["accepted", "no_change", "blocked", "cancelled", "failed", "recovery_required"]},
+        "observable_work_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+        "current_revision_or_epoch": {"type": "integer", "minimum": 0},
+        "projection_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "receipt_refs": {"$ref": "#/$defs/ref_list"},
+        "artifact_refs": {"$ref": "#/$defs/ref_list"},
+        "disabled_reason": {"oneOf": [{"$ref": "#/$defs/disabled_reason"}, {"type": "null"}]},
+        "error": {"oneOf": [{"$ref": "#/$defs/command_error"}, {"type": "null"}]},
+        "recovery_actions": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]*$"}},
+        "replayed": {"type": "boolean"},
+        "original_operation_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+        "terminal_owner_result_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"replayed": {"const": true}}, "required": ["replayed"]},
+          "then": {"properties": {"original_operation_id": {"$ref": "#/$defs/non_empty_string"}}}
+        },
+        {
+          "if": {"properties": {"outcome": {"enum": ["blocked", "failed", "recovery_required"]}}, "required": ["outcome"]},
+          "then": {"anyOf": [{"properties": {"disabled_reason": {"$ref": "#/$defs/disabled_reason"}}}, {"properties": {"error": {"$ref": "#/$defs/command_error"}}}]}
+        }
+      ]
+    },
+    "command_cancellation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id", "command_instance_id", "operation_id", "cancellation_request_id",
+        "state", "race_winner", "requested_at_utc", "acknowledged_at_utc",
+        "cleanup_evidence_ref", "terminal_result_ref"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.shared_runtime.command_cancellation.v1"},
+        "command_instance_id": {"$ref": "#/$defs/non_empty_string"},
+        "operation_id": {"$ref": "#/$defs/non_empty_string"},
+        "cancellation_request_id": {"$ref": "#/$defs/non_empty_string"},
+        "state": {"enum": ["requested", "acknowledged", "cleanup_confirmed", "won_by_completion", "failed"]},
+        "race_winner": {"oneOf": [{"enum": ["cancellation", "completion", "none_yet"]}, {"type": "null"}]},
+        "requested_at_utc": {"$ref": "#/$defs/timestamp"},
+        "acknowledged_at_utc": {"$ref": "#/$defs/nullable_timestamp"},
+        "cleanup_evidence_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "terminal_result_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"state": {"const": "acknowledged"}}, "required": ["state"]},
+          "then": {"properties": {"acknowledged_at_utc": {"$ref": "#/$defs/timestamp"}, "cleanup_evidence_ref": {"type": "null"}, "terminal_result_ref": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"state": {"const": "cleanup_confirmed"}}, "required": ["state"]},
+          "then": {"properties": {"race_winner": {"const": "cancellation"}, "cleanup_evidence_ref": {"$ref": "#/$defs/non_secret_ref"}, "terminal_result_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+        },
+        {
+          "if": {"properties": {"state": {"const": "won_by_completion"}}, "required": ["state"]},
+          "then": {"properties": {"race_winner": {"const": "completion"}, "terminal_result_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+        }
+      ]
+    },
+    "installation_lifecycle_command_request": {
+      "allOf": [
+        {"$ref": "#/$defs/command_request_envelope"},
+        {
+          "type": "object",
+          "required": [
+            "action", "subject_kind", "subject_id", "provider_cli", "acquisition_basis",
+            "installation_id", "official_source_ref", "provenance_ref", "target_release_ref",
+            "repair_plan_ref", "rollback_target_ref", "verification_policy_ref"
+          ],
+          "properties": {
+            "command_id": {"enum": ["cmd.installation.install", "cmd.installation.update", "cmd.installation.repair", "cmd.installation.rollback", "cmd.installation.verify"]},
+            "action": {"enum": ["install", "update", "repair", "rollback", "verify"]},
+            "subject_kind": {"$ref": "#/$defs/non_empty_string"},
+            "subject_id": {"$ref": "#/$defs/non_empty_string"},
+            "provider_cli": {"type": "boolean"},
+            "acquisition_basis": {"enum": ["explicit_user_acquisition", "post_consent_management", "non_provider_demand"]},
+            "installation_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+            "official_source_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+            "provenance_ref": {"$ref": "#/$defs/non_secret_ref"},
+            "target_release_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+            "repair_plan_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+            "rollback_target_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+            "verification_policy_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+          }
+        },
+        {"if": {"properties": {"command_id": {"const": "cmd.installation.install"}}}, "then": {"properties": {"action": {"const": "install"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.installation.update"}}}, "then": {"properties": {"action": {"const": "update"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.installation.repair"}}}, "then": {"properties": {"action": {"const": "repair"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.installation.rollback"}}}, "then": {"properties": {"action": {"const": "rollback"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.installation.verify"}}}, "then": {"properties": {"action": {"const": "verify"}}}},
+        {
+          "if": {"properties": {"provider_cli": {"const": true}, "action": {"const": "install"}}, "required": ["provider_cli", "action"]},
+          "then": {"properties": {"acquisition_basis": {"const": "explicit_user_acquisition"}, "official_source_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "opaque_auth_handoff_ref": {
+      "allOf": [
+        {"$ref": "#/$defs/non_secret_ref"},
+        {"not": {"pattern": "^[A-Za-z][A-Za-z0-9+.-]*://"}}
+      ]
+    },
+    "server_owned_auth_handoff": {
+      "description": "Non-secret reference binding to the RAS-015 Server-owned hosted-Tailscale authorization operation, not a second operation or a bearer credential. The broker resolves the authoritative session and revalidates operation/revision, Server/connector, current Client/session, handoff authorization/generation, expiry, revocation, protected-session reference, and exact return/continuation context before any effect. Shape validation alone proves none of those joins.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_contract_ref", "control_server_kind", "server_id", "connector_id",
+        "authorization_session_ref", "operation_generation", "handoff_generation",
+        "authorized_client_id", "authorized_client_session_generation", "protected_action_ref",
+        "client_loss_policy", "inherited_protected_content"
+      ],
+      "properties": {
+        "owner_contract_ref": {"const": "Plans/Remote_Access_System.md#RAS-015"},
+        "control_server_kind": {"const": "hosted_tailscale"},
+        "server_id": {"$ref": "#/$defs/non_empty_string"},
+        "connector_id": {"$ref": "#/$defs/non_empty_string"},
+        "authorization_session_ref": {"$ref": "#/$defs/opaque_auth_handoff_ref"},
+        "operation_generation": {"type": "integer", "minimum": 1},
+        "handoff_generation": {"type": "integer", "minimum": 1},
+        "authorized_client_id": {"$ref": "#/$defs/non_empty_string"},
+        "authorized_client_session_generation": {"type": "integer", "minimum": 0},
+        "protected_action_ref": {"$ref": "#/$defs/opaque_auth_handoff_ref"},
+        "client_loss_policy": {"const": "operation_survives_handoff_must_be_reauthorized"},
+        "inherited_protected_content": {"const": false}
+      }
+    },
+    "authentication_handoff_policy": {
+      "description": "Current command policy. The RAS-015 exception is selected only by the broker-resolved hosted-Tailscale owner, never by trusting a caller's policy/provider label. All other protected-provider flows retain initiating-active-Client-only behavior. Predecessor Tailscale requests require owner reauthorization and may not dispatch unchanged.",
+      "type": "object",
+      "required": ["client_handoff_policy"],
+      "properties": {
+        "client_handoff_policy": {"enum": ["not_applicable", "initiating_active_client_only", "server_owned_authorized_client_handoff"]},
+        "server_owned_handoff": {"oneOf": [{"$ref": "#/$defs/server_owned_auth_handoff"}, {"type": "null"}]}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"client_handoff_policy": {"const": "server_owned_authorized_client_handoff"}}, "required": ["client_handoff_policy"]},
+          "then": {
+            "required": ["server_owned_handoff", "auth_surface"],
+            "properties": {"auth_surface": {"const": "protected_auth_browser"}, "server_owned_handoff": {"$ref": "#/$defs/server_owned_auth_handoff"}}
+          },
+          "else": {"properties": {"server_owned_handoff": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"auth_surface": {"const": "protected_auth_browser"}}, "required": ["auth_surface"]},
+          "then": {"properties": {"client_handoff_policy": {"enum": ["initiating_active_client_only", "server_owned_authorized_client_handoff"]}}},
+          "else": {"properties": {"client_handoff_policy": {"enum": ["not_applicable", "initiating_active_client_only"]}}}
+        }
+      ]
+    },
+    "authentication_command_request": {
+      "allOf": [
+        {"$ref": "#/$defs/command_request_envelope"},
+        {"$ref": "#/$defs/authentication_handoff_policy"},
+        {
+          "type": "object",
+          "required": [
+            "action", "provider_id", "route_id", "profile_ref", "account_id", "connection_id",
+            "auth_surface", "credential_ref", "authentication_operation_id", "expected_auth_revision",
+            "continuation_ref", "initiating_client_id", "expected_initiating_client_session_generation",
+            "protected_auth_session_ref", "return_target_ref", "client_handoff_policy"
+          ],
+          "properties": {
+            "command_id": {"enum": ["cmd.authentication.start", "cmd.authentication.cancel", "cmd.authentication.resume"]},
+            "action": {"enum": ["start", "cancel", "resume"]},
+            "provider_id": {"$ref": "#/$defs/non_empty_string"},
+            "route_id": {"$ref": "#/$defs/non_empty_string"},
+            "profile_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+            "account_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+            "connection_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+            "auth_surface": {"enum": ["protected_auth_browser", "device_code", "terminal_user_flow", "provider_owned_external"]},
+            "credential_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+            "authentication_operation_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+            "expected_auth_revision": {"type": ["integer", "null"], "minimum": 0},
+            "continuation_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+            "initiating_client_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+            "expected_initiating_client_session_generation": {"type": ["integer", "null"], "minimum": 0},
+            "protected_auth_session_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+            "return_target_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+          }
+        },
+        {"if": {"properties": {"command_id": {"const": "cmd.authentication.start"}}}, "then": {"properties": {"action": {"const": "start"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.authentication.cancel"}}}, "then": {"properties": {"action": {"const": "cancel"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.authentication.resume"}}}, "then": {"properties": {"action": {"const": "resume"}}}},
+        {
+          "if": {"properties": {"client_handoff_policy": {"const": "server_owned_authorized_client_handoff"}}, "required": ["client_handoff_policy"]},
+          "then": {"properties": {"expected_auth_revision": {"type": "integer", "minimum": 0}}}
+        },
+        {
+          "if": {"properties": {"auth_surface": {"const": "protected_auth_browser"}}, "required": ["auth_surface"]},
+          "then": {
+            "properties": {
+              "authentication_operation_id": {"$ref": "#/$defs/non_empty_string"},
+              "initiating_client_id": {"$ref": "#/$defs/non_empty_string"},
+              "expected_initiating_client_session_generation": {"type": "integer", "minimum": 0},
+              "protected_auth_session_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "return_target_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "continuation_ref": {"$ref": "#/$defs/non_secret_ref"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"command_id": {"const": "cmd.authentication.cancel"}}, "required": ["command_id"]},
+          "then": {
+            "properties": {
+              "authentication_operation_id": {"$ref": "#/$defs/non_empty_string"},
+              "expected_auth_revision": {"type": "integer", "minimum": 0},
+              "initiating_client_id": {"$ref": "#/$defs/non_empty_string"},
+              "expected_initiating_client_session_generation": {"type": "integer", "minimum": 0},
+              "return_target_ref": {"$ref": "#/$defs/non_secret_ref"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"command_id": {"const": "cmd.authentication.resume"}}, "required": ["command_id"]},
+          "then": {
+            "properties": {
+              "authentication_operation_id": {"$ref": "#/$defs/non_empty_string"},
+              "expected_auth_revision": {"type": "integer", "minimum": 0},
+              "continuation_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "initiating_client_id": {"$ref": "#/$defs/non_empty_string"},
+              "expected_initiating_client_session_generation": {"type": "integer", "minimum": 0},
+              "return_target_ref": {"$ref": "#/$defs/non_secret_ref"}
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "eval_session_command_request": {
+      "allOf": [
+        {"$ref": "#/$defs/command_request_envelope"},
+        {
+          "type": "object",
+          "required": [
+            "action", "eval_session_id", "language", "sandbox_policy_ref", "limits_ref",
+            "variable_scope", "execution_id", "expected_session_generation", "code_artifact_ref",
+            "selected_tool_refs", "variable_disposition", "cleanup_policy_ref"
+          ],
+          "properties": {
+            "command_id": {"enum": ["cmd.eval.session.start", "cmd.eval.session.execute", "cmd.eval.session.stop"]},
+            "action": {"enum": ["start", "execute", "stop"]},
+            "eval_session_id": {"$ref": "#/$defs/non_empty_string"},
+            "language": {"oneOf": [{"enum": ["python", "javascript", "ruby", "julia"]}, {"type": "null"}]},
+            "sandbox_policy_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+            "limits_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+            "variable_scope": {"oneOf": [{"enum": ["session", "thread", "goal"]}, {"type": "null"}]},
+            "execution_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+            "expected_session_generation": {"type": ["integer", "null"], "minimum": 0},
+            "code_artifact_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+            "selected_tool_refs": {"$ref": "#/$defs/ref_list"},
+            "variable_disposition": {"oneOf": [{"enum": ["preserved", "cleared", "exported_redacted_artifact", "quarantined", "manual_recovery_required"]}, {"type": "null"}]},
+            "cleanup_policy_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+          }
+        },
+        {"if": {"properties": {"command_id": {"const": "cmd.eval.session.start"}}}, "then": {"properties": {"action": {"const": "start"}, "language": {"enum": ["python", "javascript", "ruby", "julia"]}, "variable_scope": {"enum": ["session", "thread", "goal"]}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.eval.session.execute"}}}, "then": {"properties": {"action": {"const": "execute"}, "execution_id": {"$ref": "#/$defs/non_empty_string"}, "expected_session_generation": {"type": "integer"}, "code_artifact_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.eval.session.stop"}}}, "then": {"properties": {"action": {"const": "stop"}, "expected_session_generation": {"type": "integer"}, "variable_disposition": {"enum": ["preserved", "cleared", "exported_redacted_artifact", "quarantined", "manual_recovery_required"]}, "cleanup_policy_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "mcp_server_lifecycle_command_request": {
+      "allOf": [
+        {"$ref": "#/$defs/command_request_envelope"},
+        {
+          "type": "object",
+          "required": ["action", "server_id", "expected_config_epoch", "expected_runtime_generation", "reason"],
+          "properties": {
+            "command_id": {"enum": ["cmd.mcp.server.connect", "cmd.mcp.server.reconnect"]},
+            "action": {"enum": ["connect", "reconnect"]},
+            "server_id": {"$ref": "#/$defs/non_empty_string"},
+            "expected_config_epoch": {"type": "integer", "minimum": 0},
+            "expected_runtime_generation": {"type": "integer", "minimum": 0},
+            "reason": {"$ref": "#/$defs/nullable_non_empty_string"}
+          }
+        },
+        {"if": {"properties": {"command_id": {"const": "cmd.mcp.server.connect"}}}, "then": {"properties": {"action": {"const": "connect"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.mcp.server.reconnect"}}}, "then": {"properties": {"action": {"const": "reconnect"}}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "runtime_resource_inspect_request": {
+      "allOf": [
+        {"$ref": "#/$defs/command_request_envelope"},
+        {
+          "type": "object",
+          "required": ["resource_scope_ref", "host_id", "environment_id", "expected_policy_generation"],
+          "properties": {
+            "command_id": {"const": "cmd.resource.inspect"},
+            "resource_scope_ref": {"$ref": "#/$defs/non_secret_ref"},
+            "host_id": {"$ref": "#/$defs/non_empty_string"},
+            "environment_id": {"$ref": "#/$defs/non_empty_string"},
+            "expected_policy_generation": {"type": "integer", "minimum": 0}
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "back_seat_driver_mode_set_request": {
+      "allOf": [
+        {"$ref": "#/$defs/command_request_envelope"},
+        {
+          "type": "object",
+          "required": ["scope_kind", "scope_id", "requested_mode", "expected_policy_revision"],
+          "properties": {
+            "command_id": {"const": "cmd.bsd.set"},
+            "scope_kind": {"enum": ["global", "project", "run"]},
+            "scope_id": {"$ref": "#/$defs/non_empty_string"},
+            "requested_mode": {"enum": ["Off", "Auto", "On"]},
+            "expected_policy_revision": {"type": "integer", "minimum": 0}
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "remote_reconnect_wrapper_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id", "schema_version", "command_id", "command_instance_id", "idempotency",
+        "project_id", "project_home_server_id", "execution_host_id", "execution_environment_id",
+        "source_location_id", "topology_generation", "actor_ref", "permission_snapshot_ref",
+        "remote_id", "expected_remote_revision", "expected_connection_epoch"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.shared_runtime.remote_reconnect_wrapper_request.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"const": "cmd.remote.reconnect"},
+        "command_instance_id": {"$ref": "#/$defs/non_empty_string"},
+        "idempotency": {"$ref": "#/$defs/command_idempotency"},
+        "project_id": {"$ref": "#/$defs/non_empty_string"},
+        "project_home_server_id": {"$ref": "#/$defs/non_empty_string"},
+        "execution_host_id": {"$ref": "#/$defs/non_empty_string"},
+        "execution_environment_id": {"$ref": "#/$defs/non_empty_string"},
+        "source_location_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+        "topology_generation": {"type": "integer", "minimum": 0},
+        "actor_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "permission_snapshot_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "remote_id": {"$ref": "#/$defs/non_empty_string"},
+        "expected_remote_revision": {"type": "integer", "minimum": 0},
+        "expected_connection_epoch": {"type": "integer", "minimum": 0}
+      }
+    },
+    "environment_connection_command_result": {
+      "allOf": [
+        {"$ref": "#/$defs/command_result_envelope"},
+        {"type": "object", "required": ["subject_ref"], "properties": {"result_type": {"const": "EnvironmentConnectionCommandResult"}, "command_id": {"enum": ["cmd.environment.connect", "cmd.environment.reconnect", "cmd.environment.disconnect"]}, "subject_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "thread_outbox_command_result": {
+      "allOf": [
+        {"$ref": "#/$defs/command_result_envelope"},
+        {"type": "object", "required": ["subject_ref"], "properties": {"result_type": {"const": "ThreadOutboxCommandResult"}, "command_id": {"enum": ["cmd.thread.outbox.retry", "cmd.thread.outbox.cancel"]}, "subject_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "thread_request_command_result": {
+      "allOf": [
+        {"$ref": "#/$defs/command_result_envelope"},
+        {"type": "object", "required": ["subject_ref"], "properties": {"result_type": {"const": "ThreadRequestCommandResult"}, "command_id": {"const": "cmd.thread.request"}, "subject_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "thread_spawn_command_result": {
+      "allOf": [
+        {"$ref": "#/$defs/command_result_envelope"},
+        {"type": "object", "required": ["subject_ref"], "properties": {"result_type": {"const": "ThreadSpawnCommandResult"}, "command_id": {"const": "cmd.thread.spawn"}, "subject_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "thread_await_command_result": {
+      "allOf": [
+        {"$ref": "#/$defs/command_result_envelope"},
+        {"type": "object", "required": ["subject_ref"], "properties": {"result_type": {"const": "ThreadAwaitCommandResult"}, "command_id": {"const": "cmd.thread.await"}, "subject_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "capability_ensure_result": {
+      "allOf": [
+        {"$ref": "#/$defs/command_result_envelope"},
+        {"type": "object", "required": ["subject_ref"], "properties": {"result_type": {"const": "CapabilityEnsureResult"}, "command_id": {"const": "cmd.capability.ensure"}, "subject_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "tool_discover_result": {
+      "allOf": [
+        {"$ref": "#/$defs/command_result_envelope"},
+        {"type": "object", "required": ["subject_ref"], "properties": {"result_type": {"const": "ToolDiscoverResult"}, "command_id": {"const": "cmd.tool.discover"}, "subject_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "tool_select_result": {
+      "allOf": [
+        {"$ref": "#/$defs/command_result_envelope"},
+        {"type": "object", "required": ["subject_ref"], "properties": {"result_type": {"const": "ToolSelectResult"}, "command_id": {"const": "cmd.tool.select"}, "subject_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "installation_lifecycle_command_result": {
+      "allOf": [
+        {"$ref": "#/$defs/command_result_envelope"},
+        {"type": "object", "required": ["subject_ref"], "properties": {"result_type": {"const": "InstallationLifecycleCommandResult"}, "command_id": {"enum": ["cmd.installation.install", "cmd.installation.update", "cmd.installation.repair", "cmd.installation.rollback", "cmd.installation.verify"]}, "subject_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "authentication_command_result": {
+      "allOf": [
+        {"$ref": "#/$defs/command_result_envelope"},
+        {"$ref": "#/$defs/authentication_handoff_policy"},
+        {
+          "type": "object",
+          "required": [
+            "subject_ref", "authentication_operation_id", "auth_revision", "auth_surface",
+            "initiating_client_id", "observed_initiating_client_session_generation", "return_target_ref",
+            "return_fence_state", "authentication_disposition", "content_exposed_to_caller",
+            "caller_navigation_allowed", "content_capture_allowed", "content_recording_allowed",
+            "content_persistence_allowed"
+          ],
+          "properties": {
+            "result_type": {"const": "AuthenticationCommandResult"},
+            "command_id": {"enum": ["cmd.authentication.start", "cmd.authentication.cancel", "cmd.authentication.resume"]},
+            "subject_ref": {"$ref": "#/$defs/non_secret_ref"},
+            "authentication_operation_id": {"$ref": "#/$defs/non_empty_string"},
+            "auth_revision": {"type": "integer", "minimum": 0},
+            "auth_surface": {"enum": ["protected_auth_browser", "device_code", "terminal_user_flow", "provider_owned_external"]},
+            "initiating_client_id": {"$ref": "#/$defs/nullable_non_empty_string"},
+            "observed_initiating_client_session_generation": {"type": ["integer", "null"], "minimum": 0},
+            "return_target_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+            "return_fence_state": {
+              "enum": [
+                "not_applicable", "pending_exact_operation_and_client", "exact_operation_and_initiating_active_client",
+                "pending_exact_operation_and_authorized_client_handoff", "exact_operation_and_current_authorized_client_handoff",
+                "cancelled_without_content_return", "timed_out_without_content_return", "rejected_stale_operation",
+                "rejected_initiating_client", "rejected_client_and_stale_operation", "rejected_authorized_client_handoff"
+              ]
+            },
+            "authentication_disposition": {"enum": ["in_progress", "verified", "cancelled", "timed_out", "failed_closed"]},
+            "content_exposed_to_caller": {"const": false},
+            "caller_navigation_allowed": {"const": false},
+            "content_capture_allowed": {"const": false},
+            "content_recording_allowed": {"const": false},
+            "content_persistence_allowed": {"const": false}
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "auth_surface": {"const": "protected_auth_browser"},
+              "authentication_disposition": {"const": "verified"}
+            },
+            "required": ["auth_surface", "authentication_disposition"]
+          },
+          "then": {
+            "properties": {
+              "initiating_client_id": {"$ref": "#/$defs/non_empty_string"},
+              "observed_initiating_client_session_generation": {"type": "integer", "minimum": 0},
+              "return_target_ref": {"$ref": "#/$defs/non_secret_ref"}
+            },
+            "if": {"properties": {"client_handoff_policy": {"const": "server_owned_authorized_client_handoff"}}, "required": ["client_handoff_policy"]},
+            "then": {"properties": {"return_fence_state": {"const": "exact_operation_and_current_authorized_client_handoff"}}},
+            "else": {"properties": {"return_fence_state": {"const": "exact_operation_and_initiating_active_client"}}}
+          }
+        },
+        {
+          "if": {"properties": {"client_handoff_policy": {"const": "server_owned_authorized_client_handoff"}}, "required": ["client_handoff_policy"]},
+          "then": {"properties": {"return_fence_state": {"enum": ["pending_exact_operation_and_authorized_client_handoff", "exact_operation_and_current_authorized_client_handoff", "cancelled_without_content_return", "timed_out_without_content_return", "rejected_stale_operation", "rejected_client_and_stale_operation", "rejected_authorized_client_handoff"]}}},
+          "else": {"properties": {"return_fence_state": {"not": {"enum": ["pending_exact_operation_and_authorized_client_handoff", "exact_operation_and_current_authorized_client_handoff", "rejected_authorized_client_handoff"]}}}}
+        },
+        {
+          "if": {"properties": {"authentication_disposition": {"const": "cancelled"}}, "required": ["authentication_disposition"]},
+          "then": {"properties": {"outcome": {"const": "cancelled"}, "return_fence_state": {"const": "cancelled_without_content_return"}}}
+        },
+        {
+          "if": {"properties": {"authentication_disposition": {"const": "timed_out"}}, "required": ["authentication_disposition"]},
+          "then": {
+            "properties": {
+              "outcome": {"const": "failed"},
+              "return_fence_state": {"const": "timed_out_without_content_return"},
+              "error": {
+                "allOf": [
+                  {"$ref": "#/$defs/command_error"},
+                  {"properties": {"code": {"const": "deadline_expired"}}, "required": ["code"]}
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "return_fence_state": {"enum": ["rejected_stale_operation", "rejected_initiating_client", "rejected_client_and_stale_operation", "rejected_authorized_client_handoff"]}
+            },
+            "required": ["return_fence_state"]
+          },
+          "then": {"properties": {"authentication_disposition": {"const": "failed_closed"}}}
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "eval_session_command_result": {
+      "allOf": [
+        {"$ref": "#/$defs/command_result_envelope"},
+        {"type": "object", "required": ["subject_ref"], "properties": {"result_type": {"const": "EvalSessionCommandResult"}, "command_id": {"enum": ["cmd.eval.session.start", "cmd.eval.session.execute", "cmd.eval.session.stop"]}, "subject_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "mcp_server_lifecycle_command_result": {
+      "allOf": [
+        {"$ref": "#/$defs/command_result_envelope"},
+        {"type": "object", "required": ["subject_ref"], "properties": {"result_type": {"const": "McpServerLifecycleCommandResult"}, "command_id": {"enum": ["cmd.mcp.server.connect", "cmd.mcp.server.reconnect"]}, "subject_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "runtime_resource_inspect_result": {
+      "allOf": [
+        {"$ref": "#/$defs/command_result_envelope"},
+        {"type": "object", "required": ["subject_ref"], "properties": {"result_type": {"const": "RuntimeResourceInspectResult"}, "command_id": {"const": "cmd.resource.inspect"}, "subject_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "back_seat_driver_mode_set_result": {
+      "allOf": [
+        {"$ref": "#/$defs/command_result_envelope"},
+        {"type": "object", "required": ["subject_ref"], "properties": {"result_type": {"const": "BackSeatDriverModeSetResult"}, "command_id": {"const": "cmd.bsd.set"}, "subject_ref": {"$ref": "#/$defs/non_secret_ref"}}}
+      ],
+      "unevaluatedProperties": false
+    },
+    "pm7_settled_interaction_trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "fixture_id",
+        "surface_kind",
+        "phase",
+        "command_id",
+        "command_dispatch_count",
+        "command_result_count",
+        "receipt_count",
+        "result_outcome",
+        "dispatch_accepted",
+        "event_types",
+        "persistence_write_attempt_count",
+        "persistence_write_count",
+        "settled_state_changed",
+        "preview_frame_count",
+        "rollback_completed",
+        "cleanup_completed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.pm7.settled_interaction_trace.v1"
+        },
+        "fixture_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "surface_kind": {
+          "enum": [
+            "usage_widget",
+            "home_surface",
+            "dashboard_widget",
+            "shared_assistant",
+            "context_detail"
+          ]
+        },
+        "phase": {
+          "enum": [
+            "preview",
+            "commit",
+            "cancel",
+            "no_change",
+            "owner_rejected",
+            "persistence_adapter_failed"
+          ]
+        },
+        "command_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^cmd\\.widget\\.[a-z0-9_]+(?:\\.[a-z0-9_]+)*$"
+            },
+            {"$ref": "#/$defs/home_workspace_layout_event_command_id"},
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "command_dispatch_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "command_result_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "receipt_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "result_outcome": {
+          "enum": [
+            "not_dispatched",
+            "accepted",
+            "rejected",
+            "failed"
+          ]
+        },
+        "dispatch_accepted": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "event_types": {
+          "type": "array",
+          "maxItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "persistence_write_attempt_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "persistence_write_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "settled_state_changed": {
+          "type": "boolean"
+        },
+        "preview_frame_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rollback_completed": {
+          "type": "boolean"
+        },
+        "cleanup_completed": {
+          "const": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "enum": [
+                  "preview",
+                  "cancel",
+                  "no_change"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "type": "null"
+              },
+              "command_dispatch_count": {
+                "const": 0
+              },
+              "command_result_count": {
+                "const": 0
+              },
+              "receipt_count": {
+                "const": 0
+              },
+              "result_outcome": {
+                "const": "not_dispatched"
+              },
+              "dispatch_accepted": {
+                "type": "null"
+              },
+              "event_types": {
+                "maxItems": 0
+              },
+              "persistence_write_attempt_count": {
+                "const": 0
+              },
+              "persistence_write_count": {
+                "const": 0
+              },
+              "settled_state_changed": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "preview"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "rollback_completed": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "enum": [
+                  "cancel",
+                  "no_change"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "rollback_completed": {
+                "const": true
+              }
+            }
+          }
+        },
+    {
+      "if": {
+        "properties": {
+          "phase": {
+            "const": "commit"
+          }
+        },
+        "required": [
+          "phase"
+        ]
+      },
+      "then": {
+        "properties": {
+          "surface_kind": {
+            "enum": [
+              "usage_widget",
+              "home_surface",
+              "dashboard_widget"
+            ]
+          },
+          "command_id": {
+            "type": "string"
+              },
+              "command_dispatch_count": {
+                "const": 1
+              },
+          "command_result_count": {
+            "const": 1
+          },
+          "receipt_count": {
+            "const": 1
+          },
+          "result_outcome": {
+            "const": "accepted"
+          },
+          "dispatch_accepted": {
+            "const": true
+          },
+          "persistence_write_attempt_count": {
+            "const": 1
+          },
+          "persistence_write_count": {
+            "const": 1
+          },
+          "settled_state_changed": {
+            "const": true
+          },
+          "rollback_completed": {
+            "const": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "phase": {
+            "const": "owner_rejected"
+          }
+        },
+        "required": [
+          "phase"
+        ]
+      },
+      "then": {
+        "properties": {
+          "surface_kind": {
+            "enum": [
+              "usage_widget",
+              "home_surface",
+              "dashboard_widget"
+            ]
+          },
+          "command_id": {
+            "type": "string"
+          },
+          "command_dispatch_count": {
+            "const": 1
+          },
+          "command_result_count": {
+            "const": 1
+          },
+          "receipt_count": {
+            "const": 1
+          },
+          "result_outcome": {
+            "const": "rejected"
+          },
+          "dispatch_accepted": {
+            "const": false
+          },
+          "event_types": {
+            "maxItems": 0
+          },
+          "persistence_write_attempt_count": {
+            "const": 0
+          },
+          "persistence_write_count": {
+            "const": 0
+          },
+          "settled_state_changed": {
+            "const": false
+          },
+          "rollback_completed": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "phase": {
+            "const": "persistence_adapter_failed"
+          }
+        },
+        "required": [
+          "phase"
+        ]
+      },
+      "then": {
+        "properties": {
+          "surface_kind": {
+            "enum": [
+              "usage_widget",
+              "home_surface",
+              "dashboard_widget"
+            ]
+          },
+          "command_id": {
+            "type": "string"
+          },
+          "command_dispatch_count": {
+            "const": 1
+          },
+          "command_result_count": {
+            "const": 1
+          },
+          "receipt_count": {
+            "const": 1
+          },
+          "result_outcome": {
+            "const": "failed"
+          },
+          "dispatch_accepted": {
+            "const": true
+          },
+          "event_types": {
+            "maxItems": 0
+          },
+          "persistence_write_attempt_count": {
+            "const": 1
+          },
+          "persistence_write_count": {
+            "const": 0
+          },
+          "settled_state_changed": {
+            "const": false
+          },
+          "rollback_completed": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "phase": {
+            "const": "commit"
+          },
+          "surface_kind": {
+            "const": "home_surface"
+          }
+        },
+        "required": [
+          "phase",
+          "surface_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "$ref": "#/$defs/home_workspace_layout_event_command_id"
+          },
+          "event_types": {
+            "const": [
+              "workspace.layout_changed"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "phase": {
+            "const": "commit"
+          },
+          "surface_kind": {
+            "enum": [
+              "usage_widget",
+              "dashboard_widget"
+            ]
+          }
+        },
+        "required": [
+          "phase",
+          "surface_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "type": "string",
+            "pattern": "^cmd\\.widget\\."
+          },
+          "event_types": {
+            "maxItems": 0
+          }
+        }
+      }
+    }
+      ]
+    },
+    "ExecutionTopologyCommandRequest": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest"
+    },
+    "ExecutionTopologyCommandResult": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult"
+    },
+    "ExecutionTopologyCommandError": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandError"
+    },
+    "ExecutionTopologyCommandAvailability": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandAvailability"
+    },
+    "ExecutionTopologyCommandDisabledReason": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandDisabledReason"
+    },
+    "ExecutionTopologyPermissionDecision": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyPermissionDecision"
+    },
+    "ProjectTopologyCommandRequest": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandRequest"
+    },
+    "ProjectTopologyCommandResult": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandResult"
+    },
+    "ProjectTopologyCommandError": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandError"
+    },
+    "ProjectTopologyCommandAvailability": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandAvailability"
+    },
+    "ProjectTopologyCommandDisabledReason": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandDisabledReason"
+    },
+    "ProjectTopologyPermissionDecision": {
+      "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyPermissionDecision"
+    },
+    "ExecutionTopologyLocalActionRequest": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalActionRequest"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "action_id": {
+              "enum": [
+                "ui.execution_environment.open_details",
+                "ui.execution_environment.open_logs",
+                "ui.execution_host.open_details"
+              ]
+            },
+            "packet_token": {
+              "enum": [
+                "cmd.execution_environment.open_details",
+                "cmd.execution_environment.open_logs",
+                "cmd.execution_host.open_details"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "ExecutionTopologyLocalActionResult": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalActionResult"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "action_id": {
+              "enum": [
+                "ui.execution_environment.open_details",
+                "ui.execution_environment.open_logs",
+                "ui.execution_host.open_details"
+              ]
+            },
+            "packet_token": {
+              "enum": [
+                "cmd.execution_environment.open_details",
+                "cmd.execution_environment.open_logs",
+                "cmd.execution_host.open_details"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "ProjectTopologyLocalActionRequest": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalActionRequest"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "action_id": {
+              "const": "ui.project.source_location.open_details"
+            },
+            "packet_token": {
+              "const": "cmd.project.source_location.open_details"
+            }
+          }
+        }
+      ]
+    },
+    "ProjectTopologyLocalActionResult": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalActionResult"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "action_id": {
+              "const": "ui.project.source_location.open_details"
+            },
+            "packet_token": {
+              "const": "cmd.project.source_location.open_details"
+            }
+          }
+        }
+      ]
+    },
+    "InstallationLocalActionRequest": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalActionRequest"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "action_id": {
+              "enum": [
+                "ui.installation.open_details",
+                "ui.installation.open_logs",
+                "ui.tool_package.open_provenance",
+                "ui.tool_package.review_license"
+              ]
+            },
+            "packet_token": {
+              "enum": [
+                "cmd.installation.open_details",
+                "cmd.installation.open_logs",
+                "cmd.tool_package.open_provenance",
+                "cmd.tool_package.review_license"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "InstallationLocalActionResult": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalActionResult"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "action_id": {
+              "enum": [
+                "ui.installation.open_details",
+                "ui.installation.open_logs",
+                "ui.tool_package.open_provenance",
+                "ui.tool_package.review_license"
+              ]
+            },
+            "packet_token": {
+              "enum": [
+                "cmd.installation.open_details",
+                "cmd.installation.open_logs",
+                "cmd.tool_package.open_provenance",
+                "cmd.tool_package.review_license"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "pm7_context_compaction_trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "fixture_id",
+        "command_id",
+        "outcome",
+        "command_result_count",
+        "receipt_count",
+        "event_types",
+        "context_revision_before",
+        "context_revision_after",
+        "compaction_history_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.pm7.context_compaction_trace.v1"
+        },
+        "fixture_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "const": "cmd.chat.compact_context"
+        },
+        "outcome": {
+          "enum": [
+            "started",
+            "already_running",
+            "cancelled",
+            "no_op",
+            "degraded",
+            "unavailable",
+            "retry_scheduled",
+            "completed",
+            "failed"
+          ]
+        },
+        "command_result_count": {
+          "const": 1
+        },
+        "receipt_count": {
+          "const": 1
+        },
+        "event_types": {
+          "type": "array",
+          "items": {
+            "const": "context.compaction.completed"
+          },
+          "maxItems": 1
+        },
+        "context_revision_before": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "context_revision_after": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "compaction_history_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        }
+      },
+      "description": "Fixture-only command/result/receipt trace. outcome=completed represents successful committed compaction under ACD-461 / SP-259 and requires exactly one completion event; all other outcomes are noncommitted and event-silent. This static shape neither proves commit nor grants runtime emission authority.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "completed"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "event_types": {
+                "minItems": 1,
+                "maxItems": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "event_types": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

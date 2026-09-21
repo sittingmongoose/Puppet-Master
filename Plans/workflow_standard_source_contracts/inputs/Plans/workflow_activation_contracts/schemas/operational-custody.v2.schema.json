@@ -1,0 +1,2908 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json",
+  "description": "Complete original operational custody successor selecting the actual landed stage-aware compiler schema and current original source-child admission; proposals only, native installation NOT_RUN.",
+  "$defs": {
+    "Scope": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/InputCaptureScope"
+    },
+    "Owner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_id",
+        "owner_epoch",
+        "server_id",
+        "server_epoch"
+      ],
+      "properties": {
+        "owner_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "Selector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "physical_sha256"
+      ],
+      "properties": {
+        "family_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "Binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/Selector"
+        },
+        "origin": {
+          "$ref": "#/$defs/Selector"
+        }
+      }
+    },
+    "OriginalIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "scope",
+        "owner",
+        "original_method",
+        "original_operation_id",
+        "original_transaction_id",
+        "output_identity",
+        "output_revision",
+        "output_issued_at_utc"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "original_method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "output_issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "SourceHash": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ref",
+        "source_schema_ref",
+        "source_owner_ref",
+        "complete_source_sha256",
+        "hash_codec_id"
+      ],
+      "properties": {
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_schema_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "complete_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "hash_codec_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "CurrentnessCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "check_id",
+        "source",
+        "expected_source_sha256",
+        "observed_source_sha256",
+        "result",
+        "reason",
+        "original_check_operation_ref",
+        "observed_at_utc",
+        "evidence_refs"
+      ],
+      "properties": {
+        "check_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "$ref": "#/$defs/SourceHash"
+        },
+        "expected_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "observed_source_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "result": {
+          "enum": [
+            "current",
+            "stale",
+            "unavailable"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_check_operation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "evidence_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        }
+      }
+    },
+    "CompilerRetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "retry_id",
+        "stage",
+        "assignment_id",
+        "attempt_number",
+        "route",
+        "original_operation_ref",
+        "result_receipt_refs"
+      ],
+      "properties": {
+        "retry_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stage": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/stage_name"
+        },
+        "assignment_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "route": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/compile_wave_retry_route"
+        },
+        "original_operation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result_receipt_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        }
+      }
+    },
+    "CompilerCancellation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_operation_ref",
+        "original_cancellation_source",
+        "cancelled_at_utc",
+        "last_committed_stage",
+        "unfinished_assignment_ids",
+        "preserved_effect_receipt_refs"
+      ],
+      "properties": {
+        "original_operation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_cancellation_source": {
+          "$ref": "#/$defs/SourceHash"
+        },
+        "cancelled_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_committed_stage": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/stage_name"
+        },
+        "unfinished_assignment_ids": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "preserved_effect_receipt_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        }
+      }
+    },
+    "ImpactLane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lane_ref",
+        "classification",
+        "reason",
+        "dependency_proof_refs",
+        "write_surface_proof_refs",
+        "evidence_refs"
+      ],
+      "properties": {
+        "lane_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "classification": {
+          "enum": [
+            "unaffected",
+            "already_safe",
+            "needs_recompile",
+            "invalidated"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        },
+        "dependency_proof_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "write_surface_proof_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "evidence_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        }
+      }
+    },
+    "CompilerSupersession": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_operation_ref",
+        "prior_approved_pack",
+        "successor_approved_pack",
+        "plan_diff_impact_report_id",
+        "lanes",
+        "original_report_source_ref",
+        "original_report_source_sha256",
+        "superseded_at_utc"
+      ],
+      "properties": {
+        "original_operation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prior_approved_pack": {
+          "$ref": "#/$defs/SourceHash"
+        },
+        "successor_approved_pack": {
+          "$ref": "#/$defs/SourceHash"
+        },
+        "plan_diff_impact_report_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lanes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ImpactLane"
+          }
+        },
+        "original_report_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_report_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "superseded_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "NextAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage",
+        "resume_command_or_action",
+        "route",
+        "original_action_ref",
+        "input_refs"
+      ],
+      "properties": {
+        "stage": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resume_command_or_action": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "route": {
+          "anyOf": [
+            {
+              "anyOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/stage_success_route"
+                },
+                {
+                  "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/stage_blocked_route"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_action_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "input_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        }
+      }
+    },
+    "CompilerArtifactValue": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifact_kind",
+            "value"
+          ],
+          "properties": {
+            "artifact_kind": {
+              "const": "node_seed_candidate"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/node_seed_candidate"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifact_kind",
+            "value"
+          ],
+          "properties": {
+            "artifact_kind": {
+              "const": "node_seed_review"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/node_seed_review"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifact_kind",
+            "value"
+          ],
+          "properties": {
+            "artifact_kind": {
+              "const": "workgraph_draft"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/workgraph_draft"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifact_kind",
+            "value"
+          ],
+          "properties": {
+            "artifact_kind": {
+              "const": "worknode_request"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/worknode_request"
+            }
+          }
+        }
+      ]
+    },
+    "CompilerArtifactRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "artifact",
+        "source_hashes"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/OriginalIdentity"
+        },
+        "artifact": {
+          "$ref": "#/$defs/CompilerArtifactValue"
+        },
+        "source_hashes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceHash"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "identity": {
+              "properties": {
+                "original_method": {
+                  "const": "owner.plan_compile.native.publish_artifact.v1"
+                },
+                "output_revision": {
+                  "const": 1
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CompilerArtifactPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.native_plan_compile_artifact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/CompilerArtifactRecord"
+        }
+      }
+    },
+    "CompilerCheckpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run",
+        "stage_cards",
+        "worklists",
+        "source_hashes",
+        "currentness_checks",
+        "repairs",
+        "repair_attempt_receipts",
+        "audit_cycles",
+        "verification_receipts",
+        "repair_receipt_sources",
+        "retry_records",
+        "cancellation",
+        "supersession",
+        "next_action",
+        "artifact_sources",
+        "compile_receipt_sources",
+        "other_required_receipt_sources",
+        "approved_pack_source",
+        "planunit_index_source",
+        "acceptance_index_source",
+        "project_context_source",
+        "testing_policy_source",
+        "final_audit_closure_source"
+      ],
+      "properties": {
+        "run": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/plan_compile_run"
+            },
+            {
+              "properties": {
+                "contract_mode": {
+                  "const": "native_runtime"
+                }
+              }
+            }
+          ]
+        },
+        "stage_cards": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/stage_card"
+          }
+        },
+        "worklists": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/compile_worklist"
+          }
+        },
+        "source_hashes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceHash"
+          }
+        },
+        "currentness_checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CurrentnessCheck"
+          }
+        },
+        "repairs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/repair_record"
+          }
+        },
+        "repair_attempt_receipts": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/repair_attempt_receipt"
+          }
+        },
+        "audit_cycles": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/auditor_cycle_report"
+          }
+        },
+        "verification_receipts": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/auditor_verification_receipt"
+          }
+        },
+        "repair_receipt_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceHash"
+          }
+        },
+        "retry_records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CompilerRetry"
+          }
+        },
+        "cancellation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CompilerCancellation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "supersession": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CompilerSupersession"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "next_action": {
+          "$ref": "#/$defs/NextAction"
+        },
+        "artifact_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Binding"
+          }
+        },
+        "compile_receipt_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Binding"
+          }
+        },
+        "other_required_receipt_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceHash"
+          }
+        },
+        "approved_pack_source": {
+          "$ref": "#/$defs/SourceHash"
+        },
+        "planunit_index_source": {
+          "$ref": "#/$defs/SourceHash"
+        },
+        "acceptance_index_source": {
+          "$ref": "#/$defs/SourceHash"
+        },
+        "project_context_source": {
+          "$ref": "#/$defs/SourceHash"
+        },
+        "testing_policy_source": {
+          "$ref": "#/$defs/SourceHash"
+        },
+        "final_audit_closure_source": {
+          "$ref": "#/$defs/SourceHash",
+          "description": "The complete earlier ApprovedPlanPack final audit/closure input available at native compiler birth. Never the future final_compile_audit_repair output; genuine later audit/verification/receipt bodies retain their separate checkpoint fields."
+        }
+      }
+    },
+    "CompilerRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "input_kind",
+        "original_method",
+        "value",
+        "prior_checkpoint"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/OriginalIdentity"
+        },
+        "input_kind": {
+          "const": "native_compile"
+        },
+        "original_method": {
+          "const": "owner.plan_compile.native.publish_state_input.v1"
+        },
+        "value": {
+          "$ref": "#/$defs/CompilerCheckpoint"
+        },
+        "prior_checkpoint": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Binding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "identity": {
+              "properties": {
+                "original_method": {
+                  "const": "owner.plan_compile.native.publish_state_input.v1"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CompilerPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.native_plan_compile_checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/CompilerRecord"
+        }
+      }
+    },
+    "CompilerReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "binding",
+        "reader_purpose",
+        "original_input_binding"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "binding": {
+          "$ref": "#/$defs/Binding"
+        },
+        "reader_purpose": {
+          "enum": [
+            "original_recovery",
+            "current_semantic_read",
+            "retained_original_output"
+          ]
+        },
+        "original_input_binding": {
+          "$ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/NativeCompileBinding"
+        }
+      }
+    },
+    "CompilerReadAvailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result",
+        "input_kind",
+        "source",
+        "origin",
+        "complete_original_input",
+        "action_authority",
+        "complete_operational_checkpoint"
+      ],
+      "properties": {
+        "result": {
+          "const": "available_original_full_value"
+        },
+        "input_kind": {
+          "const": "native_compile"
+        },
+        "source": {
+          "$ref": "#/$defs/CompilerPhysical"
+        },
+        "origin": {
+          "$ref": "#/$defs/OriginPhysical"
+        },
+        "complete_original_input": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/plan_compile_run"
+        },
+        "action_authority": {
+          "const": "none"
+        },
+        "complete_operational_checkpoint": {
+          "$ref": "#/$defs/CompilerCheckpoint"
+        }
+      }
+    },
+    "CompilerReadResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CompilerReadAvailable"
+        },
+        {
+          "$ref": "#/$defs/Unavailable"
+        }
+      ]
+    },
+    "CertificationRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "input_kind",
+        "original_method",
+        "value",
+        "compiler_checkpoint",
+        "certified_graph_source",
+        "original_request_sources"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/OriginalIdentity"
+        },
+        "input_kind": {
+          "const": "compile_certification"
+        },
+        "original_method": {
+          "const": "owner.plan_compile.native.publish_certification_input.v1"
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/plan_compile_receipt"
+        },
+        "compiler_checkpoint": {
+          "$ref": "#/$defs/Binding"
+        },
+        "certified_graph_source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/OriginalSourceBinding"
+        },
+        "original_request_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/OriginalSourceBinding"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "identity": {
+              "properties": {
+                "original_method": {
+                  "const": "owner.plan_compile.native.publish_certification_input.v1"
+                },
+                "output_revision": {
+                  "const": 1
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CertificationPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.native_plan_compile_certification_receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/CertificationRecord"
+        }
+      }
+    },
+    "CertificationReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "binding",
+        "reader_purpose",
+        "original_input_binding"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "binding": {
+          "$ref": "#/$defs/Binding"
+        },
+        "reader_purpose": {
+          "enum": [
+            "original_recovery",
+            "current_semantic_read",
+            "retained_original_output"
+          ]
+        },
+        "original_input_binding": {
+          "$ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/CompileCertificationBinding"
+        }
+      }
+    },
+    "CertificationReadAvailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result",
+        "input_kind",
+        "source",
+        "origin",
+        "complete_original_input",
+        "action_authority"
+      ],
+      "properties": {
+        "result": {
+          "const": "available_original_full_value"
+        },
+        "input_kind": {
+          "const": "compile_certification"
+        },
+        "source": {
+          "$ref": "#/$defs/CertificationPhysical"
+        },
+        "origin": {
+          "$ref": "#/$defs/OriginPhysical"
+        },
+        "complete_original_input": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/plan_compile_receipt"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "CertificationReadResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CertificationReadAvailable"
+        },
+        {
+          "$ref": "#/$defs/Unavailable"
+        }
+      ]
+    },
+    "AggregateRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "input_kind",
+        "original_method",
+        "value",
+        "original_graph_source",
+        "original_per_request_sources"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/OriginalIdentity"
+        },
+        "input_kind": {
+          "const": "aggregate_intake"
+        },
+        "original_method": {
+          "const": "owner.executor.intake.publish_aggregate_input.v1"
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/executor_intake_report"
+        },
+        "original_graph_source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/OriginalSourceBinding"
+        },
+        "original_per_request_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceHash"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "identity": {
+              "properties": {
+                "original_method": {
+                  "const": "owner.executor.intake.publish_aggregate_input.v1"
+                },
+                "output_revision": {
+                  "const": 1
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "AggregatePhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_aggregate_intake_receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/AggregateRecord"
+        }
+      }
+    },
+    "AggregateReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "binding",
+        "reader_purpose",
+        "original_input_binding"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "binding": {
+          "$ref": "#/$defs/Binding"
+        },
+        "reader_purpose": {
+          "enum": [
+            "original_recovery",
+            "current_semantic_read",
+            "retained_original_output"
+          ]
+        },
+        "original_input_binding": {
+          "$ref": "https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json#/$defs/Binding"
+        }
+      }
+    },
+    "AggregateReadAvailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result",
+        "input_kind",
+        "source",
+        "origin",
+        "complete_original_input",
+        "action_authority"
+      ],
+      "properties": {
+        "result": {
+          "const": "available_original_full_value"
+        },
+        "input_kind": {
+          "const": "aggregate_intake"
+        },
+        "source": {
+          "$ref": "#/$defs/AggregatePhysical"
+        },
+        "origin": {
+          "$ref": "#/$defs/OriginPhysical"
+        },
+        "complete_original_input": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/executor_intake_report"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "AggregateReadResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/AggregateReadAvailable"
+        },
+        {
+          "$ref": "#/$defs/Unavailable"
+        }
+      ]
+    },
+    "TestRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "input_kind",
+        "original_method",
+        "value",
+        "original_request_source",
+        "request_semantic_sha256",
+        "original_report_operation_ref"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/OriginalIdentity"
+        },
+        "input_kind": {
+          "const": "test_capability"
+        },
+        "original_method": {
+          "const": "owner.ats.test_capability.output.v1"
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_capability_report"
+        },
+        "original_request_source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/OriginalSourceBinding"
+        },
+        "request_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_report_operation_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "identity": {
+              "properties": {
+                "original_method": {
+                  "const": "owner.ats.test_capability.output.v1"
+                },
+                "output_revision": {
+                  "const": 1
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "TestPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.ats_test_capability_receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/TestRecord"
+        }
+      }
+    },
+    "TestReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "binding",
+        "reader_purpose",
+        "original_input_binding"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "binding": {
+          "$ref": "#/$defs/Binding"
+        },
+        "reader_purpose": {
+          "enum": [
+            "original_recovery",
+            "current_semantic_read",
+            "retained_original_output"
+          ]
+        },
+        "original_input_binding": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/TestCapabilityInputBinding"
+        }
+      }
+    },
+    "TestReadAvailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result",
+        "input_kind",
+        "source",
+        "origin",
+        "complete_original_input",
+        "action_authority"
+      ],
+      "properties": {
+        "result": {
+          "const": "available_original_full_value"
+        },
+        "input_kind": {
+          "const": "test_capability"
+        },
+        "source": {
+          "$ref": "#/$defs/TestPhysical"
+        },
+        "origin": {
+          "$ref": "#/$defs/OriginPhysical"
+        },
+        "complete_original_input": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_capability_report"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "TestReadResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/TestReadAvailable"
+        },
+        {
+          "$ref": "#/$defs/Unavailable"
+        }
+      ]
+    },
+    "ModelsRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "input_kind",
+        "original_method",
+        "value",
+        "original_request_source",
+        "request_semantic_sha256",
+        "requested_effective_runtime_source"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/OriginalIdentity"
+        },
+        "input_kind": {
+          "const": "model_resolution"
+        },
+        "original_method": {
+          "const": "models.resolve_plans_to_code_role.v1"
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/model_resolution_receipt"
+        },
+        "original_request_source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/OriginalSourceBinding"
+        },
+        "request_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "requested_effective_runtime_source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceHash"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "identity": {
+              "properties": {
+                "original_method": {
+                  "const": "models.resolve_plans_to_code_role.v1"
+                },
+                "output_revision": {
+                  "const": 1
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ModelsPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.models_plans_to_code_resolution_receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/ModelsRecord"
+        }
+      }
+    },
+    "ModelsReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "binding",
+        "reader_purpose",
+        "original_input_binding"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "binding": {
+          "$ref": "#/$defs/Binding"
+        },
+        "reader_purpose": {
+          "enum": [
+            "original_recovery",
+            "current_semantic_read",
+            "retained_original_output"
+          ]
+        },
+        "original_input_binding": {
+          "$ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/ModelsBinding"
+        }
+      }
+    },
+    "ModelsReadAvailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result",
+        "input_kind",
+        "source",
+        "origin",
+        "complete_original_input",
+        "action_authority"
+      ],
+      "properties": {
+        "result": {
+          "const": "available_original_full_value"
+        },
+        "input_kind": {
+          "const": "model_resolution"
+        },
+        "source": {
+          "$ref": "#/$defs/ModelsPhysical"
+        },
+        "origin": {
+          "$ref": "#/$defs/OriginPhysical"
+        },
+        "complete_original_input": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/model_resolution_receipt"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "ModelsReadResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ModelsReadAvailable"
+        },
+        {
+          "$ref": "#/$defs/Unavailable"
+        }
+      ]
+    },
+    "RequestSetRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "input_kind",
+        "original_method",
+        "value",
+        "source_graph",
+        "source_intake",
+        "source_provisioning",
+        "source_requests"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/OriginalIdentity"
+        },
+        "input_kind": {
+          "const": "worknode_request_set"
+        },
+        "original_method": {
+          "const": "goal_runtime.executor.decide_activation_request_set.v1"
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/WorkNodeRequests"
+        },
+        "source_graph": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/OriginalSourceBinding"
+        },
+        "source_intake": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/OriginalSourceBinding"
+        },
+        "source_provisioning": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/OriginalSourceBinding"
+        },
+        "source_requests": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/OriginalSourceBinding"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "identity": {
+              "properties": {
+                "original_method": {
+                  "const": "goal_runtime.executor.decide_activation_request_set.v1"
+                },
+                "output_revision": {
+                  "const": 1
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "RequestSetPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_activation_request_set_decision.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/RequestSetRecord"
+        }
+      }
+    },
+    "RequestSetReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "binding",
+        "reader_purpose",
+        "original_input_binding"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "binding": {
+          "$ref": "#/$defs/Binding"
+        },
+        "reader_purpose": {
+          "enum": [
+            "original_recovery",
+            "current_semantic_read",
+            "retained_original_output"
+          ]
+        },
+        "original_input_binding": {
+          "$ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/RequestSetBinding"
+        }
+      }
+    },
+    "RequestSetReadAvailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result",
+        "input_kind",
+        "source",
+        "origin",
+        "complete_original_input",
+        "action_authority"
+      ],
+      "properties": {
+        "result": {
+          "const": "available_original_full_value"
+        },
+        "input_kind": {
+          "const": "worknode_request_set"
+        },
+        "source": {
+          "$ref": "#/$defs/RequestSetPhysical"
+        },
+        "origin": {
+          "$ref": "#/$defs/OriginPhysical"
+        },
+        "complete_original_input": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/WorkNodeRequests"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "RequestSetReadResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/RequestSetReadAvailable"
+        },
+        {
+          "$ref": "#/$defs/Unavailable"
+        }
+      ]
+    },
+    "Unavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result",
+        "reason",
+        "action_authority"
+      ],
+      "properties": {
+        "result": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "enum": [
+            "missing_original_custody",
+            "scope_mismatch",
+            "original_owner_unavailable",
+            "source_stale",
+            "source_deleted",
+            "source_corrupt",
+            "recovery_unresolved",
+            "permission_denied",
+            "unsupported_source",
+            "codec_unavailable"
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "Origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "scope",
+        "original_owner",
+        "original_method",
+        "publisher_method",
+        "original_operation_id",
+        "original_transaction_id",
+        "issued_family_id",
+        "issued_key",
+        "issued_semantic_record_sha256",
+        "issued_physical_sha256",
+        "output_identity",
+        "output_revision",
+        "prior_physical_sha256",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "original_owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "original_method": {
+          "enum": [
+            "owner.plan_compile.native.publish_state_input.v1",
+            "owner.plan_compile.native.publish_certification_input.v1",
+            "owner.executor.intake.publish_aggregate_input.v1",
+            "owner.ats.test_capability.output.v1",
+            "models.resolve_plans_to_code_role.v1",
+            "goal_runtime.executor.decide_activation_request_set.v1",
+            "owner.plan_compile.native.publish_artifact.v1",
+            "owner.plan_compile.native.advance_head.v1"
+          ]
+        },
+        "publisher_method": {
+          "const": "owner.storage.activation_operational_custody.publish.v1"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_family_id": {
+          "enum": [
+            "native_plan_compile_checkpoint",
+            "native_plan_compile_certification_receipt",
+            "executor_aggregate_intake_receipt",
+            "ats_test_capability_receipt",
+            "models_plans_to_code_resolution_receipt",
+            "workflow_activation_request_set_decision",
+            "native_plan_compile_artifact",
+            "native_plan_compile_head"
+          ]
+        },
+        "issued_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_semantic_record_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "issued_physical_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "output_identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "prior_physical_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "OriginPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.activation_operational_origin.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/Origin"
+        }
+      }
+    },
+    "CompilerHead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "compile_id",
+        "generation",
+        "checkpoint",
+        "original_owner",
+        "original_operation_id",
+        "original_transaction_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "compile_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "checkpoint": {
+          "$ref": "#/$defs/Binding"
+        },
+        "original_owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "CompilerHeadPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.native_plan_compile_head.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/CompilerHead"
+        }
+      }
+    },
+    "CompilerRecoveryRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "compile_id",
+        "head_source",
+        "actual_recovery_owner"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "compile_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "head_source": {
+          "$ref": "#/$defs/Binding"
+        },
+        "actual_recovery_owner": {
+          "$ref": "#/$defs/Owner"
+        }
+      }
+    },
+    "CompilerRecoveryAvailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result",
+        "head",
+        "head_origin",
+        "checkpoint",
+        "checkpoint_origin",
+        "artifacts",
+        "compile_receipts",
+        "action_authority"
+      ],
+      "properties": {
+        "result": {
+          "const": "available_original_checkpoint"
+        },
+        "head": {
+          "$ref": "#/$defs/CompilerHeadPhysical"
+        },
+        "head_origin": {
+          "$ref": "#/$defs/OriginPhysical"
+        },
+        "checkpoint": {
+          "$ref": "#/$defs/CompilerPhysical"
+        },
+        "checkpoint_origin": {
+          "$ref": "#/$defs/OriginPhysical"
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source",
+              "origin"
+            ],
+            "properties": {
+              "source": {
+                "$ref": "#/$defs/CompilerArtifactPhysical"
+              },
+              "origin": {
+                "$ref": "#/$defs/OriginPhysical"
+              }
+            }
+          }
+        },
+        "compile_receipts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source",
+              "origin"
+            ],
+            "properties": {
+              "source": {
+                "$ref": "#/$defs/CertificationPhysical"
+              },
+              "origin": {
+                "$ref": "#/$defs/OriginPhysical"
+              }
+            }
+          }
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "CompilerRecoveryResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CompilerRecoveryAvailable"
+        },
+        {
+          "$ref": "#/$defs/Unavailable"
+        }
+      ]
+    },
+    "PreflightReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "original_live_binding",
+        "source_binding"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "original_live_binding": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/PreflightInputBinding"
+        },
+        "source_binding": {
+          "$ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/OriginalReceiptBinding"
+        }
+      }
+    },
+    "PreflightReadAvailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result",
+        "input_kind",
+        "source",
+        "origin",
+        "complete_original_input",
+        "action_authority"
+      ],
+      "properties": {
+        "result": {
+          "const": "available_original_full_value"
+        },
+        "input_kind": {
+          "const": "source_control_preflight"
+        },
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/PreflightPhysical"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/ReceiptOriginPhysical"
+        },
+        "complete_original_input": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/source_control_preflight_receipt"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "PreflightReadResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PreflightReadAvailable"
+        },
+        {
+          "$ref": "#/$defs/Unavailable"
+        }
+      ]
+    },
+    "CompilerDurableInputBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_kind",
+        "source_mode",
+        "original_capture",
+        "full_source"
+      ],
+      "properties": {
+        "input_kind": {
+          "const": "native_compile"
+        },
+        "source_mode": {
+          "const": "original_durable_custody"
+        },
+        "original_capture": {
+          "$ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/NativeCompileBinding"
+        },
+        "full_source": {
+          "$ref": "#/$defs/Binding"
+        }
+      }
+    },
+    "CertificationDurableInputBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_kind",
+        "source_mode",
+        "original_capture",
+        "full_source"
+      ],
+      "properties": {
+        "input_kind": {
+          "const": "compile_certification"
+        },
+        "source_mode": {
+          "const": "original_durable_custody"
+        },
+        "original_capture": {
+          "$ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/CompileCertificationBinding"
+        },
+        "full_source": {
+          "$ref": "#/$defs/Binding"
+        }
+      }
+    },
+    "AggregateDurableInputBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_kind",
+        "source_mode",
+        "original_capture",
+        "full_source"
+      ],
+      "properties": {
+        "input_kind": {
+          "const": "aggregate_intake"
+        },
+        "source_mode": {
+          "const": "original_durable_custody"
+        },
+        "original_capture": {
+          "$ref": "https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json#/$defs/Binding"
+        },
+        "full_source": {
+          "$ref": "#/$defs/Binding"
+        }
+      }
+    },
+    "TestDurableInputBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_kind",
+        "source_mode",
+        "original_capture",
+        "full_source"
+      ],
+      "properties": {
+        "input_kind": {
+          "const": "test_capability"
+        },
+        "source_mode": {
+          "const": "original_durable_custody"
+        },
+        "original_capture": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/TestCapabilityInputBinding"
+        },
+        "full_source": {
+          "$ref": "#/$defs/Binding"
+        }
+      }
+    },
+    "ModelsDurableInputBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_kind",
+        "source_mode",
+        "original_capture",
+        "full_source"
+      ],
+      "properties": {
+        "input_kind": {
+          "const": "model_resolution"
+        },
+        "source_mode": {
+          "const": "original_durable_custody"
+        },
+        "original_capture": {
+          "$ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/ModelsBinding"
+        },
+        "full_source": {
+          "$ref": "#/$defs/Binding"
+        }
+      }
+    },
+    "RequestSetDurableInputBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_kind",
+        "source_mode",
+        "original_capture",
+        "full_source"
+      ],
+      "properties": {
+        "input_kind": {
+          "const": "worknode_request_set"
+        },
+        "source_mode": {
+          "const": "original_durable_custody"
+        },
+        "original_capture": {
+          "$ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/RequestSetBinding"
+        },
+        "full_source": {
+          "$ref": "#/$defs/Binding"
+        }
+      }
+    },
+    "PreflightDurableInputBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_kind",
+        "source_mode",
+        "original_capture",
+        "full_source"
+      ],
+      "properties": {
+        "input_kind": {
+          "const": "source_control_preflight"
+        },
+        "source_mode": {
+          "const": "original_durable_custody"
+        },
+        "original_capture": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/PreflightInputBinding"
+        },
+        "full_source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/OriginalReceiptBinding"
+        }
+      }
+    },
+    "CompilerArtifactReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "binding",
+        "artifact_kind"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "binding": {
+          "$ref": "#/$defs/Binding"
+        },
+        "artifact_kind": {
+          "enum": [
+            "node_seed_candidate",
+            "node_seed_review",
+            "workgraph_draft",
+            "worknode_request"
+          ]
+        }
+      }
+    },
+    "CompilerArtifactReadResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "source",
+            "origin",
+            "action_authority"
+          ],
+          "properties": {
+            "result": {
+              "const": "available_original_compiler_artifact"
+            },
+            "source": {
+              "$ref": "#/$defs/CompilerArtifactPhysical"
+            },
+            "origin": {
+              "$ref": "#/$defs/OriginPhysical"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/Unavailable"
+        }
+      ]
+    },
+    "OriginalPublishInput": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "candidate",
+            "prior_source"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "native_compile"
+            },
+            "candidate": {
+              "$ref": "#/$defs/CompilerPhysical"
+            },
+            "prior_source": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Binding"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "candidate",
+            "prior_source"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "compile_certification"
+            },
+            "candidate": {
+              "$ref": "#/$defs/CertificationPhysical"
+            },
+            "prior_source": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Binding"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "candidate",
+            "prior_source"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "aggregate_intake"
+            },
+            "candidate": {
+              "$ref": "#/$defs/AggregatePhysical"
+            },
+            "prior_source": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Binding"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "candidate",
+            "prior_source"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "test_capability"
+            },
+            "candidate": {
+              "$ref": "#/$defs/TestPhysical"
+            },
+            "prior_source": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Binding"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "candidate",
+            "prior_source"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "model_resolution"
+            },
+            "candidate": {
+              "$ref": "#/$defs/ModelsPhysical"
+            },
+            "prior_source": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Binding"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "candidate",
+            "prior_source"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "worknode_request_set"
+            },
+            "candidate": {
+              "$ref": "#/$defs/RequestSetPhysical"
+            },
+            "prior_source": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Binding"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "candidate",
+            "prior_source"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "compiler_artifact"
+            },
+            "candidate": {
+              "$ref": "#/$defs/CompilerArtifactPhysical"
+            },
+            "prior_source": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "OriginalPublishResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "input_kind",
+            "source",
+            "origin",
+            "action_authority"
+          ],
+          "properties": {
+            "result": {
+              "const": "published_original_custody"
+            },
+            "input_kind": {
+              "const": "native_compile"
+            },
+            "source": {
+              "$ref": "#/$defs/CompilerPhysical"
+            },
+            "origin": {
+              "$ref": "#/$defs/OriginPhysical"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "input_kind",
+            "source",
+            "origin",
+            "action_authority"
+          ],
+          "properties": {
+            "result": {
+              "const": "published_original_custody"
+            },
+            "input_kind": {
+              "const": "compile_certification"
+            },
+            "source": {
+              "$ref": "#/$defs/CertificationPhysical"
+            },
+            "origin": {
+              "$ref": "#/$defs/OriginPhysical"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "input_kind",
+            "source",
+            "origin",
+            "action_authority"
+          ],
+          "properties": {
+            "result": {
+              "const": "published_original_custody"
+            },
+            "input_kind": {
+              "const": "aggregate_intake"
+            },
+            "source": {
+              "$ref": "#/$defs/AggregatePhysical"
+            },
+            "origin": {
+              "$ref": "#/$defs/OriginPhysical"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "input_kind",
+            "source",
+            "origin",
+            "action_authority"
+          ],
+          "properties": {
+            "result": {
+              "const": "published_original_custody"
+            },
+            "input_kind": {
+              "const": "test_capability"
+            },
+            "source": {
+              "$ref": "#/$defs/TestPhysical"
+            },
+            "origin": {
+              "$ref": "#/$defs/OriginPhysical"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "input_kind",
+            "source",
+            "origin",
+            "action_authority"
+          ],
+          "properties": {
+            "result": {
+              "const": "published_original_custody"
+            },
+            "input_kind": {
+              "const": "model_resolution"
+            },
+            "source": {
+              "$ref": "#/$defs/ModelsPhysical"
+            },
+            "origin": {
+              "$ref": "#/$defs/OriginPhysical"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "input_kind",
+            "source",
+            "origin",
+            "action_authority"
+          ],
+          "properties": {
+            "result": {
+              "const": "published_original_custody"
+            },
+            "input_kind": {
+              "const": "worknode_request_set"
+            },
+            "source": {
+              "$ref": "#/$defs/RequestSetPhysical"
+            },
+            "origin": {
+              "$ref": "#/$defs/OriginPhysical"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "input_kind",
+            "source",
+            "origin",
+            "action_authority"
+          ],
+          "properties": {
+            "result": {
+              "const": "published_original_custody"
+            },
+            "input_kind": {
+              "const": "compiler_artifact"
+            },
+            "source": {
+              "$ref": "#/$defs/CompilerArtifactPhysical"
+            },
+            "origin": {
+              "$ref": "#/$defs/OriginPhysical"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/Unavailable"
+        }
+      ]
+    },
+    "CompilerCommitInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_head",
+        "expected_head_origin",
+        "new_checkpoint",
+        "new_head",
+        "new_artifacts",
+        "new_certification"
+      ],
+      "properties": {
+        "expected_head": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CompilerHeadPhysical"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_head_origin": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OriginPhysical"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "new_checkpoint": {
+          "$ref": "#/$defs/CompilerPhysical"
+        },
+        "new_head": {
+          "$ref": "#/$defs/CompilerHeadPhysical"
+        },
+        "new_artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CompilerArtifactPhysical"
+          }
+        },
+        "new_certification": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CertificationPhysical"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "CompilerCommitResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "checkpoint",
+            "checkpoint_origin",
+            "head",
+            "head_origin",
+            "artifacts",
+            "certification",
+            "action_authority"
+          ],
+          "properties": {
+            "result": {
+              "const": "original_compiler_state_committed"
+            },
+            "checkpoint": {
+              "$ref": "#/$defs/CompilerPhysical"
+            },
+            "checkpoint_origin": {
+              "$ref": "#/$defs/OriginPhysical"
+            },
+            "head": {
+              "$ref": "#/$defs/CompilerHeadPhysical"
+            },
+            "head_origin": {
+              "$ref": "#/$defs/OriginPhysical"
+            },
+            "artifacts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "source",
+                  "origin"
+                ],
+                "properties": {
+                  "source": {
+                    "$ref": "#/$defs/CompilerArtifactPhysical"
+                  },
+                  "origin": {
+                    "$ref": "#/$defs/OriginPhysical"
+                  }
+                }
+              }
+            },
+            "certification": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "source",
+                    "origin"
+                  ],
+                  "properties": {
+                    "source": {
+                      "$ref": "#/$defs/CertificationPhysical"
+                    },
+                    "origin": {
+                      "$ref": "#/$defs/OriginPhysical"
+                    }
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/Unavailable"
+        }
+      ]
+    },
+    "CurrentCompletionRequirementSource": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/CompletionRequirementSource"
+        },
+        {
+          "properties": {
+            "required_children": {
+              "type": "array",
+              "maxItems": 0
+            }
+          },
+          "required": [
+            "required_children"
+          ]
+        }
+      ],
+      "description": "Current GRS-075 original source admission only, when this full original value has actually been issued. Actual owner authenticates whole graph/requirement authority sources and empty child scope; historical source grammar remains separate. This does not require a future value before original birth."
+    },
+    "CurrentRequiredSet": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RequiredSet"
+        },
+        {
+          "properties": {
+            "required_child_goal_run_ids": {
+              "type": "array",
+              "maxItems": 0
+            }
+          },
+          "required": [
+            "required_child_goal_run_ids"
+          ]
+        }
+      ],
+      "description": "Current GRS-075 original source admission only, when this full original value has actually been issued. Actual owner authenticates whole graph/requirement authority sources and empty child scope; historical source grammar remains separate. This does not require a future value before original birth."
+    }
+  }
+}

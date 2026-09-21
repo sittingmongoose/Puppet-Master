@@ -1,0 +1,2700 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json",
+  "title": "Generic EventRecord index checkpoint custody \u2014 external proposal",
+  "description": "NEW derived checkpoint; typed source-selection binding is a verified reader projection of existing CURRENT/manifest owners, not a replacement on-disk control format. Native parsing/auth/durability remain separate proof obligations.",
+  "$defs": {
+    "checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "current_generation_id",
+        "generations",
+        "redaction_profile"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.event_record_index_checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "current_generation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^eig_[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "generations": {
+          "type": "object",
+          "patternProperties": {
+            "^eig_[0-9a-f]{64}$": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "generation_id",
+                "projector_id",
+                "projector_version",
+                "index_value_schema_id",
+                "index_value_schema_version",
+                "index_dataset_name",
+                "state",
+                "origin",
+                "anchor",
+                "frontier",
+                "translation",
+                "first_prepared_at_utc",
+                "activated_at_utc",
+                "retired_at_utc",
+                "successor_generation_id",
+                "hold_refs"
+              ],
+              "properties": {
+                "generation_id": {
+                  "type": "string",
+                  "pattern": "^eig_[0-9a-f]{64}$"
+                },
+                "projector_id": {
+                  "const": "projector.storage.event_record_index"
+                },
+                "projector_version": {
+                  "const": "1.0.0"
+                },
+                "index_value_schema_id": {
+                  "const": "pm.storage_value.event_record_index.v2"
+                },
+                "index_value_schema_version": {
+                  "const": "2.0.0"
+                },
+                "index_dataset_name": {
+                  "type": "string",
+                  "pattern": "^event_record_index\\.v2@eig_[0-9a-f]{64}$"
+                },
+                "state": {
+                  "enum": [
+                    "staged",
+                    "current",
+                    "retired"
+                  ]
+                },
+                "origin": {
+                  "enum": [
+                    "initial_rebuild",
+                    "same_source_rebuild",
+                    "recovery_rebuild",
+                    "compaction_shadow"
+                  ]
+                },
+                "anchor": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "source_selection",
+                    "first_retained_sequence_id",
+                    "through_sequence_id",
+                    "retained_event_count",
+                    "retained_event_prefix_sha256",
+                    "sequence_gaps_sha256",
+                    "generation_seed_sha256"
+                  ],
+                  "properties": {
+                    "source_selection": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "storage_instance_id",
+                        "current_ref",
+                        "current_bytes_sha256",
+                        "selected_segment_generation",
+                        "manifest_ref",
+                        "manifest_bytes_sha256",
+                        "manifest_generation",
+                        "recovery_epoch",
+                        "manifest_survivor_prefix_sha256",
+                        "retained_inventory_sha256",
+                        "durable_watermarks_sha256",
+                        "excluded_ranges_sha256",
+                        "retired_inputs_sha256"
+                      ],
+                      "properties": {
+                        "storage_instance_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "current_ref": {
+                          "const": "storage/seglog/CURRENT"
+                        },
+                        "current_bytes_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "selected_segment_generation": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        "manifest_ref": {
+                          "const": "storage/seglog/manifest.v1.msgpack"
+                        },
+                        "manifest_bytes_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "manifest_generation": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        "recovery_epoch": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        "manifest_survivor_prefix_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "retained_inventory_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "durable_watermarks_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "excluded_ranges_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "retired_inputs_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        }
+                      }
+                    },
+                    "first_retained_sequence_id": {
+                      "anyOf": [
+                        {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "through_sequence_id": {
+                      "anyOf": [
+                        {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "retained_event_count": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 18446744073709551615
+                    },
+                    "retained_event_prefix_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "sequence_gaps_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "generation_seed_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  }
+                },
+                "frontier": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "publication_revision",
+                    "source_selection",
+                    "coverage",
+                    "index_row_count",
+                    "index_row_set_sha256",
+                    "redb_transaction_id",
+                    "indexed_at_utc",
+                    "predecessor_frontier_sha256"
+                  ],
+                  "properties": {
+                    "publication_revision": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 18446744073709551615
+                    },
+                    "source_selection": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "storage_instance_id",
+                        "current_ref",
+                        "current_bytes_sha256",
+                        "selected_segment_generation",
+                        "manifest_ref",
+                        "manifest_bytes_sha256",
+                        "manifest_generation",
+                        "recovery_epoch",
+                        "manifest_survivor_prefix_sha256",
+                        "retained_inventory_sha256",
+                        "durable_watermarks_sha256",
+                        "excluded_ranges_sha256",
+                        "retired_inputs_sha256"
+                      ],
+                      "properties": {
+                        "storage_instance_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "current_ref": {
+                          "const": "storage/seglog/CURRENT"
+                        },
+                        "current_bytes_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "selected_segment_generation": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        "manifest_ref": {
+                          "const": "storage/seglog/manifest.v1.msgpack"
+                        },
+                        "manifest_bytes_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "manifest_generation": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        "recovery_epoch": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        "manifest_survivor_prefix_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "retained_inventory_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "durable_watermarks_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "excluded_ranges_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "retired_inputs_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        }
+                      }
+                    },
+                    "coverage": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "scope",
+                        "complete_to_captured_boundary",
+                        "empty_retained_source",
+                        "first_retained_sequence_id",
+                        "through_sequence_id",
+                        "last_frame",
+                        "retained_event_count",
+                        "retained_event_prefix_sha256",
+                        "segments",
+                        "sequence_gaps",
+                        "health"
+                      ],
+                      "properties": {
+                        "scope": {
+                          "const": "all_application_and_project_partitions"
+                        },
+                        "complete_to_captured_boundary": {
+                          "const": true
+                        },
+                        "empty_retained_source": {
+                          "type": "boolean"
+                        },
+                        "first_retained_sequence_id": {
+                          "anyOf": [
+                            {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 18446744073709551615
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "through_sequence_id": {
+                          "anyOf": [
+                            {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 18446744073709551615
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "last_frame": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "segment_generation",
+                                "segment_name",
+                                "byte_offset",
+                                "frame_end_offset",
+                                "last_sequence_id",
+                                "last_event_id"
+                              ],
+                              "properties": {
+                                "segment_generation": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 18446744073709551615
+                                },
+                                "segment_name": {
+                                  "type": "string",
+                                  "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+                                },
+                                "byte_offset": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 18446744073709551615
+                                },
+                                "frame_end_offset": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 18446744073709551615
+                                },
+                                "last_sequence_id": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 18446744073709551615
+                                },
+                                "last_event_id": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "retained_event_count": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        "retained_event_prefix_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "segments": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "segment_generation",
+                              "segment_name",
+                              "state",
+                              "scan_start_offset",
+                              "scanned_through_offset",
+                              "source_durable_end_offset",
+                              "source_durable_bytes_sha256",
+                              "retained_event_count",
+                              "first_sequence_id",
+                              "last_sequence_id"
+                            ],
+                            "properties": {
+                              "segment_generation": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 18446744073709551615
+                              },
+                              "segment_name": {
+                                "type": "string",
+                                "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+                              },
+                              "state": {
+                                "enum": [
+                                  "active",
+                                  "closed",
+                                  "sealed_degraded"
+                                ]
+                              },
+                              "scan_start_offset": {
+                                "const": 0
+                              },
+                              "scanned_through_offset": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 18446744073709551615
+                              },
+                              "source_durable_end_offset": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 18446744073709551615
+                              },
+                              "source_durable_bytes_sha256": {
+                                "type": "string",
+                                "pattern": "^[0-9a-f]{64}$"
+                              },
+                              "retained_event_count": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 18446744073709551615
+                              },
+                              "first_sequence_id": {
+                                "anyOf": [
+                                  {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 18446744073709551615
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "last_sequence_id": {
+                                "anyOf": [
+                                  {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 18446744073709551615
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "minItems": 1
+                        },
+                        "sequence_gaps": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "reason",
+                              "first_sequence_id",
+                              "last_sequence_id",
+                              "manifest_evidence_ref",
+                              "manifest_evidence_sha256"
+                            ],
+                            "properties": {
+                              "reason": {
+                                "enum": [
+                                  "allocator_lease_abandoned",
+                                  "corruption_loss",
+                                  "retention_compaction"
+                                ]
+                              },
+                              "first_sequence_id": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 18446744073709551615
+                              },
+                              "last_sequence_id": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 18446744073709551615
+                              },
+                              "manifest_evidence_ref": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "manifest_evidence_sha256": {
+                                "type": "string",
+                                "pattern": "^[0-9a-f]{64}$"
+                              }
+                            }
+                          }
+                        },
+                        "health": {
+                          "enum": [
+                            "healthy",
+                            "degraded"
+                          ]
+                        }
+                      },
+                      "allOf": [
+                        {
+                          "if": {
+                            "properties": {
+                              "empty_retained_source": {
+                                "const": true
+                              }
+                            }
+                          },
+                          "then": {
+                            "properties": {
+                              "first_retained_sequence_id": {
+                                "type": "null"
+                              },
+                              "through_sequence_id": {
+                                "type": "null"
+                              },
+                              "last_frame": {
+                                "type": "null"
+                              },
+                              "retained_event_count": {
+                                "const": 0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "if": {
+                            "properties": {
+                              "empty_retained_source": {
+                                "const": false
+                              }
+                            }
+                          },
+                          "then": {
+                            "properties": {
+                              "first_retained_sequence_id": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 18446744073709551615
+                              },
+                              "through_sequence_id": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 18446744073709551615
+                              },
+                              "last_frame": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "segment_generation",
+                                  "segment_name",
+                                  "byte_offset",
+                                  "frame_end_offset",
+                                  "last_sequence_id",
+                                  "last_event_id"
+                                ],
+                                "properties": {
+                                  "segment_generation": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 18446744073709551615
+                                  },
+                                  "segment_name": {
+                                    "type": "string",
+                                    "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+                                  },
+                                  "byte_offset": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 18446744073709551615
+                                  },
+                                  "frame_end_offset": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 18446744073709551615
+                                  },
+                                  "last_sequence_id": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 18446744073709551615
+                                  },
+                                  "last_event_id": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                }
+                              },
+                              "retained_event_count": {
+                                "type": "integer",
+                                "minimum": 1
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "index_row_count": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 18446744073709551615
+                    },
+                    "index_row_set_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "redb_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "indexed_at_utc": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "predecessor_frontier_sha256": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "translation": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "manifest_ref",
+                        "manifest_sha256",
+                        "source_index_generation_id",
+                        "source_selection_sha256",
+                        "target_selection_sha256",
+                        "preserved_event_count",
+                        "removed_event_count",
+                        "semantic_outcomes_sha256"
+                      ],
+                      "properties": {
+                        "manifest_ref": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "manifest_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "source_index_generation_id": {
+                          "type": "string",
+                          "pattern": "^eig_[0-9a-f]{64}$"
+                        },
+                        "source_selection_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "target_selection_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "preserved_event_count": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        "removed_event_count": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        "semantic_outcomes_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        }
+                      }
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "first_prepared_at_utc": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "activated_at_utc": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "retired_at_utc": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "successor_generation_id": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^eig_[0-9a-f]{64}$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "hold_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "state": {
+                        "const": "staged"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "activated_at_utc": {
+                        "type": "null"
+                      },
+                      "retired_at_utc": {
+                        "type": "null"
+                      },
+                      "successor_generation_id": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "state": {
+                        "const": "current"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "activated_at_utc": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "retired_at_utc": {
+                        "type": "null"
+                      },
+                      "successor_generation_id": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "state": {
+                        "const": "retired"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "activated_at_utc": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "retired_at_utc": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "successor_generation_id": {
+                        "type": "string",
+                        "pattern": "^eig_[0-9a-f]{64}$"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "minProperties": 1,
+          "maxProperties": 3
+        },
+        "redaction_profile": {
+          "const": "no_secrets"
+        }
+      }
+    },
+    "generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generation_id",
+        "projector_id",
+        "projector_version",
+        "index_value_schema_id",
+        "index_value_schema_version",
+        "index_dataset_name",
+        "state",
+        "origin",
+        "anchor",
+        "frontier",
+        "translation",
+        "first_prepared_at_utc",
+        "activated_at_utc",
+        "retired_at_utc",
+        "successor_generation_id",
+        "hold_refs"
+      ],
+      "properties": {
+        "generation_id": {
+          "type": "string",
+          "pattern": "^eig_[0-9a-f]{64}$"
+        },
+        "projector_id": {
+          "const": "projector.storage.event_record_index"
+        },
+        "projector_version": {
+          "const": "1.0.0"
+        },
+        "index_value_schema_id": {
+          "const": "pm.storage_value.event_record_index.v2"
+        },
+        "index_value_schema_version": {
+          "const": "2.0.0"
+        },
+        "index_dataset_name": {
+          "type": "string",
+          "pattern": "^event_record_index\\.v2@eig_[0-9a-f]{64}$"
+        },
+        "state": {
+          "enum": [
+            "staged",
+            "current",
+            "retired"
+          ]
+        },
+        "origin": {
+          "enum": [
+            "initial_rebuild",
+            "same_source_rebuild",
+            "recovery_rebuild",
+            "compaction_shadow"
+          ]
+        },
+        "anchor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_selection",
+            "first_retained_sequence_id",
+            "through_sequence_id",
+            "retained_event_count",
+            "retained_event_prefix_sha256",
+            "sequence_gaps_sha256",
+            "generation_seed_sha256"
+          ],
+          "properties": {
+            "source_selection": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "storage_instance_id",
+                "current_ref",
+                "current_bytes_sha256",
+                "selected_segment_generation",
+                "manifest_ref",
+                "manifest_bytes_sha256",
+                "manifest_generation",
+                "recovery_epoch",
+                "manifest_survivor_prefix_sha256",
+                "retained_inventory_sha256",
+                "durable_watermarks_sha256",
+                "excluded_ranges_sha256",
+                "retired_inputs_sha256"
+              ],
+              "properties": {
+                "storage_instance_id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "current_ref": {
+                  "const": "storage/seglog/CURRENT"
+                },
+                "current_bytes_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "selected_segment_generation": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "manifest_ref": {
+                  "const": "storage/seglog/manifest.v1.msgpack"
+                },
+                "manifest_bytes_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "manifest_generation": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "recovery_epoch": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "manifest_survivor_prefix_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "retained_inventory_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "durable_watermarks_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "excluded_ranges_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "retired_inputs_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            "first_retained_sequence_id": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "through_sequence_id": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "retained_event_count": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "retained_event_prefix_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "sequence_gaps_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "generation_seed_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "frontier": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "publication_revision",
+            "source_selection",
+            "coverage",
+            "index_row_count",
+            "index_row_set_sha256",
+            "redb_transaction_id",
+            "indexed_at_utc",
+            "predecessor_frontier_sha256"
+          ],
+          "properties": {
+            "publication_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "source_selection": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "storage_instance_id",
+                "current_ref",
+                "current_bytes_sha256",
+                "selected_segment_generation",
+                "manifest_ref",
+                "manifest_bytes_sha256",
+                "manifest_generation",
+                "recovery_epoch",
+                "manifest_survivor_prefix_sha256",
+                "retained_inventory_sha256",
+                "durable_watermarks_sha256",
+                "excluded_ranges_sha256",
+                "retired_inputs_sha256"
+              ],
+              "properties": {
+                "storage_instance_id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "current_ref": {
+                  "const": "storage/seglog/CURRENT"
+                },
+                "current_bytes_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "selected_segment_generation": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "manifest_ref": {
+                  "const": "storage/seglog/manifest.v1.msgpack"
+                },
+                "manifest_bytes_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "manifest_generation": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "recovery_epoch": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "manifest_survivor_prefix_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "retained_inventory_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "durable_watermarks_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "excluded_ranges_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "retired_inputs_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            "coverage": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "scope",
+                "complete_to_captured_boundary",
+                "empty_retained_source",
+                "first_retained_sequence_id",
+                "through_sequence_id",
+                "last_frame",
+                "retained_event_count",
+                "retained_event_prefix_sha256",
+                "segments",
+                "sequence_gaps",
+                "health"
+              ],
+              "properties": {
+                "scope": {
+                  "const": "all_application_and_project_partitions"
+                },
+                "complete_to_captured_boundary": {
+                  "const": true
+                },
+                "empty_retained_source": {
+                  "type": "boolean"
+                },
+                "first_retained_sequence_id": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 18446744073709551615
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "through_sequence_id": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 18446744073709551615
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "last_frame": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "segment_generation",
+                        "segment_name",
+                        "byte_offset",
+                        "frame_end_offset",
+                        "last_sequence_id",
+                        "last_event_id"
+                      ],
+                      "properties": {
+                        "segment_generation": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        "segment_name": {
+                          "type": "string",
+                          "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+                        },
+                        "byte_offset": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        "frame_end_offset": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        "last_sequence_id": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        "last_event_id": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "retained_event_count": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "retained_event_prefix_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "segments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "segment_generation",
+                      "segment_name",
+                      "state",
+                      "scan_start_offset",
+                      "scanned_through_offset",
+                      "source_durable_end_offset",
+                      "source_durable_bytes_sha256",
+                      "retained_event_count",
+                      "first_sequence_id",
+                      "last_sequence_id"
+                    ],
+                    "properties": {
+                      "segment_generation": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "segment_name": {
+                        "type": "string",
+                        "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+                      },
+                      "state": {
+                        "enum": [
+                          "active",
+                          "closed",
+                          "sealed_degraded"
+                        ]
+                      },
+                      "scan_start_offset": {
+                        "const": 0
+                      },
+                      "scanned_through_offset": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "source_durable_end_offset": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "source_durable_bytes_sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      },
+                      "retained_event_count": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "first_sequence_id": {
+                        "anyOf": [
+                          {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "last_sequence_id": {
+                        "anyOf": [
+                          {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "minItems": 1
+                },
+                "sequence_gaps": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "reason",
+                      "first_sequence_id",
+                      "last_sequence_id",
+                      "manifest_evidence_ref",
+                      "manifest_evidence_sha256"
+                    ],
+                    "properties": {
+                      "reason": {
+                        "enum": [
+                          "allocator_lease_abandoned",
+                          "corruption_loss",
+                          "retention_compaction"
+                        ]
+                      },
+                      "first_sequence_id": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "last_sequence_id": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "manifest_evidence_ref": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "manifest_evidence_sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    }
+                  }
+                },
+                "health": {
+                  "enum": [
+                    "healthy",
+                    "degraded"
+                  ]
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "empty_retained_source": {
+                        "const": true
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "first_retained_sequence_id": {
+                        "type": "null"
+                      },
+                      "through_sequence_id": {
+                        "type": "null"
+                      },
+                      "last_frame": {
+                        "type": "null"
+                      },
+                      "retained_event_count": {
+                        "const": 0
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "empty_retained_source": {
+                        "const": false
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "first_retained_sequence_id": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "through_sequence_id": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "last_frame": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "segment_generation",
+                          "segment_name",
+                          "byte_offset",
+                          "frame_end_offset",
+                          "last_sequence_id",
+                          "last_event_id"
+                        ],
+                        "properties": {
+                          "segment_generation": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "segment_name": {
+                            "type": "string",
+                            "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+                          },
+                          "byte_offset": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "frame_end_offset": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "last_sequence_id": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "last_event_id": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      },
+                      "retained_event_count": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "index_row_count": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "index_row_set_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "redb_transaction_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "indexed_at_utc": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "predecessor_frontier_sha256": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        "translation": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "manifest_ref",
+                "manifest_sha256",
+                "source_index_generation_id",
+                "source_selection_sha256",
+                "target_selection_sha256",
+                "preserved_event_count",
+                "removed_event_count",
+                "semantic_outcomes_sha256"
+              ],
+              "properties": {
+                "manifest_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "manifest_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "source_index_generation_id": {
+                  "type": "string",
+                  "pattern": "^eig_[0-9a-f]{64}$"
+                },
+                "source_selection_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "target_selection_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "preserved_event_count": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "removed_event_count": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "semantic_outcomes_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_prepared_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "activated_at_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "retired_at_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "successor_generation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^eig_[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hold_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "staged"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "activated_at_utc": {
+                "type": "null"
+              },
+              "retired_at_utc": {
+                "type": "null"
+              },
+              "successor_generation_id": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "current"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "activated_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "retired_at_utc": {
+                "type": "null"
+              },
+              "successor_generation_id": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "retired"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "activated_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "retired_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "successor_generation_id": {
+                "type": "string",
+                "pattern": "^eig_[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "source_selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "current_ref",
+        "current_bytes_sha256",
+        "selected_segment_generation",
+        "manifest_ref",
+        "manifest_bytes_sha256",
+        "manifest_generation",
+        "recovery_epoch",
+        "manifest_survivor_prefix_sha256",
+        "retained_inventory_sha256",
+        "durable_watermarks_sha256",
+        "excluded_ranges_sha256",
+        "retired_inputs_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "current_ref": {
+          "const": "storage/seglog/CURRENT"
+        },
+        "current_bytes_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "selected_segment_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "manifest_ref": {
+          "const": "storage/seglog/manifest.v1.msgpack"
+        },
+        "manifest_bytes_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "manifest_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "recovery_epoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "manifest_survivor_prefix_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "retained_inventory_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "durable_watermarks_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "excluded_ranges_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "retired_inputs_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "complete_to_captured_boundary",
+        "empty_retained_source",
+        "first_retained_sequence_id",
+        "through_sequence_id",
+        "last_frame",
+        "retained_event_count",
+        "retained_event_prefix_sha256",
+        "segments",
+        "sequence_gaps",
+        "health"
+      ],
+      "properties": {
+        "scope": {
+          "const": "all_application_and_project_partitions"
+        },
+        "complete_to_captured_boundary": {
+          "const": true
+        },
+        "empty_retained_source": {
+          "type": "boolean"
+        },
+        "first_retained_sequence_id": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "through_sequence_id": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_frame": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "segment_generation",
+                "segment_name",
+                "byte_offset",
+                "frame_end_offset",
+                "last_sequence_id",
+                "last_event_id"
+              ],
+              "properties": {
+                "segment_generation": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "segment_name": {
+                  "type": "string",
+                  "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+                },
+                "byte_offset": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "frame_end_offset": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "last_sequence_id": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "last_event_id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "retained_event_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "retained_event_prefix_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "segment_generation",
+              "segment_name",
+              "state",
+              "scan_start_offset",
+              "scanned_through_offset",
+              "source_durable_end_offset",
+              "source_durable_bytes_sha256",
+              "retained_event_count",
+              "first_sequence_id",
+              "last_sequence_id"
+            ],
+            "properties": {
+              "segment_generation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "segment_name": {
+                "type": "string",
+                "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+              },
+              "state": {
+                "enum": [
+                  "active",
+                  "closed",
+                  "sealed_degraded"
+                ]
+              },
+              "scan_start_offset": {
+                "const": 0
+              },
+              "scanned_through_offset": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "source_durable_end_offset": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "source_durable_bytes_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "retained_event_count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "first_sequence_id": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "last_sequence_id": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "minItems": 1
+        },
+        "sequence_gaps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "reason",
+              "first_sequence_id",
+              "last_sequence_id",
+              "manifest_evidence_ref",
+              "manifest_evidence_sha256"
+            ],
+            "properties": {
+              "reason": {
+                "enum": [
+                  "allocator_lease_abandoned",
+                  "corruption_loss",
+                  "retention_compaction"
+                ]
+              },
+              "first_sequence_id": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "last_sequence_id": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "manifest_evidence_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "manifest_evidence_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        "health": {
+          "enum": [
+            "healthy",
+            "degraded"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "empty_retained_source": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_retained_sequence_id": {
+                "type": "null"
+              },
+              "through_sequence_id": {
+                "type": "null"
+              },
+              "last_frame": {
+                "type": "null"
+              },
+              "retained_event_count": {
+                "const": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "empty_retained_source": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_retained_sequence_id": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "through_sequence_id": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "last_frame": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "segment_generation",
+                  "segment_name",
+                  "byte_offset",
+                  "frame_end_offset",
+                  "last_sequence_id",
+                  "last_event_id"
+                ],
+                "properties": {
+                  "segment_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "segment_name": {
+                    "type": "string",
+                    "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+                  },
+                  "byte_offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "frame_end_offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "last_sequence_id": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "last_event_id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "retained_event_count": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "frontier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "publication_revision",
+        "source_selection",
+        "coverage",
+        "index_row_count",
+        "index_row_set_sha256",
+        "redb_transaction_id",
+        "indexed_at_utc",
+        "predecessor_frontier_sha256"
+      ],
+      "properties": {
+        "publication_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "source_selection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "storage_instance_id",
+            "current_ref",
+            "current_bytes_sha256",
+            "selected_segment_generation",
+            "manifest_ref",
+            "manifest_bytes_sha256",
+            "manifest_generation",
+            "recovery_epoch",
+            "manifest_survivor_prefix_sha256",
+            "retained_inventory_sha256",
+            "durable_watermarks_sha256",
+            "excluded_ranges_sha256",
+            "retired_inputs_sha256"
+          ],
+          "properties": {
+            "storage_instance_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "current_ref": {
+              "const": "storage/seglog/CURRENT"
+            },
+            "current_bytes_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "selected_segment_generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "manifest_ref": {
+              "const": "storage/seglog/manifest.v1.msgpack"
+            },
+            "manifest_bytes_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "manifest_generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "recovery_epoch": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "manifest_survivor_prefix_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "retained_inventory_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "durable_watermarks_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "excluded_ranges_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "retired_inputs_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scope",
+            "complete_to_captured_boundary",
+            "empty_retained_source",
+            "first_retained_sequence_id",
+            "through_sequence_id",
+            "last_frame",
+            "retained_event_count",
+            "retained_event_prefix_sha256",
+            "segments",
+            "sequence_gaps",
+            "health"
+          ],
+          "properties": {
+            "scope": {
+              "const": "all_application_and_project_partitions"
+            },
+            "complete_to_captured_boundary": {
+              "const": true
+            },
+            "empty_retained_source": {
+              "type": "boolean"
+            },
+            "first_retained_sequence_id": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "through_sequence_id": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "last_frame": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "segment_generation",
+                    "segment_name",
+                    "byte_offset",
+                    "frame_end_offset",
+                    "last_sequence_id",
+                    "last_event_id"
+                  ],
+                  "properties": {
+                    "segment_generation": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 18446744073709551615
+                    },
+                    "segment_name": {
+                      "type": "string",
+                      "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+                    },
+                    "byte_offset": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 18446744073709551615
+                    },
+                    "frame_end_offset": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 18446744073709551615
+                    },
+                    "last_sequence_id": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 18446744073709551615
+                    },
+                    "last_event_id": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "retained_event_count": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "retained_event_prefix_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "segments": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "segment_generation",
+                  "segment_name",
+                  "state",
+                  "scan_start_offset",
+                  "scanned_through_offset",
+                  "source_durable_end_offset",
+                  "source_durable_bytes_sha256",
+                  "retained_event_count",
+                  "first_sequence_id",
+                  "last_sequence_id"
+                ],
+                "properties": {
+                  "segment_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "segment_name": {
+                    "type": "string",
+                    "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+                  },
+                  "state": {
+                    "enum": [
+                      "active",
+                      "closed",
+                      "sealed_degraded"
+                    ]
+                  },
+                  "scan_start_offset": {
+                    "const": 0
+                  },
+                  "scanned_through_offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "source_durable_end_offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "source_durable_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "retained_event_count": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "first_sequence_id": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "last_sequence_id": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                }
+              },
+              "minItems": 1
+            },
+            "sequence_gaps": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "reason",
+                  "first_sequence_id",
+                  "last_sequence_id",
+                  "manifest_evidence_ref",
+                  "manifest_evidence_sha256"
+                ],
+                "properties": {
+                  "reason": {
+                    "enum": [
+                      "allocator_lease_abandoned",
+                      "corruption_loss",
+                      "retention_compaction"
+                    ]
+                  },
+                  "first_sequence_id": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "last_sequence_id": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "manifest_evidence_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "manifest_evidence_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            },
+            "health": {
+              "enum": [
+                "healthy",
+                "degraded"
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "empty_retained_source": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "first_retained_sequence_id": {
+                    "type": "null"
+                  },
+                  "through_sequence_id": {
+                    "type": "null"
+                  },
+                  "last_frame": {
+                    "type": "null"
+                  },
+                  "retained_event_count": {
+                    "const": 0
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "empty_retained_source": {
+                    "const": false
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "first_retained_sequence_id": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "through_sequence_id": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "last_frame": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "segment_generation",
+                      "segment_name",
+                      "byte_offset",
+                      "frame_end_offset",
+                      "last_sequence_id",
+                      "last_event_id"
+                    ],
+                    "properties": {
+                      "segment_generation": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "segment_name": {
+                        "type": "string",
+                        "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+                      },
+                      "byte_offset": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "frame_end_offset": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "last_sequence_id": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "last_event_id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  "retained_event_count": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "index_row_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "index_row_set_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "redb_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "indexed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "predecessor_frontier_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "read_token": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "checkpoint_key",
+        "checkpoint_ref",
+        "generation_id",
+        "generation_anchor_sha256",
+        "frontier_revision",
+        "frontier_sha256",
+        "index_dataset_name",
+        "source_selection",
+        "redb_snapshot_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "checkpoint_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "checkpoint_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generation_id": {
+          "type": "string",
+          "pattern": "^eig_[0-9a-f]{64}$"
+        },
+        "generation_anchor_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "frontier_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "frontier_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "index_dataset_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_selection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "storage_instance_id",
+            "current_ref",
+            "current_bytes_sha256",
+            "selected_segment_generation",
+            "manifest_ref",
+            "manifest_bytes_sha256",
+            "manifest_generation",
+            "recovery_epoch",
+            "manifest_survivor_prefix_sha256",
+            "retained_inventory_sha256",
+            "durable_watermarks_sha256",
+            "excluded_ranges_sha256",
+            "retired_inputs_sha256"
+          ],
+          "properties": {
+            "storage_instance_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "current_ref": {
+              "const": "storage/seglog/CURRENT"
+            },
+            "current_bytes_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "selected_segment_generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "manifest_ref": {
+              "const": "storage/seglog/manifest.v1.msgpack"
+            },
+            "manifest_bytes_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "manifest_generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "recovery_epoch": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "manifest_survivor_prefix_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "retained_inventory_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "durable_watermarks_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "excluded_ranges_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "retired_inputs_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "redb_snapshot_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

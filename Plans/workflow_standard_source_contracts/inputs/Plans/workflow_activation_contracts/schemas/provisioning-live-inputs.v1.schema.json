@@ -1,0 +1,1067 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0",
+  "title": "Two original live provisioning input routes and compact original captures; source proposal only",
+  "$defs": {
+    "CaptureSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "original_operation_id",
+        "request_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "AcceptedRequestBinding": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/OriginalSourceBinding"
+        },
+        {
+          "properties": {
+            "source": {
+              "properties": {
+                "family_id": {
+                  "const": "workflow_native_request_source"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.workflow_native_request_source.v1"
+                },
+                "schema_version": {
+                  "const": "1.0.0"
+                }
+              }
+            },
+            "origin": {
+              "properties": {
+                "family_id": {
+                  "const": "workflow_original_source_origin"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.workflow_original_source_origin.v1"
+                },
+                "schema_version": {
+                  "const": "1.0.0"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "NativeInputScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "host_id",
+        "environment_id",
+        "project_root_identity",
+        "plan_compile_run_id",
+        "goal_id",
+        "goal_run_id",
+        "activation_id",
+        "workgraph_id",
+        "workgraph_revision",
+        "request_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "host_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "environment_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_root_identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_compile_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "activation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "OriginalPreflightLiveStage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "source_mode",
+        "scope",
+        "original_method",
+        "original_owner_id",
+        "original_owner_epoch",
+        "original_operation_id",
+        "output_identity",
+        "output_issued_at_utc",
+        "source_request",
+        "request_semantic_sha256",
+        "input_schema_ref",
+        "input"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.workflow.source_control_preflight.original_live_stage.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "source_mode": {
+          "const": "original_native_live"
+        },
+        "scope": {
+          "$ref": "#/$defs/NativeInputScope"
+        },
+        "original_method": {
+          "const": "owner.executor.source_control_preflight.output.v1"
+        },
+        "original_owner_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_request": {
+          "$ref": "#/$defs/AcceptedRequestBinding"
+        },
+        "request_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "input_schema_ref": {
+          "const": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/source_control_preflight_receipt"
+        },
+        "input": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/source_control_preflight_receipt"
+        }
+      }
+    },
+    "PreflightLiveCapture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_mode",
+        "input_kind",
+        "input_schema_ref",
+        "native_stage_schema_ref",
+        "native_stage_pointer",
+        "scope",
+        "original_method",
+        "original_owner_id",
+        "original_owner_epoch",
+        "original_operation_id",
+        "output_identity",
+        "output_issued_at_utc",
+        "source_request",
+        "request_semantic_sha256",
+        "input_semantic_sha256",
+        "native_stage_sha256",
+        "capture_method",
+        "capture_operation_id",
+        "capture_transaction_id",
+        "captured_at_utc",
+        "retained_kind",
+        "action_authority"
+      ],
+      "properties": {
+        "source_mode": {
+          "const": "original_native_live"
+        },
+        "input_kind": {
+          "const": "source_control_preflight"
+        },
+        "input_schema_ref": {
+          "const": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/source_control_preflight_receipt"
+        },
+        "native_stage_schema_ref": {
+          "const": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/OriginalPreflightLiveStage"
+        },
+        "native_stage_pointer": {
+          "const": "/input"
+        },
+        "scope": {
+          "$ref": "#/$defs/NativeInputScope"
+        },
+        "original_method": {
+          "const": "owner.executor.source_control_preflight.output.v1"
+        },
+        "original_owner_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_request": {
+          "$ref": "#/$defs/AcceptedRequestBinding"
+        },
+        "request_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "input_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "native_stage_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "capture_method": {
+          "const": "owner.storage.executor_preflight.capture_live.v1"
+        },
+        "capture_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capture_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "captured_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "retained_kind": {
+          "const": "original_output_capture_only"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "PreflightLiveCapturePhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_executor_preflight_live_capture.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/PreflightLiveCapture"
+        }
+      }
+    },
+    "PreflightLiveReadResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "input_kind",
+            "input_schema_ref",
+            "input",
+            "capture",
+            "origin",
+            "action_authority"
+          ],
+          "properties": {
+            "result": {
+              "const": "available_original_live_input"
+            },
+            "input_kind": {
+              "const": "source_control_preflight"
+            },
+            "input_schema_ref": {
+              "const": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/source_control_preflight_receipt"
+            },
+            "input": {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/source_control_preflight_receipt"
+            },
+            "capture": {
+              "$ref": "#/$defs/PreflightLiveCapturePhysical"
+            },
+            "origin": {
+              "$ref": "#/$defs/LiveInputOriginPhysical"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "input_kind",
+            "input_schema_ref",
+            "input",
+            "capture",
+            "origin",
+            "action_authority"
+          ],
+          "properties": {
+            "result": {
+              "const": "unavailable"
+            },
+            "input_kind": {
+              "type": "null"
+            },
+            "input_schema_ref": {
+              "type": "null"
+            },
+            "input": {
+              "type": "null"
+            },
+            "capture": {
+              "type": "null"
+            },
+            "origin": {
+              "type": "null"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        }
+      ]
+    },
+    "PreflightRetainedReadResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "capture",
+            "origin",
+            "action_authority"
+          ],
+          "properties": {
+            "result": {
+              "const": "available_original_capture_metadata"
+            },
+            "capture": {
+              "$ref": "#/$defs/PreflightLiveCapturePhysical"
+            },
+            "origin": {
+              "$ref": "#/$defs/LiveInputOriginPhysical"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "capture",
+            "origin",
+            "action_authority"
+          ],
+          "properties": {
+            "result": {
+              "const": "unavailable"
+            },
+            "capture": {
+              "type": "null"
+            },
+            "origin": {
+              "type": "null"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        }
+      ]
+    },
+    "PreflightInputBinding": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/OriginalInputBinding"
+        },
+        {
+          "properties": {
+            "input_kind": {
+              "const": "source_control_preflight"
+            },
+            "capture": {
+              "properties": {
+                "source": {
+                  "properties": {
+                    "family_id": {
+                      "const": "workflow_executor_preflight_live_capture"
+                    },
+                    "schema_id": {
+                      "const": "pm.storage_value.workflow_executor_preflight_live_capture.v1"
+                    },
+                    "schema_version": {
+                      "const": "1.0.0"
+                    }
+                  }
+                },
+                "origin": {
+                  "properties": {
+                    "family_id": {
+                      "const": "workflow_provisioning_live_input_origin"
+                    },
+                    "schema_id": {
+                      "const": "pm.storage_value.workflow_provisioning_live_input_origin.v1"
+                    },
+                    "schema_version": {
+                      "const": "1.0.0"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "OriginalTestCapabilityLiveStage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "source_mode",
+        "scope",
+        "original_method",
+        "original_owner_id",
+        "original_owner_epoch",
+        "original_operation_id",
+        "output_identity",
+        "output_issued_at_utc",
+        "source_request",
+        "request_semantic_sha256",
+        "input_schema_ref",
+        "input"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.workflow.test_capability.original_live_stage.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "source_mode": {
+          "const": "original_native_live"
+        },
+        "scope": {
+          "$ref": "#/$defs/NativeInputScope"
+        },
+        "original_method": {
+          "const": "owner.ats.test_capability.output.v1"
+        },
+        "original_owner_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_request": {
+          "$ref": "#/$defs/AcceptedRequestBinding"
+        },
+        "request_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "input_schema_ref": {
+          "const": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_capability_report"
+        },
+        "input": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_capability_report"
+        }
+      }
+    },
+    "TestCapabilityLiveCapture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_mode",
+        "input_kind",
+        "input_schema_ref",
+        "native_stage_schema_ref",
+        "native_stage_pointer",
+        "scope",
+        "original_method",
+        "original_owner_id",
+        "original_owner_epoch",
+        "original_operation_id",
+        "output_identity",
+        "output_issued_at_utc",
+        "source_request",
+        "request_semantic_sha256",
+        "input_semantic_sha256",
+        "native_stage_sha256",
+        "capture_method",
+        "capture_operation_id",
+        "capture_transaction_id",
+        "captured_at_utc",
+        "retained_kind",
+        "action_authority"
+      ],
+      "properties": {
+        "source_mode": {
+          "const": "original_native_live"
+        },
+        "input_kind": {
+          "const": "test_capability"
+        },
+        "input_schema_ref": {
+          "const": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_capability_report"
+        },
+        "native_stage_schema_ref": {
+          "const": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/OriginalTestCapabilityLiveStage"
+        },
+        "native_stage_pointer": {
+          "const": "/input"
+        },
+        "scope": {
+          "$ref": "#/$defs/NativeInputScope"
+        },
+        "original_method": {
+          "const": "owner.ats.test_capability.output.v1"
+        },
+        "original_owner_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_request": {
+          "$ref": "#/$defs/AcceptedRequestBinding"
+        },
+        "request_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "input_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "native_stage_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "capture_method": {
+          "const": "owner.storage.test_capability.capture_live.v1"
+        },
+        "capture_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capture_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "captured_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "retained_kind": {
+          "const": "original_output_capture_only"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "TestCapabilityLiveCapturePhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_test_capability_live_capture.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/TestCapabilityLiveCapture"
+        }
+      }
+    },
+    "TestCapabilityLiveReadResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "input_kind",
+            "input_schema_ref",
+            "input",
+            "capture",
+            "origin",
+            "action_authority"
+          ],
+          "properties": {
+            "result": {
+              "const": "available_original_live_input"
+            },
+            "input_kind": {
+              "const": "test_capability"
+            },
+            "input_schema_ref": {
+              "const": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_capability_report"
+            },
+            "input": {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_capability_report"
+            },
+            "capture": {
+              "$ref": "#/$defs/TestCapabilityLiveCapturePhysical"
+            },
+            "origin": {
+              "$ref": "#/$defs/LiveInputOriginPhysical"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "input_kind",
+            "input_schema_ref",
+            "input",
+            "capture",
+            "origin",
+            "action_authority"
+          ],
+          "properties": {
+            "result": {
+              "const": "unavailable"
+            },
+            "input_kind": {
+              "type": "null"
+            },
+            "input_schema_ref": {
+              "type": "null"
+            },
+            "input": {
+              "type": "null"
+            },
+            "capture": {
+              "type": "null"
+            },
+            "origin": {
+              "type": "null"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        }
+      ]
+    },
+    "TestCapabilityRetainedReadResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "capture",
+            "origin",
+            "action_authority"
+          ],
+          "properties": {
+            "result": {
+              "const": "available_original_capture_metadata"
+            },
+            "capture": {
+              "$ref": "#/$defs/TestCapabilityLiveCapturePhysical"
+            },
+            "origin": {
+              "$ref": "#/$defs/LiveInputOriginPhysical"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "capture",
+            "origin",
+            "action_authority"
+          ],
+          "properties": {
+            "result": {
+              "const": "unavailable"
+            },
+            "capture": {
+              "type": "null"
+            },
+            "origin": {
+              "type": "null"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        }
+      ]
+    },
+    "TestCapabilityInputBinding": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/OriginalInputBinding"
+        },
+        {
+          "properties": {
+            "input_kind": {
+              "const": "test_capability"
+            },
+            "capture": {
+              "properties": {
+                "source": {
+                  "properties": {
+                    "family_id": {
+                      "const": "workflow_test_capability_live_capture"
+                    },
+                    "schema_id": {
+                      "const": "pm.storage_value.workflow_test_capability_live_capture.v1"
+                    },
+                    "schema_version": {
+                      "const": "1.0.0"
+                    }
+                  }
+                },
+                "origin": {
+                  "properties": {
+                    "family_id": {
+                      "const": "workflow_provisioning_live_input_origin"
+                    },
+                    "schema_id": {
+                      "const": "pm.storage_value.workflow_provisioning_live_input_origin.v1"
+                    },
+                    "schema_version": {
+                      "const": "1.0.0"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "LiveInputOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issuer_method",
+        "storage_owner_id",
+        "storage_owner_epoch",
+        "original_source_method",
+        "original_source_owner_id",
+        "original_source_owner_epoch",
+        "original_source_operation_id",
+        "capture_operation_id",
+        "capture_transaction_id",
+        "issued_at_utc",
+        "issued_value_key",
+        "issued_record_sha256",
+        "native_stage_sha256",
+        "source_request",
+        "actual_permission_source",
+        "actual_stop_source",
+        "actual_cancellation_source"
+      ],
+      "properties": {
+        "issuer_method": {
+          "enum": [
+            "owner.storage.executor_preflight.capture_live.v1",
+            "owner.storage.test_capability.capture_live.v1"
+          ]
+        },
+        "storage_owner_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_source_method": {
+          "enum": [
+            "owner.executor.source_control_preflight.output.v1",
+            "owner.ats.test_capability.output.v1"
+          ]
+        },
+        "original_source_owner_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_source_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_source_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capture_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capture_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "issued_value_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_record_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "native_stage_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_request": {
+          "$ref": "#/$defs/AcceptedRequestBinding"
+        },
+        "actual_permission_source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/SourceSelector"
+        },
+        "actual_stop_source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/SourceSelector"
+        },
+        "actual_cancellation_source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/SourceSelector"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "issuer_method": {
+                "const": "owner.storage.executor_preflight.capture_live.v1"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_source_method": {
+                "const": "owner.executor.source_control_preflight.output.v1"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "issuer_method": {
+                "const": "owner.storage.test_capability.capture_live.v1"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_source_method": {
+                "const": "owner.ats.test_capability.output.v1"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "LiveInputOriginPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_provisioning_live_input_origin.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/LiveInputOrigin"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/PreflightLiveCapturePhysical"
+    },
+    {
+      "$ref": "#/$defs/TestCapabilityLiveCapturePhysical"
+    },
+    {
+      "$ref": "#/$defs/LiveInputOriginPhysical"
+    }
+  ],
+  "$comment": "No public source import. Native stage is actual original owner output, never persisted by this proposal. Complete original live/current source guards and final independent output/transaction predicates are mandatory."
+}

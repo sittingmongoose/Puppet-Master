@@ -1,0 +1,169 @@
+{
+  "status": "whole_v3_prebirth_source_proposal_not_installed",
+  "encoding": "messagepack_canonical",
+  "new_families": [
+    {
+      "family": "workflow_standard_result",
+      "key": "workflow_standard_result.v1:{lower_hex_utf8_project_id}:{lower_hex_utf8_goal_run_id}:{lower_hex_utf8_operation_id}",
+      "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json#/$defs/StorageWorkflowResult",
+      "role": "immutable_original_native_workflow_publication_result",
+      "producer": [
+        "owner.workflow.standard.publish_execution.v1",
+        "owner.workflow.standard.publish_provisional_success.v1",
+        "owner.workflow.standard.publish_certified_joint.v1"
+      ],
+      "consumers": [
+        "owner.workflow.standard.read_retained.v1",
+        "current D01 original lineage verification"
+      ],
+      "retention": "mandatory original operation authority for original current lineage and retained audit; never implies hold on referenced mutable sources",
+      "backup": "required exact originally issued row/key/bytes plus original origin and installed profile"
+    },
+    {
+      "family": "workflow_standard_origin",
+      "key": "workflow_standard_origin.v1:{lower_hex_utf8_project_id}:{lower_hex_utf8_goal_run_id}:{lower_hex_utf8_operation_id}",
+      "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v3.schema.json#/$defs/StorageWorkflowOrigin",
+      "role": "immutable_native_original_publication_origin",
+      "producer": [
+        "owner.workflow.standard.publish_execution.v1",
+        "owner.workflow.standard.publish_provisional_success.v1",
+        "owner.workflow.standard.publish_certified_joint.v1"
+      ],
+      "consumers": [
+        "owner.workflow.standard.read_retained.v1",
+        "current D01 original lineage verification"
+      ],
+      "retention": "same original publication authority lifetime as result",
+      "backup": "required exact original row and issuing native authority; never recreated from result"
+    },
+    {
+      "family": "workflow_standard_capture_origin",
+      "key": "workflow_standard_capture_origin.v1:{lower_hex_utf8_project_id}:{lower_hex_utf8_receipt_id}",
+      "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v3.schema.json#/$defs/StorageStandardCaptureOrigin",
+      "role": "immutable native original Standard capture custody",
+      "producer": [
+        "storage.goal_receipt.capture_standard.v2"
+      ],
+      "consumers": [
+        "owner.storage.workflow_standard.read_current.v1",
+        "owner.workflow.standard.prepare_certified.v1",
+        "owner.workflow.standard.publish_certified_joint.v1",
+        "storage.goal_receipt.read_standard.v1"
+      ],
+      "retention": "mandatory original Standard receipt authority; preserved independently of mutable source retention",
+      "backup": "originally coissued with the whole original v2 receipt; exact physical bytes/key and original native issuer/operation/argument commitments; never synthesized on restore"
+    }
+  ],
+  "changed_existing_profiles": [
+    {
+      "file": "workflow-original-start.v5.schema.json",
+      "definition": "StorageWorkflowBirth",
+      "before_schema_id": "pm.storage_value.executor_workflow_workflow_birth.v6",
+      "before_version": "6.0.0",
+      "after_schema_id": "pm.storage_value.executor_workflow_workflow_birth.v7",
+      "after_version": "7.0.0",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "file": "workflow-original-start.v5.schema.json",
+      "definition": "StorageWorkflowHead",
+      "before_schema_id": "pm.storage_value.executor_workflow_workflow_head.v6",
+      "before_version": "6.0.0",
+      "after_schema_id": "pm.storage_value.executor_workflow_workflow_head.v7",
+      "after_version": "7.0.0",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "file": "workflow-original-start.v5.schema.json",
+      "definition": "StorageWorkflowUpdate",
+      "before_schema_id": "pm.storage_value.executor_workflow_workflow_update.v6",
+      "before_version": "6.0.0",
+      "after_schema_id": "pm.storage_value.executor_workflow_workflow_update.v7",
+      "after_version": "7.0.0",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "file": "workflow-original-start.v5.schema.json",
+      "definition": "StorageWorkflowMutationOrigin",
+      "before_schema_id": "pm.storage_value.executor_workflow_lineage_origin.v6",
+      "before_version": "6.0.0",
+      "after_schema_id": "pm.storage_value.executor_workflow_lineage_origin.v7",
+      "after_version": "7.0.0",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "file": "workflow-start-custody.v5.schema.json",
+      "definition": "StorageCandidate",
+      "before_schema_id": "pm.storage_value.workflow_start_candidate.v4",
+      "before_version": "4.0.0",
+      "after_schema_id": "pm.storage_value.workflow_start_candidate.v5",
+      "after_version": "5.0.0",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "file": "workflow-start-custody.v5.schema.json",
+      "definition": "StorageOrigin",
+      "before_schema_id": "pm.storage_value.workflow_start_origin.v4",
+      "before_version": "4.0.0",
+      "after_schema_id": "pm.storage_value.workflow_start_origin.v5",
+      "after_version": "5.0.0",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "file": "workflow-cancel-start-profile.v5.schema.json",
+      "definition": "StorageResult",
+      "before_schema_id": "pm.storage_value.workflow_cancel_result.v5",
+      "before_version": "5.0.0",
+      "after_schema_id": "pm.storage_value.workflow_cancel_result.v6",
+      "after_version": "6.0.0",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "file": "workflow-cancel-start-profile.v5.schema.json",
+      "definition": "StorageOrigin",
+      "before_schema_id": "pm.storage_value.workflow_cancel_origin.v5",
+      "before_version": "5.0.0",
+      "after_schema_id": "pm.storage_value.workflow_cancel_origin.v6",
+      "after_version": "6.0.0",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "file": "workflow-standard-current-source.v3.schema.json",
+      "definition": "StorageWorkflowResult",
+      "before_schema_id": "pm.storage_value.workflow_standard_result.v2",
+      "before_version": "2.0.0",
+      "after_schema_id": "pm.storage_value.workflow_standard_result.v3",
+      "after_version": "3.0.0",
+      "key_codec": "unchanged proposed v1 family key; fresh exact role only, no overwrite or old-row reinterpretation"
+    },
+    {
+      "file": "workflow-standard-current-source.v3.schema.json",
+      "definition": "StorageWorkflowOrigin",
+      "before_schema_id": "pm.storage_value.workflow_standard_origin.v2",
+      "before_version": "2.0.0",
+      "after_schema_id": "pm.storage_value.workflow_standard_origin.v3",
+      "after_version": "3.0.0",
+      "key_codec": "unchanged proposed v1 family key; fresh exact role only, no overwrite or old-row reinterpretation"
+    },
+    {
+      "file": "workflow-standard-certification-argument.v3.schema.json",
+      "definition": "StorageStandardCaptureOrigin",
+      "before_schema_id": "pm.storage_value.workflow_standard_capture_origin.v2",
+      "before_version": "2.0.0",
+      "after_schema_id": "pm.storage_value.workflow_standard_capture_origin.v3",
+      "after_version": "3.0.0",
+      "key_codec": "unchanged proposed original capture-origin v1 key; exact new role only"
+    }
+  ],
+  "unchanged_generic_profiles": [
+    "attempt_record.v1",
+    "execution_unit_context_store",
+    "attempt_receipt",
+    "goal_receipt generic v1 and Standard v2 original role routes"
+  ],
+  "registry_changes": "NONE; complete physical installation/adoption separate",
+  "mutable_body_archive": "NONE",
+  "key_codec": "Each named ID is its exact UTF-8 bytes encoded as nonempty even-length lowercase hex; separators are literal colon; no Unicode normalization or lossy roundtrip.",
+  "native_profile": "pm.executor.workflow_source.all_writers.v6",
+  "old_proposal": "predecessor/v2 remains byte-exact, including its frozen predecessor chain and uninstalled profiles; no old row is promoted or rewritten"
+}

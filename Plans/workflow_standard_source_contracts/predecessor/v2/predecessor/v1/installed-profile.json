@@ -1,0 +1,71 @@
+{
+  "schema_id": "pm.workflow_standard_source.installed_profile.proposal.v1",
+  "profile": "pm.executor.workflow_source.all_writers.v4",
+  "members": [
+    {
+      "path": "fresh-profile-method-delta.json",
+      "sha256": "7d804293f5378ad54af2b53be2696402219f5e032f928dd718832c513f184a5d"
+    },
+    {
+      "path": "fresh-profile-methods.json",
+      "sha256": "41d65a844fa0901e5d1edec356cd2107416326d04dd1e184bc67e0dfb4b86aab"
+    },
+    {
+      "path": "input-pins.json",
+      "sha256": "8596a10880995849ff028328d017743296456bbc98a85e81507db459812789db"
+    },
+    {
+      "path": "literal-resource-realms.json",
+      "sha256": "bb3c040b65f7dec1571280556a2b246ef95399e5dd552665f9269471cfbf2e8b"
+    },
+    {
+      "path": "methods.json",
+      "sha256": "599297d0f940623650360d025ba42ae690b672ca750517bf3162b44cbaea1a41"
+    },
+    {
+      "path": "native-field-map.json",
+      "sha256": "3dd640512f1472457a75fae3094e885d3165b66959500048851e5a040ec81cce"
+    },
+    {
+      "path": "physical-contracts.json",
+      "sha256": "57142e8f2b172fef0c0f92f0697b968c343547ebb931e2402616031d5c21ab12"
+    },
+    {
+      "path": "profile-delta.json",
+      "sha256": "871e9a0486a909dfc5ff20d24734a00b61f1c8e53705be9789a83a58ae3ee40c"
+    },
+    {
+      "path": "protocol.md",
+      "sha256": "cef51806516bcac6b5b40ca9f635e609f408f58b0bad4601f6db1e2da56db37f"
+    },
+    {
+      "path": "schemas/workflow-cancel-start-profile.v3.schema.json",
+      "sha256": "1fddd9157dc3c533a1c22107aab88dbed3007ed3ecaf2670b29be0c180acbd2a"
+    },
+    {
+      "path": "schemas/workflow-original-start.v3.schema.json",
+      "sha256": "fc0e1aa5a9ee0b6279c7064022bc4e320c0cc9576b282e0a6252f429bfdc4f19"
+    },
+    {
+      "path": "schemas/workflow-standard-certification-argument.v1.schema.json",
+      "sha256": "750091bdd8f887dec4419f7433226c3b72a2ff0d26d234f895838a74a8c8a364"
+    },
+    {
+      "path": "schemas/workflow-standard-current-source.v1.schema.json",
+      "sha256": "cff78bb3d196f3da4c8a51033d6e305c259ccc42fe0126be6cba13bcdee9c9ea"
+    },
+    {
+      "path": "schemas/workflow-standard-event-prerequisite.v1.schema.json",
+      "sha256": "fbba3b4c681708806d715b15b71d3de9dee919ceed9153ededd1b86e9b68a251"
+    },
+    {
+      "path": "schemas/workflow-start-arguments.v3.schema.json",
+      "sha256": "ecb20cfb502c47b70acc6ade2a399d03b095e05db6ef5896ef7026b82b441072"
+    },
+    {
+      "path": "schemas/workflow-start-custody.v3.schema.json",
+      "sha256": "5b724806700cb6f9fe5b513b6769f67e1f1be717001e6464fd3d30b431e0d543"
+    }
+  ],
+  "original_sources": "All whole original resource hashes and isolated retrieval routes are transitively bound by literal-resource-realms.json and input-pins.json."
+}

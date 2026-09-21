@@ -1,0 +1,850 @@
+{
+  "status": "SOURCE_ADOPTION_REVIEWED_LANDING_HELD",
+  "base_commit": "dd1df59d6307952d82a5c93be9ad4083a5bc0773",
+  "source_review": {
+    "status": "PASS_WHOLE_DRAFT_SOURCE_STRUCTURE_AND_EXPLICIT_METADATA_DELTA",
+    "packages": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/goal-certified-canonical-draft-20260920/v2/manifest.json",
+        "sha256": "741faa4e0122c0ba63fc39b8676ded82a9eda4d8515cf658e2974eda0bd52b63",
+        "members": 551
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/goal-run-certified-current-source-20260914/v3/manifest.json",
+        "sha256": "664723cf1af8d3deee4a2e71c63d664aa22d4809c31f3f5246bd99e7c5a67c08",
+        "members": 355
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/goal-certified-canonical-review-20260920/v1/manifest.json",
+        "sha256": "0876d513cf4afee1cb47c711bcad875f6c12b5b3a419e1ae7ec39eeddd51ef6e",
+        "members": 558
+      }
+    ],
+    "base_commit": "dd1df59d6307952d82a5c93be9ad4083a5bc0773",
+    "changed_source_paths": 173,
+    "whole_git_and_current_before_files": 7,
+    "old_storage_rows_preserved": 282,
+    "new_storage_families": [
+      "workflow_standard_result",
+      "workflow_standard_origin",
+      "workflow_standard_capture_origin"
+    ],
+    "whole_source_schemas_unchanged": 8,
+    "resource_relocations_checked": 207,
+    "installation_member_count": 164,
+    "installation_composition_digest": "26c6d171a879de07a604f03d2497d43d89fa3acaa3775885bf5075c431c96320",
+    "installed_profile_digest": "2741f7462cf91a061185156027e328ef2966211bb43bc9980b781a2e6ad48ea3",
+    "planunits_schema_valid": [
+      "ATS-055",
+      "CV-350",
+      "EP-122",
+      "GRS-082",
+      "SP-314"
+    ],
+    "v1_to_v2_changed_canonical_paths": [
+      "Plans/workflow_standard_source_contracts/README.md",
+      "Plans/workflow_standard_source_contracts/installation-composition-digest.txt",
+      "Plans/workflow_standard_source_contracts/installation-composition.json"
+    ],
+    "native_execution": "NOT_RUN",
+    "event_admission": false,
+    "canonical_apply": false,
+    "landing": "HELD_BY_EXISTING_NONSTALE_TOUCHED_FILE_FAILURES"
+  },
+  "apply_receipt": {
+    "status": "APPLIED_EXACT_REVIEWED_V2_SOURCE_DRAFT_IN_OWN_WORKTREE",
+    "source_paths": 173,
+    "review_manifest_sha256": "da309a08fc5f3b01d42f85c18e9b3c911144a18b40d2307e3d4e1d3f8a90f28b",
+    "review_members_authenticated": 563,
+    "whole_current_git_pins": 90,
+    "exact_passages": 27,
+    "landing": "NOT_ATTEMPTED_BLOCKED_BY_EXISTING_NONSTALE_TOUCHED_FAILURES"
+  },
+  "scope": {
+    "status": "PASS_EXACT_REVIEWED_SOURCE_AND_OWNED_DERIVED_SCOPE",
+    "reviewed_source_paths": 173,
+    "all_owned_paths_before_reports": 1004,
+    "derived_paths": 831,
+    "unrelated_paths": [],
+    "shard_prefix_counts": {
+      "Plans/_shards/00-plans-index": 25,
+      "Plans/_shards/automated_testing_system": 37,
+      "Plans/_shards/contracts_v0": 60,
+      "Plans/_shards/executor_protocol": 33,
+      "Plans/_shards/goal_runtime_system": 43,
+      "Plans/_shards/storage-plan": 79,
+      "Plans/_shards/storage_value_registry": 548
+    }
+  },
+  "index_preservation": {
+    "status": "PASS_GENERATED_INDEX_OLD_UNIT_AND_ACCEPTANCE_PRESERVATION",
+    "old_planunits": 6688,
+    "new_planunits": 6693,
+    "new_planunit_ids": [
+      "ATS-055",
+      "CV-350",
+      "EP-122",
+      "GRS-082",
+      "SP-314"
+    ],
+    "prior_units_changed_only_own_source_hash": 976,
+    "prior_acceptance_units_exact": 26071,
+    "new_acceptance_units": 25,
+    "current_total_acceptance_units": 26096
+  },
+  "final_source_check": {
+    "status": "PASS",
+    "reviewed_source_files": 173,
+    "all_owned_paths": 1004,
+    "all_sources_exact_reviewed_draft": true,
+    "diff_check": "PASS",
+    "unexpected_paths": [],
+    "native": "NOT_RUN"
+  },
+  "packages": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-run-certified-current-source-20260914/v3/manifest.json",
+      "sha256": "664723cf1af8d3deee4a2e71c63d664aa22d4809c31f3f5246bd99e7c5a67c08",
+      "members_verified": 355
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-certified-canonical-draft-20260920/v2/manifest.json",
+      "sha256": "741faa4e0122c0ba63fc39b8676ded82a9eda4d8515cf658e2974eda0bd52b63",
+      "members_verified": 551
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-certified-canonical-review-20260920/v1/manifest.json",
+      "sha256": "0876d513cf4afee1cb47c711bcad875f6c12b5b3a419e1ae7ec39eeddd51ef6e",
+      "members_verified": 558
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-certified-canonical-review-20260920/v2/manifest.json",
+      "sha256": "da309a08fc5f3b01d42f85c18e9b3c911144a18b40d2307e3d4e1d3f8a90f28b",
+      "members_verified": 563
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-certified-postapply-review-20260920/v1/manifest.json",
+      "sha256": "efba05bfe102a7f5b9d7285593dfdf0944a0fa55a19e7f6a16c7ffde4364bc31",
+      "members_verified": 15
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-certified-final-gate-classification-20260920/manifest.json",
+      "sha256": "e219b961c7ecfe17b3c0960419403fb0fee48bc293f5d99920b5bc61153990e9",
+      "members_verified": 6
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-certified-canonical-root-20260920/baseline-classification/manifest.json",
+      "sha256": "5c345ba228f00ac95b9c9d471e881f8b332e4ab724e4d6b9e307a5db76f692cf",
+      "members_verified": 12
+    }
+  ],
+  "repository_checks": {
+    "shard_generate": "PASS, 99 documents / 2698 shards",
+    "shard_check": "PASS, 2698 bodies reconstructed",
+    "plan_index": "PASS, 6693 PlanUnits / 26096 acceptance units",
+    "diff_check": "PASS",
+    "run_gates": "21 PASS / 15 FAIL",
+    "audit_governance": "19 PASS / 14 FAIL",
+    "current_migration_failures": 28298,
+    "shared_checkout_landing_checks": "NOT_RUN; branch not landed"
+  },
+  "gate_comparison": [
+    {
+      "report": "final-run-gates.json",
+      "baseline": "baseline-run-gates.json",
+      "baseline_status_counts": {
+        "pass": 21,
+        "fail": 15
+      },
+      "final_status_counts": {
+        "pass": 21,
+        "fail": 15
+      },
+      "checks": [
+        {
+          "check": "check_project_artifact_requirements",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "check_shards",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "json_syntax",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1,
+          "final_failure_count": 1,
+          "final_exposed_samples": 1,
+          "truncated": false
+        },
+        {
+          "check": "lint_banned_phrases",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "lint_contractrefs",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1,
+          "final_failure_count": 1,
+          "final_exposed_samples": 1,
+          "truncated": false
+        },
+        {
+          "check": "lint_path_refs",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 12,
+          "final_failure_count": 12,
+          "final_exposed_samples": 10,
+          "truncated": true
+        },
+        {
+          "check": "validate_audit_closure",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 201,
+          "final_failure_count": 201,
+          "final_exposed_samples": 10,
+          "truncated": true
+        },
+        {
+          "check": "validate_audit_status_index",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1,
+          "final_failure_count": 1,
+          "final_exposed_samples": 1,
+          "truncated": false
+        },
+        {
+          "check": "validate_auto_decisions",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "validate_browser_event_admission",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1,
+          "final_failure_count": 1,
+          "final_exposed_samples": 1,
+          "truncated": false
+        },
+        {
+          "check": "validate_case_l_non_event_materialization",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "validate_evidence",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1552,
+          "final_failure_count": 1552,
+          "final_exposed_samples": 10,
+          "truncated": true
+        },
+        {
+          "check": "validate_filesafe_security_policy",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "validate_forge_backup_acceptance",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "validate_github_project_integration",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1,
+          "final_failure_count": 1,
+          "final_exposed_samples": 1,
+          "truncated": false
+        },
+        {
+          "check": "validate_goal_runtime_event_fixtures",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "validate_gui_asset_policy",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "validate_implementation_readiness",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 124,
+          "final_failure_count": 154,
+          "final_exposed_samples": 10,
+          "truncated": true
+        },
+        {
+          "check": "validate_new_contracts",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "validate_plan_graph",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1552,
+          "final_failure_count": 1552,
+          "final_exposed_samples": 10,
+          "truncated": true
+        },
+        {
+          "check": "validate_plan_migration",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 181,
+          "final_failure_count": 181,
+          "final_exposed_samples": 10,
+          "truncated": true
+        },
+        {
+          "check": "validate_plans_to_code_handoff_schema",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "validate_pm7_gui_fixtures",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1,
+          "final_failure_count": 1,
+          "final_exposed_samples": 1,
+          "truncated": false
+        },
+        {
+          "check": "validate_prd_planning_runtime_contracts",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1240,
+          "final_failure_count": 1240,
+          "final_exposed_samples": 10,
+          "truncated": true
+        },
+        {
+          "check": "validate_project_output_fixtures",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "validate_runtime_artifact_schemas",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "validate_server_command_gap",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "validate_testing_session_event_admission",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1,
+          "final_failure_count": 1,
+          "final_exposed_samples": 1,
+          "truncated": false
+        },
+        {
+          "check": "validate_touch_closure",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "validate_ui_command_response",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "validate_usage_contract_drift",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "validate_usage_gui_fixtures",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "validate_web_capability_contracts",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "validate_wiring_matrix",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "validate_working_notebook_contracts",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "verify_spec_lock",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 35,
+          "final_failure_count": 35,
+          "final_exposed_samples": 10,
+          "truncated": true
+        }
+      ]
+    },
+    {
+      "report": "final-audit-governance.json",
+      "baseline": "baseline-audit-governance.json",
+      "baseline_status_counts": {
+        "fail": 14,
+        "pass": 19
+      },
+      "final_status_counts": {
+        "fail": 14,
+        "pass": 19
+      },
+      "checks": [
+        {
+          "check": "audit_closure",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 201,
+          "final_failure_count": 201,
+          "final_exposed_samples": 10,
+          "truncated": true
+        },
+        {
+          "check": "audit_status_index",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1,
+          "final_failure_count": 1,
+          "final_exposed_samples": 1,
+          "truncated": false
+        },
+        {
+          "check": "auto_decisions",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "browser_event_admission",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1,
+          "final_failure_count": 1,
+          "final_exposed_samples": 1,
+          "truncated": false
+        },
+        {
+          "check": "case_l_non_event_materialization",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "evidence",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1552,
+          "final_failure_count": 1552,
+          "final_exposed_samples": 10,
+          "truncated": true
+        },
+        {
+          "check": "filesafe_security_policy",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "forge_backup_acceptance",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "github_project_integration",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1,
+          "final_failure_count": 1,
+          "final_exposed_samples": 1,
+          "truncated": false
+        },
+        {
+          "check": "goal_runtime_event_fixtures",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "gui_asset_policy",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "implementation_readiness",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 124,
+          "final_failure_count": 154,
+          "final_exposed_samples": 10,
+          "truncated": true
+        },
+        {
+          "check": "path_refs",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 12,
+          "final_failure_count": 12,
+          "final_exposed_samples": 10,
+          "truncated": true
+        },
+        {
+          "check": "plan_graph",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1552,
+          "final_failure_count": 1552,
+          "final_exposed_samples": 10,
+          "truncated": true
+        },
+        {
+          "check": "plan_migration",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 181,
+          "final_failure_count": 181,
+          "final_exposed_samples": 10,
+          "truncated": true
+        },
+        {
+          "check": "plans_to_code_handoff_schema",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "pm7_gui_fixtures",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1,
+          "final_failure_count": 1,
+          "final_exposed_samples": 1,
+          "truncated": false
+        },
+        {
+          "check": "prd_planning_runtime_contracts",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1240,
+          "final_failure_count": 1240,
+          "final_exposed_samples": 10,
+          "truncated": true
+        },
+        {
+          "check": "project_artifacts",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "project_output_fixtures",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "runtime_artifact_schemas",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "server_command_gap",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "shards",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "spec_lock",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 35,
+          "final_failure_count": 35,
+          "final_exposed_samples": 10,
+          "truncated": true
+        },
+        {
+          "check": "support_refs",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1,
+          "final_failure_count": 1,
+          "final_exposed_samples": 1,
+          "truncated": false
+        },
+        {
+          "check": "testing_session_event_admission",
+          "baseline_status": "fail",
+          "final_status": "fail",
+          "baseline_failure_count": 1,
+          "final_failure_count": 1,
+          "final_exposed_samples": 1,
+          "truncated": false
+        },
+        {
+          "check": "touch_closure",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "ui_command_response",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "usage_contract_drift",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "usage_gui_fixtures",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "web_capability_contracts",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "wiring_matrix",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        },
+        {
+          "check": "working_notebook_contracts",
+          "baseline_status": "pass",
+          "final_status": "pass",
+          "baseline_failure_count": 0,
+          "final_failure_count": 0,
+          "final_exposed_samples": 0,
+          "truncated": false
+        }
+      ]
+    }
+  ],
+  "touched_failures": {
+    "storage_registry_nonhash": 115,
+    "storage_registry_preexisting": 85,
+    "storage_registry_new_unresolved_ref_predicates": 30,
+    "missing_index_report_ref": 1,
+    "missing_planunit_surface_refs_total": 12,
+    "missing_planunit_surface_refs_final_samples": 10,
+    "current_migration_direct_nonhash": 29,
+    "current_migration_joined_nonhash": 8280,
+    "current_migration_touched_hashes_separate": 564,
+    "native_schema_defect_from_30_new_flags": false,
+    "classification_manifest": {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-certified-final-gate-classification-20260920/manifest.json",
+      "sha256": "e219b961c7ecfe17b3c0960419403fb0fee48bc293f5d99920b5bc61153990e9",
+      "members_verified": 6
+    },
+    "landing_rule": "AGENTS.md line 95: Any other failure that names a file your branch touches does stop it.",
+    "disposition": "SPECIFIC_USER_EXCEPTION_OR_OWNER_REPAIR_REQUIRED_BEFORE_MAIN",
+    "limitations": [
+      "Aggregate diagnostics expose at most ten failure samples per check. Full final readiness and current migration are available; other full baseline detail does not prove hidden final rows unchanged.",
+      "Span source mapping uses exact original current-run span_map.jsonl; joined source references are explicitly distinguished from paths named directly in diagnostics.",
+      "Actual/expected member arrays are context only; common mentioned files are not automatically blamed for an aggregate set mismatch.",
+      "Repeated audit/run-gates/baseline/migration propagation is not a count of unique product defects."
+    ]
+  },
+  "raw_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/certified-source-canonical-20260920/manifest.json",
+    "sha256": "45874273815825369d397d0dfcab0d9a1cec816de3a37faae4c276255a9161b9",
+    "members": 36
+  },
+  "scope_limits": [
+    "Canonical source contracts only; no native implementation, execution, schema-instance behavioral proof or full Event depth clearance.",
+    "New source profile applies only to genuine original fresh births with the complete original participant installation; no late enrollment.",
+    "The original source draft remains frozen; adopted installation paths and metadata have an explicit reviewed transform and separate composition digest.",
+    "All prior 282 Storage rows and old PlanUnit/acceptance content are preserved. Five owner PlanUnits and three physical source families are additive.",
+    "Event registry, payload selection, producer envelope/causality adapter, certified coordinator and consumer remain separate work.",
+    "No validator edits, governance seal, old outcome restamping, B01 decision or Step 9 entry.",
+    "Full final current migration and readiness are available; equal aggregate counts do not prove hidden final diagnostic tails unchanged.",
+    "The interrupted first standard gate run is not final evidence; its exit and empty stdout are preserved separately. The successful completion of the external-volume rerun produced the final failing gate report."
+  ],
+  "native_execution": "NOT_RUN",
+  "event_admission": false,
+  "full_event_depth_clearance": false,
+  "step9_started": false,
+  "governance_seal": false,
+  "validator_edits": false,
+  "B01_approval": false,
+  "cost": "Source authoring, independent review and repository checks; monetary attribution unavailable."
+}

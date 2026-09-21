@@ -1,0 +1,787 @@
+{
+  "original_path": "inputs/Plans/executor_cancellation_contracts/methods.json",
+  "original_sha256": "0fbb8d53064eaffd091cb0a1f071453e8cf9e460f897a41369f2b284b1cc08d1",
+  "profile_dispatch": "Only fresh all_writers.v4 uses this whole image. Original phase-specific native/Goal roles, whole algorithms, methods, enums and producer/consumer ownership remain. New post-Start U/G predicates and source contracts in methods.json/protocol.md additionally apply. No current Goal association is demanded before its original birth; exact original BirthGoalArgument is preserved.",
+  "field_changes": [
+    {
+      "pointer": "/workflow_source_methods/methods/0/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/0/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthInput",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/WorkflowBirthInput"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/0/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/WorkflowBirthResult"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/0/publication_only_full_result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthPublication",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/WorkflowBirthPublication"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/1/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/1/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageInput",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CoverageInput"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/1/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/2/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/2/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowTransitionInput",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/WorkflowTransitionInput"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/2/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowLineageResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/WorkflowLineageResult"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/3/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/3/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/3/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/4/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/4/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/4/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/5/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/5/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/5/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/6/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/6/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/6/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/7/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/7/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/7/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/8/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/8/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/8/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/9/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/9/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/9/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/10/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/10/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/10/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/11/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/11/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/11/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/12/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/12/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/12/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/13/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/13/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/13/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StopResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/StopResult"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/14/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/14/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/14/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/15/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/15/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/16/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_methods/methods/16/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StopResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/StopResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/0/existing_complete_method/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/0/existing_complete_method/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthInput",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/WorkflowBirthInput"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/0/existing_complete_method/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/WorkflowBirthResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/0/existing_complete_method/publication_only_full_result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthPublication",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/WorkflowBirthPublication"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/0/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/BirthControlPublication",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/BirthControlPublication"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/0/activation_source_phase_arguments/0/source_argument",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v2.schema.json#/$defs/OriginalBirthArgument",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v3.schema.json#/$defs/OriginalBirthArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/1/existing_complete_method/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/1/existing_complete_method/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageInput",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CoverageInput"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/1/existing_complete_method/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/1/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/1/activation_source_phase_arguments/0/source_argument",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v2.schema.json#/$defs/OriginalFirstCoverageArgument",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v3.schema.json#/$defs/OriginalFirstCoverageArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/2/existing_complete_method/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/2/existing_complete_method/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowTransitionInput",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/WorkflowTransitionInput"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/2/existing_complete_method/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowLineageResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/WorkflowLineageResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/2/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/2/activation_source_phase_arguments/0/source_argument",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v2.schema.json#/$defs/OriginalMaterializedWorkflowUpdateArgument",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v3.schema.json#/$defs/OriginalMaterializedWorkflowUpdateArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/2/activation_source_phase_arguments/1/source_argument",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v2.schema.json#/$defs/OriginalPrestartWorkflowUpdateArgument",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v3.schema.json#/$defs/OriginalPrestartWorkflowUpdateArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/2/activation_source_phase_arguments/2/source_argument",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/OriginalD01StartPublicationArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/OriginalD01StartPublicationArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/3/existing_complete_method/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/3/existing_complete_method/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/3/existing_complete_method/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/3/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/4/existing_complete_method/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/4/existing_complete_method/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/4/existing_complete_method/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/4/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/5/existing_complete_method/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/5/existing_complete_method/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/5/existing_complete_method/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/5/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/6/existing_complete_method/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/6/existing_complete_method/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/6/existing_complete_method/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/6/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/7/existing_complete_method/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/7/existing_complete_method/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/7/existing_complete_method/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/7/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/8/existing_complete_method/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/8/existing_complete_method/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/8/existing_complete_method/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/8/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/9/existing_complete_method/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/9/existing_complete_method/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/9/existing_complete_method/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/9/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/10/existing_complete_method/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/10/existing_complete_method/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/10/existing_complete_method/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/10/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/11/existing_complete_method/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/11/existing_complete_method/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/11/existing_complete_method/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/11/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/12/existing_complete_method/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/12/existing_complete_method/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/12/existing_complete_method/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/12/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/13/existing_complete_method/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/13/existing_complete_method/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/13/existing_complete_method/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StopResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/StopResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/13/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/14/existing_complete_method/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/14/existing_complete_method/private_source_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/14/existing_complete_method/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/14/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/15/existing_complete_method/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/15/existing_complete_method/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/15/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/16/existing_complete_method/request_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/16/existing_complete_method/result_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StopResult",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/StopResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/16/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/17/existing_complete_method/request",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/17/existing_complete_method/private_input",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/17/existing_complete_method/output",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/17/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/18/existing_complete_method/request",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/18/existing_complete_method/private_input",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/AdmittedInput",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/AdmittedInput"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/18/existing_complete_method/output",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/18/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/19/existing_complete_method/request",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/19/existing_complete_method/private_input",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/PreparedMutation",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/PreparedMutation"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/19/existing_complete_method/output",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/19/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/20/existing_complete_method/request",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/20/existing_complete_method/private_input",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/AdmittedInput",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/AdmittedInput"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/20/existing_complete_method/output",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/20/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/21/existing_complete_method/request",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/21/existing_complete_method/private_input",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/CurrentSource",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/CurrentSource"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/21/existing_complete_method/output",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/ReadResult",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/ReadResult"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/21/mandatory_start_companion",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/22/existing_complete_method/request",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/22/existing_complete_method/private_input",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_source_phase_arguments/methods/22/existing_complete_method/output",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v2.schema.json#/$defs/RetainedResult",
+      "after": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v3.schema.json#/$defs/RetainedResult"
+    },
+    {
+      "pointer": "/workflow_start_methods/methods/0/request_schema",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_start_methods/methods/0/private_arguments/0/schema",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/OriginalCommitArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/OriginalCommitArgument"
+    },
+    {
+      "pointer": "/workflow_start_methods/methods/0/result_schema",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/PublicationResult",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/PublicationResult"
+    },
+    {
+      "pointer": "/workflow_start_methods/methods/1/private_arguments/0/schema",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/OriginalCommitArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/OriginalCommitArgument"
+    },
+    {
+      "pointer": "/workflow_start_methods/methods/1/result_schema",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/PublicationResult",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/PublicationResult"
+    },
+    {
+      "pointer": "/workflow_start_methods/methods/2/request_schema",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_start_methods/methods/2/private_arguments/0/schema",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_start_methods/methods/2/result_schema",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    },
+    {
+      "pointer": "/workflow_start_methods/methods/2/unavailable_schema",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/Unavailable",
+      "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v3.schema.json#/$defs/Unavailable"
+    },
+    {
+      "pointer": "/workflow_start_methods/methods/3/request_schema",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Request",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/Request"
+    },
+    {
+      "pointer": "/workflow_start_methods/methods/3/private_arguments/0/schema",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentSourceArgument",
+      "after": "https://puppetmaster.local/proposals/workflow_start_original_custody.v3.schema.json#/$defs/CurrentSourceArgument"
+    }
+  ]
+}
