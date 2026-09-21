@@ -7,7 +7,7 @@
   "initial_comparison_commit": "29f9cf9a3ef09b07457d84492f95c12802f82d10",
   "current_qualification_commit": "dd1df59d6307952d82a5c93be9ad4083a5bc0773",
   "published_review_comparison_commit": "29f9cf9a3ef09b07457d84492f95c12802f82d10",
-  "landing_base_commit": "dd1df59d6307952d82a5c93be9ad4083a5bc0773",
+  "landing_base_commit": "4e68cc0e4b4b8d9bb656542ce5c365ff7b8ade48",
   "new_batch": {
     "case_count": 1040,
     "touch_rows": 80,
@@ -323,6 +323,13 @@
       }
     }
   },
+  "landing_currentness": {
+    "comparison": "dd1df59d6307952d82a5c93be9ad4083a5bc0773 to 4e68cc0e4b4b8d9bb656542ce5c365ff7b8ade48",
+    "changed_paths": 14,
+    "scope": "Only the separate Concepts/chat-assistant-concepts/5.6 Pro Browser batch changed. No Plans or scripts changed; all 3273 captured dependency Git entries remain identical. The changed paths intersect none of the 116 selected artifacts, 26 selected passage sources, or selected schema/command/wiring sources. No selected command token appears in the compared diff hunks.",
+    "root_qualification": "Retain this batch's already published judgments. This disjoint concept landing neither repairs the recorded gaps nor supplies native or visual acceptance for the selected actions. The 37 check executions remain attributed to dd1df59d; they are not relabelled as executions on the landing base. All 121 published result files remain unchanged.",
+    "separate_shared_working_tree_observation": "A non-Git scratchpad plugin-projection JSON exists in the shared checkout although absent from both compared Git trees and the audited worktree capture. The delta receipt records its path and hash separately. Its local presence is neither committed source currentness nor new executed acceptance evidence, and it was not changed or incorporated into the audit results."
+  },
   "verification": {
     "comparison_commit": "dd1df59d6307952d82a5c93be9ad4083a5bc0773",
     "named_checks": {
@@ -465,6 +472,10 @@
     "forge_probes": {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-onboarding1040-review-20260914-3RkvIPQ2/current-main-refresh/forge-probes/probes.json",
       "sha256": "fc2cb6d9eee8c209f272965686b14e0c49800fc660ba3fa85c62c80351e5c6a1"
+    },
+    "landing_delta": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-onboarding1040-review-20260914-3RkvIPQ2/landing-delta-summary.json",
+      "sha256": "6b799c1aab88ed43ae9b310788426bb430ecce4ea7f139d5e6a46d3b19d2f65e"
     },
     "refreshed_assembly": {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-touch-onboarding1040-review-20260914-3RkvIPQ2/current-main-refresh/refreshed-assembly-summary.json",
