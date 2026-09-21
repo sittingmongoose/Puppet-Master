@@ -85,6 +85,7 @@ tests/
 !/tests/test_pm_evidence_artifact_binding_modes.py
 !/tests/test_pm_landing_check.py
 !/tests/test_pm_plan_migration.py
+!/tests/test_pm_plan_index.py
 !/tests/test_pm_validate_pm7_gui_fixtures.py
 !/tests/test_v3_residuals.js
 # Fixture files the repository-wide gates read. run-gates and audit-governance fail on missing
