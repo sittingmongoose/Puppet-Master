@@ -1,0 +1,232 @@
+{
+  "schema_id": "pm.post_audit.event_authority_governance_review.v1",
+  "disposition": "HOLD_MAIN_PUSH",
+  "requested_handoff": {
+    "path": "/home/sittingmongoose/pm-worktrees/post-audit-contract-repair-20260921/reports/packet-gap-closure-20260910/post-audit-landing-handoff-20260921.json",
+    "sha256": "631230e0a2408dcd12f43eaf74af2cf89931bebac4098b6fac7fcfc6fbecd5ec",
+    "bytes": 5193
+  },
+  "historical_landing_head": "44172dbfb1bfc660c342f7adb33057c7b67d468e",
+  "state": {
+    "review_candidate": "9ee75987be116fd7548b0fb787084205bddbeaa9",
+    "shared_main": "d09377d4eb8936e0cb5e905dfcb464a7a03320c4",
+    "origin_main": "478cd2aa0fa5a5660961f351918739d43643bbac",
+    "shared_symbolic_head": "main",
+    "shared_worktree_status": "M .omp/lsp.json\n?? PM_Chat_Assistant_5.6_Pro_Standalone.html\n?? \"Puppet_Master_External_Research_Complete_Agent_Handoff (1).md\"\n?? Puppet_Master_Low_Cost_Planning_Wizard_Agent_Handoff.md\n?? app.js\n?? browser-capture.css\n?? browser-capture.js\n?? gap_report.md\n?? index.html",
+    "claim_boundary": "Observed concurrent state; no shared Git or input mutation by this review."
+  },
+  "historical_blockers": [
+    {
+      "check": "run_gates",
+      "subcheck": "implementation_readiness",
+      "kind": "truncated_total_rise",
+      "baseline": 124,
+      "current": 218,
+      "sample_cap": 50
+    },
+    {
+      "check": "audit_governance",
+      "subcheck": "implementation_readiness",
+      "kind": "truncated_total_rise",
+      "baseline": 124,
+      "current": 218,
+      "sample_cap": 100
+    },
+    {
+      "check": "run_gates",
+      "kind": "on_branch_nonexcused_currentness_source_drift",
+      "path": "Plans/Commands_System.md"
+    },
+    {
+      "check": "audit_governance",
+      "kind": "on_branch_nonexcused_currentness_source_drift",
+      "path": "Plans/Commands_System.md"
+    },
+    {
+      "check": "audit_governance",
+      "kind": "on_branch_nonexcused_currentness_source_drift",
+      "path": "Plans/UI_Command_Catalog.md"
+    }
+  ],
+  "controlled_current_candidate_comparison": {
+    "runs": [
+      {
+        "label": "candidate-audit-absent",
+        "command": [
+          "python3",
+          "scripts/pm-implementation-readiness.py",
+          "validate"
+        ],
+        "head": "9ee75987be116fd7548b0fb787084205bddbeaa9",
+        "exit_code": 1,
+        "elapsed_seconds": 14.02723240852356,
+        "stdout_sha256": "82abc6c87d5a2d34770a55612582263d123fa04cde40c812753a0474b2cb67ea",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "failure_count": 124,
+        "error_counts": {
+          "buildability_gate_report_stale_or_not_canonical": 1,
+          "pnc019_source_hash_stale": 16,
+          "pnc019_source_hash_path_missing": 1,
+          "event_authority_currentness_audit_unavailable": 1,
+          "event_authority_checkpoint_changed_requires_fresh_approval": 2,
+          "event_denominator_unresolved": 2,
+          "event_family_contract_depth_unresolved": 2,
+          "event_family_registry_kernel_row_count_mismatch": 1,
+          "event_family_registry_goal_payload_ref_mismatch": 2,
+          "event_family_registry_goal_kernel_membership_mismatch": 1,
+          "event_legacy_fixture_root_mismatch": 1,
+          "event_record_spec_lock_hash_stale": 1,
+          "storage_value_registry_retention_policy_count_mismatch": 1,
+          "storage_value_registry_family_count_mismatch": 1,
+          "storage_value_secret_material_key": 10,
+          "storage_value_secret_material_field": 4,
+          "storage_value_registry_value_schema_not_object": 8,
+          "storage_value_registry_value_schema_not_closed": 8,
+          "storage_value_registry_required_fields_schema_mismatch": 8,
+          "storage_value_registry_required_field_absent_from_value_schema": 24,
+          "storage_value_registry_value_schema_id_const_mismatch": 8,
+          "storage_value_registry_value_schema_version_const_mismatch": 8,
+          "storage_value_registry_status_counts_mismatch": 1,
+          "storage_value_registry_tier_counts_mismatch": 1,
+          "storage_value_registry_mvp_required_family_tier_mismatch": 2,
+          "storage_value_registry_semantic_recovery_authority_mismatch": 1,
+          "storage_value_registry_spec_lock_hash_stale": 5,
+          "non_executable_closure_spec_lock_hash_stale": 1,
+          "execution_unit_context_spec_lock_hash_stale": 1,
+          "implementation_readiness_self_tests_failed": 1
+        }
+      },
+      {
+        "label": "candidate-frozen-audit-present",
+        "command": [
+          "python3",
+          "scripts/pm-implementation-readiness.py",
+          "validate"
+        ],
+        "head": "9ee75987be116fd7548b0fb787084205bddbeaa9",
+        "exit_code": 1,
+        "elapsed_seconds": 13.912498474121094,
+        "stdout_sha256": "1846e38a1aeaba80135c50ff2f55a0646a742727cc44e7da8db72332c1f3a03d",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "failure_count": 218,
+        "error_counts": {
+          "buildability_gate_report_stale_or_not_canonical": 1,
+          "pnc019_source_hash_stale": 17,
+          "event_authority_currentness_source_drift": 92,
+          "event_authority_currentness_direct_plans_source_set_drift": 1,
+          "event_authority_currentness_validator_drift": 1,
+          "event_authority_currentness_live_registry_drift": 1,
+          "event_authority_checkpoint_changed_requires_fresh_approval": 2,
+          "event_denominator_unresolved": 2,
+          "event_family_contract_depth_unresolved": 2,
+          "event_family_registry_kernel_row_count_mismatch": 1,
+          "event_family_registry_goal_payload_ref_mismatch": 2,
+          "event_family_registry_goal_kernel_membership_mismatch": 1,
+          "event_legacy_fixture_root_mismatch": 1,
+          "event_record_spec_lock_hash_stale": 1,
+          "storage_value_registry_retention_policy_count_mismatch": 1,
+          "storage_value_registry_family_count_mismatch": 1,
+          "storage_value_secret_material_key": 10,
+          "storage_value_secret_material_field": 4,
+          "storage_value_registry_value_schema_not_object": 8,
+          "storage_value_registry_value_schema_not_closed": 8,
+          "storage_value_registry_required_fields_schema_mismatch": 8,
+          "storage_value_registry_required_field_absent_from_value_schema": 24,
+          "storage_value_registry_value_schema_id_const_mismatch": 8,
+          "storage_value_registry_value_schema_version_const_mismatch": 8,
+          "storage_value_registry_status_counts_mismatch": 1,
+          "storage_value_registry_tier_counts_mismatch": 1,
+          "storage_value_registry_mvp_required_family_tier_mismatch": 2,
+          "storage_value_registry_semantic_recovery_authority_mismatch": 1,
+          "storage_value_registry_spec_lock_hash_stale": 5,
+          "non_executable_closure_spec_lock_hash_stale": 1,
+          "execution_unit_context_spec_lock_hash_stale": 1,
+          "implementation_readiness_self_tests_failed": 1
+        }
+      }
+    ],
+    "same_full_failure_objects": 122,
+    "count_delta": 94,
+    "historical_baseline_equivalence_proven": false,
+    "unseen_baseline_rows": 24,
+    "existing_inputs_removed_or_hidden": false
+  },
+  "checkpoint_proposal": {
+    "approved": false,
+    "approval_source": null,
+    "path": "Plans/event_family_registry.json",
+    "sha256": "1972a6aa6ef168a46091be5347bc9cff657985a1c21ab1b84665b9ed96c1ed3a",
+    "family_count": 42,
+    "revision": "2026-09-11.2",
+    "purpose": "Successor PNC-019 comparison checkpoint only",
+    "denominator_clearance": false,
+    "contract_depth_clearance": false,
+    "certification_runtime_seal_authority": false,
+    "existing_approved_checkpoint": {
+      "family_count": 40,
+      "revision": "2026-09-11.1"
+    }
+  },
+  "required_actions": [
+    "Stabilize the actual reconciled landing source tree.",
+    "Produce and review a separately authorized fail-closed currentness successor while preserving historical evidence.",
+    "Review explicit aggregate location/custody binding without changing validation predicates.",
+    "Recover or obtain genuine exact 42-family checkpoint approval before any checkpoint-data change.",
+    "Provision and authenticate consistent ignored evidence for nightly baseline and landing checks; no baseline refresh to excuse this landing.",
+    "Run required shard and full landing checks on final reconciled tree before main push."
+  ],
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-root-governance-review-20260921/manifest.json",
+      "sha256": "b12056dfefa408e312be6944a26995d2bff9fa3d8b41840b0547a4447d002ab7",
+      "bytes": 2058
+    },
+    {
+      "path": "/mnt/Cursor/PM-Experiments/post-audit-currentness-workflow-review-20260921/v1/manifest.json",
+      "sha256": "0e40dd8d91b3585d7837b6da295ca4b920f669de53fc67c621971896e1902c97",
+      "bytes": 1546,
+      "authenticated_members": 7
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/currentness-workflow-review-20260921/v1/manifest.json",
+      "sha256": "06a254c4400920ccdd7105848c06f4bde3a324107c62e1ef71be12a6b04e1592",
+      "bytes": 1383,
+      "authenticated_members": 8
+    },
+    {
+      "path": "/mnt/Cursor/PM-Experiments/checkpoint-approval-lineage-review-20260921/v1/manifest.json",
+      "sha256": "cdb955b8aa2c70f715c7e98bd29b7976d0bd2c850a1e7573a4340ad9a241356b",
+      "bytes": 30142,
+      "authenticated_members": 132
+    },
+    {
+      "path": "/mnt/Cursor/PM-Experiments/post-audit-baseline-input-review-20260921/v1/manifest.json",
+      "sha256": "9e4e44e9be002f9d46562a86bb9b0b189edefb1d7568973af9f0b6aa60c8e512",
+      "bytes": 2633,
+      "authenticated_members": 15
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-currentness-input-snapshot-20260921/manifest.json",
+      "sha256": "9943bfe38199ce76403d5f11611605b830fbe150fcfeb17238d68991f56e3ee2",
+      "bytes": 5900,
+      "authenticated_members": 15
+    }
+  ],
+  "performed": {
+    "currentness_validate": {
+      "exit": 1,
+      "failed_predicates": 5
+    },
+    "currentness_self_test": {
+      "exit": 0,
+      "passed_controls": 7
+    },
+    "complete_readiness_runs": 2,
+    "fresh_currentness_generation": false,
+    "fresh_aggregate_landing_check": false,
+    "checkpoint_change": false,
+    "baseline_change": false,
+    "canonical_or_validator_change": false,
+    "shared_main_push": false
+  }
+}
