@@ -1,0 +1,355 @@
+{
+  "schema": "shape.blind_score_checkpoint.v1",
+  "campaign_id": "phase1-20260921",
+  "checkpoint": 7,
+  "checkpoint_at_utc": "2026-09-21T08:54:27.967429+00:00",
+  "score_locks_recorded": 4,
+  "scheduled_main_component_slots": 16,
+  "schedule_scope": {
+    "main": 12,
+    "components": 4,
+    "diagnostics_outside_arm_scores": 9,
+    "repeat_schedule_trimmed": false,
+    "pending_slots_terminalized": false
+  },
+  "slot": {
+    "blind_run_id": "R-c1b39b04e92a73f97285",
+    "ordinal": 4,
+    "case_id": "ome-zarr-thin",
+    "phase": "main"
+  },
+  "root_score_sha256": "e5a3dd22567c0921b2d962b10a2a2eb8df77de8f7836e00eee1e198e5f0e3a16",
+  "validation_score_sha256_is_canonical_JSON_digest": "d58255f492d451158b7aa55d2996e8fbaa73751293003d36da8ddeeb531e565c",
+  "score_lock_disposition": "scored",
+  "delivery": {
+    "artifact": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/delivered.md",
+      "sha256": "fa1072dafa5cc31d6e306ae4aa98713d1ee2b694f36a71daca6250eb2673fa2c"
+    },
+    "reason": "One substantive verifier-delivered partial artifact exists. It explicitly says verification is incomplete, names a bounded checked subset and leaves other selected IDs unchecked. No complete verified endpoint is inferred.",
+    "status": "partial"
+  },
+  "exact_sets": {
+    "contradicted": [],
+    "lost": [
+      "OME05-C03",
+      "OME05-C07"
+    ],
+    "narrowed": [
+      "OME05-C01",
+      "OME05-C02",
+      "OME05-C04",
+      "OME05-C05",
+      "OME05-C06",
+      "OME05-C08"
+    ],
+    "retained": []
+  },
+  "reference_findings": [
+    {
+      "finding_id": "OME05-C01",
+      "missing_facets": [
+        "Explicit admission/compatibility validation and unsupported outcome.",
+        "No implicit legacy-layout reinterpretation."
+      ],
+      "reason": "The version/namespace and hierarchy-consistency source rules survive. The delivery does not connect them to explicit compatibility/admission checks, truthful unsupported results or rejection of implicit legacy reinterpretation.",
+      "reference_adjudication": null,
+      "retained_facets": [
+        "Zarr v3 and attributes.ome for 0.5.",
+        "Hierarchy-consistent metadata version."
+      ],
+      "status": "narrowed"
+    },
+    {
+      "finding_id": "OME05-C02",
+      "missing_facets": [
+        "Array rank/order and unique arbitrary axis-name validation.",
+        "Absent dimensions versus length-one dimensions.",
+        "Truthful navigation/slicing with no invented sliders or coordinates."
+      ],
+      "reason": "Matching dimension_names is a supported identity facet. Rank/order, arbitrary unique names, optional dimensions and the navigation/slicing consequences are not preserved.",
+      "reference_adjudication": null,
+      "retained_facets": [
+        "dimension_names must match the declared axis identity."
+      ],
+      "status": "narrowed"
+    },
+    {
+      "finding_id": "OME05-C03",
+      "missing_facets": [
+        "Declared group-relative dataset paths and highest-resolution-first ordering.",
+        "Arbitrary level names and nonuniform/anisotropic reductions.",
+        "Level-specific geometry and explicit missing-level behavior."
+      ],
+      "reason": "No delivered proposition uses the declared pyramid list for selection. Dataset transform order and matching label level counts are different propositions and cannot stand in for level path/order/selection correctness.",
+      "reference_adjudication": null,
+      "retained_facets": [],
+      "status": "lost"
+    },
+    {
+      "finding_id": "OME05-C04",
+      "missing_facets": [
+        "Declared units and unknown-calibration treatment without invented units.",
+        "A delivered concrete numerical or fixture-based validation of the promised calibrated viewer."
+      ],
+      "reason": "Ordered dataset scale then translation and subsequent global composition survive, with a correctly bounded captured-source counterexample where translation entries are omitted. Unit/unknown-calibration treatment and a concrete proposed calibration fixture are absent; no released-version or Slide Scout runtime result is claimed.",
+      "reference_adjudication": null,
+      "retained_facets": [
+        "Ordered dataset scale then translation followed by multiscales transforms.",
+        "Pinned napari no-parent-transform path selects only the first dataset transform and first matching global transform, omitting nonzero translations in ordinary valid 0.5 lists.",
+        "Static captured-source limitation is distinguished from release/application runtime evidence."
+      ],
+      "status": "narrowed"
+    },
+    {
+      "finding_id": "OME05-C05",
+      "missing_facets": [
+        "Declared labels paths and intermediate hierarchy handling.",
+        "Relative source-image association and explicit image identity.",
+        "Coordinate/level registration before overlays and explicit unsupported geometry."
+      ],
+      "reason": "Matching pyramid level counts for label images is retained, along with the recommended image-label metadata. Declared label discovery paths, relative source-image association and coordinate registration before overlay are not delivered.",
+      "reference_adjudication": null,
+      "retained_facets": [
+        "Label/source pyramid level counts must match.",
+        "image-label metadata is recommended rather than treated as universal mandatory styling."
+      ],
+      "status": "narrowed"
+    },
+    {
+      "finding_id": "OME05-C06",
+      "missing_facets": [
+        "Colors AND properties are keyed by label-value independently of list position/order.",
+        "Exact supported identity/precision range or explicit refusal of unsupported values.",
+        "Categorical decoding/lookup/resampling that does not create or round label IDs."
+      ],
+      "reason": "The result preserves integer labels through 64 bits, recommended colors and a visible label-0 example. It does not preserve general label-value-keyed color/property identity, array-order independence, exact precision/range limits or categorical resampling. Reading the full specification is not participant generalization.",
+      "reference_adjudication": null,
+      "retained_facets": [
+        "Integer label data types include 64-bit types.",
+        "image-label/colors are recommended, with a nontransparent label-0 example in the specification."
+      ],
+      "status": "narrowed"
+    },
+    {
+      "finding_id": "OME05-C07",
+      "missing_facets": [
+        "Reverse decoding of the declared codec pipeline.",
+        "Endian and transpose/layout correctness.",
+        "Evidence for a chosen reader/support envelope and truthful refusal of unsupported combinations."
+      ],
+      "reason": "No delivered codec-chain, layout, endian or chosen-reader support-boundary proposition exists. The admitted catalog also lacks the direct cited Zarr core/bytes/transpose bodies; the full historical source rule is not silently treated as revalidated or removed from the fixed set.",
+      "reference_adjudication": null,
+      "retained_facets": [],
+      "status": "lost"
+    },
+    {
+      "finding_id": "OME05-C08",
+      "missing_facets": [
+        "Valid absent chunks/fill_value versus unreadable or malformed data.",
+        "Truthful separation of read, decode and cancellation outcomes.",
+        "Actual reader-side no-write behavior, with tests rather than Plan text as proof."
+      ],
+      "reason": "The pre-existing source-preservation/background/cancellation Plan boundary survives, and implementation is not inferred. Valid absent/fill data versus read/decode/cancellation failures is not explained. The cited core/store fill predicates remain unavailable in this admitted source inspection.",
+      "reference_adjudication": null,
+      "retained_facets": [
+        "Source files remain unchanged.",
+        "Background reads, cancellation and responsiveness are existing Plan promises, not established implementation."
+      ],
+      "status": "narrowed"
+    }
+  ],
+  "novel_supported": [
+    {
+      "classification": "correction",
+      "id": "N01",
+      "proposition": "Metadata-led image-series discovery with plate precedence.",
+      "reason": "A distinct collection-discovery proposition beyond the eight controls survives on line3 and is relevant to the Plan promise to list images. Credit is limited to that hierarchy priority; no full fallback algorithm, path validation or HCS UI is inferred."
+    },
+    {
+      "classification": "product_choice",
+      "id": "N03",
+      "proposition": "Optional OMERO display metadata and initial display-default choices.",
+      "reason": "The result preserves the optional metadata boundary and identifies initial colors/windows/default T/Z as product choices. Required structure when metadata exists is not confused with mandating all example fields. It does not provide a complete fallback policy or implement these choices."
+    },
+    {
+      "classification": "optional_capability",
+      "id": "N06",
+      "proposition": "Historical PR436/0.11.0 BioFile Finder CSV and localhost catalog workflow as optional prior art.",
+      "reason": "Pinned PR discussion and changelog support the historical workflow and release association. The Plan does not require a disk-wide catalog. The .zattrs-only limitation is credited as a historical documented scope, not tested scanner implementation or present-day v3 support."
+    }
+  ],
+  "correct_non_findings": [
+    {
+      "id": "NF01",
+      "proposition": "Background reads, cancellation, responsiveness and unchanged source files are already Plan promises; the Plan does not prove implementation or executed checks.",
+      "reason": "Line9 states both the existing promises and the proof boundary. The complete thin Plan supports them; no implementation/test success is awarded."
+    },
+    {
+      "id": "NF06",
+      "proposition": "Captured napari main-source behavior is not a released-version or Slide Scout runtime result.",
+      "reason": "The cited source is a capture-only main-branch file and the finding is expressly static and conditional. No release qualification or application execution is established."
+    },
+    {
+      "id": "NF07",
+      "proposition": "Optional OMERO metadata does not make every example display field mandatory.",
+      "reason": "The specification distinguishes required conditional channels/color/window structure from other example fields. This rejects a broader format mandate while keeping initial display choices open. This is the negative-disposition facet of N03, not an extra additive discovery."
+    },
+    {
+      "id": "NF08",
+      "proposition": "Historical PR436 and its changelog association do not establish current scanner support or a mandatory disk-wide catalog.",
+      "reason": "The record is historical documentation with a stated legacy discovery limit, while the Plan only promises opening/listing the selected local fileset. This is the scope/disposition facet of N06, not another additive discovery."
+    }
+  ],
+  "unsupported_assertions": [],
+  "shared_facets_nonadditive": true,
+  "decision_burden": {
+    "blocking": [],
+    "nonblocking": [
+      "Initial display-default policy: colors, contrast windows and default time/plane (T/Z) values; each facet remains unresolved.",
+      "Whether and how to expose optional composites.",
+      "Navigation presentation within the Plan-required relevant controls."
+    ],
+    "reason": "Three explicit choice groups on line9, with colors/windows/default T and Z preserved as facets of the one initial-default policy group. No blocking product decision or explicit clarification question is posed. Required controls, responsiveness and source preservation are not reopened. Handoff review leaves these delivery counts unchanged. The46store questions are research questions, not user clarification burden; reduced detail in a partial delivery does not demonstrate equal quality.",
+    "redundant": []
+  },
+  "decision_burden_supplement": {
+    "blind_run_id": "R-c1b39b04e92a73f97285",
+    "blocking_product_decision_count": 0,
+    "clarification_question_count": 0,
+    "counting_rule": "Only decision obligations in the coherent partial delivery are counted. The 46 research-store questions are not 46 user clarification requests. The three display/navigation groups preserve every named facet and do not imply approval. Low burden under a short partial delivery is not evidence of equivalent semantic coverage.",
+    "delivery": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/delivered.md",
+      "sha256": "fa1072dafa5cc31d6e306ae4aa98713d1ee2b694f36a71daca6250eb2673fa2c"
+    },
+    "first_pass": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-c1b39b04e92a73f97285/semantic-first-pass.json",
+      "sha256": "83f71fec9274f0c56638debe1e40e93ad8b89c2118fd34a874e52fc7ad2216b9"
+    },
+    "nonblocking_choice_count": 3,
+    "nonblocking_groups": [
+      {
+        "facets": [
+          "initial colors",
+          "initial contrast windows",
+          "default time T",
+          "default plane Z"
+        ],
+        "id": "DB01"
+      },
+      {
+        "facets": [
+          "whether and how to expose optional composites"
+        ],
+        "id": "DB02"
+      },
+      {
+        "facets": [
+          "navigation presentation within Plan-required relevant controls"
+        ],
+        "id": "DB03"
+      }
+    ],
+    "redundant_question_count": 0,
+    "schema": "shape.root_decision_burden_supplement.v1"
+  },
+  "upstream_record_counts": {
+    "observations": 108,
+    "assessments": 12,
+    "questions": 46,
+    "coverage": 57,
+    "question_states": {
+      "deferred": 7,
+      "environment_blocked": 18,
+      "investigated": 15,
+      "open": 1,
+      "unvisited": 5
+    },
+    "interpretation": "Scoped preserved records; not proof of complete research."
+  },
+  "verification_record": {
+    "authenticated_checks": 27,
+    "confirm": 26,
+    "qualify": 1,
+    "selected_targets": 79,
+    "without_serialized_checks": 52,
+    "final_reports_checked_targets": 7,
+    "final_inventory_of_remaining_52_present": false,
+    "complete_verified_endpoint": false,
+    "interpretation": "Final line1 reports7 checked targets and all other selected IDs unchecked, whereas H18 has27 authenticated records (26confirm1qualify). COV260 accurately reports27/79 but falsely says the remaining52 IDs were explicitly inventoried in final. The final contains neither that inventory nor the additional20check results. This is a handoff/coverage-reporting loss; it does not permit substituting later check prose for the delivered artifact."
+  },
+  "execution_and_hold": {
+    "run_status": "partial",
+    "native_terminal_reason": "job_seconds_limit",
+    "halt": {
+      "kind": "unknown_usage_hold",
+      "reason": "terminal_native_usage_unresolved"
+    },
+    "native_handles_quiesced": true,
+    "completed_responses_priced_once": true,
+    "genuine_missing_authoritative_response_for_one_forwarded_request": true,
+    "read_only_remaining_evidence_exhausted": true,
+    "unresolved_usage_remains_unknown": true,
+    "aggregate_only_recovery_rationale_applicable": false,
+    "hold_and_reserve_preserved": true,
+    "fifth_pending": true,
+    "conditional_fifth_authorization_conditions_met": false,
+    "fifth_launched": false,
+    "sixth_authorized": false
+  },
+  "external_usage_records": {
+    "historical_live_imports": [
+      "04",
+      "05",
+      "06"
+    ],
+    "historical_guard_health": "01",
+    "latest_post_hold_import": "02",
+    "latest_capture_resume_predecessor": "post-hold import 02",
+    "prior_transitions_deduplicated": true,
+    "known_cap_exceeded": false,
+    "absolute_completeness_unknown": true,
+    "historical_imports_additive": false,
+    "private_economic_totals_reported": false,
+    "prior_post_hold_imports_retained": [
+      "01"
+    ]
+  },
+  "evaluator_source_preparation": {
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/pinned-checks/jujutsu-recovery-scope.json",
+      "sha256": "6275658aadc77f7de960169aaebbcd519b10e3ad713f79f280e876fd58016cf9"
+    },
+    "reference_id": "F011",
+    "related_reference_ids": [
+      "F015"
+    ],
+    "scope": "Partial recovery-source preparation only; not full F011 adjudication, runtime proof or any participant score.",
+    "assessment": "Pinned code supports distinct undo-parent restoration, inverse-one-operation merge and selected-operation view restoration. The shared view selector preserves current Git refs/heads, and shared finishing can short circuit on no changes or encounter failure after earlier effects. Frozen JJI-005 and JJI-008 already require distinct recovery scopes and exact proof. Native redo is mentioned by undo documentation but its implementation is absent; no claim of implemented redo correctness is made.",
+    "full_reference_adjudication": false,
+    "candidate_credit": false
+  },
+  "campaign_status": {
+    "goal_active": true,
+    "goal_complete": false,
+    "candidate_verdict_assigned": false,
+    "configuration_mapping_hidden": true,
+    "production_economics_available": false,
+    "earlier_attempts_and_scores_preserved": true
+  },
+  "limitations": [
+    "Scored only the single sealed partial delivered artifact; no best-sentence union, upstream substitution or successful completion inferred.",
+    "The immutable delivery-only first pass was locked before any neutral H material was read. Subsequent H review changes only coverage/handoff/burden commentary and these limitations; it does not upgrade the five locked semantic fields.",
+    "The source-normalized first pass retains the fixed eight IDs even where direct source availability limits adjudication.",
+    "N03/NF07 and N06/NF08 describe positive and negative facets of the same proposals; the separate lists are not additive and never form a net score.",
+    "The unqualified line11 wording about no upstream code is ambiguous beside the explicit static napari-source analysis on line5; it is not credited as proof that no captured source code was inspected. No material unsupported format or implementation-success assertion is established by this wording.",
+    "Bare checked observation IDs on line1 do not import their unseen contents.",
+    "Decision groups preserve their named subchoices; no default is silently approved.",
+    "Configuration mapping, private counts/costs and economic clocks remain unseen by root.",
+    "H18 contains27authenticated checks, while final line1 reports7; COV260 claims an explicit52-ID final inventory that is absent. Treat this as handoff/reporting loss, not a reason to replace final with later check sentences.",
+    "Final narrative stop wording automatic_paid_retry_denied is participant workflow context; the sealed controller terminal reason and missing native usage hold are reported separately, not inferred from this prose.",
+    "Private operational auditor authenticates original source/target envelopes and raw accounting. Root checks neutral semantic bindings and private hashes without parsing private proof.",
+    "The fourth hold includes genuine missing authoritative usage; the third attempt aggregate-only recovery cannot resolve it.",
+    "No runtime evidence or private economic comparison is supplied; low burden in a partial artifact does not demonstrate equal quality."
+  ]
+}

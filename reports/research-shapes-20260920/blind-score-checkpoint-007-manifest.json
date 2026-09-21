@@ -1,0 +1,338 @@
+{
+  "schema": "shape.blind_checkpoint_manifest.v1",
+  "checkpoint": 7,
+  "blind_run_id": "R-c1b39b04e92a73f97285",
+  "checkpoint_at_utc": "2026-09-21T08:54:27.967429+00:00",
+  "report_files": [
+    {
+      "path": "reports/research-shapes-20260920/BLIND_SCORE_CHECKPOINT_007.md",
+      "sha256": "84c4c69b20bc8a6a7d384b3e4e0a15849985f54288c7f14c4ca9384cb44ababd"
+    },
+    {
+      "path": "reports/research-shapes-20260920/blind-score-checkpoint-007.json",
+      "sha256": "08ea41a1fc35165e24719873fa7bc72d2cd94221f2b064c4dc1d731038a6b3e5"
+    },
+    {
+      "path": "reports/research-shapes-20260920/STATUS.md",
+      "sha256": "e3e70ef8f7bf5027336ae055cf43c3653bdb6a87555766daf483cfa6abd416e1"
+    },
+    {
+      "path": "reports/research-shapes-20260920/evaluation-preparation.json",
+      "sha256": "c29c5c78d752451296224f2617732815aa3e67313cda602ee6ff894d60bebd45"
+    }
+  ],
+  "historical_checkpoints": [
+    {
+      "path": "reports/research-shapes-20260920/blind-score-checkpoint-004.json",
+      "sha256": "17e4af1228b6b345f48c8c1bf322711918732c4b25cf54b24ccb7bfafb4c3d61"
+    },
+    {
+      "path": "reports/research-shapes-20260920/operational-checkpoint-005.json",
+      "sha256": "6f4462127be2da6cb077addac9f0f4a90885650422c7afa9aeb6a6d94283b40d"
+    },
+    {
+      "path": "reports/research-shapes-20260920/operational-checkpoint-006.json",
+      "sha256": "af0415e2d4d1329b25c13fc1396184fad289ed7fe63f25791e30f6e077b90fec"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-c1b39b04e92a73f97285/score.json",
+      "sha256": "e5a3dd22567c0921b2d962b10a2a2eb8df77de8f7836e00eee1e198e5f0e3a16",
+      "review_scope": "neutral_evidence"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-c1b39b04e92a73f97285/score-lock.json",
+      "sha256": "5466c7f464053f4162af47b6aaed791561247a76a4d53244ac0bd45d9fbbb4b6",
+      "review_scope": "neutral_evidence"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-c1b39b04e92a73f97285/score-validation.json",
+      "sha256": "dd3ac2e641f99496a60d5fe7d608d703493783b87f91313abbbedb7286951ab8",
+      "review_scope": "neutral_evidence"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-c1b39b04e92a73f97285/semantic-first-pass.json",
+      "sha256": "83f71fec9274f0c56638debe1e40e93ad8b89c2118fd34a874e52fc7ad2216b9",
+      "review_scope": "neutral_evidence"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-c1b39b04e92a73f97285/semantic-first-pass.lock.json",
+      "sha256": "d902656e18b6feb2bbbe13499c96829825093d0d628e637ff5b17107a83dc513",
+      "review_scope": "neutral_evidence"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-c1b39b04e92a73f97285/semantic-first-pass-validation.json",
+      "sha256": "bf3833a2970bccf9a1ad065b741f5fa14a13122fd6abcd205e3e6f8bfb3e5e21",
+      "review_scope": "neutral_evidence"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-c1b39b04e92a73f97285/decision-burden-supplement.json",
+      "sha256": "438c30b8c979a0da024c07903dcf1e556bd3ed5410a90dcbaf52e3018bdfd54e",
+      "review_scope": "neutral_evidence"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-c1b39b04e92a73f97285/upstream-root-review.json",
+      "sha256": "cbc0dd9bfa04fe3c05a2001427c761fc7ba4ce9cca47f083852f3e92449348ea",
+      "review_scope": "neutral_evidence"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-c1b39b04e92a73f97285/upstream-root-source-checks.json",
+      "sha256": "de9160123ee9db9464a1cbda9ffb1dbc24dbf7cf729e409a38e2da0493ece844",
+      "review_scope": "neutral_evidence"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-c1b39b04e92a73f97285/upstream-ref-authentication-supplement.json",
+      "sha256": "8dff954272722a478a686c38e863a4b71659864c7c725b5797f3e0ac28d1a744",
+      "review_scope": "neutral_evidence"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-c1b39b04e92a73f97285/delivered-root-source-checks.json",
+      "sha256": "4b9bfb262c23ae6687fc1d6beb21727458458001a12905b4ad20bb63b3f019ed",
+      "review_scope": "neutral_evidence"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-c1b39b04e92a73f97285/delivered-source-index.json",
+      "sha256": "aea2141e61a701e9685e34bdf8567f813fd160ef80719bd1156e7a97ff2a273d",
+      "review_scope": "neutral_evidence"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-c1b39b04e92a73f97285/delivered-ref-authentication-supplement.json",
+      "sha256": "d8590cb487d3b23a01eb2aa15017e1f943ee0ecebf26e24aa85fc2af67922ed4",
+      "review_scope": "neutral_evidence"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-c1b39b04e92a73f97285/neutral-delivered-ref-receipts.json",
+      "sha256": "118f23cadd064ec890bada833e41c014245cb1613494c27805d033fa06e39109",
+      "review_scope": "neutral_evidence"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-c1b39b04e92a73f97285/upstream-mechanical-index.json",
+      "sha256": "b7f23a90da1772a9b4d30a190b4167edfff5592f37f4ae80e9ddaa144e76855c",
+      "review_scope": "neutral_evidence"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/scores/R-c1b39b04e92a73f97285/verifier-binding-index.json",
+      "sha256": "a87eb04a39a05656f2fd80fb16c7cd7bef7898f4a104f736536a120b6ac4b3b9",
+      "review_scope": "neutral_evidence"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/pinned-checks/jujutsu-recovery-scope.json",
+      "sha256": "6275658aadc77f7de960169aaebbcd519b10e3ad713f79f280e876fd58016cf9",
+      "review_scope": "evaluator_source_preparation"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/blind-safe-fourth-terminal.json",
+      "sha256": "5da2de9eb5993cf9b5de6c8834de5d1f08631a1166f4a9e963c4938ec07b1912",
+      "review_scope": "blind_safe_content"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/blind-safe-fourth-live-usage-import-04.json",
+      "sha256": "bf91728916077b3a76cdaf638ed3c80fa82d19146bebcb15714a03bc6ea2e9e5",
+      "review_scope": "blind_safe_content"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/blind-safe-fourth-live-usage-import-05.json",
+      "sha256": "6051e20327f422660435dbf5ec0b58df8005293974349fc428b7974b1c0e0515",
+      "review_scope": "blind_safe_content"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/blind-safe-fourth-live-usage-import-06.json",
+      "sha256": "0f0027f3d44ff50cfd2a3ff3bc9d96b11fbc8af8558a91165b948830645e817d",
+      "review_scope": "blind_safe_content"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/blind-safe-fourth-guard-health-01.json",
+      "sha256": "865f99dfb909b2c3112400279e2cf1ce8db3ca18a6f6af1d3441cdac56dffc9d",
+      "review_scope": "blind_safe_content"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/fourth-accounting-audit/blind-safe-fourth-usage-findings.json",
+      "sha256": "c6452e866a52bf18bf950b6a227a51a560c9a57eb030838589a3b1c15c129323",
+      "review_scope": "blind_safe_content"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/fourth-accounting-audit/blind-safe-remaining-native-evidence-limitation.json",
+      "sha256": "561d5db4a98df0d46d1c8a65da631cb7519c668ae81f7fe91ba5ef36075101bc",
+      "review_scope": "blind_safe_content"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/fourth-accounting-audit/blind-safe-post-hold-usage-import-01.json",
+      "sha256": "384225419b8d8801e33eedbdbd4079f75b7fcacfc438a0443dd3343b2bed34af",
+      "review_scope": "blind_safe_content"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/fourth-accounting-audit/neutral-original-target-and-upstream-ref-authentication.json",
+      "sha256": "bad67f9af96a773f81b1a6d0da3c3e3e7d277a82fad0691e7dc8a0e9383744df",
+      "review_scope": "neutral_attestation"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/fourth-accounting-audit/private-original-target-and-upstream-ref-authentication.json",
+      "sha256": "a0da2c60b2f29ad1eb4784fa24b15d578801240f7b5c0f46ee8678816afc0b0b",
+      "review_scope": "private_hash_only_never_parsed"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/private-fourth-live-usage-import-04.json",
+      "sha256": "da98f362940d00a1ef6f577a93a3ef2dfcbed1bfccab5d051910e0d55abb4ad1",
+      "review_scope": "private_hash_only_never_parsed"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/private-fourth-live-usage-import-05.json",
+      "sha256": "6919dd57018d9c102d09c9ae5f9b243f06e6e4528a620501d9f70b13e5e783c2",
+      "review_scope": "private_hash_only_never_parsed"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/private-fourth-live-usage-import-06.json",
+      "sha256": "80e7f2e0a71a03957e4b6bc56d68a0403ce8f85474482d66835f7564a9ca0eab",
+      "review_scope": "private_hash_only_never_parsed"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/third-accounting-audit/private-fourth-guard-health-01.json",
+      "sha256": "78b9535e96ffa6917369c910fdab0c28cfaf53be8020192152ab5b5edc5b59e0",
+      "review_scope": "private_hash_only_never_parsed"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/fourth-accounting-audit/private-proof-v2.json",
+      "sha256": "f3d9ca08f1da3dfe87d245e2d60b7b97be0bc522fb8287a8ec92fbf24bb94c17",
+      "review_scope": "private_hash_only_never_parsed"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/fourth-accounting-audit/private-remaining-native-evidence.json",
+      "sha256": "f8250a211fd951b5bdc5c7fc8c5e444ff903a754cc52444848e23ddb03bcdec5",
+      "review_scope": "private_hash_only_never_parsed"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/fourth-accounting-audit/private-post-hold-usage-import-01.json",
+      "sha256": "ec76506020715efb455d42b32d668a00d932ab153266d2ab3a64404db7ba3de9",
+      "review_scope": "private_hash_only_never_parsed"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/final.json",
+      "sha256": "d02e1f05ffa099526426428ac470b1cb3114f9abc6c16e1616ad53bd919f9234",
+      "review_scope": "sealed_packet"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/handoff.json",
+      "sha256": "6d1cd4bed30913d52047955b172fc965e8b678cb6b9ffe0bce737e63888b90fe",
+      "review_scope": "sealed_packet"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/delivered.md",
+      "sha256": "fa1072dafa5cc31d6e306ae4aa98713d1ee2b694f36a71daca6250eb2673fa2c",
+      "review_scope": "scored_delivery"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0001.txt",
+      "sha256": "d520b3cb12319a8499ada04b0f5ee6ece4adb334b938929d62ec5d694b4c104b",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0002.txt",
+      "sha256": "0cf76aaa9e5b6bb7ca279db6e1c437a3921fe320a244c68a58a974c4a0d2f508",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0003.txt",
+      "sha256": "78f1331ca5e889caa6422d46291464ca5f0f62e20b35f262b8e906d3b83498f7",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0004.txt",
+      "sha256": "67425c90ae78b9cb84cbc520e1f59036ce8d93d3c93a5f378c48ded1c6140581",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0005.txt",
+      "sha256": "50a664bc1bffeaf9166dbbf8a1dddcc666d226130c1fa1caf91fb2e204ca417f",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0006.txt",
+      "sha256": "3a660b851b78540d2f2eb56045686299a29d3c9f2d6e918e417935e89c357927",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0007.txt",
+      "sha256": "d09555902baa6a24006a8e8c6afe45584f7e28c94afda37a3f344bbe99850071",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0008.txt",
+      "sha256": "e49719d079f7c66fe13b2ab9ae4267edd23bee90c33e1aae5a34a9e6099d2a08",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0009.txt",
+      "sha256": "16bac124598b3e75aca4f39579677d800e7568a0cb9cccd348d024863f0066d2",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0010.txt",
+      "sha256": "ab66d91790968719d0078d97df1a3e26e59276d525becd387756fe986407f6ff",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0011.txt",
+      "sha256": "1867e2ecf88358b618ab5e6d1761c2e2ea75a4d00d55814e11e994d9453f3b09",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0012.txt",
+      "sha256": "953f7a341d75d71678223231a84e3aa0aeb9040cc9a51ba195781a5236054444",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0013.txt",
+      "sha256": "5087dd6de99120955519e98db4709a907f5340a9aa2a9885d301ed5b81212629",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0014.txt",
+      "sha256": "1f842f2be18150ee81004d18f26dcb3486b7f77b767739be2a09eca26be750af",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0015.txt",
+      "sha256": "f93794fe512e21bef36d5983b43a0e8dd897f7d6064f49221f5323c8c0ea89de",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0016.txt",
+      "sha256": "79ca32f650e665a690531a817664d17b993be08ec386d56ad4fab4c808cce23b",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0017.txt",
+      "sha256": "723f829114cfa0e95350f58ffe6d7a1fcd5efbf94b361d1b3dfb38f6d521fcaf",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0018.txt",
+      "sha256": "ca4aff2a04af87762c3b0d476efca359224c9a8b48f6b61c9fbdecd5b72b6296",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/blind-registry/packets/R-c1b39b04e92a73f97285/artifacts/H0019.txt",
+      "sha256": "013f762babf6056978747ba619cca8002776a396a35ed01020afe65b29df59af",
+      "review_scope": "neutral_handoff_hash_binding"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/fourth-accounting-audit/blind-safe-post-hold-usage-import-02.json",
+      "sha256": "08ce23c578d369151ea563af30dd80228209c9c7e47dc1bfb331cd054ee9b9d9",
+      "review_scope": "blind_safe_content"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/controller/fourth-accounting-audit/private-post-hold-usage-import-02.json",
+      "sha256": "4131bf3d8eea459171145d3170fbe617848e2a67c2e1ea97e0aa231c74a932ef",
+      "review_scope": "private_hash_only_never_parsed"
+    }
+  ],
+  "verification": {
+    "all_listed_hashes_verified": true,
+    "canonical_validation_digest_and_byte_score_lock_verified": true,
+    "immutable_first_pass_semantic_fields_equal": true,
+    "private_artifacts_hashed_only_never_parsed": true,
+    "no_independent_scoring": true,
+    "historical_reports_unchanged": true
+  }
+}

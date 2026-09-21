@@ -100,6 +100,22 @@
       "full_reference_adjudication": false,
       "candidate_credit": false,
       "runtime_execution_performed": false
+    },
+    {
+      "recorded_at": "2026-09-21T07:03:22.836763+00:00",
+      "reference_id": "F011",
+      "related_reference_ids": [
+        "F015"
+      ],
+      "receipt": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/pinned-checks/jujutsu-recovery-scope.json",
+        "sha256": "6275658aadc77f7de960169aaebbcd519b10e3ad713f79f280e876fd58016cf9"
+      },
+      "scope": "Partial recovery-source preparation only; not full F011 adjudication, runtime proof or any participant score.",
+      "root_assessment": "Pinned code supports distinct undo-parent restoration, inverse-one-operation merge and selected-operation view restoration. The shared view selector preserves current Git refs/heads, and shared finishing can short circuit on no changes or encounter failure after earlier effects. Frozen JJI-005 and JJI-008 already require distinct recovery scopes and exact proof. Native redo is mentioned by undo documentation but its implementation is absent; no claim of implemented redo correctness is made.",
+      "full_reference_adjudication": false,
+      "candidate_credit": false,
+      "runtime_execution_performed": false
     }
   ],
   "subsequent_component_entry_static_review": {

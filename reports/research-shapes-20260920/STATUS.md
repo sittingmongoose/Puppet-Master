@@ -1,6 +1,6 @@
 # Phase 1 screen — qualified prelaunch checkpoint
 
-> Latest operational update: [checkpoint 006](OPERATIONAL_CHECKPOINT_006.md) records the fourth slot still running/native-live and fifth pending at `2026-09-21T06:21:54.302323+00:00`, with 3/16 score locks. Fifth authorization is conditional on clean completion and all fresh gates; no sixth. Imports 02/03 and component-entry static checks are recorded without new runtime acceptance. Earlier reports remain historical.
+> Latest blind update: [checkpoint 007](BLIND_SCORE_CHECKPOINT_007.md) records 4/16 score locks and the fourth partial delivery: six narrowed, two lost. A genuinely missing authoritative usage receipt preserves the hold; fifth remains pending. No candidate verdict or production economics is available. Earlier checkpoints remain historical.
 
 The reports-only branch is `research/shapes-screen-20260921`, based on `977ae12f9e91b459f70d7f287f60a087160dbf8a`; this checkpoint is pushed and not landed. The previous input universe was physically copied into the external baseline: 1,343 frozen inputs plus the original freeze record, totaling 108,933,920 bytes. Original and copied baseline manifests and every listed input hash were verified; content SHA-256 is `a95d3b6800f05b69e80e42ad0e02a78ac55e92bf457e32e74f5f335f9f4217dd`. The campaign has not modified the original source inputs.
 
