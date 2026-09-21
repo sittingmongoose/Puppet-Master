@@ -62,9 +62,125 @@ def all_prepared_snapshot():
     registry = copy.deepcopy(GATE.load_json("Plans/event_family_registry.json"))
     baseline_ids = set(context[0]["preexisting_family_ids"]) | {"event-family-context-compaction-completed"}
     registry["families"] = [row for row in registry["families"] if row["family_id"] in baseline_ids]
-    if len(registry["families"]) != 40 or GATE.fingerprint(registry["families"]) != "4f701c9598003d7c01a405f18f7991b373379eca8b182cf6222540a4746d1756":
-        raise AssertionError("Synthetic admission fixture requires the unchanged live upstream40")
+    preservation, failures = GATE.preexisting_preservation(context[0], registry["families"])
+    if len(registry["families"]) != 40 or failures or not preservation["current_preexisting_rows_match_reviewed_successors"]:
+        raise AssertionError("Synthetic admission fixture requires the exact reviewed current upstream40")
     return context, registry
+
+
+class BrowserPreexistingPreservationTests(unittest.TestCase):
+    def setUp(self):
+        self.admission = copy.deepcopy(CONTEXT[0])
+        self.rows = copy.deepcopy(GATE.load_json("Plans/event_family_registry.json")["families"])
+
+    def test_historical39_and40_are_separate_from_current_successors(self):
+        context, registry = all_prepared_snapshot()
+        rows = GATE.historical_preexisting_rows(registry["families"])
+        original39 = [row for row in rows if row["family_id"] != GATE.COMPACTION_FAMILY]
+        self.assertEqual(len(original39), 39)
+        self.assertEqual(GATE.fingerprint(original39), "f548a2977dc4f1c51dc0a4976940a0a3562de6281a707a96fbd5cee67f618c0e")
+        self.assertEqual(len(rows), 40)
+        self.assertEqual(GATE.fingerprint(rows), "4f701c9598003d7c01a405f18f7991b373379eca8b182cf6222540a4746d1756")
+        report, failures = GATE.preexisting_preservation(context[0], rows, allow_historical=True)
+        self.assertEqual(failures, [])
+        self.assertTrue(report["historical_baseline_verified"])
+        self.assertTrue(report["preexisting_family_rows_unchanged"])
+        self.assertFalse(report["current_preexisting_rows_match_reviewed_successors"])
+        self.assertEqual(report["reviewed_preexisting_successor_family_ids"], [])
+
+    def test_each_predecessor_and_mixed_or_full_rollback_fail_default_validation(self):
+        historical = {row["family_id"]: row for row in GATE.historical_preexisting_rows(self.rows)}
+        ids = list(GATE.REVIEWED_GOAL_SUCCESSORS)
+        for rollback_ids in ([family_id] for family_id in ids):
+            with self.subTest(rollback_ids=rollback_ids):
+                rows = [copy.deepcopy(historical[row["family_id"]] if row["family_id"] in rollback_ids else row)
+                        for row in self.rows]
+                report, failures = GATE.preexisting_preservation(self.admission, rows)
+                self.assertTrue(report["historical_baseline_verified"])
+                self.assertFalse(report["current_preexisting_rows_match_reviewed_successors"])
+                self.assertIn("required_preexisting_successors_missing", {row["error"] for row in failures})
+        for rollback_ids in (ids[:2], ids):
+            with self.subTest(rollback_ids=rollback_ids):
+                rows = [copy.deepcopy(historical[row["family_id"]] if row["family_id"] in rollback_ids else row)
+                        for row in self.rows]
+                with registry_snapshot({"families": rows}):
+                    report = GATE.validate()
+                self.assertEqual(report["status"], "fail")
+                self.assertIn("required_preexisting_successors_missing", {row["error"] for row in report["failures"]})
+                self.assertFalse(report["admission_complete"])
+
+    def test_exact_five_complete_adoptions_preserve_historical_authority(self):
+        report, failures = GATE.preexisting_preservation(self.admission, self.rows)
+        self.assertEqual(failures, [])
+        self.assertTrue(report["historical_original39_verified"])
+        self.assertTrue(report["historical_original40_verified"])
+        self.assertFalse(report["preexisting_family_rows_unchanged"])
+        self.assertTrue(report["current_preexisting_rows_match_reviewed_successors"])
+        self.assertEqual(set(report["reviewed_preexisting_successor_family_ids"]), {
+            "event-family-goal-created", "event-family-goal-updated", "event-family-goal-cancelled",
+            "event-family-goal-run-started", "event-family-goal-run-cancelled",
+        })
+
+    def test_every_field_of_each_successor_is_pinned(self):
+        for original in self.rows:
+            if original["family_id"] not in GATE.REVIEWED_GOAL_SUCCESSORS:
+                continue
+            for field in original:
+                with self.subTest(family=original["family_id"], field=field):
+                    rows = copy.deepcopy(self.rows)
+                    row = next(row for row in rows if row["family_id"] == original["family_id"])
+                    # Even apparently descriptive metadata is whole-row authority.
+                    row[field] = "unapproved-drift"
+                    report, failures = GATE.preexisting_preservation(self.admission, rows)
+                    self.assertTrue(failures)
+                    self.assertFalse(report["historical_baseline_verified"])
+                    self.assertFalse(report["current_preexisting_rows_match_reviewed_successors"])
+
+    def test_each_other_historical_row_and_compaction_remain_exact(self):
+        for original in self.rows:
+            if original["family_id"] in GATE.REVIEWED_GOAL_SUCCESSORS or original["event_type"].startswith("browser."):
+                continue
+            with self.subTest(family=original["family_id"]):
+                rows = copy.deepcopy(self.rows)
+                next(row for row in rows if row["family_id"] == original["family_id"])["family_revision"] = "99.0.0"
+                report, failures = GATE.preexisting_preservation(self.admission, rows)
+                self.assertTrue(failures)
+                self.assertFalse(report["historical_baseline_verified"])
+
+    def test_missing_duplicate_reordered_extra_and_changed_manifest_rejected(self):
+        for mutation in ("missing", "duplicate", "order", "compaction_order", "extra", "manifest_order", "manifest_hash"):
+            with self.subTest(mutation=mutation):
+                rows, admission = copy.deepcopy(self.rows), copy.deepcopy(self.admission)
+                if mutation == "missing":
+                    rows.pop(0)
+                elif mutation == "duplicate":
+                    rows.append(copy.deepcopy(rows[0]))
+                elif mutation == "order":
+                    rows[0], rows[1] = rows[1], rows[0]
+                elif mutation == "compaction_order":
+                    row = next(row for row in rows if row["family_id"] == GATE.COMPACTION_FAMILY)
+                    rows.remove(row)
+                    rows.insert(0, row)
+                elif mutation == "extra":
+                    rows.append({**rows[0], "family_id": "event-family-unapproved", "event_type": "unapproved.event"})
+                elif mutation == "manifest_order":
+                    admission["preexisting_family_ids"].reverse()
+                else:
+                    admission["preexisting_family_rows_sha256"] = GATE.fingerprint(rows[:39])
+                report, failures = GATE.preexisting_preservation(admission, rows)
+                self.assertTrue(failures)
+                self.assertFalse(report["current_preexisting_rows_match_reviewed_successors"])
+
+    def test_prepared_registration_cannot_escape_with_reviewed_successors(self):
+        prepared = next(row for row in self.admission["rows"] if row["admission_status"] == "prepared_not_admitted")
+        for payloads_only in (False, True):
+            with self.subTest(payloads_only=payloads_only):
+                registry = {"families": self.rows + [synthetic_family(prepared)]}
+                with registry_snapshot(registry):
+                    report = GATE.validate(payloads_only=payloads_only)
+                self.assertEqual(report["status"], "fail")
+                self.assertIn("exact_admitted_subset_mismatch", {row["error"] for row in report["failures"]})
+                self.assertFalse(report["admission_complete"])
 
 
 class BrowserPreparedAdmissionTests(unittest.TestCase):
