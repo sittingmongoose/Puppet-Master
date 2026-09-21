@@ -1235,6 +1235,119 @@ def forge_review_alias_failures(
     return failures
 
 
+def permissions_rule_reference_failures(registry: dict[str, Any]) -> list[str]:
+    """Keep the five rule controls bound to their existing semantic owners.
+
+    PS-065 identifies the editor, not the complete validation/persistence contract:
+    the exact command/error and TOML sections must remain explicit references.
+    PS-130 is an approval-lease unit and cannot substitute for those contracts.
+    """
+    failures: list[str] = []
+
+    def require(condition: bool, detail: str) -> None:
+        if not condition:
+            failures.append(f"Permissions rule references: {detail}")
+
+    profiles = registry.get("profiles", [])
+    profiles = profiles if isinstance(profiles, list) else []
+    selected = [profile for profile in profiles if isinstance(profile, dict)
+                and profile.get("profile_id") == "TCP-PERMISSIONS"]
+    require(len(selected) == 1, "expected one TCP-PERMISSIONS profile")
+    profile = selected[0] if selected else {}
+    owner = "Plans/Permissions_System.md"
+    for field, expected in {
+        "owner_plan": owner,
+        "plan_unit": "PS-065",
+        "dry_contract_ref": owner + "#Permissions-UI-Commands-And-Error-States",
+        "handler_status": "specified",
+        "wiring_status": "specified",
+        "production_or_simulation": "Static owner/catalog and production-intent wiring only.",
+        "evidence_refs": ["static_owner_catalog_and_wiring_only"],
+    }.items():
+        require(profile.get(field) == expected, f"profile {field} must remain {expected!r}")
+    refs = profile.get("requirement_refs", [])
+    refs = refs if isinstance(refs, list) else []
+    for ref in (
+        owner + "#PS-065", owner + "#PS-072",
+        owner + "#Permissions-UI-Commands-And-Error-States",
+        owner + "#TOML-Persistence-Failure-And-Atomicity-Rules",
+        "Plans/UI_Command_Catalog.md#UCC-113", "Plans/Settings_System.md#SSYS-023",
+    ):
+        require(ref in refs, f"missing semantic owner reference {ref}")
+    rows = registry.get("rows", [])
+    rows = rows if isinstance(rows, list) else []
+    selected_rows = [row for row in rows if isinstance(row, list) and len(row) == 6
+                     and row[1] == "TCP-PERMISSIONS"]
+    expected_rows = [
+        [f"TOUCH-PERM-{number:03d}", "TCP-PERMISSIONS", "command",
+         "cmd.permissions." + action, "partial"]
+        for number, action in enumerate(
+            ("create_project_rule", "update_rule", "reorder_rule", "delete_rule", "validate_rule"), 1
+        )
+    ]
+    require(sorted(row[:5] for row in selected_rows) == sorted(expected_rows),
+            "retain exactly the five partial Permissions command obligations")
+    require(all(isinstance(row[5], str) and row[5].strip() for row in selected_rows),
+            "partial obligations must retain their runtime residuals")
+    return failures
+
+
+def central_ui_reference_failures(
+    map_ui: set[str], registry: dict[str, Any], production_entries: dict[str, Any]
+) -> list[str]:
+    """Reconcile only the owner-approved archived-Project adapter conditionally."""
+    failures: list[str] = []
+    rows = registry.get("rows", [])
+    rows = rows if isinstance(rows, list) else []
+    rows = [row for row in rows if isinstance(row, list) and len(row) == 6]
+    matrix_ui = {row[3] for row in rows if row[2] == "ui_action"}
+    reconciled: set[str] = set()
+    adapter = "ui.project.restore_archived"
+    target = "cmd.project.unarchive"
+    if adapter in map_ui:
+        # PJCT-002/003, UCC-151 and WM-050 supersede the extraction's local
+        # classification. This is not a stale-token exemption: require its exact
+        # current successor, sole planned route, and no resurrected local peer.
+        def require(condition: bool, detail: str) -> None:
+            if not condition:
+                failures.append(f"central archived-Project adapter: {detail}")
+
+        target_rows = [row for row in rows if row[3] == target]
+        require(len(target_rows) == 1 and target_rows[0][:5] == [
+            "TOUCH-PJCT-010", "TCP-PROJECT", "command", target, "partial"
+        ], "expected the one partial TCP-PROJECT unarchive command obligation")
+        profiles = registry.get("profiles", [])
+        profiles = profiles if isinstance(profiles, list) else []
+        selected = [profile for profile in profiles if isinstance(profile, dict)
+                    and profile.get("profile_id") == "TCP-PROJECT"]
+        require(len(selected) == 1, "expected one TCP-PROJECT owner profile")
+        profile = selected[0] if selected else {}
+        for field, expected in {
+            "owner_plan": "Plans/Project_System.md", "plan_unit": "PJCT-002",
+            "handler_status": "specified", "wiring_status": "specified",
+        }.items():
+            require(profile.get(field) == expected, f"successor {field} must remain {expected!r}")
+        entries = [entry for entry in production_entries.values() if isinstance(entry, dict)]
+        target_entries = [entry for entry in entries if entry.get("ui_command_id") == target]
+        require(len(target_entries) == 1, "expected exactly one unarchive production-intent row")
+        entry = target_entries[0] if target_entries else {}
+        for field, expected in {
+            "handler_location": "handlers::project::unarchive",
+            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
+            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_result",
+        }.items():
+            require(entry.get(field) == expected, f"successor production {field} must remain {expected!r}")
+        require(not any(row[3] == adapter for row in rows), "adapter cannot have a peer Touch row")
+        require(not any(entry.get("ui_command_id") == adapter for entry in entries),
+                "adapter cannot have peer production wiring")
+        if not failures:
+            reconciled.add(adapter)
+    missing_map_ui = sorted(map_ui - matrix_ui - STALE_CENTRAL_UI_ACTIONS - reconciled)
+    if missing_map_ui:
+        failures.append(f"central extraction typed UI actions lack rows: {missing_map_ui}")
+    return failures
+
+
 def verify() -> tuple[list[str], dict[str, Any]]:
     failures: list[str] = []
     try:
@@ -1373,6 +1486,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     production_actions: set[str] = set()
     production_handlers_by_action: dict[str, set[str]] = defaultdict(set)
     production_entry_count = 0
+    production_entries: dict[str, Any] = {}
     if PRODUCTION_WIRING_PATH is not None:
         if not PRODUCTION_WIRING_PATH.is_file():
             failures.append(f"production wiring cross-check is missing: {PRODUCTION_WIRING_PATH}")
@@ -1382,6 +1496,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
                 production_entries = production.get("entries", {})
                 if not isinstance(production_entries, dict):
                     failures.append("production wiring entries is not an object")
+                    production_entries = {}
                 else:
                     production_entry_count = len(production_entries)
                     production_actions = {
@@ -1405,6 +1520,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         settings_document = {}
     failures.extend(dry_guard_consumer_failures(registry, settings_document, production_actions))
     failures.extend(forge_review_alias_failures(registry, production_actions))
+    failures.extend(permissions_rule_reference_failures(registry))
     alias_sources_with_peer_wiring = sorted(alias_row_actions & production_actions)
     if alias_sources_with_peer_wiring:
         failures.append(
@@ -1640,10 +1756,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         if uncovered_map_commands:
             failures.append(f"central extraction command candidates lack row/adjudication: {uncovered_map_commands}")
         map_ui = set(central.get("typed_local_ui_actions", []))
-        matrix_ui = {action for action, row in row_by_action.items() if row[2] == "ui_action"}
-        missing_map_ui = sorted(map_ui - matrix_ui - STALE_CENTRAL_UI_ACTIONS)
-        if missing_map_ui:
-            failures.append(f"central extraction typed UI actions lack rows: {missing_map_ui}")
+        failures.extend(central_ui_reference_failures(map_ui, registry, production_entries))
 
     kind_counts = Counter(row[2] for row in rows if isinstance(row, list) and len(row) == 6)
     disposition_counts = Counter(row[4] for row in rows if isinstance(row, list) and len(row) == 6)

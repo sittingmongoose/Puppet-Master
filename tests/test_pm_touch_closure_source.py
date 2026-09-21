@@ -608,5 +608,164 @@ class ForgeReviewAliasConsumerTests(unittest.TestCase):
         self.assertIn(sentinel, failures)
 
 
+class PermissionsRuleReferenceTests(unittest.TestCase):
+    def setUp(self):
+        self.registry = json.loads((ROOT / "Plans/touch_closure.json").read_text(encoding="utf-8"))
+
+    def profile(self, registry):
+        return next(profile for profile in registry["profiles"]
+                    if profile["profile_id"] == "TCP-PERMISSIONS")
+
+    def test_editor_and_precise_contracts_cover_all_five_partial_rows(self):
+        self.assertEqual(validator.permissions_rule_reference_failures(self.registry), [])
+        rows = [row for row in self.registry["rows"] if row[1] == "TCP-PERMISSIONS"]
+        self.assertEqual([row[3] for row in rows], [
+            "cmd.permissions.create_project_rule", "cmd.permissions.update_rule",
+            "cmd.permissions.reorder_rule", "cmd.permissions.delete_rule",
+            "cmd.permissions.validate_rule",
+        ])
+        self.assertTrue(all(row[4] == "partial" and "native" in row[5] for row in rows))
+        self.assertEqual(self.profile(self.registry)["plan_unit"], "PS-065")
+
+    def test_approval_lease_unit_and_owner_swap_are_rejected(self):
+        for field, value in (("plan_unit", "PS-130"),
+                             ("owner_plan", "Plans/UI_Command_Catalog.md"),
+                             ("dry_contract_ref", "Plans/Permissions_System.md#PS-065")):
+            registry = copy.deepcopy(self.registry)
+            self.profile(registry)[field] = value
+            with self.subTest(field=field):
+                self.assertTrue(validator.permissions_rule_reference_failures(registry))
+
+    def test_editor_unit_cannot_replace_precise_owner_anchors(self):
+        for ref in self.profile(self.registry)["requirement_refs"]:
+            registry = copy.deepcopy(self.registry)
+            self.profile(registry)["requirement_refs"].remove(ref)
+            with self.subTest(missing_ref=ref):
+                self.assertTrue(validator.permissions_rule_reference_failures(registry))
+
+    def test_partial_rows_and_native_proof_boundary_cannot_be_promoted(self):
+        for field, value in (("handler_status", "implemented"), ("wiring_status", "verified"),
+                             ("production_or_simulation", "native verified"),
+                             ("evidence_refs", ["runtime_verified"])):
+            registry = copy.deepcopy(self.registry)
+            self.profile(registry)[field] = value
+            with self.subTest(field=field):
+                self.assertTrue(validator.permissions_rule_reference_failures(registry))
+        for position, value in ((1, "TCP-OTHER"), (3, "cmd.permissions.synthetic"),
+                                (4, "implemented"), (5, "")):
+            registry = copy.deepcopy(self.registry)
+            next(row for row in registry["rows"] if row[0] == "TOUCH-PERM-005")[position] = value
+            with self.subTest(position=position):
+                self.assertTrue(validator.permissions_rule_reference_failures(registry))
+
+    def test_missing_or_duplicate_profile_or_obligation_is_rejected(self):
+        for collection, identity in (("profiles", "TCP-PERMISSIONS"), ("rows", "TOUCH-PERM-004")):
+            for duplicate in (False, True):
+                registry = copy.deepcopy(self.registry)
+                item = next(item for item in registry[collection]
+                            if (item.get("profile_id") if isinstance(item, dict) else item[0]) == identity)
+                if duplicate:
+                    registry[collection].append(copy.deepcopy(item))
+                else:
+                    registry[collection].remove(item)
+                with self.subTest(collection=collection, duplicate=duplicate):
+                    self.assertTrue(validator.permissions_rule_reference_failures(registry))
+
+    def test_verify_composes_permissions_reference_check_once(self):
+        sentinel = "Permissions rule references: synthetic integration sentinel"
+        with mock.patch.object(validator, "permissions_rule_reference_failures", return_value=[sentinel]) as check:
+            failures, _ = validator.verify()
+        check.assert_called_once()
+        self.assertIn(sentinel, failures)
+
+
+class CentralArchivedProjectAdapterTests(unittest.TestCase):
+    ADAPTER = "ui.project.restore_archived"
+    TARGET = "cmd.project.unarchive"
+
+    def setUp(self):
+        self.registry = json.loads((ROOT / "Plans/touch_closure.json").read_text(encoding="utf-8"))
+        self.entries = json.loads((ROOT / "Plans/Wiring_Matrix.production.json").read_text(encoding="utf-8"))["entries"]
+
+    def check(self, registry=None, entries=None, map_ui=None):
+        return validator.central_ui_reference_failures(
+            {self.ADAPTER} if map_ui is None else map_ui,
+            self.registry if registry is None else registry,
+            self.entries if entries is None else entries,
+        )
+
+    def test_legacy_local_classification_resolves_only_to_current_successor(self):
+        self.assertEqual(self.check(), [])
+        self.assertNotIn(self.ADAPTER, validator.STALE_CENTRAL_UI_ACTIONS)
+        self.assertFalse(any(row[3] == self.ADAPTER for row in self.registry["rows"]))
+
+    def test_missing_wrong_or_duplicate_successor_cannot_exempt_adapter(self):
+        for change in ("missing", "duplicate", "wrong_profile", "local_kind", "ready"):
+            registry = copy.deepcopy(self.registry)
+            row = next(row for row in registry["rows"] if row[3] == self.TARGET)
+            if change == "missing":
+                registry["rows"].remove(row)
+            elif change == "duplicate":
+                registry["rows"].append(copy.deepcopy(row))
+            else:
+                index, value = {"wrong_profile": (1, "TCP-OTHER"), "local_kind": (2, "ui_action"),
+                                "ready": (4, "implemented")}[change]
+                row[index] = value
+            with self.subTest(change=change):
+                self.assertTrue(self.check(registry=registry))
+
+    def test_wrong_owner_or_unit_cannot_exempt_adapter(self):
+        for field, value in (("owner_plan", "Plans/UI_Command_Catalog.md"), ("plan_unit", "PJCT-003"),
+                             ("handler_status", "implemented")):
+            registry = copy.deepcopy(self.registry)
+            next(p for p in registry["profiles"] if p["profile_id"] == "TCP-PROJECT")[field] = value
+            with self.subTest(field=field):
+                self.assertTrue(self.check(registry=registry))
+
+    def test_missing_duplicate_or_wrong_production_route_is_rejected(self):
+        for change in ("missing", "duplicate", "handler_location", "request_schema_ref", "result_schema_ref"):
+            entries = copy.deepcopy(self.entries)
+            key = next(k for k, e in entries.items() if e["ui_command_id"] == self.TARGET)
+            if change == "missing":
+                del entries[key]
+            elif change == "duplicate":
+                entries["duplicate"] = copy.deepcopy(entries[key])
+            else:
+                entries[key][change] = "wrong_successor_route"
+            with self.subTest(change=change):
+                self.assertTrue(self.check(entries=entries))
+
+    def test_resurrected_touch_or_production_peer_is_rejected(self):
+        registry = copy.deepcopy(self.registry)
+        registry["rows"].append(["TOUCH-LEGACY-001", "TCP-PROJECT", "ui_action",
+                                 self.ADAPTER, "partial", "legacy local peer"])
+        self.assertTrue(self.check(registry=registry))
+        entries = copy.deepcopy(self.entries)
+        entries["legacy_peer"] = {"ui_command_id": self.ADAPTER}
+        self.assertTrue(self.check(entries=entries))
+
+    def test_unknown_central_ui_is_not_exempted(self):
+        unknown = "ui.project.unknown_local_action"
+        failures = self.check(map_ui={self.ADAPTER, unknown})
+        self.assertTrue(any(unknown in failure for failure in failures), failures)
+
+    def test_verify_reconciles_optional_legacy_map(self):
+        fixture_path = Path(__file__).resolve()
+        original = validator.load_json
+
+        def load(path):
+            if path == fixture_path:
+                return {"registration_candidates": {"commands": [], "typed_local_ui_actions": [self.ADAPTER]}}
+            return original(path)
+
+        with mock.patch.object(validator, "CENTRAL_MAP_PATH", fixture_path), \
+                mock.patch.object(validator, "load_json", side_effect=load), \
+                mock.patch.object(validator, "central_ui_reference_failures", wraps=validator.central_ui_reference_failures) as check:
+            failures, result = validator.verify()
+        check.assert_called_once()
+        self.assertEqual(failures, [])
+        self.assertEqual(result["central_map_crosscheck"], "pass")
+
+
 if __name__ == "__main__":
     unittest.main()
