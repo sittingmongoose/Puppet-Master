@@ -123,6 +123,13 @@
   var KINDS = ['crew', 'brainstorm', 'review', 'chat_room'];
   var KIND_LABEL = { crew: 'Crew', brainstorm: 'BrainStorm', review: 'Review', chat_room: 'Chat Room' };
   var KIND_ICON = { crew: 'users', brainstorm: 'brain', review: 'eye', chat_room: 'users' };
+  /* One-line explanation per kind, shown as the configure dialog's sub. */
+  var KIND_SUB = {
+    crew: 'A coordinator assigns bounded tasks to each role and combines only verified results.',
+    chat_room: 'A moderated multi-agent discussion. Nothing becomes a Task or Plan until you promote a message.',
+    brainstorm: 'Blind proposals, debate and a vote produce one Plan document.',
+    review: 'Independent read-only reviewers. Findings never auto-repair anything.'
+  };
   var RUN_STATE_LABEL = {
     configuring: 'Configuring', running: 'Running', paused: 'Paused', waiting: 'Waiting',
     blocked: 'Blocked', completed: 'Completed', canceled: 'Cancelled', failed: 'Failed'
@@ -1578,17 +1585,19 @@
   }
 
   function draftRowHtml(ctx, row, idx) {
-    const pick=window.PM56_PICKERS;
+    const pick=window.PM56_PICKERS, S=window.PM56_SHELL;
     const attrs='data-row="'+esc(row.rowId)+'"';
     const fallback=UNAVAILABLE_DEMO[row.requestedModelId]?fallbackModelFor(row.requestedModelId):null;
-    return '<div class="collab-participant-editor-row" data-k="collab-draftrow-'+esc(row.rowId)+'">'+
-      '<div class="collab-member-name"><span class="collab-member-number">'+(idx+1)+'</span><input class="collab-field-role" aria-label="Participant role" type="text" data-collab-input="role" data-row="'+esc(row.rowId)+'" value="'+esc(row.role)+'" placeholder="Role">'+
+    /* Card grammar from module-shell (.mdl-card); the row keeps its own class
+       because the harnesses select through .collab-participant-editor-row. */
+    return '<article class="mdl-card collab-participant-editor-row" data-k="collab-draftrow-'+esc(row.rowId)+'">'+
+      '<div class="mdl-card-head collab-member-name"><span class="collab-member-number">'+(idx+1)+'</span><input class="collab-field-role" aria-label="Participant role" type="text" data-collab-input="role" data-row="'+esc(row.rowId)+'" value="'+esc(row.role)+'" placeholder="Role">'+
       '<button class="icon-button" data-action="collab-modal-duplicate-participant" data-row="'+esc(row.rowId)+'" title="Duplicate participant">'+ctx.icon('copy',12)+'</button>'+
       '<button class="icon-button" data-action="collab-modal-remove-participant" data-row="'+esc(row.rowId)+'" title="Remove participant">'+ctx.icon('close',12)+'</button></div>'+
-      '<div class="collab-member-pickers"><label>Model'+pick.modelButton('collab-pick-model','collab-model-'+row.rowId,row.requestedModelId,attrs)+'</label>'+
-      '<label>Persona'+pick.personaButton('collab-pick-persona','collab-persona-'+row.rowId,row.persona,attrs)+'</label></div>'+
-      (row.requestedEffort?'<span class="collab-config-effort">'+esc(row.requestedEffort)+(row.requestedFast?' · Fast':'')+'</span>':'')+
-      (UNAVAILABLE_DEMO[row.requestedModelId]?'<span class="collab-route-eff">Requested model unavailable · '+(fallback?'Uses '+esc(modelLabel(fallback.id)):'No substitute')+'</span>':'')+'</div>';
+      '<div class="mdl-grid2">'+S.field('Model',pick.modelButton('collab-pick-model','collab-model-'+row.rowId,row.requestedModelId,attrs))+
+      S.field('Persona',pick.personaButton('collab-pick-persona','collab-persona-'+row.rowId,row.persona,attrs))+'</div>'+
+      (row.requestedEffort?'<p class="mdl-note collab-config-effort">'+esc(row.requestedEffort)+(row.requestedFast?' · Fast':'')+'</p>':'')+
+      (UNAVAILABLE_DEMO[row.requestedModelId]?'<p class="mdl-note collab-route-eff">Requested model unavailable · '+(fallback?'Uses '+esc(modelLabel(fallback.id)):'No substitute')+'</p>':'')+'</article>';
   }
   ['model','persona'].forEach(function(kind){
     EXT.action('collab-pick-'+kind,function(ctx,btn){
@@ -1690,8 +1699,11 @@
     {value:'3',label:'At least three independent tasks',description:'Reserve automatic delegation for a wider split of independent work.'}
   ];
   function configChoice(ctx,d,key,title){
+    const S=window.PM56_SHELL;
     const options=CONFIG_CHOICES[key], selected=options.find(o=>o.value===d.config[key])||options[0];
-    return '<label>'+esc(title)+'<button type="button" class="shared-picker-button collab-choice" data-action="collab-pick-choice" data-field="'+key+'" data-menu-anchor="collab-choice-'+key+'"><span class="shared-picker-copy"><strong>'+esc(selected.label)+'</strong></span>'+ctx.icon('down',11)+'</button></label>';
+    /* SHELL.field keeps the title as the label's first child node, which is
+       exactly where the collab-pick-choice handler reads the menu title from. */
+    return S.field(esc(title),S.pickerButton({action:'collab-pick-choice',anchor:'collab-choice-'+key,strong:esc(selected.label),extra:'data-field="'+esc(key)+'"',iconHtml:ctx.icon('down',11)}));
   }
   EXT.action('collab-pick-choice',function(ctx,btn){
     const draft=RTC.draft,key=btn.dataset.field;if(!draft||!CONFIG_CHOICES[key])return true;
@@ -1708,58 +1720,67 @@
     });return true;
   });
   function kindConfigFields(ctx, d) {
+    const S=window.PM56_SHELL;
     if (d.kind === 'crew') {
-      return '<div class="collab-field-row">' + configChoice(ctx,d,'coordinator','Coordinator') + '' +
-        '' + configChoice(ctx,d,'assignmentStrategy','Task assignment') + '' +
-        '<label>Simultaneous tasks<input type="number" min="1" max="8" data-collab-input="cfg-parallelism" value="' + esc(d.config.parallelism) + '"></label></div>' +
-        '<span class="collab-authority" title="Cannot widen this thread’s permissions">Inherits thread permissions</span>' +
-        (d.autoMode ? '<h4>When to use a Crew</h4><div class="collab-field-row">'+configChoice(ctx,d,'autoComplexity','Request complexity')+configChoice(ctx,d,'autoMinIndependent','Useful parallel work')+'</div>' : '');
+      return S.grid2(configChoice(ctx,d,'coordinator','Coordinator') +
+        configChoice(ctx,d,'assignmentStrategy','Task assignment') +
+        S.field('Simultaneous tasks','<input type="number" min="1" max="8" data-collab-input="cfg-parallelism" value="' + esc(d.config.parallelism) + '">')) +
+        '<span class="collab-authority" title="Cannot widen this thread’s permissions">Inherits thread permissions</span>';
     }
     if (d.kind === 'brainstorm') {
-      var effShown = d.config.questionLimit + (d.grillMe ? '/' + (d.config.questionLimit + d.config.grillExtension) : '');
-      return '<div class="collab-field-row"><label>Debate rounds<input type="number" min="1" max="4" data-collab-input="cfg-debateRounds" value="' + esc(d.config.debateRounds) + '"></label>' +
-        '' + configChoice(ctx,d,'externalResearch','Research') + '</div>' +
+      return S.grid2(S.field('Debate rounds','<input type="number" min="1" max="4" data-collab-input="cfg-debateRounds" value="' + esc(d.config.debateRounds) + '">') +
+        configChoice(ctx,d,'externalResearch','Research')) +
         '<p class="collab-qmax">' + (d.grillMe ? 'Maximum questions: ' + (d.config.questionLimit + d.config.grillExtension) + ' (' + d.config.questionLimit + ' + Grill Me ' + d.config.grillExtension + ')' : 'Maximum questions: ' + d.config.questionLimit) + '</p>';
     }
     if (d.kind === 'review') {
-      return '<div class="collab-field-row">' + configChoice(ctx,d,'strategy','Review approach') + '' +
-        '<label>Reviewers<input type="number" min="1" max="8" data-collab-input="cfg-reviewerCount" value="' + esc(d.rows.length) + '" disabled title="Add or remove reviewer rows below to change this count."></label></div>' +
-        '<label class="collab-checkbox-row"><input type="checkbox" checked disabled><span>Independent first pass <small>Always on</small></span></label>' +
-        '<label class="collab-checkbox-row"><input type="checkbox" disabled><span>Auto-repair <small>Off · review only</small></span></label>';
+      return S.grid2(configChoice(ctx,d,'strategy','Review approach') +
+        S.field('Reviewers','<input type="number" min="1" max="8" data-collab-input="cfg-reviewerCount" value="' + esc(d.rows.length) + '" disabled title="Add or remove reviewer rows below to change this count.">')) +
+        '<label class="mdl-check collab-checkbox-row"><input type="checkbox" checked disabled><span>Independent first pass <small>Always on</small></span></label>' +
+        '<label class="mdl-check collab-checkbox-row"><input type="checkbox" disabled><span>Auto-repair <small>Off · review only</small></span></label>';
     }
-    return '<div class="collab-field-row">' + configChoice(ctx,d,'turnPolicy','Conversation flow') + '' +
-      '<label>Max rounds<input type="number" min="1" max="20" data-collab-input="cfg-maxRounds" value="' + esc(d.config.maxRounds) + '"></label></div>';
+    return S.grid2(configChoice(ctx,d,'turnPolicy','Conversation flow') +
+      S.field('Max rounds','<input type="number" min="1" max="20" data-collab-input="cfg-maxRounds" value="' + esc(d.config.maxRounds) + '">'));
   }
 
   function renderConfigureModal(ctx) {
     var d = RTC.draft; if (!d) return '';
     normalizeReview(d);
+    var S = window.PM56_SHELL;
     var limits = KIND_PARTICIPANT_LIMIT[d.kind];
     var supportsAdditive = d.kind === 'crew' || d.kind === 'brainstorm' || d.kind === 'chat_room';
     var overLimit = d.rows.length > limits[1] || d.rows.length < limits[0];
-    return '<section class="dialog collab-configure" style="width:min(760px,calc(100vw - 20px))" role="dialog" aria-modal="true" aria-label="Configure ' + esc(KIND_LABEL[d.kind]) + '">' +
-      '<div class="drawer-head"><span class="event-icon">' + ctx.icon(KIND_ICON[d.kind], 13) + '</span><strong>' + (d.reconfigureRunId ? 'Reconfigure ' : 'Configure ') + esc(KIND_LABEL[d.kind]) + '</strong>' +
-      (d.autoMode ? '<span class="meta-pill">Crew Auto</span>' : '') +
-      '<span class="spacer"></span><button class="icon-button" data-action="collab-modal-cancel">' + ctx.icon('close', 13) + '</button></div>' +
-      '<div class="dialog-body collab-configure-body">' +
-      '<div class="collab-field-row"><label>Name<input type="text" data-collab-input="name" value="' + esc(d.name) + '"></label></div>' +
-      '<div class="collab-field-row"><label>What should they accomplish?<input type="text" data-collab-input="purpose" value="' + esc(d.purpose) + '" placeholder="One line — why this run exists"></label></div>' +
-      (d.kind==='review' && d.reviewTarget ? '<div class="review-target-label"><small>Frozen on Start · recorded example</small><strong>'+esc(d.reviewTarget.label)+'</strong><span>Read-only · no provider calls</span></div>' : '') +
-      '<h4>Participants · ' + d.rows.length + (overLimit ? ' <span class="collab-limit-warn">out of range</span>' : '') + '</h4>' +
+    var runBody =
+      S.field('Name', '<input type="text" data-collab-input="name" value="' + esc(d.name) + '">') +
+      S.field('What should they accomplish?', '<input type="text" data-collab-input="purpose" value="' + esc(d.purpose) + '" placeholder="One line — why this run exists">') +
+      (d.kind === 'review' && d.reviewTarget ? S.note('Frozen on Start · recorded example') + S.rows([['Frozen on Start', esc(d.reviewTarget.label)], ['Access', 'Read-only · no provider calls']]) : '');
+    var participantsBody =
       '<div class="collab-participant-editor">' + d.rows.map(function (r, i) { return draftRowHtml(ctx, r, i); }).join('') + '</div>' +
-      '<button class="text-button" data-action="collab-modal-add-participant">' + ctx.icon('plus', 12) + ' '+(d.kind==='review'&&d.config.strategy==='single_agent'?'Replace reviewer':'Add participant')+'</button>' +
-      '<h4>How they work</h4>' +
-      kindConfigFields(ctx, d) + (d.scheduleIntent?'<p class="schedule-caption">Scheduling freezes this roster without starting it. The local work adapter executes one bounded operation at a time; requested models are retained, not invoked.</p>':'') +
-      (supportsAdditive ? '<details class="collab-add-specialists"><summary>Optional specialists</summary>' +
-        '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="wonderer"' + (d.wonderer ? ' checked' : '') + '><span title="Explores adjacent leads; labels unresearched ideas as hypotheses">Wonderer</span></label>' +
-        '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="grillMe"' + (d.grillMe ? ' checked' : '') + '><span>Grill Me' + (d.kind === 'brainstorm' ? ' — raises the question maximum by ' + d.config.grillExtension : '') + '</span></label>' +
-        '</details>' : '') +
-      '' +
-      '</div>' +
-      (d.lastFailure ? '<div class="collab-start-failure" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong><p>' + esc(d.lastFailure.message) + '</p></div>' : '') +
-      (window.PM56_CREW_DEMOS?.guide(ctx,true)||'') + (window.PM56_REVIEW_DEMOS?.guide(ctx,true)||'') + (window.PM56_BRAINSTORM_DEMOS?.guide(ctx,true)||'') +
-      '<div class="dialog-body-foot collab-configure-foot"><button class="soft-button" data-action="collab-modal-cancel">Cancel</button><button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.scheduleIntent?'Use this Crew':d.autoMode ? 'Enable Crew Auto' : d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button></div>' +
-      '</section>';
+      '<button class="text-button" data-action="collab-modal-add-participant">' + ctx.icon('plus', 12) + ' ' + (d.kind === 'review' && d.config.strategy === 'single_agent' ? 'Replace reviewer' : 'Add participant') + '</button>';
+    var howBody = kindConfigFields(ctx, d) +
+      (supportsAdditive ?
+        '<label class="mdl-check collab-checkbox-row"><input type="checkbox" data-collab-input="wonderer"' + (d.wonderer ? ' checked' : '') + '><span title="Explores adjacent leads; labels unresearched ideas as hypotheses">Wonderer</span></label>' +
+        '<label class="mdl-check collab-checkbox-row"><input type="checkbox" data-collab-input="grillMe"' + (d.grillMe ? ' checked' : '') + '><span>Grill Me' + (d.kind === 'brainstorm' ? ' — raises the question maximum by ' + d.config.grillExtension : '') + '</span></label>' : '') +
+      (d.scheduleIntent ? '<p class="schedule-caption">Scheduling freezes this roster without starting it. The local work adapter executes one bounded operation at a time; requested models are retained, not invoked.</p>' : '');
+    var body =
+      S.section({ iconHtml: ctx.icon('document', 12), label: 'Run', body: runBody }) +
+      S.section({ iconHtml: ctx.icon('users', 12), label: 'Participants', meta: d.rows.length + ' of ' + limits[1] + (overLimit ? ' · <span class="collab-limit-warn">out of range</span>' : ''), body: participantsBody }) +
+      S.section({ iconHtml: ctx.icon('settings', 12), label: 'How they work', body: howBody }) +
+      (d.kind === 'crew' && d.autoMode ? S.section({ iconHtml: ctx.icon('settings', 12), label: 'When to use a Crew', body: S.grid2(configChoice(ctx,d,'autoComplexity','Request complexity') + configChoice(ctx,d,'autoMinIndependent','Useful parallel work')) }) : '') +
+      (window.PM56_CREW_DEMOS?.guide(ctx,true)||'') + (window.PM56_REVIEW_DEMOS?.guide(ctx,true)||'') + (window.PM56_BRAINSTORM_DEMOS?.guide(ctx,true)||'');
+    var refusal = d.lastFailure ? '<p class="mdl-note danger" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong> ' + esc(d.lastFailure.message) + '</p>' : '';
+    return S.dialog({
+      cls: 'collab-configure',
+      iconHtml: ctx.icon(KIND_ICON[d.kind], 15),
+      title: (d.reconfigureRunId ? 'Reconfigure ' : 'Configure ') + esc(KIND_LABEL[d.kind]),
+      sub: KIND_SUB[d.kind],
+      pill: d.autoMode ? 'Crew Auto' : '',
+      width: 760,
+      closeAction: 'collab-modal-cancel',
+      body: body,
+      foot: S.foot(refusal,
+        '<button class="soft-button" data-action="collab-modal-cancel">Cancel</button>' +
+        '<button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.scheduleIntent ? 'Use this Crew' : d.autoMode ? 'Enable Crew Auto' : d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button>')
+    });
   }
   EXT.slot('dialog', function (ctx) {
     var d = ctx.state.dialog;

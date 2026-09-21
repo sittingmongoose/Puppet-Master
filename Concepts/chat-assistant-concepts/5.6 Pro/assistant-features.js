@@ -1207,10 +1207,45 @@
     ctx.openDialog({ type:'af-settings' });
     return true;
   });
-  EXT.action('af-title-set-policy', function(ctx, btn){
-    F.title.policy=btn.dataset.value;
+  /* Single setter path for the thread-title policy. The old inline policy-row
+     buttons are gone (the settings dialog now uses one picker button); this
+     function is exactly what that row handler ran, and it is what the picker's
+     onChange calls. */
+  function applyTitlePolicy(ctx, value){
+    F.title.policy=value;
     ctx.renderOverlays();
     ctx.toast('Title policy updated', policyDescription(F.title.policy));
+  }
+  function titlePolicyLabel(p){
+    if(p==='default') return 'Default resolver';
+    if(p==='none') return 'None';
+    var m=modelById(p.indexOf('model:')===0?p.slice(6):'');
+    return m?m.name:p;
+  }
+  function titlePolicySmall(p){
+    if(p==='default') return 'Deterministic resolver';
+    if(p==='none') return 'No automatic titles';
+    var m=modelById(p.indexOf('model:')===0?p.slice(6):'');
+    return m?(m.account||m.provider):'Not in the current roster';
+  }
+  function titlePolicyOptions(){
+    var opts=[
+      {value:'default',label:'Default resolver',description:'Deterministic: ready + fast route, smallest context, then id'},
+      {value:'none',label:'None',description:'Stays "New chat" until you rename it'}
+    ];
+    (D.models||[]).forEach(function(m){
+      var ready=m.status==='ready';
+      opts.push({value:'model:'+m.id,label:m.name,description:(m.account||m.provider)+(ready?'':' — Unavailable: '+(m.statusDetail||m.statusLabel||m.status))});
+    });
+    return opts;
+  }
+  EXT.action('af-title-pick-policy', function(ctx, btn){
+    if(!window.PM56_PICKERS) return true;
+    window.PM56_PICKERS.openChoice(btn, 'Thread title policy', F.title.policy, titlePolicyOptions(), function(value){
+      var c=ctxNow();
+      if(!c || !c.state.dialog || c.state.dialog.type!=='af-settings') return;
+      applyTitlePolicy(c, value);
+    });
     return true;
   });
   EXT.action('af-title-race-demo', function(ctx){
@@ -1252,38 +1287,31 @@
       '<span class="menu-icon">'+icon('refresh',13)+'</span><span class="menu-copy"><strong>Regenerate title</strong><span>'+(canRegen?'Clears the manual-rename lock':'Title policy is set to None')+'</span></span></button>';
   });
 
-  function modelPickerRows(ctx){
-    var icon=ctx.icon, e=ctx.esc;
-    var current=F.title.policy.indexOf('model:')===0?F.title.policy.slice(6):null;
-    return (D.models||[]).map(function(m){
-      var active=current===m.id, ready=m.status==='ready';
-      return '<button class="menu-item'+(active?' active':'')+'" data-action="af-title-set-policy" data-value="model:'+e(m.id)+'">'+
-        '<span class="menu-copy"><strong>'+e(m.name)+'</strong><span>'+e(m.account||m.provider)+(ready?'':' — Unavailable: '+e(m.statusDetail||m.statusLabel||m.status))+'</span></span>'+
-        (active?'<span class="check">'+icon('check',12)+'</span>':'')+'</button>';
-    }).join('');
-  }
   function renderSettingsDialog(ctx){
-    var icon=ctx.icon, e=ctx.esc;
+    var icon=ctx.icon, e=ctx.esc, S=window.PM56_SHELL;
     var tid=ctx.thread.id;
     var attempts=(F.title.attempts[tid]||[]).slice(-3).reverse();
-    var body='<h3 class="af-settings-h3">ELI5 default</h3>'+
-      '<label class="af-toggle-row"><input type="checkbox" data-af-input="eli5-default"'+(F.eli5.appDefault?' checked':'')+'>'+
-      '<span>Explain simply in conversations that inherit this default</span></label>'+
-      '<p class="af-note">Any thread can still set its own override from the wand.</p>'+
-      '<h3 class="af-settings-h3">Thread titles</h3>'+
-      '<div class="af-policy-rows af-scroll-rows">'+
-      '<button class="menu-item'+(F.title.policy==='default'?' active':'')+'" data-action="af-title-set-policy" data-value="default"><span class="menu-copy"><strong>Default resolver</strong><span>Deterministic: ready + fast route, smallest context, then id</span></span>'+(F.title.policy==='default'?'<span class="check">'+icon('check',12)+'</span>':'')+'</button>'+
-      '<button class="menu-item'+(F.title.policy==='none'?' active':'')+'" data-action="af-title-set-policy" data-value="none"><span class="menu-copy"><strong>None</strong><span>Stays "New chat" until you rename it</span></span>'+(F.title.policy==='none'?'<span class="check">'+icon('check',12)+'</span>':'')+'</button>'+
-      modelPickerRows(ctx)+
-      '</div>'+
-      '<p class="af-note">'+e(policyDescription(F.title.policy))+'</p>'+
-      '<h3 class="af-settings-h3">Demonstrations · this thread</h3>'+
-      '<div class="plan-actions"><button class="soft-button" data-action="af-title-regenerate" data-value="'+e(tid)+'">'+icon('refresh',12)+' Regenerate this title</button>'+
-      '<button class="soft-button" data-action="af-title-race-demo">'+icon('warning',12)+' Late-generation race</button></div>'+
-      (attempts.length?'<div class="af-attempt-log">'+attempts.map(function(a){
-        return '<div class="af-attempt-row"><span class="af-attempt-outcome af-outcome-'+e(a.outcome)+'">'+e(a.outcome)+'</span><span>'+e(a.reason||a.titleText||'')+'</span><span class="af-mem-time">'+e(clockOf(a.at))+'</span></div>';
-      }).join('')+'</div>':'');
-    return dialogShell(ctx, { icon:'settings', title:'Assistant defaults', body:body, width:560 });
+    var body=
+      S.section({iconHtml:icon('info',12),label:'What lives here',body:
+        S.note(e('These are application-level defaults, not per-conversation settings. They apply when a new thread starts and never rewrite an existing conversation.'))+
+        S.note(e('Each conversation can still override ELI5 from the wand (ELI5 explanations) and its title from the thread menu (Regenerate title). Choosing a title model here only selects the route used for future auto-titles; nothing contacts a provider by itself.'))})+
+      S.section({iconHtml:icon('sparkles',12),label:'ELI5 default',body:
+        S.check(e('Explain simply in conversations that inherit this default'),F.eli5.appDefault,' data-af-input="eli5-default"')+
+        S.note(e('Any thread can still set its own override from the wand.'))})+
+      S.section({iconHtml:icon('edit',12),label:'Thread titles',body:
+        S.field(e('How new threads are titled'),S.pickerButton({action:'af-title-pick-policy',anchor:'af-title-policy',strong:e(titlePolicyLabel(F.title.policy)),small:e(titlePolicySmall(F.title.policy)),iconHtml:icon('down',11)}))+
+        S.note(e(policyDescription(F.title.policy)))})+
+      S.section({iconHtml:icon('warning',12),label:'Demonstrations · this thread',body:
+        '<div class="mdl-card-actions">'+
+        '<button class="soft-button" data-action="af-title-regenerate" data-value="'+e(tid)+'">'+icon('refresh',12)+' Regenerate this title</button>'+
+        '<button class="soft-button" data-action="af-title-race-demo">'+icon('warning',12)+' Late-generation race</button></div>'+
+        (attempts.length?S.rows(attempts.map(function(a){
+          return [e(a.outcome),e(a.reason||a.titleText||'')+(clockOf(a.at)?' · '+e(clockOf(a.at)):'')];
+        })):'')});
+    return S.dialog({iconHtml:icon('settings',15),title:e('Assistant defaults'),
+      sub:e('The two choices every new conversation inherits before you override anything: whether ELI5 explanations start on, and how threads get their title.'),
+      width:620,body:body,
+      foot:S.foot('','<button class="soft-button" data-action="close-dialog">Close</button>')});
   }
 
   document.addEventListener('change', function(e){

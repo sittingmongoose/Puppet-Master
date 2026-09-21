@@ -7,7 +7,7 @@
  */
 (function(){
  'use strict';
- const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,copy=x=>JSON.parse(JSON.stringify(x));
+const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56_SHELL,copy=x=>JSON.parse(JSON.stringify(x));
  let epoch=1,seq=0,filter='Unverified',tab='auto';
  const runs=new Map(),sources=new Map(),proofs=new Map(),seen=new Map(),views=new Map(),disclosures=new Map(),dedupIndex=new Map();
  const uid=p=>'am-'+p+'-'+epoch+'-'+(++seq),now=()=>new Date().toISOString(),fail=error=>({ok:false,error});
@@ -90,11 +90,42 @@
  function correction(id){const g=get(id);if(!g||!allowed(g)||!g.teaching_proposal)return fail('proposal_missing');const t=T.get(g.teaching_proposal.id);if(!t||!T.active(t)||!T.applies(t,context())||(t.version||1)!==g.teaching_proposal.version)return fail('teaching_changed');return T.correction(t.id);}
  function exportData(){return JSON.stringify({kind:'concept_memory_history',persistence:'session_only',gists:visible().map(g=>copy(assess(g))),preview:preview()},null,2);}
  const button=(c,a,label,id='')=>'<button class="soft-button" data-action="'+a+'" data-id="'+c.esc(id)+'">'+label+'</button>';
+ const gistTone=s=>s==='Verified'?'positive':s==='Discarded'?'idle':'warning';
+ /* SHELL.disclosure has no attribute slot; the toggle listener below keys on
+    data-memory-disclosure, so inject it beside the builder's own data-k. */
+ const memDisclosure=(key,summaryHtml,bodyHtml,open)=>S.disclosure(key,summaryHtml,bodyHtml,open)
+  .replace('<details','<details data-memory-disclosure="'+S.esc(key)+'"');
  function render(c,editor=false){const e=c.esc,v=views.get(c.thread.id)||{},list=visible().map(assess),selection=v.id?list.filter(g=>g.id===v.id):list.filter(g=>filter==='All'||g.verification_state===filter);const p=preview();
-  return '<article class="memory-document" data-k="auto-memory-doc"><div class="room-meta"><span>Gist Review · session preview</span><span>'+p.items.length+' eligible</span></div><h2>Automatic memory</h2><div class="memory-controls">'+['Unverified','Verified','All'].map(x=>'<button class="soft-button'+(!v.id&&filter===x?' active':'')+'" data-action="memory-filter" data-value="'+x+'">'+x+'</button>').join('')+button(c,'memory-preview','Preview next context')+button(c,'memory-export','Export history')+button(c,'teach-open','Taught memory')+'</div>'+(v.preview?'<section class="memory-preview" data-k="memory-preview"><header><strong>Next Assistant context</strong><small>Preview only · not dispatched</small></header><h3>Verified summaries</h3>'+(p.items.map(x=>'<p data-capsule-gist="'+e(x.id)+'">'+e(x.summary)+'</p>').join('')||'<p>No automatic summaries eligible.</p>')+'<h3>Explicit teaching</h3>'+(p.teaching.map(x=>'<p data-capsule-teaching="'+e(x.id)+'">'+e(x.text)+'</p>').join('')||'<p>No teaching in this scope.</p>')+'<small>'+p.estimatedTokens+' / '+p.budget+' estimated automatic-summary tokens'+(p.truncated?' · limit applied':'')+'</small></section>':'')+'<div class="memory-gists">'+(selection.map(g=>'<section class="memory-gist" data-k="gist:'+e(g.id)+'" data-gist="'+e(g.id)+'"><header><strong>'+e(g.verification_state)+'</strong><small>'+e(g.source||'Legacy')+(g.pinned?' · Pinned':'')+'</small></header><p>'+e(g.summary)+'</p><small>'+e(g.reason)+'</small><div class="memory-controls">'+button(c,'memory-verify','Recheck evidence',g.id)+button(c,'memory-pin',g.pinned?'Unpin':'Pin',g.id)+(!g.discarded?button(c,'memory-discard','Discard',g.id):'')+(g.teaching_proposal?button(c,'memory-correct','Review teaching correction',g.id):'')+'</div><details data-k="evidence:'+e(g.id)+'" data-memory-disclosure="evidence:'+e(g.id)+'"'+(disclosures.get('evidence:'+g.id)?' open':'')+'><summary>Claims and evidence</summary>'+(g.claims||[]).map(cl=>'<div class="memory-claim"><strong>'+e(cl.support_state||'Unverified')+'</strong><p>'+e(cl.text)+'</p><small>'+e(cl.support_scope)+' · '+e(cl.currentness)+'</small></div>').join('')+(g.evidence_refs||[]).map(ref=>{const q=proofs.get(ref.ref);return q?'<div class="memory-evidence"><strong>'+e(q.sourcePath)+'</strong><pre>'+e(q.sourceBody)+'</pre>'+q.cases.map(t=>'<p>'+e(t.name)+' · '+(t.pass?'Pass':'Not passing')+'</p>').join('')+'</div>':'<p>Evidence not available in this session.</p>';}).join('')+'</details><details data-k="history:'+e(g.id)+'" data-memory-disclosure="history:'+e(g.id)+'"'+(disclosures.get('history:'+g.id)?' open':'')+'><summary>History</summary><ol>'+(g.history||[]).map(h=>'<li>'+e(h.event)+' · '+e(h.detail)+'</li>').join('')+'</ol></details></section>').join('')||'<p class="memory-empty">No '+(filter==='All'?'':filter.toLowerCase()+' ')+'gists in this project.</p>')+'</div><small class="memory-boundary">Local concept checks only. No persistent database or model dispatch.</small>'+(editor?(window.PM56_MEMORY_DEMOS?.guide(c,true)||''):'')+'</article>';
+  const about=S.section({iconHtml:c.icon('info',12),label:'What this is',body:
+   S.note(e('A gist is one sentence plus the claims it rests on and the evidence refs behind them. Automatic memory writes a gist at run boundaries and milestones — never mid-turn.'))+
+   S.note(e('Verification is computed, not asserted: a claim is Verified only while its referenced local check still passes against an unchanged source. Everything else stays Unverified and is excluded from the next context.'))+
+   S.note(e('Eligible means "would enter the next Assistant context right now". Local concept checks only — no persistent database, no model dispatch.'))});
+  const controls=S.section({iconHtml:c.icon('settings',12),label:'Gist controls',meta:S.seg(['Unverified','Verified','All'].map(x=>[x,x]),v.id?null:filter,'memory-filter'),body:
+   '<div class="mdl-card-actions">'+button(c,'memory-preview','Preview next context')+button(c,'memory-export','Export history')+button(c,'teach-open','Taught memory')+'</div>'});
+  const previewPanel=v.preview?'<div data-k="memory-preview">'+S.section({iconHtml:c.icon('eye',12),label:'Next Assistant context',meta:e('Preview only · not dispatched'),body:
+   (p.items.length?S.rows(p.items.map(x=>['<span data-capsule-gist="'+e(x.id)+'">'+e(x.summary)+'</span>',S.chip('positive','Included')])):S.note(e('No automatic summaries eligible.')))+
+   (p.teaching.length?S.rows(p.teaching.map(x=>['<span data-capsule-teaching="'+e(x.id)+'">'+e(x.text)+'</span>',S.chip('accent','Taught')])):S.note(e('No teaching in this scope.')))+
+   (p.excluded.length?S.rows(p.excluded.map(x=>{const g=get(x.id);return [e(g?g.summary:x.id),e(x.reason)+' '+S.chip('idle','Excluded')];})):'')+
+   S.note(e(p.estimatedTokens+' / '+p.budget+' estimated automatic-summary tokens'+(p.truncated?' · limit applied':'')))})+'</div>':'';
+  const gists=selection.map(g=>{
+   const cl=(g.claims||[])[0]||{};
+   return S.card({attrs:' data-k="gist:'+e(g.id)+'" data-gist="'+e(g.id)+'"',
+    head:S.cardHead({copy:S.copy(e(g.summary),e((cl.support_scope||'unassessed')+' · '+(g.kind||'Note')+' · '+(cl.currentness||'source_unavailable')+(g.pinned?' · Pinned':''))),extra:S.chip(gistTone(g.verification_state),e(g.verification_state))}),
+    body:S.note(e(g.reason))+((g.claims||[]).length?S.rows(g.claims.map(x=>[e(x.text),S.chip(x.support_state==='supported'?'positive':'idle',e(x.support_state||'unverified'))])):''),
+    actions:button(c,'memory-verify','Recheck evidence',g.id)+button(c,'memory-pin',g.pinned?'Unpin':'Pin',g.id)+(!g.discarded?button(c,'memory-discard','Discard',g.id):'')+(g.teaching_proposal?button(c,'memory-correct','Review teaching correction',g.id):'')})+
+   memDisclosure('evidence:'+g.id,e('Claims and evidence'),
+    (g.evidence_refs||[]).map(ref=>{const q=proofs.get(ref.ref);return q?'<div class="memory-evidence"><strong>'+e(q.sourcePath)+'</strong><pre>'+e(q.sourceBody)+'</pre>'+q.cases.map(t=>'<p>'+e(t.name)+' · '+(t.pass?'Pass':'Not passing')+'</p>').join('')+'</div>':S.note(e('Evidence not available in this session.'));}).join(''),
+    disclosures.get('evidence:'+g.id))+
+   memDisclosure('history:'+g.id,e('History'),'<ol>'+(g.history||[]).map(h=>'<li>'+e(h.event)+' · '+e(h.detail)+'</li>').join('')+'</ol>',disclosures.get('history:'+g.id));
+  }).join('')||S.note(e('No '+(filter==='All'?'':filter.toLowerCase()+' ')+'gists in this project.'));
+  return '<article class="memory-document" data-k="auto-memory-doc">'+about+controls+previewPanel+gists+(editor?(window.PM56_MEMORY_DEMOS?.guide(c,true)||''):'')+'</article>';
  }
  function show(id){const c=E.ctx();if(id&&(!get(id)||!allowed(get(id))))return fail('outside_scope');views.set(c.thread.id,{id:id||null,preview:false});filter='Unverified';c.closeMenu();c.closeDialog();c.state.editorRevealed=true;c.openEditor('memory:'+c.thread.id);return {ok:true};}
- function dialog(c){return '<div class="dialog" style="width:min(740px,calc(100vw - 32px))"><div class="dialog-head"><h2>Memory</h2><button class="icon-button" data-action="close-dialog" aria-label="Close">'+c.icon('close',14)+'</button></div><div class="af-tabs"><button class="af-tab" data-action="af-memory-section" data-value="auto">Automatic · '+visible().length+'</button><button class="af-tab" data-action="af-memory-section" data-value="taught">Taught by you · '+T.visibleRecords(context()).filter(T.active).length+'</button></div><div class="dialog-body">'+(tab==='auto'?render(c):T.memoryRows(c))+'</div></div>';}
+ function dialog(c){const e=c.esc,p=preview();
+  return S.dialog({iconHtml:c.icon('brain',15),title:e('Memory'),
+   sub:e('What the assistant keeps between turns: gists captured automatically from finished work, plus teaching you wrote on purpose. Both are session-local concept records.'),
+   pill:e(p.items.length+' eligible'),width:780,
+   body:S.tabs([['auto','Automatic · '+visible().length],['taught','Taught by you · '+T.visibleRecords(context()).filter(T.active).length]],tab,{action:'af-memory-section'})+(tab==='auto'?render(c):T.memoryRows(c))});}
  E.chainAction('af-memory-open',c=>{filter='Unverified';tab='auto';views.delete(c.thread.id);c.closeMenu();c.openDialog({type:'af-memory'});return true;});
  E.chainAction('af-memory-verify',(c,b)=>{mutation(b.dataset.value,'verify');c.renderApp();return true;});
  // Compatibility gallery replay: produces an unverified candidate, never evidence.

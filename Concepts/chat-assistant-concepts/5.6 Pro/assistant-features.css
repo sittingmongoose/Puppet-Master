@@ -43,11 +43,6 @@
   color:var(--muted); font-size:12px;
 }
 .af-empty svg{ opacity:.55; }
-.af-settings-h3{
-  margin:6px 0 -2px; font-size:11px; font-weight:700; letter-spacing:.03em; text-transform:uppercase;
-  color:var(--subtle); border-top:1px solid var(--border); padding-top:10px;
-}
-.af-dialog-body>.af-settings-h3:first-child{ border-top:0; padding-top:0; }
 
 /* =====================================================================
    3. TEACH DIALOG
@@ -232,27 +227,9 @@ button.af-chip:hover{ background:var(--surface-3); color:var(--text); }
 }
 
 /* =====================================================================
-   9. ASSISTANT DEFAULTS (Settings dialog) + THREAD MENU
+   9. THREAD MENU (the settings dialog now renders through the shared
+   PM56_SHELL grammar in module-shell.css; its old rules are gone)
    ===================================================================== */
-.af-toggle-row{ display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text); cursor:pointer; }
-.af-toggle-row input{ width:15px; height:15px; accent-color:var(--accent); }
-.af-policy-rows{ display:grid; gap:4px; border:1px solid var(--border); border-radius:var(--radius-sm); padding:5px; background:var(--surface); }
-.af-scroll-rows{ max-height:min(38vh,300px); overflow:auto; }
-.af-attempt-log{ display:grid; gap:3px; margin-top:2px; }
-.af-attempt-row{
-  display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:8px; align-items:center;
-  padding:5px 7px; border-radius:var(--radius-sm); background:var(--surface-2); font-size:10.5px; color:var(--muted);
-}
-.af-attempt-row>span:nth-child(2){ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.af-attempt-outcome{
-  padding:1px 6px; border-radius:999px; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.02em;
-  border:1px solid var(--border-strong); background:var(--surface-3); white-space:nowrap;
-}
-.af-attempt-outcome.af-outcome-generated{ color:var(--positive); border-color:color-mix(in srgb, var(--positive) 40%, var(--border)); }
-.af-attempt-outcome.af-outcome-unavailable, .af-attempt-outcome.af-outcome-manual_rename_race, .af-attempt-outcome.af-outcome-skipped_locked{
-  color:var(--warning); border-color:color-mix(in srgb, var(--warning) 40%, var(--border));
-}
-.af-attempt-outcome.af-outcome-pending{ color:var(--accent); }
 
 .af-menu-divider{ height:1px; margin:4px 8px; background:var(--border); }
 .af-menu-note{

@@ -18,7 +18,7 @@
   /* dialog({iconHtml,title,sub,pill,width,ariaLabel,body,foot,closeAction,closeIcon}) */
   function dialog(o) {
     o = o || {};
-    return '<section class="dialog mdl" style="width:min(' + (o.width || 640) + 'px,calc(100vw - 20px))" role="dialog" aria-modal="true" aria-label="' + esc(o.ariaLabel || o.title) + '">' +
+    return '<section class="dialog mdl' + (o.cls ? ' ' + o.cls : '') + '" style="width:min(' + (o.width || 640) + 'px,calc(100vw - 20px))" role="dialog" aria-modal="true" aria-label="' + esc(o.ariaLabel || o.title) + '">' +
         '<div class="mdl-head">' +
           '<span class="mdl-icon">' + (o.iconHtml || '') + '</span>' +
           '<div class="mdl-title"><strong>' + (o.title || '') + '</strong>' + (o.sub ? '<span>' + o.sub + '</span>' : '') + '</div>' +
@@ -73,6 +73,14 @@
     }).join('') + '</div>';
   }
 
+  /* disclosure(key,summaryHtml,bodyHtml,open?,cls?) — cls appends legacy classes. */
+  function disclosure(key, summaryHtml, bodyHtml, open, cls) {
+    return '<details class="mdl-disclosure' + (cls ? ' ' + cls : '') + '" data-k="' + esc(key) + '"' + (open ? ' open' : '') + '>' +
+        '<summary>' + summaryHtml + CHEVRON + '</summary>' +
+        '<div class="mdl-disclosure-body">' + (bodyHtml || '') + '</div>' +
+      '</details>';
+  }
+
   /* choice({value,label,detail,active,action,extra}) — data-value is String(value) verbatim. */
   function choice(o) {
     o = o || {};
@@ -98,12 +106,6 @@
     return '<p class="mdl-note' + (tone ? ' ' + esc(tone) : '') + '">' + html + '</p>';
   }
 
-  function disclosure(key, summaryHtml, bodyHtml, open) {
-    return '<details class="mdl-disclosure" data-k="' + esc(key) + '"' + (open ? ' open' : '') + '>' +
-        '<summary>' + summaryHtml + CHEVRON + '</summary>' +
-        '<div class="mdl-disclosure-body">' + (bodyHtml || '') + '</div>' +
-      '</details>';
-  }
 
   function stat(labelHtml, valueHtml) {
     return '<div class="mdl-stat"><strong>' + valueHtml + '</strong><span>' + labelHtml + '</span></div>';

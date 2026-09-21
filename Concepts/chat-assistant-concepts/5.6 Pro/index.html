@@ -8303,7 +8303,8 @@ button.qs-spine-slot.is-current::after{
 .mdl-title{flex:1;min-width:0;display:grid;gap:2px;}
 .mdl-title strong{font-size:14px;font-weight:680;letter-spacing:-.1px;color:var(--text);}
 .mdl-title span{font-size:11.5px;line-height:1.45;color:var(--muted);}
-.mdl-body{min-height:0;overflow:auto;padding:16px 20px;display:grid;gap:12px;align-content:start;}
+.mdl-body{min-height:0;overflow:auto;padding:16px 20px;}
+.mdl-body>*+*{margin-top:12px;}
 .mdl-section{border:1px solid var(--border);border-radius:12px;background:color-mix(in srgb,var(--surface-2) 72%,transparent);overflow:hidden;align-self:start;}
 .mdl-section-head{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border);
   background:color-mix(in srgb,var(--surface-3) 55%,transparent);}
@@ -10521,72 +10522,9 @@ button.qs-spine-slot.is-current::after{
 }
 
 /* ======================================================= configure == */
-.collab-configure-body { display: flex; flex-direction: column; gap: 10px; }
-.collab-configure-body h4 {
-  margin: 6px 0 0;
-  font-size: 11.5px;
-  text-transform: uppercase;
-  letter-spacing: .03em;
-  color: var(--muted);
-}
-.collab-field-row {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.collab-field-row label {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: 11px;
-  color: var(--muted);
-  flex: 1 1 160px;
-}
-.collab-field-row input[type="text"],
-.collab-field-row input[type="number"],
-.collab-field-row select {
-  font: inherit;
-  font-size: 12.5px;
-  color: var(--text);
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 6px 8px;
-}
 .collab-limit-warn { color: var(--danger); font-weight: 700; text-transform: none; }
 .collab-participant-editor { display: flex; flex-direction: column; gap: 6px; }
-.collab-participant-editor-row {
-  display: grid;
-  grid-template-columns: minmax(110px,1fr) minmax(150px,1.4fr) minmax(110px,1fr) auto auto auto;
-  align-items: center;
-  gap: 6px;
-  padding: 6px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--surface-2);
-}
-.collab-participant-editor-row input,
-.collab-participant-editor-row select {
-  font: inherit;
-  font-size: 11.5px;
-  color: var(--text);
-  background: var(--surface-3);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 5px 6px;
-  min-width: 0;
-}
-.collab-add-specialists {
-  border: 1px dashed var(--border-strong);
-  border-radius: var(--radius-sm);
-  padding: 9px 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.collab-add-specialists strong { font-size: 11px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); }
 .collab-checkbox-row { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text); }
-.collab-configure-foot { display: flex; justify-content: flex-end; gap: 8px; }
 .collab-refusal-demo {
   border: 1px solid var(--warning);
   border-radius: var(--radius-sm);
@@ -10675,24 +10613,12 @@ button.qs-spine-slot.is-current::after{
 .collab-card .collab-truth-note{ color:var(--muted); }
 .collab-card .collab-truth-warn{ color:var(--warning); font-weight:500; }
 
-/* MODAL-005: a refused Start, shown inside the modal that still holds every
-   value the user configured. It is a disclosure, not a card: no run exists. */
-.collab-start-failure{
-  margin:12px 0 0; padding:10px 12px; border-radius:8px;
-  border:1px solid var(--border-strong); background:var(--surface-2);
-}
-.collab-start-failure strong{ display:block; font-size:12px; margin-bottom:4px; color:var(--text); }
-.collab-start-failure p{ margin:0; font-size:11.5px; color:var(--muted); }
-.collab-start-failure p + p{ margin-top:5px; }
-
 /* Shared selector rows: identity and role, not a table of native selects. */
 .collab-participant-editor { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
 .collab-participant-editor-row { display:flex; flex-direction:column; gap:8px; padding:11px; border:1px solid var(--border); border-radius:11px; background:var(--surface-2); }
 .collab-member-name { display:flex; align-items:center; gap:6px; min-width:0; }
 .collab-member-name .collab-field-role { flex:1; min-width:0; border:0; background:transparent; padding:5px 2px; font-weight:600; }
 .collab-member-number { font-size:10px; color:var(--muted); width:16px; flex:none; }
-.collab-member-pickers { display:grid; grid-template-columns:minmax(0,1fr); gap:7px; }
-.collab-member-pickers label { display:grid; gap:4px; font-size:9px; color:var(--muted); }
 .collab-config-effort { color:var(--muted); font-size:10px; }
 .collab-authority { color:var(--muted); font-size:10px; }
 .collab-checkbox-row small { margin-left:7px; color:var(--muted); }
@@ -11318,9 +11244,6 @@ button.qs-spine-slot.is-current::after{
 /* ---------- shared field chrome (compose forms) ---------- */
 .sched-honesty{margin:0 0 10px;padding:8px 9px;border:1px solid var(--border);border-radius:9px;
   background:var(--surface-2);color:var(--muted);font-size:11px;line-height:1.5}
-.sched-field{display:grid;gap:4px;margin-bottom:9px}
-.sched-field label{font-size:10px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--subtle)}
-.sched-field-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px;margin-bottom:9px}
 .sched-static{padding:7px 9px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);
   color:var(--text);font-size:12px}
 .sched-text{width:100%;resize:vertical;min-height:64px;border:1px solid var(--border);border-radius:9px;
@@ -11330,11 +11253,6 @@ button.qs-spine-slot.is-current::after{
 .sched-count{display:block;margin-top:3px;font-size:10px;color:var(--subtle);text-align:right;
   font-variant-numeric:tabular-nums}
 .sched-count.over{color:var(--danger)}
-.sched-field input[type="date"],.sched-field input[type="time"],.sched-field input[type="number"],
-.sched-field select{width:100%;height:32px;border:1px solid var(--border);border-radius:8px;
-  background:var(--surface-2);color:var(--text);padding:0 8px;outline:0;font-size:12px;font-family:var(--font-ui)}
-.sched-field input:focus,.sched-field select:focus{border-color:var(--accent)}
-.sched-field input:disabled{opacity:.5}
 .sched-attach-list{list-style:none;margin:0;padding:0;display:grid;gap:3px}
 .sched-attach-list li{padding:5px 8px;border:1px solid var(--border);border-radius:7px;background:var(--surface-2);
   font-size:11px;color:var(--muted)}
@@ -11355,7 +11273,6 @@ button.qs-spine-slot.is-current::after{
 .sched-day-chip input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
 .sched-day-chip.on{border-color:color-mix(in srgb,var(--accent) 50%,var(--border));
   background:color-mix(in srgb,var(--accent) 15%,var(--surface-2));color:var(--text)}
-.sched-check-row{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text);margin:2px 0 9px;cursor:pointer}
 
 /* ---------- DST summary ---------- */
 .sched-dst{display:grid;gap:6px;margin:2px 0 9px;padding:8px 9px;border-radius:9px;
@@ -11405,20 +11322,11 @@ button.qs-spine-slot.is-current::after{
 /* ---------- precedence + quota metric strip ---------- */
 .sched-precedence{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:6px;margin:8px 0}
 
-/* ---------- manage dialog tabs ---------- */
-.sched-tabs{display:flex;gap:2px;padding:6px 10px;border-bottom:1px solid var(--border);flex-wrap:wrap}
-.sched-tab{border-radius:8px 8px 0 0}
-.sched-tab.active{background:var(--surface-3);color:var(--text);box-shadow:inset 0 -2px var(--accent)}
 .sched-pill-stop{border-color:color-mix(in srgb,var(--danger) 45%,var(--border));
   background:color-mix(in srgb,var(--danger) 15%,var(--surface-3));color:var(--danger)}
 
 /* ---------- event log ---------- */
 .sched-event-log{display:grid;gap:5px}
-.sched-event-row{padding:7px 8px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2)}
-.sched-event-row.refused{border-color:color-mix(in srgb,var(--warning) 32%,var(--border))}
-.sched-event-type{display:block;font-size:9px;font-weight:800;letter-spacing:.02em;color:var(--accent-2);
-  margin-top:2px;font-family:var(--font-mono)}
-.sched-event-row p{margin:3px 0 0;font-size:11px;color:var(--muted);line-height:1.5}
 
 /* ---------- restart/persistence footer ---------- */
 .sched-persist-foot{padding:9px 10px;border-top:1px solid var(--border);background:var(--surface)}
@@ -11431,10 +11339,13 @@ button.qs-spine-slot.is-current::after{
   border:1px solid var(--border);background:var(--surface-3);color:var(--subtle);font-size:9px;font-weight:700;
   vertical-align:middle}
 
-/* ---------- dialog width polish (base .dialog chrome is inherited) ---------- */
-.sched-dialog .dialog-body{display:block}
-.sched-dialog--manage{display:grid;grid-template-rows:auto auto minmax(0,1fr) auto}
-.sched-dialog--manage .dialog-body{overflow:auto}
+/* ---------- dialog roots ----------
+   The dialogs are built by PM56_SHELL; module-shell.css owns every visual.
+   .sched-dialog / .sched-dialog--message|--build|--manage|--focused remain
+   on the roots as UNSTYLED hooks: plan-demo-batch2.js refreshGuide()
+   resolves closest('.sched-dialog'), the b18/b19/b20 evidence harnesses
+   measure .sched-dialog geometry, and tests/scheduling-verify.mjs opens the
+   build dialog through .sched-dialog--build. No layout rules may live here. */
 
 @media (prefers-reduced-motion: reduce){
   .sched-row{animation:none;opacity:1;transform:none}
@@ -11489,36 +11400,8 @@ button.qs-spine-slot.is-current::after{
 }
 
 /* Scheduling v2: readable messages and windows, not a runtime diagnostics wall. */
-.sched-dialog{width:min(680px,calc(100vw - 24px));max-height:calc(100vh - 36px);display:flex;flex-direction:column;overflow:hidden;}
-.sched-dialog--manage{width:min(820px,calc(100vw - 24px));height:min(780px,calc(100vh - 36px));}
-.sched-dialog>.dialog-body{padding:20px 24px;overflow-y:auto;min-height:0;display:block;}
-.sched-dialog .drawer-head{gap:10px;padding:17px 22px;flex:none;}
-.schedule-overview{padding:18px 24px;display:flex;align-items:center;gap:32px;border-bottom:1px solid var(--border);}
-.schedule-overview>div:not(.schedule-overview-state){display:grid;gap:3px;}
-.schedule-overview strong{font-size:23px;font-weight:600;line-height:1.1;}
-.schedule-overview span{font-size:11px;color:var(--muted);}
-.schedule-overview-state{margin-left:auto;}
-.sched-tabs{padding:0 20px;gap:18px;border-bottom:1px solid var(--border);flex:none;}
-.sched-tab{padding:13px 2px!important;border-radius:0;display:flex;gap:6px;align-items:center;font-size:11px;}
-.sched-tab.active{background:transparent;border-bottom:2px solid var(--accent);color:var(--text);}
-.sched-tab>span{background:var(--surface-3);padding:1px 5px;border-radius:5px;font-size:9px;}
 .schedule-list-toolbar{padding:12px 24px 0;display:flex;align-items:center;gap:12px;flex:none;}
 .schedule-list-toolbar>span:not(.spacer){color:var(--muted);font-size:10px;}
-.schedule-list-section>h3{font-size:11px;letter-spacing:.02em;font-weight:600;margin:0 0 9px;display:flex;gap:8px;align-items:center;}
-.schedule-list-section>h3>span{font-size:10px;font-weight:400;color:var(--muted);}
-.schedule-list-section+.schedule-list-section{margin-top:22px;}
-.schedule-item{border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:var(--surface-2);margin:8px 0;min-width:0;}
-.schedule-item-head{display:flex;align-items:start;gap:12px;}
-.schedule-item-icon{width:30px;height:30px;border-radius:8px;background:var(--surface-3);display:grid;place-items:center;flex:none;color:var(--muted);}
-.schedule-item-copy{display:grid;gap:7px;flex:1;min-width:0;}
-.schedule-item-copy>strong{font-size:12px;line-height:1.5;font-weight:550;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;}
-.schedule-item-copy>span{font-size:11px;color:var(--muted);line-height:1.4;}
-.schedule-item-destination{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted);margin:10px 0 6px 42px;}
-.schedule-item-controls{display:flex;align-items:center;gap:8px;margin:11px 0 0 42px;flex-wrap:wrap;}
-.schedule-details{margin-top:12px;padding-top:9px;border-top:1px solid var(--border);}
-.schedule-details>summary{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:10px;color:var(--muted);width:fit-content;padding:2px 0;list-style:none;}
-.schedule-details[open]>summary{color:var(--text);margin-bottom:11px;}
-.schedule-details[open]>summary>svg{transform:rotate(180deg);}
 .sched-details-body{font-size:11px;line-height:1.55;}
 .sched-full-message{white-space:pre-wrap;overflow-wrap:anywhere;padding:10px 12px;border-radius:7px;background:var(--surface-3);margin:3px 0 16px;}
 .sched-facts{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px;margin:14px 0;font-size:11px;}
@@ -11531,29 +11414,12 @@ button.qs-spine-slot.is-current::after{
 .sched-audit p{line-height:1.5;}
 .schedule-attention{display:flex;gap:7px;align-items:start;font-size:11px;color:var(--warning);margin:11px 0 0;line-height:1.45;}
 .schedule-attention svg{flex:none;margin-top:2px;}
-.schedule-history{margin-top:22px;}
-.schedule-history>summary{font-size:11px;color:var(--muted);cursor:pointer;padding:9px 0;}
-.schedule-history>summary>span{margin-left:5px;font-size:10px;}
-.schedule-footer{padding:12px 24px;display:flex;justify-content:space-between;color:var(--muted);font-size:9px;border-top:1px solid var(--border);flex:none;}
 .schedule-empty{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:15px;padding:40px 20px;font-size:12px;color:var(--muted);}
 .schedule-empty strong{color:var(--text);font-size:14px;}
-.schedule-safety{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;border-bottom:1px solid var(--border);}
-.schedule-safety>div{display:grid;gap:7px;}.schedule-safety strong{font-size:12px;}.schedule-safety div>span{color:var(--muted);font-size:11px;}
-.schedule-destination-tag,.sched-destination-tag{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px;margin:0 0 17px;}
-.sched-dialog .sched-field{display:flex;flex-direction:column;gap:7px;min-width:0;margin-bottom:15px;font-size:11px;color:var(--muted);}
-.sched-dialog .sched-field>span{font-size:11px;color:var(--muted);}
-.sched-dialog .sched-field input,.sched-dialog .sched-field select{height:36px;min-width:0;width:100%;}
-.sched-dialog .sched-field textarea{font-size:12px;line-height:1.65;min-height:110px;color:var(--text);padding:12px;}
-.schedule-when{padding-top:3px;}.schedule-when h3{font-size:12px;font-weight:600;margin:5px 0 11px;}
-.sched-dialog .sched-field-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;}
-.schedule-zone{grid-column:1/-1;}
 .sched-attached{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:15px;font-size:10px;}
 .sched-attached>span{display:flex;align-items:center;gap:5px;padding:4px 7px;background:var(--surface-3);border-radius:5px;}
-.schedule-form-foot{display:flex;align-items:center;gap:9px;padding:14px 22px;border-top:1px solid var(--border);flex:none;flex-wrap:wrap;}
 .schedule-caption{font-size:10px;color:var(--muted);}
 .sched-form-error{color:var(--danger);font-size:11px;min-height:14px;}
-.schedule-plan-target{display:grid;gap:5px;margin-bottom:22px;}.schedule-plan-target>strong{font-size:14px;}.schedule-plan-target>span{font-size:11px;color:var(--muted);}
-.schedule-kind{display:flex;gap:6px;margin-bottom:20px;}.schedule-kind .active{background:var(--surface-3);border-color:var(--border-strong);}
 .sched-days{margin:0 0 20px;gap:6px;}.sched-day-chip{justify-content:center;min-width:34px;height:33px;color:var(--muted);font-size:10px;}.sched-day-chip.on{color:var(--text);background:var(--surface-4);border-color:var(--border-strong);}
 .sched-card{display:block;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);padding:14px 16px;min-width:0;}
 .sched-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;}
@@ -11564,7 +11430,7 @@ button.qs-spine-slot.is-current::after{
 .sched-card-foot .text-button{padding:2px 0;font-size:10px;}
 .sched-card .sched-details-body{margin-top:14px;}
 .sched-chip{font-size:9px;white-space:nowrap;}
-@media(max-width:540px){.schedule-overview{gap:18px;padding:16px;}.schedule-overview-state{display:none;}.sched-tabs{gap:12px;padding:0 14px;}.sched-tab{font-size:10px;}.sched-dialog>.dialog-body{padding:16px;}.schedule-item{padding:12px;}.schedule-item-destination,.schedule-item-controls{margin-left:0;}.sched-facts{grid-template-columns:1fr;}.schedule-form-foot .schedule-caption{display:none;}}
+@media(max-width:540px){.sched-facts{grid-template-columns:1fr}}
 
 /* Terminal events read as receipts, not another stack of active forms. */
 .sched-card:is(.sched-card-sent,.sched-card-dispatched,.sched-card-canceled,.sched-card-cancelled,.sched-card-expired){border:0;border-top:1px solid var(--border);border-radius:0;background:transparent;padding:11px 2px;}
@@ -12083,11 +11949,6 @@ button.qs-spine-slot.is-current::after{
   color:var(--muted); font-size:12px;
 }
 .af-empty svg{ opacity:.55; }
-.af-settings-h3{
-  margin:6px 0 -2px; font-size:11px; font-weight:700; letter-spacing:.03em; text-transform:uppercase;
-  color:var(--subtle); border-top:1px solid var(--border); padding-top:10px;
-}
-.af-dialog-body>.af-settings-h3:first-child{ border-top:0; padding-top:0; }
 
 /* =====================================================================
    3. TEACH DIALOG
@@ -12272,27 +12133,9 @@ button.af-chip:hover{ background:var(--surface-3); color:var(--text); }
 }
 
 /* =====================================================================
-   9. ASSISTANT DEFAULTS (Settings dialog) + THREAD MENU
+   9. THREAD MENU (the settings dialog now renders through the shared
+   PM56_SHELL grammar in module-shell.css; its old rules are gone)
    ===================================================================== */
-.af-toggle-row{ display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text); cursor:pointer; }
-.af-toggle-row input{ width:15px; height:15px; accent-color:var(--accent); }
-.af-policy-rows{ display:grid; gap:4px; border:1px solid var(--border); border-radius:var(--radius-sm); padding:5px; background:var(--surface); }
-.af-scroll-rows{ max-height:min(38vh,300px); overflow:auto; }
-.af-attempt-log{ display:grid; gap:3px; margin-top:2px; }
-.af-attempt-row{
-  display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:8px; align-items:center;
-  padding:5px 7px; border-radius:var(--radius-sm); background:var(--surface-2); font-size:10.5px; color:var(--muted);
-}
-.af-attempt-row>span:nth-child(2){ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.af-attempt-outcome{
-  padding:1px 6px; border-radius:999px; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.02em;
-  border:1px solid var(--border-strong); background:var(--surface-3); white-space:nowrap;
-}
-.af-attempt-outcome.af-outcome-generated{ color:var(--positive); border-color:color-mix(in srgb, var(--positive) 40%, var(--border)); }
-.af-attempt-outcome.af-outcome-unavailable, .af-attempt-outcome.af-outcome-manual_rename_race, .af-attempt-outcome.af-outcome-skipped_locked{
-  color:var(--warning); border-color:color-mix(in srgb, var(--warning) 40%, var(--border));
-}
-.af-attempt-outcome.af-outcome-pending{ color:var(--accent); }
 
 .af-menu-divider{ height:1px; margin:4px 8px; background:var(--border); }
 .af-menu-note{
@@ -12650,20 +12493,15 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .room-demo-guide{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface-2);padding:10px 12px;margin:6px 0 10px;display:flex;gap:10px;align-items:center;justify-content:space-between;min-width:0;}
 .room-demo-guide>div:first-child{min-width:0;flex:1;}.room-demo-guide strong{display:block;font-size:12px;font-weight:550;line-height:1.5;}.room-demo-guide small{display:block;color:var(--muted);font-size:10px;margin-bottom:3px;}.room-demo-guide>div:last-child{display:flex;gap:6px;flex:none;}
 
-/* Teach uses existing native cards/section borders, not the withdrawn video layout. */
-.teach-dialog{width:min(560px,calc(100vw - 28px));max-height:calc(100vh - 32px);display:flex;flex-direction:column;}
-.teach-dialog .dialog-body{padding:18px 20px;overflow:auto;min-height:0;}
-.teach-dialog textarea{display:block;width:100%;resize:vertical;min-height:110px;max-height:230px;padding:12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface-2);color:var(--text);font-family:inherit;font-size:13px;line-height:1.6;box-sizing:border-box;}
-.teach-scope-picker{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 16px;}
-.teach-scope-picker .selected,.teach-related .selected{outline:1px solid var(--accent);background:var(--surface-3);}
-.teach-source-line{display:flex;gap:12px;justify-content:space-between;color:var(--muted);font-size:11px;}
-.teach-footer{padding:16px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;}
-.teach-help,.teach-safety,.teach-source small{color:var(--muted);font-size:11px;line-height:1.5;}
-.teach-safety{margin-top:8px;}.teach-safety summary{cursor:pointer;}
+/* Teach: dialog rebuilt on the PM56_SHELL grammar (module-shell.css). The rules
+   here style only what the shell does not own: the related-teaching block and
+   capture quote emitted into the dialog, and the Taught-memory editor document. */
+.teach-related .selected{outline:1px solid var(--accent);background:var(--surface-3);}
+.teach-help,.teach-source small{color:var(--muted);font-size:11px;line-height:1.5;}
 .teach-related,.teach-revoke,.teach-preview{border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin:12px 0;background:var(--surface-2);}
 .teach-related small{display:block;margin:4px 0;color:var(--muted);font-size:10px;}.teach-related button,.teach-revoke button{margin-right:8px;margin-top:6px;}
-.teach-confirm{font-size:12px;display:flex;align-items:flex-start;gap:8px;margin:12px 0;}
-.teach-error{color:var(--danger,#d86676);font-size:12px;min-height:0;margin:6px 0;}.teach-error:empty{display:none;}
+#teach-related:empty{display:none;}
+#teach-error:empty{display:none;}
 .teach-document{max-width:100%;min-width:0;padding:20px;box-sizing:border-box;}.teach-document h2{font-size:21px;margin:12px 0;}
 .teach-version{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;min-width:0;}
 .teach-version header,.teach-preview header{display:flex;gap:12px;align-items:baseline;justify-content:space-between;flex-wrap:wrap;}
@@ -12671,25 +12509,19 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .teach-version small,.teach-preview small{color:var(--muted);font-size:11px;}.teach-actions{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0;}
 .teach-version details{color:var(--muted);font-size:11px;line-height:1.6;}.teach-version summary{cursor:pointer;}.teach-version dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;}.teach-version dd{margin:0;overflow-wrap:anywhere;}
 .teach-source{padding:12px;border:1px solid var(--border);border-radius:var(--radius);margin-top:12px;}
-@media(max-width:750px){.teach-document{padding:14px;}.teach-version{padding:12px;}.teach-source-line{flex-wrap:wrap;}}
+@media(max-width:750px){.teach-document{padding:14px;}.teach-version{padding:12px;}}
 
 .teach-receipt .event-copy{min-width:0;}.teach-receipt .soft-button{white-space:nowrap;}
 
 .teach-demo-guide{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface-2);margin:8px 0;min-width:0;}
 .teach-demo-guide>div{min-width:0;}.teach-demo-guide>div:last-child{display:flex;gap:8px;flex-shrink:0;}.teach-demo-guide small{display:block;font-size:10px;color:var(--muted);margin-bottom:4px;}.teach-demo-guide strong{font-size:12px;line-height:1.5;font-weight:500;}
 
-/* Native card grammar; no reference-video flattening or decorative side stripe. */
-.memory-document{padding:22px;min-width:0;max-width:100%;color:var(--text);font:13px/1.6 var(--font-ui)}
-.memory-document h2{font-size:22px;margin:10px 0 16px}.memory-document h3{font-size:12px;margin:12px 0 4px}
-.memory-controls{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.memory-controls button{white-space:normal;max-width:100%}
-.memory-controls .active{border-color:var(--accent);color:var(--accent)}
-.memory-gists{display:grid;gap:14px}.memory-gist,.memory-preview{padding:16px;border:1px solid var(--border);background:var(--surface-2);border-radius:12px;min-width:0}
-.memory-preview{margin:16px 0}.memory-gist header,.memory-preview header{display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap}
-.memory-document small{color:var(--muted);font-size:11px}.memory-gist>p{font-size:14px;line-height:1.55;margin:12px 0 6px;overflow-wrap:anywhere}
-.memory-gist details{margin:10px 0 0}.memory-gist summary{cursor:pointer;font-size:12px;color:var(--muted)}
-.memory-claim,.memory-evidence{padding:12px;border:1px solid var(--border);border-radius:8px;margin-top:10px}
+/* Memory surfaces render through the shared PM56_SHELL grammar (module-shell.css);
+   only the document wrapper and the evidence block inside disclosures remain here. */
+.memory-document{padding:22px;min-width:0;max-width:100%;color:var(--text);font:13px/1.6 var(--font-ui);display:grid;gap:12px;align-content:start}
+.mdl-body .memory-document{padding:0}
 .memory-document pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px}.memory-document li{overflow-wrap:anywhere}
-.memory-empty{padding:24px 8px;color:var(--muted)}.memory-boundary{display:block;margin-top:18px}
+.memory-evidence{padding:12px;border:1px solid var(--border);border-radius:8px}
 @media(max-width:820px){.memory-document{padding:16px}}
 
 .memory-demo-guide{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:8px 0;padding:12px;border:1px solid var(--border);background:var(--surface-2);border-radius:12px;font:12px/1.45 var(--font-ui)}
@@ -12763,18 +12595,9 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .revert-demo-injection{border:1px dashed var(--border);border-radius:10px;padding:12px 14px;margin:14px 0}.revert-demo-injection>small{font-size:10px;color:var(--muted)}.revert-demo-injection p{font-size:11px;color:var(--muted);line-height:1.6;margin:6px 0 10px}
 @media(max-width:820px){.revert-demo-guide{flex-wrap:wrap}.revert-demo-guide>div:last-child{flex-shrink:1}}
 
-/* B11: compact native cards; no left stripes, work animation or global layout overrides. */
-.eli5-dialog{width:min(460px,calc(100vw - 32px));max-height:calc(100vh - 36px);display:flex;flex-direction:column;overflow:hidden}
-.eli5-dialog .dialog-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 22px 16px;border-bottom:1px solid var(--border)}
-.eli5-dialog .dialog-head small{font-size:10px;color:var(--muted);letter-spacing:.8px}.eli5-dialog h2{font-size:21px;margin:3px 0 0;letter-spacing:-.4px}
-.eli5-dialog .dialog-body{padding:16px 22px;overflow-y:auto;min-height:0}.eli5-lede{color:var(--muted);font-size:12px;margin:0 0 14px}
-.eli5-choices{display:grid;gap:7px}.eli5-choice{display:flex;align-items:center;gap:11px;padding:11px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);color:var(--text);text-align:left;cursor:pointer;width:100%;font-family:inherit}
-.eli5-choice:hover{background:var(--hover)}.eli5-choice[aria-checked=true]{background:var(--surface-3,var(--surface-2));border-color:var(--muted)}
-.eli5-choice strong{display:block;font-size:12px;font-weight:600}.eli5-choice small{display:block;font-size:11px;color:var(--muted);line-height:1.5;margin-top:3px}
-.eli5-radio{width:19px;height:19px;flex:0 0 19px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center}
-.eli5-defaults{margin-top:16px;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2)}.eli5-defaults summary{cursor:pointer;font-size:12px}.eli5-defaults h3{font-size:11px;color:var(--muted);margin:16px 0 7px}.eli5-defaults .eli5-choices{grid-template-columns:repeat(2,minmax(0,1fr))}.eli5-defaults .eli5-choices:last-child{grid-template-columns:1fr}.eli5-boundary{font-size:10px;line-height:1.6;color:var(--muted);margin:15px 0 0}
-.eli5-footer{padding:14px 22px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;border-top:1px solid var(--border)}.eli5-footer span{font-size:11px;color:var(--muted)}
-@media(max-width:700px){.eli5-dialog .dialog-head{padding:16px}.eli5-dialog .dialog-body{padding:14px 16px}.eli5-footer{padding:14px 16px 16px}}
+/* B11: dialog rebuilt on the PM56_SHELL grammar (module-shell.css); the module
+   only owns the choice-group container inside shell sections/disclosures. */
+.eli5-choices{display:grid;gap:7px}
 
 .eli5-demo-guide{padding:10px 12px;margin:8px 0 0;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);display:flex;flex-wrap:wrap;align-items:center;gap:10px;justify-content:space-between}
 .eli5-demo-guide>div:first-child{display:grid;gap:3px}.eli5-demo-guide small{font-size:9px;color:var(--muted)}.eli5-demo-guide strong{font-size:12px}.eli5-demo-guide span{font-size:10px;color:var(--muted)}.eli5-demo-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.eli5-demo-actions .soft-button{font-size:10px;padding:6px 8px}
@@ -26499,7 +26322,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
   /* dialog({iconHtml,title,sub,pill,width,ariaLabel,body,foot,closeAction,closeIcon}) */
   function dialog(o) {
     o = o || {};
-    return '<section class="dialog mdl" style="width:min(' + (o.width || 640) + 'px,calc(100vw - 20px))" role="dialog" aria-modal="true" aria-label="' + esc(o.ariaLabel || o.title) + '">' +
+    return '<section class="dialog mdl' + (o.cls ? ' ' + o.cls : '') + '" style="width:min(' + (o.width || 640) + 'px,calc(100vw - 20px))" role="dialog" aria-modal="true" aria-label="' + esc(o.ariaLabel || o.title) + '">' +
         '<div class="mdl-head">' +
           '<span class="mdl-icon">' + (o.iconHtml || '') + '</span>' +
           '<div class="mdl-title"><strong>' + (o.title || '') + '</strong>' + (o.sub ? '<span>' + o.sub + '</span>' : '') + '</div>' +
@@ -26554,6 +26377,14 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     }).join('') + '</div>';
   }
 
+  /* disclosure(key,summaryHtml,bodyHtml,open?,cls?) — cls appends legacy classes. */
+  function disclosure(key, summaryHtml, bodyHtml, open, cls) {
+    return '<details class="mdl-disclosure' + (cls ? ' ' + cls : '') + '" data-k="' + esc(key) + '"' + (open ? ' open' : '') + '>' +
+        '<summary>' + summaryHtml + CHEVRON + '</summary>' +
+        '<div class="mdl-disclosure-body">' + (bodyHtml || '') + '</div>' +
+      '</details>';
+  }
+
   /* choice({value,label,detail,active,action,extra}) — data-value is String(value) verbatim. */
   function choice(o) {
     o = o || {};
@@ -26579,12 +26410,6 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     return '<p class="mdl-note' + (tone ? ' ' + esc(tone) : '') + '">' + html + '</p>';
   }
 
-  function disclosure(key, summaryHtml, bodyHtml, open) {
-    return '<details class="mdl-disclosure" data-k="' + esc(key) + '"' + (open ? ' open' : '') + '>' +
-        '<summary>' + summaryHtml + CHEVRON + '</summary>' +
-        '<div class="mdl-disclosure-body">' + (bodyHtml || '') + '</div>' +
-      '</details>';
-  }
 
   function stat(labelHtml, valueHtml) {
     return '<div class="mdl-stat"><strong>' + valueHtml + '</strong><span>' + labelHtml + '</span></div>';
@@ -33923,6 +33748,13 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
   var KINDS = ['crew', 'brainstorm', 'review', 'chat_room'];
   var KIND_LABEL = { crew: 'Crew', brainstorm: 'BrainStorm', review: 'Review', chat_room: 'Chat Room' };
   var KIND_ICON = { crew: 'users', brainstorm: 'brain', review: 'eye', chat_room: 'users' };
+  /* One-line explanation per kind, shown as the configure dialog's sub. */
+  var KIND_SUB = {
+    crew: 'A coordinator assigns bounded tasks to each role and combines only verified results.',
+    chat_room: 'A moderated multi-agent discussion. Nothing becomes a Task or Plan until you promote a message.',
+    brainstorm: 'Blind proposals, debate and a vote produce one Plan document.',
+    review: 'Independent read-only reviewers. Findings never auto-repair anything.'
+  };
   var RUN_STATE_LABEL = {
     configuring: 'Configuring', running: 'Running', paused: 'Paused', waiting: 'Waiting',
     blocked: 'Blocked', completed: 'Completed', canceled: 'Cancelled', failed: 'Failed'
@@ -35378,17 +35210,19 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
   }
 
   function draftRowHtml(ctx, row, idx) {
-    const pick=window.PM56_PICKERS;
+    const pick=window.PM56_PICKERS, S=window.PM56_SHELL;
     const attrs='data-row="'+esc(row.rowId)+'"';
     const fallback=UNAVAILABLE_DEMO[row.requestedModelId]?fallbackModelFor(row.requestedModelId):null;
-    return '<div class="collab-participant-editor-row" data-k="collab-draftrow-'+esc(row.rowId)+'">'+
-      '<div class="collab-member-name"><span class="collab-member-number">'+(idx+1)+'</span><input class="collab-field-role" aria-label="Participant role" type="text" data-collab-input="role" data-row="'+esc(row.rowId)+'" value="'+esc(row.role)+'" placeholder="Role">'+
+    /* Card grammar from module-shell (.mdl-card); the row keeps its own class
+       because the harnesses select through .collab-participant-editor-row. */
+    return '<article class="mdl-card collab-participant-editor-row" data-k="collab-draftrow-'+esc(row.rowId)+'">'+
+      '<div class="mdl-card-head collab-member-name"><span class="collab-member-number">'+(idx+1)+'</span><input class="collab-field-role" aria-label="Participant role" type="text" data-collab-input="role" data-row="'+esc(row.rowId)+'" value="'+esc(row.role)+'" placeholder="Role">'+
       '<button class="icon-button" data-action="collab-modal-duplicate-participant" data-row="'+esc(row.rowId)+'" title="Duplicate participant">'+ctx.icon('copy',12)+'</button>'+
       '<button class="icon-button" data-action="collab-modal-remove-participant" data-row="'+esc(row.rowId)+'" title="Remove participant">'+ctx.icon('close',12)+'</button></div>'+
-      '<div class="collab-member-pickers"><label>Model'+pick.modelButton('collab-pick-model','collab-model-'+row.rowId,row.requestedModelId,attrs)+'</label>'+
-      '<label>Persona'+pick.personaButton('collab-pick-persona','collab-persona-'+row.rowId,row.persona,attrs)+'</label></div>'+
-      (row.requestedEffort?'<span class="collab-config-effort">'+esc(row.requestedEffort)+(row.requestedFast?' · Fast':'')+'</span>':'')+
-      (UNAVAILABLE_DEMO[row.requestedModelId]?'<span class="collab-route-eff">Requested model unavailable · '+(fallback?'Uses '+esc(modelLabel(fallback.id)):'No substitute')+'</span>':'')+'</div>';
+      '<div class="mdl-grid2">'+S.field('Model',pick.modelButton('collab-pick-model','collab-model-'+row.rowId,row.requestedModelId,attrs))+
+      S.field('Persona',pick.personaButton('collab-pick-persona','collab-persona-'+row.rowId,row.persona,attrs))+'</div>'+
+      (row.requestedEffort?'<p class="mdl-note collab-config-effort">'+esc(row.requestedEffort)+(row.requestedFast?' · Fast':'')+'</p>':'')+
+      (UNAVAILABLE_DEMO[row.requestedModelId]?'<p class="mdl-note collab-route-eff">Requested model unavailable · '+(fallback?'Uses '+esc(modelLabel(fallback.id)):'No substitute')+'</p>':'')+'</article>';
   }
   ['model','persona'].forEach(function(kind){
     EXT.action('collab-pick-'+kind,function(ctx,btn){
@@ -35490,8 +35324,11 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     {value:'3',label:'At least three independent tasks',description:'Reserve automatic delegation for a wider split of independent work.'}
   ];
   function configChoice(ctx,d,key,title){
+    const S=window.PM56_SHELL;
     const options=CONFIG_CHOICES[key], selected=options.find(o=>o.value===d.config[key])||options[0];
-    return '<label>'+esc(title)+'<button type="button" class="shared-picker-button collab-choice" data-action="collab-pick-choice" data-field="'+key+'" data-menu-anchor="collab-choice-'+key+'"><span class="shared-picker-copy"><strong>'+esc(selected.label)+'</strong></span>'+ctx.icon('down',11)+'</button></label>';
+    /* SHELL.field keeps the title as the label's first child node, which is
+       exactly where the collab-pick-choice handler reads the menu title from. */
+    return S.field(esc(title),S.pickerButton({action:'collab-pick-choice',anchor:'collab-choice-'+key,strong:esc(selected.label),extra:'data-field="'+esc(key)+'"',iconHtml:ctx.icon('down',11)}));
   }
   EXT.action('collab-pick-choice',function(ctx,btn){
     const draft=RTC.draft,key=btn.dataset.field;if(!draft||!CONFIG_CHOICES[key])return true;
@@ -35508,58 +35345,67 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     });return true;
   });
   function kindConfigFields(ctx, d) {
+    const S=window.PM56_SHELL;
     if (d.kind === 'crew') {
-      return '<div class="collab-field-row">' + configChoice(ctx,d,'coordinator','Coordinator') + '' +
-        '' + configChoice(ctx,d,'assignmentStrategy','Task assignment') + '' +
-        '<label>Simultaneous tasks<input type="number" min="1" max="8" data-collab-input="cfg-parallelism" value="' + esc(d.config.parallelism) + '"></label></div>' +
-        '<span class="collab-authority" title="Cannot widen this thread’s permissions">Inherits thread permissions</span>' +
-        (d.autoMode ? '<h4>When to use a Crew</h4><div class="collab-field-row">'+configChoice(ctx,d,'autoComplexity','Request complexity')+configChoice(ctx,d,'autoMinIndependent','Useful parallel work')+'</div>' : '');
+      return S.grid2(configChoice(ctx,d,'coordinator','Coordinator') +
+        configChoice(ctx,d,'assignmentStrategy','Task assignment') +
+        S.field('Simultaneous tasks','<input type="number" min="1" max="8" data-collab-input="cfg-parallelism" value="' + esc(d.config.parallelism) + '">')) +
+        '<span class="collab-authority" title="Cannot widen this thread’s permissions">Inherits thread permissions</span>';
     }
     if (d.kind === 'brainstorm') {
-      var effShown = d.config.questionLimit + (d.grillMe ? '/' + (d.config.questionLimit + d.config.grillExtension) : '');
-      return '<div class="collab-field-row"><label>Debate rounds<input type="number" min="1" max="4" data-collab-input="cfg-debateRounds" value="' + esc(d.config.debateRounds) + '"></label>' +
-        '' + configChoice(ctx,d,'externalResearch','Research') + '</div>' +
+      return S.grid2(S.field('Debate rounds','<input type="number" min="1" max="4" data-collab-input="cfg-debateRounds" value="' + esc(d.config.debateRounds) + '">') +
+        configChoice(ctx,d,'externalResearch','Research')) +
         '<p class="collab-qmax">' + (d.grillMe ? 'Maximum questions: ' + (d.config.questionLimit + d.config.grillExtension) + ' (' + d.config.questionLimit + ' + Grill Me ' + d.config.grillExtension + ')' : 'Maximum questions: ' + d.config.questionLimit) + '</p>';
     }
     if (d.kind === 'review') {
-      return '<div class="collab-field-row">' + configChoice(ctx,d,'strategy','Review approach') + '' +
-        '<label>Reviewers<input type="number" min="1" max="8" data-collab-input="cfg-reviewerCount" value="' + esc(d.rows.length) + '" disabled title="Add or remove reviewer rows below to change this count."></label></div>' +
-        '<label class="collab-checkbox-row"><input type="checkbox" checked disabled><span>Independent first pass <small>Always on</small></span></label>' +
-        '<label class="collab-checkbox-row"><input type="checkbox" disabled><span>Auto-repair <small>Off · review only</small></span></label>';
+      return S.grid2(configChoice(ctx,d,'strategy','Review approach') +
+        S.field('Reviewers','<input type="number" min="1" max="8" data-collab-input="cfg-reviewerCount" value="' + esc(d.rows.length) + '" disabled title="Add or remove reviewer rows below to change this count.">')) +
+        '<label class="mdl-check collab-checkbox-row"><input type="checkbox" checked disabled><span>Independent first pass <small>Always on</small></span></label>' +
+        '<label class="mdl-check collab-checkbox-row"><input type="checkbox" disabled><span>Auto-repair <small>Off · review only</small></span></label>';
     }
-    return '<div class="collab-field-row">' + configChoice(ctx,d,'turnPolicy','Conversation flow') + '' +
-      '<label>Max rounds<input type="number" min="1" max="20" data-collab-input="cfg-maxRounds" value="' + esc(d.config.maxRounds) + '"></label></div>';
+    return S.grid2(configChoice(ctx,d,'turnPolicy','Conversation flow') +
+      S.field('Max rounds','<input type="number" min="1" max="20" data-collab-input="cfg-maxRounds" value="' + esc(d.config.maxRounds) + '">'));
   }
 
   function renderConfigureModal(ctx) {
     var d = RTC.draft; if (!d) return '';
     normalizeReview(d);
+    var S = window.PM56_SHELL;
     var limits = KIND_PARTICIPANT_LIMIT[d.kind];
     var supportsAdditive = d.kind === 'crew' || d.kind === 'brainstorm' || d.kind === 'chat_room';
     var overLimit = d.rows.length > limits[1] || d.rows.length < limits[0];
-    return '<section class="dialog collab-configure" style="width:min(760px,calc(100vw - 20px))" role="dialog" aria-modal="true" aria-label="Configure ' + esc(KIND_LABEL[d.kind]) + '">' +
-      '<div class="drawer-head"><span class="event-icon">' + ctx.icon(KIND_ICON[d.kind], 13) + '</span><strong>' + (d.reconfigureRunId ? 'Reconfigure ' : 'Configure ') + esc(KIND_LABEL[d.kind]) + '</strong>' +
-      (d.autoMode ? '<span class="meta-pill">Crew Auto</span>' : '') +
-      '<span class="spacer"></span><button class="icon-button" data-action="collab-modal-cancel">' + ctx.icon('close', 13) + '</button></div>' +
-      '<div class="dialog-body collab-configure-body">' +
-      '<div class="collab-field-row"><label>Name<input type="text" data-collab-input="name" value="' + esc(d.name) + '"></label></div>' +
-      '<div class="collab-field-row"><label>What should they accomplish?<input type="text" data-collab-input="purpose" value="' + esc(d.purpose) + '" placeholder="One line — why this run exists"></label></div>' +
-      (d.kind==='review' && d.reviewTarget ? '<div class="review-target-label"><small>Frozen on Start · recorded example</small><strong>'+esc(d.reviewTarget.label)+'</strong><span>Read-only · no provider calls</span></div>' : '') +
-      '<h4>Participants · ' + d.rows.length + (overLimit ? ' <span class="collab-limit-warn">out of range</span>' : '') + '</h4>' +
+    var runBody =
+      S.field('Name', '<input type="text" data-collab-input="name" value="' + esc(d.name) + '">') +
+      S.field('What should they accomplish?', '<input type="text" data-collab-input="purpose" value="' + esc(d.purpose) + '" placeholder="One line — why this run exists">') +
+      (d.kind === 'review' && d.reviewTarget ? S.note('Frozen on Start · recorded example') + S.rows([['Frozen on Start', esc(d.reviewTarget.label)], ['Access', 'Read-only · no provider calls']]) : '');
+    var participantsBody =
       '<div class="collab-participant-editor">' + d.rows.map(function (r, i) { return draftRowHtml(ctx, r, i); }).join('') + '</div>' +
-      '<button class="text-button" data-action="collab-modal-add-participant">' + ctx.icon('plus', 12) + ' '+(d.kind==='review'&&d.config.strategy==='single_agent'?'Replace reviewer':'Add participant')+'</button>' +
-      '<h4>How they work</h4>' +
-      kindConfigFields(ctx, d) + (d.scheduleIntent?'<p class="schedule-caption">Scheduling freezes this roster without starting it. The local work adapter executes one bounded operation at a time; requested models are retained, not invoked.</p>':'') +
-      (supportsAdditive ? '<details class="collab-add-specialists"><summary>Optional specialists</summary>' +
-        '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="wonderer"' + (d.wonderer ? ' checked' : '') + '><span title="Explores adjacent leads; labels unresearched ideas as hypotheses">Wonderer</span></label>' +
-        '<label class="collab-checkbox-row"><input type="checkbox" data-collab-input="grillMe"' + (d.grillMe ? ' checked' : '') + '><span>Grill Me' + (d.kind === 'brainstorm' ? ' — raises the question maximum by ' + d.config.grillExtension : '') + '</span></label>' +
-        '</details>' : '') +
-      '' +
-      '</div>' +
-      (d.lastFailure ? '<div class="collab-start-failure" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong><p>' + esc(d.lastFailure.message) + '</p></div>' : '') +
-      (window.PM56_CREW_DEMOS?.guide(ctx,true)||'') + (window.PM56_REVIEW_DEMOS?.guide(ctx,true)||'') + (window.PM56_BRAINSTORM_DEMOS?.guide(ctx,true)||'') +
-      '<div class="dialog-body-foot collab-configure-foot"><button class="soft-button" data-action="collab-modal-cancel">Cancel</button><button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.scheduleIntent?'Use this Crew':d.autoMode ? 'Enable Crew Auto' : d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button></div>' +
-      '</section>';
+      '<button class="text-button" data-action="collab-modal-add-participant">' + ctx.icon('plus', 12) + ' ' + (d.kind === 'review' && d.config.strategy === 'single_agent' ? 'Replace reviewer' : 'Add participant') + '</button>';
+    var howBody = kindConfigFields(ctx, d) +
+      (supportsAdditive ?
+        '<label class="mdl-check collab-checkbox-row"><input type="checkbox" data-collab-input="wonderer"' + (d.wonderer ? ' checked' : '') + '><span title="Explores adjacent leads; labels unresearched ideas as hypotheses">Wonderer</span></label>' +
+        '<label class="mdl-check collab-checkbox-row"><input type="checkbox" data-collab-input="grillMe"' + (d.grillMe ? ' checked' : '') + '><span>Grill Me' + (d.kind === 'brainstorm' ? ' — raises the question maximum by ' + d.config.grillExtension : '') + '</span></label>' : '') +
+      (d.scheduleIntent ? '<p class="schedule-caption">Scheduling freezes this roster without starting it. The local work adapter executes one bounded operation at a time; requested models are retained, not invoked.</p>' : '');
+    var body =
+      S.section({ iconHtml: ctx.icon('document', 12), label: 'Run', body: runBody }) +
+      S.section({ iconHtml: ctx.icon('users', 12), label: 'Participants', meta: d.rows.length + ' of ' + limits[1] + (overLimit ? ' · <span class="collab-limit-warn">out of range</span>' : ''), body: participantsBody }) +
+      S.section({ iconHtml: ctx.icon('settings', 12), label: 'How they work', body: howBody }) +
+      (d.kind === 'crew' && d.autoMode ? S.section({ iconHtml: ctx.icon('settings', 12), label: 'When to use a Crew', body: S.grid2(configChoice(ctx,d,'autoComplexity','Request complexity') + configChoice(ctx,d,'autoMinIndependent','Useful parallel work')) }) : '') +
+      (window.PM56_CREW_DEMOS?.guide(ctx,true)||'') + (window.PM56_REVIEW_DEMOS?.guide(ctx,true)||'') + (window.PM56_BRAINSTORM_DEMOS?.guide(ctx,true)||'');
+    var refusal = d.lastFailure ? '<p class="mdl-note danger" data-failure="' + esc(d.lastFailure.error) + '"><strong>Start refused · ' + esc(d.lastFailure.error) + '</strong> ' + esc(d.lastFailure.message) + '</p>' : '';
+    return S.dialog({
+      cls: 'collab-configure',
+      iconHtml: ctx.icon(KIND_ICON[d.kind], 15),
+      title: (d.reconfigureRunId ? 'Reconfigure ' : 'Configure ') + esc(KIND_LABEL[d.kind]),
+      sub: KIND_SUB[d.kind],
+      pill: d.autoMode ? 'Crew Auto' : '',
+      width: 760,
+      closeAction: 'collab-modal-cancel',
+      body: body,
+      foot: S.foot(refusal,
+        '<button class="soft-button" data-action="collab-modal-cancel">Cancel</button>' +
+        '<button class="primary-button" data-action="collab-modal-commit"' + (overLimit ? ' disabled' : '') + '>' + (d.scheduleIntent ? 'Use this Crew' : d.autoMode ? 'Enable Crew Auto' : d.reconfigureRunId ? 'Save reconfiguration' : 'Start ' + esc(KIND_LABEL[d.kind])) + '</button>')
+    });
   }
   EXT.slot('dialog', function (ctx) {
     var d = ctx.state.dialog;
@@ -36772,6 +36618,9 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   var D = window.PM56_DATA; if (!D) return;
   var EXT = window.PM56_EXT; if (!EXT || !EXT.slot) return;
   var RT = window.PM56_RUNTIME = window.PM56_RUNTIME || {};
+  /* Shared dialog grammar. module-shell loads first of all modules (build.py
+     MODULES), so the builders exist before this module is evaluated. */
+  var SH = window.PM56_SHELL;
 
   function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
   function nowIso() { return new Date().toISOString(); }
@@ -37167,7 +37016,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
           schedule_kind: 'recurring_window',
           timezone: 'America/Chicago', local_start: '22:00', local_pause: '02:00',
           days_of_week: [1, 2, 3, 4, 5],
-          wind_down_seconds: 600, missed_policy: 'hold', auto_resume_next_window: true,
+          binding_kind: 'plan_content_v1',
           state: 'active', revision: 1, invalidated_reason: null,
           pendingVersion: null, pendingHash: null,
           runPhase: 'idle', demoClockIso: t0, lastOccurrenceStart: null, occurrencesFired: [],
@@ -38091,6 +37940,39 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   var PHASE_LABEL = { completed:'Build completed', idle: 'Idle · window closed', admitted: 'Admitted · running', winding_down: 'Winding down', paused_safe: 'Paused at safe checkpoint' };
   function chip(label, tone) { return '<span class="sched-chip sched-tone-' + esc(tone) + '">' + esc(label) + '</span>'; }
 
+  /* Shell-grammar bridge. The module's historical chip tones (sched-tone-*)
+     map onto PM56_SHELL chip tones; the dialogs use mdlChip while the
+     transcript card (renderMessageCard) keeps chip() and its own CSS. */
+  var MDL_TONE = { active:'accent', attention:'warning', done:'positive', blocked:'danger', idle:'idle' };
+  function mdlChip(label, tone) { return SH.chip(MDL_TONE[tone] || 'idle', esc(label)); }
+  /* module-shell owns the dialog look; these classes stay on the dialog roots
+     as UNSTYLED hooks: plan-demo-batch2.js refreshGuide() resolves
+     closest('.sched-dialog'), the b18/b19/b20 evidence harnesses measure
+     .sched-dialog geometry, and tests/scheduling-verify.mjs opens the build
+     dialog through .sched-dialog--build. */
+  function withCls(html, cls) { return html.replace('class="dialog mdl"', 'class="dialog mdl ' + cls + '"'); }
+  /* The refusal line keeps its .sched-form-error hook and role=alert (b15/b19/
+     b20 harnesses read refusals through it) inside the shell's danger note.
+     Always emitted, exactly like the old min-height div, so those readers
+     resolve whether or not an error is showing. */
+  function formError(err) { return SH.note(esc(err || ''), 'danger').replace('<p class="mdl-note danger">', '<p class="mdl-note danger sched-form-error" role="alert">'); }
+  /* Option vocabularies — the exact values and labels the replaced native
+     select elements carried; shared by the picker buttons and their
+     openChoice menus so the two can never drift. */
+  var MISSED_MSG_OPTIONS = [['hold','Hold for me'],['next_available','Send when available'],['cancel_after_grace','Cancel after grace']];
+  var MISSED_BUILD_OPTIONS = [['hold','Hold'],['next_available','Next available'],['cancel_after_grace','Cancel after grace']];
+  var TOPOLOGY_OPTIONS = [['agent','Build normally'],['goal_driven','Build as Goal'],['crew','Build with Crew']];
+  var MANAGER_STATUS_OPTIONS = [['all','All'],['active','Active'],['paused','Paused'],['held','Held / needs review'],['completed','Completed / sent'],['failed','Failed'],['expired','Expired'],['canceled','Canceled']];
+  var MANAGER_SORT_OPTIONS = [['time_asc','Earliest first'],['time_desc','Latest first']];
+  function optionLabel(pairs, value) { for (var i = 0; i < pairs.length; i++) if (pairs[i][0] === value) return pairs[i][1]; return String(value); }
+  /* The old timezone select prepended a resolved zone missing from the
+     offered ten; the choice menu keeps that exact behaviour. */
+  function tzChoiceOptions(current) {
+    var opts = TZ_OPTIONS.map(t => ({ value: t.id, label: t.label, description: zoneName(t.id) }));
+    if (!TZ_OPTIONS.some(t => t.id === current)) opts.unshift({ value: current, label: tzLabel(current), description: zoneName(current) });
+    return opts;
+  }
+
   function zoneName(zone){ return String(zone||'UTC').split('/').pop().replace(/_/g,' '); }
   function whenLabel(iso,zone){
     if(!iso||!Number.isFinite(Date.parse(iso)))return 'Time not set';
@@ -38126,12 +38008,15 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   function renderMessageRow(ctx,m){
     var label=SM_STATE[m.state]?.label||MSG_STATE_LABEL[m.state]||m.state,tone=MSG_STATE_TONE[m.state]||'idle';
     var why=m.heldReason||m.failureReason||m.expiredReason;
-    return '<article class="schedule-item" data-k="schedule-'+esc(m.scheduled_dispatch_id)+'" data-schedule-id="'+esc(m.scheduled_dispatch_id)+'">'+
-      '<div class="schedule-item-head"><span class="schedule-item-icon">'+ctx.icon('history',17)+'</span><div class="schedule-item-copy"><strong>'+esc(String(m.text||'Untitled message'))+'</strong><span>'+esc(whenLabel(m.scheduled_at_utc,m.timezone)+' · '+m.timezone)+'</span></div>'+chip(label,tone)+'</div>'+
-      '<div class="schedule-item-destination">'+ctx.icon('chat',12)+esc(destinationLabel(m))+'</div>'+
-      (why&&['held','failed','expired'].includes(m.state)?'<div class="schedule-attention">'+ctx.icon('warning',13)+'<span>'+esc(attentionLabel(m))+'</span></div>':'')+
-      '<div class="schedule-item-controls">'+messageActions(ctx,m)+'</div>'+
-      '<details class="schedule-details" '+(ui.focusSchedule===m.scheduled_dispatch_id?'open':'')+'><summary>Details '+ctx.icon('down',11)+'</summary>'+messageDetails(ctx,m)+'</details></article>';
+    var id=esc(m.scheduled_dispatch_id);
+    return SH.card({
+      attrs:' data-k="schedule-'+id+'" data-schedule-id="'+id+'"',
+      head:SH.cardHead({iconHtml:ctx.icon('history',17),copy:SH.copy(esc(String(m.text||'Untitled message')),esc(whenLabel(m.scheduled_at_utc,m.timezone)+' · '+m.timezone)),extra:mdlChip(label,tone)}),
+      body:SH.note(ctx.icon('chat',12)+' '+esc(destinationLabel(m)))+
+        (why&&['held','failed','expired'].includes(m.state)?SH.note(ctx.icon('warning',13)+' '+esc(attentionLabel(m)),'danger'):'')+
+        '<div class="mdl-card-actions">'+messageActions(ctx,m)+'</div>'+
+        SH.disclosure('schedule-details-'+m.scheduled_dispatch_id,'Details',messageDetails(ctx,m),ui.focusSchedule===m.scheduled_dispatch_id)
+    });
   }
 
 
@@ -38145,32 +38030,54 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
       else{var nx=computeNextOccurrence(b,b.clock_ms??Date.now());if(typeof nx==='number'&&Number.isFinite(nx))nextMs=nx;}
     }
     var nextIso=nextMs===null?null:new Date(nextMs).toISOString();
-    return '<article class="schedule-item" data-k="sched-bld-'+id+'"><div class="schedule-item-head"><span class="schedule-item-icon">'+ctx.icon('document',17)+'</span><div class="schedule-item-copy"><strong>'+esc(plan?.title||b.target_id)+'</strong><span>V'+b.exact_target_version+' · '+esc(when)+'</span></div>'+chip(label,BLD_STATE_TONE[b.state]||'idle')+'</div>'+
-      (b.state==='invalidated'?'<div class="schedule-attention">'+ctx.icon('warning',13)+'<span>Plan changed to V'+esc(b.pendingVersion)+'. Review before scheduling.</span></div>':'<div class="schedule-item-destination">'+esc(b.dispatchReceipt?(plan?.status==='completed'?'Build completed':'Build started'):(one&&b.runPhase==='idle'?'Waiting for scheduled time':PHASE_LABEL[b.runPhase]||b.runPhase||'Waiting'))+(nextIso&&!one?' · Next '+esc(whenLabel(nextIso,b.timezone)):'')+'</div>')+
-      (b.held_reason?'<div class="schedule-attention">'+esc(b.held_reason)+'</div>':'')+'<div class="schedule-item-controls"><button class="soft-button" data-action="pd-info" data-id="'+esc(b.target_id)+'">Open plan</button>'+
-      (b.state==='invalidated'?'<button class="soft-button" data-action="sched-rebind-build" data-id="'+id+'" data-version="'+esc(b.pendingVersion)+'" data-hash="'+esc(b.pendingHash)+'" data-revision="'+b.revision+'">Use V'+esc(b.pendingVersion)+'</button>':'')+
-      (b.state==='active'&&!b.dispatchReceipt?'<button class="text-button" data-action="sched-edit-build" data-id="'+id+'">Edit window</button>':'')+
-      (['active','paused','invalidated'].includes(b.state)?'<button class="text-button danger" data-action="sched-cancel-build" data-id="'+id+'" data-revision="'+b.revision+'" data-currentness="'+esc(buildCurrent(b))+'">Cancel</button>':'')+'</div>'+
-      '<details class="schedule-details"><summary>Details '+ctx.icon('down',11)+'</summary><div class="sched-details-body">'+(b.binding_kind==='plan_content_v1'&&b.state==='active'?'<p class="schedule-caption">Local clock control only. This page does not run a background scheduling service.</p><button class="soft-button" data-action="sched-advance-window" data-id="'+id+'">Evaluate next local boundary</button>':'')+facts([
-        ['Timezone',b.timezone],['Wind-down',b.wind_down_seconds/60+' min'],['Resume next window',b.auto_resume_next_window?'On':'Off'],['If missed',b.missed_policy],['Exact plan version','V'+b.exact_target_version],['Revision',b.revision]
-      ])+'<details class="sched-audit"><summary>Record & history</summary>'+facts([['Schedule ID',b.schedule_id],['Bound hash (demo)',b.exact_target_hash],['Idempotency key',idempotencyKey(b)]])+
-      (b.log||[]).map(l=>'<p><time>'+esc(fmtClock(l.at))+'</time> '+esc(l.text)+'</p>').join('')+'</details></div></details></article>';
+    return SH.card({
+      attrs:' data-k="sched-bld-'+id+'"',
+      head:SH.cardHead({iconHtml:ctx.icon('document',17),copy:SH.copy(esc(plan?.title||b.target_id),'V'+b.exact_target_version+' · '+esc(when)),extra:mdlChip(label,BLD_STATE_TONE[b.state]||'idle')}),
+      body:(b.state==='invalidated'
+          ?SH.note(ctx.icon('warning',13)+' Plan changed to V'+esc(b.pendingVersion)+'. Review before scheduling.','danger')
+          :SH.note(esc(b.dispatchReceipt?(plan?.status==='completed'?'Build completed':'Build started'):(one&&b.runPhase==='idle'?'Waiting for scheduled time':PHASE_LABEL[b.runPhase]||b.runPhase||'Waiting'))+(nextIso&&!one?' · Next '+esc(whenLabel(nextIso,b.timezone)):'')))+
+        (b.held_reason?SH.note(esc(b.held_reason),'danger'):'')+
+        '<div class="mdl-card-actions"><button class="soft-button" data-action="pd-info" data-id="'+esc(b.target_id)+'">Open plan</button>'+
+        (b.state==='invalidated'?'<button class="soft-button" data-action="sched-rebind-build" data-id="'+id+'" data-version="'+esc(b.pendingVersion)+'" data-hash="'+esc(b.pendingHash)+'" data-revision="'+b.revision+'">Use V'+esc(b.pendingVersion)+'</button>':'')+
+        (b.state==='active'&&!b.dispatchReceipt?'<button class="text-button" data-action="sched-edit-build" data-id="'+id+'">Edit window</button>':'')+
+        (['active','paused','invalidated'].includes(b.state)?'<button class="text-button danger" data-action="sched-cancel-build" data-id="'+id+'" data-revision="'+b.revision+'" data-currentness="'+esc(buildCurrent(b))+'">Cancel</button>':'')+'</div>'+
+        SH.disclosure('bld-details-'+b.schedule_id,'Details','<div class="sched-details-body">'+(b.binding_kind==='plan_content_v1'&&b.state==='active'?'<p class="schedule-caption">Local clock control only. This page does not run a background scheduling service.</p><button class="soft-button" data-action="sched-advance-window" data-id="'+id+'">Evaluate next local boundary</button>':'')+facts([
+          ['Timezone',b.timezone],['Wind-down',b.wind_down_seconds/60+' min'],['Resume next window',b.auto_resume_next_window?'On':'Off'],['If missed',b.missed_policy],['Exact plan version','V'+b.exact_target_version],['Revision',b.revision]
+        ])+'<details class="sched-audit"><summary>Record & history</summary>'+facts([['Schedule ID',b.schedule_id],['Bound hash (demo)',b.exact_target_hash],['Idempotency key',idempotencyKey(b)]])+
+        (b.log||[]).map(l=>'<p><time>'+esc(fmtClock(l.at))+'</time> '+esc(l.text)+'</p>').join('')+'</details></div>')
+    });
   }
 
 
-  function wallResolution(date,time,zone){const r=PM56_SCHEDULE_TIME.resolve(zone,PM56_SCHEDULE_TIME.parse(date,time));if(!r.ok)return '';return '<p class="b18-time-resolution">'+esc(r.kind==='gap_forward'?'Clock change: first valid local instant after the gap.':r.kind==='fold_first'?'Repeated local time: first occurrence only.':'Exact local time.')+' '+esc(new Date(r.at).toISOString())+' · '+esc(zone)+'</p>';}
+  function wallResolution(date,time,zone){const r=PM56_SCHEDULE_TIME.resolve(zone,PM56_SCHEDULE_TIME.parse(date,time));if(!r.ok)return '';return SH.note(esc(r.kind==='gap_forward'?'Clock change: first valid local instant after the gap.':r.kind==='fold_first'?'Repeated local time: first occurrence only.':'Exact local time.')+' '+esc(new Date(r.at).toISOString())+' · '+esc(zone));}
   function renderMessageDialog(ctx){
     var d=ui.msgDraft||(ui.msgDraft=defaultMsgDraft(ctx)),editing=ui.editingMsgId,th=threadByIdRaw(d.threadId),text=String(d.text||'');
-    var tzOpts=TZ_OPTIONS.map(t=>'<option value="'+esc(t.id)+'" '+(t.id===d.timezone?'selected':'')+'>'+esc(zoneName(t.id))+'</option>').join('');
-    if(!TZ_OPTIONS.some(t=>t.id===d.timezone))tzOpts='<option selected value="'+esc(d.timezone)+'">'+esc(zoneName(d.timezone))+'</option>'+tzOpts;
-    return '<section class="dialog sched-dialog sched-dialog--message" role="dialog" aria-modal="true" aria-label="Schedule Message"><div class="drawer-head">'+ctx.icon('history',16)+'<strong>'+(editing?'Edit scheduled message':'Schedule a message')+'</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div>'+
-      '<div class="dialog-body"><div class="sched-destination-tag">'+ctx.icon('chat',14)+esc(d.destination?.label||th?.title||'This thread')+'</div>'+
-      '<label class="sched-field"><span>Message</span><textarea class="sched-text" data-sched-input="msg-text" rows="4" maxlength="8000" placeholder="What should be sent?">'+esc(text)+'</textarea></label>'+
-      (d.attachments?.length?'<div class="sched-attached">'+d.attachments.map(a=>'<span>'+ctx.icon('attach',12)+esc(attachmentLabel(a))+'</span>').join('')+'</div>':'')+
-      '<div class="schedule-when"><h3>Send on</h3><div class="sched-field-grid"><label class="sched-field"><span>Date</span><input type="date" data-sched-input="msg-date" value="'+esc(d.date)+'"></label><label class="sched-field"><span>Time</span><input type="time" data-sched-input="msg-time" value="'+esc(d.time)+'"></label><label class="sched-field schedule-zone"><span>Timezone</span><select data-sched-input="msg-tz">'+tzOpts+'</select></label></div></div>'+
-      wallResolution(d.date,d.time,d.timezone)+'<label class="sched-field"><span>Model & account</span>'+window.PM56_PICKERS.modelButton('sched-pick-model','schedule-model',d.modelId)+'</label>'+
-      '<details class="schedule-details"><summary>If the send time is missed '+ctx.icon('down',11)+'</summary><div class="sched-field-grid"><label class="sched-field"><span>Action</span><select data-sched-input="msg-missed">'+[['hold','Hold for me'],['next_available','Send when available'],['cancel_after_grace','Cancel after grace']].map(([v,l])=>'<option value="'+v+'" '+(d.missed===v?'selected':'')+'>'+l+'</option>').join('')+'</select></label>'+(d.missed==='cancel_after_grace'?'<label class="sched-field"><span>Grace · minutes</span><input type="number" min="1" max="1440" data-sched-input="msg-grace" value="'+d.grace+'"></label>':'')+'</div></details>'+
-      '<div class="sched-form-error" role="alert">'+esc(d.error||'')+'</div></div><div class="schedule-form-foot"><button class="text-button" data-action="sched-open-manage">All schedules</button><span class="spacer"></span><button class="soft-button" data-action="sched-close-dialog">Cancel</button><button class="primary-button" data-action="sched-create-message" '+(!text.trim()||text.length>8000||ui.snapshotBusy?'disabled':'')+'>'+(ui.snapshotBusy?'Retaining selected bytes…':editing?'Save changes':'Schedule message')+'</button></div></section>';
+    var pick=window.PM56_PICKERS;
+    var body=
+      SH.section({iconHtml:ctx.icon('edit',12),label:'Message',body:
+        '<div>'+SH.chip('accent',esc(d.destination?.label||th?.title||'This thread'))+'</div>'+
+        '<textarea class="sched-text" data-sched-input="msg-text" rows="4" maxlength="8000" placeholder="What should be sent?">'+esc(text)+'</textarea>'+
+        (d.attachments?.length?'<div class="sched-attached">'+d.attachments.map(a=>'<span>'+ctx.icon('attach',12)+esc(attachmentLabel(a))+'</span>').join('')+'</div>':'')})+
+      SH.section({iconHtml:ctx.icon('history',12),label:'Send at',body:
+        SH.grid2(SH.field('Date','<input type="date" data-sched-input="msg-date" value="'+esc(d.date)+'">')+SH.field('Time','<input type="time" data-sched-input="msg-time" value="'+esc(d.time)+'">'))+
+        SH.field('Timezone',SH.pickerButton({action:'sched-pick-msg-tz',anchor:'sched-msg-tz',strong:esc(tzLabel(d.timezone)),iconHtml:ctx.icon('down',11)}))+
+        wallResolution(d.date,d.time,d.timezone)})+
+      SH.section({iconHtml:ctx.icon('sparkles',12),label:'Route',body:
+        SH.field('Model &amp; account',pick.modelButton('sched-pick-model','schedule-model',d.modelId))})+
+      SH.disclosure('sched-msg-missed','If the send time is missed',
+        SH.grid2(SH.field('Action',SH.pickerButton({action:'sched-pick-msg-missed',anchor:'sched-msg-missed-pick',strong:esc(optionLabel(MISSED_MSG_OPTIONS,d.missed)),iconHtml:ctx.icon('down',11)}))+
+          (d.missed==='cancel_after_grace'?SH.field('Grace · minutes','<input type="number" min="1" max="1440" data-sched-input="msg-grace" value="'+d.grace+'">'):'')))+
+      formError(d.error);
+    return withCls(SH.dialog({
+      iconHtml:ctx.icon('history',15),
+      title:editing?'Edit scheduled message':'Schedule a message',
+      sub:'Freezes this text, destination, route and send time into a local record. Nothing is dispatched here — admission happens when the slot arrives.',
+      width:620,ariaLabel:'Schedule Message',closeAction:'sched-close-dialog',
+      body:body,
+      foot:SH.foot('<button class="text-button" data-action="sched-open-manage">All schedules</button>',
+        '<button class="soft-button" data-action="sched-close-dialog">Cancel</button>'+
+        '<button class="primary-button" data-action="sched-create-message" '+(!text.trim()||text.length>8000||ui.snapshotBusy?'disabled':'')+'>'+(ui.snapshotBusy?'Retaining selected bytes…':editing?'Save changes':'Schedule message')+'</button>')
+    }),'sched-dialog sched-dialog--message');
   }
 
   function renderQuotaHint() {
@@ -38183,49 +38090,72 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   function renderBuildDialog(ctx){
     var x=ctx.state.dialog,d=ui.buildDraft;if(!d||d.planId!==x.planId)d=ui.buildDraft=defaultBuildDraft(x.planId,x.version);
     var plan=window.PM56_PLANS?.get(d.planId),one=d.kind==='one_time';
-    var zones=TZ_OPTIONS.map(t=>'<option value="'+esc(t.id)+'" '+(d.timezone===t.id?'selected':'')+'>'+esc(zoneName(t.id))+'</option>').join('');
-    if(!TZ_OPTIONS.some(t=>t.id===d.timezone))zones='<option selected value="'+esc(d.timezone)+'">'+esc(zoneName(d.timezone))+'</option>'+zones;
-    return '<section class="dialog sched-dialog sched-dialog--build" role="dialog" aria-modal="true" aria-label="Build At"><div class="drawer-head">'+ctx.icon('document',16)+'<strong>'+(ui.editingBuildId?'Edit build window':'Schedule a build')+'</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div><div class="dialog-body">'+
-      '<div class="schedule-plan-target"><strong>'+esc(plan?.title||d.planId)+'</strong><span>V'+esc(d.version)+' · Fixed version</span></div>'+
-      (one?wallResolution(d.date,d.time,d.timezone):'')+'<label class="sched-field"><span>Execution</span><select data-sched-input="build-topology"><option value="agent" '+((d.executionTopology||'agent')==='agent'?'selected':'')+'>Build normally</option><option value="goal_driven" '+(d.executionTopology==='goal_driven'?'selected':'')+'>Build as Goal</option><option value="crew" '+(d.executionTopology==='crew'?'selected':'')+'>Build with Crew</option></select></label>'+(d.executionTopology==='goal_driven'?'<p class="schedule-caption">The Goal is created only when this exact build is admitted.</p>':'')+
-      (d.executionTopology==='crew'?'<section class="schedule-crew-config"><button class="soft-button" data-action="sched-configure-crew">'+(d.crewDefinition?'Review frozen Crew':'Configure Crew')+'</button><p class="schedule-caption">'+(d.crewDefinition?esc(d.crewDefinition.name)+' · '+d.crewDefinition.participants.length+' participants · no run until dispatch':'Choose the roster before scheduling. No unattended modal opens at dispatch.')+'</p></section>':'')+
-      '<div class="schedule-kind">'+[['one_time','Once'],['recurring_window','Recurring window']].map(([v,l])=>'<button class="soft-button '+(d.kind===v?'active':'')+'" data-action="sched-set-build-kind" data-value="'+v+'">'+l+'</button>').join('')+'</div>'+
-      '<div class="sched-field-grid">'+(one?'<label class="sched-field"><span>Date</span><input type="date" data-sched-input="build-date" value="'+esc(d.date)+'"></label><label class="sched-field"><span>Start</span><input type="time" data-sched-input="build-time" value="'+esc(d.time)+'"></label>':'<label class="sched-field"><span>Start</span><input type="time" data-sched-input="build-start" value="'+esc(d.startTime)+'"></label><label class="sched-field"><span>Pause</span><input type="time" data-sched-input="build-pause" value="'+esc(d.pauseTime)+'"></label>')+
-      '<label class="sched-field schedule-zone"><span>Timezone</span><select data-sched-input="build-tz">'+zones+'</select></label></div>'+
-      (!one?'<div class="sched-days">'+DAY_LABELS.map((l,i)=>'<button class="sched-day-chip '+(d.days.includes(i)?'on':'')+'" aria-pressed="'+d.days.includes(i)+'" data-action="sched-toggle-day" data-day="'+i+'">'+l+'</button>').join('')+'</div><label class="sched-check-row"><input type="checkbox" data-action="sched-toggle-autoresume" '+(d.autoResumeNext?'checked':'')+'>Resume next window</label>':'')+
-      '<details class="schedule-details"><summary>More options '+ctx.icon('down',11)+'</summary><div class="sched-field-grid">'+(!one?'<label class="sched-field"><span>Wind-down · minutes</span><input type="number" data-sched-input="build-wind" min="0" max="180" value="'+d.windDown+'"></label>':'')+
-      '<label class="sched-field"><span>If missed</span><select data-sched-input="build-missed">'+[['hold','Hold'],['next_available','Next available'],['cancel_after_grace','Cancel after grace']].map(([v,l])=>'<option value="'+v+'" '+(d.missed===v?'selected':'')+'>'+l+'</option>').join('')+'</select></label></div><details class="sched-audit"><summary>Timezone rules</summary>'+describeDst(d.timezone,[],d.days).map(l=>'<p>'+esc(l)+'</p>').join('')+'</details></details>'+
-      '<div class="sched-form-error" role="alert">'+esc(d.error||'')+'</div></div><div class="schedule-form-foot"><span class="schedule-caption">Plan revisions require review.</span><span class="spacer"></span><button class="soft-button" data-action="sched-close-dialog">Cancel</button><button class="primary-button" data-action="sched-create-build" data-plan-id="'+esc(d.planId)+'" data-plan-version="'+esc(d.version)+'">'+(ui.editingBuildId?'Save window':'Schedule build')+'</button></div>'+(window.PM56_SCHEDULE_DEMOS?window.PM56_SCHEDULE_DEMOS.dialogGuide(ctx):'')+'</section>';
+    var hash=d.contentHash||demoHash(d.planId+':'+d.version);
+    var body=
+      SH.section({iconHtml:ctx.icon('document',12),label:'Plan target',body:
+        SH.rows([['Plan',esc(plan?.title||d.planId)],['Version','V'+esc(d.version)+' · Fixed version']])})+
+      SH.section({iconHtml:ctx.icon('history',12),label:'When',body:
+        SH.seg([['one_time','Once'],['recurring_window','Recurring window']],d.kind,'sched-set-build-kind')+
+        (one
+          ?SH.grid2(SH.field('Date','<input type="date" data-sched-input="build-date" value="'+esc(d.date)+'">')+SH.field('Start','<input type="time" data-sched-input="build-time" value="'+esc(d.time)+'">'))+wallResolution(d.date,d.time,d.timezone)
+          :SH.grid2(SH.field('Start','<input type="time" data-sched-input="build-start" value="'+esc(d.startTime)+'">')+SH.field('Pause','<input type="time" data-sched-input="build-pause" value="'+esc(d.pauseTime)+'">')))+
+        SH.field('Timezone',SH.pickerButton({action:'sched-pick-build-tz',anchor:'sched-build-tz',strong:esc(tzLabel(d.timezone)),iconHtml:ctx.icon('down',11)}))+
+        (!one?'<div class="sched-days">'+DAY_LABELS.map((l,i)=>'<button class="sched-day-chip '+(d.days.includes(i)?'on':'')+'" aria-pressed="'+d.days.includes(i)+'" data-action="sched-toggle-day" data-day="'+i+'">'+l+'</button>').join('')+'</div>'+SH.check('Resume next window',d.autoResumeNext,' data-action="sched-toggle-autoresume"'):'')})+
+      SH.section({iconHtml:ctx.icon('sparkles',12),label:'Execution',body:
+        SH.pickerButton({action:'sched-pick-build-topology',anchor:'sched-build-topology',strong:esc(optionLabel(TOPOLOGY_OPTIONS,d.executionTopology||'agent')),iconHtml:ctx.icon('down',11)})+
+        (d.executionTopology==='goal_driven'?SH.note('The Goal is created only when this exact build is admitted.'):'')+
+        (d.executionTopology==='crew'?'<section class="schedule-crew-config"><button class="soft-button" data-action="sched-configure-crew">'+(d.crewDefinition?'Review frozen Crew':'Configure Crew')+'</button><p class="schedule-caption">'+(d.crewDefinition?esc(d.crewDefinition.name)+' · '+d.crewDefinition.participants.length+' participants · no run until dispatch':'Choose the roster before scheduling. No unattended modal opens at dispatch.')+'</p></section>':'')})+
+      SH.disclosure('sched-build-more','More options',
+        (!one?SH.field('Wind-down · minutes','<input type="number" data-sched-input="build-wind" min="0" max="180" value="'+d.windDown+'">'):'')+
+        SH.field('If missed',SH.pickerButton({action:'sched-pick-build-missed',anchor:'sched-build-missed',strong:esc(optionLabel(MISSED_BUILD_OPTIONS,d.missed)),iconHtml:ctx.icon('down',11)}))+
+        SH.disclosure('sched-build-tz-rules','Timezone rules','<div class="sched-dst">'+describeDst(d.timezone,[],d.days).map(l=>'<p class="sched-dst-line">'+esc(l)+'</p>').join('')+'</div>'))+
+      formError(d.error)+
+      (window.PM56_SCHEDULE_DEMOS?window.PM56_SCHEDULE_DEMOS.dialogGuide(ctx):'');
+    return withCls(SH.dialog({
+      iconHtml:ctx.icon('document',15),
+      title:ui.editingBuildId?'Edit build window':'Schedule a build',
+      sub:'Binds one exact Plan version to a local execution window. Nothing runs until an eligible dispatch is admitted.',
+      pill:esc(d.planId)+' · V'+esc(d.version)+' · hash '+esc(hash),
+      width:620,ariaLabel:'Build At',closeAction:'sched-close-dialog',
+      body:body,
+      foot:SH.foot('<span class="schedule-caption">Plan revisions require review.</span>',
+        '<button class="soft-button" data-action="sched-close-dialog">Cancel</button>'+
+        '<button class="primary-button" data-action="sched-create-build" data-plan-id="'+esc(d.planId)+'" data-plan-version="'+esc(d.version)+'">'+(ui.editingBuildId?'Save window':'Schedule build')+'</button>')
+    }),'sched-dialog sched-dialog--build');
   }
 
 
-  function renderPrecedenceSection(){
-    var S=P();return '<section class="schedule-safety"><div><strong>Manual stop</strong><span>'+(S.stopped?'Automations paused':'Not active')+'</span></div>'+
-      (S.stopped?'<button class="soft-button" data-action="sched-clear-stop">Resume automations</button>':'')+'</section>'+
-      (S.stopped?'<p class="schedule-attention">'+esc(S.stopReason||'Stopped by you')+'</p>':'')+
-      '<details class="sched-audit"><summary>Stop record</summary>'+facts([['Epoch',S.stopEpoch],['Stopped',S.stopAt],['Rule','Manual stop, pause or cancel wins over automatic continuation.']])+'</details>';
+  function renderPrecedenceSection(ctx){
+    var S=P();
+    return SH.section({iconHtml:ctx.icon('stop',12),label:'Manual stop',
+      meta:mdlChip(S.stopped?'Automations paused':'Not active',S.stopped?'attention':'idle'),
+      body:(S.stopped?SH.note(esc(S.stopReason||'Stopped by you'),'danger')+'<div class="mdl-card-actions"><button class="soft-button" data-action="sched-clear-stop">Resume automations</button></div>':'')+
+        SH.disclosure('sched-stop-record','Stop record',facts([['Epoch',S.stopEpoch],['Stopped',S.stopAt],['Rule','Manual stop, pause or cancel wins over automatic continuation.']]))});
   }
 
 
-  function renderQuotaSection(){
-    var q=RT.quota,c=P().quotaConsents[0];return '<section class="schedule-safety"><div><strong>Quota resume</strong><span>'+(q?.waiting?'Waiting for provider quota':'No quota wait')+'</span></div>'+chip(q?.resumeAutomatically?'Opted in':'Off','idle')+'</section>'+facts([
-      ['Expected reset',q?.resetAt||'Unknown'],['Reset source',q?.resetSource||'Unknown'],['Provider',c?.provider_id],['Account',c?.account_id]
-    ])+'<details class="sched-audit"><summary>Consent record</summary>'+facts([['Run',c?.run_id],['Scope','This run and account only'],['Control','Use the quota wait strip in chat.']])+'</details>';
+  function renderQuotaSection(ctx){
+    var q=RT.quota,c=P().quotaConsents[0];
+    var pairs=[['Expected reset',q?.resetAt||'Unknown'],['Reset source',q?.resetSource||'Unknown'],['Provider',c?.provider_id],['Account',c?.account_id]]
+      .filter(r=>r[1]!=null&&r[1]!=='').map(r=>[esc(r[0]),esc(r[1])]);
+    return SH.section({iconHtml:ctx.icon('refresh',12),label:'Quota resume',
+      meta:mdlChip(q?.waiting?'Waiting for provider quota':'No quota wait',q?.waiting?'attention':'idle')+mdlChip(q?.resumeAutomatically?'Opted in':'Off','idle'),
+      body:SH.rows(pairs)+SH.disclosure('sched-consent-record','Consent record',facts([['Run',c?.run_id],['Scope','This run and account only'],['Control','Use the quota wait strip in chat.']]))});
   }
 
   function renderEventLog() {
     var events = P().events;
     if (!events.length) return '<p class="sched-empty">No events yet.</p>';
     return '<div class="sched-event-log">' + events.map(function (e) {
-      return '<div class="sched-event-row' + (e.clause ? ' refused' : '') + '">' +
-        '<span class="sched-log-when">' + esc(fmtClock(e.at)) + ' ' + esc(fmtDay(e.at)) + '</span>' +
-        '<span class="sched-event-type">' + esc(e.type) + (e.clause ? (' · ' + esc(e.clause)) : '') + '</span>' +
-        '<p>' + esc(e.detail) + '</p></div>';
+      return SH.card({
+        head:SH.cardHead({copy:SH.copy(esc(e.type)+(e.clause?(' · '+esc(e.clause)):''),esc(fmtClock(e.at)+' '+fmtDay(e.at)))}),
+        body:e.detail?SH.note(esc(e.detail)):''
+      });
     }).join('') + '</div>';
   }
 
 
-  function renderPersistenceFooter(ctx){return '<div class="schedule-footer"><span title="This HTML demonstrates schedules; no background dispatch service runs here.">Concept · local records</span><span title="'+(ui.persistenceAvailable===false?'Browser storage unavailable. Changes last for this session.':'')+'">'+(ui.persistenceAvailable===false?'Session only':P().lastSavedAt?'Saved '+esc(fmtClock(P().lastSavedAt)):'')+'</span></div>';}
+  function renderPersistenceFooter(ctx){return SH.foot(SH.note('<span title="This HTML demonstrates schedules; no background dispatch service runs here.">Concept · local records</span>'),SH.note('<span title="'+(ui.persistenceAvailable===false?'Browser storage unavailable. Changes last for this session.':'')+'">'+(ui.persistenceAvailable===false?'Session only':P().lastSavedAt?'Saved '+esc(fmtClock(P().lastSavedAt)):'')+'</span>'));}
 
 
   function managerFilter(tab){return (ui.managerFilters||(ui.managerFilters={}))[tab]||((ui.managerFilters)[tab]={status:'all',query:'',sort:'time_asc'});}
@@ -38233,22 +38163,44 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     const state=r.state==='scheduled'?'active':r.state==='sent'||r.state==='dispatched'?'completed':r.state==='held'||r.state==='invalidated'?'held':r.state==='cancelled'?'canceled':r.runPhase==='paused_safe'?'paused':r.state;
     return (f.status==='all'||state===f.status)&&(!q||[r.text,r.target_id,r.destination_ref?.label,r.timezone,PM56_PLANS.get(r.target_id)?.title].filter(Boolean).join(' ').toLowerCase().includes(q));
   }).sort((a,b)=>{const n=(Date.parse(a.scheduled_at_utc||a.next_occurrence_at||a.createdAt)||0)-(Date.parse(b.scheduled_at_utc||b.next_occurrence_at||b.createdAt)||0);return (f.sort==='time_desc'?-n:n)||String(a.scheduled_dispatch_id||a.schedule_id).localeCompare(String(b.scheduled_dispatch_id||b.schedule_id));});}
-  function managerToolbar(tab,focused){const f=managerFilter(tab);return '<div class="b18-manager-filter"><label>Search<input data-sched-input="manager-query" value="'+esc(f.query)+'" placeholder="Text, destination or timezone"></label><label>Status<select data-sched-input="manager-status">'+[['all','All'],['active','Active'],['paused','Paused'],['held','Held / needs review'],['completed','Completed / sent'],['failed','Failed'],['expired','Expired'],['canceled','Canceled']].map(([v,l])=>'<option value="'+v+'" '+(f.status===v?'selected':'')+'>'+l+'</option>').join('')+'</select></label><label>Order<select data-sched-input="manager-sort"><option value="time_asc" '+(f.sort==='time_asc'?'selected':'')+'>Earliest first</option><option value="time_desc" '+(f.sort==='time_desc'?'selected':'')+'>Latest first</option></select></label></div>'+(focused?'<button class="text-button" data-action="sched-show-all-builds">All build windows</button>':'');}
+  function managerToolbar(ctx,tab,focused){
+    const f=managerFilter(tab);
+    return SH.section({iconHtml:ctx.icon('search',12),label:'Filter',body:
+      SH.field('Search','<input type="text" data-sched-input="manager-query" value="'+esc(f.query)+'" placeholder="Text, destination or timezone">')+
+      SH.grid2(
+        SH.field('Status',SH.pickerButton({action:'sched-pick-manager-status',anchor:'sched-manager-status',strong:esc(optionLabel(MANAGER_STATUS_OPTIONS,f.status)),iconHtml:ctx.icon('down',11)}))+
+        SH.field('Order',SH.pickerButton({action:'sched-pick-manager-sort',anchor:'sched-manager-sort',strong:esc(optionLabel(MANAGER_SORT_OPTIONS,f.sort)),iconHtml:ctx.icon('down',11)})))+
+      (focused?'<div class="mdl-card-actions"><button class="text-button" data-action="sched-show-all-builds">All build windows</button></div>':'')});
+  }
   function renderManageDialog(ctx){
     var S=P(),tab=ui.manageTab||'messages';if(tab==='precedence')tab='quota';
     const focused=tab==='builds'&&!!findBuild(ui.focusBuild),allActive=S.scheduledMessages.filter(m=>['scheduled','held','failed'].includes(m.state));
     const msgs=visibleSchedules(S.scheduledMessages,'messages'),active=msgs.filter(m=>['scheduled','held'].includes(m.state)),attention=active.filter(m=>m.state==='held'),upcoming=active.filter(m=>m.state==='scheduled'),past=msgs.filter(m=>!active.includes(m));
     const tabs=[['messages','Scheduled Messages'],['builds','Execution & Build Windows'],['quota','Resume & Safety Policy'],['events','Events & Automation']];
-    function section(label,rows){return rows.length?'<section class="schedule-list-section"><h3>'+label+' <span>'+rows.length+'</span></h3>'+rows.map(m=>renderMessageRow(ctx,m)).join('')+'</section>':'';}
+    function listSection(icon,label,rows){return rows.length?SH.section({iconHtml:ctx.icon(icon,12),label:label,meta:String(rows.length),body:rows.map(m=>renderMessageRow(ctx,m)).join('')}):'';}
     var content='';
-    if(tab==='messages')content=section('Needs attention',attention)+section('Upcoming',upcoming)+(past.length?'<details class="schedule-history" '+(managerFilter(tab).status!=='all'||past.some(m=>m.scheduled_dispatch_id===ui.focusSchedule)?'open':'')+'><summary>History <span>'+past.length+'</span></summary>'+past.map(m=>renderMessageRow(ctx,m)).join('')+'</details>':'')+(!msgs.length?'<div class="schedule-empty">'+ctx.icon('history',28)+'<strong>No matching scheduled messages</strong><span>Create a message schedule from the Assistant wand.</span></div>':'');
-    else if(tab==='builds'){const rows=visibleSchedules(S.buildSchedules.filter(b=>!ui.focusBuild||b.schedule_id===ui.focusBuild),'builds');content='<section class="schedule-list-section"><h3>Execution &amp; build windows</h3>'+(rows.length?rows.map(b=>renderBuildRow(ctx,b)).join(''):'<div class="schedule-empty"><strong>No matching windows</strong><span>Use Build At from a Plan.</span></div>')+'</section>';}
-    else if(tab==='quota')content=renderPrecedenceSection()+renderQuotaSection();
-    else content='<p class="schedule-caption">Session event history. Native webhook and automation services are not running in this concept.</p>'+renderEventLog();
-    return '<section class="dialog sched-dialog sched-dialog--manage'+(focused?' sched-dialog--focused':'')+'" role="dialog" aria-modal="true" aria-label="Scheduled and Automations"><div class="drawer-head"><strong>'+(focused?'Build schedule':'Scheduled &amp; automations')+'</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div>'+
-      '<div class="schedule-overview"><div><strong>'+allActive.length+'</strong><span>pending messages</span></div><div><strong>'+S.buildSchedules.filter(b=>b.state==='active').length+'</strong><span>active windows</span></div><div class="schedule-overview-state">'+chip(S.stopped?'Automations paused':allActive.some(m=>m.state==='held')?'Needs attention':'No blockers',S.stopped?'attention':'idle')+'</div></div>'+
-      '<div class="sched-tabs" role="tablist">'+tabs.map(([v,l])=>'<button role="tab" aria-selected="'+(v===tab)+'" class="text-button sched-tab '+(v===tab?'active':'')+'" data-action="sched-manage-tab" data-tab="'+v+'">'+l+'</button>').join('')+'</div>'+
-      (['messages','builds'].includes(tab)?managerToolbar(tab,focused):'')+'<div class="dialog-body">'+content+'</div>'+renderPersistenceFooter(ctx)+(window.PM56_SCHEDULE_DEMOS?window.PM56_SCHEDULE_DEMOS.dialogGuide(ctx):'')+'</section>';
+    if(tab==='messages')content=listSection('warning','Needs attention',attention)+listSection('history','Upcoming',upcoming)+(past.length?SH.disclosure('sched-msg-history','History · '+past.length,past.map(m=>renderMessageRow(ctx,m)).join(''),managerFilter(tab).status!=='all'||past.some(m=>m.scheduled_dispatch_id===ui.focusSchedule)):'')+(!msgs.length?'<div class="schedule-empty">'+ctx.icon('history',28)+'<strong>No matching scheduled messages</strong><span>Create a message schedule from the Assistant wand.</span></div>':'');
+    else if(tab==='builds'){const rows=visibleSchedules(S.buildSchedules.filter(b=>!ui.focusBuild||b.schedule_id===ui.focusBuild),'builds');const list=rows.length?rows.map(b=>renderBuildRow(ctx,b)).join(''):'<div class="schedule-empty"><strong>No matching windows</strong><span>Use Build At from a Plan.</span></div>';content=focused?list:SH.section({iconHtml:ctx.icon('document',12),label:'Execution &amp; build windows',body:list});}
+    else if(tab==='quota')content=renderPrecedenceSection(ctx)+renderQuotaSection(ctx);
+    else content=SH.note('Session event history. Native webhook and automation services are not running in this concept.')+renderEventLog();
+    /* focused = the demo-driven single-record view. plan-demo-batch2.css used
+       to hide the overview strip, the tabs and the list heading with CSS
+       overrides on .sched-dialog--focused; the shell grammar simply does not
+       emit them, and the dialog narrows instead of the old 680px override. */
+    var body=(focused?'':
+        SH.stats([['pending messages',String(allActive.length)],['active windows',String(S.buildSchedules.filter(b=>b.state==='active').length)],['automation state',mdlChip(S.stopped?'Automations paused':allActive.some(m=>m.state==='held')?'Needs attention':'No blockers',S.stopped?'attention':'idle')]])+
+        SH.tabs(tabs.map(t=>[t[0],esc(t[1])]),tab,{action:'sched-manage-tab',attr:'data-tab'}))+
+      (['messages','builds'].includes(tab)?managerToolbar(ctx,tab,focused):'')+
+      content+
+      (window.PM56_SCHEDULE_DEMOS?window.PM56_SCHEDULE_DEMOS.dialogGuide(ctx):'');
+    return withCls(SH.dialog({
+      iconHtml:ctx.icon('refresh',15),
+      title:focused?'Build schedule':'Scheduled &amp; automations',
+      sub:'Every scheduled message, execution window, resume consent and automation event in one local record. No background dispatch service runs in this concept.',
+      width:focused?720:880,ariaLabel:'Scheduled and Automations',closeAction:'sched-close-dialog',
+      body:body,
+      foot:renderPersistenceFooter(ctx)
+    }),'sched-dialog sched-dialog--manage'+(focused?' sched-dialog--focused':''));
   }
 
   EXT.slot('wandRows', function (ctx) {
@@ -38417,6 +38369,38 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   EXT.action('sched-pick-model',function(ctx,btn){
     var d=ui.msgDraft;if(!d)return true;
     window.PM56_PICKERS.openModel(btn,{model:d.modelId,effort:d.effort,fast:d.fast},v=>{if(ui.msgDraft!==d||ctx.state.dialog?.type!=='sched-message')return;d.modelId=v.model;d.effort=v.effort;d.fast=v.fast;ctx.renderOverlays();});return true;
+  });
+  /* Enumeration pickers — the seven former native select elements, now
+     shared openChoice menus. Guarded exactly like sched-pick-model above: draft
+     existence at click time, draft identity and dialog type re-checked
+     inside the onChange callback before assigning and re-rendering. */
+  EXT.action('sched-pick-msg-tz',function(ctx,btn){
+    var d=ui.msgDraft;if(!d)return true;
+    window.PM56_PICKERS.openChoice(btn,'Timezone',d.timezone,tzChoiceOptions(d.timezone),v=>{if(ui.msgDraft!==d||ctx.state.dialog?.type!=='sched-message')return;d.timezone=v;ctx.renderOverlays();});return true;
+  });
+  EXT.action('sched-pick-msg-missed',function(ctx,btn){
+    var d=ui.msgDraft;if(!d)return true;
+    window.PM56_PICKERS.openChoice(btn,'If the send time is missed',d.missed,MISSED_MSG_OPTIONS.map(([value,label])=>({value,label})),v=>{if(ui.msgDraft!==d||ctx.state.dialog?.type!=='sched-message')return;d.missed=v;ctx.renderOverlays();});return true;
+  });
+  EXT.action('sched-pick-manager-status',function(ctx,btn){
+    var f=managerFilter(ui.manageTab);
+    window.PM56_PICKERS.openChoice(btn,'Status',f.status,MANAGER_STATUS_OPTIONS.map(([value,label])=>({value,label})),v=>{if(ctx.state.dialog?.type!=='sched-manage')return;f.status=v;ctx.renderOverlays();});return true;
+  });
+  EXT.action('sched-pick-manager-sort',function(ctx,btn){
+    var f=managerFilter(ui.manageTab);
+    window.PM56_PICKERS.openChoice(btn,'Order',f.sort,MANAGER_SORT_OPTIONS.map(([value,label])=>({value,label})),v=>{if(ctx.state.dialog?.type!=='sched-manage')return;f.sort=v;ctx.renderOverlays();});return true;
+  });
+  EXT.action('sched-pick-build-topology',function(ctx,btn){
+    var d=ui.buildDraft;if(!d)return true;
+    window.PM56_PICKERS.openChoice(btn,'Execution',d.executionTopology||'agent',TOPOLOGY_OPTIONS.map(([value,label])=>({value,label})),v=>{if(ui.buildDraft!==d||ctx.state.dialog?.type!=='sched-build-at')return;d.executionTopology=v;ctx.renderOverlays();});return true;
+  });
+  EXT.action('sched-pick-build-tz',function(ctx,btn){
+    var d=ui.buildDraft;if(!d)return true;
+    window.PM56_PICKERS.openChoice(btn,'Timezone',d.timezone,tzChoiceOptions(d.timezone),v=>{if(ui.buildDraft!==d||ctx.state.dialog?.type!=='sched-build-at')return;d.timezone=v;ctx.renderOverlays();});return true;
+  });
+  EXT.action('sched-pick-build-missed',function(ctx,btn){
+    var d=ui.buildDraft;if(!d)return true;
+    window.PM56_PICKERS.openChoice(btn,'If missed',d.missed,MISSED_BUILD_OPTIONS.map(([value,label])=>({value,label})),v=>{if(ui.buildDraft!==d||ctx.state.dialog?.type!=='sched-build-at')return;d.missed=v;ctx.renderOverlays();});return true;
   });
   EXT.action('sched-card-edit', function(ctx,btn){
     var rec=smById(btn.dataset.id); if(!rec) return true;
@@ -38652,22 +38636,17 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     var k = t.getAttribute('data-sched-input'); if (!k) return;
     var ctx = EXT.ctx && EXT.ctx(); if (!ctx) return;
     var md = ui.msgDraft, bd = ui.buildDraft;
-    if(k.startsWith('manager-')){const f=managerFilter(ui.manageTab);f[k==='manager-query'?'query':k==='manager-status'?'status':'sort']=t.value;ctx.renderOverlays();return;}
+    if(k==='manager-query'){managerFilter(ui.manageTab).query=t.value;ctx.renderOverlays();return;}
     if (k === 'msg-text' && md) md.text = t.value;
     else if (k === 'msg-date' && md) md.date = t.value;
     else if (k === 'msg-time' && md) md.time = t.value;
-    else if (k === 'msg-tz' && md) md.timezone = t.value;
     else if (k === 'msg-model' && md) md.modelId = t.value;
-    else if (k === 'msg-missed' && md) md.missed = t.value;
     else if (k === 'msg-grace' && md) md.grace = clamp(t.value, 1, 1440);
-    else if (k === 'build-topology' && bd) bd.executionTopology=t.value;
     else if (k === 'build-date' && bd) bd.date = t.value;
     else if (k === 'build-time' && bd) bd.time = t.value;
     else if (k === 'build-start' && bd) bd.startTime = t.value;
     else if (k === 'build-pause' && bd) bd.pauseTime = t.value;
-    else if (k === 'build-tz' && bd) bd.timezone = t.value;
     else if (k === 'build-wind' && bd) bd.windDown = clamp(t.value, 0, 180);
-    else if (k === 'build-missed' && bd) bd.missed = t.value;
     else return;
     reRender(ctx);
   });
@@ -42351,10 +42330,45 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     ctx.openDialog({ type:'af-settings' });
     return true;
   });
-  EXT.action('af-title-set-policy', function(ctx, btn){
-    F.title.policy=btn.dataset.value;
+  /* Single setter path for the thread-title policy. The old inline policy-row
+     buttons are gone (the settings dialog now uses one picker button); this
+     function is exactly what that row handler ran, and it is what the picker's
+     onChange calls. */
+  function applyTitlePolicy(ctx, value){
+    F.title.policy=value;
     ctx.renderOverlays();
     ctx.toast('Title policy updated', policyDescription(F.title.policy));
+  }
+  function titlePolicyLabel(p){
+    if(p==='default') return 'Default resolver';
+    if(p==='none') return 'None';
+    var m=modelById(p.indexOf('model:')===0?p.slice(6):'');
+    return m?m.name:p;
+  }
+  function titlePolicySmall(p){
+    if(p==='default') return 'Deterministic resolver';
+    if(p==='none') return 'No automatic titles';
+    var m=modelById(p.indexOf('model:')===0?p.slice(6):'');
+    return m?(m.account||m.provider):'Not in the current roster';
+  }
+  function titlePolicyOptions(){
+    var opts=[
+      {value:'default',label:'Default resolver',description:'Deterministic: ready + fast route, smallest context, then id'},
+      {value:'none',label:'None',description:'Stays "New chat" until you rename it'}
+    ];
+    (D.models||[]).forEach(function(m){
+      var ready=m.status==='ready';
+      opts.push({value:'model:'+m.id,label:m.name,description:(m.account||m.provider)+(ready?'':' — Unavailable: '+(m.statusDetail||m.statusLabel||m.status))});
+    });
+    return opts;
+  }
+  EXT.action('af-title-pick-policy', function(ctx, btn){
+    if(!window.PM56_PICKERS) return true;
+    window.PM56_PICKERS.openChoice(btn, 'Thread title policy', F.title.policy, titlePolicyOptions(), function(value){
+      var c=ctxNow();
+      if(!c || !c.state.dialog || c.state.dialog.type!=='af-settings') return;
+      applyTitlePolicy(c, value);
+    });
     return true;
   });
   EXT.action('af-title-race-demo', function(ctx){
@@ -42396,38 +42410,31 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
       '<span class="menu-icon">'+icon('refresh',13)+'</span><span class="menu-copy"><strong>Regenerate title</strong><span>'+(canRegen?'Clears the manual-rename lock':'Title policy is set to None')+'</span></span></button>';
   });
 
-  function modelPickerRows(ctx){
-    var icon=ctx.icon, e=ctx.esc;
-    var current=F.title.policy.indexOf('model:')===0?F.title.policy.slice(6):null;
-    return (D.models||[]).map(function(m){
-      var active=current===m.id, ready=m.status==='ready';
-      return '<button class="menu-item'+(active?' active':'')+'" data-action="af-title-set-policy" data-value="model:'+e(m.id)+'">'+
-        '<span class="menu-copy"><strong>'+e(m.name)+'</strong><span>'+e(m.account||m.provider)+(ready?'':' — Unavailable: '+e(m.statusDetail||m.statusLabel||m.status))+'</span></span>'+
-        (active?'<span class="check">'+icon('check',12)+'</span>':'')+'</button>';
-    }).join('');
-  }
   function renderSettingsDialog(ctx){
-    var icon=ctx.icon, e=ctx.esc;
+    var icon=ctx.icon, e=ctx.esc, S=window.PM56_SHELL;
     var tid=ctx.thread.id;
     var attempts=(F.title.attempts[tid]||[]).slice(-3).reverse();
-    var body='<h3 class="af-settings-h3">ELI5 default</h3>'+
-      '<label class="af-toggle-row"><input type="checkbox" data-af-input="eli5-default"'+(F.eli5.appDefault?' checked':'')+'>'+
-      '<span>Explain simply in conversations that inherit this default</span></label>'+
-      '<p class="af-note">Any thread can still set its own override from the wand.</p>'+
-      '<h3 class="af-settings-h3">Thread titles</h3>'+
-      '<div class="af-policy-rows af-scroll-rows">'+
-      '<button class="menu-item'+(F.title.policy==='default'?' active':'')+'" data-action="af-title-set-policy" data-value="default"><span class="menu-copy"><strong>Default resolver</strong><span>Deterministic: ready + fast route, smallest context, then id</span></span>'+(F.title.policy==='default'?'<span class="check">'+icon('check',12)+'</span>':'')+'</button>'+
-      '<button class="menu-item'+(F.title.policy==='none'?' active':'')+'" data-action="af-title-set-policy" data-value="none"><span class="menu-copy"><strong>None</strong><span>Stays "New chat" until you rename it</span></span>'+(F.title.policy==='none'?'<span class="check">'+icon('check',12)+'</span>':'')+'</button>'+
-      modelPickerRows(ctx)+
-      '</div>'+
-      '<p class="af-note">'+e(policyDescription(F.title.policy))+'</p>'+
-      '<h3 class="af-settings-h3">Demonstrations · this thread</h3>'+
-      '<div class="plan-actions"><button class="soft-button" data-action="af-title-regenerate" data-value="'+e(tid)+'">'+icon('refresh',12)+' Regenerate this title</button>'+
-      '<button class="soft-button" data-action="af-title-race-demo">'+icon('warning',12)+' Late-generation race</button></div>'+
-      (attempts.length?'<div class="af-attempt-log">'+attempts.map(function(a){
-        return '<div class="af-attempt-row"><span class="af-attempt-outcome af-outcome-'+e(a.outcome)+'">'+e(a.outcome)+'</span><span>'+e(a.reason||a.titleText||'')+'</span><span class="af-mem-time">'+e(clockOf(a.at))+'</span></div>';
-      }).join('')+'</div>':'');
-    return dialogShell(ctx, { icon:'settings', title:'Assistant defaults', body:body, width:560 });
+    var body=
+      S.section({iconHtml:icon('info',12),label:'What lives here',body:
+        S.note(e('These are application-level defaults, not per-conversation settings. They apply when a new thread starts and never rewrite an existing conversation.'))+
+        S.note(e('Each conversation can still override ELI5 from the wand (ELI5 explanations) and its title from the thread menu (Regenerate title). Choosing a title model here only selects the route used for future auto-titles; nothing contacts a provider by itself.'))})+
+      S.section({iconHtml:icon('sparkles',12),label:'ELI5 default',body:
+        S.check(e('Explain simply in conversations that inherit this default'),F.eli5.appDefault,' data-af-input="eli5-default"')+
+        S.note(e('Any thread can still set its own override from the wand.'))})+
+      S.section({iconHtml:icon('edit',12),label:'Thread titles',body:
+        S.field(e('How new threads are titled'),S.pickerButton({action:'af-title-pick-policy',anchor:'af-title-policy',strong:e(titlePolicyLabel(F.title.policy)),small:e(titlePolicySmall(F.title.policy)),iconHtml:icon('down',11)}))+
+        S.note(e(policyDescription(F.title.policy)))})+
+      S.section({iconHtml:icon('warning',12),label:'Demonstrations · this thread',body:
+        '<div class="mdl-card-actions">'+
+        '<button class="soft-button" data-action="af-title-regenerate" data-value="'+e(tid)+'">'+icon('refresh',12)+' Regenerate this title</button>'+
+        '<button class="soft-button" data-action="af-title-race-demo">'+icon('warning',12)+' Late-generation race</button></div>'+
+        (attempts.length?S.rows(attempts.map(function(a){
+          return [e(a.outcome),e(a.reason||a.titleText||'')+(clockOf(a.at)?' · '+e(clockOf(a.at)):'')];
+        })):'')});
+    return S.dialog({iconHtml:icon('settings',15),title:e('Assistant defaults'),
+      sub:e('The two choices every new conversation inherits before you override anything: whether ELI5 explanations start on, and how threads get their title.'),
+      width:620,body:body,
+      foot:S.foot('','<button class="soft-button" data-action="close-dialog">Close</button>')});
   }
 
   document.addEventListener('change', function(e){
@@ -44111,10 +44118,19 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  const errorText={credential_detected:'Remove the credential before saving.',source_changed:'The source changed. Select it again.',resolve_related_teaching:'Choose how to handle the related teaching.',stale_correction:'This teaching changed. Reopen its current version.',scope_context_changed:'The destination changed. Open a new capture.',confirm_nonconfidential_user_scope:'Confirm this is safe for other projects.',correction_cannot_widen_scope:'Create a separate teaching to broaden its scope.',draft_changed:'The draft changed. Review it before saving.',text_required_and_bounded:'Enter 1–4,000 characters.',invalid_scope:'Choose a supported scope.'};
  const explain=x=>errorText[x]||'The record changed. Reopen it and try again.';
  function conflictHtml(c,d){const rows=related(d);if(d.narrowOf||!rows.length)return '';return '<div class="teach-related"><strong>Related teaching</strong><small>Local word overlap — not a semantic verdict</small>'+rows.map(r=>'<p>'+c.esc(r.text)+'</p><button class="soft-button '+(d.conflictChoice==='replace:'+r.id?'selected':'')+'" data-action="teach-conflict" data-choice="replace:'+c.esc(r.id)+'">Replace this version</button>').join('')+'<button class="soft-button" data-action="teach-conflict" data-choice="keep_both">'+(d.conflictChoice==='keep_both'?'✓ ':'')+'Keep both</button></div>';}
- function dialog(c){const d=store().pending;if(!d)return '';const isCorrection=!!d.narrowOf,e=c.esc;
-  return '<section class="dialog teach-dialog" role="dialog" aria-modal="true" aria-label="'+(isCorrection?'Correct teaching':'Teach Puppet Master')+'"><div class="drawer-head"><span class="event-icon">'+c.icon('sparkles',14)+'</span><strong>'+(isCorrection?'Correct teaching':'Teach Puppet Master')+'</strong><span class="spacer"></span><button class="icon-button" data-action="af-teach-cancel" aria-label="Close">'+c.icon('close',13)+'</button></div><div class="dialog-body"><label class="af-field-label" for="teach-body">Remember this</label><textarea id="teach-body" data-teach-input="text" rows="4" maxlength="4000">'+e(d.text)+'</textarea><label class="af-field-label">Applies to</label><div class="teach-scope-picker">'+Object.entries(scopes).map(([k,v])=>'<button class="soft-button '+(d.scope===k?'selected':'')+'" data-action="af-teach-set-scope" data-value="'+k+'" aria-pressed="'+(d.scope===k)+'">'+e(v)+'</button>').join('')+'</div>'+(d.scope==='user'?'<label class="teach-confirm"><input type="checkbox" data-teach-input="public"'+(d.allowUserScope?' checked':'')+'> This contains no project-confidential information.</label>':'')+'<div class="teach-source-line"><small>'+e(d.source.kind==='manual'?'Source: your explicit instruction':'Source: '+(d.source.kind==='assistant_output'?'selected assistant output':'your message'))+'</small><small>User-locked</small></div>'+(isCorrection?'<p class="teach-help">The previous version stays in history.</p>':'')+'<div id="teach-related">'+conflictHtml(c,d)+'</div><p id="teach-error" class="teach-error" role="status">'+e(d.error?explain(d.error):'')+'</p><details class="teach-safety"><summary>Capture details</summary><p>Local credential-pattern check only. This concept keeps teaching in this session; it does not save to a production memory store.</p>'+(d.source.excerpt?'<p class="teach-quote">'+e(d.source.excerpt)+'</p>':'')+'</details></div><footer class="teach-footer"><button class="soft-button" data-action="af-teach-cancel">Cancel</button><button class="primary-button" data-action="af-teach-capture">'+(isCorrection?'Save new version':'Capture teaching')+'</button></footer></section>';
+ function dialog(c){const d=store().pending;if(!d)return '';const isCorrection=!!d.narrowOf,e=c.esc,S=window.PM56_SHELL;
+  return S.dialog({iconHtml:c.icon('sparkles',15),title:isCorrection?'Correct teaching':'Teach Puppet Master',sub:'Write one rule the assistant must follow. It is stored as versioned memory you can lock, correct or revoke — not a Persona, and no model call is made.',pill:e('/teach'),width:560,closeAction:'af-teach-cancel',
+   body:S.section({iconHtml:c.icon('edit',12),label:'Remember this',body:'<textarea id="teach-body" data-teach-input="text" rows="4" maxlength="4000">'+e(d.text)+'</textarea>'+(isCorrection?S.note('The previous version stays in history.'):'')})+
+    S.section({iconHtml:c.icon('users',12),label:'Applies to',body:S.seg(Object.entries(scopes),d.scope,'af-teach-set-scope')+(d.scope==='user'?S.check('This contains no project-confidential information.',d.allowUserScope,' data-teach-input="public"'):'')+S.note('User-locked: teaching stays active until you correct or revoke it.')})+
+    S.section({iconHtml:c.icon('info',12),label:e('Source & control'),body:S.rows([['Source',e(d.source.kind==='manual'?'your explicit instruction':d.source.kind==='assistant_output'?'selected assistant output':'your message')]])+'<div id="teach-related">'+conflictHtml(c,d)+'</div><p id="teach-error" class="mdl-note danger" role="status">'+e(d.error?explain(d.error):'')+'</p>'})+
+    S.disclosure('teach-safety','Capture details',S.note('Local credential-pattern check only. This concept keeps teaching in this session; it does not save to a production memory store.')+(d.source.excerpt?'<p class="teach-quote">'+e(d.source.excerpt)+'</p>':'')),
+   foot:S.foot('','<button class="soft-button" data-action="af-teach-cancel">Cancel</button><button class="primary-button" data-action="af-teach-capture">'+(isCorrection?'Save new version':'Capture teaching')+'</button>')});
  }
- function memoryRows(c){return visibleRecords(context()).slice().reverse().map(r=>'<div class="af-mem-row"><div class="af-mem-row-head"><strong>'+c.esc(status(r))+'</strong><span class="spacer"></span><small>'+c.esc(scopes[scope(r)]||r.scope)+' · v'+(r.version||1)+'</small></div><p class="af-mem-text">'+c.esc(r.text)+'</p><button class="text-button" data-action="teach-open" data-id="'+c.esc(r.id)+'">Details and history</button></div>').join('')||'<p>No teaching captured.</p>';}
+ function memoryRows(c){const S=window.PM56_SHELL,e=c.esc,tone=s=>s==='Active · locked'?'accent':s==='Active'?'positive':'idle';
+  return visibleRecords(context()).slice().reverse().map(r=>S.card({
+   head:S.cardHead({copy:S.copy(e((scopes[scope(r)]||r.scope)+' · v'+(r.version||1)),e(r.text)),extra:S.chip(tone(status(r)),e(status(r)))}),
+   actions:'<button class="text-button" data-action="teach-open" data-id="'+e(r.id)+'">Details and history</button>'})).join('')
+   ||S.note(e('No teaching captured yet — use Teach Puppet Master from the wand.'));}
  function status(r){return r.supersededBy?'Superseded':r.revoked?'Revoked':r.locked?'Active · locked':'Active';}
  function visibleRecords(ctx){if(!ctx)return [];return all().filter(r=>{const s=scope(r);if(s==='user')return (r.userId||'concept:user')===ctx.userId;if((r.projectId||'concept:pm')!==ctx.projectId)return false;return s==='project'||(s==='thread'&&r.sourceThreadId===ctx.threadId);});}
  function history(c,tid){
@@ -44192,7 +44208,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  */
 (function(){
  'use strict';
- const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,copy=x=>JSON.parse(JSON.stringify(x));
+const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56_SHELL,copy=x=>JSON.parse(JSON.stringify(x));
  let epoch=1,seq=0,filter='Unverified',tab='auto';
  const runs=new Map(),sources=new Map(),proofs=new Map(),seen=new Map(),views=new Map(),disclosures=new Map(),dedupIndex=new Map();
  const uid=p=>'am-'+p+'-'+epoch+'-'+(++seq),now=()=>new Date().toISOString(),fail=error=>({ok:false,error});
@@ -44275,11 +44291,42 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  function correction(id){const g=get(id);if(!g||!allowed(g)||!g.teaching_proposal)return fail('proposal_missing');const t=T.get(g.teaching_proposal.id);if(!t||!T.active(t)||!T.applies(t,context())||(t.version||1)!==g.teaching_proposal.version)return fail('teaching_changed');return T.correction(t.id);}
  function exportData(){return JSON.stringify({kind:'concept_memory_history',persistence:'session_only',gists:visible().map(g=>copy(assess(g))),preview:preview()},null,2);}
  const button=(c,a,label,id='')=>'<button class="soft-button" data-action="'+a+'" data-id="'+c.esc(id)+'">'+label+'</button>';
+ const gistTone=s=>s==='Verified'?'positive':s==='Discarded'?'idle':'warning';
+ /* SHELL.disclosure has no attribute slot; the toggle listener below keys on
+    data-memory-disclosure, so inject it beside the builder's own data-k. */
+ const memDisclosure=(key,summaryHtml,bodyHtml,open)=>S.disclosure(key,summaryHtml,bodyHtml,open)
+  .replace('<details','<details data-memory-disclosure="'+S.esc(key)+'"');
  function render(c,editor=false){const e=c.esc,v=views.get(c.thread.id)||{},list=visible().map(assess),selection=v.id?list.filter(g=>g.id===v.id):list.filter(g=>filter==='All'||g.verification_state===filter);const p=preview();
-  return '<article class="memory-document" data-k="auto-memory-doc"><div class="room-meta"><span>Gist Review · session preview</span><span>'+p.items.length+' eligible</span></div><h2>Automatic memory</h2><div class="memory-controls">'+['Unverified','Verified','All'].map(x=>'<button class="soft-button'+(!v.id&&filter===x?' active':'')+'" data-action="memory-filter" data-value="'+x+'">'+x+'</button>').join('')+button(c,'memory-preview','Preview next context')+button(c,'memory-export','Export history')+button(c,'teach-open','Taught memory')+'</div>'+(v.preview?'<section class="memory-preview" data-k="memory-preview"><header><strong>Next Assistant context</strong><small>Preview only · not dispatched</small></header><h3>Verified summaries</h3>'+(p.items.map(x=>'<p data-capsule-gist="'+e(x.id)+'">'+e(x.summary)+'</p>').join('')||'<p>No automatic summaries eligible.</p>')+'<h3>Explicit teaching</h3>'+(p.teaching.map(x=>'<p data-capsule-teaching="'+e(x.id)+'">'+e(x.text)+'</p>').join('')||'<p>No teaching in this scope.</p>')+'<small>'+p.estimatedTokens+' / '+p.budget+' estimated automatic-summary tokens'+(p.truncated?' · limit applied':'')+'</small></section>':'')+'<div class="memory-gists">'+(selection.map(g=>'<section class="memory-gist" data-k="gist:'+e(g.id)+'" data-gist="'+e(g.id)+'"><header><strong>'+e(g.verification_state)+'</strong><small>'+e(g.source||'Legacy')+(g.pinned?' · Pinned':'')+'</small></header><p>'+e(g.summary)+'</p><small>'+e(g.reason)+'</small><div class="memory-controls">'+button(c,'memory-verify','Recheck evidence',g.id)+button(c,'memory-pin',g.pinned?'Unpin':'Pin',g.id)+(!g.discarded?button(c,'memory-discard','Discard',g.id):'')+(g.teaching_proposal?button(c,'memory-correct','Review teaching correction',g.id):'')+'</div><details data-k="evidence:'+e(g.id)+'" data-memory-disclosure="evidence:'+e(g.id)+'"'+(disclosures.get('evidence:'+g.id)?' open':'')+'><summary>Claims and evidence</summary>'+(g.claims||[]).map(cl=>'<div class="memory-claim"><strong>'+e(cl.support_state||'Unverified')+'</strong><p>'+e(cl.text)+'</p><small>'+e(cl.support_scope)+' · '+e(cl.currentness)+'</small></div>').join('')+(g.evidence_refs||[]).map(ref=>{const q=proofs.get(ref.ref);return q?'<div class="memory-evidence"><strong>'+e(q.sourcePath)+'</strong><pre>'+e(q.sourceBody)+'</pre>'+q.cases.map(t=>'<p>'+e(t.name)+' · '+(t.pass?'Pass':'Not passing')+'</p>').join('')+'</div>':'<p>Evidence not available in this session.</p>';}).join('')+'</details><details data-k="history:'+e(g.id)+'" data-memory-disclosure="history:'+e(g.id)+'"'+(disclosures.get('history:'+g.id)?' open':'')+'><summary>History</summary><ol>'+(g.history||[]).map(h=>'<li>'+e(h.event)+' · '+e(h.detail)+'</li>').join('')+'</ol></details></section>').join('')||'<p class="memory-empty">No '+(filter==='All'?'':filter.toLowerCase()+' ')+'gists in this project.</p>')+'</div><small class="memory-boundary">Local concept checks only. No persistent database or model dispatch.</small>'+(editor?(window.PM56_MEMORY_DEMOS?.guide(c,true)||''):'')+'</article>';
+  const about=S.section({iconHtml:c.icon('info',12),label:'What this is',body:
+   S.note(e('A gist is one sentence plus the claims it rests on and the evidence refs behind them. Automatic memory writes a gist at run boundaries and milestones — never mid-turn.'))+
+   S.note(e('Verification is computed, not asserted: a claim is Verified only while its referenced local check still passes against an unchanged source. Everything else stays Unverified and is excluded from the next context.'))+
+   S.note(e('Eligible means "would enter the next Assistant context right now". Local concept checks only — no persistent database, no model dispatch.'))});
+  const controls=S.section({iconHtml:c.icon('settings',12),label:'Gist controls',meta:S.seg(['Unverified','Verified','All'].map(x=>[x,x]),v.id?null:filter,'memory-filter'),body:
+   '<div class="mdl-card-actions">'+button(c,'memory-preview','Preview next context')+button(c,'memory-export','Export history')+button(c,'teach-open','Taught memory')+'</div>'});
+  const previewPanel=v.preview?'<div data-k="memory-preview">'+S.section({iconHtml:c.icon('eye',12),label:'Next Assistant context',meta:e('Preview only · not dispatched'),body:
+   (p.items.length?S.rows(p.items.map(x=>['<span data-capsule-gist="'+e(x.id)+'">'+e(x.summary)+'</span>',S.chip('positive','Included')])):S.note(e('No automatic summaries eligible.')))+
+   (p.teaching.length?S.rows(p.teaching.map(x=>['<span data-capsule-teaching="'+e(x.id)+'">'+e(x.text)+'</span>',S.chip('accent','Taught')])):S.note(e('No teaching in this scope.')))+
+   (p.excluded.length?S.rows(p.excluded.map(x=>{const g=get(x.id);return [e(g?g.summary:x.id),e(x.reason)+' '+S.chip('idle','Excluded')];})):'')+
+   S.note(e(p.estimatedTokens+' / '+p.budget+' estimated automatic-summary tokens'+(p.truncated?' · limit applied':'')))})+'</div>':'';
+  const gists=selection.map(g=>{
+   const cl=(g.claims||[])[0]||{};
+   return S.card({attrs:' data-k="gist:'+e(g.id)+'" data-gist="'+e(g.id)+'"',
+    head:S.cardHead({copy:S.copy(e(g.summary),e((cl.support_scope||'unassessed')+' · '+(g.kind||'Note')+' · '+(cl.currentness||'source_unavailable')+(g.pinned?' · Pinned':''))),extra:S.chip(gistTone(g.verification_state),e(g.verification_state))}),
+    body:S.note(e(g.reason))+((g.claims||[]).length?S.rows(g.claims.map(x=>[e(x.text),S.chip(x.support_state==='supported'?'positive':'idle',e(x.support_state||'unverified'))])):''),
+    actions:button(c,'memory-verify','Recheck evidence',g.id)+button(c,'memory-pin',g.pinned?'Unpin':'Pin',g.id)+(!g.discarded?button(c,'memory-discard','Discard',g.id):'')+(g.teaching_proposal?button(c,'memory-correct','Review teaching correction',g.id):'')})+
+   memDisclosure('evidence:'+g.id,e('Claims and evidence'),
+    (g.evidence_refs||[]).map(ref=>{const q=proofs.get(ref.ref);return q?'<div class="memory-evidence"><strong>'+e(q.sourcePath)+'</strong><pre>'+e(q.sourceBody)+'</pre>'+q.cases.map(t=>'<p>'+e(t.name)+' · '+(t.pass?'Pass':'Not passing')+'</p>').join('')+'</div>':S.note(e('Evidence not available in this session.'));}).join(''),
+    disclosures.get('evidence:'+g.id))+
+   memDisclosure('history:'+g.id,e('History'),'<ol>'+(g.history||[]).map(h=>'<li>'+e(h.event)+' · '+e(h.detail)+'</li>').join('')+'</ol>',disclosures.get('history:'+g.id));
+  }).join('')||S.note(e('No '+(filter==='All'?'':filter.toLowerCase()+' ')+'gists in this project.'));
+  return '<article class="memory-document" data-k="auto-memory-doc">'+about+controls+previewPanel+gists+(editor?(window.PM56_MEMORY_DEMOS?.guide(c,true)||''):'')+'</article>';
  }
  function show(id){const c=E.ctx();if(id&&(!get(id)||!allowed(get(id))))return fail('outside_scope');views.set(c.thread.id,{id:id||null,preview:false});filter='Unverified';c.closeMenu();c.closeDialog();c.state.editorRevealed=true;c.openEditor('memory:'+c.thread.id);return {ok:true};}
- function dialog(c){return '<div class="dialog" style="width:min(740px,calc(100vw - 32px))"><div class="dialog-head"><h2>Memory</h2><button class="icon-button" data-action="close-dialog" aria-label="Close">'+c.icon('close',14)+'</button></div><div class="af-tabs"><button class="af-tab" data-action="af-memory-section" data-value="auto">Automatic · '+visible().length+'</button><button class="af-tab" data-action="af-memory-section" data-value="taught">Taught by you · '+T.visibleRecords(context()).filter(T.active).length+'</button></div><div class="dialog-body">'+(tab==='auto'?render(c):T.memoryRows(c))+'</div></div>';}
+ function dialog(c){const e=c.esc,p=preview();
+  return S.dialog({iconHtml:c.icon('brain',15),title:e('Memory'),
+   sub:e('What the assistant keeps between turns: gists captured automatically from finished work, plus teaching you wrote on purpose. Both are session-local concept records.'),
+   pill:e(p.items.length+' eligible'),width:780,
+   body:S.tabs([['auto','Automatic · '+visible().length],['taught','Taught by you · '+T.visibleRecords(context()).filter(T.active).length]],tab,{action:'af-memory-section'})+(tab==='auto'?render(c):T.memoryRows(c))});}
  E.chainAction('af-memory-open',c=>{filter='Unverified';tab='auto';views.delete(c.thread.id);c.closeMenu();c.openDialog({type:'af-memory'});return true;});
  E.chainAction('af-memory-verify',(c,b)=>{mutation(b.dataset.value,'verify');c.renderApp();return true;});
  // Compatibility gallery replay: produces an unverified candidate, never evidence.
@@ -44665,11 +44712,13 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  function open(c){const r=resolve(c.thread.id);c.closeMenu();c.openDialog({type:'eli5-style',threadId:r.threadId,projectId:r.projectId});}
  const valueName=v=>v?'On':'Off';
  function wand(c){const r=resolve(c.thread.id);return '<button class="menu-item af-wand-row" data-action="eli5-open"><span class="menu-icon">'+c.icon('sparkles',13)+'</span><span class="menu-copy"><strong>ELI5 explanations</strong><span>'+valueName(r.effective)+' · '+(r.source==='conversation'?'this conversation':r.source+' default')+'</span></span><span class="menu-right">'+c.icon('chevronRight',11)+'</span></button>';}
- function choices(c,name,current,rows,tid){return '<div class="eli5-choices" role="radiogroup" aria-label="'+c.esc(name)+'">'+rows.map(([v,label,detail])=>'<button class="eli5-choice" role="radio" aria-checked="'+(current===v)+'" data-action="eli5-set" data-scope="'+name+'" data-thread="'+c.esc(tid)+'" data-value="'+(v===null?'inherit':v?'on':'off')+'"><span class="eli5-radio">'+(current===v?c.icon('check',12):'')+'</span><span><strong>'+c.esc(label)+'</strong>'+(detail?'<small>'+c.esc(detail)+'</small>':'')+'</span></button>').join('')+'</div>';}
- function dialog(c){const d=c.state.dialog;if(d?.type!=='eli5-style')return '';const r=resolve(d.threadId),stale=!r.ok||r.threadId!==c.thread.id||r.projectId!==d.projectId;
-  if(stale)return '<section class="dialog eli5-dialog"><div class="dialog-head"><h2>Conversation changed</h2></div><div class="dialog-body"><p>Open explanation preferences from the current conversation.</p><button class="soft-button" data-action="close-dialog">Close</button></div></section>';
-  return '<section class="dialog eli5-dialog" role="dialog" aria-modal="true" aria-label="Explanation style"><div class="dialog-head"><div><small>ELI5</small><h2>Explanation style</h2></div><button class="icon-button" data-action="close-dialog" aria-label="Close">'+c.icon('close',13)+'</button></div><div class="dialog-body"><p class="eli5-lede">For future replies in this conversation.</p>'+choices(c,'conversation',r.override,[[null,'Use default',valueName(r.inherited)+' · '+(r.projectDefault===null?'application':'project')],[true,'On','Plain language, without changing technical details.'],[false,'Off','Standard explanations.']],r.threadId)+
-   '<details data-k="eli5-defaults" class="eli5-defaults"'+(d.defaultsOpen?' open':'')+'><summary>Application & project defaults</summary><h3>Application</h3>'+choices(c,'application',r.appDefault,[[false,'Off',''],[true,'On','']],r.threadId)+'<h3>This project</h3>'+choices(c,'project',r.projectDefault,[[null,'Use application default',valueName(r.appDefault)],[true,'On',''],[false,'Off','']],r.threadId)+'</details><p class="eli5-boundary">Session-only concept preferences. Existing answers and work products stay unchanged.</p></div><footer class="eli5-footer"><span>'+valueName(r.effective)+' · '+(r.source==='conversation'?'conversation override':r.source+' default')+'</span><button class="primary-button" data-action="close-dialog">Done</button></footer></section>';
+ function choices(c,name,current,rows,tid){const S=window.PM56_SHELL;return '<div class="eli5-choices" role="radiogroup" aria-label="'+c.esc(name)+'">'+rows.map(([v,label,detail])=>S.choice({value:v===null?'inherit':v?'on':'off',label:c.esc(label),detail:detail?c.esc(detail):'',active:current===v,action:'eli5-set',extra:' data-scope="'+c.esc(name)+'" data-thread="'+c.esc(tid)+'"'})).join('')+'</div>';}
+ function dialog(c){const d=c.state.dialog;if(d?.type!=='eli5-style')return '';const S=window.PM56_SHELL,r=resolve(d.threadId),stale=!r.ok||r.threadId!==c.thread.id||r.projectId!==d.projectId;
+  if(stale)return S.dialog({iconHtml:c.icon('warning',15),title:'Conversation changed',width:560,body:S.note('Open explanation preferences from the current conversation.'),foot:S.foot('','<button class="soft-button" data-action="close-dialog">Close</button>')});
+  return S.dialog({iconHtml:c.icon('sparkles',15),title:'Explanation style',sub:'ELI5 restates the answer in plain language beside the technical one. Presentation only — code, Plans and work products are byte-identical either way.',pill:c.esc(valueName(r.effective)),width:560,
+   body:S.section({iconHtml:c.icon('chat',12),label:'This conversation',body:choices(c,'conversation',r.override,[[null,'Use default',valueName(r.inherited)+' · '+(r.projectDefault===null?'application':'project')],[true,'On','Plain language, without changing technical details.'],[false,'Off','Standard explanations.']],r.threadId)})+
+    S.disclosure('eli5-defaults',c.esc('Application & project defaults'),'<div class="mdl-field"><span>Application</span>'+choices(c,'application',r.appDefault,[[false,'Off',''],[true,'On','']],r.threadId)+'</div><div class="mdl-field"><span>This project</span>'+choices(c,'project',r.projectDefault,[[null,'Use application default',valueName(r.appDefault)],[true,'On',''],[false,'Off','']],r.threadId)+'</div>',d.defaultsOpen,'eli5-defaults'),
+   foot:S.foot(S.note('Session-only concept preferences. Existing answers and work products stay unchanged.'),'<button class="soft-button" data-action="close-dialog">Close</button>')});
  }
  E.action('eli5-open',c=>{open(c);return true;});
  E.action('eli5-set',(c,b)=>{
@@ -44681,7 +44730,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   else if(b.dataset.scope==='application')setApplication(value);
   c.renderApp();return true;
  });
- document.addEventListener('toggle',event=>{const c=E.ctx();if(event.target.isConnected&&event.target.matches?.('.eli5-defaults')&&c.state.dialog?.type==='eli5-style')c.state.dialog.defaultsOpen=event.target.open;},true);
+ document.addEventListener('toggle',event=>{const c=E.ctx();if(event.target.isConnected&&event.target.matches?.('.eli5-defaults,[data-k="eli5-defaults"]')&&c.state.dialog?.type==='eli5-style')c.state.dialog.defaultsOpen=event.target.open;},true);
  E.slot('dialog',dialog);
  E.chainAction('demo-trigger',(c,b)=>{if(b.dataset.trigger==='ELI5 receipt'){window.PM56_ELI5_DEMOS?.start('override');return true;}return false;});
  window.PM56_ELI5={resolve,setThread,setProject,setApplication,wand,open,project,
