@@ -18,3 +18,5 @@ Current native descriptor digest: `3e2b3017bd048f0c5666c547b9ae1d8d9db1db256f865
 Producer and consumer current dependencies are being rebound and reviewed separately. The repaired family placement plan is accepted only for conditional external authoring; no full family candidate or certified Event-row change is applied. Replan and restore-specific source work remain separate. The prior landing-policy hold and unanswered narrow exception are unchanged; this branch correction does not authorize a main landing. Native issuance, codec, transactions, barriers and durability remain NOT_RUN. Step 09 remains at 0 registered, 6 excluded, 20 carded and 226 remaining, with no new outcomes.
 
 Cost: source correction, independent review and bounded branch verification; monetary attribution unavailable.
+
+Current follow-up: `step-08-source-composition-review-20260921.md` records accepted dependency repins, supplemental custody placement and later source reviews. The original correction receipt above remains unchanged.
