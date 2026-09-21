@@ -28,6 +28,7 @@ def main():
    loc=p.locator(sel).filter(visible=True).first;loc.scroll_into_view_if_needed();r['actions'].append({'label':label or sel,'browser_ms':p.evaluate('performance.now()')});loc.click();p.wait_for_timeout(220 if a.record else 90);save()
   def fill(sel,value):
    loc=p.locator(sel).filter(visible=True).first;loc.fill(value);p.wait_for_timeout(60)
+  def pick(family,value,label=None):click('[data-action="sched-pick-'+family+'"]',label or 'Pick '+family);p.wait_for_timeout(250);click('.overlay-menu [data-action="shared-choice-pick"][data-value="'+value+'"]','Choose '+family+' '+value)
   def shot(name):
    p.wait_for_timeout(420);p.mouse.move(a.width-8,25);p.screenshot(path=str(o/(name+'.png')));boxes=p.evaluate("""()=>[...document.querySelectorAll('.transcript,.editor-body,.bc-dialog,.bc-surface,.composer-box,.sched-dialog,.ar-document')].filter(x=>x.clientWidth&&x.clientHeight).map(x=>({class:x.className,width:x.clientWidth,scroll:x.scrollWidth}))""");r.setdefault('geometry',{})[name]=boxes;ck(name+' no horizontal overflow',bool(boxes) and all(x['scroll']<=x['width']+1 for x in boxes))
   def shot_tray(name):
@@ -141,7 +142,7 @@ def main():
    click('[data-action="open-menu"][data-menu="wand"]','Open composer wand')
    if not p.locator('[data-action="sched-open-message"]').filter(visible=True).count():click('[data-action="polish-wand-group"][data-group="schedule"]','Open Scheduling')
    click('[data-action="sched-open-message"]','Schedule Message')
-   fill('[data-sched-input="msg-date"]','2027-05-10');fill('[data-sched-input="msg-time"]','22:00');p.locator('[data-sched-input="msg-tz"]').select_option('America/New_York')
+   fill('[data-sched-input="msg-date"]','2027-05-10');fill('[data-sched-input="msg-time"]','22:00');pick('msg-tz','America/New_York')
    click('[data-action="sched-create-message"]','Attempt the commit');p.wait_for_timeout(600)
    ck('Live selector refuses with a stated reason, composer intact','Freeze browser context' in p.locator('.sched-form-error').inner_text() and p.evaluate('PM56_SCHED.list().messages.length')==msgs0 and 'Try to schedule' in p.locator('[data-input="composer"]').input_value());shot('02-live-refused');click('[data-action="sched-close-dialog"]','Close schedule manager')
    open_browser();click('[data-action="bc-freeze-snapshots"]','Freeze the live reference')
@@ -150,7 +151,7 @@ def main():
    fill('[data-input="composer"]',p.locator('[data-input="composer"]').input_value()+'\nHold this exact snapshot.');click('[data-action="open-menu"][data-menu="wand"]','Open composer wand')
    if not p.locator('[data-action="sched-open-message"]').filter(visible=True).count():click('[data-action="polish-wand-group"][data-group="schedule"]','Open Scheduling')
    click('[data-action="sched-open-message"]','Schedule Message')
-   fill('[data-sched-input="msg-date"]','2027-05-10');fill('[data-sched-input="msg-time"]','22:00');p.locator('[data-sched-input="msg-tz"]').select_option('America/New_York');(shot_tray if a.width<1000 else shot)('04-frozen-schedule-form');click('[data-action="sched-create-message"]','Commit through shared scheduler')
+   fill('[data-sched-input="msg-date"]','2027-05-10');fill('[data-sched-input="msg-time"]','22:00');pick('msg-tz','America/New_York');(shot_tray if a.width<1000 else shot)('04-frozen-schedule-form');click('[data-action="sched-create-message"]','Commit through shared scheduler')
    p.wait_for_function(f'PM56_SCHED.list().messages.length==={msgs0+1}');srec=p.evaluate('PM56_SCHED.list().messages.at(-1)')
    ck('Frozen schedule commits with the retained ref',srec['attachment_refs'][0]['snapshot_ref']['artifact_id'].startswith('snapshot:'));shot('05-pending-schedule');click('[data-action="sched-close-dialog"]','Close schedule manager')
    open_browser();click('[data-action="bc-simulate-replace"]','Move the live page on after commit');click('[data-action="bc-close"]','Close browser')

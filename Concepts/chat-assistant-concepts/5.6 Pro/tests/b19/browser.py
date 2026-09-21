@@ -27,6 +27,7 @@ def main():
    loc=p.locator(sel).filter(visible=True).first;loc.scroll_into_view_if_needed();r['actions'].append({'label':label or sel,'browser_ms':p.evaluate('performance.now()')});loc.click();p.wait_for_timeout(220 if a.record else 90);save()
   def fill(sel,value):
    loc=p.locator(sel).filter(visible=True).first;loc.fill(value);loc.press('Tab');p.wait_for_timeout(60)
+  def pick(family,value,label=None):click('[data-action="sched-pick-'+family+'"]',label or 'Pick '+family);p.wait_for_timeout(250);click('.overlay-menu [data-action="shared-choice-pick"][data-value="'+value+'"]','Choose '+family+' '+value)
   def shot(name):
    p.wait_for_timeout(420);p.mouse.move(a.width-8,25);p.screenshot(path=str(o/(name+'.png')));boxes=p.evaluate("""()=>[...document.querySelectorAll('.transcript,.editor-body,.b19-guide,.att-details-dialog,.att-tray,.sched-dialog,.ar-document,.snapshot-manifest')].filter(x=>x.clientWidth&&x.clientHeight).map(x=>({class:x.className,width:x.clientWidth,scroll:x.scrollWidth}))""");r.setdefault('geometry',{})[name]=boxes;ck(name+' no horizontal overflow',bool(boxes) and all(x['scroll']<=x['width']+1 for x in boxes))
   def back():
@@ -36,7 +37,7 @@ def main():
    click('[data-action="open-menu"][data-menu="wand"]','Open composer wand')
    if not p.locator('[data-action="sched-open-message"]').filter(visible=True).count():click('[data-action="polish-wand-group"][data-group="schedule"]','Open Scheduling')
    click('[data-action="sched-open-message"]','Schedule Message')
-   fill('[data-sched-input="msg-date"]','2027-05-10');fill('[data-sched-input="msg-time"]','22:00');p.locator('[data-sched-input="msg-tz"]').select_option('America/New_York');shot('03-frozen-schedule-form');click('[data-action="sched-create-message"]','Commit through shared scheduler');ck('Composer cleared after committed schedule',p.locator('[data-input="composer"]').input_value()=='');shot('04-pending-schedule');click('[data-action="sched-close-dialog"]','Close schedule manager')
+   fill('[data-sched-input="msg-date"]','2027-05-10');fill('[data-sched-input="msg-time"]','22:00');pick('msg-tz','America/New_York');shot('03-frozen-schedule-form');click('[data-action="sched-create-message"]','Commit through shared scheduler');ck('Composer cleared after committed schedule',p.locator('[data-input="composer"]').input_value()=='');shot('04-pending-schedule');click('[data-action="sched-close-dialog"]','Close schedule manager')
   click('[data-action="open-demo"]','Open Demo Studio');p.wait_for_timeout(500);p.locator('select[data-input="variant"][data-family="2"]').filter(visible=True).first.select_option('8' if a.variant=='simple' else '1');ck('All three B19 workflows exposed',p.locator('[data-action="b19-start"]').count()==3);click('[data-action="b19-start"][data-flow="'+('folder' if a.scenario=='device' else a.scenario)+'"]','Prepare workflow, not a schedule')
   if a.record:
    p.wait_for_timeout(350);f=open(o/'ffmpeg.log','w');logs.append(f);rec=subprocess.Popen(['ffmpeg','-y','-f','x11grab','-framerate','60','-video_size',f'{a.width}x{a.height}','-i',env['DISPLAY'],'-an','-c:v','libx264','-preset','ultrafast','-crf','22','-pix_fmt','yuv420p','-fps_mode','passthrough','-enc_time_base','1:60000',str(o/'workflow.mkv')],stdin=subprocess.PIPE,stdout=f,stderr=f)
@@ -104,7 +105,7 @@ def main():
     click('[data-action="open-menu"][data-menu="wand"]','Open composer wand')
     if not p.locator('[data-action="sched-open-message"]').filter(visible=True).count():click('[data-action="polish-wand-group"][data-group="schedule"]','Open Scheduling')
     click('[data-action="sched-open-message"]','Schedule Message')
-    fill('[data-sched-input="msg-date"]','2027-05-10');fill('[data-sched-input="msg-time"]','22:00');p.locator('[data-sched-input="msg-tz"]').select_option('America/New_York')
+    fill('[data-sched-input="msg-date"]','2027-05-10');fill('[data-sched-input="msg-time"]','22:00');pick('msg-tz','America/New_York')
     click('[data-action="sched-create-message"]','Attempt the commit');p.wait_for_timeout(600)
     ck('Byteless folder fixture refuses with a stated reason, composer intact','needs selected bytes' in p.locator('.sched-form-error').inner_text() and p.locator('[data-input="composer"]').input_value()!='');shot('04-honest-schedule-refusal');click('[data-action="sched-close-dialog"]','Close schedule manager')
    else:
