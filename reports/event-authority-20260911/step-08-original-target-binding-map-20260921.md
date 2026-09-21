@@ -1,0 +1,19 @@
+# Step 08 — Original context and citation target bindings
+
+Root and independent review accept the bounded A1/A2 target map. Its 21 rows identify existing producer-local meanings while preserving the separate need for an authentic restore-capture binding and complete original material source. No complete native restore route or positive scope witness is supplied. Step 08 remains open; main remains unpushed after the last full preflight's 15 blockers. Step 09 remains 0 registered, 6 excluded, 20 carded and 226 remaining; Step 10 has not run.
+
+Cost: 1,128 author checks and 2,077 independent assertions passed. Root authenticated all 51 source members, six review members and two clarification members, and read the whole map, all 21 binding rows and review. Native execution remains NOT_RUN; monetary attribution is unavailable.
+
+| Evidence | Manifest path | SHA-256 |
+|---|---|---|
+| Original target map | `/mnt/Cursor/PM-Experiments/restore-corrupt-context-citation-original-target-map-20260921/v1/manifest.json` | `b12bc8d9e3d985b5c01a666f84333e0d5d845b448c942ccc4c85da67ebad91bb` |
+| Independent review | `/mnt/Cursor/PM-Experiments/restore-corrupt-context-citation-original-target-map-independent-review-20260921/v1/manifest.json` | `35695d50cbb8247b35229a286524df1adbdb8d04807cab8ad8d4f15ed9930eaf` |
+| Compaction role clarification | `/mnt/Cursor/PM-Experiments/restore-corrupt-context-citation-original-target-map-independent-review-20260921/v1-compaction-role-clarification/manifest.json` | `f10c3e07d53e0094b1d2bb21231aadf1ab81dd12ee76ec9972302451a83dfc85` |
+
+Research synthesis citation refs identify CitationRecord metadata within the original run; source and read-receipt joins lead to separate objects. Notebook exact entry revisions, bodies, capsules and checkpoint records likewise retain their distinct identities. ContextReceipt, compiler blocks, canonical history, transformed provider context, bounded browser/document capture, snapshots and Assistant-only memory are not interchangeable. Every original occurrence and category survives, including duplicate strings and overlaps. A matching string or successful attachment reader cannot establish another category's original producer.
+
+The whole pinned corpus contains 827 resources; the map copies 35 complete selected sources and records 66 selectors. Independent review checked actual original Git bodies and preserved separate web/evidence resource scopes. ReadReceipt hashes remain optional, Notebook checkpoint capsule hashes may be null, and required receipt-property presence does not establish a genuine native receipt. Static joins and valid fixtures are not publication, immutable custody, permission or complete-byte proof. A current cache hit, refetch, latest revision or fresh serialization cannot manufacture original expected bytes.
+
+The compaction clarification preserves two different operations. SP-259's context.compaction.completed points to its original immutable detailed CompactionReceipt and summary/head bundle, whose content lifetime is not extended by the indefinite audit event. SP-295–297 and DL-049 govern storage.compaction_lifecycle_changed operational detail: exact completed journal, survivor/removal/translation and obsolete proof metadata under seven-day settlement rules. Independent owner records and live protections retain their own policies. Neither lifetime transfers merely because both operations use the word compaction.
+
+The next technical dependency is the actual original capture-to-producer/target relation for each selected occurrence, followed by the appropriate whole native source and independently owned byte expectation. Only an originally unselected metadata/body/span/representation meaning requires specific owner adjudication. No broad A3 question, source allowlist, retention change, new archive, schema, registry admission, native installation or governance change follows. The pending decision is unchanged.
