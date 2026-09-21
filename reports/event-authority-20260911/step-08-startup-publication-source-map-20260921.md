@@ -1,0 +1,19 @@
+# Step 08 — original publication-to-Boot source map
+
+Root accepts the bounded existing-source map: the original Recovery publisher already authenticates a complete Event and strict full-value receipt at its completion boundary, but does not export the complete native source needed by Boot. The narrow next definition is an explicit handoff from the same original, just-completed publication while all six physical fact sources remain genuinely owned. This map does not provide that handoff or close ADM-R07. Step 08 remains open; main remains unpushed after the last full preflight's 15 blockers. Step 09 remains 0 registered, 6 excluded, 20 carded and 226 remaining; Step 10 has not run.
+
+Cost: 1,355 author documentary checks passed over 24 whole resources, 31 selected bodies/passages and 630 dependency member occurrences. Root authenticated all 35 map members and read the complete map, proposed next scope and all 26 selected Python method bodies. This is root research review, not an independent acceptance review or native execution; monetary attribution is unavailable.
+
+| Evidence | Manifest path | SHA-256 |
+|---|---|---|
+| Original publication source map v1 | `/mnt/Cursor/PM-Experiments/restore-corrupt-startup-publication-source-map-20260921/v1/manifest.json` | `c93028b822355fb680bbb2f0cf35a44d5b97abdc593c105454042c8f319cc9c8` |
+
+The reviewed original `Domain.completed_response` selects the complete current capsule and original Event, resolves the full-value witness through the original Store, and compares complete source, owner, candidate and output facts. It returns only an eight-field result. That result has no full Event, capsule, six-fact physical source or native ownership transfer. The frozen Recovery and Boot Python bodies are reviewed specification/model lineage, not native execution evidence; Boot's supplied source owner is a synthetic fixture.
+
+The original completion function also serves committed retries and retained responses. Its narrower control check does not establish that original physical controls remain live. Retirement clears original capture, intent, effect, confirmation, image, backup, reservation, completion-session and publication-binding sources. The retained receipt view cannot recreate them. Original immutable facts, still-owned source operands, consumed capabilities and later reacquired views remain distinct.
+
+The required Boot join retains the genuine original operation, whole journal, selected backup, pre-restore or quarantine source, complete promotion set and verified reopened boundary, together with the original root, epoch, occurrence, admission and source-member contract. Existing Boot protection must already cover actual source ownership through durable aggregate capture and readback. No new archive, retention or source lifetime is authorized. Physical verification does not establish current aftermath or ordinary readiness, and an expired pre-publication transaction cannot become a current post-publication view.
+
+The next definition must expose the actual publication phase, source and transaction ownership, effects, disclosure and fresh post-publication comparisons for the same original operation. A generic startup reader, future D1 admission or expanded closed compaction purpose cannot fill that gap. Delayed, restart, disposed-source and arbitrary retained-history profiles remain unavailable. Earlier effects remain recorded if subsequent preparation or transfer refuses.
+
+Currentness is pinned to task-root revision `12989b07d9d963858ca357eab6a0e0103170dc3d`, whose Plans tree equals the map's original task inputs at `4f8927b8594a33ae8b2e62034ace4bd5fe699ab0`. No shared-main or combined landing clearance follows. Canonical Plans, frozen source packets, registry membership, governance artifacts and the landing baseline remain unchanged.
