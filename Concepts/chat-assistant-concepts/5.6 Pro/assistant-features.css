@@ -255,9 +255,6 @@ button.af-chip:hover{ background:var(--surface-3); color:var(--text); }
 .af-attempt-outcome.af-outcome-pending{ color:var(--accent); }
 
 .af-menu-divider{ height:1px; margin:4px 8px; background:var(--border); }
-.af-menu-note{
-  display:flex; align-items:center; gap:6px; padding:4px 12px 2px; font-size:10.5px; color:var(--subtle);
-}
 
 /* =====================================================================
    10. RESPONSIVE

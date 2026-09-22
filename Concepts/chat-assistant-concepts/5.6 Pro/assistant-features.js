@@ -1234,20 +1234,8 @@
   EXT.slot('threadMenu', function(ctx){
     var icon=ctx.icon, e=ctx.esc;
     var t=ctx.thread; if(!t) return '';
-    var locked=!!F.title.locks[t.id], pending=!!F.title.pending[t.id];
-    var attempts=F.title.attempts[t.id]||[];
-    var last=attempts.length?attempts[attempts.length-1]:null;
-    var statusText;
-    if(pending) statusText='Generating…';
-    else if(locked) statusText='Locked by manual rename';
-    else if(F.title.policy==='none') statusText='Policy: None';
-    else if(last && last.outcome==='unavailable') statusText='Unavailable — '+last.reason;
-    else if(last && last.outcome==='skipped_locked') statusText='Late generation discarded (manual rename won)';
-    else if(last && last.outcome==='generated') statusText='Auto · '+last.route;
-    else statusText='Policy: '+(F.title.policy==='default'?'Default resolver':F.title.policy);
     var canRegen=F.title.policy!=='none';
     return '<div class="af-menu-divider"></div>'+
-      '<div class="af-menu-note">'+icon('document',12)+'<span>Title: '+e(statusText)+'</span></div>'+
       '<button class="menu-item" data-action="af-title-regenerate" data-value="'+e(t.id)+'"'+(canRegen?'':' disabled')+'>'+
       '<span class="menu-icon">'+icon('refresh',13)+'</span><span class="menu-copy"><strong>Regenerate title</strong><span>'+(canRegen?'Clears the manual-rename lock':'Title policy is set to None')+'</span></span></button>';
   });

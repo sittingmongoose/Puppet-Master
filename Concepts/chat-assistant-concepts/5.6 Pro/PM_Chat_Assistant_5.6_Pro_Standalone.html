@@ -163,6 +163,9 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 .thread-row.active { background:color-mix(in srgb,var(--accent) 12%,var(--surface-3));color:var(--text); }
 
 .thread-copy { min-width:0;padding-right:2px; }
+.thread-row:hover .thread-copy,
+.thread-row:has(.thread-more:focus) .thread-copy,
+.thread-row:has(.thread-more:focus-visible) .thread-copy { padding-right:30px; }
 .thread-title { display:flex;align-items:center;gap:5px;font-weight:620;font-size:13px;white-space:nowrap; min-width:0; }
 .thread-time { flex:0 0 auto; white-space:nowrap; font-variant-numeric:tabular-nums; color:var(--subtle); font-weight:500; font-size:12px; }
 .thread-name { min-width:0; overflow:hidden; text-overflow:ellipsis; }
@@ -170,9 +173,8 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 .thread-sub .summary { overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
 .thread-lead { position:relative;width:28px;min-height:28px;display:grid;place-items:center;align-self:start;flex-shrink:0; }
 .thread-status-slot { width:18px;height:18px;display:grid;place-items:center;transition:opacity 130ms,transform var(--spring-soft); }
-.thread-more { position:absolute;inset:0;width:28px;height:28px;margin:0;padding:0;opacity:0;transform:scale(.82);pointer-events:none;transition:opacity 130ms,transform var(--spring-soft); }
-.thread-row:hover .thread-more,.thread-row:focus-within .thread-more { opacity:1;transform:scale(1);pointer-events:auto; }
-.thread-row:hover .thread-status-slot,.thread-row:focus-within .thread-status-slot { opacity:0;transform:scale(.6);pointer-events:none; }
+.thread-more { position:absolute;top:50%;right:4px;width:28px;height:28px;margin:0;padding:0;opacity:0;transform:translateY(-50%) scale(.82);pointer-events:none;transition:opacity 130ms,transform var(--spring-soft); }
+.thread-row:hover .thread-more,.thread-more:focus,.thread-more:focus-visible { opacity:1;transform:translateY(-50%) scale(1);pointer-events:auto; }
 .status-dot { width:7px;height:7px;border-radius:50%;background:var(--subtle); }
 .status-dot.working,.status-dot.reviewing { background:var(--warning);animation:status-pulse 1.5s ease-in-out infinite; }
 .status-dot.complete,.status-dot.idle { background:var(--positive); }.status-dot.blocked,.status-dot.failed { background:var(--danger); }.status-dot.waiting,.status-dot.paused { background:var(--accent-2); }
@@ -2634,7 +2636,7 @@ body:has(.activity-panel.transient) .history-flyout {
   white-space: nowrap;
 }
 .activity-scroll {
-  padding: 12px;
+  padding: 10px 8px;
   overscroll-behavior: contain;
 }
 
@@ -2805,6 +2807,8 @@ body:has(.activity-panel.transient) .history-flyout {
   min-width: 56px; color: var(--subtle); font-size: 11px; line-height: 16px;
   text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums;
 }
+.pmap-row:has(.pmap-churn) { grid-template-columns: 14px minmax(0,1fr) auto; column-gap: 4px; }
+.pmap-row:has(.pmap-churn) .right { min-width: 0; }
 .pmap-churn { display: inline-flex; gap: 5px; align-items: baseline; font-variant-numeric: tabular-nums; }
 .pmap-churn b, .pmap-tile-facts b.is-add, .pmap-focus-facts b.is-add { color: var(--positive); font-weight: 650; }
 .pmap-churn i, .pmap-tile-facts b.is-del, .pmap-focus-facts b.is-del { color: var(--danger); font-style: normal; font-weight: 650; }
@@ -3512,6 +3516,9 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
   overflow: hidden;
   border-radius: 12px;
   background: var(--surface-2);
+  /* The shared .hover-card blur clips the border through the top radius. */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   /* Column flex + a viewport cap so the card fits a short window; .ab-body is
      the part that gives. Without this the card simply grew past the bottom. */
   display: flex; flex-direction: column;
@@ -3544,6 +3551,7 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
   padding: 8px 12px;
   border-bottom: 1px solid var(--border);
   background: var(--surface-2);
+  border-radius: 11px 11px 0 0;
 }
 .ab-card .ab-head strong { display: block; font-size: 14px; line-height: 18px; font-weight: 650; color: var(--text); }
 .ab-card .ab-head-meta {
@@ -4695,7 +4703,10 @@ body[data-theme="retro-light"] {
   box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 55%,transparent);
 }
 .thread-row.active .thread-title{ font-weight:650; color:var(--text); }
-.thread-row.active .thread-copy{ padding-right:4px; }
+.thread-row.active .thread-copy{ padding-right:2px; }
+.thread-row:hover .thread-copy,
+.thread-row:has(.thread-more:focus) .thread-copy,
+.thread-row:has(.thread-more:focus-visible) .thread-copy{ padding-right:30px; }
 .thread-row.active:hover{ background:color-mix(in srgb,var(--accent) 21%,var(--surface-3)); }
 
 /* =====================================================================
@@ -4770,16 +4781,10 @@ body[data-theme="retro-light"] {
   }
   .thread-status-slot,
   .thread-time{ display:none !important; }
-  .thread-row{ grid-template-columns:minmax(0,1fr) !important; }
+  .thread-row{ grid-template-columns:minmax(0,1fr) !important; padding-left:10px; }
   .thread-lead{
     display:none !important; width:0 !important; min-width:0 !important;
     overflow:hidden; margin:0;
-  }
-  .thread-row:hover,
-  .thread-row:focus-within{ grid-template-columns:28px minmax(0,1fr) !important; }
-  .thread-row:hover .thread-lead,
-  .thread-row:focus-within .thread-lead{
-    display:grid !important; width:28px !important; min-width:28px !important; overflow:visible;
   }
 }
 
@@ -4801,32 +4806,12 @@ body[data-theme="retro-light"] {
 .history-flyout.is-history-narrow .thread-row,
 .history-flyout:has(.history-head.is-hh-compact) .thread-row,
 .history-panel.is-history-narrow .thread-row,
-.history-panel:has(.history-head.is-hh-compact) .thread-row{ grid-template-columns:minmax(0,1fr) !important; }
+.history-panel:has(.history-head.is-hh-compact) .thread-row{ grid-template-columns:minmax(0,1fr) !important; padding-left:10px; }
 .history-flyout.is-history-narrow .thread-lead,
 .history-flyout:has(.history-head.is-hh-compact) .thread-lead,
 .history-panel.is-history-narrow .thread-lead,
 .history-panel:has(.history-head.is-hh-compact) .thread-lead{
   display:none !important; width:0 !important; min-width:0 !important; overflow:hidden; margin:0;
-}
-.history-flyout.is-history-narrow .thread-row:hover,
-.history-flyout.is-history-narrow .thread-row:focus-within,
-.history-flyout:has(.history-head.is-hh-compact) .thread-row:hover,
-.history-flyout:has(.history-head.is-hh-compact) .thread-row:focus-within,
-.history-panel.is-history-narrow .thread-row:hover,
-.history-panel.is-history-narrow .thread-row:focus-within,
-.history-panel:has(.history-head.is-hh-compact) .thread-row:hover,
-.history-panel:has(.history-head.is-hh-compact) .thread-row:focus-within{
-  grid-template-columns:28px minmax(0,1fr) !important;
-}
-.history-flyout.is-history-narrow .thread-row:hover .thread-lead,
-.history-flyout.is-history-narrow .thread-row:focus-within .thread-lead,
-.history-flyout:has(.history-head.is-hh-compact) .thread-row:hover .thread-lead,
-.history-flyout:has(.history-head.is-hh-compact) .thread-row:focus-within .thread-lead,
-.history-panel.is-history-narrow .thread-row:hover .thread-lead,
-.history-panel.is-history-narrow .thread-row:focus-within .thread-lead,
-.history-panel:has(.history-head.is-hh-compact) .thread-row:hover .thread-lead,
-.history-panel:has(.history-head.is-hh-compact) .thread-row:focus-within .thread-lead{
-  display:grid !important; width:28px !important; min-width:28px !important; overflow:visible;
 }
 
 /* =====================================================================
@@ -9883,7 +9868,8 @@ button.qs-spine-slot.is-current::after{
   border:0; background:transparent; color:var(--muted); cursor:pointer; border-radius:4px;
   transition:transform 160ms var(--ease),color 150ms var(--ease); }
 .todo-caret:hover{ color:var(--text); background:var(--surface-3); }
-.todo-caret.is-collapsed{ transform:rotate(-90deg); }
+.todo-caret.is-collapsed{ transform:none; }
+.todo-caret:not(.is-collapsed){ transform:rotate(90deg); }
 .todo-caret-spacer{ width:16px; height:16px; }
 
 .todo-glyph{ display:grid; place-items:center; width:18px; height:18px; margin-top:1px; color:var(--muted); flex:0 0 auto; }
@@ -9906,9 +9892,9 @@ button.qs-spine-slot.is-current::after{
 .todo-blocked-line svg{ flex:0 0 auto; margin-top:1px; }
 
 .todo-chips{ display:flex; flex-wrap:wrap; gap:4px; }
-.todo-chip{ display:inline-flex; align-items:center; padding:1px 7px; border-radius:999px; font-size:9.5px;
+.todo-chip{ display:inline-flex; align-items:center; max-width:100%; box-sizing:border-box; padding:1px 7px; border-radius:999px; font-size:9.5px;
   border:1px solid var(--border); background:var(--surface-3); color:var(--muted); white-space:normal;
-  line-height:1.5; }
+  line-height:1.5; overflow-wrap:anywhere; }
 /* Pending-with-a-dependency is deliberately NOT danger-toned — it is not
    blocked (TDR-003), so it must not read like a problem. */
 .todo-chip-dep.is-waiting{ border-color:color-mix(in srgb,var(--accent-2) 40%,var(--border));
@@ -9968,13 +9954,24 @@ button.qs-spine-slot.is-current::after{
 .todo-tree-navigation{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-bottom:8px}.todo-tree-navigation small{margin-right:auto;color:var(--muted)}
 .todo-viewport{position:relative;overflow:auto;overscroll-behavior:contain;min-height:88px;max-height:440px;scrollbar-gutter:stable;contain:layout paint}
 .todo-virtual-space{display:block!important;position:relative;width:100%;min-width:0}
-.todo-virtual-row{box-sizing:border-box;position:absolute;left:0;right:0;height:82px;overflow:hidden;border:1px solid var(--border);border-radius:11px;background:var(--surface-1);padding:7px 6px 5px;margin-left:var(--todo-indent,0);transition:background 160ms var(--ease)}
-.todo-virtual-row[aria-selected="true"]{background:var(--surface-2)}
-.todo-virtual-row .todo-row{grid-template-columns:14px 16px minmax(0,1fr);gap:5px;padding:0!important;align-items:start}
-.todo-virtual-row .todo-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.25;font-size:11px}
-.todo-virtual-row .todo-copy small{font-size:9px;color:var(--muted);white-space:nowrap;text-overflow:ellipsis;overflow:hidden;width:100%;text-align:left}
-.todo-virtual-row .todo-row-actions{margin-top:auto;gap:3px;flex-wrap:nowrap}.todo-virtual-row .todo-row-actions .text-button{font-size:10px;min-height:22px;padding:0 6px}
-.todo-selected-detail{border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;background:var(--surface-2);overflow-wrap:anywhere;font-size:11px}.todo-selected-detail header{display:flex;flex-wrap:wrap;align-items:start;gap:6px}.todo-selected-detail header strong{flex:1;min-width:100px}.todo-selected-detail p{line-height:1.5}.todo-selected-detail details{margin-top:12px}.todo-selected-detail summary{cursor:pointer}.todo-selected-detail pre,.todo-opened-work pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:10px;max-height:240px;overflow:auto}.todo-hover-overflow{background:none;border:0;color:var(--accent);font-size:11px;text-align:left;padding:7px 0;cursor:pointer}
+.todo-virtual-row{box-sizing:border-box;position:absolute;left:0;right:0;height:72px;display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);padding:0;margin-left:var(--todo-indent,0);transition:background 160ms var(--ease),border-color 160ms var(--ease)}
+.todo-virtual-row[aria-selected="true"]{background:color-mix(in srgb,var(--accent) 8%,var(--surface-2));border-color:color-mix(in srgb,var(--accent) 35%,var(--border))}
+.todo-virtual-row .todo-row-top{display:grid;grid-template-columns:14px 16px minmax(0,1fr);gap:5px;align-items:center;padding:6px 8px 4px;min-height:0;flex:1}
+.todo-virtual-row .todo-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.25;font-size:11px;font-weight:650}
+.todo-virtual-row .todo-meta{display:flex;align-items:center;gap:6px;min-width:0;margin:0;padding:3px 8px 4px;border-top:1px solid var(--border);background:var(--surface-3)}
+.todo-virtual-row .todo-meta small{flex:1;min-width:0;font-size:9px;color:var(--muted);white-space:nowrap;text-overflow:ellipsis;overflow:hidden;text-align:left}
+.todo-virtual-row .todo-row-foot{display:flex;flex:0 0 auto;align-items:center;gap:4px;margin:0}
+.todo-virtual-row .todo-row-foot .text-button{font-size:9.5px;min-height:18px;padding:0 5px}
+.todo-selected-detail.todo-detail{border:1px solid var(--border);border-radius:12px;padding:10px 10px 12px;margin:12px 0;background:var(--surface-2);overflow-wrap:anywhere;font-size:11px;color:var(--text)}
+.todo-selected-detail .todo-detail-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:6px;margin:0 0 10px;padding:0 0 8px;border-bottom:1px solid var(--border)}
+.todo-selected-detail .todo-detail-title{min-width:0;font-size:12px;line-height:1.35;font-weight:650}
+.todo-selected-detail .todo-detail-close{width:22px;height:22px;min-width:22px;margin:0;padding:0}
+.todo-selected-detail .todo-detail-well{padding:8px 10px;border-radius:8px;background:var(--surface-3)}
+.todo-selected-detail .todo-detail-label{display:block;margin-bottom:4px;font-size:10px;font-weight:650;letter-spacing:.04em;text-transform:uppercase;color:var(--subtle)}
+.todo-selected-detail .todo-detail-outcome{margin:0;line-height:1.45;color:var(--text)}
+.todo-selected-detail .todo-chip-dep{display:flex;width:100%;max-width:100%;box-sizing:border-box;margin-top:8px;border-radius:8px;white-space:normal}
+.todo-selected-detail pre,.todo-opened-work pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:10px;max-height:240px;overflow:auto}
+.todo-hover-overflow{background:none;border:0;color:var(--accent);font-size:11px;text-align:left;padding:7px 0;cursor:pointer}
 
 /* collaboration.css — feature module.  OWNER: Collaborative Workflows
  * (Assistant redesign wave, 2026-09-03). Pairs with collaboration.js.
@@ -12224,9 +12221,6 @@ button.af-chip:hover{ background:var(--surface-3); color:var(--text); }
 .af-attempt-outcome.af-outcome-pending{ color:var(--accent); }
 
 .af-menu-divider{ height:1px; margin:4px 8px; background:var(--border); }
-.af-menu-note{
-  display:flex; align-items:center; gap:6px; padding:4px 12px 2px; font-size:10.5px; color:var(--subtle);
-}
 
 /* =====================================================================
    10. RESPONSIVE
@@ -12274,12 +12268,21 @@ button.af-chip:hover{ background:var(--surface-3); color:var(--text); }
 .hover-card.ab-card .todo-hover-list { max-height:none; overflow:visible; }
 .ab-head, .todo-hover-head { width:100%; background:transparent; text-align:left; color:var(--text); cursor:pointer; }
 .ab-head:hover, .todo-hover-head:hover { background:var(--surface-3); }
-.ab-row-copy b, .todo-hover-title { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; white-space:normal; }
+.ab-row-copy b { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; white-space:normal; }
+.todo-hover-title { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .ab-row-copy i { display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; }
-.todo-hover-list { display:grid; gap:3px; margin:0; padding:8px; }
-button.todo-hover-row { display:grid; grid-template-columns:18px minmax(0,1fr); gap:8px; width:100%; padding:7px; border:0; border-radius:8px; background:transparent; text-align:left; color:var(--text); cursor:pointer; }
-button.todo-hover-row:hover { background:var(--surface-3); }
-button.todo-hover-blocked { width:100%; text-align:left; background:transparent; padding:8px 14px; cursor:pointer; }
+.hover-card .todo-hover-head { display:flex; align-items:center; gap:8px; min-height:36px; padding:6px 10px; border-bottom:1px solid var(--border); }
+.hover-card .todo-hover-list { display:flex; flex-direction:column; gap:0; margin:0; padding:4px; }
+.hover-card button.todo-hover-row { display:grid; grid-template-columns:16px minmax(0,1fr) 68px; gap:8px; align-items:center; width:100%; min-height:32px; padding:4px 8px; border:0; border-radius:6px; background:transparent; text-align:left; color:var(--text); cursor:pointer; }
+.hover-card button.todo-hover-row:hover { background:var(--surface-3); }
+.hover-card .todo-hover-status { font-size:10.5px; line-height:14px; text-align:right; color:var(--muted); white-space:nowrap; font-variant-numeric:tabular-nums; }
+.hover-card .todo-hover-status[data-tone="working"] { color:var(--accent); }
+.hover-card .todo-hover-status[data-tone="blocked"] { color:var(--danger); }
+.hover-card .todo-hover-status[data-tone="done"] { color:var(--positive); }
+.hover-card .todo-hover-foot-row { display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:30px; padding:0 12px; border-top:1px solid var(--border); }
+.hover-card .todo-hover-overflow, .hover-card button.todo-hover-blocked { width:auto; margin:0; padding:4px 0; border:0; background:transparent; font-size:11px; line-height:16px; text-align:left; cursor:pointer; }
+.hover-card .todo-hover-overflow { color:var(--muted); }
+.hover-card button.todo-hover-blocked { margin-left:auto; color:var(--danger); display:inline-flex; align-items:center; gap:4px; }
 .todo-row { grid-template-columns:14px 17px minmax(0,1fr); padding:8px 0; align-items:start; gap:6px; }
 .todo-title-button { border:0; background:transparent; color:var(--text); text-align:left; cursor:pointer; padding:0; width:100%; font:inherit; }
 .todo-title-button:hover { color:var(--accent); }
@@ -12483,7 +12486,7 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
  .collab-configure .collab-member-pickers {padding-left:0;}
  .collab-configure-foot,.collab-panel-foot {padding:14px 18px !important;}
  .ctx-drawer .drawer-scroll {padding:16px 18px;}
- .activity-panel .activity-scroll {padding:12px 16px;}
+ .activity-panel .activity-scroll {padding:10px 8px;}
 }
 
 /* Revealing an editor removes it from grid flow at narrow desktop widths.
@@ -17905,8 +17908,10 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
   }
   function goalCompact(ctx) {
     var api = goalApi();
-    if (api && api.render && api.render.compact) {
-      try { return sealed(api.render.compact(ctx)); } catch (e) { /* fall through */ }
+    var render = api && api.render;
+    var fn = render && (render.panel || render.compact);
+    if (fn) {
+      try { return sealed(fn(ctx)); } catch (e) { /* fall through */ }
     }
     return '';
   }
@@ -19596,16 +19601,16 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
    (editing?'<div class="goal-edit"><textarea class="goal-objective-input" data-goal-input="objective" data-pm-keep rows="5">'+esc(ui.draft)+'</textarea><div class="goal-edit-foot"><span class="goal-count">'+ui.draft.length+' / 4000</span><span class="spacer"></span>'+button('goal-cancel-edit','Cancel edit')+button('goal-save','Save')+'</div></div>':'<p class="goal-objective-full">'+esc(g.objective)+'</p>')+
    '<div class="goal-lifecycle">'+(g.status==='active'?button('goal-pause','Pause'):button('goal-resume','Resume',!resumeEligibility(g).ok?'disabled':''))+button('goal-cancel','Cancel Goal',g.status==='completed'?'disabled':'')+(!editing?button('goal-edit','Edit objective',g.status==='completed'?'disabled':''):'')+'</div>'+
    (g.binding?'<div class="goal-lifecycle">'+button('goal-bound-open-plan','Open exact Plan · V'+g.binding.plan_version,'data-id="'+esc(g.binding.assistant_plan_id)+'"')+(g.blockedReason?button('goal-revise-plan','Revise Plan','data-id="'+esc(g.binding.assistant_plan_id)+'"'):'')+'</div>':'')+
-   '<div class="goal-disclosures">'+button('goal-toggle-history','Objective history')+button('goal-toggle-conts','Continuation decisions')+button('goal-request-change','Ask for a replacement',g.status==='completed'?'disabled':'')+'</div>'+
+   '<div class="goal-disclosures">'+button('goal-toggle-history','Objective history')+button('goal-request-change','Ask for a replacement',g.status==='completed'?'disabled':'')+'</div>'+
    (ui.history?'<div class="goal-history">'+g.revisions.slice().reverse().map(r=>'<div class="goal-history-row"><strong>Revision '+r.revision+'</strong><small>'+esc(r.source==='user_direct'?'Your direct change':'Your approved proposal')+'</small><p>'+esc(r.objective)+'</p></div>').join('')+'</div>':'')+
-   (ui.continuations?'<div class="goal-conts">'+g.continuations.slice().reverse().map(t=>'<div class="goal-cont-row"><strong>'+esc(t.result)+'</strong><small>Stop epoch '+t.stopEpochAt+'</small><p>'+esc(t.note)+'</p></div>').join('')+(g.continuations.length?'':'<p>No continuation decision yet.</p>')+'</div>':'')+
-   '<details class="goal-technical"><summary>Details</summary><p>Session-memory concept. No native host persistence or provider execution.</p><pre>'+esc(JSON.stringify({goal_id:g.id,origin:g.lineage,scope:g.scope,binding:g.binding||null,active_run_ref:g.activeRunRef,currentness_hash:g.currentnessHash,user_stop_epoch:g.stopEpoch},null,2))+'</pre>'+(!g.binding?button('goal-continue','Evaluate next turn',g.status==='active'?'':'disabled'):'')+'</details></section>';
+   '</section>';
  }
- function renderCompact(c){const g=get(c.thread.id);if(!g)return '';if(ui.editing||ui.proposal||ui.history||ui.continuations)return renderSection(c);
+ function renderCompact(c){const g=get(c.thread.id);if(!g)return '';
   return '<section class="goal-compact" data-goal-id="'+esc(g.id)+'"><div class="goal-compact-head"><span class="goal-chip goal-chip-'+g.status+'">'+labels[g.status]+'</span><span class="goal-rev">Revision '+g.revision+'</span></div><p class="ab-objective goal-objective-2">'+esc(g.objective)+'</p><div class="goal-compact-actions">'+(g.status==='active'?button('goal-pause','Pause'):button('goal-resume','Resume',!resumeEligibility(g).ok?'disabled':''))+button('goal-open-editor','Edit objective',g.status==='completed'?'disabled':'')+button('goal-cancel','Cancel',g.status==='completed'?'disabled':'')+button('goal-details','Details')+'</div></section>';
  }
+ function renderPanel(c){if(ui.editing||ui.proposal||ui.history)return renderSection(c);return renderCompact(c);}
  function refresh(c,out){c.renderApp();c.renderOverlays?.();if(out?.ok===false)c.toast('No change made',out.error?.replaceAll('_',' ')||'The owner refused this action.');}
- function openGoal(c){c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';c.state.menu=null;if(c.state.activity.expanded&&!c.state.activity.expanded.includes('goal'))c.state.activity.expanded.push('goal');}
+ function openGoal(c){c.state.hover=null;c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';c.state.menu=null;if(c.state.activity.expanded&&!c.state.activity.expanded.includes('goal'))c.state.activity.expanded.push('goal');}
  const actions={
   'goal-new':c=>{c.state.composer='/goal '+c.state.composer.replace(/^\/goal\s*/,'');c.state.menu=null;refresh(c);setTimeout(()=>document.querySelector('textarea.composer-input,textarea[data-composer]')?.focus(),0);},
   'goal-details':c=>{ui.history=true;openGoal(c);refresh(c);},
@@ -19634,7 +19639,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
   cancelled,proposal:id=>clone(store.proposals[id]||null),tickets:()=>clone(store.tickets),cancellation:id=>clone(store.cancellations[id]||null),
   registerOwner:(kind,api)=>{if(owners.has(kind))throw new Error('duplicate_goal_work_owner');owners.set(kind,api);},
   fenceThread:tid=>{const g=get(tid);if(g){fence(g,'Thread lineage changed.');g.status='paused';if(g.binding)window.PM56_PLANS?.boundPause(g.binding.assistant_plan_id);}return g;},
-  bound,boundList,createBound,boundTransition,restore,fixture:()=>clone(GOAL_FIXTURE),render:{section:renderSection,compact:renderCompact,editor:renderEditor},chip:()=>'',sidebar:()=>summary().statusLine,
+  bound,boundList,createBound,boundTransition,restore,fixture:()=>clone(GOAL_FIXTURE),render:{section:renderSection,compact:renderCompact,panel:renderPanel,editor:renderEditor},chip:()=>'',sidebar:()=>summary().statusLine,
   originKinds:()=>origins.slice(),originLabel:k=>originLabels[k]||null,lineageFor,progress:()=>({completed:0,total:0,open:0,retired:true}),phaseNumber:()=>0,
   exportRecord:id=>{const g=byId(id);return g?{schema_id:'pm.goal.record.v2',goal_id:g.id,project_id:g.projectId,thread_id:g.thread,objective_text:g.objective,revision:g.revision,state:g.status,blocked_reason_ref:g.blockedReason,active_run_ref:g.activeRunRef,created_at:g.createdAt,updated_at:g.updatedAt,currentness_hash:g.currentnessHash}:null;}
  };
@@ -32863,13 +32868,19 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
      attribute set activity-bar.js's own activityHoverCard registrant uses
      (id/data-overlay/data-k/data-domain/data-tone/role) so aria-controls on
      the Activity Bar button still resolves once this owns the 'todo' domain. */
+  var HOVER_STATUS = { pending:'Pending', in_progress:'Working', completed:'Done', blocked:'Blocked', skipped:'Skipped' };
   function renderCompact(ctx){
     var feed=hoverFeed(currentThreadId(ctx)); if(!feed) return '';
     var rows=feed.rows.slice(0,4);
+    var list=rows.length?rows.map(function(r){
+      var it=r.item, tone=STATUS_TONE[it.status]||'idle';
+      return '<button type="button" class="todo-hover-row'+(r.current?' is-current':'')+'" data-k="todo-hr:'+esc(it.todo_id)+'" data-action="todo-show-item" data-thread="'+esc(it.thread_id)+'" data-id="'+esc(it.todo_id)+'"><span class="todo-hover-glyph todo-glyph-'+esc(it.status)+'">'+glyph(it.status)+'</span><span class="todo-hover-title">'+esc(it.title)+'</span><span class="todo-hover-status" data-tone="'+esc(tone)+'">'+esc(HOVER_STATUS[it.status]||STATUS_LABEL[it.status])+'</span></button>';
+    }).join(''):'<p class="todo-hover-empty">Nothing waiting.</p>';
+    var more=feed.total>rows.length, blocked=feed.blockedCount;
+    var foot=(more||blocked)?'<div class="todo-hover-foot-row">'+(more?'<button class="todo-hover-overflow" data-action="open-activity" data-domain="todo">Open all '+feed.total+'</button>':'<span></span>')+(blocked?'<button type="button" class="todo-hover-blocked" data-action="open-activity" data-domain="todo">'+ctx.icon('lock',11)+' '+blocked+' blocked</button>':'')+'</div>':'';
     return '<button type="button" class="todo-hover-head" data-action="open-activity" data-domain="todo">'+
       '<span class="todo-hover-head-icon">'+ctx.icon('todo',13)+'</span><strong>To-Dos</strong><span class="todo-hover-head-meta">'+feed.done+' of '+feed.total+'</span></button>'+
-      '<div class="todo-hover-list">'+(rows.length?rows.map(function(r){var it=r.item;return '<button type="button" class="todo-hover-row'+(r.current?' is-current':'')+'" data-k="todo-hr:'+esc(it.todo_id)+'" data-action="todo-show-item" data-thread="'+esc(it.thread_id)+'" data-id="'+esc(it.todo_id)+'"><span class="todo-hover-glyph todo-glyph-'+esc(it.status)+'">'+glyph(it.status)+'</span><span class="todo-hover-title">'+esc(it.title)+'</span></button>';}).join(''):'<p class="todo-hover-empty">Nothing waiting.</p>')+'</div>'+
-      (feed.total>rows.length?'<button class="todo-hover-overflow" data-action="open-activity" data-domain="todo">Open all '+feed.total+' items</button>':'')+(feed.blockedCount?'<button type="button" class="todo-hover-blocked" data-action="open-activity" data-domain="todo">'+ctx.icon('lock',11)+' '+feed.blockedCount+' blocked</button>':'');
+      '<div class="todo-hover-list">'+list+'</div>'+foot;
   }
 
   /* extReplace('activityPanelBody',{domain:d,transient}, ...) (app.js) passes
@@ -32958,7 +32969,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
 
   /* View-only virtual hierarchy. The complete graph remains in ToDoController.
      Fixed row geometry keeps deep/large trees bounded in DOM, never in data. */
-  const ROW_HEIGHT=88;
+  const ROW_HEIGHT=78;
   const treeViews=new Map();
   function treeView(tid){if(!treeViews.has(tid))treeViews.set(tid,{query:'',searchCollapsed:{},top:0,selected:null,work:null});return treeViews.get(tid);}
   function visibleTree(tid){
@@ -32987,15 +32998,18 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     return rows.slice(start,end).map((row,n)=>{
       const t=row.item,kids=childrenOf(list,t.todo_id),view=treeView(tid),selected=view.selected===t.todo_id,scope=rowScope(tid,t),collapsed=!!(view.query.trim()?view.searchCollapsed[t.todo_id]:ui.collapsed[t.todo_id]);
       const wait=t.owner_wait||workOwner(t)?.waitState?.(t.workflow_ref,t),next=kids.length?childSummary(list,t):wait?.reason||wait?.kind||t.blocked_reason_ref||(t.status==='pending'&&!runnable(list,t)?'Waiting for dependencies':STATUS_LABEL[t.status]);
+      const actions=rowActions(ctx,list,t);
+      const foot=(t.explicit_assignment_label||actions)?(t.explicit_assignment_label?'<small class="todo-assign">'+esc(t.explicit_assignment_label)+'</small>':'')+actions:'';
       return '<div class="todo-node todo-virtual-row" data-todo-id="'+esc(t.todo_id)+'" data-status="'+esc(t.status)+'" data-k="todo-node:'+esc(t.todo_id)+'" style="top:'+((start+n)*ROW_HEIGHT)+'px;--todo-indent:'+Math.min(row.depth*12,48)+'px" role="treeitem" aria-level="'+(row.depth+1)+'"'+(kids.length?' aria-expanded="'+!collapsed+'"':'')+' aria-selected="'+selected+'">'+
-        '<div class="todo-row">'+(kids.length?'<button class="todo-caret'+(collapsed?' is-collapsed':'')+'" data-action="todo-toggle-parent"'+scope+' aria-label="'+(collapsed?'Expand ':'Collapse ')+esc(t.title)+'" aria-expanded="'+!collapsed+'">'+ctx.icon('chevron',11)+'</button>':'<span class="todo-caret-spacer"></span>')+
-        '<span class="todo-glyph todo-glyph-'+esc(t.status)+'" title="'+esc(STATUS_LABEL[t.status])+'">'+glyph(t.status)+'</span><button class="todo-copy todo-title-button" data-action="todo-toggle-detail"'+scope+' aria-expanded="'+selected+'" title="'+esc(t.title)+'"><span class="todo-title'+(t.status==='completed'?' is-struck':'')+'">'+esc(t.title)+'</span><small>'+esc(next)+'</small></button></div><div class="todo-row-actions">'+(t.explicit_assignment_label?'<small>'+esc(t.explicit_assignment_label)+'</small>':'')+rowActions(ctx,list,t)+'</div></div>';
+        '<div class="todo-row-top">'+(kids.length?'<button class="todo-caret'+(collapsed?' is-collapsed':'')+'" data-action="todo-toggle-parent"'+scope+' aria-label="'+(collapsed?'Expand ':'Collapse ')+esc(t.title)+'" aria-expanded="'+!collapsed+'">'+ctx.icon('chevron',11)+'</button>':'<span class="todo-caret-spacer"></span>')+
+        '<span class="todo-glyph todo-glyph-'+esc(t.status)+'" title="'+esc(STATUS_LABEL[t.status])+'">'+glyph(t.status)+'</span><button class="todo-copy todo-title-button" data-action="todo-toggle-detail"'+scope+' aria-expanded="'+selected+'" title="'+esc(t.title)+'"><span class="todo-title'+(t.status==='completed'?' is-struck':'')+'">'+esc(t.title)+'</span></button></div>'+
+        '<div class="todo-meta"><small>'+esc(next)+'</small>'+(foot?'<div class="todo-row-foot">'+foot+'</div>':'')+'</div></div>';
     }).join('');
   }
   function selectedDetail(ctx,tid){
     const view=treeView(tid),list=itemsOf(tid),item=findItem(list,view.selected);if(!item)return '';
-    return '<section class="todo-selected-detail todo-detail" data-k="todo-detail:'+esc(item.todo_id)+'"><header><strong>'+esc(item.title)+'</strong><button class="text-button" data-action="todo-toggle-detail"'+rowScope(tid,item)+'>Close details</button></header><p>'+esc(item.expected_outcome||childSummary(list,item))+'</p>'+depChip(list,item)+(item.source_room_run_id&&item.source_room_message_id?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(item.source_room_run_id)+'" data-message="'+esc(item.source_room_message_id)+'">Open source message</button>':'')+(item.source_review_run_id&&item.source_finding_id?'<button class="text-button" data-action="review-open-report" data-run="'+esc(item.source_review_run_id)+'" data-finding="'+esc(item.source_finding_id)+'">Open source finding</button>':'')+
-      '<details data-k="todo-technical:'+esc(item.todo_id)+'"><summary>Dependencies, attempts and receipts</summary><pre>'+esc(JSON.stringify({todo_id:item.todo_id,list_revision:threadStore(tid).revision||1,item_revision:item.revision,dependencies:item.depends_on,bindings:itemBindings(tid,item.todo_id),transitions:item.transitions},null,2))+'</pre></details>'+ 
+    const outcome=esc(item.expected_outcome||childSummary(list,item));
+    return '<section class="todo-selected-detail todo-detail" data-k="todo-detail:'+esc(item.todo_id)+'"><header class="todo-detail-head"><strong class="todo-detail-title">'+esc(item.title)+'</strong><button class="icon-button todo-detail-close" data-action="todo-toggle-detail"'+rowScope(tid,item)+' data-hover-key="todo-detail-close-'+esc(item.todo_id)+'" data-hover-tip="Close details" aria-label="Close details">'+ctx.icon('close',13)+'</button></header><div class="todo-detail-well"><span class="todo-detail-label">Expected</span><p class="todo-detail-outcome">'+outcome+'</p></div>'+depChip(list,item)+(item.source_room_run_id&&item.source_room_message_id?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(item.source_room_run_id)+'" data-message="'+esc(item.source_room_message_id)+'">Open source message</button>':'')+(item.source_review_run_id&&item.source_finding_id?'<button class="text-button" data-action="review-open-report" data-run="'+esc(item.source_review_run_id)+'" data-finding="'+esc(item.source_finding_id)+'">Open source finding</button>':'')+
       (view.work?.todo_id===item.todo_id?'<div class="todo-opened-work" data-k="todo-opened-work"><strong>Exact work · '+esc(view.work.attempt_id)+'</strong><p>'+esc(view.work.work_id)+'</p><pre>'+esc(JSON.stringify(view.work.detail,null,2))+'</pre></div>':'')+'</section>';
   }
   function renderPanel(ctx){
@@ -42117,20 +42131,8 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   EXT.slot('threadMenu', function(ctx){
     var icon=ctx.icon, e=ctx.esc;
     var t=ctx.thread; if(!t) return '';
-    var locked=!!F.title.locks[t.id], pending=!!F.title.pending[t.id];
-    var attempts=F.title.attempts[t.id]||[];
-    var last=attempts.length?attempts[attempts.length-1]:null;
-    var statusText;
-    if(pending) statusText='Generating…';
-    else if(locked) statusText='Locked by manual rename';
-    else if(F.title.policy==='none') statusText='Policy: None';
-    else if(last && last.outcome==='unavailable') statusText='Unavailable — '+last.reason;
-    else if(last && last.outcome==='skipped_locked') statusText='Late generation discarded (manual rename won)';
-    else if(last && last.outcome==='generated') statusText='Auto · '+last.route;
-    else statusText='Policy: '+(F.title.policy==='default'?'Default resolver':F.title.policy);
     var canRegen=F.title.policy!=='none';
     return '<div class="af-menu-divider"></div>'+
-      '<div class="af-menu-note">'+icon('document',12)+'<span>Title: '+e(statusText)+'</span></div>'+
       '<button class="menu-item" data-action="af-title-regenerate" data-value="'+e(t.id)+'"'+(canRegen?'':' disabled')+'>'+
       '<span class="menu-icon">'+icon('refresh',13)+'</span><span class="menu-copy"><strong>Regenerate title</strong><span>'+(canRegen?'Clears the manual-rename lock':'Title policy is set to None')+'</span></span></button>';
   });
@@ -46396,7 +46398,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
 
   function renderThreadRow(t){
-    return `<div class="thread-row ${t.id===state.selectedThread?'active':''}" data-k="thread:${esc(t.id)}" data-action="select-thread" data-id="${esc(t.id)}" tabindex="0"${hoverAttrs('thread-st-'+t.id,statusLabel(t.status))}><span class="thread-lead"><span class="thread-status-slot">${extReplace('threadRowStatus',{thread:t,variant:state.variants[1]},renderStatus(t,state.variants[1]))}</span><button class="icon-button thread-more" data-action="thread-menu" data-id="${esc(t.id)}" data-menu-anchor="thread-${esc(t.id)}"${hoverAttrs('thread-more-'+t.id,'Thread options')}>${icon('more',14)}</button></span><div class="thread-copy"><div class="thread-title"><span class="thread-time">${esc(t.updated)}</span><span class="thread-name">${esc(t.title)}</span></div><div class="thread-sub"><span class="summary">${esc(t.summary)}</span></div></div></div>`;
+    return `<div class="thread-row ${t.id===state.selectedThread?'active':''}" data-k="thread:${esc(t.id)}" data-action="select-thread" data-id="${esc(t.id)}" tabindex="0"${hoverAttrs('thread-st-'+t.id,statusLabel(t.status))}><span class="thread-lead"><span class="thread-status-slot">${extReplace('threadRowStatus',{thread:t,variant:state.variants[1]},renderStatus(t,state.variants[1]))}</span></span><div class="thread-copy"><div class="thread-title"><span class="thread-time">${esc(t.updated)}</span><span class="thread-name">${esc(t.title)}</span></div><div class="thread-sub"><span class="summary">${esc(t.summary)}</span></div></div><button class="icon-button thread-more" data-action="thread-menu" data-id="${esc(t.id)}" data-menu-anchor="thread-${esc(t.id)}"${hoverAttrs('thread-more-'+t.id,'Thread options')}>${icon('more',14)}</button></div>`;
   }
 
   function renderHistory(){ return `<aside class="history-panel" data-history-variant="${state.variants[1]}">${renderHistoryContent(false)}<div class="panel-resize" data-resize="history"></div></aside>`; }
