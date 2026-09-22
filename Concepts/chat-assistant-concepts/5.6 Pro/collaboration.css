@@ -565,7 +565,7 @@
 .collab-authority { color:var(--muted); font-size:10px; }
 .collab-checkbox-row small { margin-left:7px; color:var(--muted); }
 .collab-msg { padding:8px 0; border-bottom:1px solid var(--border); }
-@media(max-width:560px){ .collab-participant-editor { grid-template-columns:1fr; } }
+@media(max-width:760px){ .collab-participant-editor { grid-template-columns:1fr; } }
 
 .plan-crew-summary{padding:12px;overflow-wrap:anywhere}.plan-crew-summary>p{font-size:12px;opacity:.8}.plan-crew-assignment{display:flex;flex-direction:column;gap:4px;padding:10px 0;border-bottom:1px solid var(--border)}.plan-crew-assignment span{font-size:12px}
 

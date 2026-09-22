@@ -44,6 +44,7 @@
 .mdl-chip[data-tone=positive]{color:var(--positive);border-color:color-mix(in srgb,var(--positive) 45%,var(--border));}
 .mdl-chip[data-tone=warning]{color:var(--warning);border-color:color-mix(in srgb,var(--warning) 45%,var(--border));}
 .mdl-chip[data-tone=danger]{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 45%,var(--border));}
+.mdl .shared-picker-copy strong{white-space:normal;overflow:visible;text-overflow:clip;}
 .mdl .shared-picker-button{min-width:0;width:100%;}
 .mdl-rows>div{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--border);font-size:11.5px;}
 .mdl-rows>div:first-child{border-top:0;}
