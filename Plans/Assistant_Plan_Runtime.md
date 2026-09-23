@@ -1004,8 +1004,23 @@ planning run, not by participant, agent, specialist, pass, or card. BrainStorm p
 the Wonderer role, and the Grill Me specialist read and write that one counter. The ceiling is
 never multiplied by participant count and is never partitioned into per-agent pools.
 
-`Plans/Planning_Ledger_System.md` owns the durable question record and its single-registry
-guarantee. This document owns the arithmetic and the admission decision.
+For a Deep Plan run, `Plans/Planning_Ledger_System.md` owns the durable question record and its
+single-registry guarantee. This document owns the arithmetic and the admission decision.
+
+The durable question records that back this counter are mapped per backend, and the budget names
+in this section never collapse into one type. For a Deep Plan run they are the ledger session
+question records inside `DeepPlanLedgerSession` (`pm.assistant_plan.deep_ledger_session.v1`); a
+BrainStorm run records its shared participant frontier in `QuestionBank`
+(`pm.brainstorm.question_bank.v1`, owned by `Plans/Collaborative_Workflows.md`). For a regular
+Plan run, which creates no ledger session, they are the durably admitted `QuestionnaireEnvelope`
+question and answer records of the existing questionnaire host owned by
+`Plans/assistant-chat-design.md`; opening a ledger session for a regular Plan remains an
+owner-boundary violation. `PlanningQuestionBudgetProjection`
+(`pm.assistant_plan.question_budget_projection.v1`, QMAX-016) is the derived projection rebuilt
+from those durable records, and `pm.assistant_plan.question_budget_policy.v2` is the policy
+record whose seven factory values are the registered Settings rows (QMAX-018). Physical storage
+registration for every record named here follows the boundary in section 3: no writer is
+admitted until central Storage and Contracts adjudication closes.
 
 ### QMAX-008 — Revisions keep the counter; a new Plan gets a new one
 
