@@ -273,7 +273,7 @@
         "path": "reports/assistant-contract-closure-2026-09-22/repair_closure_matrix.jsonl",
         "reason": "+2 blocked rows (CCR-01-REG, CCR-02-RESIDUAL) → 13 rows",
         "commit": "finish-pass reports commit",
-        "sha256": "b5bf2c3044cc62a7fe6ab89125eaa09760ea2a6143e7064320b6172a137fdcc9"
+        "sha256": "6225b60eb3e56255b9d1d782c6c817369cd5a252a8af44422b77942e77b7c584"
       },
       {
         "path": "reports/assistant-contract-closure-2026-09-22/criteria_evidence_map.md",
@@ -285,7 +285,7 @@
         "path": "reports/assistant-contract-closure-2026-09-22/UNVERIFIED.md",
         "reason": "stale wave-1 statements corrected (§1 schema existence, §8 disposition row) + new §9 blocked dispositions",
         "commit": "finish-pass reports commit",
-        "sha256": "d6d452e3e8580c259c97a90eb9201de8a44b923331c521471fc0f685577357af"
+        "sha256": "7855f8bda5f6fc50f8ccad8c4c07c8f0e52e82890ea000d46ef8d1493497b258"
       },
       {
         "path": "reports/assistant-contract-closure-2026-09-22/validator_results.json",
@@ -328,13 +328,13 @@
         "path": "reports/assistant-contract-closure-2026-09-22/repair_closure_matrix.jsonl",
         "reason": "CCR-01-REG exception-mechanics ground + annex evidence + unblock-step update; CCR-02-RESIDUAL ten -> eleven kinds",
         "commit": "annex-wave commit",
-        "sha256": "b5bf2c3044cc62a7fe6ab89125eaa09760ea2a6143e7064320b6172a137fdcc9"
+        "sha256": "6225b60eb3e56255b9d1d782c6c817369cd5a252a8af44422b77942e77b7c584"
       },
       {
         "path": "reports/assistant-contract-closure-2026-09-22/UNVERIFIED.md",
         "reason": "whole-file wave-2-staleness sweep (sections 2, 3, 6, 7, 9)",
         "commit": "annex-wave commit",
-        "sha256": "d6d452e3e8580c259c97a90eb9201de8a44b923331c521471fc0f685577357af"
+        "sha256": "7855f8bda5f6fc50f8ccad8c4c07c8f0e52e82890ea000d46ef8d1493497b258"
       },
       {
         "path": "reports/assistant-contract-closure-2026-09-22/REPAIR_REPORT.md",
@@ -366,6 +366,30 @@
       "scripts/**",
       "fixtures (unchanged this wave)",
       "baseline.json"
+    ]
+  },
+  "wave5": {
+    "scope": "Reports-metadata consistency amendment (post-acceptance advisory): matrix evidence hashes and pointer counts refreshed after the annex wave's tripwire edit and UNVERIFIED heading fix; no canon, test, or fixture content changes.",
+    "authored": [
+      {
+        "path": "reports/assistant-contract-closure-2026-09-22/repair_closure_matrix.jsonl",
+        "reason": "CCR-01-REG/CCR-02-RESIDUAL: test-file sha256 refreshed to the tripwire-11 version, annex sha256 filled (was null), pointer text 'ten quoted schema_ids'/'enumerates all ten' corrected to eleven",
+        "commit": "consistency-amendment commit",
+        "sha256": "6225b60eb3e56255b9d1d782c6c817369cd5a252a8af44422b77942e77b7c584"
+      },
+      {
+        "path": "reports/assistant-contract-closure-2026-09-22/changed_paths.json",
+        "reason": "wave3+wave4 UNVERIFIED sha256 refreshed to the post-heading-fix bytes; wave4 matrix sha256 refreshed; this wave5 section (self-entry hash in the evidence-store manifest)",
+        "commit": "consistency-amendment commit"
+      }
+    ],
+    "generated": [],
+    "explicitly_not_changed": [
+      "All Plans/** canon",
+      "scripts/**",
+      "tests/** (content unchanged; only matrix references to it refreshed)",
+      "fixtures",
+      "REPAIR_REPORT.md / criteria_evidence_map.md / UNVERIFIED.md (bytes unchanged this wave)"
     ]
   }
 }
