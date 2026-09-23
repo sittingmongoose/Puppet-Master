@@ -62,7 +62,9 @@ def all_prepared_snapshot():
     registry = copy.deepcopy(GATE.load_json("Plans/event_family_registry.json"))
     baseline_ids = set(context[0]["preexisting_family_ids"]) | {"event-family-context-compaction-completed"}
     registry["families"] = [row for row in registry["families"] if row["family_id"] in baseline_ids]
-    if len(registry["families"]) != 40 or GATE.fingerprint(registry["families"]) != "4f701c9598003d7c01a405f18f7991b373379eca8b182cf6222540a4746d1756":
+    # Re-frozen 2026-09-23 (was 4f701c95..., last true at 4fe66204bd) after the six landed goal v3
+    # adoptions named in scripts/pm_emit_only_event_contract.py; same value as its prefix hash.
+    if len(registry["families"]) != 40 or GATE.fingerprint(registry["families"]) != "a27cf49b63d364ae0d6d6f62b0ebc8d3ebe9e66df6de8e58814d099194d81050":
         raise AssertionError("Synthetic admission fixture requires the unchanged live upstream40")
     return context, registry
 
