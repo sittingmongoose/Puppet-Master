@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.assistant_contract_closure.payload_fixtures.v1",
   "schema_version": "1.0.0",
-  "purpose": "Static positive/negative payload fixtures for the PM-ASSISTANT-CONTRACT-CLOSURE-2026-09-22-v1 contract tests. These fixtures prove schema and contract shape only: no runtime, native handler, persistence, event emission, or governance-seal claim.",
+  "purpose": "Static positive/negative payload fixtures for the PM-ASSISTANT-CONTRACT-CLOSURE-2026-09-22-v1 contract tests. These fixtures prove schema and contract shape only: no runtime, native handler, persistence, event emission, or governance-seal claim. Wave 2 (CCR-01/CCR-02, 2026-09-23) adds the bsd_records sections: positive and negative fixtures for the six pm.bsd.* lifecycle record families defined by Plans/back_seat_driver_contracts.schema.json.",
   "positive": {
     "goal_plan_binding_deep": {
       "goal_id": "goal_01J8ZK3M9QW2E4R6T8Y0U1A2",
@@ -93,6 +93,219 @@
       "original_operation_id": null,
       "terminal_owner_result_ref": null,
       "subject_ref": "bsd_policy.proj_01J8ZK9D4F6H8J0K2L3M5N7P"
+    },
+    "bsd_policy_auto": {
+      "schema_id": "pm.bsd.policy.v1",
+      "schema_version": "1.0.0",
+      "project_id": "proj_01J8ZK9D4F6H8J0K2L3M5N7P",
+      "mode": "Auto",
+      "model_selection": "session_default",
+      "requested_model_id": null,
+      "requested_persona_id": "persona.bsd_critical_advisor.v1",
+      "trigger_sensitivity": "balanced",
+      "read_only_tool_profile_id": "tool_profile.bsd_read_only.v1",
+      "catch_up_seconds": 30,
+      "interruption_cooldown_turns": 2,
+      "per_thread_cost_limit": 100,
+      "per_stage_review_limit": 6,
+      "retain_transcript": true,
+      "project_watch_instructions_ref": null,
+      "stage_defaults_ref": null,
+      "revision": 3
+    },
+    "bsd_workflow_binding_mixed": {
+      "schema_id": "pm.bsd.workflow_binding.v1",
+      "schema_version": "1.0.0",
+      "binding_id": "binding_01J8ZKH9J1L3N5P7R9T1V3X5",
+      "workflow_kind": "prd_builder",
+      "workflow_id": "workflow_01J8ZKJ0K2M4O6Q8S0U2W4Y6",
+      "policy_revision": 3,
+      "stage_bindings": [
+        {
+          "stage_id": "prd.research",
+          "stage_mode": "inherit"
+        },
+        {
+          "stage_id": "prd.draft",
+          "stage_mode": "on",
+          "requested_advisor_ref": "advisor.bsd_critical.v1",
+          "effective_advisor_ref": "advisor.bsd_critical.v1"
+        }
+      ],
+      "created_at": "2026-09-23T00:00:00Z"
+    },
+    "bsd_assignment_holding": {
+      "schema_id": "pm.bsd.assignment.v1",
+      "schema_version": "1.0.0",
+      "bsd_assignment_id": "asgn_01J8ZKK1L3N5P7R9T1V3X5Z7",
+      "binding_id": "binding_01J8ZKH9J1L3N5P7R9T1V3X5",
+      "stage_id": "prd.draft",
+      "primary_run_id": "run_01J8ZK5P2Q7Y9E4R6T1U8I3O",
+      "advisor_attempt_id": "attempt_01J8ZKM2N4P6R8T0V2X4Z6B8",
+      "epoch": 2,
+      "cursor": "cursor_01J8ZKN3O5Q7S9U1W3Y5A7C9",
+      "stable_prefix_hash": "1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f809",
+      "requested_effective_snapshot_ref": "snapshots.bsd.binding_01J8ZKH9J1L3N5P7R9T1V3X5.epoch_2",
+      "state": "holding"
+    },
+    "bsd_assignment_stopped": {
+      "schema_id": "pm.bsd.assignment.v1",
+      "schema_version": "1.0.0",
+      "bsd_assignment_id": "asgn_01J8ZKD1N3P5R7T9V1X3Z5B7",
+      "binding_id": "binding_01J8ZKH9J1L3N5P7R9T1V3X5",
+      "stage_id": "prd.draft",
+      "primary_run_id": "run_01J8ZK5P2Q7Y9E4R6T1U8I3O",
+      "advisor_attempt_id": "attempt_01J8ZKM2N4P6R8T0V2X4Z6B8",
+      "epoch": 3,
+      "cursor": "cursor_01J8ZKE2P4Q6R8T0V2X4Z6B8D0",
+      "stable_prefix_hash": "1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f809",
+      "requested_effective_snapshot_ref": null,
+      "state": "stopped"
+    },
+    "bsd_review_cycle_held": {
+      "schema_id": "pm.bsd.review_cycle.v1",
+      "schema_version": "1.0.0",
+      "review_cycle_id": "cycle_01J8ZKP4Q6S8U0W2Y4A6C8E0",
+      "bsd_assignment_id": "asgn_01J8ZKK1L3N5P7R9T1V3X5Z7",
+      "trigger_kind": "pre_high_risk_action",
+      "trigger_reason": "destructive shell command queued against paths outside the project root",
+      "primary_generation": 4,
+      "input_manifest_ref": "manifests.bsd.cycle_01J8ZKP4Q6S8U0W2Y4A6C8E0",
+      "result": "held",
+      "usage_attempt_ref": "usage_attempt.cycle_01J8ZKP4Q6S8U0W2Y4A6C8E0",
+      "latency_ms": 1200,
+      "created_at": "2026-09-23T00:05:00Z",
+      "frozen_boundary": false,
+      "no_call_reason": null
+    },
+    "bsd_review_cycle_silent_no_call": {
+      "schema_id": "pm.bsd.review_cycle.v1",
+      "schema_version": "1.0.0",
+      "review_cycle_id": "cycle_01J8ZKR5S7U9W1Y3A5C7E9G1",
+      "bsd_assignment_id": "asgn_01J8ZKK1L3N5P7R9T1V3X5Z7",
+      "trigger_kind": "configured_stage_boundary",
+      "trigger_reason": "stage boundary reached inside the interruption cooldown window",
+      "primary_generation": 5,
+      "input_manifest_ref": "manifests.bsd.cycle_01J8ZKR5S7U9W1Y3A5C7E9G1",
+      "result": "silent",
+      "usage_attempt_ref": null,
+      "latency_ms": null,
+      "created_at": "2026-09-23T00:20:00Z",
+      "frozen_boundary": true,
+      "no_call_reason": "no_call_cooldown"
+    },
+    "bsd_finding_held": {
+      "schema_id": "pm.bsd.finding.v1",
+      "schema_version": "1.0.0",
+      "bsd_finding_id": "find_01J8ZKT6U8W0Y2A4C6E8G0I2",
+      "finding_key": "bsd.finding.command_destruction_outside_root.v1",
+      "assignment_id": "asgn_01J8ZKK1L3N5P7R9T1V3X5Z7",
+      "raised_against_generation": 4,
+      "latest_checked_generation": 4,
+      "severity": "concern",
+      "claim": "The queued shell command deletes paths outside the project root.",
+      "affected_object_refs": [
+        "runs.primary.run_01J8ZK5P2Q7Y9E4R6T1U8I3O.command_17"
+      ],
+      "rule_or_constraint_refs": [
+        "Plans/Back_Seat_Driver.md#16-typed-records"
+      ],
+      "evidence_refs": [
+        "manifests.bsd.cycle_01J8ZKP4Q6S8U0W2Y4A6C8E0"
+      ],
+      "state": "held",
+      "reconfirmation_count": 0,
+      "closed_reason": null,
+      "created_at": "2026-09-23T00:06:00Z",
+      "updated_at": "2026-09-23T00:06:00Z"
+    },
+    "bsd_finding_reconfirming": {
+      "schema_id": "pm.bsd.finding.v1",
+      "schema_version": "1.0.0",
+      "bsd_finding_id": "find_01J8ZKV7V9X1Z3B5D7F9H1J3",
+      "finding_key": "bsd.finding.constraint_divergence_verified_paths.v1",
+      "assignment_id": "asgn_01J8ZKK1L3N5P7R9T1V3X5Z7",
+      "raised_against_generation": 5,
+      "latest_checked_generation": 6,
+      "severity": "critical",
+      "claim": "Verified command targets diverge from the frozen constraint bundle.",
+      "affected_object_refs": [
+        "runs.primary.run_01J8ZK5P2Q7Y9E4R6T1U8I3O.command_22"
+      ],
+      "rule_or_constraint_refs": [
+        "Plans/Back_Seat_Driver.md#16-typed-records"
+      ],
+      "evidence_refs": [
+        "manifests.bsd.cycle_01J8ZKR5S7U9W1Y3A5C7E9G1"
+      ],
+      "state": "reconfirming",
+      "reconfirmation_count": 1,
+      "closed_reason": null,
+      "created_at": "2026-09-23T00:21:00Z",
+      "updated_at": "2026-09-23T00:25:00Z"
+    },
+    "bsd_finding_cleared": {
+      "schema_id": "pm.bsd.finding.v1",
+      "schema_version": "1.0.0",
+      "bsd_finding_id": "find_01J8ZKW8W0Y2A4C6E8G0I2K4",
+      "finding_key": "bsd.finding.command_destruction_outside_root.v1",
+      "assignment_id": "asgn_01J8ZKK1L3N5P7R9T1V3X5Z7",
+      "raised_against_generation": 4,
+      "latest_checked_generation": 7,
+      "severity": "concern",
+      "claim": "The queued shell command deletes paths outside the project root.",
+      "affected_object_refs": [
+        "runs.primary.run_01J8ZK5P2Q7Y9E4R6T1U8I3O.command_17"
+      ],
+      "rule_or_constraint_refs": [
+        "Plans/Back_Seat_Driver.md#16-typed-records"
+      ],
+      "evidence_refs": [
+        "manifests.bsd.cycle_01J8ZKP4Q6S8U0W2Y4A6C8E0"
+      ],
+      "state": "cleared",
+      "reconfirmation_count": 2,
+      "closed_reason": null,
+      "created_at": "2026-09-23T00:06:00Z",
+      "updated_at": "2026-09-23T00:40:00Z"
+    },
+    "bsd_finding_closed": {
+      "schema_id": "pm.bsd.finding.v1",
+      "schema_version": "1.0.0",
+      "bsd_finding_id": "find_01J8ZKX9Y1Z3B5D7F9H1J3L5",
+      "finding_key": "bsd.finding.command_destruction_outside_root.v1",
+      "assignment_id": "asgn_01J8ZKK1L3N5P7R9T1V3X5Z7",
+      "raised_against_generation": 4,
+      "latest_checked_generation": 7,
+      "severity": "concern",
+      "claim": "The queued shell command deletes paths outside the project root.",
+      "affected_object_refs": [
+        "runs.primary.run_01J8ZK5P2Q7Y9E4R6T1U8I3O.command_17"
+      ],
+      "rule_or_constraint_refs": [
+        "Plans/Back_Seat_Driver.md#16-typed-records"
+      ],
+      "evidence_refs": [
+        "manifests.bsd.cycle_01J8ZKP4Q6S8U0W2Y4A6C8E0"
+      ],
+      "state": "closed",
+      "reconfirmation_count": 2,
+      "closed_reason": "duplicate_of.find_01J8ZKT6U8W0Y2A4C6E8G0I2",
+      "created_at": "2026-09-23T00:06:00Z",
+      "updated_at": "2026-09-23T00:45:00Z"
+    },
+    "bsd_quarantine_pause": {
+      "schema_id": "pm.bsd.quarantine.v1",
+      "schema_version": "1.0.0",
+      "quarantine_id": "quar_01J8ZKY0A2C4E6G8I0K2M4O6",
+      "assignment_id": "asgn_01J8ZKK1L3N5P7R9T1V3X5Z7",
+      "review_cycle_id": "cycle_01J8ZKR5S7U9W1Y3A5C7E9G1",
+      "reason": "advisor output failed payload admission twice within the same epoch",
+      "payload_hash": "9f2c1a4b6d8e0f1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192",
+      "retained_payload_ref": "quarantine.bsd.quar_01J8ZKY0A2C4E6G8I0K2M4O6.payload",
+      "reset_attempted": true,
+      "terminal_action": "pause_bsd",
+      "created_at": "2026-09-23T00:30:00Z"
     }
   },
   "negative": [
@@ -175,6 +388,147 @@
       "mutation": { "set": { "outcome": "blocked" } },
       "expected_keyword": "anyOf",
       "expected_path": []
+    },
+    {
+      "negative_id": "bsdrec_finding_severity_blocker",
+      "target": "bsd_finding_held",
+      "schema": "bsd_finding",
+      "mutation": {
+        "set": {
+          "severity": "blocker"
+        }
+      },
+      "expected_keyword": "enum",
+      "expected_path": [
+        "severity"
+      ]
+    },
+    {
+      "negative_id": "bsdrec_finding_missing_finding_key",
+      "target": "bsd_finding_held",
+      "schema": "bsd_finding",
+      "mutation": {
+        "remove": "finding_key"
+      },
+      "expected_keyword": "required",
+      "expected_message_field": "finding_key"
+    },
+    {
+      "negative_id": "bsdrec_finding_state_delivered",
+      "target": "bsd_finding_held",
+      "schema": "bsd_finding",
+      "mutation": {
+        "set": {
+          "state": "delivered"
+        }
+      },
+      "expected_keyword": "enum",
+      "expected_path": [
+        "state"
+      ]
+    },
+    {
+      "negative_id": "bsdrec_quarantine_terminal_action_ignore",
+      "target": "bsd_quarantine_pause",
+      "schema": "bsd_quarantine",
+      "mutation": {
+        "set": {
+          "terminal_action": "ignore"
+        }
+      },
+      "expected_keyword": "enum",
+      "expected_path": [
+        "terminal_action"
+      ]
+    },
+    {
+      "negative_id": "bsdrec_assignment_epoch_negative",
+      "target": "bsd_assignment_holding",
+      "schema": "bsd_assignment",
+      "mutation": {
+        "set": {
+          "epoch": -1
+        }
+      },
+      "expected_keyword": "minimum",
+      "expected_path": [
+        "epoch"
+      ]
+    },
+    {
+      "negative_id": "bsdrec_policy_mode_lowercase",
+      "target": "bsd_policy_auto",
+      "schema": "bsd_policy",
+      "mutation": {
+        "set": {
+          "mode": "auto"
+        }
+      },
+      "expected_keyword": "enum",
+      "expected_path": [
+        "mode"
+      ]
+    },
+    {
+      "negative_id": "bsdrec_review_cycle_unknown_no_call_reason",
+      "target": "bsd_review_cycle_silent_no_call",
+      "schema": "bsd_review_cycle",
+      "mutation": {
+        "set": {
+          "no_call_reason": "no_call_maybe"
+        }
+      },
+      "expected_keyword": "oneOf",
+      "expected_path": [
+        "no_call_reason"
+      ]
+    },
+    {
+      "negative_id": "bsdrec_assignment_extra_held_finding_refs",
+      "target": "bsd_assignment_stopped",
+      "schema": "bsd_assignment",
+      "mutation": {
+        "set": {
+          "held_finding_refs": []
+        }
+      },
+      "expected_keyword": "additionalProperties",
+      "expected_message_field": "held_finding_refs"
+    },
+    {
+      "negative_id": "bsdrec_workflow_binding_stage_mode_enabled",
+      "target": "bsd_workflow_binding_mixed",
+      "schema": "bsd_workflow_binding",
+      "mutation": {
+        "set": {
+          "stage_bindings": [
+            {
+              "stage_id": "prd.research",
+              "stage_mode": "enabled"
+            }
+          ]
+        }
+      },
+      "expected_keyword": "enum",
+      "expected_path": [
+        "stage_bindings",
+        0,
+        "stage_mode"
+      ]
+    },
+    {
+      "negative_id": "bsdrec_quarantine_payload_hash_uppercase",
+      "target": "bsd_quarantine_pause",
+      "schema": "bsd_quarantine",
+      "mutation": {
+        "set": {
+          "payload_hash": "9F2C1A4B6D8E0F1A2B3C4D5E6F708192A3B4C5D6E7F8091A2B3C4D5E6F708192"
+        }
+      },
+      "expected_keyword": "pattern",
+      "expected_path": [
+        "payload_hash"
+      ]
     }
   ]
 }

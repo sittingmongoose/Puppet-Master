@@ -5,6 +5,10 @@ BSD event/effect authority boundary (ACC-BSD-01), and the proof-truthfulness gua
 (ACC-TRUTH-01). These are static contract checks over live Plans source: they prove schema,
 registry, wiring, and owner-reference agreement only, never native runtime, handler,
 persistence, event emission, or governance-seal results.
+
+Wave 2 (CCR-01/CCR-02, 2026-09-23) adds BsdLifecycleRecordClosureTests: typed record contracts for the six
+`pm.bsd.*` lifecycle families, the central durable/pending disposition row, and executed positive, negative,
+and broken-reference fixture evidence.
 """
 
 from __future__ import annotations
@@ -55,6 +59,8 @@ SETTINGS = _load_json(ROOT / "Plans" / "settings_inventory.json")
 TOUCH = _load_json(ROOT / "Plans" / "touch_closure.json")
 GATE_REPORT = _load_json(ROOT / "Plans" / ".implementation_readiness" / "buildability_gate_report.json")
 FIXTURES = _load_json(FIXTURES_PATH)
+BSD_RECORDS = _load_json(ROOT / "Plans" / "back_seat_driver_contracts.schema.json")
+REDACTION_TRANSFORMS = _load_json(ROOT / "Plans" / "redaction_transform_registry.json")
 
 APR_TEXT = (ROOT / "Plans" / "Assistant_Plan_Runtime.md").read_text(encoding="utf-8")
 CV0_TEXT = (ROOT / "Plans" / "Contracts_V0.md").read_text(encoding="utf-8")
@@ -128,6 +134,8 @@ def schema_doc_for(def_name: str) -> dict:
         return CUSTODY
     if def_name in SHARED_COMMANDS.get("$defs", {}):
         return SHARED_COMMANDS
+    if def_name in BSD_RECORDS.get("$defs", {}):
+        return BSD_RECORDS
     raise AssertionError(f"unknown fixture schema def: {def_name}")
 
 
@@ -492,6 +500,122 @@ class BsdEventEffectClosureTests(unittest.TestCase):
         self.assertTrue(shared_runtime_validator.validate()["passed"])
 
 
+class BsdLifecycleRecordClosureTests(unittest.TestCase):
+    """CCR-01/CCR-02: the six BSD lifecycle record families have typed, centrally referenced
+    contracts, a durable/pending disposition row, and executed fixture evidence."""
+
+    RECORD_DEFS = [
+        "bsd_policy",
+        "bsd_workflow_binding",
+        "bsd_assignment",
+        "bsd_review_cycle",
+        "bsd_finding",
+        "bsd_quarantine",
+    ]
+    RECORD_SCHEMA_IDS = [
+        "pm.bsd.policy.v1",
+        "pm.bsd.workflow_binding.v1",
+        "pm.bsd.assignment.v1",
+        "pm.bsd.review_cycle.v1",
+        "pm.bsd.finding.v1",
+        "pm.bsd.quarantine.v1",
+    ]
+
+    def disposition_row(self) -> dict:
+        rows = [
+            row
+            for row in REGISTRY["contract_family_dispositions"]
+            if row["disposition_id"] == "scd.back_seat_driver.durable.v1"
+        ]
+        self.assertEqual(len(rows), 1, "expected exactly one BSD disposition row")
+        return rows[0]
+
+    def test_schema_is_valid_draft_2020_12(self) -> None:
+        Draft202012Validator.check_schema(BSD_RECORDS)
+
+    def test_defs_bind_declared_schema_ids(self) -> None:
+        for def_name, schema_id in zip(self.RECORD_DEFS, self.RECORD_SCHEMA_IDS):
+            definition = BSD_RECORDS["$defs"][def_name]
+            self.assertEqual(definition["properties"]["schema_id"]["const"], schema_id, def_name)
+            self.assertEqual(definition["properties"]["schema_version"]["const"], "1.0.0", def_name)
+            self.assertFalse(definition["additionalProperties"], def_name)
+            self.assertIn("schema_id", definition["required"], def_name)
+
+    def test_positive_record_fixtures_validate(self) -> None:
+        seen = set()
+        for name, record in FIXTURES["positive"].items():
+            schema_id = str(record.get("schema_id", ""))
+            if not schema_id.startswith("pm.bsd."):
+                continue
+            def_name = schema_id[len("pm.") : -len(".v1")].replace(".", "_")
+            errors = list(validator_for(BSD_RECORDS, def_name).iter_errors(record))
+            self.assertEqual(errors, [], f"{name}: {[str(e)[:200] for e in errors]}")
+            seen.add((schema_id, record.get("state"), record.get("result"), record.get("terminal_action")))
+        # The reviewer-required lifecycle states each carry an executed positive fixture.
+        for required in (
+            ("pm.bsd.assignment.v1", "holding"),
+            ("pm.bsd.assignment.v1", "stopped"),
+            ("pm.bsd.review_cycle.v1", "held"),
+            ("pm.bsd.finding.v1", "held"),
+            ("pm.bsd.finding.v1", "reconfirming"),
+            ("pm.bsd.finding.v1", "cleared"),
+            ("pm.bsd.finding.v1", "closed"),
+        ):
+            self.assertTrue(
+                any(s[0] == required[0] and required[1] in s for s in seen),
+                f"missing positive fixture for {required}",
+            )
+        self.assertIn(("pm.bsd.quarantine.v1", None, None, "pause_bsd"), seen)
+        self.assertEqual(len(seen), 11)
+
+    def test_negative_record_fixtures_fail_for_intended_reason(self) -> None:
+        run_negative_fixtures(self, *self.RECORD_DEFS)
+
+    def test_disposition_row_bound_and_bounded(self) -> None:
+        row = self.disposition_row()
+        self.assertEqual(row["system_id"], "back_seat_driver")
+        self.assertEqual(row["owner_doc"], "Plans/Back_Seat_Driver.md")
+        self.assertEqual(row["record_kinds"], self.RECORD_SCHEMA_IDS)
+        self.assertEqual(row["persistence_disposition"], "durable")
+        self.assertEqual(row["physical_family_status"], "physical_family_registration_pending")
+        self.assertIs(row["runtime_evidence"], False)
+        self.assertEqual(
+            row["event_effect_policy"], "receipt_only_no_eventrecord_pending_event_authority"
+        )
+        self.assertEqual(row["existing_family_refs"], ["bsd_runtime_record"])
+        self.assertEqual(row["retention_disposition"]["mode"], "physical_registration_pending")
+        self.assertEqual(row["retention_disposition"]["refs"], [])
+        resolved = checker.resolve(ROOT, row["schema_ref"])
+        self.assertEqual(Path(resolved).name, "back_seat_driver_contracts.schema.json")
+        registered = {t["transform_id"] for t in REDACTION_TRANSFORMS["transforms"]}
+        for transform_id in row["redaction_transform_ids"]:
+            self.assertIn(transform_id, registered)
+        # The disposition adds no physical family (SP-251/SP-314 negative constraint).
+        self.assertEqual(len(REGISTRY["families"]), 282)
+
+    def test_lifecycle_not_folded_into_summary(self) -> None:
+        self.assertNotIn("bsd_runtime_record", BSD_RECORDS["$defs"])
+        summary = checker.resolve(ROOT, family("bsd_runtime_record")["value_schema_ref"])
+        self.assertEqual(
+            summary["properties"]["schema_id"]["const"], "pm.shared_runtime.bsd_runtime_record.v1"
+        )
+        self.assertEqual(len(summary["required"]), 23)
+        summary_text = json.dumps(summary).lower()
+        for token in ("quarantine", "reconfirm", "pm.bsd."):
+            self.assertNotIn(token, summary_text)
+
+    def test_broken_reference_negatives(self) -> None:
+        # S02 broken-reference control executed through the central resolver (CCR-02).
+        with self.assertRaises(ValueError):
+            checker.resolve(ROOT, "Plans/Back_Seat_Driver_Contracts.schema.json")  # case drift
+        with self.assertRaises(ValueError):
+            checker.resolve(ROOT, "Plans/no_such_bsd_contracts.schema.json")  # missing file
+        with self.assertRaises(KeyError):
+            checker.resolve(ROOT, "Plans/back_seat_driver_contracts.schema.json#/$defs/NoSuchDef")
+        with self.assertRaises(ValueError):
+            checker.resolve(ROOT, "scripts/pm-plan-index.py")  # non-canonical prefix
+
+
 class TruthBoundaryTests(unittest.TestCase):
     """ACC-TRUTH-01: future declarations stay future; gates stay closed."""
 
@@ -503,7 +627,27 @@ class TruthBoundaryTests(unittest.TestCase):
         self.assertIn("are required and do not exist yet", APR_TEXT)
         self.assertIn("Naming them here does not create them", CS_TEXT)
         self.assertFalse((ROOT / "Plans" / "assistant_plan_runtime_contracts.schema.json").exists())
-        self.assertFalse((ROOT / "Plans" / "back_seat_driver_contracts.schema.json").exists())
+        # The BSD typed companion now exists (CCR-01 repair) but strictly as record definitions:
+        # none of the CS-078 command request/result definitions may appear in it, so every
+        # CS-078 row keeps handler_unavailable truthfully.
+        self.assertTrue((ROOT / "Plans" / "back_seat_driver_contracts.schema.json").exists())
+        for command_def in (
+            "BackSeatDriverModeSetRequest",
+            "BackSeatDriverModeSetResult",
+            "BSDPolicyUpdateRequest",
+            "BSDPolicyUpdateResult",
+            "BSDWorkflowBindingRequest",
+            "BSDWorkflowBindingResult",
+            "BSDAssignmentControlRequest",
+            "BSDAssignmentControlResult",
+            "BSDAssignmentRetryRequest",
+            "BSDAssignmentRetryResult",
+            "BSDFindingRoute",
+            "BSDUsageRoute",
+            "BSDTranscriptRoute",
+            "RouteResult",
+        ):
+            self.assertNotIn(command_def, BSD_RECORDS["$defs"])
 
     def test_bsd_set_row_keeps_handler_unavailable_boundary(self) -> None:
         rows = [
