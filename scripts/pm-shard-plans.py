@@ -260,10 +260,10 @@ def shard_source(source: Path, output_root: Path, generated_at: str,
             f"L{shard['source_line_start']}-L{shard['source_line_end']} "
             f"`{shard['sha256']}`"
         )
-    index_path.write_text(normalize_generated_markdown("\n".join(index_lines)), encoding="utf-8")
+    index_path.write_text(normalize_generated_markdown("\n".join(index_lines)), encoding="utf-8", newline="\n")
 
     manifest["index_sha256"] = sha256_file(index_path)
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     manifest["manifest_sha256"] = sha256_file(manifest_path)
     return manifest
 
@@ -310,7 +310,7 @@ def generate(config_path: Path, report_path: Path | None) -> dict[str, Any]:
     }
     if report_path:
         report_path.parent.mkdir(parents=True, exist_ok=True)
-        report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     return report
 
 
@@ -505,7 +505,7 @@ def check(config_path: Path, report_path: Path | None) -> dict[str, Any]:
     }
     if report_path:
         report_path.parent.mkdir(parents=True, exist_ok=True)
-        report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     return report
 
 
