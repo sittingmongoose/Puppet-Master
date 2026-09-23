@@ -4,7 +4,7 @@ Source: `Plans/feature-list.md`
 
 Source lines: L13-L124
 
-Source SHA256: `6cabffb048e5b6528ece9c156ce2afe1ae4bb49a7d6f20e08a00e5dca5de9421`
+Source SHA256: `43393f020659076aa039e640a3d41e20fa898a64ff4161ee881b359889bc5d43`
 
 ---
 
@@ -103,7 +103,7 @@ Feature summaries must describe the runtime/storage/schema backbone as attempt-s
 
 Scheduler and recovery summaries must preserve deterministic scored ready-set behavior rather than drifting back to lexicographic `node_id` dispatch. Feature copy may name `node_id` for correlation, but dispatch is based on the scored ready-set, `attempt_id`, `scheduler_lane`, first-class safe-point metadata, remediation child lineage, `worktree-conflict` handling, graph-local retry lineage, blocked/runtime outcomes, and the `/runtime/storage` event stream. Any `tier-era` or lexical-dispatch phrasing is explicitly historical and must not own the current scheduler contract.
 
-Account-switching summaries preserve both latest-state and append-only event requirements. Runtime identity features include `account.switched`, `recent_switch_reason`, `account_switch_reason`, effective/requested account fields, and account-pressure history as first-class `/runtime` records, so usage views can reconstruct the switch-history rather than reading only the newest account label.
+Account-switching summaries preserve both latest-state and append-only event requirements. Runtime identity features include the durable `account_switch_event` record (the separate `account.switched` event-name requirement is retired as summary vocabulary by DL-071, with no alias and no second history stream), `recent_switch_reason`, `account_switch_reason`, effective/requested account fields, and account-pressure history as first-class `/runtime` records, so usage views can reconstruct the switch-history rather than reading only the newest account label.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Executor_Protocol.md
 

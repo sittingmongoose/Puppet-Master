@@ -2,9 +2,9 @@
 
 Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
-Source lines: L1914-L2007
+Source lines: L1914-L2009
 
-Source SHA256: `19c2e9efe0fa0322b01ca45e4f2ddea6809e5d0581e5da73ca070c6ba9b55583`
+Source SHA256: `e024f56af83a32efe5bd8ebd7bbe0b089b6edf1206a0ffce01cac0f31b245ca4`
 
 ---
 
@@ -62,7 +62,9 @@ The GUI rebuild is not Home-complete until the evidence set verifies:
 - a bottom-terminal collapse chevron that both collapses and expands, staying visible
   and hit-testable on the collapsed strip; the top-bar menu row is likewise a toggle
   (runtime relabel to Expand Bottom Terminal while collapsed — tweak wave 2026-08-13);
-- Move Workgroup to New Section reseeding the vacated source section with a fresh
+- Move Workgroup to New Section leaving the vacated source section empty and reusable
+  with its guidance state (DL-070 retires the earlier fresh-workgroup reseed below);
+  historical wording: reseeding the vacated source section with a fresh
   workgroup in the same commit (tidy guidance state instead at the four-pane cap),
   and reset reconstituting a live workgroup (preferring a section that owns one,
   pristine seed otherwise);

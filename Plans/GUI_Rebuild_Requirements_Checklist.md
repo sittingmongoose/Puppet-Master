@@ -1965,7 +1965,9 @@ The GUI rebuild is not Home-complete until the evidence set verifies:
 - a bottom-terminal collapse chevron that both collapses and expands, staying visible
   and hit-testable on the collapsed strip; the top-bar menu row is likewise a toggle
   (runtime relabel to Expand Bottom Terminal while collapsed — tweak wave 2026-08-13);
-- Move Workgroup to New Section reseeding the vacated source section with a fresh
+- Move Workgroup to New Section leaving the vacated source section empty and reusable
+  with its guidance state (DL-070 retires the earlier fresh-workgroup reseed below);
+  historical wording: reseeding the vacated source section with a fresh
   workgroup in the same commit (tidy guidance state instead at the four-pane cap),
   and reset reconstituting a live workgroup (preferring a section that owns one,
   pristine seed otherwise);

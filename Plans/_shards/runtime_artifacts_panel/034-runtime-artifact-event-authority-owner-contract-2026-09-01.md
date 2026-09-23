@@ -4,7 +4,7 @@ Source: `Plans/Runtime_Artifacts_Panel.md`
 
 Source lines: L2468-L2638
 
-Source SHA256: `d72d25525291a655b6bcba20605df5c11f6d31181f79e5f031d5bc0a6535e025`
+Source SHA256: `0f6862817d85cfe80bc72c7eadf312b269e62156b7bbd54785bf11cea7d5f2b0`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `d72d25525291a655b6bcba20605df5c11f6d31181f79e5f031d5bc0a6535e025
 
 This section is the Runtime Artifacts semantic-owner disposition for the exact Option 2 taxonomy in RAP-004. It closes owner intent and payload-schema material depth only. It does not edit or supersede the EventRecord envelope, register any family, assign persistence behavior, authorize append or dispatch, advance a projector checkpoint, certify executable depth, or authorize PNC-019. Registry admission, storage binding, dedupe execution, replay/recovery fixtures, projector fixtures, and producer/consumer runtime evidence remain a separate Event Authority wave.
 
-Every row below has project scope `project_id required; cross-project payload or routing references rejected`, and recommends retention class `RP-AUTHORITY-INDEFINITE` for later storage-owner adjudication. The recommendation is not a current retention assignment. The exact dedupe identity recommendation is the length-framed tuple `[event_type, project_id, artifact_id, schema_id]`; storage must bind that tuple before admission and must not dedupe by timestamp, summary, preview content, or artifact subtype.
+Every row below has project scope `project_id required; cross-project payload or routing references rejected`, and recommends retention class `RP-AUTHORITY-INDEFINITE` for later storage-owner adjudication. On 2026-09-23 Jared approved that recommendation for all 19 event histories (DL-075), so `RP-AUTHORITY-INDEFINITE` is their retention assignment for the time their full contracts are admitted. The assignment is retention only: it registers no family, defines no binding, and does not make the schemas complete. Text embedded in each event is retained with it, and each full contract must make that and any applicable deletion requirement explicit before admission. The exact dedupe identity recommendation is the length-framed tuple `[event_type, project_id, artifact_id, schema_id]`; storage must bind that tuple before admission and must not dedupe by timestamp, summary, preview content, or artifact subtype.
 
 | Exact event type | Semantic transition | Payload schema ID / ref / version | Producer -> consumers | Material-depth status |
 | --- | --- | --- | --- | --- |

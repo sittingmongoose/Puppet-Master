@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L5193-L5988
+Source lines: L5193-L5989
 
-Source SHA256: `e96a1e1e98d8ee589d1bae0c6bc6ee52e71c92b722f0291f6d98682cb2868481`
+Source SHA256: `9d2dc958e29dc27845ebb1233b5d3c85294758e6e1e7ab479db11ed9556c732b`
 
 ---
 
@@ -634,7 +634,8 @@ changes:
   superseded on 2026-08-27: the full-width F3-448 no-bell status bar remains;
   the 4 px shell-spacing decision remains applicable.
   F3-HOME-003 also records the move-workgroup source reseed and reset
-  reconstitution semantics.
+  reconstitution semantics; the move reseed is retired by DL-070 (2026-09-23),
+  reset reconstitution is unchanged.
 - `Plans/UI_Command_Catalog.md` — UCC-144: top-bar collapse row toggles on
   cmd.workspace_layout.set_collapsed; track handle reuses
   cmd.workspace_layout.resize_surface; no new command IDs.

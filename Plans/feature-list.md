@@ -105,7 +105,7 @@ Feature summaries must describe the runtime/storage/schema backbone as attempt-s
 
 Scheduler and recovery summaries must preserve deterministic scored ready-set behavior rather than drifting back to lexicographic `node_id` dispatch. Feature copy may name `node_id` for correlation, but dispatch is based on the scored ready-set, `attempt_id`, `scheduler_lane`, first-class safe-point metadata, remediation child lineage, `worktree-conflict` handling, graph-local retry lineage, blocked/runtime outcomes, and the `/runtime/storage` event stream. Any `tier-era` or lexical-dispatch phrasing is explicitly historical and must not own the current scheduler contract.
 
-Account-switching summaries preserve both latest-state and append-only event requirements. Runtime identity features include `account.switched`, `recent_switch_reason`, `account_switch_reason`, effective/requested account fields, and account-pressure history as first-class `/runtime` records, so usage views can reconstruct the switch-history rather than reading only the newest account label.
+Account-switching summaries preserve both latest-state and append-only event requirements. Runtime identity features include the durable `account_switch_event` record (the separate `account.switched` event-name requirement is retired as summary vocabulary by DL-071, with no alias and no second history stream), `recent_switch_reason`, `account_switch_reason`, effective/requested account fields, and account-pressure history as first-class `/runtime` records, so usage views can reconstruct the switch-history rather than reading only the newest account label.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Executor_Protocol.md
 
@@ -892,7 +892,8 @@ negative_constraints:
 - Scheduler and recovery summaries must preserve deterministic scored ready-set behavior rather than drifting back to lexicographic `node_id` dispatch.
 compatibility_only_notes:
 - /phase/iteration, tier_runtime_record, and tier_id vocabulary is compatibility history.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- The separate account.switched event-name requirement is retired as summary vocabulary by DL-071; account_switch_event is the durable record, with no alias.
 owner_boundary_notes:
 - storage-plan, usage-feature, and Executor_Protocol own detailed runtime storage and scheduler behavior.
 owner_hints:

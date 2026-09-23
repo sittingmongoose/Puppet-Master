@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L262-L1207
+Source lines: L262-L1216
 
-Source SHA256: `43437de2f53d342ba114fb46f90a8f32de6fced1ed522738f4d99778a94add85`
+Source SHA256: `29e9dee98e8af052e6a59420e02f11456ba87404b67397156dce58f31adae48f`
 
 ---
 
@@ -341,6 +341,15 @@ live workgroup id at all (persisted-null corruption), `restoreOwnerRefs` reseeds
 section 1 from the pristine terminal seed and heals the persisted domain-ref
 CSVs in the same pass — the empty-guidance block never renders over a
 recoverable state.
+
+Amended 2026-09-23 (DL-070) — the move no longer reseeds. The 2026-08-13
+sentence that `Move Workgroup to New Section` reseeds the vacated source
+section with a fresh workgroup is retired: the vacated section stays empty
+and reusable with its guidance state, no replacement workgroup is allocated
+and no new terminal session starts, and creating one there is a separate
+action. The move payload's `source_reseeded` is therefore always false for a
+move. Reset and boot recovery reconstitution above are unchanged and gain no
+new creation authority from this amendment.
 
 Browser access from any editor panel, File Manager `Open in Panel`, Dashboard/Chat
 movement, terminal section/workgroup movement, explicit empty-section state, and

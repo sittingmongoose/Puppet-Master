@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L16954-L17908
+Source lines: L16954-L17914
 
-Source SHA256: `328858615bc5badb18c227e89e721c6ae18e244e0a13ae49b692000e9c15add7`
+Source SHA256: `a23b037aa42c7dbe8bb7ab34edae1f5f360563559cedf13966d3b3a349596758`
 
 ---
 
@@ -300,7 +300,11 @@ Minimum event-class defaults:
 | Usage/ordinary telemetry | 90 days; 2,000,000/project | compact expired unheld rows |
 | `seglog.event_appended` | 7 days; 500,000/instance | compact expired unheld rows |
 | Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |
-| Released safe points | 90 days after last hold release; 64/run and 2,048/project | oldest eligible only; retained hash summary 365 days |
+| Released safe points | 90 days after last hold release; 64/run and 2,048/project | oldest eligible only; retained hash summary 365 days after its first durable publication (DL-069) |
+
+The retained SafePoint hash summary's anchor is the instant of its first successful durable publication (DL-069): preparation, retries, recovery and re-observation never start or reset it, and existing holds and dependencies still override age eligibility. The 90-day full-SafePoint minimum is unchanged.
+
+The 19 `runtime_artifact.*` event histories named in DL-075 are assigned `RP-AUTHORITY-INDEFINITE` for the time their full contracts are admitted. This is a retention assignment only: it admits no family, defines no binding, and leaves artifact bodies, original receipts, restore points, Usage and source records under their own policies. Text embedded in those events is retained with them; each full contract must make that and any applicable deletion requirement explicit before admission, and retention never grants access to a linked body.
 
 Expiry is inclusive at `anchor + ttl`. Count order is `(retention_anchor_at_utc, sequence_id?, stable_object_id)`. Legal hold, recovery/preserved/recent-run anchor, live ref, backup, rollback, or maintenance ref overrides age/count eligibility. Latest 25 terminal runs/project receive the automatic `recent_run` anchor; becoming 26th clears only that automatic anchor.
 
@@ -408,6 +412,8 @@ Closed transition edges are exactly: `detected -> secured`; `secured -> migrated
 Only resettable GUI/projection state may secure then reset to owner defaults. Authority, receipts, blocked state, safe points, holds, and audit state fail closed. Unknown schema/upgrader stays `recovery_blocked`.
 
 Risk classes are `Q-CRITICAL | Q-RESETTABLE | Q-DERIVED | Q-MIRROR`. Unresolved critical quarantine is indefinite and never cap-evicted; cap pressure blocks new mutation-capable writes. Raw bytes inherit source permissions, stay out of routine export, and require protected explicit export.
+
+Disposal boundary after eligible cleanup (DL-068): once an item is resolved, its selected Q policy permits cleanup and every actual hold and dependency allows it, its quarantined raw content is removed. The closed custody manifest, operation journal and operational quarantine index keep their custody and recovery requirement until the actual authorized purge, its `purged` lifecycle event and that event's first AppendReceipt have settled and every real backup, recovery, live-reference and maintenance dependency is released; then those operational quarantine records retire. This narrows only the operational quarantine record: the existing indefinite audit event, the original shared receipt and their identity/dedupe custody keep their own policies under the approval, receipt, audit and source-lineage class. A later audit shows the recorded purge event and its first receipt and reports "Source evidence unavailable" for the removed source; it cannot open the old bytes, re-resolve the old quarantine source receipt or recreate the entry, and missing evidence alone never proves a lawful purge. No new quarantine audit record is created. This grants no purge authority and changes no TTL, anchor, cap, overflow behavior, hold kind, eligibility rule or lifecycle edge; `purged` still has no outgoing transition.
 
 SourceRef: `PD-L033-01` through `PD-L033-03`, `Case-L:L-033`
 

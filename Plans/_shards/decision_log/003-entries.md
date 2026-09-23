@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L1193
+Source lines: L13-L1454
 
-Source SHA256: `1691101acd2c5dec0cbe8f9370f5da7bc6f46969c62c7acdc43046ef22e39160`
+Source SHA256: `5c751ceeb006a3dcb5c25485aff1cf2042924e18f86f51cac17948b43bb6aee3`
 
 ---
 
@@ -1189,3 +1189,264 @@ This records planning canon only. It enables no runtime behaviour, admits no com
 SourceRef: `/home/sittingmongoose/PM-Experiments/harness-latency-20260916/D3_ACCEPTANCE_AND_LANDING_BASELINE_BRIEF.md`, SHA-256 `efd043f2a5a21f68841c8cd0813cef407cd587a5f0fb9958d19cc4bd135cf274` as read on 2026-09-17; the two landing runs of 2026-09-17 at `/home/sittingmongoose/PM-Experiments/harness-latency-20260916/reports/landing-gates-20260917/` (run-gates.json SHA-256 `fec3ff2a4b515902772f1d76d2eaaeb5cfb202135151b456af31e445f5155ac4`) and `/home/sittingmongoose/PM-Experiments/harness-latency-20260916/reports/landing-gates-20260917-n4/` (run-gates.json SHA-256 `079c484c63bfcc99e421458b6c06bd2eb811d326078a197931516cad3fcd588b`); Jared, direction of 2026-09-17.
 
 ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/Planning_Ledger_System.md
+
+
+### DL-068: After quarantine cleanup, keep only the existing audit trail
+
+Answered on 2026-09-23 by Jared, in conversation with the coordinator, from the card page: **Approve**, which selects the recommended option A. Jared confirmed the answer again in the DL-039 takeover conversation the same day.
+
+**Name:** What remains after eligible quarantine cleanup.
+
+**Question:** After quarantined data becomes eligible for cleanup, should Puppet Master keep only the existing permanent audit event and receipt, with source evidence shown as unavailable, or also keep a new minimal content-free quarantine audit record permanently?
+
+**Why:** The quarantine family retains its custody manifest and recovery receipts as a required recovery anchor, and its Q policies expire with `delete_sidecar`. No owner text said whether that includes the operational index, manifest and journal. The existing retention language was not enough permission to delete them.
+
+**What you get:** A clear disposal boundary. Raw content goes once cleanup is allowed. The operational records stay until the actual purge, its event and its first receipt have settled and every real dependency is released. The existing permanent audit event and shared receipt keep providing lasting evidence of what happened.
+
+**What it costs:** After cleanup, an audit can show the recorded purge event and receipt but reports "Source evidence unavailable" for the removed source. There is no separate quarantine-specific record of the disposition.
+
+**Options:**
+
+1. **A:** Keep the existing audit trail only (recommended).
+2. **B:** Also keep a new minimal quarantine audit record indefinitely.
+
+**Recommendation:** A.
+
+**Answer:** Approve (A).
+
+`Plans/storage-plan.md` Case L-3, "Invalid-value quarantine", now carries the disposal boundary. This grants no purge authority and changes no TTL, anchor, cap, overflow behavior, hold, eligibility rule or lifecycle edge. It creates no new record, event family, command or governance change.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260923/ANSWERS.md`, SHA-256 `0f668bb0194a0cc7637be949652ec1d8e3714780b37a8c3453f512085ecf0402`; card `reports/event-authority-20260911/step-08-quarantine-cleanup-card.md`.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json
+
+### DL-069: The SafePoint summary's 365 days start when it is first saved
+
+Answered on 2026-09-23 by Jared, in conversation with the coordinator, from the card page: **Approve**, which selects option 1 on `EA-S8-SAFEPOINT-SUMMARY-CLOCK-001`. Jared confirmed it again in the DL-039 takeover conversation.
+
+**Name:** When the 365-day SafePoint summary window starts.
+
+**Question:** Should the small hash summary left after eligible SafePoint cleanup be kept for 365 days after it is first durably saved, or should its clock start when the SafePoint's last hold was released?
+
+**Why:** Storage specified 90 days after the last hold release for a full SafePoint and 365 days for its retained hash summary, but it did not name the summary's clock anchor. DL-045 leaves retention choices to Jared.
+
+**What you get:** The summary gets a full 365 days from the moment it exists. Retries and recovery never restart the clock, and holds still block cleanup.
+
+**What it costs:** When cleanup is delayed, the small summary is kept longer.
+
+**Options:**
+
+1. First durable summary publication (recommended).
+2. Last hold release.
+3. Another rule.
+
+**Recommendation:** Option 1.
+
+**Answer:** Approve (option 1).
+
+The Case L-3 retention table and anchor rule in `Plans/storage-plan.md` now carry the anchor. The 90-day full-SafePoint minimum, event membership, policy objects and hold rules are unchanged. No event or physical family is admitted.
+
+SourceRef: the answers file above; card `reports/event-authority-20260911/step-08-safe-point-summary-clock-card.md`.
+
+ContractRef: ContractName:Plans/storage-plan.md
+
+### DL-070: Moving the last terminal workgroup leaves the old section empty
+
+Answered on 2026-09-23 by Jared, in conversation with the coordinator, from the card page: **Approve**, which selects option 1 on `EA-S8-TERMINAL-MOVE-SOURCE-001`. Jared confirmed it again in the DL-039 takeover conversation.
+
+**Name:** The terminal section left behind by a move.
+
+**Question:** After moving the last workgroup to a new section, should the old section stay empty, receive an empty replacement workgroup, or open a new terminal session?
+
+**Why:** Section 15 said the old section remains empty and reusable. A 2026-08-13 FinalGUISpec amendment said the same move reseeds it with a fresh workgroup. A third rule says layout movement never creates workgroups, panes or sessions.
+
+**What you get:** One consistent result. The moved workgroup keeps its panes, sessions, transcript and process ownership, and the old section shows its reusable empty state.
+
+**What it costs:** Adding another terminal to the old section is a separate action.
+
+**Options:**
+
+1. Leave the old section empty (recommended).
+2. Create an empty replacement workgroup.
+3. Open a replacement terminal.
+
+**Recommendation:** Option 1.
+
+**Answer:** Approve (option 1).
+
+Owner edits:
+
+- **Section 15 (SMPFS-138)** states that the move does not reseed.
+- **FinalGUISpec** retires its move-reseed sentence with a dated amendment, so the move payload's `source_reseeded` is always false.
+- **The GUI rebuild checklist and the plans index** note the retirement.
+
+Reset and boot-recovery reconstitution are unchanged and gain no creation authority.
+
+Open follow-ups, outside this card's scope:
+
+- The command and wiring owners should decide whether to retire the `source_reseeded` field.
+- The PM7 concept's move behavior still reseeds and should be aligned by its concept owner.
+
+SourceRef: the answers file above; card `reports/event-authority-20260911/step-08-terminal-move-source-card-20260921.md`.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-138, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
+
+### DL-071: Account-switch history uses the existing switch record
+
+Answered on 2026-09-23 by Jared, in conversation with the coordinator, from the card page: **Approve** on `EA-S08C-ACCOUNT`. Jared confirmed it again in the DL-039 takeover conversation.
+
+**Name:** One name for account-switch history.
+
+**Question:** Should current feature summaries use the existing `account_switch_event` record and stop requiring a separate `account.switched` event name?
+
+**Why:** The feature list still named `account.switched`. Meanwhile Contracts and Multi-Account already define durable switch history through `account_switch_event`, and no passage made the two names interchangeable.
+
+**What you get:** One owner-backed vocabulary for account-switch history.
+
+**What it costs:** A small documentation correction. Normalizing historical bytes, if ever needed, requires its own evidence.
+
+**Options:** Approve; Deny; Deny with changes; Ask a question.
+
+**Recommendation:** Approve the summary correction.
+
+**Answer:** Approve.
+
+The feature list and Run Graph summaries now name `account_switch_event` and retire the separate name. No migration alias and no second history stream are created.
+
+SourceRef: the answers file above; card `EA-S08C-ACCOUNT` in `reports/event-authority-20260911/step-08-ambiguous-cards.md`.
+
+ContractRef: ContractName:Plans/feature-list.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md
+
+### DL-072: Continuation-suppression diagnostics stay transient
+
+Answered on 2026-09-23 by Jared, in conversation with the coordinator, from the card page: **Approve** on `EA-S08C-CONTINUE`. Jared confirmed it again in the DL-039 takeover conversation.
+
+**Name:** Keep retry-suppression diagnostics transient.
+
+**Question:** Should `diag.synthetic_continue_loop_prevented` remain a transient diagnostic rather than become a separately persisted EventRecord family?
+
+**Why:** Prompt Pipeline requires a reason-bearing emission when automatic continuation is suppressed, but it did not say whether that emission is durable.
+
+**What you get:** An explicit rule that keeps the visible suppression reason and the existing failure and rotation handling, with no new durable stream.
+
+**What it costs:** There is no separately replayable history of these suppressions. Adding one later needs a full event contract.
+
+**Options:** Approve; Deny; Deny with changes; Ask a question.
+
+**Recommendation:** Approve.
+
+**Answer:** Approve.
+
+Owner edit: `Plans/Prompt_Pipeline.md`, loop-prevention rules.
+
+SourceRef: the answers file above; card `EA-S08C-CONTINUE` in `reports/event-authority-20260911/step-08-ambiguous-cards.md`.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md
+
+### DL-073: Doctor media-check results stay in the check output
+
+Answered on 2026-09-23 by Jared, in conversation with the coordinator, from the card page: **Approve** on `EA-S08C-DOCTOR`. Jared confirmed it again in the DL-039 takeover conversation.
+
+**Name:** Keep media-check results in the check output.
+
+**Question:** Should `doctor.evidence_media.checked` remain check output associated with its evidence artifacts rather than become a separately persisted EventRecord family?
+
+**Why:** Newtools requires a PASS/FAIL result with remediation, but it did not establish a durable EventRecord binding or a transient-only rule.
+
+**What you get:** An explicit boundary that keeps the result and its remediation in the existing evidence-check flow.
+
+**What it costs:** There is no separately replayable history of these checks. Existing artifact retention is unchanged.
+
+**Options:** Approve; Deny; Deny with changes; Ask a question.
+
+**Recommendation:** Approve.
+
+**Answer:** Approve.
+
+Owner edit: `Plans/newtools.md`, Doctor evidence-media output step.
+
+SourceRef: the answers file above; card `EA-S08C-DOCTOR` in `reports/event-authority-20260911/step-08-ambiguous-cards.md`.
+
+ContractRef: ContractName:Plans/newtools.md
+
+### DL-074: Task failure is a presentation notification over child-run history
+
+Answered on 2026-09-23 by Jared, in conversation with the coordinator, from the card page: **Approve** on `EA-S09-EXEC-TASK-FAILURE`, which selects option A. Jared confirmed it again in the DL-039 takeover conversation.
+
+**Name:** Task failure history.
+
+**Question:** Should `task.failed` be a presentation notification backed by canonical child-run history, or a separately persisted EventRecord family with its own replayable task-failure history?
+
+**Why:** Assistant Chat requires a `task.failed` emission with error detail but gave it no persistence boundary. Chat cards project canonical child-run state. Contracts names `subagent.failed`, but no alias is specified.
+
+**What you get:** The required failure signal stays, along with visible errors, the canonical child lifecycle, parent-owned retries, timeout distinctions and audit attribution.
+
+**What it costs:** There is no independent `task.failed` replay stream.
+
+**Options:**
+
+1. **A:** Presentation notification over canonical child-run records (recommended).
+2. **B:** An independent persisted `task.failed` family.
+3. **C:** Another boundary.
+
+**Recommendation:** A.
+
+**Answer:** Approve (A).
+
+Owner edit: the task and subagent lifecycle rule in `Plans/assistant-chat-design.md`. This is not an alias to `subagent.failed`, does not permit deleting history, and changes no registered family.
+
+SourceRef: the answers file above; card `EA-S09-EXEC-TASK-FAILURE` in `reports/event-authority-20260911/step-09-execution-cards.md`.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
+
+### DL-075: Runtime-artifact event histories are kept indefinitely
+
+Answered on 2026-09-23 by Jared, in conversation with the coordinator, from the card page: **Approve** on `EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION`, which selects option A. Jared confirmed it again in the DL-039 takeover conversation.
+
+**Name:** Runtime-artifact event history.
+
+**Question:** Should the 19 runtime-artifact event histories use indefinite retention once their full contracts are ready for admission?
+
+**Why:** The Runtime Artifacts owner recommended `RP-AUTHORITY-INDEFINITE` but said explicitly that this was not an assignment. Storage's temporary preservation of unknown-policy records does not settle the choice.
+
+**What you get:** Artifact identity, changes, provenance and event history stay available for authorized inspection and replay. Retaining an event grants no access to a linked body and no permission to repeat an action.
+
+**What it costs:** A lasting commitment to keep the text embedded in these events, such as summaries, titles, plan steps and failure descriptions, with growing storage and backup needs. Deleting a linked body does not erase text copied into its event, so each full contract must reconcile any applicable deletion requirement before admission.
+
+**Options:**
+
+1. **A:** Indefinite for all 19 (recommended).
+2. **B:** 365 days for explicitly classified non-authority records, with authority records kept indefinitely.
+3. **C:** A different policy.
+
+**Recommendation:** A.
+
+**Answer:** Approve (A).
+
+The 19 families:
+
+- `runtime_artifact.api_web_call`
+- `runtime_artifact.artifact_version`
+- `runtime_artifact.before_after_snapshot`
+- `runtime_artifact.browser_recording`
+- `runtime_artifact.code_diff`
+- `runtime_artifact.context_snapshot`
+- `runtime_artifact.cost_usage`
+- `runtime_artifact.document`
+- `runtime_artifact.evidence`
+- `runtime_artifact.failed_attempts`
+- `runtime_artifact.hitl_approval`
+- `runtime_artifact.implementation_plan`
+- `runtime_artifact.reasoning_summary`
+- `runtime_artifact.restore_point`
+- `runtime_artifact.screenshot`
+- `runtime_artifact.subagent_lineage`
+- `runtime_artifact.suggested_next_steps`
+- `runtime_artifact.tool_llm_trace`
+- `runtime_artifact.validation_test`
+
+Owner edits: `Plans/Runtime_Artifacts_Panel.md` and the Case L-3 retention text in `Plans/storage-plan.md`. This is retention only. It registers no family, defines no binding, authorizes no runtime, and does not make the schemas complete. Artifact bodies, original receipts, restore points, Usage records and source records keep their own policies.
+
+SourceRef: the answers file above; card `reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md`.
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json

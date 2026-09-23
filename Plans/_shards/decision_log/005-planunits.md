@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L1202-L5155
+Source lines: L1463-L5813
 
-Source SHA256: `1691101acd2c5dec0cbe8f9370f5da7bc6f46969c62c7acdc43046ef22e39160`
+Source SHA256: `5c751ceeb006a3dcb5c25485aff1cf2042924e18f86f51cac17948b43bb6aee3`
 
 ---
 
@@ -3838,6 +3838,403 @@ negative_constraints:
 owner_hints:
   - Plans/Decision_Log.md
   - Plans/Bootstrap_Planning_Migration.md
+```
+
+### DL-068 - Quarantine Cleanup Keeps Only The Existing Audit Trail
+
+```yaml
+plan_unit_id: DL-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option A) on 2026-09-23: after eligible quarantine cleanup,
+  keep only the existing audit trail. Raw content is removed when the item is resolved,
+  its Q policy permits cleanup and every hold and dependency allows it; the custody
+  manifest, operation journal and operational quarantine index keep custody until the
+  actual authorized purge, its purged event and first AppendReceipt settle and every
+  real dependency is released, then retire. The existing indefinite audit event,
+  original shared receipt and identity/dedupe custody keep their own policies, and a
+  later audit reports Source evidence unavailable.
+gui_related: false
+gui_classification_reason: Defines quarantine record disposal and audit evidence, not visual presentation.
+split_recommended: false
+depends_on: [DL-039, DL-045]
+unblocks: []
+acceptance_criteria:
+  - storage-plan Case L-3 states the operational-index disposal boundary with a DL-068 citation.
+  - Raw content removal waits for resolution, Q-policy eligibility and every hold and dependency.
+  - Manifest, journal and operational index retire only after the actual purge, its event and first AppendReceipt settle and every real dependency is released.
+  - The existing audit event, shared receipt and identity/dedupe custody keep their own policies; no new quarantine audit record is created.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: quarantine_disposal_boundary_drift
+reasoning_tier: high
+context_scope: quarantine_cleanup_remainder
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260923/ANSWERS.md
+  - reports/event-authority-20260911/step-08-quarantine-cleanup-card.md
+preserved_exact_tokens:
+  - "Approve"
+  - "Source evidence unavailable"
+  - "AppendReceipt"
+negative_constraints:
+  - Do not treat this as purge authority or change any TTL, anchor, cap, overflow, hold, eligibility or lifecycle edge.
+  - Do not delete a live, unresolved or still-needed quarantine index.
+  - Do not create a new quarantine audit record or event family.
+owner_hints:
+  - Plans/storage-plan.md
+```
+
+### DL-069 - SafePoint Summary Retention Clock Starts At First Durable Publication
+
+```yaml
+plan_unit_id: DL-069
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option 1) on EA-S8-SAFEPOINT-SUMMARY-CLOCK-001 on 2026-09-23:
+  the retained SafePoint hash summary is kept for 365 days after its first successful
+  durable publication. Preparation, retries, recovery and re-observation never start or
+  reset that anchor; existing holds and dependencies still override age eligibility;
+  the 90-day full-SafePoint minimum is unchanged.
+gui_related: false
+gui_classification_reason: Defines a retention anchor, not visual presentation.
+split_recommended: false
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - The storage-plan retention table and anchor rule name the first durable publication anchor with a DL-069 citation.
+  - Retries and recovery never reset the anchor; holds still block cleanup.
+  - The 90-day full-SafePoint minimum and existing policy objects are unchanged.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: safepoint_summary_retention_anchor_drift
+reasoning_tier: high
+context_scope: safepoint_summary_clock
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260923/ANSWERS.md
+  - reports/event-authority-20260911/step-08-safe-point-summary-clock-card.md
+preserved_exact_tokens:
+  - "EA-S8-SAFEPOINT-SUMMARY-CLOCK-001"
+  - "365 days"
+  - "first successful durable publication"
+negative_constraints:
+  - Do not anchor the summary clock on hold release or reset it on retry or recovery.
+  - Do not admit an event or physical family from this decision.
+owner_hints:
+  - Plans/storage-plan.md
+```
+
+### DL-070 - Moving The Last Terminal Workgroup Leaves The Old Section Empty
+
+```yaml
+plan_unit_id: DL-070
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option 1) on EA-S8-TERMINAL-MOVE-SOURCE-001 on 2026-09-23:
+  after the last workgroup moves out, the old terminal section stays empty and reusable
+  with its guidance state. The move creates no replacement workgroup and opens no new
+  terminal session; creating one there is a separate action. The FinalGUISpec
+  2026-08-13 move reseed is retired, so source_reseeded is always false for a move.
+  Reset and boot recovery reconstitution are unchanged and gain no creation authority.
+gui_related: true
+gui_classification_reason: Defines the user-visible terminal section state after a workgroup move.
+split_recommended: false
+depends_on: [DL-039, DL-045, SMPFS-138]
+unblocks: []
+acceptance_criteria:
+  - SMPFS-138 states that the move does not reseed the vacated section, with a DL-070 citation.
+  - FinalGUISpec carries a dated DL-070 amendment retiring the move reseed; reset text is unchanged.
+  - The GUI rebuild checklist and plans index note the retirement.
+  - Retiring the source_reseeded field and aligning the PM7 concept's move behavior remain open follow-ups for their owners.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: terminal_move_empty_section_drift
+reasoning_tier: high
+context_scope: terminal_move_vacated_section
+implementation_surfaces:
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/FinalGUISpec.md
+  - Plans/GUI_Rebuild_Requirements_Checklist.md
+  - Plans/00-plans-index.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260923/ANSWERS.md
+  - reports/event-authority-20260911/step-08-terminal-move-source-card-20260921.md
+preserved_exact_tokens:
+  - "EA-S8-TERMINAL-MOVE-SOURCE-001"
+  - "source_reseeded"
+negative_constraints:
+  - Do not reseed a vacated section or start a new terminal session as part of a move.
+  - Do not grant reset or recovery new creation authority from this answer.
+owner_hints:
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/FinalGUISpec.md
+  - Plans/GUI_Rebuild_Requirements_Checklist.md
+  - Plans/00-plans-index.md
+```
+
+### DL-071 - Account Switch History Uses The Existing Switch Record
+
+```yaml
+plan_unit_id: DL-071
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve on EA-S08C-ACCOUNT on 2026-09-23: current feature summaries
+  use the existing durable account_switch_event record and the separate
+  account.switched event-name requirement is retired as summary vocabulary, with no
+  migration alias and no second history stream.
+gui_related: false
+gui_classification_reason: Corrects runtime history vocabulary in summaries, not visual presentation.
+split_recommended: false
+depends_on: [DL-039]
+unblocks: []
+acceptance_criteria:
+  - feature-list and Run_Graph_View summaries name account_switch_event and retire account.switched with a DL-071 citation.
+  - No alias, migration or second history stream is created.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: account_switch_vocabulary_drift
+reasoning_tier: high
+context_scope: account_switch_history_name
+implementation_surfaces:
+  - Plans/feature-list.md
+  - Plans/Run_Graph_View.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260923/ANSWERS.md
+  - reports/event-authority-20260911/step-08-ambiguous-cards.md
+preserved_exact_tokens:
+  - "EA-S08C-ACCOUNT"
+  - "account_switch_event"
+  - "account.switched"
+negative_constraints:
+  - Do not create an account.switched alias or a second switch-history stream.
+  - Do not normalize historical bytes without separate evidence.
+owner_hints:
+  - Plans/feature-list.md
+  - Plans/Run_Graph_View.md
+```
+
+### DL-072 - Continuation Suppression Diagnostic Stays Transient
+
+```yaml
+plan_unit_id: DL-072
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve on EA-S08C-CONTINUE on 2026-09-23:
+  diag.synthetic_continue_loop_prevented remains a transient diagnostic, not a
+  persisted EventRecord family. The visible suppression reason and existing failure or
+  rotation handling are preserved; a replayable history would need its own full event
+  contract.
+gui_related: false
+gui_classification_reason: Sets an event persistence boundary, not visual presentation.
+split_recommended: false
+depends_on: [DL-039]
+unblocks: []
+acceptance_criteria:
+  - Prompt_Pipeline loop-prevention rules state the transient boundary with a DL-072 citation.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: diagnostic_persistence_boundary_drift
+reasoning_tier: high
+context_scope: continue_suppression_diagnostic
+implementation_surfaces:
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260923/ANSWERS.md
+  - reports/event-authority-20260911/step-08-ambiguous-cards.md
+preserved_exact_tokens:
+  - "EA-S08C-CONTINUE"
+  - "diag.synthetic_continue_loop_prevented"
+negative_constraints:
+  - Do not persist this diagnostic as an EventRecord family without a full event contract.
+owner_hints:
+  - Plans/Prompt_Pipeline.md
+```
+
+### DL-073 - Doctor Media Check Result Stays Check Output
+
+```yaml
+plan_unit_id: DL-073
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve on EA-S08C-DOCTOR on 2026-09-23: doctor.evidence_media.checked
+  remains check output associated with its evidence artifacts, not a separately
+  persisted EventRecord family. Existing artifact retention is unchanged.
+gui_related: false
+gui_classification_reason: Sets an event persistence boundary, not visual presentation.
+split_recommended: false
+depends_on: [DL-039]
+unblocks: []
+acceptance_criteria:
+  - newtools Doctor evidence-media output step states the check-output boundary with a DL-073 citation.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: diagnostic_persistence_boundary_drift
+reasoning_tier: high
+context_scope: doctor_media_check_output
+implementation_surfaces:
+  - Plans/newtools.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260923/ANSWERS.md
+  - reports/event-authority-20260911/step-08-ambiguous-cards.md
+preserved_exact_tokens:
+  - "EA-S08C-DOCTOR"
+  - "doctor.evidence_media.checked"
+negative_constraints:
+  - Do not persist this check result as an EventRecord family or infer a new retention duration.
+owner_hints:
+  - Plans/newtools.md
+```
+
+### DL-074 - Task Failure Is A Presentation Notification Over Child Run History
+
+```yaml
+plan_unit_id: DL-074
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option A) on EA-S09-EXEC-TASK-FAILURE on 2026-09-23:
+  task.failed is a presentation notification over canonical child-run records, not a
+  separately persisted EventRecord family and not an alias of subagent.failed. Visible
+  error detail, canonical child lifecycle, parent-owned retries, timeout distinctions
+  and audit attribution are preserved.
+gui_related: false
+gui_classification_reason: Sets an event persistence boundary; chat card presentation is unchanged.
+split_recommended: false
+depends_on: [DL-039]
+unblocks: []
+acceptance_criteria:
+  - assistant-chat-design states the non-persisted notification rule with a DL-074 citation.
+  - Canonical child-run history and visible error detail are preserved.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: task_failure_persistence_boundary_drift
+reasoning_tier: high
+context_scope: task_failure_notification
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260923/ANSWERS.md
+  - reports/event-authority-20260911/step-09-execution-cards.md
+preserved_exact_tokens:
+  - "EA-S09-EXEC-TASK-FAILURE"
+  - "task.failed"
+  - "subagent.failed"
+negative_constraints:
+  - Do not alias task.failed to subagent.failed.
+  - Do not delete child-run history or change any registered family.
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### DL-075 - Runtime Artifact Event Histories Are Kept Indefinitely
+
+```yaml
+plan_unit_id: DL-075
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option A) on EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION on
+  2026-09-23: the 19 runtime_artifact.* event histories are assigned
+  RP-AUTHORITY-INDEFINITE for the time their full contracts are admitted. This is
+  retention only: no family is registered, no binding defined, no schema made complete.
+  Embedded event text is retained with the event, and each full contract must make that
+  and any applicable deletion requirement explicit before admission. Artifact bodies,
+  original receipts, restore points, Usage and source records keep their own policies.
+gui_related: false
+gui_classification_reason: Assigns event retention, not visual presentation.
+split_recommended: false
+depends_on: [DL-039, DL-045]
+unblocks: []
+acceptance_criteria:
+  - Runtime_Artifacts_Panel and storage-plan Case L-3 record the RP-AUTHORITY-INDEFINITE assignment for the 19 families with a DL-075 citation.
+  - No family is admitted and no binding, schema completion or runtime authority follows.
+  - Each full contract makes embedded-text retention and applicable deletion requirements explicit before admission.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: runtime_artifact_retention_assignment_drift
+reasoning_tier: high
+context_scope: runtime_artifact_event_retention
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260923/ANSWERS.md
+  - reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md
+preserved_exact_tokens:
+  - "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION"
+  - "RP-AUTHORITY-INDEFINITE"
+  - "runtime_artifact.*"
+negative_constraints:
+  - Do not treat the retention assignment as admission, binding or schema completion.
+  - Do not let event retention grant access to a linked artifact body or override an applicable deletion requirement.
+owner_hints:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/storage-plan.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

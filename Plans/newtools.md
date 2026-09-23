@@ -691,7 +691,7 @@ Add **Doctor (Evidence Media)** checks:
    - if recording enabled, at least one playable `video/webm|video/mp4` artifact or explicit `recording_disabled_reason`
    - fallback link generation succeeds for non-inline artifacts
 4. **Chat-card quality gate:** at least one `chat_cards` entry for failure, with non-empty `reason`.
-5. **Output:** emit `doctor.evidence_media.checked` event with PASS/FAIL + actionable remediation.
+5. **Output:** emit `doctor.evidence_media.checked` event with PASS/FAIL + actionable remediation. This result is check output associated with its evidence artifacts, not a separately persisted EventRecord family (DL-073); existing artifact retention is unchanged.
 
 **Failure severity:**
 - Missing manifest/timeline: **FAIL (block release/testing gate)**

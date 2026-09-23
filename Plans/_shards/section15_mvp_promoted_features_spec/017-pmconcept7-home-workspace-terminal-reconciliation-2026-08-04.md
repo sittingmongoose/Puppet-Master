@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L9420-L9485
+Source lines: L9420-L9489
 
-Source SHA256: `e750a78018fc0ec74c2408635d69f122e1f9a59c26ba6d8a5c8508f534bdf091`
+Source SHA256: `35619c401d0d37fbce387c2b1f5c43765d4b453a33f2f43581f4dca925c7d1fb`
 
 ---
 
@@ -23,7 +23,9 @@ per active section presentation. A workgroup can move to an existing section or 
 a newly created section only while the section limit permits it. At the limit, the
 move is rejected with a visible disabled reason and the source remains unchanged.
 When the last workgroup leaves a section, that section renders an explicit empty
-state and may be closed or reused. Moving a workgroup is distinct from moving an
+state and may be closed or reused. The vacated section is not reseeded: the move
+creates no replacement workgroup and opens no new terminal session (DL-070);
+creating another workgroup or terminal there is a separate action. Moving a workgroup is distinct from moving an
 individual terminal pane; `cmd.terminal.move_pane` is not extended.
 
 ### Superseded Section15 constraint
@@ -52,6 +54,7 @@ acceptance_criteria:
 - Moving a whole workgroup uses cmd.terminal.move_workgroup, preserves all pane/session bindings, and may create a section only below the cap.
 - Moving a section uses shell layout commands and never aliases cmd.terminal.move_pane.
 - Moving the last workgroup out leaves an explicit reusable empty section; no PTY or session is silently destroyed.
+- Moving the last workgroup out creates no replacement workgroup and opens no new terminal session in the vacated section (DL-070).
 validation_surfaces:
 - node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
 - python3 scripts/pm-plan-index.py validate
@@ -68,6 +71,7 @@ preserved_exact_tokens: [up to four terminal sections, one-to-four pane tabs, te
 negative_constraints:
 - Do not mint a PTY or terminal session during layout movement.
 - Do not destroy an empty terminal section implicitly.
+- Do not reseed a vacated terminal section with a replacement workgroup or new session as part of a move.
 compatibility_only_notes:
 - SMPFS-079 is retained only as retired source lineage.
 stale_retired_dispositions:

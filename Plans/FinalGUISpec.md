@@ -593,6 +593,15 @@ section 1 from the pristine terminal seed and heals the persisted domain-ref
 CSVs in the same pass — the empty-guidance block never renders over a
 recoverable state.
 
+Amended 2026-09-23 (DL-070) — the move no longer reseeds. The 2026-08-13
+sentence that `Move Workgroup to New Section` reseeds the vacated source
+section with a fresh workgroup is retired: the vacated section stays empty
+and reusable with its guidance state, no replacement workgroup is allocated
+and no new terminal session starts, and creating one there is a separate
+action. The move payload's `source_reseeded` is therefore always false for a
+move. Reset and boot recovery reconstitution above are unchanged and gain no
+new creation authority from this amendment.
+
 Browser access from any editor panel, File Manager `Open in Panel`, Dashboard/Chat
 movement, terminal section/workgroup movement, explicit empty-section state, and
 reset route through the command and production-wiring owners; disclosure-only menu

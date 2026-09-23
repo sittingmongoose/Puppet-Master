@@ -2,9 +2,9 @@
 
 Source: `Plans/feature-list.md`
 
-Source lines: L219-L1570
+Source lines: L219-L1571
 
-Source SHA256: `6cabffb048e5b6528ece9c156ce2afe1ae4bb49a7d6f20e08a00e5dca5de9421`
+Source SHA256: `43393f020659076aa039e640a3d41e20fa898a64ff4161ee881b359889bc5d43`
 
 ---
 
@@ -684,7 +684,8 @@ negative_constraints:
 - Scheduler and recovery summaries must preserve deterministic scored ready-set behavior rather than drifting back to lexicographic `node_id` dispatch.
 compatibility_only_notes:
 - /phase/iteration, tier_runtime_record, and tier_id vocabulary is compatibility history.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- The separate account.switched event-name requirement is retired as summary vocabulary by DL-071; account_switch_event is the durable record, with no alias.
 owner_boundary_notes:
 - storage-plan, usage-feature, and Executor_Protocol own detailed runtime storage and scheduler behavior.
 owner_hints:

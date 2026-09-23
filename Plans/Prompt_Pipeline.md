@@ -355,6 +355,7 @@ Loop-prevention rules:
 - PM MUST compare the latest assistant tail hash against `last_assistant_tail_hash`; if the tail is unchanged after a synthetic continue, PM suppresses further auto-continue
 - PM suppresses further auto-continue if the provider returns effectively empty continuation output or repeats the same continuation prompt hash without net new content
 - suppression emits `diag.synthetic_continue_loop_prevented` with the reason and leaves the run to normal failure or rotation handling instead of silently retrying forever
+- `diag.synthetic_continue_loop_prevented` is a transient diagnostic, not a persisted EventRecord family (DL-072): the visible suppression reason and the existing failure/rotation behavior are preserved, and a replayable history for it would need its own full event contract
 
 Task-based checkpoint markers in seglog preserve prompt/session recovery points for long sessions; this recovery lesson keeps checkpoint recovery separate from synthetic-continue injection.
 
