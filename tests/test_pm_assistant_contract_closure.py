@@ -582,7 +582,10 @@ class BsdLifecycleRecordClosureTests(unittest.TestCase):
         self.assertEqual(
             row["event_effect_policy"], "receipt_only_no_eventrecord_pending_event_authority"
         )
-        self.assertEqual(row["existing_family_refs"], ["bsd_runtime_record"])
+        self.assertEqual(
+            row["existing_family_refs"],
+            ["Plans/storage_value_registry.json#/families/bsd_runtime_record"],
+        )
         self.assertEqual(row["retention_disposition"]["mode"], "physical_registration_pending")
         self.assertEqual(row["retention_disposition"]["refs"], [])
         resolved = checker.resolve(ROOT, row["schema_ref"])

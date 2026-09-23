@@ -529,6 +529,34 @@
       "expected_path": [
         "payload_hash"
       ]
+    },
+    {
+      "negative_id": "bsdrec_quarantine_reset_attempted_wrong_type",
+      "target": "bsd_quarantine_pause",
+      "schema": "bsd_quarantine",
+      "mutation": {
+        "set": {
+          "reset_attempted": "yes"
+        }
+      },
+      "expected_keyword": "type",
+      "expected_path": [
+        "reset_attempted"
+      ]
+    },
+    {
+      "negative_id": "bsdrec_finding_schema_version_wrong_const",
+      "target": "bsd_finding_held",
+      "schema": "bsd_finding",
+      "mutation": {
+        "set": {
+          "schema_version": "2.0.0"
+        }
+      },
+      "expected_keyword": "const",
+      "expected_path": [
+        "schema_version"
+      ]
     }
   ]
 }
