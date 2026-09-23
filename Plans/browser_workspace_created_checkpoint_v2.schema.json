@@ -1,0 +1,709 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/browser_workspace_created_checkpoint/2.0.0/schema.json",
+  "title": "Conditional Browser workspace-created checkpoint v2 contracts",
+  "description": "Conditional SP-266 successor companion; not an admitted writer or reader. Native migration, source, permission and crash proof NOT_RUN.",
+  "x-pm-v1-schema-ref": "Plans/browser_workspace_created_contracts.schema.json#/$defs/checkpoint",
+  "$defs": {
+    "non_secret_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*$",
+      "not": {
+        "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "checkpoint_id",
+        "storage_instance_id",
+        "project_id",
+        "scope_partition",
+        "projector_id",
+        "projector_version",
+        "event_type",
+        "index_read_token",
+        "first_retained_sequence_id",
+        "index_through_sequence_id",
+        "source_cursor",
+        "filter_complete",
+        "state",
+        "health",
+        "updated_at_utc",
+        "withdrawn_at_utc",
+        "publication_id",
+        "published_at_utc",
+        "hold_refs",
+        "retired_generations"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.browser_workspace_created_index_checkpoint.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "checkpoint_id": {
+          "const": "browser.workspace.created"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192
+        },
+        "scope_partition": {
+          "type": "string",
+          "pattern": "^project~[A-Za-z0-9_-]+$"
+        },
+        "projector_id": {
+          "const": "storage.browser_workspace_created_index.v2"
+        },
+        "projector_version": {
+          "const": "2.0.0"
+        },
+        "event_type": {
+          "const": "browser.workspace.created"
+        },
+        "index_read_token": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+        },
+        "first_retained_sequence_id": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "index_through_sequence_id": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "source_cursor": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/coverage/properties/last_frame"
+        },
+        "filter_complete": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "health": {
+          "enum": [
+            "healthy",
+            "degraded"
+          ]
+        },
+        "updated_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "withdrawn_at_utc": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "publication_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "published_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "hold_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          },
+          "uniqueItems": true
+        },
+        "retired_generations": {
+          "type": "array",
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/retired_generation"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "current"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "filter_complete": {
+                "const": true
+              },
+              "health": {
+                "const": "healthy"
+              },
+              "withdrawn_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "degraded"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "health": {
+                "const": "degraded"
+              },
+              "withdrawn_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "withdrawn"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "withdrawn_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_cursor": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "source_cursor"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_retained_sequence_id": {
+                "type": "null"
+              },
+              "index_through_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "first_retained_sequence_id": {
+                "type": "integer"
+              },
+              "index_through_sequence_id": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "checkpoint_core": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "checkpoint_id",
+        "storage_instance_id",
+        "project_id",
+        "scope_partition",
+        "projector_id",
+        "projector_version",
+        "event_type",
+        "index_read_token",
+        "first_retained_sequence_id",
+        "index_through_sequence_id",
+        "source_cursor",
+        "filter_complete",
+        "state",
+        "health",
+        "updated_at_utc",
+        "withdrawn_at_utc",
+        "publication_id",
+        "published_at_utc",
+        "hold_refs"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.browser_workspace_created_index_checkpoint.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "checkpoint_id": {
+          "const": "browser.workspace.created"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192
+        },
+        "scope_partition": {
+          "type": "string",
+          "pattern": "^project~[A-Za-z0-9_-]+$"
+        },
+        "projector_id": {
+          "const": "storage.browser_workspace_created_index.v2"
+        },
+        "projector_version": {
+          "const": "2.0.0"
+        },
+        "event_type": {
+          "const": "browser.workspace.created"
+        },
+        "index_read_token": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+        },
+        "first_retained_sequence_id": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "index_through_sequence_id": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "source_cursor": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/coverage/properties/last_frame"
+        },
+        "filter_complete": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "health": {
+          "enum": [
+            "healthy",
+            "degraded"
+          ]
+        },
+        "updated_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "withdrawn_at_utc": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "publication_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "published_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "hold_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "current"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "filter_complete": {
+                "const": true
+              },
+              "health": {
+                "const": "healthy"
+              },
+              "withdrawn_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "degraded"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "health": {
+                "const": "degraded"
+              },
+              "withdrawn_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "withdrawn"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "withdrawn_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_cursor": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "source_cursor"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_retained_sequence_id": {
+                "type": "null"
+              },
+              "index_through_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "first_retained_sequence_id": {
+                "type": "integer"
+              },
+              "index_through_sequence_id": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "retired_generation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "checkpoint_core",
+            "successor_publication_id"
+          ],
+          "properties": {
+            "checkpoint_core": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/checkpoint_core"
+                },
+                {
+                  "properties": {
+                    "state": {
+                      "const": "withdrawn"
+                    }
+                  }
+                }
+              ]
+            },
+            "successor_publication_id": {
+              "$ref": "#/$defs/non_secret_ref"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "identity_origin",
+            "publication_id",
+            "custody_bound_at_utc",
+            "retired_at_utc",
+            "successor_publication_id",
+            "hold_refs",
+            "legacy_checkpoint"
+          ],
+          "properties": {
+            "identity_origin": {
+              "const": "v1_custody_bound_at_handoff"
+            },
+            "publication_id": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "custody_bound_at_utc": {
+              "$ref": "#/$defs/timestamp"
+            },
+            "retired_at_utc": {
+              "$ref": "#/$defs/timestamp"
+            },
+            "successor_publication_id": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "hold_refs": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            },
+            "legacy_checkpoint": {
+              "allOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/browser_workspace_created_contracts/1.0.0#/$defs/checkpoint"
+                },
+                {
+                  "properties": {
+                    "state": {
+                      "const": "withdrawn"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "Finalized withdrawn v1 core. Already-withdrawn v1 fields remain exact; otherwise only state, updated_at_utc and withdrawn_at_utc are finalized at handoff. retired_at_utc equals the original first withdrawal. custody_bound_at_utc is handoff time, never historical birth."
+        }
+      ]
+    },
+    "generation_transaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "transaction_ref",
+        "checkpoint_key",
+        "before",
+        "after",
+        "selected_publication_id",
+        "committed_at_utc",
+        "status",
+        "v1_custody"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_workspace_created_checkpoint_generation_transaction.v2"
+        },
+        "transaction_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "checkpoint_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "before": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/checkpoint"
+            },
+            {
+              "$ref": "https://puppetmaster.local/schemas/browser_workspace_created_contracts/1.0.0#/$defs/checkpoint"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after": {
+          "$ref": "#/$defs/checkpoint"
+        },
+        "selected_publication_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "committed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "status": {
+          "const": "committed"
+        },
+        "v1_custody": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "publication_id",
+                "hold_refs",
+                "codec"
+              ],
+              "properties": {
+                "publication_id": {
+                  "$ref": "#/$defs/non_secret_ref"
+                },
+                "hold_refs": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                },
+                "codec": {
+                  "const": "messagepack_canonical"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "cleanup_transaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "transaction_ref",
+        "checkpoint_key",
+        "before",
+        "after",
+        "selected_publication_id",
+        "committed_at_utc",
+        "status"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_workspace_created_checkpoint_cleanup_transaction.v2"
+        },
+        "transaction_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "checkpoint_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "before": {
+          "$ref": "#/$defs/checkpoint"
+        },
+        "after": {
+          "$ref": "#/$defs/checkpoint"
+        },
+        "selected_publication_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "committed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "status": {
+          "const": "committed"
+        }
+      },
+      "description": "Same-key committed removal of exactly the selected retired publication after original first-withdrawal expiry and current hold/reference clearance; all surviving bytes unchanged."
+    }
+  },
+  "x-pm-event-authority-binding": {
+    "event_type": "browser.workspace.created",
+    "binding_version": "2.0.0",
+    "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-167",
+    "storage_owner_ref": "Plans/storage-plan.md#SP-266",
+    "producer_component": "BrowserRuntimeService.workspace",
+    "consumer_id": "browser.workspace_inventory.created.v2",
+    "consumer_version": "2.0.0",
+    "projector_id": "storage.browser_workspace_created_index.v2",
+    "projector_version": "2.0.0",
+    "checkpoint_family_id": "browser_workspace_created_index_checkpoint",
+    "checkpoint_key": "browser_workspace_created_index_checkpoint.v1:{storage_instance_id}:{scope_partition}",
+    "checkpoint_schema_id": "pm.storage_value.browser_workspace_created_index_checkpoint.v2",
+    "checkpoint_schema_version": "2.0.0",
+    "checkpoint_schema_pointer": "#/$defs/checkpoint",
+    "source_payload_schema_ref": "Plans/browser_event_payloads.schema.json#/$defs/workspace_created",
+    "source_payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+    "source_retention_policy_id": "RP-AUTHORITY-INDEFINITE",
+    "checkpoint_retention_policy_id": "RP-PROJECTION-3GEN",
+    "retention_policy_version": "1.0.0",
+    "definition_authority_ref": "Plans/Decision_Log.md#DL-046",
+    "definition_status": "conditional_not_admitted",
+    "native_proof": false,
+    "generic_index_owner_ref": "Plans/storage-plan.md#SP-278",
+    "generic_index_read_token_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/read_token"
+  },
+  "x-pm-definition-status": "conditional_not_admitted"
+}

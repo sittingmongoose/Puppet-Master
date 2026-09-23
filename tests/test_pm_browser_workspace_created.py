@@ -341,5 +341,237 @@ class WorkspaceHistoricalReadTests(unittest.TestCase):
         self.assertEqual(self.read(event=value)["outcome"], "read_unavailable")
 
 
-if __name__ == "__main__":
+# Conditional v2 successor: these tests do not replace v1 admission or prove
+# native migration, source bytes, permissions or crash recovery.
+V2_SPEC = importlib.util.spec_from_file_location('workspace_created_v2', ROOT / 'scripts/pm_browser_workspace_created_v2.py')
+V2 = importlib.util.module_from_spec(V2_SPEC)
+V2_SPEC.loader.exec_module(V2)
+
+
+class ConditionalCreatedV2Tests(unittest.TestCase):
+    def setUp(self):
+        self.cp, self.index, self.obs, self.old = V2.fixture_values()
+
+    def bind(self, before, after, custody=None):
+        observation = copy.deepcopy(self.obs)
+        observation['prior_checkpoint'] = copy.deepcopy(before)
+        observation['generation_transaction'].update(
+            before=copy.deepcopy(before), after=copy.deepcopy(after),
+            selected_publication_id=after['publication_id'], committed_at_utc=after['published_at_utc'],
+            checkpoint_key=V2.key(after), v1_custody=copy.deepcopy(custody))
+        if custody is not None:
+            observation['resolved_v1_hold_refs'] = copy.deepcopy(custody['hold_refs'])
+        return observation
+
+    def handoff(self, withdrawn=False, holds=None):
+        before = copy.deepcopy(self.old)
+        if withdrawn:
+            before.update(state='withdrawn', withdrawn_at_utc='2026-09-11T12:00:00Z')
+        after = copy.deepcopy(self.cp)
+        custody = {'publication_id': 'publication:created-v1-custody', 'codec': 'messagepack_canonical',
+                   'hold_refs': holds or []}
+        core = copy.deepcopy(before)
+        if not withdrawn:
+            core.update(state='withdrawn', updated_at_utc=after['published_at_utc'], withdrawn_at_utc=after['published_at_utc'])
+        after['retired_generations'] = [{
+            'identity_origin': 'v1_custody_bound_at_handoff', 'publication_id': custody['publication_id'],
+            'custody_bound_at_utc': after['published_at_utc'], 'retired_at_utc': core['withdrawn_at_utc'],
+            'successor_publication_id': after['publication_id'], 'hold_refs': custody['hold_refs'], 'legacy_checkpoint': core}]
+        return before, after, self.bind(before, after, custody)
+
+    def rotate(self, before, name, time):
+        after = copy.deepcopy(before)
+        after.update(publication_id=name, published_at_utc=time, updated_at_utc=time, state='current', withdrawn_at_utc=None)
+        core = {k: copy.deepcopy(v) for k, v in before.items() if k != 'retired_generations'}
+        if core['state'] != 'withdrawn':
+            core.update(state='withdrawn', updated_at_utc=time, withdrawn_at_utc=time)
+        after['retired_generations'].append({'checkpoint_core': core, 'successor_publication_id': name})
+        return after, self.bind(before, after)
+
+    def test_conditional_initial_and_entire_generic_range(self):
+        self.assertEqual(V2.advance_failures(None, self.cp, self.index, self.obs), [])
+        self.assertEqual(V2.source_failures(self.cp, self.index, self.obs, disclosure=True), [])
+        self.assertEqual(V2.load(V2.SCHEMA)['x-pm-definition-status'], 'conditional_not_admitted')
+        self.assertEqual(self.obs['generation_transaction']['after'], self.cp)
+        self.assertNotIn('reset', self.obs['generation_transaction']['checkpoint_key'])
+        changed = copy.deepcopy(self.cp)
+        changed['first_retained_sequence_id'] = 1 if changed['first_retained_sequence_id'] != 1 else 2
+        self.assertTrue(V2.source_failures(changed, self.index, self.obs))
+
+    def test_v1_handoff_preimage_and_finalization(self):
+        for withdrawn in (False, True):
+            with self.subTest(withdrawn=withdrawn):
+                before, after, obs = self.handoff(withdrawn, ['hold:legacy'])
+                self.assertEqual(V2.advance_failures(before, after, self.index, obs, replacement=True), [])
+                entry = after['retired_generations'][0]
+                self.assertEqual(obs['generation_transaction']['before'], before)
+                if withdrawn:
+                    self.assertEqual(entry['legacy_checkpoint'], before)
+                    self.assertEqual(entry['retired_at_utc'], before['withdrawn_at_utc'])
+                else:
+                    self.assertEqual(entry['legacy_checkpoint']['state'], 'withdrawn')
+                    self.assertEqual(entry['retired_at_utc'], after['published_at_utc'])
+                self.assertEqual(entry['custody_bound_at_utc'], after['published_at_utc'])
+                self.assertTrue(V2.advance_failures(before, after, self.index, obs))
+
+    def test_v1_wrapper_only_finalization_and_anchor_reset_rejected(self):
+        for withdrawn in (False, True):
+            before, after, obs = self.handoff(withdrawn)
+            entry = after['retired_generations'][0]
+            if withdrawn:
+                entry['retired_at_utc'] = after['published_at_utc']
+            else:
+                entry['legacy_checkpoint'] = copy.deepcopy(before)
+            obs = self.bind(before, after, obs['generation_transaction']['v1_custody'])
+            self.assertTrue(V2.generation_failures(before, after, obs))
+
+    def test_schema_rejects_missing_token_wrong_family_and_bad_time(self):
+        for field in self.cp['index_read_token']:
+            changed = copy.deepcopy(self.cp)
+            del changed['index_read_token'][field]
+            self.assertTrue(V2.checkpoint_failures(changed), field)
+        for field, value in [('event_type', 'browser.workspace.reset'), ('schema_version', '1.0.0'),
+                             ('published_at_utc', 'invalid')]:
+            changed = copy.deepcopy(self.cp); changed[field] = value
+            self.assertTrue(V2.checkpoint_failures(changed), field)
+        self.assertTrue(V2.checkpoint_failures(self.old))
+
+    def test_schema_valid_custody_mutations_rejected(self):
+        mutations = {
+            'preimage': lambda b, a, o: o['generation_transaction']['before'].update(current_selection_sha256='f' * 64),
+            'key': lambda b, a, o: o['generation_transaction'].update(checkpoint_key='other:key'),
+            'selected': lambda b, a, o: o['generation_transaction'].update(selected_publication_id='publication:wrong'),
+            'unknown_commit': lambda b, a, o: o.update(generation_transaction_resolved=False),
+            'codec': lambda b, a, o: o.update(v1_codec_supported=False),
+            'custody': lambda b, a, o: o.update(v1_custody_verified=False),
+            'holds': lambda b, a, o: o.update(resolved_v1_hold_refs=[]),
+            'hold_fence': lambda b, a, o: o.update(hold_ref_fence_current=False),
+            'capacity': lambda b, a, o: o.update(capacity_reserved=False),
+        }
+        for name, change in mutations.items():
+            with self.subTest(name=name):
+                before, after, obs = self.handoff(holds=['hold:protected'])
+                change(before, after, obs)
+                self.assertTrue(V2.generation_failures(before, after, obs))
+        for field, value in [('successor_publication_id', 'publication:unrelated'),
+                             ('hold_refs', []), ('publication_id', self.cp['publication_id'])]:
+            before, after, obs = self.handoff(holds=['hold:protected'])
+            after['retired_generations'][0][field] = value
+            obs = self.bind(before, after, obs['generation_transaction']['v1_custody'])
+            self.assertTrue(V2.generation_failures(before, after, obs), field)
+
+    def test_cross_scope_and_contradictory_cursor_rejected(self):
+        for target, field, value in [('token', 'storage_instance_id', '22222222-2222-4222-8222-222222222222'),
+                                     ('cp', 'scope_partition', 'project~wrong'),
+                                     ('cp', 'index_through_sequence_id', 99999)]:
+            changed = copy.deepcopy(self.cp)
+            (changed['index_read_token'] if target == 'token' else changed)[field] = value
+            self.assertTrue(V2.source_failures(changed, self.index, self.obs))
+        before, after, obs = self.handoff()
+        after['retired_generations'][0]['legacy_checkpoint']['project_id'] = 'other-project'
+        self.assertTrue(V2.checkpoint_failures(after))
+
+    def test_fresh_snapshot_and_source_access_deletion_fences(self):
+        self.assertEqual(V2.source_failures(self.cp, self.index, None), ['source_observation_schema'])
+        for field in ('generic_source_verified', 'created_sources_validated', 'project_filter_complete',
+                      'source_dedupe_verified', 'access_allowed', 'deletion_allows_audit',
+                      'disclosure_fence_current', 'binding_supported'):
+            changed = copy.deepcopy(self.obs); changed[field] = False
+            self.assertTrue(V2.source_failures(self.cp, self.index, changed, disclosure=True), field)
+        changed = copy.deepcopy(self.obs); changed['before_commit_fence_current'] = False
+        self.assertTrue(V2.source_failures(self.cp, self.index, changed))
+        self.assertEqual(V2.source_failures(self.cp, self.index, changed, disclosure=True), [])
+        changed = copy.deepcopy(self.obs); changed['redb_snapshot_id'] = 'snapshot:other'
+        self.assertTrue(V2.source_failures(self.cp, self.index, changed))
+        self.assertEqual(V2.source_failures(self.cp, self.index, changed, disclosure=True), [])
+        stale = copy.deepcopy(self.cp)
+        stale['index_read_token']['frontier_sha256'] = 'f' * 64
+        self.assertTrue(V2.source_failures(stale, self.index, changed, disclosure=True))
+        changed = copy.deepcopy(self.index)
+        changed['generations'][changed['current_generation_id']]['frontier']['publication_revision'] += 1
+        self.assertTrue(V2.source_failures(self.cp, changed, self.obs))
+
+    def test_second_generation_preserves_v1_and_v2_history_and_capacity(self):
+        _, first, _ = self.handoff(withdrawn=True, holds=['hold:original'])
+        second, obs = self.rotate(first, 'publication:created-v2-second', '2026-09-12T20:00:00Z')
+        self.assertEqual(V2.advance_failures(first, second, self.index, obs, replacement=True), [])
+        self.assertEqual(second['retired_generations'][0], first['retired_generations'][0])
+        third, obs = self.rotate(second, 'publication:created-v2-third', '2026-09-13T20:00:00Z')
+        self.assertTrue(V2.advance_failures(second, third, self.index, obs, replacement=True))
+        # Even a schema-valid replacement that drops protected history fails.
+        third['retired_generations'].pop(0)
+        obs = self.bind(second, third)
+        self.assertTrue(V2.generation_failures(second, third, obs))
+
+    def test_refresh_preserves_generation_history_and_holds(self):
+        _, before, _ = self.handoff()
+        after = copy.deepcopy(before); after['updated_at_utc'] = '2026-09-12T20:00:00Z'
+        obs = self.bind(before, after)
+        self.assertEqual(V2.advance_failures(before, after, self.index, obs), [])
+        for field, value in [('publication_id', 'publication:changed'), ('hold_refs', ['hold:new']), ('retired_generations', [])]:
+            changed = copy.deepcopy(after); changed[field] = value
+            self.assertTrue(V2.advance_failures(before, changed, self.index, obs), field)
+
+    def test_frontier_only_refresh_uses_fresh_token_without_new_generation(self):
+        before = copy.deepcopy(self.cp)
+        after = copy.deepcopy(before)
+        index = copy.deepcopy(self.index)
+        frontier = index['generations'][index['current_generation_id']]['frontier']
+        frontier['publication_revision'] += 1
+        frontier['predecessor_frontier_sha256'] = before['index_read_token']['frontier_sha256']
+        after['index_read_token']['frontier_revision'] = frontier['publication_revision']
+        after['index_read_token']['frontier_sha256'] = V2.sibling('pm_browser_workspace_reset').digest(frontier)
+        after['index_read_token']['redb_snapshot_id'] = 'snapshot:created-v2-refresh'
+        after['updated_at_utc'] = '2026-09-12T20:00:00Z'
+        obs = copy.deepcopy(self.obs)
+        obs.update(prior_checkpoint=before, redb_snapshot_id='snapshot:created-v2-refresh')
+        self.assertEqual(V2.advance_failures(before, after, index, obs), [])
+        self.assertEqual(after['publication_id'], before['publication_id'])
+        self.assertEqual(after['index_read_token']['generation_id'], before['index_read_token']['generation_id'])
+        self.assertTrue(V2.source_failures(before, index, obs))
+
+    def test_every_token_value_is_joined_to_actual_snapshot(self):
+        for field, value in self.cp['index_read_token'].items():
+            changed = copy.deepcopy(self.cp)
+            if isinstance(value, dict):
+                changed['index_read_token'][field]['storage_instance_id'] = '22222222-2222-4222-8222-222222222222'
+            elif isinstance(value, int):
+                changed['index_read_token'][field] += 1
+            elif field == 'storage_instance_id':
+                changed['index_read_token'][field] = '22222222-2222-4222-8222-222222222222'
+            elif field.endswith('sha256'):
+                changed['index_read_token'][field] = 'f' * 64
+            else:
+                changed['index_read_token'][field] += '-changed'
+            self.assertTrue(V2.source_failures(changed, self.index, self.obs), field)
+
+    def test_cleanup_original_clock_holds_and_exact_cas(self):
+        _, before, _ = self.handoff(withdrawn=True)
+        after = copy.deepcopy(before); after['retired_generations'] = []
+        publication = before['retired_generations'][0]['publication_id']
+        obs = {'prior_checkpoint': before, 'now_utc': '2026-09-18T12:00:00Z', 'resolved_hold_refs': [],
+               'active_hold_refs': [], 'resolved_references': [], 'all_applicable_holds_enumerated': True,
+               'hold_ref_fence_current': True, 'cleanup_transaction_resolved': True}
+        obs['cleanup_transaction'] = {'schema_id': 'pm.browser_workspace_created_checkpoint_cleanup_transaction.v2',
+            'transaction_ref': 'transaction:created-v2-cleanup', 'before': before, 'after': after, 'checkpoint_key': V2.key(before),
+            'selected_publication_id': publication, 'committed_at_utc': obs['now_utc'], 'status': 'committed'}
+        self.assertEqual(V2.cleanup_failures(before, after, publication, obs), [])
+        for field, value in [('now_utc', '2026-09-18T11:59:59Z'), ('resolved_hold_refs', ['hold:current']),
+                             ('active_hold_refs', ['hold:current']), ('all_applicable_holds_enumerated', False),
+                             ('resolved_references', ['ref:current']), ('hold_ref_fence_current', False),
+                             ('cleanup_transaction_resolved', False), ('prior_checkpoint', None)]:
+            changed = copy.deepcopy(obs); changed[field] = value
+            self.assertTrue(V2.cleanup_failures(before, after, publication, changed), field)
+        _, held_before, _ = self.handoff(withdrawn=True, holds=['hold:original'])
+        held_after = copy.deepcopy(held_before); held_after['retired_generations'] = []
+        held = copy.deepcopy(obs)
+        held.update(prior_checkpoint=held_before, resolved_hold_refs=['hold:original'],
+                    active_hold_refs=['hold:original'])
+        held['cleanup_transaction'].update(before=held_before, after=held_after)
+        self.assertTrue(V2.cleanup_failures(held_before, held_after, publication, held))
+        held['active_hold_refs'] = []
+        self.assertEqual(V2.cleanup_failures(held_before, held_after, publication, held), [])
+
+
+if __name__ == '__main__':
     unittest.main()

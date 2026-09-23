@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19706-L19934
+Source lines: L19706-L19940
 
-Source SHA256: `93f7d6e197544f5a5954bda07cb86a918a6c4a652484cdf1fa5e02902fd3675f`
+Source SHA256: `cf2b2ef8bcbbae146826490c453dae1d2aa4d187b35b846887615661dbddfcf4`
 
 ---
 
@@ -182,11 +182,17 @@ store graph and version ceilings. It first authenticates the old v1 row, codec,
 Project/source and all applicable hold/reference custody, and independently
 rebuilds the v2 current value from complete verified CURRENT-selected SP-278
 source. One same-key transaction reserves lawful `RP-PROJECTION-3GEN@1.0.0`
-capacity, replaces the current value and preserves the exact decoded v1 core as
-retired history. Because v1 had no publication birth identity, the history
-wrapper uses `v1_custody_bound_at_handoff`: its new identity, custody-bound time,
-first retirement time and successor ID come from the actual handoff transaction,
-not a guessed v1 birth. Preserve all existing holds and protected history; one
+capacity, joins the exact authenticated v1 preimage, replaces the current value
+and preserves its finalized decoded v1 core as retired history. If v1 was already
+withdrawn, preserve its complete core and original `withdrawn_at_utc` unchanged.
+Otherwise that transaction performs the first durable withdrawal, changing only
+its state, `updated_at_utc` and `withdrawn_at_utc` to the actual commit time.
+Because v1 had no publication birth identity, the history wrapper uses
+`v1_custody_bound_at_handoff`: its new identity and custody-bound time come from
+the handoff, not a guessed v1 birth. Its `retired_at_utc` equals the finalized
+v1 core's first `withdrawn_at_utc`, even if that precedes handoff; its successor
+ID identifies the actual committed v2 publication. Preserve all existing holds
+and protected history; one
 current plus at most two retired cores is the limit, with no fourth staging key
 or early eviction. Unknown old custody, unsupported codec, unresolved hold, full
 protected capacity, incomplete source or uncertain transaction outcome leaves

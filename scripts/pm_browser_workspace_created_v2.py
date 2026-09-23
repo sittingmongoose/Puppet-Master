@@ -1,0 +1,286 @@
+"""Conditional SP-266 v2 decoded-value oracles. No admission; native NOT_RUN.
+
+Observations are synthetic adapter assumptions, not authenticated native receipts.
+This module never writes registries, storage, events or live Browser state. The
+v1 producer and immutable v1 schema remain owned by their existing module.
+"""
+from __future__ import annotations
+
+import copy
+import importlib.util
+import json
+from datetime import datetime, timedelta
+from functools import lru_cache
+from pathlib import Path
+
+from jsonschema import Draft202012Validator, FormatChecker
+from referencing import Registry, Resource
+
+ROOT = Path(__file__).resolve().parents[1]
+SCHEMA = 'Plans/browser_workspace_created_checkpoint_v2.schema.json'
+FIXTURES = 'Plans/browser_workspace_created_checkpoint_v2_fixtures.json'
+V1_SCHEMA = 'Plans/browser_workspace_created_contracts.schema.json'
+GENERIC = 'Plans/event_record_index_checkpoint.schema.json'
+FAMILY = 'browser_workspace_created_index_checkpoint'
+V1_ID = 'pm.storage_value.browser_workspace_created_index_checkpoint.v1'
+V2_ID = 'pm.storage_value.browser_workspace_created_index_checkpoint.v2'
+SCOPE = ('storage_instance_id', 'project_id', 'scope_partition')
+
+
+def load(path, root=ROOT):
+    return json.loads((root / path).read_text())
+
+
+@lru_cache(maxsize=8)
+def sibling(name, root=ROOT):
+    spec = importlib.util.spec_from_file_location('created_v2_' + name, root / 'scripts' / (name + '.py'))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+@lru_cache(maxsize=8)
+def validators(root=ROOT):
+    schemas = [load(p, root) for p in (SCHEMA, V1_SCHEMA, GENERIC)]
+    for schema in schemas:
+        Draft202012Validator.check_schema(schema)
+    registry = Registry().with_resources((s['$id'], Resource.from_contents(s)) for s in schemas)
+    def make(schema, definition):
+        return Draft202012Validator({'$ref': schema['$id'] + '#/$defs/' + definition},
+                                     registry=registry, format_checker=FormatChecker())
+    return {**{name: make(schemas[0], name) for name in ('checkpoint', 'checkpoint_core', 'generation_transaction', 'cleanup_transaction')},
+            'v1': make(schemas[1], 'checkpoint')}
+
+
+def instant(value):
+    return datetime.fromisoformat(value.replace('Z', '+00:00'))
+
+
+def key(value):
+    return FAMILY + '.v1:' + value['storage_instance_id'] + ':' + value['scope_partition']
+
+
+def is_v1(value):
+    return isinstance(value, dict) and value.get('schema_id') == V1_ID
+
+
+def legacy_failures(value, root=ROOT):
+    if not validators(root)['v1'].is_valid(value):
+        return ['legacy_schema']
+    return sibling('pm_browser_workspace_created', root).checkpoint_failures(value, root=root)
+
+
+def core_failures(value, root=ROOT):
+    if not validators(root)['checkpoint_core'].is_valid(value):
+        return ['checkpoint_core_schema']
+    # These are generic decoded scope/range/time relations, not reset admission.
+    return sibling('pm_browser_workspace_reset', root).checkpoint_core_failures(value)
+
+
+def checkpoint_failures(value, root=ROOT):
+    if not validators(root)['checkpoint'].is_valid(value):
+        return ['checkpoint_schema']
+    core = {k: v for k, v in value.items() if k != 'retired_generations'}
+    errors = core_failures(core, root)
+    # Successor references may name a lawfully removed generation. Exact
+    # rotation/cleanup transactions preserve the chain without rewriting refs.
+    seen = {value['publication_id']}
+    for entry in value['retired_generations']:
+        old = entry.get('checkpoint_core', entry.get('legacy_checkpoint'))
+        if 'legacy_checkpoint' in entry:
+            errors += legacy_failures(old, root)
+            publication = entry['publication_id']
+            withdrawal = entry['retired_at_utc']
+            custody = entry['custody_bound_at_utc']
+            if (old['withdrawn_at_utc'] is not None and withdrawal != old['withdrawn_at_utc']) or (
+                    old['withdrawn_at_utc'] is None and withdrawal != custody):
+                errors.append('legacy_first_withdrawal_changed')
+            if instant(custody) < instant(old['updated_at_utc']) or instant(withdrawal) > instant(custody):
+                errors.append('legacy_custody_time')
+            birth = custody
+        else:
+            errors += core_failures(old, root)
+            publication = old['publication_id']
+            withdrawal = old['withdrawn_at_utc']
+            birth = old['published_at_utc']
+        if publication in seen or publication == entry['successor_publication_id']:
+            errors.append('history_identity')
+        seen.add(publication)
+        if any(old[k] != value[k] for k in SCOPE):
+            errors.append('history_scope')
+        if instant(withdrawal) > instant(value['published_at_utc']) or instant(birth) > instant(value['published_at_utc']):
+            errors.append('history_time')
+    return sorted(set(errors))
+
+
+def generation_failures(before, after, observation, root=ROOT):
+    """Exact handoff/rotation join beneath assumed native custody and CAS."""
+    if not isinstance(observation, dict):
+        return ['generation_observation_schema']
+    errors = checkpoint_failures(after, root)
+    if before is not None:
+        errors += legacy_failures(before, root) if is_v1(before) else checkpoint_failures(before, root)
+    tx = observation.get('generation_transaction')
+    if not validators(root)['generation_transaction'].is_valid(tx):
+        return errors + ['generation_transaction_schema']
+    if errors:
+        return errors
+    if (tx['before'] != before or tx['after'] != after or tx['checkpoint_key'] != key(after) or
+            tx['selected_publication_id'] != after['publication_id'] or
+            tx['committed_at_utc'] != after['published_at_utc'] or observation.get('prior_checkpoint') != before):
+        return ['generation_transaction_join']
+    for flag in ('generation_transaction_resolved', 'coordinator_admitted', 'complete_rebuild_verified',
+                 'capacity_reserved', 'hold_ref_fence_current'):
+        if observation.get(flag) is not True:
+            errors.append('generation_unproved:' + flag)
+    if after['state'] != 'current' or after['updated_at_utc'] != after['published_at_utc']:
+        errors.append('generation_birth')
+    if before is None:
+        if after['retired_generations'] or tx['v1_custody'] is not None:
+            errors.append('initial_history')
+        return errors
+    if any(before[k] != after[k] for k in SCOPE) or instant(after['published_at_utc']) < instant(before['updated_at_utc']):
+        return errors + ['replacement_scope_or_time']
+    if is_v1(before):
+        custody = tx['v1_custody']
+        if custody is None or any(observation.get(flag) is not True for flag in
+                                  ('v1_custody_verified', 'v1_codec_supported')):
+            return errors + ['legacy_custody_unproved']
+        if observation.get('resolved_v1_hold_refs') != custody['hold_refs']:
+            errors.append('legacy_hold_custody')
+        finalized = copy.deepcopy(before)
+        if finalized['state'] != 'withdrawn':
+            finalized.update(state='withdrawn', withdrawn_at_utc=tx['committed_at_utc'], updated_at_utc=tx['committed_at_utc'])
+        history = [{'identity_origin': 'v1_custody_bound_at_handoff', 'publication_id': custody['publication_id'],
+                    'custody_bound_at_utc': tx['committed_at_utc'],
+                    'retired_at_utc': before['withdrawn_at_utc'] or tx['committed_at_utc'],
+                    'successor_publication_id': after['publication_id'], 'hold_refs': custody['hold_refs'],
+                    'legacy_checkpoint': finalized}]
+    else:
+        if tx['v1_custody'] is not None or before['publication_id'] == after['publication_id']:
+            errors.append('replacement_identity')
+        if len(before['retired_generations']) >= 2:
+            errors.append('capacity_requires_cleanup')
+        old = {k: copy.deepcopy(v) for k, v in before.items() if k != 'retired_generations'}
+        if old['state'] != 'withdrawn':
+            old.update(state='withdrawn', withdrawn_at_utc=tx['committed_at_utc'], updated_at_utc=tx['committed_at_utc'])
+        history = copy.deepcopy(before['retired_generations']) + [
+            {'checkpoint_core': old, 'successor_publication_id': after['publication_id']}]
+    if after['retired_generations'] != history:
+        errors.append('exact_history_or_holds_changed')
+    return sorted(set(errors))
+
+
+def source_failures(candidate, index, observation, root=ROOT, *, disclosure=False):
+    errors = checkpoint_failures(candidate, root)
+    if errors:
+        return errors
+    if not isinstance(observation, dict):
+        return ['source_observation_schema']
+    # A persisted snapshot ID is provenance, not a reopenable read handle.
+    # Disclosure may rebind only that transient field to the fresh actual
+    # snapshot; every persistent root/anchor/frontier/source field must still
+    # pass the exact SP-278 join below.
+    token = candidate['index_read_token']
+    if disclosure:
+        token = {**token, 'redb_snapshot_id': observation.get('redb_snapshot_id')}
+    errors += sibling('pm_browser_workspace_reset', root).index_token_failures(
+        token, index, observation, root=root)
+    if errors:
+        return errors
+    for flag in ('project_filter_complete', 'created_sources_validated', 'source_dedupe_verified',
+                 'access_allowed', 'deletion_allows_audit', 'binding_supported'):
+        if observation.get(flag) is not True:
+            errors.append('source_or_fence_unproved:' + flag)
+    fence = 'disclosure_fence_current' if disclosure else 'before_commit_fence_current'
+    if observation.get(fence) is not True:
+        errors.append('source_or_fence_unproved:' + fence)
+    if candidate['state'] != 'current' or not candidate['filter_complete']:
+        errors.append('checkpoint_not_current')
+    if observation.get('project_id') != candidate['project_id']:
+        errors.append('project_join')
+    coverage = index['generations'][index['current_generation_id']]['frontier']['coverage']
+    for own, generic in (('first_retained_sequence_id', 'first_retained_sequence_id'),
+                         ('index_through_sequence_id', 'through_sequence_id'),
+                         ('source_cursor', 'last_frame'), ('health', 'health')):
+        if candidate[own] != coverage[generic]:
+            errors.append('complete_examined_range_join')
+    return sorted(set(errors))
+
+
+def advance_failures(before, after, index, observation, root=ROOT, *, replacement=False):
+    """An oracle pass is conditional shape/semantic validity, never activation."""
+    errors = source_failures(after, index, observation, root)
+    if errors:
+        return errors
+    if before is None or replacement:
+        return generation_failures(before, after, observation, root)
+    if is_v1(before):
+        return ['legacy_requires_coordinator_handoff']
+    errors += checkpoint_failures(before, root)
+    if errors:
+        return errors
+    if observation.get('prior_checkpoint') != before:
+        errors.append('prior_value_cas')
+    if before['state'] == 'withdrawn':
+        errors.append('withdrawn_requires_replacement')
+    for field in (*SCOPE, 'publication_id', 'published_at_utc', 'hold_refs', 'retired_generations'):
+        if before[field] != after[field]:
+            errors.append('refresh_changed_custody')
+    if instant(after['updated_at_utc']) < instant(before['updated_at_utc']):
+        errors.append('observation_time_regressed')
+    if before['index_through_sequence_id'] is not None and (
+            after['index_through_sequence_id'] is None or after['index_through_sequence_id'] < before['index_through_sequence_id']):
+        errors.append('refresh_range_regressed')
+    return sorted(set(errors))
+
+
+def cleanup_failures(before, after, publication_id, observation, root=ROOT):
+    """Same-key cleanup needs current resolved holds/refs and original anchor."""
+    if not isinstance(observation, dict):
+        return ['cleanup_observation_schema']
+    errors = checkpoint_failures(before, root) + checkpoint_failures(after, root)
+    if errors:
+        return errors
+    selected = [e for e in before['retired_generations'] if e.get('publication_id', e.get('checkpoint_core', {}).get('publication_id')) == publication_id]
+    if len(selected) != 1:
+        return ['cleanup_publication_missing']
+    entry = selected[0]
+    anchor = entry.get('retired_at_utc', entry.get('checkpoint_core', {}).get('withdrawn_at_utc'))
+    holds = entry.get('hold_refs', entry.get('checkpoint_core', {}).get('hold_refs'))
+    try:
+        eligible = instant(observation['now_utc']) >= instant(anchor) + timedelta(seconds=604800)
+    except (ValueError, KeyError, TypeError):
+        eligible = False
+    resolved_holds = observation.get('resolved_hold_refs')
+    if (not eligible or not isinstance(resolved_holds, list) or sorted(resolved_holds) != sorted(holds) or
+            observation.get('active_hold_refs') != [] or observation.get('resolved_references') != [] or
+            observation.get('all_applicable_holds_enumerated') is not True):
+        errors.append('cleanup_protected_or_unexpired')
+    if observation.get('hold_ref_fence_current') is not True or observation.get('cleanup_transaction_resolved') is not True:
+        errors.append('cleanup_custody_unproved')
+    expected = copy.deepcopy(before)
+    expected['retired_generations'].remove(entry)
+    tx = observation.get('cleanup_transaction')
+    if not validators(root)['cleanup_transaction'].is_valid(tx):
+        return errors + ['cleanup_transaction_schema']
+    if (observation.get('prior_checkpoint') != before or tx.get('before') != before or tx.get('after') != after or
+            tx.get('checkpoint_key') != key(before) or tx.get('selected_publication_id') != publication_id or
+            tx.get('committed_at_utc') != observation.get('now_utc') or tx.get('status') != 'committed'):
+        errors.append('cleanup_transaction_join')
+    if after != expected:
+        errors.append('cleanup_changed_survivors')
+    return sorted(set(errors))
+
+
+def fixture_values(root=ROOT):
+    fixture = load(FIXTURES, root)
+    return tuple(copy.deepcopy(fixture[k]) for k in ('checkpoint', 'generic_index', 'generic_observation', 'legacy_v1_checkpoint'))
+
+
+if __name__ == '__main__':
+    checkpoint, index, observation, _ = fixture_values()
+    errors = advance_failures(None, checkpoint, index, observation)
+    print(json.dumps({'status': 'FAIL' if errors else 'PASS', 'definition_status': 'conditional_not_admitted',
+                      'native': 'NOT_RUN', 'errors': errors}))
+    raise SystemExit(bool(errors))
