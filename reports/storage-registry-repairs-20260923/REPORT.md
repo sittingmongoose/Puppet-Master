@@ -231,7 +231,7 @@ The environment is this sparse worktree. It holds the ignored currentness audit 
 | `validate-evidence` / `validate-plan-graph` | 665 / 665 | 665 / 665 (all 82 storage-plan bundle entries were already stale or missing) |
 | `validate-wiring-matrix`, `validate-touch-closure` | pass, pass | pass, pass |
 
-Every "This branch" value above was re-measured after the seven review fixes, at `af7b2aa2fb`; none changed. Outputs: `/mnt/Cursor/PuppetMaster-Evidence/storage-registry-repairs-20260923/front1/` (`before/`, `after/`, `after-review/`), listed in `MANIFEST.sha256` (66 files, SHA-256 `8e8ddb45f9583d642e9cc60d6690b4dd3887297a264cdb5c64894426af96ffb0`). The readiness failure set is identical, the shard check and index validation still pass (6,718 PlanUnits, 26,208 acceptance units), and all three event gates still pass.
+Every "This branch" value above was re-measured after the seven review fixes, at `af7b2aa2fb`; none changed. Outputs: `/mnt/Cursor/PuppetMaster-Evidence/storage-registry-repairs-20260923/front1/` (`before/`, `after/`, `after-review/`), listed in `MANIFEST-front1-review.sha256` (66 files, SHA-256 `8e8ddb45f9583d642e9cc60d6690b4dd3887297a264cdb5c64894426af96ffb0`). The readiness failure set is identical, the shard check and index validation still pass (6,718 PlanUnits, 26,208 acceptance units), and all three event gates still pass.
 
 The 33 readiness failures left are all outside this scope:
 - 17 `pnc019_source_hash_stale`;
