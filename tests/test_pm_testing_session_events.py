@@ -167,6 +167,27 @@ class TestingSessionEventTests(unittest.TestCase):
             self.assertIn("settled_owner_binding", gate.event_failures(
                 changed["event"], changed["producer"], changed["request"], changed["snapshot"]))
 
+    def test_readiness_pins_goal_run_v3_refs_and_rejects_a_retired_v2_ref(self):
+        # The landed v3 adoptions (e686963ad5, a3c511657f, f6350caf27) point these rows at whole v3
+        # schemas; readiness pins exactly those paths and still rejects a row sent back to v2.
+        owner = gate.response.module("testing_event_readiness_goal_refs", "pm-implementation-readiness.py")
+        registry = gate.load("Plans/event_family_registry.json")
+        schema = gate.load("Plans/event_family_registry.schema.json")
+        rows = {row["event_type"]: row for row in registry["families"]}
+        for event_type in ("goal_run.started", "goal_run.cancelled", "goal_run.certified"):
+            with self.subTest(event=event_type):
+                self.assertEqual(rows[event_type]["payload_schema_ref"]["path"],
+                                 owner.EVENT_FAMILY_GOAL_PAYLOAD_SCHEMA_REFS[event_type])
+                self.assertEqual(rows[event_type]["payload_schema_ref"]["schema_id"], rows[event_type]["payload_schema_id"])
+                self.assertTrue(rows[event_type]["payload_schema_id"].endswith(".schema.v3"))
+        drifted = copy.deepcopy(registry)
+        next(row for row in drifted["families"] if row["event_type"] == "goal_run.started")["payload_schema_ref"]["path"] = (
+            "Plans/event_payloads/goal_runtime/goal_run_started.schema.json")
+        errors = {failure["error"] for failure in owner.event_family_registry_data_failures(
+            drifted, schema, path_label="test:goal-run-v2-drift", include_residuals=False)}
+        self.assertIn("event_family_registry_goal_payload_ref_mismatch", errors)
+        self.assertIn("event_family_registry_goal_kernel_membership_mismatch", errors)
+
 
 if __name__ == "__main__":
     unittest.main()

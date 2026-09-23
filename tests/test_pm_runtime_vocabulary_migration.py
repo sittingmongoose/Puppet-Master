@@ -1,3 +1,5 @@
+import copy
+import importlib.util
 import json
 import unittest
 from pathlib import Path
@@ -236,6 +238,92 @@ class RuntimeVocabularyMigrationTest(unittest.TestCase):
         self.assertIn("source_ref:user_approval:2026-09-09:uphold_final_gui_renderer_order", release)
         self.assertNotIn("Renderer order remains bakeoff-evidence-gated", release)
         self.assertNotIn("renderer bakeoff, full-thread benchmark", release)
+
+
+def load_readiness():
+    spec = importlib.util.spec_from_file_location(
+        "runtime_vocabulary_readiness", ROOT / "scripts" / "pm-implementation-readiness.py"
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+class ReadinessRegistryRepresentationTest(unittest.TestCase):
+    """Readiness representation rules of Plans/storage-plan.md section 2.3.1 (2026-09-23)."""
+
+    REPRESENTATION_CHECKS = (
+        "stored_profile_union_live_rows_accepted",
+        "stored_profile_union_synthetic_single_header_rejected",
+        "stored_profile_union_composition_identity_as_stored_header_rejected",
+        "stored_profile_union_member_version_drift_rejected",
+        "stored_profile_union_widened_composition_rejected",
+        "stored_profile_union_undeclared_document_bytes_rejected",
+        "stored_profile_union_no_cross_realm_fallback",
+        "stored_profile_union_dropped_original_keys_rejected",
+        "single_wrapper_bare_reference_still_rejected",
+        "sp278_read_token_fields_accepted",
+        "read_token_named_string_rejected",
+        "read_token_schema_under_other_name_rejected",
+        "read_token_not_equal_to_canonical_rejected",
+        "read_token_local_reference_to_altered_definition_rejected",
+        "landed_census_accepted",
+        "retention_policy_count_rejected",
+        "status_counts_rejected",
+        "tier_counts_rejected",
+        "mvp_legacy_import_reader_tier_accepted",
+        "mvp_writer_at_migration_tier_rejected",
+        "mvp_current_row_at_migration_tier_rejected",
+        "retention_hold_v2_authority_accepted",
+        "retention_hold_v1_authority_on_v2_row_rejected",
+    )
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.readiness = load_readiness()
+        cls.registry = load_json(PLANS / "storage_value_registry.json")
+
+    def clone(self) -> dict:
+        return copy.deepcopy(self.registry)
+
+    @staticmethod
+    def family(registry: dict, family_id: str) -> dict:
+        return next(row for row in registry["families"] if row["family_id"] == family_id)
+
+    def test_live_registry_has_no_storage_registry_findings(self) -> None:
+        self.assertEqual(
+            self.readiness.storage_value_registry_data_failures(self.registry, path_label="test:live"), []
+        )
+
+    def test_retired_import_readers_keep_mvp_membership_at_migration_tier_only(self) -> None:
+        for family_id in ("runtime_resource_admission", "observable_work_projection"):
+            with self.subTest(family_id=family_id):
+                self.assertIn(family_id, self.registry["mvp_required_family_ids"])
+                self.assertTrue(self.readiness.storage_value_legacy_import_only_reader(self.family(self.registry, family_id)))
+        drifted = self.clone()
+        self.family(drifted, "runtime_resource_admission")["migration_disposition"]["mode"] = "current_schema"
+        mismatches = [
+            (failure["family_id"], failure["expected"], failure["actual"])
+            for failure in self.readiness.storage_value_registry_data_failures(drifted, path_label="test:writer")
+            if failure["error"] == "storage_value_registry_mvp_required_family_tier_mismatch"
+        ]
+        self.assertEqual(mismatches, [("runtime_resource_admission", "later_gui_or_feature_projection", "migration_only")])
+
+    def test_every_representation_rule_has_passing_positive_and_negative_checks(self) -> None:
+        def defer(registry: dict, family_id: str) -> None:
+            row = self.family(registry, family_id)
+            row.update(
+                status="deferred_not_build_blocking",
+                deferred_owner="Plans/storage-plan.md",
+                deferred_reason="test deferral",
+                reopen_condition="test reopen",
+            )
+
+        checks = self.readiness.storage_value_representation_self_test_checks(
+            self.registry, self.clone, self.family, defer
+        )
+        self.assertEqual(sorted(checks), sorted(self.REPRESENTATION_CHECKS))
+        self.assertEqual([name for name, passed in checks.items() if not passed], [])
 
 
 if __name__ == "__main__":

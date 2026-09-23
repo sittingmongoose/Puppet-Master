@@ -13,7 +13,7 @@ import struct
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 def _load_pnc019_currentness():
     """Load the governed helper from this script's directory."""
@@ -480,11 +480,16 @@ EVENT_FAMILY_GOAL_PAYLOAD_SCHEMA_REFS = {
     "goal.stopped": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
     "goal.blocked": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
     "goal.cancelled": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
-    "goal_run.started": "Plans/event_payloads/goal_runtime/goal_run_started.schema.json",
+    # The three goal_run v3 rows select whole v3 payload schemas outside event_payloads/goal_runtime,
+    # as their landed adoptions registered them: started by e686963ad5 (GRS-079, SP-311), cancelled by
+    # a3c511657f (GRS-080, SP-312) and certified by f6350caf27 (GRS-084, CV-352). Each keeps its complete
+    # historical v2 schema file unchanged. The identity check above still binds payload_schema_id,
+    # payload_schema_ref.schema_id and the resolved schema identity for every row.
+    "goal_run.started": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
     "goal_run.replanned": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
     "goal_run.blocked": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
-    "goal_run.certified": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
-    "goal_run.cancelled": "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json",
+    "goal_run.certified": "Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+    "goal_run.cancelled": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
     "goal_run.stopped": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json",
 }
 EVENT_FAMILY_LEGACY_FIXTURE_PATH = (
@@ -735,17 +740,24 @@ STORAGE_VALUE_REGISTRY_SCHEMA_VERSION = "2.0.0"
 STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
     "https://puppetmaster.local/schemas/storage_value_registry/2.0.0/storage_value_registry.schema.json"
 )
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 88
-STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 24
+# Registry census. Re-pin it only to landed, recorded registry changes (Plans/storage-plan.md
+# section 2.3.1). Pinned at 99a3c7db9d (2026-09-06: 88 families, 24 policies); re-pinned on
+# 2026-09-23 at origin/main dca3c3349e after 27 landed commits, each on main with its own
+# record: 63bff67fb4 retired runtime_resource_admission and observable_work_projection to
+# migration_only (SIR full-thread addendum 2026-08-31), and the 26 commits af6856d039 through
+# f6350caf27 added 206 families and 3 policies and removed none.
+# reports/storage-registry-repairs-20260923/REPORT.md lists each commit and its record.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 294
+STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 27
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 66,
+    "materialized": 272,
     "deferred_not_build_blocking": 21,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
-    "tier_0_launch_critical": 16,
-    "later_gui_or_feature_projection": 71,
-    "migration_only": 1,
+    "tier_0_launch_critical": 40,
+    "later_gui_or_feature_projection": 251,
+    "migration_only": 3,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [
     "approved_plan_pack",
@@ -874,7 +886,10 @@ STORAGE_VALUE_REQUIRED_RECOVERY_AUTHORITIES = {
     "event_id_dedupe_index": "derived_rebuildable",
     "event_idempotency_dedupe_index": "derived_rebuildable",
     "event_dedupe_checkpoint": "derived_rebuildable",
-    "retention_hold_record": "canonical_dual_homed",
+    # SP-288 (2080658ff8): the current v2 legal-command row is canonical non-rebuildable command and
+    # receipt authority restored from mandatory backup; canonical_dual_homed stays only with the
+    # separate v1 roles, which the family-level disposition does not describe.
+    "retention_hold_record": "canonical_non_rebuildable",
     "recovery_anchor_record": "required_recovery_anchor",
     "storage_maintenance_operation": "canonical_non_rebuildable",
     "storage_quarantine_record": "required_recovery_anchor",
@@ -882,6 +897,36 @@ STORAGE_VALUE_REQUIRED_RECOVERY_AUTHORITIES = {
     "permission_snapshot_record": "canonical_non_rebuildable",
     "provider_dispatch_admission_receipt": "canonical_non_rebuildable",
 }
+# SP-310 nonstored stored-profile union compositions (Plans/storage-plan.md section 2.3.1,
+# 2026-09-23). For exactly these families the registry value_schema_id, value_schema_ref and
+# schema_version name a nonstored validation composition, and every member is a whole stored
+# wrapper that keeps its literal stored schema_id and schema_version. Member identities come from
+# the owner profile declaration; references resolve only inside the declared resource realm.
+STORAGE_VALUE_STORED_PROFILE_UNION_CONTRACT = {
+    "family_ids": (
+        "goal_cancel_progress",
+        "goal_cancel_control_publication",
+        "goal_cancel_terminal_audit",
+    ),
+    "declaration_path": "Plans/goal_workflow_cancel_contracts/physical-profiles.json",
+    "schema_resources_path": "Plans/goal_workflow_cancel_schema_resources.json",
+    "resource_realm": "goal",
+    "encoding": "json_canonical",
+}
+STORAGE_VALUE_STORED_PROFILE_UNION_COMPOSITION_KEYWORDS = frozenset({"$id", "$comment", "oneOf"})
+# SP-278 read token (Plans/storage-plan.md section 2.3.1, 2026-09-23): a closed, non-secret read
+# selector of Storage identity, relative control names, hashes, generation and frontier. A field
+# named read_token or *_read_token is a read selector, not secret material, only when its whole
+# schema is exactly this canonical definition, inline or through a local $defs reference.
+STORAGE_VALUE_READ_TOKEN_SCHEMA_PATH = PLANS / "event_record_index_checkpoint.schema.json"
+STORAGE_VALUE_READ_TOKEN_POINTER = "/$defs/read_token"
+# Legacy import-only reader rows (SIR full-thread addendum 2026-08-31; Plans/storage-plan.md
+# section 2.3.1, 2026-09-23): an MVP-required family whose owner retired its vocabulary to a
+# one-time owner-boundary import has no writer and carries tier migration_only.
+STORAGE_VALUE_LEGACY_IMPORT_READER_PRODUCER = (
+    "No new writer; existing physical rows are retained for compatibility import only"
+)
+STORAGE_VALUE_LEGACY_IMPORT_READER_CROSSWALK_PREFIX = "legacy_reader_import_only_to_"
 SHARED_RUNTIME_STORAGE_FAMILIES = {
     "permission_snapshot_record": {
         "value_schema_ref": "Plans/shared_runtime_contracts.schema.json#/$defs/permission_snapshot_record",
@@ -2096,13 +2141,65 @@ def storage_value_secret_key_allowed(key: str) -> bool:
     return lowered.endswith(("_ref", "_refs", "_ref_id", "_profile", "_policy", "_hash"))
 
 
-def storage_value_secret_key_failures(value: Any, *, path_label: str, pointer: str = "$") -> list[dict[str, Any]]:
+_STORAGE_VALUE_READ_TOKEN_CACHE: dict[str, Any] = {}
+
+
+def storage_value_canonical_read_token_schema() -> dict[str, Any] | None:
+    """The canonical SP-278 read token definition, or None when it cannot be read (fail closed)."""
+    if "schema" not in _STORAGE_VALUE_READ_TOKEN_CACHE:
+        try:
+            token = json_pointer_value(read_json(STORAGE_VALUE_READ_TOKEN_SCHEMA_PATH), STORAGE_VALUE_READ_TOKEN_POINTER)
+        except Exception:  # noqa: BLE001 - an unreadable canonical token grants no exemption.
+            token = None
+        _STORAGE_VALUE_READ_TOKEN_CACHE["schema"] = token if isinstance(token, dict) and token else None
+    return _STORAGE_VALUE_READ_TOKEN_CACHE["schema"]
+
+
+def storage_value_read_token_name(name: str) -> bool:
+    return name == "read_token" or name.endswith("_read_token")
+
+
+def storage_value_is_canonical_read_token(name: str, schema: Any, root: Any) -> bool:
+    """True only for a read-token-named key whose whole schema is the canonical SP-278 read token.
+
+    The schema may be the definition inline or a single local "#/..." reference to it inside the
+    same value schema. Any other shape, name or reference keeps the secret-material rule.
+    """
+    if not storage_value_read_token_name(name):
+        return False
+    canonical = storage_value_canonical_read_token_schema()
+    if canonical is None:
+        return False
+    target = schema
+    if isinstance(schema, dict) and set(schema) == {"$ref"}:
+        ref = schema["$ref"]
+        if not isinstance(ref, str) or not ref.startswith("#/") or not isinstance(root, dict):
+            return False
+        try:
+            target = resolve_local_schema_ref(root, ref)
+        except (KeyError, ValueError):
+            return False
+    return target == canonical
+
+
+def storage_value_secret_key_failures(
+    value: Any,
+    *,
+    path_label: str,
+    pointer: str = "$",
+    root: Any = None,
+) -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
+    root = value if root is None else root
     if isinstance(value, dict):
         for key, child in value.items():
             key_str = str(key)
             child_pointer = f"{pointer}.{key_str}"
-            if SECRET_MATERIAL_KEY_RE.search(key_str) and not storage_value_secret_key_allowed(key_str):
+            if (
+                SECRET_MATERIAL_KEY_RE.search(key_str)
+                and not storage_value_secret_key_allowed(key_str)
+                and not storage_value_is_canonical_read_token(key_str, child, root)
+            ):
                 failures.append(
                     {
                         "path": path_label,
@@ -2111,25 +2208,47 @@ def storage_value_secret_key_failures(value: Any, *, path_label: str, pointer: s
                         "field": key_str,
                     }
                 )
-            failures.extend(storage_value_secret_key_failures(child, path_label=path_label, pointer=child_pointer))
+            failures.extend(
+                storage_value_secret_key_failures(child, path_label=path_label, pointer=child_pointer, root=root)
+            )
     elif isinstance(value, list):
         for index, child in enumerate(value):
             failures.extend(
-                storage_value_secret_key_failures(child, path_label=path_label, pointer=f"{pointer}[{index}]")
+                storage_value_secret_key_failures(
+                    child,
+                    path_label=path_label,
+                    pointer=f"{pointer}[{index}]",
+                    root=root,
+                )
             )
     return failures
 
 
-def storage_value_field_name_failures(fields: Any, *, path_label: str, field_list_name: str) -> list[dict[str, Any]]:
+def storage_value_field_name_failures(
+    fields: Any,
+    *,
+    path_label: str,
+    field_list_name: str,
+    value_schema: Any = None,
+) -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
     if not isinstance(fields, list):
         failures.append({"path": path_label, "error": "storage_value_field_list_invalid", "field": field_list_name})
         return failures
+    properties = value_schema.get("properties") if isinstance(value_schema, dict) else None
+    properties = properties if isinstance(properties, dict) else {}
     for field in fields:
         if not isinstance(field, str) or not field:
             failures.append({"path": path_label, "error": "storage_value_field_name_invalid", "field": field_list_name})
             continue
-        if SECRET_MATERIAL_KEY_RE.search(field) and not storage_value_secret_key_allowed(field):
+        if (
+            SECRET_MATERIAL_KEY_RE.search(field)
+            and not storage_value_secret_key_allowed(field)
+            and not (
+                field in properties
+                and storage_value_is_canonical_read_token(field, properties[field], value_schema)
+            )
+        ):
             failures.append(
                 {
                     "path": path_label,
@@ -5177,6 +5296,34 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
         and goal_owner_types == set(EVENT_FAMILY_GOAL_PAYLOAD_SCHEMA_REFS)
         and actual_goal_refs == EVENT_FAMILY_GOAL_PAYLOAD_SCHEMA_REFS
     )
+    # Negative for the goal_run v3 pins: a row pointed back at its retired v2 file, or at another
+    # family's v3 schema, is rejected by the fixed-path check and by the kernel reference check.
+    goal_ref_negative_errors: dict[str, set[str]] = {}
+    for event_type, wrong_path in (
+        ("goal_run.started", "Plans/event_payloads/goal_runtime/goal_run_started.schema.json"),
+        ("goal_run.cancelled", "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json"),
+        ("goal_run.certified", "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json"),
+    ):
+        drifted_registry = clone(event_registry)
+        drifted_row = next(row for row in drifted_registry["families"] if row.get("event_type") == event_type)
+        drifted_row["payload_schema_ref"]["path"] = wrong_path
+        goal_ref_negative_errors[event_type] = {
+            failure.get("error")
+            for failure in event_family_registry_data_failures(
+                drifted_registry,
+                event_registry_schema,
+                path_label=f"self-test:goal-ref-drift:{event_type}",
+                include_residuals=False,
+            )
+        }
+    checks["event_family_registry_goal_run_v3_ref_drift_rejected"] = all(
+        {
+            "event_family_registry_goal_payload_ref_mismatch",
+            "event_family_registry_goal_kernel_membership_mismatch",
+        }
+        <= errors
+        for errors in goal_ref_negative_errors.values()
+    )
     checks["event_legacy_two_positive_full_negative_matrix_recomputes"] = not event_family_legacy_fixture_failures(
         legacy_fixture,
         event_registry,
@@ -5685,6 +5832,250 @@ def transitive_local_schema_definitions(
     return {name: collected[name] for name in sorted(collected)}
 
 
+def storage_value_union_resource(
+    resources: Any,
+    realm: str,
+    ref: str,
+    *,
+    read_bytes: Callable[[str], bytes],
+) -> tuple[str, Any]:
+    """Resolve an absolute schema reference inside one declared resource realm.
+
+    Only whole documents that the realm declares under exactly this retrieval URI are eligible; the
+    document must match its declared SHA-256 and carry the URI as its own $id. Nothing is fetched,
+    merged across realms or inferred from a file name.
+    """
+    uri, _, fragment = ref.partition("#")
+    realms = resources.get("realms") if isinstance(resources, dict) else None
+    spec = realms.get(realm) if isinstance(realms, dict) else None
+    if not isinstance(spec, dict) or not isinstance(spec.get("whole_documents"), list):
+        raise ValueError(f"resource realm {realm!r} is not declared")
+    entries = [
+        entry
+        for entry in spec["whole_documents"]
+        if isinstance(entry, dict) and entry.get("retrieval_uri") == uri
+    ]
+    paths = {entry.get("path") for entry in entries}
+    if len(paths) != 1:
+        raise ValueError(f"{uri} resolves to {len(paths)} documents in realm {realm!r}")
+    path = paths.pop()
+    if not isinstance(path, str) or not path:
+        raise ValueError(f"{uri} has no document path in realm {realm!r}")
+    raw = read_bytes(path)
+    digest = hashlib.sha256(raw).hexdigest()
+    if any(entry.get("complete_document_sha256") != digest for entry in entries):
+        raise ValueError(f"{path} does not match its declared complete_document_sha256")
+    document = json.loads(raw.decode("utf-8"))
+    if not isinstance(document, dict) or document.get("$id") != uri:
+        raise ValueError(f"{path} does not carry $id {uri}")
+    return path, json_pointer_value(document, fragment) if fragment else document
+
+
+def storage_value_stored_profile_union_failures(
+    family: dict[str, Any],
+    *,
+    row_path: str,
+    declaration: Any = None,
+    resources: Any = None,
+    read_bytes: Callable[[str], bytes] | None = None,
+) -> list[dict[str, Any]]:
+    """Check one SP-310 stored-profile union row (Plans/storage-plan.md section 2.3.1, 2026-09-23).
+
+    The row's value_schema is exactly one reference to a nonstored composition whose $id is the
+    row's value_schema_id. The composition is exactly a oneOf of the whole stored wrappers the owner
+    profile declaration lists, in order. Each wrapper is a closed object whose required fields are
+    the row's and whose literal schema_id/schema_version constants are the declared stored member
+    identity, never the composition identity. The row's keys, producers, consumers, codec,
+    retention and recovery authority equal what the declaration assigns to its profiles.
+    """
+    contract = STORAGE_VALUE_STORED_PROFILE_UNION_CONTRACT
+    family_id = family.get("family_id")
+    failures: list[dict[str, Any]] = []
+
+    def fail(error: str, **detail: Any) -> None:
+        failures.append({"path": row_path, "error": error, "family_id": family_id, **detail})
+
+    if read_bytes is None:
+        read_bytes = lambda rel_path: (ROOT / rel_path).read_bytes()  # noqa: E731
+    value_schema_ref = family.get("value_schema_ref")
+    if not isinstance(value_schema_ref, str) or family.get("value_schema") != {"$ref": value_schema_ref}:
+        fail("storage_value_registry_stored_profile_union_value_schema_not_exact_reference")
+        return failures
+    try:
+        if declaration is None:
+            declaration = json.loads(read_bytes(contract["declaration_path"]).decode("utf-8"))
+        if resources is None:
+            resources = json.loads(read_bytes(contract["schema_resources_path"]).decode("utf-8"))
+    except Exception as exc:  # noqa: BLE001 - an unreadable owner declaration fails closed.
+        fail("storage_value_registry_stored_profile_union_contract_unavailable", detail=str(exc))
+        return failures
+    entries = [
+        entry
+        for entry in (declaration.get("profiles", []) if isinstance(declaration, dict) else [])
+        if isinstance(entry, dict) and entry.get("family_id") == family_id
+    ]
+    if len(entries) != 1:
+        fail(
+            "storage_value_registry_stored_profile_union_declaration_missing",
+            declaration_path=contract["declaration_path"],
+            matches=len(entries),
+        )
+        return failures
+    entry = entries[0]
+    members = entry.get("profiles")
+    if (
+        entry.get("value_schema_ref") != value_schema_ref
+        or entry.get("existing_family") is not True
+        or entry.get("metadata_schema_is_not_a_stored_envelope") is not True
+        or not isinstance(members, list)
+        or len(members) < 2
+        or not all(isinstance(member, dict) for member in members)
+    ):
+        fail("storage_value_registry_stored_profile_union_declaration_mismatch")
+        return failures
+    realm = contract["resource_realm"]
+    try:
+        composition_path, composition = storage_value_union_resource(
+            resources, realm, value_schema_ref, read_bytes=read_bytes
+        )
+    except Exception as exc:  # noqa: BLE001 - unresolved composition fails closed.
+        fail("storage_value_registry_stored_profile_union_composition_unresolved", detail=str(exc))
+        return failures
+    if composition_path != declaration.get("validation_schema_path"):
+        fail(
+            "storage_value_registry_stored_profile_union_composition_path_mismatch",
+            expected=declaration.get("validation_schema_path"),
+            actual=composition_path,
+        )
+    if not isinstance(composition, dict):
+        fail("storage_value_registry_stored_profile_union_composition_unresolved", detail="not an object")
+        return failures
+    if composition.get("$id") != family.get("value_schema_id"):
+        fail(
+            "storage_value_registry_stored_profile_union_composition_identity_mismatch",
+            expected=family.get("value_schema_id"),
+            actual=composition.get("$id"),
+        )
+    extra_keywords = sorted(set(composition) - STORAGE_VALUE_STORED_PROFILE_UNION_COMPOSITION_KEYWORDS)
+    if extra_keywords:
+        fail("storage_value_registry_stored_profile_union_composition_not_exact_union", keywords=extra_keywords)
+    member_refs = [member.get("whole_wrapper_ref") for member in members]
+    if composition.get("oneOf") != [{"$ref": ref} for ref in member_refs]:
+        fail(
+            "storage_value_registry_stored_profile_union_composition_members_mismatch",
+            expected=member_refs,
+            actual=composition.get("oneOf"),
+        )
+    stored_ids = [member.get("stored_schema_id") for member in members]
+    if (
+        not all(isinstance(stored_id, str) and stored_id for stored_id in stored_ids)
+        or len(set(stored_ids)) != len(stored_ids)
+        or family.get("value_schema_id") in stored_ids
+    ):
+        fail("storage_value_registry_stored_profile_union_member_identities_not_distinct", stored_schema_ids=stored_ids)
+    required_fields = family.get("required_fields")
+    required_list = required_fields if isinstance(required_fields, list) else []
+    for index, member in enumerate(members):
+        ref = member.get("whole_wrapper_ref")
+        try:
+            if not isinstance(ref, str):
+                raise ValueError("whole_wrapper_ref is not a string")
+            _member_path, wrapper = storage_value_union_resource(resources, realm, ref, read_bytes=read_bytes)
+        except Exception as exc:  # noqa: BLE001 - an unresolved member fails closed.
+            fail("storage_value_registry_stored_profile_union_member_unresolved", member=ref, detail=str(exc))
+            continue
+        if not isinstance(wrapper, dict):
+            fail("storage_value_registry_stored_profile_union_member_unresolved", member=ref, detail="not an object")
+            continue
+        if wrapper.get("type") != "object" or wrapper.get("additionalProperties") is not False:
+            fail("storage_value_registry_stored_profile_union_member_not_closed_object", member=ref)
+        if wrapper.get("required") != required_fields:
+            fail(
+                "storage_value_registry_stored_profile_union_member_required_fields_mismatch",
+                member=ref,
+                expected=required_fields,
+                actual=wrapper.get("required"),
+            )
+        properties = wrapper.get("properties") if isinstance(wrapper.get("properties"), dict) else {}
+        for field in required_list:
+            if field not in properties:
+                fail("storage_value_registry_stored_profile_union_member_required_property_missing", member=ref, field=field)
+        for header, declared_field in (("schema_id", "stored_schema_id"), ("schema_version", "stored_schema_version")):
+            header_property = properties.get(header) if isinstance(properties.get(header), dict) else {}
+            if header_property.get("const") != member.get(declared_field):
+                fail(
+                    f"storage_value_registry_stored_profile_union_member_{header}_const_mismatch",
+                    member=ref,
+                    expected=member.get(declared_field),
+                    actual=header_property.get("const"),
+                )
+        failures.extend(storage_value_secret_key_failures(wrapper, path_label=row_path, pointer=f"$.oneOf[{index}]"))
+    row_keys = [part.strip() for part in str(family.get("key_shape", "")).split(" OR ") if part.strip()]
+    declared_keys = [key for member in members for key in (member.get("key_shapes") or [])]
+    if row_keys != declared_keys:
+        fail("storage_value_registry_stored_profile_union_key_shapes_mismatch", expected=declared_keys, actual=row_keys)
+    if family.get("compatibility_key_shapes") != []:
+        fail("storage_value_registry_stored_profile_union_compatibility_keys_present")
+    for field, member_field in (("producer", "native_producers"), ("consumers", "native_consumers")):
+        declared_inventory = [value for member in members for value in (member.get(member_field) or [])]
+        if family.get(field) != declared_inventory:
+            fail(
+                "storage_value_registry_stored_profile_union_inventory_mismatch",
+                field=field,
+                expected=declared_inventory,
+                actual=family.get(field),
+            )
+    codecs = {member.get("codec") for member in members}
+    declared_codec = str(declaration.get("codec", ""))
+    member_codec = next(iter(codecs)) if len(codecs) == 1 else None
+    if (
+        not isinstance(member_codec, str)
+        or not member_codec
+        or declared_codec.split(";", 1)[0].strip() != member_codec
+        or family.get("encoding") != contract["encoding"]
+    ):
+        fail(
+            "storage_value_registry_stored_profile_union_codec_mismatch",
+            member_codecs=sorted(str(codec) for codec in codecs),
+            encoding=family.get("encoding"),
+        )
+    if entry.get("retention_policy_ref") != family.get("retention_policy_ref"):
+        fail(
+            "storage_value_registry_stored_profile_union_retention_mismatch",
+            expected=entry.get("retention_policy_ref"),
+            actual=family.get("retention_policy_ref"),
+        )
+    recovery = family.get("recovery_disposition") if isinstance(family.get("recovery_disposition"), dict) else {}
+    if entry.get("canonical_non_rebuildable") is True and recovery.get("authority_class") != "canonical_non_rebuildable":
+        fail(
+            "storage_value_registry_stored_profile_union_recovery_authority_mismatch",
+            expected="canonical_non_rebuildable",
+            actual=recovery.get("authority_class"),
+        )
+    return failures
+
+
+def storage_value_legacy_import_only_reader(family: dict[str, Any]) -> bool:
+    """A materialized row the owner retired to a one-time owner-boundary import reader.
+
+    It has no writer, reads only through compatibility keys, fails closed on ambiguity and names its
+    successor contract (SIR full-thread addendum 2026-08-31; Plans/storage-plan.md section 2.3.1).
+    """
+    migration = family.get("migration_disposition") if isinstance(family.get("migration_disposition"), dict) else {}
+    crosswalk = family.get("legacy_canonical_crosswalk_status")
+    return (
+        family.get("status") == "materialized"
+        and family.get("tier") == "migration_only"
+        and migration.get("mode") == "compatibility_read_only"
+        and migration.get("compatibility_keys_read_only") is True
+        and migration.get("ambiguity_policy") == "fail_closed"
+        and family.get("producer") == [STORAGE_VALUE_LEGACY_IMPORT_READER_PRODUCER]
+        and isinstance(crosswalk, str)
+        and crosswalk.startswith(STORAGE_VALUE_LEGACY_IMPORT_READER_CROSSWALK_PREFIX)
+        and len(crosswalk) > len(STORAGE_VALUE_LEGACY_IMPORT_READER_CROSSWALK_PREFIX)
+    )
+
+
 def storage_value_registry_data_failures(
     registry: Any,
     *,
@@ -5977,14 +6368,21 @@ def storage_value_registry_data_failures(
                 failures.append({"path": row_path, "error": "storage_value_registry_family_list_empty", "field": list_field})
 
         required_fields = family.get("required_fields", [])
+        row_value_schema = family.get("value_schema")
         failures.extend(
-            storage_value_field_name_failures(required_fields, path_label=row_path, field_list_name="required_fields")
+            storage_value_field_name_failures(
+                required_fields,
+                path_label=row_path,
+                field_list_name="required_fields",
+                value_schema=row_value_schema,
+            )
         )
         failures.extend(
             storage_value_field_name_failures(
                 family.get("optional_fields", []),
                 path_label=row_path,
                 field_list_name="optional_fields",
+                value_schema=row_value_schema,
             )
         )
         failures.extend(
@@ -5992,6 +6390,7 @@ def storage_value_registry_data_failures(
                 family.get("nullable_fields", []),
                 path_label=row_path,
                 field_list_name="nullable_fields",
+                value_schema=row_value_schema,
             )
         )
         optional_fields = family.get("optional_fields", [])
@@ -6021,6 +6420,11 @@ def storage_value_registry_data_failures(
         if status == "materialized":
             if not isinstance(value_schema, dict):
                 failures.append({"path": row_path, "error": "storage_value_registry_materialized_schema_missing"})
+                continue
+            if family_id in STORAGE_VALUE_STORED_PROFILE_UNION_CONTRACT["family_ids"]:
+                # SP-310 nonstored composition: checked member by member against the owner
+                # declaration instead of as one inline stored header.
+                failures.extend(storage_value_stored_profile_union_failures(family, row_path=row_path))
                 continue
             if value_schema.get("type") != "object":
                 failures.append({"path": row_path, "error": "storage_value_registry_value_schema_not_object"})
@@ -6217,6 +6621,10 @@ def storage_value_registry_data_failures(
                 }
             )
         expected_tier = "tier_0_launch_critical" if family_id in required_launch_families else "later_gui_or_feature_projection"
+        if family_id not in required_launch_families and storage_value_legacy_import_only_reader(family):
+            # A required non-launch row its owner retired to a one-time import reader keeps its
+            # MVP membership (existing rows must still be imported) at tier migration_only.
+            expected_tier = "migration_only"
         if family.get("tier") != expected_tier:
             failures.append(
                 {
@@ -7457,6 +7865,258 @@ def fixture_node_snapshot(
     }
 
 
+def storage_value_representation_self_test_checks(
+    live_registry: dict[str, Any],
+    clone_registry: Callable[[], dict[str, Any]],
+    family_of: Callable[[dict[str, Any], str], dict[str, Any]],
+    defer_family: Callable[[dict[str, Any], str], None],
+) -> dict[str, bool]:
+    """Positive and negative checks for the 2026-09-23 registry representation rules.
+
+    Plans/storage-plan.md section 2.3.1 states each rule: SP-310 stored-profile unions, SP-278
+    read tokens, the landed census, MVP legacy import-only readers and the SP-288 retention-hold
+    authority. Every rule has a check that the live registry passes it and at least one check that
+    a drifted copy is still rejected.
+    """
+
+    def errors(fixture: dict[str, Any], label: str) -> list[dict[str, Any]]:
+        return storage_value_registry_data_failures(fixture, path_label=f"self-test:{label}")
+
+    def has(failures: list[dict[str, Any]], error: str, **match: Any) -> bool:
+        return any(
+            failure.get("error") == error and all(failure.get(key) == value for key, value in match.items())
+            for failure in failures
+        )
+
+    checks: dict[str, bool] = {}
+    contract = STORAGE_VALUE_STORED_PROFILE_UNION_CONTRACT
+    live_failures = errors(live_registry, "representation-live")
+
+    # SP-310 stored-profile unions.
+    checks["stored_profile_union_live_rows_accepted"] = not any(
+        storage_value_stored_profile_union_failures(family_of(live_registry, family_id), row_path=f"self-test:union:{family_id}")
+        for family_id in contract["family_ids"]
+    ) and not any(failure.get("family_id") in contract["family_ids"] for failure in live_failures)
+    synthetic = clone_registry()
+    synthetic_row = family_of(synthetic, "goal_cancel_progress")
+    synthetic_row["value_schema"] = {
+        "$ref": synthetic_row["value_schema_ref"],
+        "type": "object",
+        "additionalProperties": False,
+        "required": list(synthetic_row["required_fields"]),
+        "properties": {
+            "schema_id": {"const": synthetic_row["value_schema_id"]},
+            "schema_version": {"const": synthetic_row["schema_version"]},
+            "record": {},
+        },
+    }
+    checks["stored_profile_union_synthetic_single_header_rejected"] = has(
+        errors(synthetic, "union-synthetic-header"),
+        "storage_value_registry_stored_profile_union_value_schema_not_exact_reference",
+        family_id="goal_cancel_progress",
+    )
+    union_row = family_of(live_registry, "goal_cancel_progress")
+    declaration = read_json(ROOT / contract["declaration_path"])
+    resources = read_json(ROOT / contract["schema_resources_path"])
+    relabelled = json.loads(json.dumps(declaration))
+    relabelled_entry = next(entry for entry in relabelled["profiles"] if entry["family_id"] == "goal_cancel_progress")
+    relabelled_entry["profiles"][1]["stored_schema_id"] = union_row["value_schema_id"]
+    relabelled_failures = storage_value_stored_profile_union_failures(
+        union_row, row_path="self-test:union-relabelled", declaration=relabelled, resources=resources
+    )
+    checks["stored_profile_union_composition_identity_as_stored_header_rejected"] = has(
+        relabelled_failures, "storage_value_registry_stored_profile_union_member_schema_id_const_mismatch"
+    ) and has(relabelled_failures, "storage_value_registry_stored_profile_union_member_identities_not_distinct")
+    version_drift = json.loads(json.dumps(declaration))
+    next(entry for entry in version_drift["profiles"] if entry["family_id"] == "goal_cancel_progress")["profiles"][0][
+        "stored_schema_version"
+    ] = "2.0.0"
+    checks["stored_profile_union_member_version_drift_rejected"] = has(
+        storage_value_stored_profile_union_failures(
+            union_row, row_path="self-test:union-version", declaration=version_drift, resources=resources
+        ),
+        "storage_value_registry_stored_profile_union_member_schema_version_const_mismatch",
+    )
+    composition_path = declaration["validation_schema_path"]
+    widened = read_json(ROOT / composition_path)
+    widened["$defs"]["goal_cancel_progress_values"]["oneOf"].append({"type": "object"})
+    widened_bytes = json.dumps(widened).encode("utf-8")
+    widened_resources = json.loads(json.dumps(resources))
+    for entry in widened_resources["realms"][contract["resource_realm"]]["whole_documents"]:
+        if entry.get("path") == composition_path:
+            entry["complete_document_sha256"] = hashlib.sha256(widened_bytes).hexdigest()
+
+    def widened_read(rel_path: str) -> bytes:
+        return widened_bytes if rel_path == composition_path else (ROOT / rel_path).read_bytes()
+
+    checks["stored_profile_union_widened_composition_rejected"] = has(
+        storage_value_stored_profile_union_failures(
+            union_row,
+            row_path="self-test:union-widened",
+            declaration=declaration,
+            resources=widened_resources,
+            read_bytes=widened_read,
+        ),
+        "storage_value_registry_stored_profile_union_composition_members_mismatch",
+    )
+
+    def tampered_read(rel_path: str) -> bytes:
+        raw = (ROOT / rel_path).read_bytes()
+        return raw + b"\n" if rel_path == composition_path else raw
+
+    checks["stored_profile_union_undeclared_document_bytes_rejected"] = has(
+        storage_value_stored_profile_union_failures(
+            union_row, row_path="self-test:union-tampered", declaration=declaration, resources=resources, read_bytes=tampered_read
+        ),
+        "storage_value_registry_stored_profile_union_composition_unresolved",
+    )
+    v1_ref = next(entry for entry in declaration["profiles"] if entry["family_id"] == "goal_cancel_progress")["profiles"][0][
+        "whole_wrapper_ref"
+    ]
+    v1_uri = v1_ref.partition("#")[0]
+    realm_isolated = json.loads(json.dumps(resources))
+    goal_realm = realm_isolated["realms"][contract["resource_realm"]]
+    goal_realm["whole_documents"] = [entry for entry in goal_realm["whole_documents"] if entry.get("retrieval_uri") != v1_uri]
+    checks["stored_profile_union_no_cross_realm_fallback"] = any(
+        uri_entry.get("retrieval_uri") == v1_uri
+        for name, realm_spec in realm_isolated["realms"].items()
+        if name != contract["resource_realm"]
+        for uri_entry in realm_spec.get("whole_documents", [])
+    ) and has(
+        storage_value_stored_profile_union_failures(
+            union_row, row_path="self-test:union-realm", declaration=declaration, resources=realm_isolated
+        ),
+        "storage_value_registry_stored_profile_union_member_unresolved",
+        member=v1_ref,
+    )
+    key_drift = clone_registry()
+    key_row = family_of(key_drift, "goal_cancel_progress")
+    key_row["key_shape"] = " OR ".join(part for part in key_row["key_shape"].split(" OR ") if ".v2:" in part)
+    checks["stored_profile_union_dropped_original_keys_rejected"] = has(
+        errors(key_drift, "union-key-drift"),
+        "storage_value_registry_stored_profile_union_key_shapes_mismatch",
+        family_id="goal_cancel_progress",
+    )
+    bare_reference = clone_registry()
+    bare_row = family_of(bare_reference, "goal_cancel_receipt")
+    bare_row["value_schema"] = {"$ref": bare_row["value_schema_ref"]}
+    checks["single_wrapper_bare_reference_still_rejected"] = has(
+        errors(bare_reference, "single-wrapper-bare-reference"), "storage_value_registry_value_schema_not_object"
+    ) and has(errors(bare_reference, "single-wrapper-bare-reference"), "storage_value_registry_value_schema_not_closed")
+
+    # SP-278 read tokens.
+    read_token_families = (
+        "retention_hold_record",
+        "browser_workspace_reset_index_checkpoint",
+        "seglog_observability_reader_checkpoint",
+        "home_layout_event_reader_checkpoint",
+        "restore_point_expired_checkpoint",
+    )
+    read_token_rows = {
+        f"Plans/storage_value_registry.json:families[{index}]"
+        for index, family in enumerate(live_registry["families"], start=1)
+        if family.get("family_id") in read_token_families
+    }
+    checks["sp278_read_token_fields_accepted"] = storage_value_canonical_read_token_schema() is not None and not any(
+        str(failure.get("error", "")).startswith("storage_value_secret_material")
+        for failure in storage_value_registry_data_failures(live_registry, path_label="Plans/storage_value_registry.json")
+        if failure.get("path") in read_token_rows
+    )
+    string_token = clone_registry()
+    family_of(string_token, "seglog_observability_reader_checkpoint")["value_schema"]["properties"]["index_read_token"] = {
+        "type": "string"
+    }
+    string_token_failures = errors(string_token, "read-token-string")
+    checks["read_token_named_string_rejected"] = has(
+        string_token_failures, "storage_value_secret_material_key", field="index_read_token"
+    ) and has(string_token_failures, "storage_value_secret_material_field", field="index_read_token")
+    renamed_token = clone_registry()
+    renamed_row = family_of(renamed_token, "approved_plan_pack")
+    renamed_row["required_fields"].append("api_token")
+    renamed_row["value_schema"]["required"].append("api_token")
+    renamed_row["value_schema"]["properties"]["api_token"] = json.loads(
+        json.dumps(storage_value_canonical_read_token_schema())
+    )
+    checks["read_token_schema_under_other_name_rejected"] = has(
+        errors(renamed_token, "read-token-renamed"), "storage_value_secret_material_field", field="api_token"
+    )
+    widened_token = clone_registry()
+    widened_token_row = family_of(widened_token, "home_layout_event_reader_checkpoint")
+    widened_token_row["value_schema"]["properties"]["generic_read_token"]["properties"]["bearer_value"] = {"type": "string"}
+    widened_token_row["value_schema"]["properties"]["generic_read_token"]["required"].append("bearer_value")
+    checks["read_token_not_equal_to_canonical_rejected"] = has(
+        errors(widened_token, "read-token-widened"), "storage_value_secret_material_field", field="generic_read_token"
+    )
+    widened_local = clone_registry()
+    widened_local_row = family_of(widened_local, "browser_workspace_reset_index_checkpoint")
+    widened_local_row["value_schema"]["$defs"]["generic_read_token"]["additionalProperties"] = True
+    widened_local_failures = errors(widened_local, "read-token-local-ref")
+    checks["read_token_local_reference_to_altered_definition_rejected"] = has(
+        widened_local_failures, "storage_value_secret_material_key", pointer="$.properties.index_read_token"
+    ) and has(widened_local_failures, "storage_value_secret_material_field", field="index_read_token")
+
+    # Census re-pinned to the landed registry.
+    checks["landed_census_accepted"] = not any(
+        failure.get("error")
+        in {
+            "storage_value_registry_family_count_mismatch",
+            "storage_value_registry_retention_policy_count_mismatch",
+            "storage_value_registry_status_counts_mismatch",
+            "storage_value_registry_tier_counts_mismatch",
+        }
+        for failure in live_failures
+    )
+    fewer_policies = clone_registry()
+    fewer_policies["retention_policies"] = fewer_policies["retention_policies"][:-1]
+    checks["retention_policy_count_rejected"] = has(
+        errors(fewer_policies, "census-retention"), "storage_value_registry_retention_policy_count_mismatch"
+    )
+    status_drift = clone_registry()
+    defer_family(status_drift, "goal_run_started_projection")
+    checks["status_counts_rejected"] = has(errors(status_drift, "census-status"), "storage_value_registry_status_counts_mismatch")
+    tier_drift = clone_registry()
+    family_of(tier_drift, "goal_run_started_projection")["tier"] = "tier_0_launch_critical"
+    checks["tier_counts_rejected"] = has(errors(tier_drift, "census-tier"), "storage_value_registry_tier_counts_mismatch")
+
+    # MVP-required rows retired to one-time import readers.
+    legacy_rows = ("runtime_resource_admission", "observable_work_projection")
+    checks["mvp_legacy_import_reader_tier_accepted"] = all(
+        storage_value_legacy_import_only_reader(family_of(live_registry, family_id)) for family_id in legacy_rows
+    ) and not any(
+        failure.get("error") == "storage_value_registry_mvp_required_family_tier_mismatch" for failure in live_failures
+    )
+    writer_at_migration_tier = clone_registry()
+    family_of(writer_at_migration_tier, "runtime_resource_admission")["migration_disposition"]["mode"] = "current_schema"
+    checks["mvp_writer_at_migration_tier_rejected"] = has(
+        errors(writer_at_migration_tier, "mvp-writer-migration-tier"),
+        "storage_value_registry_mvp_required_family_tier_mismatch",
+        family_id="runtime_resource_admission",
+        expected="later_gui_or_feature_projection",
+    )
+    current_at_migration_tier = clone_registry()
+    family_of(current_at_migration_tier, "onboarding_state")["tier"] = "migration_only"
+    checks["mvp_current_row_at_migration_tier_rejected"] = has(
+        errors(current_at_migration_tier, "mvp-current-migration-tier"),
+        "storage_value_registry_mvp_required_family_tier_mismatch",
+        family_id="onboarding_state",
+    )
+
+    # SP-288 retention-hold authority.
+    checks["retention_hold_v2_authority_accepted"] = (
+        family_of(live_registry, "retention_hold_record").get("recovery_disposition", {}).get("authority_class")
+        == STORAGE_VALUE_REQUIRED_RECOVERY_AUTHORITIES["retention_hold_record"]
+        == "canonical_non_rebuildable"
+    ) and not has(live_failures, "storage_value_registry_semantic_recovery_authority_mismatch")
+    v1_authority = clone_registry()
+    family_of(v1_authority, "retention_hold_record")["recovery_disposition"]["authority_class"] = "canonical_dual_homed"
+    checks["retention_hold_v1_authority_on_v2_row_rejected"] = has(
+        errors(v1_authority, "retention-hold-v1-authority"),
+        "storage_value_registry_semantic_recovery_authority_mismatch",
+        family_id="retention_hold_record",
+    )
+    return checks
+
+
 def run_self_tests() -> dict[str, Any]:
     matrix = {
         "false_proof_guardrails": REQUIRED_FALSE_PROOF_GUARDS,
@@ -7909,6 +8569,12 @@ def run_self_tests() -> dict[str, Any]:
                 path_label=f"self-test:operational_family_deferred:{family_id}",
             )
         )
+    storage_representation_checks = storage_value_representation_self_test_checks(
+        storage_registry_fixture,
+        clone_storage_registry_fixture,
+        storage_fixture_family,
+        defer_storage_fixture_family,
+    )
     storage_registry_checks = {
         "valid_storage_value_registry": not storage_value_registry_data_failures(
             storage_registry_fixture,
@@ -8050,6 +8716,7 @@ def run_self_tests() -> dict[str, Any]:
             )
         ),
         "operational_categories_required": all(operational_family_checks.values()),
+        **storage_representation_checks,
     }
     if not all(storage_registry_checks.values()):
         failures.append(
