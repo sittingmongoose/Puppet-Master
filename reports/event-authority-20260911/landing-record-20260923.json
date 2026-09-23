@@ -1,0 +1,675 @@
+{
+ "authority": {
+  "checkpoint": "Approved, separate branch",
+  "landing_exception": "Confirm, land it",
+  "reseal_designation": "Yes, designate me (after this landing)",
+  "source": "Jared, in the DL-039 takeover conversation, 2026-09-23, confirming the coordinator session rulings (PM Low cost/complexity process)"
+ },
+ "base": "origin/main d247d57ebd0d53ce4c66f4795e24a14d8782e9b8",
+ "branch": "plans/event-authority-source-current-20260921",
+ "currentness_drift_as_staleness": {
+  "count": 13,
+  "reseal_request": true,
+  "rows": [
+   {
+    "check": "run-gates",
+    "error": "event_authority_currentness_source_drift",
+    "key": "run-gates|validate_implementation_readiness|event_authority_currentness_source_drift||e62a59ff2641",
+    "source_path": "Plans/00-plans-index.md",
+    "subcheck": "validate_implementation_readiness"
+   },
+   {
+    "check": "run-gates",
+    "error": "event_authority_currentness_source_drift",
+    "key": "run-gates|validate_implementation_readiness|event_authority_currentness_source_drift||966713e6ac2f",
+    "source_path": "Plans/Automated_Testing_System.md",
+    "subcheck": "validate_implementation_readiness"
+   },
+   {
+    "check": "run-gates",
+    "error": "event_authority_currentness_source_drift",
+    "key": "run-gates|validate_implementation_readiness|event_authority_currentness_source_drift||6afb48172bc6",
+    "source_path": "Plans/Backup_Restore_System.md",
+    "subcheck": "validate_implementation_readiness"
+   },
+   {
+    "check": "run-gates",
+    "error": "event_authority_currentness_source_drift",
+    "key": "run-gates|validate_implementation_readiness|event_authority_currentness_source_drift||d9e287f261e5",
+    "source_path": "Plans/Contracts_V0.md",
+    "subcheck": "validate_implementation_readiness"
+   },
+   {
+    "check": "run-gates",
+    "error": "event_authority_currentness_source_drift",
+    "key": "run-gates|validate_implementation_readiness|event_authority_currentness_source_drift||fe9b3049d0f1",
+    "source_path": "Plans/Executor_Protocol.md",
+    "subcheck": "validate_implementation_readiness"
+   },
+   {
+    "check": "run-gates",
+    "error": "event_authority_currentness_source_drift",
+    "key": "run-gates|validate_implementation_readiness|event_authority_currentness_source_drift||3144f19a6964",
+    "source_path": "Plans/Goal_Runtime_System.md",
+    "subcheck": "validate_implementation_readiness"
+   },
+   {
+    "check": "audit-governance",
+    "error": "event_authority_currentness_source_drift",
+    "key": "audit-governance|implementation_readiness|event_authority_currentness_source_drift||e62a59ff2641",
+    "source_path": "Plans/00-plans-index.md",
+    "subcheck": "implementation_readiness"
+   },
+   {
+    "check": "audit-governance",
+    "error": "event_authority_currentness_source_drift",
+    "key": "audit-governance|implementation_readiness|event_authority_currentness_source_drift||966713e6ac2f",
+    "source_path": "Plans/Automated_Testing_System.md",
+    "subcheck": "implementation_readiness"
+   },
+   {
+    "check": "audit-governance",
+    "error": "event_authority_currentness_source_drift",
+    "key": "audit-governance|implementation_readiness|event_authority_currentness_source_drift||6afb48172bc6",
+    "source_path": "Plans/Backup_Restore_System.md",
+    "subcheck": "implementation_readiness"
+   },
+   {
+    "check": "audit-governance",
+    "error": "event_authority_currentness_source_drift",
+    "key": "audit-governance|implementation_readiness|event_authority_currentness_source_drift||d9e287f261e5",
+    "source_path": "Plans/Contracts_V0.md",
+    "subcheck": "implementation_readiness"
+   },
+   {
+    "check": "audit-governance",
+    "error": "event_authority_currentness_source_drift",
+    "key": "audit-governance|implementation_readiness|event_authority_currentness_source_drift||fe9b3049d0f1",
+    "source_path": "Plans/Executor_Protocol.md",
+    "subcheck": "implementation_readiness"
+   },
+   {
+    "check": "audit-governance",
+    "error": "event_authority_currentness_source_drift",
+    "key": "audit-governance|implementation_readiness|event_authority_currentness_source_drift||3144f19a6964",
+    "source_path": "Plans/Goal_Runtime_System.md",
+    "subcheck": "implementation_readiness"
+   },
+   {
+    "check": "audit-governance",
+    "error": "event_authority_currentness_source_drift",
+    "key": "audit-governance|implementation_readiness|event_authority_currentness_source_drift||7ba7abc0e17f",
+    "source_path": "Plans/event_family_registry.json",
+    "subcheck": "implementation_readiness"
+   }
+  ]
+ },
+ "date": "2026-09-23",
+ "deferred": {
+  "after_landing": "delete plans/event-authority-certified-source-20260920 on origin; currentness edition and Step 10 reseal by the takeover agent in a fresh worktree",
+  "checkpoint_2026-09-11.2": "Jared approved the 42-family registry (SHA-256 1972a6aa6ef168a46091be5347bc9cff657985a1c21ab1b84665b9ed96c1ed3a) as the Step 8 comparison checkpoint; applied in the next small branch with the pm_pnc019_currentness.py lines 48-49 repair and a Decision Log entry.",
+  "unlanded": [
+   "plans/browser-created-sp278-20260923",
+   "plans/terminal-workgroup-depth-20260923"
+  ]
+ },
+ "kept_goal_payload_ref_rows": [
+  {
+   "actual": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+   "disposition": "kept on the goal_run.started / goal_run.cancelled v3 precedent (e686963ad5, a3c511657f)",
+   "error": "event_family_registry_goal_payload_ref_mismatch",
+   "event_type": "goal_run.cancelled",
+   "expected": "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json",
+   "introduced_by_branch": false,
+   "owner": "Storage registry owner, repair in a later branch",
+   "path": "Plans/event_family_registry.json:families/1"
+  },
+  {
+   "actual": "Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+   "disposition": "kept on the goal_run.started / goal_run.cancelled v3 precedent (e686963ad5, a3c511657f)",
+   "error": "event_family_registry_goal_payload_ref_mismatch",
+   "event_type": "goal_run.certified",
+   "expected": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+   "introduced_by_branch": true,
+   "owner": "Storage registry owner, repair in a later branch",
+   "path": "Plans/event_family_registry.json:families/2"
+  },
+  {
+   "actual": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+   "disposition": "kept on the goal_run.started / goal_run.cancelled v3 precedent (e686963ad5, a3c511657f)",
+   "error": "event_family_registry_goal_payload_ref_mismatch",
+   "event_type": "goal_run.started",
+   "expected": "Plans/event_payloads/goal_runtime/goal_run_started.schema.json",
+   "introduced_by_branch": false,
+   "owner": "Storage registry owner, repair in a later branch",
+   "path": "Plans/event_family_registry.json:families/4"
+  },
+  {
+   "actual": [
+    "goal.blocked",
+    "goal.cancelled",
+    "goal.child_status_changed",
+    "goal.completed",
+    "goal.created",
+    "goal.degraded",
+    "goal.evidence_captured",
+    "goal.progressed",
+    "goal.receipt_recorded",
+    "goal.replanned",
+    "goal.scheduled",
+    "goal.stopped",
+    "goal.tool_check_recorded",
+    "goal.updated",
+    "goal.verification_decided",
+    "goal_run.blocked",
+    "goal_run.cancelled",
+    "goal_run.certified",
+    "goal_run.replanned",
+    "goal_run.started",
+    "goal_run.stopped"
+   ],
+   "actual_refs": {
+    "goal.blocked": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
+    "goal.cancelled": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+    "goal.child_status_changed": "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
+    "goal.completed": "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
+    "goal.created": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+    "goal.degraded": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
+    "goal.evidence_captured": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
+    "goal.progressed": "Plans/event_payloads/goal_runtime/goal_progressed.schema.json",
+    "goal.receipt_recorded": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
+    "goal.replanned": "Plans/event_payloads/goal_runtime/goal_replanned.schema.json",
+    "goal.scheduled": "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+    "goal.stopped": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
+    "goal.tool_check_recorded": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+    "goal.updated": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+    "goal.verification_decided": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json",
+    "goal_run.blocked": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
+    "goal_run.cancelled": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+    "goal_run.certified": "Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+    "goal_run.replanned": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+    "goal_run.started": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+    "goal_run.stopped": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json"
+   },
+   "disposition": "kept on the goal_run.started / goal_run.cancelled v3 precedent (e686963ad5, a3c511657f)",
+   "error": "event_family_registry_goal_kernel_membership_mismatch",
+   "expected": [
+    "goal.blocked",
+    "goal.cancelled",
+    "goal.child_status_changed",
+    "goal.completed",
+    "goal.created",
+    "goal.degraded",
+    "goal.evidence_captured",
+    "goal.progressed",
+    "goal.receipt_recorded",
+    "goal.replanned",
+    "goal.scheduled",
+    "goal.stopped",
+    "goal.tool_check_recorded",
+    "goal.updated",
+    "goal.verification_decided",
+    "goal_run.blocked",
+    "goal_run.cancelled",
+    "goal_run.certified",
+    "goal_run.replanned",
+    "goal_run.started",
+    "goal_run.stopped"
+   ],
+   "expected_refs": {
+    "goal.blocked": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
+    "goal.cancelled": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+    "goal.child_status_changed": "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
+    "goal.completed": "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
+    "goal.created": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+    "goal.degraded": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
+    "goal.evidence_captured": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
+    "goal.progressed": "Plans/event_payloads/goal_runtime/goal_progressed.schema.json",
+    "goal.receipt_recorded": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
+    "goal.replanned": "Plans/event_payloads/goal_runtime/goal_replanned.schema.json",
+    "goal.scheduled": "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+    "goal.stopped": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
+    "goal.tool_check_recorded": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+    "goal.updated": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+    "goal.verification_decided": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json",
+    "goal_run.blocked": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
+    "goal_run.cancelled": "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json",
+    "goal_run.certified": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+    "goal_run.replanned": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+    "goal_run.started": "Plans/event_payloads/goal_runtime/goal_run_started.schema.json",
+    "goal_run.stopped": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json"
+   },
+   "introduced_by_branch": true,
+   "owner": "Storage registry owner, repair in a later branch",
+   "path": "Plans/event_family_registry.json"
+  }
+ ],
+ "landing_check_worktree": {
+  "blocking_items": 15,
+  "exit": 2,
+  "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/takeover-20260923/landing-check-source-current-58711085cb.json",
+  "sha256": "829873f3de5c4055bda4cdce9d3ee149188f5c81bf5bd3bb54e25bc5724e118c"
+ },
+ "readiness_comparison_equal_inputs": {
+  "added": 2,
+  "baseline_note": "Baseline 124 was recorded at b29eab7b99 without the ignored currentness audit inputs.",
+  "branch_58711085cb": 179,
+  "branch_output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/takeover-20260923/readiness-validate-source-current-58711085cb.json",
+  "branch_sha256": "3c4f1bfeaa25dbf1de2d021d17d8a82c86148960f63cd5cb9ebbefb6e053dae4",
+  "main_d247d57ebd": 218,
+  "main_output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/takeover-20260923/readiness-validate-main-d247d57ebd.json",
+  "main_sha256": "8e16734f5a7cd6183a33c5869d323a3ed2e232dbe837eac5c828c8e5a2ea4366",
+  "removed": 41
+ },
+ "reseal_request_documents": [
+  "Plans/00-plans-index.md",
+  "Plans/Automated_Testing_System.md",
+  "Plans/Backup_Restore_System.md",
+  "Plans/Contracts_V0.md",
+  "Plans/Executor_Protocol.md",
+  "Plans/Goal_Runtime_System.md",
+  "Plans/event_family_registry.json",
+  "Plans/goal_certified_family_composition.json",
+  "Plans/goal_certified_original_scope_dispatch.json",
+  "Plans/storage-plan.md",
+  "Plans/storage_value_registry.json",
+  "Plans/Planning_Wizard.md",
+  "Plans/Bootstrap_Planning_Migration.md",
+  "Plans/Decision_Log.md"
+ ],
+ "schema_id": "pm.event_authority.landing_record.v1",
+ "scoped_exception_storage_registry": {
+  "count": 45,
+  "findings": [
+   {
+    "actual": 27,
+    "error": "storage_value_registry_retention_policy_count_mismatch",
+    "expected": 24,
+    "key": "64948d311622840b",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json"
+   },
+   {
+    "actual": 294,
+    "error": "storage_value_registry_family_count_mismatch",
+    "expected": 88,
+    "key": "0382633f16e4118f",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json"
+   },
+   {
+    "error": "storage_value_secret_material_key",
+    "field": "read_token",
+    "key": "369f46db9a37837f",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[50]",
+    "pointer": "$.$defs.read_token"
+   },
+   {
+    "error": "storage_value_secret_material_field",
+    "field": "index_read_token",
+    "field_list": "required_fields",
+    "key": "9c0ed24a90c9ce13",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[96]"
+   },
+   {
+    "error": "storage_value_secret_material_key",
+    "field": "index_read_token",
+    "key": "ee729336b6a13574",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[96]",
+    "pointer": "$.properties.index_read_token"
+   },
+   {
+    "error": "storage_value_secret_material_key",
+    "field": "index_read_token",
+    "key": "b653c114f8ee1752",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[96]",
+    "pointer": "$.$defs.checkpoint_core.properties.index_read_token"
+   },
+   {
+    "error": "storage_value_secret_material_key",
+    "field": "generic_read_token",
+    "key": "2c9a2a5074d798fa",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[96]",
+    "pointer": "$.$defs.generic_read_token"
+   },
+   {
+    "error": "storage_value_secret_material_field",
+    "field": "index_read_token",
+    "field_list": "required_fields",
+    "key": "e2e2ceee9d13a7a8",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[99]"
+   },
+   {
+    "error": "storage_value_secret_material_key",
+    "field": "index_read_token",
+    "key": "9dea79bb9347facd",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[99]",
+    "pointer": "$.properties.index_read_token"
+   },
+   {
+    "error": "storage_value_secret_material_key",
+    "field": "index_read_token",
+    "key": "422a889aaca5be55",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[99]",
+    "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.index_read_token"
+   },
+   {
+    "error": "storage_value_secret_material_field",
+    "field": "generic_read_token",
+    "field_list": "required_fields",
+    "key": "04167ca101c0e9aa",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[102]"
+   },
+   {
+    "error": "storage_value_secret_material_key",
+    "field": "generic_read_token",
+    "key": "24f8618e37a48fff",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[102]",
+    "pointer": "$.properties.generic_read_token"
+   },
+   {
+    "error": "storage_value_secret_material_key",
+    "field": "generic_read_token",
+    "key": "67503ca7be51d954",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[102]",
+    "pointer": "$.properties.previous_generations.items.properties.value.properties.generic_read_token"
+   },
+   {
+    "error": "storage_value_secret_material_field",
+    "field": "generic_read_token",
+    "field_list": "required_fields",
+    "key": "1dca93113bb26770",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[110]"
+   },
+   {
+    "error": "storage_value_secret_material_key",
+    "field": "generic_read_token",
+    "key": "123222f184696259",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[110]",
+    "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.generic_read_token"
+   },
+   {
+    "error": "storage_value_secret_material_key",
+    "field": "generic_read_token",
+    "key": "85c43312fba020a2",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[110]",
+    "pointer": "$.properties.generic_read_token"
+   },
+   {
+    "error": "storage_value_registry_value_schema_not_object",
+    "key": "4463b1b075aa0f86",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[145]"
+   },
+   {
+    "error": "storage_value_registry_value_schema_not_closed",
+    "key": "a70eebf23809af30",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[145]"
+   },
+   {
+    "actual": [],
+    "error": "storage_value_registry_required_fields_schema_mismatch",
+    "expected": [
+     "schema_id",
+     "schema_version",
+     "record"
+    ],
+    "family_id": "goal_cancel_progress",
+    "key": "ebd2bc2070062d51",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[145]"
+   },
+   {
+    "error": "storage_value_registry_required_field_absent_from_value_schema",
+    "family_id": "goal_cancel_progress",
+    "field": "schema_id",
+    "key": "06409b9532e60e0c",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[145]"
+   },
+   {
+    "error": "storage_value_registry_required_field_absent_from_value_schema",
+    "family_id": "goal_cancel_progress",
+    "field": "schema_version",
+    "key": "ba14b4f7dfd087e4",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[145]"
+   },
+   {
+    "error": "storage_value_registry_required_field_absent_from_value_schema",
+    "family_id": "goal_cancel_progress",
+    "field": "record",
+    "key": "d8bbcaa9aabd53c0",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[145]"
+   },
+   {
+    "actual": null,
+    "error": "storage_value_registry_value_schema_id_const_mismatch",
+    "expected": "https://puppetmaster.local/proposals/goal_cancel_progress_stored_profiles.v1.schema.json",
+    "family_id": "goal_cancel_progress",
+    "key": "f58e3e6a367af6ef",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[145]"
+   },
+   {
+    "actual": null,
+    "error": "storage_value_registry_value_schema_version_const_mismatch",
+    "expected": "1.0.0",
+    "family_id": "goal_cancel_progress",
+    "key": "111c8070bbc58d5d",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[145]"
+   },
+   {
+    "error": "storage_value_registry_value_schema_not_object",
+    "key": "93daf9db9ca8896a",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[146]"
+   },
+   {
+    "error": "storage_value_registry_value_schema_not_closed",
+    "key": "a8e87528b114d2ec",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[146]"
+   },
+   {
+    "actual": [],
+    "error": "storage_value_registry_required_fields_schema_mismatch",
+    "expected": [
+     "schema_id",
+     "schema_version",
+     "record"
+    ],
+    "family_id": "goal_cancel_control_publication",
+    "key": "df7b82984ec9dfb8",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[146]"
+   },
+   {
+    "error": "storage_value_registry_required_field_absent_from_value_schema",
+    "family_id": "goal_cancel_control_publication",
+    "field": "schema_id",
+    "key": "8249d6b99e51718e",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[146]"
+   },
+   {
+    "error": "storage_value_registry_required_field_absent_from_value_schema",
+    "family_id": "goal_cancel_control_publication",
+    "field": "schema_version",
+    "key": "9d24d4aa38f64a1f",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[146]"
+   },
+   {
+    "error": "storage_value_registry_required_field_absent_from_value_schema",
+    "family_id": "goal_cancel_control_publication",
+    "field": "record",
+    "key": "c87e8f24b031ba92",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[146]"
+   },
+   {
+    "actual": null,
+    "error": "storage_value_registry_value_schema_id_const_mismatch",
+    "expected": "https://puppetmaster.local/proposals/goal_cancel_control_publication_stored_profiles.v1.schema.json",
+    "family_id": "goal_cancel_control_publication",
+    "key": "84e4ad0fcdb0d860",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[146]"
+   },
+   {
+    "actual": null,
+    "error": "storage_value_registry_value_schema_version_const_mismatch",
+    "expected": "1.0.0",
+    "family_id": "goal_cancel_control_publication",
+    "key": "1c95f2dc3ffc0e01",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[146]"
+   },
+   {
+    "error": "storage_value_registry_value_schema_not_object",
+    "key": "ed25e536f08050a7",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[147]"
+   },
+   {
+    "error": "storage_value_registry_value_schema_not_closed",
+    "key": "5e074e4d1bbe26eb",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[147]"
+   },
+   {
+    "actual": [],
+    "error": "storage_value_registry_required_fields_schema_mismatch",
+    "expected": [
+     "schema_id",
+     "schema_version",
+     "record"
+    ],
+    "family_id": "goal_cancel_terminal_audit",
+    "key": "85af4c5f1230aaa6",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[147]"
+   },
+   {
+    "error": "storage_value_registry_required_field_absent_from_value_schema",
+    "family_id": "goal_cancel_terminal_audit",
+    "field": "schema_id",
+    "key": "c54639888b1aaa8d",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[147]"
+   },
+   {
+    "error": "storage_value_registry_required_field_absent_from_value_schema",
+    "family_id": "goal_cancel_terminal_audit",
+    "field": "schema_version",
+    "key": "3892a776ab18752d",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[147]"
+   },
+   {
+    "error": "storage_value_registry_required_field_absent_from_value_schema",
+    "family_id": "goal_cancel_terminal_audit",
+    "field": "record",
+    "key": "c3100aeb25529549",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[147]"
+   },
+   {
+    "actual": null,
+    "error": "storage_value_registry_value_schema_id_const_mismatch",
+    "expected": "https://puppetmaster.local/proposals/goal_cancel_terminal_audit_stored_profiles.v1.schema.json",
+    "family_id": "goal_cancel_terminal_audit",
+    "key": "af5d201d6c2429d0",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[147]"
+   },
+   {
+    "actual": null,
+    "error": "storage_value_registry_value_schema_version_const_mismatch",
+    "expected": "1.0.0",
+    "family_id": "goal_cancel_terminal_audit",
+    "key": "44dc73fcca773f07",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json:families[147]"
+   },
+   {
+    "actual": {
+     "compatibility_alias": 1,
+     "deferred_not_build_blocking": 21,
+     "materialized": 272
+    },
+    "error": "storage_value_registry_status_counts_mismatch",
+    "expected": {
+     "compatibility_alias": 1,
+     "deferred_not_build_blocking": 21,
+     "materialized": 66
+    },
+    "key": "c17f657bd3d54c80",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json"
+   },
+   {
+    "actual": {
+     "later_gui_or_feature_projection": 251,
+     "migration_only": 3,
+     "tier_0_launch_critical": 40
+    },
+    "error": "storage_value_registry_tier_counts_mismatch",
+    "expected": {
+     "later_gui_or_feature_projection": 71,
+     "migration_only": 1,
+     "tier_0_launch_critical": 16
+    },
+    "key": "a0b2b5b7ca745d8d",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json"
+   },
+   {
+    "actual": "migration_only",
+    "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+    "expected": "later_gui_or_feature_projection",
+    "family_id": "runtime_resource_admission",
+    "key": "01436f48da9dd1e0",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json"
+   },
+   {
+    "actual": "migration_only",
+    "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+    "expected": "later_gui_or_feature_projection",
+    "family_id": "observable_work_projection",
+    "key": "24a886fce2e81cc2",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json"
+   },
+   {
+    "actual": "canonical_non_rebuildable",
+    "error": "storage_value_registry_semantic_recovery_authority_mismatch",
+    "expected": "canonical_dual_homed",
+    "family_id": "retention_hold_record",
+    "key": "6578ffe48f0775bf",
+    "owner": "Storage registry owner, repair in a later branch",
+    "path": "Plans/storage_value_registry.json"
+   }
+  ],
+  "note": "All 45 also present on main (same error/path/family identity; 3 census rows differ only in counts because the branch adds 12 families). Branch removes 40 others in the same file (main 85 -> branch 45). Validator unchanged."
+ }
+}
