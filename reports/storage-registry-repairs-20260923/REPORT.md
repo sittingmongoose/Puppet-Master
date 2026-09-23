@@ -1,6 +1,6 @@
 # Storage registry repairs, 2026-09-23
 
-STATUS: front 1 complete and pushed (last step: report written; branch `fix/storage-registry-repairs-20260923` held for the coordinator's landing slot). Front 2 not started.
+STATUS: front 1 complete, including the seven blind-review fixes, and pushed (last step: review-fix section written). Held for the coordinator's go; front 2 lands after it.
 
 Branch `fix/storage-registry-repairs-20260923`, from `origin/main` `dca3c3349e`, in the sparse worktree `~/pm-worktrees/storage-registry-repairs-20260923` (`Plans scripts reports tests`). Not landed.
 
@@ -28,7 +28,31 @@ Readiness failures drop from **79 to 33**: the 49 targeted rows are removed, and
 | `d5e5b725c2` | `scripts/pm-implementation-readiness.py`: the rules, 23 named storage self-test checks and 1 event self-test check. Unittests in `tests/test_pm_runtime_vocabulary_migration.py` (+3) and `tests/test_pm_testing_session_events.py` (+1). |
 | `76c7f30854` | Upstream event-row hash re-frozen: `scripts/pm_emit_only_event_contract.py`, the two emit-only manifests, the two named test modules, and the emit-only boundary test's copy. |
 | `3567632096` | The same re-freeze for the Browser admission pins (manifest, schema `const`, test). It sits in its own commit so it can be dropped (see "Choices"). |
-| this commit | This report. |
+| `0540f4bd03` | This report, first version. |
+| `ae9d9e9c41` | R-02: union row `schema_version` bound to the composition version `1.0.0`; `whole_wrapper_sha256` recorded as an owner question. |
+| `c3035e0d2f` | R-03: the union secret-material scan follows every reference the members reach, inside the declared realm. |
+| `f279a5a45c` | R-05: the read-token passage names `redb_snapshot_id` and raises its persistence as an owner question. |
+| `9ca1cef052` | R-07: retired MVP import readers limited to the two named families and their only consumer; census comment corrected. |
+| `0148394b91` | R-09: the census comment says it names only count- or tier-changing commits, and lists the 15 others. |
+| `feed0f1723` | R-12: re-freeze provenance: baseline source `f6350caf27`, and the Browser fingerprint sentence. |
+| `af7b2aa2fb` | R-14: SP-310's acceptance criterion amended with the dated 2026-09-23 qualification. |
+| this commit | This report, with the review-fix section. |
+
+## Blind review and fixes
+
+A blind reviewer read this branch at `0540f4bd03` against SP-310, SP-278, SP-288 and the registry rows, without this report. Its files are in `/home/sittingmongoose/PM-Experiments/storage-registry-repairs-review-20260923/` (`findings.jsonl`, `REVIEW.md`, `RECONCILIATION.md`). Result: 14 findings, 0 weakened, 6 unclear, 8 canon-correct; verdict "fix then land". The coordinator asked for the six unclear findings and R-09 to be fixed, one commit each. Each commit that edits `Plans/storage-plan.md` regenerates its shards and the index.
+
+| Finding | What was wrong | Fix | Commit | New named checks |
+|---|---|---|---|---|
+| R-02 | The union check never read the row's `schema_version`; `9.9.9` passed. | The row's `schema_version` must equal the composition version `1.0.0` that SP-310 assigns (the declaration has no version field). The per-member `whole_wrapper_sha256` values stay unchecked: no stated preimage reproduces them, so the owner text records the recipe as an open question for the Storage owner. | `ae9d9e9c41` | `stored_profile_union_schema_version_drift_rejected` |
+| R-03 | The secret scan stopped at each member wrapper; a required `provider_api_token` inside the V2 `Progress` record passed. | One realm resolver now resolves the composition, the members and the transitive `$ref` closure of the members: only declared, hash-pinned documents and embedded resources, read on first use. The secret scan runs over every reached definition (86 targets in 8 documents on the live rows, none flagged). An undeclared URI, plain-name fragment, missing pointer or dynamic reference fails as `storage_value_registry_stored_profile_union_reference_unresolved`. | `c3035e0d2f` | `stored_profile_union_record_graph_secret_rejected`, `stored_profile_union_record_graph_reference_outside_realm_rejected` |
+| R-05 | The read-token passage omitted `redb_snapshot_id`, which SP-311 says never to persist. | The passage names it, lists the four checkpoint rows that persist the whole token, and leaves their persistence as an open question for the Storage owner. No readiness rule changes. | `f279a5a45c` | none |
+| R-07 | The import-reader predicate keyed on shape alone and skipped the consumer; the code comment said every census commit had its own record. | The predicate requires one of the two named families (`runtime_resource_admission`, `observable_work_projection`) and consumers exactly `["StorageMigrationCoordinator one-time owner-boundary normalizer"]`. The comment now says `63bff67fb4` is a sweep commit and the SIR addendum arrived in the sweep `3e1842da40`. | `9ca1cef052` | `mvp_unlisted_row_in_import_reader_shape_rejected`, `mvp_import_reader_with_writer_era_consumers_rejected` |
+| R-09 | The census comment did not say its 27-commit list covers only census-changing commits. | It now does, and lists the other 15 registry commits in the range. The review put that number at six. A parent-by-parent comparison of all 42 registry commits between `99a3c7db9d` and `dca3c3349e` gives 27 census-changing and 15 unchanged. | `0148394b91` | none |
+| R-12 | The emit-only manifests still named baseline source `cc6d4a9aca` (old prefix), and the Browser manifest called its changed fingerprint unchanged. | Both baseline sources point at `f6350caf277d662fad531fc9b9af4c82803670fa`, registry SHA-256 `0be544181eda…`, whose first-40 prefix is the re-frozen value. The Browser sentence says the fingerprint was re-frozen and that membership and order are unchanged. | `feed0f1723` | none (no script reads these fields) |
+| R-14 | SP-310's acceptance criterion still said the readiness limitation "remain[s] explicitly unqualified". | The criterion (`SP-310-A005`, same ID) carries a dated amendment: the limitation was qualified on 2026-09-23 by the §2.3.1 readiness representation contract, on Jared's 2026-09-23 instruction to repair the Storage registry findings. The SP-310 follow-up and the §2.3.1 lead say the same. **No Decision Log entry was added. One can record the qualification if Jared wants one.** | `af7b2aa2fb` | none |
+
+The storage representation self-test now has 28 named checks, up from 23. `test_pm_runtime_vocabulary_migration.ReadinessRegistryRepresentationTest` asserts all 28 by name. Readiness stays at 33 failures with an identical set. The coordinator classified the three Spec Lock rows on the edited validator as governance staleness for the landing.
 
 ## The rules, each with its canon basis
 
@@ -40,12 +64,26 @@ The owner text is `Plans/storage-plan.md` §2.3.1, "Readiness representation of 
 - It requires the composition `$id` to equal `value_schema_id`, and the composition to be exactly `$id`/`$comment`/`oneOf` of the whole wrappers that `physical-profiles.json` lists, in order.
 - Each member must be a closed object with the row's required fields and the declared literal `schema_id`/`schema_version`. The composition identity must never be a stored header.
 - The row's key shapes, producers, consumers, codec, retention and authority must equal the declaration.
+- The row's `schema_version` must be the composition version `1.0.0` (review fix R-02).
+- Every definition the members reach through references, resolved inside the same realm, is scanned for secret material exactly as an inline row's `value_schema` is; a reference that does not resolve there fails (review fix R-03). The resolver treats any object with a string `$id` as a resource boundary, because the realm declares embedded resources at non-standard keywords such as `legacy_v2_reader`.
 
-Negatives cover six drifts, each rejected: a synthetic single header, the composition identity relabelled as a member header, member version drift, a widened `oneOf`, undeclared document bytes, and a missing goal-realm entry (no fallback to the native realm). Also rejected are dropped V1 keys and a bare reference on a non-union row (`goal_cancel_receipt`).
+Negatives cover eight drifts, each rejected:
+- a synthetic single header;
+- the composition identity relabelled as a member header;
+- member version drift;
+- row `schema_version` drift;
+- a widened `oneOf`;
+- undeclared document bytes;
+- a missing goal-realm entry (no fallback to the native realm);
+- a secret key or an outside-realm reference inside a record graph.
+
+Also rejected are dropped V1 keys and a bare reference on a non-union row (`goal_cancel_receipt`).
 
 **T. SP-278 read tokens (14 findings, rows 50, 96, 99, 102, 110).** All five fields (`read_token`, `index_read_token`, `generic_read_token`) are JSON-identical to `Plans/event_record_index_checkpoint.schema.json#/$defs/read_token`. SP-278 defines that as a closed read selector of Storage identity, relative control names, hashes, generation and frontier ("Retained metadata contains only non-secret relative control names, identities, hashes, cursors and authorized refs"). The secret-name rule matched `token` in the name. A key or field is now exempt only when both of these hold:
 - its name is `read_token` or ends in `_read_token`;
 - its whole schema equals the canonical definition, inline or through one local reference.
+
+The canonical token also carries `redb_snapshot_id`. Four checkpoint rows persist the whole token as a required field, and SP-311 calls the snapshot id a live transaction fence never to be persisted. That persistence question is left to the Storage owner; a snapshot id is not secret material (review fix R-05).
 
 The recursion still inspects the token's own properties. Negatives, each still rejected:
 - a `*_read_token` typed as a string;
@@ -53,9 +91,13 @@ The recursion still inspects the token's own properties. Negatives, each still r
 - a token with an extra property;
 - a local `$defs` token with `additionalProperties: true`, which also flags the property that references it.
 
-**C. Census (4 findings).** The validator pinned 88 families, 24 policies, status 66/21/1 and tier 16/71/1. That is exactly the registry at `99a3c7db9d` (2026-09-06). It is re-pinned to 294 families, 27 policies, status 272/21/1 and tier 40/251/3. SP-318 already states "294 rows after the 2026-09-23 Event Authority source-current landing". All 27 commits that moved the census since the pin are ancestors of `main`, and each carries a record; they are listed below. They add 206 families and 3 policies and remove none. Negatives cover a removed policy, a status change and a tier change; the family-count negative already existed.
+**C. Census (4 findings).** The validator pinned 88 families, 24 policies, status 66/21/1 and tier 16/71/1. That is exactly the registry at `99a3c7db9d` (2026-09-06). It is re-pinned to 294 families, 27 policies, status 272/21/1 and tier 40/251/3. SP-318 already states "294 rows after the 2026-09-23 Event Authority source-current landing". 27 commits changed a count or a tier since the pin; all are ancestors of `main`, and they are listed below. 26 of them carry their own record and together add 206 families and 3 policies, removing none. The 27th, `63bff67fb4`, is a sweep checkpoint with no record of its own (see choice 1). Another 15 commits touched the registry in the range without changing the census. Negatives cover a removed policy, a status change and a tier change; the family-count negative already existed.
 
-**M. MVP rows retired to import readers (2 findings).** `runtime_resource_admission` and `observable_work_projection` are MVP-required and now `migration_only`. The Shared_Integration_Runtime full-thread addendum (2026-08-31) makes existing `pm.shared_runtime.contracts.v1` rows "compatibility/import values [that] normalize once at the owner boundary". `Plans/full_thread_runtime_contracts.schema.json#/x-legacy-normalization` names these two record kinds. `tests/test_pm_runtime_vocabulary_migration.py` asserts `migration_only`. The validator's rule ("every non-launch MVP family is `later_gui_or_feature_projection`") predates that retirement. It now accepts `migration_only` only for a row with no writer, a `compatibility_read_only` migration with read-only compatibility keys and fail-closed ambiguity, and a `legacy_reader_import_only_to_<successor>` crosswalk. Negatives: the same tier on a row with a writer, and on an ordinary MVP row (`onboarding_state`).
+**M. MVP rows retired to import readers (2 findings).** `runtime_resource_admission` and `observable_work_projection` are MVP-required and now `migration_only`. The Shared_Integration_Runtime full-thread addendum (2026-08-31) makes existing `pm.shared_runtime.contracts.v1` rows "compatibility/import values [that] normalize once at the owner boundary". `Plans/full_thread_runtime_contracts.schema.json#/x-legacy-normalization` names these two record kinds. `tests/test_pm_runtime_vocabulary_migration.py` asserts `migration_only`. The validator's rule ("every non-launch MVP family is `later_gui_or_feature_projection`") predates that retirement. It now accepts `migration_only` only for the two named families (review fix R-07). Each must have no writer and only the `StorageMigrationCoordinator one-time owner-boundary normalizer` as consumer, with a `compatibility_read_only` migration with read-only compatibility keys and fail-closed ambiguity, and a `legacy_reader_import_only_to_<successor>` crosswalk. Negatives, each rejected:
+- the same tier on a row with a writer;
+- the same tier on an ordinary MVP row (`onboarding_state`);
+- an unlisted MVP row (`editor_buffer_recovery_state`) edited into the full import-only shape;
+- a named row with its writer-era consumers.
 
 **H. Retention-hold authority (1 finding).** SP-288 (`2080658ff8`) says "V2 is canonical non-rebuildable command/receipt authority" restored from mandatory backup. `canonical_dual_homed` stays "only where complete original v1 authority is actually available", for the separate v1 roles. The registry row is v2, so the validator's pin moves from `canonical_dual_homed` to `canonical_non_rebuildable`. Negative: the v1 authority on the v2 row is rejected.
 
@@ -138,9 +180,9 @@ Keys and paths are those in `reports/event-authority-20260911/landing-record-202
 | 48 | (goal row) | `event_family_registry_goal_payload_ref_mismatch` | goal_run.started | validator fix | G: goal_run v3 refs follow e686963ad5, a3c511657f, f6350caf27 |
 | 49 | (goal row) | `event_family_registry_goal_kernel_membership_mismatch` | goal kernel membership | validator fix | G: goal_run v3 refs follow e686963ad5, a3c511657f, f6350caf27 |
 
-## Census chain: the 27 commits after the 2026-09-06 pin
+## Census chain: the 27 commits after the 2026-09-06 pin that changed a count or a tier
 
-Every commit is an ancestor of `origin/main`. Records are under `reports/` unless named otherwise.
+Every commit is an ancestor of `origin/main`. Records are under `reports/` unless named otherwise. Fifteen more registry commits in the range left the census unchanged: `6d54e0e3ba`, `9b96beb0fc`, `b09294e44b`, `38d896d3f0`, `641c980264`, `2080658ff8`, `59335a3435`, `679e066a2a`, `46f30fb464`, `274c681e43`, `f8ace334f4`, `8aeaea204c`, `7ad1ffff6a`, `68d5b26461`, `5cdde8d150`.
 
 | Commit | Date | Families | Policies | Status / tier change | Record |
 |---|---|---|---|---|---|
@@ -187,6 +229,9 @@ The environment is this sparse worktree. It holds the ignored currentness audit 
 | `validate-browser-event-admission` | 1 (`preexisting_family_rows_changed`) | **0**, pass |
 | `verify-spec-lock` | 5 `stale_hash` | 6 (adds `scripts/pm-implementation-readiness.py`) |
 | `validate-evidence` / `validate-plan-graph` | 665 / 665 | 665 / 665 (all 82 storage-plan bundle entries were already stale or missing) |
+| `validate-wiring-matrix`, `validate-touch-closure` | pass, pass | pass, pass |
+
+Every "This branch" value above was re-measured after the seven review fixes, at `af7b2aa2fb`; none changed. Outputs: `/mnt/Cursor/PuppetMaster-Evidence/storage-registry-repairs-20260923/front1/` (`before/`, `after/`, `after-review/`), listed in `MANIFEST.sha256` (66 files, SHA-256 `8e8ddb45f9583d642e9cc60d6690b4dd3887297a264cdb5c64894426af96ffb0`). The readiness failure set is identical, the shard check and index validation still pass (6,718 PlanUnits, 26,208 acceptance units), and all three event gates still pass.
 
 The 33 readiness failures left are all outside this scope:
 - 17 `pnc019_source_hash_stale`;
@@ -206,11 +251,10 @@ The storage self-test scenario now passes entirely. The self-test row that remai
 | `tests.test_pm_testing_session_events` + `tests.test_pm_github_project_integration` | 25 run, **5 fail** | 26 run, **0 fail** |
 | `tests.test_pm_emit_only_event_boundaries` | 13 run, 2 fail | 13 run, 0 fail |
 | `tests.test_pm_browser_event_admission` | 30 run, 30 fail | 30 run, 0 fail |
-| `tests.test_pm_runtime_vocabulary_migration` | 6 run, 0 fail | 9 run, 0 fail |
-| Whole tracked suite (`unittest discover -s tests`) | 900 run, 42 fail, 3 errors | 904 run, **5 fail, 3 errors** |
+| `tests.test_pm_runtime_vocabulary_migration` | 6 run, 0 fail | 9 run, 0 fail (its representation test now asserts 28 named checks) |
+| Whole tracked suite (`unittest discover -s tests`) | 900 run, 42 fail, 3 errors | 904 run, **5 fail, 0 errors** (after the review fixes) |
 
-The 5 failures and 3 errors left are byte-identical to `main`'s. None touches this scope, apart from the two stale census pins listed under open items.
-- `test_pm_touch_closure_source` ×3 (errors): the sparse worktree has no `Concepts/`.
+The 5 failures left are byte-identical to `main`'s. None touches this scope, apart from the two stale census pins listed under open items. The first front 1 run also had 3 `test_pm_touch_closure_source` errors, because the sparse worktree had no `Concepts/pm7-tools`. They are environmental and disappeared once front 2 added that directory to the cone:
 - `test_pm_onboarding_phases` census: pins the bytes of 88 rows as they stood before 2026-09-11.
 - `test_pm_pnc019_currentness`: currentness drift from the BSD landing.
 - `test_prd_planning_runtime_contracts`.
@@ -226,17 +270,22 @@ Expected, and for Jared or the coordinator to classify as in landing 1. The land
 
 The truncated `validate_implementation_readiness` total falls from 79 to 33, and the evidence and plan-graph totals are unchanged, so no truncated subcheck rises.
 
+**Coordinator classification, 2026-09-23:** the three Spec Lock rows on the edited validator count as governance staleness for this landing; they need no work.
+
 **Reseal request:** `Plans/storage-plan.md` and `scripts/pm-implementation-readiness.py`. The other edited files are neither Spec-Locked nor in the currentness inventory.
 
 ## Choices where canon was ambiguous
 
-1. **The census re-pin rests on one sweep commit.** `63bff67fb4` moved the two `migration_only` tiers inside a "checkpoint paused thread work" sweep, with no report of its own. I counted it as recorded because four things back the same state: the SIR 2026-08-31 addendum, the `x-legacy-normalization` contract, `test_pm_runtime_vocabulary_migration.py`, and `prepared-verification-20260911.json`, which already reported the discrepancy "not repaired by changing readiness constants".
+1. **The census re-pin rests on one sweep commit.** `63bff67fb4` moved the two `migration_only` tiers inside a "checkpoint paused thread work" sweep, with no report of its own. The SIR 2026-08-31 addendum it implements arrived in another sweep, `3e1842da40`. I counted it as recorded because three things in canon back the same state: the SIR addendum, the `x-legacy-normalization` contract, and `test_pm_runtime_vocabulary_migration.py`. `prepared-verification-20260911.json` also reported the discrepancy "not repaired by changing readiness constants". As the review notes, that record describes its own workstream's scope, not an owner ruling. The code comment now says this too (review fix R-07).
 2. **The two retired rows stay MVP-required.** They are kept at `migration_only` rather than removed from `mvp_required_family_ids`. No canon removes them, successor physical families are not registered yet, and existing rows still have to be imported.
 3. **The `goal_run.certified` row keeps its older owner anchors.** It keeps `semantic_owner_doc` `#goal-and-goalrun-payload-minima` and `payload_owner_doc` `#sp-214`, while started and cancelled moved theirs to GRS/SP units. GRS-084 says only the certified family's "version/payload selection and corresponding source refs advance". Changing the row would also break the approved checkpoint hash. It is left as is.
-4. **The union rule does not check the wrapper SHA-256.** `physical-profiles.json` carries `whole_wrapper_sha256` values that no plain JSON hash of the wrapper reproduces, so the rule does not claim them. It binds members through the resource map's declared `complete_document_sha256` instead. The registry's `encoding` (`json_canonical`) and the declared codec (`pm.goal.cancel_command_json.v1`) use different vocabularies, so the rule checks that the codecs agree, not that the strings are equal.
+4. **The union rule does not check the wrapper SHA-256.** `physical-profiles.json` carries `whole_wrapper_sha256` values that no plain JSON hash of the wrapper reproduces; the review tried sorted and unsorted keys, both separators, ASCII and UTF-8, and a trailing LF. So the rule does not claim them, and the owner text records the recipe as an open question (review fix R-02). It binds members through the resource map's declared `complete_document_sha256` instead. The registry's `encoding` (`json_canonical`) and the declared codec (`pm.goal.cancel_command_json.v1`) use different vocabularies, so the rule checks that the codecs agree, not that the strings are equal.
 5. **Scope beyond the five named tests.** The same frozen value is copied into `tests/test_pm_emit_only_event_boundaries.py` (2 failing tests) and into the Browser admission pins (30 failing tests and the Browser gate). The first is the same constant and belongs with it. The Browser re-freeze is in its own commit (`3567632096`) so it can be dropped. Neither draft branch touches those files.
 6. **Test placement.** No test file was added. The rule tests live in the validator's self-test, which runs on every `validate`. `test_pm_runtime_vocabulary_migration.py` asserts them by name, since it is the named test file that already owns registry-row assertions. `test_shared_runtime_storage_contracts.py` is tracked but not named in `.gitignore`, so it is outside the edit scope.
 7. **The index was generated without the ignored currentness audit.** `main`'s committed `node_readiness_report.json` was generated that way. With the audit present the report differs in its runtime block, which is environment, not canon.
+8. **Resource boundaries in the union resolver (R-03).** Under strict JSON Schema 2020-12, `legacy_v2_reader` in `goal_cancelled.schema.json` is not a subschema location, so its `$id` would not open a resource, and its local references would not resolve. The realm declaration nevertheless lists it as an embedded resource. For a secret scan, following more references is the safe direction, so any object with a string `$id` is treated as a resource boundary and any string `$ref` as a reference. Anything the resolver cannot resolve inside the realm fails rather than being skipped.
+9. **Baseline provenance (R-12).** The existing `preexisting_registry_baseline_source` field now points at `f6350caf27`, rather than a `refrozen_from`/`refrozen_at` pair being added. This keeps the manifests' key sets unchanged. The earlier baseline `cc6d4a9aca` stays in git history and in the constant's comment in `scripts/pm_emit_only_event_contract.py`.
+10. **The census count of other commits (R-09).** The review said six other commits touched the registry without changing the census; the comment says 15, which is what a parent-by-parent comparison of all 42 registry commits in the range gives.
 
 ## Open items, with owners
 
@@ -244,5 +293,13 @@ The truncated `validate_implementation_readiness` total falls from 79 to 33, and
 - **The landing check's staleness list.** It lacks the readiness Spec Lock kinds and `event_authority_currentness_source_drift`. Owner: landing-check tooling, for Jared.
 - **Reseal** of the two Spec-Locked files, and a new currentness edition for `Plans/storage-plan.md`. Owner: the designated Plans agent.
 - **The three remaining `case_l_verification_integration` self-test checks and the legacy-fixture `registry_revision` mismatch.** They were false or failing before this branch. Owner: Event Authority Step 8/9.
+- **`whole_wrapper_sha256` preimage recipe.** `Plans/goal_workflow_cancel_contracts/physical-profiles.json` should state how its per-member digests are computed before readiness can bind them (R-02). Owner: Storage.
+- **`redb_snapshot_id` in four persisted checkpoints.** Should `browser_workspace_reset_index_checkpoint`, `seglog_observability_reader_checkpoint`, `home_layout_event_reader_checkpoint` and `restore_point_expired_checkpoint` persist the snapshot id that SP-311 says never to persist? (R-05) Owner: Storage.
+- **A Decision Log entry for the §2.3.1 qualification (R-14).** It is optional; the SP-310 criterion and the §2.3.1 lead already cite Jared's 2026-09-23 instruction. Owner: Jared.
+- **Review observations outside the fixes.** For the Storage owner and the readiness tooling:
+  - Only `authority_class` is pinned for `retention_hold_record`, not `strategy` or the restore mode (R-08).
+  - 40 families are tier 0 while `critical_family_ids` holds 16. The other 24 are Storage core families added by seven landed commits; no readiness check ties tier 0 to critical membership.
+  - `recovery_disposition.backup_required` is not checked against canonical authority for any row.
+  - Two self-test names are stale: `event_family_registry_39_row_kernel_structurally_valid` validates 42 rows, and `…_v2_exact_goal_refs_…` now covers three v3 files.
 
 Cost: one session; no model calls beyond this agent; monetary attribution unavailable.
