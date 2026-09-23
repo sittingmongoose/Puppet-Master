@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11411-L11539
+Source lines: L11411-L11551
 
-Source SHA256: `35619c401d0d37fbce387c2b1f5c43765d4b453a33f2f43581f4dca925c7d1fb`
+Source SHA256: `75fd8f6965d0de0ae10d844dc278bbfc74bbd750fb46c01ca4b8ac5610c06105`
 
 ---
 
@@ -101,6 +101,17 @@ this creation fact cannot create billing, attach a chip, dereference an artifact
 or start a Browser action. A future independent persisted consumer requires its
 own reviewed owner/Storage binding before use.
 
+The conditional SP-266 successor names
+`browser.workspace_inventory.created.v2@2.0.0` as this same historical read
+consumer's future version. It may replace the v1 read route only after the exact
+v2 Storage value, binding, admission and migration are installed. The reader must
+reacquire the actual SP-278 root/generation/anchor/frontier/source token and
+current Project/access/deletion fence for each disclosure; a stored snapshot ID,
+matching generation or old creation row does not authorize a current answer.
+The v1 checkpoint and reader remain versioned compatibility custody, not an
+alternate v2 currentness path. Neither route can act on a live workspace, and
+the successor does not change creation publication or admit another Browser event.
+
 ### SMPFS-167 - Workspace-created transition and historical inventory consumer
 
 ```yaml
@@ -124,6 +135,7 @@ acceptance_criteria:
   - A new workspace identity has no predecessor generation; idempotent retries return the original committed result without a second runtime resource or event.
   - The one read consumer uses the complete SP-266 snapshot/checkpoint token; historical creation and index currentness never grant current Browser authority.
   - Replay, deletion, recovery and withdrawal cannot dispatch, recreate a process, restore a controller, attach prompt material or create UsageRecords.
+  - A separately admitted v2 reader must use SP-266's full SP-278 frontier/source token and authenticated checkpoint handoff; this conditional target does not make v2 current.
 validation_surfaces: [Plans/browser_workspace_created_contracts.schema.json, Plans/browser_workspace_created_contract_fixtures.json, tests/test_pm_browser_workspace_created.py]
 risk_class: browser_workspace_creation_or_replay_authority_escape
 reasoning_tier: high

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19706-L19885
+Source lines: L19706-L19934
 
-Source SHA256: `f8781a617fff053dd9e9f8dc529e4f248791530a6d553dd40dec182058508c53`
+Source SHA256: `93f7d6e197544f5a5954bda07cb86a918a6c4a652484cdf1fa5e02902fd3675f`
 
 ---
 
@@ -149,6 +149,54 @@ source/currentness/deletion, then allow the adopted reader. No silent reset to
 zero, sibling checkpoint reuse, bulk Browser admission or destructive history
 rewrite is a migration path.
 
+### Conditional SP-278 successor for the created checkpoint
+
+The registered v1 value and binding above remain the current definitions until a
+separately installed successor is admitted. They do not encode SP-278's complete
+advancing-frontier read token, so a v1 checkpoint cannot by itself certify current
+SP-278 coverage. The exact successor target is the same
+`browser_workspace_created_index_checkpoint` family and logical v1 key, with a
+distinct `pm.storage_value.browser_workspace_created_index_checkpoint.v2@2.0.0`
+value, `storage.browser_workspace_created_index.v2@2.0.0` binding and SMPFS-167's
+versioned v2 read consumer. It changes no event, source policy, payload, producer,
+generic index owner, or Browser session/profile physical family. The v1 schema
+and stored digest meanings remain immutable compatibility custody; an old value
+is never default-filled or relabeled as a current v2 checkpoint.
+
+The v2 current value must bind the actual SP-278 `index_read_token`: exact generic
+root key, generation JSON Pointer, immutable anchor, advancing frontier revision
+and digest, physical dataset, complete source selection and actual redb snapshot
+identity. Its inclusive last-examined frame covers the complete generic range,
+including verified nonmatching events, rather than only the last creation match.
+Every read reacquires a real SP-278 snapshot, joins the retained source frames and
+full-index checkpoint, and revalidates the complete token and Project/access/
+deletion fence before disclosure. A stored snapshot ID is provenance, not a
+reopenable snapshot. An append may change the frontier without changing the
+generation or an older row; generation equality, maximum matching sequence and
+old selection digest cannot establish currentness. The filtered writer still
+commits only its own checkpoint and historical join under prior-value CAS and
+unchanged source/currentness fences; uncertainty refuses publication.
+
+StorageMigrationCoordinator alone may install this successor against the actual
+store graph and version ceilings. It first authenticates the old v1 row, codec,
+Project/source and all applicable hold/reference custody, and independently
+rebuilds the v2 current value from complete verified CURRENT-selected SP-278
+source. One same-key transaction reserves lawful `RP-PROJECTION-3GEN@1.0.0`
+capacity, replaces the current value and preserves the exact decoded v1 core as
+retired history. Because v1 had no publication birth identity, the history
+wrapper uses `v1_custody_bound_at_handoff`: its new identity, custody-bound time,
+first retirement time and successor ID come from the actual handoff transaction,
+not a guessed v1 birth. Preserve all existing holds and protected history; one
+current plus at most two retired cores is the limit, with no fourth staging key
+or early eviction. Unknown old custody, unsupported codec, unresolved hold, full
+protected capacity, incomplete source or uncertain transaction outcome leaves
+v2 currentness unavailable. A retired v1 core is historical derived evidence,
+never an alternate current reader. Later cleanup obeys the existing first-
+withdrawal clock, hold/ref clearance and same-key CAS rules. This successor
+requires its closed registered schema, explicit reader/admission revisions and
+native migration, source, permission and crash proofs before activation; this
+conditional target alone grants none of them.
+
 ### SP-266 - Browser workspace-created single-family persistence binding
 
 ```yaml
@@ -175,6 +223,7 @@ acceptance_criteria:
   - Missing, corrupt, withdrawn, stale, cross-scope, conflicting or unsupported inputs have no checkpoint advance, current read publication or runtime effect.
   - Empty-range proof is explicit; replay duplicates, restart, compaction, deletion, withdrawal and lost acknowledgement cannot resurrect or duplicate a workspace.
   - Static positive/negative schemas and semantic oracles are separate from unperformed native crash, producer, permission and storage proofs.
+  - A v2 SP-278 successor requires complete frontier/source token, authenticated same-key v1 retirement and lawful three-generation custody before current use; v1 remains current until that separate admission.
 validation_surfaces: [Plans/browser_workspace_created_contracts.schema.json, Plans/browser_workspace_created_contract_fixtures.json, tests/test_pm_browser_workspace_created.py, python3 scripts/pm-browser-event-admission.py]
 risk_class: browser_workspace_created_source_or_checkpoint_authority_drift
 reasoning_tier: high
