@@ -52,6 +52,10 @@ This branch's `git push -u origin` at ~15:14 UTC, hitting an SMB read fault, rep
 
 Wave-2 canon edits joining the DL-039 reseal queue: `Plans/storage-plan.md` (SP-318 addendum), `Plans/Back_Seat_Driver.md` (§16 companion paragraph), `Plans/00-plans-index.md` (Change Summary entry), `Plans/storage_value_registry.json` (disposition row). Scripts touched: `pm-shard-plans.py`, `pm-plan-index.py` (DEP-02 newline portability only — Spec Lock `stale_hash` rows for both are expected). Reseal applies once the branch lands.
 
+## Post-check main movement (handover currency note)
+
+Main is moving under this handover: after the frozen-head check (base `a73cb06d10`), the Step-8 comparison-checkpoint wave landed as `3d391fd297` on both remotes (it edits `Plans/storage_value_registry.json` again - "registry 0be54418", test pins 40->42, regenerated readiness projections), and the shared checkout additionally carries one unpushed local commit `2da97421a1` (DL-068..DL-075 Event Authority card answers, shards/index regenerated) from the active DL-039/coordinator thread - left untouched. Consequence for the handover: whichever option Jared picks, this branch needs one more AGENTS rebase cycle onto the then-current main before an ff-merge (recipe proven twice today: sources auto-merge or re-adjudicate by passage rule; derived conflicts resolved by regeneration only; expect SP-ID and census re-adjudication if those documents moved). The exit-2 attribution itself is unaffected in kind: the 48 registry lines are the DL-039-exceptioned class, and the new waves do not repair them (the Step-8 checkpoint wave keys its own registry edits to the same pending owner repair).
+
 ## Retained evidence
 
 `//TRUENAS/Cursor/PuppetMaster-Evidence/tests/bsd-lifecycle-closure-20260923/` — battery logs (pre- and post-rebase), main-baseline comparison logs + `comparisons.json`, regeneration determinism logs, both landing-check logs, exits register, rebuild/rewrite scripts, HALT analysis, SHA-256 manifest (`evidence_hashes_final.txt`).
