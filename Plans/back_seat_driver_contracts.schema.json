@@ -1,0 +1,546 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/back_seat_driver_contracts/1.0.0/schema.json",
+  "$comment": "Typed record definitions for the six pm.bsd.* lifecycle record families declared by Plans/Back_Seat_Driver.md section 16 and named by Plans/Commands_System.md CS-078 (\"Naming them here does not create them\"). Scope is record definitions only. The CS-078 command request/result definitions (BackSeatDriverModeSetRequest, BSDPolicyUpdateRequest/Result, BSDWorkflowBindingRequest/Result, BSDAssignmentControlRequest/Result, BSDAssignmentRetryRequest/Result, BSDFindingRoute, BSDUsageRoute, BSDTranscriptRoute, RouteResult) are intentionally absent and remain future owner-authored additions to this file, so every CS-078 row keeps handler_unavailable truthfully. This file admits no storage key, no EventRecord, no writer, and no physical family; the central persistence disposition is row scd.back_seat_driver.durable.v1 in Plans/storage_value_registry.json under Plans/storage-plan.md unit SP-314. The legacy completed-review summary pm.shared_runtime.bsd_runtime_record.v1 is not redefined or extended here.",
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nullable_non_empty_string": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "non_secret_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "nullable_non_secret_ref": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "non_negative_integer": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "nullable_non_negative_integer": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bsd_stage_binding": {
+      "description": "One stage binding inside pm.bsd.workflow_binding.v1. Subfield spellings normalize Back_Seat_Driver.md section 16's prose (\"Each stage binding is inherit|off|auto|on and freezes requested and effective advisor identity\") under the document's snake_case *_ref convention.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage_id",
+        "stage_mode"
+      ],
+      "properties": {
+        "stage_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "stage_mode": {
+          "enum": [
+            "inherit",
+            "off",
+            "auto",
+            "on"
+          ]
+        },
+        "requested_advisor_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "effective_advisor_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        }
+      }
+    },
+    "bsd_policy": {
+      "description": "Project-scoped BSD policy record. Transcribed from Plans/Back_Seat_Driver.md section 16 (pm.bsd.policy.v1) with owner-pinned vocabularies: mode from section 1 (Off|Auto|On), trigger_sensitivity from section 5 (conservative|balanced|frequent; lowercase record vocabulary, Settings display options are separate), catch_up_seconds from section 10 (0|15|30|60, default 30). This definition binds the declared shape for contract validation only: it admits no storage key, no writer, no physical family, and no EventRecord.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "mode",
+        "model_selection",
+        "requested_model_id",
+        "requested_persona_id",
+        "trigger_sensitivity",
+        "read_only_tool_profile_id",
+        "catch_up_seconds",
+        "interruption_cooldown_turns",
+        "per_thread_cost_limit",
+        "per_stage_review_limit",
+        "retain_transcript",
+        "project_watch_instructions_ref",
+        "stage_defaults_ref",
+        "revision"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.policy.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "mode": {
+          "enum": [
+            "Off",
+            "Auto",
+            "On"
+          ]
+        },
+        "model_selection": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "requested_model_id": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "requested_persona_id": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "trigger_sensitivity": {
+          "enum": [
+            "conservative",
+            "balanced",
+            "frequent"
+          ]
+        },
+        "read_only_tool_profile_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "catch_up_seconds": {
+          "enum": [
+            0,
+            15,
+            30,
+            60
+          ]
+        },
+        "interruption_cooldown_turns": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "per_thread_cost_limit": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "per_stage_review_limit": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "retain_transcript": {
+          "type": "boolean"
+        },
+        "project_watch_instructions_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "stage_defaults_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "revision": {
+          "$ref": "#/$defs/non_negative_integer"
+        }
+      }
+    },
+    "bsd_workflow_binding": {
+      "description": "BSD workflow/stage binding record. Transcribed from Plans/Back_Seat_Driver.md section 16 (pm.bsd.workflow_binding.v1). workflow_kind is an open non-empty string: the owner document names no closed value set for it (the section 17.2 and CS-078 lists enumerate stage domains, not workflow kinds). Contract-validation shape only; admits no storage key, writer, physical family, or EventRecord.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "binding_id",
+        "workflow_kind",
+        "workflow_id",
+        "policy_revision",
+        "stage_bindings",
+        "created_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.workflow_binding.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "binding_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "workflow_kind": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "workflow_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "policy_revision": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "stage_bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/bsd_stage_binding"
+          }
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "bsd_assignment": {
+      "description": "BSD assignment lifecycle record. Transcribed from Plans/Back_Seat_Driver.md section 16 (pm.bsd.assignment.v1) with the owner-pinned state vocabulary idle|queued|reviewing|holding|reconfirming|paused_quota|failed|stopped. requested_effective_snapshot_ref is nullable because an idle assignment may precede route resolution. Contract-validation shape only; admits no storage key, writer, physical family, or EventRecord.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "bsd_assignment_id",
+        "binding_id",
+        "stage_id",
+        "primary_run_id",
+        "advisor_attempt_id",
+        "epoch",
+        "cursor",
+        "stable_prefix_hash",
+        "requested_effective_snapshot_ref",
+        "state"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.assignment.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "binding_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "stage_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "primary_run_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "advisor_attempt_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "epoch": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "cursor": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "stable_prefix_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "requested_effective_snapshot_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "state": {
+          "enum": [
+            "idle",
+            "queued",
+            "reviewing",
+            "holding",
+            "reconfirming",
+            "paused_quota",
+            "failed",
+            "stopped"
+          ]
+        }
+      }
+    },
+    "bsd_review_cycle": {
+      "description": "BSD review cycle record. Transcribed from Plans/Back_Seat_Driver.md section 16 (pm.bsd.review_cycle.v1) with owner-pinned vocabularies: trigger_kind from the complete section 4 Auto trigger set, result from section 11 (silent|held|cleared|emitted|duplicate_suppressed|content_free_suppressed|failed|timed_out|quarantined), and no_call_reason from section 5. The frozen-boundary flag and the no-call reason are carried on the cycle so section 8 emissions and section 4 suppressions are both auditable. No conditional pairing between result and no_call_reason is encoded here; that semantics stays owner prose. Contract-validation shape only; admits no storage key, writer, physical family, or EventRecord.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "review_cycle_id",
+        "bsd_assignment_id",
+        "trigger_kind",
+        "trigger_reason",
+        "primary_generation",
+        "input_manifest_ref",
+        "result",
+        "usage_attempt_ref",
+        "latency_ms",
+        "created_at",
+        "frozen_boundary",
+        "no_call_reason"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.review_cycle.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "review_cycle_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "trigger_kind": {
+          "enum": [
+            "pre_first_material_mutation",
+            "pre_high_risk_action",
+            "constraint_divergence",
+            "repeated_normalized_failure",
+            "environment_identity_change",
+            "major_verification_failure",
+            "pre_terminal_completion_claim",
+            "configured_stage_boundary",
+            "project_watch_rule",
+            "held_finding_reconfirmation"
+          ]
+        },
+        "trigger_reason": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "primary_generation": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "input_manifest_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "result": {
+          "enum": [
+            "silent",
+            "held",
+            "cleared",
+            "emitted",
+            "duplicate_suppressed",
+            "content_free_suppressed",
+            "failed",
+            "timed_out",
+            "quarantined"
+          ]
+        },
+        "usage_attempt_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "latency_ms": {
+          "$ref": "#/$defs/nullable_non_negative_integer"
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "frozen_boundary": {
+          "type": "boolean"
+        },
+        "no_call_reason": {
+          "oneOf": [
+            {
+              "enum": [
+                "no_call_off",
+                "no_call_no_trigger",
+                "no_call_no_material_delta",
+                "no_call_cooldown",
+                "no_call_cost_limit",
+                "no_call_stage_limit",
+                "no_call_quota_unavailable",
+                "no_call_resource_refused",
+                "no_call_paused"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "bsd_finding": {
+      "description": "BSD finding record. Transcribed from Plans/Back_Seat_Driver.md section 16 (pm.bsd.finding.v1). Severity is the section 7 vocabulary nit|concern|critical; blocker is excluded from every public surface and payload per section 2. State vocabulary is held|reconfirming|emitted|cleared|suppressed|closed. Held state is stored outside the advisor transcript so compaction cannot erase it. Contract-validation shape only; admits no storage key, writer, physical family, or EventRecord.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "bsd_finding_id",
+        "finding_key",
+        "assignment_id",
+        "raised_against_generation",
+        "latest_checked_generation",
+        "severity",
+        "claim",
+        "affected_object_refs",
+        "rule_or_constraint_refs",
+        "evidence_refs",
+        "state",
+        "reconfirmation_count",
+        "closed_reason",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.finding.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "bsd_finding_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "finding_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "assignment_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "raised_against_generation": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "latest_checked_generation": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "severity": {
+          "enum": [
+            "nit",
+            "concern",
+            "critical"
+          ]
+        },
+        "claim": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "affected_object_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          },
+          "uniqueItems": true
+        },
+        "rule_or_constraint_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          },
+          "uniqueItems": true
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          },
+          "uniqueItems": true
+        },
+        "state": {
+          "enum": [
+            "held",
+            "reconfirming",
+            "emitted",
+            "cleared",
+            "suppressed",
+            "closed"
+          ]
+        },
+        "reconfirmation_count": {
+          "$ref": "#/$defs/non_negative_integer"
+        },
+        "closed_reason": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "bsd_quarantine": {
+      "description": "BSD quarantine record. Transcribed from Plans/Back_Seat_Driver.md section 16 (pm.bsd.quarantine.v1) with the owner-pinned terminal_action vocabulary re_prime|pause_bsd. Contract-validation shape only; admits no storage key, writer, physical family, or EventRecord.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "quarantine_id",
+        "assignment_id",
+        "review_cycle_id",
+        "reason",
+        "payload_hash",
+        "retained_payload_ref",
+        "reset_attempted",
+        "terminal_action",
+        "created_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.bsd.quarantine.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "quarantine_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "assignment_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "review_cycle_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "reason": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "payload_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "retained_payload_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "reset_attempted": {
+          "type": "boolean"
+        },
+        "terminal_action": {
+          "enum": [
+            "re_prime",
+            "pause_bsd"
+          ]
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    }
+  }
+}

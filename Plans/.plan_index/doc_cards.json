@@ -74,7 +74,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6010,
+      "line_count": 6013,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "9d2dc958e29dc27845ebb1233b5d3c85294758e6e1e7ab479db11ed9556c732b",
+      "sha256": "cb30c059749992fbb13703b93a3b7d6fda0f36daa70a2dab2cb22f4632369929",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -2228,7 +2228,7 @@
         "Plans/settings_inventory.json",
         "Plans/usage-feature.md"
       ],
-      "line_count": 2060,
+      "line_count": 2062,
       "path": "Plans/Back_Seat_Driver.md",
       "plan_unit_count": 29,
       "plan_unit_ids": [
@@ -2297,7 +2297,7 @@
         "unsafe_advisor_output_delivered",
         "usage_attribution_collapse"
       ],
-      "sha256": "96b290f57baabfd348c1cbe407e98b0ea98f4696b2d60c6c10122c0617f83538",
+      "sha256": "eea68ab4b128b24f4dc1800c8c82c17cad492ab4b2a5705848675d8b0297b1c3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 29
@@ -17273,10 +17273,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 209,
+        "False": 210,
         "True": 102
       },
-      "heading_count": 757,
+      "heading_count": 759,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -17303,6 +17303,7 @@
         "Plans/Widget_System.md",
         "Plans/WorktreeGitImprovement.md",
         "Plans/assistant-chat-design.md",
+        "Plans/back_seat_driver_contracts.schema.json",
         "Plans/browser_event_admission.json",
         "Plans/browser_event_payloads.schema.json",
         "Plans/browser_workspace_created_contracts.schema.json",
@@ -17359,9 +17360,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 26381,
+      "line_count": 26461,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 311,
+      "plan_unit_count": 312,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -17616,6 +17617,7 @@
         "SP-251",
         "SP-252",
         "SP-253",
+        "SP-318",
         "SP-254",
         "SP-255",
         "SP-256",
@@ -17774,10 +17776,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "a23b037aa42c7dbe8bb7ab34edae1f5f360563559cedf13966d3b3a349596758",
+      "sha256": "fff136533e78d7c5772cb52b0a3d11f4d2b4db0705ce60f5f580b5ef69a8bfaa",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 308,
+        "accepted": 309,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
@@ -17789,7 +17791,7 @@
         "requirement": 256,
         "schema_contract": 21,
         "security_contract": 1,
-        "storage_contract": 21,
+        "storage_contract": 22,
         "storage_security_contract": 1
       },
       "validation_surfaces": [
@@ -19943,7 +19945,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-23T17:06:24Z",
+  "generated_at_utc": "2026-09-23T19:01:39Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19951,13 +19953,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3521,
+      "False": 3522,
       "True": 3196
     },
-    "plan_unit_count": 6717,
+    "plan_unit_count": 6718,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6526,
+      "accepted": 6527,
       "retired": 182,
       "superseded": 9
     },
@@ -20041,7 +20043,7 @@
       "source_lineage_disposition": 2,
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
-      "storage_contract": 21,
+      "storage_contract": 22,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,

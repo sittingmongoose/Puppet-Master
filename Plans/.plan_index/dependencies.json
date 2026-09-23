@@ -6471,6 +6471,7 @@
     "SMPFS-146",
     "SP-252",
     "SP-253",
+    "SP-318",
     "ACD-450",
     "ACD-451",
     "ACD-453",
@@ -69385,6 +69386,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-318",
+      "to": "SP-251"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -98439,7 +98445,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-23T17:06:24Z",
+  "generated_at_utc": "2026-09-23T19:01:39Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -98451,8 +98457,8 @@
       "source_location": {
         "heading": "0PI-001 - Plans Index Retired Source-Preserving Bridge",
         "heading_level": 3,
-        "heading_line": 901,
-        "line": 903,
+        "heading_line": 904,
+        "line": 906,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98468,8 +98474,8 @@
       "source_location": {
         "heading": "0PI-002 - Index Authority And Compliance",
         "heading_level": 3,
-        "heading_line": 1016,
-        "line": 1018,
+        "heading_line": 1019,
+        "line": 1021,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98485,8 +98491,8 @@
       "source_location": {
         "heading": "0PI-003 - Change Summary And Index Role",
         "heading_level": 3,
-        "heading_line": 1064,
-        "line": 1066,
+        "heading_line": 1067,
+        "line": 1069,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98502,8 +98508,8 @@
       "source_location": {
         "heading": "0PI-004 - Anti Drift Reading Order",
         "heading_level": 3,
-        "heading_line": 1115,
-        "line": 1117,
+        "heading_line": 1118,
+        "line": 1120,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98519,8 +98525,8 @@
       "source_location": {
         "heading": "0PI-005 - Owner Map Guard And Initial Seams",
         "heading_level": 3,
-        "heading_line": 1170,
-        "line": 1172,
+        "heading_line": 1173,
+        "line": 1175,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98536,8 +98542,8 @@
       "source_location": {
         "heading": "0PI-006 - Owner Map Routing And Stale Consumer Seams",
         "heading_level": 3,
-        "heading_line": 1219,
-        "line": 1221,
+        "heading_line": 1222,
+        "line": 1224,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98553,8 +98559,8 @@
       "source_location": {
         "heading": "0PI-007 - Owner Map Runtime File Storage Seams",
         "heading_level": 3,
-        "heading_line": 1270,
-        "line": 1272,
+        "heading_line": 1273,
+        "line": 1275,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98570,8 +98576,8 @@
       "source_location": {
         "heading": "0PI-008 - Owner Map GUI Widget Usage Final Pass Seams",
         "heading_level": 3,
-        "heading_line": 1321,
-        "line": 1323,
+        "heading_line": 1324,
+        "line": 1326,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98587,8 +98593,8 @@
       "source_location": {
         "heading": "0PI-009 - Rewrite Agent Loop Architecture Baseline",
         "heading_level": 3,
-        "heading_line": 1374,
-        "line": 1376,
+        "heading_line": 1377,
+        "line": 1379,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98604,8 +98610,8 @@
       "source_location": {
         "heading": "0PI-010 - Rewrite UI Auth Account Carry Through",
         "heading_level": 3,
-        "heading_line": 1425,
-        "line": 1427,
+        "heading_line": 1428,
+        "line": 1430,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98621,8 +98627,8 @@
       "source_location": {
         "heading": "0PI-011 - Provider Account Owner Split",
         "heading_level": 3,
-        "heading_line": 1485,
-        "line": 1487,
+        "heading_line": 1488,
+        "line": 1490,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98638,8 +98644,8 @@
       "source_location": {
         "heading": "0PI-012 - PM Planning And Node Readiness Owner Split",
         "heading_level": 3,
-        "heading_line": 1536,
-        "line": 1538,
+        "heading_line": 1539,
+        "line": 1541,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98655,8 +98661,8 @@
       "source_location": {
         "heading": "0PI-013 - Instant Grep Live Canon Map",
         "heading_level": 3,
-        "heading_line": 1588,
-        "line": 1590,
+        "heading_line": 1591,
+        "line": 1593,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98672,8 +98678,8 @@
       "source_location": {
         "heading": "0PI-014 - Instant Grep Owner Split",
         "heading_level": 3,
-        "heading_line": 1637,
-        "line": 1639,
+        "heading_line": 1640,
+        "line": 1642,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98689,8 +98695,8 @@
       "source_location": {
         "heading": "0PI-015 - Browser Owner Split",
         "heading_level": 3,
-        "heading_line": 1686,
-        "line": 1688,
+        "heading_line": 1689,
+        "line": 1691,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98706,8 +98712,8 @@
       "source_location": {
         "heading": "0PI-016 - Browser Stale Cleanup And Consumer Map",
         "heading_level": 3,
-        "heading_line": 1739,
-        "line": 1741,
+        "heading_line": 1742,
+        "line": 1744,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98723,8 +98729,8 @@
       "source_location": {
         "heading": "0PI-017 - Slash Chat SSOT Boundary",
         "heading_level": 3,
-        "heading_line": 1791,
-        "line": 1793,
+        "heading_line": 1794,
+        "line": 1796,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98740,8 +98746,8 @@
       "source_location": {
         "heading": "0PI-018 - Slash Chat Scope And Drift Risks",
         "heading_level": 3,
-        "heading_line": 1842,
-        "line": 1844,
+        "heading_line": 1845,
+        "line": 1847,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98757,8 +98763,8 @@
       "source_location": {
         "heading": "0PI-019 - Artifact HITL Tool Owner Split",
         "heading_level": 3,
-        "heading_line": 1894,
-        "line": 1896,
+        "heading_line": 1897,
+        "line": 1899,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98774,8 +98780,8 @@
       "source_location": {
         "heading": "0PI-020 - Approval Compatibility Boundary",
         "heading_level": 3,
-        "heading_line": 1945,
-        "line": 1947,
+        "heading_line": 1948,
+        "line": 1950,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98791,8 +98797,8 @@
       "source_location": {
         "heading": "0PI-021 - Terminal Ownership Map",
         "heading_level": 3,
-        "heading_line": 1994,
-        "line": 1996,
+        "heading_line": 1997,
+        "line": 1999,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98808,8 +98814,8 @@
       "source_location": {
         "heading": "0PI-022 - File Manager Editor Owner Posture",
         "heading_level": 3,
-        "heading_line": 2047,
-        "line": 2049,
+        "heading_line": 2050,
+        "line": 2052,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98825,8 +98831,8 @@
       "source_location": {
         "heading": "0PI-023 - File Manager Editor Packetization Gates",
         "heading_level": 3,
-        "heading_line": 2097,
-        "line": 2099,
+        "heading_line": 2100,
+        "line": 2102,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98842,8 +98848,8 @@
       "source_location": {
         "heading": "0PI-024 - GUI Worktree And Source Control Handoff",
         "heading_level": 3,
-        "heading_line": 2150,
-        "line": 2152,
+        "heading_line": 2153,
+        "line": 2155,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98859,8 +98865,8 @@
       "source_location": {
         "heading": "0PI-025 - Debug Ownership And Packet Coupling",
         "heading_level": 3,
-        "heading_line": 2203,
-        "line": 2205,
+        "heading_line": 2206,
+        "line": 2208,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98876,8 +98882,8 @@
       "source_location": {
         "heading": "0PI-026 - Plan Map Table Core UX Owners",
         "heading_level": 3,
-        "heading_line": 2257,
-        "line": 2259,
+        "heading_line": 2260,
+        "line": 2262,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98893,8 +98899,8 @@
       "source_location": {
         "heading": "0PI-027 - Plan Map Table Planning Runtime Artifacts",
         "heading_level": 3,
-        "heading_line": 2309,
-        "line": 2311,
+        "heading_line": 2312,
+        "line": 2314,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98910,8 +98916,8 @@
       "source_location": {
         "heading": "0PI-028 - Plan Map Table Widgets Config Media Wiring",
         "heading_level": 3,
-        "heading_line": 2368,
-        "line": 2370,
+        "heading_line": 2371,
+        "line": 2373,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98927,8 +98933,8 @@
       "source_location": {
         "heading": "0PI-029 - Instant Grep Sparse N Gram Owner Split",
         "heading_level": 3,
-        "heading_line": 2429,
-        "line": 2431,
+        "heading_line": 2432,
+        "line": 2434,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98944,8 +98950,8 @@
       "source_location": {
         "heading": "0PI-030 - Cross-Cutting Backend Duplication Hotspots",
         "heading_level": 3,
-        "heading_line": 2481,
-        "line": 2483,
+        "heading_line": 2484,
+        "line": 2486,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98961,8 +98967,8 @@
       "source_location": {
         "heading": "0PI-031 - Context Lens UI Hotspot",
         "heading_level": 3,
-        "heading_line": 2538,
-        "line": 2540,
+        "heading_line": 2541,
+        "line": 2543,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98978,8 +98984,8 @@
       "source_location": {
         "heading": "0PI-032 - Rewrite-Era Owner Guidance",
         "heading_level": 3,
-        "heading_line": 2587,
-        "line": 2589,
+        "heading_line": 2590,
+        "line": 2592,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -98995,8 +99001,8 @@
       "source_location": {
         "heading": "0PI-033 - Shard Governance Boundaries",
         "heading_level": 3,
-        "heading_line": 2638,
-        "line": 2640,
+        "heading_line": 2641,
+        "line": 2643,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99012,8 +99018,8 @@
       "source_location": {
         "heading": "0PI-034 - Shard Index Routing Table",
         "heading_level": 3,
-        "heading_line": 2695,
-        "line": 2697,
+        "heading_line": 2698,
+        "line": 2700,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99029,8 +99035,8 @@
       "source_location": {
         "heading": "0PI-035 - Containers Registry Unraid Owner Scope",
         "heading_level": 3,
-        "heading_line": 2751,
-        "line": 2753,
+        "heading_line": 2754,
+        "line": 2756,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99046,8 +99052,8 @@
       "source_location": {
         "heading": "0PI-036 - Docker Manager Auth UX Routing",
         "heading_level": 3,
-        "heading_line": 2805,
-        "line": 2807,
+        "heading_line": 2808,
+        "line": 2810,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99063,8 +99069,8 @@
       "source_location": {
         "heading": "0PI-037 - Runtime Packet Owner Routing",
         "heading_level": 3,
-        "heading_line": 2855,
-        "line": 2857,
+        "heading_line": 2858,
+        "line": 2860,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99080,8 +99086,8 @@
       "source_location": {
         "heading": "0PI-038 - Runtime Rendering And Blocked UX",
         "heading_level": 3,
-        "heading_line": 2911,
-        "line": 2913,
+        "heading_line": 2914,
+        "line": 2916,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99097,8 +99103,8 @@
       "source_location": {
         "heading": "0PI-039 - Source Control Actions Docker Owner Split",
         "heading_level": 3,
-        "heading_line": 2965,
-        "line": 2967,
+        "heading_line": 2968,
+        "line": 2970,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99114,8 +99120,8 @@
       "source_location": {
         "heading": "0PI-040 - Visible Source-Control Surface Routing",
         "heading_level": 3,
-        "heading_line": 3021,
-        "line": 3023,
+        "heading_line": 3024,
+        "line": 3026,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99131,8 +99137,8 @@
       "source_location": {
         "heading": "0PI-041 - Retired Git Alias And Stale-Canon Risk",
         "heading_level": 3,
-        "heading_line": 3085,
-        "line": 3087,
+        "heading_line": 3088,
+        "line": 3090,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99148,8 +99154,8 @@
       "source_location": {
         "heading": "0PI-042 - Web Firecrawl Owner Set",
         "heading_level": 3,
-        "heading_line": 3140,
-        "line": 3142,
+        "heading_line": 3143,
+        "line": 3145,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99165,8 +99171,8 @@
       "source_location": {
         "heading": "0PI-043 - Firecrawl Consumer Deference And Anchors",
         "heading_level": 3,
-        "heading_line": 3211,
-        "line": 3213,
+        "heading_line": 3214,
+        "line": 3216,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99182,8 +99188,8 @@
       "source_location": {
         "heading": "0PI-044 - Firecrawl Obligation Routing",
         "heading_level": 3,
-        "heading_line": 3283,
-        "line": 3285,
+        "heading_line": 3286,
+        "line": 3288,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99199,8 +99205,8 @@
       "source_location": {
         "heading": "0PI-045 - Slash And Provider Drift Guards",
         "heading_level": 3,
-        "heading_line": 3355,
-        "line": 3357,
+        "heading_line": 3358,
+        "line": 3360,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99216,8 +99222,8 @@
       "source_location": {
         "heading": "0PI-046 - Firecrawl Packet-Conflict Reset Scope",
         "heading_level": 3,
-        "heading_line": 3421,
-        "line": 3423,
+        "heading_line": 3424,
+        "line": 3426,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99233,8 +99239,8 @@
       "source_location": {
         "heading": "0PI-047 - Reset Operation Constraints",
         "heading_level": 3,
-        "heading_line": 3485,
-        "line": 3487,
+        "heading_line": 3488,
+        "line": 3490,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99250,8 +99256,8 @@
       "source_location": {
         "heading": "0PI-048 - Legacy Fidelity Traceability",
         "heading_level": 3,
-        "heading_line": 3557,
-        "line": 3559,
+        "heading_line": 3560,
+        "line": 3562,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99267,8 +99273,8 @@
       "source_location": {
         "heading": "0PI-049 - Additional Fidelity And Webmap Guard",
         "heading_level": 3,
-        "heading_line": 3630,
-        "line": 3632,
+        "heading_line": 3633,
+        "line": 3635,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99284,8 +99290,8 @@
       "source_location": {
         "heading": "0PI-050 - A2A OpenCode Packet Boundary",
         "heading_level": 3,
-        "heading_line": 3702,
-        "line": 3704,
+        "heading_line": 3705,
+        "line": 3707,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99301,8 +99307,8 @@
       "source_location": {
         "heading": "0PI-051 - A2A Impacted-Doc Taxonomy",
         "heading_level": 3,
-        "heading_line": 3763,
-        "line": 3765,
+        "heading_line": 3766,
+        "line": 3768,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99318,8 +99324,8 @@
       "source_location": {
         "heading": "0PI-052 - A2A Cleanup And Final Narrowing",
         "heading_level": 3,
-        "heading_line": 3838,
-        "line": 3840,
+        "heading_line": 3841,
+        "line": 3843,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99335,8 +99341,8 @@
       "source_location": {
         "heading": "0PI-053 - A2A Evidence And Anchor Exactness",
         "heading_level": 3,
-        "heading_line": 3906,
-        "line": 3908,
+        "heading_line": 3909,
+        "line": 3911,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99352,8 +99358,8 @@
       "source_location": {
         "heading": "0PI-054 - Standardization Owner Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 3984,
-        "line": 3986,
+        "heading_line": 3987,
+        "line": 3989,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99369,8 +99375,8 @@
       "source_location": {
         "heading": "0PI-055 - Goal Runtime System Owner Map",
         "heading_level": 3,
-        "heading_line": 4036,
-        "line": 4038,
+        "heading_line": 4039,
+        "line": 4041,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99386,8 +99392,8 @@
       "source_location": {
         "heading": "0PI-056 - Orchestrator Goal Runtime Flow Owner Map",
         "heading_level": 3,
-        "heading_line": 4125,
-        "line": 4127,
+        "heading_line": 4128,
+        "line": 4130,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99403,8 +99409,8 @@
       "source_location": {
         "heading": "0PI-057 - Semantic Audit Closure Owner Map",
         "heading_level": 3,
-        "heading_line": 4260,
-        "line": 4262,
+        "heading_line": 4263,
+        "line": 4265,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99420,8 +99426,8 @@
       "source_location": {
         "heading": "0PI-058 - Plans-To-Code Handoff Owner Map",
         "heading_level": 3,
-        "heading_line": 4349,
-        "line": 4351,
+        "heading_line": 4352,
+        "line": 4354,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99437,8 +99443,8 @@
       "source_location": {
         "heading": "0PI-059 - PRD Builder And Planning Wizard Owner Map",
         "heading_level": 3,
-        "heading_line": 4470,
-        "line": 4472,
+        "heading_line": 4473,
+        "line": 4475,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99454,8 +99460,8 @@
       "source_location": {
         "heading": "Native Discovery Owner Map (2026-06-22)",
         "heading_level": 3,
-        "heading_line": 4571,
-        "line": 4582,
+        "heading_line": 4574,
+        "line": 4585,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99471,8 +99477,8 @@
       "source_location": {
         "heading": "0PI-061 - Provider Updates Owner Map And Retired Gemini CLI Anchor",
         "heading_level": 3,
-        "heading_line": 4664,
-        "line": 4666,
+        "heading_line": 4667,
+        "line": 4669,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99488,8 +99494,8 @@
       "source_location": {
         "heading": "0PI-062 - Miscellaneous History Vision Bridge Teach Owner Map",
         "heading_level": 3,
-        "heading_line": 4744,
-        "line": 4746,
+        "heading_line": 4747,
+        "line": 4749,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99505,8 +99511,8 @@
       "source_location": {
         "heading": "0PI-063 - Miscellaneous Feature Intake Compile Owner Map",
         "heading_level": 3,
-        "heading_line": 4953,
-        "line": 4955,
+        "heading_line": 4956,
+        "line": 4958,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99522,8 +99528,8 @@
       "source_location": {
         "heading": "0PI-064 - Free Models Compile Owner Map",
         "heading_level": 3,
-        "heading_line": 5037,
-        "line": 5039,
+        "heading_line": 5040,
+        "line": 5042,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99539,8 +99545,8 @@
       "source_location": {
         "heading": "0PI-065 - Containerized Hosts Compile Owner Map",
         "heading_level": 3,
-        "heading_line": 5100,
-        "line": 5102,
+        "heading_line": 5103,
+        "line": 5105,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99556,8 +99562,8 @@
       "source_location": {
         "heading": "0PI-066 - 0PI-066",
         "heading_level": 3,
-        "heading_line": 5197,
-        "line": 5199,
+        "heading_line": 5200,
+        "line": 5202,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99573,8 +99579,8 @@
       "source_location": {
         "heading": "0PI-067 - Shared Integration Runtime Owner Routing",
         "heading_level": 3,
-        "heading_line": 5444,
-        "line": 5446,
+        "heading_line": 5447,
+        "line": 5449,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -99590,8 +99596,8 @@
       "source_location": {
         "heading": "0PI-068 - 203-Command Touch Closure Owner And Machine-Registry Map",
         "heading_level": 3,
-        "heading_line": 5499,
-        "line": 5501,
+        "heading_line": 5502,
+        "line": 5504,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -112680,8 +112686,8 @@
       "source_location": {
         "heading": "BSD-001 - Passive Read-Only Advisor Owner Boundary",
         "heading_level": 3,
-        "heading_line": 443,
-        "line": 445,
+        "heading_line": 445,
+        "line": 447,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112697,8 +112703,8 @@
       "source_location": {
         "heading": "BSD-002 - Modes And Auto Default Resolution",
         "heading_level": 3,
-        "heading_line": 493,
-        "line": 495,
+        "heading_line": 495,
+        "line": 497,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112714,8 +112720,8 @@
       "source_location": {
         "heading": "BSD-003 - Deterministic Trigger Matrix And Suppression Accounting",
         "heading_level": 3,
-        "heading_line": 545,
-        "line": 547,
+        "heading_line": 547,
+        "line": 549,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112731,8 +112737,8 @@
       "source_location": {
         "heading": "BSD-004 - Isolated Advisor Session And Self-Compaction",
         "heading_level": 3,
-        "heading_line": 596,
-        "line": 598,
+        "heading_line": 598,
+        "line": 600,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112748,8 +112754,8 @@
       "source_location": {
         "heading": "BSD-005 - Bounded Redacted Delta Input",
         "heading_level": 3,
-        "heading_line": 649,
-        "line": 651,
+        "heading_line": 651,
+        "line": 653,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112765,8 +112771,8 @@
       "source_location": {
         "heading": "BSD-006 - Held And Reconfirmed Asynchronous Advice",
         "heading_level": 3,
-        "heading_line": 699,
-        "line": 701,
+        "heading_line": 701,
+        "line": 703,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112782,8 +112788,8 @@
       "source_location": {
         "heading": "BSD-007 - Frozen Safe Point Immediate Delivery Exception",
         "heading_level": 3,
-        "heading_line": 754,
-        "line": 756,
+        "heading_line": 756,
+        "line": 758,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112799,8 +112805,8 @@
       "source_location": {
         "heading": "BSD-008 - Terminal Catch-Up Timeout And Stale Labeling",
         "heading_level": 3,
-        "heading_line": 798,
-        "line": 800,
+        "heading_line": 800,
+        "line": 802,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112816,8 +112822,8 @@
       "source_location": {
         "heading": "BSD-009 - Severity Vocabulary Without A Public Blocker",
         "heading_level": 3,
-        "heading_line": 847,
-        "line": 849,
+        "heading_line": 849,
+        "line": 851,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112833,8 +112839,8 @@
       "source_location": {
         "heading": "BSD-010 - Finding Identity Deduplication And Durable Closure",
         "heading_level": 3,
-        "heading_line": 895,
-        "line": 897,
+        "heading_line": 897,
+        "line": 899,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112850,8 +112856,8 @@
       "source_location": {
         "heading": "BSD-011 - Read-Only Tool Profile And Forbidden Authority",
         "heading_level": 3,
-        "heading_line": 946,
-        "line": 948,
+        "heading_line": 948,
+        "line": 950,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112867,8 +112873,8 @@
       "source_location": {
         "heading": "BSD-012 - Unsafe Output Quarantine And Bounded Re-Prime",
         "heading_level": 3,
-        "heading_line": 998,
-        "line": 1000,
+        "heading_line": 1000,
+        "line": 1002,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112884,8 +112890,8 @@
       "source_location": {
         "heading": "BSD-013 - Failure Isolation From The Primary Run",
         "heading_level": 3,
-        "heading_line": 1046,
-        "line": 1048,
+        "heading_line": 1048,
+        "line": 1050,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112901,8 +112907,8 @@
       "source_location": {
         "heading": "BSD-014 - Reset Re-Prime And Epoch Fencing",
         "heading_level": 3,
-        "heading_line": 1097,
-        "line": 1099,
+        "heading_line": 1099,
+        "line": 1101,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112918,8 +112924,8 @@
       "source_location": {
         "heading": "BSD-015 - Bounded Catch-Up And Interruption Cooldown",
         "heading_level": 3,
-        "heading_line": 1146,
-        "line": 1148,
+        "heading_line": 1148,
+        "line": 1150,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112935,8 +112941,8 @@
       "source_location": {
         "heading": "BSD-016 - Stage Coverage Across Visible And Hidden Workflows",
         "heading_level": 3,
-        "heading_line": 1196,
-        "line": 1198,
+        "heading_line": 1198,
+        "line": 1200,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112952,8 +112958,8 @@
       "source_location": {
         "heading": "BSD-017 - Single Start Modal And Frozen Stage Bindings",
         "heading_level": 3,
-        "heading_line": 1249,
-        "line": 1251,
+        "heading_line": 1251,
+        "line": 1253,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112969,8 +112975,8 @@
       "source_location": {
         "heading": "BSD-018 - Truthful Compact Context And Context Details Projection",
         "heading_level": 3,
-        "heading_line": 1294,
-        "line": 1296,
+        "heading_line": 1296,
+        "line": 1298,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -112986,8 +112992,8 @@
       "source_location": {
         "heading": "BSD-019 - Distinct BSD Usage Attribution",
         "heading_level": 3,
-        "heading_line": 1347,
-        "line": 1349,
+        "heading_line": 1349,
+        "line": 1351,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -113003,8 +113009,8 @@
       "source_location": {
         "heading": "BSD-020 - Command Event Storage And Wiring Closure",
         "heading_level": 3,
-        "heading_line": 1396,
-        "line": 1398,
+        "heading_line": 1398,
+        "line": 1400,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -113020,8 +113026,8 @@
       "source_location": {
         "heading": "BSD-021 - Reuse And Alias Reconciliation For cmd.bsd.set",
         "heading_level": 3,
-        "heading_line": 1451,
-        "line": 1453,
+        "heading_line": 1453,
+        "line": 1455,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -113037,8 +113043,8 @@
       "source_location": {
         "heading": "BSD-022 - Requested Versus Effective Advisor Identity Disclosure",
         "heading_level": 3,
-        "heading_line": 1507,
-        "line": 1509,
+        "heading_line": 1509,
+        "line": 1511,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -113054,8 +113060,8 @@
       "source_location": {
         "heading": "BSD-023 - Project Watch Guidance Scope And Inertness",
         "heading_level": 3,
-        "heading_line": 1558,
-        "line": 1560,
+        "heading_line": 1560,
+        "line": 1562,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -113071,8 +113077,8 @@
       "source_location": {
         "heading": "BSD-024 - Record Families Recovery And Shared Runtime Supersession",
         "heading_level": 3,
-        "heading_line": 1609,
-        "line": 1611,
+        "heading_line": 1611,
+        "line": 1613,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -113088,8 +113094,8 @@
       "source_location": {
         "heading": "Working Notebook Boundary Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 1690,
-        "line": 1694,
+        "heading_line": 1692,
+        "line": 1696,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -113105,8 +113111,8 @@
       "source_location": {
         "heading": "25. Concise Context More Details Projection (APR-061)",
         "heading_level": 3,
-        "heading_line": 1764,
-        "line": 1776,
+        "heading_line": 1766,
+        "line": 1778,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -113122,8 +113128,8 @@
       "source_location": {
         "heading": "25. Concise Context More Details Projection (APR-061)",
         "heading_level": 3,
-        "heading_line": 1764,
-        "line": 1824,
+        "heading_line": 1766,
+        "line": 1826,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -113139,8 +113145,8 @@
       "source_location": {
         "heading": "26. Back Seat Driver Manager Kit Presentation (USER-SETTINGS-MANAGER-REFRESH-20260908)",
         "heading_level": 3,
-        "heading_line": 1870,
-        "line": 1874,
+        "heading_line": 1872,
+        "line": 1876,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -113156,8 +113162,8 @@
       "source_location": {
         "heading": "Registration, implementation, and demonstrations remain distinct",
         "heading_level": 3,
-        "heading_line": 2008,
-        "line": 2026,
+        "heading_line": 2010,
+        "line": 2028,
         "path": "Plans/Back_Seat_Driver.md"
       },
       "status": "accepted",
@@ -198496,8 +198502,8 @@
       "source_location": {
         "heading": "SP-254 - Consolidated Forge/Backup/tsnet Durable-Metadata And Redaction Boundary",
         "heading_level": 3,
-        "heading_line": 18831,
-        "line": 18833,
+        "heading_line": 18911,
+        "line": 18913,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198513,8 +198519,8 @@
       "source_location": {
         "heading": "Working Notebook And Context Transition Storage Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 18992,
-        "line": 19013,
+        "heading_line": 19072,
+        "line": 19093,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198530,8 +198536,8 @@
       "source_location": {
         "heading": "Working Notebook And Context Transition Storage Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 18992,
-        "line": 19047,
+        "heading_line": 19072,
+        "line": 19127,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198547,8 +198553,8 @@
       "source_location": {
         "heading": "Working Notebook And Context Transition Storage Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 18992,
-        "line": 19081,
+        "heading_line": 19072,
+        "line": 19161,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198564,8 +198570,8 @@
       "source_location": {
         "heading": "SP-258 - Durable Research Decision Dispositions And Clarification Resume",
         "heading_level": 3,
-        "heading_line": 19133,
-        "line": 19135,
+        "heading_line": 19213,
+        "line": 19215,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198581,8 +198587,8 @@
       "source_location": {
         "heading": "SP-259 - Compaction Completion Persistence",
         "heading_level": 3,
-        "heading_line": 19223,
-        "line": 19225,
+        "heading_line": 19303,
+        "line": 19305,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198598,8 +198604,8 @@
       "source_location": {
         "heading": "SP-260 - Native History Metadata And Isolated View Persistence Boundary",
         "heading_level": 3,
-        "heading_line": 19331,
-        "line": 19333,
+        "heading_line": 19411,
+        "line": 19413,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198615,8 +198621,8 @@
       "source_location": {
         "heading": "SP-261 - History Index Rebuild And Completion Receipt Consumers",
         "heading_level": 3,
-        "heading_line": 19411,
-        "line": 19413,
+        "heading_line": 19491,
+        "line": 19493,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198632,8 +198638,8 @@
       "source_location": {
         "heading": "SP-262 - Browser Event Retention And Recovery Consumer",
         "heading_level": 3,
-        "heading_line": 19287,
-        "line": 19289,
+        "heading_line": 19367,
+        "line": 19369,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198649,8 +198655,8 @@
       "source_location": {
         "heading": "SP-265 - Run-start filtered index checkpoint and four-reader boundary",
         "heading_level": 3,
-        "heading_line": 19541,
-        "line": 19545,
+        "heading_line": 19621,
+        "line": 19625,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198666,8 +198672,8 @@
       "source_location": {
         "heading": "SP-266 - Browser workspace-created single-family persistence binding",
         "heading_level": 3,
-        "heading_line": 19757,
-        "line": 19759,
+        "heading_line": 19837,
+        "line": 19839,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198683,8 +198689,8 @@
       "source_location": {
         "heading": "SP-268 — Restore-point deletion custody and checkpoint",
         "heading_level": 3,
-        "heading_line": 22027,
-        "line": 22029,
+        "heading_line": 22107,
+        "line": 22109,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198700,8 +198706,8 @@
       "source_location": {
         "heading": "SP-269 — Restore-point final retention summary custody",
         "heading_level": 3,
-        "heading_line": 20052,
-        "line": 20054,
+        "heading_line": 20132,
+        "line": 20134,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198717,8 +198723,8 @@
       "source_location": {
         "heading": "Exact producer projection, native bookkeeping and history joins",
         "heading_level": 3,
-        "heading_line": 21251,
-        "line": 21263,
+        "heading_line": 21331,
+        "line": 21343,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198734,8 +198740,8 @@
       "source_location": {
         "heading": "SP-271 - Historical child-status exact source reader",
         "heading_level": 3,
-        "heading_line": 20262,
-        "line": 20264,
+        "heading_line": 20342,
+        "line": 20344,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198751,8 +198757,8 @@
       "source_location": {
         "heading": "SP-272 — Restore-point delete original-result custody",
         "heading_level": 3,
-        "heading_line": 22123,
-        "line": 22125,
+        "heading_line": 22203,
+        "line": 22205,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198768,8 +198774,8 @@
       "source_location": {
         "heading": "Slot migration-generation custody and activation",
         "heading_level": 3,
-        "heading_line": 21523,
-        "line": 21545,
+        "heading_line": 21603,
+        "line": 21625,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198785,8 +198791,8 @@
       "source_location": {
         "heading": "SP-274 - Create restore-point original result custody",
         "heading_level": 3,
-        "heading_line": 20144,
-        "line": 20146,
+        "heading_line": 20224,
+        "line": 20226,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198802,8 +198808,8 @@
       "source_location": {
         "heading": "SP-275 — Restore-point expiry custody and checkpoint",
         "heading_level": 3,
-        "heading_line": 22321,
-        "line": 22323,
+        "heading_line": 22401,
+        "line": 22403,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198819,8 +198825,8 @@
       "source_location": {
         "heading": "SP-277 - Historical Goal degradation direct source reader",
         "heading_level": 3,
-        "heading_line": 20360,
-        "line": 20362,
+        "heading_line": 20440,
+        "line": 20442,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198836,8 +198842,8 @@
       "source_location": {
         "heading": "Generic EventRecord index checkpoint and publication",
         "heading_level": 3,
-        "heading_line": 20719,
-        "line": 20765,
+        "heading_line": 20799,
+        "line": 20845,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198853,8 +198859,8 @@
       "source_location": {
         "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
         "heading_level": 3,
-        "heading_line": 23015,
-        "line": 23017,
+        "heading_line": 23095,
+        "line": 23097,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198870,8 +198876,8 @@
       "source_location": {
         "heading": "SP-280 - Exact historical Goal scheduling contract",
         "heading_level": 3,
-        "heading_line": 20540,
-        "line": 20542,
+        "heading_line": 20620,
+        "line": 20622,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198887,8 +198893,8 @@
       "source_location": {
         "heading": "SP-281 — Restore-point created custody and checkpoint",
         "heading_level": 3,
-        "heading_line": 19875,
-        "line": 19879,
+        "heading_line": 19955,
+        "line": 19959,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198904,8 +198910,8 @@
       "source_location": {
         "heading": "SP-282 - Browser workspace-reset single-family persistence binding",
         "heading_level": 3,
-        "heading_line": 21092,
-        "line": 21094,
+        "heading_line": 21172,
+        "line": 21174,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198921,8 +198927,8 @@
       "source_location": {
         "heading": "SP-285 — Restore-point admission and retained-read phases",
         "heading_level": 3,
-        "heading_line": 22476,
-        "line": 22478,
+        "heading_line": 22556,
+        "line": 22558,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198938,8 +198944,8 @@
       "source_location": {
         "heading": "SP-286 - First AppendReceipt Custody And Restore Admission",
         "heading_level": 3,
-        "heading_line": 21769,
-        "line": 21771,
+        "heading_line": 21849,
+        "line": 21851,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198955,8 +198961,8 @@
       "source_location": {
         "heading": "SP-287 - Goal Body Physical Custody And Thread Lifetime",
         "heading_level": 3,
-        "heading_line": 21888,
-        "line": 21890,
+        "heading_line": 21968,
+        "line": 21970,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198972,8 +198978,8 @@
       "source_location": {
         "heading": "SP-288 - Legal Hold Transition And Original SIR Custody",
         "heading_level": 3,
-        "heading_line": 22697,
-        "line": 22699,
+        "heading_line": 22777,
+        "line": 22779,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -198989,8 +198995,8 @@
       "source_location": {
         "heading": "SP-289 - Original Standard Certification Custody",
         "heading_level": 3,
-        "heading_line": 22824,
-        "line": 22826,
+        "heading_line": 22904,
+        "line": 22906,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199006,8 +199012,8 @@
       "source_location": {
         "heading": "SP-290 - Platform Capability Decision Custody",
         "heading_level": 3,
-        "heading_line": 23220,
-        "line": 23222,
+        "heading_line": 23300,
+        "line": 23302,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199023,8 +199029,8 @@
       "source_location": {
         "heading": "SP-291 - Boot Recovery Aggregate and Original Producer Custody",
         "heading_level": 3,
-        "heading_line": 23333,
-        "line": 23335,
+        "heading_line": 23413,
+        "line": 23415,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199040,8 +199046,8 @@
       "source_location": {
         "heading": "SP-292 - Boot Earliest Receipt Continuity and Activation",
         "heading_level": 3,
-        "heading_line": 23431,
-        "line": 23433,
+        "heading_line": 23511,
+        "line": 23513,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199057,8 +199063,8 @@
       "source_location": {
         "heading": "SP-293 - Recovery Original Action Custody and Publication",
         "heading_level": 3,
-        "heading_line": 23527,
-        "line": 23529,
+        "heading_line": 23607,
+        "line": 23609,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199074,8 +199080,8 @@
       "source_location": {
         "heading": "SP-294 - Goal start original command custody and publication",
         "heading_level": 2,
-        "heading_line": 23602,
-        "line": 23604,
+        "heading_line": 23682,
+        "line": 23684,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199091,8 +199097,8 @@
       "source_location": {
         "heading": "SP-295 - Compaction Original Native Source Controls",
         "heading_level": 3,
-        "heading_line": 23765,
-        "line": 23767,
+        "heading_line": 23845,
+        "line": 23847,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199108,8 +199114,8 @@
       "source_location": {
         "heading": "SP-296 - Compaction Original Phase and Observation Custody",
         "heading_level": 3,
-        "heading_line": 23801,
-        "line": 23803,
+        "heading_line": 23881,
+        "line": 23883,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199125,8 +199131,8 @@
       "source_location": {
         "heading": "SP-297 - Compaction Original Settlement and Seven-Day Detail Retirement",
         "heading_level": 3,
-        "heading_line": 23837,
-        "line": 23839,
+        "heading_line": 23917,
+        "line": 23919,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199142,8 +199148,8 @@
       "source_location": {
         "heading": "SP-298 - Passive Goal Creation Read And Original Member Boundaries",
         "heading_level": 3,
-        "heading_line": 23932,
-        "line": 23934,
+        "heading_line": 24012,
+        "line": 24014,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199159,8 +199165,8 @@
       "source_location": {
         "heading": "SP-299 - Original Goal Update Physical And Transaction Custody",
         "heading_level": 3,
-        "heading_line": 24137,
-        "line": 24138,
+        "heading_line": 24217,
+        "line": 24218,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199176,8 +199182,8 @@
       "source_location": {
         "heading": "SP-300 - Exact historical goal.progressed source reader",
         "heading_level": 3,
-        "heading_line": 24213,
-        "line": 24215,
+        "heading_line": 24293,
+        "line": 24295,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199193,8 +199199,8 @@
       "source_location": {
         "heading": "SP-301 - Exact historical goal.replanned source reader",
         "heading_level": 3,
-        "heading_line": 24315,
-        "line": 24317,
+        "heading_line": 24395,
+        "line": 24397,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199210,8 +199216,8 @@
       "source_location": {
         "heading": "SP-302 - Exact historical goal.stopped source reader",
         "heading_level": 3,
-        "heading_line": 24417,
-        "line": 24419,
+        "heading_line": 24497,
+        "line": 24499,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199227,8 +199233,8 @@
       "source_location": {
         "heading": "SP-303 - Exact historical goal.verification_decided source reader",
         "heading_level": 3,
-        "heading_line": 24519,
-        "line": 24521,
+        "heading_line": 24599,
+        "line": 24601,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199244,8 +199250,8 @@
       "source_location": {
         "heading": "SP-304 - Original cancellation stages and custody",
         "heading_level": 3,
-        "heading_line": 24621,
-        "line": 24623,
+        "heading_line": 24701,
+        "line": 24703,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199261,8 +199267,8 @@
       "source_location": {
         "heading": "SP-305 - Execution binding custody and original append reservation",
         "heading_level": 3,
-        "heading_line": 24799,
-        "line": 24801,
+        "heading_line": 24879,
+        "line": 24881,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199278,8 +199284,8 @@
       "source_location": {
         "heading": "Exact physical codec and commitments",
         "heading_level": 4,
-        "heading_line": 24987,
-        "line": 25016,
+        "heading_line": 25067,
+        "line": 25096,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199295,8 +199301,8 @@
       "source_location": {
         "heading": "Original backup, restore and identity",
         "heading_level": 4,
-        "heading_line": 25112,
-        "line": 25124,
+        "heading_line": 25192,
+        "line": 25204,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199312,8 +199318,8 @@
       "source_location": {
         "heading": "Retention, original lifetime and restore",
         "heading_level": 4,
-        "heading_line": 25265,
-        "line": 25281,
+        "heading_line": 25345,
+        "line": 25361,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199329,8 +199335,8 @@
       "source_location": {
         "heading": "Event and native qualification boundary",
         "heading_level": 4,
-        "heading_line": 25430,
-        "line": 25436,
+        "heading_line": 25510,
+        "line": 25516,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199346,8 +199352,8 @@
       "source_location": {
         "heading": "Existing readiness validator representation gap",
         "heading_level": 4,
-        "heading_line": 25572,
-        "line": 25584,
+        "heading_line": 25652,
+        "line": 25664,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199363,8 +199369,8 @@
       "source_location": {
         "heading": "Exact physical and source registration",
         "heading_level": 4,
-        "heading_line": 25709,
-        "line": 25717,
+        "heading_line": 25789,
+        "line": 25797,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199380,8 +199386,8 @@
       "source_location": {
         "heading": "Exact delta registration and successor selection",
         "heading_level": 4,
-        "heading_line": 25867,
-        "line": 25879,
+        "heading_line": 25947,
+        "line": 25959,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199397,8 +199403,8 @@
       "source_location": {
         "heading": "Storage, retention and installation boundary",
         "heading_level": 5,
-        "heading_line": 26001,
-        "line": 26010,
+        "heading_line": 26081,
+        "line": 26090,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199414,8 +199420,8 @@
       "source_location": {
         "heading": "SP-314 — Original Standard authority families and fresh whole stored profiles (2026-09-20)",
         "heading_level": 2,
-        "heading_line": 26079,
-        "line": 26081,
+        "heading_line": 26159,
+        "line": 26161,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199431,8 +199437,8 @@
       "source_location": {
         "heading": "SP-315 — Certified producer current and retained source disclosure (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 26177,
-        "line": 26179,
+        "heading_line": 26257,
+        "line": 26259,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199448,8 +199454,8 @@
       "source_location": {
         "heading": "SP-316 — Seven compact authority families, eleven v7 profile-qualified wrapper routes and atomic native/Event release (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 26237,
-        "line": 26239,
+        "heading_line": 26317,
+        "line": 26319,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -199465,12 +199471,29 @@
       "source_location": {
         "heading": "SP-317 — Two projection/checkpoint families and exact RP-PROJECTION-3GEN transaction/generation/cutover obligations (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 26310,
-        "line": 26312,
+        "heading_line": 26390,
+        "line": 26392,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "bsd_contract_family_persistence_disposition",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-318",
+      "reasoning_tier": "high",
+      "risk_class": "durable_contract_claim_without_physical_family_or_nonpersisted_boundary",
+      "source_location": {
+        "heading": "SP-318 - Back Seat Driver Lifecycle Contract-Family Disposition",
+        "heading_level": 3,
+        "heading_line": 18832,
+        "line": 18834,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
     },
     {
       "context_scope": "scheduling_precedence",
@@ -212637,10 +212660,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15644,
+    "depends_on_edge_count": 15645,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18343,
-    "node_count": 6717,
+    "edge_count": 18344,
+    "node_count": 6718,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0

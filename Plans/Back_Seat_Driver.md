@@ -312,6 +312,8 @@ BSD owns six record families. Payload semantics are owned here; physical binding
 
 Restart restores held findings, closed keys, assignment epochs and cursors, quarantine counters, and policy/binding revisions. Absence of evidence is never recovered as success, and a nonterminal assignment that cannot be reconciled becomes `failed` with an explicit reason rather than silently `idle`.
 
+The typed machine companion for these six record families is `Plans/back_seat_driver_contracts.schema.json`. It binds the declared shapes for contract validation only: it admits no storage key, no writer, no physical family, and no EventRecord, and the command request/result contracts named by CS-078 remain future owner-authored artifacts. Physical binding, replay, retention, and registration status are recorded by the `Plans/storage-plan.md` disposition `scd.back_seat_driver.durable.v1` (SP-318).
+
 ContractRef: ContractName:Plans/storage-plan.md, SchemaID:pm.bsd.policy.v1, SchemaID:pm.bsd.workflow_binding.v1, SchemaID:pm.bsd.assignment.v1, SchemaID:pm.bsd.review_cycle.v1, SchemaID:pm.bsd.finding.v1, SchemaID:pm.bsd.quarantine.v1
 
 ## 17. Exact commands and command ownership

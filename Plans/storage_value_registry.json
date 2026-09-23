@@ -1742,6 +1742,47 @@
         "Plans/Test_Capture_and_Motion_Evidence.md",
         "Plans/Remote_Access_System.md"
       ]
+    },
+    {
+      "disposition_id": "scd.back_seat_driver.durable.v1",
+      "system_id": "back_seat_driver",
+      "owner_doc": "Plans/Back_Seat_Driver.md",
+      "schema_ref": "Plans/back_seat_driver_contracts.schema.json",
+      "record_kinds": [
+        "pm.bsd.policy.v1",
+        "pm.bsd.workflow_binding.v1",
+        "pm.bsd.assignment.v1",
+        "pm.bsd.review_cycle.v1",
+        "pm.bsd.finding.v1",
+        "pm.bsd.quarantine.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [
+        "bsd_runtime_record"
+      ],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "No durable write or retention authority until exact physical key/value, index, and adapter registration are admitted. Restart must restore held findings, closed finding keys, assignment epochs and cursors, quarantine counters, and policy/binding revisions from the registered owner records; held state lives outside the advisor transcript so compaction cannot erase it (Back_Seat_Driver.md section 16).",
+        "expiry_rule": "Registration must define terminal cleanup, stale/corrupt quarantine, and reference release without erasing closure or quarantine evidence required for audit; schema fixtures establish no retention implementation."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No legacy BSD writer or predecessor record family exists; the completed-review summary family bsd_runtime_record is not a lifecycle migration input. Physical migration requires exact family/key/value registration first and the sole terminal pm.storage_value.migration_receipt.v1.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Independent review CCR-01 (2026-09-23, target d247d57ebd) found the six pm.bsd.* lifecycle record families declared by Back_Seat_Driver.md section 16 without a typed payload contract or central storage disposition; the materialized pm.shared_runtime.bsd_runtime_record.v1 is only a completed-review summary and cannot represent held findings, reconfirmation, quarantine, or restart-restoration state. This row records the durable/pending decision for the typed companion Plans/back_seat_driver_contracts.schema.json. It adds no physical family, no storage key, no EventRecord, and no writer; lifecycle state is not folded into bsd_runtime_record; CS-078 command rows keep handler_unavailable.",
+      "source_refs": [
+        "Plans/Back_Seat_Driver.md#16-typed-records",
+        "Plans/Back_Seat_Driver.md#19-events",
+        "Plans/back_seat_driver_contracts.schema.json",
+        "Plans/Commands_System.md#CS-078",
+        "Plans/storage-plan.md#SP-318"
+      ]
     }
   ],
   "families": [
