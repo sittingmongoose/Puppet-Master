@@ -267,36 +267,37 @@
         "path": "reports/assistant-contract-closure-2026-09-22/REPAIR_REPORT.md",
         "reason": "§10 finish-pass section",
         "commit": "finish-pass reports commit",
-        "sha256": null
+        "sha256": "c3996beb03916aa9abe07d501805d7c76d735f8c6f464043dda4dec1d1586781"
       },
       {
         "path": "reports/assistant-contract-closure-2026-09-22/repair_closure_matrix.jsonl",
         "reason": "+2 blocked rows (CCR-01-REG, CCR-02-RESIDUAL) → 13 rows",
         "commit": "finish-pass reports commit",
-        "sha256": null
+        "sha256": "b5bf2c3044cc62a7fe6ab89125eaa09760ea2a6143e7064320b6172a137fdcc9"
       },
       {
         "path": "reports/assistant-contract-closure-2026-09-22/criteria_evidence_map.md",
         "reason": "N/A-OWNER → BLOCKED-OWNER reclassifications, M01 upgrade, counts sync",
         "commit": "finish-pass reports commit",
-        "sha256": null
+        "sha256": "d37aa877a808aa78809b6d7f0cc04378d9b777250258b1a4713a36512f8a707a"
       },
       {
         "path": "reports/assistant-contract-closure-2026-09-22/UNVERIFIED.md",
         "reason": "stale wave-1 statements corrected (§1 schema existence, §8 disposition row) + new §9 blocked dispositions",
         "commit": "finish-pass reports commit",
-        "sha256": null
+        "sha256": "d6d452e3e8580c259c97a90eb9201de8a44b923331c521471fc0f685577357af"
       },
       {
         "path": "reports/assistant-contract-closure-2026-09-22/validator_results.json",
         "reason": "wave3 section",
         "commit": "finish-pass reports commit",
-        "sha256": null
+        "sha256": "33a1c2ff7d5ddc8545dfc698264cd66c55f51c0e8d939e79ae710c25f493102d"
       },
       {
         "path": "reports/assistant-contract-closure-2026-09-22/changed_paths.json",
         "reason": "wave3 section (this list; self-entry sha in the evidence manifest)",
-        "commit": "finish-pass reports commit"
+        "commit": "finish-pass reports commit",
+        "sha256": "61bbe1e6fb7038bf00c64c074cea8798546807f9ceebf4fc941c4d1eb703783f"
       }
     ],
     "generated": [],
@@ -306,6 +307,65 @@
       "scripts/** (no tooling edits this wave)",
       "reports/landing-checks/baseline.json (coordinator re-recorded it at c08e7561f4; not this task's act)",
       "Concepts/**, Spec_Lock, .evidence, .implementation_readiness"
+    ]
+  },
+  "wave4": {
+    "scope": "Annex wave (post-acceptance advisory follow-up): reports + one test-list correction; zero canon edits.",
+    "authored": [
+      {
+        "path": "reports/assistant-contract-closure-2026-09-22/bsd_family_registration_spec.md",
+        "reason": "NEW: ready-to-apply BSD family registration spec for the Storage-registry-owner lane (exception-mechanics ground, prerequisites, six proposed family rows, replay/recovery/retention proposals, readiness pin deltas, same-change test-pin updates, explicit non-changes); proposal input, binds nothing",
+        "commit": "annex-wave commit",
+        "sha256": "7b9c2db11ee9f024358235953e88d094b2a03b374259f586ff3f89d7c9ee8354"
+      },
+      {
+        "path": "tests/test_pm_assistant_contract_closure.py",
+        "reason": "tripwire DEFINITIONLESS_RECORD_IDS gains QuestionnaireEnvelope (10 -> 11 kinds)",
+        "commit": "annex-wave commit",
+        "sha256": "c0eb5ce27e98627062755376367600c5339381d2c7cb48ef1ff97617dc567e58"
+      },
+      {
+        "path": "reports/assistant-contract-closure-2026-09-22/repair_closure_matrix.jsonl",
+        "reason": "CCR-01-REG exception-mechanics ground + annex evidence + unblock-step update; CCR-02-RESIDUAL ten -> eleven kinds",
+        "commit": "annex-wave commit",
+        "sha256": "b5bf2c3044cc62a7fe6ab89125eaa09760ea2a6143e7064320b6172a137fdcc9"
+      },
+      {
+        "path": "reports/assistant-contract-closure-2026-09-22/UNVERIFIED.md",
+        "reason": "whole-file wave-2-staleness sweep (sections 2, 3, 6, 7, 9)",
+        "commit": "annex-wave commit",
+        "sha256": "d6d452e3e8580c259c97a90eb9201de8a44b923331c521471fc0f685577357af"
+      },
+      {
+        "path": "reports/assistant-contract-closure-2026-09-22/REPAIR_REPORT.md",
+        "reason": "section 10 eleven-kind correction + finish-pass addendum",
+        "commit": "annex-wave commit",
+        "sha256": "c3996beb03916aa9abe07d501805d7c76d735f8c6f464043dda4dec1d1586781"
+      },
+      {
+        "path": "reports/assistant-contract-closure-2026-09-22/criteria_evidence_map.md",
+        "reason": "unchanged content this wave except where counts are inherited (verified no ten-kind counts remain)",
+        "commit": null,
+        "sha256": "d37aa877a808aa78809b6d7f0cc04378d9b777250258b1a4713a36512f8a707a"
+      },
+      {
+        "path": "reports/assistant-contract-closure-2026-09-22/validator_results.json",
+        "reason": "unchanged this wave (no new validator surface; suite rerun recorded in the annex-wave commit message)",
+        "commit": null,
+        "sha256": "33a1c2ff7d5ddc8545dfc698264cd66c55f51c0e8d939e79ae710c25f493102d"
+      },
+      {
+        "path": "reports/assistant-contract-closure-2026-09-22/changed_paths.json",
+        "reason": "wave3 sha256 backfill + this wave4 section (self-entry hash in the evidence-store manifest)",
+        "commit": "annex-wave commit"
+      }
+    ],
+    "generated": [],
+    "explicitly_not_changed": [
+      "All Plans/** canon",
+      "scripts/**",
+      "fixtures (unchanged this wave)",
+      "baseline.json"
     ]
   }
 }

@@ -638,6 +638,7 @@ class LiveEquivalentPayloadClosureTests(unittest.TestCase):
         "pm.chat.todo_item.v2",
         "pm.chat.todo_work_binding.v1",
         "pm.chat.todo_transition.v1",
+        "QuestionnaireEnvelope",
     ]
 
     def test_scheduled_message_durable_payloads_validate(self) -> None:
