@@ -277,6 +277,8 @@ class ReadinessRegistryRepresentationTest(unittest.TestCase):
         "mvp_legacy_import_reader_tier_accepted",
         "mvp_writer_at_migration_tier_rejected",
         "mvp_current_row_at_migration_tier_rejected",
+        "mvp_unlisted_row_in_import_reader_shape_rejected",
+        "mvp_import_reader_with_writer_era_consumers_rejected",
         "retention_hold_v2_authority_accepted",
         "retention_hold_v1_authority_on_v2_row_rejected",
     )

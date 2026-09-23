@@ -743,11 +743,13 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 )
 # Registry census. Re-pin it only to landed, recorded registry changes (Plans/storage-plan.md
 # section 2.3.1). Pinned at 99a3c7db9d (2026-09-06: 88 families, 24 policies); re-pinned on
-# 2026-09-23 at origin/main dca3c3349e after 27 landed commits, each on main with its own
-# record: 63bff67fb4 retired runtime_resource_admission and observable_work_projection to
-# migration_only (SIR full-thread addendum 2026-08-31), and the 26 commits af6856d039 through
-# f6350caf27 added 206 families and 3 policies and removed none.
-# reports/storage-registry-repairs-20260923/REPORT.md lists each commit and its record.
+# 2026-09-23 at origin/main dca3c3349e after 27 landed commits. The 26 commits af6856d039 through
+# f6350caf27 each carry their own record and together added 206 families and 3 policies,
+# removing none. 63bff67fb4 has no record of its own: it is the 2026-09-10 sweep checkpoint that
+# swept in the registry change retiring runtime_resource_admission and observable_work_projection
+# to migration_only, with its owner test (tests/test_pm_runtime_vocabulary_migration.py). The canon
+# it implements, the Shared_Integration_Runtime full-thread addendum of 2026-08-31, arrived in the
+# sweep 3e1842da40. reports/storage-registry-repairs-20260923/REPORT.md lists each commit.
 STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 294
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 27
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
@@ -927,11 +929,15 @@ STORAGE_VALUE_STORED_PROFILE_UNION_COMPOSITION_KEYWORDS = frozenset({"$id", "$co
 STORAGE_VALUE_READ_TOKEN_SCHEMA_PATH = PLANS / "event_record_index_checkpoint.schema.json"
 STORAGE_VALUE_READ_TOKEN_POINTER = "/$defs/read_token"
 # Legacy import-only reader rows (SIR full-thread addendum 2026-08-31; Plans/storage-plan.md
-# section 2.3.1, 2026-09-23): an MVP-required family whose owner retired its vocabulary to a
-# one-time owner-boundary import has no writer and carries tier migration_only.
+# section 2.3.1, 2026-09-23): exactly the two MVP-required families the owner passage names were
+# retired to a one-time owner-boundary import; they have no writer, their only consumer is the
+# StorageMigrationCoordinator normalizer, and they carry tier migration_only. Any other family
+# needs the owner to name it there first.
+STORAGE_VALUE_LEGACY_IMPORT_READER_FAMILY_IDS = ("runtime_resource_admission", "observable_work_projection")
 STORAGE_VALUE_LEGACY_IMPORT_READER_PRODUCER = (
     "No new writer; existing physical rows are retained for compatibility import only"
 )
+STORAGE_VALUE_LEGACY_IMPORT_READER_CONSUMER = "StorageMigrationCoordinator one-time owner-boundary normalizer"
 STORAGE_VALUE_LEGACY_IMPORT_READER_CROSSWALK_PREFIX = "legacy_reader_import_only_to_"
 SHARED_RUNTIME_STORAGE_FAMILIES = {
     "permission_snapshot_record": {
@@ -6280,15 +6286,19 @@ def storage_value_stored_profile_union_failures(
 
 
 def storage_value_legacy_import_only_reader(family: dict[str, Any]) -> bool:
-    """A materialized row the owner retired to a one-time owner-boundary import reader.
+    """One of the named rows the owner retired to a one-time owner-boundary import reader.
 
-    It has no writer, reads only through compatibility keys, fails closed on ambiguity and names its
-    successor contract (SIR full-thread addendum 2026-08-31; Plans/storage-plan.md section 2.3.1).
+    It is one of the families the owner passage names, has no writer, is consumed only by the
+    StorageMigrationCoordinator normalizer, reads only through compatibility keys, fails closed on
+    ambiguity and names its successor contract (SIR full-thread addendum 2026-08-31;
+    Plans/storage-plan.md section 2.3.1).
     """
     migration = family.get("migration_disposition") if isinstance(family.get("migration_disposition"), dict) else {}
     crosswalk = family.get("legacy_canonical_crosswalk_status")
     return (
-        family.get("status") == "materialized"
+        family.get("family_id") in STORAGE_VALUE_LEGACY_IMPORT_READER_FAMILY_IDS
+        and family.get("consumers") == [STORAGE_VALUE_LEGACY_IMPORT_READER_CONSUMER]
+        and family.get("status") == "materialized"
         and family.get("tier") == "migration_only"
         and migration.get("mode") == "compatibility_read_only"
         and migration.get("compatibility_keys_read_only") is True
@@ -8375,6 +8385,36 @@ def storage_value_representation_self_test_checks(
     family_of(writer_at_migration_tier, "runtime_resource_admission")["migration_disposition"]["mode"] = "current_schema"
     checks["mvp_writer_at_migration_tier_rejected"] = has(
         errors(writer_at_migration_tier, "mvp-writer-migration-tier"),
+        "storage_value_registry_mvp_required_family_tier_mismatch",
+        family_id="runtime_resource_admission",
+        expected="later_gui_or_feature_projection",
+    )
+    unlisted_import_reader = clone_registry()
+    unlisted_row = family_of(unlisted_import_reader, "editor_buffer_recovery_state")
+    unlisted_row.update(
+        tier="migration_only",
+        producer=[STORAGE_VALUE_LEGACY_IMPORT_READER_PRODUCER],
+        consumers=[STORAGE_VALUE_LEGACY_IMPORT_READER_CONSUMER],
+        legacy_canonical_crosswalk_status=STORAGE_VALUE_LEGACY_IMPORT_READER_CROSSWALK_PREFIX + "pm.self_test.successor.v1",
+    )
+    unlisted_row["migration_disposition"].update(
+        mode="compatibility_read_only", compatibility_keys_read_only=True, ambiguity_policy="fail_closed"
+    )
+    checks["mvp_unlisted_row_in_import_reader_shape_rejected"] = has(
+        errors(unlisted_import_reader, "mvp-unlisted-import-reader"),
+        "storage_value_registry_mvp_required_family_tier_mismatch",
+        family_id="editor_buffer_recovery_state",
+        expected="later_gui_or_feature_projection",
+    )
+    writer_era_consumers = clone_registry()
+    family_of(writer_era_consumers, "runtime_resource_admission")["consumers"] = [
+        "all resource consumers",
+        "ObservableWork",
+        "Doctor",
+        "Usage",
+    ]
+    checks["mvp_import_reader_with_writer_era_consumers_rejected"] = has(
+        errors(writer_era_consumers, "mvp-writer-era-consumers"),
         "storage_value_registry_mvp_required_family_tier_mismatch",
         family_id="runtime_resource_admission",
         expected="later_gui_or_feature_projection",
