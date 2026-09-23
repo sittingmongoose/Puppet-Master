@@ -1,0 +1,11 @@
+# Step 08 — original capture freeze handoff source map
+
+Root accepts L07 as an OPEN technical source-definition finding. Selection v2 F0–F5 does not supply a complete four-category capture or original restore B1 write-side constructor. The genuine Material P06-W handoff is for original message Material publication, with a different operation and write set; it cannot be retagged as restore creation. The missing original creation publisher must finish the whole read-side capture, preserve immutable expected values without live read authority, consume its read capabilities, retain only independently permitted cross-phase operation exclusion, gain fresh write authority, reauthenticate the complete original sources and current guards, and execute the exact three-row B1 transaction under its own pure final predicate. Unknown B1 effects and later cancellation retain original custody; they do not license recapture or a new attempt. This map supplies no B1 arm or native execution. Step 08 remains open; Step 09 remains 0 registered, 6 excluded, 20 carded, 226 remaining; Step 10 has not run. Main stays held.
+
+Cost: root authenticated all 322 frozen members, read the map, and reran its static checker: PASS, 760 assertions, including 301 predecessor members, 95 selected source bodies and 19 current canonical comparisons at `origin/main` `0fbcc50ef764f6bb13825665261790eb3ce4d711`. Native tests are NOT_RUN and positive native instances are zero. Monetary attribution is unavailable.
+
+| Evidence | Manifest path | SHA-256 |
+|---|---|---|
+| L07 freeze handoff map | `/mnt/Cursor/PM-Experiments/restore-corrupt-l07-freeze-handoff-map-20260923/v1/manifest.json` | `070b7cc5e9e9587e1ea41ed8e85ed517448f9102ff3a14b88b36c9a73570adf9` |
+
+The frozen point hash binds the canonical recipe, while the frozen-input digest binds the complete 26-field producer input. Neither authenticates dereferenced Material bytes or grants write authority. B1 must atomically commit the point, pending companion and admitted pending result in one redb transaction. B2 uses the durable original frozen input and genuine append receipt; B3 authenticates that receipt and atomically publishes the committed companion and terminal result. Existing recovery routes handle effect-unknown and post-effect cases without selecting newer conversation state.
