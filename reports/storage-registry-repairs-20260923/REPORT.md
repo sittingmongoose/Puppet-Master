@@ -52,6 +52,26 @@ A blind reviewer read this branch at `0540f4bd03` against SP-310, SP-278, SP-288
 | R-12 | The emit-only manifests still named baseline source `cc6d4a9aca` (old prefix), and the Browser manifest called its changed fingerprint unchanged. | Both baseline sources point at `f6350caf277d662fad531fc9b9af4c82803670fa`, registry SHA-256 `0be544181eda…`, whose first-40 prefix is the re-frozen value. The Browser sentence says the fingerprint was re-frozen and that membership and order are unchanged. | `feed0f1723` | none (no script reads these fields) |
 | R-14 | SP-310's acceptance criterion still said the readiness limitation "remain[s] explicitly unqualified". | The criterion (`SP-310-A005`, same ID) carries a dated amendment: the limitation was qualified on 2026-09-23 by the §2.3.1 readiness representation contract, on Jared's 2026-09-23 instruction to repair the Storage registry findings. The SP-310 follow-up and the §2.3.1 lead say the same. **No Decision Log entry was added. One can record the qualification if Jared wants one.** | `af7b2aa2fb` | none |
 
+**Coupling introduced by R-03.** The three union rows now depend on the declared SHA-256 of every document their check reads. That is the composition document `Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json` plus the eight documents the members reach:
+- `Plans/goal_cancel_command_custody.schema.json`
+- `Plans/goal_workflow_cancel_contracts/schemas/goal-workflow-cancel-custody.schema.json`
+- `Plans/event_append_receipt_contracts.schema.json`
+- `Plans/event_payloads/goal_runtime/goal_cancelled.schema.json`
+- `Plans/event_record.schema.json`
+- `Plans/full_thread_runtime_contracts.schema.json`
+- `Plans/shared_runtime_command_contracts.schema.json`
+- `Plans/ui_command_response.schema.json`
+
+The first version already pinned the composition and the two custody documents; R-03 adds the other six. Editing any of these nine files without refreshing `Plans/goal_workflow_cancel_schema_resources.json` makes all three rows fail:
+- `storage_value_registry_stored_profile_union_composition_unresolved` for the composition;
+- `..._member_unresolved` for a custody document;
+- `..._reference_unresolved` for the others.
+
+No generator maintains that file (it was written once, in `de87b6dfc3`), so the refresh is a manual owner step. After confirming the edited document still satisfies the SP-310 composition, the editor:
+1. runs `sha256sum <path>`;
+2. replaces every `complete_document_sha256` recorded for that path in the `goal` realm, in `whole_documents` (the `https` entry and any `file://` alias) and in `embedded_resources`. The resolver requires all of them to match;
+3. reruns `python3 scripts/pm-implementation-readiness.py validate` and confirms the three rows are clean.
+
 The storage representation self-test now has 28 named checks, up from 23. `test_pm_runtime_vocabulary_migration.ReadinessRegistryRepresentationTest` asserts all 28 by name. Readiness stays at 33 failures with an identical set. The coordinator classified the three Spec Lock rows on the edited validator as governance staleness for the landing.
 
 ## The rules, each with its canon basis
