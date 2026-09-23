@@ -1,20 +1,79 @@
 {
-  "build_order_blockers": [],
+  "build_order_blockers": [
+    {
+      "blocker_type": "dependency_cycles",
+      "items": [
+        {
+          "plan_unit_id": "SMPFS-170",
+          "remaining_depends_on": [
+            "SP-314"
+          ]
+        },
+        {
+          "plan_unit_id": "SP-314",
+          "remaining_depends_on": [
+            "SMPFS-170"
+          ]
+        }
+      ]
+    },
+    {
+      "blocker_type": "dependency_cycle_downstream_blocked_nodes",
+      "items": [
+        {
+          "plan_unit_id": "ATS-055",
+          "remaining_depends_on": [
+            "SP-314"
+          ]
+        },
+        {
+          "plan_unit_id": "ATS-056",
+          "remaining_depends_on": [
+            "ATS-055"
+          ]
+        },
+        {
+          "plan_unit_id": "ATS-057",
+          "remaining_depends_on": [
+            "ATS-056"
+          ]
+        },
+        {
+          "plan_unit_id": "SP-315",
+          "remaining_depends_on": [
+            "SP-314"
+          ]
+        },
+        {
+          "plan_unit_id": "SP-316",
+          "remaining_depends_on": [
+            "SP-315"
+          ]
+        },
+        {
+          "plan_unit_id": "SP-317",
+          "remaining_depends_on": [
+            "SP-316"
+          ]
+        }
+      ]
+    }
+  ],
   "dependency_graph_summary": {
-    "build_order_available": true,
-    "build_order_blocked_node_count": 0,
-    "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15648,
-    "downstream_blocked_node_count": 0,
-    "edge_count": 18347,
-    "node_count": 6719,
-    "true_cycle_component_count": 0,
+    "build_order_available": false,
+    "build_order_blocked_node_count": 8,
+    "cycle_blocker_count": 2,
+    "depends_on_edge_count": 15665,
+    "downstream_blocked_node_count": 6,
+    "edge_count": 18364,
+    "node_count": 6721,
+    "true_cycle_component_count": 1,
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-24T14:49:21Z",
+  "generated_at_utc": "2026-09-24T15:18:47Z",
   "gui_related_units": {
-    "count": 3196,
+    "count": 3197,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -28771,6 +28830,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "plan_unit_id": "SMPFS-170",
+        "source_location": {
+          "heading": "SMPFS-170 - Terminal workgroup moved original operation and historical consumer",
+          "heading_level": 3,
+          "heading_line": 11890,
+          "line": 11892,
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        }
+      },
+      {
         "owner_doc": "Plans/storage-plan.md",
         "plan_unit_id": "SP-001",
         "source_location": {
@@ -35180,10 +35250,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6719,
+  "plan_unit_count": 6721,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2170,
+      "high": 2172,
       "low": 5,
       "medium": 8,
       "standard": 4536
@@ -38612,6 +38682,8 @@
       "terminal_lifecycle_drift": 1,
       "terminal_lock_persistence_identity_confusion": 1,
       "terminal_move_empty_section_drift": 1,
+      "terminal_move_history_source_or_original_authority_escape": 1,
+      "terminal_move_original_result_or_sibling_event_authority_escape": 1,
       "terminal_noise_state_drift": 1,
       "terminal_observability_drift": 1,
       "terminal_owner_boundary": 1,
@@ -39035,7 +39107,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6528,
+      "accepted": 6530,
       "retired": 182,
       "superseded": 9
     },
@@ -39107,7 +39179,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 115,
+      "schema_contract": 117,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 16,
@@ -39322,6 +39394,6 @@
   },
   "schema_id": "pm.plan_index.node_readiness_report.v1",
   "source_plan_unit_index": "Plans/.plan_index/plan_units.jsonl",
-  "status": "blocked_runtime_certification_incomplete",
-  "status_reason": "Plans are indexed with required PlanUnit metadata and the PlanCompile compiler contract is accepted, but native runtime readiness remains blocked by PNC-019 until an executable lifecycle certification harness passes and records evidence for the enabled runtime boundary."
+  "status": "blocked_plans_incomplete",
+  "status_reason": "PlanUnit coverage or required metadata is incomplete; see missing_required_metadata and coverage_report blockers."
 }
