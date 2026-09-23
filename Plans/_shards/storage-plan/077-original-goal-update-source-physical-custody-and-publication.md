@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L24096-L26168
+Source lines: L24096-L26170
 
-Source SHA256: `ac17fa7a8fac2b14edbde759d7522f0903c3a7d39ad8153178361c7801a4a0c8`
+Source SHA256: `f8781a617fff053dd9e9f8dc529e4f248791530a6d553dd40dec182058508c53`
 
 ---
 
@@ -1586,7 +1586,7 @@ The added composition has a further representational requirement even after refe
 
 A future explicitly owner-qualified readiness contract must resolve the full fixed family schema, recognize the separate nonstored validation identity, and check each complete native-accepted profile's original wrapper/key/codec/producer/reader branch. This source adoption does not implement or authorize that validator change, change the registry schema, or claim an implementation-readiness/gate pass. The source adoption preserves this readiness limitation.
 
-**2026-09-23 follow-up.** Section 2.3.1 now states the owner-qualified readiness contract that this subsection called for, and the readiness validator implements it. The three rows resolve their composition and both whole wrappers in the declared `goal` realm. The composition identity stays validation metadata, and each wrapper keeps its literal stored header. This clears the 24 inline-shape failures on these rows without relabelling a member or inventing an envelope. The registry rows, the registry schema and every stored identity are unchanged. Native codec, key, producer and reader qualification remains NOT_RUN.
+**2026-09-23 follow-up.** Section 2.3.1 now states the owner-qualified readiness contract that this subsection called for, written on Jared's 2026-09-23 instruction to repair the Storage registry findings, and the readiness validator implements it. The three rows resolve their composition and both whole wrappers in the declared `goal` realm. The composition identity stays validation metadata, and each wrapper keeps its literal stored header. This clears the 24 inline-shape failures on these rows without relabelling a member or inventing an envelope. The registry rows, the registry schema and every stored identity are unchanged. Native codec, key, producer and reader qualification remains NOT_RUN.
 
 ```yaml
 plan_unit_id: SP-310
@@ -1616,7 +1616,9 @@ acceptance_criteria:
 - All 27 existing retention policies and all 272 unrelated whole rows remain exact; complete diagnostic text is
   accurately classified without changing stored fields or lifetimes.
 - Mandatory coherent backup covers genuinely issued authority and authentic original absence; readiness validator
-  representation limitations remain explicitly unqualified.
+  representation limitations remain explicitly unqualified. Amended 2026-09-23 — that limitation was qualified on
+  2026-09-23 by the section 2.3.1 readiness representation contract, on Jared's 2026-09-23 instruction to repair
+  the Storage registry findings.
 validation_surfaces:
 - Plans/goal_runtime_workflow_cancel_contracts.schema.json
 - Plans/goal_workflow_cancel_schema_resources.json
