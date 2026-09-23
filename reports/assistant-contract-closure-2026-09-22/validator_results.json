@@ -128,5 +128,109 @@
     "python scripts/pm-plans-verify.py run-gates / audit-governance: repository-wide checks requiring the full (non-sparse) checkout; policy assigns them to the landing check in the shared checkout. The sparse worktree lacks Concepts/tests-full cone and would manufacture missing-file failures.",
     "pm-plan-migration.py validate: same landing-check scope.",
     "No Concepts, WorkNode, NodeSeed, queue, native, or runtime execution surface was touched or exercised."
-  ]
+  ],
+  "wave2": {
+    "task_identity": "bsd-lifecycle-contract-closure-2026-09-23 (wave 2 of assistant-contract-closure-2026-09-22)",
+    "host": "Windows 11 (win32), Python 3.13.7, git-bash; worktree C:/Users/sitti/pm-worktrees/bsd-lifecycle-closure-2026-09-23 (local disk, sparse cone Plans/scripts/reports/tests)",
+    "baseline_commit": "d247d57ebd0d53ce4c66f4795e24a14d8782e9b8",
+    "final_commit": "4a2d0ddcbacd8523d9a982089b8b8af0321e9ab5",
+    "raw_log_store": "/mnt/Cursor/PuppetMaster-Evidence/tests/bsd-lifecycle-closure-20260923/ (Windows UNC //TRUENAS/Cursor/PuppetMaster-Evidence/tests/bsd-lifecycle-closure-20260923/); per-file SHA-256 manifest copied alongside",
+    "worktree_normalization_note": "Checkout LF-normalized before any generation (7377 files i/lf w/crlf -> LF; i/crlf untouched), verified against a committed shard Source SHA256. DEP-02 discovered during the first regeneration: generator write_text without newline produced CRLF outputs and CRLF-derived manifest hashes, drifting all 99 manifests; reverted, fixed at the root (commit f5099f775f), regenerated clean. NTFS exec-bit artifact: 29 files whose committed mode is 100755 show mode-only worktree diffs after Python rewrites (msys chmod does not restore git's exec view); all three wave-2 commits are verified mode-clean (0 mode changes), and all content tracking uses git -c core.filemode=false diff. Two i/mixed audit ledgers (event-authority-2026-08-12) flattened by an over-broad renormalization were restored byte-exact via git checkout before any commit.",
+    "hash_convention_note": "Wave-2 sha256 values are canonical LF (= git cat-file blob) hashes, reproducible on every platform. Wave-1 canonical_evidence values were CRLF worktree bytes; verified: CRLF variants of the current blobs reproduce the wave-1 anchors exactly (d5765a5c..., d6dc1f2f..., 19d4861c..., 03b6106d...). Wave-1 fields left untouched as historical record.",
+    "runs": [
+      {
+        "command": "python scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+        "tree": "final tree at 4a2d0ddcba (battery ran pre-commit on identical content; LF-normalized)",
+        "exit_code": 0,
+        "log": "final_shard_check.log",
+        "log_sha256": "314f1d3c86d7bdc2ff94f58ac92120c59a2037307406ffee5fa176310d343fba",
+        "result": "pass; 99 sources"
+      },
+      {
+        "command": "python scripts/pm-plan-index.py validate",
+        "tree": "final tree at 4a2d0ddcba (battery ran pre-commit on identical content; LF-normalized)",
+        "exit_code": 0,
+        "log": "final_plan_index_validate.log",
+        "log_sha256": "351edd28c5596d187eaea07af597cb8ffa1fc1b7a84f1ad9e09da2fc6074b13a",
+        "result": "pass; SP-314 unit indexed (plan_unit_count 6692)"
+      },
+      {
+        "command": "python scripts/pm-shared-runtime-command-contracts.py validate",
+        "tree": "final tree at 4a2d0ddcba (battery ran pre-commit on identical content; LF-normalized)",
+        "exit_code": 0,
+        "log": "final_shared_runtime_validate.log",
+        "log_sha256": "2f8cc25f4bce1a5586c079d921a48cb682831c7f251402c56a75365c770d93f9",
+        "result": "pass; cmd.bsd.set still exactly one production row"
+      },
+      {
+        "command": "python scripts/pm-plans-verify.py validate-wiring-matrix",
+        "tree": "final tree at 4a2d0ddcba (battery ran pre-commit on identical content; LF-normalized)",
+        "exit_code": 0,
+        "log": "final_wiring_matrix.log",
+        "log_sha256": "e6df48d3e69a0efcf5595e24d31618123dfc597a44637e51a61a9c9fc62b95b6",
+        "result": "pass"
+      },
+      {
+        "command": "python scripts/pm-assistant-contract-check.py",
+        "tree": "final tree at 4a2d0ddcba (battery ran pre-commit on identical content; LF-normalized)",
+        "exit_code": 1,
+        "log": "final_assistant_contract_check.log",
+        "log_sha256": "91b9920d62d376ef9b759411133b85a72f1c8b38b0651d20f6b665262c286677",
+        "result": "18 errors; error set machine-compared EQUAL to the wave-1 final log (same 18 pre-existing Browser event-admission items); zero BSD/record errors"
+      },
+      {
+        "command": "python -m pytest tests/test_pm_assistant_contract_closure.py tests/test_pm_plan_index.py -q",
+        "tree": "final tree at 4a2d0ddcba (battery ran pre-commit on identical content; LF-normalized)",
+        "exit_code": 0,
+        "log": "final_pytest_closure_planindex.log",
+        "log_sha256": "9584488a8693a581b5ce976f7325d6ffe362489ee0b12d14281897f4f3c165df",
+        "result": "52 passed (34 closure incl. 7 new BsdLifecycleRecordClosureTests + rewritten truth test; 18 plan-index)"
+      },
+      {
+        "command": "python scripts/pm-implementation-readiness.py validate",
+        "tree": "final tree at 4a2d0ddcba (battery ran pre-commit on identical content; LF-normalized)",
+        "exit_code": 1,
+        "log": "final_readiness_validate.log",
+        "log_sha256": "c911f8a4f93095b7a31e392d1f94aba762e61b5e2fc857a5479db54ba62720fd",
+        "result": "124 failures vs wave-1's 124; zero new failure kinds; 4 rows differ only by citing the edited docs' new hashes (expected governance staleness pending designated-Plans-agent reseal)"
+      },
+      {
+        "command": "python scripts/pm-implementation-readiness.py validate-case-l",
+        "tree": "final tree at 4a2d0ddcba (battery ran pre-commit on identical content; LF-normalized)",
+        "exit_code": 0,
+        "log": "final_readiness_case_l.log",
+        "log_sha256": "ef44ee1520df293d1ac5c3b04ec6a83cbe9766a2e293f73a7159b6e82322b5ac",
+        "result": "pass"
+      },
+      {
+        "command": "python scripts/pm-new-contracts-verify.py",
+        "tree": "final tree at 4a2d0ddcba (battery ran pre-commit on identical content; LF-normalized)",
+        "exit_code": 0,
+        "log": "final_new_contracts_verify.log",
+        "log_sha256": "87ab448a3e7f5d474c6b911a8e7ea83d5f9e26121ef0636e1c9b0456eec1afc0",
+        "result": "pass; closed 31-pair CONTRACT_PAIRS manifest untouched; the new records-only schema file is deliberately not registered there (manifest extension belongs to the future owner-authored CS-078 command contracts)"
+      },
+      {
+        "command": "python scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json (determinism re-run, post-commit)",
+        "tree": "final tree at 4a2d0ddcba (battery ran pre-commit on identical content; LF-normalized)",
+        "exit_code": 0,
+        "log": "regen_determinism_shard.log",
+        "log_sha256": "e1f67847cbd2b31c0f6a2dde6d2429372297f99105d40c9f2107bd8cb8b728e5",
+        "result": "pass; zero content diff on the committed tree"
+      },
+      {
+        "command": "python scripts/pm-plan-index.py generate (determinism re-run, post-commit)",
+        "tree": "final tree at 4a2d0ddcba (battery ran pre-commit on identical content; LF-normalized)",
+        "exit_code": 0,
+        "log": "regen_determinism_index.log",
+        "log_sha256": "45777703afed71b2af7180b99413adb7e2a4dbcb26058d9f65685e3191c82b90",
+        "result": "pass; only generated_at_utc timestamps moved in 4 .plan_index report files (reverted; jsonl outputs byte-stable)"
+      }
+    ],
+    "not_run": [
+      "python scripts/pm-plans-verify.py run-gates / audit-governance: repository-wide checks requiring the full (non-sparse) checkout; policy assigns them to the landing check in the shared checkout. The sparse worktree lacks Concepts/tests-full cone and would manufacture missing-file failures.",
+      "pm-plan-migration.py validate: same landing-check scope.",
+      "No Concepts, WorkNode, NodeSeed, queue, native, or runtime execution surface was touched or exercised."
+    ]
+  }
 }
