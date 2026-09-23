@@ -131,9 +131,9 @@
   ],
   "wave2": {
     "task_identity": "bsd-lifecycle-contract-closure-2026-09-23 (wave 2 of assistant-contract-closure-2026-09-22)",
-    "host": "Windows 11 (win32), Python 3.13.7, git-bash; worktree C:/Users/sitti/pm-worktrees/bsd-lifecycle-closure-2026-09-23 (local disk; full tree, sparse disabled; LF canonical)",
-    "baseline_commit": "a73cb06d101ff821cfcc69d2cdaccbd4e873660d",
-    "final_commit": "f6442035f04bd9b4711eb1df16757aa7eb3487fa",
+    "host": "final phase: Ubuntu VM (ubuntuserver, Python 3.13.7, git 2.51.0), worktree /home/sittingmongoose/pm-worktrees/bsd-lifecycle-closure-2026-09-23 on VM local disk per Jared's instruction; earlier phase: Windows 11 worktree on C: (logs retained)",
+    "baseline_commit": "2da97421a1805950a7533abfa2d7cbe5df33637a",
+    "final_commit": "78b499d668de406b0f02b85eec11c4d36118173d",
     "raw_log_store": "//TRUENAS/Cursor/PuppetMaster-Evidence/tests/bsd-lifecycle-closure-20260923/",
     "worktree_normalization_note": "Checkout LF-normalized before any generation (7377 files i/lf w/crlf -> LF; i/crlf and i/mixed untouched), verified against a committed shard Source SHA256. DEP-02 discovered during the first regeneration: generator write_text without newline produced CRLF outputs and CRLF-derived manifest hashes, drifting all 99 manifests; reverted, fixed at the root (DEP-02 commit), regenerated clean. Two i/mixed audit ledgers flattened by an over-broad renormalization were restored byte-exact via git checkout before any commit. Shared .git/config incident 2026-09-23 (~15:14 UTC): this branch's `git push -u origin` hit an SMB read fault and persisted a 140-byte config skeleton (no core/remotes/user); the DL-039 takeover thread documented it (reports/event-authority-20260911/takeover-20260923.md) and the coordinator restored an approved reconstruction at ~15:58 UTC. At ~16:2x UTC this agent, diagnosing persistent error-87 reads of the file, restored .git/config from the TrueNAS ZFS snapshot auto-2026-09-23_00-00 (3473B pre-incident state: both remotes + pushurls, user identity, filemode=false, worktreeConfig, historical branch upstreams) plus this branch's tracking entry, superseding the coordinator's 775B reconstruction (preserved as .git/config.corrupted-20260923). Disclosed to Jared; the coordinator may prefer their reconstruction - the restored state is the pre-incident canonical superset and every git operation since has been verified working. Phantom ` M` status entries (autocrlf asymmetry on LF worktrees) were handled with worktree-scoped core.autocrlf=false and content-level `git -c core.filemode=false diff` tracking; an aborted `git add --renormalize .` (staged 1081 EOL flips) was fully reverted with git reset before any commit (zero blobs changed). Rebase onto a73cb06d10: 654 + 550 derived-file conflicts resolved by checkout-upstream + regeneration from merged sources, never hand-merged; all source files auto-merged; zero source conflicts.",
     "hash_convention_note": "Wave-2 sha256 values are canonical LF (= git cat-file blob) hashes. Wave-1 canonical_evidence values were CRLF worktree bytes; verified: CRLF variants of the current-for-then blobs reproduce the wave-1 anchors exactly. Wave-1 fields left untouched as historical record.",
@@ -224,7 +224,7 @@
       "pm-plan-migration.py validate: same landing-check scope.",
       "No Concepts, WorkNode, NodeSeed, queue, native, or runtime execution surface was touched or exercised."
     ],
-    "original_base": "d247d57ebd0d53ce4c66f4795e24a14d8782e9b8 (branch created here, then rebased onto the landed Event Authority wave a73cb06d10 with re-adjudication: SP-314 renumbered SP-318, families census pin 282 -> 294)",
+    "original_base": "d247d57ebd (branch creation) -> rebased onto a73cb06d10 -> rebased onto 2da97421a1 (final base)",
     "comparisons": {
       "assistant_contract_check": {
         "branch_exit": 1,
@@ -276,6 +276,96 @@
         ],
         "note": "NOT a like-for-like pair: the main run executed in the shared checkout (CRLF-materialized files; the gitignored event-authority currentness audit inputs present on disk), the branch run in a clean LF worktree WITHOUT those ignored inputs. All four branch-only failure kinds name the missing ignored audit files (Plans/.audits/event-authority-2026-08-13-currentness/**, pnc019 source paths) - environmental, not branch content. The 102 removed rows are the shared checkout's environment profile. The verdict-relevant attribution is the landing check's own baseline-relative measurement on one tree (LANDING_20260923_BSD_LIFECYCLE.md). Same caveat the DL-039 landing record documented when it supplied the ignored audit snapshot into its worktree."
       }
-    }
+    },
+    "vm_final_runs": [
+      {
+        "command": "python3 -m pytest tests/test_pm_assistant_contract_closure.py tests/test_pm_plan_index.py (unittest runner)",
+        "tree": "VM worktree at f58ee3ea48 (final rebased state)",
+        "exit_code": 0,
+        "log": "vm_pytest.log",
+        "log_sha256": "195b093a166a9ae50c7216b597625e6109caaa5ac8defd6a903af8169cb05d06",
+        "result": "all pass (34 closure + 18 plan-index)"
+      },
+      {
+        "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+        "tree": "VM worktree at f58ee3ea48 (final rebased state)",
+        "exit_code": 0,
+        "log": "vm_shard_check.log",
+        "log_sha256": "a23246d8fa7c4eff08b5397dacfe298aa454b500ce3662df1efc56ad0bb930c2",
+        "result": "pass; 99 sources"
+      },
+      {
+        "command": "python3 scripts/pm-plan-index.py validate",
+        "tree": "VM worktree at f58ee3ea48 (final rebased state)",
+        "exit_code": 0,
+        "log": "vm_plan_index.log",
+        "log_sha256": "89f4f2aad528859b8ee31d2a80cfdf8046c93ea336dab328bc840cad83e553ba",
+        "result": "pass; SP-318 indexed; no ledger-scan artifact on the rebased base"
+      },
+      {
+        "command": "python3 scripts/pm-shared-runtime-command-contracts.py validate",
+        "tree": "VM worktree at f58ee3ea48 (final rebased state)",
+        "exit_code": 0,
+        "log": "vm_shared_runtime.log",
+        "log_sha256": "23d91842a2e61212529455a39674a20c5c1842d37eafc3d1cd8548aeb18f992b",
+        "result": "pass; cmd.bsd.set one production row"
+      },
+      {
+        "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+        "tree": "VM worktree at f58ee3ea48 (final rebased state)",
+        "exit_code": 0,
+        "log": "vm_wiring.log",
+        "log_sha256": "329563f709ef484848511b9932c8412e52a372108df8305b488d6db2bbcdef42",
+        "result": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-new-contracts-verify.py",
+        "tree": "VM worktree at f58ee3ea48 (final rebased state)",
+        "exit_code": 0,
+        "log": "vm_new_contracts.log",
+        "log_sha256": "97d42fe38d0a46eb4f4a7a6709bc29ebca0a6b902d0bc03f0a251328a9d160a8",
+        "result": "pass; 31-pair manifest untouched"
+      },
+      {
+        "command": "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts",
+        "tree": "VM worktree at f58ee3ea48 (final rebased state)",
+        "exit_code": 1,
+        "log": "vm_prd_runtime.log",
+        "log_sha256": "6763ee6ad4b7ec0eb7aa5b01c951bd408fdc20dd337db5581de0330e7c825475",
+        "result": "1240 failures; set EQUAL to same-day main run (vm_main_prd_runtime.log); zero name back_seat_driver_contracts.schema.json"
+      },
+      {
+        "command": "python3 scripts/pm-assistant-contract-check.py",
+        "tree": "VM worktree at f58ee3ea48 (final rebased state)",
+        "exit_code": 1,
+        "log": "vm_assistant_check.log",
+        "log_sha256": "426af8a1242d06f8bdfa5d2a5344fb01a0e7d244d57f12d4c39b6291bc9525b4",
+        "result": "18 errors; set EQUAL to same-day main run (vm_main_assistant_check.log)"
+      },
+      {
+        "command": "python3 scripts/pm-implementation-readiness.py validate",
+        "tree": "VM worktree at f58ee3ea48 (final rebased state)",
+        "exit_code": 1,
+        "log": "vm_readiness_validate.log",
+        "log_sha256": "95a9740b5fb618e2c9fb2bca05ae32a964323115740bf65bd543ec465fc3ead6",
+        "result": "80 failures vs same-day main 81 (vm_main_readiness.log): +3 expected stale_hash rows for this branch's edited canon, +2/-6 gitignored-currentness-audit environment shuffle; zero content-caused kinds"
+      },
+      {
+        "command": "python3 scripts/pm-implementation-readiness.py validate-case-l",
+        "tree": "VM worktree at f58ee3ea48 (final rebased state)",
+        "exit_code": 0,
+        "log": "vm_readiness_case_l.log",
+        "log_sha256": "688b73b2dd8d79cd1c08a94002094b552040b5e748fbbd87a8a9aeaf37ba5b64",
+        "result": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-landing-check.py --base origin/main",
+        "tree": "VM worktree at f58ee3ea48 (final rebased state)",
+        "exit_code": 2,
+        "log": "vm_landing_check.log",
+        "log_sha256": "38bc3495c3de5ccaa4384aae6276f9354c7d3a2f8d35c21debe02e394906c2ab",
+        "result": "exit 2, 76 non-excused items - landed under Jared's scoped exception; full class-by-class attribution in LANDING_20260923_BSD_LIFECYCLE.md"
+      }
+    ]
   }
 }
