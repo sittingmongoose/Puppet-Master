@@ -203,7 +203,22 @@ def read_json(path: Path) -> Any:
 
 def portable_index_diagnostic(detail: str) -> str:
     """Keep a failure's meaning without baking this checkout into derived canon."""
-    return detail.replace(f"{ROOT.as_posix()}/", "")
+    root = str(ROOT)
+    doubled_root = root.replace("\\", "\\\\")
+    # Diagnostics reach this function in several platform spellings: POSIX joins,
+    # Windows native backslash joins, f-string mixes of a native root with a "/"
+    # separator, and repr-escaped OSError text with doubled backslashes. Strip the
+    # exact checkout root in every spelling and normalize the tail to forward
+    # slashes; a sibling directory of the root must never match.
+    for needle, separator in (
+        (f"{ROOT.as_posix()}/", "/"),
+        (f"{root}/", "/"),
+        (f"{root}\\", "\\"),
+        (f"{doubled_root}\\\\", "\\\\"),
+    ):
+        if needle in detail:
+            return detail.replace(needle, "").replace(separator, "/")
+    return detail
 
 
 def pnc019_certification_status() -> dict[str, Any]:
