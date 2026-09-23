@@ -1,0 +1,180 @@
+{
+  "schema_id": "pm.assistant_contract_closure.payload_fixtures.v1",
+  "schema_version": "1.0.0",
+  "purpose": "Static positive/negative payload fixtures for the PM-ASSISTANT-CONTRACT-CLOSURE-2026-09-22-v1 contract tests. These fixtures prove schema and contract shape only: no runtime, native handler, persistence, event emission, or governance-seal claim.",
+  "positive": {
+    "goal_plan_binding_deep": {
+      "goal_id": "goal_01J8ZK3M9QW2E4R6T8Y0U1A2",
+      "assistant_plan_id": "aplan_01J8ZK4N7P5X3C1V9B8M2Q4W",
+      "plan_version": 5,
+      "plan_hash": "9f2c1a4b6d8e0f1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192",
+      "plan_run_id": "run_01J8ZK5P2Q7Y9E4R6T1U8I3O",
+      "todo_list_ref": "todo_list.thread_01J8ZK2H4G6F8D0S2A3P5O7I",
+      "planunit_bundle_ref": "bundle_01J8ZK6Q1W2E3R4T5Y6U7I8O"
+    },
+    "goal_plan_binding_regular_null_bundle": {
+      "goal_id": "goal_01J8ZK7R2E4T6Y8U0I2O4P6A",
+      "assistant_plan_id": "aplan_01J8ZK8S3D5F7G9H1J3K5L7Z",
+      "plan_version": 2,
+      "plan_hash": "1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f809",
+      "plan_run_id": "run_01J8ZK9T4F6H8J0K2L4M6N8B",
+      "todo_list_ref": "todo_list.thread_01J8ZKAU5G7I9K1M3O5Q7S9D",
+      "planunit_bundle_ref": null
+    },
+    "goal_plan_binding_storage_envelope": {
+      "schema_id": "pm.storage_value.goal_plan_binding.v1",
+      "schema_version": "1.0.0",
+      "storage_instance_id": "storage_instance_01J8ZKBV6H8J0L2N4P6R8T0V",
+      "physical_key": "goal_plan_binding.v1:696e7374:70726f6a:74687264:676f616c:72756e31",
+      "record": {
+        "goal_id": "goal_01J8ZK3M9QW2E4R6T8Y0U1A2",
+        "assistant_plan_id": "aplan_01J8ZK4N7P5X3C1V9B8M2Q4W",
+        "plan_version": 5,
+        "plan_hash": "9f2c1a4b6d8e0f1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192",
+        "plan_run_id": "run_01J8ZK5P2Q7Y9E4R6T1U8I3O",
+        "todo_list_ref": "todo_list.thread_01J8ZK2H4G6F8D0S2A3P5O7I",
+        "planunit_bundle_ref": "bundle_01J8ZK6Q1W2E3R4T5Y6U7I8O"
+      }
+    },
+    "bsd_mode_set_request": {
+      "schema_id": "pm.shared_runtime.command_request.v1",
+      "schema_version": "1.0.0",
+      "command_id": "cmd.bsd.set",
+      "command_instance_id": "cmdi_01J8ZKB7Q2W4E6R8T0Y1U3I5",
+      "idempotency": {
+        "schema_id": "pm.shared_runtime.command_idempotency.v1",
+        "idempotency_key": "idem_01J8ZKC8X3Z5V7B9N1M2Q4W6",
+        "scope_ref": "project.proj_01J8ZK9D4F6H8J0K2L3M5N7P",
+        "binding_sha256": "0f1e2d3c4b5a69788796a5b4c3d2e1f00f1e2d3c4b5a69788796a5b4c3d2e1f0",
+        "replay_policy": "return_original_result",
+        "conflict_behavior": "reject_same_key_different_binding"
+      },
+      "project_id": "proj_01J8ZK9D4F6H8J0K2L3M5N7P",
+      "project_home_server_id": "server_01J8ZKA2C4E6G8I0K2M4O6Q8",
+      "execution_host_id": "host_01J8ZKB3D5F7H9J1L3N5P7R9",
+      "execution_environment_id": "env_01J8ZKC4E6G8I0K2M4O6Q8S0",
+      "source_location_id": null,
+      "topology_generation": 3,
+      "actor_ref": "actor.user_01J8ZKD5F7H9J1L3N5P7R9T1",
+      "permission_snapshot_ref": "perm_snapshot_01J8ZKE6G8I0K2M4O6Q8S0U2",
+      "goal_id": null,
+      "plan_id": null,
+      "run_id": null,
+      "thread_id": "thread_01J8ZKF7H9J1L3N5P7R9T1V3",
+      "agent_id": null,
+      "crew_id": null,
+      "deadline_utc": null,
+      "recovery_of_operation_id": null,
+      "scope_kind": "project",
+      "scope_id": "proj_01J8ZK9D4F6H8J0K2L3M5N7P",
+      "requested_mode": "Auto",
+      "expected_policy_revision": 7
+    },
+    "bsd_mode_set_result": {
+      "schema_id": "pm.shared_runtime.command_result.v1",
+      "schema_version": "1.0.0",
+      "result_type": "BackSeatDriverModeSetResult",
+      "command_id": "cmd.bsd.set",
+      "operation_id": "op_01J8ZKG8I0K2M4O6Q8S0U2W4",
+      "command_instance_id": "cmdi_01J8ZKB7Q2W4E6R8T0Y1U3I5",
+      "command_outcome_ref": "outcome.bsd_set.op_01J8ZKG8I0K2M4O6Q8S0U2W4",
+      "outcome": "accepted",
+      "observable_work_id": null,
+      "current_revision_or_epoch": 8,
+      "projection_ref": "projection.bsd_policy.proj_01J8ZK9D4F6H8J0K2L3M5N7P",
+      "receipt_refs": [
+        "receipt.bsd_set.op_01J8ZKG8I0K2M4O6Q8S0U2W4"
+      ],
+      "artifact_refs": [],
+      "disabled_reason": null,
+      "error": null,
+      "recovery_actions": [],
+      "replayed": false,
+      "original_operation_id": null,
+      "terminal_owner_result_ref": null,
+      "subject_ref": "bsd_policy.proj_01J8ZK9D4F6H8J0K2L3M5N7P"
+    }
+  },
+  "negative": [
+    {
+      "negative_id": "gpb_missing_plan_run_id",
+      "target": "goal_plan_binding_deep",
+      "schema": "GoalPlanBinding",
+      "mutation": { "remove": "plan_run_id" },
+      "expected_keyword": "required",
+      "expected_message_field": "plan_run_id"
+    },
+    {
+      "negative_id": "gpb_bundle_ref_wrong_type",
+      "target": "goal_plan_binding_deep",
+      "schema": "GoalPlanBinding",
+      "mutation": { "set": { "planunit_bundle_ref": 42 } },
+      "expected_keyword": "oneOf",
+      "expected_path": ["planunit_bundle_ref"]
+    },
+    {
+      "negative_id": "gpb_plan_hash_not_hex64",
+      "target": "goal_plan_binding_deep",
+      "schema": "GoalPlanBinding",
+      "mutation": { "set": { "plan_hash": "ABC123" } },
+      "expected_keyword": "pattern",
+      "expected_path": ["plan_hash"]
+    },
+    {
+      "negative_id": "gpb_plan_version_zero",
+      "target": "goal_plan_binding_deep",
+      "schema": "GoalPlanBinding",
+      "mutation": { "set": { "plan_version": 0 } },
+      "expected_keyword": "minimum",
+      "expected_path": ["plan_version"]
+    },
+    {
+      "negative_id": "gpb_retired_goal_revision_field_rejected",
+      "target": "goal_plan_binding_deep",
+      "schema": "GoalPlanBinding",
+      "mutation": { "set": { "goal_revision": 3 } },
+      "expected_keyword": "additionalProperties",
+      "expected_message_field": "goal_revision"
+    },
+    {
+      "negative_id": "gpb_envelope_missing_schema_id",
+      "target": "goal_plan_binding_storage_envelope",
+      "schema": "StorageGoalPlanBinding",
+      "mutation": { "remove": "schema_id" },
+      "expected_keyword": "required",
+      "expected_message_field": "schema_id"
+    },
+    {
+      "negative_id": "bsd_request_missing_expected_policy_revision",
+      "target": "bsd_mode_set_request",
+      "schema": "back_seat_driver_mode_set_request",
+      "mutation": { "remove": "expected_policy_revision" },
+      "expected_keyword": "required",
+      "expected_message_field": "expected_policy_revision"
+    },
+    {
+      "negative_id": "bsd_request_invalid_mode_enum",
+      "target": "bsd_mode_set_request",
+      "schema": "back_seat_driver_mode_set_request",
+      "mutation": { "set": { "requested_mode": "Disabled" } },
+      "expected_keyword": "enum",
+      "expected_path": ["requested_mode"]
+    },
+    {
+      "negative_id": "bsd_result_replay_without_original_operation",
+      "target": "bsd_mode_set_result",
+      "schema": "back_seat_driver_mode_set_result",
+      "mutation": { "set": { "replayed": true } },
+      "expected_keyword": "type",
+      "expected_path": ["original_operation_id"]
+    },
+    {
+      "negative_id": "bsd_result_blocked_without_reason_or_error",
+      "target": "bsd_mode_set_result",
+      "schema": "back_seat_driver_mode_set_result",
+      "mutation": { "set": { "outcome": "blocked" } },
+      "expected_keyword": "anyOf",
+      "expected_path": []
+    }
+  ]
+}
