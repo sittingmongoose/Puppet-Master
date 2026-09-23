@@ -1,7 +1,7 @@
 # Landing record — BSD lifecycle contract closure (wave 2, CCR-01/CCR-02) — landed 2026-09-23 under Jared's scoped exception
 
 **Branch:** `fix/bsd-lifecycle-contract-closure-2026-09-23`
-**Main before:** `aff2a0d692a20dfa10bef962fd01875c68aa3e9d` (the Jared-designated repository-wide reseal, pushed while this wave awaited its landing) → **Main after:** __MAIN_AFTER__ (ff-merge; pushed to GitHub + TrueNAS: __PUSH_DETAIL__)
+**Main before:** `aff2a0d692a20dfa10bef962fd01875c68aa3e9d` (the Jared-designated repository-wide reseal, pushed while this wave awaited its landing) → **Main after:** e6571faf7ae0cbc39d1cc1240a13e60e854fa341 (ff-merge; pushed to GitHub + TrueNAS: single `git push origin main` from the shared checkout via its dual pushurls (GitHub https + TrueNAS ssh); both remotes verified at e6571faf7ae0cbc39d1cc1240a13e60e854fa341)
 **Base history:** created off `d247d57ebd`; rebased onto `a73cb06d10` (Event Authority source-current wave landed mid-execution); rebased again onto `2da97421a1` (Step-8 checkpoint + DL-068..075 card-answer waves landed during the halt), and a third time onto `aff2a0d692` (the governance reseal landed while this wave awaited the exception push — waited for its push rather than overtaking an in-flight governance landing). Both rebases per AGENTS: cited passages re-read against the new main (BSD §16 and CS-078 unchanged both times; storage-plan/00-plans-index hunks disjoint from this wave's insertions), SP-314→SP-318 and census 282→294 re-adjudicated once at the first rebase, every derived-file conflict (654+550 first rebase; 115+4+89 second) resolved by checkout-upstream + regeneration, never hand-merged.
 **Final commit stack (post-third-rebase, base `aff2a0d692`):** `446d4374aa` → `68d5b26461` → `f435de1162` → `57e6e4f4ec` → `5cdde8d150` → `cf4f048944` (**content head**) → reports-rebuild → currency-note → final-assembly → record-update commit (this text).
 **Environment (per Jared's instruction):** all landing git operations ran from the VM worktree `/home/sittingmongoose/pm-worktrees/bsd-lifecycle-closure-2026-09-23` (ubuntuserver, local disk). The Windows-path worktree was removed and no further git runs against the share from Windows paths — it was the likely writer of the ~15:14 UTC `.git/config` wipe (disclosed below).
@@ -38,7 +38,14 @@ Windows-phase checks (retained logs): exit 2 with 90 items at `d4a7f90e81` (pre-
 
 ## Landing actions
 
-__LANDING_ACTIONS__
+1. Intersection rescan before merge: shared-checkout dirty entries vs the 686 branch paths — **zero intersection** (`branch_paths_pre_merge.txt` / `shared_dirty_pre_merge.txt` in the evidence store); the 51 dirty entries (Concepts 5.6 Pro wave, WATCHDOG.yml, untracked roots) were left untouched.
+2. `git merge --ff-only fix/bsd-lifecycle-contract-closure-2026-09-23` in the shared checkout: `aff2a0d692` → `e6571faf7ae0cbc39d1cc1240a13e60e854fa341` (fast-forward, no merge commit, no force).
+3. Landed-byte verification in the shared checkout: `back_seat_driver_contracts.schema.json` sha256 `2948e5e7…` OK; `storage_value_registry.json` sha256 `76813d70…` OK; families 294 / dispositions 32 OK.
+4. Shared-checkout `pm-shard-plans.py --check`: **exit 0, pass, 99 sources** (`shared_shard_check.log`).
+5. Shared-checkout `pm-landing-check.py --base origin/main` (post-ff, pre-push, per CLAUDE.md): **exit 2 — 74 items** (`shared_landing_check.log`, sha256 `0be585bf9b05e651bfe076b1211e7836c0d2e6e687dd9f2a4231922c0eab1a20`); same classes as the worktree run, covered by the exception ruling; recorded, not re-adjudicated.
+6. `git push origin main` (dual pushurls): GitHub + TrueNAS → `e6571faf7ae0cbc39d1cc1240a13e60e854fa341`; both remotes ls-remote verified.
+7. Post-push record commit (this text) on main, pushed.
+8. Cleanup: VM worktree removed, local branch deleted (remote branch retained at the final head per wave-1 precedent), Windows safe.directory entry removed; the Windows worktree was already removed before the VM phase.
 
 ## Shared `.git/config` incident (disclosure, resolved)
 
