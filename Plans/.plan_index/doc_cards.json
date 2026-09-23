@@ -5484,7 +5484,7 @@
         "scripts/pm-plans-verify.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 5841,
+      "line_count": 5848,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 72,
       "plan_unit_ids": [
@@ -5638,7 +5638,7 @@
         "unrenderable_branch_policy_promise",
         "weak_integration_underclassification"
       ],
-      "sha256": "5c751ceeb006a3dcb5c25485aff1cf2042924e18f86f51cac17948b43bb6aee3",
+      "sha256": "daa68e9c6155c3b937896eeab640403235315784ba54db71af05e7c04e03e945",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 72
@@ -7131,7 +7131,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 38208,
+      "line_count": 38217,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 561,
       "plan_unit_ids": [
@@ -7795,7 +7795,7 @@
         "visualizer_script_policy_drift",
         "wand_overflow_or_demo_command_pollution"
       ],
-      "sha256": "29e9dee98e8af052e6a59420e02f11456ba87404b67397156dce58f31adae48f",
+      "sha256": "1b7b0f4674c9088b4e042040be5522e66badc19d0008b0d55f9fe63c31ccc4f0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 560,
@@ -19945,7 +19945,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-23T23:24:49Z",
+  "generated_at_utc": "2026-09-23T23:35:28Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

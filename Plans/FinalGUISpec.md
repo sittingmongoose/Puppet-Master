@@ -602,6 +602,15 @@ action. The move payload's `source_reseeded` is therefore always false for a
 move. Reset and boot recovery reconstitution above are unchanged and gain no
 new creation authority from this amendment.
 
+Amended 2026-09-23 (DL-070 follow-up) — `source_reseeded` is retired. The
+move payload no longer carries the field at all. The typed arguments of
+`cmd.terminal.move_workgroup` in the UI Command Catalog, its production
+wiring rows and the closed `terminal.workgroup_moved` payload schema never
+included it, so the 2026-08-13 statement that the move command payload
+records `source_reseeded`, and the always-false clause above, are retired
+with the reseed. A move reports what it moved and whether it created the
+target section (`section_created`); it reports no reseeding.
+
 Browser access from any editor panel, File Manager `Open in Panel`, Dashboard/Chat
 movement, terminal section/workgroup movement, explicit empty-section state, and
 reset route through the command and production-wiring owners; disclosure-only menu

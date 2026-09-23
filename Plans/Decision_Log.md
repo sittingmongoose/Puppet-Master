@@ -1289,6 +1289,13 @@ Open follow-ups, outside this card's scope:
 - The command and wiring owners should decide whether to retire the `source_reseeded` field.
 - The PM7 concept's move behavior still reseeds and should be aligned by its concept owner.
 
+**Addendum, 2026-09-23: both follow-ups are carried out.** This records owner follow-through on the answer above. It is not a new decision.
+
+- **`source_reseeded` is retired.** A search of the command and wiring owners found the field in none of them. `cmd.terminal.move_workgroup`'s typed arguments in `Plans/UI_Command_Catalog.md`, the production wiring rows `home.terminal_section.move_workgroup` and `home.terminal_section.new_section` in `Plans/Wiring_Matrix.production.json` and its schema, `Plans/Commands_System.md`, and the closed `Plans/event_payloads/terminal_workgroup_moved.schema.json` never carried it. Its only carrier was FinalGUISpec prose, which now retires it with a dated amendment, so a move payload carries no `source_reseeded`.
+- **The PM7 concept's move no longer reseeds.** The Home workspace authored source that the PM7 pipeline's T48 transform reads (`Concepts/pm7-tools/home_workspace_source.py`) leaves the vacated section empty, allocates no workgroup or session, and emits no reseed field or receipt. The Home verifier's expectations follow DL-070. The checked-in `Concepts/PMConcept7.html` changes only at the pipeline's next authorized promotion.
+
+No command argument, wiring row, event payload schema, event admission, reset or boot-recovery behavior changes.
+
 SourceRef: the answers file above; card `reports/event-authority-20260911/step-08-terminal-move-source-card-20260921.md`.
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-138, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
