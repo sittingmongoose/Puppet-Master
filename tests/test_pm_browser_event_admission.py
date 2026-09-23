@@ -109,7 +109,7 @@ class BrowserPreexistingPreservationTests(unittest.TestCase):
                 self.assertIn("required_preexisting_successors_missing", {row["error"] for row in report["failures"]})
                 self.assertFalse(report["admission_complete"])
 
-    def test_exact_five_complete_adoptions_preserve_historical_authority(self):
+    def test_exact_six_complete_adoptions_preserve_historical_authority(self):
         report, failures = GATE.preexisting_preservation(self.admission, self.rows)
         self.assertEqual(failures, [])
         self.assertTrue(report["historical_original39_verified"])
@@ -119,6 +119,7 @@ class BrowserPreexistingPreservationTests(unittest.TestCase):
         self.assertEqual(set(report["reviewed_preexisting_successor_family_ids"]), {
             "event-family-goal-created", "event-family-goal-updated", "event-family-goal-cancelled",
             "event-family-goal-run-started", "event-family-goal-run-cancelled",
+            "event-family-goal-run-certified",
         })
 
     def test_every_field_of_each_successor_is_pinned(self):
