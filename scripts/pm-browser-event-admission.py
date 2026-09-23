@@ -29,7 +29,7 @@ ORIGINAL40_SHA256 = "4f701c9598003d7c01a405f18f7991b373379eca8b182cf6222540a4746
 COMPACTION_FAMILY = "event-family-context-compaction-completed"
 # Whole-row pins independently taken from each adoption commit, never generated
 # from the live registry. Historical pins are from b09294e44b. No sibling or
-# field-level exemption follows from these exact five owner adoptions.
+# field-level exemption follows from these exact six owner adoptions.
 REVIEWED_GOAL_SUCCESSORS = {
     "event-family-goal-created": (
         "b659581816da0131ee0bb3883e05d4bc4e72d833fb41fc60648d9a7777bee93b",
@@ -55,6 +55,11 @@ REVIEWED_GOAL_SUCCESSORS = {
         "befcf90338898beeef80b6a96c154fdff3bdd990b277e848026d55660c33ec25",
         "f60bbabf5cd822c1e59ac39d33ef0eed0007226457fdade4dc0a3a811166af6b",
         "a3c511657f", "Plans/Goal_Runtime_System.md#GRS-080",
+    ),
+    "event-family-goal-run-certified": (
+        "b139f451951b3bf8b08a3d91e3cc0deabf6445760842465ddcd859ca39648061",
+        "f58cc6a74676d7d3266c0a45f1a7f07a7e9f12e9782ca2c837f840070df7654e",
+        "f6350caf277d662fad531fc9b9af4c82803670fa", "Plans/Goal_Runtime_System.md#GRS-084",
     ),
 }
 

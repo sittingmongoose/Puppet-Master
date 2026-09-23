@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-24T00:36:01Z",
+  "generated_at_utc": "2026-09-24T00:37:19Z",
   "gui_related_units": {
     "count": 3196,
     "units": [
@@ -39288,6 +39288,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/storage_value_registry.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/touch_closure.json"
       },
       {
         "bulk_registration_allowed": false,
