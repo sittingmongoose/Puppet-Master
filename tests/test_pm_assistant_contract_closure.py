@@ -593,8 +593,9 @@ class BsdLifecycleRecordClosureTests(unittest.TestCase):
         registered = {t["transform_id"] for t in REDACTION_TRANSFORMS["transforms"]}
         for transform_id in row["redaction_transform_ids"]:
             self.assertIn(transform_id, registered)
-        # The disposition adds no physical family (SP-251/SP-314 negative constraint).
-        self.assertEqual(len(REGISTRY["families"]), 282)
+        # The disposition adds no physical family (SP-251/SP-318 negative constraint).
+        # Census re-adjudicated after the 2026-09-23 Event Authority landing (+12 families): 282 -> 294.
+        self.assertEqual(len(REGISTRY["families"]), 294)
 
     def test_lifecycle_not_folded_into_summary(self) -> None:
         self.assertNotIn("bsd_runtime_record", BSD_RECORDS["$defs"])

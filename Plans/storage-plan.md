@@ -18860,7 +18860,7 @@ acceptance_criteria:
   - The disposition ID `scd.back_seat_driver.durable.v1` is unique and schema-valid, and the row fixes `runtime_evidence=false`.
   - The row binds all six `pm.bsd.*.v1` record kinds to `Plans/back_seat_driver_contracts.schema.json` and references `bsd_runtime_record` only as an existing family.
   - The durable-pending row cannot be written, restored, advertised as materialized, or used to enable a dependent command; no EventRecord family, storage key, or writer is admitted.
-  - The registry physical `families` array membership remains unchanged at 282 rows and the readiness-enforced census is unchanged.
+  - The registry physical `families` array membership is unchanged by this disposition (294 rows after the 2026-09-23 Event Authority source-current landing) and the readiness-enforced census is unchanged by it.
   - Lifecycle state (held findings, reconfirmation, quarantine, restart restoration) is never folded into `pm.shared_runtime.bsd_runtime_record.v1`.
   - CS-078 command rows keep `handler_unavailable` and the typed companion contains no command request/result definitions.
 validation_surfaces:
