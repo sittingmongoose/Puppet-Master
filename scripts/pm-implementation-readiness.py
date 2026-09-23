@@ -743,13 +743,17 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 )
 # Registry census. Re-pin it only to landed, recorded registry changes (Plans/storage-plan.md
 # section 2.3.1). Pinned at 99a3c7db9d (2026-09-06: 88 families, 24 policies); re-pinned on
-# 2026-09-23 at origin/main dca3c3349e after 27 landed commits. The 26 commits af6856d039 through
-# f6350caf27 each carry their own record and together added 206 families and 3 policies,
-# removing none. 63bff67fb4 has no record of its own: it is the 2026-09-10 sweep checkpoint that
-# swept in the registry change retiring runtime_resource_admission and observable_work_projection
-# to migration_only, with its owner test (tests/test_pm_runtime_vocabulary_migration.py). The canon
-# it implements, the Shared_Integration_Runtime full-thread addendum of 2026-08-31, arrived in the
-# sweep 3e1842da40. reports/storage-registry-repairs-20260923/REPORT.md lists each commit.
+# 2026-09-23 at origin/main dca3c3349e. The 27 commits the re-pin counts are only those that
+# changed a count or a tier; 15 more touched the registry in that range without changing the
+# census (6d54e0e3ba, 9b96beb0fc, b09294e44b, 38d896d3f0, 641c980264, 2080658ff8, 59335a3435,
+# 679e066a2a, 46f30fb464, 274c681e43, f8ace334f4, 8aeaea204c, 7ad1ffff6a, 68d5b26461, 5cdde8d150).
+# Of the 27, the 26 from af6856d039 to f6350caf27 each carry their own record and together added
+# 206 families and 3 policies, removing none. 63bff67fb4 has no record of its own: it is the
+# 2026-09-10 sweep checkpoint that swept in the registry change retiring runtime_resource_admission
+# and observable_work_projection to migration_only, with its owner test
+# (tests/test_pm_runtime_vocabulary_migration.py). The canon it implements, the
+# Shared_Integration_Runtime full-thread addendum of 2026-08-31, arrived in the sweep 3e1842da40.
+# reports/storage-registry-repairs-20260923/REPORT.md lists each commit.
 STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 294
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 27
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
