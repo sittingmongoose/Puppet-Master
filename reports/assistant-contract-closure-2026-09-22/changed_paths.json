@@ -248,5 +248,64 @@
     ],
     "authored_sha_note": "sha256 values are canonical LF (= git cat-file blob) bytes of the final committed state.",
     "rebase_note": "Branch rebased three times: d247d57ebd -> a73cb06d10 (Event Authority source-current) -> 2da97421a1 (Step-8 checkpoint + DL-068..075) -> aff2a0d692 (governance reseal; final base). Commit SHAs below are post-third-rebase (VM). Re-adjudications: SP-314 -> SP-318; census 282 -> 294; derived conflicts resolved by regeneration only (654+550, then 115+4+89, then 1+4+4 files)."
+  },
+  "wave3": {
+    "authored": [
+      {
+        "path": "tests/test_pm_assistant_contract_closure.py",
+        "reason": "finish pass: LiveEquivalentPayloadClosureTests (4 tests: schedule-lane payload validation, negatives, definitionless-blocked tripwire, BSD-registration-blocked tripwire) + schema_doc_for routing for CANCEL_CUSTODY defs",
+        "commit": "75ab7c27dd",
+        "sha256": "2747de4a7d475d862f3b2f68c72e3e08e3473ac6d51cd85b02af32e1db5c5317"
+      },
+      {
+        "path": "tests/fixtures/assistant_contract_closure/payload_fixtures.json",
+        "reason": "finish pass: 4 schedule-lane positives + 9 schedrec_*/binding_* negatives (20 positives / 31 negatives total)",
+        "commit": "75ab7c27dd",
+        "sha256": "5466d1012f8aa308ff771a49189ff9090899dc2cad0b91b052e59ce334358fa1"
+      },
+      {
+        "path": "reports/assistant-contract-closure-2026-09-22/REPAIR_REPORT.md",
+        "reason": "§10 finish-pass section",
+        "commit": "finish-pass reports commit",
+        "sha256": null
+      },
+      {
+        "path": "reports/assistant-contract-closure-2026-09-22/repair_closure_matrix.jsonl",
+        "reason": "+2 blocked rows (CCR-01-REG, CCR-02-RESIDUAL) → 13 rows",
+        "commit": "finish-pass reports commit",
+        "sha256": null
+      },
+      {
+        "path": "reports/assistant-contract-closure-2026-09-22/criteria_evidence_map.md",
+        "reason": "N/A-OWNER → BLOCKED-OWNER reclassifications, M01 upgrade, counts sync",
+        "commit": "finish-pass reports commit",
+        "sha256": null
+      },
+      {
+        "path": "reports/assistant-contract-closure-2026-09-22/UNVERIFIED.md",
+        "reason": "stale wave-1 statements corrected (§1 schema existence, §8 disposition row) + new §9 blocked dispositions",
+        "commit": "finish-pass reports commit",
+        "sha256": null
+      },
+      {
+        "path": "reports/assistant-contract-closure-2026-09-22/validator_results.json",
+        "reason": "wave3 section",
+        "commit": "finish-pass reports commit",
+        "sha256": null
+      },
+      {
+        "path": "reports/assistant-contract-closure-2026-09-22/changed_paths.json",
+        "reason": "wave3 section (this list; self-entry sha in the evidence manifest)",
+        "commit": "finish-pass reports commit"
+      }
+    ],
+    "generated": [],
+    "generated_scope_note": "Zero canon edits in the finish pass: no Plans/** change, no derived-file regeneration, no shard/index churn.",
+    "explicitly_not_changed": [
+      "All Plans/** canon (schema, registry, storage-plan, BSD, index untouched — blocked work is recorded, not forced)",
+      "scripts/** (no tooling edits this wave)",
+      "reports/landing-checks/baseline.json (coordinator re-recorded it at c08e7561f4; not this task's act)",
+      "Concepts/**, Spec_Lock, .evidence, .implementation_readiness"
+    ]
   }
 }

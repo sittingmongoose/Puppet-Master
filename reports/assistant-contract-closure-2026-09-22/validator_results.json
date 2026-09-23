@@ -368,5 +368,91 @@
       }
     ],
     "vm_final_runs_note": "vm_final_runs executed at the second-rebase head f58ee3ea48; vm3_* logs (retained in the evidence store) re-ran the full battery at the third-rebase head: pytest OK, shard/plan-index/shared-runtime/wiring/new-contracts/case-l all 0, assistant-check 18=18 set-equal to same-day main, prd-runtime 1240=1240 set-equal, readiness branch 74 vs main 71 (+3 expected pre-reseal stale_hash rows for this branch's edited canon, +2 gitignored-currentness-audit environment rows), landing check exit 2 with 71 non-excused items (landed under Jared's scoped exception)."
+  },
+  "wave3": {
+    "task_identity": "contract-closure-finish-2026-09-23 (finish pass per the acceptance review of wave 2)",
+    "host": "Ubuntu VM (ubuntuserver), Python 3.13.7; worktree /home/sittingmongoose/pm-worktrees/contract-closure-finish-2026-09-23 (VM local disk per Jared's standing instruction; no git against the share from Windows paths)",
+    "baseline_commit": "dca3c3349e5d2632469643da4a2eb99e738585fa",
+    "final_commit": "75ab7c27ddf64fd2c5e7dd3362d018017bd93248",
+    "raw_log_store": "//TRUENAS/Cursor/PuppetMaster-Evidence/tests/bsd-lifecycle-closure-20260923/ (w3_* logs)",
+    "runs": [
+      {
+        "command": "python3 -m unittest discover -s tests -p test_pm_assistant_contract_closure.py (+ test_pm_plan_index.py)",
+        "tree": "finish-pass worktree at 75ab7c27dd (base dca3c3349e; VM, Linux)",
+        "exit_code": 0,
+        "log": "w3_suite.log",
+        "log_sha256": "fb57d53225c941b7f34b23ea9ca5afab3c26934d93056c6096d3ff989ffcaa78",
+        "result": "OK — 38 closure tests (34 wave-2 + 4 finish-pass LiveEquivalentPayloadClosureTests) + 18 plan-index tests"
+      },
+      {
+        "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+        "tree": "finish-pass worktree at 75ab7c27dd (base dca3c3349e; VM, Linux)",
+        "exit_code": 0,
+        "log": "w3_shard.log",
+        "log_sha256": "a23246d8fa7c4eff08b5397dacfe298aa454b500ce3662df1efc56ad0bb930c2",
+        "result": "pass (no Plans edits in this wave; sanity)"
+      },
+      {
+        "command": "python3 scripts/pm-plan-index.py validate",
+        "tree": "finish-pass worktree at 75ab7c27dd (base dca3c3349e; VM, Linux)",
+        "exit_code": 0,
+        "log": "w3_plan_index.log",
+        "log_sha256": "b45ba1bc240c238dd3a7329edf59891bdae2e43a7961a1ea9b5cf59b2fb33aa1",
+        "result": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-shared-runtime-command-contracts.py validate",
+        "tree": "finish-pass worktree at 75ab7c27dd (base dca3c3349e; VM, Linux)",
+        "exit_code": 0,
+        "log": "w3_shared.log",
+        "log_sha256": "23d91842a2e61212529455a39674a20c5c1842d37eafc3d1cd8548aeb18f992b",
+        "result": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+        "tree": "finish-pass worktree at 75ab7c27dd (base dca3c3349e; VM, Linux)",
+        "exit_code": 0,
+        "log": "w3_wiring.log",
+        "log_sha256": "836f3b75b02ae24e6fd0c763191a4c2a82ba6e526a58f7a50cbebca896cb98f3",
+        "result": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-new-contracts-verify.py",
+        "tree": "finish-pass worktree at 75ab7c27dd (base dca3c3349e; VM, Linux)",
+        "exit_code": 0,
+        "log": "w3_newcontracts.log",
+        "log_sha256": "97d42fe38d0a46eb4f4a7a6709bc29ebca0a6b902d0bc03f0a251328a9d160a8",
+        "result": "pass; 31-pair manifest untouched"
+      },
+      {
+        "command": "python3 scripts/pm-assistant-contract-check.py",
+        "tree": "finish-pass worktree at 75ab7c27dd (base dca3c3349e; VM, Linux)",
+        "exit_code": 1,
+        "log": "w3_assistant.log",
+        "log_sha256": "426af8a1242d06f8bdfa5d2a5344fb01a0e7d244d57f12d4c39b6291bc9525b4",
+        "result": "exit 1 expected; error set unchanged from the wave-3 base (no Plans edits)"
+      },
+      {
+        "command": "python3 scripts/pm-implementation-readiness.py validate",
+        "tree": "finish-pass worktree at 75ab7c27dd (base dca3c3349e; VM, Linux)",
+        "exit_code": 1,
+        "log": "w3_readiness.log",
+        "log_sha256": "e47b865b5a3556abdd5498266376bbd6f4f8d1917ea08279d1262f64f4c97cb6",
+        "result": "exit 1 expected; failure set unchanged from base (tests/fixtures/reports-only wave)"
+      },
+      {
+        "command": "python3 scripts/pm-implementation-readiness.py validate-case-l",
+        "tree": "finish-pass worktree at 75ab7c27dd (base dca3c3349e; VM, Linux)",
+        "exit_code": 0,
+        "log": "w3_casel.log",
+        "log_sha256": "eb2a70b55eb88c48c7256887335463e690dbba679998146895105e77ec50ccb0",
+        "result": "pass"
+      }
+    ],
+    "not_run": [
+      "python scripts/pm-plans-verify.py run-gates / audit-governance: repository-wide checks requiring the full (non-sparse) checkout; policy assigns them to the landing check in the shared checkout. The sparse worktree lacks Concepts/tests-full cone and would manufacture missing-file failures.",
+      "pm-plan-migration.py validate: same landing-check scope.",
+      "No Concepts, WorkNode, NodeSeed, queue, native, or runtime execution surface was touched or exercised."
+    ]
   }
 }
