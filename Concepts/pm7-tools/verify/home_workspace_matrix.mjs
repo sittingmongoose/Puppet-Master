@@ -2112,9 +2112,11 @@ await runInteraction('panel34_open_renders_content', async page => {
   };
 });
 
-/* 2026-08-13 tweak wave 2: "New Section" is move-and-reseed -- the source
-   section keeps a live workgroup instead of stranding an EMPTY strip -- and a
-   layout reset recovers to exactly one live section that still renders. */
+/* DL-070 (2026-09-23) retires the 2026-08-13 move-and-reseed: "New Section"
+   moves the whole workgroup (same identity) into a new section, and the
+   vacated source stays empty and reusable with its truth-gated guidance
+   state -- no replacement workgroup, no new terminal session. A layout reset
+   still recovers to exactly one live section that still renders. */
 await runInteraction('terminal_new_section_recoverable', async page => {
   const before = await page.evaluate(() => Object.values(window.PM_HOME_WORKSPACE.terminal_workgroups).map(owner => owner.terminal_workgroup_id || null));
   await page.locator('[data-pm-home-action="move-workgroup-new-section"]:visible').first().click();
@@ -2141,13 +2143,19 @@ await runInteraction('terminal_new_section_recoverable', async page => {
     validation: window.PM_HOME_WORKSPACE.layout.validation.status
   }));
   const noteAfterReset = await noteState();
+  const liveAfter = after.workgroups.filter(Boolean);
   return {
     pass: before.length === 1 && Boolean(before[0]) &&
-      after.workgroups.length === 2 && after.workgroups.every(Boolean) && after.sections === 2 &&
+      after.workgroups.length === 2 && after.sections === 2 &&
+      /* DL-070: exactly the moved workgroup stays live, under its own identity;
+         the vacated section holds none and shows its guidance state */
+      liveAfter.length === 1 && liveAfter[0] === before[0] &&
+      after.workgroups.filter(id => id === null).length === 1 &&
+      noteAfterNewSection.attr === 'true' && noteAfterNewSection.note_visible &&
       recovered.live === 1 && recovered.host_rendering && recovered.validation === 'valid' &&
-      /* wave 3: the truth-gated empty note never shows while a workgroup is
-         live -- neither with both sections live nor after the reset */
-      !noteAfterNewSection.note_visible && !noteAfterReset.note_visible,
+      /* wave 3: the truth-gated empty note never shows once a workgroup is
+         live in the bottom section again after the reset */
+      noteAfterReset.attr === 'false' && !noteAfterReset.note_visible,
     before,
     after_new_section: after,
     empty_note_after_new_section: noteAfterNewSection,
@@ -2247,11 +2255,9 @@ await runInteraction('terminal_four_section_four_pane_caps_and_identity', async 
       atPaneCap.identities.terminals.reduce((sum, owner) => sum + owner.pane_ids.length, 0) === 4 &&
       paneDisabled && paneReason === 'Maximum four visible terminal panes' &&
       same(beforeFifthPane.layout, afterFifthPane.layout) && beforeFifthPane.metrics.commandCount === afterFifthPane.metrics.commandCount &&
-      /* tweak wave 2: New Section is move-and-RESEED, but the reseed is pane
-         -budget gated ("At the pane cap the source stays empty") -- this case
-         runs at the 4-pane cap, so every vacated source legitimately stays
-         empty and exactly one live workgroup remains. The budget-allowing
-         path is covered by terminal_new_section_recoverable. */
+      /* DL-070: a move never reseeds, so every vacated source stays empty
+         and exactly one live workgroup remains; the below-cap path is
+         covered by terminal_new_section_recoverable. */
       sections.length === 4 && nonempty.length === 1 &&
       sectionDisabled && sectionReason === 'Maximum four terminal sections' &&
       same(beforeFifthSection.layout, afterFifthSection.layout) && beforeFifthSection.metrics.commandCount === afterFifthSection.metrics.commandCount &&

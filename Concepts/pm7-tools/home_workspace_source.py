@@ -3063,29 +3063,11 @@ HOME_SCRIPT = r'''
     var sourceSnapshot = clone(workgroup);
     terminalSections[targetSectionId] = clone(sourceSnapshot);
     terminalSections[targetSectionId].terminal_section_id = targetSectionId.split(":")[1];
+    /* DL-070 (2026-09-23): the vacated source section stays empty and
+       reusable with its guidance state. A move allocates no replacement
+       workgroup and starts no terminal session; adding one there is a
+       separate action. Reset and boot-recovery reconstitution are unchanged. */
     terminalSections[sourceId] = { terminal_section_id: sourceId.split(":")[1], terminal_workgroup_id: null, pane_ids: [], terminal_session_ids: [] };
-    /* Move-and-reseed: "New Section" (forceCreate) should not strand an empty
-       source. While the pane budget allows, seed the vacated source with a
-       fresh one-pane workgroup IN THE SAME COMMIT, allocating ids with the
-       same numbering scan splitTerminalPane uses. At the pane cap the source
-       stays empty (today's behavior). */
-    var sourceReseeded = false;
-    var seededWorkgroup = null;
-    if (forceCreate === true && totalTerminalPanes() < 4) {
-      var seedPanes = Object.keys(terminalSections).reduce(function (values, id) { return values.concat(terminalSections[id].pane_ids || []); }, []);
-      var seedSessions = Object.keys(terminalSections).reduce(function (values, id) { return values.concat(terminalSections[id].terminal_session_ids || []); }, []);
-      var seedWorkgroups = Object.keys(terminalSections).map(function (id) { return terminalSections[id].terminal_workgroup_id; });
-      var seedNumber = 1;
-      while (seedPanes.indexOf("tp-" + seedNumber) !== -1 || seedSessions.indexOf("ts-sess-" + seedNumber) !== -1 || seedWorkgroups.indexOf("terminal_workgroup_" + seedNumber) !== -1) seedNumber += 1;
-      seededWorkgroup = {
-        terminal_section_id: sourceId.split(":")[1],
-        terminal_workgroup_id: "terminal_workgroup_" + seedNumber,
-        pane_ids: ["tp-" + seedNumber],
-        terminal_session_ids: ["ts-sess-" + seedNumber]
-      };
-      terminalSections[sourceId] = seededWorkgroup;
-      sourceReseeded = true;
-    }
     var targetSurface = surfaceById(next, targetSectionId);
     targetSurface.host = hostIsValid(host) ? host : targetSurface.host;
     targetSurface.visible = true;
@@ -3096,24 +3078,14 @@ HOME_SCRIPT = r'''
     var workgroupAffected = changedSurfaceIds(committed, normalizeLayout(next, null));
     var result = commitLayout(next, "move_workgroup", "cmd.terminal.move_workgroup", {
       affected_surface_instance_ids: workgroupAffected, source_host: surfaceById(committed, sourceId).host, target_host: targetSurface.host, target_slot_index: targetSurface.slot_index,
-      command_payload: { terminal_workgroup_id: sourceSnapshot.terminal_workgroup_id, source_terminal_section_id: sourceId.split(":")[1], target_terminal_section_id: targetSectionId.split(":")[1], create_target_section: sectionCreated, target_workspace_host: targetSurface.host, target_slot_index: targetSurface.slot_index, preserve_session_identity: true, source_reseeded: sourceReseeded }
+      command_payload: { terminal_workgroup_id: sourceSnapshot.terminal_workgroup_id, source_terminal_section_id: sourceId.split(":")[1], target_terminal_section_id: targetSectionId.split(":")[1], create_target_section: sectionCreated, target_workspace_host: targetSurface.host, target_slot_index: targetSurface.slot_index, preserve_session_identity: true }
     });
     if (!result.ok) {
-      /* rollback restores BOTH sections' prior refs: the source snapshot
-         also discards any reseeded workgroup written above */
+      /* rollback restores BOTH sections' prior refs */
       terminalSections[sourceId] = sourceSnapshot;
       if (targetOwner) terminalSections[targetSectionId] = targetOwner;
       else delete terminalSections[targetSectionId];
       return result;
-    }
-    if (sourceReseeded && seededWorkgroup) {
-      receipt("cmd.terminal.move_workgroup", "projected", {
-        source_reseeded: true,
-        source_terminal_section_id: sourceId.split(":")[1],
-        seeded_terminal_workgroup_id: seededWorkgroup.terminal_workgroup_id,
-        seeded_pane_ids: seededWorkgroup.pane_ids.slice(),
-        seeded_session_ids: seededWorkgroup.terminal_session_ids.slice()
-      }, result.command);
     }
     activeTerminalSectionId = targetSectionId;
     emit("terminal.workgroup_moved", {
