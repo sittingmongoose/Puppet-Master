@@ -256,6 +256,7 @@ class ReadinessRegistryRepresentationTest(unittest.TestCase):
         "stored_profile_union_live_rows_accepted",
         "stored_profile_union_synthetic_single_header_rejected",
         "stored_profile_union_composition_identity_as_stored_header_rejected",
+        "stored_profile_union_schema_version_drift_rejected",
         "stored_profile_union_member_version_drift_rejected",
         "stored_profile_union_widened_composition_rejected",
         "stored_profile_union_undeclared_document_bytes_rejected",

@@ -912,6 +912,10 @@ STORAGE_VALUE_STORED_PROFILE_UNION_CONTRACT = {
     "schema_resources_path": "Plans/goal_workflow_cancel_schema_resources.json",
     "resource_realm": "goal",
     "encoding": "json_canonical",
+    # SP-310 gives each composition "a real, referenceable complete validation-schema ID/version
+    # 1.0.0", and the registry schema_version identifies that composition. The declaration carries
+    # no version field of its own, so the version SP-310 states is the pin.
+    "composition_schema_version": "1.0.0",
 }
 STORAGE_VALUE_STORED_PROFILE_UNION_COMPOSITION_KEYWORDS = frozenset({"$id", "$comment", "oneOf"})
 # SP-278 read token (Plans/storage-plan.md section 2.3.1, 2026-09-23): a closed, non-secret read
@@ -5956,6 +5960,12 @@ def storage_value_stored_profile_union_failures(
             expected=family.get("value_schema_id"),
             actual=composition.get("$id"),
         )
+    if family.get("schema_version") != contract["composition_schema_version"]:
+        fail(
+            "storage_value_registry_stored_profile_union_schema_version_mismatch",
+            expected=contract["composition_schema_version"],
+            actual=family.get("schema_version"),
+        )
     extra_keywords = sorted(set(composition) - STORAGE_VALUE_STORED_PROFILE_UNION_COMPOSITION_KEYWORDS)
     if extra_keywords:
         fail("storage_value_registry_stored_profile_union_composition_not_exact_union", keywords=extra_keywords)
@@ -7927,6 +7937,13 @@ def storage_value_representation_self_test_checks(
     checks["stored_profile_union_composition_identity_as_stored_header_rejected"] = has(
         relabelled_failures, "storage_value_registry_stored_profile_union_member_schema_id_const_mismatch"
     ) and has(relabelled_failures, "storage_value_registry_stored_profile_union_member_identities_not_distinct")
+    row_version_drift = clone_registry()
+    family_of(row_version_drift, "goal_cancel_progress")["schema_version"] = "9.9.9"
+    checks["stored_profile_union_schema_version_drift_rejected"] = has(
+        errors(row_version_drift, "union-row-version"),
+        "storage_value_registry_stored_profile_union_schema_version_mismatch",
+        family_id="goal_cancel_progress",
+    )
     version_drift = json.loads(json.dumps(declaration))
     next(entry for entry in version_drift["profiles"] if entry["family_id"] == "goal_cancel_progress")["profiles"][0][
         "stored_schema_version"
