@@ -920,7 +920,8 @@ STORAGE_VALUE_STORED_PROFILE_UNION_CONTRACT = {
 }
 STORAGE_VALUE_STORED_PROFILE_UNION_COMPOSITION_KEYWORDS = frozenset({"$id", "$comment", "oneOf"})
 # SP-278 read token (Plans/storage-plan.md section 2.3.1, 2026-09-23): a closed, non-secret read
-# selector of Storage identity, relative control names, hashes, generation and frontier. A field
+# selector of Storage identity, relative control names, hashes, generation and frontier, plus the
+# live redb_snapshot_id (whether rows should persist that fence is a Storage-owner question). A field
 # named read_token or *_read_token is a read selector, not secret material, only when its whole
 # schema is exactly this canonical definition, inline or through a local $defs reference.
 STORAGE_VALUE_READ_TOKEN_SCHEMA_PATH = PLANS / "event_record_index_checkpoint.schema.json"
