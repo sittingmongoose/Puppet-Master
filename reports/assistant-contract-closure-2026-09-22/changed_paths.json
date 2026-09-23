@@ -1,7 +1,7 @@
 {
   "schema_note": "Packet-recommended reporting format (PM-ASSISTANT-CONTRACT-CLOSURE-2026-09-22-v1); not a PM product schema. Hashes are SHA-256 of final worktree bytes (LF canonical).",
   "baseline_commit": "0fbcc50ef764f6bb13825665261790eb3ce4d711",
-  "final_commit": "159ca47a9f30a631eb9133245d2209b93609c21c",
+  "final_commit": "8f271b11ffddad14fa729c8d059db7a37cec17b5",
   "authored": [
     {
       "path": "Plans/Assistant_Plan_Runtime.md",
@@ -18,7 +18,7 @@
     {
       "path": "tests/test_pm_assistant_contract_closure.py",
       "reason": "New static contract-closure regression suite (27 tests): registry binding hygiene incl. NONE/payload_schema_ref negative controls, GoalPlanBinding chain + fixtures, five-finding closure pins, BSD event/effect boundary pins with validator-driven negative duplicate-row control, truth-boundary guardrail. No runtime claim.",
-      "commit": "159ca47a9f30a631eb9133245d2209b93609c21c",
+      "commit": "8f271b11ffddad14fa729c8d059db7a37cec17b5",
       "sha256": "fd53145a4f9949bfcf862ae9634f87c68e17615304868b775e8e4e10c61a9863"
     },
     {
@@ -36,17 +36,41 @@
     {
       "path": "reports/assistant-contract-closure-2026-09-22/",
       "reason": "Task handoff bundle: REPAIR_REPORT.md, repair_closure_matrix.jsonl, validator_results.json, changed_paths.json, UNVERIFIED.md (this directory; committed as the final scoped commit).",
-      "commit": "final report commit",
+      "commit": "0f249463ac + 8f271b11ff + reports freeze commit",
       "sha256": "per-file, see below"
     }
   ],
   "generated": [
-    {"path": "Plans/.plan_index/acceptance_units.jsonl", "reason": "regenerated from the APR edit (span shifts)", "sha256": "843d3122626101b6372edad1ae1830397a97b3fd9e4464fbf708ad2beb6bcfb6"},
-    {"path": "Plans/.plan_index/coverage_report.json", "reason": "regenerated (generated_at_utc only)", "sha256": "f599abdc3d6103254156259e5f3be1b6794973b44819a6c1c6a25b4d9c2ecefd"},
-    {"path": "Plans/.plan_index/dependencies.json", "reason": "regenerated (APR unit span shifts + generated_at_utc)", "sha256": "d6f981f662aea512bc4dcd6930bc2b12bf75753ec08ebe4bf365f6ae2fb1a1ba"},
-    {"path": "Plans/.plan_index/doc_cards.json", "reason": "regenerated (APR sha256/line_count + generated_at_utc)", "sha256": "e5bf1173f9c751fbb66129f8b180e8d30ac9544c5327ce1bb1d415b7394b49a8"},
-    {"path": "Plans/.plan_index/node_readiness_report.json", "reason": "regenerated (APR span shift + generated_at_utc; machine-local path leak removed by DEP-01 fix)", "sha256": "38ba122fad94f16170b6062b3ace7fa461693733da622583a476e518ab0a5190"},
-    {"path": "Plans/.plan_index/plan_units.jsonl", "reason": "regenerated (APR unit span shifts)", "sha256": "84697e07af4261ba5336b3230d9c89b7d75428db78946599d52a53996ea51507"}
+    {
+      "path": "Plans/.plan_index/acceptance_units.jsonl",
+      "reason": "regenerated from the APR edit (span shifts)",
+      "sha256": "843d3122626101b6372edad1ae1830397a97b3fd9e4464fbf708ad2beb6bcfb6"
+    },
+    {
+      "path": "Plans/.plan_index/coverage_report.json",
+      "reason": "regenerated (generated_at_utc only)",
+      "sha256": "f599abdc3d6103254156259e5f3be1b6794973b44819a6c1c6a25b4d9c2ecefd"
+    },
+    {
+      "path": "Plans/.plan_index/dependencies.json",
+      "reason": "regenerated (APR unit span shifts + generated_at_utc)",
+      "sha256": "d6f981f662aea512bc4dcd6930bc2b12bf75753ec08ebe4bf365f6ae2fb1a1ba"
+    },
+    {
+      "path": "Plans/.plan_index/doc_cards.json",
+      "reason": "regenerated (APR sha256/line_count + generated_at_utc)",
+      "sha256": "e5bf1173f9c751fbb66129f8b180e8d30ac9544c5327ce1bb1d415b7394b49a8"
+    },
+    {
+      "path": "Plans/.plan_index/node_readiness_report.json",
+      "reason": "regenerated (APR span shift + generated_at_utc; machine-local path leak removed by DEP-01 fix)",
+      "sha256": "38ba122fad94f16170b6062b3ace7fa461693733da622583a476e518ab0a5190"
+    },
+    {
+      "path": "Plans/.plan_index/plan_units.jsonl",
+      "reason": "regenerated (APR unit span shifts)",
+      "sha256": "84697e07af4261ba5336b3230d9c89b7d75428db78946599d52a53996ea51507"
+    }
   ],
   "explicitly_not_changed": [
     "Plans/storage_value_registry.json (reported findings disproved from its actual content; no family or disposition added or removed; SP-251 denominator untouched)",
