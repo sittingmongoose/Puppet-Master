@@ -23,7 +23,9 @@ GITHUB = module("emit_only_github", "pm-github-project-integration.py")
 SHARED = module("emit_only_shared", "pm_emit_only_event_contract.py")
 EVENTS = set(TESTING.EVENTS) | set(GITHUB.EVENTS)
 DENIAL = "event_not_admitted_dl039"
-PREFIX_SHA256 = "4f701c9598003d7c01a405f18f7991b373379eca8b182cf6222540a4746d1756"
+# Same value as pm_emit_only_event_contract.PREEXISTING_REGISTRY_ROWS_SHA256, re-frozen 2026-09-23
+# after the six landed goal v3 adoptions named there.
+PREFIX_SHA256 = "a27cf49b63d364ae0d6d6f62b0ebc8d3ebe9e66df6de8e58814d099194d81050"
 
 
 def failures(gate, case, *, candidate=False):

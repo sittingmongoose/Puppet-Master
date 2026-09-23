@@ -25,7 +25,9 @@ class TestingSessionEventTests(unittest.TestCase):
         self.assertEqual(len(upstream), 40)
         self.assertEqual({row["family_id"] for row in upstream}, upstream_ids)
         encoded = json.dumps(sorted(upstream, key=lambda row: row["family_id"]), sort_keys=True, separators=(",", ":")).encode()
-        self.assertEqual(hashlib.sha256(encoded).hexdigest(), "a3246c0e86217741e3b24bfaa0652c1bb1c99e45a6931fb6aca49c54b43ce0b2")
+        # Re-frozen 2026-09-23 (was a3246c0e..., last true at 4fe66204bd) after six landed, recorded
+        # goal v3 adoptions: 3890d86c70, 5fc9747b6f, 1136661ddc, e686963ad5, a3c511657f, f6350caf27.
+        self.assertEqual(hashlib.sha256(encoded).hexdigest(), "b59cc61d0f6569d1389256157d29d80f88516644b70c029809d4543405be52ea")
         admitted_ids = {row["family_id"] for row in manifest["rows"] if row["admission_status"] == "admitted_static_contract"}
         self.assertEqual({row["family_id"] for row in families}, upstream_ids | admitted_ids)
         self.assertEqual(len(families), 40 + len(admitted_ids))

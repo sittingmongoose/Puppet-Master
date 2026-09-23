@@ -8,7 +8,12 @@ DECISION_ID = "EMIT-PERSIST-026"
 DISPOSITION = "quarantined_not_admitted"
 DENIAL = "event_not_admitted_dl039"
 PREEXISTING_REGISTRY_COUNT = 40
-PREEXISTING_REGISTRY_ROWS_SHA256 = "4f701c9598003d7c01a405f18f7991b373379eca8b182cf6222540a4746d1756"
+# Re-frozen 2026-09-23 (was 4f701c95..., last true at 4fe66204bd). Six landed commits changed
+# upstream rows since, each on main with its own record in reports/event-authority-20260911/:
+# 3890d86c70 goal.created v3, 5fc9747b6f goal.updated v3, 1136661ddc goal.cancelled v3,
+# e686963ad5 goal_run.started v3, a3c511657f goal_run.cancelled v3, f6350caf27 goal_run.certified
+# v3. Row order and membership are unchanged. Re-freeze again only for landed, recorded changes.
+PREEXISTING_REGISTRY_ROWS_SHA256 = "a27cf49b63d364ae0d6d6f62b0ebc8d3ebe9e66df6de8e58814d099194d81050"
 
 
 def preexisting_registry_unchanged(manifest, registry):
