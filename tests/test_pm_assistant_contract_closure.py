@@ -12,9 +12,10 @@ from __future__ import annotations
 import copy
 import importlib.util
 import json
-from collections import Counter
 from pathlib import Path
+import tempfile
 import unittest
+from unittest import mock
 
 from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
@@ -38,6 +39,9 @@ def _load_module(name: str, relpath: str):
 # Reuse the central checker's exact-case reference resolver and Touch Closure materializer
 # rather than re-implementing a second resolution semantics.
 checker = _load_module("assistant_contract_check_for_closure", "scripts/pm-assistant-contract-check.py")
+shared_runtime_validator = _load_module(
+    "shared_runtime_command_contracts_for_closure", "scripts/pm-shared-runtime-command-contracts.py"
+)
 
 REGISTRY = _load_json(ROOT / "Plans" / "storage_value_registry.json")
 REGISTRY_SCHEMA = _load_json(ROOT / "Plans" / "storage_value_registry.schema.json")
@@ -468,20 +472,24 @@ class BsdEventEffectClosureTests(unittest.TestCase):
                 row["action_id"],
             )
 
-    def test_negative_duplicate_row_is_detected(self) -> None:
-        # The merged-away assistant.redesign.w_036.bsd_set duplicate must stay detectable.
-        mutated = dict(self.entries)
-        mutated["assistant.redesign.w_036.bsd_set"] = copy.deepcopy(self.bsd_rows[0])
-        counts = Counter(v.get("ui_command_id") for v in mutated.values())
-        self.assertEqual(counts["cmd.bsd.set"], 2)
+    def test_negative_duplicate_row_fails_central_validator(self) -> None:
+        # Drive the real exactly-one-production-row rule (pm-shared-runtime-command-contracts.py
+        # validate(): "<cmd>:production_wiring_count=N") with the shape of the merged-away
+        # assistant.redesign.w_036.bsd_set duplicate, through a temporary copy of the matrix
+        # rather than a local re-count that could not fail if the detector were removed.
         self.assertNotIn("assistant.redesign.w_036.bsd_set", self.entries)
-
-    def test_negative_invented_event_would_fail_admission(self) -> None:
-        registered = {r["event_type"] for r in EVENT_REGISTRY["families"]}
-        self.assertNotIn("bsd.mode_changed", registered)
-        row = copy.deepcopy(self.bsd_rows[0])
-        row["expected_event_types"] = ["bsd.mode_changed"]
-        self.assertTrue([e for e in row["expected_event_types"] if e not in registered])
+        mutated = copy.deepcopy(WIRING)
+        mutated["entries"]["assistant.redesign.w_036.bsd_set"] = copy.deepcopy(self.bsd_rows[0])
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_wiring = Path(tmp) / "Wiring_Matrix.production.json"
+            tmp_wiring.write_text(json.dumps(mutated), encoding="utf-8")
+            with mock.patch.object(shared_runtime_validator, "WIRING_PATH", tmp_wiring):
+                report = shared_runtime_validator.validate()
+        self.assertFalse(report["passed"])
+        self.assertIn("cmd.bsd.set:production_wiring_count=2", report["failures"])
+        # The same validator passes on the unmutated tree, so the failure above is
+        # attributable to the injected duplicate alone.
+        self.assertTrue(shared_runtime_validator.validate()["passed"])
 
 
 class TruthBoundaryTests(unittest.TestCase):

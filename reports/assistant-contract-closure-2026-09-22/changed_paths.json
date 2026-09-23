@@ -17,9 +17,9 @@
     },
     {
       "path": "tests/test_pm_assistant_contract_closure.py",
-      "reason": "New static contract-closure regression suite (28 tests): registry binding hygiene incl. NONE/payload_schema_ref negative controls, GoalPlanBinding chain + fixtures, five-finding closure pins, BSD event/effect boundary pins with negative duplicate-row and invented-event controls, truth-boundary guardrail. No runtime claim.",
+      "reason": "New static contract-closure regression suite (27 tests): registry binding hygiene incl. NONE/payload_schema_ref negative controls, GoalPlanBinding chain + fixtures, five-finding closure pins, BSD event/effect boundary pins with validator-driven negative duplicate-row control, truth-boundary guardrail. No runtime claim.",
       "commit": "159ca47a9f30a631eb9133245d2209b93609c21c",
-      "sha256": "49306122c526f4f31c3fdb2ebb6b5ee56be8b8712e6a722bdc6686346691c87f"
+      "sha256": "fd53145a4f9949bfcf862ae9634f87c68e17615304868b775e8e4e10c61a9863"
     },
     {
       "path": "tests/fixtures/assistant_contract_closure/payload_fixtures.json",

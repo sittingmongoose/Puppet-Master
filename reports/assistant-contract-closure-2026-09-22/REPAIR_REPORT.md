@@ -26,7 +26,7 @@ Read live `AGENTS.md`, `Plans/00-plans-index.md`, and the full owner/registry/co
 
 ## 3. Actual changes (full list + hashes in changed_paths.json)
 
-Authored: `Plans/Assistant_Plan_Runtime.md` (QMAX-006 mapping paragraph, additive), `scripts/pm-plan-index.py` (portable_index_diagnostic), `tests/test_pm_assistant_contract_closure.py` (28 static tests), `tests/fixtures/assistant_contract_closure/payload_fixtures.json` (5 positive + 10 negative payloads), `.gitignore` (4 whitelist lines).
+Authored: `Plans/Assistant_Plan_Runtime.md` (QMAX-006 mapping paragraph, additive), `scripts/pm-plan-index.py` (portable_index_diagnostic), `tests/test_pm_assistant_contract_closure.py` (27 static tests), `tests/fixtures/assistant_contract_closure/payload_fixtures.json` (5 positive + 10 negative payloads), `.gitignore` (4 whitelist lines).
 Generated: six `Plans/.plan_index/*` files (APR-derived spans/hash/line-count + `generated_at_utc` only; verified line-by-line). `Plans/_shards/**` byte-identical to origin/main (APR is not in `Plans/sharding_config.json`). Nothing else changed: registry, wiring matrix, catalog, BSD/Commands/Contracts/storage-plan docs, touch closure, event registry, Spec Lock, evidence, readiness artifacts, Concepts — all untouched.
 
 ## 4. Checks (commands, exit codes, logs in validator_results.json; raw logs + SHA-256 in the external evidence store)
@@ -57,7 +57,7 @@ Two read-only specialists (StorageReview: storage/schema closure S01-S07 + recor
 ## 7. Verdicts (separate dimensions — a pass in one is not evidence for another)
 
 - **Specification closure:** CLOSED for the seven packet findings — ACC-ST-03 and DEP-01 repaired; ACC-ST-01/02/04/05 and ACC-BSD-01 disproved or already-fixed with exact live-owner evidence; ACC-TRUTH-01 guardrail held. No in-scope binding/effect defect remains open.
-- **Targeted contract checks:** PASS (final-tree battery above; new suite 28/28; checker/validator exits match or improve on baseline with zero new failures).
+- **Targeted contract checks:** PASS (final-tree battery above; new suite 27/27; checker/validator exits match or improve on baseline with zero new failures).
 - **Independent review:** see §6 (same-harness read-only specialists; disclosed limitation, not human certification).
 - **Regression/scope:** PASS — derived set APR-only; `_shards` untouched; pre-existing failures documented, none fixed or masked; unrelated files uncommitted.
 - **Branch/main publication:** branch pushed to origin (GitHub + TrueNAS push URLs) at `159ca47a9f…`; guarded landing per AGENTS executed after this report commit — outcome recorded in §8.
