@@ -1,0 +1,163 @@
+{
+ "schema_id": "pm.assurance.event_authority.checkpoint_approval.v1",
+ "step": 8,
+ "supplement": "step08_comparison_checkpoint_2026-09-11.2",
+ "base_commit": "a73cb06d101ff821cfcc69d2cdaccbd4e873660d",
+ "applier": "Claude (Opus 5.5), DL-039 takeover session 8efe8964",
+ "applied_at_utc": "2026-09-23T16:44:06.748953+00:00",
+ "authority": {
+  "approved_by": "Jared",
+  "conversation": "DL-039 takeover conversation, 2026-09-23",
+  "initial_approval_ref": "Plans/Decision_Log.md#DL-039",
+  "prior_checkpoint": {
+   "registry_revision": "2026-09-11.1",
+   "registered_kernel_rows": 40,
+   "ref": "reports/event-authority-20260911/step-04-current-checkpoint.json"
+  },
+  "answers": [
+   {
+    "question": "42-family checkpoint as registry SHA-256 1972a6aa...: is that your checkpoint approval, and where should it go?",
+    "answer": "Approved, separate branch (Recommended)"
+   },
+   {
+    "question": "Main's registry is now 0be54418... after the goal_run.certified 2.0.0 -> 3.0.0 row change; which identity should the checkpoint record?",
+    "answer": "Live registry 0be54418 (Recommended)"
+   },
+   {
+    "question": "How should scripts/pm_pnc019_currentness.py lines 48-49 change?",
+    "answer": "Step 4 precedent (Recommended)"
+   }
+  ],
+  "proposed_by": "PM Low cost/complexity process coordinator session ruling 4, 2026-09-23; first proposed in reports/packet-gap-closure-20260910/post-audit-event-authority-governance-review-20260921.md"
+ },
+ "approved_checkpoint": {
+  "schema_id": "pm.event_family_registry.v1",
+  "schema_version": "2.0.0",
+  "registry_revision": "2026-09-11.2",
+  "registered_kernel_rows": 42,
+  "registry_sha256": "0be544181eda423dcea4d8661206e7da6d066fdcf51913d5962f1a283635c842",
+  "approved_predecessor_sha256": "1972a6aa6ef168a46091be5347bc9cff657985a1c21ab1b84665b9ed96c1ed3a",
+  "predecessor_difference": "one row: event-family-goal-run-certified family_revision 2.0.0 -> 3.0.0 with v3 payload schema ref (landed a73cb06d10); event-type set unchanged"
+ },
+ "implementation": {
+  "path": "scripts/pm_pnc019_currentness.py",
+  "changed_data": [
+   "EVENT_FAMILY_REGISTRY_REVISION",
+   "EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT"
+  ],
+  "provenance_comments_updated": true,
+  "before_sha256": "643559041c967acb2c9218774390c935eb55ede65229580f78bbfb9b199d14b1",
+  "after_sha256": "41f9268d416196a7ecf7de81411caa4624feb222c409b8ca13aca1540ac8e46c",
+  "ast_nodes_changed": 2,
+  "all_other_module_ast_nodes_unchanged": true
+ },
+ "test_pins_updated": {
+  "paths": [
+   "tests/test_pm_testing_session_events.py",
+   "tests/test_pm_github_project_integration.py"
+  ],
+  "change": "KERNEL_ROW_COUNT pin 40 -> 42 and kernel-count-mismatch expectation keyed to 42",
+  "note": "Both files carry 5 pre-existing failures on main (frozen upstream-row hash a3246c0e..., preexisting_registry_changed, standard gate) since the goal_run v3 adoptions; unchanged by this branch and not repaired here. The edited assertions are not reached past the earlier hash assertion, and when evaluated directly they still see the kept goal_run v3 payload-ref rows (landing-record exception)."
+ },
+ "projection_commands": [
+  [
+   "python3",
+   "scripts/pm-implementation-readiness.py",
+   "generate"
+  ],
+  [
+   "python3",
+   "scripts/pm-plan-index.py",
+   "generate"
+  ],
+  [
+   "python3",
+   "scripts/pm-implementation-readiness.py",
+   "generate"
+  ]
+ ],
+ "validation": {
+  "focused_checks": {
+   "live_registry_clears_checkpoint_mismatch": true,
+   "prior_revision_2026-09-11.1_fails": true,
+   "future_revision_fails": true,
+   "wrong_schema_id_fails": true,
+   "wrong_schema_version_fails": true,
+   "one_fewer_family_fails": true,
+   "one_more_family_fails": true,
+   "forty_families_fails": true,
+   "quarantine_count_still_252": true,
+   "denominator_still_unknown_open": true,
+   "bulk_registration_still_false": true,
+   "checkpoint_denominator_known_false": true,
+   "live_registry_revision_is_2026-09-11.2": true,
+   "live_registry_family_count_is_42": true
+  },
+  "focused_checks_before_live_clears": false,
+  "readiness_validate": {
+   "before": 179,
+   "after": 175,
+   "removed": {
+    "event_authority_checkpoint_changed_requires_fresh_approval": 2,
+    "event_family_registry_kernel_row_count_mismatch": 1,
+    "buildability_gate_report_stale_or_not_canonical": 1
+   },
+   "added": {}
+  },
+  "remaining_event_authority_failures": [
+   "event_denominator_unresolved",
+   "event_family_contract_depth_unresolved"
+  ]
+ },
+ "claim_boundary": {
+  "checkpoint_only": true,
+  "registry_admission": false,
+  "denominator_known": false,
+  "depth_complete": false,
+  "pnc019_certified": false,
+  "runtime_enabled": false,
+  "spec_lock_sealed": false,
+  "independent_validator_changed": false,
+  "freeze_or_closure_hash_restamps": false
+ },
+ "retained_currentness_inputs": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-currentness-input-snapshot-20260921/manifest.json",
+  "sha256": "9943bfe38199ce76403d5f11611605b830fbe150fcfeb17238d68991f56e3ee2",
+  "note": "supplied through an ignored local symlink, byte-identical to the shared checkout's audit directory"
+ },
+ "evidence": {
+  "before-hashes.txt": {
+   "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/checkpoint-42-20260923/before-hashes.txt",
+   "sha256": "469428ad35b34c4c3ed72e17c626e47078b791289291c71c6e1390e206cd0284"
+  },
+  "before-readiness-validate.json": {
+   "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/checkpoint-42-20260923/before-readiness-validate.json",
+   "sha256": "ff7832d5d91e413b393f2dcd636b74c54b41f83b840b8181b2614fd6f05eebdd"
+  },
+  "after-readiness-validate.json": {
+   "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/checkpoint-42-20260923/after-readiness-validate.json",
+   "sha256": "5ed3b5da1bb2647aef0b9115e35c63961ee533ccaa2c9d938df89b83530a0aa4"
+  },
+  "focused_checks.py": {
+   "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/checkpoint-42-20260923/focused_checks.py",
+   "sha256": "fc76c15f5be02891a7a20ad868f15fbb43126a67072c0ba23952e2876e4f346e"
+  },
+  "focused-checks.before.json": {
+   "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/checkpoint-42-20260923/focused-checks.before.json",
+   "sha256": "b5f2cbbb433ddb2b21ebbc87147fcc058924a5dcb93cdd120f96849f3ac8adc3"
+  },
+  "focused-checks.after.json": {
+   "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/checkpoint-42-20260923/focused-checks.after.json",
+   "sha256": "dbc5549c061126b061683fa052344dc4e752a2579dc2373a7d3c2ddd3a7fb558"
+  },
+  "applied.patch": {
+   "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/checkpoint-42-20260923/applied.patch",
+   "sha256": "e70fb1612c01c9b15d64102f9f7e28b9e09d0181420ed66cd62b4f4d6b45ae25"
+  }
+ },
+ "cost": {
+  "model": "claude-opus-5-5",
+  "usd": null,
+  "note": "monetary attribution unavailable"
+ }
+}

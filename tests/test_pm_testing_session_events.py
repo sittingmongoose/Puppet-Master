@@ -73,11 +73,11 @@ class TestingSessionEventTests(unittest.TestCase):
         failures = owner.event_family_registry_data_failures(
             registry, gate.load("Plans/event_family_registry.schema.json"),
             path_label="test:session-events", include_residuals=False)
-        # DL-040 remains pinned to 40: prepared Browser contracts add no rows;
-        # any later scoped admissions still do not refresh historical currentness.
+        # Jared's 2026-09-23 Step 8 checkpoint is 42 (the 40 upstream rows plus the
+        # two admitted Browser rows); any further admission still needs fresh approval.
         self.assertEqual({failure["error"] for failure in failures},
-                         {"event_family_registry_kernel_row_count_mismatch"} if admitted_count else set())
-        self.assertEqual(owner.EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT, 40)
+                         {"event_family_registry_kernel_row_count_mismatch"} if 40 + admitted_count != 42 else set())
+        self.assertEqual(owner.EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT, 42)
 
     def test_transport_aliases_and_conflicts_are_denied_without_remembering_identity(self):
         for case in gate.fixture_cases():

@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-23T14:56:23Z",
+  "generated_at_utc": "2026-09-23T16:43:11Z",
   "gui_related_units": {
     "count": 3195,
     "units": [
@@ -39238,7 +39238,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "643559041c967acb2c9218774390c935eb55ede65229580f78bbfb9b199d14b1",
+        "expected": "41f9268d416196a7ecf7de81411caa4624feb222c409b8ca13aca1540ac8e46c",
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {
@@ -39624,35 +39624,6 @@
       },
       {
         "error": "event_authority_currentness_live_registry_drift"
-      },
-      {
-        "actual_checkpoint": {
-          "registered_kernel_rows": 42,
-          "registry_revision": "2026-09-11.2",
-          "registry_schema_id": "pm.event_family_registry.v1",
-          "registry_schema_version": "2.0.0"
-        },
-        "denominator_status": "UNKNOWN_OPEN",
-        "error": "event_authority_checkpoint_changed_requires_fresh_approval",
-        "evidence_currentness": "live_rehashed_fail_closed_currentness_audit",
-        "evidence_refs": [
-          {
-            "artifact_id": "EVENT_FAMILY_DENOMINATOR_STATUS.json",
-            "claim": "UNKNOWN_OPEN current status",
-            "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json"
-          },
-          {
-            "artifact_id": "GROUP_ARTIFACT_MANIFEST.json",
-            "claim": "252 unique row-local findings quarantined without registry or checkpoint advance",
-            "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json"
-          }
-        ],
-        "expected_checkpoint": {
-          "registered_kernel_rows": 40,
-          "registry_revision": "2026-09-11.1",
-          "registry_schema_id": "pm.event_family_registry.v1",
-          "registry_schema_version": "2.0.0"
-        }
       },
       {
         "bulk_registration_allowed": false,
