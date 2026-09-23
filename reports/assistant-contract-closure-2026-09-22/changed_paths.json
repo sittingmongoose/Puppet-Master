@@ -84,86 +84,86 @@
       {
         "path": "Plans/back_seat_driver_contracts.schema.json",
         "reason": "CCR-01: typed record definitions for the six pm.bsd.* lifecycle families (new file; the exact name CS-078 declared; records-only scope)",
-        "commit": "5356e7505a",
+        "commit": "68d5b26461",
         "sha256": "2948e5e7ca85cefa7f6798020a177d0f55020e491db12930bcbdf3facc08c594"
       },
       {
         "path": "Plans/storage_value_registry.json",
         "reason": "CCR-01: appended contract_family_dispositions row scd.back_seat_driver.durable.v1 (rows 31->32 on the rebased base; the landed 294 families untouched by this wave; existing_family_refs in registry-pointer convention; source_refs cite SP-318)",
-        "commit": "467e51f271",
+        "commit": "5cdde8d150",
         "sha256": "76813d70faa372b2c883f8042ee5295a8cca135ba788d3994cffdb5e41cb5640"
       },
       {
         "path": "Plans/storage-plan.md",
         "reason": "CCR-01: Back Seat Driver Contract-Family Persistence Disposition Addendum - 2026-09-23 + PlanUnit SP-318 (depends_on SP-251; census criterion re-adjudicated to the landed 294)",
-        "commit": "78b499d668",
+        "commit": "cf4f048944",
         "sha256": "1a4a8cab9d13d8283875784a1993e709255c1b523cad0eb3da9f03754594be58"
       },
       {
         "path": "Plans/Back_Seat_Driver.md",
         "reason": "CCR-01: section 16 companion paragraph naming the typed machine companion and the disposition (SP-318); no semantic change to field lists",
-        "commit": "5356e7505a",
+        "commit": "68d5b26461",
         "sha256": "eea68ab4b128b24f4dc1800c8c82c17cad492ab4b2a5705848675d8b0297b1c3"
       },
       {
         "path": "Plans/00-plans-index.md",
         "reason": "CCR-01: Change Summary 2026-09-23 registration entry + ContractRef (SP-318)",
-        "commit": "5356e7505a",
+        "commit": "68d5b26461",
         "sha256": "cb30c059749992fbb13703b93a3b7d6fda0f36daa70a2dab2cb22f4632369929"
       },
       {
         "path": "scripts/pm-shard-plans.py",
         "reason": "DEP-02: newline='\\n' at four generated-file write sites (Windows CRLF-output + CRLF-derived manifest hash fix; Linux byte-identical)",
-        "commit": "c8b5e4b2bf",
+        "commit": "446d4374aa",
         "sha256": "6ef337bcd00802c0ad39c78cdc8ed410ab35726c738a680b4b07d6f4c7fa51dd"
       },
       {
         "path": "scripts/pm-plan-index.py",
         "reason": "DEP-02: newline='\\n' in write_json/write_jsonl (same class as landed DEP-01)",
-        "commit": "c8b5e4b2bf",
+        "commit": "446d4374aa",
         "sha256": "bc0f70bf7bde290d1bfa07a4ac9f309f8d9fc7e885b3a0be9f65608ede7402e6"
       },
       {
         "path": "tests/test_pm_assistant_contract_closure.py",
         "reason": "CCR-01/CCR-02: BsdLifecycleRecordClosureTests (7 tests), schema_doc_for routing, rewritten future-files truth test; rebase re-adjudication: census pin 294, pointer-convention assertion, SP-318 comment",
-        "commit": "78b499d668",
+        "commit": "cf4f048944",
         "sha256": "b49150ae88b405f086679966351ead2b059db777d964cc58ebca2a73aebdf6d5"
       },
       {
         "path": "tests/fixtures/assistant_contract_closure/payload_fixtures.json",
         "reason": "CCR-02: 11 bsd record positives + 12 bsdrec_* intended-reason negatives (incl. wrong-type and const-discriminator classes); wave-1 fixtures unchanged",
-        "commit": "467e51f271",
+        "commit": "5cdde8d150",
         "sha256": "d808446bfa89eab2c19ac3a83179024936760601238e3326ff59ab137770cd2b"
       },
       {
         "path": "reports/landing-checks/LANDING_20260923.md",
         "reason": "Second-review correction: L27 'byte-identical 13,711-byte reports' claim replaced with the verified statement (cmp on tail -n +2 bodies)",
-        "commit": "927294062b",
+        "commit": "57e6e4f4ec",
         "sha256": "807a1f93c1ce5c8bf39e1b335bc2e7a0547df72c0d0971c288661e7091a3fd9a"
       },
       {
         "path": "reports/assistant-contract-closure-2026-09-22/REPAIR_REPORT.md",
         "reason": "Wave-2 header line, section 2 ACC-BSD-01 disposition correction, section 7 verdict corrections, section 8 wording correction, new section 9 (second review + corrective wave + rebase re-adjudication)",
-        "commit": "final reports commit (this update)",
-        "sha256": "7269137594ddcae6946fdb9033c4fa651893914d39d71fd66a5da4418c01fdd5"
+        "commit": "record-update commit (this update)",
+        "sha256": "7bff7dbe29ace287d0aa5a4f53ec570a78cb9df20945f5abec28c41727c9bada"
       },
       {
         "path": "reports/assistant-contract-closure-2026-09-22/repair_closure_matrix.jsonl",
         "reason": "ACC-BSD-01 reclassified repaired; CCR-01/CCR-02/DEP-02 rows; post-rebase heads/hashes/SP-318/294 refresh",
-        "commit": "final reports commit (this update)",
-        "sha256": "3d9670318668bf3cf81560c6ff3c4851032e25f6266a5cc10bacce71fdd2606e"
+        "commit": "record-update commit (this update)",
+        "sha256": "e085796b06fdcce7e7bee9b8e82ca215fcfbe9023ba91860c2b159c76c9752ad"
       },
       {
         "path": "reports/assistant-contract-closure-2026-09-22/criteria_evidence_map.md",
         "reason": "CCR-02: all 41 packet criteria + CCR-01 behavioral items + registration-convention sweep (CONTRACT_PAIRS / ATS deferral / path_reference_registry) mapped to executed evidence or owner-backed N/A",
-        "commit": "final reports commit (this update)",
+        "commit": "record-update commit (this update)",
         "sha256": "c6353af895518842f6bf6eba9d0663b22074178d8a5701dd7597079f8f77f047"
       },
       {
         "path": "reports/assistant-contract-closure-2026-09-22/validator_results.json",
         "reason": "wave2 section (post-rebase runs, comparisons, incident + normalization notes); wave-1 entries untouched",
-        "commit": "final reports commit (this update)",
-        "sha256": "7862c8a12c43758248b65be32bbbe77eb6ed6cea60f71e5c2d7de2a5ddf3affd"
+        "commit": "record-update commit (this update)",
+        "sha256": "8aaf32056845dc496a3cb74ec3f1f0dc1378498e616f23f4de9857c90574d73c"
       },
       {
         "path": "reports/assistant-contract-closure-2026-09-22/changed_paths.json",
@@ -173,8 +173,8 @@
       {
         "path": "reports/landing-checks/LANDING_20260923_BSD_LIFECYCLE.md",
         "reason": "Wave-2 landing record (new file): rebase, landing-check verdict and full attribution, config-incident disclosure, review verdicts, handover",
-        "commit": "final reports commit (this update)",
-        "sha256": "eca37c63acd2ae0f06def234be37550c64dec92f51db8cc6a3016749d016e027"
+        "commit": "record-update commit (this update)",
+        "sha256": "f3d135eefcc04a46a3d3d82cb89381cca6c2b236038cd171b913ac84971b3319"
       },
       {
         "path": "reports/assistant-contract-closure-2026-09-22/UNVERIFIED.md",
@@ -247,6 +247,6 @@
       "The landed Event Authority wave's own content (SP-314..SP-317, five-envelope repairs, +12 families) - consumed as base, never modified"
     ],
     "authored_sha_note": "sha256 values are canonical LF (= git cat-file blob) bytes of the final committed state.",
-    "rebase_note": "Branch rebased twice: d247d57ebd -> a73cb06d10 (Event Authority source-current) -> 2da97421a1 (Step-8 checkpoint + DL-068..075). Commit SHAs below are post-second-rebase (VM). Re-adjudications: SP-314 -> SP-318 (main's SP-314 is the landed Event Authority unit; max SP on final base 317); families census pin 282 -> 294 (Event Authority wave added twelve; the two later waves added none); derived conflicts resolved by regeneration only."
+    "rebase_note": "Branch rebased three times: d247d57ebd -> a73cb06d10 (Event Authority source-current) -> 2da97421a1 (Step-8 checkpoint + DL-068..075) -> aff2a0d692 (governance reseal; final base). Commit SHAs below are post-third-rebase (VM). Re-adjudications: SP-314 -> SP-318; census 282 -> 294; derived conflicts resolved by regeneration only (654+550, then 115+4+89, then 1+4+4 files)."
   }
 }

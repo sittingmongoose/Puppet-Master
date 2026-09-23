@@ -132,8 +132,8 @@
   "wave2": {
     "task_identity": "bsd-lifecycle-contract-closure-2026-09-23 (wave 2 of assistant-contract-closure-2026-09-22)",
     "host": "final phase: Ubuntu VM (ubuntuserver, Python 3.13.7, git 2.51.0), worktree /home/sittingmongoose/pm-worktrees/bsd-lifecycle-closure-2026-09-23 on VM local disk per Jared's instruction; earlier phase: Windows 11 worktree on C: (logs retained)",
-    "baseline_commit": "2da97421a1805950a7533abfa2d7cbe5df33637a",
-    "final_commit": "78b499d668de406b0f02b85eec11c4d36118173d",
+    "baseline_commit": "aff2a0d692a20dfa10bef962fd01875c68aa3e9d",
+    "final_commit": "cf4f048944fcc45b5932ae10e251296435c5c142",
     "raw_log_store": "//TRUENAS/Cursor/PuppetMaster-Evidence/tests/bsd-lifecycle-closure-20260923/",
     "worktree_normalization_note": "Checkout LF-normalized before any generation (7377 files i/lf w/crlf -> LF; i/crlf and i/mixed untouched), verified against a committed shard Source SHA256. DEP-02 discovered during the first regeneration: generator write_text without newline produced CRLF outputs and CRLF-derived manifest hashes, drifting all 99 manifests; reverted, fixed at the root (DEP-02 commit), regenerated clean. Two i/mixed audit ledgers flattened by an over-broad renormalization were restored byte-exact via git checkout before any commit. Shared .git/config incident 2026-09-23 (~15:14 UTC): this branch's `git push -u origin` hit an SMB read fault and persisted a 140-byte config skeleton (no core/remotes/user); the DL-039 takeover thread documented it (reports/event-authority-20260911/takeover-20260923.md) and the coordinator restored an approved reconstruction at ~15:58 UTC. At ~16:2x UTC this agent, diagnosing persistent error-87 reads of the file, restored .git/config from the TrueNAS ZFS snapshot auto-2026-09-23_00-00 (3473B pre-incident state: both remotes + pushurls, user identity, filemode=false, worktreeConfig, historical branch upstreams) plus this branch's tracking entry, superseding the coordinator's 775B reconstruction (preserved as .git/config.corrupted-20260923). Disclosed to Jared; the coordinator may prefer their reconstruction - the restored state is the pre-incident canonical superset and every git operation since has been verified working. Phantom ` M` status entries (autocrlf asymmetry on LF worktrees) were handled with worktree-scoped core.autocrlf=false and content-level `git -c core.filemode=false diff` tracking; an aborted `git add --renormalize .` (staged 1081 EOL flips) was fully reverted with git reset before any commit (zero blobs changed). Rebase onto a73cb06d10: 654 + 550 derived-file conflicts resolved by checkout-upstream + regeneration from merged sources, never hand-merged; all source files auto-merged; zero source conflicts.",
     "hash_convention_note": "Wave-2 sha256 values are canonical LF (= git cat-file blob) hashes. Wave-1 canonical_evidence values were CRLF worktree bytes; verified: CRLF variants of the current-for-then blobs reproduce the wave-1 anchors exactly. Wave-1 fields left untouched as historical record.",
@@ -224,7 +224,7 @@
       "pm-plan-migration.py validate: same landing-check scope.",
       "No Concepts, WorkNode, NodeSeed, queue, native, or runtime execution surface was touched or exercised."
     ],
-    "original_base": "d247d57ebd (branch creation) -> rebased onto a73cb06d10 -> rebased onto 2da97421a1 (final base)",
+    "original_base": "d247d57ebd -> a73cb06d10 -> 2da97421a1 -> aff2a0d692 (governance reseal; final base)",
     "comparisons": {
       "assistant_contract_check": {
         "branch_exit": 1,
@@ -366,6 +366,7 @@
         "log_sha256": "38bc3495c3de5ccaa4384aae6276f9354c7d3a2f8d35c21debe02e394906c2ab",
         "result": "exit 2, 76 non-excused items - landed under Jared's scoped exception; full class-by-class attribution in LANDING_20260923_BSD_LIFECYCLE.md"
       }
-    ]
+    ],
+    "vm_final_runs_note": "vm_final_runs executed at the second-rebase head f58ee3ea48; vm3_* logs (retained in the evidence store) re-ran the full battery at the third-rebase head: pytest OK, shard/plan-index/shared-runtime/wiring/new-contracts/case-l all 0, assistant-check 18=18 set-equal to same-day main, prd-runtime 1240=1240 set-equal, readiness branch 74 vs main 71 (+3 expected pre-reseal stale_hash rows for this branch's edited canon, +2 gitignored-currentness-audit environment rows), landing check exit 2 with 71 non-excused items (landed under Jared's scoped exception)."
   }
 }
