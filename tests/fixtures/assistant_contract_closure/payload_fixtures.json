@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.assistant_contract_closure.payload_fixtures.v1",
   "schema_version": "1.0.0",
-  "purpose": "Static positive/negative payload fixtures for the PM-ASSISTANT-CONTRACT-CLOSURE-2026-09-22-v1 contract tests. These fixtures prove schema and contract shape only: no runtime, native handler, persistence, event emission, or governance-seal claim. Wave 2 (CCR-01/CCR-02, 2026-09-23) adds the bsd_records sections: positive and negative fixtures for the six pm.bsd.* lifecycle record families defined by Plans/back_seat_driver_contracts.schema.json.",
+  "purpose": "Static positive/negative payload fixtures for the PM-ASSISTANT-CONTRACT-CLOSURE-2026-09-22-v1 contract tests. These fixtures prove schema and contract shape only: no runtime, native handler, persistence, event emission, or governance-seal claim. Wave 2 (CCR-01/CCR-02, 2026-09-23) adds the bsd_records sections: positive and negative fixtures for the six pm.bsd.* lifecycle record families defined by Plans/back_seat_driver_contracts.schema.json. Wave 3 (finish pass, 2026-09-23) adds live-equivalent payload fixtures for the materialized schedule-lane storage contracts (StorageExecutionSchedule / ExecutionSchedule / StorageScheduleRunBinding / ScheduleRunBinding in Plans/assistant_plan_cancel_custody.schema.json).",
   "positive": {
     "goal_plan_binding_deep": {
       "goal_id": "goal_01J8ZK3M9QW2E4R6T8Y0U1A2",
@@ -306,6 +306,102 @@
       "reset_attempted": true,
       "terminal_action": "pause_bsd",
       "created_at": "2026-09-23T00:30:00Z"
+    },
+    "execution_schedule_scheduled_message": {
+      "schema_id": "pm.storage_value.execution_schedule.v1",
+      "schema_version": "1.0.0",
+      "storage_instance_id": "storage_instance_01J8ZKT0K2M4O6Q8S0U2W4Y6",
+      "physical_key": "execution_schedule.v1:696e7374:70726f6a",
+      "source_revision": 7,
+      "record": {
+        "schema_id": "pm.execution.schedule.v1",
+        "schema_version": "1.0.0",
+        "schedule_id": "sched_01J8ZKS9J1L3N5P7R9T1V3X5",
+        "project_id": "proj_01J8ZK9D4F6H8J0K2L3M5N7P",
+        "target_kind": "scheduled_message",
+        "target_id": "thread_01J8ZKF7H9J1L3N5P7R9T1V3",
+        "exact_target_version": 4,
+        "exact_target_hash": "9f2c1a4b6d8e0f1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192",
+        "schedule_kind": "recurring_window",
+        "timezone": "America/New_York",
+        "local_start": "09:00",
+        "local_pause": "22:00",
+        "days_of_week": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "wind_down_seconds": 300,
+        "missed_policy": "next_available",
+        "auto_resume_next_window": true,
+        "state": "active",
+        "revision": 7,
+        "invalidated_reason": null,
+        "dst_policy": "wall_clock_fixed_offset"
+      }
+    },
+    "execution_schedule_record_bare": {
+      "schema_id": "pm.execution.schedule.v1",
+      "schema_version": "1.0.0",
+      "schedule_id": "sched_01J8ZKS9J1L3N5P7R9T1V3X5",
+      "project_id": "proj_01J8ZK9D4F6H8J0K2L3M5N7P",
+      "target_kind": "scheduled_message",
+      "target_id": "thread_01J8ZKF7H9J1L3N5P7R9T1V3",
+      "exact_target_version": 4,
+      "exact_target_hash": "9f2c1a4b6d8e0f1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192",
+      "schedule_kind": "recurring_window",
+      "timezone": "America/New_York",
+      "local_start": "09:00",
+      "local_pause": "22:00",
+      "days_of_week": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "wind_down_seconds": 300,
+      "missed_policy": "next_available",
+      "auto_resume_next_window": true,
+      "state": "active",
+      "revision": 7,
+      "invalidated_reason": null,
+      "dst_policy": "wall_clock_fixed_offset"
+    },
+    "schedule_run_binding_assistant_plan": {
+      "schema_id": "pm.storage_value.execution_schedule_run_binding.v1",
+      "schema_version": "1.0.0",
+      "storage_instance_id": "storage_instance_01J8ZKT0K2M4O6Q8S0U2W4Y6",
+      "physical_key": "execution_schedule_run_binding.v1:696e7374",
+      "source_revision": 1,
+      "record": {
+        "schema_id": "pm.execution.schedule_run_binding.v1",
+        "schema_version": "1.0.0",
+        "schedule_id": "sched_01J8ZKS9J1L3N5P7R9T1V3X5",
+        "project_id": "proj_01J8ZK9D4F6H8J0K2L3M5N7P",
+        "plan_run_id": "run_01J8ZK5P2Q7Y9E4R6T1U8I3O",
+        "target_kind": "assistant_plan_run",
+        "target_id": "aplanrun_01J8ZKU1L3N5P7R9T1V3X5Z7",
+        "assistant_plan_id": "aplan_01J8ZK4N7P5X3C1V9B8M2Q4W",
+        "plan_version": 5,
+        "plan_hash": "1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f809",
+        "original_schedule_admission_ref": "receipt.schedule_admission.op_01J8ZKV2M4O6Q8S0U2W4Y6A8"
+      }
+    },
+    "schedule_run_binding_record_bare": {
+      "schema_id": "pm.execution.schedule_run_binding.v1",
+      "schema_version": "1.0.0",
+      "schedule_id": "sched_01J8ZKS9J1L3N5P7R9T1V3X5",
+      "project_id": "proj_01J8ZK9D4F6H8J0K2L3M5N7P",
+      "plan_run_id": "run_01J8ZK5P2Q7Y9E4R6T1U8I3O",
+      "target_kind": "assistant_plan_run",
+      "target_id": "aplanrun_01J8ZKU1L3N5P7R9T1V3X5Z7",
+      "assistant_plan_id": "aplan_01J8ZK4N7P5X3C1V9B8M2Q4W",
+      "plan_version": 5,
+      "plan_hash": "1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f809",
+      "original_schedule_admission_ref": "receipt.schedule_admission.op_01J8ZKV2M4O6Q8S0U2W4Y6A8"
     }
   },
   "negative": [
@@ -556,6 +652,128 @@
       "expected_keyword": "const",
       "expected_path": [
         "schema_version"
+      ]
+    },
+    {
+      "negative_id": "schedrec_envelope_missing_schema_id",
+      "target": "execution_schedule_scheduled_message",
+      "schema": "StorageExecutionSchedule",
+      "mutation": {
+        "remove": "schema_id"
+      },
+      "expected_keyword": "required",
+      "expected_message_field": "schema_id"
+    },
+    {
+      "negative_id": "schedrec_envelope_source_revision_zero",
+      "target": "execution_schedule_scheduled_message",
+      "schema": "StorageExecutionSchedule",
+      "mutation": {
+        "set": {
+          "source_revision": 0
+        }
+      },
+      "expected_keyword": "minimum",
+      "expected_path": [
+        "source_revision"
+      ]
+    },
+    {
+      "negative_id": "schedrec_envelope_record_wrong_type",
+      "target": "execution_schedule_scheduled_message",
+      "schema": "StorageExecutionSchedule",
+      "mutation": {
+        "set": {
+          "record": 42
+        }
+      },
+      "expected_keyword": "type",
+      "expected_path": [
+        "record"
+      ]
+    },
+    {
+      "negative_id": "schedrec_target_kind_invalid",
+      "target": "execution_schedule_record_bare",
+      "schema": "ExecutionSchedule",
+      "mutation": {
+        "set": {
+          "target_kind": "reminder"
+        }
+      },
+      "expected_keyword": "enum",
+      "expected_path": [
+        "target_kind"
+      ]
+    },
+    {
+      "negative_id": "schedrec_state_invalid",
+      "target": "execution_schedule_record_bare",
+      "schema": "ExecutionSchedule",
+      "mutation": {
+        "set": {
+          "state": "fired"
+        }
+      },
+      "expected_keyword": "enum",
+      "expected_path": [
+        "state"
+      ]
+    },
+    {
+      "negative_id": "schedrec_missed_policy_invalid",
+      "target": "execution_schedule_record_bare",
+      "schema": "ExecutionSchedule",
+      "mutation": {
+        "set": {
+          "missed_policy": "skip"
+        }
+      },
+      "expected_keyword": "enum",
+      "expected_path": [
+        "missed_policy"
+      ]
+    },
+    {
+      "negative_id": "schedrec_auto_resume_wrong_type",
+      "target": "execution_schedule_record_bare",
+      "schema": "ExecutionSchedule",
+      "mutation": {
+        "set": {
+          "auto_resume_next_window": "yes"
+        }
+      },
+      "expected_keyword": "type",
+      "expected_path": [
+        "auto_resume_next_window"
+      ]
+    },
+    {
+      "negative_id": "binding_plan_version_zero",
+      "target": "schedule_run_binding_record_bare",
+      "schema": "ScheduleRunBinding",
+      "mutation": {
+        "set": {
+          "plan_version": 0
+        }
+      },
+      "expected_keyword": "minimum",
+      "expected_path": [
+        "plan_version"
+      ]
+    },
+    {
+      "negative_id": "binding_plan_hash_not_hex",
+      "target": "schedule_run_binding_record_bare",
+      "schema": "ScheduleRunBinding",
+      "mutation": {
+        "set": {
+          "plan_hash": "XYZ123"
+        }
+      },
+      "expected_keyword": "pattern",
+      "expected_path": [
+        "plan_hash"
       ]
     }
   ]

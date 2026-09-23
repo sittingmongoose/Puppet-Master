@@ -136,6 +136,8 @@ def schema_doc_for(def_name: str) -> dict:
         return SHARED_COMMANDS
     if def_name in BSD_RECORDS.get("$defs", {}):
         return BSD_RECORDS
+    if def_name in CANCEL_CUSTODY.get("$defs", {}):
+        return CANCEL_CUSTODY
     raise AssertionError(f"unknown fixture schema def: {def_name}")
 
 
@@ -618,6 +620,105 @@ class BsdLifecycleRecordClosureTests(unittest.TestCase):
             checker.resolve(ROOT, "Plans/back_seat_driver_contracts.schema.json#/$defs/NoSuchDef")
         with self.assertRaises(ValueError):
             checker.resolve(ROOT, "scripts/pm-plan-index.py")  # non-canonical prefix
+
+
+class LiveEquivalentPayloadClosureTests(unittest.TestCase):
+    """Finish pass (2026-09-23): payload-schema evidence against the LIVE equivalents of the reported
+    records, plus machine-pinned BLOCKED states for the record kinds whose owner-authored definitions
+    do not exist yet (an absent schema is a blocked check, never an inapplicable one)."""
+
+    DEFINITIONLESS_RECORD_IDS = [
+        "pm.assistant_plan.progress_projection.v1",
+        "pm.assistant_plan.question_budget_projection.v1",
+        "pm.assistant_plan.question_budget_policy.v2",
+        "pm.assistant_plan.deep_ledger_session.v1",
+        "pm.brainstorm.question_bank.v1",
+        "pm.schedule.message_projection.v1",
+        "pm.chat.scheduled_message_snapshot.v1",
+        "pm.chat.todo_item.v2",
+        "pm.chat.todo_work_binding.v1",
+        "pm.chat.todo_transition.v1",
+    ]
+
+    def test_scheduled_message_durable_payloads_validate(self) -> None:
+        # M01/M02 structural side: the materialized durable authority for scheduled messages is the
+        # execution_schedule family; validate real payloads against its actual authoritative defs.
+        positive = FIXTURES["positive"]
+        pairs = [
+            ("execution_schedule_scheduled_message", "StorageExecutionSchedule"),
+            ("execution_schedule_record_bare", "ExecutionSchedule"),
+            ("schedule_run_binding_assistant_plan", "StorageScheduleRunBinding"),
+            ("schedule_run_binding_record_bare", "ScheduleRunBinding"),
+        ]
+        for name, def_name in pairs:
+            errors = list(validator_for(CANCEL_CUSTODY, def_name).iter_errors(positive[name]))
+            self.assertEqual(errors, [], f"{name}: {[str(e)[:200] for e in errors]}")
+        # The live registry families resolve to exactly these defs (family -> contract binding).
+        for fid, def_name in (
+            ("execution_schedule", "StorageExecutionSchedule"),
+            ("execution_schedule_run_binding", "StorageScheduleRunBinding"),
+        ):
+            definition = checker.resolve(ROOT, family(fid)["value_schema_ref"])
+            self.assertEqual(definition, CANCEL_CUSTODY["$defs"][def_name])
+        # Schedule identity and dispatched-run identity are structurally distinct records (M01
+        # non-conflation): the binding references the schedule by id and adds its own run identity.
+        self.assertEqual(
+            positive["schedule_run_binding_record_bare"]["schedule_id"],
+            positive["execution_schedule_record_bare"]["schedule_id"],
+        )
+        self.assertNotIn("plan_run_id", CANCEL_CUSTODY["$defs"]["ExecutionSchedule"]["properties"])
+
+    def test_live_equivalent_negatives_fail_for_intended_reason(self) -> None:
+        run_negative_fixtures(
+            self,
+            "StorageExecutionSchedule",
+            "ExecutionSchedule",
+            "StorageScheduleRunBinding",
+            "ScheduleRunBinding",
+        )
+
+    def test_definitionless_records_stay_blocked(self) -> None:
+        # BLOCKED tripwire: these record kinds are declared by live owners (APR QMAX/PPROG blocks,
+        # SQR, TDR) and queued in CS-078, but no machine definition exists anywhere in Plans schemas
+        # or the registry. Payload validation for them is BLOCKED on owner-authored definitions -
+        # not inapplicable. If an owner materializes one, this test fails and the payload checks
+        # must be completed in the same change.
+        texts = []
+        for path in sorted((ROOT / "Plans").glob("*.schema.json")):
+            texts.append(path.read_text(encoding="utf-8"))
+        texts.append(REGISTRY_TEXT)
+        for record_id in self.DEFINITIONLESS_RECORD_IDS:
+            for text in texts:
+                self.assertNotIn('"' + record_id + '"', text, record_id)
+        # Their owner declarations remain the live references (CS-078 queue rows for the todo trio
+        # are pinned by AssistantRecordClosureTests; the APR companion absence by TruthBoundaryTests).
+        for token in ("pm.chat.todo_item.v2", "pm.chat.todo_work_binding.v1", "pm.chat.todo_transition.v1"):
+            self.assertIn(token, TDR_TEXT)
+
+    def test_bsd_registration_stays_blocked_pending_authority(self) -> None:
+        # Item-1 blocked tripwire: the BSD lifecycle persistence/effect registration is pending
+        # central authority (physical-family denominator governance, Event Authority adjudication,
+        # designated reseal) - pinned here so silent partial registration cannot pass unnoticed.
+        rows = [
+            r
+            for r in REGISTRY["contract_family_dispositions"]
+            if r["disposition_id"] == "scd.back_seat_driver.durable.v1"
+        ]
+        self.assertEqual(len(rows), 1)
+        row = rows[0]
+        self.assertEqual(row["persistence_disposition"], "durable")
+        self.assertEqual(row["physical_family_status"], "physical_family_registration_pending")
+        self.assertEqual(row["retention_disposition"]["mode"], "physical_registration_pending")
+        self.assertEqual(
+            row["event_effect_policy"], "receipt_only_no_eventrecord_pending_event_authority"
+        )
+        self.assertIs(row["runtime_evidence"], False)
+        family_ids = {f["family_id"] for f in REGISTRY["families"]}
+        for candidate in ("bsd_policy", "bsd_workflow_binding", "bsd_assignment",
+                          "bsd_review_cycle", "bsd_finding", "bsd_quarantine"):
+            self.assertNotIn(candidate, family_ids)
+        registered = {r["event_type"] for r in EVENT_REGISTRY["families"]}
+        self.assertFalse(any(t.startswith("bsd.") for t in registered))
 
 
 class TruthBoundaryTests(unittest.TestCase):
