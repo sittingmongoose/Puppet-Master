@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L24086-L26156
+Source lines: L24096-L26168
 
-Source SHA256: `1a4a8cab9d13d8283875784a1993e709255c1b523cad0eb3da9f03754594be58`
+Source SHA256: `189f37a8fffd067f66749c49b91528e86ff96ef6fae01a562a240e21117f790c`
 
 ---
 
@@ -1585,6 +1585,8 @@ Calling that unchanged pure function on the pinned 275-family baseline and propo
 The added composition has a further representational requirement even after reference resolution: its own schema identity is a real nonstored family validator, while its member values deliberately retain two distinct original stored IDs/versions. One synthetic inline `schema_id` or `schema_version` constant cannot honestly describe both. Adding the composition's identity as a stored-header const would reject both real original wrappers. Relabelling stored members, inventing a new envelope, changing old accepted-operation routes, or counting the old profile as a new logical family would violate the source contract.
 
 A future explicitly owner-qualified readiness contract must resolve the full fixed family schema, recognize the separate nonstored validation identity, and check each complete native-accepted profile's original wrapper/key/codec/producer/reader branch. This source adoption does not implement or authorize that validator change, change the registry schema, or claim an implementation-readiness/gate pass. The source adoption preserves this readiness limitation.
+
+**2026-09-23 follow-up.** Section 2.3.1 now states the owner-qualified readiness contract that this subsection called for, and the readiness validator implements it. The three rows resolve their composition and both whole wrappers in the declared `goal` realm. The composition identity stays validation metadata, and each wrapper keeps its literal stored header. This clears the 24 inline-shape failures on these rows without relabelling a member or inventing an envelope. The registry rows, the registry schema and every stored identity are unchanged. Native codec, key, producer and reader qualification remains NOT_RUN.
 
 ```yaml
 plan_unit_id: SP-310
