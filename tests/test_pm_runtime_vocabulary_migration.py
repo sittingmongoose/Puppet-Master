@@ -261,6 +261,8 @@ class ReadinessRegistryRepresentationTest(unittest.TestCase):
         "stored_profile_union_widened_composition_rejected",
         "stored_profile_union_undeclared_document_bytes_rejected",
         "stored_profile_union_no_cross_realm_fallback",
+        "stored_profile_union_record_graph_secret_rejected",
+        "stored_profile_union_record_graph_reference_outside_realm_rejected",
         "stored_profile_union_dropped_original_keys_rejected",
         "single_wrapper_bare_reference_still_rejected",
         "sp278_read_token_fields_accepted",

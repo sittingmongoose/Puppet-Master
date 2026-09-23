@@ -14,6 +14,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
+from urllib.parse import unquote, urldefrag, urljoin
 
 def _load_pnc019_currentness():
     """Load the governed helper from this script's directory."""
@@ -5836,43 +5837,228 @@ def transitive_local_schema_definitions(
     return {name: collected[name] for name in sorted(collected)}
 
 
+def storage_value_union_base(uri: str, node: Any) -> str:
+    """The base URI of a resource reached as ``uri``: its own ``$id`` resolved against ``uri``."""
+    identifier = node.get("$id") if isinstance(node, dict) else None
+    return urldefrag(urljoin(uri, identifier))[0] if isinstance(identifier, str) else uri
+
+
+def storage_value_json_pointer_token(token: str) -> str:
+    return token.replace("~", "~0").replace("/", "~1")
+
+
+class StorageValueUnionRealm:
+    """Resolve schema references only through one declared, hash-pinned resource realm.
+
+    Documents come only from the realm's declared whole documents and embedded resources, and a
+    document is read only when a reference reaches it; its bytes must match every SHA-256 the realm
+    declares for its path. Nothing is fetched, merged across realms or inferred from a file name.
+    Any object with a string ``$id`` is a resource boundary (the realm declares embedded resources at
+    non-standard keywords such as ``legacy_v2_reader``) and any object with a string ``$ref`` is a
+    reference. A URI the realm does not declare, a plain-name fragment or a missing pointer does
+    not resolve.
+    """
+
+    def __init__(self, resources: Any, realm: str, *, read_bytes: Callable[[str], bytes]) -> None:
+        realms = resources.get("realms") if isinstance(resources, dict) else None
+        spec = realms.get(realm) if isinstance(realms, dict) else None
+        if not isinstance(spec, dict) or not isinstance(spec.get("whole_documents"), list):
+            raise ValueError(f"resource realm {realm!r} is not declared")
+        self.realm = realm
+        self._read_bytes = read_bytes
+        self._whole: dict[str, set[str]] = {}
+        self._embedded: dict[str, set[tuple[str, str]]] = {}
+        self._digests: dict[str, set[Any]] = {}
+        for kind in ("whole_documents", "embedded_resources"):
+            entries = spec.get(kind) or []
+            if not isinstance(entries, list):
+                raise ValueError(f"realm {realm!r} {kind} is not a list")
+            for entry in entries:
+                if (
+                    not isinstance(entry, dict)
+                    or not isinstance(entry.get("path"), str)
+                    or not entry["path"]
+                    or not isinstance(entry.get("retrieval_uri"), str)
+                ):
+                    raise ValueError(f"realm {realm!r} has a malformed {kind} entry")
+                self._digests.setdefault(entry["path"], set()).add(entry.get("complete_document_sha256"))
+                if kind == "whole_documents":
+                    self._whole.setdefault(entry["retrieval_uri"], set()).add(entry["path"])
+                else:
+                    pointer = entry.get("json_pointer", "#")
+                    if not isinstance(pointer, str):
+                        raise ValueError(f"realm {realm!r} has a malformed embedded json_pointer")
+                    self._embedded.setdefault(entry["retrieval_uri"], set()).add(
+                        (entry["path"], pointer[1:] if pointer.startswith("#") else pointer)
+                    )
+        self._documents: dict[str, Any] = {}
+        self._nested: dict[str, set[tuple[str, str]]] = {}
+
+    def whole_document_paths(self, uri: str) -> list[str]:
+        return sorted(self._whole.get(uri, set()))
+
+    def document(self, path: str) -> Any:
+        if path not in self._documents:
+            raw = self._read_bytes(path)
+            if self._digests.get(path) != {hashlib.sha256(raw).hexdigest()}:
+                raise ValueError(f"{path} does not match its declared complete_document_sha256")
+            document = json.loads(raw.decode("utf-8"))
+            self._documents[path] = document
+            for uri, paths in self._whole.items():
+                if path in paths:
+                    self._index_resources(document, path, "", storage_value_union_base(uri, document))
+        return self._documents[path]
+
+    def _index_resources(self, node: Any, path: str, pointer: str, base: str) -> None:
+        stack = [(node, pointer, base)]
+        while stack:
+            current, current_pointer, current_base = stack.pop()
+            if isinstance(current, dict):
+                if not current_pointer:
+                    self._nested.setdefault(current_base, set()).add((path, current_pointer))
+                elif isinstance(current.get("$id"), str):
+                    current_base = storage_value_union_base(current_base, current)
+                    self._nested.setdefault(current_base, set()).add((path, current_pointer))
+                for key, child in current.items():
+                    stack.append((child, current_pointer + "/" + storage_value_json_pointer_token(key), current_base))
+            elif isinstance(current, list):
+                for index, child in enumerate(current):
+                    stack.append((child, f"{current_pointer}/{index}", current_base))
+
+    def resource(self, uri: str) -> tuple[str, str, str]:
+        """(path, pointer, base) of the resource the realm declares under ``uri``."""
+        paths = self._whole.get(uri)
+        if paths:
+            if len(paths) != 1:
+                raise ValueError(f"{uri} resolves to {len(paths)} documents in realm {self.realm!r}")
+            path = next(iter(paths))
+            return path, "", storage_value_union_base(uri, self.document(path))
+        embedded = self._embedded.get(uri)
+        if embedded:
+            if len(embedded) != 1:
+                raise ValueError(f"{uri} resolves to {len(embedded)} embedded resources in realm {self.realm!r}")
+            path, pointer = next(iter(embedded))
+            return path, pointer, storage_value_union_base(uri, json_pointer_value(self.document(path), pointer))
+        # A resource that a document the realm already supplied carries under this $id.
+        located = self._nested.get(uri, set())
+        if len(located) == 1:
+            path, pointer = next(iter(located))
+            return path, pointer, uri
+        if located:
+            raise ValueError(f"{uri} names {len(located)} resources in realm {self.realm!r}")
+        raise ValueError(f"{uri} is not declared in realm {self.realm!r}")
+
+    def lookup(self, reference: str, base: str) -> tuple[Any, str, str, str]:
+        """Resolve ``reference`` against ``base``: (node, path, pointer, base of the node)."""
+        absolute = urljoin(base, reference) if base else reference
+        uri, fragment = urldefrag(absolute)
+        fragment = unquote(fragment)
+        if fragment and not fragment.startswith("/"):
+            raise ValueError(f"{reference}: plain-name fragments are not resolved")
+        path, pointer, node_base = self.resource(uri)
+        node = json_pointer_value(self.document(path), pointer)
+        for token in fragment.split("/")[1:] if fragment else []:
+            key = token.replace("~1", "/").replace("~0", "~")
+            if isinstance(node, dict) and key in node:
+                node = node[key]
+            elif isinstance(node, list) and key.isdigit() and int(key) < len(node):
+                node = node[int(key)]
+            else:
+                raise ValueError(f"{reference}: {fragment} does not exist in {path}")
+            pointer = f"{pointer}/{token}"
+            if isinstance(node, dict) and isinstance(node.get("$id"), str):
+                node_base = storage_value_union_base(node_base, node)
+        return node, path, pointer, node_base
+
+
 def storage_value_union_resource(
     resources: Any,
     realm: str,
     ref: str,
     *,
     read_bytes: Callable[[str], bytes],
+    realm_resolver: StorageValueUnionRealm | None = None,
 ) -> tuple[str, Any]:
-    """Resolve an absolute schema reference inside one declared resource realm.
+    """Resolve an absolute schema reference to a whole document of one declared resource realm.
 
-    Only whole documents that the realm declares under exactly this retrieval URI are eligible; the
-    document must match its declared SHA-256 and carry the URI as its own $id. Nothing is fetched,
-    merged across realms or inferred from a file name.
+    The URI must name exactly one declared whole document, whose bytes match its declared SHA-256
+    and whose own $id resolves to that URI.
     """
-    uri, _, fragment = ref.partition("#")
-    realms = resources.get("realms") if isinstance(resources, dict) else None
-    spec = realms.get(realm) if isinstance(realms, dict) else None
-    if not isinstance(spec, dict) or not isinstance(spec.get("whole_documents"), list):
-        raise ValueError(f"resource realm {realm!r} is not declared")
-    entries = [
-        entry
-        for entry in spec["whole_documents"]
-        if isinstance(entry, dict) and entry.get("retrieval_uri") == uri
-    ]
-    paths = {entry.get("path") for entry in entries}
+    resolver = realm_resolver or StorageValueUnionRealm(resources, realm, read_bytes=read_bytes)
+    uri = urldefrag(ref)[0]
+    paths = resolver.whole_document_paths(uri)
     if len(paths) != 1:
         raise ValueError(f"{uri} resolves to {len(paths)} documents in realm {realm!r}")
-    path = paths.pop()
-    if not isinstance(path, str) or not path:
-        raise ValueError(f"{uri} has no document path in realm {realm!r}")
-    raw = read_bytes(path)
-    digest = hashlib.sha256(raw).hexdigest()
-    if any(entry.get("complete_document_sha256") != digest for entry in entries):
-        raise ValueError(f"{path} does not match its declared complete_document_sha256")
-    document = json.loads(raw.decode("utf-8"))
-    if not isinstance(document, dict) or document.get("$id") != uri:
-        raise ValueError(f"{path} does not carry $id {uri}")
-    return path, json_pointer_value(document, fragment) if fragment else document
+    document = resolver.document(paths[0])
+    if not isinstance(document, dict) or storage_value_union_base(uri, document) != uri:
+        raise ValueError(f"{paths[0]} does not carry $id {uri}")
+    node, path, _pointer, _base = resolver.lookup(ref, "")
+    return path, node
+
+
+def storage_value_union_reference_closure(
+    resolver: StorageValueUnionRealm,
+    start_refs: list[str],
+) -> tuple[list[tuple[str, str, Any]], list[dict[str, Any]]]:
+    """Every object reachable from ``start_refs`` through references inside the realm.
+
+    Returns the reached objects as (path, pointer, node) and one record per reference that does
+    not resolve inside the realm. Dynamic reference keywords are reported, not followed.
+    """
+    reached: dict[int, tuple[str, str, Any]] = {}
+    unresolved: list[dict[str, Any]] = []
+    stack: list[tuple[Any, str, str, str, str]] = []
+    for ref in start_refs:
+        try:
+            node, path, pointer, base = resolver.lookup(ref, "")
+        except Exception as exc:  # noqa: BLE001 - an unresolved start fails closed.
+            unresolved.append({"member": ref, "reference": ref, "at": None, "detail": str(exc)})
+            continue
+        stack.append((node, path, pointer, base, ref))
+    while stack:
+        node, path, pointer, base, member = stack.pop()
+        if not isinstance(node, (dict, list)) or id(node) in reached:
+            continue
+        reached[id(node)] = (path, pointer, node)
+        inner = [(node, pointer, base)]
+        while inner:
+            current, current_pointer, current_base = inner.pop()
+            if isinstance(current, dict):
+                if current is not node and isinstance(current.get("$id"), str):
+                    current_base = storage_value_union_base(current_base, current)
+                for keyword in ("$dynamicRef", "$recursiveRef"):
+                    if keyword in current:
+                        unresolved.append(
+                            {
+                                "member": member,
+                                "reference": str(current[keyword]),
+                                "at": f"{path}#{current_pointer}",
+                                "detail": f"{keyword} is not resolved by readiness",
+                            }
+                        )
+                reference = current.get("$ref")
+                if isinstance(reference, str):
+                    try:
+                        target = resolver.lookup(reference, current_base)
+                    except Exception as exc:  # noqa: BLE001 - an unresolved reference fails closed.
+                        unresolved.append(
+                            {
+                                "member": member,
+                                "reference": reference,
+                                "at": f"{path}#{current_pointer}",
+                                "detail": str(exc),
+                            }
+                        )
+                    else:
+                        stack.append((*target, member))
+                for key, child in current.items():
+                    inner.append(
+                        (child, current_pointer + "/" + storage_value_json_pointer_token(str(key)), current_base)
+                    )
+            elif isinstance(current, list):
+                for index, child in enumerate(current):
+                    inner.append((child, f"{current_pointer}/{index}", current_base))
+    return list(reached.values()), unresolved
 
 
 def storage_value_stored_profile_union_failures(
@@ -5939,8 +6125,9 @@ def storage_value_stored_profile_union_failures(
         return failures
     realm = contract["resource_realm"]
     try:
+        resolver = StorageValueUnionRealm(resources, realm, read_bytes=read_bytes)
         composition_path, composition = storage_value_union_resource(
-            resources, realm, value_schema_ref, read_bytes=read_bytes
+            resources, realm, value_schema_ref, read_bytes=read_bytes, realm_resolver=resolver
         )
     except Exception as exc:  # noqa: BLE001 - unresolved composition fails closed.
         fail("storage_value_registry_stored_profile_union_composition_unresolved", detail=str(exc))
@@ -5985,18 +6172,22 @@ def storage_value_stored_profile_union_failures(
         fail("storage_value_registry_stored_profile_union_member_identities_not_distinct", stored_schema_ids=stored_ids)
     required_fields = family.get("required_fields")
     required_list = required_fields if isinstance(required_fields, list) else []
-    for index, member in enumerate(members):
+    resolved_member_refs: list[str] = []
+    for member in members:
         ref = member.get("whole_wrapper_ref")
         try:
             if not isinstance(ref, str):
                 raise ValueError("whole_wrapper_ref is not a string")
-            _member_path, wrapper = storage_value_union_resource(resources, realm, ref, read_bytes=read_bytes)
+            _member_path, wrapper = storage_value_union_resource(
+                resources, realm, ref, read_bytes=read_bytes, realm_resolver=resolver
+            )
         except Exception as exc:  # noqa: BLE001 - an unresolved member fails closed.
             fail("storage_value_registry_stored_profile_union_member_unresolved", member=ref, detail=str(exc))
             continue
         if not isinstance(wrapper, dict):
             fail("storage_value_registry_stored_profile_union_member_unresolved", member=ref, detail="not an object")
             continue
+        resolved_member_refs.append(ref)
         if wrapper.get("type") != "object" or wrapper.get("additionalProperties") is not False:
             fail("storage_value_registry_stored_profile_union_member_not_closed_object", member=ref)
         if wrapper.get("required") != required_fields:
@@ -6019,7 +6210,29 @@ def storage_value_stored_profile_union_failures(
                     expected=member.get(declared_field),
                     actual=header_property.get("const"),
                 )
-        failures.extend(storage_value_secret_key_failures(wrapper, path_label=row_path, pointer=f"$.oneOf[{index}]"))
+    # Secret material: every definition the resolved members reach through references, resolved
+    # inside the same declared, hash-pinned realm, is scanned as an inline row's value_schema is.
+    # A reference that does not resolve inside the realm fails closed.
+    reached, unresolved = storage_value_union_reference_closure(resolver, resolved_member_refs)
+    for record in unresolved:
+        fail("storage_value_registry_stored_profile_union_reference_unresolved", **record)
+    nodes_by_path: dict[str, dict[str, Any]] = {}
+    for path, pointer, node in reached:
+        nodes_by_path.setdefault(path, {})[pointer] = node
+    for path in sorted(nodes_by_path):
+        nodes = nodes_by_path[path]
+        outermost = [
+            pointer
+            for pointer in nodes
+            if not any(other != pointer and (other == "" or pointer.startswith(other + "/")) for other in nodes)
+        ]
+        document = resolver.document(path)
+        for pointer in sorted(outermost):
+            failures.extend(
+                storage_value_secret_key_failures(
+                    nodes[pointer], path_label=row_path, pointer=f"{path}#{pointer}", root=document
+                )
+            )
     row_keys = [part.strip() for part in str(family.get("key_shape", "")).split(" OR ") if part.strip()]
     declared_keys = [key for member in members for key in (member.get("key_shapes") or [])]
     if row_keys != declared_keys:
@@ -8005,6 +8218,61 @@ def storage_value_representation_self_test_checks(
         ),
         "storage_value_registry_stored_profile_union_member_unresolved",
         member=v1_ref,
+    )
+    realm_resolver = StorageValueUnionRealm(resources, contract["resource_realm"], read_bytes=lambda rel: (ROOT / rel).read_bytes())
+
+    def record_definition(member_ref: str) -> tuple[str, str]:
+        """(document path, pointer) of the first record definition a member wrapper references."""
+        wrapper = realm_resolver.lookup(member_ref, "")[0]
+        references: list[str] = []
+        pending = [wrapper["properties"]["record"]]
+        while pending:
+            current = pending.pop()
+            if isinstance(current, dict):
+                if isinstance(current.get("$ref"), str):
+                    references.append(current["$ref"])
+                pending.extend(current.values())
+            elif isinstance(current, list):
+                pending.extend(current)
+        _node, path, pointer, _base = realm_resolver.lookup(sorted(references)[0], "")
+        return path, pointer
+
+    def realm_with(path: str, pointer: str, extra_properties: dict[str, Any]) -> tuple[Any, Callable[[str], bytes]]:
+        """A copy of the realm in which one definition gains required properties, re-pinned."""
+        document = read_json(ROOT / path)
+        definition = json_pointer_value(document, pointer)
+        definition.setdefault("properties", {}).update(extra_properties)
+        definition["required"] = list(definition.get("required", [])) + sorted(extra_properties)
+        changed = json.dumps(document).encode("utf-8")
+        changed_resources = json.loads(json.dumps(resources))
+        for realm_spec in changed_resources["realms"].values():
+            for kind in ("whole_documents", "embedded_resources"):
+                for entry in realm_spec.get(kind) or []:
+                    if entry.get("path") == path:
+                        entry["complete_document_sha256"] = hashlib.sha256(changed).hexdigest()
+        return changed_resources, lambda rel: changed if rel == path else (ROOT / rel).read_bytes()
+
+    union_members = next(entry for entry in declaration["profiles"] if entry["family_id"] == "goal_cancel_progress")["profiles"]
+    v2_record = record_definition(union_members[1]["whole_wrapper_ref"])
+    secret_resources, secret_read = realm_with(*v2_record, {"provider_api_token": {"type": "string"}})
+    checks["stored_profile_union_record_graph_secret_rejected"] = has(
+        storage_value_stored_profile_union_failures(
+            union_row, row_path="self-test:union-record-secret", declaration=declaration,
+            resources=secret_resources, read_bytes=secret_read,
+        ),
+        "storage_value_secret_material_key",
+        field="provider_api_token",
+    )
+    outside_reference = "https://example.invalid/outside.schema.json#/$defs/value"
+    v1_record = record_definition(union_members[0]["whole_wrapper_ref"])
+    outside_resources, outside_read = realm_with(*v1_record, {"outside_value": {"$ref": outside_reference}})
+    checks["stored_profile_union_record_graph_reference_outside_realm_rejected"] = has(
+        storage_value_stored_profile_union_failures(
+            union_row, row_path="self-test:union-record-outside", declaration=declaration,
+            resources=outside_resources, read_bytes=outside_read,
+        ),
+        "storage_value_registry_stored_profile_union_reference_unresolved",
+        reference=outside_reference,
     )
     key_drift = clone_registry()
     key_row = family_of(key_drift, "goal_cancel_progress")
