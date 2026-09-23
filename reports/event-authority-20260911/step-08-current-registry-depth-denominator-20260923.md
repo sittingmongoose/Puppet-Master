@@ -6,8 +6,11 @@ Cost: root compared the two complete JSON family sets by exact event type and in
 
 | Source at this cut | SHA-256 |
 |---|---|
-| `Plans/event_family_registry.json` | `0be544181eda423dcea4d8661206e7da6d066fdcf51913d5962f1a283635c842` |
+| `Plans/event_family_registry.json` on `origin/main` | `1972a6aa6ef168a46091be5347bc9cff657985a1c21ab1b84665b9ed96c1ed3a` |
+| `Plans/event_family_registry.json` on this working branch | `0be544181eda423dcea4d8661206e7da6d066fdcf51913d5962f1a283635c842` |
 | `reports/event-authority-20260911/step-08-depth-assessment.json` | `34e9295cb93da5551ffb44156dd31607f0abae28cc9361d53c52a184482cd05e` |
 | `reports/event-authority-20260911/step-06-contract-depth.json` | `e376a134cca92cf66178f7369b9101248df656084378e39e11894ebc5629f365` |
 
 The three added rows retain their registered project scope, exact payload schema and `RP-AUTHORITY-INDEFINITE@1.0.0` assignment. Their owner anchors are `ACD-461`, `SMPFS-167` and `SMPFS-168` respectively. This comparison does not infer producer, consumer, projector or checkpoint completeness from registry membership; those are depth obligations to examine in the owner contracts.
+
+The two registry files differ in other content, but the three named family objects are byte-equivalent after canonical JSON serialization on this branch and `origin/main` `d247d57ebd0d53ce4c66f4795e24a14d8782e9b8`; both contain 42 families at revision `2026-09-11.2`. The working-branch hash above is not a hash of main.

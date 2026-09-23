@@ -4,10 +4,13 @@ The current `browser.workspace.created` Storage binding SP-266 predates the exac
 
 Cost: root read SP-266, SP-278 and SP-282, compared the two complete registered checkpoint schemas, and independently reran both Browser workspace static test files: 87 tests PASS. The interrupted Browser assessment produced only a source inventory, not a frozen twelve-cell verdict. No native Browser, Storage or permission execution was run. Monetary attribution is unavailable.
 
-| Current source at `origin/main` `d247d57ebd0d53ce4c66f4795e24a14d8782e9b8` | SHA-256 |
+| Source (`origin/main` is `d247d57ebd0d53ce4c66f4795e24a14d8782e9b8`) | SHA-256 |
 |---|---|
 | `Plans/browser_workspace_created_contracts.schema.json` | `0be9ff6f77fba79156d65afa6c73bf2055c103a651f0237dd289f5d765ee0409` |
 | `Plans/browser_workspace_reset_contracts.schema.json` | `fc3b1824c918f17e1b5691462b371997e2b0eabe5a064af6feef7e6c6ad6f02e` |
-| `Plans/storage-plan.md` | `328858615bc5badb18c227e89e721c6ae18e244e0a13ae49b692000e9c15add7` |
+| `Plans/storage-plan.md` on `origin/main` | `f11aeeafaff1fd3153923008b962a6b72c1fbc82f7659e190b22c9a1eadbce36` |
+| `Plans/storage-plan.md` on this working branch | `328858615bc5badb18c227e89e721c6ae18e244e0a13ae49b692000e9c15add7` |
 
 The 87 passing tests exercise the existing contracts; they do not supply the missing created-token adoption or PNC-019 approval for the 42-family checkpoint. No registry, Plan, governance or baseline file was changed.
+
+The complete SP-266, SP-278 and SP-282 passages are identical between the two Storage files, despite other working-branch Storage edits. The Browser-created and Browser-reset schema files are also identical. The branch-wide Storage hash is not a hash of main.
