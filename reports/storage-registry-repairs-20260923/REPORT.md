@@ -1,6 +1,6 @@
 # Storage registry repairs, 2026-09-23
 
-STATUS: front 1 landed on `main` on 2026-09-24; the landing record is `reports/landing-checks/LANDING_20260924_STORAGE_REGISTRY_REPAIRS.md`. Front 2 lands next.
+STATUS: fronts 1 and 2 complete and pushed; front 2 rebased onto front 1's review fixes (last step: front 2 section re-measured). Neither branch is landed; both are held for the coordinator's go, front 1 first.
 
 Branch `fix/storage-registry-repairs-20260923`, from `origin/main` `dca3c3349e`, in the sparse worktree `~/pm-worktrees/storage-registry-repairs-20260923` (`Plans scripts reports tests`). Not landed.
 
@@ -323,3 +323,83 @@ The truncated `validate_implementation_readiness` total falls from 79 to 33, and
   - Two self-test names are stale: `event_family_registry_39_row_kernel_structurally_valid` validates 42 rows, and `…_v2_exact_goal_refs_…` now covers three v3 files.
 
 Cost: one session; no model calls beyond this agent; monetary attribution unavailable.
+
+## Front 2: DL-070 follow-ups
+
+Branch `plans/dl070-followups-20260923`. It is stacked on front 1's tip `0540f4bd03`, so this report continues in one file, and it lands after front 1. It shares front 1's worktree: the VM disk had about 600 MB free, not enough for a second worktree. `Concepts/pm7-tools`, `Concepts/settings-redesign-concepts/kimi-k3-polish` and `Concepts/pm6-build/checks` were added to the sparse set for the PM7 build.
+
+| Commit | What |
+|---|---|
+| `03e978c54a` | `Plans/FinalGUISpec.md`: dated DL-070 follow-up amendment retiring `source_reseeded`. `Plans/Decision_Log.md`: dated addendum under DL-070's Entries record closing both follow-ups. FinalGUISpec and Decision_Log shards and the plan index regenerated. |
+| `2e75664a00` | `Concepts/pm7-tools/home_workspace_source.py`: the move no longer reseeds. `Concepts/pm7-tools/verify/home_workspace_matrix.mjs`: DL-070 expectations. |
+| this commit | This section. |
+
+### `source_reseeded`: every occurrence on `main`
+
+| Where | Occurrences | Disposition |
+|---|---|---|
+| `Plans/UI_Command_Catalog.md` (`cmd.terminal.move_workgroup` typed arguments), `Plans/Wiring_Matrix.production.json` (`home.terminal_section.move_workgroup`, `home.terminal_section.new_section`) and its schema, `Plans/Commands_System.md`, `Plans/event_payloads/terminal_workgroup_moved.schema.json` (closed, `additionalProperties: false`) | **0** | Nothing to retire. No command or wiring owner ever carried the field. |
+| `Plans/FinalGUISpec.md` | 2 (the 2026-08-13 "move command payload records `source_reseeded`" and DL-070's "always false") | Retired by a dated 2026-09-23 follow-up amendment; the earlier text stays as history. |
+| `Plans/Decision_Log.md` DL-070 | 5 | Kept as the decision record. A dated addendum under the Entries record says both follow-ups are carried out. The DL-070 PlanUnit, including its `preserved_exact_tokens`, is unchanged. This is not a new entry. |
+| `Concepts/pm7-tools/home_workspace_source.py` | 2 | Removed with the reseed block and its receipt (the authored T48 source). |
+| `Concepts/PMConcept7.html` | 2 | Built output, not hand-edited. It changes at the next authorized promotion (see below). |
+| `Concepts/pm7-tools/base/*.html` (4 pinned bases) | 8 | Frozen pinned pipeline inputs, never edited. For PM7, T48 replaces this band with the authored source. |
+| 11 other concept files (`Concepts/Test*.html`, including `TestPMConcept.html`) | 22 | Separate concepts, outside "the PM7 concept". Untouched. |
+| `PM7.html` at the repository root | 2 | Outside the allowed edit scope. Untouched. |
+| `reports/…` (takeover note, card answers) | 2 | Historical records. Untouched. |
+
+### The PM7 concept
+
+The move behavior has a source. The PM7 pipeline's T48 transform (`home_workspace_refresh_source.py`) replaces the base's Home controller band with `HOME_SCRIPT` from `home_workspace_source.py`, so that source is where the change was made. `moveWorkgroupToHost` now:
+- leaves the vacated section `{terminal_workgroup_id: null, pane_ids: [], terminal_session_ids: []}`;
+- allocates no workgroup, pane or session;
+- drops `source_reseeded` from the `cmd.terminal.move_workgroup` payload and the reseed receipt.
+
+Reset and the boot-recovery `restoreOwnerRefs` reseed are unchanged, as DL-070 requires. T48's input pins and effect-surface guard still pass.
+
+| Scratch build (`build_pm7.py --report`) | Bytes | SHA-256 | Gates |
+|---|---:|---|---|
+| Branch base, before the change | 7,407,722 | `36661a9968c1c4b9d6a9090fccaa0e7674e2e1dce5dcd9da4ab3261fd0878829` | all pass |
+| With the change | 7,405,980 | `da8561f63fe4979be5364445d9c4435d514e2b60abf5de067e611306b3247f5a` | all pass |
+
+The two builds differ in exactly the move code: 40 diff lines, recorded in `pm7-builds/base-to-dl070.diff` in the evidence set below.
+
+**Not promoted, and why.** The checked-in `Concepts/PMConcept7.html` (4,308,739 bytes, `b019cf8dfed0e6d64f415bb5d71871d844cf58bbce16017ac82fb1e904ab0923`) was last changed by the 2026-09-02 sweep `3e1842da40`. A clean build at the branch base does not reproduce it: they differ by 26,334 diff lines, and the checked-in file lacks T44–T50 and the 2026-09-01 font-link removal. Promoting a rebuild would therefore also ship the unadjudicated T44–T50 integration wave. `Concepts/pm7-tools/README.md` allows promotion "only after its report and browser evidence are frozen and adjudicated", so it is left for the pipeline's next authorized promotion. Nothing was hand-edited.
+
+**Verifier.** In `verify/home_workspace_matrix.mjs`, `terminal_new_section_recoverable` now expects:
+- the moved workgroup live under its original identity;
+- the vacated section empty with `data-pm-term-empty="true"` and its guidance visible;
+- reset to restore one live rendering section with the guidance gone.
+
+The comment in `terminal_four_section_four_pane_caps_and_identity` is updated to match. The file passes `node --check`. The browser run is **NOT_RUN**: this matrix needs the served, provenance-pinned campaign in the README, and this VM's disk and headless-HTTP limits rule it out here.
+
+### Checks and tests, front 2
+
+| Check | Front 1 tip | Front 2 tip |
+|---|---|---|
+| Shard check | pass, 99 / 2,720 | pass, 99 / 2,720 |
+| Index validate (without the ignored audit) | pass, 6,718 / 26,208 | pass, 6,718 / 26,208 |
+| `validate-wiring-matrix`, `validate-ui-command-response`, `validate-touch-closure` | — | pass, pass, pass |
+| `lint-contractrefs` / `lint-path-refs` | — | 1 / 36, all naming files outside the sparse cone that exist in the shared checkout; none from these edits |
+| `validate-pm7-gui-fixtures` | 3 (baseline) | 3 (the same, pre-existing) |
+| `pm-implementation-readiness.py validate` | 33 | 35 (+2 `event_authority_currentness_source_drift`: `Plans/FinalGUISpec.md`, `Plans/Decision_Log.md`) |
+| `verify-spec-lock` | 6 | 7 (+`Plans/FinalGUISpec.md` `stale_hash`) |
+| `validate-evidence` / `validate-plan-graph` | 665 / 665 | **759 / 759** (+94 `artifact_hash_stale`: 82 FinalGUISpec shards, 10 Decision_Log shards, and the two documents) |
+| Two named test modules | 26 run, 0 fail | 26 run, 0 fail |
+| Whole tracked suite | 904 run, 5 fail, 3 errors | 904 run, 5 fail, **0 errors** (the `Concepts/pm7-tools` cone resolves the three touch-closure errors) |
+
+**Landing expectation for front 2.** Editing two resealed canon documents makes their evidence-bundle shards stale. The truncated `validate_evidence` and `validate_plan_graph` totals therefore rise from 665 to 759, and `pm-landing-check.py` stops on any rise in a truncated subcheck, whatever the kind. Its answer will be exit 2, even though every added row is `artifact_hash_stale`. The two new currentness-drift rows also print as blocking (see front 1). This is the same class the DL-068..DL-075 landing was pushed under by Jared's instruction; it needs that exception or a reseal first. **Reseal request for front 2:** `Plans/FinalGUISpec.md` (Spec Lock and evidence), `Plans/Decision_Log.md` (evidence), and a currentness edition for both.
+
+### Open items, front 2
+
+- **PM7 promotion.** `Concepts/PMConcept7.html` still reseeds until the pipeline's next authorized promotion of the whole current tail. Owner: the PM7 concept owner.
+- **The Home matrix browser run.** Owner: the PM7 concept owner, with the promotion campaign.
+- **The other 11 concepts, the four frozen bases and root `PM7.html`** still contain the old reseed code. They are separate artifacts; changing them needs their owners' decision.
+
+## Evidence
+
+`/mnt/Cursor/PuppetMaster-Evidence/storage-registry-repairs-20260923/`, manifest `MANIFEST.sha256` (51 files), SHA-256 `a5e68d098c82671608e79a05c0526d8a6e60e09f84f165c55e64f197da68cbf1`. It holds:
+- every before/after check output for both fronts;
+- both whole-suite runs (front 1's before/after and front 2's);
+- the census chain and disposition tables;
+- both scratch PM7 builds, with their reports and the diff between them.
