@@ -1,0 +1,124 @@
+{
+  "schema_note": "Packet-recommended reporting format (PM-ASSISTANT-CONTRACT-CLOSURE-2026-09-22-v1 REPAIR_BRIEF section 8); not a PM product schema.",
+  "task_identity": "assistant-contract-closure-2026-09-22",
+  "host": "Windows 11 (win32), Python 3.13.7, git-bash; worktree C:/Users/sitti/pm-worktrees/assistant-contract-closure-2026-09-22 (local disk, sparse cone Plans/scripts/reports/tests)",
+  "baseline_commit": "0fbcc50ef764f6bb13825665261790eb3ce4d711",
+  "final_commit": "159ca47a9f30a631eb9133245d2209b93609c21c",
+  "raw_log_store": "/mnt/Cursor/PuppetMaster-Evidence/tests/assistant-contract-closure-20260922/ (Windows UNC //TRUENAS/Cursor/PuppetMaster-Evidence/tests/assistant-contract-closure-20260922/); per-file SHA-256 manifest copied alongside as evidence_hashes_final.txt",
+  "worktree_normalization_note": "The autocrlf=true Windows checkout was CRLF; canonical generators hash raw bytes, so the worktree was normalized to LF (worktree-only; committed blobs unchanged; git diff --name-only remained content-scoped). An initial regeneration in the CRLF state rewrote 2897 derived files with CRLF-derived hashes and was reverted per the AGENTS stop-and-report rule before the clean regeneration.",
+  "baseline_runs": [
+    {
+      "command": "python scripts/pm-assistant-contract-check.py",
+      "tree": "baseline 0fbcc50 (CRLF worktree)",
+      "exit_code": 1,
+      "result": "status gaps_found; 18 errors, all pre-existing Browser event-admission items (successor_admission_not_valid preexisting_family_rows_changed + 17 event_not_admitted browser.* names pending registry admission). Zero errors on any cmd.bsd.* subject or the five storage records. All 10 cmd.bsd.* commands: catalogue rows present, wiring_rows==1, sole handler, touch_rows==1; cmd.bsd.set catalogue_rows==2 (UCC-145 canonical row + UCC-156 reconciled reuse listing, same request/result/handler).",
+      "log": "assistant_check_baseline.json",
+      "log_sha256": "c0ef4b864ca27a3916564f3e13ef211a35aec94fd76f0acf3fe8d5b19bc35f20"
+    },
+    {
+      "command": "python scripts/pm-implementation-readiness.py validate",
+      "tree": "baseline 0fbcc50 (CRLF worktree)",
+      "exit_code": 1,
+      "result": "135 failures: buildability_gate_report_stale_or_not_canonical + pnc019_source_hash_stale rows. 11 of these were CRLF-hash artifacts of the Windows worktree (they disappeared once the tree was LF-normalized); the remainder are pre-existing governance staleness pending the designated Plans agent reseal.",
+      "log": "readiness_baseline.json",
+      "log_sha256": "1090bb35ea40664de40c1333b0630928e3db575aae86a2bf0d932247e2b8bedb"
+    },
+    {
+      "command": "python scripts/pm-shared-runtime-command-contracts.py validate",
+      "tree": "baseline 0fbcc50",
+      "exit_code": 0,
+      "log": "baseline_shared_runtime_validate.json",
+      "log_sha256": "2f8cc25f4bce1a5586c079d921a48cb682831c7f251402c56a75365c770d93f9"
+    },
+    {
+      "command": "python scripts/pm-plans-verify.py validate-wiring-matrix",
+      "tree": "baseline 0fbcc50",
+      "exit_code": 0,
+      "log": "baseline_wiring_validate.log",
+      "log_sha256": "af2cb5013f4ebf3a73fd8766a4c90801bc818025b15ee1c1aacada9dd44eb57a"
+    },
+    {
+      "command": "python -m pytest tests/test_pm_onboarding_phases.py -q",
+      "tree": "baseline 0fbcc50",
+      "exit_code": 1,
+      "result": "1 failed, 41 passed. Pre-existing failure: test_existing_family_and_retention_census_is_unchanged pins len(families)==90 and prior==88 against a registry that has grown to 282 families through separately admitted waves. Unrelated to this packet's records; not fixed here (registry-wide census adjudication belongs to the storage-plan owner/SP-251 denominator governance).",
+      "log": "baseline_onboarding_test.log",
+      "log_sha256": "7f498853ec8e8426ce439e4e536aaea8ecd3664c9e9a9458a148dd7d93b06c1d"
+    }
+  ],
+  "final_runs": [
+    {
+      "command": "python scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+      "tree": "final 159ca47a (LF-normalized)",
+      "exit_code": 0,
+      "log": "final_shard_check2.log",
+      "log_sha256": "14ffd09fe64820008d788892d96c21c28f5b48d4e7e2b80fdc3e8027afab2f7b"
+    },
+    {
+      "command": "python scripts/pm-plan-index.py validate",
+      "tree": "final",
+      "exit_code": 0,
+      "log": "final_plan_index_validate2.log",
+      "log_sha256": "ac1ade3a21d3043d18cb889b426ce528311eadab78c4625eb6a4fffee8ca843f"
+    },
+    {
+      "command": "python scripts/pm-assistant-contract-check.py",
+      "tree": "final",
+      "exit_code": 1,
+      "result": "18 errors; error set byte-identical to baseline (verified by sorted comparison). No new error introduced by the branch; BSD subjects remain error-free.",
+      "log": "final_assistant_check2.json",
+      "log_sha256": "31e121ac4a8955d00e45bc869d7b242b2d131cb7b319b1e2965ade928366f7c8"
+    },
+    {
+      "command": "python scripts/pm-implementation-readiness.py validate",
+      "tree": "final",
+      "exit_code": 1,
+      "result": "124 failures vs 135 at baseline; set comparison: 0 NEW, unique GONE entries are pnc019_source_hash_stale rows for Progression_Gates.md and execution_unit_context.schema.json that were CRLF worktree artifacts in the baseline run. All remaining failures are pre-existing governance staleness (buildability report + pnc019 receipt hashes) pending the designated Plans agent reseal. buildability_gate_passed remains false.",
+      "log": "final_readiness.json",
+      "log_sha256": "e936fd61de29c8e070365d82ce6aabef4c3891498b0ca79dfce1425f4fe56a8c"
+    },
+    {
+      "command": "python scripts/pm-shared-runtime-command-contracts.py validate",
+      "tree": "final",
+      "exit_code": 0,
+      "log": "final_shared_rt2.json",
+      "log_sha256": "2f8cc25f4bce1a5586c079d921a48cb682831c7f251402c56a75365c770d93f9"
+    },
+    {
+      "command": "python scripts/pm-plans-verify.py validate-wiring-matrix",
+      "tree": "final",
+      "exit_code": 0,
+      "log": "final_wiring2.log",
+      "log_sha256": "35bc6c09654133bd923c5f18954d43286d9407b879c393d61dda84eef3b9ac57"
+    },
+    {
+      "command": "python -m pytest tests/test_pm_assistant_contract_closure.py tests/test_pm_plan_index.py tests/test_pm_governance_seal.py tests/test_pm_onboarding_phases.py -q",
+      "tree": "final",
+      "exit_code": 1,
+      "result": "99 passed, 3 failed. New closure suite 28/28 pass; test_pm_plan_index 18/18 pass (its two portability tests failed on Windows at baseline and pass after the DEP-01 fix). The 3 failures are pre-existing and unrelated to the branch change set: 2x test_pm_governance_seal (pm-governance-seal.py emits os.sep backslash paths in JSON output on Windows; script untouched by this branch) and 1x test_pm_onboarding_phases census 282!=90 (identical to baseline).",
+      "log": "final_pytest_all.log",
+      "log_sha256": "6021ce73329b48df15b5c4752c5c1e2f77c7fe9be6709991b8c744079e2dc596"
+    },
+    {
+      "command": "python scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json && python scripts/pm-plan-index.py generate",
+      "tree": "final (after LF normalization; regenerated twice, second run after the pm-plan-index.py portability fix)",
+      "exit_code": 0,
+      "result": "Deterministic derived set: Plans/.plan_index/{acceptance_units.jsonl,coverage_report.json,dependencies.json,doc_cards.json,node_readiness_report.json,plan_units.jsonl} changed with Assistant_Plan_Runtime-derived content only (span shifts +15 lines, doc sha/line_count, generated_at_utc). Plans/_shards/** byte-identical to origin/main (Assistant_Plan_Runtime.md is not in the sharding config). The first (CRLF-state) generate run touched 2897 files and was reverted wholesale.",
+      "log": "shard_generate2.log / plan_index_generate5.log",
+      "log_sha256": "40d2553c08ae354de067bb5142c38f2397f85d2c995c7b71011c1b475613db6d / 1f793d9d1199394eac9b0eb77a872201a22815a897a18b695a18dbdbde3353af"
+    },
+    {
+      "command": "python scripts/pm-landing-check.py --base origin/main",
+      "tree": "shared checkout P:/ at landing time (policy requires the full checkout; sparse worktree is refused with exit 3)",
+      "exit_code": null,
+      "result": "PENDING at report-write time; run during guarded landing and appended to this file's landing section in the final commit or reported in REPAIR_REPORT.md.",
+      "log": null,
+      "log_sha256": null
+    }
+  ],
+  "not_run": [
+    "python scripts/pm-plans-verify.py run-gates / audit-governance: repository-wide checks requiring the full (non-sparse) checkout; policy assigns them to the landing check in the shared checkout. The sparse worktree lacks Concepts/tests-full cone and would manufacture missing-file failures.",
+    "pm-plan-migration.py validate: same landing-check scope.",
+    "No Concepts, WorkNode, NodeSeed, queue, native, or runtime execution surface was touched or exercised."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "schema_note": "Packet-recommended reporting format (PM-ASSISTANT-CONTRACT-CLOSURE-2026-09-22-v1); not a PM product schema. Hashes are SHA-256 of final worktree bytes (LF canonical).",
+  "baseline_commit": "0fbcc50ef764f6bb13825665261790eb3ce4d711",
+  "final_commit": "159ca47a9f30a631eb9133245d2209b93609c21c",
+  "authored": [
+    {
+      "path": "Plans/Assistant_Plan_Runtime.md",
+      "reason": "ACC-ST-03 repair: QMAX-006 durable question record mapped per backend (Deep Plan ledger session records / BrainStorm QuestionBank frontier / regular-Plan QuestionnaireEnvelope records), projection vs policy vs durable records explicitly distinguished; additive prose only, no accepted semantic changed.",
+      "commit": "70b6b15aedeed0c761267305e7183265c2c1bd6c",
+      "sha256": "e8a8ba19888682d75e5fda2127747283d553a36da627a3fd379ed117b99d2469"
+    },
+    {
+      "path": "scripts/pm-plan-index.py",
+      "reason": "DEP-01 validator portability repair: portable_index_diagnostic strips the checkout root in POSIX/native/mixed/repr-escaped Windows spellings so regenerated derived canon never embeds machine-local absolute paths; Linux behavior unchanged (POSIX needle matched first); the script's two existing portability tests now pass on Windows.",
+      "commit": "b5d1f437ffacef7a06d8a0e10690aac1b4eb6b35",
+      "sha256": "7c57be5b0132ed23cb087e2c40938214f3a8dd19452a8c5650461e98740a4dc3"
+    },
+    {
+      "path": "tests/test_pm_assistant_contract_closure.py",
+      "reason": "New static contract-closure regression suite (28 tests): registry binding hygiene incl. NONE/payload_schema_ref negative controls, GoalPlanBinding chain + fixtures, five-finding closure pins, BSD event/effect boundary pins with negative duplicate-row and invented-event controls, truth-boundary guardrail. No runtime claim.",
+      "commit": "159ca47a9f30a631eb9133245d2209b93609c21c",
+      "sha256": "49306122c526f4f31c3fdb2ebb6b5ee56be8b8712e6a722bdc6686346691c87f"
+    },
+    {
+      "path": "tests/fixtures/assistant_contract_closure/payload_fixtures.json",
+      "reason": "Positive/negative payload fixtures: GoalPlanBinding (deep + regular null-bundle + storage envelope) and cmd.bsd.set request/result against the materialized shared-runtime $defs; 10 negatives each pinned to intended validator keyword/path.",
+      "commit": "159ca47a9f30a631eb9133245d2209b93609c21c",
+      "sha256": "c9c8ce44acd1d364abd003527b758ee756d246e0501eaa207d1a260a9d2b3d59"
+    },
+    {
+      "path": ".gitignore",
+      "reason": "Repository-mandated one-by-one whitelist registration for the new test file and fixture directory (4 added lines; tests are tracked only when named here).",
+      "commit": "159ca47a9f30a631eb9133245d2209b93609c21c",
+      "sha256": "b8258993283387d237806bccdbf95bbf8bd87df660be0046b8a85868ac56f0a3"
+    },
+    {
+      "path": "reports/assistant-contract-closure-2026-09-22/",
+      "reason": "Task handoff bundle: REPAIR_REPORT.md, repair_closure_matrix.jsonl, validator_results.json, changed_paths.json, UNVERIFIED.md (this directory; committed as the final scoped commit).",
+      "commit": "final report commit",
+      "sha256": "per-file, see below"
+    }
+  ],
+  "generated": [
+    {"path": "Plans/.plan_index/acceptance_units.jsonl", "reason": "regenerated from the APR edit (span shifts)", "sha256": "843d3122626101b6372edad1ae1830397a97b3fd9e4464fbf708ad2beb6bcfb6"},
+    {"path": "Plans/.plan_index/coverage_report.json", "reason": "regenerated (generated_at_utc only)", "sha256": "f599abdc3d6103254156259e5f3be1b6794973b44819a6c1c6a25b4d9c2ecefd"},
+    {"path": "Plans/.plan_index/dependencies.json", "reason": "regenerated (APR unit span shifts + generated_at_utc)", "sha256": "d6f981f662aea512bc4dcd6930bc2b12bf75753ec08ebe4bf365f6ae2fb1a1ba"},
+    {"path": "Plans/.plan_index/doc_cards.json", "reason": "regenerated (APR sha256/line_count + generated_at_utc)", "sha256": "e5bf1173f9c751fbb66129f8b180e8d30ac9544c5327ce1bb1d415b7394b49a8"},
+    {"path": "Plans/.plan_index/node_readiness_report.json", "reason": "regenerated (APR span shift + generated_at_utc; machine-local path leak removed by DEP-01 fix)", "sha256": "38ba122fad94f16170b6062b3ace7fa461693733da622583a476e518ab0a5190"},
+    {"path": "Plans/.plan_index/plan_units.jsonl", "reason": "regenerated (APR unit span shifts)", "sha256": "84697e07af4261ba5336b3230d9c89b7d75428db78946599d52a53996ea51507"}
+  ],
+  "explicitly_not_changed": [
+    "Plans/storage_value_registry.json (reported findings disproved from its actual content; no family or disposition added or removed; SP-251 denominator untouched)",
+    "Plans/_shards/** (byte-identical to origin/main; Assistant_Plan_Runtime.md is not in Plans/sharding_config.json)",
+    "Plans/Back_Seat_Driver.md, Plans/Wiring_Matrix.production.json, Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/shared_runtime_command_contracts.schema.json, Plans/shared_runtime_contracts.schema.json, Plans/touch_closure.json, Plans/event_family_registry.json (BSD boundary closed by evidence; no marker deleted or renamed)",
+    "Plans/Spec_Lock.json, Plans/.evidence/**, Plans/.implementation_readiness/**, reports/landing-checks/baseline.json (governance reseals and baseline refreshes remain with the designated Plans agent)",
+    "Concepts/** (untouched), no WorkNodes/NodeSeeds/queues, no native implementation"
+  ]
+}

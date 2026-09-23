@@ -1,0 +1,70 @@
+# REPAIR_REPORT — PM-ASSISTANT-CONTRACT-CLOSURE-2026-09-22-v1
+
+**Task identity:** `assistant-contract-closure-2026-09-22` (single identity; no collision suffix needed)
+**Repository:** sittingmongoose/Puppet-Master
+**Baseline (origin/main, pinned at start):** `0fbcc50ef764f6bb13825665261790eb3ce4d711` — the packet's historical review baseline and the live main tip at execution time were the same commit; main had not advanced, and nothing was reset.
+**Branch:** `fix/assistant-contract-closure-2026-09-22` (worktree `C:/Users/sitti/pm-worktrees/assistant-contract-closure-2026-09-22`, local disk, sparse cone Plans/scripts/reports/tests)
+**Final commit (repair set):** `159ca47a9f30a631eb9133245d2209b93609c21c`
+**Commits:** `b5d1f437ff` (scripts/pm-plan-index.py portability fix) → `70b6b15aed` (APR QMAX-006 mapping + regenerated `.plan_index`) → `159ca47a9f` (contract tests + fixtures + .gitignore whitelist) → report commit (this bundle).
+
+## 1. Scope actually exercised
+
+Read live `AGENTS.md`, `Plans/00-plans-index.md`, and the full owner/registry/contract set named by the packet. Parsed `Plans/storage_value_registry.json` (4,240,439 bytes, sha256 `426d27a8…1d8b`) with a real JSON parser — never a search index or connector snippet. Traced the five named records and the BSD boundary through their live owners, schema definitions, storage registration, command/wiring consumers, and existing validators. Two bounded read-only scouts performed the initial traces; one writer (this agent) made all edits; two bounded read-only reviewers re-inspected the final source (§6).
+
+## 2. Per-finding dispositions (full evidence in repair_closure_matrix.jsonl)
+
+| Finding | Record/effect | Disposition | Core evidence |
+|---|---|---|---|
+| ACC-ST-01 | PlanProgressProjection | **false_positive_with_evidence** | Registry contains no `payload_schema_ref` field and no `"NONE"` value anywhere (whole-file scans); record is a v4 rule-1 derived reconstructible cache (storage-plan L18925-18938) with owner-declared `pm.assistant_plan.progress_projection.v1` (APR PPROG-001..003; Contracts_V0 L21277); writers disabled pending adjudication (APR L879-881; CS-078 L6068). |
+| ACC-ST-02 | GoalPlanBinding | **already_fixed** | Registry `/families/151` `goal_plan_binding` materialized pre-baseline (SP-305), `value_schema_ref` → `goal_execution_binding_custody.schema.json#/$defs/StorageGoalPlanBinding` → seven-field `GoalPlanBinding` (nullable `planunit_bundle_ref` for Regular Plan); inline and external definitions agree; consumer `assistant_plan_cancel_custody.schema.json` L1890 references the same def; GRS L5412-5416 joint ownership. |
+| ACC-ST-03 | PlanningQuestionBudget | **repaired** | Reported NONE row not reproducible. Real bounded gap: QMAX-006 required one durable counter for "a Plan or Deep Plan run" and attributed the durable question record to Planning_Ledger_System, but PLS scopes its registry to Deep Plan sessions and regular Plans may not create sessions — regular-Plan durable charge record unmapped. Repaired with additive owner-prose mapping (APR L1007-1023): Deep Plan → PLS session question records; BrainStorm → `QuestionBank` (`pm.brainstorm.question_bank.v1`, CWR L372); regular Plan → durably admitted `QuestionnaireEnvelope` records (assistant-chat-design L589+); projection (`question_budget_projection.v1`) and policy (`question_budget_policy.v2`, seven registered Settings factory values 3/6/8, 10/15/20, +25) explicitly distinguished. Bases/totals/Grill semantics untouched; no new schema minted. |
+| ACC-ST-04 | ScheduledMessageProjection | **false_positive_with_evidence** | Projection = v4 rule-1 cache with owner-declared `pm.schedule.message_projection.v1` (SQR L699); durable schedule authority registered/materialized: registry `/families/158` `execution_schedule` → `StorageExecutionSchedule` → `pm.execution.schedule.v1` whose `target_kind` enum includes `scheduled_message`; snapshot record `pm.chat.scheduled_message_snapshot.v1` queued in CS-078 (L5983) with owner shape (SQR L387); scheduling≠dispatch, frozen attachments, race rules intact (SMSG-005..016). |
+| ACC-ST-05 | ToDoOutcomeRecord | **false_positive_with_evidence** | Name exists nowhere in live source (packet S3 anticipated this). Live outcome attribution = `pm.chat.todo_transition.v1` (TDR L570; `cause_kind: outcome_satisfied` receipt-gated), `pm.chat.todo_work_binding.v1` (L554), `pm.chat.todo_item.v2` (L520), TDG-015..016 item-level outcome/cause/evidence; all queued `required` in CS-078 (L5995-5997); tool success alone never completes; no `verifying` revival. |
+| ACC-BSD-01 | BSD event/effect authority | **false_positive_with_evidence** (deliberate receipt/projection-only design proven) | Exactly one production row `entries/catalog.bsd_set` (both UI producers named; duplicate merged 2026-09-04 citing the exactly-one-row rule); typed request/result resolve to materialized `shared_runtime_command_contracts.schema.json` `$defs/back_seat_driver_mode_set_request|result` (CAS `expected_policy_revision`, envelope replay/receipt/projection fields); durable receipt side: registry `/families/69` `bsd_runtime_record` materialized → `shared_runtime_contracts.schema.json#/$defs/bsd_runtime_record`, `canonical_non_rebuildable`, `backup_required`; `UNKNOWN_OPEN` denominator and `missing_event_registration` are active central policy (SIR L415-417; DRY DR-037; storage-plan SP-251 L18576-18580; BSD §19 L359-363; BSD-020 tokens), zero `bsd.*` families in `event_family_registry.json`, all rows `expected_event_types: []` machine-enforced; CS-078 future-file naming (`back_seat_driver_contracts.schema.json`) is a declared-not-materialized obligation ("Naming them here does not create them", L5956) — markers were not deleted, renamed, or filled with guesses; no BSD file changed. |
+| ACC-TRUTH-01 | Proof-boundary guardrail | **held (no defect)** | Buildability gate flags remain false; future companions (`assistant_plan_runtime_contracts.schema.json`, fixtures) still declared "required and do not exist yet" (APR L881) and verified absent; every CS-078 row keeps `handler_unavailable`; branch diff touches no readiness/handler/Concepts artifact. |
+| DEP-01 (admitted dependency) | `pm-plan-index.py` portable diagnostics on Windows | **repaired** | Regenerating derived canon on this Windows worktree embedded a machine-local absolute path into `node_readiness_report.json` (`portable_index_diagnostic` stripped only POSIX spelling; OSError text repr-escapes Windows backslashes). Fixed for all four spellings; Linux output unchanged (POSIX needle first); the script's own two portability tests went fail→pass on Windows. Also recorded: first regeneration in the CRLF checkout state touched 2897 derived files (CRLF-derived source hashes + 99 manifest `index_sha256` values); reverted per the AGENTS stop-and-report rule, worktree LF-normalized (worktree-only), clean regeneration produced the 6-file `.plan_index` derived set with APR-only content changes. |
+
+## 3. Actual changes (full list + hashes in changed_paths.json)
+
+Authored: `Plans/Assistant_Plan_Runtime.md` (QMAX-006 mapping paragraph, additive), `scripts/pm-plan-index.py` (portable_index_diagnostic), `tests/test_pm_assistant_contract_closure.py` (28 static tests), `tests/fixtures/assistant_contract_closure/payload_fixtures.json` (5 positive + 10 negative payloads), `.gitignore` (4 whitelist lines).
+Generated: six `Plans/.plan_index/*` files (APR-derived spans/hash/line-count + `generated_at_utc` only; verified line-by-line). `Plans/_shards/**` byte-identical to origin/main (APR is not in `Plans/sharding_config.json`). Nothing else changed: registry, wiring matrix, catalog, BSD/Commands/Contracts/storage-plan docs, touch closure, event registry, Spec Lock, evidence, readiness artifacts, Concepts — all untouched.
+
+## 4. Checks (commands, exit codes, logs in validator_results.json; raw logs + SHA-256 in the external evidence store)
+
+| Check | Baseline | Final | Attribution |
+|---|---|---|---|
+| `pm-shard-plans.py --check` | — | **0** | pass |
+| `pm-plan-index.py validate` | — | **0** | pass |
+| `pm-shared-runtime-command-contracts.py validate` (one-row-per-command) | **0** | **0** | pass |
+| `pm-plans-verify.py validate-wiring-matrix` | **0** | **0** | pass |
+| `pm-assistant-contract-check.py` | **1** (18 errors) | **1** (18 errors, set identical) | pre-existing Browser event-admission gap; zero BSD/record errors |
+| `pm-implementation-readiness.py validate` | **1** (135 failures) | **1** (124 failures, **0 new**) | pre-existing governance staleness pending designated reseal; 11 baseline entries were CRLF worktree artifacts |
+| `pytest` closure suite | — | **28/28 pass** | new |
+| `pytest tests/test_pm_plan_index.py` | 16/18 on Windows | **18/18** | DEP-01 fixed its two Windows failures |
+| `pytest tests/test_pm_governance_seal.py` | 2 Windows failures | 2 Windows failures | pre-existing host-portability in untouched sealing script |
+| `pytest tests/test_pm_onboarding_phases.py` | 1F/41P (census 282≠90) | 1F/41P identical | pre-existing stale census pin, registry-wide governance scope |
+
+Negative fixtures fail for their intended defect (validator keyword + JSON path asserted per fixture: `required`/`oneOf`/`pattern`/`minimum`/`additionalProperties`/`enum`/`type`/`anyOf`), not for unrelated syntax (D02). Schema/contract proof is distinguished from runtime proof everywhere; no fixture claims atomicity, restart, or dispatch behavior.
+
+## 5. Semantic protections verified preserved
+
+Simple Goals; lightweight Plan vs ledger-backed Deep Plan (regular Plan gained no ledger/PlanUnit requirement — the mapping states regular Plans create no session); To-Do/PlanUnit reuse by identity; atomic Goal+PlanRun+binding; bases 3/6/8 and 10/15/20 with Grill +25 (totals 28/31/33, 35/40/45 pinned by test against Settings defaults and the QMAX-001 block); approved immutable Plan content; accurate To-Do outcomes (receipt-gated completion pinned); scheduling identity (schedule vs dispatched message, frozen attachments); read-only non-gating BSD (`primary_run_mutated:false`, `authority_granted:false`, no local checkbox truth, one production row, both producers). No native handlers, no Concepts edits, no WorkNodes/NodeSeeds/queues, no old-packet reapplication, no runtime-readiness claim, no blanket NONE replacement (no NONE existed), no parallel schema.
+
+## 6. Independent review
+
+Two read-only specialists (StorageReview: storage/schema closure S01-S07 + record-specific rows; BsdReview: BSD effect closure B01-B08 + D07/ACC-TRUTH-01) inspected the final source and the branch diff with the acceptance criteria before this narrative. REVIEW_RESULTS_PLACEHOLDER
+
+## 7. Verdicts (separate dimensions — a pass in one is not evidence for another)
+
+- **Specification closure:** CLOSED for the seven packet findings — ACC-ST-03 and DEP-01 repaired; ACC-ST-01/02/04/05 and ACC-BSD-01 disproved or already-fixed with exact live-owner evidence; ACC-TRUTH-01 guardrail held. No in-scope binding/effect defect remains open.
+- **Targeted contract checks:** PASS (final-tree battery above; new suite 28/28; checker/validator exits match or improve on baseline with zero new failures).
+- **Independent review:** see §6 (same-harness read-only specialists; disclosed limitation, not human certification).
+- **Regression/scope:** PASS — derived set APR-only; `_shards` untouched; pre-existing failures documented, none fixed or masked; unrelated files uncommitted.
+- **Branch/main publication:** branch pushed to origin (GitHub + TrueNAS push URLs) at `159ca47a9f…`; guarded landing per AGENTS executed after this report commit — outcome recorded in §8.
+- **Global governance seal:** PENDING — designated Plans agent must reseal (APR Spec Lock/evidence/readiness staleness is the expected consequence of this canon edit; `pm-implementation-readiness.py validate` staleness failures predate the branch).
+- **Native runtime proof:** NOT ASSESSED — explicitly out of scope; see UNVERIFIED.md §1.
+
+## 8. Publication and landing record
+
+- Branch publication: `origin/fix/assistant-contract-closure-2026-09-22` at `159ca47a9f30a631eb9133245d2209b93609c21c` (pushed 2026-09-23, GitHub and TrueNAS remotes confirmed).
+- Shared-checkout conflict scan at landing: LANDING_RECORD_PLACEHOLDER
