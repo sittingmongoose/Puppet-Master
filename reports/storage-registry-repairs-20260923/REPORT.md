@@ -326,13 +326,14 @@ Cost: one session; no model calls beyond this agent; monetary attribution unavai
 
 ## Front 2: DL-070 follow-ups
 
-Branch `plans/dl070-followups-20260923`. It is stacked on front 1's tip `0540f4bd03`, so this report continues in one file, and it lands after front 1. It shares front 1's worktree: the VM disk had about 600 MB free, not enough for a second worktree. `Concepts/pm7-tools`, `Concepts/settings-redesign-concepts/kimi-k3-polish` and `Concepts/pm6-build/checks` were added to the sparse set for the PM7 build.
+Branch `plans/dl070-followups-20260923`. It is stacked on front 1's tip `b43afadca2`, so this report continues in one file, and it lands after front 1. On 2026-09-23 it was rebased from `0540f4bd03` onto front 1's blind-review fixes. Its authored files are byte-identical to the pre-rebase tip `2f4f3f9f6d`. Only the derived index files conflicted, and they were regenerated, not merged. The branch was pushed with `--force-with-lease` pinned to `2f4f3f9f6d`. It shares front 1's worktree: the VM disk had about 600 MB free, not enough for a second worktree. `Concepts/pm7-tools`, `Concepts/settings-redesign-concepts/kimi-k3-polish` and `Concepts/pm6-build/checks` were added to the sparse set for the PM7 build.
 
 | Commit | What |
 |---|---|
-| `03e978c54a` | `Plans/FinalGUISpec.md`: dated DL-070 follow-up amendment retiring `source_reseeded`. `Plans/Decision_Log.md`: dated addendum under DL-070's Entries record closing both follow-ups. FinalGUISpec and Decision_Log shards and the plan index regenerated. |
-| `2e75664a00` | `Concepts/pm7-tools/home_workspace_source.py`: the move no longer reseeds. `Concepts/pm7-tools/verify/home_workspace_matrix.mjs`: DL-070 expectations. |
-| this commit | This section. |
+| `11a82b0e9e` (was `03e978c54a`) | `Plans/FinalGUISpec.md`: dated DL-070 follow-up amendment retiring `source_reseeded`. `Plans/Decision_Log.md`: dated addendum under DL-070's Entries record closing both follow-ups. FinalGUISpec and Decision_Log shards and the plan index regenerated. |
+| `efdb201816` (was `2e75664a00`) | `Concepts/pm7-tools/home_workspace_source.py`: the move no longer reseeds. `Concepts/pm7-tools/verify/home_workspace_matrix.mjs`: DL-070 expectations. |
+| `6fdc02b17f` (was `2f4f3f9f6d`) | This section, first version. |
+| this commit | This section, re-measured after the rebase. |
 
 ### `source_reseeded`: every occurrence on `main`
 
@@ -386,7 +387,9 @@ The comment in `terminal_four_section_four_pane_caps_and_identity` is updated to
 | `verify-spec-lock` | 6 | 7 (+`Plans/FinalGUISpec.md` `stale_hash`) |
 | `validate-evidence` / `validate-plan-graph` | 665 / 665 | **759 / 759** (+94 `artifact_hash_stale`: 82 FinalGUISpec shards, 10 Decision_Log shards, and the two documents) |
 | Two named test modules | 26 run, 0 fail | 26 run, 0 fail |
-| Whole tracked suite | 904 run, 5 fail, 3 errors | 904 run, 5 fail, **0 errors** (the `Concepts/pm7-tools` cone resolves the three touch-closure errors) |
+| Whole tracked suite | 904 run, 5 fail, 0 errors (at `af7b2aa2fb`) | 904 run, 5 fail, 0 errors |
+
+Every "Front 2 tip" value was re-measured after the rebase, at `6fdc02b17f`; none changed. Regenerating shards and the index at the rebased tip changes only generation timestamps. The two scratch PM7 builds below were not repeated: front 1's review fixes touch no file the PM7 pipeline reads.
 
 **Landing expectation for front 2.** Editing two resealed canon documents makes their evidence-bundle shards stale. The truncated `validate_evidence` and `validate_plan_graph` totals therefore rise from 665 to 759, and `pm-landing-check.py` stops on any rise in a truncated subcheck, whatever the kind. Its answer will be exit 2, even though every added row is `artifact_hash_stale`. The two new currentness-drift rows also print as blocking (see front 1). This is the same class the DL-068..DL-075 landing was pushed under by Jared's instruction; it needs that exception or a reseal first. **Reseal request for front 2:** `Plans/FinalGUISpec.md` (Spec Lock and evidence), `Plans/Decision_Log.md` (evidence), and a currentness edition for both.
 
@@ -398,8 +401,8 @@ The comment in `terminal_four_section_four_pane_caps_and_identity` is updated to
 
 ## Evidence
 
-`/mnt/Cursor/PuppetMaster-Evidence/storage-registry-repairs-20260923/`, manifest `MANIFEST.sha256` (51 files), SHA-256 `a5e68d098c82671608e79a05c0526d8a6e60e09f84f165c55e64f197da68cbf1`. It holds:
-- every before/after check output for both fronts;
+`/mnt/Cursor/PuppetMaster-Evidence/storage-registry-repairs-20260923/`. Each stage has its own manifest, so no citation goes stale: `MANIFEST-initial.sha256` (51 files, SHA-256 `a5e68d098c82671608e79a05c0526d8a6e60e09f84f165c55e64f197da68cbf1`, as first cited), `MANIFEST-front1-review.sha256` (66 files, `8e8ddb45f9583d642e9cc60d6690b4dd3887297a264cdb5c64894426af96ffb0`), and `MANIFEST-front2-rebased.sha256` (81 files, `33089a12198c884e2583129a6d9b65a48c1e18827333f4f6ccad2e313ac3ae2f`). `MANIFEST.sha256` is a copy of the latest stage. The evidence holds:
+- every before/after check output for both fronts, including the re-measurements after the review fixes (`front1/after-review/`) and after the rebase (`front2-rebased/`);
 - both whole-suite runs (front 1's before/after and front 2's);
 - the census chain and disposition tables;
 - both scratch PM7 builds, with their reports and the diff between them.
