@@ -1,0 +1,1774 @@
+{
+ "schema_id": "pm.governance.reseal_attestation.v1",
+ "previous_seal_commit": "fcd2bb25f411b19c4e00bf463f9ce3e190ed225d",
+ "reseal_base_commit": "2da97421a1805950a7533abfa2d7cbe5df33637a",
+ "locked_file_count": 94,
+ "changed_since_previous_seal": 35,
+ "files": [
+  {
+   "path": "Plans/.implementation_readiness/buildability_gate_report.json",
+   "hash_at_previous_seal": "35ad65d32b35a5ef01b534b86ad51e86ceac26159e8e8f230bf95d996083d6e3",
+   "hash_at_reseal": "f547abef9d69523b1904c386218447e526b203981a427ff95d4bc03a9e0808f9",
+   "commits": [
+    {
+     "commit": "3d391fd297",
+     "date": "2026-09-23",
+     "subject": "plans: record Jared-approved Step 8 comparison checkpoint 2026-09-11.2 (42 families, registry 0be54418) - helper literals and provenance only, test pins 40->42, regenerated readiness projections, receipt and response"
+    },
+    {
+     "commit": "c423c3890d",
+     "date": "2026-09-11",
+     "subject": "Carry PNC-019 baseline approval to registry 2026-09-11.1"
+    },
+    {
+     "commit": "49e339c2de",
+     "date": "2026-09-11",
+     "subject": "Record DL-039 approved Event Authority checkpoint in PNC-019 readiness"
+    }
+   ]
+  },
+  {
+   "path": "Plans/00-plans-index.md",
+   "hash_at_previous_seal": "24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929",
+   "hash_at_reseal": "9d2dc958e29dc27845ebb1233b5d3c85294758e6e1e7ab479db11ed9556c732b",
+   "commits": [
+    {
+     "commit": "2da97421a1",
+     "date": "2026-09-23",
+     "subject": "plans: record Jared's eight Event Authority card answers as DL-068..DL-075 with the owner edits each authorizes (quarantine disposal boundary, SafePoint summary anchor, terminal move leaves section empty, account_switch_event vocabulary, two transient-diagnostic boundaries, task.failed notification, runtime-artifact indefinite retention); regenerate shards and index"
+    },
+    {
+     "commit": "f6350caf27",
+     "date": "2026-09-21",
+     "subject": "plans: integrate complete certified event source family and reviewed realms"
+    },
+    {
+     "commit": "0f57dbf608",
+     "date": "2026-09-21",
+     "subject": "plans: add original certified Workflow source contracts and reviewed evidence"
+    },
+    {
+     "commit": "d108ef5336",
+     "date": "2026-09-18",
+     "subject": "plans: apply the cycle-2 blind review fixes to the compile repair"
+    },
+    {
+     "commit": "3c54bede66",
+     "date": "2026-09-17",
+     "subject": "plans: register External Research as the owner of the research capability"
+    },
+    {
+     "commit": "2a92905501",
+     "date": "2026-09-17",
+     "subject": "plans: drop stale script-owned literal counts from canon and route workflow attention to Actions & Pipelines"
+    },
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    },
+    {
+     "commit": "63bff67fb4",
+     "date": "2026-09-10",
+     "subject": "Checkpoint paused thread work and move raw evidence out of the product repository"
+    },
+    {
+     "commit": "f256e8427e",
+     "date": "2026-09-08",
+     "subject": "Refresh every Settings manager of TestPMConcept through the T50 lane and amend the Plans"
+    },
+    {
+     "commit": "500b247d00",
+     "date": "2026-09-08",
+     "subject": "Reconcile reference-layout supersession and add 5.6 Pro Chat Room batch 6"
+    },
+    {
+     "commit": "6d54e0e3ba",
+     "date": "2026-09-07",
+     "subject": "Materialize Guided Tour v3 contracts and ship concept batch 3 / Astra onboarding"
+    }
+   ]
+  },
+  {
+   "path": "Plans/Automated_Testing_System.md",
+   "hash_at_previous_seal": "92a37e73a67b4a820fc5be5ef5b1033682608005a6cf09da37b46ab2455ba2e7",
+   "hash_at_reseal": "8c6415acf4cc3d87c760cc8c2f15fd124ffa45b509d7c37d10a3a7f9f795298a",
+   "commits": [
+    {
+     "commit": "f6350caf27",
+     "date": "2026-09-21",
+     "subject": "plans: integrate complete certified event source family and reviewed realms"
+    },
+    {
+     "commit": "0f57dbf608",
+     "date": "2026-09-21",
+     "subject": "plans: add original certified Workflow source contracts and reviewed evidence"
+    },
+    {
+     "commit": "70b9f8bef5",
+     "date": "2026-09-18",
+     "subject": "plans: apply Jared's nine answers of 2026-09-18 to the two repaired compiles"
+    },
+    {
+     "commit": "0d9ba9ffc4",
+     "date": "2026-09-18",
+     "subject": "plans: repair the External Research findings the blind reviews confirmed, and record the rest"
+    },
+    {
+     "commit": "3dd777a8fc",
+     "date": "2026-09-17",
+     "subject": "plans: repair the External Research compile's orphaned registries and unregistered tokens"
+    },
+    {
+     "commit": "f81c547ab0",
+     "date": "2026-09-17",
+     "subject": "plans: fold the reviewer's copy-edit into the rebase onto the landed corrections"
+    },
+    {
+     "commit": "6ca8d64a32",
+     "date": "2026-09-17",
+     "subject": "plans: apply the independent review of goal 3 (six should-fix items and two notes)"
+    },
+    {
+     "commit": "ca7d5f4ff6",
+     "date": "2026-09-17",
+     "subject": "plans: add External Research contracts, fixtures and their gate registration"
+    },
+    {
+     "commit": "2a92905501",
+     "date": "2026-09-17",
+     "subject": "plans: drop stale script-owned literal counts from canon and route workflow attention to Actions & Pipelines"
+    },
+    {
+     "commit": "c508ae639d",
+     "date": "2026-09-16",
+     "subject": "plans: drop the stale corpus census from ATS-041 and align DL-050 wording"
+    },
+    {
+     "commit": "11d08ce436",
+     "date": "2026-09-16",
+     "subject": "plans: route assistant hosted-repo requests by the selected forge adapter"
+    },
+    {
+     "commit": "a3ac15f22f",
+     "date": "2026-09-14",
+     "subject": "plans: define original Workflow activation and native materialization custody"
+    },
+    {
+     "commit": "ced70178c2",
+     "date": "2026-09-13",
+     "subject": "plans: define original bound Plan cancellation and runtime retirement"
+    },
+    {
+     "commit": "274c681e43",
+     "date": "2026-09-13",
+     "subject": "plans: enforce current Workflow child-Goal retirement at certification admission"
+    },
+    {
+     "commit": "1136661ddc",
+     "date": "2026-09-13",
+     "subject": "Define current Goal cancellation and original execution binding contracts"
+    },
+    {
+     "commit": "6a6c24bfa7",
+     "date": "2026-09-12",
+     "subject": "Define individual historical contracts for four Goal events"
+    },
+    {
+     "commit": "9bd40d7907",
+     "date": "2026-09-12",
+     "subject": "plans: adopt shared authority for historical Goal readers and preserve refusal state"
+    },
+    {
+     "commit": "5fc9747b6f",
+     "date": "2026-09-12",
+     "subject": "Specify Goal objective update custody, schemas and validation"
+    },
+    {
+     "commit": "3890d86c70",
+     "date": "2026-09-12",
+     "subject": "plans: define original Goal start command custody and v3 event"
+    },
+    {
+     "commit": "38e37d11a0",
+     "date": "2026-09-12",
+     "subject": "plans: define integrity wire findings and passive history custody"
+    },
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    },
+    {
+     "commit": "b240dd93e2",
+     "date": "2026-09-11",
+     "subject": "plans: register compaction completion with explicit replay and retention contract"
+    },
+    {
+     "commit": "84070fd6f5",
+     "date": "2026-09-10",
+     "subject": "Repair assistant contracts and packet audit custody tooling"
+    },
+    {
+     "commit": "b027f3b0e1",
+     "date": "2026-09-09",
+     "subject": "plans: protect terminal input from users and agents"
+    },
+    {
+     "commit": "7ba82a6fc4",
+     "date": "2026-09-09",
+     "subject": "plans: compile accepted terminal capabilities and remote ownership evaluation"
+    },
+    {
+     "commit": "9b96beb0fc",
+     "date": "2026-09-09",
+     "subject": "Refresh Plans shards and prune superseded Concepts prototypes"
+    },
+    {
+     "commit": "f256e8427e",
+     "date": "2026-09-08",
+     "subject": "Refresh every Settings manager of TestPMConcept through the T50 lane and amend the Plans"
+    },
+    {
+     "commit": "6d54e0e3ba",
+     "date": "2026-09-07",
+     "subject": "Materialize Guided Tour v3 contracts and ship concept batch 3 / Astra onboarding"
+    }
+   ]
+  },
+  {
+   "path": "Plans/Bootstrap_Planning_Migration.md",
+   "hash_at_previous_seal": "d8fb28074b82828d9c400f66cc85c303aea28448e4bb556bcba6bb566008eea1",
+   "hash_at_reseal": "2ce889933b04cdce0510d5d7577292bb7de5c3d0db194980d937b48d01b8230e",
+   "commits": [
+    {
+     "commit": "d09377d4eb",
+     "date": "2026-09-18",
+     "subject": "plans: record DL-066 bounded seal acceptance and DL-067 landing baseline rules"
+    },
+    {
+     "commit": "289983decc",
+     "date": "2026-09-18",
+     "subject": "landing check: Jared's seven answers of 2026-09-18, and the review's four should-fix items"
+    },
+    {
+     "commit": "3620f216da",
+     "date": "2026-09-17",
+     "subject": "plans: stale governance hashes for a branch's own edited documents never stop a landing; they are reported with a reseal request"
+    },
+    {
+     "commit": "0f1228974a",
+     "date": "2026-09-17",
+     "subject": "plans: keep the migration snapshot out of the shared checkout at landing; three read-only checks land, four run nightly"
+    },
+    {
+     "commit": "0387eb6b9b",
+     "date": "2026-09-17",
+     "subject": "plans: record the plan-layer seal decision and put the repository gates at landing"
+    }
+   ]
+  },
+  {
+   "path": "Plans/Commands_System.md",
+   "hash_at_previous_seal": "6e7b77143dd54fd94efbff335b9f142d72b3a6ca74578fe3fa0103bd9adcd93a",
+   "hash_at_reseal": "7b049569c0eb5a055014ab53fdd15a2bc7d3a74cb2b2200d480b7aae164d7f04",
+   "commits": [
+    {
+     "commit": "5fc9747b6f",
+     "date": "2026-09-12",
+     "subject": "Specify Goal objective update custody, schemas and validation"
+    },
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    },
+    {
+     "commit": "63bff67fb4",
+     "date": "2026-09-10",
+     "subject": "Checkpoint paused thread work and move raw evidence out of the product repository"
+    },
+    {
+     "commit": "6d54e0e3ba",
+     "date": "2026-09-07",
+     "subject": "Materialize Guided Tour v3 contracts and ship concept batch 3 / Astra onboarding"
+    }
+   ]
+  },
+  {
+   "path": "Plans/Contracts_V0.md",
+   "hash_at_previous_seal": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+   "hash_at_reseal": "9753361f6702fae3b897aa0d1791de664b1f4f0cac04959935ca948fe721862d",
+   "commits": [
+    {
+     "commit": "f6350caf27",
+     "date": "2026-09-21",
+     "subject": "plans: integrate complete certified event source family and reviewed realms"
+    },
+    {
+     "commit": "0f57dbf608",
+     "date": "2026-09-21",
+     "subject": "plans: add original certified Workflow source contracts and reviewed evidence"
+    },
+    {
+     "commit": "a3ac15f22f",
+     "date": "2026-09-14",
+     "subject": "plans: define original Workflow activation and native materialization custody"
+    },
+    {
+     "commit": "ced70178c2",
+     "date": "2026-09-13",
+     "subject": "plans: define original bound Plan cancellation and runtime retirement"
+    },
+    {
+     "commit": "274c681e43",
+     "date": "2026-09-13",
+     "subject": "plans: enforce current Workflow child-Goal retirement at certification admission"
+    },
+    {
+     "commit": "1136661ddc",
+     "date": "2026-09-13",
+     "subject": "Define current Goal cancellation and original execution binding contracts"
+    },
+    {
+     "commit": "6a6c24bfa7",
+     "date": "2026-09-12",
+     "subject": "Define individual historical contracts for four Goal events"
+    },
+    {
+     "commit": "bc66595334",
+     "date": "2026-09-12",
+     "subject": "Define active Goal update consumers and retained audit replay"
+    },
+    {
+     "commit": "9bd40d7907",
+     "date": "2026-09-12",
+     "subject": "plans: adopt shared authority for historical Goal readers and preserve refusal state"
+    },
+    {
+     "commit": "6df1db15e8",
+     "date": "2026-09-12",
+     "subject": "Reconcile registered event receipt and consumer contracts"
+    },
+    {
+     "commit": "5fc9747b6f",
+     "date": "2026-09-12",
+     "subject": "Specify Goal objective update custody, schemas and validation"
+    },
+    {
+     "commit": "3890d86c70",
+     "date": "2026-09-12",
+     "subject": "plans: define original Goal start command custody and v3 event"
+    },
+    {
+     "commit": "679e066a2a",
+     "date": "2026-09-12",
+     "subject": "Define original Standard certification custody and exact receipt roles"
+    },
+    {
+     "commit": "59335a3435",
+     "date": "2026-09-12",
+     "subject": "plans: bind first receipts to original full event values"
+    },
+    {
+     "commit": "06ad4268ab",
+     "date": "2026-09-12",
+     "subject": "plans: define exact SeglogFrameV2 bytes and canonical codec"
+    },
+    {
+     "commit": "640d494d01",
+     "date": "2026-09-12",
+     "subject": "Plans: define durable first append receipt custody and recovery gates"
+    },
+    {
+     "commit": "fd12aebd90",
+     "date": "2026-09-11",
+     "subject": "Qualify three retired Goal events and historical read contracts"
+    },
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    },
+    {
+     "commit": "50f3d42397",
+     "date": "2026-09-11",
+     "subject": "Compile DL-043 Jujutsu answers into 42 reviewed owner PlanUnits"
+    },
+    {
+     "commit": "bf898b1608",
+     "date": "2026-09-11",
+     "subject": "Apply approved Settings event identity and historical To-Do mapping"
+    },
+    {
+     "commit": "b240dd93e2",
+     "date": "2026-09-11",
+     "subject": "plans: register compaction completion with explicit replay and retention contract"
+    },
+    {
+     "commit": "e27b35cf42",
+     "date": "2026-09-09",
+     "subject": "plans: define research decision cards and durable review flow"
+    }
+   ]
+  },
+  {
+   "path": "Plans/Crosswalk.md",
+   "hash_at_previous_seal": "9ec60383b4d1dbbf8296abf0656249a24639590f6a26edd22c6600871284974c",
+   "hash_at_reseal": "79b617d2d88be5533b0667255de5dc9644d0912f8aee855400e2c63302d46699",
+   "commits": [
+    {
+     "commit": "2a92905501",
+     "date": "2026-09-17",
+     "subject": "plans: drop stale script-owned literal counts from canon and route workflow attention to Actions & Pipelines"
+    },
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    }
+   ]
+  },
+  {
+   "path": "Plans/Executor_Protocol.md",
+   "hash_at_previous_seal": "83949ad194756c4c2addb257dade79c089dc9f1bb3ce21bd36fced9b192382e5",
+   "hash_at_reseal": "53125b0e45132356d0d316a172676cde8e6737c78c43012c9713e34fcd303c89",
+   "commits": [
+    {
+     "commit": "f6350caf27",
+     "date": "2026-09-21",
+     "subject": "plans: integrate complete certified event source family and reviewed realms"
+    },
+    {
+     "commit": "0f57dbf608",
+     "date": "2026-09-21",
+     "subject": "plans: add original certified Workflow source contracts and reviewed evidence"
+    },
+    {
+     "commit": "a3c511657f",
+     "date": "2026-09-14",
+     "subject": "plans: adopt original Workflow cancelled v3 event consumer and checkpoint"
+    },
+    {
+     "commit": "e686963ad5",
+     "date": "2026-09-14",
+     "subject": "plans: adopt original Workflow started v3 event consumer and checkpoint"
+    },
+    {
+     "commit": "953634d128",
+     "date": "2026-09-14",
+     "subject": "plans: define original Workflow start and bounded cancellation custody"
+    },
+    {
+     "commit": "a3ac15f22f",
+     "date": "2026-09-14",
+     "subject": "plans: define original Workflow activation and native materialization custody"
+    },
+    {
+     "commit": "6df1db15e8",
+     "date": "2026-09-12",
+     "subject": "Reconcile registered event receipt and consumer contracts"
+    },
+    {
+     "commit": "38d896d3f0",
+     "date": "2026-09-11",
+     "subject": "Adopt versioned run-start and restore-created index checkpoints"
+    },
+    {
+     "commit": "af6856d039",
+     "date": "2026-09-11",
+     "subject": "Define run.started consumer and checkpoint contract depth"
+    }
+   ]
+  },
+  {
+   "path": "Plans/FinalGUISpec.md",
+   "hash_at_previous_seal": "de01270457309bc0af0549ee36044cb936b0cbef429251fb6bddb5c412a5d0c8",
+   "hash_at_reseal": "29e9dee98e8af052e6a59420e02f11456ba87404b67397156dce58f31adae48f",
+   "commits": [
+    {
+     "commit": "2da97421a1",
+     "date": "2026-09-23",
+     "subject": "plans: record Jared's eight Event Authority card answers as DL-068..DL-075 with the owner edits each authorizes (quarantine disposal boundary, SafePoint summary anchor, terminal move leaves section empty, account_switch_event vocabulary, two transient-diagnostic boundaries, task.failed notification, runtime-artifact indefinite retention); regenerate shards and index"
+    },
+    {
+     "commit": "d9edb71fa3",
+     "date": "2026-09-18",
+     "subject": "review cycle 1: apply all 14 blind-review findings as one fix commit"
+    },
+    {
+     "commit": "21728bd695",
+     "date": "2026-09-18",
+     "subject": "DL-059 to DL-065: the seven Azure decision-card answers of 2026-09-18, in both sections"
+    },
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    },
+    {
+     "commit": "50f3d42397",
+     "date": "2026-09-11",
+     "subject": "Compile DL-043 Jujutsu answers into 42 reviewed owner PlanUnits"
+    },
+    {
+     "commit": "b240dd93e2",
+     "date": "2026-09-11",
+     "subject": "plans: register compaction completion with explicit replay and retention contract"
+    },
+    {
+     "commit": "63bff67fb4",
+     "date": "2026-09-10",
+     "subject": "Checkpoint paused thread work and move raw evidence out of the product repository"
+    },
+    {
+     "commit": "b027f3b0e1",
+     "date": "2026-09-09",
+     "subject": "plans: protect terminal input from users and agents"
+    },
+    {
+     "commit": "e27b35cf42",
+     "date": "2026-09-09",
+     "subject": "plans: define research decision cards and durable review flow"
+    },
+    {
+     "commit": "7ba82a6fc4",
+     "date": "2026-09-09",
+     "subject": "plans: compile accepted terminal capabilities and remote ownership evaluation"
+    },
+    {
+     "commit": "f256e8427e",
+     "date": "2026-09-08",
+     "subject": "Refresh every Settings manager of TestPMConcept through the T50 lane and amend the Plans"
+    },
+    {
+     "commit": "500b247d00",
+     "date": "2026-09-08",
+     "subject": "Reconcile reference-layout supersession and add 5.6 Pro Chat Room batch 6"
+    },
+    {
+     "commit": "6d54e0e3ba",
+     "date": "2026-09-07",
+     "subject": "Materialize Guided Tour v3 contracts and ship concept batch 3 / Astra onboarding"
+    }
+   ]
+  },
+  {
+   "path": "Plans/Glossary.md",
+   "hash_at_previous_seal": "94a7c04cf2f59015b4cf11c204410386c7ebb13266903d43af3af2a3ebb67826",
+   "hash_at_reseal": "e4f403a703b8eb7f7ec5fdfc9d3dfebb9926516d99db63680707332d954b1663",
+   "commits": [
+    {
+     "commit": "d108ef5336",
+     "date": "2026-09-18",
+     "subject": "plans: apply the cycle-2 blind review fixes to the compile repair"
+    },
+    {
+     "commit": "6ca8d64a32",
+     "date": "2026-09-17",
+     "subject": "plans: apply the independent review of goal 3 (six should-fix items and two notes)"
+    }
+   ]
+  },
+  {
+   "path": "Plans/Goal_Runtime_System.md",
+   "hash_at_previous_seal": "739e3f3675e4b7fc1c2475b6351a80d34571df977313bf76f50de122685f1c07",
+   "hash_at_reseal": "ccedade9fde5fdf69f10fca4fb7d67eec1869e2d52364f010f95e80c06dcd863",
+   "commits": [
+    {
+     "commit": "f6350caf27",
+     "date": "2026-09-21",
+     "subject": "plans: integrate complete certified event source family and reviewed realms"
+    },
+    {
+     "commit": "0f57dbf608",
+     "date": "2026-09-21",
+     "subject": "plans: add original certified Workflow source contracts and reviewed evidence"
+    },
+    {
+     "commit": "f8ace334f4",
+     "date": "2026-09-14",
+     "subject": "plans: define read-only current Workflow cancellation inspector v2"
+    },
+    {
+     "commit": "a3c511657f",
+     "date": "2026-09-14",
+     "subject": "plans: adopt original Workflow cancelled v3 event consumer and checkpoint"
+    },
+    {
+     "commit": "e686963ad5",
+     "date": "2026-09-14",
+     "subject": "plans: adopt original Workflow started v3 event consumer and checkpoint"
+    },
+    {
+     "commit": "de87b6dfc3",
+     "date": "2026-09-14",
+     "subject": "plans: define original Workflow Goal cancellation coordination and storage profiles"
+    },
+    {
+     "commit": "a3ac15f22f",
+     "date": "2026-09-14",
+     "subject": "plans: define original Workflow activation and native materialization custody"
+    },
+    {
+     "commit": "ced70178c2",
+     "date": "2026-09-13",
+     "subject": "plans: define original bound Plan cancellation and runtime retirement"
+    },
+    {
+     "commit": "274c681e43",
+     "date": "2026-09-13",
+     "subject": "plans: enforce current Workflow child-Goal retirement at certification admission"
+    },
+    {
+     "commit": "1136661ddc",
+     "date": "2026-09-13",
+     "subject": "Define current Goal cancellation and original execution binding contracts"
+    },
+    {
+     "commit": "6a6c24bfa7",
+     "date": "2026-09-12",
+     "subject": "Define individual historical contracts for four Goal events"
+    },
+    {
+     "commit": "bc66595334",
+     "date": "2026-09-12",
+     "subject": "Define active Goal update consumers and retained audit replay"
+    },
+    {
+     "commit": "9bd40d7907",
+     "date": "2026-09-12",
+     "subject": "plans: adopt shared authority for historical Goal readers and preserve refusal state"
+    },
+    {
+     "commit": "6df1db15e8",
+     "date": "2026-09-12",
+     "subject": "Reconcile registered event receipt and consumer contracts"
+    },
+    {
+     "commit": "5fc9747b6f",
+     "date": "2026-09-12",
+     "subject": "Specify Goal objective update custody, schemas and validation"
+    },
+    {
+     "commit": "58f95a87ea",
+     "date": "2026-09-12",
+     "subject": "plans: define passive Goal creation reader and original command members"
+    },
+    {
+     "commit": "3890d86c70",
+     "date": "2026-09-12",
+     "subject": "plans: define original Goal start command custody and v3 event"
+    },
+    {
+     "commit": "679e066a2a",
+     "date": "2026-09-12",
+     "subject": "Define original Standard certification custody and exact receipt roles"
+    },
+    {
+     "commit": "0fed14e345",
+     "date": "2026-09-12",
+     "subject": "Define Goal body currentness, physical custody and thread lifetime"
+    },
+    {
+     "commit": "fd12aebd90",
+     "date": "2026-09-11",
+     "subject": "Qualify three retired Goal events and historical read contracts"
+    },
+    {
+     "commit": "4869b4cbaa",
+     "date": "2026-09-11",
+     "subject": "Promote 21 Goal Runtime payload schemas under DL-039 authority"
+    },
+    {
+     "commit": "500b247d00",
+     "date": "2026-09-08",
+     "subject": "Reconcile reference-layout supersession and add 5.6 Pro Chat Room batch 6"
+    }
+   ]
+  },
+  {
+   "path": "Plans/Models_System.md",
+   "hash_at_previous_seal": "ffd245b25eedaff44d228996befdce514a88d6fac146f8cd083a57350eedcea3",
+   "hash_at_reseal": "018c37767997cac4e20f76cebc19a39c42985f28d5a738fc12e397b0ce0abf66",
+   "commits": [
+    {
+     "commit": "a3ac15f22f",
+     "date": "2026-09-14",
+     "subject": "plans: define original Workflow activation and native materialization custody"
+    },
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    }
+   ]
+  },
+  {
+   "path": "Plans/Plan_To_Node_Compilation.md",
+   "hash_at_previous_seal": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
+   "hash_at_reseal": "f31d88c4b35996d247054ac9faffae91c07489df4d1bed10e6555f2824fcdb12",
+   "commits": [
+    {
+     "commit": "a3ac15f22f",
+     "date": "2026-09-14",
+     "subject": "plans: define original Workflow activation and native materialization custody"
+    },
+    {
+     "commit": "11812c0949",
+     "date": "2026-09-13",
+     "subject": "plans: preserve truthful compiler receipt timing before dispatch and completion"
+    }
+   ]
+  },
+  {
+   "path": "Plans/Planning_Ledger_System.md",
+   "hash_at_previous_seal": "f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec",
+   "hash_at_reseal": "90fa584e9dc777abc3dc135ee5bc7929cb154b7ceab5a72911a7fe63366f038c",
+   "commits": [
+    {
+     "commit": "70b9f8bef5",
+     "date": "2026-09-18",
+     "subject": "plans: apply Jared's nine answers of 2026-09-18 to the two repaired compiles"
+    },
+    {
+     "commit": "3dd777a8fc",
+     "date": "2026-09-17",
+     "subject": "plans: repair the External Research compile's orphaned registries and unregistered tokens"
+    },
+    {
+     "commit": "7dd932685a",
+     "date": "2026-09-17",
+     "subject": "plans: add External Research consumer references to Chat, Ledgers and Settings"
+    }
+   ]
+  },
+  {
+   "path": "Plans/Planning_Wizard.md",
+   "hash_at_previous_seal": "e3bd3e17e5ca0dce00a6b7b6776eeec9d67cb2c4283fa8706b180dbfe4604dce",
+   "hash_at_reseal": "60b87b69635821bcf9ed89fa516a22e53955046cc4e8dcf34a2128127da34679",
+   "commits": [
+    {
+     "commit": "d09377d4eb",
+     "date": "2026-09-18",
+     "subject": "plans: record DL-066 bounded seal acceptance and DL-067 landing baseline rules"
+    },
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    },
+    {
+     "commit": "e27b35cf42",
+     "date": "2026-09-09",
+     "subject": "plans: define research decision cards and durable review flow"
+    },
+    {
+     "commit": "6d54e0e3ba",
+     "date": "2026-09-07",
+     "subject": "Materialize Guided Tour v3 contracts and ship concept batch 3 / Astra onboarding"
+    }
+   ]
+  },
+  {
+   "path": "Plans/Release_Supply_Chain.md",
+   "hash_at_previous_seal": "118be1d006503d8868bd2c1f8a80b1ca1c2c3f80417be9090296bb82770d777c",
+   "hash_at_reseal": "12a0786d3c9f3afa7b43b24796ffc62366c3a7e9548dffa599237635b281145c",
+   "commits": [
+    {
+     "commit": "5fc9747b6f",
+     "date": "2026-09-12",
+     "subject": "Specify Goal objective update custody, schemas and validation"
+    },
+    {
+     "commit": "58f95a87ea",
+     "date": "2026-09-12",
+     "subject": "plans: define passive Goal creation reader and original command members"
+    },
+    {
+     "commit": "c881c8c62e",
+     "date": "2026-09-12",
+     "subject": "plans: define Platform installed support and withdrawal custody"
+    },
+    {
+     "commit": "63bff67fb4",
+     "date": "2026-09-10",
+     "subject": "Checkpoint paused thread work and move raw evidence out of the product repository"
+    },
+    {
+     "commit": "98258a07f1",
+     "date": "2026-09-09",
+     "subject": "plans: establish PM-owned terminal and pinned Windows console policy"
+    }
+   ]
+  },
+  {
+   "path": "Plans/UI_Command_Catalog.md",
+   "hash_at_previous_seal": "cc381fd6280cc85f4076fd267007c732d4fd3d2bb50c7803d4a108d43b1bd5f9",
+   "hash_at_reseal": "4fb0eb751c66b8565aa82e5407a97b67c6efb582c9206cbc47ee5f538ed504a6",
+   "commits": [
+    {
+     "commit": "1136661ddc",
+     "date": "2026-09-13",
+     "subject": "Define current Goal cancellation and original execution binding contracts"
+    },
+    {
+     "commit": "5fc9747b6f",
+     "date": "2026-09-12",
+     "subject": "Specify Goal objective update custody, schemas and validation"
+    },
+    {
+     "commit": "2080658ff8",
+     "date": "2026-09-12",
+     "subject": "plans: define legal-hold original command and recovery custody"
+    },
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    },
+    {
+     "commit": "50f3d42397",
+     "date": "2026-09-11",
+     "subject": "Compile DL-043 Jujutsu answers into 42 reviewed owner PlanUnits"
+    },
+    {
+     "commit": "45b9d3984f",
+     "date": "2026-09-11",
+     "subject": "Record DL-044 Forge review aliases and adapter wiring vocabulary"
+    },
+    {
+     "commit": "bf898b1608",
+     "date": "2026-09-11",
+     "subject": "Apply approved Settings event identity and historical To-Do mapping"
+    },
+    {
+     "commit": "b240dd93e2",
+     "date": "2026-09-11",
+     "subject": "plans: register compaction completion with explicit replay and retention contract"
+    },
+    {
+     "commit": "84070fd6f5",
+     "date": "2026-09-10",
+     "subject": "Repair assistant contracts and packet audit custody tooling"
+    },
+    {
+     "commit": "63bff67fb4",
+     "date": "2026-09-10",
+     "subject": "Checkpoint paused thread work and move raw evidence out of the product repository"
+    },
+    {
+     "commit": "b027f3b0e1",
+     "date": "2026-09-09",
+     "subject": "plans: protect terminal input from users and agents"
+    },
+    {
+     "commit": "e27b35cf42",
+     "date": "2026-09-09",
+     "subject": "plans: define research decision cards and durable review flow"
+    },
+    {
+     "commit": "7ba82a6fc4",
+     "date": "2026-09-09",
+     "subject": "plans: compile accepted terminal capabilities and remote ownership evaluation"
+    },
+    {
+     "commit": "9b96beb0fc",
+     "date": "2026-09-09",
+     "subject": "Refresh Plans shards and prune superseded Concepts prototypes"
+    },
+    {
+     "commit": "6d54e0e3ba",
+     "date": "2026-09-07",
+     "subject": "Materialize Guided Tour v3 contracts and ship concept batch 3 / Astra onboarding"
+    }
+   ]
+  },
+  {
+   "path": "Plans/UI_Wiring_Rules.md",
+   "hash_at_previous_seal": "b8367d078b36f222790f922a8751e07ad425eabf2f120618c6f8beb2c381f7d3",
+   "hash_at_reseal": "6c3f0f5bed62d1beda720f51d06e53470c29670422c509a914cd559089dc6666",
+   "commits": [
+    {
+     "commit": "f23c165ff8",
+     "date": "2026-09-11",
+     "subject": "Reconcile DL-044 touch closure and validate wiring vocabulary"
+    },
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    },
+    {
+     "commit": "45b9d3984f",
+     "date": "2026-09-11",
+     "subject": "Record DL-044 Forge review aliases and adapter wiring vocabulary"
+    },
+    {
+     "commit": "bf898b1608",
+     "date": "2026-09-11",
+     "subject": "Apply approved Settings event identity and historical To-Do mapping"
+    },
+    {
+     "commit": "b027f3b0e1",
+     "date": "2026-09-09",
+     "subject": "plans: protect terminal input from users and agents"
+    },
+    {
+     "commit": "e27b35cf42",
+     "date": "2026-09-09",
+     "subject": "plans: define research decision cards and durable review flow"
+    },
+    {
+     "commit": "7ba82a6fc4",
+     "date": "2026-09-09",
+     "subject": "plans: compile accepted terminal capabilities and remote ownership evaluation"
+    }
+   ]
+  },
+  {
+   "path": "Plans/Wiring_Matrix.md",
+   "hash_at_previous_seal": "d108a46be70fbc2c9a91dc216f291f8238ed1201412f6582a4ad93a1ccad03f6",
+   "hash_at_reseal": "0de2e6abde2e596358185d3fbc7d431ef70adc6db31be2b0fa5c15c6c543647b",
+   "commits": [
+    {
+     "commit": "2a92905501",
+     "date": "2026-09-17",
+     "subject": "plans: drop stale script-owned literal counts from canon and route workflow attention to Actions & Pipelines"
+    },
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    },
+    {
+     "commit": "50f3d42397",
+     "date": "2026-09-11",
+     "subject": "Compile DL-043 Jujutsu answers into 42 reviewed owner PlanUnits"
+    },
+    {
+     "commit": "45b9d3984f",
+     "date": "2026-09-11",
+     "subject": "Record DL-044 Forge review aliases and adapter wiring vocabulary"
+    },
+    {
+     "commit": "bf898b1608",
+     "date": "2026-09-11",
+     "subject": "Apply approved Settings event identity and historical To-Do mapping"
+    },
+    {
+     "commit": "63bff67fb4",
+     "date": "2026-09-10",
+     "subject": "Checkpoint paused thread work and move raw evidence out of the product repository"
+    },
+    {
+     "commit": "b027f3b0e1",
+     "date": "2026-09-09",
+     "subject": "plans: protect terminal input from users and agents"
+    },
+    {
+     "commit": "e27b35cf42",
+     "date": "2026-09-09",
+     "subject": "plans: define research decision cards and durable review flow"
+    },
+    {
+     "commit": "7ba82a6fc4",
+     "date": "2026-09-09",
+     "subject": "plans: compile accepted terminal capabilities and remote ownership evaluation"
+    },
+    {
+     "commit": "6d54e0e3ba",
+     "date": "2026-09-07",
+     "subject": "Materialize Guided Tour v3 contracts and ship concept batch 3 / Astra onboarding"
+    }
+   ]
+  },
+  {
+   "path": "Plans/Wiring_Matrix.schema.json",
+   "hash_at_previous_seal": "44ce597ce5bf097e88f4b251ca537b723e43b793c9451a298b866b8579d49b08",
+   "hash_at_reseal": "ced41d91296811960e611ca01e3d58a9fb74f285f1dbefd7eebdf5c4caf8e21e",
+   "commits": [
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    },
+    {
+     "commit": "45b9d3984f",
+     "date": "2026-09-11",
+     "subject": "Record DL-044 Forge review aliases and adapter wiring vocabulary"
+    }
+   ]
+  },
+  {
+   "path": "Plans/assistant-chat-design.md",
+   "hash_at_previous_seal": "3bb33c06937319395f45013b19134b1a7b0aa00f3f873a2a5fcc11f167cfd706",
+   "hash_at_reseal": "8b1cfe27bc861b853c0ed88c516e1c48a955074f926bcebded388e88f1a31e45",
+   "commits": [
+    {
+     "commit": "2da97421a1",
+     "date": "2026-09-23",
+     "subject": "plans: record Jared's eight Event Authority card answers as DL-068..DL-075 with the owner edits each authorizes (quarantine disposal boundary, SafePoint summary anchor, terminal move leaves section empty, account_switch_event vocabulary, two transient-diagnostic boundaries, task.failed notification, runtime-artifact indefinite retention); regenerate shards and index"
+    },
+    {
+     "commit": "70b9f8bef5",
+     "date": "2026-09-18",
+     "subject": "plans: apply Jared's nine answers of 2026-09-18 to the two repaired compiles"
+    },
+    {
+     "commit": "0d9ba9ffc4",
+     "date": "2026-09-18",
+     "subject": "plans: repair the External Research findings the blind reviews confirmed, and record the rest"
+    },
+    {
+     "commit": "3dd777a8fc",
+     "date": "2026-09-17",
+     "subject": "plans: repair the External Research compile's orphaned registries and unregistered tokens"
+    },
+    {
+     "commit": "7dd932685a",
+     "date": "2026-09-17",
+     "subject": "plans: add External Research consumer references to Chat, Ledgers and Settings"
+    },
+    {
+     "commit": "11d08ce436",
+     "date": "2026-09-16",
+     "subject": "plans: route assistant hosted-repo requests by the selected forge adapter"
+    },
+    {
+     "commit": "7fa3b65df7",
+     "date": "2026-09-12",
+     "subject": "Define restore-point expiry, deletion and retained recovery contracts"
+    },
+    {
+     "commit": "38d896d3f0",
+     "date": "2026-09-11",
+     "subject": "Adopt versioned run-start and restore-created index checkpoints"
+    },
+    {
+     "commit": "4d9d21297d",
+     "date": "2026-09-11",
+     "subject": "plans: define restore-created custody and original command replay contracts"
+    },
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    },
+    {
+     "commit": "bf898b1608",
+     "date": "2026-09-11",
+     "subject": "Apply approved Settings event identity and historical To-Do mapping"
+    },
+    {
+     "commit": "b240dd93e2",
+     "date": "2026-09-11",
+     "subject": "plans: register compaction completion with explicit replay and retention contract"
+    },
+    {
+     "commit": "84070fd6f5",
+     "date": "2026-09-10",
+     "subject": "Repair assistant contracts and packet audit custody tooling"
+    },
+    {
+     "commit": "e27b35cf42",
+     "date": "2026-09-09",
+     "subject": "plans: define research decision cards and durable review flow"
+    },
+    {
+     "commit": "9b96beb0fc",
+     "date": "2026-09-09",
+     "subject": "Refresh Plans shards and prune superseded Concepts prototypes"
+    },
+    {
+     "commit": "500b247d00",
+     "date": "2026-09-08",
+     "subject": "Reconcile reference-layout supersession and add 5.6 Pro Chat Room batch 6"
+    }
+   ]
+  },
+  {
+   "path": "Plans/orchestrator-subagent-integration.md",
+   "hash_at_previous_seal": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+   "hash_at_reseal": "935bdd9dc15ccc0df609a8baa99a4ace5d9eb4cc9a337a4d84cba49a276c5467",
+   "commits": [
+    {
+     "commit": "6df1db15e8",
+     "date": "2026-09-12",
+     "subject": "Reconcile registered event receipt and consumer contracts"
+    }
+   ]
+  },
+  {
+   "path": "Plans/plans_to_code_handoff.schema.json",
+   "hash_at_previous_seal": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+   "hash_at_reseal": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+   "commits": [
+    {
+     "commit": "11812c0949",
+     "date": "2026-09-13",
+     "subject": "plans: preserve truthful compiler receipt timing before dispatch and completion"
+    }
+   ]
+  },
+  {
+   "path": "Plans/sharding_config.json",
+   "hash_at_previous_seal": "91d918be2a958c0d60fb189a9ef532682951ce3b564b2c942ba97677eb752eaf",
+   "hash_at_reseal": "0fb4eb885849baad1d5b229b6f0e82faec4c5b39e7207de14e355ac81f7e444d",
+   "commits": [
+    {
+     "commit": "3c54bede66",
+     "date": "2026-09-17",
+     "subject": "plans: register External Research as the owner of the research capability"
+    }
+   ]
+  },
+  {
+   "path": "Plans/shared_runtime_contracts.schema.json",
+   "hash_at_previous_seal": "09d4316fe4b4828aaa4edbab1c96835169abc01cbd00a916e8873c8986245451",
+   "hash_at_reseal": "680d47fb8e6226aaa26046bcaa971d4a312da6c81949b4a7bb75208b90e97a59",
+   "commits": [
+    {
+     "commit": "63bff67fb4",
+     "date": "2026-09-10",
+     "subject": "Checkpoint paused thread work and move raw evidence out of the product repository"
+    }
+   ]
+  },
+  {
+   "path": "Plans/storage-plan.md",
+   "hash_at_previous_seal": "6cae6d4bebe68a39b13ecadcec32580598254209e62566daff4d272354e4dd08",
+   "hash_at_reseal": "a23b037aa42c7dbe8bb7ab34edae1f5f360563559cedf13966d3b3a349596758",
+   "commits": [
+    {
+     "commit": "2da97421a1",
+     "date": "2026-09-23",
+     "subject": "plans: record Jared's eight Event Authority card answers as DL-068..DL-075 with the owner edits each authorizes (quarantine disposal boundary, SafePoint summary anchor, terminal move leaves section empty, account_switch_event vocabulary, two transient-diagnostic boundaries, task.failed notification, runtime-artifact indefinite retention); regenerate shards and index"
+    },
+    {
+     "commit": "f6350caf27",
+     "date": "2026-09-21",
+     "subject": "plans: integrate complete certified event source family and reviewed realms"
+    },
+    {
+     "commit": "0f57dbf608",
+     "date": "2026-09-21",
+     "subject": "plans: add original certified Workflow source contracts and reviewed evidence"
+    },
+    {
+     "commit": "2a92905501",
+     "date": "2026-09-17",
+     "subject": "plans: drop stale script-owned literal counts from canon and route workflow attention to Actions & Pipelines"
+    },
+    {
+     "commit": "f8ace334f4",
+     "date": "2026-09-14",
+     "subject": "plans: define read-only current Workflow cancellation inspector v2"
+    },
+    {
+     "commit": "a3c511657f",
+     "date": "2026-09-14",
+     "subject": "plans: adopt original Workflow cancelled v3 event consumer and checkpoint"
+    },
+    {
+     "commit": "e686963ad5",
+     "date": "2026-09-14",
+     "subject": "plans: adopt original Workflow started v3 event consumer and checkpoint"
+    },
+    {
+     "commit": "de87b6dfc3",
+     "date": "2026-09-14",
+     "subject": "plans: define original Workflow Goal cancellation coordination and storage profiles"
+    },
+    {
+     "commit": "953634d128",
+     "date": "2026-09-14",
+     "subject": "plans: define original Workflow start and bounded cancellation custody"
+    },
+    {
+     "commit": "a3ac15f22f",
+     "date": "2026-09-14",
+     "subject": "plans: define original Workflow activation and native materialization custody"
+    },
+    {
+     "commit": "ced70178c2",
+     "date": "2026-09-13",
+     "subject": "plans: define original bound Plan cancellation and runtime retirement"
+    },
+    {
+     "commit": "274c681e43",
+     "date": "2026-09-13",
+     "subject": "plans: enforce current Workflow child-Goal retirement at certification admission"
+    },
+    {
+     "commit": "1136661ddc",
+     "date": "2026-09-13",
+     "subject": "Define current Goal cancellation and original execution binding contracts"
+    },
+    {
+     "commit": "6a6c24bfa7",
+     "date": "2026-09-12",
+     "subject": "Define individual historical contracts for four Goal events"
+    },
+    {
+     "commit": "bc66595334",
+     "date": "2026-09-12",
+     "subject": "Define active Goal update consumers and retained audit replay"
+    },
+    {
+     "commit": "9bd40d7907",
+     "date": "2026-09-12",
+     "subject": "plans: adopt shared authority for historical Goal readers and preserve refusal state"
+    },
+    {
+     "commit": "6df1db15e8",
+     "date": "2026-09-12",
+     "subject": "Reconcile registered event receipt and consumer contracts"
+    },
+    {
+     "commit": "5fc9747b6f",
+     "date": "2026-09-12",
+     "subject": "Specify Goal objective update custody, schemas and validation"
+    },
+    {
+     "commit": "58f95a87ea",
+     "date": "2026-09-12",
+     "subject": "plans: define passive Goal creation reader and original command members"
+    },
+    {
+     "commit": "6621d9dc1d",
+     "date": "2026-09-12",
+     "subject": "plans: define original compaction controls and seven-day detail custody"
+    },
+    {
+     "commit": "3890d86c70",
+     "date": "2026-09-12",
+     "subject": "plans: define original Goal start command custody and v3 event"
+    },
+    {
+     "commit": "21c646fb0b",
+     "date": "2026-09-12",
+     "subject": "plans: define original recovery action custody and record verification"
+    },
+    {
+     "commit": "c881c8c62e",
+     "date": "2026-09-12",
+     "subject": "plans: define Platform installed support and withdrawal custody"
+    },
+    {
+     "commit": "d3c1179f78",
+     "date": "2026-09-12",
+     "subject": "Define Boot recovery aggregate and original receipt continuity"
+    },
+    {
+     "commit": "e7c7f14a9d",
+     "date": "2026-09-12",
+     "subject": "plans: bind integrity completion to original full-value custody"
+    },
+    {
+     "commit": "74c5485e3b",
+     "date": "2026-09-12",
+     "subject": "plans: define original Platform decision custody and reference lifetime"
+    },
+    {
+     "commit": "38e37d11a0",
+     "date": "2026-09-12",
+     "subject": "plans: define integrity wire findings and passive history custody"
+    },
+    {
+     "commit": "46f30fb464",
+     "date": "2026-09-12",
+     "subject": "plans: close Home original pending and full-value custody"
+    },
+    {
+     "commit": "29dfc9ac32",
+     "date": "2026-09-12",
+     "subject": "Adopt original full-value custody for Hold pending completion"
+    },
+    {
+     "commit": "705a5bb15a",
+     "date": "2026-09-12",
+     "subject": "Adopt original full-value custody for Restore pending recovery"
+    },
+    {
+     "commit": "679e066a2a",
+     "date": "2026-09-12",
+     "subject": "Define original Standard certification custody and exact receipt roles"
+    },
+    {
+     "commit": "59335a3435",
+     "date": "2026-09-12",
+     "subject": "plans: bind first receipts to original full event values"
+    },
+    {
+     "commit": "06ad4268ab",
+     "date": "2026-09-12",
+     "subject": "plans: define exact SeglogFrameV2 bytes and canonical codec"
+    },
+    {
+     "commit": "2080658ff8",
+     "date": "2026-09-12",
+     "subject": "plans: define legal-hold original command and recovery custody"
+    },
+    {
+     "commit": "7fa3b65df7",
+     "date": "2026-09-12",
+     "subject": "Define restore-point expiry, deletion and retained recovery contracts"
+    },
+    {
+     "commit": "0fed14e345",
+     "date": "2026-09-12",
+     "subject": "Define Goal body currentness, physical custody and thread lifetime"
+    },
+    {
+     "commit": "640d494d01",
+     "date": "2026-09-12",
+     "subject": "Plans: define durable first append receipt custody and recovery gates"
+    },
+    {
+     "commit": "808bd8d918",
+     "date": "2026-09-11",
+     "subject": "plans: define Home layout settlement and migration custody"
+    },
+    {
+     "commit": "c47c566af9",
+     "date": "2026-09-11",
+     "subject": "plans: define source-first seglog append observability custody"
+    },
+    {
+     "commit": "4fe66204bd",
+     "date": "2026-09-11",
+     "subject": "Define and statically admit browser workspace reset authority"
+    },
+    {
+     "commit": "641c980264",
+     "date": "2026-09-11",
+     "subject": "plans: name current restore-point summary reader routes"
+    },
+    {
+     "commit": "38d896d3f0",
+     "date": "2026-09-11",
+     "subject": "Adopt versioned run-start and restore-created index checkpoints"
+    },
+    {
+     "commit": "d21fd2cf23",
+     "date": "2026-09-11",
+     "subject": "Define generic EventRecord index checkpoint and publication contract"
+    },
+    {
+     "commit": "ea449e70c7",
+     "date": "2026-09-11",
+     "subject": "Require original admission custody for historical child status"
+    },
+    {
+     "commit": "fd12aebd90",
+     "date": "2026-09-11",
+     "subject": "Qualify three retired Goal events and historical read contracts"
+    },
+    {
+     "commit": "4d9d21297d",
+     "date": "2026-09-11",
+     "subject": "plans: define restore-created custody and original command replay contracts"
+    },
+    {
+     "commit": "69553720f1",
+     "date": "2026-09-11",
+     "subject": "plans: admit workspace-created Browser event with exact checkpoint authority"
+    },
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    },
+    {
+     "commit": "af6856d039",
+     "date": "2026-09-11",
+     "subject": "Define run.started consumer and checkpoint contract depth"
+    },
+    {
+     "commit": "50f3d42397",
+     "date": "2026-09-11",
+     "subject": "Compile DL-043 Jujutsu answers into 42 reviewed owner PlanUnits"
+    },
+    {
+     "commit": "bf898b1608",
+     "date": "2026-09-11",
+     "subject": "Apply approved Settings event identity and historical To-Do mapping"
+    },
+    {
+     "commit": "b240dd93e2",
+     "date": "2026-09-11",
+     "subject": "plans: register compaction completion with explicit replay and retention contract"
+    },
+    {
+     "commit": "e27b35cf42",
+     "date": "2026-09-09",
+     "subject": "plans: define research decision cards and durable review flow"
+    },
+    {
+     "commit": "9b96beb0fc",
+     "date": "2026-09-09",
+     "subject": "Refresh Plans shards and prune superseded Concepts prototypes"
+    },
+    {
+     "commit": "6d54e0e3ba",
+     "date": "2026-09-07",
+     "subject": "Materialize Guided Tour v3 contracts and ship concept batch 3 / Astra onboarding"
+    }
+   ]
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "hash_at_previous_seal": "39fafdbf71c7f484c75a325647bd7fbc458f4b05fb6ddc8116587073be7791b5",
+   "hash_at_reseal": "8556e24390ee956543bf4615e497407b47f64b6dcd8a9be779c121b4497f7a08",
+   "commits": [
+    {
+     "commit": "7ad1ffff6a",
+     "date": "2026-09-21",
+     "subject": "fix: expose five Goal storage envelopes without changing schema meaning"
+    },
+    {
+     "commit": "8aeaea204c",
+     "date": "2026-09-21",
+     "subject": "fix: preserve Standard source schema meaning in registry envelopes"
+    },
+    {
+     "commit": "f6350caf27",
+     "date": "2026-09-21",
+     "subject": "plans: integrate complete certified event source family and reviewed realms"
+    },
+    {
+     "commit": "0f57dbf608",
+     "date": "2026-09-21",
+     "subject": "plans: add original certified Workflow source contracts and reviewed evidence"
+    },
+    {
+     "commit": "f8ace334f4",
+     "date": "2026-09-14",
+     "subject": "plans: define read-only current Workflow cancellation inspector v2"
+    },
+    {
+     "commit": "a3c511657f",
+     "date": "2026-09-14",
+     "subject": "plans: adopt original Workflow cancelled v3 event consumer and checkpoint"
+    },
+    {
+     "commit": "e686963ad5",
+     "date": "2026-09-14",
+     "subject": "plans: adopt original Workflow started v3 event consumer and checkpoint"
+    },
+    {
+     "commit": "de87b6dfc3",
+     "date": "2026-09-14",
+     "subject": "plans: define original Workflow Goal cancellation coordination and storage profiles"
+    },
+    {
+     "commit": "953634d128",
+     "date": "2026-09-14",
+     "subject": "plans: define original Workflow start and bounded cancellation custody"
+    },
+    {
+     "commit": "a3ac15f22f",
+     "date": "2026-09-14",
+     "subject": "plans: define original Workflow activation and native materialization custody"
+    },
+    {
+     "commit": "ced70178c2",
+     "date": "2026-09-13",
+     "subject": "plans: define original bound Plan cancellation and runtime retirement"
+    },
+    {
+     "commit": "274c681e43",
+     "date": "2026-09-13",
+     "subject": "plans: enforce current Workflow child-Goal retirement at certification admission"
+    },
+    {
+     "commit": "1136661ddc",
+     "date": "2026-09-13",
+     "subject": "Define current Goal cancellation and original execution binding contracts"
+    },
+    {
+     "commit": "5fc9747b6f",
+     "date": "2026-09-12",
+     "subject": "Specify Goal objective update custody, schemas and validation"
+    },
+    {
+     "commit": "6621d9dc1d",
+     "date": "2026-09-12",
+     "subject": "plans: define original compaction controls and seven-day detail custody"
+    },
+    {
+     "commit": "3890d86c70",
+     "date": "2026-09-12",
+     "subject": "plans: define original Goal start command custody and v3 event"
+    },
+    {
+     "commit": "21c646fb0b",
+     "date": "2026-09-12",
+     "subject": "plans: define original recovery action custody and record verification"
+    },
+    {
+     "commit": "d3c1179f78",
+     "date": "2026-09-12",
+     "subject": "Define Boot recovery aggregate and original receipt continuity"
+    },
+    {
+     "commit": "74c5485e3b",
+     "date": "2026-09-12",
+     "subject": "plans: define original Platform decision custody and reference lifetime"
+    },
+    {
+     "commit": "38e37d11a0",
+     "date": "2026-09-12",
+     "subject": "plans: define integrity wire findings and passive history custody"
+    },
+    {
+     "commit": "46f30fb464",
+     "date": "2026-09-12",
+     "subject": "plans: close Home original pending and full-value custody"
+    },
+    {
+     "commit": "679e066a2a",
+     "date": "2026-09-12",
+     "subject": "Define original Standard certification custody and exact receipt roles"
+    },
+    {
+     "commit": "59335a3435",
+     "date": "2026-09-12",
+     "subject": "plans: bind first receipts to original full event values"
+    },
+    {
+     "commit": "2080658ff8",
+     "date": "2026-09-12",
+     "subject": "plans: define legal-hold original command and recovery custody"
+    },
+    {
+     "commit": "7fa3b65df7",
+     "date": "2026-09-12",
+     "subject": "Define restore-point expiry, deletion and retained recovery contracts"
+    },
+    {
+     "commit": "0fed14e345",
+     "date": "2026-09-12",
+     "subject": "Define Goal body currentness, physical custody and thread lifetime"
+    },
+    {
+     "commit": "640d494d01",
+     "date": "2026-09-12",
+     "subject": "Plans: define durable first append receipt custody and recovery gates"
+    },
+    {
+     "commit": "808bd8d918",
+     "date": "2026-09-11",
+     "subject": "plans: define Home layout settlement and migration custody"
+    },
+    {
+     "commit": "c47c566af9",
+     "date": "2026-09-11",
+     "subject": "plans: define source-first seglog append observability custody"
+    },
+    {
+     "commit": "4fe66204bd",
+     "date": "2026-09-11",
+     "subject": "Define and statically admit browser workspace reset authority"
+    },
+    {
+     "commit": "641c980264",
+     "date": "2026-09-11",
+     "subject": "plans: name current restore-point summary reader routes"
+    },
+    {
+     "commit": "38d896d3f0",
+     "date": "2026-09-11",
+     "subject": "Adopt versioned run-start and restore-created index checkpoints"
+    },
+    {
+     "commit": "d21fd2cf23",
+     "date": "2026-09-11",
+     "subject": "Define generic EventRecord index checkpoint and publication contract"
+    },
+    {
+     "commit": "4d9d21297d",
+     "date": "2026-09-11",
+     "subject": "plans: define restore-created custody and original command replay contracts"
+    },
+    {
+     "commit": "69553720f1",
+     "date": "2026-09-11",
+     "subject": "plans: admit workspace-created Browser event with exact checkpoint authority"
+    },
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    },
+    {
+     "commit": "af6856d039",
+     "date": "2026-09-11",
+     "subject": "Define run.started consumer and checkpoint contract depth"
+    },
+    {
+     "commit": "63bff67fb4",
+     "date": "2026-09-10",
+     "subject": "Checkpoint paused thread work and move raw evidence out of the product repository"
+    },
+    {
+     "commit": "9b96beb0fc",
+     "date": "2026-09-09",
+     "subject": "Refresh Plans shards and prune superseded Concepts prototypes"
+    },
+    {
+     "commit": "6d54e0e3ba",
+     "date": "2026-09-07",
+     "subject": "Materialize Guided Tour v3 contracts and ship concept batch 3 / Astra onboarding"
+    }
+   ]
+  },
+  {
+   "path": "Plans/storage_value_registry.schema.json",
+   "hash_at_previous_seal": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+   "hash_at_reseal": "31779ca5f21f2ebb77dac7d4cbd9366682543337939b690f7e6a9dabf1ff4d2b",
+   "commits": [
+    {
+     "commit": "38e37d11a0",
+     "date": "2026-09-12",
+     "subject": "plans: define integrity wire findings and passive history custody"
+    }
+   ]
+  },
+  {
+   "path": "Plans/usage-feature.md",
+   "hash_at_previous_seal": "b992d366f78133b51691900eac1e8a6e32e7b48648348bd6984c1acc2ab781d1",
+   "hash_at_reseal": "3f0a8dcc889ec2cd2f2a0df746594ff699966d6850c730b316a7ab5bd4926c6d",
+   "commits": [
+    {
+     "commit": "38d896d3f0",
+     "date": "2026-09-11",
+     "subject": "Adopt versioned run-start and restore-created index checkpoints"
+    },
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    },
+    {
+     "commit": "af6856d039",
+     "date": "2026-09-11",
+     "subject": "Define run.started consumer and checkpoint contract depth"
+    }
+   ]
+  },
+  {
+   "path": "scripts/pm-implementation-readiness.py",
+   "hash_at_previous_seal": "6292e1c6973b80ad9774827e2d2ded017fbc54aa79a4a2d0ba9db4cf55763c2f",
+   "hash_at_reseal": "7101cbd81f9c8670c20c2824f77db1708001ad36213a77d3f383aa5e42c4579f",
+   "commits": [
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    }
+   ]
+  },
+  {
+   "path": "scripts/pm-plan-index.py",
+   "hash_at_previous_seal": "f3c2bd1e881f538e730258a854943e16c729150d2f7485cfac98dd58d034f293",
+   "hash_at_reseal": "7c57be5b0132ed23cb087e2c40938214f3a8dd19452a8c5650461e98740a4dc3",
+   "commits": [
+    {
+     "commit": "b5d1f437ff",
+     "date": "2026-09-22",
+     "subject": "scripts: make pm-plan-index portable_index_diagnostic strip Windows checkout roots (native, f-string mixed-separator, and repr-escaped spellings) so derived index diagnostics never embed machine-local absolute paths; its two existing portability tests now pass on Windows checkouts unchanged on Linux"
+    },
+    {
+     "commit": "8eacd40516",
+     "date": "2026-09-21",
+     "subject": "Guard PlanUnit retention against origin/main and record baseline landing"
+    },
+    {
+     "commit": "e39e42c2d5",
+     "date": "2026-09-12",
+     "subject": "fix: bind Browser results to actual byte budgets and pinned schemas"
+    }
+   ]
+  },
+  {
+   "path": "scripts/pm-plans-verify.py",
+   "hash_at_previous_seal": "80d04f675c083ad39905c5690a9a58aaafcd11b0455b8c50a99ff21e0182b2f4",
+   "hash_at_reseal": "d10c009eceea4fcc66de4e55e9db3fabe1226425c3713e66e70a7f0bb55c1ca0",
+   "commits": [
+    {
+     "commit": "4be10115a2",
+     "date": "2026-09-20",
+     "subject": "fix: limit ignored evidence reads to manifest referents"
+    },
+    {
+     "commit": "2a9b1e84d5",
+     "date": "2026-09-20",
+     "subject": "fix: read raw evidence captures through the approved symlink"
+    },
+    {
+     "commit": "f23c165ff8",
+     "date": "2026-09-11",
+     "subject": "Reconcile DL-044 touch closure and validate wiring vocabulary"
+    },
+    {
+     "commit": "b09294e44b",
+     "date": "2026-09-11",
+     "subject": "Prepare packet integration contracts and bounded Browser admission workflow"
+    },
+    {
+     "commit": "45b9d3984f",
+     "date": "2026-09-11",
+     "subject": "Record DL-044 Forge review aliases and adapter wiring vocabulary"
+    }
+   ]
+  },
+  {
+   "path": "scripts/pm-shard-plans.py",
+   "hash_at_previous_seal": "b6ba0d9ad3e8609af4e78874b270e9f70f2084ae815435aaac7119de5fb8325e",
+   "hash_at_reseal": "1c6d64931699c2f0fa89addd5fb96119cdd02a68e0e85221c58ff3f0f3e2ecec",
+   "commits": [
+    {
+     "commit": "5b0ace24ca",
+     "date": "2026-09-10",
+     "subject": "Make shard regeneration deterministic and reconcile the shard layer"
+    }
+   ]
+  },
+  {
+   "path": "scripts/pm-shared-runtime-storage-materialize.py",
+   "hash_at_previous_seal": "7dcd2e74585c2e11e7386ffe161fb1dd95809d8d31c289517f651991960126c8",
+   "hash_at_reseal": "2e26da2415a6120afbd5065457cab66c1853ac9c670efbbf1f49027171dda100",
+   "commits": [
+    {
+     "commit": "63bff67fb4",
+     "date": "2026-09-10",
+     "subject": "Checkpoint paused thread work and move raw evidence out of the product repository"
+    }
+   ]
+  },
+  {
+   "path": "scripts/pm_pnc019_currentness.py",
+   "hash_at_previous_seal": "3ec270220e09f61e7e122a294ddf7ddad007905f28f95416c13860700dc3b15c",
+   "hash_at_reseal": "41f9268d416196a7ecf7de81411caa4624feb222c409b8ca13aca1540ac8e46c",
+   "commits": [
+    {
+     "commit": "3d391fd297",
+     "date": "2026-09-23",
+     "subject": "plans: record Jared-approved Step 8 comparison checkpoint 2026-09-11.2 (42 families, registry 0be54418) - helper literals and provenance only, test pins 40->42, regenerated readiness projections, receipt and response"
+    },
+    {
+     "commit": "c423c3890d",
+     "date": "2026-09-11",
+     "subject": "Carry PNC-019 baseline approval to registry 2026-09-11.1"
+    },
+    {
+     "commit": "49e339c2de",
+     "date": "2026-09-11",
+     "subject": "Record DL-039 approved Event Authority checkpoint in PNC-019 readiness"
+    }
+   ]
+  }
+ ]
+}
