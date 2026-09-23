@@ -1,0 +1,11 @@
+# Step 08 — conditional original restore B1 constructor
+
+Root reviewed and froze the external L07 successor as a conditional technical source proposal for the original `handlers::chat::create_restore_point` publisher. Its private transition consumes all read-bound selection/Material sources, retains only independently permitted operation exclusion across read-end/write-open, obtains genuine fresh write-side authority, compares the complete immutable expected capture with freshly authenticated original sources and current guards, prepares the exact point/pending-companion/admitted-pending result write set, and runs a pure final predicate immediately before the one original Storage primitive. Unknown B1 effects remain under original recovery; a B1 abort does not by itself prove the whole operation had no effect. No recapture, invented hold, event, physical family or stored handoff token follows. F0–F3 complete capture and genuine native owners are still missing, so this is not a B1 arm, installation or Step 08 closure. Step 09 remains 0 registered, 6 excluded, 20 carded, 226 remaining; Step 10 has not run. Main stays held.
+
+Cost: root read the complete proposal and model, authenticated its copied 322-member L07 source, generated a 328-member proposal manifest, and reran `check.py`: PASS, 428 checks including 94 synthetic negative cases. All eleven cited current canonical resource blobs are identical between source cut `0fbcc50ef764f6bb13825665261790eb3ce4d711` and later `origin/main` `d247d57ebd0d53ce4c66f4795e24a14d8782e9b8`. Native tests and positive native instances are zero; the model assumes real owner issuance, codecs and redb atomicity rather than proving them. Monetary attribution is unavailable.
+
+| Evidence | Manifest path | SHA-256 |
+|---|---|---|
+| Conditional original B1 proposal | `/mnt/Cursor/PM-Experiments/restore-corrupt-l07-original-b1-constructor-20260923/v1/manifest.json` | `c2677897d188f233b8bb1977adc1eef55ce24f83d075eaa9724439e9fe754226` |
+
+The proposal is ready for an original-owner review only after complete F0–F3 history and four-category capture have genuine sources. Its symbolic three-row oracle cannot authenticate an initial command/SIR outcome, source lifetime, secure EOF, exact codec, native exclusion or durable transaction.
