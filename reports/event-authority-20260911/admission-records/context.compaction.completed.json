@@ -2,6 +2,7 @@
  "schema_id": "pm.assurance.event_authority.post_august_admission_record.v1",
  "event_type": "context.compaction.completed",
  "family_id": "event-family-context-compaction-completed",
+ "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-040",
  "decision_section_sha256": "2bfdfff9852d15855a294934ba6d1b0efacd590342b5480302a5c2f31ca5c3df",
  "registry_before": {
@@ -28,7 +29,7 @@
  ],
  "status_at_recording": "incomplete_depth",
  "recorded_by": "claude-opus-5.5:dl039-steps-8-9-20260924",
- "recorded_at_utc": "2026-09-24T23:15:29Z",
+ "recorded_at_utc": "2026-09-24T23:39:35Z",
  "notes": [
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ]

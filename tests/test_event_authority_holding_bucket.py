@@ -310,6 +310,7 @@ class PostAugustAdmissionTests(unittest.TestCase):
             'schema_id': self.v.POST_AUGUST_RECORD_SCHEMA,
             'event_type': et,
             'family_id': self.families[et]['family_id'],
+            'implementation_receipt_sha256': self.v.sha256_file(self.root / self.v.POST_AUGUST_RECEIPT),
             'decision_ref': 'Plans/Decision_Log.md#' + self.DECISION[et],
             'decision_section_sha256': hashlib.sha256(section).hexdigest(),
             'registry_before': {'revision': 'r' + str(n), 'sha256': str(n) * 64, 'family_count': 39 + n},
@@ -496,6 +497,22 @@ class PostAugustAdmissionTests(unittest.TestCase):
                 admitted, issues, _ = self.check()
                 self.assertNotIn(et, admitted)
                 self.assertIn(et + ': ' + problem, issues)
+
+    def test_a_record_pins_the_receipt_it_was_written_under(self):
+        et = self.POST[0]
+        record = self.record_for(et)
+        record['implementation_receipt_sha256'] = '0' * 64
+        self.write_record(record)
+        admitted, issues, _ = self.check()
+        self.assertNotIn(et, admitted)
+        self.assertIn(et + ': implementation_receipt_sha256', issues)
+        self.write_record(self.record_for(et))
+        post = self.root / self.v.POST_AUGUST_RECEIPT
+        changed = json.loads(post.read_text())
+        changed['notes'] = changed.get('notes', []) + ['a later edit']
+        post.write_text(json.dumps(changed))
+        admitted, issues, _ = self.check()
+        self.assertEqual(admitted, set())
 
     def test_record_file_name_must_equal_its_event_type(self):
         (self.record_dir / 'browser.workspace.reset.json').unlink()

@@ -2,6 +2,7 @@
  "schema_id": "pm.assurance.event_authority.post_august_admission_record.v1",
  "event_type": "browser.workspace.created",
  "family_id": "event-family-browser-workspace-created",
+ "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-046",
  "decision_section_sha256": "94f3705169bf73f8c61d491e1a74ac643d0dc5afd31334358997757770b264a0",
  "registry_before": {
@@ -30,7 +31,7 @@
  ],
  "status_at_recording": "incomplete_depth",
  "recorded_by": "claude-opus-5.5:dl039-steps-8-9-20260924",
- "recorded_at_utc": "2026-09-24T23:38:53Z",
+ "recorded_at_utc": "2026-09-24T23:39:35Z",
  "notes": [
   "Verification record: reports/packet-gap-closure-20260910/browser-workspace-created-verification-20260911.json (f359b6aed3).",
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."

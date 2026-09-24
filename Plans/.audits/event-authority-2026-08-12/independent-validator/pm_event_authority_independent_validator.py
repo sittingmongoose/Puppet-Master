@@ -193,6 +193,8 @@ def admission_record_problems(record, family) -> list:
     event_type = record.get("event_type")
     if record.get("schema_id") != POST_AUGUST_RECORD_SCHEMA:
         problems.append("schema_id")
+    if record.get("implementation_receipt_sha256") != sha256_file(REPO / POST_AUGUST_RECEIPT):
+        problems.append("implementation_receipt_sha256")
     if record.get("family_id") != family.get("family_id"):
         problems.append("family_id")
     match = re.fullmatch(r"Plans/Decision_Log\.md#(DL-\d{3})", str(record.get("decision_ref", "")))
