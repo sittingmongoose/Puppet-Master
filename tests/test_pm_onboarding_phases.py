@@ -68,6 +68,189 @@ def project_join(binding=COMMIT, result=PROJECT_RESULT, **kwargs):
                                           resolved_result_ref=COMMIT["project_action_result_ref"], **kwargs)
 
 
+def resume_join_values(name="valid.result.actual_commit_enters_provider"):
+    current = copy.deepcopy(CASES[name]["continuation_snapshot"])
+    request = copy.deepcopy(CASES["valid.request.start"])
+    request.update(onboarding_session_id=current["onboarding_session_id"], stage=current["stage"],
+                   expected_revision=current["revision"], continuation_generation=current["continuation_generation"],
+                   source_surface="resume", return_focus_id=current["return_focus_id"])
+    request["local_context"]["intent"] = "resume"
+    result = copy.deepcopy(CASES["valid.result.applied.start"])
+    result.update(onboarding_session_id=current["onboarding_session_id"], stage_before=current["stage"],
+                  stage_after=current["stage"], revision=current["revision"] + 1,
+                  continuation_generation=current["continuation_generation"], return_focus_id=current["return_focus_id"],
+                  local_effect="session_resumed", continuation_snapshot=copy.deepcopy(current))
+    result["continuation_snapshot"]["revision"] = result["revision"]
+    return current, request, result
+
+
+def resume_session_for(current):
+    source = ("valid.session.postcommit_provider" if current["project_disposition"] == "committed"
+              else "valid.session.active_without_branch")
+    session = copy.deepcopy(CASES[source])
+    session.update({key: copy.deepcopy(value) for key, value in current.items() if key in session})
+    session["return_context"] = None
+    session["status"] = "active"
+    return session
+
+
+class OnboardingResumeTests(unittest.TestCase):
+    def join(self, current, request, result):
+        return onboarding_action_join_failures(current, request, result, resume_session=resume_session_for(current))
+
+    def test_resume_restores_valid_draft_and_both_provider_phases(self):
+        for name in ("valid.result.applied.more_ways", "valid.result.actual_commit_enters_provider", "valid.result.skip_provider"):
+            with self.subTest(fixture=name):
+                current, request, result = resume_join_values(name)
+                session = resume_session_for(current)
+                self.assertTrue(valid("onboarding_session", session))
+                self.assertEqual(onboarding_semantic_failures("onboarding_session", session), [])
+                self.assertTrue(valid("onboarding_continuation_snapshot", current))
+                self.assertTrue(valid("onboarding_action_request", request))
+                self.assertTrue(valid("onboarding_action_result", result))
+                self.assertEqual(onboarding_semantic_failures("onboarding_action_request", request), [])
+                self.assertEqual(onboarding_semantic_failures("onboarding_action_result", result), [])
+                self.assertEqual(self.join(current, request, result), [])
+
+    def test_fresh_start_still_requires_welcome_and_original_transition(self):
+        self.assertTrue(valid("onboarding_action_request", CASES["valid.request.start"]))
+        self.assertTrue(valid("onboarding_action_result", CASES["valid.result.applied.start"]))
+        _, request, result = resume_join_values()
+        request["local_context"]["intent"] = "start"
+        result["local_effect"] = "session_started"
+        self.assertFalse(valid("onboarding_action_request", request))
+        self.assertFalse(valid("onboarding_action_result", result))
+
+    def test_resume_cannot_dispatch_or_claim_owner_work(self):
+        current, request, result = resume_join_values()
+        for field in ("owner_route_ref", "owner_operation_ref", "production_receipt_ref"):
+            with self.subTest(field=field):
+                changed = copy.deepcopy(result)
+                changed[field] = "owner:unexpected"
+                self.assertFalse(valid("onboarding_action_result", changed))
+                self.assertIn("onboarding_resume_dispatches_owner_work",
+                              self.join(current, request, changed))
+        request["owner_route_ref"] = "owner:unexpected"
+        self.assertFalse(valid("onboarding_action_request", request))
+
+    def test_resume_requires_resume_surface_and_no_new_choice(self):
+        _, request, _ = resume_join_values()
+        for surface in ("first_run", "settings_rerun", "owner_return"):
+            changed = copy.deepcopy(request)
+            changed["source_surface"] = surface
+            self.assertFalse(valid("onboarding_action_request", changed))
+        request["choice"] = "setup_provider"
+        self.assertFalse(valid("onboarding_action_request", request))
+
+    def test_resume_join_preserves_every_continuation_field_except_local_revision(self):
+        current, request, result = resume_join_values()
+        for field, value in current.items():
+            if field in {"revision", "onboarding_session_id", "continuation_generation"}:
+                continue  # Separately fenced by the existing identity/revision join.
+            with self.subTest(field=field):
+                changed = copy.deepcopy(result)
+                changed["continuation_snapshot"][field] = None if value is not None else "changed"
+                self.assertIn("onboarding_resume_changes_" + field,
+                              self.join(current, request, changed))
+
+    def test_resume_needs_full_prior_continuation_and_matching_intent_focus(self):
+        current, request, result = resume_join_values()
+        for field in ("history", "initiating_client_id", "return_focus_id"):
+            incomplete = copy.deepcopy(current)
+            del incomplete[field]
+            self.assertIn("onboarding_resume_missing_current_" + field,
+                          self.join(incomplete, request, result))
+        changed = copy.deepcopy(result)
+        changed["local_effect"] = "session_started"
+        self.assertIn("onboarding_start_intent_result_mismatch",
+                      self.join(current, request, changed))
+        request["return_focus_id"] = "focus:different"
+        self.assertIn("onboarding_resume_request_focus_mismatch",
+                      self.join(current, request, result))
+
+    def test_valid_fresh_request_cannot_accept_a_resume_result(self):
+        current, request, result = resume_join_values("valid.result.applied.start")
+        current.update(stage="welcome", history=["welcome"])
+        request.update(stage="welcome", source_surface="first_run")
+        request["local_context"]["intent"] = "start"
+        result.update(stage_before="welcome", stage_after="welcome")
+        result["continuation_snapshot"].update(stage="welcome", history=["welcome"])
+        self.assertTrue(valid("onboarding_continuation_snapshot", current))
+        self.assertTrue(valid("onboarding_action_request", request))
+        self.assertTrue(valid("onboarding_action_result", result))
+        self.assertIn("onboarding_start_intent_result_mismatch",
+                      self.join(current, request, result))
+
+    def test_disabled_resume_keeps_existing_no_effect_contract(self):
+        current, request, _ = resume_join_values()
+        result = copy.deepcopy(CASES["valid.result.disabled.open_owner_flow"])
+        result.update(action_id=request["action_id"], action_instance_id=request["action_instance_id"],
+                      onboarding_session_id=current["onboarding_session_id"], stage_before=current["stage"],
+                      stage_after=current["stage"], revision=current["revision"],
+                      continuation_generation=current["continuation_generation"])
+        self.assertTrue(valid("onboarding_action_result", result))
+        self.assertEqual(self.join(current, request, result), [])
+        self.assertEqual(result["local_effect"], "none")
+        self.assertFalse(result["onboarding_session_written"])
+        self.assertIsNone(result["continuation_snapshot"])
+
+    def test_resume_retains_revision_and_generation_fences(self):
+        current, request, result = resume_join_values()
+        request["expected_revision"] += 1
+        self.assertIn("onboarding_action_current_state_mismatch",
+                      self.join(current, request, result))
+        current, request, result = resume_join_values()
+        result["revision"] += 1
+        self.assertIn("onboarding_action_result_revision_mismatch",
+                      self.join(current, request, result))
+        current, request, result = resume_join_values()
+        request["continuation_generation"] += 1
+        self.assertIn("onboarding_action_continuation_generation_mismatch",
+                      self.join(current, request, result))
+
+    def test_resume_rejects_missing_terminal_or_mismatched_prior_session(self):
+        current, request, result = resume_join_values()
+        self.assertIn("onboarding_resume_missing_prior_session",
+                      onboarding_action_join_failures(current, request, result))
+        session = resume_session_for(current)
+        for status in ("skipped", "cancelled"):
+            terminal = copy.deepcopy(session)
+            terminal["status"] = status
+            self.assertTrue(valid("onboarding_session", terminal))
+            self.assertIn("onboarding_resume_session_not_resumable",
+                          onboarding_action_join_failures(current, request, result, resume_session=terminal))
+        completed = CASES["valid.session.ready_after_optional_provider_skips"]
+        self.assertTrue(valid("onboarding_session", completed))
+        self.assertIn("onboarding_resume_session_not_resumable",
+                      onboarding_action_join_failures(current, request, result, resume_session=completed))
+        session["revision"] += 1
+        self.assertIn("onboarding_resume_session_revision_mismatch",
+                      onboarding_action_join_failures(current, request, result, resume_session=session))
+
+    def test_resume_accepts_interrupted_and_deferred_sessions_without_new_owner_work(self):
+        current, request, result = resume_join_values()
+        interrupted = resume_session_for(current)
+        interrupted["status"] = "interrupted"
+        self.assertTrue(valid("onboarding_session", interrupted))
+        self.assertEqual(onboarding_action_join_failures(current, request, result, resume_session=interrupted), [])
+        deferred = copy.deepcopy(CASES["valid.session.deferred_with_active_branch"])
+        current.update({key: copy.deepcopy(value) for key, value in deferred.items() if key in current})
+        current.update(initiating_client_id=deferred["return_context"]["initiating_client_id"],
+                       return_focus_id=deferred["return_context"]["return_focus_id"])
+        request.update(onboarding_session_id=current["onboarding_session_id"], expected_revision=current["revision"],
+                       continuation_generation=current["continuation_generation"], return_focus_id=current["return_focus_id"])
+        result.update(onboarding_session_id=current["onboarding_session_id"], revision=current["revision"] + 1,
+                      continuation_generation=current["continuation_generation"], return_focus_id=current["return_focus_id"],
+                      continuation_snapshot=copy.deepcopy(current))
+        result["continuation_snapshot"]["revision"] = result["revision"]
+        self.assertTrue(valid("onboarding_session", deferred))
+        self.assertTrue(valid("onboarding_continuation_snapshot", current))
+        self.assertTrue(valid("onboarding_action_result", result))
+        self.assertEqual(onboarding_semantic_failures("onboarding_session", deferred), [])
+        self.assertEqual(onboarding_semantic_failures("onboarding_action_result", result), [])
+        self.assertEqual(onboarding_action_join_failures(current, request, result, resume_session=deferred), [])
+
+
 class OnboardingPhaseTests(unittest.TestCase):
     def test_every_current_positive_is_structurally_and_semantically_valid(self):
         for row in PACK["valid"]:
