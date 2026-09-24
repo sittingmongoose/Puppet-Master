@@ -244,7 +244,7 @@ The landing check has still not been run; it runs at landing. The review expects
 
 ## Still open
 
-- **Review and landing.** The confirmation pass on these fixes, then the coordinator's landing go.
+- **Landed** on 2026-09-24 under the coordinator's go, after one more commit it asked for: the DL-070 PlanUnit now says `source_reseeded` is retired. The landing rebase onto `54ac20a1bc` rewrote the commit hashes cited above. `reports/landing-checks/LANDING_20260924_TERMINAL_WORKGROUP_MOVED.md` maps each one to its commit on `main`, and SP-319's renumbering note now cites the landed draft commit `a475070763`.
 - **Companion work the contract itself requires.** Each still needs its own owner work before the producer or reader can be used:
   - the closed original result and pending custody schemas, including the `event_id`, `idempotency_key` and `replay_policy` derivation named under T-02;
   - SIR delegation;
