@@ -171,10 +171,21 @@ class BrowserPreexistingPreservationTests(unittest.TestCase):
                 elif mutation == "manifest_order":
                     admission["preexisting_family_ids"].reverse()
                 else:
-                    admission["preexisting_family_rows_sha256"] = GATE.fingerprint(rows[:39])
+                    admission["preexisting_family_rows_sha256"] = "0" * 64
                 report, failures = GATE.preexisting_preservation(admission, rows)
                 self.assertTrue(failures)
                 self.assertFalse(report["current_preexisting_rows_match_reviewed_successors"])
+
+    def test_current_manifest_pin_does_not_replace_historical_row_authority(self):
+        self.assertEqual(self.admission["preexisting_family_rows_sha256"], GATE.CURRENT39_SHA256)
+        current39 = [row for row in self.rows if row["family_id"] in self.admission["preexisting_family_ids"]]
+        self.assertEqual(GATE.fingerprint(current39), GATE.CURRENT39_SHA256)
+        admission = copy.deepcopy(self.admission)
+        admission["preexisting_family_rows_sha256"] = GATE.ORIGINAL39_SHA256
+        report, failures = GATE.preexisting_preservation(admission, self.rows)
+        self.assertTrue(report["historical_baseline_verified"])
+        self.assertIn("current_preexisting_manifest_hash_mismatch", {row["error"] for row in failures})
+        self.assertFalse(report["current_preexisting_rows_match_reviewed_successors"])
 
     def test_prepared_registration_cannot_escape_with_reviewed_successors(self):
         prepared = next(row for row in self.admission["rows"] if row["admission_status"] == "prepared_not_admitted")
