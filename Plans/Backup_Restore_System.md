@@ -197,6 +197,12 @@ canonical_text: >-
   protocol versions and compatibility range, consistency boundaries, included/excluded families, relative object paths,
   sizes and hashes, encryption/security metadata refs, source Host/Environment, source-code inclusion mode, verification,
   and parent/incremental relationship. Retention is a durable decision with protected/held generations never deleted.
+  cmd.backup.destination.update consumes the selected destination, its expected current generation and an explicit
+  typed nonsecret patch of destination-owned editable configuration. Identity alone or focused form state cannot
+  supply the edit. The actual destination owner validates the patch and all referenced configuration against its
+  current field, auth and permission contracts; caller-supplied health or capability claims are not configuration.
+  The result preserves destination identity and unedited fields and binds the applied patch and resulting generation.
+  An edit grants no implicit credential issuance, repository reassignment, backend deletion or successful test.
 gui_related: true
 gui_classification_reason: Destination, policy, schedule/retention, selected data, storage use, verification, protection, and history are visible manager behavior.
 depends_on: [BRS-002, BRS-003]
@@ -205,6 +211,8 @@ acceptance_criteria:
   - Destination test verifies declared capabilities and write/read/delete or protection behavior without destructive guessing.
   - Each Project repository and the separate Catalog repository can be unlocked, verified, quarantined, retained, pruned, and restored without coupling an unrelated Project.
   - A multi-destination run preserves each attempt's immutable snapshot ID, upload state, failure, and evidence independently.
+  - Destination update requires the actual typed nonsecret patch and exact current destination/Server/generation; a missing operand, stale target or unauthorized referenced configuration cannot apply.
+  - An applied destination result resolves the actual owner output and preserves every unedited field; no-change is explicit and neither outcome creates readiness, credentials or remote data effects.
   - Manifest covers every included object with relative path, byte size, digest, family, and consistency boundary and names exclusions.
   - Retention cannot delete protected, held, active-parent, last-known-good, or recovery-required generations.
 validation_surfaces: [Plans/backup_restore_system_contract_fixtures.json, future offline partial-write protection and retention tests]
@@ -215,11 +223,12 @@ implementation_surfaces: [Plans/backup_restore_system_contracts.schema.json, fut
 node_compile_hint: {mode: backup_destination_manifest_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - source_ref:packet:2026-09-01:BKP-003
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/machine/command_census.json:ACT-089
   - source_ref:packet:2026-09-01:BKP-009
   - source_ref:packet:2026-09-01:CLOUD-001-CLOUD-008
   - source_ref:normalized-register:server-first-2026-08-31:B09-B11
   - source_ref:packet:backbone_v5/09_UPDATES_BACKUP_RESTORE_CONTRACT.md
-preserved_exact_tokens: [BackupDestination, BackupPolicy, BackupManifest, BackupRetentionDecision, incremental, parent]
+preserved_exact_tokens: [BackupDestination, BackupPolicy, BackupManifest, BackupRetentionDecision, incremental, parent, cmd.backup.destination.update]
 negative_constraints: [Do not use absolute source paths as portable object paths., Do not delete protected or held backups., Do not call an unverified partial write complete., Do not collapse repository authority or multi-destination attempts into one scalar state., Do not make a remote backup backend canonical PM state.]
 owner_hints: [Plans/Backup_Restore_System.md, Plans/storage-plan.md]
 ```
@@ -366,6 +375,13 @@ canonical_text: >-
   verification level/time, Recovery Kit status, Back Up Now, Restore, and Add Destination. History/Browse, Destinations,
   Schedule/Retention/Holds, Recovery and Keys, and Advanced/Diagnostics own detailed work. Missing executable
   contracts disable the affected action without reverting accepted scope.
+  Current dispatch of cmd.backup.destination.update, cmd.backup.verify, cmd.backup.test_restore and
+  cmd.backup.file.compare requires the actual owner-defined selection and operation operands below, not only a
+  generic target or receipt reference. The actual owner joins original command instance, selected input, current
+  authority and resolved operation/result evidence. Historical requests lacking these operands remain readable;
+  reading, replay or migration cannot invent a patch, verification level, snapshot set, drill target/coverage or
+  comparison revision, or admit such a historical request as a current effect. The other 37 command contracts
+  and the exact 41 command IDs remain unchanged by this input-depth requirement.
 gui_related: true
 gui_classification_reason: This unit defines all visible backup/restore actions, compact cards, advanced manager fields, progress, receipts, and disabled states.
 depends_on: [BRS-004, BRS-005, BRS-006, BRS-007]
@@ -375,6 +391,8 @@ acceptance_criteria:
   - Every listed command has one central command/UI row, sole handler, permission path, receipt/event disposition, and production wiring row before enablement.
   - Compact UI preserves the four-product distinction and does not imply secrets are included by default.
   - Native/web/palette/NL/API/automation routes share exact identity, handler, receipt, and currentness behavior.
+  - The four operand-bearing commands reject missing or substituted selections through current admission and join actual owner results to the original request; matching strings, a caller facts wrapper or a receipt list alone is not proof.
+  - Historical read compatibility cannot bypass these four current input contracts; other command semantics, sole handlers, permission owners, event dispositions and runtime-unavailable boundaries remain unchanged.
 validation_surfaces: [Plans/backup_restore_system_contracts.schema.json, Plans/backup_restore_system_contract_fixtures.json, future production wiring reverse coverage, future native web UI tests]
 risk_class: backup_action_without_safety_or_wiring
 reasoning_tier: high
@@ -577,6 +595,12 @@ canonical_text: >-
   portable artifact without becoming a restore; archive retrieval requires capability, wait/fee projection, and human
   consent before a billable external effect. None selects latest after refresh, activates content, executes restored
   files, or mutates the Project. Files, Projects, Source Control, and JJ consume these Backup-owned routes only.
+  cmd.backup.file.compare requires both the immutable backup snapshot/path and an explicit target_revision for
+  the selected comparison target. Backup treats that revision as opaque and resolves its actual identity,
+  authorized content and currentness through the existing File or Source Control/native revision owner.
+  Focused editor state, a current checkout or latest after refresh cannot supply the second operand implicitly.
+  The actual compare operation and bounded result preserve both resolved operands and original return/focus;
+  changed target authority or revision cannot relabel old comparison evidence as a current result.
 gui_related: true
 gui_classification_reason: Snapshot tree, download/extract/compare/export, cold-retrieval consent/progress, FileSafe decisions, and exact back-navigation are user-visible.
 depends_on: [BRS-006, BRS-012, BRS-013]
@@ -586,6 +610,7 @@ acceptance_criteria:
   - Archive retrieval reports waiting, external prerequisite, and cost-consent state without hard-coded prices.
   - Reverse navigation returns to the exact immutable snapshot and original Project/repository/filter/focus, never silently latest.
   - Client download and Host extract preserve topology and FileSafe containment; raw keys and foreign absolute paths never enter ordinary evidence.
+  - Compare rejects a missing or substituted target_revision, wrong target owner/path or stale target binding; its actual owner result joins both immutable selected operands without checkout, restore, activation or other Project mutation.
 validation_surfaces: [Plans/backup_restore_system_contracts.schema.json, Plans/backup_restore_system_contract_fixtures.json, future traversal symlink archive cost Client Host and reverse-route tests]
 risk_class: browse_delivery_mutation_or_wrong_target
 reasoning_tier: high
@@ -596,6 +621,8 @@ source_lineage:
   - source_ref:packet:2026-09-01:REST-002-REST-005
   - source_ref:packet:2026-09-01:REST-009
   - source_ref:packet:2026-09-01:BGUI-003
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/machine/command_census.json:ACT-110
+preserved_exact_tokens: [cmd.backup.file.compare, target_revision]
 negative_constraints: [Do not browse latest by implication., Do not activate or execute browsed content., Do not make Files Projects or SCM a backup handler., Do not start billable retrieval without consent.]
 owner_hints: [Plans/Backup_Restore_System.md, Plans/FileManager.md, Plans/FileSafe.md]
 ```
@@ -617,6 +644,21 @@ canonical_text: >-
   confirmation, and expiry. Prune uses engine reachability under a verified maintenance lease; ordinary writers do not
   gain destructive authority. Structural check, sampled/full data read, and isolated restore drill remain distinct
   evidence levels/timestamps/coverage and never inherit between snapshots.
+  cmd.backup.verify requires one actual repository, an explicit nonempty set of selected immutable snapshots and
+  the requested level. Source labels structure, sample and full_data map respectively to the existing receipt
+  scopes structural, sampled_data_read and full_data_read; none means isolated_restore_drill. The owner resolves
+  the actual selected manifests and snapshot membership before work, and reports each selected snapshot's
+  requested and achieved level, status, coverage and authentic receipt without dropping failed or missing members.
+  cmd.backup.test_restore instead requires one selected immutable snapshot, an explicitly selected isolated
+  destination and typed requested drill coverage. The existing Restore, FileSafe and native source owners verify
+  the actual target, isolation, authorization, currentness and required closure before their effects. Requested
+  coverage cannot waive BRS-021's mandatory native rebuild/retained-operation proof or BRS-024 through BRS-029's
+  coherent original-custody, source-lifetime and disclosure boundaries. Missing dependencies remain unproved;
+  BRS-022's separately authorized data completion is never silently started by verification or a drill.
+  Applicable cost, network and resource admission remains current and owner-bound for both commands. Accepted
+  work is not completion; results join the original selected snapshot/target/coverage and actual verification or
+  test-restore evidence. An isolated drill cannot activate the live Project or execute untrusted restored hooks,
+  and no default target, inherited badge or caller declaration supplies missing selection or proof.
 gui_related: true
 gui_classification_reason: Automatic Backups, schedule/timezone, 7/4/6 recommendation, missed state, holds, prune preview, verification badges, and drill progress are visible.
 depends_on: [BRS-005, BRS-013, SIR-012]
@@ -626,6 +668,9 @@ acceptance_criteria:
   - DST repeat/skip, sleeping/offline Host, duplicated signal, restart, and multiple Clients produce at most one occurrence ID and truthful missed/catch-up state.
   - Holds, active parents, last-known-good, recovery-required points, concurrent upload/restore, and unrelated Project repositories survive preview/prune rules.
   - Prune requires exact preview hash/currentness, policy/repository revisions, confirmation, and unexpired maintenance lease.
+  - Verify rejects missing requested scope, empty/substituted snapshot membership, wrong repository/manifest or borrowed receipts; every selected member retains its own actual outcome and exact requested-versus-achieved evidence level.
+  - Test restore rejects missing target/coverage, a live or unauthorized target, stale isolation evidence and mismatched snapshot/coverage receipts; accepted, partial, failed or not-run work cannot be presented as a passed drill.
+  - Neither action invents stronger verification, current authority, source bodies, remote completion or retention from a selected reference; all current BRS-019 and BRS-021 through BRS-029 requirements remain independent.
 validation_surfaces: [Plans/backup_restore_system_contracts.schema.json, Plans/backup_restore_system_contract_fixtures.json, future DST catch-up hold lease prune corruption and isolated-drill tests]
 risk_class: duplicate_schedule_or_destructive_prune
 reasoning_tier: high
@@ -634,7 +679,9 @@ implementation_surfaces: [Plans/Backup_Restore_System.md, Plans/Server_System.md
 node_compile_hint: {mode: backup_operations_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - source_ref:packet:2026-09-01:AUTO-001-AUTO-006
-preserved_exact_tokens: [seven daily, four weekly, six monthly, timezone-aware, occurrence ID, coalesced catch-up, last known good]
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/machine/command_census.json:ACT-101
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/machine/command_census.json:ACT-102
+preserved_exact_tokens: [seven daily, four weekly, six monthly, timezone-aware, occurrence ID, coalesced catch-up, last known good, cmd.backup.verify, cmd.backup.test_restore, structural, sampled_data_read, full_data_read, isolated_restore_drill]
 negative_constraints: [Do not overwrite existing policy., Do not create one schedule per Client., Do not prune by object age., Do not inherit verification or restore-drill badges., Do not remove locks merely because an owner is temporarily unreachable.]
 owner_hints: [Plans/Backup_Restore_System.md, Plans/Server_System.md, Plans/Shared_Integration_Runtime.md]
 ```
