@@ -15161,12 +15161,16 @@ canonical_text: 'storage-plan owns persistence, replay, and projection boundarie
 
 
   For exactly goal_run.certified, GRS-084 selects the active v3 payload and coordinator identity EventRecord root,
-  GRS-085 governs its started/cancelled/certified prefix projection, SP-316 owns its compact original authority
-  families and v7 wrapper routes, and SP-317 owns its projection and checkpoint families. The goal_run_projection.v1
-  inventory above is not its reducer or checkpoint, and whole-v2 certified rows keep their historical interpretation.
-  The event family registry keeps this unit as the payload_owner_doc route for that family; this paragraph, added
-  2026-09-24, points the route at those owners and changes no payload, schema, registry row, admission or behavior.
-  goal_run.started and goal_run.cancelled v3 are likewise governed by GRS-079 with SP-311 and GRS-080 with SP-312.'
+  and GRS-085 governs the mandatory started/cancelled/certified per-Workflow-run prefix projection that carries
+  the durable GoalRun projection role of this unit (with D-R20) for that family. SP-316 owns its compact original
+  authority families and v7 wrapper routes, and SP-317 owns its projection and checkpoint families. The goal_run_projection.v1
+  inventory above is not its reducer or checkpoint. That family applies only to a genuine fresh pm.executor.workflow_source.all_writers.v7
+  birth and pm.goal_run_certified.producer_source.v2 prepare.v2 binding; earlier native-v6 and producer-v1 source
+  editions keep their original closed scope, no existing birth is enrolled or cast, and whole-v2 certified rows
+  keep their historical interpretation. The event family registry keeps this unit as the payload_owner_doc route
+  for that family; this paragraph, added 2026-09-24, points the route at those owners and changes no payload, schema,
+  registry row, admission or behavior. goal_run.started and goal_run.cancelled v3 are likewise governed by GRS-079
+  with SP-311 and GRS-080 with SP-312.'
 gui_related: false
 gui_classification_reason: Goal Runtime persistence and projection ownership is backend storage behavior, not visual
   presentation.
@@ -15191,8 +15195,10 @@ acceptance_criteria:
 - Each of goal.progressed, goal.replanned, goal.stopped and goal.verification_decided has its own current-writer
   prohibition and zero-effect historical reader under SP-300 through SP-303; the complete actual SP-278 generic
   checkpoint remains independently required.
-- goal_run.certified v3 is governed by GRS-084 and GRS-085 with SP-316 and SP-317; this unit remains only the
-  payload_owner_doc route in the registry row for that family, and whole-v2 certified rows keep their historical interpretation.
+- goal_run.certified v3 is governed by GRS-084 and GRS-085 with SP-316 and SP-317 within their native-v7 and producer-v2
+  scope; this unit stays the payload_owner_doc route of the registry row for that family, its mandatory durable per-Workflow-run
+  GoalRun projection role is carried by GRS-085 in the two SP-317 families rather than by goal_run_projection.v1,
+  and whole-v2 certified rows keep their historical interpretation.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures
