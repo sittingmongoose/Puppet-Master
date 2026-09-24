@@ -64,7 +64,10 @@ The counterfactual shows what the amendment does and does not do. With complete 
 - copies of the receipt and the records;
 - the writer, harness and amendment scripts.
 
-## Landing notes
+## Landing notes (review V-07, ruled by the coordinator)
 
-- This branch lands after the depth42 branch, whose assessment the records pin.
-- The seal is not applied here. DL-077 bars this task from applying it.
+- **Order.** This branch lands after the depth42 branch, whose assessment the records pin. That branch is on `main` at `38b8c1301d`, with the assessment at `ba9b84f99e0e0761a8b435a16602d4c88d14589ef273f789fd5b92bdbd5849fd`. If those bytes change before this branch lands, the three records are re-pinned first.
+- **Lander.** The receipt pins `lander_task` to this task, `claude-opus-5.5:dl039-steps-8-9-20260924`, so this task lands it. If another agent had to land it, stop and ask: correcting `lander_task` would take another validator edit, which DL-077 does not allow.
+- **Re-pin rule after landing.** The records pin the three live registry rows, the DL-040 and DL-046 prose sections, the depth assessment bytes and the receipt. The receipt pins the DL-077 prose section and the validator bytes. Any later change to one of them re-pins the affected records in the same landing: a changed receipt means rewriting all three records. Without that, the check fails closed.
+- **Step 9 registrations.** Every registration landing under DL-078 adds its family's record in the same landing.
+- **The seal.** It is not applied here. DL-077 bars this task from applying it.
