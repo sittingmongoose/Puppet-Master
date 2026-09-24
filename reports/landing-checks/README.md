@@ -19,7 +19,7 @@ Exit codes: 0 nothing to report; 1 nothing it reports stops the landing, meaning
 staleness on files the branch edited or failures that are new but name none of the branch's files;
 2 something it reports does stop the landing, meaning a failure on the branch's files that is not
 staleness, a bucket that grew whose error kind is not staleness, or a rise in a subcheck whose
-failures are truncated; 3 the check could not run.
+failures are truncated, other than the readiness growth counter; 3 the check could not run.
 
 **It refuses a sparse worktree**, with exit 3, in both modes. The three checks read the whole
 repository, so every file outside a sparse cone reads as missing: a dry run at `ecb77f4e6c` on a
@@ -75,6 +75,57 @@ sample can change with no failure added or removed, and a fingerprint first seen
 otherwise read as a new failure at every landing. Its rows are still read for the branch match,
 which does not depend on the baseline. Where a subcheck prints every failure, a row that was not
 there before really is new, and is reported as such.
+
+## What counts as governance staleness
+
+AGENTS.md names four things as governance staleness: Spec Lock `stale_hash`, stale owner or artifact
+evidence hashes, a stale readiness report, and the stale plan-migration snapshot. Editing canon
+produces them until the designated Plans agent reseals, so they never stop a landing: on a file the
+branch edited they are reported with a reseal request and the check exits 1. The script recognises
+them by error kind.
+
+| What AGENTS.md names | Error kinds |
+|---|---|
+| Spec Lock `stale_hash` | `stale_hash`, and every kind ending `_spec_lock_hash_stale`: the readiness validator's Spec Lock check for each family it certifies, today `event_record_`, `execution_unit_context_`, `non_executable_closure_` and `storage_value_registry_spec_lock_hash_stale` |
+| stale owner or artifact evidence hashes | `artifact_hash_stale`, `stale_audit_status_index`, `event_authority_currentness_source_drift` (the Event Authority currentness inventory's stored hash of an edited source), and an audit-closure failure whose detail says a stored hash "is stale" |
+| a stale readiness report | `pnc019_source_hash_stale`, `buildability_gate_report_stale_or_not_canonical`, `buildability_passed_with_stale_source_hashes`, the `_spec_lock_hash_stale` kinds above, and the readiness growth counter below |
+| the stale plan-migration snapshot | every `current_snapshot_*` kind, `stale_batch_report_sha256_after`, `complete_final_summary_live_plan_unit_count_stale`, `doc_count_mismatch`, `inventory_doc_set_mismatch`, `superseded_run_final_summary_missing` |
+
+A bucket of one of these kinds that grew is staleness too, so it does not stop the landing either.
+
+Deliberately not on the list: the shard and index kinds such as `shard_hash_stale` and
+`stale_generated_index_artifact`, because a branch that edits canon regenerates those and a stale one
+is the branch's to fix; `event_authority_currentness_audit_unavailable`, which says the ignored audit
+inputs are absent from the tree, not that a hash is stale;
+`event_authority_currentness_artifact_drift` and `_validator_drift`, because a canon edit changes
+neither an audit artifact nor the validator; `pnc019_source_hash_path_missing` and
+`implementation_readiness_self_tests_failed`.
+
+### The readiness growth counter
+
+The readiness validator, `validate_implementation_readiness` in run-gates and
+`implementation_readiness` in audit-governance, prints 50 or 100 rows of its total. Where the
+gitignored Event Authority currentness audit inputs are present, as in the shared checkout, it
+compares every inventoried source with its stored hash, and every edited source adds a source-drift
+row; without them it reports one `event_authority_currentness_audit_unavailable` row instead. Both
+shared-checkout landings of 2026-09-21 saw the total rise from 124 to 218 in each aggregate, while a
+clean worktree at the same commit, without those inputs, stayed at 124; the retained reports cannot
+say row by row what the other 94 were. A rise in a truncated subcheck otherwise stops the landing,
+because nothing can match what was added against the branch's paths. For the readiness subcheck the
+rise is instead the growth counter of the stale readiness rows, and counts as staleness, when the
+rows it printed say so:
+
+- at least one printed row is a staleness kind whose bucket is new or holds more rows than the
+  baseline's, so the stale growth is visible; and
+- no printed row that is not staleness is new or in a bucket that grew, so nothing else is visibly
+  growing.
+
+Otherwise it is judged like any other truncated rise and stops the landing. The rows above the print
+cap stay unseen: a readiness failure that is not staleness and lands above the cap during a rise the
+sample explains is not caught. Every truncated subcheck has that hole; here it is accepted because
+the rule names the counter as staleness. The evidence and plan-graph subchecks get no such exception,
+and a rise in them still stops the landing. In `--json`, each row of `grown_subchecks` carries
+`stale`, true for the readiness growth counter.
 
 ## Which paths count as the branch's
 

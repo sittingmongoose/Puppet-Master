@@ -21,6 +21,12 @@ is never keyed, and the on-branch match runs over the sample, not over the whole
 in a truncated subcheck is therefore reported and stops the landing, since what was added cannot be
 matched against the branch's paths.
 
+Governance staleness is what AGENTS.md names: Spec Lock `stale_hash`, stale owner or artifact
+evidence hashes (among them `event_authority_currentness_source_drift`), stale readiness rows and
+their growth counter, and the stale plan-migration snapshot. It never stops a landing. The readiness
+validator's total is that growth counter: its rise is staleness, not a truncated rise, when the rows
+it printed show stale readiness rows growing and nothing else new.
+
 It exits 0 when it has nothing to report.
 
 A key is `check | subcheck | error kind | path | fingerprint`. The fingerprint is a short digest of
@@ -49,7 +55,8 @@ Exit codes:
      failures that are new but name none of the branch's files (push, and report them)
   2  it reports something that does stop the landing: a failure on the branch's files that is not
      staleness, a bucket that grew whose error kind is not staleness, or a rise in a subcheck whose
-     failures are truncated, where the on-branch match cannot see what was added
+     failures are truncated, where the on-branch match cannot see what was added, other than the
+     readiness growth counter
   3  the script could not run a check or could not read the baseline or the branch paths
 """
 from __future__ import annotations
@@ -85,7 +92,9 @@ TIME_RE = re.compile(r"\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]
 SPAN_ID_RE_CACHE: dict[str, re.Pattern[str]] = {}
 
 # Error kinds that a canon edit is expected to produce until the designated Plans agent reseals.
-# AGENTS.md already carves these out of a landing refusal; the script only names them.
+# AGENTS.md already carves these out of a landing refusal: Spec Lock `stale_hash`, stale owner or
+# artifact evidence hashes, a stale readiness report, the stale plan-migration snapshot. The script
+# only names them; reports/landing-checks/README.md lists them by that grouping.
 STALENESS_ERRORS = {
     "stale_hash",
     "artifact_hash_stale",
@@ -97,9 +106,27 @@ STALENESS_ERRORS = {
     "doc_count_mismatch",
     "inventory_doc_set_mismatch",
     "superseded_run_final_summary_missing",
+    # The Event Authority currentness inventory stores a hash for every source it covers; an edited
+    # source no longer matches it until the next currentness edition. A stale owner evidence hash.
+    "event_authority_currentness_source_drift",
+    # A readiness report whose recorded source hashes no longer match its sources: a stale report.
+    "buildability_passed_with_stale_source_hashes",
 }
 STALENESS_ERROR_PREFIXES = ("current_snapshot_",)
+# The readiness validator checks the Spec Lock hash of every file it certifies, one kind per family:
+# event_record_, execution_unit_context_, non_executable_closure_ and storage_value_registry_ so far.
+# An edited Spec-Locked file reads stale in each of them until the reseal, like `stale_hash` itself.
+STALENESS_ERROR_SUFFIXES = ("_spec_lock_hash_stale",)
 STALENESS_DETAIL_MARKER = "is stale"
+
+# The readiness validator, as each aggregate names it. Its total is the growth counter of the stale
+# readiness rows above: where the gitignored currentness audit inputs are present, as in the shared
+# checkout, every inventoried source whose stored hash has drifted adds a source-drift row, so a
+# canon edit can lift it past the print cap. See readiness_counter_is_staleness.
+READINESS_SUBCHECKS = {
+    ("run-gates", "validate_implementation_readiness"),
+    ("audit-governance", "implementation_readiness"),
+}
 
 CHECKS = ("run-gates", "audit-governance", "plan-migration-validate")
 
@@ -251,8 +278,17 @@ def normalize(check: str, subcheck: str, failure: Any, root: Path) -> dict[str, 
     }
 
 
+def is_staleness_kind(error: str) -> bool:
+    """Governance staleness by error kind alone, as a row or as a bucket that grew."""
+    return (
+        error in STALENESS_ERRORS
+        or error.startswith(STALENESS_ERROR_PREFIXES)
+        or error.endswith(STALENESS_ERROR_SUFFIXES)
+    )
+
+
 def is_staleness(error: str, scrubbed: dict[str, Any]) -> bool:
-    if error in STALENESS_ERRORS or error.startswith(STALENESS_ERROR_PREFIXES):
+    if is_staleness_kind(error):
         return True
     detail = scrubbed.get("detail")
     return isinstance(detail, str) and STALENESS_DETAIL_MARKER in detail
@@ -339,6 +375,54 @@ def bucket_subcheck(name: str) -> tuple[str, str]:
     return check, subcheck
 
 
+def bucket_counts(items: list[dict[str, Any]]) -> dict[str, int]:
+    """How many printed rows each bucket holds in this run, sampled subchecks included.
+
+    In a subcheck that prints only a sample, this is the count inside the sample, and so is the
+    baseline's count for it, because the baseline was built from the printed rows too.
+    """
+    counts: dict[str, int] = {}
+    for item in items:
+        name = bucket_of(item)
+        counts[name] = counts.get(name, 0) + 1
+    return counts
+
+
+def bucket_rose(count: int, baseline_count: int | None) -> bool:
+    """A bucket the baseline never saw, or one holding more rows than it recorded."""
+    return baseline_count is None or count > baseline_count
+
+
+def readiness_counter_is_staleness(
+    row: dict[str, Any],
+    items: list[dict[str, Any]],
+    run_counts: dict[str, int],
+    baseline_counts: dict[str, int],
+) -> bool:
+    """Whether a readiness subcheck's rise is the growth counter of stale readiness rows.
+
+    The readiness validator prints 50 or 100 rows of a total that every canon edit can lift, so the
+    rise itself cannot be matched row by row, and a rise in a truncated subcheck otherwise stops the
+    landing. It counts as staleness when the rows it did print say so: at least one printed row is a
+    staleness kind whose bucket is new or grew, so the stale growth is visible, and no printed row
+    that is not staleness is new or in a grown bucket, so nothing else is visibly growing. Rows above
+    the print cap stay unseen either way; README.md says what that leaves open.
+    """
+    if (row["check"], row["subcheck"]) not in READINESS_SUBCHECKS:
+        return False
+    stale_growth = False
+    for item in items:
+        if (item["check"], item["subcheck"]) != (row["check"], row["subcheck"]):
+            continue
+        name = bucket_of(item)
+        rose = bucket_rose(run_counts.get(name, 0), baseline_counts.get(name))
+        if item["stale"]:
+            stale_growth = stale_growth or rose
+        elif rose:
+            return False
+    return stale_growth
+
+
 def blocking_items(
     on_branch: list[dict[str, Any]],
     grown: list[dict[str, Any]],
@@ -348,13 +432,14 @@ def blocking_items(
 
     A failure on a file the branch touched that is not governance staleness; a bucket that grew whose
     error kind is not staleness; and a rise in a truncated subcheck, whose added failures nothing can
-    match against the branch's paths. A failure that is new but names none of the branch's files does
-    not stop the landing: it is reported and pushed, exactly as the shard-check rule reads.
+    match against the branch's paths, unless it is the readiness growth counter of stale readiness
+    rows (`stale` on the row). A failure that is new but names none of the branch's files does not
+    stop the landing: it is reported and pushed, exactly as the shard-check rule reads.
     """
     return (
         [item for item in on_branch if not item["stale"]]
         + [row for row in grown if not row["stale"]]
-        + [row for row in subcheck_growth if row["truncated"]]
+        + [row for row in subcheck_growth if row["truncated"] and not row.get("stale")]
     )
 
 
@@ -380,7 +465,7 @@ def grown_buckets(seen: dict[str, int], baseline: dict[str, int]) -> list[dict[s
             "bucket": name,
             "baseline_count": baseline[name],
             "count": seen[name],
-            "stale": error in STALENESS_ERRORS or error.startswith(STALENESS_ERROR_PREFIXES),
+            "stale": is_staleness_kind(error),
         })
     return rows
 
@@ -733,6 +818,9 @@ def main() -> int:
 
     grown = grown_buckets(seen_buckets, baseline_counts)
     subcheck_growth = grown_subchecks(counts, baseline.get("checks") or {})
+    run_counts = bucket_counts(items)
+    for row in subcheck_growth:
+        row["stale"] = readiness_counter_is_staleness(row, items, run_counts, baseline_counts)
     resolved = sorted(
         name for name in set(baseline_counts) - set(seen_buckets)
         if bucket_subcheck(name) not in partial
@@ -810,8 +898,16 @@ def main() -> int:
                   f"{row['baseline_count']} -> {row['count']}")
         print(f"Subchecks reporting more failures than the baseline: {len(subcheck_growth)}")
         for row in subcheck_growth[:40]:
-            tag = "blocking " if row["truncated"] else "off-branch"
-            note = f" (only {row['sampled']} of {row['reported']} are printed, so what was added cannot be matched)" if row["truncated"] else ""
+            if row["stale"]:
+                tag = "staleness"
+                note = (" (the readiness growth counter: its printed rows show stale readiness rows "
+                        "growing and nothing else new)")
+            elif row["truncated"]:
+                tag = "blocking "
+                note = f" (only {row['sampled']} of {row['reported']} are printed, so what was added cannot be matched)"
+            else:
+                tag = "off-branch"
+                note = ""
             print(f"  [{tag}] {row['check']}/{row['subcheck'] or '-'}  "
                   f"{row['baseline_reported']} -> {row['reported']}{note}")
         print(f"Naming a path this branch touches: {len(on_branch)}")
@@ -834,7 +930,9 @@ def main() -> int:
                 advice.append("governance staleness for what this branch edited, so ask the Plans agent for a reseal")
             if any(item["key"] not in {other["key"] for other in on_branch} for item in new_items):
                 advice.append("new but names no file this branch touched, so report it to Jared")
-            if subcheck_growth:
+            if any(row["stale"] for row in subcheck_growth):
+                advice.append("the readiness growth counter of stale readiness rows, so ask for a reseal")
+            if any(not row["stale"] for row in subcheck_growth):
                 advice.append("a subcheck that reports more than the baseline, with every failure still printed")
             print("Nothing reported stops the landing: it is " + "; and ".join(advice) + ".")
         else:

@@ -1082,6 +1082,229 @@ class SparseDetection(unittest.TestCase):
             self.assertEqual(M.sparse_paths(Path(plain)), [])
 
 
+class LandingRun(unittest.TestCase):
+    """main() on a real git repository, with each aggregate stubbed subcheck by subcheck.
+
+    The stub prints at most 50 rows of a run-gates subcheck and 100 of an audit-governance one, and
+    reports the true total beside them, as the real checks do. The rule tests below use it.
+    """
+
+    RG_READINESS = "validate_implementation_readiness"
+    AG_READINESS = "implementation_readiness"
+
+    def setUp(self):
+        self.scratch = tempfile.TemporaryDirectory()
+        self.addCleanup(self.scratch.cleanup)
+        self.repo = Path(self.scratch.name)
+        self.module = load_module()
+        self.git("init", "-q", "-b", "main")
+        self.git("config", "user.email", "t@example.invalid")
+        self.git("config", "user.name", "t")
+        (self.repo / "Plans").mkdir()
+        (self.repo / "Plans" / "Base.md").write_text("base\n", encoding="utf-8")
+        self.git("add", "Plans/Base.md")
+        self.git("commit", "-qm", "base")
+        self.base = self.git("rev-parse", "HEAD").strip()
+        self.timeouts = []
+
+    def git(self, *args):
+        return subprocess.run(["git", *args], cwd=self.repo, capture_output=True, text=True, check=True).stdout
+
+    def touch(self, rel):
+        path = self.repo / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("edited\n", encoding="utf-8")
+        self.git("add", rel)
+        self.git("commit", "-qm", rel)
+
+    def stub(self, gates=None, audit=None, migration=()):
+        """`gates` and `audit` map a subcheck to its rows, or to (rows, true total)."""
+        def aggregate(name, spec, cap):
+            blocks, totals = [], {}
+            for subcheck, value in (spec or {}).items():
+                rows, reported = value if isinstance(value, tuple) else (value, len(value))
+                if reported:
+                    blocks.append({"check": subcheck, "failures": list(rows)[:cap]})
+                totals[subcheck] = {"status": "fail" if reported else "pass", "failures": reported}
+            report = {"check": name, "status": "fail" if blocks else "pass", "failures": blocks}
+            if name == "run-gates":
+                report["checks"] = totals
+            else:
+                report.update(totals)
+            return report
+        reports = {
+            "run-gates": aggregate("run-gates", gates, 50),
+            "audit-governance": aggregate("audit-governance", audit, 100),
+            "plan-migration-validate": {"status": "fail" if migration else "pass", "failures": list(migration)},
+        }
+        def run_check(name, root, run_dir, timeout):
+            self.timeouts.append(timeout)
+            return json.loads(json.dumps(reports[name]))
+        self.module.run_check = run_check
+        self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
+
+    def run_main(self, *argv):
+        import io, contextlib
+        out, err = io.StringIO(), io.StringIO()
+        sys.argv = ["pm-landing-check.py", "--root", str(self.repo), *argv]
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            code = self.module.main()
+        self.stderr = err.getvalue()
+        return code, out.getvalue()
+
+    def record(self):
+        code, out = self.run_main("--record-baseline", "--baseline", "baseline.json")
+        self.assertEqual(code, 0, out + self.stderr)
+
+    def compare(self, *argv):
+        return self.run_main("--base", self.base, "--baseline", "baseline.json", *argv)
+
+
+def drift(source_path):
+    """The Event Authority currentness row for one inventoried source whose stored hash no longer
+    matches. It names the source only in `source_path`; its `path` is empty."""
+    return {"error": "event_authority_currentness_source_drift", "source_path": source_path}
+
+
+def pnc_stale(source_path):
+    return {"path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+            "error": "pnc019_source_hash_stale", "source_path": source_path,
+            "expected": "a" * 64, "actual": "b" * 64}
+
+
+def registry_row(family):
+    """A readiness failure that is not staleness, one bucket per family, as the validator reports."""
+    return {"path": f"Plans/storage_value_registry.json:families[{family}]",
+            "error": "storage_value_secret_material_key", "key": "api_token"}
+
+
+class RuleOneStalenessKinds(unittest.TestCase):
+    """Rule 1: governance staleness covers every kind the AGENTS.md rule names."""
+
+    NAMED = (
+        "stale_hash",                                      # Spec Lock
+        "artifact_hash_stale",                             # artifact evidence hashes
+        "event_authority_currentness_source_drift",        # owner evidence hash of an edited source
+        "pnc019_source_hash_stale",                        # stale readiness rows
+        "buildability_gate_report_stale_or_not_canonical",
+        "buildability_passed_with_stale_source_hashes",
+        "event_record_spec_lock_hash_stale",
+        "execution_unit_context_spec_lock_hash_stale",
+        "non_executable_closure_spec_lock_hash_stale",
+        "storage_value_registry_spec_lock_hash_stale",
+        "current_snapshot_live_span_metadata_mismatch",    # the plan-migration snapshot
+        "stale_batch_report_sha256_after",
+    )
+    NOT_NAMED = (
+        "event_authority_currentness_audit_unavailable",   # the audit inputs are absent, not stale
+        "event_authority_currentness_artifact_drift",
+        "event_authority_currentness_validator_drift",
+        "event_authority_checkpoint_changed_requires_fresh_approval",
+        "pnc019_source_hash_path_missing",
+        "implementation_readiness_self_tests_failed",
+        "storage_value_secret_material_key",
+        "shard_hash_stale",                                # regeneration forgotten: the branch's to fix
+        "stale_generated_index_artifact",
+        "subprocess_timeout",
+    )
+
+    def test_every_kind_the_rule_names_is_staleness_as_a_row_and_as_a_grown_bucket(self):
+        for error in self.NAMED:
+            item = M.normalize("run-gates", "s", {"path": "Plans/x.md", "error": error}, CHECKOUT)
+            self.assertTrue(item["stale"], error)
+            bucket = f"run-gates|s|{error}|Plans/x.md"
+            self.assertTrue(M.grown_buckets({bucket: 10}, {bucket: 4})[0]["stale"], error)
+
+    def test_kinds_the_rule_does_not_name_stay_failures(self):
+        for error in self.NOT_NAMED:
+            item = M.normalize("run-gates", "s", {"path": "Plans/x.md", "error": error}, CHECKOUT)
+            self.assertFalse(item["stale"], error)
+            bucket = f"run-gates|s|{error}|Plans/x.md"
+            self.assertFalse(M.grown_buckets({bucket: 2}, {bucket: 1})[0]["stale"], error)
+
+
+class RuleOneOnABranch(LandingRun):
+    def test_source_drift_on_an_edited_document_is_staleness_and_exits_one(self):
+        """The row the two 2026-09-21 shared-checkout landings stopped on: an edited document's
+        currentness hash, named only in source_path."""
+        self.stub(gates={self.RG_READINESS: [pnc_stale("Plans/Base.md")]},
+                  audit={self.AG_READINESS: [pnc_stale("Plans/Base.md")]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={self.RG_READINESS: [pnc_stale("Plans/Base.md"), drift("Plans/Touched.md")]},
+                  audit={self.AG_READINESS: [pnc_stale("Plans/Base.md"), drift("Plans/Touched.md")]})
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("Naming a path this branch touches: 2", out)
+        self.assertIn("excused as governance staleness, by kind (2 in total)", out)
+        self.assertIn("event_authority_currentness_source_drift", out)
+
+    def test_a_readiness_failure_that_is_not_staleness_on_an_edited_document_exits_two(self):
+        self.stub(gates={self.RG_READINESS: [pnc_stale("Plans/Base.md")]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        missing = {"error": "event_authority_currentness_source_missing", "source_path": "Plans/Touched.md"}
+        self.stub(gates={self.RG_READINESS: [pnc_stale("Plans/Base.md"), missing]})
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn("the baseline does not excuse", out)
+
+
+class RuleOneReadinessGrowthCounter(LandingRun):
+    """The readiness total is the growth counter of the stale readiness rows. Both 2026-09-21
+    shared-checkout landings stopped on it: 124 to 218 in each aggregate, 50 and 100 rows printed."""
+
+    def baseline_rows(self):
+        return [pnc_stale("Plans/A.md"), pnc_stale("Plans/B.md"), registry_row(96), registry_row(99)]
+
+    def record_readiness(self):
+        self.stub(gates={self.RG_READINESS: (self.baseline_rows(), 124)},
+                  audit={self.AG_READINESS: (self.baseline_rows(), 124)})
+        self.record()
+        self.touch("Plans/Touched.md")
+
+    def test_a_rise_past_the_print_cap_made_of_stale_rows_exits_one(self):
+        self.record_readiness()
+        grown = [drift("Plans/Touched.md"), drift("Plans/Other.md")] + self.baseline_rows()
+        self.stub(gates={self.RG_READINESS: (grown, 218)}, audit={self.AG_READINESS: (grown, 218)})
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("[staleness] run-gates/validate_implementation_readiness  124 -> 218", out)
+        self.assertIn("[staleness] audit-governance/implementation_readiness  124 -> 218", out)
+        self.assertIn("readiness growth counter", out)
+        report = json.loads(self.compare("--json")[1])
+        self.assertEqual(report["blocking"], 0)
+        self.assertTrue(all(row["stale"] for row in report["grown_subchecks"]))
+
+    def test_a_rise_whose_sample_shows_a_new_failure_that_is_not_staleness_blocks(self):
+        self.record_readiness()
+        grown = [drift("Plans/Touched.md"), registry_row(147)] + self.baseline_rows()
+        self.stub(gates={self.RG_READINESS: (grown, 218)}, audit={self.AG_READINESS: (grown, 218)})
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn("[blocking ] run-gates/validate_implementation_readiness  124 -> 218", out)
+
+    def test_a_rise_whose_sample_shows_no_stale_growth_blocks(self):
+        """Nothing printed says the rise is staleness, so it is judged like any truncated rise."""
+        self.record_readiness()
+        self.stub(gates={self.RG_READINESS: (self.baseline_rows(), 218)},
+                  audit={self.AG_READINESS: (self.baseline_rows(), 218)})
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn("cannot be matched", out)
+
+    def test_a_truncated_rise_outside_readiness_still_blocks_even_when_its_rows_are_stale(self):
+        """Growth counters are the readiness rule only; evidence and plan-graph rises keep exit 2."""
+        stale_rows = [{"path": f"Plans/_shards/d{n}/manifest.json", "error": "artifact_hash_stale"} for n in range(3)]
+        self.stub(gates={"validate_evidence": (stale_rows[:2], 665)})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"validate_evidence": (stale_rows, 876)})
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn("[blocking ] run-gates/validate_evidence  665 -> 876", out)
+
+
 class BaselineReading(unittest.TestCase):
     def test_a_foreign_document_is_refused(self):
         import tempfile
