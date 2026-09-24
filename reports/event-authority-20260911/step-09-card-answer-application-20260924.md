@@ -5,7 +5,7 @@ Jared answered both Step 9 product cards on 2026-09-23, and those answers are re
 | Rows | Card and answer | Outcome for the row |
 |---|---|---|
 | `task.failed` | `EA-S09-EXEC-TASK-FAILURE`, Approve, option A (DL-074) | **Excluded.** `RECLASSIFY_TO_EXCLUDED`: a presentation notification over canonical child-run records, not a separately persisted EventRecord family and not an alias of `subagent.failed` (`Plans/assistant-chat-design.md:1380`). |
-| The 19 `runtime_artifact.*` rows | `EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION`, Approve, option A (DL-075) | **Back to technical work, retention settled.** `KEEP_QUARANTINED`; the retention cell becomes PASS for `RP-AUTHORITY-INDEFINITE` for the time each full contract is admitted (`Plans/Runtime_Artifacts_Panel.md:2472`, `Plans/storage-plan.md:17260`). Every other binding gap stays open, including the embedded-text and deletion reconciliation that DL-075 puts on each full contract. |
+| The 19 `runtime_artifact.*` rows | `EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION`, Approve, option A (DL-075) | **Back to technical work, retention settled.** `KEEP_QUARANTINED`; the retention cell becomes PASS for `RP-AUTHORITY-INDEFINITE` for the time each full contract is admitted (`Plans/Runtime_Artifacts_Panel.md:2472`, `Plans/storage-plan.md:17260`). Every other evidence cell is unchanged. The embedded-text and deletion reconciliation that DL-075 puts on each full contract stays an open admission precondition in each row's rationale and retention note; it is not an evidence cell, and in `api_web_call` and `restore_point` the existing `redaction_custody` PASS predates DL-075 and does not cover it. |
 
 ## Campaign count after this batch
 
@@ -23,7 +23,7 @@ No row is left on a card. The 19 artifact rows move from "carded" to "remaining"
 
 All in `Plans/.audits/event-authority-2026-08-12/`, following the pattern of the six exclusions recorded on 2026-09-11 (`e54a2c8a5c`):
 
-- `individual-disposition/rows/ROW_<event>.json` for the 20 rows: new disposition and rationale, `owner_veto` set to `null` because the question is answered, and new `citations_checked` entries for the owner edit and the Decision Log entry. For the 19 artifact rows the `retention` evidence cell changes from `FAIL` to `PASS` with its Plans citation. No other evidence cell changes, and `bucket`, `cohort_pins`, `phase1_application` and `provisional` are unchanged.
+- `individual-disposition/rows/ROW_<event>.json` for the 20 rows: new disposition and rationale, `owner_veto` set to `null` because the question is answered, and new `citations_checked` entries for the owner edit and the Decision Log entry. For the 19 artifact rows the `retention` evidence cell changes to `PASS` with its Plans citation (from `FAIL` in 10 rows and `OWNER_REQUIRED` in 9). No other evidence cell changes, and `bucket`, `cohort_pins`, `phase1_application` and `provisional` are unchanged.
 - `individual-disposition/LEDGER.jsonl` and `census-adjudication/LEDGER.jsonl`: the same 20 lines, rewritten from the row objects with each file's own serialization and each line's own line ending. No other line changes.
 - `individual-disposition/OWNER_VETOES.jsonl`: the 20 answered vetoes are removed. It lists pending vetoes, and none is pending now; it is back to the empty state it had before the cards were raised. The removed objects are kept verbatim in the application record.
 
