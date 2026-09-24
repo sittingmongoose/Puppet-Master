@@ -11799,8 +11799,8 @@ accepted destination and membership before mutation; retries cannot choose a
 new target, recreate a section or obtain fresh session identities.
 
 When the moved workgroup is the last one in its source section, that section
-stays empty and reusable with its guidance state, as SMPFS-138 states under
-DL-070. The move allocates no replacement workgroup, pane or session, opens no
+stays empty and reusable with its guidance state (DL-070); as SMPFS-138 states,
+it renders an explicit empty state and may later be closed or reused, and is never destroyed implicitly. The move allocates no replacement workgroup, pane or session, opens no
 terminal session and records no reseed; creating another workgroup or terminal
 there is a separate action. The payload has no `source_reseeded` field, and
 `section_created` reports only whether the target section was created. Reset and

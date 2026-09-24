@@ -4,7 +4,7 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L11753-L11972
 
-Source SHA256: `a7d9d36b340c4292c027c2879ebe096cea6f5a2dff287fda64fc9ce27bbb8d00`
+Source SHA256: `8fb0e2df529b58403568b6a18fa95a12c883b7dd537f07b8de1f12cd284bf696`
 
 ---
 
@@ -57,8 +57,8 @@ accepted destination and membership before mutation; retries cannot choose a
 new target, recreate a section or obtain fresh session identities.
 
 When the moved workgroup is the last one in its source section, that section
-stays empty and reusable with its guidance state, as SMPFS-138 states under
-DL-070. The move allocates no replacement workgroup, pane or session, opens no
+stays empty and reusable with its guidance state (DL-070); as SMPFS-138 states,
+it renders an explicit empty state and may later be closed or reused, and is never destroyed implicitly. The move allocates no replacement workgroup, pane or session, opens no
 terminal session and records no reseed; creating another workgroup or terminal
 there is a separate action. The payload has no `source_reseeded` field, and
 `section_created` reports only whether the target section was created. Reset and
