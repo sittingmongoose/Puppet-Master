@@ -1413,6 +1413,12 @@
       "schema_ref": "Plans/forge_integration_contracts.schema.json",
       "record_kinds": [
         "pm.forge.command_request.v1",
+        "pm.forge.repository_create_command_request.v2",
+        "pm.forge.repository_creation_choices.v1",
+        "pm.forge.repository_creation_intent.v1",
+        "pm.forge.repository_creation_preview.v1",
+        "pm.forge.creation_option_selections.v1",
+        "pm.forge.creation_field_catalog.v1",
         "pm.forge.command_result.v1",
         "pm.forge.command_error.v1",
         "pm.forge.command_availability.v1"
