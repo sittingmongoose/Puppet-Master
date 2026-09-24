@@ -28,7 +28,7 @@
     'cmd.server.claim': { owner: 'Server', phase: 'server_setup' },
     'cmd.client.pair.start': { owner: 'Server', phase: 'server_setup' },
     'cmd.restore.preview': { owner: 'Backup', phase: 'read_only_preflight' },
-    'cmd.restore.apply': { owner: 'Backup', phase: 'server_setup', canonical: false },
+    'cmd.restore.apply': { owner: 'Backup', phase: 'restore_preflow', canonical: false },
     /* the one reviewed commit and its child owners */
     'cmd.project.new_local': { owner: 'Project', phase: 'project_commit' },
     'cmd.project.add_existing': { owner: 'Project', phase: 'project_commit' },
@@ -64,6 +64,7 @@
     const s = ctx || {};
     if (row.phase === 'tour_local' || PRECOMMIT.has(row.phase)) return { ok: true };
     if (row.phase === 'server_setup') return s.serverConfirmed ? { ok: true } : { ok: false, reason: 'needs_server_confirmation' };
+    if (row.phase === 'restore_preflow') return s.restoreConfirmed ? { ok: true } : { ok: false, reason: 'needs_restore_confirmation' };
     if (row.phase === 'project_commit') return s.reviewConfirmed ? { ok: true } : { ok: false, reason: 'needs_review_confirmation' };
     if (row.phase.startsWith('postcommit')) return s.committed ? { ok: true } : { ok: false, reason: 'needs_committed_project' };
     return { ok: false, reason: 'unknown_phase' };

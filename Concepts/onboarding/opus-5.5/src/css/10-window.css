@@ -76,8 +76,8 @@ html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 .o55-body { display: grid; grid-template-columns: minmax(300px, 42%) minmax(0, 1fr); min-height: 0; }
 .o55-stage { position: relative; overflow: hidden; border-right: 1px solid var(--o55-line); background: var(--background); }
 .o55-pane { position: relative; overflow: hidden; min-height: 0; }
-.o55-layer { position: absolute; inset: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; background: var(--o55-win-bg); }
-#pm-o55-onboarding[data-family="glass"] .o55-layer { background: transparent; }
+.o55-pane > .o55-layer { position: absolute; inset: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; background: var(--o55-win-bg); }
+#pm-o55-onboarding[data-family="glass"] .o55-pane > .o55-layer { background: transparent; }
 .o55-scroll { display: flex; flex-direction: column; overflow: auto; min-height: 0; overscroll-behavior: contain; scrollbar-width: thin; }
 .o55-content { margin-block: auto; padding: 32px var(--o55-pad) 28px; max-width: 640px; width: 100%; box-sizing: border-box; }
 .o55-eyebrow { margin: 0 0 10px; font: 700 11.5px/1.2 var(--body-font); letter-spacing: 0.13em; text-transform: uppercase; color: var(--o55-accent); }

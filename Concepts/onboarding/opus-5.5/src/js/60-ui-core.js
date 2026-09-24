@@ -13,7 +13,7 @@
     env: null, sess: null, root: null, open: false, busyNav: false,
     draft() { return this.sess.drafts[this.sess.active]; },
     save() { if (this.sess) O55.store.set(KEY, this.sess); },
-    ctx() { const s = this.sess; return { serverConfirmed: !!(s.server.confirmed || s.connect.confirmed), reviewConfirmed: !!this.draft().review_confirmed, committed: s.commit.state === 'done' }; },
+    ctx() { const s = this.sess; return { serverConfirmed: !!(s.server.confirmed || s.connect.confirmed), restoreConfirmed: !!(s.restore && s.restore.confirmed), reviewConfirmed: !!this.draft().review_confirmed, committed: s.commit.state === 'done' }; },
     set(patch) { O55.draft.set(this.draft(), patch); this.save(); }
   };
 
@@ -119,7 +119,7 @@
   /* Choices become charms: the token flies from the card to the rail's current chapter node and hangs there. */
   function charm(fromEl, label, glyph) {
     const def = SCREENS.defs[S.sess.screen] || {};
-    const ch = def.chapter || 'welcome';
+    const ch = (def.chapterFor ? def.chapterFor(S) : def.chapter) || 'welcome';
     const existing = S.sess.charms.findIndex((c) => c.chapter === ch && c.slot === (def.charmSlot || def.id));
     const entry = { chapter: ch, label, glyph, slot: def.charmSlot || def.id };
     if (existing >= 0) S.sess.charms[existing] = entry; else S.sess.charms.push(entry);
@@ -163,9 +163,15 @@
       + (eyebrow ? `<p class="o55-eyebrow o55-st" style="--i:0">${U.esc(eyebrow)}</p>` : '')
       + `<h1 class="o55-title o55-st" style="--i:1" id="o55-h" tabindex="-1">${U.esc(title || '')}</h1>`
       + (lead ? `<p class="o55-lead o55-st" style="--i:2">${U.esc(lead)}</p>` : '')
-      + `<div class="o55-main o55-st" style="--i:3" data-key="main">${body}</div></div></div>` + footHtml(def.foot ? def.foot(S) : {}, def);
+      + `<div class="o55-main o55-st" style="--i:3" data-key="main">${resumedBanner(def)}${body}</div></div></div>` + footHtml(def.foot ? def.foot(S) : {}, def);
   }
 
+  /* Reopening lands on the exact saved screen with a quiet "Picking up where you left off" and Start over; the banner
+     stays until the person moves on. The welcome screen shows its own version. */
+  function resumedBanner(def) {
+    if (!S.resumed || S.resumedShownOn !== def.id || def.id === 'welcome') return '';
+    return `<div class="o55-banner" data-key="resumed">${O55.c.small('history', 18)}<span>${U.esc(T('welcome.resumed'))}</span>${O55.c.link(T('welcome.startOver'), 'startOver')}</div>`;
+  }
   function renderScene(force) {
     const def = SCREENS.defs[S.sess.screen]; if (!def) return;
     const sc = def.scene ? def.scene(S) : { id: 'hero' };
@@ -231,6 +237,7 @@
     const from = SCREENS.defs[S.sess.screen];
     if (from && from.leave) from.leave(S);
     if (!opts.replace && S.sess.screen !== id && !opts.noHistory) S.sess.history.push(S.sess.screen);
+    S.resumedShownOn = null;
     S.sess.screen = id; S.save();
     const def = SCREENS.defs[id];
     if (def.enter) def.enter(S, opts);
@@ -326,7 +333,7 @@
   let returnFocus = null, inerted = [];
   function setInert(on) {
     if (on) {
-      inerted = Array.from(document.body.children).filter((n) => n !== S.root && !n.hasAttribute('inert') && n.id !== 'pm-hover-tag-root' && n.tagName !== 'SCRIPT');
+      inerted = Array.from(document.body.children).filter((n) => n !== S.root && !n.hasAttribute('inert') && n.id !== 'pm-hover-tag-root' && n.id !== 'o55-demo' && n.tagName !== 'SCRIPT');
       inerted.forEach((n) => n.setAttribute('inert', ''));
     } else { inerted.forEach((n) => n.removeAttribute('inert')); inerted = []; }
   }
@@ -338,9 +345,12 @@
     S.sess = saved && saved.v === 1 && saved.status !== 'done' && saved.status !== 'skipped' ? Object.assign(freshSession(), saved) : freshSession();
     if (opts.fresh || (saved && (saved.status === 'done' || saved.status === 'skipped'))) S.sess = freshSession();
     S.resumed = !!(saved && !opts.fresh && saved.status === 'closed');
+    /* facts the person established earlier (a trusted device, an installed key) are re-applied to the fixture world */
+    (O55.onOpen || []).forEach((fn) => { try { fn(S); } catch (_) {} });
     S.sess.status = 'active';
     if (opts.screen && SCREENS.defs[opts.screen]) S.sess.screen = opts.screen;
     if (!SCREENS.defs[S.sess.screen]) S.sess.screen = 'welcome';
+    S.resumedShownOn = S.resumed ? S.sess.screen : null;
     returnFocus = opts.returnFocus || document.activeElement;
     S.open = true; S.save();
     const r = S.root; r.hidden = false; r.setAttribute('data-open', 'true');
@@ -384,7 +394,8 @@
   O55.actions = {
     skip() { close('skip'); },
     'sheet-close'(S2, arg, el) { const sh = el.closest('.o55-sheet'); if (sh) { sh.setAttribute('data-open', 'false'); S.sess.ui.sheet = null; S.save(); refresh(); } },
-    details(S2, arg, el) { const k = 'details:' + (arg || S.sess.screen); S.sess.ui[k] = !S.sess.ui[k]; S.save(); refresh(); }
+    details(S2, arg, el) { const k = 'details:' + (arg || S.sess.screen); S.sess.ui[k] = !S.sess.ui[k]; S.save(); refresh(); },
+    startOver() { open({ fresh: true }); }
   };
 
   Object.assign(O55.ui, { S, build, open, close, go, back, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml });

@@ -85,9 +85,9 @@
     return `<svg class="o55-scene o55-f-${ctx.family} o55-m-${ctx.mode}" viewBox="${vb}" preserveAspectRatio="xMidYMid slice"`
       + ` role="img" aria-label="${U.esc(label)}" data-scene="${U.esc(sceneId)}" data-beat="${U.esc(ctx.beat)}" data-family="${ctx.family}" xmlns="http://www.w3.org/2000/svg">`
       + `<defs>${defs}</defs><g class="o55-bg" data-key="bg">${bg}</g>`
-      + `<g class="o55-layer o55-back" data-key="back">${layers.back.join('')}</g>`
-      + `<g class="o55-layer o55-mid" data-key="mid">${layers.mid.join('')}</g>`
-      + `<g class="o55-layer o55-front" data-key="front">${layers.front.join('')}</g>`
+      + `<g class="o55-sl o55-sl-back" data-key="back">${layers.back.join('')}</g>`
+      + `<g class="o55-sl o55-sl-mid" data-key="mid">${layers.mid.join('')}</g>`
+      + `<g class="o55-sl o55-sl-front" data-key="front">${layers.front.join('')}</g>`
       + `<g class="o55-fx" data-key="fx">${fx}</g></svg>`;
   };
 

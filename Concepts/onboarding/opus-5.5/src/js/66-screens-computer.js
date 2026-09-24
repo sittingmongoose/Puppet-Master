@@ -58,7 +58,7 @@
         S.sess.active = 'main'; O55.draft.set(S.sess.drafts.main, { server_mode: 'new_server', storage_mode: 'with_server' }); S.save();
         return O55.ui.go('s-kind');
       },
-      restoreAll(S) { S.sess.ui.restoreScope = 'full'; S.save(); O55.ui.go('r-source'); }
+      restoreAll(S) { S.sess.restore = { scope: 'full' }; S.save(); O55.ui.go('r-source'); }
     }
   });
 })();

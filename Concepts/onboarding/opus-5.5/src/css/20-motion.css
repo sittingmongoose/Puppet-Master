@@ -8,9 +8,9 @@
 #pm-o55-onboarding[data-family="retro"] { --o55-ui-ease: steps(4, end); --o55-step: 420ms; --o55-stagger: 60ms; --o55-enter-delay: 90ms; }
 
 /* layers are transparent so the outgoing layer stays visible under the incoming one */
-.o55-layer { background: transparent !important; }
-.o55-layer.o55-out { pointer-events: none; z-index: 0; }
-.o55-layer:not(.o55-out) { z-index: 1; }
+.o55-pane > .o55-layer { background: transparent !important; }
+.o55-pane > .o55-layer.o55-out { pointer-events: none; z-index: 0; }
+.o55-pane > .o55-layer:not(.o55-out) { z-index: 1; }
 
 /* ---- incoming stagger ------------------------------------------------------------------------------------------ */
 .o55-entering .o55-st { animation: o55-st-basic var(--o55-step) var(--o55-ui-ease) calc(var(--o55-enter-delay) + var(--i, 0) * var(--o55-stagger)) both; }
@@ -60,15 +60,15 @@
 @keyframes o55-blink-in { 0% { opacity: 0; } 30% { opacity: 1; } 50% { opacity: 0; } 70%, 100% { opacity: 1; } }
 
 /* ---- outgoing layer (inert, ID-free) --------------------------------------------------------------------------- */
-.o55-layer.o55-out-fwd { animation: o55-out-basic var(--o55-out) cubic-bezier(0.3, 0, 1, 1) both; }
-.o55-layer.o55-out-back { animation: o55-out-basic-back var(--o55-out) cubic-bezier(0.3, 0, 1, 1) both; }
+.o55-pane > .o55-layer.o55-out-fwd { animation: o55-out-basic var(--o55-out) cubic-bezier(0.3, 0, 1, 1) both; }
+.o55-pane > .o55-layer.o55-out-back { animation: o55-out-basic-back var(--o55-out) cubic-bezier(0.3, 0, 1, 1) both; }
 @keyframes o55-out-basic { 0% { opacity: 1; transform: none; } 55% { opacity: 0; } 100% { opacity: 0; transform: translateX(-26px); } }
 @keyframes o55-out-basic-back { 0% { opacity: 1; transform: none; } 55% { opacity: 0; } 100% { opacity: 0; transform: translateX(26px); } }
-#pm-o55-onboarding[data-family="friendly"] .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="friendly"] .o55-layer.o55-out-back { animation-name: o55-out-friendly; }
+#pm-o55-onboarding[data-family="friendly"] .o55-pane > .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="friendly"] .o55-pane > .o55-layer.o55-out-back { animation-name: o55-out-friendly; }
 @keyframes o55-out-friendly { 0% { opacity: 1; transform: none; } 55% { opacity: 0; } 100% { opacity: 0; transform: translateY(14px) scale(0.98); } }
-#pm-o55-onboarding[data-family="glass"] .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="glass"] .o55-layer.o55-out-back { animation-name: o55-out-glass; }
+#pm-o55-onboarding[data-family="glass"] .o55-pane > .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="glass"] .o55-pane > .o55-layer.o55-out-back { animation-name: o55-out-glass; }
 @keyframes o55-out-glass { 0% { opacity: 1; transform: none; } 55% { opacity: 0; } 100% { opacity: 0; transform: scale(0.975); } }
-#pm-o55-onboarding[data-family="retro"] .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="retro"] .o55-layer.o55-out-back { animation: o55-out-retro 240ms steps(4, jump-start) both; }
+#pm-o55-onboarding[data-family="retro"] .o55-pane > .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="retro"] .o55-pane > .o55-layer.o55-out-back { animation: o55-out-retro 240ms steps(4, jump-start) both; }
 @keyframes o55-out-retro { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(100% 0 0 0); } }
 
 /* ---- window open / close (bounds never change; only opacity, transform and clip) -------------------------------- */
@@ -81,8 +81,8 @@
 @keyframes o55-win-in-glass { from { opacity: 0; transform: scale(1.045); } to { opacity: 1; transform: none; } }
 #pm-o55-onboarding[data-family="retro"].o55-opening .o55-win { animation: o55-win-in-retro 460ms steps(6, end) both; }
 @keyframes o55-win-in-retro { 0% { clip-path: inset(49.6% 0 49.6% 0); opacity: 1; } 35% { clip-path: inset(49.6% 0 49.6% 0); } 100% { clip-path: inset(0 0 0 0); opacity: 1; } }
-#pm-o55-onboarding.o55-opening .o55-layer .o55-st { animation-delay: calc(260ms + var(--i, 0) * var(--o55-stagger)); }
-#pm-o55-onboarding.o55-opening .o55-layer .o55-main .o55-card, #pm-o55-onboarding.o55-opening .o55-layer .o55-promise li { animation-delay: calc(260ms + 3 * var(--o55-stagger) + var(--ci, 0) * 60ms); }
+#pm-o55-onboarding.o55-opening .o55-pane > .o55-layer .o55-st { animation-delay: calc(260ms + var(--i, 0) * var(--o55-stagger)); }
+#pm-o55-onboarding.o55-opening .o55-pane > .o55-layer .o55-main .o55-card, #pm-o55-onboarding.o55-opening .o55-pane > .o55-layer .o55-promise li { animation-delay: calc(260ms + 3 * var(--o55-stagger) + var(--ci, 0) * 60ms); }
 
 #pm-o55-onboarding.o55-closing .o55-scrim { animation: o55-fadeout 320ms ease both; }
 #pm-o55-onboarding.o55-closing .o55-win { animation: o55-win-out 300ms cubic-bezier(0.3, 0, 1, 1) both; }
@@ -98,13 +98,13 @@ html[data-o55-vt]::view-transition-old(root), html[data-o55-vt]::view-transition
 /* ---- Reduced Motion: order and cause/effect kept, movement removed ---------------------------------------------- */
 html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-st, html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-main *,
 html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-promise li { animation: o55-fadeonly 140ms ease both !important; }
-html[data-motion="reduced"] #pm-o55-onboarding .o55-layer.o55-out { animation: o55-fadeout 100ms ease both !important; }
+html[data-motion="reduced"] #pm-o55-onboarding .o55-pane > .o55-layer.o55-out { animation: o55-fadeout 100ms ease both !important; }
 html[data-motion="reduced"] #pm-o55-onboarding.o55-opening .o55-win, html[data-motion="reduced"] #pm-o55-onboarding.o55-closing .o55-win { animation: o55-fadeonly 160ms ease both !important; }
 html[data-motion="reduced"] #pm-o55-onboarding.o55-closing .o55-win { animation-name: o55-fadeout !important; }
 html[data-motion="reduced"] #pm-o55-onboarding * { transition-duration: 0.01ms !important; }
 @media (prefers-reduced-motion: reduce) {
   #pm-o55-onboarding .o55-entering .o55-st, #pm-o55-onboarding .o55-entering .o55-main *, #pm-o55-onboarding .o55-entering .o55-promise li { animation: o55-fadeonly 140ms ease both !important; }
-  #pm-o55-onboarding .o55-layer.o55-out { animation: o55-fadeout 100ms ease both !important; }
+  #pm-o55-onboarding .o55-pane > .o55-layer.o55-out { animation: o55-fadeout 100ms ease both !important; }
   #pm-o55-onboarding.o55-opening .o55-win { animation: o55-fadeonly 160ms ease both !important; }
   #pm-o55-onboarding.o55-closing .o55-win { animation: o55-fadeout 160ms ease both !important; }
   #pm-o55-onboarding * { transition-duration: 0.01ms !important; }

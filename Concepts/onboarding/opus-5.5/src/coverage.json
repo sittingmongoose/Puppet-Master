@@ -685,6 +685,388 @@
    "mapped": "ex-online: the reviewed online Project carries its repository ref"
   }
  ],
- "screens": {},
- "scenarios": {}
+ "screens": {
+  "welcome": {
+   "chapter": "welcome",
+   "stage": "welcome",
+   "scene": "hero:intro"
+  },
+  "look": {
+   "chapter": "welcome",
+   "stage": "welcome",
+   "scene": "hero:look"
+  },
+  "where": {
+   "chapter": "computer",
+   "stage": "simple_path",
+   "scene": "where:this"
+  },
+  "c-route": {
+   "chapter": "computer",
+   "stage": "remote_access_setup",
+   "scene": "where:connect"
+  },
+  "c-review": {
+   "chapter": "computer",
+   "stage": "review_setup_plan",
+   "scene": "where:connect"
+  },
+  "c-pair": {
+   "chapter": "computer",
+   "stage": "automatic_preparation",
+   "scene": "where:connect"
+  },
+  "c-ready": {
+   "chapter": "ready",
+   "stage": "ready",
+   "scene": "hero:ready"
+  },
+  "s-kind": {
+   "chapter": "computer",
+   "stage": "simple_path",
+   "scene": "where:server"
+  },
+  "s-wait": {
+   "chapter": "computer",
+   "stage": "simple_path",
+   "scene": "where:server"
+  },
+  "s-confirm": {
+   "chapter": "computer",
+   "stage": "server_storage_client",
+   "scene": "where:server"
+  },
+  "s-ready": {
+   "chapter": "computer",
+   "stage": "server_storage_client",
+   "scene": "where:server"
+  },
+  "r-source": {
+   "chapter": "by path",
+   "stage": "first_project",
+   "scene": "begin:restore"
+  },
+  "r-unlock": {
+   "chapter": "by path",
+   "stage": "first_project",
+   "scene": "begin:restore"
+  },
+  "r-pick": {
+   "chapter": "by path",
+   "stage": "first_project",
+   "scene": "begin:restore"
+  },
+  "r-preview": {
+   "chapter": "computer",
+   "stage": "first_project",
+   "scene": "begin:restore"
+  },
+  "r-done": {
+   "chapter": "ready",
+   "stage": "ready",
+   "scene": "hero:ready"
+  },
+  "begin": {
+   "chapter": "project",
+   "stage": "first_project",
+   "scene": "begin:new"
+  },
+  "ex-folder": {
+   "chapter": "project",
+   "stage": "first_project",
+   "scene": "begin:folder"
+  },
+  "name": {
+   "chapter": "project",
+   "stage": "first_project",
+   "scene": "name:type"
+  },
+  "like": {
+   "chapter": "project",
+   "stage": "first_project",
+   "scene": "like:fresh"
+  },
+  "nas-find": {
+   "chapter": "project",
+   "stage": "server_storage_client",
+   "scene": "nas:find"
+  },
+  "nas-identity": {
+   "chapter": "project",
+   "stage": "server_storage_client",
+   "scene": "nas:identity"
+  },
+  "nas-key": {
+   "chapter": "project",
+   "stage": "server_storage_client",
+   "scene": "nas:keys"
+  },
+  "nas-signin": {
+   "chapter": "project",
+   "stage": "server_storage_client",
+   "scene": "nas:keys"
+  },
+  "nas-install": {
+   "chapter": "project",
+   "stage": "server_storage_client",
+   "scene": "nas:install"
+  },
+  "nas-folder": {
+   "chapter": "project",
+   "stage": "server_storage_client",
+   "scene": "nas:folder"
+  },
+  "nas-smb": {
+   "chapter": "project",
+   "stage": "server_storage_client",
+   "scene": "nas:keys"
+  },
+  "nas-nfs": {
+   "chapter": "project",
+   "stage": "server_storage_client",
+   "scene": "nas:folder"
+  },
+  "nas-mounted": {
+   "chapter": "project",
+   "stage": "server_storage_client",
+   "scene": "nas:folder"
+  },
+  "online-signin": {
+   "chapter": "project",
+   "stage": "source_control_setup",
+   "scene": "online:signin"
+  },
+  "online-service": {
+   "chapter": "project",
+   "stage": "source_control_setup",
+   "scene": "online:service"
+  },
+  "online-details": {
+   "chapter": "project",
+   "stage": "source_control_setup",
+   "scene": "online:signed"
+  },
+  "ex-repos": {
+   "chapter": "project",
+   "stage": "first_project",
+   "scene": "online:signed"
+  },
+  "safe": {
+   "chapter": "project",
+   "stage": "source_control_setup",
+   "scene": "safe:default"
+  },
+  "away": {
+   "chapter": "project",
+   "stage": "remote_access_setup",
+   "scene": "away:home"
+  },
+  "review": {
+   "chapter": "project",
+   "stage": "review_setup_plan",
+   "scene": "route:default"
+  },
+  "creating": {
+   "chapter": "project",
+   "stage": "automatic_preparation",
+   "scene": "creating:build"
+  },
+  "protect": {
+   "chapter": "project",
+   "stage": "automatic_preparation",
+   "scene": "safe:protect"
+  },
+  "ai": {
+   "chapter": "ai",
+   "stage": "provider_setup",
+   "scene": "power:waiting"
+  },
+  "ai-all": {
+   "chapter": "ai",
+   "stage": "provider_setup",
+   "scene": "power:waiting"
+  },
+  "ai-none": {
+   "chapter": "ai",
+   "stage": "provider_setup",
+   "scene": "power:waiting"
+  },
+  "free": {
+   "chapter": "ai",
+   "stage": "free_models_setup",
+   "scene": "power:free"
+  },
+  "ready": {
+   "chapter": "ready",
+   "stage": "ready",
+   "scene": "ready:curtain"
+  }
+ },
+ "scenarios": {
+  "s01": {
+   "fixture": "fresh",
+   "title": "Fresh user, local default, no existing Projects",
+   "driver": "tools/scenarios.mjs --only s01"
+  },
+  "s02": {
+   "fixture": "returning",
+   "title": "Existing Projects available; Start fresh",
+   "driver": "tools/scenarios.mjs --only s02"
+  },
+  "s03": {
+   "fixture": "returning",
+   "title": "Inherit settings with preview and optional group selection",
+   "driver": "tools/scenarios.mjs --only s03"
+  },
+  "s04": {
+   "fixture": "fresh",
+   "title": "Back through every pre-commit choice creates nothing",
+   "driver": "tools/scenarios.mjs --only s04"
+  },
+  "s05": {
+   "fixture": "fresh",
+   "title": "Close and resume before commit with the draft intact",
+   "driver": "tools/scenarios.mjs --only s05"
+  },
+  "s06a": {
+   "fixture": "fresh",
+   "title": "Existing folder",
+   "driver": "tools/scenarios.mjs --only s06a"
+  },
+  "s06b": {
+   "fixture": "fresh",
+   "title": "Bring in a Project stored online (just-in-time sign-in)",
+   "driver": "tools/scenarios.mjs --only s06b"
+  },
+  "s06c": {
+   "fixture": "fresh",
+   "title": "Restore a Project from a backup",
+   "driver": "tools/scenarios.mjs --only s06c"
+  },
+  "s08": {
+   "fixture": "fresh",
+   "title": "Review Edit returns to review",
+   "driver": "tools/scenarios.mjs --only s08"
+  },
+  "s09": {
+   "fixture": "nameTaken",
+   "title": "Commit failure, change the name, resume (idempotent)",
+   "driver": "tools/scenarios.mjs --only s09"
+  },
+  "s09b": {
+   "fixture": "flaky",
+   "title": "Network failure, Try again resumes",
+   "driver": "tools/scenarios.mjs --only s09b"
+  },
+  "s10": {
+   "fixture": "returning",
+   "title": "Provider already installed and signed in: Ready automatically",
+   "driver": "tools/scenarios.mjs --only s10"
+  },
+  "s11": {
+   "fixture": "cliMissing",
+   "title": "CLI missing: explicit Install, then Sign In",
+   "driver": "tools/scenarios.mjs --only s11"
+  },
+  "s12": {
+   "fixture": "signedOut",
+   "title": "Installed but signed out: Sign In",
+   "driver": "tools/scenarios.mjs --only s12"
+  },
+  "s13": {
+   "fixture": "fresh",
+   "title": "Key provider: Enter API Key, no Install",
+   "driver": "tools/scenarios.mjs --only s13"
+  },
+  "s14": {
+   "fixture": "returning",
+   "title": "Copied provider route already usable",
+   "driver": "tools/scenarios.mjs --only s14"
+  },
+  "s16": {
+   "fixture": "fresh",
+   "title": "Skip providers, then Set Up Free Models",
+   "driver": "tools/scenarios.mjs --only s16"
+  },
+  "s17": {
+   "fixture": "fresh",
+   "title": "Close after commit and resume at AI",
+   "driver": "tools/scenarios.mjs --only s17"
+  },
+  "s23": {
+   "fixture": "lowResource",
+   "title": "Low-resource mode drops ambient motion only",
+   "driver": "tools/scenarios.mjs --only s23"
+  },
+  "c1": {
+   "fixture": "fresh",
+   "title": "Connect this device, then Create a new Project on it",
+   "driver": "tools/scenarios.mjs --only c1"
+  },
+  "c2": {
+   "fixture": "fresh",
+   "title": "Connect by code, with a wrong code first",
+   "driver": "tools/scenarios.mjs --only c2"
+  },
+  "c3": {
+   "fixture": "fresh",
+   "title": "Connect through My own web address",
+   "driver": "tools/scenarios.mjs --only c3"
+  },
+  "v1": {
+   "fixture": "fresh",
+   "title": "Set up a new Server, then a Project on it with Tailscale",
+   "driver": "tools/scenarios.mjs --only v1"
+  },
+  "n1": {
+   "fixture": "fresh",
+   "title": "Files on a NAS over SSH with a new key and one password",
+   "driver": "tools/scenarios.mjs --only n1"
+  },
+  "n2": {
+   "fixture": "keyWorks",
+   "title": "A key already works: no password step",
+   "driver": "tools/scenarios.mjs --only n2"
+  },
+  "n3": {
+   "fixture": "hostChanged",
+   "title": "Known device with a changed ID blocks",
+   "driver": "tools/scenarios.mjs --only n3"
+  },
+  "n4": {
+   "fixture": "wrongPassword",
+   "title": "Wrong NAS password once",
+   "driver": "tools/scenarios.mjs --only n4"
+  },
+  "n5": {
+   "fixture": "readOnly",
+   "title": "Read-only NAS folder is refused",
+   "driver": "tools/scenarios.mjs --only n5"
+  },
+  "n6": {
+   "fixture": "homeNasPm",
+   "title": "NAS already runs Puppet Master: pairs, no SSH password",
+   "driver": "tools/scenarios.mjs --only n6"
+  },
+  "n7": {
+   "fixture": "keyRefused",
+   "title": "Key refused once: one clear fix",
+   "driver": "tools/scenarios.mjs --only n7"
+  },
+  "d1": {
+   "fixture": "fresh",
+   "title": "Concept demo pill switches the world while the window is open",
+   "driver": "tools/scenarios.mjs --only d1"
+  },
+  "r1": {
+   "fixture": "fresh",
+   "title": "Moving from an old computer: restore everything",
+   "driver": "tools/scenarios.mjs --only r1"
+  },
+  "l1": {
+   "fixture": "fresh",
+   "title": "Set up a Project later",
+   "driver": "tools/scenarios.mjs --only l1"
+  }
+ }
 }

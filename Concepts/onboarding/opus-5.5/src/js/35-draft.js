@@ -84,6 +84,7 @@
       Object.assign(d, { include_vpn_networks: false, tailscale_control: null, tailscale_account_action: null, headscale_url: '', remote_endpoint: '' });
       if (d.proxy_hostname && !/^https:\/\//.test(d.proxy_hostname)) d.proxy_hostname = 'https://' + d.proxy_hostname.replace(/^[a-z]+:\/\//i, '');
       if (d.journey === 'connect_existing') Object.assign(d, { server_connection_mode: 'manual', proxy_kind: null, proxy_hosting: null, proxy_tls: null });
+      else if (d.proxy_hosting === 'existing_proxy') { /* an address someone already runs: nothing to generate here */ }
       else { if (!d.proxy_kind) d.proxy_kind = 'caddy'; if (!d.proxy_hosting) d.proxy_hosting = 'generate_for_server'; if (!d.proxy_tls) d.proxy_tls = 'lets_encrypt'; }
     } else if (d.remote_mode === 'remote_link') {
       clearRemote(); Object.assign(d, { server_connection_mode: 'manual', include_vpn_networks: false });

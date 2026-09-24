@@ -23,7 +23,7 @@
     return d.project_mode === 'later' ? DEFERRED : MAIN;
   }
   function progress(S, screen) {
-    const list = chapters(S), ch = screen.chapter || 'welcome';
+    const list = chapters(S), ch = (screen.chapterFor ? screen.chapterFor(S) : screen.chapter) || 'welcome';
     const idx = Math.max(0, list.indexOf(ch));
     return { chapters: list, index: idx, current: ch, stage: screen.stage || null, graph: graph(S), announce: O55.t('chrome.progress', { n: idx + 1, total: list.length, name: O55.t('chapters.' + ch) }) };
   }
