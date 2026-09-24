@@ -6072,6 +6072,17 @@ def storage_value_union_reference_closure(
     return list(reached.values()), unresolved
 
 
+def storage_value_whole_wrapper_sha256(definition: Any) -> str:
+    """The SP-310 member digest (Plans/storage-plan.md SP-310, 2026-09-24 follow-up; DL-076).
+
+    SHA-256 of the UTF-8 bytes of the resolved wrapper definition written as
+    json.dumps(definition, ensure_ascii=False, indent=2) plus one final LF: members in document
+    order, never sorted. It pins the schema definition in the owner declaration; it is not the
+    stored-value codec and not a hash of any stored value.
+    """
+    return hashlib.sha256((json.dumps(definition, ensure_ascii=False, indent=2) + "\n").encode("utf-8")).hexdigest()
+
+
 def storage_value_stored_profile_union_failures(
     family: dict[str, Any],
     *,
@@ -6086,8 +6097,9 @@ def storage_value_stored_profile_union_failures(
     row's value_schema_id. The composition is exactly a oneOf of the whole stored wrappers the owner
     profile declaration lists, in order. Each wrapper is a closed object whose required fields are
     the row's and whose literal schema_id/schema_version constants are the declared stored member
-    identity, never the composition identity. The row's keys, producers, consumers, codec,
-    retention and recovery authority equal what the declaration assigns to its profiles.
+    identity, never the composition identity. Each member's declared whole_wrapper_sha256 equals
+    the SP-310 digest of the resolved wrapper definition. The row's keys, producers, consumers,
+    codec, retention and recovery authority equal what the declaration assigns to its profiles.
     """
     contract = STORAGE_VALUE_STORED_PROFILE_UNION_CONTRACT
     family_id = family.get("family_id")
@@ -6199,6 +6211,14 @@ def storage_value_stored_profile_union_failures(
             fail("storage_value_registry_stored_profile_union_member_unresolved", member=ref, detail="not an object")
             continue
         resolved_member_refs.append(ref)
+        wrapper_digest = storage_value_whole_wrapper_sha256(wrapper)
+        if member.get("whole_wrapper_sha256") != wrapper_digest:
+            fail(
+                "storage_value_registry_stored_profile_union_member_wrapper_digest_mismatch",
+                member=ref,
+                expected=member.get("whole_wrapper_sha256"),
+                actual=wrapper_digest,
+            )
         if wrapper.get("type") != "object" or wrapper.get("additionalProperties") is not False:
             fail("storage_value_registry_stored_profile_union_member_not_closed_object", member=ref)
         if wrapper.get("required") != required_fields:
@@ -8235,6 +8255,67 @@ def storage_value_representation_self_test_checks(
         member=v1_ref,
     )
     realm_resolver = StorageValueUnionRealm(resources, contract["resource_realm"], read_bytes=lambda rel: (ROOT / rel).read_bytes())
+
+    # SP-310 member wrapper digests (2026-09-24 follow-up; DL-076).
+    declared_members = [
+        member
+        for entry in declaration["profiles"]
+        if entry["family_id"] in contract["family_ids"]
+        for member in entry["profiles"]
+    ]
+    checks["stored_profile_union_member_wrapper_digests_reproduce"] = len(declared_members) == 2 * len(
+        contract["family_ids"]
+    ) and all(
+        re.fullmatch(r"[0-9a-f]{64}", str(member.get("whole_wrapper_sha256")))
+        and member["whole_wrapper_sha256"]
+        == storage_value_whole_wrapper_sha256(realm_resolver.lookup(member["whole_wrapper_ref"], "")[0])
+        for member in declared_members
+    )
+    digest_drift = json.loads(json.dumps(declaration))
+    drifted_member = next(entry for entry in digest_drift["profiles"] if entry["family_id"] == "goal_cancel_progress")[
+        "profiles"
+    ][0]
+    drifted_member["whole_wrapper_sha256"] = "0" * 64
+    checks["stored_profile_union_member_wrapper_digest_drift_rejected"] = has(
+        storage_value_stored_profile_union_failures(
+            union_row, row_path="self-test:union-digest", declaration=digest_drift, resources=resources
+        ),
+        "storage_value_registry_stored_profile_union_member_wrapper_digest_mismatch",
+        member=drifted_member["whole_wrapper_ref"],
+    )
+    edited_ref = next(entry for entry in declaration["profiles"] if entry["family_id"] == "goal_cancel_progress")[
+        "profiles"
+    ][1]["whole_wrapper_ref"]
+    _edited_node, edited_path, edited_pointer, _edited_base = realm_resolver.lookup(edited_ref, "")
+    edited_document = read_json(ROOT / edited_path)
+    json_pointer_value(edited_document, edited_pointer)["$comment"] = "self-test: wrapper definition edited"
+    edited_bytes = json.dumps(edited_document, ensure_ascii=False, indent=2).encode("utf-8") + b"\n"
+    edited_resources = json.loads(json.dumps(resources))
+    for realm_spec in edited_resources["realms"].values():
+        for kind in ("whole_documents", "embedded_resources"):
+            for entry in realm_spec.get(kind) or []:
+                if entry.get("path") == edited_path:
+                    entry["complete_document_sha256"] = hashlib.sha256(edited_bytes).hexdigest()
+    edited_failures = storage_value_stored_profile_union_failures(
+        union_row,
+        row_path="self-test:union-edited-wrapper",
+        declaration=declaration,
+        resources=edited_resources,
+        read_bytes=lambda rel: edited_bytes if rel == edited_path else (ROOT / rel).read_bytes(),
+    )
+    checks["stored_profile_union_edited_wrapper_with_refreshed_document_pin_rejected"] = has(
+        edited_failures,
+        "storage_value_registry_stored_profile_union_member_wrapper_digest_mismatch",
+        member=edited_ref,
+    ) and not any(
+        failure.get("error")
+        in {
+            "storage_value_registry_stored_profile_union_composition_unresolved",
+            "storage_value_registry_stored_profile_union_member_unresolved",
+            "storage_value_registry_stored_profile_union_reference_unresolved",
+        }
+        for failure in edited_failures
+    )
 
     def record_definition(member_ref: str) -> tuple[str, str]:
         """(document path, pointer) of the first record definition a member wrapper references."""
