@@ -1,6 +1,6 @@
 # Storage registry repairs, 2026-09-23
 
-STATUS: front 1 landed on `main` on 2026-09-24 (`reports/landing-checks/LANDING_20260924_STORAGE_REGISTRY_REPAIRS.md`). Front 2 is rebased onto it and is being landed (last step: evidence-delta proof held).
+STATUS: both fronts landed on `main` on 2026-09-24. The landing records are `reports/landing-checks/LANDING_20260924_STORAGE_REGISTRY_REPAIRS.md` (front 1) and `reports/landing-checks/LANDING_20260924_DL070_FOLLOWUPS.md` (front 2).
 
 Branch `fix/storage-registry-repairs-20260923`, from `origin/main` `dca3c3349e`, in the sparse worktree `~/pm-worktrees/storage-registry-repairs-20260923` (`Plans scripts reports tests`). Not landed.
 
