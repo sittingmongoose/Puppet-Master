@@ -21,6 +21,7 @@ SCHEMA = 'Plans/browser_workspace_created_checkpoint_v2.schema.json'
 FIXTURES = 'Plans/browser_workspace_created_checkpoint_v2_fixtures.json'
 V1_SCHEMA = 'Plans/browser_workspace_created_contracts.schema.json'
 GENERIC = 'Plans/event_record_index_checkpoint.schema.json'
+GENERIC_FIXTURES = 'Plans/event_record_index_checkpoint_contract_fixtures.json'
 FAMILY = 'browser_workspace_created_index_checkpoint'
 V1_ID = 'pm.storage_value.browser_workspace_created_index_checkpoint.v1'
 V2_ID = 'pm.storage_value.browser_workspace_created_index_checkpoint.v2'
@@ -133,7 +134,9 @@ def generation_failures(before, after, observation, root=ROOT):
                  'capacity_reserved', 'hold_ref_fence_current'):
         if observation.get(flag) is not True:
             errors.append('generation_unproved:' + flag)
-    if after['state'] != 'current' or after['updated_at_utc'] != after['published_at_utc']:
+    # A new generation may be born degraded over lawful SP-278 survivor loss;
+    # only a withdrawn birth or a birth time other than first publication fails.
+    if after['state'] == 'withdrawn' or after['updated_at_utc'] != after['published_at_utc']:
         errors.append('generation_birth')
     if before is None:
         if after['retired_generations'] or tx['v1_custody'] is not None:
@@ -195,7 +198,10 @@ def source_failures(candidate, index, observation, root=ROOT, *, disclosure=Fals
     fence = 'disclosure_fence_current' if disclosure else 'before_commit_fence_current'
     if observation.get(fence) is not True:
         errors.append('source_or_fence_unproved:' + fence)
-    if candidate['state'] != 'current' or not candidate['filter_complete']:
+    # Degraded complete-survivor coverage stays readable history (SP-266 v1,
+    # SP-278 degraded survivors); health must still equal the generic coverage
+    # health below. Only withdrawal or an incomplete filter refuses the value.
+    if candidate['state'] == 'withdrawn' or not candidate['filter_complete']:
         errors.append('checkpoint_not_current')
     if observation.get('project_id') != candidate['project_id']:
         errors.append('project_join')
@@ -273,9 +279,47 @@ def cleanup_failures(before, after, publication_id, observation, root=ROOT):
     return sorted(set(errors))
 
 
-def fixture_values(root=ROOT):
+def binding_digest(value, root=ROOT):
+    # SP-278's own pm.event_index.binding.msgpack_sha256.v1 recipe.
+    return sibling('pm_event_index_binding', root).binding_digest(value)
+
+
+def generic_case_values(checkpoint, observation, case, root=ROOT):
+    """Rebind the fixture's owner fields to one named SP-278 positive source."""
+    source = load(GENERIC_FIXTURES, root)['positive'][case]
+    index = copy.deepcopy(source['checkpoint'])
+    generation = index['current_generation_id']
+    node = index['generations'][generation]
+    frontier = node['frontier']
+    coverage = frontier['coverage']
+    token = {'storage_instance_id': index['storage_instance_id'], 'checkpoint_key': source['checkpoint_key'],
+             'checkpoint_ref': source['checkpoint_key'] + '#/generations/' + generation,
+             'generation_id': generation, 'generation_anchor_sha256': binding_digest(node['anchor'], root),
+             'frontier_revision': frontier['publication_revision'], 'frontier_sha256': binding_digest(frontier, root),
+             'index_dataset_name': node['index_dataset_name'],
+             'source_selection': copy.deepcopy(frontier['source_selection']),
+             'redb_snapshot_id': observation['redb_snapshot_id']}
+    checkpoint = {**copy.deepcopy(checkpoint), 'storage_instance_id': index['storage_instance_id'],
+                  'index_read_token': token,
+                  'first_retained_sequence_id': coverage['first_retained_sequence_id'],
+                  'index_through_sequence_id': coverage['through_sequence_id'],
+                  'source_cursor': copy.deepcopy(coverage['last_frame']),
+                  'state': 'current' if coverage['health'] == 'healthy' else 'degraded',
+                  'health': coverage['health']}
+    observation = copy.deepcopy(observation)
+    observation['source_selection'] = copy.deepcopy(frontier['source_selection'])
+    observation['generation_transaction'].update(after=copy.deepcopy(checkpoint), checkpoint_key=key(checkpoint))
+    return checkpoint, index, observation
+
+
+def fixture_values(root=ROOT, generic_case=None):
+    """Fixture controls; generic_case rebinds them to that SP-278 positive source."""
     fixture = load(FIXTURES, root)
-    return tuple(copy.deepcopy(fixture[k]) for k in ('checkpoint', 'generic_index', 'generic_observation', 'legacy_v1_checkpoint'))
+    checkpoint, index, observation, legacy = (copy.deepcopy(fixture[k]) for k in (
+        'checkpoint', 'generic_index', 'generic_observation', 'legacy_v1_checkpoint'))
+    if generic_case is not None:
+        checkpoint, index, observation = generic_case_values(checkpoint, observation, generic_case, root)
+    return checkpoint, index, observation, legacy
 
 
 if __name__ == '__main__':

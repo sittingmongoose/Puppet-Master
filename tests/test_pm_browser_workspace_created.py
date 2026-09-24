@@ -572,6 +572,33 @@ class ConditionalCreatedV2Tests(unittest.TestCase):
         held['active_hold_refs'] = []
         self.assertEqual(V2.cleanup_failures(held_before, held_after, publication, held), [])
 
+    # S-01: SP-278 degraded survivors are complete coverage. A v2 value born or
+    # refreshed over them commits and discloses as degraded history, never healthy.
+    def degraded(self):
+        return V2.fixture_values(generic_case='degraded_survivors')[:3]
+
+    def test_degraded_survivor_commit_and_disclosure_pass(self):
+        cp, index, obs = self.degraded()
+        self.assertEqual((cp['state'], cp['health']), ('degraded', 'degraded'))
+        self.assertEqual(V2.advance_failures(None, cp, index, obs), [])
+        self.assertEqual(V2.source_failures(cp, index, obs, disclosure=True), [])
+
+    def test_degraded_survivors_false_healthy_rejected(self):
+        cp, index, obs = self.degraded()
+        false_healthy = {**cp, 'state': 'current', 'health': 'healthy'}
+        obs['generation_transaction']['after'] = copy.deepcopy(false_healthy)
+        self.assertEqual(V2.checkpoint_failures(false_healthy), [])
+        self.assertIn('complete_examined_range_join', V2.advance_failures(None, false_healthy, index, obs))
+        self.assertIn('complete_examined_range_join', V2.source_failures(false_healthy, index, obs, disclosure=True))
+
+    def test_degraded_survivors_incomplete_filter_rejected(self):
+        cp, index, obs = self.degraded()
+        incomplete = {**cp, 'filter_complete': False}
+        obs['generation_transaction']['after'] = copy.deepcopy(incomplete)
+        self.assertEqual(V2.checkpoint_failures(incomplete), [])
+        self.assertIn('checkpoint_not_current', V2.advance_failures(None, incomplete, index, obs))
+        self.assertIn('checkpoint_not_current', V2.source_failures(incomplete, index, obs, disclosure=True))
+
 
 if __name__ == '__main__':
     unittest.main()
