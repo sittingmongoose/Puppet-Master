@@ -38,7 +38,7 @@
     "valid_rejected_result_count": 1,
     "valid_session_count": 5,
     "valid_migration_receipt_count": 4,
-    "invalid_case_count": 194,
+    "invalid_case_count": 196,
     "valid_setup_plan_count": 14,
     "invalid_setup_plan_count": 41,
     "connect_existing_setup_plan_count": 6,
@@ -1415,8 +1415,8 @@
           "continuation_generation": 2,
           "initiating_client_id": "client:desktop:1",
           "return_focus_id": "onboarding.simple_path.heading",
-          "project_draft_ref": null,
-          "project_draft_revision": null,
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
           "project_disposition": "not_applicable",
           "project_commit_binding": null,
           "provider_phase_status": "not_applicable",
@@ -6180,6 +6180,26 @@
     }
   ],
   "invalid": [
+    {
+      "name": "invalid.queued_connect_plan_without_draft_identity",
+      "definition": "onboarding_action_result",
+      "base_valid": "valid.result.applied.choose_simple_path.connect_existing_server",
+      "patch": {
+        "continuation_snapshot.project_draft_ref": null,
+        "continuation_snapshot.project_draft_revision": null
+      },
+      "expected_error": "a queued connect-existing plan retains its own draft identity without fabricating a Project"
+    },
+    {
+      "name": "invalid.back_discards_queued_connect_draft_identity",
+      "definition": "onboarding_action_result",
+      "base_valid": "valid.result.applied.back.remote_access_setup_to_simple_path.connect_existing_server",
+      "patch": {
+        "continuation_snapshot.project_draft_ref": null,
+        "continuation_snapshot.project_draft_revision": null
+      },
+      "expected_error": "Back to simple_path retains the queued draft identity; early navigation does not erase the draft"
+    },
     {
       "name": "invalid.nonexistent_source_control_repository_init",
       "definition": "onboarding_action_request",

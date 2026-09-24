@@ -10117,6 +10117,29 @@
           {
             "if": {
               "properties": {
+                "queued_setup_plan_ref": {
+                  "$ref": "#/$defs/onboarding__safe_ref"
+                }
+              },
+              "required": [
+                "queued_setup_plan_ref"
+              ]
+            },
+            "then": {
+              "properties": {
+                "project_draft_ref": {
+                  "$ref": "#/$defs/onboarding__safe_ref"
+                },
+                "project_draft_revision": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
                 "stage": {
                   "enum": [
                     "first_project",
@@ -11136,6 +11159,29 @@
                   "properties": {
                     "queued_setup_plan_ref": {
                       "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "queued_setup_plan_ref": {
+                      "$ref": "#/$defs/onboarding__safe_ref"
+                    }
+                  },
+                  "required": [
+                    "queued_setup_plan_ref"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_draft_ref": {
+                      "$ref": "#/$defs/onboarding__safe_ref"
+                    },
+                    "project_draft_revision": {
+                      "type": "integer",
+                      "minimum": 1
                     }
                   }
                 }
