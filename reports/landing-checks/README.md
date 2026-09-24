@@ -257,8 +257,9 @@ records `exported` beside `reported` and `sampled`, and the complete rows as `ex
 its own export, or in which it prints every failure, compares with `export_buckets`. A landing whose
 export falls back compares its printed sample with the printed `buckets`, sample with sample, exactly
 as before. The baseline recorded at `792d2fb8b1` has no exports. Until the next nightly refresh, the
-two subchecks it holds only a sample of, the PRD contracts (1,240) and audit-closure (201), keep the
-truncated rule as a baseline sample. The refresh records the PRD contracts from their export.
+PRD contracts (1,240), which it holds only a sample of, keep the truncated rule as a baseline sample;
+audit-closure (201) keeps it after the refresh too, because it has no complete export. The refresh
+records the PRD contracts from their export.
 Evidence and plan-graph are complete in that baseline (0 each), so a landing keys them already.
 
 In `--json`, `exports` carries `complete_export_commands` and `no_complete_export`, and under
