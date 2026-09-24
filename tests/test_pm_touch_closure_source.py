@@ -635,6 +635,98 @@ class ForgeReviewAliasConsumerTests(unittest.TestCase):
         self.assertIn(sentinel, failures)
 
 
+class ScmCheckoutAliasContractTests(unittest.TestCase):
+    PROFILE = "TCP-SCM-CHECKOUT-ALIAS"
+    SCHEMA = "Plans/source_control_contracts.schema.json#/$defs/"
+    ALIASES = {
+        "cmd.project.checkout.add_worktree": "cmd.source_control.workspace.create",
+        "cmd.project.checkout.connect_existing": "cmd.source_control.repository.bind",
+        "cmd.project.checkout.create": "cmd.source_control.workspace.create",
+        "cmd.project.checkout.remove": "cmd.source_control.workspace.remove",
+        "cmd.project.checkout.verify": "cmd.source_control.status.refresh",
+    }
+
+    def setUp(self):
+        self.registry = json.loads((ROOT / "Plans/touch_closure.json").read_text())
+
+    def profile(self, registry):
+        return next(p for p in registry["profiles"] if p["profile_id"] == self.PROFILE)
+
+    def test_profile_uses_full_request_and_result_not_lineage(self):
+        profile = self.profile(self.registry)
+        for field, expected in {
+            "payload_schema_ref": self.SCHEMA + "source_control_command_request",
+            "result_schema_ref": self.SCHEMA + "source_control_command_result",
+            "receipt_refs": [self.SCHEMA + "source_control_command_result"],
+        }.items():
+            with self.subTest(field=field):
+                self.assertEqual(profile[field], expected)
+
+    def test_five_aliases_preserve_four_exact_targets_without_peer_routes(self):
+        bindings = self.registry["alias_bindings"]
+        rows = [r for r in self.registry["rows"] if r[1] == self.PROFILE]
+        self.assertEqual({r[3] for r in rows}, set(self.ALIASES))
+        self.assertEqual(len(rows), 5)
+        self.assertEqual(len(set(self.ALIASES.values())), 4)
+        self.assertNotIn("cmd.source_control.workspace.switch", self.ALIASES.values())
+        for alias, target in self.ALIASES.items():
+            with self.subTest(alias=alias):
+                binding = bindings[alias]
+                for field in ("exact_target", "availability_source", "handler_dispatch_token"):
+                    self.assertEqual(binding[field], target)
+                self.assertEqual(binding["canonical_handler_id"],
+                                 "handlers::source_control::" + target.removeprefix("cmd.source_control.").replace(".", "_"))
+                self.assertEqual(binding["normalization_phase"], "before_permission_and_dispatch")
+                self.assertEqual(binding["source_receipt_identity"],
+                                 "preserve_invoked_alias_as_compatibility_source_only")
+                for field in ("source_registered", "independent_handler_allowed",
+                              "independent_wiring_allowed", "domain_event_emitted_by_alias"):
+                    self.assertIs(binding[field], False)
+
+    def test_four_target_contracts_accept_full_records_and_reject_bare_lineage(self):
+        schema = json.loads((ROOT / "Plans/source_control_contracts.schema.json").read_text())
+        fixtures = json.loads((ROOT / "Plans/source_control_contract_fixtures.json").read_text())
+        validators = {name: Draft202012Validator({"$ref": "#/$defs/source_control_command_" + name,
+                                                "$defs": schema["$defs"]})
+                      for name in ("request", "result", "lineage")}
+        requests = {case["value"]["scope"]["command_id"]: case["value"]
+                    for case in fixtures["valid"]
+                    if case.get("definition") == "source_control_command_request"}
+        result_template = next(case["value"] for case in fixtures["valid"]
+                               if case["name"] == "source_control_command_result_is_generic_and_receipted")
+        for target in sorted(set(self.ALIASES.values())):
+            with self.subTest(target=target):
+                request = requests[target]
+                result = copy.deepcopy(result_template)
+                result["scope"] = copy.deepcopy(request["scope"])
+                result["command_instance_id"] = request["command_instance_id"]
+                lineage = request["scope"]["lineage"]
+                self.assertEqual(list(validators["lineage"].iter_errors(lineage)), [])
+                for name, value in (("request", request), ("result", result)):
+                    self.assertEqual(list(validators[name].iter_errors(value)), [])
+                    self.assertTrue(list(validators[name].iter_errors(lineage)))
+                    self.assertTrue(list(validators["lineage"].iter_errors(value)))
+
+    def test_each_stale_lineage_pointer_is_rejected(self):
+        self.assertEqual(validator.scm_checkout_alias_contract_failures(self.registry), [])
+        for field in ("payload_schema_ref", "result_schema_ref", "receipt_refs"):
+            registry = copy.deepcopy(self.registry)
+            stale = self.SCHEMA + "source_control_command_lineage"
+            self.profile(registry)[field] = [stale] if field == "receipt_refs" else stale
+            with self.subTest(field=field):
+                failures = validator.scm_checkout_alias_contract_failures(registry)
+                self.assertEqual(len(failures), 1)
+                self.assertIn(field, failures[0])
+
+    def test_verify_composes_checkout_contract_check_once(self):
+        sentinel = "SCS-008 checkout alias: synthetic integration sentinel"
+        with mock.patch.object(validator, "scm_checkout_alias_contract_failures",
+                               return_value=[sentinel]) as check:
+            failures, _ = validator.verify()
+        check.assert_called_once()
+        self.assertIn(sentinel, failures)
+
+
 class PermissionsRuleReferenceTests(unittest.TestCase):
     def setUp(self):
         self.registry = json.loads((ROOT / "Plans/touch_closure.json").read_text(encoding="utf-8"))
