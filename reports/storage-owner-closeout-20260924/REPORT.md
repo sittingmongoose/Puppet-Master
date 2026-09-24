@@ -1,6 +1,6 @@
 # Storage owner closeout, 2026-09-24
 
-STATUS: in progress. All three tasks are committed, rebased onto `origin/main` `15ab001892` and pushed; the whole-suite and landing-check comparisons are running. Not landed.
+STATUS: ready to land, waiting for the coordinator's go. All three tasks are committed on `plans/storage-owner-closeout-20260924`, rebased onto `origin/main` `15ab001892` and pushed. Not landed; the landing lock has not been taken.
 
 Branch `plans/storage-owner-closeout-20260924`, sparse worktree `~/pm-worktrees/storage-owner-closeout-20260924` (`Plans scripts reports tests .claude`), rebased onto `origin/main` `15ab001892`. Not landed.
 
@@ -249,6 +249,15 @@ This branch lands under the landing lock, after the coordinator's go. The landin
 
   The last two kinds are missing from the check's staleness list, so they print as blocking on-branch items. The coordinator classified the same rows as staleness for the storage-registry-repairs landing; they are the currentness drift the coordinator said to expect under the carve-out.
 - **Readiness is not worse.** Its truncated total is 38 on `main` and on the branch, with an identical keyed set; the baseline has 79.
+- **Measured prediction.** A landing baseline was recorded at `origin/main` `15ab001892` in a temporary detached sparse worktree, with `--record-baseline --allow-sparse` and a scratch `--baseline` file. `pm-landing-check.py --base 15ab001892` then ran on this branch against it, in the same sparse environment. Result:
+  - **0 new failures, 0 grown buckets, 0 grown subchecks.**
+  - Exit 2 comes only from 166 on-branch items that already exist on `main`. None was introduced here.
+  - 150 are samples of the truncated `prd_planning_runtime_contracts` subcheck: `unresolved_local_ref`, `#/$defs/surface` and similar, in `Plans/home_layout_event_contracts.schema.json` and `Plans/home_layout_pending_receipt.schema.json`. They count as on-branch only because 1(b) edits those two files. The full standalone subcheck has 1,240 failures on `main` and 1,240 on the branch, with **0 added and 0 removed** under the landing check's keys (`prd-runtime-delta/` in the evidence set).
+  - 14 are governance staleness: 3 currentness drift rows and 4 readiness Spec Lock rows, each reported by both run-gates and audit-governance.
+  - 2 are `implementation_readiness_self_tests_failed`. It names the validator because this branch edits it, but its false checks are the three `case_l_verification_integration` checks that are false on `main` too; every storage check passes.
+
+  The real landing runs in the full shared checkout against the committed baseline. There the sparse-cone noise disappears, and `main`'s own rises since `75bcda93bc` appear, as described above.
+- **Tooling note.** With a `--baseline` path outside the repository, `pm-landing-check.py --record-baseline` writes the baseline and then crashes on its final message, which calls `baseline_path.relative_to(root)`. The file it wrote is complete. This matters only for scratch baselines like this one.
 - **Reseal request:** see "Open items".
 
 ## Choices where canon was ambiguous
@@ -270,3 +279,26 @@ This branch lands under the landing lock, after the coordinator's go. The landin
 - **The landing baseline predates `main`'s own rises.** `reports/landing-checks/baseline.json` (recorded at `75bcda93bc`) has 665 `validate_evidence` and 665 `validate_plan_graph` failures; `main` has 847 of each. Every landing therefore reports a truncated-subcheck rise until the nightly refresh re-records it. Owner: the designated Plans agent's nightly run.
 - **The dead whole-token definition in `retention_hold_record`.** Its `$defs/read_token`, like its source `Plans/storage_retention_hold_value.schema.json`, carries the ten-field token, and nothing references it. The owner may remove it or replace it with the projection. Owner: Storage, SP-288.
 - **The landing check's staleness list** still lacks the readiness Spec Lock kinds and `event_authority_currentness_source_drift`; see the storage-registry-repairs report. Owner: landing-check tooling, for Jared.
+
+## Evidence
+
+`/mnt/Cursor/PuppetMaster-Evidence/storage-owner-closeout-20260924/`, listed in `MANIFEST.sha256` (90 files; SHA-256 `b098a2954bbcc4a1c4dc317c934b55eadbd1463e1a97bb248b991b0ec68cfc2f`).
+- `before/`: branch-base check outputs, unittest runs and the fixture baseline.
+- `after/`: the fixture harness and the stored-snapshot rejection check before the rebase.
+- `after-rebase/`:
+  - readiness on `15ab001892` and on the tip;
+  - `verify-spec-lock` on both;
+  - the shard check and index validation;
+  - the Browser gate and the reset module report;
+  - the fixture checks;
+  - the eight named unittest modules.
+- `evidence-delta/` and `evidence-delta-rebased/`: the full `validate-evidence` and `validate-plan-graph` lists on each side, `proof_diff.py` and `proof-result.txt` (both NO_DELTA).
+- `prd-runtime-delta/`: the full `validate-prd-planning-runtime-contracts` lists on `15ab001892` and the tip (NO_DELTA).
+- `compare/`:
+  - the whole-suite runs on both sides;
+  - the local landing baseline at `15ab001892`;
+  - the tip's landing check against it, `landing-tip-vs-local-baseline.json`. Its plain-text rerun was stopped as redundant, so `landing-tip-vs-local-baseline.txt` is partial.
+- `registry-history.json`: the per-commit census and row-change history of `Plans/storage_value_registry.json` that Task 2 is traced from.
+- `scripts/`: every script used for the recipe check, the edits, the fixture harness, the history, the rebase and the comparisons.
+
+Cost: this session only; no model calls beyond this agent; monetary attribution unavailable.
