@@ -23,6 +23,8 @@ A complete record, as the receipt's record contract defines it, has:
 
 For a Step 9 registration, the decision entry is the DL-078 landing entry that names the family.
 
+**Currentness rule (review V-10, ruled by the coordinator on 2026-09-24).** "Current" is tied to the live registry per family, not per assessment. A record's assessment row is current when its `family_id` and `family_revision` equal the live registry row, which the V-02 repair enforces. Whole-assessment equality with the live registry is not required, because it would force re-grading every family at every registration. The spec's DL-077 section states the same rule.
+
 ## The three admission records
 
 All three pin the Step 8(a) depth assessment `reports/event-authority-20260911/step-08-depth42-assessment-20260924.json` at SHA-256 `ba9b84f99e0e0761a8b435a16602d4c88d14589ef273f789fd5b92bdbd5849fd`, the version after that branch's review cycle 2 repairs; they first pinned `ff7dbd59...`. That file is on `plans/ea-step08-depth42-20260924` and lands before this branch. If it changes again, the records are re-pinned before this branch lands.
