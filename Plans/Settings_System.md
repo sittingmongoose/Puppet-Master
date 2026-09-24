@@ -279,6 +279,11 @@ canonical_text: >-
   hides a blocking error, unavailable reason, consent boundary, requested/effective difference, or live-versus-example
   distinction. Sound preview and explicit notification test-send consume F3-405 rather than sharing a simulated
   delivery-success presentation.
+  Settings attention/setup notices distinguish Needs attention, Continue setup, and Recommended. Each notice uses
+  one stable status treatment, one actionable headline, one short reason, and at most one primary action plus one quiet secondary action.
+  Alert or attention state stays in the stable status treatment rather than being repeated inside the explanation;
+  category, setting type, urgency, and status are not repeated as four text layers. These semantics use the existing K3 geometry
+  and current shared status-token and manager-kit presentation.
   Hidden origin/breadcrumb metadata may preserve return context. A visible Back, Close, or breadcrumb is not required;
   Settings must remain keyboard-escapable through the host's standard navigation contract without adding geometry.
 gui_related: true
@@ -291,7 +296,8 @@ acceptance_criteria:
   - Manager curation preserves stable destinations and action availability while removing duplicate in-view navigation and actions; secondary controls remain discoverable and keyboard-operable.
   - Advanced disclosures do not suppress actionable warnings, permission or consent boundaries, owner-currentness reasons, or example-data labels.
   - Return context survives without requiring visible Back, Close, or breadcrumb chrome.
-validation_surfaces: [future row renderer matrix, future manager-state matrix, future navigation and focus tests]
+  - Notice fixtures distinguish Needs attention, Continue setup, and Recommended and enforce the compact status/headline/reason/action anatomy without adding a new shell layout, hiding a blocking reason or consent boundary, adding a manager header action strip, or creating a separate notification inbox.
+validation_surfaces: [tests/test_pm_settings_copy_notice_prose.py, future row renderer matrix, future manager-state matrix, future navigation and focus tests]
 risk_class: settings_state_or_manager_grammar_drift
 reasoning_tier: high
 context_scope: settings_row_and_manager_grammar
@@ -299,8 +305,9 @@ implementation_surfaces: [Plans/Settings_System.md, future Slint Settings compon
 node_compile_hint: {mode: settings_row_manager_grammar_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - Concepts/settings-redesign-concepts/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/authority/base_packet/02_MANAGER_GRAMMAR_AND_SETTING_MODEL.md
+  - source_ref:packet:PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/01_CORE_ARCHITECTURE.md:33-50
   - source_ref:chat:settings-canonical-owner-lane-2026-08-31
-preserved_exact_tokens: [Help, Details, Auto, Not configured, Managed, Unavailable, hidden origin breadcrumb]
+preserved_exact_tokens: [Help, Details, Auto, Not configured, Managed, Unavailable, hidden origin breadcrumb, Needs attention, Continue setup, Recommended, one stable status treatment, one actionable headline, one short reason, one quiet secondary action]
 negative_constraints: [Do not render one-shot actions, status, diagnostics, manager routes, and persisted values as the same row type., Do not require a visible Back or Close control.]
 owner_hints: [Plans/Settings_System.md, Plans/Crosswalk.md]
 ```
@@ -312,7 +319,9 @@ plan_unit_id: SSYS-007
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: 'Copy Settings From Another Project is a one-time detached exact-ID transaction. The user selects
+canonical_text: 'Copy Settings From Another Project is a one-time detached exact-ID transaction. On opening, the copy flow
+  defaults to all ten broad selector categories; the user may explicitly deselect categories before preview. This initial
+  selection does not authorize apply or bypass credential and owner exclusions, preview, confirmation, or apply admission. The user selects
   broad categories, preview resolves each category to an immutable sorted setting_id set and source/destination
   revisions, and the UI shows a redacted diff, source Project, provenance, exclusions, conflicts, validation, and
   rollback plan before apply. The ten stable selector IDs are appearance_workspace, assistant_chat, providers_accounts_models_routing,
@@ -341,6 +350,7 @@ acceptance_criteria:
 - Credential-bearing IDs and owner-excluded IDs are listed as excluded and never copied.
 - Stale preview, validation failure, commit/read-back failure, or cancellation produces no partial destination mutation.
 - Later source changes cannot affect the destination.
+- A newly opened copy flow starts with all ten selector categories selected; an explicitly reduced selection resolves and applies only its previewed eligible exact IDs, never unselected or excluded IDs.
 - Explicit choices made for the new Project win over copied defaults; excluded credential-bearing and owner-excluded
   IDs are never applied.
 - A draft preview or rebind cannot itself satisfy the ordinary apply request; source/draft/preview/inventory changes
@@ -349,6 +359,7 @@ validation_surfaces:
 - Plans/settings_system_contracts.schema.json
 - Plans/settings_system_contract_fixtures.json
 - tests/test_pm_settings_draft_transfer.py
+- tests/test_pm_settings_copy_notice_prose.py
 - future native Settings restore/readback/rollback receipts; not_run
 risk_class: settings_transfer_leak_or_partial_apply
 reasoning_tier: high
@@ -363,6 +374,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - Concepts/settings-redesign-concepts/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/authority/base_packet/reference/SERVER_BACKBONE_SETTINGS_RETURN.md
+- source_ref:packet:PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/SERVER_BACKBONE_SETTINGS_RETURN.md:15-35
 - source_ref:chat:settings-canonical-owner-lane-2026-08-31
 preserved_exact_tokens:
 - Copy Settings From Another Project
@@ -372,6 +384,8 @@ preserved_exact_tokens:
 - provenance
 - rollback
 - no inheritance
+- defaults to all
+- explicitly deselect categories before preview
 negative_constraints:
 - Do not copy raw credentials or credential-store contents.
 - Do not copy unpreviewed IDs.
