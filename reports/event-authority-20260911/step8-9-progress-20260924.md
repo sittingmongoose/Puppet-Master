@@ -1,4 +1,4 @@
-STATUS: last completed step: Step 9 batch 1 (card answers DL-074/DL-075 applied to 20 rows, branch plans/ea-step09-card-answers-20260924 at 10c3df084e, not landed). Also done: 8(d) (plans/ea-certified-anchors-20260924, a8c5ff6a39). In progress: 8(a) on plans/ea-step08-depth42-20260924.
+STATUS: last completed step: 8(a) (42-family depth assessment, 05716b4005 on plans/ea-step08-depth42-20260924). Also done: 8(d) (plans/ea-certified-anchors-20260924), Step 9 batch 1 with review fixes (plans/ea-step09-card-answers-20260924, 67e3056687), DL-077/DL-078 recorded (plans/ea-seal-check-decisions-20260924, 705d823031). In progress: DL-077 seal-check amendment; 8(c). Nothing landed yet.
 
 # DL-039 Steps 8 and 9: progress, 2026-09-24
 
@@ -21,11 +21,15 @@ Opus agent under the coordinator's thread, continuing the DL-039 step list on Ja
 
 | Item | What | State |
 |---|---|---|
-| 8(a) | Current depth assessment of the 42 registered families at checkpoint `2026-09-11.2`, replacing the dated 39-family matrix | in progress |
+| 8(a) | Current depth assessment of the 42 registered families at checkpoint `2026-09-11.2`, replacing the dated 39-family matrix | done: `step-08-depth42-assessment-20260924.{json,md}` (`05716b4005`). 336 PASS, 143 PARTIAL, 13 CONFLICT, 12 ABSENT; complete: `goal.created`, `restore_point.deleted`, `run.started`. Suggested for a short blind review. |
 | 8(b) | Remaining source work: Replan Stop route; original capture for restore-point corruption; native v8 installation; consumer adoption; compaction depth currentness | not started |
 | 8(c) | Browser-created PARTIAL criteria after the SP-278 v2 companion (`22e516b456`) and `terminal.workgroup_moved` (`566576ea55`) | not started |
 | 8(d) | `goal_run.certified` older owner anchors (GRS-084) | done on `plans/ea-certified-anchors-20260924` (`b7128bfeac` owner edit, `a8c5ff6a39` report); bounded owner edit, registry and checkpoint unchanged; waiting for review and the landing go |
-| 9 | J248 campaign: 252 rows | batch 1 done on `plans/ea-step09-card-answers-20260924` (`10c3df084e`): DL-074 excludes `task.failed`; DL-075 settles retention for the 19 `runtime_artifact.*` rows, which return to technical work. Count now 0 registered, 7 excluded, 0 carded, 245 remaining. Ready for blind review. |
+| 9 | J248 campaign: 252 rows | batch 1 on `plans/ea-step09-card-answers-20260924`, reviewed (fix then land, 8 findings, 0 blocking) and fixed (tip `67e3056687`): DL-074 excludes `task.failed`; DL-075 settles retention for the 19 `runtime_artifact.*` rows, which return to technical work. Count now 0 registered, 7 excluded, 0 carded, 245 remaining. Ready for blind review. |
+
+## Decision Log entries
+
+- DL-077 and DL-078 (Jared's answers to `EA-S10-VALIDATOR-LIVE-SET-001`, 2026-09-24) on `plans/ea-seal-check-decisions-20260924` (`705d823031`), with the Step 9 procedure record `step-09-procedure-20260924.md`. Blind review running.
 
 ## Landings
 
