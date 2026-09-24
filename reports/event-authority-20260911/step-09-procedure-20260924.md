@@ -37,7 +37,7 @@ A family is admitted only with its complete contract: exact payload schema (clos
 
 ## Per exclusion
 
-Record `RECLASSIFY_TO_EXCLUDED` on the row in `Plans/.audits/event-authority-2026-08-12/individual-disposition/` and on its line in the census adjudication ledger, citing the owner text and any Decision Log answer. Keep the legacy bucket and cohort pins, since the frozen schema has no J248 exclusion category, and claim no denominator removal. Write an application record with before and after hashes, as batch 1 did (`step-09-card-answer-application-20260924.json`).
+Record `RECLASSIFY_TO_EXCLUDED` on the row in `Plans/.audits/event-authority-2026-08-12/individual-disposition/` and on its line in the census adjudication ledger, citing the owner text and any Decision Log answer. Keep the legacy bucket and cohort pins, since the frozen schema has no J248 exclusion category, and claim no denominator removal. Write an application record with before and after hashes, as batch 1 does (`step-09-card-answer-application-20260924.json`, on `plans/ea-step09-card-answers-20260924` until batch 1 lands).
 
 ## Standing constraints
 
