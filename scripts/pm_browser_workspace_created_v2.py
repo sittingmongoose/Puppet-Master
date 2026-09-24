@@ -111,6 +111,9 @@ def checkpoint_failures(value, root=ROOT):
             errors.append('history_scope')
         if instant(withdrawal) > instant(value['published_at_utc']) or instant(birth) > instant(value['published_at_utc']):
             errors.append('history_time')
+    # Only one v1 row exists per key, so a lawful handoff leaves one v1 wrapper.
+    if sum('legacy_checkpoint' in entry for entry in value['retired_generations']) > 1:
+        errors.append('multiple_v1_custody_entries')
     return sorted(set(errors))
 
 

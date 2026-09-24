@@ -740,6 +740,13 @@ class ConditionalCreatedV2Tests(unittest.TestCase):
         late['retired_generations'][0]['custody_bound_at_utc'] = '2026-09-12T00:00:00Z'
         self.assertEqual(V2.checkpoint_failures(late), ['history_time'])
 
+    def test_only_one_v1_custody_entry(self):
+        _, after, _ = self.handoff()
+        duplicate = copy.deepcopy(after['retired_generations'][0])
+        duplicate['publication_id'] = 'publication:created-v1-custody-2'
+        after['retired_generations'].append(duplicate)
+        self.assertEqual(V2.checkpoint_failures(after), ['multiple_v1_custody_entries'])
+
     def cleanup_obs(self, before, after, publication, now='2026-09-18T12:00:00Z'):
         return {'prior_checkpoint': copy.deepcopy(before), 'now_utc': now, 'resolved_hold_refs': [],
                 'active_hold_refs': [], 'resolved_references': [], 'all_applicable_holds_enumerated': True,
