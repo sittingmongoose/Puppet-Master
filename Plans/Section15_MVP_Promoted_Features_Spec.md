@@ -11501,7 +11501,14 @@ this creation fact cannot create billing, attach a chip, dereference an artifact
 or start a Browser action. A future independent persisted consumer requires its
 own reviewed owner/Storage binding before use.
 
-The conditional SP-266 successor names
+<a id="conditional-sp-266-v2-successor-adopting-the-sp-278-read-token"></a>
+### Conditional SP-266 v2 successor adopting the SP-278 read token — 2026-09-23
+
+These are **newly authored technical owner definitions under DL-046** for
+`browser.workspace.created` only. The depth gap they answer is recorded in
+`reports/event-authority-20260911/step-08-browser-pair-depth-assessment-20260923.md`.
+
+The conditional SP-266 v2 successor adopting the SP-278 read token names
 `browser.workspace_inventory.created.v2@2.0.0` as this same historical read
 consumer's future version. It may replace the v1 read route only after the exact
 v2 Storage value, binding, admission and migration are installed. The reader must

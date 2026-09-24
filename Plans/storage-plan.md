@@ -19844,7 +19844,12 @@ source/currentness/deletion, then allow the adopted reader. No silent reset to
 zero, sibling checkpoint reuse, bulk Browser admission or destructive history
 rewrite is a migration path.
 
-### Conditional SP-278 successor for the created checkpoint
+<a id="conditional-sp-266-v2-successor-adopting-the-sp-278-read-token"></a>
+### Conditional SP-266 v2 successor adopting the SP-278 read token — 2026-09-23
+
+These are **newly authored technical Storage definitions under DL-046** for
+`browser.workspace.created` only. The depth gap they answer is recorded in
+`reports/event-authority-20260911/step-08-browser-pair-depth-assessment-20260923.md`.
 
 The registered v1 value and binding above remain the current definitions until a
 separately installed successor is admitted. They do not encode SP-278's complete
