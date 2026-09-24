@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19706-L19962
+Source lines: L19706-L20013
 
-Source SHA256: `104c98f5177b2937d4cb51023628fde6944da58815b775cce3a56c5d02fa6277`
+Source SHA256: `08812f0511a349794ea5f65aa725ea9f47db3d315674a3f7da74fd6ff54c03dd`
 
 ---
 
@@ -219,11 +219,62 @@ current plus at most two retired cores is the limit, with no fourth staging key
 or early eviction. Unknown old custody, unsupported codec, unresolved hold, full
 protected capacity, incomplete source or uncertain transaction outcome leaves
 v2 currentness unavailable. A retired v1 core is historical derived evidence,
-never an alternate current reader. Later cleanup obeys the existing first-
-withdrawal clock, hold/ref clearance and same-key CAS rules. This successor
-requires its closed registered schema, explicit reader/admission revisions and
-native migration, source, permission and crash proofs before activation; this
-conditional target alone grants none of them.
+never an alternate current reader. After the handoff commits,
+`storage.browser_workspace_created_index.v1@1.0.0` cannot write this key; its CAS
+against a v2 value fails closed.
+
+Newly authored under DL-046 for `browser.workspace.created` only, the v2
+generation custody is stated here in full, not inferred from a sibling; it
+restates for this key the rules the reset section gives its own checkpoint. The
+same redb `checkpoints` value at the unchanged logical key holds the entire
+generation set: one current core plus at most two closed `retired_generations`
+cores without recursive history. There is no secondary history key, unspecified
+redb generation slot or backup substitute. Every v2 core has a stable
+`publication_id`, first `published_at_utc` and `hold_refs`; a v2 history entry
+contains exactly `checkpoint_core` and `successor_publication_id`, and the only v1
+entry is the `v1_custody_bound_at_handoff` wrapper above. An entry's terminal
+anchor is its core's actual first `withdrawn_at_utc`, which for the v1 wrapper is
+its `retired_at_utc`; it is never birth, cursor time or a guessed retirement.
+Every retained core joins this exact Storage/Project/partition. Publication IDs
+are unique and never retire into themselves, and old successor refs are not
+retargeted when later history is cleaned up.
+
+Only initial governed publication, a verified rebuild or an explicitly admitted
+binding successor, such as this v1 handoff, allocates a new publication identity.
+The coordinator selects that identity once and reuses it on retry. An ordinary
+refresh preserves the current publication ID, first publication time, hold refs
+and every history entry. It changes only the verified token, bounds, cursor,
+health/state and observation time; observation time and the examined range never
+regress, and a withdrawn value is never refreshed. Generic append or rebuild does
+not itself retire this filtered generation. Any separately authorized hold update
+serializes through the existing hold owner, not ordinary traversal.
+
+A v2-to-v2 replacement requires a complete verified source rebuild, exact
+predecessor CAS, current coordinator/maintenance/hold/reference fences and a
+lawful reserved slot. One redb commit withdraws an active predecessor at the
+commit time, archives its complete finalized core with the selected successor ID,
+preserves all older entries byte-for-byte and publishes the new complete core
+under a new publication ID with no v1 custody. An already-withdrawn predecessor
+keeps its entire core and first withdrawal time. Successor birth equals the actual
+commit time and cannot precede the prior observation. One current core plus two
+retained predecessors consume all three slots: a fourth publication waits for
+lawful cleanup and never drops history, overwrites a held generation or stages in
+a hidden fourth key.
+
+Cleanup selects one exact retired publication ID and removes only that entry in a
+same-key compare-and-swap commit, preserving the current core and every sibling
+byte-for-byte. Eligibility begins inclusively at that entry's first withdrawal
+plus 604800 seconds and requires complete current hold/ref resolution, authorized
+maintenance/access/deletion and the same-redb fence used by hold admission and
+capacity reservation. Resolve stored `hold_refs` through the unchanged
+`retention_hold_record` owner and enumerate all applicable existing
+application/Project/thread/Run/event/receipt and live/backup/recovery references;
+no new hold scope or meaning is introduced. Missing hold resolution blocks
+cleanup. Archived cores never become current by moving them to the root.
+
+This successor requires its closed registered schema, explicit reader/admission
+revisions and native migration, source, permission and crash proofs before
+activation; this conditional target alone grants none of them.
 
 ### SP-266 - Browser workspace-created single-family persistence binding
 

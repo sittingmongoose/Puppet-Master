@@ -265,6 +265,9 @@ def cleanup_failures(before, after, publication_id, observation, root=ROOT):
         errors.append('cleanup_protected_or_unexpired')
     if observation.get('hold_ref_fence_current') is not True or observation.get('cleanup_transaction_resolved') is not True:
         errors.append('cleanup_custody_unproved')
+    for flag in ('maintenance_authorized', 'access_allowed', 'deletion_allows_audit'):
+        if observation.get(flag) is not True:
+            errors.append('cleanup_authority_unproved:' + flag)
     expected = copy.deepcopy(before)
     expected['retired_generations'].remove(entry)
     tx = observation.get('cleanup_transaction')

@@ -551,7 +551,8 @@ class ConditionalCreatedV2Tests(unittest.TestCase):
         publication = before['retired_generations'][0]['publication_id']
         obs = {'prior_checkpoint': before, 'now_utc': '2026-09-18T12:00:00Z', 'resolved_hold_refs': [],
                'active_hold_refs': [], 'resolved_references': [], 'all_applicable_holds_enumerated': True,
-               'hold_ref_fence_current': True, 'cleanup_transaction_resolved': True}
+               'hold_ref_fence_current': True, 'cleanup_transaction_resolved': True,
+               'maintenance_authorized': True, 'access_allowed': True, 'deletion_allows_audit': True}
         obs['cleanup_transaction'] = {'schema_id': 'pm.browser_workspace_created_checkpoint_cleanup_transaction.v2',
             'transaction_ref': 'transaction:created-v2-cleanup', 'before': before, 'after': after, 'checkpoint_key': V2.key(before),
             'selected_publication_id': publication, 'committed_at_utc': obs['now_utc'], 'status': 'committed'}
@@ -559,7 +560,9 @@ class ConditionalCreatedV2Tests(unittest.TestCase):
         for field, value in [('now_utc', '2026-09-18T11:59:59Z'), ('resolved_hold_refs', ['hold:current']),
                              ('active_hold_refs', ['hold:current']), ('all_applicable_holds_enumerated', False),
                              ('resolved_references', ['ref:current']), ('hold_ref_fence_current', False),
-                             ('cleanup_transaction_resolved', False), ('prior_checkpoint', None)]:
+                             ('cleanup_transaction_resolved', False), ('prior_checkpoint', None),
+                             ('maintenance_authorized', False), ('access_allowed', False),
+                             ('deletion_allows_audit', False)]:
             changed = copy.deepcopy(obs); changed[field] = value
             self.assertTrue(V2.cleanup_failures(before, after, publication, changed), field)
         _, held_before, _ = self.handoff(withdrawn=True, holds=['hold:original'])
