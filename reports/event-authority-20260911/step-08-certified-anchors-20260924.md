@@ -21,7 +21,16 @@
 - `pm-plans-verify.py validate-goal-runtime-event-fixtures` (SP-214's validation surface): pass, 0 failures, on the branch and on `main`.
 - SP-214's YAML block parses; the new text avoids apostrophes so both the single-quoted `canonical_text` and the plain acceptance criterion read literally.
 
-**Expected at landing.** Governance staleness for the two edited documents: their Spec Lock hash (`storage-plan.md`), evidence and plan-graph artifact hashes, `event_authority_currentness_source_drift` rows and plan-migration snapshot rows. That is a reseal request, not a blocker.
+**Expected at landing.** Governance staleness for the two edited documents, which is a reseal request and not a canon defect:
+- Spec Lock `stale_hash` for both `Plans/Goal_Runtime_System.md` and `Plans/storage-plan.md`;
+- `pnc019_source_hash_stale` for `Plans/Goal_Runtime_System.md`;
+- two `event_authority_currentness_source_drift` rows, one per document;
+- 132 `artifact_hash_stale` rows in the live plan-sharding evidence bundle (the two documents and their 130 shards). They make `validate_plan_graph` and `validate_evidence` truncated rises, so the landing check exits 2 until the rises are classified as this staleness, as the `f1ce058ccd` landing did;
+- the node readiness report regenerated after the rebase with the ignored currentness edition present (review A-08), never hand-merged;
+- the certified-family pins above (A-07);
+- the plan-migration snapshot rows for the two documents' units.
+
+The reseal request to the designated Plans agent covers the Spec Lock entries, the live plan-sharding evidence bundle, the PNC-019 hash for `Goal_Runtime_System.md`, a currentness edition for both documents, the plan-migration snapshot, and the certified-family pins.
 
 **Certified-family pins (review A-07).** The edit moves `Plans/Goal_Runtime_System.md` off the whole-file hash and line numbers the certified family pins: the Goal_Runtime_System.md member of `Plans/goal_certified_family_composition.json` (`ccedade9fde5fdf69f10fca4fb7d67eec1869e2d52364f010f95e80c06dcd863`) and the consumer source-citations C01 to C05, whose lines move by two. The cited passages themselves are byte-unchanged. Nothing in the certified contracts changes on this branch. The certified-family owner refreshes those pins at the next reseal, together with the `storage-plan.md` member (`328858615b...`), which was already stale on `main`. This is part of the reseal request below.
 
