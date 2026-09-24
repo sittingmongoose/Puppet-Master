@@ -11857,9 +11857,11 @@ its existing idempotency/event identity and Storage-assigned fields. Never infer
 an event ID from a Home event, correlation alone or current layout.
 
 Call the actual Storage append owner with that same immutable ProducerInput,
-under the existing post-mutation fact durability class and append protocol.
-Validate original source/first AppendReceipt/full-value custody under SP-286 and
-CV-339, and current source observation under SP-278/SP-319. Do not synthesize an
+under the existing `ordinary` durability class of Case L-2 and CV-339 (a fact
+recorded after the accepted mutation, not a mutation-authorizing receipt) and the
+existing append protocol. Validate original source/first AppendReceipt/full-value
+custody under SP-286 and CV-339, and current source observation under
+SP-278/SP-319. Do not synthesize an
 AppendReceipt or remint Storage-assigned fields. An authentic issued event may
 precede local recording of its result. Lost acknowledgement, uncertain append or
 uncertain readback preserves the same pending operation, blocks conflicting

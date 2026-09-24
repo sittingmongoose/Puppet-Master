@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11753-L11948
+Source lines: L11753-L11950
 
-Source SHA256: `35e4fd72dab2f42756023845503ca82fa1a3bc0ed06f0c610804f904245d6972`
+Source SHA256: `8d45e72925103e63b35248b3d21eca7a8f9f6ff7620d8a18c83a785a20c2e5d5`
 
 ---
 
@@ -115,9 +115,11 @@ its existing idempotency/event identity and Storage-assigned fields. Never infer
 an event ID from a Home event, correlation alone or current layout.
 
 Call the actual Storage append owner with that same immutable ProducerInput,
-under the existing post-mutation fact durability class and append protocol.
-Validate original source/first AppendReceipt/full-value custody under SP-286 and
-CV-339, and current source observation under SP-278/SP-319. Do not synthesize an
+under the existing `ordinary` durability class of Case L-2 and CV-339 (a fact
+recorded after the accepted mutation, not a mutation-authorizing receipt) and the
+existing append protocol. Validate original source/first AppendReceipt/full-value
+custody under SP-286 and CV-339, and current source observation under
+SP-278/SP-319. Do not synthesize an
 AppendReceipt or remint Storage-assigned fields. An authentic issued event may
 precede local recording of its result. Lost acknowledgement, uncertain append or
 uncertain readback preserves the same pending operation, blocks conflicting
