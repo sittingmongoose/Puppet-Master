@@ -3,6 +3,895 @@
   "owner_schema": "Plans/named_plan_system_contracts.schema.json",
   "valid": [
     {
+      "name": "named_plan_pair_create_accepted",
+      "definition": "named_plan_action_response_validation",
+      "value": {
+        "schema_id": "pm.named_plan.action_response_validation.v1",
+        "schema_version": "1.0.0",
+        "request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.create",
+          "command_instance_id": "command:named_plan:create:01",
+          "project_id": "project:01",
+          "named_plan_id": null,
+          "name": "New Plan",
+          "priority": "normal",
+          "expected_named_plan_revision": null,
+          "expected_currentness_sha256": null,
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:create:01",
+          "source_surface": "shell_header",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": false,
+          "child_work_disposition": "no_child_runtime_created",
+          "confirmation_receipt_ref": null
+        },
+        "response": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.create",
+          "command_instance_id": "command:named_plan:create:01",
+          "outcome": "accepted",
+          "project_id": "project:01",
+          "named_plan_id": "allocated-plan",
+          "named_plan_revision": 1,
+          "currentness_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "thread_group_ref": "opaque-group",
+          "route_ref": "opaque-route",
+          "receipt_refs": [
+            "opaque-receipt"
+          ],
+          "projection_ref": "opaque-projection",
+          "disabled_reason": null,
+          "error_code": null,
+          "child_work_mutated": false,
+          "replayed": false
+        },
+        "original_request": null,
+        "original_result": null
+      }
+    },
+    {
+      "name": "named_plan_pair_create_rejected",
+      "definition": "named_plan_action_response_validation",
+      "value": {
+        "schema_id": "pm.named_plan.action_response_validation.v1",
+        "schema_version": "1.0.0",
+        "request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.create",
+          "command_instance_id": "command:named_plan:create:01",
+          "project_id": "project:01",
+          "named_plan_id": null,
+          "name": "New Plan",
+          "priority": "normal",
+          "expected_named_plan_revision": null,
+          "expected_currentness_sha256": null,
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:create:01",
+          "source_surface": "shell_header",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": false,
+          "child_work_disposition": "no_child_runtime_created",
+          "confirmation_receipt_ref": null
+        },
+        "response": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.create",
+          "command_instance_id": "command:named_plan:create:01",
+          "outcome": "rejected",
+          "project_id": "project:01",
+          "named_plan_id": null,
+          "named_plan_revision": null,
+          "currentness_sha256": null,
+          "thread_group_ref": null,
+          "route_ref": null,
+          "receipt_refs": [],
+          "projection_ref": null,
+          "disabled_reason": null,
+          "error_code": "permission_denied",
+          "child_work_mutated": false,
+          "replayed": false
+        },
+        "original_request": null,
+        "original_result": null
+      }
+    },
+    {
+      "name": "named_plan_pair_open_accepted",
+      "definition": "named_plan_action_response_validation",
+      "value": {
+        "schema_id": "pm.named_plan.action_response_validation.v1",
+        "schema_version": "1.0.0",
+        "request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.open",
+          "command_instance_id": "command:named_plan:open:01",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:open-01",
+          "name": null,
+          "priority": null,
+          "expected_named_plan_revision": null,
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:open:01",
+          "source_surface": "plans_page",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": true,
+          "child_work_disposition": "preserve_unchanged",
+          "confirmation_receipt_ref": null
+        },
+        "response": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.open",
+          "command_instance_id": "command:named_plan:open:01",
+          "outcome": "accepted",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:open-01",
+          "named_plan_revision": 3,
+          "currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "thread_group_ref": "opaque-group",
+          "route_ref": "opaque-route",
+          "receipt_refs": [
+            "opaque-receipt"
+          ],
+          "projection_ref": "opaque-projection",
+          "disabled_reason": null,
+          "error_code": null,
+          "child_work_mutated": false,
+          "replayed": false
+        },
+        "original_request": null,
+        "original_result": null
+      }
+    },
+    {
+      "name": "named_plan_pair_rename_accepted",
+      "definition": "named_plan_action_response_validation",
+      "value": {
+        "schema_id": "pm.named_plan.action_response_validation.v1",
+        "schema_version": "1.0.0",
+        "request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.rename",
+          "command_instance_id": "command:named_plan:rename:01",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:rename-01",
+          "name": "Ship Settings Safely",
+          "priority": null,
+          "expected_named_plan_revision": 3,
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:rename:01",
+          "source_surface": "plans_page",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": true,
+          "child_work_disposition": "preserve_unchanged",
+          "confirmation_receipt_ref": null
+        },
+        "response": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.rename",
+          "command_instance_id": "command:named_plan:rename:01",
+          "outcome": "accepted",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:rename-01",
+          "named_plan_revision": 4,
+          "currentness_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "thread_group_ref": "opaque-group",
+          "route_ref": "opaque-route",
+          "receipt_refs": [
+            "opaque-receipt"
+          ],
+          "projection_ref": "opaque-projection",
+          "disabled_reason": null,
+          "error_code": null,
+          "child_work_mutated": false,
+          "replayed": false
+        },
+        "original_request": null,
+        "original_result": null
+      }
+    },
+    {
+      "name": "named_plan_pair_rename_cancelled",
+      "definition": "named_plan_action_response_validation",
+      "value": {
+        "schema_id": "pm.named_plan.action_response_validation.v1",
+        "schema_version": "1.0.0",
+        "request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.rename",
+          "command_instance_id": "command:named_plan:rename:01",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:rename-01",
+          "name": "Ship Settings Safely",
+          "priority": null,
+          "expected_named_plan_revision": 3,
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:rename:01",
+          "source_surface": "plans_page",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": true,
+          "child_work_disposition": "preserve_unchanged",
+          "confirmation_receipt_ref": null
+        },
+        "response": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.rename",
+          "command_instance_id": "command:named_plan:rename:01",
+          "outcome": "cancelled",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:rename-01",
+          "named_plan_revision": null,
+          "currentness_sha256": null,
+          "thread_group_ref": null,
+          "route_ref": null,
+          "receipt_refs": [],
+          "projection_ref": null,
+          "disabled_reason": null,
+          "error_code": "cancelled",
+          "child_work_mutated": false,
+          "replayed": false
+        },
+        "original_request": null,
+        "original_result": null
+      }
+    },
+    {
+      "name": "named_plan_pair_archive_accepted",
+      "definition": "named_plan_action_response_validation",
+      "value": {
+        "schema_id": "pm.named_plan.action_response_validation.v1",
+        "schema_version": "1.0.0",
+        "request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.archive",
+          "command_instance_id": "command:named_plan:archive:01",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:archive-01",
+          "name": null,
+          "priority": null,
+          "expected_named_plan_revision": 3,
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:archive:01",
+          "source_surface": "plans_page",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": true,
+          "child_work_disposition": "preserve_unchanged",
+          "confirmation_receipt_ref": "receipt:confirmation:named-plan-archive:01"
+        },
+        "response": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.archive",
+          "command_instance_id": "command:named_plan:archive:01",
+          "outcome": "accepted",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:archive-01",
+          "named_plan_revision": 4,
+          "currentness_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "thread_group_ref": "opaque-group",
+          "route_ref": "opaque-route",
+          "receipt_refs": [
+            "opaque-receipt"
+          ],
+          "projection_ref": "opaque-projection",
+          "disabled_reason": null,
+          "error_code": null,
+          "child_work_mutated": false,
+          "replayed": false
+        },
+        "original_request": null,
+        "original_result": null
+      }
+    },
+    {
+      "name": "named_plan_pair_restore_accepted",
+      "definition": "named_plan_action_response_validation",
+      "value": {
+        "schema_id": "pm.named_plan.action_response_validation.v1",
+        "schema_version": "1.0.0",
+        "request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.restore",
+          "command_instance_id": "command:named_plan:restore:01",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:restore-01",
+          "name": null,
+          "priority": null,
+          "expected_named_plan_revision": 4,
+          "expected_currentness_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:restore:01",
+          "source_surface": "plans_page",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": false,
+          "child_work_disposition": "preserve_unchanged",
+          "confirmation_receipt_ref": null
+        },
+        "response": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.restore",
+          "command_instance_id": "command:named_plan:restore:01",
+          "outcome": "accepted",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:restore-01",
+          "named_plan_revision": 5,
+          "currentness_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "thread_group_ref": "opaque-group",
+          "route_ref": "opaque-route",
+          "receipt_refs": [
+            "opaque-receipt"
+          ],
+          "projection_ref": "opaque-projection",
+          "disabled_reason": null,
+          "error_code": null,
+          "child_work_mutated": false,
+          "replayed": false
+        },
+        "original_request": null,
+        "original_result": null
+      }
+    },
+    {
+      "name": "named_plan_pair_set_priority_accepted",
+      "definition": "named_plan_action_response_validation",
+      "value": {
+        "schema_id": "pm.named_plan.action_response_validation.v1",
+        "schema_version": "1.0.0",
+        "request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.set_priority",
+          "command_instance_id": "command:named_plan:priority:01",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:priority-01",
+          "name": null,
+          "priority": "urgent",
+          "expected_named_plan_revision": 5,
+          "expected_currentness_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:priority:01",
+          "source_surface": "plans_page",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": true,
+          "child_work_disposition": "preserve_unchanged",
+          "confirmation_receipt_ref": null
+        },
+        "response": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.set_priority",
+          "command_instance_id": "command:named_plan:priority:01",
+          "outcome": "accepted",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:priority-01",
+          "named_plan_revision": 6,
+          "currentness_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "thread_group_ref": "opaque-group",
+          "route_ref": "opaque-route",
+          "receipt_refs": [
+            "opaque-receipt"
+          ],
+          "projection_ref": "opaque-projection",
+          "disabled_reason": null,
+          "error_code": null,
+          "child_work_mutated": false,
+          "replayed": false
+        },
+        "original_request": null,
+        "original_result": null
+      }
+    },
+    {
+      "name": "named_plan_pair_set_priority_no_change",
+      "definition": "named_plan_action_response_validation",
+      "value": {
+        "schema_id": "pm.named_plan.action_response_validation.v1",
+        "schema_version": "1.0.0",
+        "request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.set_priority",
+          "command_instance_id": "command:named_plan:priority:01",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:priority-01",
+          "name": null,
+          "priority": "urgent",
+          "expected_named_plan_revision": 5,
+          "expected_currentness_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:priority:01",
+          "source_surface": "plans_page",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": true,
+          "child_work_disposition": "preserve_unchanged",
+          "confirmation_receipt_ref": null
+        },
+        "response": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.set_priority",
+          "command_instance_id": "command:named_plan:priority:01",
+          "outcome": "no_change",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:priority-01",
+          "named_plan_revision": 5,
+          "currentness_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+          "thread_group_ref": "opaque-group",
+          "route_ref": "opaque-route",
+          "receipt_refs": [],
+          "projection_ref": "opaque-projection",
+          "disabled_reason": null,
+          "error_code": null,
+          "child_work_mutated": false,
+          "replayed": false
+        },
+        "original_request": null,
+        "original_result": null
+      }
+    },
+    {
+      "name": "named_plan_pair_stale_error_reports_currentness",
+      "definition": "named_plan_action_response_validation",
+      "value": {
+        "schema_id": "pm.named_plan.action_response_validation.v1",
+        "schema_version": "1.0.0",
+        "request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.rename",
+          "command_instance_id": "command:named_plan:rename:01",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:rename-01",
+          "name": "Ship Settings Safely",
+          "priority": null,
+          "expected_named_plan_revision": 3,
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:rename:01",
+          "source_surface": "plans_page",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": true,
+          "child_work_disposition": "preserve_unchanged",
+          "confirmation_receipt_ref": null
+        },
+        "response": {
+          "schema_id": "pm.named_plan.action_error.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.rename",
+          "command_instance_id": "command:named_plan:rename:01",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:rename-01",
+          "error_code": "stale_currentness",
+          "message_code": "named_plan_projection_changed",
+          "retriable": true,
+          "currentness_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+          "safe_next_action_ref": "action:refresh-named-plan",
+          "child_work_mutated": false
+        },
+        "original_request": null,
+        "original_result": null
+      }
+    },
+    {
+      "name": "named_plan_pair_error_unresolved_target",
+      "definition": "named_plan_action_response_validation",
+      "value": {
+        "schema_id": "pm.named_plan.action_response_validation.v1",
+        "schema_version": "1.0.0",
+        "request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.rename",
+          "command_instance_id": "command:named_plan:rename:01",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:rename-01",
+          "name": "Ship Settings Safely",
+          "priority": null,
+          "expected_named_plan_revision": 3,
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:rename:01",
+          "source_surface": "plans_page",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": true,
+          "child_work_disposition": "preserve_unchanged",
+          "confirmation_receipt_ref": null
+        },
+        "response": {
+          "schema_id": "pm.named_plan.action_error.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.rename",
+          "command_instance_id": "command:named_plan:rename:01",
+          "project_id": "project:01",
+          "named_plan_id": null,
+          "error_code": "stale_currentness",
+          "message_code": "named_plan_projection_changed",
+          "retriable": true,
+          "currentness_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+          "safe_next_action_ref": "action:refresh-named-plan",
+          "child_work_mutated": false
+        },
+        "original_request": null,
+        "original_result": null
+      }
+    },
+    {
+      "name": "named_plan_pair_replay_accepted",
+      "definition": "named_plan_action_response_validation",
+      "value": {
+        "schema_id": "pm.named_plan.action_response_validation.v1",
+        "schema_version": "1.0.0",
+        "request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.create",
+          "command_instance_id": "command:named_plan:create:01",
+          "project_id": "project:01",
+          "named_plan_id": null,
+          "name": "New Plan",
+          "priority": "normal",
+          "expected_named_plan_revision": null,
+          "expected_currentness_sha256": null,
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:create:01",
+          "source_surface": "shell_header",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": false,
+          "child_work_disposition": "no_child_runtime_created",
+          "confirmation_receipt_ref": null
+        },
+        "response": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.create",
+          "command_instance_id": "command:named_plan:create:01",
+          "outcome": "accepted",
+          "project_id": "project:01",
+          "named_plan_id": "allocated-plan",
+          "named_plan_revision": 1,
+          "currentness_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "thread_group_ref": "opaque-group",
+          "route_ref": "opaque-route",
+          "receipt_refs": [
+            "opaque-receipt"
+          ],
+          "projection_ref": "opaque-projection",
+          "disabled_reason": null,
+          "error_code": null,
+          "child_work_mutated": false,
+          "replayed": true
+        },
+        "original_request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.create",
+          "command_instance_id": "command:named_plan:create:01",
+          "project_id": "project:01",
+          "named_plan_id": null,
+          "name": "New Plan",
+          "priority": "normal",
+          "expected_named_plan_revision": null,
+          "expected_currentness_sha256": null,
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:create:01",
+          "source_surface": "shell_header",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": false,
+          "child_work_disposition": "no_child_runtime_created",
+          "confirmation_receipt_ref": null
+        },
+        "original_result": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.create",
+          "command_instance_id": "command:named_plan:create:01",
+          "outcome": "accepted",
+          "project_id": "project:01",
+          "named_plan_id": "allocated-plan",
+          "named_plan_revision": 1,
+          "currentness_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "thread_group_ref": "opaque-group",
+          "route_ref": "opaque-route",
+          "receipt_refs": [
+            "opaque-receipt"
+          ],
+          "projection_ref": "opaque-projection",
+          "disabled_reason": null,
+          "error_code": null,
+          "child_work_mutated": false,
+          "replayed": false
+        }
+      }
+    },
+    {
+      "name": "named_plan_pair_replay_rejected",
+      "definition": "named_plan_action_response_validation",
+      "value": {
+        "schema_id": "pm.named_plan.action_response_validation.v1",
+        "schema_version": "1.0.0",
+        "request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.create",
+          "command_instance_id": "command:named_plan:create:01",
+          "project_id": "project:01",
+          "named_plan_id": null,
+          "name": "New Plan",
+          "priority": "normal",
+          "expected_named_plan_revision": null,
+          "expected_currentness_sha256": null,
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:create:01",
+          "source_surface": "shell_header",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": false,
+          "child_work_disposition": "no_child_runtime_created",
+          "confirmation_receipt_ref": null
+        },
+        "response": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.create",
+          "command_instance_id": "command:named_plan:create:01",
+          "outcome": "rejected",
+          "project_id": "project:01",
+          "named_plan_id": null,
+          "named_plan_revision": null,
+          "currentness_sha256": null,
+          "thread_group_ref": null,
+          "route_ref": null,
+          "receipt_refs": [],
+          "projection_ref": null,
+          "disabled_reason": null,
+          "error_code": "permission_denied",
+          "child_work_mutated": false,
+          "replayed": true
+        },
+        "original_request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.create",
+          "command_instance_id": "command:named_plan:create:01",
+          "project_id": "project:01",
+          "named_plan_id": null,
+          "name": "New Plan",
+          "priority": "normal",
+          "expected_named_plan_revision": null,
+          "expected_currentness_sha256": null,
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:create:01",
+          "source_surface": "shell_header",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": false,
+          "child_work_disposition": "no_child_runtime_created",
+          "confirmation_receipt_ref": null
+        },
+        "original_result": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.create",
+          "command_instance_id": "command:named_plan:create:01",
+          "outcome": "rejected",
+          "project_id": "project:01",
+          "named_plan_id": null,
+          "named_plan_revision": null,
+          "currentness_sha256": null,
+          "thread_group_ref": null,
+          "route_ref": null,
+          "receipt_refs": [],
+          "projection_ref": null,
+          "disabled_reason": null,
+          "error_code": "permission_denied",
+          "child_work_mutated": false,
+          "replayed": false
+        }
+      }
+    },
+    {
+      "name": "named_plan_pair_replay_cancelled",
+      "definition": "named_plan_action_response_validation",
+      "value": {
+        "schema_id": "pm.named_plan.action_response_validation.v1",
+        "schema_version": "1.0.0",
+        "request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.rename",
+          "command_instance_id": "command:named_plan:rename:01",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:rename-01",
+          "name": "Ship Settings Safely",
+          "priority": null,
+          "expected_named_plan_revision": 3,
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:rename:01",
+          "source_surface": "plans_page",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": true,
+          "child_work_disposition": "preserve_unchanged",
+          "confirmation_receipt_ref": null
+        },
+        "response": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.rename",
+          "command_instance_id": "command:named_plan:rename:01",
+          "outcome": "cancelled",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:rename-01",
+          "named_plan_revision": null,
+          "currentness_sha256": null,
+          "thread_group_ref": null,
+          "route_ref": null,
+          "receipt_refs": [],
+          "projection_ref": null,
+          "disabled_reason": null,
+          "error_code": "cancelled",
+          "child_work_mutated": false,
+          "replayed": true
+        },
+        "original_request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.rename",
+          "command_instance_id": "command:named_plan:rename:01",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:rename-01",
+          "name": "Ship Settings Safely",
+          "priority": null,
+          "expected_named_plan_revision": 3,
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:rename:01",
+          "source_surface": "plans_page",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": true,
+          "child_work_disposition": "preserve_unchanged",
+          "confirmation_receipt_ref": null
+        },
+        "original_result": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.rename",
+          "command_instance_id": "command:named_plan:rename:01",
+          "outcome": "cancelled",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:rename-01",
+          "named_plan_revision": null,
+          "currentness_sha256": null,
+          "thread_group_ref": null,
+          "route_ref": null,
+          "receipt_refs": [],
+          "projection_ref": null,
+          "disabled_reason": null,
+          "error_code": "cancelled",
+          "child_work_mutated": false,
+          "replayed": false
+        }
+      }
+    },
+    {
+      "name": "named_plan_pair_replay_no_change",
+      "definition": "named_plan_action_response_validation",
+      "value": {
+        "schema_id": "pm.named_plan.action_response_validation.v1",
+        "schema_version": "1.0.0",
+        "request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.set_priority",
+          "command_instance_id": "command:named_plan:priority:01",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:priority-01",
+          "name": null,
+          "priority": "urgent",
+          "expected_named_plan_revision": 5,
+          "expected_currentness_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:priority:01",
+          "source_surface": "plans_page",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": true,
+          "child_work_disposition": "preserve_unchanged",
+          "confirmation_receipt_ref": null
+        },
+        "response": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.set_priority",
+          "command_instance_id": "command:named_plan:priority:01",
+          "outcome": "no_change",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:priority-01",
+          "named_plan_revision": 5,
+          "currentness_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+          "thread_group_ref": "opaque-group",
+          "route_ref": "opaque-route",
+          "receipt_refs": [],
+          "projection_ref": "opaque-projection",
+          "disabled_reason": null,
+          "error_code": null,
+          "child_work_mutated": false,
+          "replayed": true
+        },
+        "original_request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.set_priority",
+          "command_instance_id": "command:named_plan:priority:01",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:priority-01",
+          "name": null,
+          "priority": "urgent",
+          "expected_named_plan_revision": 5,
+          "expected_currentness_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:priority:01",
+          "source_surface": "plans_page",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": true,
+          "child_work_disposition": "preserve_unchanged",
+          "confirmation_receipt_ref": null
+        },
+        "original_result": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.set_priority",
+          "command_instance_id": "command:named_plan:priority:01",
+          "outcome": "no_change",
+          "project_id": "project:01",
+          "named_plan_id": "named_plan:priority-01",
+          "named_plan_revision": 5,
+          "currentness_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+          "thread_group_ref": "opaque-group",
+          "route_ref": "opaque-route",
+          "receipt_refs": [],
+          "projection_ref": "opaque-projection",
+          "disabled_reason": null,
+          "error_code": null,
+          "child_work_mutated": false,
+          "replayed": false
+        }
+      }
+    },
+    {
       "name": "accepted_create_has_group_route_and_initial_revision",
       "definition": "named_plan_action_result",
       "value": {
@@ -318,6 +1207,238 @@
     }
   ],
   "invalid": [
+    {
+      "name": "named_plan_pair_wrong_command_id",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_rename_accepted",
+      "patch": {
+        "response.command_id": "cmd.named_plan.open"
+      },
+      "semantic_rule": "named_plan.response_command_id_mismatch"
+    },
+    {
+      "name": "named_plan_pair_wrong_command_instance_id",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_rename_accepted",
+      "patch": {
+        "response.command_instance_id": "other-instance"
+      },
+      "semantic_rule": "named_plan.response_command_instance_id_mismatch"
+    },
+    {
+      "name": "named_plan_pair_wrong_project_id",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_rename_accepted",
+      "patch": {
+        "response.project_id": "other-project"
+      },
+      "semantic_rule": "named_plan.response_project_id_mismatch"
+    },
+    {
+      "name": "named_plan_pair_wrong_named_plan_id",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_rename_accepted",
+      "patch": {
+        "response.named_plan_id": "other-plan"
+      },
+      "semantic_rule": "named_plan.response_named_plan_id_mismatch"
+    },
+    {
+      "name": "named_plan_error_wrong_command_instance_id",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_stale_error_reports_currentness",
+      "patch": {
+        "response.command_instance_id": "other-instance"
+      },
+      "semantic_rule": "named_plan.response_command_instance_id_mismatch"
+    },
+    {
+      "name": "named_plan_error_wrong_project_id",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_stale_error_reports_currentness",
+      "patch": {
+        "response.project_id": "other-project"
+      },
+      "semantic_rule": "named_plan.response_project_id_mismatch"
+    },
+    {
+      "name": "named_plan_error_wrong_named_plan_id",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_stale_error_reports_currentness",
+      "patch": {
+        "response.named_plan_id": "other-plan"
+      },
+      "semantic_rule": "named_plan.response_named_plan_id_mismatch"
+    },
+    {
+      "name": "named_plan_replay_requires_original_pair",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_replay_accepted",
+      "patch": {
+        "original_request": null,
+        "original_result": null
+      },
+      "semantic_rule": "named_plan.replay_original_pair_missing"
+    },
+    {
+      "name": "named_plan_replay_rejects_changed_normalized_request",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_replay_accepted",
+      "patch": {
+        "request.name": "Different requested name"
+      },
+      "semantic_rule": "named_plan.replay_original_normalized_request_mismatch"
+    },
+    {
+      "name": "named_plan_replay_rejects_changed_outcome",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_replay_accepted",
+      "patch": {
+        "response.outcome": "no_change"
+      },
+      "semantic_rule": "named_plan.replay_original_result_mismatch"
+    },
+    {
+      "name": "named_plan_replay_rejects_changed_receipt",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_replay_accepted",
+      "patch": {
+        "response.receipt_refs": [
+          "other-opaque-receipt"
+        ]
+      },
+      "semantic_rule": "named_plan.replay_original_result_mismatch"
+    },
+    {
+      "name": "named_plan_replay_rejects_nonfirst_original",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_replay_accepted",
+      "patch": {
+        "original_result.replayed": true
+      },
+      "semantic_rule": "named_plan.replay_original_result_not_first_result"
+    },
+    {
+      "name": "named_plan_replay_original_pair_identity_must_match",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_replay_accepted",
+      "patch": {
+        "original_result.project_id": "other-project"
+      },
+      "semantic_rule": "named_plan.original_response_project_id_mismatch"
+    },
+    {
+      "name": "named_plan_fresh_rejects_replay_evidence",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_create_accepted",
+      "patch": {
+        "original_request": {
+          "schema_id": "pm.named_plan.action_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.create",
+          "command_instance_id": "command:named_plan:create:01",
+          "project_id": "project:01",
+          "named_plan_id": null,
+          "name": "New Plan",
+          "priority": "normal",
+          "expected_named_plan_revision": null,
+          "expected_currentness_sha256": null,
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:01",
+          "idempotency_key": "idempotency:named_plan:create:01",
+          "source_surface": "shell_header",
+          "return_route_ref": "route:plans:project:01",
+          "active_child_work_expected": false,
+          "child_work_disposition": "no_child_runtime_created",
+          "confirmation_receipt_ref": null
+        },
+        "original_result": {
+          "schema_id": "pm.named_plan.action_result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.named_plan.create",
+          "command_instance_id": "command:named_plan:create:01",
+          "outcome": "accepted",
+          "project_id": "project:01",
+          "named_plan_id": "allocated-plan",
+          "named_plan_revision": 1,
+          "currentness_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "thread_group_ref": "opaque-group",
+          "route_ref": "opaque-route",
+          "receipt_refs": [
+            "opaque-receipt"
+          ],
+          "projection_ref": "opaque-projection",
+          "disabled_reason": null,
+          "error_code": null,
+          "child_work_mutated": false,
+          "replayed": false
+        }
+      },
+      "semantic_rule": "named_plan.unexpected_replay_evidence"
+    },
+    {
+      "name": "named_plan_validation_null_request",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_create_accepted",
+      "patch": {
+        "request": null
+      },
+      "expected_invariant": "closed_validation_input_and_existing_nested_owner_schemas"
+    },
+    {
+      "name": "named_plan_validation_null_response",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_create_accepted",
+      "patch": {
+        "response": null
+      },
+      "expected_invariant": "closed_validation_input_and_existing_nested_owner_schemas"
+    },
+    {
+      "name": "named_plan_validation_unknown_field",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_create_accepted",
+      "patch": {
+        "extra": true
+      },
+      "expected_invariant": "closed_validation_input_and_existing_nested_owner_schemas"
+    },
+    {
+      "name": "named_plan_validation_wrong_schema_version",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_create_accepted",
+      "patch": {
+        "schema_version": "2.0.0"
+      },
+      "expected_invariant": "closed_validation_input_and_existing_nested_owner_schemas"
+    },
+    {
+      "name": "named_plan_validation_invalid_nested_request",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_create_accepted",
+      "patch": {
+        "request.extra": true
+      },
+      "expected_invariant": "closed_validation_input_and_existing_nested_owner_schemas"
+    },
+    {
+      "name": "named_plan_validation_invalid_nested_result",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_create_accepted",
+      "patch": {
+        "response.child_work_mutated": true
+      },
+      "expected_invariant": "closed_validation_input_and_existing_nested_owner_schemas"
+    },
+    {
+      "name": "named_plan_validation_missing_original_field",
+      "definition": "named_plan_action_response_validation",
+      "base_valid": "named_plan_pair_create_accepted",
+      "remove": [
+        "original_request"
+      ],
+      "expected_invariant": "explicit_nullable_original_evidence_fields"
+    },
     {
       "name": "accepted_create_requires_thread_group",
       "definition": "named_plan_action_result",
