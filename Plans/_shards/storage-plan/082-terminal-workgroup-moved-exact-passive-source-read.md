@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L26642-L26833
+Source lines: L26642-L26834
 
-Source SHA256: `2085ee0d86118065d30b8a4164844fe66847cc1cba2fe53be98458fc1b257c7c`
+Source SHA256: `8b37bd1b8ee875c5fa67f4ec56509c096cfbd262606cdb686df16061e1db826f`
 
 ---
 
@@ -19,7 +19,8 @@ are explicitly not terminal event custody. No sibling binding is borrowed.
 
 Define `storage.terminal_workgroup_move.inspect_current.v1@1.0.0`, a private
 passive single-event source reader used only by
-`terminal.workgroup_move_history_read.v1@1.0.0`. Its selector identifies the actual
+`terminal.workgroup_move_history_read.v1@1.0.0`, for the committed-EventRecord
+resolution that SMPFS-170 names. Its selector identifies the actual
 Storage instance, Project, workgroup, exact event ID, original global sequence and
 complete canonical index key. These join the actual original EventRecord; payload
 has no workspace-tab field and none is inferred from a current Home tab. The reader

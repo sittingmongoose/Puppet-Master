@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11753-L11959
+Source lines: L11753-L11963
 
-Source SHA256: `93dd0f8b429e5579be9872e3ec798d632db2874d5fb6833c70ed9b9d31af92cf`
+Source SHA256: `88235750824c93afc04c1ae414548d94d5b57bf26c56c34b212b71e14fa544cb`
 
 ---
 
@@ -153,7 +153,11 @@ acknowledgement or event. Historical reads never enter this producer.
 ### Passive consumer and withdrawal
 
 Define **new consumer** `terminal.workgroup_move_history_read.v1@1.0.0` for the
-single-event historical inspection owned by SP-319. It observes this existing
+single-event historical inspection owned by SP-319. It serves only the already
+specified resolution of the committed EventRecord that this operation's CV-323
+receipt and CV-333 response reference (UCC-144: every applied/no_change/failed
+result follows CV-323 and the exact canonical event family), and has no other
+caller. It observes this existing
 fact only; it owns no live-terminal projection, durable effect, cursor or family
 checkpoint. It cannot restore a workgroup, attach a session, open a terminal,
 spawn a PTY, acknowledge a command, create a section, advance a revision or select

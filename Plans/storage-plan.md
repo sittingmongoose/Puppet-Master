@@ -26650,7 +26650,8 @@ are explicitly not terminal event custody. No sibling binding is borrowed.
 
 Define `storage.terminal_workgroup_move.inspect_current.v1@1.0.0`, a private
 passive single-event source reader used only by
-`terminal.workgroup_move_history_read.v1@1.0.0`. Its selector identifies the actual
+`terminal.workgroup_move_history_read.v1@1.0.0`, for the committed-EventRecord
+resolution that SMPFS-170 names. Its selector identifies the actual
 Storage instance, Project, workgroup, exact event ID, original global sequence and
 complete canonical index key. These join the actual original EventRecord; payload
 has no workspace-tab field and none is inferred from a current Home tab. The reader

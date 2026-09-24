@@ -11895,7 +11895,11 @@ acknowledgement or event. Historical reads never enter this producer.
 ### Passive consumer and withdrawal
 
 Define **new consumer** `terminal.workgroup_move_history_read.v1@1.0.0` for the
-single-event historical inspection owned by SP-319. It observes this existing
+single-event historical inspection owned by SP-319. It serves only the already
+specified resolution of the committed EventRecord that this operation's CV-323
+receipt and CV-333 response reference (UCC-144: every applied/no_change/failed
+result follows CV-323 and the exact canonical event family), and has no other
+caller. It observes this existing
 fact only; it owns no live-terminal projection, durable effect, cursor or family
 checkpoint. It cannot restore a workgroup, attach a session, open a terminal,
 spawn a PTY, acknowledge a command, create a section, advance a revision or select
