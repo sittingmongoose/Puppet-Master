@@ -37,7 +37,7 @@ A family is admitted only with its complete contract: exact payload schema (clos
 
 ## Per exclusion
 
-Record `RECLASSIFY_TO_EXCLUDED` on the row in `Plans/.audits/event-authority-2026-08-12/individual-disposition/` and on its line in the census adjudication ledger, citing the owner text and any Decision Log answer. Keep the legacy bucket and cohort pins, since the frozen schema has no J248 exclusion category, and claim no denominator removal. Write an application record with before and after hashes, as batch 1 does (`step-09-card-answer-application-20260924.json`, on `plans/ea-step09-card-answers-20260924` until batch 1 lands).
+Record `RECLASSIFY_TO_EXCLUDED` on the row in `Plans/.audits/event-authority-2026-08-12/individual-disposition/` and on its line in the census adjudication ledger, citing the owner text and any Decision Log answer. Keep the legacy bucket and cohort pins, since the frozen schema has no J248 exclusion category, and claim no denominator removal. Write an application record with before and after hashes, as batch 1 does (`step-09-card-answer-application-20260924.json`, landed with batch 1 at `41fbecb612`).
 
 ## Standing constraints
 
@@ -52,7 +52,7 @@ Record `RECLASSIFY_TO_EXCLUDED` on the row in `Plans/.audits/event-authority-202
 | Date | Registered | Excluded | Carded | Remaining |
 |---|---:|---:|---:|---:|
 | 2026-09-11 (review packet) | 0 | 6 | 20 | 226 |
-| 2026-09-24, batch 1 (DL-074 and DL-075 applied to their 20 rows), on branch `plans/ea-step09-card-answers-20260924`, counted here once it lands | 0 | 7 | 0 | 245 |
+| 2026-09-24, batch 1 (DL-074 and DL-075 applied to their 20 rows), landed at `41fbecb612` (landing record `bc1d99c11e`) | 0 | 7 | 0 | 245 |
 
 ## Open questions from the review
 
