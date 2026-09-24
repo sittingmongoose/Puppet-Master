@@ -1,0 +1,143 @@
+{
+  "schema_id": "pm.packet_canon.settings_search_companion_repair_report.v1",
+  "scope": "SDRAW-C011 bounded value-only Settings search/route/return join; no native implementation",
+  "base_commit": "f68289a54f6d1b10c567c4129967d2f8a747d4d5",
+  "prose_commit": "13a4683a583f61544ba3c528b2b49aa5d963408e",
+  "authorization": "Root approved proposal SHA40a5627947bad18acffba06d5c246e648e608fb077654083fb3c3b509c0f6110, two value-only defs and two optional nullable selection fields; companion follows separately pushed prose.",
+  "owner_units": [
+    "SSYS-005",
+    "SSYS-019"
+  ],
+  "source_refs": [
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/machine_readable/search_contract.json",
+      "sha256": "a54290ec00454403817d5579a5a784084f912167b90b56a76e110dc02674605b",
+      "fully_read_lines": [
+        1,
+        48
+      ]
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/03_HOME_SEARCH_AND_NAVIGATION.md",
+      "sha256": "285f06762ea85e269a8e629b118126b3481669cc1f800a840ecbd997f97fa955",
+      "fully_read_lines": [
+        1,
+        82
+      ],
+      "retained": [
+        17,
+        55
+      ],
+      "superseded": [
+        57,
+        78
+      ]
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/machine_readable/supersessions.json",
+      "sha256": "6b3984ad7d91f453791c48fd4d8bd7985a9ea9b8013a902f3055ffd53583bcd3",
+      "fully_read_lines": [
+        1,
+        29
+      ]
+    }
+  ],
+  "changes": {
+    "value_only_definitions": [
+      "settings_search_result",
+      "settings_search_route_exchange"
+    ],
+    "optional_nullable_fields": [
+      "return_contract.origin_search_result_id",
+      "settings_route_return.restored_search_result_id"
+    ],
+    "gate": "Existing Settings dispatch composes unchanged settings_draft_semantic_failures with scoped settings_search_semantic_failures.",
+    "joins": [
+      "selected identity and canonical destination, independent of labels/grouping/focus",
+      "current resolved identity/destination and full exact context",
+      "canonical setting/manager registration, including registered-but-GUI-deferred routes",
+      "current continuation identity/generation/expiry and route availability independently of capability availability",
+      "exact return correlation, query/result/focus/scroll or rejected/cancelled no-restoration"
+    ],
+    "no_new_runtime_record_families": true,
+    "no_root_record_admission": true
+  },
+  "preservation": {
+    "original_valid_cases": 26,
+    "original_negative_cases": 22,
+    "original_fixture_records_unchanged": true,
+    "original_nonsearch_pack_metadata_and_registries_unchanged": true,
+    "existing_schema_definitions_unchanged_except_two_optional_fields": true,
+    "root_oneOf_unchanged": true,
+    "draft_helper_sha256": "ea66a1a416c66325ae26b822bc369562fe0585f717fe18547f05b0c178ea0311",
+    "storage_registry_sha256": "56c227c81bb1006d9799dad3c99b3685588817380ed84ffc8d9b356ad29838c4",
+    "settings_owner_sha256": "37b13dea7d06cd0a5105d305204ee6d1bc8341545693473a63c9771ed3326cd6",
+    "draft_helper_storage_registry_owner_unchanged_from_prose_commit": true
+  },
+  "added_fixtures": {
+    "positive": 25,
+    "negative": 43,
+    "semantic_negative": 33,
+    "structural_negative": 10,
+    "source_cases": [
+      "grouped_results",
+      "duplicate_labels",
+      "typo_fuzzy_match",
+      "unavailable_result",
+      "manager_object",
+      "deep_setting_row",
+      "back_restores_query"
+    ],
+    "result_kind_count": 8,
+    "causal_method": "Every authored semantic negative remains schema-valid, fails exactly its named rule, and passes the composed gate with that actual predicate replaced by an accepting predicate in the test. All six predicates exercised."
+  },
+  "verification": {
+    "focused_settings_tests": {
+      "passed": 29,
+      "command": "python3 -m unittest discover -s tests -p 'test_pm_settings*'"
+    },
+    "full_contract_gate": {
+      "status": "pass",
+      "contract_pairs": 32,
+      "positive": 1163,
+      "negative": 4020,
+      "findings": 0,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/settings-search-new-contracts-report.json",
+      "sha256": "89dc5c05639945f4743310332da7ed6f4475e12dbf986648e389679f091d0d5d"
+    },
+    "initial_gate": {
+      "status": "fail",
+      "cause": "Reused IDs across six standalone value-only kind fixtures; assigned distinct IDs without changing rules.",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/settings-search-new-contracts-initial-duplicate-value-ids.json",
+      "sha256": "372cbf1ee7c7dbaa2f8e8491a71530fb98360b81efcf2bd66769fc17f781e79b"
+    },
+    "shards": {
+      "status": "pass",
+      "docs": 99,
+      "shards": 2721
+    },
+    "index": {
+      "status": "pass",
+      "plan_units": 6719,
+      "acceptance_units": 26224,
+      "node_readiness": "blocked_runtime_certification_incomplete"
+    },
+    "diff_check": "pass"
+  },
+  "changed_source_hashes": {
+    "Plans/settings_system_contracts.schema.json": "44b27a3e9e224cb545c4b25b6c85dcdfee9d16f4c402b4127a2e0fc02594b9f0",
+    "Plans/settings_system_contract_fixtures.json": "b0bbe67e6a040d154f602f2aafc82f952ca3e793abe59c1ee9412ebbfe60a00f",
+    "scripts/pm_settings_search_semantics.py": "44260cae58d159b850768a0f1c5dd612f72896997ed5426b970662e37f5275d1",
+    "scripts/pm-new-contracts-verify.py": "929890be3a62d5b3819dec2c05a6dd18eb2910c904f7b384915851f69e8199b6",
+    "tests/test_pm_settings_search_contracts.py": "ee31eaaaf5ce8132eaf3ad048a4894b7786628eea6f9c5ecd6bcbaaaee2275f3"
+  },
+  "claim_boundary": [
+    "Static supplied-observation consistency, not owner-issued currentness, navigation execution, search-engine matching, storage admission, or readiness.",
+    "Seven source cases exercise exact chosen-result/route/return values. Group layout, fuzzy matching algorithm, non-active-tab realization, locator, focus rendering, and native performance still require GUI/runtime acceptance.",
+    "Owner capability availability never authorizes execution; command payloads and owner/native execution claims fail closed.",
+    "Existing K3/ESC/optional Help and Project/current placement remain authoritative; no new command, setting, persistence family or physical checkpoint.",
+    "No governance binding, Spec Lock, readiness artifact, main landing or shared checkout changes in this companion step.",
+    "PM planning skill was used for the preceding owner/index step only; no ledger compilation or governance seal in this companion step.",
+    "Independent exact-commit review is pending; whole raw-corpus semantic closure is not claimed."
+  ]
+}
