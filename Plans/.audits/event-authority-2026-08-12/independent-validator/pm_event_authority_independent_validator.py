@@ -234,6 +234,10 @@ def admission_record_problems(record, family) -> list:
     if len(rows) != 1:
         problems.append("depth_assessment.row")
         return problems
+    if (rows[0].get("family_id") != family.get("family_id")
+            or rows[0].get("family_revision") != family.get("family_revision")):
+        problems.append("depth_assessment.family_revision")
+        return problems
     cells = rows[0].get("cells")
     if not isinstance(cells, dict) or set(cells) != set(EVIDENCE_FIELDS):
         problems.append("depth_assessment.criteria")

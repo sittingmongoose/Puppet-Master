@@ -285,7 +285,9 @@ class PostAugustAdmissionTests(unittest.TestCase):
         self.known37 = self.v.load_json(REPO / AUDIT / 'known37/KNOWN37_FROM_PLANS.json')['event_types']
         self.families = {f['event_type']: f for f in self.registry['families']}
         self.assessment_rel = 'reports/fixture-depth-assessment.json'
-        self.assessment = {'rows': [{'event_type': et, 'cells': {c: {'status': 'PASS'} for c in self.v.EVIDENCE_FIELDS}}
+        self.assessment = {'rows': [{'event_type': et, 'family_id': self.families[et]['family_id'],
+                                     'family_revision': self.families[et]['family_revision'],
+                                     'cells': {c: {'status': 'PASS'} for c in self.v.EVIDENCE_FIELDS}}
                                     for et in self.POST]}
         self.record_dir = self.root / self.v.POST_AUGUST_RECORD_DIR
         self.record_dir.mkdir(parents=True, exist_ok=True)
@@ -434,6 +436,21 @@ class PostAugustAdmissionTests(unittest.TestCase):
         admitted, issues, _ = self.check()
         self.assertEqual(admitted, set())
         self.assertTrue(issues[0].startswith('post-August amendment receipt invalid'))
+
+    def rewrite_records(self):
+        self.write_assessment()
+        for et in self.POST:
+            self.write_record(self.record_for(et))
+
+    def test_depth_row_must_grade_the_registered_family_revision(self):
+        for key, value in [('family_revision', '9.9.9'), ('family_id', 'event-family-other')]:
+            with self.subTest(key=key):
+                self.setUp()
+                self.assessment['rows'][2][key] = value
+                self.rewrite_records()
+                admitted, issues, _ = self.check()
+                self.assertNotIn(self.POST[2], admitted)
+                self.assertIn(self.POST[2] + ': depth_assessment.family_revision', issues)
 
     def test_decision_entry_must_name_the_family(self):
         et = self.POST[1]

@@ -21,7 +21,7 @@
  "contract_depth_complete": false,
  "validator_path": "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py",
  "validator_before_sha256": "bd54afffc689146753daec474d6cdbc7ac663afaf21d842aad4fcf10255112d5",
- "validator_after_sha256": "e6b1bd667ee4cfb99752b0eeee6b8fa9b058e439bd9740bc0412fd03997a64dd",
+ "validator_after_sha256": "9a87a874c0ce18a9c89773178ea1395867cb8570d6f019f1b5109f80881010da",
  "prior_receipt": {
   "path": "reports/event-authority-20260911/step-03-holding-bucket-receipt.json",
   "sha256": "d7800b98e7304f1f2853ea786f6b438b7df5753c3f62fd365f50c7a55d0ca8b3",
@@ -38,14 +38,14 @@
   "registry_before": "{revision, sha256, family_count} of the registry before the family's admission landing",
   "registry_after": "{revision, sha256, family_count} after it; family_count exactly one more and a different sha256",
   "registry_row_sha256": "SHA-256 of the live registry row as JSON with sorted keys, separators (',', ':') and ensure_ascii false",
-  "depth_assessment": "{path under reports/, sha256}: a depth assessment whose rows[] entry for this event type has all twelve criteria with status PASS"
+  "depth_assessment": "{path under reports/, sha256}: a depth assessment whose rows[] entry for this event type has the live registry row's family_id and family_revision and all twelve criteria with status PASS"
  },
  "changes": [
   "Constants and helper functions for DL-077: the receipt and record locations, the record schema id, the DL-077 required tokens and the author identity.",
   "decision_section_bytes: pins one Decision Log prose entry (the Step 3 extraction rule, generalized to any DL-NNN).",
   "post_august_receipt_state: this receipt must pin DL-077, the current validator bytes and the Step 3 chain, or everything that depends on it fails closed.",
   "holding_validator_pin: the Step 3 holding check's validator pin now follows the chain; without a valid DL-077 receipt it still requires the current file, so any other change fails the holding check.",
-  "admission_record_problems and validate_post_august_admissions: a family beyond Known37 and August is accepted only through its complete record; a missing, malformed or stale record, or any depth criterion not passing, is reported as post_august_admission_incomplete and the family stays outside the accepted set. The cited Decision Log entry must name the family's exact event type and cannot be DL-077 or DL-078 (decision_ref_not_for_family).",
+  "admission_record_problems and validate_post_august_admissions: a family beyond Known37 and August is accepted only through its complete record; a missing, malformed or stale record, or any depth criterion not passing, is reported as post_august_admission_incomplete and the family stays outside the accepted set. The cited Decision Log entry must name the family's exact event type and cannot be DL-077 or DL-078 (decision_ref_not_for_family). The assessment row must carry the live registry row's family_id and family_revision (depth_assessment.family_revision): a record's assessment row is current when it grades the family at its registered revision.",
   "Live-set rule: live_august now excludes only the completely recorded post-August families; any other family beyond Known37 and August still fails unexpected_august_set.",
   "Disposition and depth rules: a completely recorded post-August family is represented by its record, so its old quarantine ledger row does not count as blocking and its depth is taken from the pinned assessment instead of the ledger row's cells. Every other row is judged as before.",
   "post_august_admission_incomplete joins the depth-blocking error set, and the receipt pins this receipt's SHA-256.",
