@@ -61,7 +61,27 @@ All digests are SHA-256. Raw captures remain outside the repository.
 
 ## Shared landing result
 
-Pending the mandatory post-fast-forward shared shard and landing checks. This section will record their actual results before main is pushed. No passing exit is inferred from the scoped exception.
+Shared main was fast-forwarded from `566970cb7b` to `ca57806bfe10798699058c45b733ec3543c57a17` after rechecking the lock, base and zero-overlap condition. The shard check passed (99 documents, 2,720 shards). The normal landing check ran before any main push, with exit **2**, in 892.7 seconds. Its aggregate totals are both **3,217**, readiness is **38** in both, and standalone migration validation reports **33,072** failures versus the recorded baseline's 32,967. Snapshot/hash staleness is excused by the checker; no non-staleness migration blocker is reported.
+
+All **12** checker-reported blocking items are classified:
+
+| Items | Classification |
+|---:|---|
+| 6 | The three authorized `event_authority_currentness_source_drift` rows in each aggregate. |
+| 4 | Truncated evidence/plan-graph totals 665 → 847. The inherited 665 → 759 was authorized and proved in `LANDING_20260924_DL070_FOLLOWUPS.md`; this repair's 759 → 847 is fully proved above. |
+| 1 | Currentness bucket 4 → 9: inherited 4 → 6 from DL-070, plus this repair's authorized 6 → 9. |
+| 1 | `storage_value_registry_spec_lock_hash_stale` bucket 1 → 2, entirely inherited from current main and classified in `LANDING_20260924_STORAGE_REGISTRY_REPAIRS.md`. This repair does not change `scripts/pm-implementation-readiness.py`. |
+
+Every shared aggregate subcheck total equals the complete repair capture. Every non-staleness key marked new against the old baseline is either present in the full current-main capture or explicitly authorized by this repair's exception. The six non-excused on-branch keys are exactly the authorized source-drift rows. The additional verifier-script hash remains the exact authorized value and is ordinarily classified as staleness by the checker. No added unapproved row is hidden by the exception.
+
+Capture guards report no error: HEAD, base, pinned source/lock hashes and all 43 pre-existing dirty-tracked hashes stayed stable. The checker is not represented as passing; landing proceeds under the explicit exception and the prior landings' recorded inherited classifications.
+
+- Locked shared capture: `/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-locked-landing-20260924-ca57806b/summary.json` — `c5c07677f548446dcefa6b803ceb9307835b04e8286614698b38b4567ea2ef0e`.
+- Complete landing JSON: `/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-locked-landing-20260924-ca57806b/landing-check.stdout` — `bb1fea837ad02fdba4d002edc5508c8834af069e787f2f21cc5c8960f3e92010`.
+- Shared shard result: `/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-locked-landing-20260924-ca57806b/shard-check.stdout` — `a23246d8fa7c4eff08b5397dacfe298aa454b500ce3662df1efc56ad0bb930c2`.
+- Exact exception classification: `/mnt/Cursor/PuppetMaster-Evidence/packet-audits/post-audit-locked-landing-20260924-ca57806b/exception-classification.json` — `98cd24cd14fc8003cab3a29cf91be9529504f7c86d33f8083486a024d5f08c1e`.
+
+This final annotation is report-only on top of the checked commit. The full check is not claimed to have run on the annotation's commit hash; no checked source, test, generated index, shard or governance input changes with it. Main publication, worktree removal and lock release follow this annotation under the held lock.
 
 ## Reseal request and retained boundaries
 
