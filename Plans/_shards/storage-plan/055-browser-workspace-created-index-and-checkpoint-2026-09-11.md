@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L19706-L20032
 
-Source SHA256: `72597d5d1e16f5d480780565966987fd3f6f6b2da170c8f72d5280bc7a707cda`
+Source SHA256: `141c3ff380e07b001a64ebab9dd2774617bc82e81eafcadf6a19ee5a01fb512b`
 
 ---
 
@@ -196,10 +196,10 @@ key, generation JSON Pointer, immutable anchor, advancing frontier revision and
 digest, physical dataset and complete source selection. Its `index_read_token`
 stores exactly those nine fields, as
 `Plans/browser_workspace_created_checkpoint_v2.schema.json#/$defs/durable_index_read_token`,
-and never the tenth SP-278 field, `redb_snapshot_id`. This follows the Storage
-owner decision on stored SP-278 checkpoint tokens, ruled by the coordinator on
-Jared's delegation on 2026-09-24: a stored checkpoint token is the nine-field
-durable token without `redb_snapshot_id`, on the `DurableGenericToken` precedent,
+and never the tenth SP-278 field, `redb_snapshot_id`. This follows DL-076, the
+Storage owner decision on stored SP-278 checkpoint tokens: a stored checkpoint
+token is the nine-field durable token without `redb_snapshot_id`, on the
+`DurableGenericToken` precedent,
 because SP-311 treats the snapshot id only as a live transaction fence that is
 never persisted. The writer before commit and every reader before disclosure join
 the id of the redb read snapshot it actually pinned to the stored nine fields, and
