@@ -374,7 +374,7 @@
         "reason": null,
         "domain_mutation": false,
         "persistence_write": false,
-        "return_focus_id": "guided_tour.usage.heading",
+        "return_focus_id": "guided_tour.workspace.heading",
         "result_revision": 1
       }
     },
@@ -394,7 +394,7 @@
         "reason": "Pages aren’t available right now.",
         "domain_mutation": false,
         "persistence_write": false,
-        "return_focus_id": "guided_tour.usage.heading",
+        "return_focus_id": "guided_tour.workspace.heading",
         "result_revision": 1
       }
     },
@@ -700,6 +700,7 @@
     {"name": "domain_alias_for_focus_route_is_rejected", "definition": "guided_tour_action_request", "base_valid": "generic_next_request", "patch": {"action_id": "cmd.nav.focus_route"}, "expected_error": "focus_route stays a typed local presentation action"},
     {"name": "focus_route_requires_typed_route_target", "definition": "guided_tour_action_request", "base_valid": "focus_route_is_typed_local_presentation", "remove": ["route_target"], "expected_error": "focus route requires a page identity"},
     {"name": "focus_route_rejects_workspace_as_page_identity", "definition": "guided_tour_action_request", "base_valid": "focus_route_is_typed_local_presentation", "patch": {"route_target.page_id": "workspace"}, "expected_error": "Usage remains the compatible page route inside the workspace chapter"},
+    {"name": "focus_route_result_rejects_retired_usage_chapter_heading", "definition": "guided_tour_focus_route_result", "base_valid": "focus_route_result_is_local_and_nonpersistent", "patch": {"return_focus_id": "guided_tour.usage.heading"}, "expected_error": "The Usage page route returns focus to its current workspace chapter, not a retired Usage chapter"},
     {"name": "workspace_layout_must_remain_reversible", "definition": "guided_tour_workspace_progression", "base_valid": "workspace_real_actions_and_predicates", "patch": {"layout_reversible": false}, "expected_error": "workspace practice is reversible"},
     {"name": "planning_action_share_must_be_at_least_half", "definition": "guided_tour_planning_progression", "base_valid": "planning_majority_real_edit_and_boundary", "patch": {"majority.planning_action_share_basis_points": 4999}, "expected_error": "Planning owns at least half of meaningful actions"},
     {"name": "planning_dwell_share_must_be_at_least_half", "definition": "guided_tour_planning_progression", "base_valid": "planning_majority_real_edit_and_boundary", "patch": {"majority.planning_dwell_share_basis_points": 4999}, "expected_error": "Planning owns at least half of meaningful dwell"},

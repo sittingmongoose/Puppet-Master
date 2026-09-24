@@ -86,7 +86,7 @@ class GuidedTourV3ContractTests(unittest.TestCase):
             )
 
     def test_all_counterexamples_are_rejected_by_the_target_definition(self) -> None:
-        self.assertEqual(len(self.fixtures["invalid"]), 55)
+        self.assertEqual(len(self.fixtures["invalid"]), 56)
         for case in self.fixtures["invalid"]:
             base = self.positives[case["base_valid"]]["value"]
             instance = self.materialize(base, case)
@@ -188,10 +188,30 @@ class GuidedTourV3ContractTests(unittest.TestCase):
         self.assertEqual(request["step"], "workspace")
         self.assertEqual(request["route_target"], {"page_id": "usage"})
         self.assertEqual(result["after_page_id"], "usage")
+        self.assertEqual(result["return_focus_id"], request["return_focus_id"])
         definition, wrong_page = self.negative_instance("focus_route_rejects_workspace_as_page_identity")
         self.assertTrue(self.errors(definition, wrong_page))
         storyboard = self.positives["canonical_newbie_first_storyboard"]["value"]
         self.assertEqual(storyboard["order"], ["chat_teacher", "workspace", "planning_wizard"])
+
+    def test_focus_route_outcomes_return_to_current_chapter_not_retired_page_chapter(self) -> None:
+        request = self.positives["focus_route_is_typed_local_presentation"]["value"]
+        heading = request["return_focus_id"]
+        self.assertEqual(heading, "guided_tour.workspace.heading")
+        self.assertIn(heading, self.schema["$defs"]["heading_focus"]["properties"]["target"]["enum"])
+        for status, error, reason in (("applied", None, None),
+                                      ("disabled", "page_router_unavailable", "Pages unavailable"),
+                                      ("failed", "route_not_activated", "Page did not open")):
+            with self.subTest(status=status):
+                fixture = ("focus_route_disabled_uses_page_router_error" if status == "disabled"
+                           else "focus_route_result_is_local_and_nonpersistent")
+                result = copy.deepcopy(self.positives[fixture]["value"])
+                result.update(status=status, error_code=error, reason=reason, return_focus_id=heading)
+                self.assertFalse(self.errors("guided_tour_focus_route_result", result))
+                self.assertEqual(result["route_target"], {"page_id": "usage"})
+                self.assertEqual(result["schema_id"], "pm.guided_tour.focus_route_result.v1")
+                result["return_focus_id"] = "guided_tour.usage.heading"
+                self.assertTrue(self.errors("guided_tour_focus_route_result", result))
 
     def test_planning_majority_thresholds_are_machine_checked(self) -> None:
         planning = self.positives["planning_majority_real_edit_and_boundary"]["value"]
