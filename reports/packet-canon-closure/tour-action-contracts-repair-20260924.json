@@ -1,0 +1,156 @@
+{
+  "schema_id": "pm.packet_canon_closure.repair_report.v1",
+  "finding_id": "TOUR-CANON-001",
+  "base_commit": "d8f25364b5b0365f6b1e1cf06a9ab9e6466cdd69",
+  "branch": "fix/tour-action-contracts-20260924",
+  "reviewed_proposal_sha256": "5a7be889d0a51f000f97428266ebfb948d8dc8ef9aadd28b8a95bd88e9ae7847",
+  "claim_boundary": "Static schema, fixtures, cross-record semantic checks and profile consistency only. No owner issuance, production receipt, GUI/native behavior, physical persistence, provider-isolation runtime proof, governance reseal, certification or readiness admission.",
+  "authority": [
+    {
+      "path": "Plans/Planning_Wizard.md",
+      "plan_unit": "PWIZ-023",
+      "sha256": "9197b8b63f86f3f01c384c692193c2221d73fc347fc78356158f19f73ae73b79",
+      "passages": "Guided Tour real-application contract, including optional non-action introduction, eleven actions, real owner predicates, restoration, safe resume and fresh Replay."
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "plan_unit": "F3-521",
+      "sha256": "1b7b0f4674c9088b4e042040be5522e66badc19d0008b0d55f9fe63c31ccc4f0",
+      "passages": "Current three-chapter practice, mounted controls, no generic Next/timer success, local-only Teacher and no native evidence claim."
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "plan_unit": "SP-251",
+      "sha256": "f8781a617fff053dd9e9f8dc529e4f248791530a6d553dd40dec182058508c53",
+      "passages": "Live/action transport nonpersisted; bounded checkpoint separate and physically unregistered."
+    }
+  ],
+  "implemented": [
+    "One closed eleven-action result carrier; exact action-specific detail and nested status/error consistency; preserved specialized resume/focus/terminal results.",
+    "Joined request, current Project/session/actor/mounted target/revision/hash context, result and bounded prior exchange; fail-closed semantic gate dispatch.",
+    "Start-only reserved revision zero, required request Project identity and live/checkpoint resume source; no new action or domain command.",
+    "Genuinely unfinished optional-intro/no-intro Start and fresh Replay; nullable completed Teacher summary and checkpoint ref do not discard owner-held partial practice or assert checkpoint writes.",
+    "Adjacent authored Next/Back beats; owner-observed practice only; manual owner path reused for Show Me; same-answer ELI5 stays local; Pause and failed restore retain original captures and partial owner refs.",
+    "Live/checkpoint resume can move backward to earliest owner-revalidated unsatisfied practice without replaying domain work; pending current checkpoint storage remains unavailable.",
+    "One-level previously validated exchange permits identical cached-result delivery after live revision advances, without reapplying historical state or repeating dispatch; forged prior results, recursive chains, cross-actor/Project delivery and changed-key payloads fail.",
+    "TCP-TOUR and TCP-GUIDED-NAV consume the common typed result; no row status or residual was closed. Practice dispatch arrays do not deny separate terminal restoration attempts."
+  ],
+  "preservation": {
+    "existing_schema_definitions_changed": [
+      "guided_tour_session",
+      "guided_tour_action_request"
+    ],
+    "specialized_result_definitions_exactly_equal_to_base": [
+      "guided_tour_resume_result",
+      "guided_tour_focus_route_result",
+      "guided_tour_terminal_result"
+    ],
+    "prior_fixture_controls_retained": {
+      "positive": 24,
+      "negative": 56
+    },
+    "owner_markdown_unchanged": true,
+    "physical_storage_and_checkpoint_disposition_unchanged": true,
+    "governance_bindings_unchanged": true,
+    "action_inventory_unchanged": 11,
+    "touch_profiles_changed": [
+      "TCP-TOUR",
+      "TCP-GUIDED-NAV"
+    ],
+    "touch_rows_and_statuses_unchanged": true,
+    "touch_open_residuals": 643,
+    "ephemeral_record_kinds_added": [
+      "pm.guided_tour.action_result.v3",
+      "pm.guided_tour.action_exchange.v3",
+      "pm.guided_tour.resume_result.v3",
+      "pm.guided_tour.terminal_result.v3",
+      "pm.guided_tour.focus_route_result.v1"
+    ]
+  },
+  "verification": {
+    "focused_command": "python3 -m unittest discover -s tests -p 'test_pm_guided_tour*contracts.py'",
+    "focused_tests_passed": 33,
+    "causal_rules": 10,
+    "per_action_causal_correlation_and_currentness_checks": 22,
+    "tour_fixture_positive_count": 60,
+    "tour_fixture_negative_count": 386,
+    "tour_fixture_semantic_negative_count": 160,
+    "full_contract_gate": {
+      "command": "python3 scripts/pm-plans-verify.py validate-new-contracts --report <external-report>",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/settings_dependencies/tour_repair/new-contracts-final-verified.json",
+      "sha256": "3fe5cebfd921660981a6202b705560fe8cee34ca89ad2802ec41639cbbd7ec25",
+      "counts": {
+        "contract_pairs": 31,
+        "expansion_alias_records_checked": 36,
+        "expansion_alias_records_valid": 36,
+        "expansion_command_records_checked": 264,
+        "expansion_command_records_valid": 264,
+        "expansion_fixture_packs": 1,
+        "expansion_local_records_checked": 28,
+        "expansion_local_records_valid": 28,
+        "expansion_metaschemas_valid": 1,
+        "expansion_negative_records_checked": 21,
+        "expansion_negative_records_rejected": 21,
+        "internal_self_tests": 12,
+        "internal_self_tests_passed": 12,
+        "metaschemas_valid": 31,
+        "negative_cases": 3823,
+        "negative_cases_rejected": 3823,
+        "onboarding_storage_contracts_checked": 1,
+        "onboarding_storage_contracts_valid": 1,
+        "owner_compat_command_records_checked": 240,
+        "owner_compat_command_records_valid": 240,
+        "owner_local_records_checked": 28,
+        "owner_local_records_valid": 28,
+        "positive_cases": 1103,
+        "positive_cases_valid": 1103
+      },
+      "status": "pass",
+      "findings": 0
+    },
+    "initial_session_before_repair_rejected_at": [
+      "",
+      "checkpoint_ref",
+      "teacher_practice"
+    ],
+    "storage_registry_schema_errors": 0,
+    "validate_case_l_status": "pass",
+    "touch_verifier": {
+      "status": "pass",
+      "rows": 643,
+      "profiles": 133,
+      "open_residuals": 643
+    },
+    "shard_generation_and_check": {
+      "status": "pass",
+      "docs": 99,
+      "shards": 2721,
+      "changed_derived_files": 553,
+      "changed_owner_only": "storage_value_registry"
+    },
+    "git_diff_check": "pass",
+    "environment_only_retries": [
+      "Initial shard check preceded the immutable ignored Event Authority input symlink; generation/check passed after connecting the unchanged snapshot.",
+      "Initial Touch check lacked the Concepts sparse cone; adding that cone made the full existing verifier pass. No canon was changed to excuse either environment failure."
+    ]
+  },
+  "remaining_work": [
+    "Physical safe-checkpoint family/retention/adapter admission and owner-held snapshot recovery execution.",
+    "Native mounted owner handlers, actual dispatch/currentness/receipt issuance, interruption/restart and all-story runtime execution.",
+    "Measured zero-provider/Usage runtime evidence, visual/accessibility/motion/all-theme acceptance.",
+    "Active Replay replacement UX remains unresolved without an owner-resolved safe baseline; no automatic Skip policy invented.",
+    "Separate Chat/Persona owner typed-contract gaps remain outside this companion repair."
+  ],
+  "file_sha256": {
+    "Plans/guided_tour_contracts.schema.json": "e09904fc183df3f05cce8b26ae0090ac527549ebdcd646bac01d145715534b3c",
+    "Plans/guided_tour_contract_fixtures.json": "c9d25f9e0a235cf489093b81875f0066dfcfaadd111201e1eb856020f5244bc6",
+    "Plans/storage_value_registry.json": "56c227c81bb1006d9799dad3c99b3685588817380ed84ffc8d9b356ad29838c4",
+    "Plans/touch_closure.json": "96c6b304698c4a750a1b6c88c8064274feace6a1fb265f15a8752ae10341863a",
+    "scripts/pm_guided_tour_semantics.py": "c71b642b20186fb2a50364f4726146d32d58e438858aa41f751eecd016645e90",
+    "scripts/pm-new-contracts-verify.py": "a4d09364920de49d396a393027779e6a2b731c4046c6a46b367e92777e40fb97",
+    "tests/test_pm_guided_tour_action_contracts.py": "5240ef0ac2188b82ba731a8e4a74893b92ca4f6ffa8335c45b32a3392bb8beec",
+    "tests/test_pm_guided_tour_v3_contracts.py": "f2a3998180e9fa422c8fd0f596cc96a00c2192f9c7550a0774dabac5f84c774a",
+    ".gitignore": "c83231645cf2c8531d84dacdf6579fd417da2e4469aad12e084b0c2e59159afb"
+  },
+  "generation_boundary": "Only AGENTS-required Storage shard regeneration for the edited registry source. No PlanUnit index, node-readiness, Spec Lock, evidence seal or source binding refresh."
+}

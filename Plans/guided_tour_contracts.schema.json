@@ -17,7 +17,9 @@
     {"$ref": "#/$defs/guided_tour_teacher_copy_contract"},
     {"$ref": "#/$defs/guided_tour_teacher_library_contract"},
     {"$ref": "#/$defs/guided_tour_presentation_contract"},
-    {"$ref": "#/$defs/guided_tour_terminal_result"}
+    {"$ref": "#/$defs/guided_tour_terminal_result"},
+    {"$ref": "#/$defs/guided_tour_action_result"},
+    {"$ref": "#/$defs/guided_tour_action_exchange"}
   ],
   "$defs": {
     "non_empty_string": {"type": "string", "minLength": 1, "maxLength": 4096},
@@ -255,65 +257,405 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "schema_id", "schema_version", "predecessor_schema_id", "migration_disposition", "tour_session_id", "project_id",
-        "onboarding_session_id", "storyboard_schema_id", "storyboard_revision", "story_order", "scene_count", "step",
-        "step_id", "step_index", "phase", "status", "durability_class", "session_persistence", "checkpoint_ref",
-        "captured_state", "layout_disposition", "owner_observations", "teacher_mode", "provider_use_count", "usage_increment",
-        "network_used", "model_id", "token_budget", "effective_reduced_motion", "teacher_practice", "heading_focus",
-        "low_resource_profile", "workspace_squeezed", "completed_predicate_refs", "evidence_scope", "production_receipt_claim",
-        "revision", "currentness_sha256", "updated_at_utc"
+        "schema_id",
+        "schema_version",
+        "predecessor_schema_id",
+        "migration_disposition",
+        "tour_session_id",
+        "project_id",
+        "onboarding_session_id",
+        "storyboard_schema_id",
+        "storyboard_revision",
+        "story_order",
+        "scene_count",
+        "step",
+        "step_id",
+        "step_index",
+        "phase",
+        "status",
+        "durability_class",
+        "session_persistence",
+        "checkpoint_ref",
+        "captured_state",
+        "layout_disposition",
+        "owner_observations",
+        "teacher_mode",
+        "provider_use_count",
+        "usage_increment",
+        "network_used",
+        "model_id",
+        "token_budget",
+        "effective_reduced_motion",
+        "teacher_practice",
+        "heading_focus",
+        "low_resource_profile",
+        "workspace_squeezed",
+        "completed_predicate_refs",
+        "evidence_scope",
+        "production_receipt_claim",
+        "revision",
+        "currentness_sha256",
+        "updated_at_utc"
       ],
       "properties": {
-        "schema_id": {"const": "pm.guided_tour.session.v3"},
-        "schema_version": {"const": "3.0.0"},
-        "predecessor_schema_id": {"const": "pm.guided_tour.session.v2"},
-        "migration_disposition": {"const": "replace_superseded_controller_without_replaying_domain_work"},
-        "tour_session_id": {"$ref": "#/$defs/safe_ref"},
-        "project_id": {"$ref": "#/$defs/safe_ref"},
-        "onboarding_session_id": {"$ref": "#/$defs/nullable_safe_ref"},
-        "storyboard_schema_id": {"const": "pm.guided_tour.storyboard.v3"},
-        "storyboard_revision": {"$ref": "#/$defs/storyboard_revision"},
-        "story_order": {"$ref": "#/$defs/story_order"},
-        "scene_count": {"const": 3},
-        "step": {"enum": ["chat_teacher", "workspace", "planning_wizard"]},
-        "step_id": {"$ref": "#/$defs/safe_ref"},
-        "step_index": {"type": "integer", "minimum": 0, "maximum": 2},
-        "phase": {"enum": [
-          "comfort_intro", "open_chat", "select_teacher", "send_question", "answer_stream", "same_answer_eli5",
-          "workspace_orientation", "move_or_dock_chat", "widget_action",
-          "open_planning", "book_club_goal", "three_outcomes", "access_answer", "review", "answer_edit", "consequence_changed", "completion_boundary"
-        ]},
-        "status": {"enum": ["first_launch", "demonstrating", "awaiting_user", "paused", "interrupted", "recovery_required", "skipped", "completed"]},
-        "durability_class": {"const": "ephemeral_live_session"},
-        "session_persistence": {"const": "bounded_checkpoint_only"},
-        "checkpoint_ref": {"$ref": "#/$defs/safe_ref"},
-        "captured_state": {"$ref": "#/$defs/captured_state"},
-        "layout_disposition": {"enum": ["pending", "restore", "keep"]},
-        "owner_observations": {"type": "array", "uniqueItems": true, "maxItems": 64, "items": {"$ref": "#/$defs/owner_observation"}},
-        "teacher_mode": {"const": "local_deterministic_zero_provider"},
-        "provider_use_count": {"const": 0},
-        "usage_increment": {"const": 0},
-        "network_used": {"const": false},
-        "model_id": {"type": "null"},
-        "token_budget": {"type": "null"},
-        "effective_reduced_motion": {"$ref": "#/$defs/effective_reduced_motion"},
-        "teacher_practice": {"$ref": "#/$defs/teacher_practice"},
-        "heading_focus": {"$ref": "#/$defs/heading_focus"},
-        "low_resource_profile": {"type": "boolean"},
-        "workspace_squeezed": {"type": "boolean"},
-        "completed_predicate_refs": {"type": "array", "uniqueItems": true, "maxItems": 64, "items": {"$ref": "#/$defs/predicate_ref"}},
-        "evidence_scope": {"const": "contract_fixture_only"},
-        "production_receipt_claim": {"const": false},
-        "revision": {"type": "integer", "minimum": 1},
-        "currentness_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-        "updated_at_utc": {"type": "string", "format": "date-time"}
+        "schema_id": {
+          "const": "pm.guided_tour.session.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "predecessor_schema_id": {
+          "const": "pm.guided_tour.session.v2"
+        },
+        "migration_disposition": {
+          "const": "replace_superseded_controller_without_replaying_domain_work"
+        },
+        "tour_session_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "onboarding_session_id": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "storyboard_schema_id": {
+          "const": "pm.guided_tour.storyboard.v3"
+        },
+        "storyboard_revision": {
+          "$ref": "#/$defs/storyboard_revision"
+        },
+        "story_order": {
+          "$ref": "#/$defs/story_order"
+        },
+        "scene_count": {
+          "const": 3
+        },
+        "step": {
+          "enum": [
+            "chat_teacher",
+            "workspace",
+            "planning_wizard"
+          ]
+        },
+        "step_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "step_index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "phase": {
+          "enum": [
+            "comfort_intro",
+            "open_chat",
+            "select_teacher",
+            "send_question",
+            "answer_stream",
+            "same_answer_eli5",
+            "workspace_orientation",
+            "move_or_dock_chat",
+            "widget_action",
+            "open_planning",
+            "book_club_goal",
+            "three_outcomes",
+            "access_answer",
+            "review",
+            "answer_edit",
+            "consequence_changed",
+            "completion_boundary"
+          ]
+        },
+        "status": {
+          "enum": [
+            "first_launch",
+            "demonstrating",
+            "awaiting_user",
+            "paused",
+            "interrupted",
+            "recovery_required",
+            "skipped",
+            "completed"
+          ]
+        },
+        "durability_class": {
+          "const": "ephemeral_live_session"
+        },
+        "session_persistence": {
+          "const": "bounded_checkpoint_only"
+        },
+        "checkpoint_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "captured_state": {
+          "$ref": "#/$defs/captured_state"
+        },
+        "layout_disposition": {
+          "enum": [
+            "pending",
+            "restore",
+            "keep"
+          ]
+        },
+        "owner_observations": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 64,
+          "items": {
+            "$ref": "#/$defs/owner_observation"
+          }
+        },
+        "teacher_mode": {
+          "const": "local_deterministic_zero_provider"
+        },
+        "provider_use_count": {
+          "const": 0
+        },
+        "usage_increment": {
+          "const": 0
+        },
+        "network_used": {
+          "const": false
+        },
+        "model_id": {
+          "type": "null"
+        },
+        "token_budget": {
+          "type": "null"
+        },
+        "effective_reduced_motion": {
+          "$ref": "#/$defs/effective_reduced_motion"
+        },
+        "teacher_practice": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/teacher_practice"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "heading_focus": {
+          "$ref": "#/$defs/heading_focus"
+        },
+        "low_resource_profile": {
+          "type": "boolean"
+        },
+        "workspace_squeezed": {
+          "type": "boolean"
+        },
+        "completed_predicate_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 64,
+          "items": {
+            "$ref": "#/$defs/predicate_ref"
+          }
+        },
+        "evidence_scope": {
+          "const": "contract_fixture_only"
+        },
+        "production_receipt_claim": {
+          "const": false
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "updated_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
       },
       "allOf": [
-        {"if": {"properties": {"step": {"const": "chat_teacher"}}, "required": ["step"]}, "then": {"properties": {"step_index": {"const": 0}, "phase": {"enum": ["comfort_intro", "open_chat", "select_teacher", "send_question", "answer_stream", "same_answer_eli5"]}, "heading_focus": {"properties": {"target": {"const": "guided_tour.chat_teacher.heading"}}}}}},
-        {"if": {"properties": {"step": {"const": "workspace"}}, "required": ["step"]}, "then": {"properties": {"step_index": {"const": 1}, "phase": {"enum": ["workspace_orientation", "move_or_dock_chat", "widget_action"]}, "heading_focus": {"properties": {"target": {"const": "guided_tour.workspace.heading"}}}}}},
-        {"if": {"properties": {"step": {"const": "planning_wizard"}}, "required": ["step"]}, "then": {"properties": {"step_index": {"const": 2}, "phase": {"enum": ["open_planning", "book_club_goal", "three_outcomes", "access_answer", "review", "answer_edit", "consequence_changed", "completion_boundary"]}, "heading_focus": {"properties": {"target": {"const": "guided_tour.planning_wizard.heading"}}}}}},
-        {"if": {"properties": {"status": {"const": "completed"}}, "required": ["status"]}, "then": {"properties": {"step": {"const": "planning_wizard"}, "phase": {"const": "completion_boundary"}, "layout_disposition": {"enum": ["restore", "keep"]}}}},
-        {"if": {"properties": {"status": {"const": "skipped"}}, "required": ["status"]}, "then": {"properties": {"layout_disposition": {"const": "restore"}}}}
+        {
+          "if": {
+            "properties": {
+              "step": {
+                "const": "chat_teacher"
+              }
+            },
+            "required": [
+              "step"
+            ]
+          },
+          "then": {
+            "properties": {
+              "step_index": {
+                "const": 0
+              },
+              "phase": {
+                "enum": [
+                  "comfort_intro",
+                  "open_chat",
+                  "select_teacher",
+                  "send_question",
+                  "answer_stream",
+                  "same_answer_eli5"
+                ]
+              },
+              "heading_focus": {
+                "properties": {
+                  "target": {
+                    "const": "guided_tour.chat_teacher.heading"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "step": {
+                "const": "workspace"
+              }
+            },
+            "required": [
+              "step"
+            ]
+          },
+          "then": {
+            "properties": {
+              "step_index": {
+                "const": 1
+              },
+              "phase": {
+                "enum": [
+                  "workspace_orientation",
+                  "move_or_dock_chat",
+                  "widget_action"
+                ]
+              },
+              "heading_focus": {
+                "properties": {
+                  "target": {
+                    "const": "guided_tour.workspace.heading"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "step": {
+                "const": "planning_wizard"
+              }
+            },
+            "required": [
+              "step"
+            ]
+          },
+          "then": {
+            "properties": {
+              "step_index": {
+                "const": 2
+              },
+              "phase": {
+                "enum": [
+                  "open_planning",
+                  "book_club_goal",
+                  "three_outcomes",
+                  "access_answer",
+                  "review",
+                  "answer_edit",
+                  "consequence_changed",
+                  "completion_boundary"
+                ]
+              },
+              "heading_focus": {
+                "properties": {
+                  "target": {
+                    "const": "guided_tour.planning_wizard.heading"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "step": {
+                "const": "planning_wizard"
+              },
+              "phase": {
+                "const": "completion_boundary"
+              },
+              "layout_disposition": {
+                "enum": [
+                  "restore",
+                  "keep"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "skipped"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "layout_disposition": {
+                "const": "restore"
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "later_chapter_requires_completed_teacher_summary",
+          "if": {
+            "properties": {
+              "step": {
+                "enum": [
+                  "workspace",
+                  "planning_wizard"
+                ]
+              },
+              "status": {
+                "not": {
+                  "enum": [
+                    "skipped",
+                    "recovery_required"
+                  ]
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "teacher_practice": {
+                "$ref": "#/$defs/teacher_practice"
+              }
+            }
+          }
+        }
       ]
     },
     "guided_tour_checkpoint": {
@@ -456,47 +798,440 @@
     "guided_tour_action_request": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "schema_version", "predecessor_schema_id", "migration_disposition", "action_id", "command_instance_id", "tour_session_id", "expected_revision", "expected_currentness_sha256", "step", "step_id", "target_surface_id", "target_control_id", "target_label", "actor_ref", "idempotency_key", "return_focus_id"],
+      "required": [
+        "schema_id",
+        "schema_version",
+        "predecessor_schema_id",
+        "migration_disposition",
+        "action_id",
+        "command_instance_id",
+        "tour_session_id",
+        "expected_revision",
+        "expected_currentness_sha256",
+        "step",
+        "step_id",
+        "target_surface_id",
+        "target_control_id",
+        "target_label",
+        "actor_ref",
+        "idempotency_key",
+        "return_focus_id",
+        "project_id"
+      ],
       "properties": {
-        "schema_id": {"const": "pm.guided_tour.action_request.v3"},
-        "schema_version": {"const": "3.0.0"},
-        "predecessor_schema_id": {"const": "pm.guided_tour.action_request.v2"},
-        "migration_disposition": {"const": "added_show_me_and_default_restore_explicit_keep_finish"},
-        "action_id": {"enum": ["ui.guided_tour.start", "ui.guided_tour.next", "ui.guided_tour.show_me", "ui.guided_tour.back", "ui.guided_tour.pause", "ui.guided_tour.resume", "ui.guided_tour.skip", "ui.guided_tour.focus_route", "ui.guided_tour.toggle_eli5", "ui.guided_tour.finish", "ui.guided_tour.replay"]},
-        "command_instance_id": {"$ref": "#/$defs/safe_ref"},
-        "tour_session_id": {"$ref": "#/$defs/safe_ref"},
-        "expected_revision": {"type": "integer", "minimum": 1},
-        "expected_currentness_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-        "step": {"enum": ["chat_teacher", "workspace", "planning_wizard"]},
-        "step_id": {"$ref": "#/$defs/safe_ref"},
-        "target_surface_id": {"$ref": "#/$defs/safe_ref"},
-        "target_control_id": {"$ref": "#/$defs/nullable_safe_ref"},
-        "target_label": {"$ref": "#/$defs/non_empty_string"},
-        "route_target": {"type": "object", "additionalProperties": false, "required": ["page_id"], "properties": {"page_id": {"const": "usage"}}},
-        "captured_state_ref": {"$ref": "#/$defs/safe_ref"},
-        "practice_action_ref": {"$ref": "#/$defs/safe_ref"},
-        "finish_layout": {
-          "type": "object", "additionalProperties": false,
-          "required": ["disposition", "selection_source"],
-          "properties": {
-            "disposition": {"enum": ["restore", "keep"], "default": "restore"},
-            "selection_source": {"enum": ["default_restore", "explicit_keep"]}
-          },
-          "allOf": [
-            {"x-rule": "finish_restore_is_default", "if": {"properties": {"disposition": {"const": "restore"}}, "required": ["disposition"]}, "then": {"properties": {"selection_source": {"const": "default_restore"}}}},
-            {"x-rule": "finish_keep_is_explicit", "if": {"properties": {"disposition": {"const": "keep"}}, "required": ["disposition"]}, "then": {"properties": {"selection_source": {"const": "explicit_keep"}}}}
+        "schema_id": {
+          "const": "pm.guided_tour.action_request.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "predecessor_schema_id": {
+          "const": "pm.guided_tour.action_request.v2"
+        },
+        "migration_disposition": {
+          "const": "added_show_me_and_default_restore_explicit_keep_finish"
+        },
+        "action_id": {
+          "enum": [
+            "ui.guided_tour.start",
+            "ui.guided_tour.next",
+            "ui.guided_tour.show_me",
+            "ui.guided_tour.back",
+            "ui.guided_tour.pause",
+            "ui.guided_tour.resume",
+            "ui.guided_tour.skip",
+            "ui.guided_tour.focus_route",
+            "ui.guided_tour.toggle_eli5",
+            "ui.guided_tour.finish",
+            "ui.guided_tour.replay"
           ]
         },
-        "actor_ref": {"$ref": "#/$defs/safe_ref"},
-        "idempotency_key": {"$ref": "#/$defs/safe_ref"},
-        "return_focus_id": {"enum": ["guided_tour.chat_teacher.heading", "guided_tour.workspace.heading", "guided_tour.planning_wizard.heading"]}
+        "command_instance_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "tour_session_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_currentness_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "step": {
+          "enum": [
+            "chat_teacher",
+            "workspace",
+            "planning_wizard"
+          ]
+        },
+        "step_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "target_surface_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "target_control_id": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "target_label": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "route_target": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "page_id"
+          ],
+          "properties": {
+            "page_id": {
+              "const": "usage"
+            }
+          }
+        },
+        "captured_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "practice_action_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "finish_layout": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "disposition",
+            "selection_source"
+          ],
+          "properties": {
+            "disposition": {
+              "enum": [
+                "restore",
+                "keep"
+              ],
+              "default": "restore"
+            },
+            "selection_source": {
+              "enum": [
+                "default_restore",
+                "explicit_keep"
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "x-rule": "finish_restore_is_default",
+              "if": {
+                "properties": {
+                  "disposition": {
+                    "const": "restore"
+                  }
+                },
+                "required": [
+                  "disposition"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "selection_source": {
+                    "const": "default_restore"
+                  }
+                }
+              }
+            },
+            {
+              "x-rule": "finish_keep_is_explicit",
+              "if": {
+                "properties": {
+                  "disposition": {
+                    "const": "keep"
+                  }
+                },
+                "required": [
+                  "disposition"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "selection_source": {
+                    "const": "explicit_keep"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "return_focus_id": {
+          "enum": [
+            "guided_tour.chat_teacher.heading",
+            "guided_tour.workspace.heading",
+            "guided_tour.planning_wizard.heading"
+          ]
+        },
+        "project_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "resume_source": {
+          "enum": [
+            "live",
+            "checkpoint"
+          ]
+        },
+        "checkpoint_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
       },
       "allOf": [
-        {"if": {"properties": {"action_id": {"const": "ui.guided_tour.focus_route"}}, "required": ["action_id"]}, "then": {"required": ["route_target"], "properties": {"step": {"const": "workspace"}, "target_surface_id": {"const": "usage"}, "target_control_id": {"const": "ui.guided_tour.focus_route"}, "return_focus_id": {"const": "guided_tour.workspace.heading"}}}, "else": {"not": {"required": ["route_target"]}}},
-        {"if": {"properties": {"action_id": {"const": "ui.guided_tour.skip"}}, "required": ["action_id"]}, "then": {"required": ["captured_state_ref"], "properties": {"target_control_id": {"const": "ui.guided_tour.skip"}, "target_label": {"const": "Skip Tour"}}}, "else": {"not": {"required": ["captured_state_ref"]}}},
-        {"if": {"properties": {"action_id": {"const": "ui.guided_tour.show_me"}}, "required": ["action_id"]}, "then": {"required": ["practice_action_ref"], "properties": {"target_control_id": {"const": "ui.guided_tour.show_me"}, "target_label": {"const": "Show Me"}}}, "else": {"not": {"required": ["practice_action_ref"]}}},
-        {"if": {"properties": {"action_id": {"const": "ui.guided_tour.toggle_eli5"}}, "required": ["action_id"]}, "then": {"properties": {"target_control_id": {"const": "ui.guided_tour.toggle_eli5"}, "target_label": {"enum": ["ELI5: Off", "ELI5: On"]}}}},
-        {"if": {"properties": {"action_id": {"const": "ui.guided_tour.finish"}}, "required": ["action_id"]}, "then": {"required": ["finish_layout"], "properties": {"step": {"const": "planning_wizard"}, "target_control_id": {"const": "ui.guided_tour.finish"}, "target_label": {"const": "Finish tour"}, "return_focus_id": {"const": "guided_tour.planning_wizard.heading"}}}, "else": {"not": {"required": ["finish_layout"]}}}
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.guided_tour.focus_route"
+              }
+            },
+            "required": [
+              "action_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "route_target"
+            ],
+            "properties": {
+              "step": {
+                "const": "workspace"
+              },
+              "target_surface_id": {
+                "const": "usage"
+              },
+              "target_control_id": {
+                "const": "ui.guided_tour.focus_route"
+              },
+              "return_focus_id": {
+                "const": "guided_tour.workspace.heading"
+              }
+            }
+          },
+          "else": {
+            "not": {
+              "required": [
+                "route_target"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.guided_tour.skip"
+              }
+            },
+            "required": [
+              "action_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "captured_state_ref"
+            ],
+            "properties": {
+              "target_control_id": {
+                "const": "ui.guided_tour.skip"
+              },
+              "target_label": {
+                "const": "Skip Tour"
+              }
+            }
+          },
+          "else": {
+            "not": {
+              "required": [
+                "captured_state_ref"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.guided_tour.show_me"
+              }
+            },
+            "required": [
+              "action_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "practice_action_ref"
+            ],
+            "properties": {
+              "target_control_id": {
+                "const": "ui.guided_tour.show_me"
+              },
+              "target_label": {
+                "const": "Show Me"
+              }
+            }
+          },
+          "else": {
+            "not": {
+              "required": [
+                "practice_action_ref"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.guided_tour.toggle_eli5"
+              }
+            },
+            "required": [
+              "action_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_control_id": {
+                "const": "ui.guided_tour.toggle_eli5"
+              },
+              "target_label": {
+                "enum": [
+                  "ELI5: Off",
+                  "ELI5: On"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.guided_tour.finish"
+              }
+            },
+            "required": [
+              "action_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "finish_layout"
+            ],
+            "properties": {
+              "step": {
+                "const": "planning_wizard"
+              },
+              "target_control_id": {
+                "const": "ui.guided_tour.finish"
+              },
+              "target_label": {
+                "const": "Finish tour"
+              },
+              "return_focus_id": {
+                "const": "guided_tour.planning_wizard.heading"
+              }
+            }
+          },
+          "else": {
+            "not": {
+              "required": [
+                "finish_layout"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.guided_tour.start"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expected_revision": {
+                "const": 0
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "expected_revision": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.guided_tour.resume"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "resume_source"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "resume_source"
+                  ]
+                },
+                {
+                  "required": [
+                    "checkpoint_ref"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "resume_source"
+            ],
+            "properties": {
+              "resume_source": {
+                "const": "checkpoint"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "checkpoint_ref"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "checkpoint_ref"
+              ]
+            }
+          }
+        }
       ]
     },
     "guided_tour_focus_route_result": {
@@ -792,6 +1527,1461 @@
           "then": {"properties": {"status": {"const": "recovery_required"}, "completion_reported": {"const": false}, "layout_disposition": {"const": "restore"}}}
         }
       ]
+    },
+    "action_correlation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_id",
+        "command_instance_id",
+        "project_id",
+        "tour_session_id",
+        "actor_ref",
+        "idempotency_key",
+        "expected_revision",
+        "expected_currentness_sha256",
+        "step",
+        "step_id",
+        "target_surface_id",
+        "target_control_id"
+      ],
+      "properties": {
+        "action_id": {
+          "enum": [
+            "ui.guided_tour.start",
+            "ui.guided_tour.next",
+            "ui.guided_tour.show_me",
+            "ui.guided_tour.back",
+            "ui.guided_tour.pause",
+            "ui.guided_tour.resume",
+            "ui.guided_tour.skip",
+            "ui.guided_tour.focus_route",
+            "ui.guided_tour.toggle_eli5",
+            "ui.guided_tour.finish",
+            "ui.guided_tour.replay"
+          ]
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "tour_session_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_currentness_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "step": {
+          "enum": [
+            "chat_teacher",
+            "workspace",
+            "planning_wizard"
+          ]
+        },
+        "step_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "target_surface_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "target_control_id": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        }
+      }
+    },
+    "action_error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "reason",
+        "retryable"
+      ],
+      "properties": {
+        "code": {
+          "enum": [
+            "session_missing",
+            "project_mismatch",
+            "stale_revision",
+            "stale_currentness",
+            "invalid_transition",
+            "practice_required",
+            "target_missing",
+            "owner_unavailable",
+            "snapshot_unavailable",
+            "idempotency_conflict",
+            "checkpoint_unavailable",
+            "checkpoint_stale",
+            "checkpoint_invalid",
+            "owner_state_unavailable",
+            "snapshot_stale",
+            "owner_restore_failed",
+            "stale_snapshot",
+            "persistence_failure",
+            "route_target_missing",
+            "page_router_unavailable",
+            "route_not_activated"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "retryable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "action_availability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "reason_code",
+        "safe_exit_available"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "reason_code": {
+          "oneOf": [
+            {
+              "enum": [
+                "session_missing",
+                "project_mismatch",
+                "stale_revision",
+                "stale_currentness",
+                "invalid_transition",
+                "practice_required",
+                "target_missing",
+                "owner_unavailable",
+                "snapshot_unavailable",
+                "idempotency_conflict",
+                "checkpoint_unavailable",
+                "checkpoint_stale",
+                "checkpoint_invalid",
+                "owner_state_unavailable",
+                "snapshot_stale",
+                "owner_restore_failed",
+                "stale_snapshot",
+                "persistence_failure",
+                "route_target_missing",
+                "page_router_unavailable",
+                "route_not_activated"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "safe_exit_available": {
+          "const": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "enabled": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reason_code": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "reason_code": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "action_owner_dispatch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_ref",
+        "action_id",
+        "target_ref",
+        "tour_session_id",
+        "practice_action_ref"
+      ],
+      "properties": {
+        "owner_ref": {
+          "$ref": "#/$defs/owner_ref"
+        },
+        "action_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "target_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "tour_session_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "practice_action_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        }
+      }
+    },
+    "action_owner_observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tour_session_id",
+        "conversation_ref",
+        "observation"
+      ],
+      "properties": {
+        "tour_session_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "conversation_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "observation": {
+          "$ref": "#/$defs/owner_observation"
+        }
+      }
+    },
+    "action_effect_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "controller_transport_persisted",
+        "provider_use_count",
+        "usage_increment",
+        "network_used",
+        "model_id",
+        "token_budget",
+        "domain_work_started",
+        "approval_granted",
+        "second_approval_fence_created",
+        "owner_dispatches",
+        "owner_observations",
+        "choreography_running",
+        "decorative_work_running",
+        "active_subscription_count",
+        "checkpoint_written",
+        "settings_written"
+      ],
+      "properties": {
+        "controller_transport_persisted": {
+          "const": false
+        },
+        "provider_use_count": {
+          "const": 0
+        },
+        "usage_increment": {
+          "const": 0
+        },
+        "network_used": {
+          "const": false
+        },
+        "model_id": {
+          "const": null
+        },
+        "token_budget": {
+          "const": null
+        },
+        "domain_work_started": {
+          "const": false
+        },
+        "approval_granted": {
+          "const": false
+        },
+        "second_approval_fence_created": {
+          "const": false
+        },
+        "owner_dispatches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action_owner_dispatch"
+          },
+          "maxItems": 1,
+          "uniqueItems": true,
+          "description": "Practice owner dispatches only. Existing terminal restoration attempts are carried separately by terminal_result.restoration, not denied by an empty practice-dispatch list."
+        },
+        "owner_observations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action_owner_observation"
+          },
+          "maxItems": 64,
+          "uniqueItems": true,
+          "description": "Correlated practice observations only; they are static fixtures, not issued production owner receipts."
+        },
+        "choreography_running": {
+          "type": "boolean"
+        },
+        "decorative_work_running": {
+          "type": "boolean"
+        },
+        "active_subscription_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "checkpoint_written": {
+          "const": false
+        },
+        "settings_written": {
+          "const": false
+        }
+      }
+    },
+    "nonterminal_action_detail": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "action_id",
+        "explanation_mode",
+        "answer_ref",
+        "conversation_ref",
+        "practice_action_ref",
+        "captured_state_ref"
+      ],
+      "properties": {
+        "kind": {
+          "const": "local"
+        },
+        "action_id": {
+          "enum": [
+            "ui.guided_tour.start",
+            "ui.guided_tour.next",
+            "ui.guided_tour.show_me",
+            "ui.guided_tour.back",
+            "ui.guided_tour.pause",
+            "ui.guided_tour.toggle_eli5",
+            "ui.guided_tour.replay"
+          ]
+        },
+        "explanation_mode": {
+          "enum": [
+            "normal",
+            "eli5"
+          ]
+        },
+        "answer_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "conversation_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "practice_action_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "captured_state_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        }
+      }
+    },
+    "live_resume_detail": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "owner_state_revalidated",
+        "validated_owner_state_refs",
+        "domain_work_replayed",
+        "completion_reported",
+        "earliest_unsatisfied_prerequisite_ref",
+        "resume_step",
+        "resume_step_id"
+      ],
+      "properties": {
+        "kind": {
+          "const": "live_resume"
+        },
+        "owner_state_revalidated": {
+          "const": true
+        },
+        "validated_owner_state_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          },
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true
+        },
+        "domain_work_replayed": {
+          "const": false
+        },
+        "completion_reported": {
+          "const": false
+        },
+        "earliest_unsatisfied_prerequisite_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/predicate_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resume_step": {
+          "enum": [
+            "chat_teacher",
+            "workspace",
+            "planning_wizard"
+          ]
+        },
+        "resume_step_id": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "guided_tour_action_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "correlation",
+        "status",
+        "error",
+        "availability",
+        "state_after",
+        "detail",
+        "effect_boundary",
+        "evidence_scope",
+        "production_receipt_claim"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.guided_tour.action_result.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "correlation": {
+          "$ref": "#/$defs/action_correlation"
+        },
+        "status": {
+          "enum": [
+            "applied",
+            "no_change",
+            "disabled",
+            "rejected",
+            "recovery_required"
+          ]
+        },
+        "error": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/action_error"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "$ref": "#/$defs/action_availability"
+        },
+        "state_after": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/guided_tour_session"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "detail": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/nonterminal_action_detail"
+            },
+            {
+              "$ref": "#/$defs/live_resume_detail"
+            },
+            {
+              "$ref": "#/$defs/guided_tour_resume_result"
+            },
+            {
+              "$ref": "#/$defs/guided_tour_terminal_result"
+            },
+            {
+              "$ref": "#/$defs/guided_tour_focus_route_result"
+            }
+          ]
+        },
+        "effect_boundary": {
+          "$ref": "#/$defs/action_effect_boundary"
+        },
+        "evidence_scope": {
+          "const": "contract_fixture_only"
+        },
+        "production_receipt_claim": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "applied",
+                  "no_change"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "type": "null"
+              },
+              "state_after": {
+                "$ref": "#/$defs/guided_tour_session"
+              },
+              "detail": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "availability": {
+                "properties": {
+                  "enabled": {
+                    "const": true
+                  },
+                  "reason_code": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "error": {
+                "$ref": "#/$defs/action_error"
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "result_detail_start",
+          "if": {
+            "properties": {
+              "correlation": {
+                "properties": {
+                  "action_id": {
+                    "const": "ui.guided_tour.start"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "detail": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "$ref": "#/$defs/nonterminal_action_detail"
+                      },
+                      {
+                        "properties": {
+                          "action_id": {
+                            "const": "ui.guided_tour.start"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "result_detail_next",
+          "if": {
+            "properties": {
+              "correlation": {
+                "properties": {
+                  "action_id": {
+                    "const": "ui.guided_tour.next"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "detail": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "$ref": "#/$defs/nonterminal_action_detail"
+                      },
+                      {
+                        "properties": {
+                          "action_id": {
+                            "const": "ui.guided_tour.next"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "result_detail_show_me",
+          "if": {
+            "properties": {
+              "correlation": {
+                "properties": {
+                  "action_id": {
+                    "const": "ui.guided_tour.show_me"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "detail": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "$ref": "#/$defs/nonterminal_action_detail"
+                      },
+                      {
+                        "properties": {
+                          "action_id": {
+                            "const": "ui.guided_tour.show_me"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "result_detail_back",
+          "if": {
+            "properties": {
+              "correlation": {
+                "properties": {
+                  "action_id": {
+                    "const": "ui.guided_tour.back"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "detail": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "$ref": "#/$defs/nonterminal_action_detail"
+                      },
+                      {
+                        "properties": {
+                          "action_id": {
+                            "const": "ui.guided_tour.back"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "result_detail_pause",
+          "if": {
+            "properties": {
+              "correlation": {
+                "properties": {
+                  "action_id": {
+                    "const": "ui.guided_tour.pause"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "detail": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "$ref": "#/$defs/nonterminal_action_detail"
+                      },
+                      {
+                        "properties": {
+                          "action_id": {
+                            "const": "ui.guided_tour.pause"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "result_detail_resume",
+          "if": {
+            "properties": {
+              "correlation": {
+                "properties": {
+                  "action_id": {
+                    "const": "ui.guided_tour.resume"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "detail": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "oneOf": [
+                      {
+                        "$ref": "#/$defs/live_resume_detail"
+                      },
+                      {
+                        "$ref": "#/$defs/guided_tour_resume_result"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "result_detail_skip",
+          "if": {
+            "properties": {
+              "correlation": {
+                "properties": {
+                  "action_id": {
+                    "const": "ui.guided_tour.skip"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "detail": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "$ref": "#/$defs/guided_tour_terminal_result"
+                      },
+                      {
+                        "properties": {
+                          "action_id": {
+                            "const": "ui.guided_tour.skip"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "result_detail_focus_route",
+          "if": {
+            "properties": {
+              "correlation": {
+                "properties": {
+                  "action_id": {
+                    "const": "ui.guided_tour.focus_route"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "detail": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "#/$defs/guided_tour_focus_route_result"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "result_detail_toggle_eli5",
+          "if": {
+            "properties": {
+              "correlation": {
+                "properties": {
+                  "action_id": {
+                    "const": "ui.guided_tour.toggle_eli5"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "detail": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "$ref": "#/$defs/nonterminal_action_detail"
+                      },
+                      {
+                        "properties": {
+                          "action_id": {
+                            "const": "ui.guided_tour.toggle_eli5"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "result_detail_finish",
+          "if": {
+            "properties": {
+              "correlation": {
+                "properties": {
+                  "action_id": {
+                    "const": "ui.guided_tour.finish"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "detail": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "$ref": "#/$defs/guided_tour_terminal_result"
+                      },
+                      {
+                        "properties": {
+                          "action_id": {
+                            "const": "ui.guided_tour.finish"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "result_detail_replay",
+          "if": {
+            "properties": {
+              "correlation": {
+                "properties": {
+                  "action_id": {
+                    "const": "ui.guided_tour.replay"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "detail": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "$ref": "#/$defs/nonterminal_action_detail"
+                      },
+                      {
+                        "properties": {
+                          "action_id": {
+                            "const": "ui.guided_tour.replay"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "nested_status_skip",
+          "if": {
+            "properties": {
+              "correlation": {
+                "properties": {
+                  "action_id": {
+                    "const": "ui.guided_tour.skip"
+                  }
+                }
+              },
+              "status": {
+                "enum": [
+                  "applied",
+                  "no_change"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "detail": {
+                "properties": {
+                  "status": {
+                    "const": "skipped"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "nested_status_finish",
+          "if": {
+            "properties": {
+              "correlation": {
+                "properties": {
+                  "action_id": {
+                    "const": "ui.guided_tour.finish"
+                  }
+                }
+              },
+              "status": {
+                "enum": [
+                  "applied",
+                  "no_change"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "detail": {
+                "properties": {
+                  "status": {
+                    "const": "completed"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "nested_status_focus_route",
+          "if": {
+            "properties": {
+              "correlation": {
+                "properties": {
+                  "action_id": {
+                    "const": "ui.guided_tour.focus_route"
+                  }
+                }
+              },
+              "status": {
+                "enum": [
+                  "applied",
+                  "no_change"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "detail": {
+                "properties": {
+                  "status": {
+                    "const": "applied"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "checkpoint_resume_nested_status",
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "applied",
+                  "no_change"
+                ]
+              },
+              "detail": {
+                "type": "object",
+                "required": [
+                  "schema_id"
+                ],
+                "properties": {
+                  "schema_id": {
+                    "const": "pm.guided_tour.resume_result.v3"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "detail": {
+                "properties": {
+                  "status": {
+                    "const": "resumed"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "initial_result_is_unfinished",
+          "if": {
+            "properties": {
+              "correlation": {
+                "properties": {
+                  "action_id": {
+                    "enum": [
+                      "ui.guided_tour.start",
+                      "ui.guided_tour.replay"
+                    ]
+                  }
+                }
+              },
+              "status": {
+                "enum": [
+                  "applied",
+                  "no_change"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "state_after": {
+                "properties": {
+                  "step": {
+                    "const": "chat_teacher"
+                  },
+                  "phase": {
+                    "enum": [
+                      "comfort_intro",
+                      "open_chat"
+                    ]
+                  },
+                  "status": {
+                    "const": "first_launch"
+                  },
+                  "revision": {
+                    "const": 1
+                  },
+                  "teacher_practice": {
+                    "type": "null"
+                  },
+                  "checkpoint_ref": {
+                    "type": "null"
+                  },
+                  "completed_predicate_refs": {
+                    "maxItems": 0
+                  },
+                  "owner_observations": {
+                    "maxItems": 0
+                  },
+                  "layout_disposition": {
+                    "const": "pending"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "x-rule": "only_exit_reports_terminal_state",
+          "if": {
+            "properties": {
+              "correlation": {
+                "properties": {
+                  "action_id": {
+                    "not": {
+                      "enum": [
+                        "ui.guided_tour.skip",
+                        "ui.guided_tour.finish",
+                        "ui.guided_tour.replay"
+                      ]
+                    }
+                  }
+                }
+              },
+              "status": {
+                "enum": [
+                  "applied",
+                  "no_change"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "state_after": {
+                "properties": {
+                  "status": {
+                    "not": {
+                      "enum": [
+                        "completed",
+                        "skipped"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        ,{"x-rule":"specialized_success_requires_outer_success","if":{"properties":{"detail":{"type":"object","required":["schema_id","status"],"properties":{"schema_id":{"enum":["pm.guided_tour.terminal_result.v3","pm.guided_tour.resume_result.v3","pm.guided_tour.focus_route_result.v1"]},"status":{"enum":["skipped","completed","resumed","applied"]}}}}},"then":{"properties":{"status":{"enum":["applied","no_change"]},"error":{"type":"null"}}}}
+        ,{"x-rule":"specialized_recovery_requires_outer_recovery","if":{"properties":{"detail":{"type":"object","required":["schema_id","status"],"properties":{"schema_id":{"enum":["pm.guided_tour.terminal_result.v3","pm.guided_tour.resume_result.v3"]},"status":{"const":"recovery_required"}}}}},"then":{"properties":{"status":{"const":"recovery_required"},"error":{"$ref":"#/$defs/action_error"}}}}
+        ,{"x-rule":"specialized_error_checkpoint_stale","if":{"properties":{"detail":{"type":"object","required":["error_code"],"properties":{"error_code":{"const":"checkpoint_stale"}}}}},"then":{"properties":{"error":{"type":"object","required":["code"],"properties":{"code":{"const":"checkpoint_stale"}}}}}}
+        ,{"x-rule":"specialized_error_checkpoint_invalid","if":{"properties":{"detail":{"type":"object","required":["error_code"],"properties":{"error_code":{"const":"checkpoint_invalid"}}}}},"then":{"properties":{"error":{"type":"object","required":["code"],"properties":{"code":{"const":"checkpoint_invalid"}}}}}}
+        ,{"x-rule":"specialized_error_owner_state_unavailable","if":{"properties":{"detail":{"type":"object","required":["error_code"],"properties":{"error_code":{"const":"owner_state_unavailable"}}}}},"then":{"properties":{"error":{"type":"object","required":["code"],"properties":{"code":{"const":"owner_state_unavailable"}}}}}}
+        ,{"x-rule":"specialized_error_snapshot_stale","if":{"properties":{"detail":{"type":"object","required":["error_code"],"properties":{"error_code":{"const":"snapshot_stale"}}}}},"then":{"properties":{"error":{"type":"object","required":["code"],"properties":{"code":{"const":"snapshot_stale"}}}}}}
+        ,{"x-rule":"specialized_error_route_target_missing","if":{"properties":{"detail":{"type":"object","required":["error_code"],"properties":{"error_code":{"const":"route_target_missing"}}}}},"then":{"properties":{"error":{"type":"object","required":["code"],"properties":{"code":{"const":"route_target_missing"}}}}}}
+        ,{"x-rule":"specialized_error_page_router_unavailable","if":{"properties":{"detail":{"type":"object","required":["error_code"],"properties":{"error_code":{"const":"page_router_unavailable"}}}}},"then":{"properties":{"error":{"type":"object","required":["code"],"properties":{"code":{"const":"page_router_unavailable"}}}}}}
+        ,{"x-rule":"specialized_error_route_not_activated","if":{"properties":{"detail":{"type":"object","required":["error_code"],"properties":{"error_code":{"const":"route_not_activated"}}}}},"then":{"properties":{"error":{"type":"object","required":["code"],"properties":{"code":{"const":"route_not_activated"}}}}}}
+        ,{"x-rule":"specialized_error_owner_restore_failed","if":{"properties":{"detail":{"type":"object","required":["restoration"],"properties":{"restoration":{"type":"object","required":["error_code"],"properties":{"error_code":{"const":"owner_restore_failed"}}}}}}},"then":{"properties":{"error":{"type":"object","required":["code"],"properties":{"code":{"const":"owner_restore_failed"}}}}}}
+        ,{"x-rule":"specialized_error_stale_snapshot","if":{"properties":{"detail":{"type":"object","required":["restoration"],"properties":{"restoration":{"type":"object","required":["error_code"],"properties":{"error_code":{"const":"stale_snapshot"}}}}}}},"then":{"properties":{"error":{"type":"object","required":["code"],"properties":{"code":{"const":"stale_snapshot"}}}}}}
+        ,{"x-rule":"specialized_error_persistence_failure","if":{"properties":{"detail":{"type":"object","required":["restoration"],"properties":{"restoration":{"type":"object","required":["error_code"],"properties":{"error_code":{"const":"persistence_failure"}}}}}}},"then":{"properties":{"error":{"type":"object","required":["code"],"properties":{"code":{"const":"persistence_failure"}}}}}}
+      ]
+    },
+    "action_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "tour_session_id",
+        "revision",
+        "currentness_sha256",
+        "before",
+        "optional_intro_included",
+        "target_available",
+        "owner_available",
+        "owner_permission_granted",
+        "snapshots_current",
+        "safe_replay_baseline",
+        "captured_state_ref",
+        "original_capture",
+        "owner_state_revision_refs",
+        "partial_practice_owner_refs",
+        "explanation_mode",
+        "visible_answer_ref",
+        "visible_conversation_ref",
+        "practice",
+        "checkpoint",
+        "checkpoint_registration",
+        "checkpoint_owner_revalidated",
+        "prior_exchange",
+        "revalidated_predicate_refs",
+        "actor_ref",
+        "target_surface_id",
+        "target_control_id"
+      ],
+      "properties": {
+        "project_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "tour_session_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "currentness_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "before": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/guided_tour_session"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "optional_intro_included": {
+          "type": "boolean"
+        },
+        "target_available": {
+          "type": "boolean"
+        },
+        "owner_available": {
+          "type": "boolean"
+        },
+        "owner_permission_granted": {
+          "type": "boolean"
+        },
+        "snapshots_current": {
+          "type": "boolean"
+        },
+        "safe_replay_baseline": {
+          "type": "boolean"
+        },
+        "captured_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "original_capture": {
+          "$ref": "#/$defs/captured_state"
+        },
+        "owner_state_revision_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          },
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true
+        },
+        "partial_practice_owner_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          },
+          "maxItems": 16,
+          "uniqueItems": true
+        },
+        "explanation_mode": {
+          "enum": [
+            "normal",
+            "eli5"
+          ]
+        },
+        "visible_answer_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "visible_conversation_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "practice": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/guided_tour_practice_contract"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "checkpoint": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/guided_tour_checkpoint"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "checkpoint_registration": {
+          "enum": [
+            "physical_family_registration_pending",
+            "hypothetical_registered_fixture_only"
+          ]
+        },
+        "checkpoint_owner_revalidated": {
+          "type": "boolean"
+        },
+        "prior_exchange": {
+          "description": "One previously validated static exchange. Identical retry delivers its historical result without reapplying its after-state or redispatching owner work; this is not a persisted receipt store.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/guided_tour_action_exchange"
+                },
+                {
+                  "properties": {
+                    "context": {
+                      "properties": {
+                        "prior_exchange": {
+                          "type": "null"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "revalidated_predicate_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/predicate_ref"
+          },
+          "uniqueItems": true,
+          "maxItems": 64
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "target_surface_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "target_control_id": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        }
+      }
+    },
+    "guided_tour_action_exchange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request",
+        "context",
+        "result",
+        "partial_practice_owner_refs_after",
+        "evidence_scope",
+        "production_receipt_claim"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.guided_tour.action_exchange.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "request": {
+          "$ref": "#/$defs/guided_tour_action_request"
+        },
+        "context": {
+          "$ref": "#/$defs/action_context"
+        },
+        "result": {
+          "$ref": "#/$defs/guided_tour_action_result"
+        },
+        "partial_practice_owner_refs_after": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          },
+          "maxItems": 16,
+          "uniqueItems": true
+        },
+        "evidence_scope": {
+          "const": "contract_fixture_only"
+        },
+        "production_receipt_claim": {
+          "const": false
+        }
+      }
     }
   }
 }

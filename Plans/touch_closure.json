@@ -3841,9 +3841,9 @@
       "plan_unit": "PWIZ-023",
       "dry_contract_ref": "Plans/guided_tour_contracts.schema.json",
       "payload_schema_ref": "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_action_request",
-      "result_schema_ref": "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_session",
-      "error_schema_ref": "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_session",
-      "availability_rule": "Current session/Project/revision, valid step and completed prerequisites, exact mounted target, and resolvable pre-tour layout/Chat/focus owner refs are required.",
+      "result_schema_ref": "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_action_result",
+      "error_schema_ref": "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_action_result",
+      "availability_rule": "Exact Project, source session, command instance, actor, idempotency, target and revision/hash fences join request and result. Start uses an unstarted launch context; live Resume revalidates owner predicates and may return to the earliest unsatisfied beat. Checkpoint Resume remains unavailable while physical registration or original owner recovery is absent. Required practice cannot be satisfied by Next or timers. Skip remains a safe-exit attempt; failed restoration is recoverable, never completed. Replay needs a fresh identity and an owner-resolved safe baseline; active-session replacement policy is not inferred.",
       "permission_gate": "Tour actions grant no domain mutation; real widget/layout commands remain owner-gated.",
       "disabled_reason_rule": "Name missing target/layout/command and preserve skip, reversal, focus, and safe exit.",
       "handler_owner": "Guided Tour local controller consumes the existing Persona, Assistant Chat, Home layout, and Widget owner routes; it creates no parallel domain handler, and native Slint execution is absent.",
@@ -3869,6 +3869,7 @@
       ],
       "observable_work": [],
       "persistence_refs": [
+        "SP-251/scd.guided_tour.ephemeral.v1: live session, action request/result and joined fixture transport are nonpersisted; no production receipt or EventRecord is admitted.",
         "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_checkpoint",
         "Plans/storage-plan.md#SP-251"
       ],
@@ -3878,13 +3879,14 @@
       ],
       "test_refs": [
         "Plans/guided_tour_contract_fixtures.json",
+        "tests/test_pm_guided_tour_action_contracts.py",
         "Concepts/pm7-tools/verify/guided_tour_polish_checkpoint.mjs",
         "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs"
       ],
       "evidence_refs": [
         "static_v3_contract_and_scoped_concept_checks_only",
         "checkpoint_physical_family_registration_and_owner_snapshot_adapters_pending",
-        "nonterminal_action_result_and_error_materialization_pending",
+        "static_eleven_action_result_exchange_and_causal_semantic_checks_only_no_owner_issuance_or_runtime_claim",
         "durable_checkpoint_owner_resolution_and_prerequisite_recovery_missing_in_concept",
         "full_manual_all_theme_motion_and_native_runtime_evidence_pending"
       ]
@@ -5027,9 +5029,9 @@
       "plan_unit": "PWIZ-023",
       "dry_contract_ref": "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_action_request",
       "payload_schema_ref": "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_action_request",
-      "result_schema_ref": "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_focus_route_result",
-      "error_schema_ref": "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_focus_route_result",
-      "availability_rule": "The exact mounted application router and typed route target are required.",
+      "result_schema_ref": "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_action_result",
+      "error_schema_ref": "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_action_result",
+      "availability_rule": "The exact mounted application router and typed route target are required. The common Tour result correlates the exact request/Project/session/actor/idempotency/currentness fence and retains guided_tour_focus_route_result as its specialized local-only detail; Usage remains a page route inside the workspace chapter.",
       "permission_gate": "Local navigation/focus only; no object mutation, domain authority, or persistence write.",
       "disabled_reason_rule": "Expose a missing route target or mounted application router and let the tour skip safely.",
       "handler_owner": "Guided Tour typed local presentation controller; native Slint controller is absent.",

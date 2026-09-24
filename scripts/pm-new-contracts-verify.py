@@ -31,6 +31,7 @@ from pm_restore_semantics import restore_semantic_failures
 from pm_browser_program_semantics import browser_program_semantic_failures
 from pm_onboarding_semantics import onboarding_semantic_failures, settings_draft_semantic_failures
 from pm_evidence_command_semantics import evidence_command_semantic_failures
+from pm_guided_tour_semantics import guided_tour_semantic_failures
 
 # Authored and intentionally closed.  Adding a contract pair is a reviewed gate
 # change, not an ambient glob that silently changes the validation denominator.
@@ -1197,6 +1198,8 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel == "Plans/guided_tour_contracts.schema.json":
+        return guided_tour_semantic_failures(definition_name, value)
     if schema_rel in {"Plans/testing_session_command_contracts.schema.json", "Plans/artifact_recording_command_contracts.schema.json"}:
         return evidence_command_semantic_failures(definition_name, value)
     if schema_rel == "Plans/product_onboarding_contracts.schema.json":
