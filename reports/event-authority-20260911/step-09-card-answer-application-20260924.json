@@ -1,0 +1,528 @@
+{
+  "application_id": "EA-STEP09-CARD-ANSWERS-DL074-DL075",
+  "applied_at_utc": "2026-09-24T21:08:23Z",
+  "authority_refs": [
+    "Plans/Decision_Log.md#DL-039",
+    "Plans/Decision_Log.md#DL-074",
+    "Plans/Decision_Log.md#DL-075"
+  ],
+  "answers": {
+    "DL-074": {
+      "decision_log": "Plans/Decision_Log.md#DL-074",
+      "card_id": "EA-S09-EXEC-TASK-FAILURE",
+      "chosen_option": "A",
+      "answer": "Approve",
+      "decided_by": "Jared",
+      "answered_on": "2026-09-23",
+      "answer_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260923/ANSWERS.md",
+      "answer_source_sha256": "0f668bb0194a0cc7637be949652ec1d8e3714780b37a8c3453f512085ecf0402",
+      "owner_edit": "Plans/assistant-chat-design.md:1380"
+    },
+    "DL-075": {
+      "decision_log": "Plans/Decision_Log.md#DL-075",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "chosen_option": "A",
+      "answer": "Approve",
+      "decided_by": "Jared",
+      "answered_on": "2026-09-23",
+      "answer_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260923/ANSWERS.md",
+      "answer_source_sha256": "0f668bb0194a0cc7637be949652ec1d8e3714780b37a8c3453f512085ecf0402",
+      "owner_edits": [
+        "Plans/Runtime_Artifacts_Panel.md:2472",
+        "Plans/storage-plan.md:17260"
+      ]
+    }
+  },
+  "rows": [
+    {
+      "event_type": "task.failed",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_task.failed.json",
+      "before_sha256": "0f4fe371a90cf9995ce3cae755d85c168398b28485f5ca30a481239143007a43",
+      "after_sha256": "6cd04c116f641ceeb7c9e1110691533591497dfa83559d9c7dec68bffa20d0a2",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "RECLASSIFY_TO_EXCLUDED",
+      "outcome": "EXCLUDED"
+    },
+    {
+      "event_type": "runtime_artifact.api_web_call",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.api_web_call.json",
+      "before_sha256": "0be7b5f3e2ef25af5a312030dfa905906b8e7506a962aab8f1c797db5249e32a",
+      "after_sha256": "bfd4ddede4432daa89acd8725f7c99dedbed18cc9ba4220789b8e658f7643fa5",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.artifact_version",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.artifact_version.json",
+      "before_sha256": "cda382075778c768ca5c937513d660fe0e60d48f869bf1792e1e330ca5e69353",
+      "after_sha256": "e8456dd88ef22256b278db86b74b302795feb1f032e8e019afde1bed47516f8a",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.before_after_snapshot",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.before_after_snapshot.json",
+      "before_sha256": "cddb60c7db11ac6ee54b4200c2dfe47e70682964fe25eef3deb1a8d676fbceef",
+      "after_sha256": "6edefc0bb3707a5c9286026b4adda8cb518ce74612cf078dc9474848614f2851",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.browser_recording",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.browser_recording.json",
+      "before_sha256": "32d4fb384be54c84406bb97e88c6cd612b77084a42584636d151b4b4e85938c1",
+      "after_sha256": "64f988aa3bf101845c7fa449d735dc50f3beeba4281cf9a5e985cec1ef1db432",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.code_diff",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.code_diff.json",
+      "before_sha256": "1a463916467b47e6b4ef4e64050b6164c61bfe26cf6e1bb3779bccd2c64de4ee",
+      "after_sha256": "512a0ae43dda2c58abbab148b376cfb04ddbbce22fc69a6ab2bb2da99330c72f",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.context_snapshot",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.context_snapshot.json",
+      "before_sha256": "764b5c6dfc929219bda97fea7594dde83996ddf55cb63b89568ef41871af02b1",
+      "after_sha256": "53ed1304180076cb95bf2c2111f36d27e045e1e9f051056009f999227ea9c342",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.cost_usage",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.cost_usage.json",
+      "before_sha256": "03b33d3d30ed9279379ea02dbe046956f6f218d09d3d027f8886c70ff72072c1",
+      "after_sha256": "db48f31201b40abcb8c5e39727932c8d8f032b18a895b8db6a6733eb83cea48f",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.document",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.document.json",
+      "before_sha256": "c69d5da9339de2328c2038a99dc8f7efc9ac09c712bd60c8971fdbc1235644ae",
+      "after_sha256": "b16f13e0c3bac1fb866b1b7a8a724add09ed3ffb451ea8fffa1f11c8aa3d803d",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.evidence",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.evidence.json",
+      "before_sha256": "a3377b31f549f9224812dc65a429c29f7955cf623ef529a3f28958e94942af9c",
+      "after_sha256": "4d386fa6761dc80e5daccd381610c08983d7b3c4a1c4afd748644c7cc6779374",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.failed_attempts",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.failed_attempts.json",
+      "before_sha256": "71b0834cac28bf49885097ab18afa8acb287b511b80635a338460b70d8223ddb",
+      "after_sha256": "bbf38e840ade75fab2afc072025466f2d661e61ab54dd10f81390aeb0198c7da",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.hitl_approval",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.hitl_approval.json",
+      "before_sha256": "a509a6bb86956c14a08d1fa826ab806de8502bfddb9796eb7cd6090b45737a81",
+      "after_sha256": "2997c75568eab2e165b9b42e43c56818ab7f63067c454ab1c432404cb1305e16",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.implementation_plan",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.implementation_plan.json",
+      "before_sha256": "2f39e20ff83c1357ab0075964a230d5fa16f275d589c264e5acb2f4bd8ae95de",
+      "after_sha256": "91d3bfbda3c00b8c26d698d2324f83ac8beac42ebb07f2de086b7a86533ef21d",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.reasoning_summary",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.reasoning_summary.json",
+      "before_sha256": "bf48864112504875c2e525ef51d12d55efd804af962b70bbe51e390b7f9ca23a",
+      "after_sha256": "d81683883b64707aca44031a8e2d1864d75ea852b3ff849576e0171402c13bfb",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.restore_point",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.restore_point.json",
+      "before_sha256": "c3bdaa6dff99792fefb2d46ee0feb08fcd5c79dfba475f8a6dcaee4b4700d15c",
+      "after_sha256": "ce1707d1987460479dd43d195ebf2632f5fb43655b301fd86c86a41c4791c507",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.screenshot",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.screenshot.json",
+      "before_sha256": "74c5196208339f1a0102fb7f9f7a5d79800cdec5c8c5a0c762511994f6e4d3e6",
+      "after_sha256": "bef98adfc694fda1bf9bb813bf29438868a4d37793f678999b0bcad700cf8602",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.subagent_lineage",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.subagent_lineage.json",
+      "before_sha256": "3c50d6cc407a4b251da2edfbc75aa75cf1bb8a378d9c1a6032a05f1e82ec6b69",
+      "after_sha256": "f704a2309409c748517b2fa52c18b61070eb757306eba290387acaf5d6fdc63e",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.suggested_next_steps",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.suggested_next_steps.json",
+      "before_sha256": "32043f79367eef28ddaa5856a3a8a87c5ebffeab8142a27a26c0b1ea54a6ad24",
+      "after_sha256": "c1fd926795243571ff518f9eb60f07fa8f39bc23f0df99149003b8b616305245",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.tool_llm_trace",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.tool_llm_trace.json",
+      "before_sha256": "91b52d5b7c109cc9b84ebe35ffae98414ba4a4a7198ca28a1db44fec763e1a6b",
+      "after_sha256": "63c3c6ca1d87d0356e874d1b5e83030f379ae5e88bfb0a197c23aa7485244dce",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "runtime_artifact.validation_test",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.validation_test.json",
+      "before_sha256": "1eff5dcf14618c70a20eab4c0b43b6e42d6d08da00eb7d15aa73e81460d895a1",
+      "after_sha256": "261fd6fd1bb32eb8402913b907604cc4f5473a6bbd9a479359b60b557f50a50b",
+      "disposition_before": "NEEDS_OWNER_VETO",
+      "disposition_after": "KEEP_QUARANTINED",
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    }
+  ],
+  "files": {
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl": {
+      "before_sha256": "c3356c1554507451dfcd125a8bd2731b39b95be3cd50c21aedad9ef0cc16aab4",
+      "after_sha256": "ffb551a0a756e87997878ce9ac90942a62c079916dcfb4d865000e0fd6509497",
+      "lines_changed": 20
+    },
+    "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl": {
+      "before_sha256": "75b0db23f352978231a5d2b8982600ec7074f9fac4eb8cd229160b1fe89d6697",
+      "after_sha256": "d952c79315d576a1ea3fcf260c16325c4d00f484cad8c42dea81dd69be732266",
+      "lines_changed": 20
+    },
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/OWNER_VETOES.jsonl": {
+      "before_sha256": "16ba7e47e9a4e8788b1cf2ed5d970bde71adeba6bad1426d2910acc44804d5db",
+      "after_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "entries_removed": 20,
+      "entries_left": 0
+    }
+  },
+  "removed_owner_vetoes": [
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.api_web_call"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.artifact_version"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.before_after_snapshot"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.browser_recording"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.code_diff"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.context_snapshot"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.cost_usage"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.document"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.evidence"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.failed_attempts"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.hitl_approval"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.implementation_plan"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.reasoning_summary"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.restore_point"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.screenshot"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.subagent_lineage"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.suggested_next_steps"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.tool_llm_trace"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "field_or_decision": "retention",
+      "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+      "options": [
+        "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+        "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+        "C: another explicit retention or payload-content boundary"
+      ],
+      "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+      "event_types": [
+        "runtime_artifact.validation_test"
+      ]
+    },
+    {
+      "stable_id": "OV-EA-CPU-TASK-FAILURE-HISTORY",
+      "field_or_decision": "persistence_boundary",
+      "question": "Should task.failed be a presentation notification backed by canonical child-run history, or a separately persisted EventRecord family with its own replayable task-failure history?",
+      "options": [
+        "A: presentation notification over canonical child-run history",
+        "B: separate persisted task.failed history",
+        "C: another explicit scope boundary"
+      ],
+      "evidence_gap": "Assistant Chat requires the exact failure signal but does not settle its separate EventRecord persistence boundary; canonical child-run projection is separately required and no exact alias is established.",
+      "event_types": [
+        "task.failed"
+      ]
+    }
+  ],
+  "boundaries": {
+    "registry_changed": false,
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "validator_changed": false,
+    "cohort_pins_changed": false,
+    "denominator_removal_claimed": false,
+    "depth_pass_claimed": false
+  }
+}

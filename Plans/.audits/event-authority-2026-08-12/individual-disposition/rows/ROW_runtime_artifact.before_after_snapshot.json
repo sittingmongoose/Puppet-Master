@@ -2,8 +2,8 @@
   "event_type": "runtime_artifact.before_after_snapshot",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "NEEDS_OWNER_VETO",
-  "disposition_rationale": "DL-039 Step 9 individual adjudication at 2026-09-11T16:55:03.900393+00:00: Before/after artifacts require both source refs and preserve the comparison boundary rather than fabricating a reversible workspace state. Materialized schema pm.runtime_artifact.before_after_snapshot.schema.v1 was freshly resolved; type-specific required fields: before_ref, after_ref. Retention additionally requires a genuine product choice: the owner explicitly recommends but does not assign indefinite event retention. This row is CARD for that unanswered choice; all listed technical binding gaps remain admission work after the decision. This exact row is returned on the owner-batched plain-language card EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION in reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md. No answer, approval, retention assignment, registry admission or technical depth pass is inferred. Existing buckets, cohort pins and retained evidence remain unchanged. Application: reports/event-authority-20260911/step-09-card-application.json.",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "DL-039 Step 9 individual adjudication at 2026-09-11T16:55:03.900393+00:00: Before/after artifacts require both source refs and preserve the comparison boundary rather than fabricating a reversible workspace state. Materialized schema pm.runtime_artifact.before_after_snapshot.schema.v1 was freshly resolved; type-specific required fields: before_ref, after_ref. Retention additionally requires a genuine product choice: the owner explicitly recommends but does not assign indefinite event retention. This row is CARD for that unanswered choice; all listed technical binding gaps remain admission work after the decision. Jared answered EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION with option A on 2026-09-23 (Plans/Decision_Log.md#DL-075): the 19 runtime-artifact event histories take RP-AUTHORITY-INDEFINITE for the time their full contracts are admitted (Plans/Runtime_Artifacts_Panel.md:2472; Plans/storage-plan.md:17260). Applied at 2026-09-24T21:08:23Z: the retention cell is now PASS for that assignment and the row returns to KEEP_QUARANTINED as unfinished technical contract work. Each full contract must still make the embedded text and any applicable deletion requirement explicit before admission, and every other listed binding gap remains. No registry admission, binding definition or depth pass is inferred. Application: reports/event-authority-20260911/step-09-card-answer-application-20260924.json.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
@@ -36,9 +36,9 @@
       "note": "No checked citation establishes replay and idempotency behavior for runtime_artifact.before_after_snapshot; this field remains fail-closed."
     },
     "retention": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No checked citation establishes a retention class or duration for runtime_artifact.before_after_snapshot; this field remains fail-closed."
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2472",
+      "note": "DL-075 assigns RP-AUTHORITY-INDEFINITE to runtime_artifact.before_after_snapshot for the time its full contract is admitted; Plans/storage-plan.md:17260 records the same Case L-3 assignment. Retention only: embedded-text and deletion reconciliation remain part of the full contract (redaction_custody), and no registry row, binding or admission follows."
     },
     "redaction_custody": {
       "status": "FAIL",
@@ -116,22 +116,24 @@
       "citation": "Plans/storage-plan.md:1535-1535",
       "status": "ok",
       "notes": "Current individual product-choice evidence; no missing technical cell is promoted to PASS."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2472",
+      "status": "ok",
+      "notes": "DL-075 owner edit: RP-AUTHORITY-INDEFINITE is the retention assignment of all 19 runtime-artifact event histories for the time their full contracts are admitted."
+    },
+    {
+      "citation": "Plans/storage-plan.md:17260",
+      "status": "ok",
+      "notes": "DL-075 Case L-3 retention note: assignment only, no admission, no binding, linked bodies keep their own policies."
+    },
+    {
+      "citation": "Plans/Decision_Log.md#DL-075",
+      "status": "ok",
+      "notes": "Jared's answer to EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION: Approve, option A, 2026-09-23."
     }
   ],
-  "owner_veto": {
-    "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
-    "field_or_decision": "retention",
-    "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
-    "options": [
-      "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
-      "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
-      "C: another explicit retention or payload-content boundary"
-    ],
-    "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
-    "event_types": [
-      "runtime_artifact.before_after_snapshot"
-    ]
-  },
+  "owner_veto": null,
   "bulk_registration": false,
   "analogy_used": false,
   "inference_used": false,
