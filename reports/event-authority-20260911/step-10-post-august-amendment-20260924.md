@@ -71,3 +71,7 @@ The counterfactual shows what the amendment does and does not do. With complete 
 - **Re-pin rule after landing.** The records pin the three live registry rows, the DL-040 and DL-046 prose sections, the depth assessment bytes and the receipt. The receipt pins the DL-077 prose section and the validator bytes. Any later change to one of them re-pins the affected records in the same landing: a changed receipt means rewriting all three records. Without that, the check fails closed.
 - **Step 9 registrations.** Every registration landing under DL-078 adds its family's record in the same landing.
 - **The seal.** It is not applied here. DL-077 bars this task from applying it.
+
+## Open items
+
+- **The test file has no `.gitignore` line (review V-09).** `tests/test_event_authority_holding_bucket.py` is tracked but matches `/tests/*` and has no `!` line of its own. That goes against the rule that `.gitignore` names each tracked test file. The gap predates this branch: Step 3 created the file. This branch does not edit `.gitignore`. The coordinator is asking Jared for the line `!/tests/test_event_authority_holding_bucket.py`.
