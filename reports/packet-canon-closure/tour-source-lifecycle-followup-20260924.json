@@ -1,0 +1,167 @@
+{
+  "schema_id": "pm.packet_canon_closure.repair_report.v1",
+  "finding_id": "TOUR-CANON-001-source-lifecycle-followup",
+  "base_commit": "df08011fa5cb69f9c71f59fd9cd9632b329051ae",
+  "branch": "fix/tour-action-contracts-20260924",
+  "claim_boundary": "Static companion joins only; no GUI/native behavior, owner execution, production receipt, physical persistence, governance binding, readiness or certification claim.",
+  "authority": [
+    {
+      "path": "Plans/Planning_Wizard.md",
+      "plan_unit": "PWIZ-023",
+      "start_line": 1841,
+      "end_line": 1861,
+      "sha256": "9197b8b63f86f3f01c384c692193c2221d73fc347fc78356158f19f73ae73b79"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "plan_unit": "F3-521",
+      "start_line": 35160,
+      "end_line": 35215,
+      "sha256": "1b7b0f4674c9088b4e042040be5522e66badc19d0008b0d55f9fe63c31ccc4f0"
+    }
+  ],
+  "independent_inputs": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/tour-transition-presence-root-probe.json",
+      "sha256": "74646c3e96cd2ce0b679f03f58332eac8d41235e121f0a0a9874d5524af6e5e9"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/server_forge_backup/guided-tour-eleven-action-independent-review.json",
+      "sha256": "1f434bce931212da856f763c78540759bdab079886d955c1035ece483023e5d2"
+    }
+  ],
+  "implemented": [
+    "Successful non-Start transitions need a live source session except explicit checkpoint Resume; request/context echoes alone cannot create prior state.",
+    "Checkpoint-only reconstruction joins checkpoint Project/session/safe-step/revision, owner revalidation, owner refs, original capture and earliest unsatisfied practice; current physical registration stays pending.",
+    "Paused/interrupted/recovery sessions cannot advance or dispatch practice via Next/ShowMe/Finish. Back/focus/ELI5 remain possible only with suspended status, unchanged completion and stopped choreography/subscriptions. Skip remains a safe exit.",
+    "Skipped/completed sessions cannot revive active story work through ordinary controls. Fresh Replay retains its existing fresh-identity/safe-baseline boundary without deciding active-session replacement policy.",
+    "Existing visible local-answer ELI5 may preserve a terminal lifecycle, never create one or satisfy new practice; outer result permits that retained-state carrier, joined semantics enforce preservation.",
+    "Previously validated historical retry still delivers its exact historical result without reapplication or dispatch, including when the current session changed. Prior source-less exchange cannot self-attest success."
+  ],
+  "verification": {
+    "focused_tests_passed": 36,
+    "command": "python3 -m unittest discover -s tests -p 'test_pm_guided_tour*contracts.py'",
+    "causal_rules": 12,
+    "all_ten_non_start_actions_have_source_absence_negatives": true,
+    "lifecycle_causal_cases": 22,
+    "tour_positive_count": 67,
+    "tour_negative_count": 433,
+    "tour_semantic_negative_count": 207,
+    "full_contract_gate": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/settings_dependencies/tour_repair/new-contracts-source-lifecycle.json",
+      "sha256": "a7f111bff79eae4b23723d639d256f0b28ddc198150828dd9389aff9e999fc14",
+      "status": "pass",
+      "counts": {
+        "contract_pairs": 31,
+        "expansion_alias_records_checked": 36,
+        "expansion_alias_records_valid": 36,
+        "expansion_command_records_checked": 264,
+        "expansion_command_records_valid": 264,
+        "expansion_fixture_packs": 1,
+        "expansion_local_records_checked": 28,
+        "expansion_local_records_valid": 28,
+        "expansion_metaschemas_valid": 1,
+        "expansion_negative_records_checked": 21,
+        "expansion_negative_records_rejected": 21,
+        "internal_self_tests": 12,
+        "internal_self_tests_passed": 12,
+        "metaschemas_valid": 31,
+        "negative_cases": 3870,
+        "negative_cases_rejected": 3870,
+        "onboarding_storage_contracts_checked": 1,
+        "onboarding_storage_contracts_valid": 1,
+        "owner_compat_command_records_checked": 240,
+        "owner_compat_command_records_valid": 240,
+        "owner_local_records_checked": 28,
+        "owner_local_records_valid": 28,
+        "positive_cases": 1110,
+        "positive_cases_valid": 1110
+      },
+      "findings": 0
+    },
+    "independent_probe_recheck": [
+      {
+        "name": "next_without_session",
+        "followup_semantic_failures": [
+          "tour.source_session"
+        ]
+      },
+      {
+        "name": "back_without_session",
+        "followup_semantic_failures": [
+          "tour.source_session"
+        ]
+      },
+      {
+        "name": "pause_without_session",
+        "followup_semantic_failures": [
+          "tour.source_session"
+        ]
+      },
+      {
+        "name": "focus_route_without_session",
+        "followup_semantic_failures": [
+          "tour.source_session"
+        ]
+      },
+      {
+        "name": "next_from_paused",
+        "followup_semantic_failures": [
+          "tour.lifecycle_admission"
+        ]
+      },
+      {
+        "name": "show_me_from_paused",
+        "followup_semantic_failures": [
+          "tour.lifecycle_admission"
+        ]
+      },
+      {
+        "name": "next_from_skipped",
+        "followup_semantic_failures": [
+          "tour.lifecycle_admission"
+        ]
+      },
+      {
+        "name": "show_me_from_skipped",
+        "followup_semantic_failures": [
+          "tour.lifecycle_admission"
+        ]
+      },
+      {
+        "name": "back_from_completed",
+        "followup_semantic_failures": [
+          "tour.lifecycle_admission"
+        ]
+      },
+      {
+        "name": "historical_retry_after_current_session_changed",
+        "followup_semantic_failures": []
+      }
+    ],
+    "shard_check": {
+      "status": "pass",
+      "documents": 99,
+      "shards": 2721,
+      "regeneration_needed": false
+    },
+    "git_diff_check": "pass"
+  },
+  "preservation": {
+    "only_schema_definition_changed": [
+      "guided_tour_action_result"
+    ],
+    "all_existing_specialized_definitions_unchanged": true,
+    "owner_markdown_unchanged": true,
+    "storage_registry_and_touch_unchanged_since_base": true,
+    "governance_and_generated_files_unchanged": true,
+    "original_33_tests_retained": true
+  },
+  "file_sha256": {
+    "Plans/guided_tour_contracts.schema.json": "99c0f18b64a694200483afdc044d97df6ef8206a1926280271945f073e6a8e94",
+    "Plans/guided_tour_contract_fixtures.json": "b5786bfda68aa326010d08de50dbb3f8ebdcc6e8c06f5bfb8fb3c1a02156c270",
+    "scripts/pm_guided_tour_semantics.py": "56b2f999f8c8daf1e94ef98c95b2b880e11cf4728da3db9c344efe2a41a40056",
+    "tests/test_pm_guided_tour_action_contracts.py": "606bc0fa9c36173598c78add768e06be0722b70aeb035a306f21556f21e46110"
+  },
+  "remaining": "Independent review/integration pending; checkpoint physical admission, GUI/native acceptance and active Replay replacement policy are not closed."
+}
