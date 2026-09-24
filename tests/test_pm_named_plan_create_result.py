@@ -87,8 +87,13 @@ class NamedPlanCreateResultTests(unittest.TestCase):
         for case in FIXTURES["invalid"]:
             with self.subTest(negative=case["name"]):
                 value = GATE.materialize_invalid(case, self.positives)
-                _, selected = GATE.select_definition(SCHEMA, case, value, require_valid=False)
-                self.assertFalse(GATE.validator_for(SCHEMA, selected, Registry()).is_valid(value))
+                definition, selected = GATE.select_definition(SCHEMA, case, value, require_valid=False)
+                structurally_valid = GATE.validator_for(SCHEMA, selected, Registry()).is_valid(value)
+                if "semantic_rule" in case:
+                    self.assertTrue(structurally_valid)
+                    self.assertIn(case["semantic_rule"], GATE.contract_semantic_failures(SCHEMA_REL, definition, value))
+                else:
+                    self.assertFalse(structurally_valid)
 
 
 if __name__ == "__main__":
