@@ -15,12 +15,16 @@ file any landing branch touched: stale governance hashes, and a plan-migration s
     python3 scripts/pm-landing-check.py --base origin/main   # at landing, in the shared checkout
     python3 scripts/pm-landing-check.py --record-baseline    # refresh, in a full checkout at main
 
+Both hand the aggregate checks `--subcheck-timeout-seconds`, 600 by default; see "Subchecks that
+time out" below.
+
 Exit codes: 0 nothing to report; 1 nothing it reports stops the landing, meaning governance
 staleness on files the branch edited, pre-existing failures whose count has not risen, or failures
 that are new but name none of the branch's files; 2 something it reports does stop the landing,
 meaning a failure on the branch's files that is neither staleness nor pre-existing, a bucket that
 grew whose error kind is not staleness, or a rise in a subcheck whose failures are truncated, other
-than the readiness growth counter; 3 the check could not run.
+than the readiness growth counter; 3 the check could not run, or a subcheck timed out while
+recording a baseline. A subcheck that timed out in a landing run never changes the exit code.
 
 **It refuses a sparse worktree**, with exit 3, in both modes. The three checks read the whole
 repository, so every file outside a sparse cone reads as missing: a dry run at `ecb77f4e6c` on a
@@ -155,6 +159,29 @@ recorded is not in `baseline.json`, so when it later falls inside the sample on 
 judged as before and stops the landing. The run-gates copy of that self-test row was one: run-gates
 printed 50 of the baseline's 79 readiness rows and the self-test row was not among them, while the
 audit-governance copy, printed in full, was.
+
+## Subchecks that time out
+
+`pm-plans-verify.py` kills an aggregate subcheck that is still running at
+`--subcheck-timeout-seconds` and reports one `subprocess_timeout` row in its place, or
+`subcheck_timeout` for `verify_spec_lock`, the one subcheck it runs in-process. Such a subcheck has
+no result. Its row is an infrastructure result: printed on its own line under "Infrastructure
+results" with the command and how long the subcheck ran before it was killed, which is the bound, and
+never counted as a new failure, as growth of its subcheck's total, or as a blocker. The exit code is
+what it would be without it. The timed-out subcheck is left out of every comparison, so what the
+baseline recorded for it is not reported as gone either, and the summary ends by saying how many
+subchecks did not finish: rerun each on its own to see what it reports. In `--json` they are listed
+under `infrastructure` with `elapsed_seconds`, beside the `subcheck_timeout_seconds` the run used.
+
+The landing check hands the aggregates a bound of 600 seconds by default, where it used to hand them
+180. The measured case: `lint-contractrefs` takes about 199 seconds in the shared checkout on the
+network mount, and finds nothing when run on its own (0 failures at `e44b9186fb`). At the
+terminal.workgroup_moved landing of 2026-09-24 the 180-second bound killed it in both aggregates, and
+the two timeout rows read as new failures and lifted two subcheck totals from 0 to 1.
+
+A baseline is never recorded from a run in which a subcheck timed out: `--record-baseline` exits 3
+and writes nothing, because a baseline that says a subcheck passed, or failed once, when it never
+finished would mislead every landing after it. Rerun with a larger `--subcheck-timeout-seconds`.
 
 ## Which paths count as the branch's
 

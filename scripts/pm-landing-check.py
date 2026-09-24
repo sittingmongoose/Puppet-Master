@@ -31,6 +31,11 @@ A failure that is not staleness, in a baseline bucket whose count on the branch 
 pre-existing, whether or not its content changed: it never stops a landing, and it is reported as
 "pre-existing" or "improved" with the baseline's count and the branch's.
 
+A subcheck that pm-plans-verify.py killed at --subcheck-timeout-seconds (600 by default here) has no
+result. Its timeout row is an infrastructure result, printed on its own line with how long the
+subcheck ran; it is never a new failure, growth or a blocker, and the exit code does not count it.
+A baseline is never recorded from a run that has one.
+
 It exits 0 when it has nothing to report.
 
 A key is `check | subcheck | error kind | path | fingerprint`. The fingerprint is a short digest of
@@ -62,7 +67,8 @@ Exit codes:
      neither staleness nor pre-existing, a bucket that grew whose error kind is not staleness, or a
      rise in a subcheck whose failures are truncated, where the on-branch match cannot see what was
      added, other than the readiness growth counter
-  3  the script could not run a check or could not read the baseline or the branch paths
+  3  the script could not run a check or could not read the baseline or the branch paths, or a
+     subcheck timed out while recording a baseline
 """
 from __future__ import annotations
 
@@ -134,6 +140,16 @@ READINESS_SUBCHECKS = {
 }
 
 CHECKS = ("run-gates", "audit-governance", "plan-migration-validate")
+
+# Failure kinds that say a subcheck did not finish, not that the tree is wrong. pm-plans-verify.py
+# kills a subcheck at --subcheck-timeout-seconds and reports that as the subcheck's only failure:
+# `subprocess_timeout` for the subchecks it runs as processes, `subcheck_timeout` for the one it runs
+# in-process.
+INFRASTRUCTURE_ERRORS = {"subprocess_timeout", "subcheck_timeout"}
+# The bound handed to the aggregate checks. lint-contractrefs alone takes about 199 s in the shared
+# checkout on the network mount, with 0 failures when run on its own at e44b9186fb; the old 180 s
+# bound killed it in both aggregates at the terminal.workgroup_moved landing of 2026-09-24.
+DEFAULT_SUBCHECK_TIMEOUT_SECONDS = 600
 
 
 def utc_now() -> str:
@@ -310,6 +326,40 @@ def excused_by_kind(on_branch: list[dict[str, Any]]) -> dict[str, int]:
         if item["stale"]:
             counts[item["error"]] = counts.get(item["error"], 0) + 1
     return dict(sorted(counts.items(), key=lambda pair: (-pair[1], pair[0])))
+
+
+def split_infrastructure(items: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Rule 3: take out the rows that say a subcheck was killed at its time bound.
+
+    Such a subcheck has no result: what it would have reported is unknown, neither zero nor one. Its
+    row is an infrastructure result, printed on its own line with how long the subcheck ran, and is
+    never a new failure, growth or a blocker. Returns (infrastructure results, the other items).
+    """
+    infrastructure = [infrastructure_row(item) for item in items if item["error"] in INFRASTRUCTURE_ERRORS]
+    rest = [item for item in items if item["error"] not in INFRASTRUCTURE_ERRORS]
+    return infrastructure, rest
+
+
+def infrastructure_row(item: dict[str, Any]) -> dict[str, Any]:
+    raw = item["_raw"] if isinstance(item["_raw"], dict) else {}
+    bound = raw.get("timeout_seconds")
+    known = isinstance(bound, (int, float)) and not isinstance(bound, bool)
+    return {
+        "check": item["check"],
+        "subcheck": item["subcheck"],
+        "error": item["error"],
+        "command_id": raw.get("command_id"),
+        # The subcheck is killed when its bound runs out, so the bound is how long it ran.
+        "elapsed_seconds": bound if known else None,
+    }
+
+
+def describe_infrastructure(row: dict[str, Any]) -> str:
+    command = f" ({row['command_id']})" if row.get("command_id") else ""
+    ran = (f"killed after {row['elapsed_seconds']} s, its time bound" if row["elapsed_seconds"] is not None
+           else "killed at its time bound")
+    return (f"  [infrastructure] {row['check']}/{row['subcheck'] or '-'}  {row['error']}{command}  "
+            f"{ran}; what it would report is unknown")
 
 
 def public(item: dict[str, Any]) -> dict[str, Any]:
@@ -751,7 +801,10 @@ def main() -> int:
     parser.add_argument("--record-baseline", action="store_true", help="run the three checks and write the baseline")
     parser.add_argument("--run-dir", default=None, help="plan-migration run directory (default: the current run)")
     parser.add_argument("--max-fingerprints", type=int, default=200, help="largest bucket the baseline enumerates")
-    parser.add_argument("--subcheck-timeout-seconds", type=int, default=180, help="passed to the aggregate checks")
+    parser.add_argument("--subcheck-timeout-seconds", type=int, default=DEFAULT_SUBCHECK_TIMEOUT_SECONDS,
+                        help="passed to the aggregate checks; a subcheck still running at this bound is "
+                             f"killed and reported as an infrastructure result (default: "
+                             f"{DEFAULT_SUBCHECK_TIMEOUT_SECONDS})")
     parser.add_argument("--json", action="store_true", help="print the machine-readable report instead of the summary")
     parser.add_argument("--allow-sparse", action="store_true",
                         help="run on a sparse worktree anyway; everything outside the cone reads as missing")
@@ -812,6 +865,20 @@ def main() -> int:
         ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True
     ).stdout.strip()
 
+    infrastructure, items = split_infrastructure(items)
+    timed_out = {(row["check"], row["subcheck"]) for row in infrastructure}
+
+    if args.record_baseline and infrastructure:
+        # A baseline describes what each subcheck reports on main; a subcheck that was killed reported
+        # nothing, and recording it as passing or as failing once would mislead every later landing.
+        print("pm-landing-check: not recording a baseline: these subchecks did not finish, so what "
+              "they report is unknown:", file=sys.stderr)
+        for row in infrastructure:
+            print(describe_infrastructure(row), file=sys.stderr)
+        print(f"pm-landing-check: rerun with a --subcheck-timeout-seconds above "
+              f"{args.subcheck_timeout_seconds}.", file=sys.stderr)
+        return 3
+
     if args.record_baseline:
         untracked = untracked_check_inputs(root)
         doc = build_baseline(commit, run_dir, items, counts, statuses, args.max_fingerprints, untracked)
@@ -832,7 +899,12 @@ def main() -> int:
     direct, derived = split_touched(touched)
     tokens = path_tokens(direct)
     units = units_of_touched_docs(root, direct)
-    partial = partial_subchecks(counts, baseline.get("checks") or {})
+    # A subcheck that timed out has no total to compare, so it is left out of every comparison.
+    compared = {
+        check: {name: counted for name, counted in counts[check].items() if (check, name) not in timed_out}
+        for check in counts
+    }
+    partial = partial_subchecks(compared, baseline.get("checks") or {})
 
     run_counts = bucket_counts(items)
     new_items: list[dict[str, Any]] = []
@@ -863,12 +935,12 @@ def main() -> int:
             on_branch.append({**public(item), "branch_paths": hits, **counted})
 
     grown = grown_buckets(seen_buckets, baseline_counts)
-    subcheck_growth = grown_subchecks(counts, baseline.get("checks") or {})
+    subcheck_growth = grown_subchecks(compared, baseline.get("checks") or {})
     for row in subcheck_growth:
         row["stale"] = readiness_counter_is_staleness(row, items, run_counts, baseline_counts)
     resolved = sorted(
         name for name in set(baseline_counts) - set(seen_buckets)
-        if bucket_subcheck(name) not in partial
+        if bucket_subcheck(name) not in partial and bucket_subcheck(name) not in timed_out
     )
 
     reported_keys = (
@@ -907,6 +979,8 @@ def main() -> int:
                 "grown_subchecks": subcheck_growth,
                 "excused_by_kind": excused_by_kind(on_branch),
                 "resolved_buckets": resolved,
+                "infrastructure": infrastructure,
+                "subcheck_timeout_seconds": args.subcheck_timeout_seconds,
                 "blocking": len(blocking),
             },
             indent=1,
@@ -918,7 +992,9 @@ def main() -> int:
         for check in CHECKS:
             total = sum(c["reported"] for c in counts[check].values())
             was = baseline.get("checks", {}).get(check, {}).get("failure_total", 0)
-            print(f"  {check:24s} {statuses[check]:5s} {total:7d} failures (baseline {was})")
+            infra = sum(1 for row in infrastructure if row["check"] == check)
+            note = f", {plural(infra, 'infrastructure result')} among them" if infra else ""
+            print(f"  {check:24s} {statuses[check]:5s} {total:7d} failures (baseline {was}){note}")
         print(f"  branch paths from git diff --name-only {args.base}..HEAD: {len(touched)}")
         truncated = [
             f"{check}/{name}" for check in CHECKS for name in sorted(counts[check])
@@ -980,6 +1056,10 @@ def main() -> int:
             print(describe(item, item_tag(item, True)))
         if len(on_branch) > 40:
             print(f"  ... {len(on_branch) - 40} more")
+        print(f"Infrastructure results, not failures of this tree (never new, growth or blocking): "
+              f"{len(infrastructure)}")
+        for row in infrastructure:
+            print(describe_infrastructure(row))
         print(f"Gone since the baseline (nothing to do): {len(resolved)}")
         print()
         if not reported and not grown and not subcheck_growth:
@@ -999,6 +1079,10 @@ def main() -> int:
             print("Nothing reported stops the landing: it is " + "; and ".join(advice) + ".")
         else:
             print(f"{plural(len(blocking), 'item')} the baseline does not excuse. Fix them on this branch.")
+        if infrastructure:
+            print(f"{plural(len(infrastructure), 'subcheck')} did not finish within "
+                  f"{args.subcheck_timeout_seconds} s, so what they would report is unknown and the exit "
+                  "code does not count them: rerun each on its own to see it.")
 
     return exit_code(reported, grown, subcheck_growth, blocking)
 

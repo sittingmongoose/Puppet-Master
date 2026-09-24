@@ -1401,6 +1401,109 @@ class RuleTwoPreExisting(LandingRun):
         self.assertIn("the baseline does not excuse", out)
 
 
+def timeout_row(command_id="lint-contractrefs", seconds=180):
+    """What pm-plans-verify.py reports for a subcheck it killed at its bound: the row both aggregates
+    printed for lint-contractrefs at the terminal.workgroup_moved landing of 2026-09-24."""
+    return {"error": "subprocess_timeout", "timeout_seconds": seconds, "process_group_killed": True,
+            "kill_mechanism": "os.killpg(1533414, SIGKILL)", "stdout_excerpt": "", "stderr_excerpt": "",
+            "command_id": command_id}
+
+
+MISSING_REF = {"path": "Plans/00-plans-index.md", "error": "missing_ref",
+               "bad_ref": "Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json"}
+
+
+class RuleThreeTimeouts(LandingRun):
+    """Rule 3: a subcheck that times out is an infrastructure result, never a new failure, growth or
+    a blocker. Measured case: lint-contractrefs takes about 199 s in the shared checkout on the
+    network mount and finds nothing when run alone; the old 180 s bound killed it."""
+
+    def test_the_default_bound_is_600_seconds_above_the_measured_199(self):
+        self.stub(gates={"verify_spec_lock": [STALE_HASH]})
+        self.record()
+        self.assertEqual(self.timeouts, [600, 600, 600])
+        self.assertLess(199, self.module.DEFAULT_SUBCHECK_TIMEOUT_SECONDS)
+
+    def test_lint_contractrefs_killed_at_its_bound_is_reported_on_its_own_line(self):
+        self.stub(gates={"verify_spec_lock": [STALE_HASH]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"verify_spec_lock": [STALE_HASH], "lint_contractrefs": [timeout_row()]},
+                  audit={"support_refs": [timeout_row()]})
+        code, out = self.compare("--subcheck-timeout-seconds", "180")
+        self.assertEqual(code, 0, out)
+        self.assertIn("Infrastructure results, not failures of this tree (never new, growth or blocking): 2", out)
+        self.assertIn("[infrastructure] run-gates/lint_contractrefs  subprocess_timeout (lint-contractrefs)  "
+                      "killed after 180 s, its time bound; what it would report is unknown", out)
+        self.assertIn("[infrastructure] audit-governance/support_refs  subprocess_timeout (lint-contractrefs)  "
+                      "killed after 180 s", out)
+        self.assertIn("New since the baseline: 0", out)
+        self.assertIn("Subchecks reporting more failures than the baseline: 0", out)
+        self.assertIn("1 infrastructure result among them", out)
+        self.assertIn("2 subchecks did not finish within 180 s", out)
+        report = json.loads(self.compare("--json", "--subcheck-timeout-seconds", "180")[1])
+        self.assertEqual([(r["check"], r["subcheck"], r["elapsed_seconds"]) for r in report["infrastructure"]],
+                         [("run-gates", "lint_contractrefs", 180), ("audit-governance", "support_refs", 180)])
+        self.assertEqual((report["new"], report["grown_subchecks"], report["blocking"]), ([], [], 0))
+
+    def test_a_timeout_never_changes_the_exit_code(self):
+        self.stub(gates={"verify_spec_lock": [STALE_HASH]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        cases = (
+            ([], 0),
+            ([{"path": "Plans/Glossary.md", "error": "brand_new_kind"}], 1),
+            ([{"path": "Plans/Touched.md", "error": "brand_new_kind"}], 2),
+        )
+        for extra, expected in cases:
+            with self.subTest(expected=expected):
+                self.stub(gates={"verify_spec_lock": [STALE_HASH] + extra})
+                without, _ = self.compare()
+                self.stub(gates={"verify_spec_lock": [STALE_HASH] + extra, "lint_contractrefs": [timeout_row()]},
+                          audit={"support_refs": [timeout_row()]})
+                code, out = self.compare()
+                self.assertEqual((without, code), (expected, expected), out)
+
+    def test_what_a_timed_out_subcheck_found_before_is_not_reported_gone(self):
+        """Its result is unknown, so the baseline's rows for it are neither gone nor compared."""
+        self.stub(gates={"lint_contractrefs": [MISSING_REF]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"lint_contractrefs": [timeout_row()]})
+        code, out = self.compare()
+        self.assertEqual(code, 0, out)
+        self.assertIn("Gone since the baseline (nothing to do): 0", out)
+
+    def test_a_baseline_is_not_recorded_from_a_run_with_a_timeout(self):
+        self.stub(gates={"lint_contractrefs": [timeout_row()]})
+        code, _ = self.run_main("--record-baseline", "--baseline", "baseline.json")
+        self.assertEqual(code, 3)
+        self.assertFalse((self.repo / "baseline.json").exists())
+        self.assertIn("not recording a baseline", self.stderr)
+
+    def test_the_in_process_timeout_is_infrastructure_too(self):
+        row = {"check": "verify_spec_lock", "error": "subcheck_timeout", "timeout_seconds": 600,
+               "message": "verify_spec_lock exceeded 600s"}
+        infra, rest = M.split_infrastructure([M.normalize("run-gates", "verify_spec_lock", row, CHECKOUT)])
+        self.assertEqual((len(infra), rest), (1, []))
+        self.assertEqual(infra[0]["elapsed_seconds"], 600)
+
+    def test_a_real_lint_contractrefs_failure_is_still_a_failure(self):
+        """Only the timeout row is infrastructure: what the subcheck reports when it finishes counts,
+        and so does a crash."""
+        self.stub(gates={"verify_spec_lock": [STALE_HASH]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"verify_spec_lock": [STALE_HASH], "lint_contractrefs": [MISSING_REF]})
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("New since the baseline: 1", out)
+        self.assertIn("[off-branch] run-gates/lint_contractrefs  0 -> 1", out)
+        self.assertIn("Infrastructure results, not failures of this tree (never new, growth or blocking): 0", out)
+        crash = M.normalize("run-gates", "lint_contractrefs", {"error": "subcheck_exception", "message": "boom"}, CHECKOUT)
+        self.assertEqual(M.split_infrastructure([crash]), ([], [crash]))
+
+
 class BaselineReading(unittest.TestCase):
     def test_a_foreign_document_is_refused(self):
         import tempfile
