@@ -29912,12 +29912,15 @@
       },
       "ui_command_id": "cmd.forge.review.create",
       "handler_location": "handlers::forge::review_create",
+      "request_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
+      "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
       "expected_event_types": [],
       "acceptance_checks": [
         "Create carries the exact SCM context payload: repo, source worktree/branch, target branch, compare target, baseline, and run/attempt lineage",
         "Disabled state is deterministic for missing scopes, expired auth, or a false forge_capability_current, auth_valid, or repository_current guard, exactly as the command catalog defines them; what makes each guard true for a given provider is that provider owner's capability and binding contract, never a remote type named in this row.",
         "The panel command stays distinct from the thread-bound cmd.chat.worktree.pr and does not fabricate a thread_id",
-        "cmd.forge.review.create must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.forge.review.create requires the exact Forge owner command_request and command_result contracts; navigation cannot substitute for a provider effect or terminal success.",
+        "The provider-owner route and handlers::forge::review_create remain future targets, not native proof; preserve handler_unavailable until separately admitted native/provider evidence exists.",
         "cmd.forge.review.create must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "The rendered label is the vocabulary template with the selected repository adapter's review noun in its provider_matrix_profile.review_vocabulary display form; the validate-wiring-matrix check renders it for every provider in the Forge contract fixtures.",
         "When the selected adapter's provider_matrix_profile.review_vocabulary is null, the action is unavailable and never renders a blank label."
@@ -29927,9 +29930,10 @@
       "disabled_reason_projection": "state.commands.forge_review_create.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.forge.review.create has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "cmd.forge.review.create requires the owner typed result/receipt with explicit no-persist EventRecord disposition; accepted is not success, and success requires a separate terminal provider result and receipt. Navigation or a dispatch-only receipt cannot prove creation.",
         "receipt_or_event_refs": [
-          "cmd.forge.review.create.dispatch_receipt"
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt"
         ]
       },
       "accessibility_contract": {
@@ -29952,7 +29956,7 @@
         {
           "test_id": "wiring.catalog.forge_review_create.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.forge.review.create has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.forge.review.create requires the owner typed result/receipt with explicit no-persist EventRecord disposition; accepted is not success, and success requires a separate terminal provider result and receipt. Navigation or a dispatch-only receipt cannot prove creation."
         },
         {
           "test_id": "wiring.catalog.forge_review_create.accessibility",
@@ -29961,7 +29965,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.forge.review.create records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.forge.review.create binds the owner typed result/receipt; accepted, blocked, failed, cancelled and effect_unknown never imply terminal creation success. Success requires terminal provider result and receipt; navigation is not an effect. Assert zero unregistered EventRecord."
       ]
     },
     "catalog.forge_review_mark_ready": {
@@ -30032,12 +30036,15 @@
       },
       "ui_command_id": "cmd.forge.review.merge",
       "handler_location": "handlers::forge::review_merge",
+      "request_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
+      "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
       "expected_event_types": [],
       "acceptance_checks": [
         "Merge targets an open provider review; disabled state is deterministic for a false review_open, merge_allowed, or auth_valid guard, exactly as the command catalog defines them; what makes each guard true for a given provider is that provider owner's contract, never a remote type named in this row.",
         "Protected-branch merges route the domain.git_destructive_remote permission class and are blocked without that approval",
         "Merge is distinct from the worktree-local cmd.chat.worktree.merge and records the remote merge receipt",
-        "cmd.forge.review.merge must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.forge.review.merge requires the exact Forge owner command_request and command_result contracts; navigation cannot substitute for a provider effect or terminal success.",
+        "The provider-owner route and handlers::forge::review_merge remain future targets, not native proof; preserve handler_unavailable until separately admitted native/provider evidence exists.",
         "cmd.forge.review.merge must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "The rendered label is the vocabulary template with the selected repository adapter's review noun in its provider_matrix_profile.review_vocabulary display form; the validate-wiring-matrix check renders it for every provider in the Forge contract fixtures.",
         "When the selected adapter's provider_matrix_profile.review_vocabulary is null, the action is unavailable and never renders a blank label."
@@ -30047,9 +30054,10 @@
       "disabled_reason_projection": "state.commands.forge_review_merge.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.forge.review.merge has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "cmd.forge.review.merge requires the owner typed result/receipt with explicit no-persist EventRecord disposition; accepted is not success, and success requires a separate terminal provider result and receipt. Navigation or a dispatch-only receipt cannot prove a remote merge.",
         "receipt_or_event_refs": [
-          "cmd.forge.review.merge.dispatch_receipt"
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt"
         ]
       },
       "accessibility_contract": {
@@ -30072,7 +30080,7 @@
         {
           "test_id": "wiring.catalog.forge_review_merge.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.forge.review.merge has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.forge.review.merge requires the owner typed result/receipt with explicit no-persist EventRecord disposition; accepted is not success, and success requires a separate terminal provider result and receipt. Navigation or a dispatch-only receipt cannot prove a remote merge."
         },
         {
           "test_id": "wiring.catalog.forge_review_merge.accessibility",
@@ -30081,7 +30089,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.forge.review.merge records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.forge.review.merge binds the owner typed result/receipt; accepted, blocked, failed, cancelled and effect_unknown never imply terminal remote-merge success. Success requires terminal provider result and receipt; navigation is not an effect. Assert zero unregistered EventRecord."
       ]
     },
     "catalog.forge_review_open": {
