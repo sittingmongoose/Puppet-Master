@@ -169,6 +169,11 @@ canon and forbids treating this review record as a seal or readiness unlock.
   Only the two Tour-only summary strings needed reconciliation; see
   `home-widget-return-metadata-repair.md`. Concrete exchange/storage coverage
   remains unverified. Newer DL-076 checkpoint authority must win at integration.
+- Spellcheck: bounded currentness recheck against main `f1ce058ccd` found no
+  contrary newer spelling rule in the selected owners. Branch-only ACD-468
+  remains prose-only; typed actions, exact Settings mappings and dictionary
+  custody remain open. See `spellcheck-currentness.md`; no new canonical edit
+  or command admission follows from this review.
 
 No follow-up above touches the frozen assistant-chat topics. Standard index
 validation now exposes 20 unchanged legacy decision errors plus DL-076 absent
