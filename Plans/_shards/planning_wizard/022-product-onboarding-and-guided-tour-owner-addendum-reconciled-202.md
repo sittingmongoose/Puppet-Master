@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1775-L2103
+Source lines: L1775-L2105
 
-Source SHA256: `4758841b6cf3ff7b15687f79c253a9d62d19401e986a0e1b61add8409e6f5ecd`
+Source SHA256: `c479075a5b72602b14000d0389a1dd08098e1113e5aac383e6df7982725b8b62`
 
 ---
 
@@ -79,6 +79,8 @@ The current `pm.product_onboarding.setup_plan.v3` extends the same closed durabl
 The producer resolves the actual current approved v3 draft and the initiating Project request, validates that request's existing `onboarding_setup_binding`, and joins exact setup-plan ref/reviewed revision/hash, Project-draft ref/revision, commit authorization, current consent, Client/Host/return context and owner operation. Account/container, selected Host/Execution Environment and initiating active Client are independently resolved current owner identities and permission/consent subjects, never trusted because matching caller snapshots repeat them. The binding is the initiating Project request's setup binding, not the terminal listed-Project result: Forge creation is a child of that approved chain and must not require its own successful parent outcome first. The owner resolves verified provider/variant/host/account/container and derives the actual Forge choices deterministically from the normal and advanced fields. No display label, cached account, arbitrary URL normalization, opaque ref or request wrapper substitutes for that mapping. A changed resolved destination, selected option, catalog, derived path or effect consequence must return through the applicable current review/consent boundary; it cannot be silently default-filled after approval.
 
 The resulting request uses the existing `cmd.forge.repository.create` v2 carrier, current closed inline intent and exact trusted preview/digest. Source-template, instance-trust, Git transport and later team/policy/CI/runner/mirror effects retain their own owners, capability/permission and phase. Selected-source precommit access remains narrow and cannot authorize destination creation or destination sign-in. The separately selected Azure team-project operation must finish or reconcile under its own preview/permission before the repository producer can consume its real project identity; retaining that selection is not an implementation of the separate Azure operation. Existing source history is preserved, and no local-only path obtains a fake account, repository or Project to satisfy a hosted schema.
+
+ADO-008's explicitly selected new Azure team project has no existing project ref before its child operation succeeds. The current writer must encode that absence only for the explicit create branch while preserving the existing-project branch's required real selection and all historical v2 definitions. Source bytes and review hash remain unchanged while the owner observes/reconciles creation; a separate typed result-derived binding supplies the real project identity to a fresh repository preview under the same initiating Project request. No unreviewed create-to-existing rewrite, terminal-parent dependency, fabricated selection, local-only identity, implicit retry or remote rollback is allowed.
 
 New session writes use `pm.product_onboarding.session.v3`. An editable draft is v3; immutable historical v2 draft bytes may be retained only for independently revalidated already-committed or still-reconciling owner-chain lineage, with an explicit non-dispatchable disposition. Fresh create admission never accepts that historical branch. Migrating an uncommitted v2 draft preserves its exact known normal choices, marks missing advanced choices unresolved, increments current draft/session revisions, invalidates prior review/hash and returns to unconfirmed review without effectful defaults. It does not manufacture preview, consent or owner results. Reference-only continuations keep exact refs/hashes rather than copying another draft body, and existing thirteen local actions remain the only local action family.
 

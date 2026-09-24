@@ -2143,13 +2143,14 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "True": 7
+        "True": 8
       },
-      "heading_count": 19,
+      "heading_count": 21,
       "implementation_surfaces": [
         "Plans/Azure_DevOps_Integration.md",
         "Plans/FinalGUISpec.md",
         "Plans/Forge_Integrations.md",
+        "Plans/Planning_Wizard.md",
         "Plans/Settings_System.md",
         "Plans/Source_Control_System.md",
         "Plans/UI_Command_Catalog.md",
@@ -2157,14 +2158,15 @@
         "Plans/forge_integration_contracts.schema.json",
         "future Azure adapter",
         "future Azure auth/API adapter",
+        "future Azure owner adapter",
         "future Azure pipeline/hook/API adapters",
         "future Azure review adapter",
         "future Azure review/policy adapter",
         "future Source Control review UI"
       ],
-      "line_count": 398,
+      "line_count": 491,
       "path": "Plans/Azure_DevOps_Integration.md",
-      "plan_unit_count": 7,
+      "plan_unit_count": 8,
       "plan_unit_ids": [
         "ADO-001",
         "ADO-002",
@@ -2172,7 +2174,8 @@
         "ADO-004",
         "ADO-005",
         "ADO-006",
-        "ADO-007"
+        "ADO-007",
+        "ADO-008"
       ],
       "reasoning_tiers": [
         "high"
@@ -2183,16 +2186,18 @@
         "azure_container_identity_collapse",
         "azure_gui_command_or_migration_drift",
         "azure_stale_pr_or_policy_evidence",
+        "azure_team_project_mutation_or_identity_without_reviewed_authority",
         "duplicated_or_unenforced_azure_check_presentation",
         "silently_transferred_azure_approval_or_policy_evidence"
       ],
-      "sha256": "cffbf0b1080a48573693d832e596a5b8307934dbe726abc765a0164e7a03d066",
+      "sha256": "12418c4c4b7ce99b982b604e1c0cc559a542bb402a9895ed46ad4aad8d02f7fd",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 7
+        "accepted": 8
       },
       "title": "Azure DevOps Integration",
       "unit_type_counts": {
+        "integration_contract": 1,
         "owner_boundary": 1,
         "requirement": 5,
         "validation": 1
@@ -2208,7 +2213,10 @@
         "The Azure vote and policy-evaluation fixtures this unit will need do not exist yet, for the reason ADO-003 states: no Azure review, vote, policy or check fixture exists in any Plans fixture pack. This unit is planned and is not yet falsifiable by a fixture.",
         "The TFVC leg is only partly falsifiable. A negative rejects a profile that declares a near-miss spelling instead of the enrolled tfvc_container_unsupported code, so the vocabulary is checked. Recognising a TFVC container from the provider's own repository-kind data has no fixture, because the corpus carries no container shape to present one in: that criterion is stated and not yet falsifiable, and writing the fixture waits on the same Azure fixture work ADO-003 names.",
         "access/scope/version/license/rate matrices",
+        "asynchronous reconciliation and no-replay tests",
         "command/wiring census, GUI/accessibility fixtures, migration negatives",
+        "cross-account/organization/variant and stale-preview negatives",
+        "future closed Azure team-project operation companions",
         "future stale-head/vote tests, Draft capability tests",
         "future variant negative tests",
         "missing-project, null-project, missing-project-GUID and non-GUID-project-identifier negatives",
@@ -8004,7 +8012,7 @@
         "future signed provider catalog",
         "future webhook ingress"
       ],
-      "line_count": 1341,
+      "line_count": 1343,
       "path": "Plans/Forge_Integrations.md",
       "plan_unit_count": 20,
       "plan_unit_ids": [
@@ -8054,7 +8062,7 @@
         "stale_review_evidence_or_agent_publication",
         "unbindable_vote_promise"
       ],
-      "sha256": "d9244044451c99fa48086dbf998977e9dd72db6445b090f177314f3410ebc1ab",
+      "sha256": "e1f9524386d7ea1a296bed7af3b94fd1c3fc54442d8f1454cc7d7f03733449fd",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 20
@@ -13575,7 +13583,7 @@
         "future Product Onboarding and Bootstrap projection controllers",
         "future Product Onboarding native controller"
       ],
-      "line_count": 2578,
+      "line_count": 2580,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 28,
       "plan_unit_ids": [
@@ -13630,7 +13638,7 @@
         "tour_fake_shell_or_layout_loss",
         "unbounded_review_loop_or_suppressed_finding"
       ],
-      "sha256": "4758841b6cf3ff7b15687f79c253a9d62d19401e986a0e1b61add8409e6f5ecd",
+      "sha256": "c479075a5b72602b14000d0389a1dd08098e1113e5aac383e6df7982725b8b62",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 27,
@@ -19954,7 +19962,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-24T12:52:47Z",
+  "generated_at_utc": "2026-09-24T13:16:18Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19963,12 +19971,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3522,
-      "True": 3197
+      "True": 3198
     },
-    "plan_unit_count": 6719,
+    "plan_unit_count": 6720,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6528,
+      "accepted": 6529,
       "retired": 182,
       "superseded": 9
     },
@@ -20015,7 +20023,7 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 80,
+      "integration_contract": 81,
       "interaction_contract": 6,
       "invariant": 4,
       "migration_contract": 2,

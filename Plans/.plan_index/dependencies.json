@@ -6450,6 +6450,7 @@
     "DR-039",
     "F3-515",
     "BRS-004",
+    "ADO-008",
     "PWIZ-022",
     "PWIZ-023",
     "PWIZ-024",
@@ -10609,6 +10610,41 @@
       "edge_type": "depends_on",
       "from": "ADO-007",
       "to": "FGI-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ADO-008",
+      "to": "ADO-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ADO-008",
+      "to": "ADO-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ADO-008",
+      "to": "ADO-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ADO-008",
+      "to": "FGI-011"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ADO-008",
+      "to": "FGI-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ADO-008",
+      "to": "PJCT-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ADO-008",
+      "to": "PWIZ-021"
     },
     {
       "edge_type": "depends_on",
@@ -98471,7 +98507,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-24T12:52:47Z",
+  "generated_at_utc": "2026-09-24T13:16:18Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -107686,6 +107722,23 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "azure_devops_team_project_creation",
+      "gui_related": true,
+      "owner_doc": "Plans/Azure_DevOps_Integration.md",
+      "plan_unit_id": "ADO-008",
+      "reasoning_tier": "high",
+      "risk_class": "azure_team_project_mutation_or_identity_without_reviewed_authority",
+      "source_location": {
+        "heading": "ADO-008 - Explicit New Team-Project Child Operation",
+        "heading_level": 3,
+        "heading_line": 403,
+        "line": 405,
+        "path": "Plans/Azure_DevOps_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
     },
     {
       "context_scope": "residual_plan_standardization",
@@ -147290,8 +147343,8 @@
       "source_location": {
         "heading": "FGI-011 - Verified account and repository binding requirements by forge",
         "heading_level": 3,
-        "heading_line": 747,
-        "line": 749,
+        "heading_line": 749,
+        "line": 751,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147307,8 +147360,8 @@
       "source_location": {
         "heading": "FGI-012 - Distinct Self-Hosted Providers And Independent Automation Authority",
         "heading_level": 3,
-        "heading_line": 824,
-        "line": 826,
+        "heading_line": 826,
+        "line": 828,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147324,8 +147377,8 @@
       "source_location": {
         "heading": "FGI-013 - Nine Distinct Event-Silent Forge Command Admissions",
         "heading_level": 3,
-        "heading_line": 865,
-        "line": 867,
+        "heading_line": 867,
+        "line": 869,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147341,8 +147394,8 @@
       "source_location": {
         "heading": "FGI-014 - Origin And Provider-Specific Operation Profiles",
         "heading_level": 3,
-        "heading_line": 910,
-        "line": 912,
+        "heading_line": 912,
+        "line": 914,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147358,8 +147411,8 @@
       "source_location": {
         "heading": "FGI-015 - Exact Provider Capability, Authentication, Trust, And Administration Matrix",
         "heading_level": 3,
-        "heading_line": 976,
-        "line": 978,
+        "heading_line": 978,
+        "line": 980,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147375,8 +147428,8 @@
       "source_location": {
         "heading": "FGI-016 - Conditional Ordered Review Stack Workflow",
         "heading_level": 3,
-        "heading_line": 1069,
-        "line": 1071,
+        "heading_line": 1071,
+        "line": 1073,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147392,8 +147445,8 @@
       "source_location": {
         "heading": "FGI-017 - Conditional Additional Review Service Admission",
         "heading_level": 3,
-        "heading_line": 1139,
-        "line": 1141,
+        "heading_line": 1141,
+        "line": 1143,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147409,8 +147462,8 @@
       "source_location": {
         "heading": "FGI-018 - Typed Merge Strategy On The Forge Merge Request",
         "heading_level": 3,
-        "heading_line": 1213,
-        "line": 1215,
+        "heading_line": 1215,
+        "line": 1217,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147426,8 +147479,8 @@
       "source_location": {
         "heading": "FGI-019 - Policy Evaluation Requeue That Degrades Truthfully",
         "heading_level": 3,
-        "heading_line": 1258,
-        "line": 1260,
+        "heading_line": 1260,
+        "line": 1262,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147443,8 +147496,8 @@
       "source_location": {
         "heading": "FGI-020 - Provider Neutral Vote And Reviewer Carrier",
         "heading_level": 3,
-        "heading_line": 1301,
-        "line": 1303,
+        "heading_line": 1303,
+        "line": 1305,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -186543,8 +186596,8 @@
       "source_location": {
         "heading": "PWIZ-021 - Product Onboarding draft-first state machine and connect-existing shortcut",
         "heading_level": 3,
-        "heading_line": 1877,
-        "line": 1879,
+        "heading_line": 1879,
+        "line": 1881,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -186560,8 +186613,8 @@
       "source_location": {
         "heading": "PWIZ-022 - Product Onboarding motion, accessibility, and migration",
         "heading_level": 3,
-        "heading_line": 1984,
-        "line": 1986,
+        "heading_line": 1986,
+        "line": 1988,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -186577,8 +186630,8 @@
       "source_location": {
         "heading": "PWIZ-023 - Guided Tour newbie-first real-application practice",
         "heading_level": 3,
-        "heading_line": 2056,
-        "line": 2058,
+        "heading_line": 2058,
+        "line": 2060,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -186594,8 +186647,8 @@
       "source_location": {
         "heading": "PWIZ-024 - Visible project routes, independent placement, and live reviewed setup draft",
         "heading_level": 3,
-        "heading_line": 2109,
-        "line": 2111,
+        "heading_line": 2111,
+        "line": 2113,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -186611,8 +186664,8 @@
       "source_location": {
         "heading": "PWIZ-025 - Bootstrap recovery, connector phases, and forge parity",
         "heading_level": 3,
-        "heading_line": 2207,
-        "line": 2209,
+        "heading_line": 2209,
+        "line": 2211,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -186628,8 +186681,8 @@
       "source_location": {
         "heading": "Notebook Topic Research Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 2336,
-        "line": 2340,
+        "heading_line": 2338,
+        "line": 2342,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -186645,8 +186698,8 @@
       "source_location": {
         "heading": "PWIZ-027 - Research Decision Dispositions Into Topics And Amendments",
         "heading_level": 3,
-        "heading_line": 2382,
-        "line": 2384,
+        "heading_line": 2384,
+        "line": 2386,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -186662,8 +186715,8 @@
       "source_location": {
         "heading": "PWIZ-028 - Bounded Acceptance Of A Sealed Plan",
         "heading_level": 3,
-        "heading_line": 2500,
-        "line": 2502,
+        "heading_line": 2502,
+        "line": 2504,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -212703,10 +212756,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15650,
+    "depends_on_edge_count": 15657,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18349,
-    "node_count": 6719,
+    "edge_count": 18356,
+    "node_count": 6720,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0

@@ -744,6 +744,8 @@ Product Onboarding's existing normal fields remain the input source, including d
 
 The ordinary Azure path creates a Git repository in an existing verified Azure team project. The packet's optional advanced creation of a new Azure team project is separate Azure-owned work: explicit selection, project name, visibility, process-template/capability and Git-only version-control choices, its own preview and permission, and an awaited or reconciled asynchronous result before repository creation. It is neither PM Project creation nor an implied side effect of repository creation. This requirement does not declare that separate operation's command/carrier already materialized. Generic Git gains no hosted-create capability; expert bare-over-SSH creation is not a first-run fallback.
 
+ADO-008 owns that separate team-project operation and its result-derived handoff. The repository producer consumes the operation's causally verified ready project resource only after its own current repository preview/permission checks; it never reuses `cmd.forge.repository.create` to create a project, invents a project GUID, rewrites the approved create selection as existing, or treats a pending operation reference as a repository destination. Typed companions and any common command/capability/target/storage registration are separate reviewed prerequisites, not implied by retaining the draft choice.
+
 ### FGI-011 - Verified account and repository binding requirements by forge
 
 ```yaml
