@@ -1,5 +1,7 @@
 """Behavioral checks for DL-039's sole authorized holding-bucket validator repair."""
+import contextlib
 import copy
+import io
 import hashlib
 import importlib.util
 import json
@@ -443,6 +445,19 @@ class PostAugustAdmissionTests(unittest.TestCase):
         for et in self.POST:
             self.write_record(self.record_for(et))
 
+    def test_decision_entry_must_name_the_family(self):
+        et = self.POST[1]
+        for number in ['DL-041', 'DL-040', 'DL-077']:
+            with self.subTest(number=number):
+                record = self.record_for(et)
+                section = self.v.decision_section_bytes(self.root / 'Plans/Decision_Log.md', number)
+                record['decision_ref'] = 'Plans/Decision_Log.md#' + number
+                record['decision_section_sha256'] = hashlib.sha256(section).hexdigest()
+                self.write_record(record)
+                admitted, issues, _ = self.check()
+                self.assertNotIn(et, admitted)
+                self.assertIn(et + ': decision_ref_not_for_family', issues)
+
     def test_depth_row_must_grade_the_registered_family_revision(self):
         for key, value in [('family_revision', '9.9.9'), ('family_id', 'event-family-other')]:
             with self.subTest(key=key):
@@ -463,18 +478,82 @@ class PostAugustAdmissionTests(unittest.TestCase):
                 self.assertNotIn(self.POST[0], admitted)
                 self.assertIn(self.POST[0] + ': depth_pass_without_plans_evidence:retention', issues)
 
-    def test_decision_entry_must_name_the_family(self):
-        et = self.POST[1]
-        for number in ['DL-041', 'DL-040', 'DL-077']:
-            with self.subTest(number=number):
-                record = self.record_for(et)
-                section = self.v.decision_section_bytes(self.root / 'Plans/Decision_Log.md', number)
-                record['decision_ref'] = 'Plans/Decision_Log.md#' + number
-                record['decision_section_sha256'] = hashlib.sha256(section).hexdigest()
-                self.write_record(record)
+    def test_registry_sides_must_differ_and_assessment_rows_must_be_exact(self):
+        et = self.POST[0]
+        record = self.record_for(et)
+        record['registry_after']['sha256'] = record['registry_before']['sha256']
+        self.write_record(record)
+        admitted, issues, _ = self.check()
+        self.assertIn(et + ': registry_before_after_not_exactly_one_family', issues)
+        self.write_record(self.record_for(et))
+        for mutate, problem in [(lambda rows: rows.append(copy.deepcopy(rows[0])), 'depth_assessment.row'),
+                                (lambda rows: rows[0]['cells'].pop('retention'), 'depth_assessment.criteria'),
+                                (lambda rows: rows[0]['cells'].update(extra={'status': 'PASS'}), 'depth_assessment.criteria')]:
+            with self.subTest(problem=problem):
+                self.setUp()
+                mutate(self.assessment['rows'])
+                self.rewrite_records()
                 admitted, issues, _ = self.check()
                 self.assertNotIn(et, admitted)
-                self.assertIn(et + ': decision_ref_not_for_family', issues)
+                self.assertIn(et + ': ' + problem, issues)
+
+    def test_record_file_name_must_equal_its_event_type(self):
+        (self.record_dir / 'browser.workspace.reset.json').unlink()
+        self.write_record(self.record_for('browser.workspace.reset'), name='browser.workspace.reset.copy')
+        admitted, issues, _ = self.check()
+        self.assertNotIn('browser.workspace.reset', admitted)
+        self.assertIn('browser.workspace.reset.copy.json: admission record name, event type or uniqueness mismatch', issues)
+
+    def test_receipt_lander_and_record_schema_are_pinned(self):
+        post = self.root / self.v.POST_AUGUST_RECEIPT
+        original = json.loads(post.read_text())
+        for key in ['lander_task', 'record_schema_id']:
+            with self.subTest(key=key):
+                changed = copy.deepcopy(original)
+                changed[key] = 'someone-else'
+                post.write_text(json.dumps(changed))
+                admitted, issues, receipt_sha = self.check()
+                self.assertEqual(admitted, set())
+                self.assertIsNone(receipt_sha)
+        post.write_text(json.dumps(original))
+
+    def run_main(self):
+        self.v.RECEIPT_DIR = self.root / 'validator-receipts'
+        shutil.copyfile(REPO / 'Plans/event_family_registry.json', self.root / 'Plans/event_family_registry.json')
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.v.main()
+        receipt = json.loads((self.v.RECEIPT_DIR / 'event_authority_validator_receipt.json').read_text())
+        return {f['error']: f for f in receipt['failures']}, receipt['named_checks']
+
+    def test_main_admits_complete_records_and_keeps_every_other_rule(self):
+        failures, named = self.run_main()
+        self.assertEqual(named['post_august_admitted'], sorted(self.POST))
+        self.assertNotIn('post_august_admission_incomplete', failures)
+        self.assertNotIn('unexpected_august_set', failures)
+        gap = failures.get('individual_dispositions_evidence_gap_blocking', {}).get('sample', [])
+        depth = [r['event_type'] for r in failures.get('registered_contract_depth_incomplete', {}).get('sample', [])]
+        for et in self.POST:
+            self.assertNotIn(et, gap)
+            self.assertNotIn(et, depth)
+
+    def test_main_fails_closed_without_a_complete_record(self):
+        self.assessment['rows'][0]['cells']['positive_negative_oracles'] = {'status': 'PARTIAL', 'evidence': []}
+        self.rewrite_records()
+        failures, named = self.run_main()
+        self.assertNotIn(self.POST[0], named['post_august_admitted'])
+        self.assertIn('post_august_admission_incomplete', failures)
+        self.assertIn(self.POST[0], failures['unexpected_august_set']['august'])
+        self.assertIn(self.POST[0], failures['individual_dispositions_evidence_gap_blocking']['sample'])
+        self.assertIn('post_august_admission_incomplete', named['seal_prerequisites_blocking_errors'])
+        self.assertFalse(named['post_august_admission_records_ok'])
+
+    def test_main_reports_a_stray_record(self):
+        stray = self.record_for(self.POST[1])
+        stray['event_type'] = 'workspace.layout_changed'
+        self.write_record(stray)
+        failures, _ = self.run_main()
+        self.assertIn('workspace.layout_changed: admission record for a family not registered beyond Known37 and August',
+                      failures['post_august_admission_incomplete']['issues'])
 
 
 if __name__ == '__main__':
