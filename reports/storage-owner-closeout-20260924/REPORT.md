@@ -195,6 +195,62 @@ The branch started at `566970cb7b`. On 2026-09-24, after the session resumed, it
 
 Only `Plans/.plan_index/*` conflicted. The conflicts came at the three commits that regenerate the index. Each was resolved by regenerating shards and the index at that commit, never by merging. Regenerating again at the tip changes only the four `generated_at_utc` stamps. The rebased branch was pushed with `--force-with-lease` pinned to the previous remote tip `239f2f87ec`.
 
+## Checks and tests
+
+Environment: this sparse worktree (`Plans scripts reports tests .claude`), holding a byte-identical copy of the ignored currentness audit `Plans/.audits/event-authority-2026-08-13-currentness/` (`VALIDATOR_RECEIPT.json` SHA-256 `af0bce7c65932afb2165cf64c0bd06c69f65e9a4b2007dd6ccc0125b56368f0e`). The plan index is generated and validated without that audit, as `main`'s was. "`main`" columns were measured in a temporary detached sparse worktree at the same commit and with the same audit copy.
+
+| Check | Branch base `566970cb7b` | Tip before rebase | `origin/main` `15ab001892` | Tip `9006c719e0` (rebased) |
+|---|---|---|---|---|
+| `pm-shard-plans.py --check --config Plans/sharding_config.json` | pass, 99 docs | pass, 99 docs | — | pass, 99 docs / 2,720 shards |
+| `pm-plan-index.py validate` | pass, 6,718 / 26,208 | pass, 6,719 / 26,212 | 6,718 / 26,210 (committed index) | pass, 6,719 / 26,214 |
+| `pm-implementation-readiness.py validate` | 35 | 35, identical keyed set | 38 | **38, identical keyed set** |
+| storage representation self-test checks | 28 | 36, all pass | 28 | 36, all pass |
+| `verify-spec-lock` | — | — | 10 `stale_hash` | 10, same set |
+| `validate-evidence` / `validate-plan-graph` | 759 / 759 | 759 / 759, 0 added, 0 removed | 847 / 847 | **847 / 847, 0 added, 0 removed** (keyed with `pm-landing-check.py`'s own `normalize`) |
+| `validate-browser-event-admission` | pass | pass | — | pass |
+| `pm_browser_workspace_reset.py` fixture report | pass | pass | — | pass |
+| 28 contract fixture value-shape cases (jsonschema) | all as declared | all as declared | — | all as declared |
+| updated contracts reject a stored token with `redb_snapshot_id` | — | yes (3 of 3) | — | yes (3 of 3) |
+
+Remaining readiness failures, the same set on `main` and the tip:
+- 17 `pnc019_source_hash_stale`;
+- 9 `event_authority_currentness_source_drift`;
+- 2 `event_denominator_unresolved` and 2 `event_family_contract_depth_unresolved`;
+- 5 readiness Spec Lock hash rows;
+- 1 `buildability_gate_report_stale_or_not_canonical`;
+- 1 `event_legacy_fixture_root_mismatch`;
+- 1 `implementation_readiness_self_tests_failed`, which names only the three `case_l_verification_integration` checks that were false before this branch.
+
+Every storage representation check passes.
+
+| Tests | Before (base) | After (rebased tip) |
+|---|---|---|
+| `tests.test_shared_runtime_storage_contracts` | 15 run, **1 fail** | 15 run, 0 fail |
+| `tests.test_pm_onboarding_phases` | 42 run, **1 fail** | 42 run, 0 fail |
+| `tests.test_pm_runtime_vocabulary_migration` | 9 run, 0 fail (28 checks named) | 9 run, 0 fail (36 checks named) |
+| `tests.test_pm_browser_workspace_reset` | 51 run, 0 fail | 53 run, 0 fail |
+| `tests.test_pm_browser_event_admission` | 30 run, 0 fail (at `566970cb7b`) | 38 run, 0 fail (`main` added 8) |
+| `tests.test_pm_testing_session_events`, `tests.test_pm_github_project_integration`, `tests.test_pm_emit_only_event_boundaries` | — | 11, 15, 13 run, 0 fail |
+| Whole tracked suite, `unittest discover -s tests` | 952 run, 6 fail, 3 errors (at `15ab001892`) | **954 run, 4 fail, 3 errors** |
+
+The whole-suite difference is exactly the two census tests fixed and the two new Browser reset tests passing; nothing new fails. The failures left are identical on both sides:
+- `test_pm_touch_closure_source` (3 errors and 1 failure) needs `Concepts/pm7-tools`, which is outside this sparse cone. These are environmental.
+- `test_pm_pnc019_currentness`, `test_prd_planning_runtime_contracts` and `test_runtime_integration_disposition` fail on `main` too.
+
+## What the landing check will say
+
+This branch lands under the landing lock, after the coordinator's go. The landing check compares against the committed baseline `reports/landing-checks/baseline.json`, recorded at `75bcda93bc` on 2026-09-23, which predates `main`'s later commits.
+
+- **Truncated-subcheck rise, not from this branch.** `validate_evidence` and `validate_plan_graph` have 665 failures in the baseline and 847 on `main`. The check compares truncated subchecks by their totals, so it will report a rise and exit 2 whatever branch lands. The proof: both subchecks were run on `origin/main` `15ab001892` and on this branch with their full failure lists, and diffed with the landing check's own keys. The result is **0 added and 0 removed**. Every evidence artifact this branch touches was already stale on `main` (storage-plan and Decision_Log shards and documents) or is in no evidence bundle (registry shards, contracts, fixtures).
+- **Governance staleness on files this branch edits.** These rows exist on `main` and now name branch files:
+  - `verify_spec_lock` `stale_hash` for `Plans/storage-plan.md`, `Plans/storage_value_registry.json` and `scripts/pm-implementation-readiness.py`. The landing check recognizes these as staleness.
+  - The readiness Spec Lock rows whose `required_path` is `scripts/pm-implementation-readiness.py` or `Plans/storage_value_registry.json`.
+  - `event_authority_currentness_source_drift` for `Plans/storage-plan.md`, `Plans/storage_value_registry.json` and `Plans/Decision_Log.md`.
+
+  The last two kinds are missing from the check's staleness list, so they print as blocking on-branch items. The coordinator classified the same rows as staleness for the storage-registry-repairs landing; they are the currentness drift the coordinator said to expect under the carve-out.
+- **Readiness is not worse.** Its truncated total is 38 on `main` and on the branch, with an identical keyed set; the baseline has 79.
+- **Reseal request:** see "Open items".
+
 ## Choices where canon was ambiguous
 
 1. **One Decision Log entry with two items.** Both questions came from the same review, are Storage-owned and were decided together, so one entry keeps the owner citations single (DL-076). Each item still has the full DL-036 form.
