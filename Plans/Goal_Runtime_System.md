@@ -2654,7 +2654,7 @@ Event-specific minima:
 | `goal_run.cancelled` (whole historical v2 only; active v3: GRS-080 with SP-312) | `goal_run_id`, `cancel_reason`, `mutation_started`, `settlement_refs[]`, `rollback_refs[]?` |
 | `goal_run.stopped` | `goal_run_id`, `stop_reason_code`, `safe_point_ref?`, `child_settlement_refs[]`, `resumable` |
 
-Routing note, 2026-09-24: the `goal_run.certified` row of `Plans/event_family_registry.json` keeps this section as its `semantic_owner_doc` and SP-214 as its `payload_owner_doc`, while its version and source refs have advanced to v3 under GRS-084. The `goal_run.certified` row above therefore names the units that govern v3, and the `goal_run.started` and `goal_run.cancelled` rows name theirs as the `goal.cancelled` row does. This note changes no payload, schema, registry row, admission or behavior.
+Routing note, 2026-09-24: the `goal_run.certified` row of `Plans/event_family_registry.json` keeps this section as its `semantic_owner_doc` and SP-214 as its `payload_owner_doc`, while its version and source refs have advanced to v3 under GRS-084. The `goal_run.certified` row above therefore names the units that govern v3, and the `goal_run.started` and `goal_run.cancelled` rows name theirs as the `goal.cancelled` row does. For these three `goal_run` rows the listed event-specific fields are unchanged inside the active v3 payloads; v3 changes the envelope (required `expected_goal_run_revision`, `goal_run_revision` and `idempotency_key`; no `expected_goal_revision` or `parent_goal_id`) under GRS-079, GRS-080 and the schema GRS-084 selects. This note changes no payload, schema, registry row, admission or behavior.
 
 Runtime records:
 
