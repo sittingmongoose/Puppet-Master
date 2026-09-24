@@ -180,13 +180,12 @@ def source_failures(candidate, index, observation, root=ROOT, *, disclosure=Fals
         return errors
     if not isinstance(observation, dict):
         return ['source_observation_schema']
-    # A persisted snapshot ID is provenance, not a reopenable read handle.
-    # Disclosure may rebind only that transient field to the fresh actual
-    # snapshot; every persistent root/anchor/frontier/source field must still
-    # pass the exact SP-278 join below.
-    token = candidate['index_read_token']
-    if disclosure:
-        token = {**token, 'redb_snapshot_id': observation.get('redb_snapshot_id')}
+    # The stored token is the nine-field durable token and never persists
+    # redb_snapshot_id (Storage owner decision, coordinator ruling 2026-09-24).
+    # The writer before commit and each reader before disclosure join the id of
+    # the snapshot they actually pinned; the complete ten-field SP-278 token
+    # must then pass the exact join below. The joined token is never stored.
+    token = {**candidate['index_read_token'], 'redb_snapshot_id': observation.get('redb_snapshot_id')}
     errors += sibling('pm_browser_workspace_reset', root).index_token_failures(
         token, index, observation, root=root)
     if errors:
@@ -300,8 +299,7 @@ def generic_case_values(checkpoint, observation, case, root=ROOT):
              'generation_id': generation, 'generation_anchor_sha256': binding_digest(node['anchor'], root),
              'frontier_revision': frontier['publication_revision'], 'frontier_sha256': binding_digest(frontier, root),
              'index_dataset_name': node['index_dataset_name'],
-             'source_selection': copy.deepcopy(frontier['source_selection']),
-             'redb_snapshot_id': observation['redb_snapshot_id']}
+             'source_selection': copy.deepcopy(frontier['source_selection'])}
     checkpoint = {**copy.deepcopy(checkpoint), 'storage_instance_id': index['storage_instance_id'],
                   'index_read_token': token,
                   'first_retained_sequence_id': coverage['first_retained_sequence_id'],

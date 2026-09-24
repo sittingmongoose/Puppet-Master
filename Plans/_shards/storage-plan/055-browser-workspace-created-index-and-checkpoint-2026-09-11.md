@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19706-L20013
+Source lines: L19706-L20026
 
-Source SHA256: `08812f0511a349794ea5f65aa725ea9f47db3d315674a3f7da74fd6ff54c03dd`
+Source SHA256: `50584d17271fd277e23e2e83ae0149d992e05f84454c229be3f27bf4168e6f09`
 
 ---
 
@@ -164,40 +164,53 @@ and stored digest meanings remain immutable compatibility custody; an old value
 is never default-filled or relabeled as a current v2 checkpoint.
 
 Newly authored under DL-046 for `browser.workspace.created` only, the v2 value is
-defined by `Plans/browser_workspace_created_checkpoint_v2.schema.json#/$defs/checkpoint`.
-The registry materialization must match that definition and the exact referenced
-SP-278 `read_token` and `coverage.last_frame` definitions. It fixes event,
-projector and schema identity and stores the complete read token, the examined
-global first/through bounds, an inclusive source cursor including frame-end
-offset, filter completeness, health, state and first-withdrawal time, plus
-`publication_id`, first `published_at_utc`, `hold_refs` and at most two
-`retired_generations`. The v1 `index_schema_id`, `index_schema_version`,
-`index_checkpoint_ref` and `current_selection_sha256` fields are not carried
-forward, and neither are the v1 cursor's `manifest_generation`, `recovery_epoch`,
-`survivor_prefix_sha256` and `projector_schema_version` components: the read
-token's source selection binds the manifest generation, recovery epoch and
-survivor prefix, the value's own schema and projector versions replace the
-cursor's projector schema version, and the cursor gains `frame_end_offset`.
-`#/$defs/generation_transaction`
+defined by
+`Plans/browser_workspace_created_checkpoint_v2.schema.json#/$defs/checkpoint`. The
+registry materialization must match that definition and the exact referenced
+SP-278 `read_token` field definitions and `coverage.last_frame` definition. It
+fixes event, projector and schema identity and stores the nine-field durable read
+token described below, the examined global first/through bounds, an inclusive
+source cursor including frame-end offset, filter completeness, health, state and
+first-withdrawal time, plus `publication_id`, first `published_at_utc`,
+`hold_refs` and at most two `retired_generations`. The v1 `index_schema_id`,
+`index_schema_version`, `index_checkpoint_ref` and `current_selection_sha256`
+fields are not carried forward, and neither are the v1 cursor's
+`manifest_generation`, `recovery_epoch`, `survivor_prefix_sha256` and
+`projector_schema_version` components: the read token's source selection binds the
+manifest generation, recovery epoch and survivor prefix, the value's own schema
+and projector versions replace the cursor's projector schema version, and the
+cursor gains `frame_end_offset`. `#/$defs/generation_transaction`
 (`pm.browser_workspace_created_checkpoint_generation_transaction.v2`) and
 `#/$defs/cleanup_transaction`
 (`pm.browser_workspace_created_checkpoint_cleanup_transaction.v2`) are newly
-authored read-only resolver views of the actual same-key redb commit, not
-physical records; a supplied dictionary authenticates nothing.
+authored read-only resolver views of the actual same-key redb commit, not physical
+records; a supplied dictionary authenticates nothing.
 
-The v2 current value must bind the actual SP-278 `index_read_token`: exact generic
-root key, generation JSON Pointer, immutable anchor, advancing frontier revision
-and digest, physical dataset, complete source selection and actual redb snapshot
-identity. Its inclusive last-examined frame covers the complete generic range,
-including verified nonmatching events, rather than only the last creation match.
-Every read reacquires a real SP-278 snapshot, joins the retained source frames and
-full-index checkpoint, and revalidates the complete token and Project/access/
-deletion fence before disclosure. A stored snapshot ID is provenance, not a
-reopenable snapshot. An append may change the frontier without changing the
-generation or an older row; generation equality, maximum matching sequence and
-old selection digest cannot establish currentness. The filtered writer still
-commits only its own checkpoint and historical join under prior-value CAS and
-unchanged source/currentness fences; uncertainty refuses publication.
+The v2 current value must bind the actual SP-278 read token: exact generic root
+key, generation JSON Pointer, immutable anchor, advancing frontier revision and
+digest, physical dataset and complete source selection. Its `index_read_token`
+stores exactly those nine fields, as
+`Plans/browser_workspace_created_checkpoint_v2.schema.json#/$defs/durable_index_read_token`,
+and never the tenth SP-278 field, `redb_snapshot_id`. This follows the Storage
+owner decision on stored SP-278 checkpoint tokens, ruled by the coordinator on
+Jared's delegation on 2026-09-24: a stored checkpoint token is the nine-field
+durable token without `redb_snapshot_id`, on the `DurableGenericToken` precedent,
+because SP-311 treats the snapshot id only as a live transaction fence that is
+never persisted. The writer before commit and every reader before disclosure join
+the id of the redb read snapshot it actually pinned to the stored nine fields, and
+validate the resulting complete ten-field SP-278 `read_token` for that transaction
+alone; the joined token is never written back. A separate registration must add
+this row to the checkpoint rows that the section 2.3.1 SP-278 read-token rule
+enumerates. The value's inclusive last-examined frame covers the complete generic
+range, including verified nonmatching events, rather than only the last creation
+match. Every read reacquires a real SP-278 snapshot, joins the retained source
+frames and full-index checkpoint, and revalidates the complete token and
+Project/access/deletion fence before disclosure. An append may change the frontier
+without changing the generation or an older row; generation equality, maximum
+matching sequence and old selection digest cannot establish currentness. The
+filtered writer still commits only its own checkpoint and historical join under
+prior-value CAS and unchanged source/currentness fences; uncertainty refuses
+publication.
 
 StorageMigrationCoordinator alone may install this successor against the actual
 store graph and version ceilings. It first authenticates the old v1 row, codec,

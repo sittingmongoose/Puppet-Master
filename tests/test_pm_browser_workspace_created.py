@@ -481,9 +481,15 @@ class ConditionalCreatedV2Tests(unittest.TestCase):
         changed = copy.deepcopy(self.obs); changed['before_commit_fence_current'] = False
         self.assertTrue(V2.source_failures(self.cp, self.index, changed))
         self.assertEqual(V2.source_failures(self.cp, self.index, changed, disclosure=True), [])
+        # The stored nine-field token carries no snapshot id: commit and each
+        # disclosure join the snapshot actually pinned now, and need one.
         changed = copy.deepcopy(self.obs); changed['redb_snapshot_id'] = 'snapshot:other'
-        self.assertTrue(V2.source_failures(self.cp, self.index, changed))
+        self.assertEqual(V2.source_failures(self.cp, self.index, changed), [])
         self.assertEqual(V2.source_failures(self.cp, self.index, changed, disclosure=True), [])
+        for missing in (None, ''):
+            unpinned = copy.deepcopy(self.obs); unpinned['redb_snapshot_id'] = missing
+            self.assertEqual(V2.source_failures(self.cp, self.index, unpinned), ['generic_index_schema'])
+            self.assertEqual(V2.source_failures(self.cp, self.index, unpinned, disclosure=True), ['generic_index_schema'])
         stale = copy.deepcopy(self.cp)
         stale['index_read_token']['frontier_sha256'] = 'f' * 64
         self.assertTrue(V2.source_failures(stale, self.index, changed, disclosure=True))
@@ -521,7 +527,6 @@ class ConditionalCreatedV2Tests(unittest.TestCase):
         frontier['predecessor_frontier_sha256'] = before['index_read_token']['frontier_sha256']
         after['index_read_token']['frontier_revision'] = frontier['publication_revision']
         after['index_read_token']['frontier_sha256'] = V2.sibling('pm_browser_workspace_reset').digest(frontier)
-        after['index_read_token']['redb_snapshot_id'] = 'snapshot:created-v2-refresh'
         after['updated_at_utc'] = '2026-09-12T20:00:00Z'
         obs = copy.deepcopy(self.obs)
         obs.update(prior_checkpoint=before, redb_snapshot_id='snapshot:created-v2-refresh')
@@ -574,6 +579,19 @@ class ConditionalCreatedV2Tests(unittest.TestCase):
         self.assertTrue(V2.cleanup_failures(held_before, held_after, publication, held))
         held['active_hold_refs'] = []
         self.assertEqual(V2.cleanup_failures(held_before, held_after, publication, held), [])
+
+    def test_stored_token_is_nine_field_durable_token(self):
+        generic = V2.load(V2.GENERIC)['$defs']['read_token']['required']
+        self.assertEqual(list(self.cp['index_read_token']), [f for f in generic if f != 'redb_snapshot_id'])
+        persisted = copy.deepcopy(self.cp)
+        persisted['index_read_token']['redb_snapshot_id'] = self.obs['redb_snapshot_id']
+        self.assertEqual(V2.checkpoint_failures(persisted), ['checkpoint_schema'])
+        self.assertEqual(V2.source_failures(persisted, self.index, self.obs), ['checkpoint_schema'])
+        _, first, _ = self.handoff(withdrawn=True)
+        second, _ = self.rotate(first, 'publication:created-v2-second', '2026-09-12T20:00:00Z')
+        self.assertEqual(V2.checkpoint_failures(second), [])
+        second['retired_generations'][1]['checkpoint_core']['index_read_token']['redb_snapshot_id'] = 'snapshot:old'
+        self.assertEqual(V2.checkpoint_failures(second), ['checkpoint_schema'])
 
     # S-01: SP-278 degraded survivors are complete coverage. A v2 value born or
     # refreshed over them commits and discloses as degraded history, never healthy.

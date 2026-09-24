@@ -18,6 +18,51 @@
       "type": "string",
       "format": "date-time"
     },
+    "durable_index_read_token": {
+      "description": "Nine-field durable projection of the SP-278 read_token: every field except redb_snapshot_id, each exactly its SP-278 definition. A stored checkpoint token never persists the snapshot id (Storage owner decision, coordinator ruling of 2026-09-24, DurableGenericToken precedent); the writer before commit and each reader before disclosure join the id of the redb read snapshot they actually pinned.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "checkpoint_key",
+        "checkpoint_ref",
+        "generation_id",
+        "generation_anchor_sha256",
+        "frontier_revision",
+        "frontier_sha256",
+        "index_dataset_name",
+        "source_selection"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/storage_instance_id"
+        },
+        "checkpoint_key": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/checkpoint_key"
+        },
+        "checkpoint_ref": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/checkpoint_ref"
+        },
+        "generation_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/generation_id"
+        },
+        "generation_anchor_sha256": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/generation_anchor_sha256"
+        },
+        "frontier_revision": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "frontier_sha256": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_sha256"
+        },
+        "index_dataset_name": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/index_dataset_name"
+        },
+        "source_selection": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/source_selection"
+        }
+      }
+    },
     "checkpoint": {
       "type": "object",
       "additionalProperties": false,
@@ -78,7 +123,7 @@
           "const": "browser.workspace.created"
         },
         "index_read_token": {
-          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+          "$ref": "#/$defs/durable_index_read_token"
         },
         "first_retained_sequence_id": {
           "type": [
@@ -307,7 +352,7 @@
           "const": "browser.workspace.created"
         },
         "index_read_token": {
-          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+          "$ref": "#/$defs/durable_index_read_token"
         },
         "first_retained_sequence_id": {
           "type": [

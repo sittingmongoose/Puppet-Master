@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11411-L11551
+Source lines: L11411-L11552
 
-Source SHA256: `75fd8f6965d0de0ae10d844dc278bbfc74bbd750fb46c01ca4b8ac5610c06105`
+Source SHA256: `4c6bca5889dbb2c29ac56b232f1026860d532f905ab3a0d369ca276164cc8758`
 
 ---
 
@@ -105,9 +105,10 @@ The conditional SP-266 successor names
 `browser.workspace_inventory.created.v2@2.0.0` as this same historical read
 consumer's future version. It may replace the v1 read route only after the exact
 v2 Storage value, binding, admission and migration are installed. The reader must
-reacquire the actual SP-278 root/generation/anchor/frontier/source token and
-current Project/access/deletion fence for each disclosure; a stored snapshot ID,
-matching generation or old creation row does not authorize a current answer.
+reacquire the actual SP-278 root/generation/anchor/frontier/source token, join the
+live redb snapshot id of its own read to the stored nine-field durable token, and
+recheck the current Project/access/deletion fence for each disclosure; a stored
+token, matching generation or old creation row does not authorize a current answer.
 The v1 checkpoint and reader remain versioned compatibility custody, not an
 alternate v2 currentness path. Neither route can act on a live workspace, and
 the successor does not change creation publication or admit another Browser event.
