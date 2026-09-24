@@ -158,5 +158,42 @@ class OnboardingActionCausalityTests(unittest.TestCase):
                     self.assertIn("onboarding_selected_path_result_mismatch", onboarding_action_join_failures(current, request, result))
 
 
+class OnboardingHomeEntryTests(unittest.TestCase):
+    def home_request(self):
+        request = copy.deepcopy(CASES["valid.request.start"])
+        request["source_surface"] = "home_menu"
+        return request
+
+    def test_home_menu_uses_existing_fresh_start_at_welcome(self):
+        request = self.home_request()
+        self.assertEqual(request["action_id"], "ui.onboarding.start")
+        self.assertEqual(request["local_context"]["intent"], "start")
+        self.assertEqual(request["stage"], "welcome")
+        self.assertTrue(valid("onboarding_action_request", request))
+        self.assertEqual(onboarding_semantic_failures("onboarding_action_request", request), [])
+        self.assertIsNone(request["owner_route_ref"])
+
+    def test_unknown_home_source_spellings_are_not_aliases(self):
+        for source in ("home", "home_dropdown", "Home_menu", "home_menu_unknown"):
+            request = self.home_request()
+            request["source_surface"] = source
+            with self.subTest(source=source):
+                self.assertFalse(valid("onboarding_action_request", request))
+
+    def test_home_rerun_cannot_be_normalized_to_resume(self):
+        request = self.home_request()
+        request["local_context"]["intent"] = "resume"
+        self.assertFalse(valid("onboarding_action_request", request))
+        request["source_surface"] = "resume"
+        self.assertTrue(valid("onboarding_action_request", request))
+
+    def test_home_fresh_start_cannot_skip_welcome(self):
+        for stage in ("simple_path", "first_project", "provider_setup", "ready"):
+            request = self.home_request()
+            request["stage"] = stage
+            with self.subTest(stage=stage):
+                self.assertFalse(valid("onboarding_action_request", request))
+
+
 if __name__ == "__main__":
     unittest.main()

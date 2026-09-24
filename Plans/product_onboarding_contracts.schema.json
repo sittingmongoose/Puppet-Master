@@ -1462,7 +1462,7 @@
         "owner_route_ref": {"$ref": "#/$defs/nullable_safe_ref"},
         "actor_ref": {"$ref": "#/$defs/safe_ref"},
         "idempotency_key": {"$ref": "#/$defs/safe_ref"},
-        "source_surface": {"enum": ["first_run", "settings_rerun", "resume", "owner_return"]},
+        "source_surface": {"enum": ["first_run", "settings_rerun", "resume", "owner_return", "home_menu"]},
         "return_focus_id": {"$ref": "#/$defs/safe_ref"}
       },
       "allOf": [
