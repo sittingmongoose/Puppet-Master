@@ -186,8 +186,12 @@ results" with the command and how long the subcheck ran before it was killed, wh
 never counted as a new failure, as growth of its subcheck's total, or as a blocker. The exit code is
 what it would be without it. The timed-out subcheck is left out of every comparison, so what the
 baseline recorded for it is not reported as gone either, and the summary ends by saying how many
-subchecks did not finish: rerun each on its own to see what it reports. In `--json` they are listed
-under `infrastructure` with `elapsed_seconds`, beside the `subcheck_timeout_seconds` the run used.
+subchecks did not finish: rerun each on its own to see what it reports. A timeout hides everything
+the subcheck would have reported, including failures on the branch's own files, and the exit code
+does not show it. Before pushing `main`, the lander reruns each timed-out subcheck on its own and
+judges what it reports by the rules above. The summary never calls such a run clean. In `--json` the
+timed-out subchecks are listed under `infrastructure` with `elapsed_seconds`, beside the
+`subcheck_timeout_seconds` the run used.
 
 The landing check hands the aggregates a bound of 600 seconds by default, where it used to hand them
 180. The measured case: `lint-contractrefs` takes about 199 seconds in the shared checkout on the

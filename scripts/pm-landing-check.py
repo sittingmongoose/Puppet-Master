@@ -1076,7 +1076,11 @@ def main() -> int:
         print(f"Gone since the baseline (nothing to do): {len(resolved)}")
         print()
         if not reported and not grown and not subcheck_growth:
-            print("Nothing to report. The three checks found only what the baseline already knew.")
+            if infrastructure:
+                print("Nothing reported by the subchecks that finished. This is not a clean result: "
+                      "the subchecks below the line did not finish.")
+            else:
+                print("Nothing to report. The three checks found only what the baseline already knew.")
         elif not blocking:
             advice = []
             if any(item["stale"] for item in on_branch):
@@ -1099,7 +1103,8 @@ def main() -> int:
         if infrastructure:
             print(f"{plural(len(infrastructure), 'subcheck')} did not finish within "
                   f"{args.subcheck_timeout_seconds} s, so what they would report is unknown and the exit "
-                  "code does not count them: rerun each on its own to see it.")
+                  "code does not count them: rerun each on its own and judge what it reports by the same "
+                  "rules before pushing main.")
 
     return exit_code(reported, grown, subcheck_growth, blocking)
 
