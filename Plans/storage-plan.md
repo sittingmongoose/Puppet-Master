@@ -15157,7 +15157,16 @@ canonical_text: 'storage-plan owns persistence, replay, and projection boundarie
   For exactly goal.verification_decided, GRS-072/CV-346 independently supersede current-write and Goal-state/progress/child/evidence
   projection implications above. SP-303 assigns this exact family only storage.goal_verification_decided_history_read.v1@1.0.0
   ephemeral historical inspection and none_required family checkpoint, with complete actual SP-278 generic source
-  proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.'
+  proof independently mandatory. No current command, Goal/body/receipt/revision, To-Do or Workflow effect follows.
+
+
+  For exactly goal_run.certified, GRS-084 selects the active v3 payload and coordinator identity EventRecord root,
+  GRS-085 governs its started/cancelled/certified prefix projection, SP-316 owns its compact original authority
+  families and v7 wrapper routes, and SP-317 owns its projection and checkpoint families. The goal_run_projection.v1
+  inventory above is not its reducer or checkpoint, and whole-v2 certified rows keep their historical interpretation.
+  The event family registry keeps this unit as the payload_owner_doc route for that family; this paragraph, added
+  2026-09-24, points the route at those owners and changes no payload, schema, registry row, admission or behavior.
+  goal_run.started and goal_run.cancelled v3 are likewise governed by GRS-079 with SP-311 and GRS-080 with SP-312.'
 gui_related: false
 gui_classification_reason: Goal Runtime persistence and projection ownership is backend storage behavior, not visual
   presentation.
@@ -15182,6 +15191,8 @@ acceptance_criteria:
 - Each of goal.progressed, goal.replanned, goal.stopped and goal.verification_decided has its own current-writer
   prohibition and zero-effect historical reader under SP-300 through SP-303; the complete actual SP-278 generic
   checkpoint remains independently required.
+- goal_run.certified v3 is governed by GRS-084 and GRS-085 with SP-316 and SP-317; this unit remains only the
+  payload_owner_doc route in the registry row for that family, and whole-v2 certified rows keep their historical interpretation.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures
