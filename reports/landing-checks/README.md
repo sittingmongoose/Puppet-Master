@@ -160,7 +160,11 @@ What this cannot see: a failure that sat above its subcheck's print cap when the
 recorded is not in `baseline.json`, so when it later falls inside the sample on a touched file it is
 judged as before and stops the landing. The run-gates copy of that self-test row was one: run-gates
 printed 50 of the baseline's 79 readiness rows and the self-test row was not among them, while the
-audit-governance copy, printed in full, was.
+audit-governance copy, printed in full, was. So the brief's motivating case, the storage registry
+repairs landing's self-test row, would still exit 2 in reality, and the rule's seven-to-three test
+passes only on a synthetic, uncapped copy. A follow-up outside this rule could judge the run-gates
+copy of a validator that both aggregates run by the audit-governance copy's complete counts whenever
+the latter is not truncated.
 
 It cannot tell one failure from another of the same kind on the same path. A branch that fixes one
 missing reference in a document it edits and adds another keeps the bucket's count, so the new one
