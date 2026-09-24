@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.packet_canon_bounded_repair_report.v1",
+  "base_commit": "623e4ec8a604cfa252900b054cd178f3ceafeb28",
+  "scope": ["SDRAW-C007", "SDRAW-C010"],
+  "owner": "Plans/Settings_System.md",
+  "plan_units": ["SSYS-006", "SSYS-007"],
+  "owner_sha256_before": "ba6abdc766093aea83094fef229c086cc077391d2ff08c86e39c7868db3c82e4",
+  "owner_sha256_after": "42a4d8049d4172391c1f8bdb4c3248042b54e8a153f5915dc2e575d74eb95dff",
+  "source_evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/sources/legacy-custody/raw/PKT-03-pm-settings-bakeoff-final-cumulative-2026-08-08/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/SERVER_BACKBONE_SETTINGS_RETURN.md",
+      "sha256": "ebc2d28314ede35a94b7aa8830a85ada57300b31701ab6f96d12097859dec018",
+      "lines": [15, 35],
+      "retained": "Initial copy selection defaults to all ten broad categories; explicit deselection remains valid. Preview, confirmation, exclusion and apply authority remain unchanged."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/sources/legacy-custody/raw/PKT-03-pm-settings-bakeoff-final-cumulative-2026-08-08/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/01_CORE_ARCHITECTURE.md",
+      "sha256": "a4fe99df171e8fc042f32adf12fa4eb92f5e5fdaef9c37f48d9b64b814abcc3d",
+      "lines": [33, 50],
+      "retained": "Needs attention, Continue setup and Recommended remain distinct semantic notices with stable status, one actionable headline, one short reason, at most one primary and one quiet action, without repeated four-layer text."
+    }
+  ],
+  "current_authority": [
+    "SSYS-001 separates K3 geometry from retained packet behavior.",
+    "SSYS-006 and September manager-kit/status-token corrections retain existing geometry, no header action strip and blocking/consent disclosures.",
+    "SSYS-007 retains exact selectors, detached copy, credential exclusion, immutable preview, draft/rebind and rollback."
+  ],
+  "unchanged_contracts": {
+    "Plans/settings_system_contracts.schema.json": "01b88b13aed49e46312bd4df076b21108008a5dfedcdfe020b1541705f855f1a",
+    "Plans/settings_system_contract_fixtures.json": "10e1ffd1062a9a3aebd5c418acc7289fb5bb3d0261ef08edc65a461a47685632",
+    "subset_policy": "selector_ids continues to admit 1 through 10 unique category IDs; existing one-category positive fixture remains unchanged."
+  },
+  "verification": {
+    "new_test_baseline": {"tests": 4, "failures": 3, "errors": 0, "passing_subset_guard": 1},
+    "test_pm_settings_copy_notice_prose": {"tests": 4, "status": "pass"},
+    "test_pm_settings_draft_transfer": {"tests": 11, "status": "pass"},
+    "test_pm_spellcheck_owner_prose": {"tests": 4, "status": "pass"},
+    "test_pm_project_wiring_contracts": {"tests": 5, "status": "pass"},
+    "shard_generate_and_check": {"docs": 99, "shards": 2721, "status": "pass", "changed_shards": 0, "note": "Settings_System is not a source in the current sharding configuration; no configuration change made."},
+    "plan_index_generate_and_validate": {"plan_units": 6719, "acceptance_units": 26220, "status": "pass", "readiness": "blocked_runtime_certification_incomplete"},
+    "derived_drift_review": "All37 changed PlanUnit rows belong to Settings_System. Only SSYS-006/007 change semantic fields; other35 change source hash/location only. No added/removed PlanUnit. Two acceptance rows added; all changed acceptance rows and the sole changed doc card belong to Settings. No unrelated owner drift.",
+    "git_diff_check": "pass",
+    "aggregate_landing_checks": "not_run_in_this_branch_step; parent integration and landing task owns full aggregate delta checks"
+  },
+  "generation_input": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/event-authority-input-snapshot",
+    "receipt_sha256": "af0bce7c65932afb2165cf64c0bd06c69f65e9a4b2007dd6ccc0125b56368f0e",
+    "status": "unchanged ignored symlink; no Event Authority binding refresh"
+  },
+  "claim_boundary": [
+    "Static owner-prose retention and regression checks only; no GUI/native/runtime implementation or certification.",
+    "No schema, setting, command, storage family, event, handler, or notification owner added.",
+    "No governance binding, Spec Lock, evidence bundle, landing baseline, or migration snapshot refreshed; no main landing.",
+    "Skill constrained preservation of exact tokens and PlanUnit metadata and required derived index generation without readiness admission.",
+    "Other packet findings, including provider setup-manifest materialization, import Merge/Replace semantics, DRY writer mapping and Help contracts, remain separate."
+  ]
+}

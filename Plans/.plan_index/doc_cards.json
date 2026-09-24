@@ -16497,7 +16497,7 @@
         "future native Slint Plugins manager projection",
         "future typed Settings owner projections"
       ],
-      "line_count": 2281,
+      "line_count": 2295,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 37,
       "plan_unit_ids": [
@@ -16583,7 +16583,7 @@
         "terminal_research_consumer_or_acceptance_drift",
         "theme_or_layout_cross_project_leak"
       ],
-      "sha256": "ba6abdc766093aea83094fef229c086cc077391d2ff08c86e39c7868db3c82e4",
+      "sha256": "42a4d8049d4172391c1f8bdb4c3248042b54e8a153f5915dc2e575d74eb95dff",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 37
@@ -16673,6 +16673,7 @@
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "tests/test_pm_installation_update_preferences.py",
         "tests/test_pm_onboarding_phases.py",
+        "tests/test_pm_settings_copy_notice_prose.py",
         "tests/test_pm_settings_draft_transfer.py"
       ]
     },
@@ -19992,7 +19993,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T04:47:11Z",
+  "generated_at_utc": "2026-09-25T04:47:47Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
