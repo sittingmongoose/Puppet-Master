@@ -68,7 +68,7 @@
 @keyframes o55-out-friendly { 0% { opacity: 1; transform: none; } 55% { opacity: 0; } 100% { opacity: 0; transform: translateY(14px) scale(0.98); } }
 #pm-o55-onboarding[data-family="glass"] .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="glass"] .o55-layer.o55-out-back { animation-name: o55-out-glass; }
 @keyframes o55-out-glass { 0% { opacity: 1; transform: none; } 55% { opacity: 0; } 100% { opacity: 0; transform: scale(0.975); } }
-#pm-o55-onboarding[data-family="retro"] .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="retro"] .o55-layer.o55-out-back { animation: o55-out-retro 240ms steps(4, end) both; }
+#pm-o55-onboarding[data-family="retro"] .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="retro"] .o55-layer.o55-out-back { animation: o55-out-retro 240ms steps(4, jump-start) both; }
 @keyframes o55-out-retro { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(100% 0 0 0); } }
 
 /* ---- window open / close (bounds never change; only opacity, transform and clip) -------------------------------- */

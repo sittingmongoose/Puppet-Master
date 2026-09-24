@@ -90,7 +90,7 @@
     basic: {
       tap: (c, o, t, v) => { noise(c, o, t, { dur: 0.012, f: 3200 * v, q: 3, gain: 0.07 }); tone(c, o, t, { f: 1320 * v, dur: 0.045, gain: 0.05 }); },
       select: (c, o, t, v) => { tone(c, o, t, { f: 880 * v, dur: 0.11, gain: 0.07 }); tone(c, o, t + 0.045, { f: 1320 * v, dur: 0.13, gain: 0.06 }); },
-      next: (c, o, t, v) => { noise(c, o, t, { dur: 0.07, filter: 'highpass', f: 4200, gain: 0.025 }); tone(c, o, t + 0.01, { f: 659 * v, dur: 0.12, gain: 0.06 }); tone(c, o, t + 0.06, { f: 988 * v, dur: 0.16, gain: 0.055 }); },
+      next: (c, o, t, v) => { noise(c, o, t, { dur: 0.06, f: 4600, q: 1.6, gain: 0.03 }); tone(c, o, t + 0.01, { f: 659 * v, dur: 0.12, gain: 0.06 }); tone(c, o, t + 0.06, { f: 988 * v, dur: 0.16, gain: 0.055 }); },
       back: (c, o, t, v) => { tone(c, o, t, { f: 988 * v, dur: 0.1, gain: 0.05 }); tone(c, o, t + 0.05, { f: 659 * v, dur: 0.14, gain: 0.05 }); },
       toggleOn: (c, o, t, v) => tone(c, o, t, { f: 1100 * v, dur: 0.06, gain: 0.06 }),
       toggleOff: (c, o, t, v) => tone(c, o, t, { f: 740 * v, dur: 0.06, gain: 0.05 }),
@@ -101,7 +101,7 @@
       close: (c, o, t) => tone(c, o, t, { f: 880, f2: 440, glide: 0.14, dur: 0.18, gain: 0.035 }),
       pickup: (c, o, t, v) => tone(c, o, t, { f: 520 * v, f2: 780 * v, glide: 0.08, dur: 0.1, gain: 0.05 }),
       drop: (c, o, t, v) => { tone(c, o, t, { f: 780 * v, f2: 520 * v, glide: 0.07, dur: 0.1, gain: 0.05 }); noise(c, o, t + 0.05, { dur: 0.015, f: 2500, gain: 0.05 }); },
-      spot: (c, o, t, v) => noise(c, o, t, { dur: 0.12, filter: 'highpass', f: 3000, f2: 6000, gain: 0.018 }),
+      spot: (c, o, t, v) => noise(c, o, t, { dur: 0.12, f: 3200, f2: 5600, q: 1.8, gain: 0.022 }),
       step: (c, o, t) => { tone(c, o, t, { f: note(88), dur: 0.12, gain: 0.05 }); tone(c, o, t + 0.07, { f: note(95), dur: 0.2, gain: 0.045 }); },
       finish: (c, o, t) => { [72, 79, 84, 88].forEach((m, i) => tone(c, o, t + i * 0.09, { f: note(m), dur: 0.8, gain: 0.05, a: 0.01 })); }
     },
@@ -207,7 +207,7 @@
     const on = !S.muted;
     const label = on ? O55.t('chrome.soundOn') : O55.t('chrome.soundOff');
     const wave = on ? '<path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.4 5.6a9 9 0 0 1 0 12.8"/>' : '<path d="M16 9l5 6"/><path d="M21 9l-5 6"/>';
-    return `<button type="button" class="o55-sound ${cls || ''}" data-o55-action="sound" data-pm-hover-exempt="true" aria-pressed="${on}" aria-label="${O55.util.esc(label)}" title="${O55.util.esc(label)}">`
+    return `<button type="button" class="o55-sound ${cls || ''}" data-o55-do="sound" data-pm-hover-exempt="true" aria-pressed="${on}" aria-label="${O55.util.esc(label)}" title="${O55.util.esc(label)}">`
       + `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/>${wave}</svg></button>`;
   };
 

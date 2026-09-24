@@ -115,11 +115,11 @@
       current.setAttribute('aria-hidden', 'true');
       current.setAttribute('inert', '');
       const done = () => current.remove();
-      const t = O55.motion.real.setTimeout(done, 900);
-      current.addEventListener('animationend', (e) => { if (e.target === current) { O55.motion.real.clearTimeout(t); done(); } });
+      const t = O55.motion.after(900, done);
+      current.addEventListener('animationend', (e) => { if (e.target === current) { t.cancel(); done(); } });
     }
     host.appendChild(wrap);
-    O55.motion.real.setTimeout(() => wrap.classList.remove('o55-enter'), 40);
+    O55.motion.after(40, () => wrap.classList.remove('o55-enter'));
     return wrap;
   };
 

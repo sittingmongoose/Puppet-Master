@@ -1,6 +1,9 @@
 /* O55.draft — the canonical setup_plan (pm.product_onboarding.setup_plan.v2, all 63 fields). It is a planned-only,
    secret-free record of choices: nothing in it creates a Project, folder, history, online copy, sync or backup binding.
-   set() applies the schema's 26 conditionals so the draft always validates (drivers check it with jsonschema). */
+   set() applies the schema's 26 conditionals. Values only a person can supply (a folder, a backup, a network location,
+   an Azure DevOps project, an account, the chosen online Project) are never invented: missing() names each one in plain
+   words, and Review cannot be confirmed until the list is empty, so every reviewed draft validates (drivers check
+   captured drafts with jsonschema). */
 (function () {
   'use strict';
   const O55 = window.O55;
@@ -62,16 +65,12 @@
       if (!d.forge_account_action) d.forge_account_action = 'sign_in_during_setup';
       if (!d.repository_name) d.repository_name = U.slug(d.project_name) || 'new-project';
       const vis = allowedVisibility(d);
-      if (d.forge === 'azure_devops') { d.repository_visibility = null; if (!d.repository_project) d.repository_project = 'Website'; }
+      if (d.forge === 'azure_devops') d.repository_visibility = null;
       else if (d.forge === 'bitbucket_data_center') { if (d.repository_visibility && !vis.includes(d.repository_visibility)) d.repository_visibility = null; }
       else if (!vis.includes(d.repository_visibility)) d.repository_visibility = vis[0] || 'private';
       if ((d.forge === 'forgejo' || d.forge === 'gitea') && !d.forge_instance_profile) d.forge_instance_profile = instanceProfile(d);
       if (d.forge !== 'forgejo' && d.forge !== 'gitea') d.forge_instance_profile = null;
     }
-    if (d.forge_account_action === 'already_connected' && !d.forge_account_ref) d.forge_account_ref = 'account:connected';
-    if (d.online_mode === 'existing' && d.review_confirmed && !d.repository_ref) d.repository_ref = 'repository:selected';
-    if (d.project_mode === 'existing_local' && !d.project_source_ref) d.project_source_ref = '';
-    if (d.storage_mode === 'network_location' && !d.storage_location) d.storage_location = '';
     /* remote access (#16-#23) */
     const clearRemote = () => Object.assign(d, { tailscale_control: null, tailscale_account_action: null, headscale_url: '', proxy_kind: null, proxy_hosting: null, proxy_hostname: '', proxy_tls: null });
     if (d.remote_mode === 'none') { clearRemote(); d.include_vpn_networks = false; d.remote_endpoint = ''; }
@@ -80,15 +79,15 @@
       Object.assign(d, { server_connection_mode: 'discover', include_vpn_networks: false, proxy_kind: null, proxy_hosting: null, proxy_hostname: '', proxy_tls: null });
       if (!d.tailscale_control) d.tailscale_control = 'hosted';
       d.tailscale_account_action = d.tailscale_control === 'hosted' ? 'check_existing_then_sign_in_once' : 'headscale_enrollment';
-      if (d.tailscale_control === 'hosted') d.headscale_url = ''; else if (!/^https:\/\//.test(d.headscale_url)) d.headscale_url = 'https://headscale.example.org';
+      if (d.tailscale_control === 'hosted') d.headscale_url = ''; else if (d.headscale_url && !/^https:\/\//.test(d.headscale_url)) d.headscale_url = 'https://' + d.headscale_url.replace(/^[a-z]+:\/\//i, '');
     } else if (d.remote_mode === 'reverse_proxy') {
       Object.assign(d, { include_vpn_networks: false, tailscale_control: null, tailscale_account_action: null, headscale_url: '', remote_endpoint: '' });
-      if (!/^https:\/\//.test(d.proxy_hostname)) d.proxy_hostname = 'https://pm.example.com';
+      if (d.proxy_hostname && !/^https:\/\//.test(d.proxy_hostname)) d.proxy_hostname = 'https://' + d.proxy_hostname.replace(/^[a-z]+:\/\//i, '');
       if (d.journey === 'connect_existing') Object.assign(d, { server_connection_mode: 'manual', proxy_kind: null, proxy_hosting: null, proxy_tls: null });
       else { if (!d.proxy_kind) d.proxy_kind = 'caddy'; if (!d.proxy_hosting) d.proxy_hosting = 'generate_for_server'; if (!d.proxy_tls) d.proxy_tls = 'lets_encrypt'; }
     } else if (d.remote_mode === 'remote_link') {
       clearRemote(); Object.assign(d, { server_connection_mode: 'manual', include_vpn_networks: false });
-      if (!/^[A-Za-z][A-Za-z0-9._:/#-]*$/.test(d.remote_endpoint)) d.remote_endpoint = 'remote-link:pending';
+      if (d.remote_endpoint && !/^[A-Za-z][A-Za-z0-9._:/#-]*$/.test(d.remote_endpoint)) d.remote_endpoint = '';
     }
     return d;
   }
@@ -99,14 +98,18 @@
     return f.visibility[d.forge_provider_variant] || ['private', 'public'];
   }
 
+  /* Hosted Forgejo/Gitea services ship a registered sign-in app (OAuth with PKCE); a self-managed server usually does
+     not, so its default is an access token the person creates on their server (kept by the credential owner). */
   function instanceProfile(d) {
     const host = (d.forge_instance_url || 'https://git.example.org').replace(/^https:\/\//, '').replace(/\/.*$/, '');
+    const cloud = /_cloud$/.test(d.forge_provider_variant || '');
+    const auth = d.forge_auth_method === 'token' ? 'pat_ref' : d.forge_auth_method === 'oauth' || cloud ? 'oauth_pkce' : 'pat_ref';
     return {
       provider: d.forge, provider_variant: d.forge_provider_variant, instance_id: 'forge-instance:' + U.slug(host), web_base_url: 'https://' + host,
       api_root: 'https://' + host + '/api', api_base_path: '/api/v1', ssh_url: 'ssh://git@' + host + ':22', ssh_port: 22, private_ca_ref: null,
       known_host_proof_ref: 'known-host:' + U.slug(host), detected_product: d.forge, product_version_ref: null, api_schema_ref: null, api_state_ref: null,
-      git_transport_state_ref: null, actions_state_ref: null, actions_capability_ref: null, auth_method: d.forge_auth_method === 'token' ? 'pat_ref' : 'oauth_pkce',
-      oauth_registration_ref: null, credential_ref: null, automation_binding_ref: null, currentness_ref: null, probe_performed: false,
+      git_transport_state_ref: null, actions_state_ref: null, actions_capability_ref: null, auth_method: auth,
+      oauth_registration_ref: auth === 'oauth_pkce' ? 'oauth-registration:' + U.slug(host) : null, credential_ref: null, automation_binding_ref: null, currentness_ref: null, probe_performed: false,
       redirect_credential_policy: 'strip_authorization_on_origin_change', restricted_network_target_policy: 'deny_localhost_and_metadata_unless_explicitly_approved'
     };
   }
@@ -123,13 +126,25 @@
   /* Blocking reasons in plain words (Review disables the commit button with the first one as its reason). */
   function missing(d) {
     const r = [];
-    if (d.journey === 'connect_existing') { if (!d.server_ref) r.push({ field: 'server_ref', key: 'missing.server' }); return r; }
+    if (d.journey === 'connect_existing') {
+      if (!d.server_ref) r.push({ field: 'server_ref', key: 'missing.server' });
+      if (d.remote_mode === 'remote_link' && !d.remote_endpoint) r.push({ field: 'remote_endpoint', key: 'missing.remoteLink' });
+      if (d.remote_mode === 'reverse_proxy' && !d.proxy_hostname) r.push({ field: 'proxy_hostname', key: 'missing.proxyAddress' });
+      if (d.remote_mode === 'tailscale' && d.tailscale_control === 'headscale' && !d.headscale_url) r.push({ field: 'headscale_url', key: 'missing.headscale' });
+      return r;
+    }
+    if (d.server_mode !== 'this_device' && !d.server_ref) r.push({ field: 'server_ref', key: 'missing.server' });
     if (d.project_mode === 'new' && !String(d.project_name || '').trim()) r.push({ field: 'project_name', key: 'missing.name' });
     if (d.project_mode === 'existing_local' && !d.project_source_ref) r.push({ field: 'project_source_ref', key: 'missing.folder' });
     if (d.project_mode === 'existing_online' && !d.repository_ref) r.push({ field: 'repository_ref', key: 'missing.repository' });
     if (d.project_mode === 'restore' && !d.backup_source_ref) r.push({ field: 'backup_source_ref', key: 'missing.backup' });
     if (d.storage_mode === 'network_location' && !d.storage_location) r.push({ field: 'storage_location', key: 'missing.storage' });
     if (d.online_mode !== 'none' && !d.forge_account_ref) r.push({ field: 'forge_account_ref', key: 'missing.signin' });
+    if (d.online_mode !== 'none' && d.forge === 'azure_devops' && !d.repository_project) r.push({ field: 'repository_project', key: 'missing.azureProject' });
+    if (d.online_mode === 'existing' && !d.repository_ref) r.push({ field: 'repository_ref', key: 'missing.repository' });
+    if (d.remote_mode === 'remote_link' && !d.remote_endpoint) r.push({ field: 'remote_endpoint', key: 'missing.remoteLink' });
+    if (d.remote_mode === 'reverse_proxy' && !d.proxy_hostname) r.push({ field: 'proxy_hostname', key: 'missing.proxyAddress' });
+    if (d.remote_mode === 'tailscale' && d.tailscale_control === 'headscale' && !d.headscale_url) r.push({ field: 'headscale_url', key: 'missing.headscale' });
     return r;
   }
 

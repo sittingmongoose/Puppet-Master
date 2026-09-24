@@ -295,3 +295,9 @@ html[data-motion="reduced"] .o55-railstring { animation: none !important; }
 #pm-o55-onboarding .o55-btn.o55-ghost { border-color: transparent !important; background: transparent !important; box-shadow: none !important; }
 #pm-o55-onboarding .o55-btn.o55-ghost:hover { background: color-mix(in srgb, var(--text-primary) 7%, transparent) !important; }
 #pm-o55-onboarding[data-family="retro"] .o55-lead { font-size: 14.5px; }
+
+/* Retro never tweens state: selection, hover and toggles are hard cuts */
+#pm-o55-onboarding[data-family="retro"] .o55-card, #pm-o55-onboarding[data-family="retro"] .o55-tile, #pm-o55-onboarding[data-family="retro"] .o55-chip,
+#pm-o55-onboarding[data-family="retro"] .o55-btn, #pm-o55-onboarding[data-family="retro"] .o55-seg button, #pm-o55-onboarding[data-family="retro"] .o55-switch,
+#pm-o55-onboarding[data-family="retro"] .o55-switch span, #pm-o55-onboarding[data-family="retro"] .o55-railnode, #pm-o55-onboarding[data-family="retro"] .o55-railitem,
+#pm-o55-onboarding[data-family="retro"] .o55-check, #pm-o55-onboarding[data-family="retro"] .o55-phmark { transition: none !important; }

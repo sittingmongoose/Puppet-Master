@@ -82,17 +82,19 @@
       catch (_) { document.documentElement.setAttribute('data-theme', family + '-' + mode); }
     };
     const d = S.draft(); O55.draft.set(d, { theme_family: family, theme_mode: mode }); S.save();
-    if (!document.startViewTransition || O55.motion.reduced()) { apply(); return; }
+    const now = O55.theme(); if (now.family === family && now.mode === mode) return;
+    if (!document.startViewTransition || O55.motion.reduced() || O55.motion.lowResource) { apply(); return; }
+    if (S.vt) { try { S.vt.skipTransition(); } catch (_) {} }
     const r = originEl ? originEl.getBoundingClientRect() : { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 };
     const x = r.left + r.width / 2, y = r.top + r.height / 2, end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
     document.documentElement.setAttribute('data-o55-vt', family);
-    const vt = document.startViewTransition(apply);
+    const vt = S.vt = document.startViewTransition(apply);
     vt.ready.then(() => {
       const retro = family === 'retro';
       document.documentElement.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
         { duration: retro ? 520 : 760, easing: retro ? 'steps(8, end)' : O55.motion.familyCss[family] === 'steps(6, end)' ? 'ease' : 'cubic-bezier(0.2,0,0,1)', pseudoElement: '::view-transition-new(root)' });
     }).catch(() => {});
-    vt.finished.finally(() => document.documentElement.removeAttribute('data-o55-vt'));
+    vt.finished.finally(() => { if (S.vt === vt) { S.vt = null; document.documentElement.removeAttribute('data-o55-vt'); } });
   }
 
   /* ---------------------------------------------------------------- rail */
@@ -197,7 +199,7 @@
       old.setAttribute('inert', ''); old.setAttribute('aria-hidden', 'true');
       old.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
       const kill = () => old.remove();
-      O55.motion.real.setTimeout(kill, 700);
+      O55.motion.after(900, kill);
       old.addEventListener('animationend', (e) => { if (e.target === old) kill(); });
     }
     const layer = document.createElement('div');
@@ -206,11 +208,12 @@
     layer.innerHTML = paneHtml(def);
     pane.appendChild(layer);
     layer.querySelectorAll('.o55-card, .o55-row, .o55-tile').forEach((n, i) => n.style.setProperty('--ci', i));
-    O55.motion.real.setTimeout(() => layer.classList.remove('o55-entering', 'o55-in-fwd', 'o55-in-back'), 1100);
+    /* the entrance classes leave once every entrance animation has finished (never cut short, even in slow motion) */
+    O55.motion.settled(layer, { fallback: 2600 }).then(() => layer.classList.remove('o55-entering', 'o55-in-fwd', 'o55-in-back', 'o55-in-open'));
     renderScene(); renderRail(); renderSound();
     const h = layer.querySelector('#o55-h');
     /* the scene heading takes programmatic focus when the screen settles, unless the person is already inside it */
-    O55.motion.real.setTimeout(() => { const a = document.activeElement; if (h && S.open && !(a && a !== layer && layer.contains(a))) h.focus({ preventScroll: true }); }, 60);
+    O55.motion.after(60, () => { const a = document.activeElement; if (h && S.open && !(a && a !== layer && layer.contains(a))) h.focus({ preventScroll: true }); });
     U.announce(O55.stages.progress(S, def).announce + '. ' + (val(def.title) || ''), S.root.querySelector('.o55-win'));
     def.mounted && def.mounted(S, layer, true);
   }
@@ -265,7 +268,8 @@
     const def = SCREENS.defs[S.sess.screen];
     const fn = def && def.do && def.do[action];
     if (!fn) { const g = O55.actions[action]; if (g) return g(S, arg, t, e); console.warn('O55: no action', action); return; }
-    if (!t.classList.contains('o55-primary')) O55.sound.play(t.classList.contains('o55-card') || t.classList.contains('o55-tile') ? 'select' : 'tap');
+    /* controls whose handler plays its own sound (e.g. a look tile plays the new family's kit) opt out */
+    if (!t.classList.contains('o55-primary') && t.getAttribute('data-o55-sound') !== 'self') O55.sound.play(t.classList.contains('o55-card') || t.classList.contains('o55-tile') ? 'select' : 'tap');
     fn(S, arg, t, e);
   }
   function showReason(t, reason) {
@@ -346,7 +350,7 @@
     setInert(true); syncTheme(false); layoutClass();
     r.setAttribute('data-o55-ambient', 'on');
     r.classList.remove('o55-closing'); r.classList.add('o55-opening');
-    O55.motion.real.setTimeout(() => r.classList.remove('o55-opening'), 900);
+    O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 2800 }).then(() => { if (S.open) r.classList.remove('o55-opening'); });
     const pane = r.querySelector('.o55-pane'); pane.innerHTML = '';
     const stage = r.querySelector('.o55-stage'); stage.innerHTML = ''; stage.removeAttribute('data-scene-key');
     transition('open');
@@ -362,7 +366,7 @@
     S.save();
     S.open = false;
     const r = S.root;
-    r.classList.add('o55-closing'); r.setAttribute('data-o55-ambient', 'off');
+    r.classList.remove('o55-opening'); r.classList.add('o55-closing'); r.setAttribute('data-o55-ambient', 'off');
     O55.sound.play('close');
     const finish = () => {
       r.hidden = true; r.setAttribute('data-open', 'false'); r.classList.remove('o55-closing');
@@ -372,7 +376,7 @@
       if (reason !== 'done' && returnFocus && document.contains(returnFocus)) { try { returnFocus.focus(); } catch (_) {} }
       O55.boot && O55.boot.chip && O55.boot.chip();
     };
-    if (O55.motion.reduced()) finish(); else O55.motion.real.setTimeout(finish, 380);
+    if (O55.motion.reduced()) finish(); else O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 700 }).then(finish);
     window.dispatchEvent(new CustomEvent('o55:onboarding', { detail: { type: reason === 'skip' ? 'skipped' : reason === 'done' ? 'finished' : 'closed', screen: S.sess.screen } }));
   }
 

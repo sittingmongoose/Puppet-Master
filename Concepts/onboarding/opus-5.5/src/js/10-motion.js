@@ -23,6 +23,30 @@
     });
   };
 
+  /* after(ms, fn): a timer on the motion clock (slow-motion filming stretches it; timeScale 0 holds it). */
+  M.after = function after(ms, fn) {
+    let id = null, cancelled = false;
+    const arm = () => { if (cancelled) return; if (M.timeScale === 0) { id = real.setTimeout(arm, 50); return; } id = real.setTimeout(() => { if (!cancelled) fn(); }, (ms || 0) / M.timeScale); };
+    arm();
+    return { cancel() { cancelled = true; if (id != null) real.clearTimeout(id); } };
+  };
+  /* settled(el, {subtree, fallback}) -> Promise: resolves when the element's running animations finish (or are
+     cancelled), with a clock-scaled fallback so a missed event never strands a class. */
+  M.settled = function settled(el, o) {
+    o = o || {};
+    return new Promise((res) => {
+      let done = false; const finish = () => { if (!done) { done = true; t.cancel(); res(); } };
+      const t = M.after(o.fallback || 2400, finish);
+      real.raf(() => real.raf(() => {
+        /* ambient loops and spinners never finish: only finite animations count */
+        const anims = (el && el.getAnimations ? el.getAnimations({ subtree: o.subtree !== false }) : [])
+          .filter((a) => { try { return Number.isFinite(a.effect.getComputedTiming().endTime); } catch (_) { return false; } });
+        if (!anims.length) return finish();
+        Promise.all(anims.map((a) => a.finished.catch(() => null))).then(finish);
+      }));
+    });
+  };
+
   /* Durations (ms) — canon budgets; families differ in easing, not in waiting time. */
   M.T = { micro: 160, step: 500, stepOut: 350, stagger: 70, success: 700, hero: 1350, charm: 620, travel: 900 };
 

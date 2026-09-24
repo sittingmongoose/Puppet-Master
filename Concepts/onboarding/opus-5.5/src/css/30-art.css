@@ -88,7 +88,7 @@
 .o55-scene-host[data-family="basic"] .o55-scene-wrap.o55-out { animation-name: o55-scene-out-x; }
 .o55-scene-host[data-family="friendly"] .o55-scene-wrap:not(.o55-out) { animation: o55-scene-in-up 640ms cubic-bezier(0.34, 1.56, 0.64, 1) both; }
 .o55-scene-host[data-family="glass"] .o55-scene-wrap:not(.o55-out) { animation: o55-scene-focus 760ms cubic-bezier(0.05, 0.7, 0.1, 1) both; }
-.o55-scene-host[data-family="retro"] .o55-scene-wrap:not(.o55-out) { animation: o55-scene-wipe 480ms steps(8, end) both; }
+.o55-scene-host[data-family="retro"] .o55-scene-wrap:not(.o55-out) { animation: o55-scene-wipe 480ms steps(8, jump-start) both; }
 .o55-scene-host[data-family="retro"] .o55-scene-wrap.o55-out { animation: o55-cut 1ms steps(1) 480ms both; }
 @keyframes o55-scene-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes o55-scene-out { from { opacity: 1; } to { opacity: 0; } }

@@ -61,8 +61,19 @@ def main():
     ap.add_argument('--cols', type=int, default=3)
     ap.add_argument('--width', type=int, default=640)
     ap.add_argument('--glob')
+    ap.add_argument('--film', help='a film directory (frames.json + f###.jpg); labels carry frame and motion time')
+    ap.add_argument('--every', type=int, default=1, help='with --film: keep every Nth frame')
+    ap.add_argument('--start', type=int, default=0)
+    ap.add_argument('--count', type=int, default=0)
     a = ap.parse_args()
     items = []
+    if a.film:
+        meta = json.load(open(os.path.join(a.film, 'frames.json')))
+        frames = meta['frames'][a.start::a.every]
+        if a.count:
+            frames = frames[:a.count]
+        for f in frames:
+            items.append((os.path.join(a.film, 'f%03d.jpg' % f['i']), 'f%03d  %6.1f ms' % (f['i'], f['motionMs'])))
     paths = sorted(globmod.glob(a.glob)) if a.glob else []
     for spec in list(a.images) + paths:
         if '=' in spec and not os.path.exists(spec):

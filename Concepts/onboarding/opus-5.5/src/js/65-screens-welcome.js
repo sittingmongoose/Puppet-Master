@@ -26,6 +26,10 @@
   });
 
   const FAMS = ['basic', 'friendly', 'glass', 'retro'];
+  function ack(el, sel) {
+    const group = el.parentElement;
+    group.querySelectorAll(':scope > ' + sel).forEach((n) => { const on = n === el; n.classList.toggle('o55-on', on); n.setAttribute('aria-checked', String(on)); });
+  }
   def('look', {
     chapter: 'welcome', stage: 'welcome', charmSlot: 'look',
     scene: () => ({ id: 'hero', beat: 'look' }),
@@ -36,7 +40,7 @@
       const th = O55.theme();
       const tiles = FAMS.map((f, i) => {
         const on = th.family === f;
-        return `<button type="button" class="o55-tile${on ? ' o55-on' : ''}" role="radio" aria-checked="${on}" data-o55-do="pickFamily" data-arg="${f}" data-theme="${f}-${th.mode}" data-key="tile-${f}" data-pm-hover-exempt="true" style="--ci:${i}">`
+        return `<button type="button" class="o55-tile${on ? ' o55-on' : ''}" role="radio" aria-checked="${on}" data-o55-do="pickFamily" data-o55-sound="self" data-arg="${f}" data-theme="${f}-${th.mode}" data-key="tile-${f}" data-pm-hover-exempt="true" style="--ci:${i}">`
           + `<span class="o55-tileart o55-scene-host" data-family="${f}" data-tile="${f}" aria-hidden="true" data-morph-skip></span>`
           + `<span class="o55-tilename">${U.esc(T('look.families.' + f + '.name'))}</span><span class="o55-tilesub">${U.esc(T('look.families.' + f + '.sub'))}</span>`
           + `<span class="o55-check" aria-hidden="true"></span></button>`;
@@ -59,13 +63,15 @@
     },
     foot: () => ({ primary: { label: T('chrome.continue'), do: 'next' } }),
     do: {
+      /* The click is acknowledged in the same frame (selection + sound) before the whole app re-themes, which can
+         take a few hundred milliseconds on a large page; the reveal then plays from the tile. */
       pickFamily(S, f, el) {
-        const mode = O55.theme().mode;
-        O55.ui.applyLook(f, mode, el);
+        ack(el, '.o55-tile');
         O55.sound.play('select', { family: f });
         O55.ui.charm(el, T('look.families.' + f + '.name'), 'spark');
+        O55.ui.applyLook(f, O55.theme().mode, el);
       },
-      pickMode(S, m, el) { O55.ui.applyLook(O55.theme().family, m, el); },
+      pickMode(S, m, el) { ack(el, 'button'); O55.ui.applyLook(O55.theme().family, m, el); },
       next(S) { O55.ui.go('where'); }
     }
   });
