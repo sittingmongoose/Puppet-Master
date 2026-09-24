@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11411-L11560
+Source lines: L11411-L11600
 
-Source SHA256: `b64442645033baa1dde100a6480c9b6c337b89bfe12453ac6faf4ad52cc0c2e9`
+Source SHA256: `0d2de54e70174eb826198d840f75fe67d0318daae1a37e7ad1b3fa074bb2b5d2`
 
 ---
 
@@ -73,6 +73,43 @@ blindly retry the resource effect. Native authentication, effect isolation, rece
 crash behavior remain required implementation proofs, not facts established by
 the synthetic semantic oracle.
 
+<a id="workspace-created-first-appendreceipt-recovery-adoption"></a>
+### Workspace-created first AppendReceipt recovery adoption — 2026-09-24
+
+This is a **newly authored technical owner definition under DL-046** for
+`browser.workspace.created` only. The depth gap it answers is recorded in
+`reports/event-authority-20260911/step-08-depth42-assessment-20260924.md`.
+
+For exactly this creation barrier, `BrowserRuntimeService.workspace` explicitly
+adopts SP-286/CV-339's `storage.first_append_receipt.resolve.v2`. The request is
+the original admitted EventRecord identity/semantic request under the existing
+replay policy: the original `command_instance_id`, request idempotency key,
+reserved workspace identity and assigned generation, in the actual same Storage
+instance. It is not a caller custody row, locator or receipt. Storage
+authenticates the actual global/scoped identity, source semantic tuple and
+canonical issued custody. The returned eleven-field AppendReceipt and the retained
+four-field `original_append_result` must join the original event/sequence and the
+Storage-owned original segment reference/offset. The exact original durability
+class is the required synced barrier; a newer locator, timestamp, supplied digest
+or four-field dedupe result alone cannot satisfy it. An allowed scoped alternate
+incoming event ID resolves the original event ID and cannot create a second
+workspace or event.
+
+After a committed creation and lost acknowledgement, the owner returns the
+original identity and result from that resolution without preparing another
+resource. An uncertain append stays fenced, with the prepared resource unexposed,
+until Storage resolves the original identity. The Browser owner never asks for a
+first mint from a missing receipt, lost delivery, tail absence or a supplied
+never-issued flag; only Storage's own writer reaches
+`storage.first_append_receipt.issue.v2`, for an authenticated never-issued complete
+protected group. Missing or conflicting custody keeps the operation
+recovery-required under the existing failure behavior. Resolution is passive: it
+grants no current Browser authority, recreates no process and reopens no retired
+source. This owner does not claim that a supplied complete EventRecord equals its
+originally issued value, so it does not rely on
+`storage.first_append_receipt.resolve_full_value.v1`; a later claim of that kind
+must adopt that interface explicitly and cannot fall back to semantic replay.
+
 ### Exact read consumer and currentness
 
 Define **new read consumer** `browser.workspace_inventory.created.v1@1.0.0`,
@@ -134,10 +171,12 @@ canonical_text: >-
   owner publishes the exact committed creation identity after the barrier AppendReceipt.
   browser.workspace_inventory.created.v1@1.0.0 reads the historical creation fact through
   storage.browser_workspace_created_index.v1@1.0.0 and SP-266, with no independent durable
-  effect and no authority to recreate or act on a live workspace.
+  effect and no authority to recreate or act on a live workspace. Lost-acknowledgement and
+  uncertain-append recovery resolves the original creation append only through the explicitly
+  adopted SP-286/CV-339 storage.first_append_receipt.resolve.v2.
 gui_related: false
 gui_classification_reason: This is event, scope, identity and replay authority, not presentation.
-depends_on: [DL-046, SMPFS-166, CV-332]
+depends_on: [DL-046, SMPFS-166, CV-332, SP-286, CV-339]
 unblocks: []
 acceptance_criteria:
   - Exact authenticated producer, request/result/receipt scope joins and actual permission/capability checks precede the barrier commit; rejected, unchanged or uncertain transitions cannot claim creation.
@@ -145,6 +184,7 @@ acceptance_criteria:
   - The one read consumer uses the complete SP-266 snapshot/checkpoint token; historical creation and index currentness never grant current Browser authority.
   - Replay, deletion, recovery and withdrawal cannot dispatch, recreate a process, restore a controller, attach prompt material or create UsageRecords.
   - A separately admitted v2 reader must use SP-266's full SP-278 frontier/source token and authenticated checkpoint handoff; this conditional target does not make v2 current.
+  - Lost-acknowledgement and uncertain-append recovery resolves the original creation append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, and no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1.
 validation_surfaces: [Plans/browser_workspace_created_contracts.schema.json, Plans/browser_workspace_created_contract_fixtures.json, tests/test_pm_browser_workspace_created.py, Plans/browser_workspace_created_checkpoint_v2.schema.json]
 risk_class: browser_workspace_creation_or_replay_authority_escape
 reasoning_tier: high
@@ -157,4 +197,4 @@ negative_constraints:
   - No runtime availability, currentness clearance, WorkNodes, NodeSeeds, frozen-audit rewrite or governance seal follows from this contract.
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-046, ContractName:Plans/Contracts_V0.md#CV-332, ContractName:Plans/storage-plan.md#SP-266, ContractName:Plans/usage-feature.md#UF-103, ContractName:Plans/Prompt_Pipeline.md#PP-091
+ContractRef: ContractName:Plans/Decision_Log.md#DL-046, ContractName:Plans/Contracts_V0.md#CV-332, ContractName:Plans/storage-plan.md#SP-266, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/usage-feature.md#UF-103, ContractName:Plans/Prompt_Pipeline.md#PP-091

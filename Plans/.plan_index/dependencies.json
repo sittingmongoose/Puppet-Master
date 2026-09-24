@@ -5716,7 +5716,6 @@
     "SCS-022",
     "WM-057",
     "PP-091",
-    "SMPFS-167",
     "SP-262",
     "OSI-232",
     "OSI-408",
@@ -5941,9 +5940,7 @@
     "CV-339",
     "GRS-061",
     "GRS-065",
-    "SMPFS-168",
     "SP-265",
-    "SP-266",
     "SP-271",
     "SP-285",
     "SP-300",
@@ -5973,13 +5970,14 @@
     "CRAU-083",
     "CV-341",
     "SIR-046",
+    "SMPFS-167",
+    "SMPFS-168",
     "SP-270",
     "SP-279",
     "SP-288",
     "SP-291",
     "CV-335",
     "SP-289",
-    "SP-282",
     "EP-116",
     "OP-036",
     "RGV-019",
@@ -6108,6 +6106,8 @@
     "PSMERA-021",
     "CV-342",
     "SP-294",
+    "SP-266",
+    "SP-282",
     "SP-293",
     "SP-295",
     "UCC-124",
@@ -62847,6 +62847,11 @@
     {
       "edge_type": "depends_on",
       "from": "SMPFS-167",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-167",
       "to": "DL-046"
     },
     {
@@ -62856,8 +62861,18 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SMPFS-167",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SMPFS-168",
       "to": "CV-332"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-168",
+      "to": "CV-339"
     },
     {
       "edge_type": "depends_on",
@@ -62873,6 +62888,11 @@
       "edge_type": "depends_on",
       "from": "SMPFS-168",
       "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-168",
+      "to": "SP-286"
     },
     {
       "edge_type": "depends_on",
@@ -98640,7 +98660,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-25T00:58:26Z",
+  "generated_at_utc": "2026-09-25T01:21:24Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -194481,8 +194501,8 @@
       "source_location": {
         "heading": "SMPFS-167 - Workspace-created transition and historical inventory consumer",
         "heading_level": 3,
-        "heading_line": 11524,
-        "line": 11526,
+        "heading_line": 11561,
+        "line": 11563,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -194498,8 +194518,8 @@
       "source_location": {
         "heading": "SMPFS-168 - Workspace-reset transition and historical boundary consumer",
         "heading_level": 3,
-        "heading_line": 11679,
-        "line": 11681,
+        "heading_line": 11757,
+        "line": 11759,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -194515,8 +194535,8 @@
       "source_location": {
         "heading": "SMPFS-169 - Browser Program Result Budget And Output-Schema Binding",
         "heading_level": 3,
-        "heading_line": 11718,
-        "line": 11720,
+        "heading_line": 11799,
+        "line": 11801,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -194532,8 +194552,8 @@
       "source_location": {
         "heading": "SMPFS-170 - Terminal workgroup moved original operation and historical consumer",
         "heading_level": 3,
-        "heading_line": 11933,
-        "line": 11935,
+        "heading_line": 12014,
+        "line": 12016,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -213025,9 +213045,9 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15682,
+    "depends_on_edge_count": 15686,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18381,
+    "edge_count": 18385,
     "node_count": 6728,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,
