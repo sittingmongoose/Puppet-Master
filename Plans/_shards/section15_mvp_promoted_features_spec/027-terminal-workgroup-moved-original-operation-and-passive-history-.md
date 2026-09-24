@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11753-L11926
+Source lines: L11753-L11930
 
-Source SHA256: `16d849f88fb6ba0660a86c5f37867f2a5a97d0cf1404fe505e818ec6b8ab0495`
+Source SHA256: `e73aa7e00e821e430366718017a7490e0832e9617adf91fd12458dec6b45ee17`
 
 ---
 
@@ -135,6 +135,10 @@ spawn a PTY, acknowledge a command, create a section, advance a revision or sele
 current terminal state from history. Current terminal state always comes from its
 live owner, regardless of event order. Original move validation and current
 source-read authorization are separate, as defined by SP-319.
+This unit owns the family's semantics and SP-319 is the Storage binding that
+consumes them: SP-319 depends on this unit and binds this consumer to its
+passive source read, and this unit names SP-319 only as its Storage validation
+surface and contract reference.
 
 Withdrawal stops new producer admission and new reader disclosure independently.
 Already admitted operations retain their original owner/custody and settle under
@@ -159,7 +163,7 @@ canonical_text: The new terminal.workgroup_move_commit.v1 producer and terminal.
   companions and owner admission; passive history has no terminal effects or family checkpoint.
 gui_related: true
 gui_classification_reason: Preserves existing workgroup placement, section limits and visible terminal identity.
-depends_on: [SMPFS-138, UCC-144, CV-323, CV-333, CV-339, SP-245, SP-273, SP-278, SP-286, SP-319, DL-045]
+depends_on: [SMPFS-138, UCC-144, CV-323, CV-333, CV-339, SP-245, SP-273, SP-278, SP-286, DL-045]
 unblocks: []
 acceptance_criteria:
   - Authenticate the original request, operation, full owner identity, revisions, current authority and complete membership before effects.
