@@ -1,5 +1,5 @@
 {
-  "body_reconstruction_checked": 2719,
+  "body_reconstruction_checked": 2722,
   "body_reconstruction_mismatches": 0,
   "config_path": "Plans/sharding_config.json",
   "docs": [
@@ -188,11 +188,11 @@
       "source": "Plans/Orchestrator_Page.md"
     },
     {
-      "body_reconstruction_checked": 80,
+      "body_reconstruction_checked": 82,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/storage-plan",
       "failures": [],
-      "shard_count": 80,
+      "shard_count": 82,
       "source": "Plans/storage-plan.md"
     },
     {
@@ -228,11 +228,11 @@
       "source": "Plans/Crosswalk.md"
     },
     {
-      "body_reconstruction_checked": 26,
+      "body_reconstruction_checked": 27,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/section15_mvp_promoted_features_spec",
       "failures": [],
-      "shard_count": 26,
+      "shard_count": 27,
       "source": "Plans/Section15_MVP_Promoted_Features_Spec.md"
     },
     {
@@ -798,13 +798,13 @@
   ],
   "docs_checked": 99,
   "failures": [],
-  "generated_at_utc": "2026-09-23T18:29:04Z",
+  "generated_at_utc": "2026-09-24T20:30:31Z",
   "mode": "check",
   "output_root": "Plans/_shards",
   "root_index_failures": [],
   "root_index_path": "Plans/00-plans-index.md",
   "schema_id": "pm.plan_shards.report.v1",
-  "shards_checked": 2719,
+  "shards_checked": 2722,
   "source_count": 99,
   "status": "pass"
 }
