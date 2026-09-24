@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L1586-L6110
+Source lines: L1586-L6111
 
-Source SHA256: `7dfe4733894130a70b432667ab862e2b3373736d8bc2e13bc42a6f129a359602`
+Source SHA256: `446a780b9ce3d6d0d3f434d1b04147ae36ef43a59fc89f5e9b8110495d843837`
 
 ---
 
@@ -4308,8 +4308,8 @@ canonical_text: >-
   item 1: the frozen independent Event Authority seal check receives exactly one more
   receipted amendment, in the style of DL-039's holding-bucket change. It keeps every
   existing rule and accepts a family registered beyond the original 37 and the two
-  August families only with a complete admission record, namely the Decision Log entry
-  that admitted it, the registry revision and SHA-256 before and after, and a current
+  August families only with a complete admission record, namely Jared's decision entry
+  for that family, the registry revision and SHA-256 before and after, and a current
   depth assessment with all twelve criteria passing. It fails closed otherwise. The agent
   that writes and lands the amendment must not apply the seal. DL-039's seal condition
   now reads as passing with the holding-bucket change and this amendment and no other
@@ -4369,9 +4369,10 @@ canonical_text: >-
   approved PNC-019 checkpoint in that same landing. The checkpoint constants in
   scripts/pm_pnc019_currentness.py, their provenance comment and the two test pins
   move with it, the readiness projections are regenerated, and a Decision Log entry
-  records the new revision and registry SHA-256 under this rule. Any other registry
-  change, or a registration that skips part of the procedure, still needs Jared's own
-  approval. Jared can revoke the rule at any time.
+  records the new revision and registry SHA-256 under this rule. The Decision Log entry
+  each such landing adds names the family and is the decision entry its DL-077 admission
+  record cites. Any other registry change, or a registration that skips part of the
+  procedure, still needs Jared's own approval. Jared can revoke the rule at any time.
 gui_related: false
 gui_classification_reason: Defines checkpoint approval governance for event registration, not visual presentation.
 split_recommended: false

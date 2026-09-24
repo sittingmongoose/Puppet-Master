@@ -30,7 +30,7 @@ A family is admitted only with its complete contract: exact payload schema (clos
    - `EVENT_FAMILY_REGISTRY_REVISION` and `EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT` in `scripts/pm_pnc019_currentness.py`, with their provenance comment, move to the new registry revision and family count;
    - the two test pins in `tests/test_pm_testing_session_events.py` and `tests/test_pm_github_project_integration.py` move with them;
    - the readiness projections are regenerated with the Step 4 commands (`pm-implementation-readiness.py generate`, `pm-plan-index.py generate`, `pm-implementation-readiness.py generate`);
-   - a Decision Log entry records the new registry revision and SHA-256 and cites DL-078.
+   - a Decision Log entry records the new registry revision and SHA-256 and cites DL-078. The Decision Log entry each such landing adds names the family and is the decision entry its DL-077 admission record cites.
 
    Any other registry change still needs Jared's own checkpoint approval, and so does a registration that skipped any part of this procedure. Jared can revoke the rule at any time, which returns to one approval per registration.
 3. The row's disposition records are updated in the same landing, with the admission record cited.

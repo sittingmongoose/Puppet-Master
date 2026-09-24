@@ -1522,7 +1522,7 @@ Answered on 2026-09-24 by Jared, in conversation with the coordinator, from the 
 
 **Why:** DL-039 made the seal conditional on the independent seal check (`Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py`, frozen 2026-08-12) passing without modification. That check requires the registered families beyond the original 37 to be exactly the two August families, and fails with `unexpected_august_set` otherwise. Since then `context.compaction.completed` was admitted in Step 6 under DL-039 and DL-040, and `browser.workspace.created` and `browser.workspace.reset` in their own Storage admission landings under DL-046, and every Step 9 registration adds another. Its record format also has no place for an admitted family that started among the 252 quarantined rows, so the compaction row still fails `individual_dispositions_evidence_gap_blocking`. No amount of contract work could make the unmodified check pass.
 
-**What you get:** The seal check keeps every rule it has. It additionally accepts a family registered after August only when that family has an admission record: the Decision Log entry that admitted it, the registry revision and SHA-256 before and after, and a current depth assessment with all twelve criteria passing. A family without one still fails.
+**What you get:** The seal check keeps every rule it has. It additionally accepts a family registered after August only when that family has an admission record: Jared's decision entry for that family, the registry revision and SHA-256 before and after, and a current depth assessment with all twelve criteria passing. A family without one still fails.
 
 **What it costs:** A second change to a check that was frozen, done under the same guard as Step 3. The families already admitted need admission records in the new form. The amendment makes nothing pass by itself: the depth, denominator and other failures stay until the work closes them.
 
@@ -1568,7 +1568,7 @@ Answered on 2026-09-24 by Jared, in conversation with the coordinator, from the 
 
 **Answer:** Approve (option 2).
 
-The standing rule: a family registration that passes the full Step 9 procedure moves the approved PNC-019 checkpoint in the same landing. The procedure is the family's full Event Authority contract, a blind form-driven review, its own Storage admission landing with one family per landing, and the coordinator's landing go. In that landing, `EVENT_FAMILY_REGISTRY_REVISION` and `EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT` in `scripts/pm_pnc019_currentness.py` and their provenance comment move to the new registry revision and family count. The two test pins in `tests/test_pm_testing_session_events.py` and `tests/test_pm_github_project_integration.py` move with them, and the readiness projections are regenerated with the Step 4 commands. A Decision Log entry records the new revision and registry SHA-256 under this rule. Any other registry change still needs Jared's own checkpoint approval, and so does a registration that skips any part of the procedure. Revoking the rule returns to one approval per registration.
+The standing rule: a family registration that passes the full Step 9 procedure moves the approved PNC-019 checkpoint in the same landing. The procedure is the family's full Event Authority contract, a blind form-driven review, its own Storage admission landing with one family per landing, and the coordinator's landing go. In that landing, `EVENT_FAMILY_REGISTRY_REVISION` and `EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT` in `scripts/pm_pnc019_currentness.py` and their provenance comment move to the new registry revision and family count. The two test pins in `tests/test_pm_testing_session_events.py` and `tests/test_pm_github_project_integration.py` move with them, and the readiness projections are regenerated with the Step 4 commands. A Decision Log entry records the new revision and registry SHA-256 under this rule. The Decision Log entry each such landing adds names the family and is the decision entry its DL-077 admission record cites. Any other registry change still needs Jared's own checkpoint approval, and so does a registration that skips any part of the procedure. Revoking the rule returns to one approval per registration.
 
 This rule registers nothing and lowers no Step 9 requirement. It changes no other readiness check, seal condition or validator.
 
@@ -5883,8 +5883,8 @@ canonical_text: >-
   item 1: the frozen independent Event Authority seal check receives exactly one more
   receipted amendment, in the style of DL-039's holding-bucket change. It keeps every
   existing rule and accepts a family registered beyond the original 37 and the two
-  August families only with a complete admission record, namely the Decision Log entry
-  that admitted it, the registry revision and SHA-256 before and after, and a current
+  August families only with a complete admission record, namely Jared's decision entry
+  for that family, the registry revision and SHA-256 before and after, and a current
   depth assessment with all twelve criteria passing. It fails closed otherwise. The agent
   that writes and lands the amendment must not apply the seal. DL-039's seal condition
   now reads as passing with the holding-bucket change and this amendment and no other
@@ -5944,9 +5944,10 @@ canonical_text: >-
   approved PNC-019 checkpoint in that same landing. The checkpoint constants in
   scripts/pm_pnc019_currentness.py, their provenance comment and the two test pins
   move with it, the readiness projections are regenerated, and a Decision Log entry
-  records the new revision and registry SHA-256 under this rule. Any other registry
-  change, or a registration that skips part of the procedure, still needs Jared's own
-  approval. Jared can revoke the rule at any time.
+  records the new revision and registry SHA-256 under this rule. The Decision Log entry
+  each such landing adds names the family and is the decision entry its DL-077 admission
+  record cites. Any other registry change, or a registration that skips part of the
+  procedure, still needs Jared's own approval. Jared can revoke the rule at any time.
 gui_related: false
 gui_classification_reason: Defines checkpoint approval governance for event registration, not visual presentation.
 split_recommended: false
