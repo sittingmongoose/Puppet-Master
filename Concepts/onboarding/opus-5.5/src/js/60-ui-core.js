@@ -368,18 +368,21 @@
     window.dispatchEvent(new CustomEvent('o55:onboarding', { detail: { type: 'opened', screen: S.sess.screen, resumed: S.resumed } }));
     return true;
   }
-  function close(reason) {
+  /* close(reason, {handoff}) — with handoff the window gives way at once, because the Guided Tour's first callout
+     grows out of the same rectangle in the same frame (see O55.tour.start({from})) */
+  function close(reason, o) {
     if (!S.open) return;
+    const handoff = !!(o && o.handoff);
     const def = SCREENS.defs[S.sess.screen];
     if (def && def.leave) def.leave(S);
     S.sess.status = reason === 'skip' ? 'skipped' : reason === 'done' ? 'done' : 'closed';
     S.save();
     S.open = false;
     const r = S.root;
-    r.classList.remove('o55-opening'); r.classList.add('o55-closing'); r.setAttribute('data-o55-ambient', 'off');
-    O55.sound.play('close');
+    r.classList.remove('o55-opening'); r.classList.add('o55-closing'); r.classList.toggle('o55-handoff', handoff); r.setAttribute('data-o55-ambient', 'off');
+    if (!handoff) O55.sound.play('close');
     const finish = () => {
-      r.hidden = true; r.setAttribute('data-open', 'false'); r.classList.remove('o55-closing');
+      r.hidden = true; r.setAttribute('data-open', 'false'); r.classList.remove('o55-closing', 'o55-handoff');
       document.documentElement.removeAttribute('data-o55-open');
       setInert(false);
       if (S.pausedClock && window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.resume) { try { window.PM_DEMO.clock.resume(); } catch (_) {} }

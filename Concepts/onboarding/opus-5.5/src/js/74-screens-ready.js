@@ -42,9 +42,13 @@
     const projectId = o.project || cm.projectId, name = o.projectName || (cm.projectId === projectId ? d.project_name : null) || projectId;
     if (projectId) O55.shell.selectProject(projectId, name);
     S.sess.finished = { at: new Date().toISOString(), tour: !!o.tour, project: projectId || null };
-    O55.ui.close('done');
-    O55.shell.openWizard();
-    if (o.tour && O55.tour && O55.tour.start) O55.motion.after(420, () => O55.tour.start({ source: 'onboarding', project: projectId }));
+    const tour = !!(o.tour && O55.tour && O55.tour.start);
+    /* the tour path: the window becomes the tour's first callout (a morph from its rectangle); the tour itself ends on
+       the Planning Wizard, so the page is not switched here */
+    const win = S.root && S.root.querySelector('.o55-win'), from = tour && win ? win.getBoundingClientRect() : null;
+    O55.ui.close('done', { handoff: tour && !!from });
+    if (tour) O55.tour.start({ source: 'onboarding', project: projectId, from: from ? { left: from.left, top: from.top, width: from.width, height: from.height } : null });
+    else O55.shell.openWizard();
   };
 
   function summary(S) {

@@ -184,13 +184,17 @@
     st.dest = h && !st.missing ? h : null;
     if (h && !st.missing) { if (snap) { st.hole = h; drawHole(h); } else moveHole(h); }
     else { st.hole = null; drawHole(null); }
+    placeBar(h); /* first: where the bar sits decides the room the callout has */
     placeCallout();
-    placeBar(h);
   }
   function placeCallout() {
     const c = st.root.querySelector('.o55t-callout'); if (!c) return;
     const W = innerWidth, H = innerHeight, cw = c.offsetWidth || 360, chh = c.offsetHeight || 180, m = 16, gap = 18;
     const h = !st.missing ? st.dest || st.hole : null;
+    /* the band the callout may use: below the title bar and clear of the tour bar, wherever the bar sits (on a narrow
+       window it wraps to two rows, and at the top it would otherwise sit on the callout's heading) */
+    const bar = st.root.querySelector('.o55t-bar'), bh = (bar && bar.offsetHeight) || 44, barTop = !!(bar && bar.classList.contains('o55t-top'));
+    const Y0 = barTop ? 50 + bh + 10 : 56, Y1 = barTop ? H - 12 : H - bh - 24;
     let x, y, side = 'center';
     /* a step whose spotlight tours several places keeps one callout position for the whole step, chosen once to
        stay clear of every place it will visit, so its buttons never move under the learner's hand */
@@ -200,28 +204,28 @@
         const cost = (cx, cy) => avoid.reduce((a, r) => a + Math.max(0, Math.min(cx + cw, r.right + gap) - Math.max(cx, r.left - gap)) * Math.max(0, Math.min(cy + chh, r.bottom + gap) - Math.max(cy, r.top - gap)), 0);
         let best = null;
         for (const fy of [0.45, 0.3, 0.6, 0.15, 0.8]) for (const fx of [0.5, 0.35, 0.65, 0.15, 0.85]) {
-          const cx = m + (W - cw - 2 * m) * fx, cy = 56 + (H - chh - 126) * fy, k = cost(cx, cy);
+          const cx = m + (W - cw - 2 * m) * fx, cy = Y0 + Math.max(0, Y1 - chh - Y0) * fy, k = cost(cx, cy);
           if (!best || k < best.k - 1) best = { x: cx, y: cy, k };
         }
         st.fixed = best;
       }
       x = st.fixed.x; y = st.fixed.y; side = 'fixed';
     }
-    else if (!h || (st.step && st.step.place === 'center')) { x = (W - cw) / 2; y = Math.max(80, (H - chh) / 2 - 40); }
+    else if (!h || (st.step && st.step.place === 'center')) { x = (W - cw) / 2; y = Math.max(Y0 + 24, Math.min(Y1 - chh, (H - chh) / 2 - 40)); }
     else {
       const pl = st.step && st.step.place, pref = (typeof pl === 'function' ? pl(st) : pl) || 'auto';
       const cands = { right: [h.x + h.w + gap, h.y + h.h / 2 - chh / 2], left: [h.x - gap - cw, h.y + h.h / 2 - chh / 2], bottom: [h.x + h.w / 2 - cw / 2, h.y + h.h + gap], top: [h.x + h.w / 2 - cw / 2, h.y - gap - chh] };
-      const fits = (k) => { const [cx, cy] = cands[k]; return cx >= m && cy >= 56 && cx + cw <= W - m && cy + chh <= H - 70; };
+      const fits = (k) => { const [cx, cy] = cands[k]; return cx >= m && cy >= Y0 && cx + cw <= W - m && cy + chh <= Y1; };
       const order = pref !== 'auto' ? [pref, 'right', 'left', 'bottom', 'top'] : (h.x + h.w / 2 > W / 2 ? ['left', 'bottom', 'top', 'right'] : ['right', 'bottom', 'top', 'left']);
       /* sticky side: a callout keeps its side for the whole step while that side still fits, so it never wanders
          under the pointer as the target grows or the spotlight glides */
       side = st.side && cands[st.side] && fits(st.side) ? st.side : order.find(fits) || order[0];
       st.side = side;
       [x, y] = cands[side];
-      x = Math.max(m, Math.min(W - cw - m, x)); y = Math.max(56, Math.min(H - chh - 70, y));
+      x = Math.max(m, Math.min(W - cw - m, x)); y = Math.max(Y0, Math.min(Y1 - chh, y));
       /* never cover the target: if the clamped box still overlaps the hole, park it in the emptiest corner */
       const overlap = !(x + cw < h.x || x > h.x + h.w || y + chh < h.y || y > h.y + h.h);
-      if (overlap) { x = h.x + h.w / 2 > W / 2 ? m : W - cw - m; y = h.y + h.h / 2 > H / 2 ? 64 : H - chh - 76; side = 'corner'; }
+      if (overlap) { x = h.x + h.w / 2 > W / 2 ? m : W - cw - m; y = h.y + h.h / 2 > H / 2 ? Y0 + 8 : Y1 - chh - 6; side = 'corner'; }
     }
     let nx = Math.round(x), ny = Math.round(y);
     /* within a step the callout holds still while its target only shifts a little (an answer growing, a relabel):
@@ -229,7 +233,7 @@
        A callout that slides away as the learner reaches for its button is the worst kind of motion. */
     if (st.cpos && st.cposStep === (st.step && st.step.id) && (Math.abs(st.cpos.x - nx) > 3 || Math.abs(st.cpos.y - ny) > 3)) {
       const ox = st.cpos.x, oy = st.cpos.y;
-      const inside = ox >= 8 && oy >= 8 && ox + cw <= W - 8 && oy + chh <= H - 8;
+      const inside = ox >= 8 && oy >= Y0 - 2 && ox + cw <= W - 8 && oy + chh <= Y1 + 2;
       const covers = h && !(ox + cw < h.x || ox > h.x + h.w || oy + chh < h.y || oy > h.y + h.h);
       if (inside && !covers && Math.hypot(ox - nx, oy - ny) < 140) { nx = ox; ny = oy; }
     }
@@ -239,6 +243,7 @@
   }
   function placeBar(h) {
     const bar = st.root.querySelector('.o55t-bar'); if (!bar) return;
+    if (document.body.classList.contains('pm-home-dragging')) return; /* the bar holds still while something is carried */
     const H = innerHeight, bh = bar.offsetHeight || 44, bottomY = H - bh - 14;
     const hitsBottom = h && h.y + h.h > bottomY - 6;
     bar.classList.toggle('o55t-top', !!hitsBottom);
@@ -403,7 +408,7 @@
     if (st.paused) interruptShow();
     renderBar(); O55.sound.play(st.paused ? 'toggleOff' : 'toggleOn');
   }
-  function save() { O55.store.set(KEY, { v: 1, status: st.sess.status, index: st.sess.index, done: st.sess.done, tips: st.tips, started: st.sess.started, project: st.sess.project, snap: st.snap }); }
+  function save() { O55.store.set(KEY, { v: 1, status: st.sess.status, index: st.sess.index, done: st.sess.done, tips: st.tips, started: st.sess.started, project: st.sess.project, chatTucked: !!st.sess.chatTucked, snap: st.snap }); }
 
   /* ------------------------------------------------------------------ lifecycle */
   TR.start = async function start(o) {
@@ -412,7 +417,7 @@
     const saved = O55.store.get(KEY, null);
     const resume = !o.fresh && saved && saved.status === 'running' && typeof saved.index === 'number';
     build(); syncTheme();
-    st.sess = resume ? { status: 'running', index: saved.index, done: saved.done || [], started: saved.started, project: saved.project || o.project || null } : { status: 'running', index: 0, done: [], started: new Date().toISOString(), project: o.project || null };
+    st.sess = resume ? { status: 'running', index: saved.index, done: saved.done || [], started: saved.started, project: saved.project || o.project || null, chatTucked: !!saved.chatTucked } : { status: 'running', index: 0, done: [], started: new Date().toISOString(), project: o.project || null };
     st.tips = (resume && saved.tips) || 'normal';
     st.snap = resume && saved.snap ? saved.snap : snapshot();
     st.counters = TR.counters();
@@ -425,12 +430,35 @@
     O55.sound.play('open');
     window.dispatchEvent(new CustomEvent('o55:tour', { detail: { type: resume ? 'resumed' : 'started' } }));
     await goStep(st.sess.index, { silent: true });
+    if (o.from) morphIn(o.from);
     return true;
   };
+  /* the handoff from onboarding: a plain surface leaves the onboarding window's rectangle and settles into the first
+     callout's, then the callout's words fade in as the surface fades away. Stepped in Retro; a fade under Reduced
+     Motion (the callout's own). */
+  function morphIn(from) {
+    const c = st.root.querySelector('.o55t-callout'); if (!c || !from || !from.width || O55.motion.reduced() || !st.cpos) return;
+    const to = { left: st.cpos.x, top: st.cpos.y, width: c.offsetWidth, height: c.offsetHeight };
+    c.style.transition = 'none'; c.style.transform = `translate(${to.left}px, ${to.top}px)`; void c.offsetWidth; c.style.removeProperty('transition');
+    c.classList.add('o55t-morphing');
+    const g = document.createElement('div'); g.className = 'o55t-morph'; g.setAttribute('aria-hidden', 'true'); st.root.appendChild(g);
+    const retro = family() === 'retro', radius = getComputedStyle(c).borderRadius || '14px';
+    const a = g.animate([
+      { left: from.left + 'px', top: from.top + 'px', width: from.width + 'px', height: from.height + 'px', borderRadius: retro ? '0px' : '22px' },
+      { left: to.left + 'px', top: to.top + 'px', width: to.width + 'px', height: to.height + 'px', borderRadius: radius }
+    ], { duration: 640, easing: retro ? 'steps(6, end)' : 'cubic-bezier(0.2, 0, 0, 1)', fill: 'forwards' });
+    O55.sound.play('spot');
+    a.finished.then(() => {
+      c.classList.remove('o55t-morphing');
+      g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, easing: 'ease', fill: 'forwards' }).finished.then(() => g.remove());
+    }).catch(() => { c.classList.remove('o55t-morphing'); g.remove(); });
+  }
   async function end(status, keep) {
     TR.running = false; if (st.poll) st.poll.cancel(); interruptShow();
     if (st.step && st.step.leave) { try { st.step.leave(st); } catch (_) {} }
     const res = await restore(st.snap, keep);
+    /* Chat tucked away by the tour on a phone-width window comes back either way; the learner never hid it */
+    if (keep && st.sess.chatTucked && window.PM_HOME_WORKSPACE) { try { window.PM_HOME_WORKSPACE.setSurfaceVisible('chat', true, 'cmd.panel.switch'); } catch (_) {} }
     TR.chat && TR.chat.uninstall();
     st.sess.status = status; st.sess.restored = res; O55.store.set(KEY, { v: 1, status, done: st.sess.done, finished: new Date().toISOString(), keep: !!keep, restored: res });
     document.documentElement.removeAttribute('data-o55-tour');

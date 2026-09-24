@@ -145,13 +145,27 @@
     goTo: () => goPage('dashboard') });
 
   /* ================================================================ chapter 3: Plan before building */
+  /* its visible route: the page tab, or on a narrow window the pages menu (the strip folds pages into it) */
+  const wizardTab = () => q('#tab-wizard'), wizardItem = () => q('#pageTabsMoreMenu .pm6-tb-pages-more-item[data-page="wizard"]');
   S({ id: 'open_planning', chapter: 'plan', kind: 'action', planning: true,
-    target: () => q('#tab-wizard'),
+    target: () => wizardTab() || wizardItem() || q('#pageTabsMoreBtn'),
+    doKey: () => (wizardTab() ? 'do' : 'doMore'),
     done: () => page() === 'wizard',
-    showMe: async (sm) => { await sm.click(q('#tab-wizard')); } });
+    showMe: async (sm) => {
+      if (wizardTab()) { await sm.click(wizardTab()); return; }
+      if (!wizardItem()) { await sm.click(q('#pageTabsMoreBtn')); await sm.wait(320); }
+      await sm.click(wizardItem());
+    } });
 
+  /* On a phone-width window the shell lets Chat cover the whole Wizard page, so the planning chapter tucks Chat away
+     through its real command and says so; it comes back when the tour ends (Restore or Keep). */
+  const cramped = () => innerWidth < 600;
   S({ id: 'book_club_goal', chapter: 'plan', kind: 'action', planning: true, place: 'right',
-    enter() { goPage('wizard'); P.injectGoal(); },
+    enter(st) {
+      goPage('wizard'); P.injectGoal();
+      if (cramped() && C.chatVisible()) { api().setSurfaceVisible('chat', false, 'cmd.panel.switch'); st.sess.chatTucked = true; }
+    },
+    extra: (st) => (st.sess.chatTucked ? `<p class="o55t-tips">${O55.c.small('spark', 13)}<span>${U.esc(T('tour.steps.book_club_goal.tucked'))}</span></p>` : ''),
     target: () => q('#o55pGoal'),
     done: () => P.active,
     showMe: async (sm) => { await sm.click(q('#o55pGoal .o55p-use')); },
@@ -163,19 +177,21 @@
     showMe: async (sm) => { await sm.click(q('.o55p-outcome[data-arg="o1"]')); },
     goTo: () => goPage('wizard') });
 
-  S({ id: 'access_answer', chapter: 'plan', kind: 'action', planning: true,
+  /* the thread-column steps keep their callout to the left, over the topic map, so the Live Plan stays in view:
+     answering and editing change it, and the learner is asked to watch it */
+  S({ id: 'access_answer', chapter: 'plan', kind: 'action', planning: true, place: 'left',
     target: () => q('#pm6WizThread .o55p-bubble'),
     done: () => !!P.answer,
     showMe: async (sm) => { await sm.click(q('[data-o55p="why"]')); await sm.wait(900); await sm.click(q('[data-o55p="answer"][data-arg="few"]')); },
     goTo: () => goPage('wizard') });
 
-  S({ id: 'review', chapter: 'plan', kind: 'action', planning: true, after: true,
+  S({ id: 'review', chapter: 'plan', kind: 'action', planning: true, after: true, place: (st) => (TR.st.sess.done.includes('review') ? 'auto' : 'left'),
     target: () => (P.reviewed ? document.getElementById('pm6WizDoc') : q('[data-o55p="review"]')),
     done: () => P.reviewed,
     showMe: async (sm) => { await sm.click(q('[data-o55p="review"]')); },
     goTo: () => goPage('wizard') });
 
-  S({ id: 'answer_edit', chapter: 'plan', kind: 'action', planning: true,
+  S({ id: 'answer_edit', chapter: 'plan', kind: 'action', planning: true, place: 'left',
     target: () => (P.edited ? document.getElementById('pm6WizDoc') : q('#pm6WizThread .o55p-bubble') || q('[data-o55p="change"]')),
     done: () => P.edited,
     showMe: async (sm) => {
@@ -209,6 +225,8 @@
     if (!note) { note = document.createElement('div'); note.id = 'o55tLanding'; note.className = 'o55t-landing'; note.setAttribute('role', 'status'); const hero = host.querySelector('.pm6-wiz-hero'); host.insertBefore(note, hero ? hero.nextSibling : host.firstChild); }
     note.innerHTML = `${O55.c.small('seed', 16)}<span>${U.esc(T('tour.landing'))}</span>`;
     M.after(9000, () => { if (note.isConnected) note.classList.add('o55t-leaving'); M.after(500, () => note.remove()); });
+    /* a phone-width window may have Chat over the Wizard again: say it where it will be seen as well */
+    if (innerWidth < 600) O55.pageToast(T('tour.landing'), 6000);
   };
   /* measured on the reference run: about four minutes at a reading pace, Show Me used twice */
   TR.minutes = () => 4;

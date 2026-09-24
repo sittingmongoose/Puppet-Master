@@ -59,7 +59,11 @@ async function run(theme) {
       await callout('next');
     } else {
       if (id === 'same_answer_eli5') await until(() => window.O55.tour.chat.answered('a1'), 'answer before ELI5');
-      if (id === 'move_or_dock_chat') {
+      const stackedDock = id === 'move_or_dock_chat' && await ev(() => { const b = window.O55.tour.dockBand(); return !!(b && b.stacked); });
+      if (stackedDock) {
+        /* a stacked (narrow) workspace: the reachable version is the Move Chat to the top button */
+        await callout('moveChatTop');
+      } else if (id === 'move_or_dock_chat') {
         /* a real drag, held over the left dock until the workspace adopts it, captured before letting go */
         const a = await ev(() => { const r = document.querySelector('[data-pm-home-handle="chat"]').getBoundingClientRect(); const w = document.getElementById('pm-home-workspace').getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, tx: w.left + 12, ty: w.top + w.height * 0.45 }; });
         await page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: a.x, y: a.y });

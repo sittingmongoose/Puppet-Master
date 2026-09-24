@@ -31,7 +31,8 @@ def esc(text):
 
 def build(out, items, cols, width, strip=26, bg='0x16181c', fg='0xe8e8e8'):
     sizes = [probe(p) for p, _ in items]
-    cell_h = max(int(round(h * width / w)) for w, h in sizes)
+    # scale=W:-2 rounds each height to the next even number, so the cell must hold that rounded height
+    cell_h = max(-(-int(-(-h * width // w)) // 2) * 2 for w, h in sizes)
     rows = (len(items) + cols - 1) // cols
     inputs, chains, labels = [], [], []
     for i, (path, label) in enumerate(items):

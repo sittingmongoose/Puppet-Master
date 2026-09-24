@@ -67,6 +67,14 @@ html[data-o55-tour] #pm-hover-tag-root { display: none !important; }
 body.pm-home-dragging .o55t-scrimpath { fill-opacity: 0.35; }
 body.pm-home-dragging .o55t-callout { opacity: 0.16; }
 
+/* the handoff from onboarding: the window's rectangle becomes the first callout */
+.o55t-morph { position: fixed; z-index: 3; pointer-events: none; background: var(--o55t-bg); border: 1px solid var(--o55t-line); box-shadow: 0 24px 60px -18px rgba(0, 0, 0, 0.55); }
+.o55t-root[data-family="friendly"] .o55t-morph { border: 2px solid color-mix(in srgb, var(--text-primary) 70%, transparent); box-shadow: 6px 8px 0 color-mix(in srgb, var(--text-primary) 16%, transparent); }
+.o55t-root[data-family="glass"] .o55t-morph { border-color: rgba(255, 255, 255, 0.3); box-shadow: 0 30px 70px -16px rgba(25, 10, 50, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.35); }
+.o55t-root[data-family="retro"] .o55t-morph { border: 3px solid var(--text-primary); box-shadow: 8px 8px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); }
+.o55t-callout.o55t-morphing { opacity: 0; }
+#pm-o55-onboarding.o55-handoff .o55-win { animation: none !important; opacity: 0 !important; }
+
 /* callout: one outcome, one instruction, Show Me and Back */
 .o55t-callout { position: fixed; left: 0; top: 0; width: min(380px, calc(100vw - 32px)); pointer-events: auto; padding: 18px 18px 14px; border-radius: var(--o55t-r);
   background: var(--o55t-bg); border: 1px solid var(--o55t-line); box-shadow: 0 24px 60px -18px rgba(0, 0, 0, 0.55); transition: transform 420ms cubic-bezier(0.2, 0, 0, 1), opacity 220ms ease; will-change: transform; }
@@ -216,7 +224,7 @@ html[data-o55-tour] #o55-demo { display: none !important; }
   .o55t-bar { left: 8px; right: 8px; transform: none; justify-content: center; flex-wrap: wrap; row-gap: 4px; border-radius: 18px; white-space: normal; }
   .o55t-pip:not(.o55t-cur) { display: none; }
   .o55t-pipname { display: none; }
-  .o55t-callout { width: calc(100vw - 24px); }
+  .o55t-callout { width: min(520px, calc(100vw - 24px)); }
 }
 
 .o55-pagetoast { position: fixed; left: 50%; bottom: 72px; z-index: 2147481900; max-width: min(520px, calc(100vw - 32px)); padding: 11px 16px; border-radius: 12px; background: var(--text-primary); color: var(--background);
