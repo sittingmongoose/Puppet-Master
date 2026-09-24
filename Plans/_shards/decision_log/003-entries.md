@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L13-L1735
 
-Source SHA256: `465f7536211786aebdc276a61a3ee4b6dadce5c49ba8743a2afaa207c5cfc854`
+Source SHA256: `0493c6ce5e30a40f063ad1c4ebe2706fda55369512d82ef6c62b3e20799c4e0a`
 
 ---
 
@@ -1710,7 +1710,7 @@ Answered on 2026-09-24 by Jared, in conversation with the coordinator, from the 
 
 **Question:** The seven-year operational retention policy caps records at 2,000,000 per project. How should that cap count Storage events that belong to the whole application rather than to a project?
 
-**Why:** Boot recovery, recovery-applied and compaction-lifecycle events are application-wide and carry no project. Platform capability evaluations use the same policy and can also be application-scoped. That policy, `RP-OPERATIONAL-2555D` (seven years, 2,000,000 records, per-project counting, fail-closed overflow), counts only per project. Storage's own text (the Boot aggregate custody text of SP-291) calls application-scoped counting under that policy "an unproved policy-owner adapter seam" and says that no invented project, new bucket, cap or policy value may resolve it. Retention choices are Jared's (DL-045).
+**Why:** Boot recovery, recovery-applied and compaction-lifecycle events are application-wide and carry no project. The policy they use, `RP-OPERATIONAL-2555D` (seven years, 2,000,000 records, per-project counting, fail-closed overflow), counts only per project. Storage's own text (the Boot aggregate custody text of SP-291) calls application-scoped counting under that policy "an unproved policy-owner adapter seam" and says that no invented project, new bucket, cap or policy value may resolve it. Retention choices are Jared's (DL-045).
 
 **What you get:** The same guard for application events as for project events, with the same numbers.
 
@@ -1726,7 +1726,7 @@ Answered on 2026-09-24 by Jared, in conversation with the coordinator, from the 
 
 **Answer:** Approve (option 1).
 
-Under `RP-OPERATIONAL-2555D`, the records of `storage.boot_recovery`, `storage.recovery_applied` and `storage.compaction_lifecycle_changed`, and the application-scoped evaluations of `platform.capability_evaluated`, are counted in one application-wide bucket. It takes the place of the project bucket and has the same 2,000,000-record cap, the same fail-closed overflow and the same seven-year period. Project-scoped records keep their per-project counting, and no project behavior changes. This is the policy-owner decision the Storage adapter seam waits for. The Storage retention owner writes it into the SP-291 policy text and binds the bucket technically under DL-045; no new policy object is created and no other policy value changes. Until that owner edit lands, the four retention cells in the Step 8 depth assessment stay PARTIAL. This entry registers or admits nothing.
+Under `RP-OPERATIONAL-2555D`, the records of `storage.boot_recovery`, `storage.recovery_applied` and `storage.compaction_lifecycle_changed` are counted in one application-wide bucket. It takes the place of the project bucket and has the same 2,000,000-record cap, the same fail-closed overflow and the same seven-year period. Project-scoped records keep their per-project counting, and no project behavior changes. This is the policy-owner decision the Storage adapter seam waits for. The Storage retention owner writes it into the SP-291 policy text and binds the bucket technically under DL-045; no new policy object is created and no other policy value changes. Until that owner edit lands, the three retention cells in the Step 8 depth assessment stay PARTIAL. The application-scoped evaluations of `platform.capability_evaluated` sit on the same seam, but the card Jared answered named only the three Storage families, so this answer does not cover them; that part stays open for Jared. This entry registers or admits nothing.
 
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_DEPTH_GRADING.md`, SHA-256 `cfea2eb818663d22eba69dca9296657aa05c51383a470bc1796b87aef65b923c`; card `reports/event-authority-20260911/step-08-depth42-product-cards-20260924.md` (Card 4); application record `reports/event-authority-20260911/step-08-depth42-card-answers-20260924.md`.
 

@@ -170,7 +170,8 @@ Jared answered the cards (`step-08-depth42-product-cards-20260924.md`) on 2026-0
 - `platform.capability_evaluated`: when is a first capability admitted to the active catalog, which is empty today?
   - **Deferred:** DL-082 records no answer. Jared defers filling the catalog to build time, as part of the building process and likely as one of the worknodes. The family stays registered and dormant. This is a follow-up for whoever owns the worknode work.
 - The Storage retention policy that Boot, recovery, compaction lifecycle and Platform capability evaluation share counts cardinality per project, but the first three are application-only and Platform can be application-scoped; SP-291 calls this an "unproved policy-owner adapter seam".
-  - **Answered:** DL-083 counts them in one application-wide bucket with the same cap and overflow rule. The four retention cells stay PARTIAL until the Storage retention owner writes that into the SP-291 policy text.
+  - **Answered for the three Storage families:** DL-083 counts their application-wide records in one application-wide bucket with the same cap and overflow rule. Their three retention cells stay PARTIAL until the Storage retention owner writes that into the SP-291 policy text.
+  - **Open for Platform:** the card Jared answered named only the three Storage families, so DL-083 does not cover Platform's application-scoped evaluations, which sit on the same seam. That part stays open for Jared, and Platform's retention cell stays PARTIAL.
 
 ## Queue adjudication (the other half of Step 8)
 

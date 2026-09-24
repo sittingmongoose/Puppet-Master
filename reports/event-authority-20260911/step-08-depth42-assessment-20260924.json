@@ -15517,7 +15517,7 @@
     "retention": {
      "status": "PARTIAL",
      "representation": "exact_normative_owner",
-     "finding": "The event keeps RP-OPERATIONAL-2555D@1.0.0 (cardinality_scope project, storage_value_registry.json:368) while the family is application_or_project (registry:923). SP-291 records application-scope enforcement under that bucket as an unproved policy-owner adapter seam (storage-plan.md:23548), so the application-scoped evaluations share the seam that keeps Boot, recovery-applied and compaction-lifecycle retention PARTIAL. Decision custody itself is settled by DL-048 (RP-PLATFORM-DECISION-REFERENCED@1.0.0). Jared answered card EA-S08D-OPERATIONAL-CARDINALITY-001 on 2026-09-24 (DL-083: one application-wide bucket with the same cap and overflow rule); the cell stays PARTIAL until the Storage retention owner writes that into the SP-291 policy text.",
+     "finding": "The event keeps RP-OPERATIONAL-2555D@1.0.0 (cardinality_scope project, storage_value_registry.json:368) while the family is application_or_project (registry:923). SP-291 records application-scope enforcement under that bucket as an unproved policy-owner adapter seam (storage-plan.md:23548), so the application-scoped evaluations share the seam that keeps Boot, recovery-applied and compaction-lifecycle retention PARTIAL. Decision custody itself is settled by DL-048 (RP-PLATFORM-DECISION-REFERENCED@1.0.0). DL-083 (2026-09-24) answers that seam for the three Storage families only: the card Jared answered did not name this family, so its application-scoped evaluations stay open for him and the cell stays PARTIAL.",
      "prior": {
       "source": "old_matrix",
       "status": "PASS"
@@ -15787,7 +15787,7 @@
     "SP-290/N2-157: close the output schema of storage.platform_capability_decision.read.v1 (the 'complete current read-through marker'), and name SP-278's generic read token (the nine-field durable projection) if a token is ever stored.",
     "N2-157 states aggregate multi-capability requirement-set use is unavailable until an original context-owner requirement-set contract exists; any consumer asserting aggregate coverage needs that contract first.",
     "Native capture, crash cuts, package lease, backup/cleanup and production admission remain NOT_RUN (does not lower grades).",
-    "ANSWERED by DL-083 (Jared, 2026-09-24, card EA-S08D-OPERATIONAL-CARDINALITY-001, option 1): the application-scoped evaluations count in one application-wide bucket under RP-OPERATIONAL-2555D, with its 2,000,000-record cap and fail-closed overflow. Owner work: the Storage retention owner writes it into the SP-291 policy text (storage-plan.md 23548); the retention cell stays PARTIAL until then."
+    "OPEN, not covered by DL-083: Jared's answer to card EA-S08D-OPERATIONAL-CARDINALITY-001 (DL-083, 2026-09-24) covers the three Storage families only, because the card he answered named only them. How RP-OPERATIONAL-2555D's per-project 2,000,000-record cap counts this family's application-scoped evaluations, which sit on the same SP-291 seam, stays open for Jared; the Storage retention owner applies his answer. The retention cell stays PARTIAL until then."
    ],
    "grading_batch": "R"
   },
@@ -26507,7 +26507,7 @@
  ],
  "evidence": {
   "directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924",
-  "sha256sums_sha256": "725ac105851008a3f8a0863dd6efb63752e6b15612ba520a890b22a33d99bdbb",
+  "sha256sums_sha256": "dba75226da9ac1a472e90c426836436a44b2ad1a1ca66e77b009788fe60cd832",
   "members": [
    "rubric.md",
    "batches.md",

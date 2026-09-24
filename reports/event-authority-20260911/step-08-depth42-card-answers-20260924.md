@@ -10,7 +10,7 @@ Each answer is a Decision Log entry in DL-036 form, in both Decision Log section
 | DL-080 | `EA-S08D-GOALRUN-LIFECYCLE-EVENTS-001` | Approve (option 1) | `goal_run.blocked`, `goal_run.replanned` and `goal_run.stopped` get current events: stopped and blocked first, replanned after the Replan v8 source work, which is therefore needed (not scheduled here) |
 | DL-081 | `EA-S08D-VERIFICATION-EXCEPTION-001` | Approve (option 1) | The verification exception route stays. The user who owns the project approves each exception through the existing approval flow, naming the residual risks, and the finish is labelled "completed with approved verification exception" |
 | DL-082 | `EA-S08D-PLATFORM-CATALOG-001` | No answer | Deferred to build time, with Jared's reason verbatim. It is not an approval of option 1. The catalog is filled in right before Puppet Master is built, as part of the building process and likely as one of the worknodes; `platform.capability_evaluated` stays registered and dormant |
-| DL-083 | `EA-S08D-OPERATIONAL-CARDINALITY-001` | Approve (option 1) | Application-wide records of the three Storage families, and Platform's application-scoped evaluations, count in one application-wide bucket under `RP-OPERATIONAL-2555D`, with the same cap and overflow rule |
+| DL-083 | `EA-S08D-OPERATIONAL-CARDINALITY-001` | Approve (option 1) | Application-wide records of the three Storage families the card named count in one application-wide bucket under `RP-OPERATIONAL-2555D`, with the same cap and overflow rule. Platform's application-scoped evaluations sit on the same seam but were not on the card, so they are not covered; that part stays open for Jared |
 
 ## What the answers change in the depth assessment
 
@@ -28,7 +28,7 @@ What changes is the text of 11 rows (`step-08-depth42-card-answers-20260924.json
 | `goal.evidence_captured`, `goal.receipt_recorded`, `goal.tool_check_recorded` | The product gap is answered (DL-079). The "if retained" branch is dropped, and the "if retired" branch becomes the owner work. A note says the disposition waits for the historical contract. |
 | `goal_run.blocked`, `goal_run.replanned`, `goal_run.stopped` | The product gap is answered (DL-080). The "if retired" branch is dropped, and the "if current" branch becomes the owner work. `goal_run.replanned` names the Replan v8 package. A note says the disposition waits for the current contract. |
 | `goal.completed` | The verification-exception gap is answered (DL-081) and becomes owner work, the route contract. |
-| `platform.capability_evaluated` | The catalog gap is recorded as deferred (DL-082), with the worknode follow-up. The cardinality gap and the retention finding are answered (DL-083), and the retention cell stays PARTIAL until the owner edit. |
+| `platform.capability_evaluated` | The catalog gap is recorded as deferred (DL-082), with the worknode follow-up. The cardinality gap and the retention finding now say that DL-083 does not cover this family, because the card Jared answered named only the three Storage families; that part stays open for Jared, and the retention cell stays PARTIAL. |
 | `storage.boot_recovery`, `storage.recovery_applied`, `storage.compaction_lifecycle_changed` | The cardinality gap and the retention finding are answered (DL-083), and the retention cells stay PARTIAL until the owner edit. |
 
 The assessment's MD says the same things where it listed these questions:
@@ -53,7 +53,7 @@ These are left open and not done here. None of them edits a document on this bra
 2. **DL-080, Orchestrator and Executor with Goal Runtime and Storage.** Write the full current contracts: `goal_run.stopped` and `goal_run.blocked` first, then `goal_run.replanned` after the Replan v8 source work, which needs its own go.
 3. **DL-081, Goal Runtime and the Workflow certification owner with Human-in-the-loop.** Write the exception route contract: the approval request, the approver, the waivable residual risks and the receipt.
 4. **DL-082, whoever owns the worknode work.** Fill the Platform capability catalog right before Puppet Master is built, as part of the building process, likely as a worknode. Each entry needs owner-cited evidence, an evaluation contract and tests.
-5. **DL-083, Storage retention.** Write the application-wide bucket into the SP-291 policy text (`Plans/storage-plan.md` 23548), replacing the "unproved policy-owner adapter seam" statement, together with the units that route application-scoped records to `RP-OPERATIONAL-2555D`.
+5. **DL-083, Storage retention.** Write the application-wide bucket for `storage.boot_recovery`, `storage.recovery_applied` and `storage.compaction_lifecycle_changed` into the SP-291 policy text (`Plans/storage-plan.md` 23548), replacing the "unproved policy-owner adapter seam" statement for them, together with the units that route those families to `RP-OPERATIONAL-2555D`. Platform's application-scoped evaluations wait for Jared's separate answer.
 
 Follow-ups 1, 2 and 5 edit `Plans/Goal_Runtime_System.md` or `Plans/storage-plan.md`. Their plan-sharding evidence rows exceed the landing check's print cap, so those landings wait for the landing-check exports repair.
 

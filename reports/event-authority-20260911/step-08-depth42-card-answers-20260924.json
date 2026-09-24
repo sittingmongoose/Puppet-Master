@@ -56,16 +56,15 @@
       "response": "Approve",
       "selected": "option 1",
       "families": [
-        "platform.capability_evaluated",
         "storage.boot_recovery",
         "storage.recovery_applied",
         "storage.compaction_lifecycle_changed"
       ],
-      "effect_on_assessment": "One application-wide bucket under RP-OPERATIONAL-2555D with the same cap and overflow. The four retention product gaps are answered and become Storage retention owner work; the four retention cells stay PARTIAL until the SP-291 policy text is amended."
+      "effect_on_assessment": "One application-wide bucket under RP-OPERATIONAL-2555D with the same cap and overflow, for the three Storage families the card named. Their three retention product gaps are answered and become Storage retention owner work; their retention cells stay PARTIAL until the SP-291 policy text is amended. Platform's application-scoped evaluations sit on the same seam but were not on the card Jared answered: its cardinality gap and retention finding say the part stays open for Jared, and its retention cell stays PARTIAL."
     }
   ],
   "assessment_json_sha256_before": "078d64bb5ec40c18308a342999962d8ac2cdb5fe439bf8d1b087abdf793ee1b9",
-  "assessment_json_sha256_after": "ff7dbd59b678aa53f311e5c6727ea5835e2a03c398d9b5d4639d52957f73e30e",
+  "assessment_json_sha256_after": "c93576cc35cc9f083a78d1ba31d2df1c6aa8cd73da209ee39a4cc8db8a8911b3",
   "totals_before": {
     "PASS": 335,
     "PARTIAL": 144,
@@ -255,8 +254,7 @@
     {
       "event_type": "platform.capability_evaluated",
       "decisions": [
-        "DL-082",
-        "DL-083"
+        "DL-082"
       ],
       "disposition": "CURRENT_WRITER",
       "cell_statuses_unchanged": true,
@@ -272,18 +270,18 @@
         "SP-290/N2-157: close the output schema of storage.platform_capability_decision.read.v1 (the 'complete current read-through marker'), and name SP-278's generic read token (the nine-field durable projection) if a token is ever stored.",
         "N2-157 states aggregate multi-capability requirement-set use is unavailable until an original context-owner requirement-set contract exists; any consumer asserting aggregate coverage needs that contract first.",
         "Native capture, crash cuts, package lease, backup/cleanup and production admission remain NOT_RUN (does not lower grades).",
-        "ANSWERED by DL-083 (Jared, 2026-09-24, card EA-S08D-OPERATIONAL-CARDINALITY-001, option 1): the application-scoped evaluations count in one application-wide bucket under RP-OPERATIONAL-2555D, with its 2,000,000-record cap and fail-closed overflow. Owner work: the Storage retention owner writes it into the SP-291 policy text (storage-plan.md 23548); the retention cell stays PARTIAL until then."
+        "OPEN, not covered by DL-083: Jared's answer to card EA-S08D-OPERATIONAL-CARDINALITY-001 (DL-083, 2026-09-24) covers the three Storage families only, because the card he answered named only them. How RP-OPERATIONAL-2555D's per-project 2,000,000-record cap counts this family's application-scoped evaluations, which sit on the same SP-291 seam, stays open for Jared; the Storage retention owner applies his answer. The retention cell stays PARTIAL until then."
       ],
       "notes_before": "No per-facet supplement existed, so priors come from the 2026-09-11 matrix. Upgrades rest on N2-157/SP-290/RSC-017 and DL-048 (2026-09-12), all re-read at current lines. Disposition is CURRENT_WRITER because an exact v2 current-writer contract exists. The owner states the empty active catalog admits no production evaluation or event today; that is catalog state, not a historical-only disposition, and is recorded as a PRODUCT gap. The consumers cell stays PARTIAL because the read-through output is not closed and aggregate requirement-set use is unavailable (review G-08).",
       "notes_after": "No per-facet supplement existed, so priors come from the 2026-09-11 matrix. Upgrades rest on N2-157/SP-290/RSC-017 and DL-048 (2026-09-12), all re-read at current lines. Disposition is CURRENT_WRITER because an exact v2 current-writer contract exists. The owner states the empty active catalog admits no production evaluation or event today; that is catalog state, not a historical-only disposition, and Jared deferred filling the catalog to build time (DL-082, 2026-09-24). The consumers cell stays PARTIAL because the read-through output is not closed and aggregate requirement-set use is unavailable (review G-08).",
       "cell_findings_changed": {
         "retention": {
           "finding_before": "The event keeps RP-OPERATIONAL-2555D@1.0.0 (cardinality_scope project, storage_value_registry.json:368) while the family is application_or_project (registry:923). SP-291 records application-scope enforcement under that bucket as an unproved policy-owner adapter seam (storage-plan.md:23548), so the application-scoped evaluations share the seam that keeps Boot, recovery-applied and compaction-lifecycle retention PARTIAL. Decision custody itself is settled by DL-048 (RP-PLATFORM-DECISION-REFERENCED@1.0.0). Jared's answer to card EA-S08D-OPERATIONAL-CARDINALITY-001 settles the seam.",
-          "finding_after": "The event keeps RP-OPERATIONAL-2555D@1.0.0 (cardinality_scope project, storage_value_registry.json:368) while the family is application_or_project (registry:923). SP-291 records application-scope enforcement under that bucket as an unproved policy-owner adapter seam (storage-plan.md:23548), so the application-scoped evaluations share the seam that keeps Boot, recovery-applied and compaction-lifecycle retention PARTIAL. Decision custody itself is settled by DL-048 (RP-PLATFORM-DECISION-REFERENCED@1.0.0). Jared answered card EA-S08D-OPERATIONAL-CARDINALITY-001 on 2026-09-24 (DL-083: one application-wide bucket with the same cap and overflow rule); the cell stays PARTIAL until the Storage retention owner writes that into the SP-291 policy text."
+          "finding_after": "The event keeps RP-OPERATIONAL-2555D@1.0.0 (cardinality_scope project, storage_value_registry.json:368) while the family is application_or_project (registry:923). SP-291 records application-scope enforcement under that bucket as an unproved policy-owner adapter seam (storage-plan.md:23548), so the application-scoped evaluations share the seam that keeps Boot, recovery-applied and compaction-lifecycle retention PARTIAL. Decision custody itself is settled by DL-048 (RP-PLATFORM-DECISION-REFERENCED@1.0.0). DL-083 (2026-09-24) answers that seam for the three Storage families only: the card Jared answered did not name this family, so its application-scoped evaluations stay open for him and the cell stays PARTIAL."
         }
       },
       "batch_row_sha256_before": "877aaed76060771a3b243b7dd54e2cb8c71efdcb8ee6e99eb4e273f6ff117638",
-      "batch_row_sha256_after": "06e4f4c0c606b4f1dd2f31eb2b4527c9eb43f96af8fe6c9d66f78c5508154e1c"
+      "batch_row_sha256_after": "3835254c475b967208071b8977767c03888b686e9e1a41a64bf18a762aaa9540"
     },
     {
       "event_type": "storage.boot_recovery",
@@ -440,7 +438,7 @@
     {
       "decision": "DL-083",
       "owner": "Storage retention",
-      "work": "write the application-wide bucket into the SP-291 policy text (storage-plan.md 23548) and the units that route application-scoped records to RP-OPERATIONAL-2555D",
+      "work": "write the application-wide bucket for storage.boot_recovery, storage.recovery_applied and storage.compaction_lifecycle_changed into the SP-291 policy text (storage-plan.md 23548) and the units that route those families to RP-OPERATIONAL-2555D; Platform's application-scoped evaluations wait for Jared's separate answer",
       "documents": [
         "Plans/storage-plan.md",
         "Plans/storage_value_registry.json"

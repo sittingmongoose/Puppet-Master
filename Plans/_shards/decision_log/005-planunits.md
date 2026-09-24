@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L1744-L6570
+Source lines: L1744-L6573
 
-Source SHA256: `465f7536211786aebdc276a61a3ee4b6dadce5c49ba8743a2afaa207c5cfc854`
+Source SHA256: `0493c6ce5e30a40f063ad1c4ebe2706fda55369512d82ef6c62b3e20799c4e0a`
 
 ---
 
@@ -4665,24 +4665,26 @@ owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   Jared answered Approve (option 1) on 2026-09-24 to EA-S08D-OPERATIONAL-CARDINALITY-001:
   under RP-OPERATIONAL-2555D, the records of storage.boot_recovery,
-  storage.recovery_applied and storage.compaction_lifecycle_changed, and the
-  application-scoped evaluations of platform.capability_evaluated, are counted in one
+  storage.recovery_applied and storage.compaction_lifecycle_changed are counted in one
   application-wide bucket that takes the place of the project bucket, with the same
   2,000,000-record cap, fail-closed overflow and seven-year period. Project-scoped
   records keep per-project counting. This is the policy-owner decision the SP-291
   adapter seam waits for; the Storage retention owner writes it into its policy text and
   binds the bucket under DL-045, with no new policy object and no other policy value
-  changed. Until that owner edit lands, the four retention cells in the Step 8 depth
-  assessment stay PARTIAL. Nothing is registered or admitted.
+  changed. Until that owner edit lands, the three retention cells in the Step 8 depth
+  assessment stay PARTIAL. The application-scoped evaluations of
+  platform.capability_evaluated sit on the same seam, but the card Jared answered named
+  only the three Storage families, so this answer does not cover them; that part stays
+  open for Jared. Nothing is registered or admitted.
 gui_related: false
 gui_classification_reason: Decides retention cardinality counting, not visual presentation.
 split_recommended: false
 depends_on: [DL-039, DL-045]
 unblocks: []
 acceptance_criteria:
-  - Storage owner text counts the application-scoped records of the four families in one application-wide bucket under RP-OPERATIONAL-2555D with its unchanged cap, overflow and period, and replaces the unproved adapter seam statement with that binding.
+  - Storage owner text counts the application-wide records of storage.boot_recovery, storage.recovery_applied and storage.compaction_lifecycle_changed in one application-wide bucket under RP-OPERATIONAL-2555D with its unchanged cap, overflow and period, and replaces the unproved adapter seam statement with that binding for those three families.
   - No new retention policy object is created and no RP-OPERATIONAL-2555D value changes; project-scoped records keep per-project counting.
-  - Until that owner edit lands, the Step 8 depth assessment keeps the four retention cells PARTIAL.
+  - Until that owner edit lands, the Step 8 depth assessment keeps the three retention cells PARTIAL.
 validation_surfaces:
   - reports/event-authority-20260911/decision-responses.jsonl
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -4708,6 +4710,7 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not create a new retention policy or change any RP-OPERATIONAL-2555D value to implement the application-wide bucket.
   - Do not invent a project for application-wide records or change per-project counting for project-scoped records.
+  - Do not apply this answer to the application-scoped evaluations of platform.capability_evaluated; they sit on the same seam, but that part stays open for Jared.
 owner_hints:
   - Plans/storage-plan.md
   - Plans/storage_value_registry.json
