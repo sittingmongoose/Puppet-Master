@@ -2,9 +2,9 @@
 
 Source: `Plans/Plugins_System.md`
 
-Source lines: L4564-L4570
+Source lines: L4569-L4575
 
-Source SHA256: `0b754bd9e29239becb917810f8b63479913ea56b425d53e00386acc65174f6da`
+Source SHA256: `5221647058ce770c078337c1e9c8b9c966059498610d062fa1f0988b6437c3c5`
 
 ---
 
