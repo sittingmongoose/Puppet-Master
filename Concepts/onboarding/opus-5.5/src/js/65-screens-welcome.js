@@ -45,11 +45,11 @@
           + `<span class="o55-tilename">${U.esc(T('look.families.' + f + '.name'))}</span><span class="o55-tilesub">${U.esc(T('look.families.' + f + '.sub'))}</span>`
           + `<span class="o55-check" aria-hidden="true"></span></button>`;
       }).join('');
-      /* a returning person keeps their look unless they pick another (it is already the selected tile) */
-      const keep = S.env.here.projects.length ? `<p class="o55-note o55-note-ok" data-key="keep">${C.small('check', 14)}<span>${U.esc(T('look.keep'))}</span></p>` : '';
-      return keep + `<div class="o55-tiles" role="radiogroup" aria-label="${U.esc(T('look.title'))}">${tiles}</div>`
-        + `<div class="o55-lookmode" data-key="mode">${C.segmented({ do: 'pickMode', value: th.mode, label: T('look.modeLabel'), options: [{ v: 'light', label: T('look.light'), glyph: 'spark' }, { v: 'dark', label: T('look.dark'), glyph: 'history' }] })}`
-        + `<span class="o55-hintline">${U.esc(T('look.hint'))}</span></div>`;
+      /* Light/Dark sits above the tiles; a returning person reads that their current look is kept unless they pick
+         another (it is already the selected tile) */
+      const note = S.env.here.projects.length ? `<span class="o55-hintline o55-keep">${C.small('check', 13)}${U.esc(T('look.keep'))}</span>` : `<span class="o55-hintline">${U.esc(T('look.hint'))}</span>`;
+      return `<div class="o55-lookmode" data-key="mode">${C.segmented({ do: 'pickMode', value: th.mode, label: T('look.modeLabel'), options: [{ v: 'light', label: T('look.light'), glyph: 'spark' }, { v: 'dark', label: T('look.dark'), glyph: 'history' }] })}${note}</div>`
+        + `<div class="o55-tiles" role="radiogroup" aria-label="${U.esc(T('look.title'))}">${tiles}</div>`;
     },
     mounted(S, layer, first) {
       /* each tile is a small living scene drawn with that family's own tokens */

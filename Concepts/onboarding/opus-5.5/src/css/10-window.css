@@ -301,3 +301,8 @@ html[data-motion="reduced"] .o55-railstring { animation: none !important; }
 #pm-o55-onboarding[data-family="retro"] .o55-btn, #pm-o55-onboarding[data-family="retro"] .o55-seg button, #pm-o55-onboarding[data-family="retro"] .o55-switch,
 #pm-o55-onboarding[data-family="retro"] .o55-switch span, #pm-o55-onboarding[data-family="retro"] .o55-railnode, #pm-o55-onboarding[data-family="retro"] .o55-railitem,
 #pm-o55-onboarding[data-family="retro"] .o55-check, #pm-o55-onboarding[data-family="retro"] .o55-phmark { transition: none !important; }
+
+.o55-lookmode { margin: -6px 0 2px; }
+.o55-keep { display: inline-flex; align-items: center; gap: 6px; color: var(--text-secondary); }
+.o55-keep .o55-sg { color: var(--accent-lime); }
+#pm-o55-onboarding[data-family="retro"] .o55-tileart { height: 86px; }
