@@ -5466,7 +5466,8 @@ canonical_text: >-
   after the last workgroup moves out, the old terminal section stays empty and reusable
   with its guidance state. The move creates no replacement workgroup and opens no new
   terminal session; creating one there is a separate action. The FinalGUISpec
-  2026-08-13 move reseed is retired, so source_reseeded is always false for a move.
+  2026-08-13 move reseed is retired, and source_reseeded is retired as of 2026-09-24,
+  when FinalGUISpec's DL-070 follow-up amendment landed on main (566970cb7b).
   Reset and boot recovery reconstitution are unchanged and gain no creation authority.
 gui_related: true
 gui_classification_reason: Defines the user-visible terminal section state after a workgroup move.

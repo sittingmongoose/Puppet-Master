@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L1522-L5930
+Source lines: L1522-L5931
 
-Source SHA256: `9047f3f2c11514ebae488b7f68ece59fd752c6ac1793d901bec746bea43ce41d`
+Source SHA256: `f7858552f2f6ea1c50be4324be215965362af15d6d7c01e7cc5b0bbabd652897`
 
 ---
 
@@ -3955,7 +3955,8 @@ canonical_text: >-
   after the last workgroup moves out, the old terminal section stays empty and reusable
   with its guidance state. The move creates no replacement workgroup and opens no new
   terminal session; creating one there is a separate action. The FinalGUISpec
-  2026-08-13 move reseed is retired, so source_reseeded is always false for a move.
+  2026-08-13 move reseed is retired, and source_reseeded is retired as of 2026-09-24,
+  when FinalGUISpec's DL-070 follow-up amendment landed on main (566970cb7b).
   Reset and boot recovery reconstitution are unchanged and gain no creation authority.
 gui_related: true
 gui_classification_reason: Defines the user-visible terminal section state after a workgroup move.
