@@ -18,7 +18,7 @@ Rows the review marked TECHNICAL_BLOCKED are unfinished technical work. They are
 2. For each row, re-read its row report (`step-09-execution-rows.jsonl`, `step-09-extensions-rows.jsonl` or `step-09-interaction-rows.jsonl`) and the current owner text, then reach exactly one outcome.
 3. A new binding identifier is authored only under DL-045 (the 285-family scope) or DL-046 (the 53 Browser names): only after a documented per-family search of current canon, with citations to existing partial contracts and scoped negative evidence, and labelled a newly authored owner contract.
 4. The batch report lists every row's outcome with its evidence, the commits, the checks run and their counts, and the running count of registered, excluded, carded and remaining.
-5. Before landing, a blind form-driven review runs. The coordinator dispatches the reviewer; one review and at most one repair cycle, then open points are written down (DL-066).
+5. Before landing, one blind form-driven review runs, dispatched by the coordinator. One bounded repair round addresses its blocking findings, and a re-review limited to the rows the repair touched finds no blocking finding; findings still standing after that are written down as open questions (DL-066's bound, applied here to Step 9 batches). A batch with an unrepaired blocking finding does not land.
 6. Landings go one at a time under the landing lock, after the coordinator's go.
 
 ## Per registration
