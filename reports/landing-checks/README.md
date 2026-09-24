@@ -18,6 +18,13 @@ file any landing branch touched: stale governance hashes, and a plan-migration s
 Both hand the aggregate checks `--subcheck-timeout-seconds`, 600 by default; see "Subchecks that
 time out" below.
 
+At landing, also pass `--keep-check-reports <dir>`, a directory under
+`/mnt/Cursor/PuppetMaster-Evidence/`. It keeps each check's full report, every row it printed, as
+`<dir>/<check>.json` beside the `--json` output, so the landing can later be replayed exactly. The
+`--json` report keeps only the rows it reports, and a replay from it alone cannot see the rest of a
+sampled subcheck's printed rows, which is what the readiness growth counter reads. The directory must
+be outside the repository: the check refuses one inside it with exit 3, before it runs anything.
+
 Exit codes: 0 nothing to report; 1 nothing it reports stops the landing, meaning governance
 staleness on files the branch edited, pre-existing failures whose count has not risen, or failures
 that are new but name none of the branch's files; 2 something it reports does stop the landing,

@@ -1562,6 +1562,37 @@ class ReviewLimits(LandingRun):
         self.assertIn("before pushing main", out)
 
 
+class KeptCheckReports(LandingRun):
+    """Review L-03: the --json report keeps only the rows it reports, so a replay of a sampled
+    subcheck from it cannot see the rest of the sample. --keep-check-reports keeps every printed row."""
+
+    def test_each_check_s_full_report_is_kept_outside_the_repository(self):
+        self.stub(gates={"verify_spec_lock": [STALE_HASH]}, migration=[SPAN_META])
+        self.record()
+        self.touch("Plans/Touched.md")
+        with tempfile.TemporaryDirectory() as keep:
+            code, out = self.compare("--keep-check-reports", keep)
+            self.assertEqual(code, 0, out)
+            self.assertIn(f"full check reports kept in {Path(keep).resolve()}", out)
+            self.assertEqual(sorted(path.name for path in Path(keep).iterdir()),
+                             ["audit-governance.json", "plan-migration-validate.json", "run-gates.json"])
+            kept = json.loads((Path(keep) / "run-gates.json").read_text(encoding="utf-8"))
+            self.assertEqual(kept["failures"][0]["failures"], [STALE_HASH])
+            migration = json.loads((Path(keep) / "plan-migration-validate.json").read_text(encoding="utf-8"))
+            self.assertEqual(migration["failures"], [SPAN_META])
+
+    def test_a_directory_inside_the_repository_is_refused_before_anything_runs(self):
+        ran = []
+        self.stub(gates={"verify_spec_lock": [STALE_HASH]})
+        inner = self.module.run_check
+        self.module.run_check = lambda *a, **k: (ran.append(1), inner(*a, **k))[1]
+        code, _ = self.compare("--keep-check-reports", str(self.repo / "kept"))
+        self.assertEqual(code, 3)
+        self.assertEqual(ran, [])
+        self.assertFalse((self.repo / "kept").exists())
+        self.assertIn("--keep-check-reports must name a directory outside the repository", self.stderr)
+
+
 class BaselineReading(unittest.TestCase):
     def test_a_foreign_document_is_refused(self):
         import tempfile

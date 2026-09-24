@@ -59,6 +59,11 @@ for a deliberate partial run.
 Deterministic: same tree in, same bytes out. No network. Nothing read outside the repository except
 the checks' own inputs.
 
+The --json report keeps only the rows it reports, so a later replay cannot see the rest of a sampled
+subcheck's printed rows. With --keep-check-reports DIR, a directory outside the repository, each
+check's full report, every row it printed, is kept as DIR/<check>.json, so a landing can be
+replayed exactly.
+
 Exit codes:
   0  nothing to report
   1  nothing it reports stops the landing: governance staleness on files the branch edited,
@@ -817,6 +822,9 @@ def main() -> int:
     parser.add_argument("--json", action="store_true", help="print the machine-readable report instead of the summary")
     parser.add_argument("--allow-sparse", action="store_true",
                         help="run on a sparse worktree anyway; everything outside the cone reads as missing")
+    parser.add_argument("--keep-check-reports", default=None, metavar="DIR",
+                        help="also keep each check's full report, every row it printed, as DIR/<check>.json, "
+                             "so the run can be replayed exactly; DIR must be outside the repository")
     args = parser.parse_args()
 
     root = Path(args.root).resolve()
@@ -832,6 +840,19 @@ def main() -> int:
               "at landing, or here after `git sparse-checkout disable`. Pass --allow-sparse to run it "
               "on this tree anyway.", file=sys.stderr)
         return 3
+
+    keep_dir: Path | None = None
+    if args.keep_check_reports:
+        keep_dir = Path(args.keep_check_reports).resolve()
+        if keep_dir == root or root in keep_dir.parents:
+            print("pm-landing-check: --keep-check-reports must name a directory outside the repository; "
+                  "nothing is written inside it.", file=sys.stderr)
+            return 3
+        try:
+            keep_dir.mkdir(parents=True, exist_ok=True)
+        except OSError as exc:
+            print(f"pm-landing-check: cannot create {keep_dir}: {exc}", file=sys.stderr)
+            return 3
 
     try:
         run_dir = args.run_dir or current_run_dir(root)
@@ -865,6 +886,9 @@ def main() -> int:
         except RuntimeError as exc:
             print(f"pm-landing-check: {exc}", file=sys.stderr)
             return 3
+        if keep_dir is not None:
+            (keep_dir / f"{check}.json").write_text(
+                json.dumps(report, indent=1, sort_keys=True) + "\n", encoding="utf-8")
         statuses[check] = str(report.get("status", "unknown"))
         check_items, check_counts = extract(check, report, root)
         items.extend(check_items)
@@ -995,6 +1019,7 @@ def main() -> int:
                 "resolved_buckets": resolved,
                 "infrastructure": infrastructure,
                 "subcheck_timeout_seconds": args.subcheck_timeout_seconds,
+                "kept_check_reports": str(keep_dir) if keep_dir else None,
                 "blocking": len(blocking),
             },
             indent=1,
@@ -1010,6 +1035,8 @@ def main() -> int:
             note = f", {plural(infra, 'infrastructure result')} among them" if infra else ""
             print(f"  {check:24s} {statuses[check]:5s} {total:7d} failures (baseline {was}){note}")
         print(f"  branch paths from git diff --name-only {args.base}..HEAD: {len(touched)}")
+        if keep_dir is not None:
+            print(f"  full check reports kept in {keep_dir}")
         truncated = [
             f"{check}/{name}" for check in CHECKS for name in sorted(counts[check])
             if counts[check][name]["sampled"] < counts[check][name]["reported"]
