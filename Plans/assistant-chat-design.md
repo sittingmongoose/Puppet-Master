@@ -25261,6 +25261,9 @@ floating panel over the transcript, and the older popover wording must not be us
 
 Mute and Focus continue to apply immediately to the selected messages. Subcompact stages a
 preview without changing effective assembly; explicit Apply is required to install the summary.
+A single Subcompact Apply supports up to 25 messages. This is a per-Apply bound, not a
+thread-wide total; multiple operations may accumulate. It does not impose a selection cap on
+Mute and Focus and does not specify a summary byte cap or extraction algorithm.
 Cancel changes neither canonical source messages nor effective assembly. The preview binds the
 exact thread/project identity, source-message identities and content revisions/hashes, current
 shaping revision, and summary identity. Source edits, source deletion/revocation, thread
@@ -25291,7 +25294,10 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   The Context Lens header mode chooser and in-flow expanded selection row are distinct surfaces.
   Subcompact previews are bound to exact scope, source revisions, shaping revision, and summary
-  identity; only explicit current Apply changes effective assembly. Turn Off clears transient
+  identity; only explicit current Apply changes effective assembly. A single Subcompact Apply
+  supports up to 25 messages, not a thread-wide total; multiple operations may accumulate.
+  This per-Apply bound does not impose a selection cap on Mute and Focus or specify a summary
+  byte cap or extraction algorithm. Turn Off clears transient
   selection and releases applied shaping with an attributable receipt, never deleting canonical
   history. Individual removal and rehydration can reverse one operation. Retrieval, branches, and child handoffs reuse the Prompt Pipeline owner.
 gui_related: true
@@ -25301,6 +25307,7 @@ unblocks: []
 acceptance_criteria:
   - Expanded Lens controls push the transcript down; the mode chooser does not become a second context pane.
   - Source or scope drift refuses Apply without mutating history or effective context.
+  - A single Subcompact Apply supports up to 25 messages; multiple operations may accumulate beyond 25 messages in the thread, with no selection cap on Mute and Focus implied by this bound.
   - Cancel and duplicate Apply preserve the appropriate previous state and stable result identity.
   - Turn Off clears selection and releases applied shaping with disclosed counts while preserving canonical history.
   - Branches retain canonical source and shaping lineage, not a stale pending preview capability.
@@ -25310,7 +25317,21 @@ reasoning_tier: high
 context_scope: context_lens_shaping
 implementation_surfaces: [Plans/assistant-chat-design.md, Plans/Prompt_Pipeline.md, Plans/FinalGUISpec.md]
 node_compile_hint: {mode: contract_reconciliation_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [user_correction:2026-09-10-fix-gaps-and-authority, ACD-192, ACD-193, ACD-194, ACD-455]
+source_lineage:
+  - user_correction:2026-09-10-fix-gaps-and-authority
+  - ACD-192
+  - ACD-193
+  - ACD-194
+  - ACD-455
+  - source_packet:PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10:02_FIXED_PRODUCT_BEHAVIOR.md:103-119
+  - source_packet:PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10:reference/original_handoff/01_FIXED_REQUIREMENTS.md:364-380
+  - source_packet:PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10:machine/original_requirements.json:contextLens.maximumMessagesPerApply
+preserved_exact_tokens:
+  - "Subcompact Apply"
+  - "up to 25 messages"
+  - "not a thread-wide total"
+  - "multiple operations may accumulate"
+  - "Mute and Focus"
 negative_constraints:
   - Do not promote a concept extraction algorithm or fixture byte cap to production summarization policy.
   - Do not create a second context, retrieval, or Assistant memory authority.
