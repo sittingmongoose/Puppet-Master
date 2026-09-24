@@ -11516,9 +11516,10 @@ reacquire the actual SP-278 root/generation/anchor/frontier/source token, join t
 live redb snapshot id of its own read to the stored nine-field durable token, and
 recheck the current Project/access/deletion fence for each disclosure; a stored
 token, matching generation or old creation row does not authorize a current answer.
-The v1 checkpoint and reader remain versioned compatibility custody, not an
-alternate v2 currentness path. Neither route can act on a live workspace, and
-the successor does not change creation publication or admit another Browser event.
+Until that replacement the v1 checkpoint and reader remain the current route; after
+it they are versioned compatibility custody only, never an alternate v2 currentness
+path. Neither route can act on a live workspace, and the successor does not change
+creation publication or admit another Browser event.
 
 ### SMPFS-167 - Workspace-created transition and historical inventory consumer
 

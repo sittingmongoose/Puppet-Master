@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11411-L11559
+Source lines: L11411-L11560
 
-Source SHA256: `baca0cf66c70c029d71cf2e51669f63104c743a0418f2f59b7f671f0b80b5a3a`
+Source SHA256: `7d9aa4f24e9ad375fb0e045d78cb837cd7f27a547ebc0b75030491c9c8c821d4`
 
 ---
 
@@ -116,9 +116,10 @@ reacquire the actual SP-278 root/generation/anchor/frontier/source token, join t
 live redb snapshot id of its own read to the stored nine-field durable token, and
 recheck the current Project/access/deletion fence for each disclosure; a stored
 token, matching generation or old creation row does not authorize a current answer.
-The v1 checkpoint and reader remain versioned compatibility custody, not an
-alternate v2 currentness path. Neither route can act on a live workspace, and
-the successor does not change creation publication or admit another Browser event.
+Until that replacement the v1 checkpoint and reader remain the current route; after
+it they are versioned compatibility custody only, never an alternate v2 currentness
+path. Neither route can act on a live workspace, and the successor does not change
+creation publication or admit another Browser event.
 
 ### SMPFS-167 - Workspace-created transition and historical inventory consumer
 
