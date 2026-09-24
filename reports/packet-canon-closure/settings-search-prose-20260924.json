@@ -1,0 +1,47 @@
+{
+  "schema_id": "pm.packet_canon_closure.repair_report.v1",
+  "finding_id": "SDRAW-C011",
+  "phase": "owner_prose_only",
+  "base_commit": "f68289a54f6d1b10c567c4129967d2f8a747d4d5",
+  "branch": "fix/settings-search-contracts-20260924",
+  "owner": "Plans/Settings_System.md",
+  "plan_units": ["SSYS-005", "SSYS-019"],
+  "owner_sha256": "37b13dea7d06cd0a5105d305204ee6d1bc8341545693473a63c9771ed3326cd6",
+  "approved_proposal_sha256": "40a5627947bad18acffba06d5c246e648e608fb077654083fb3c3b509c0f6110",
+  "approved_exact_diff_sha256": "58f7264641237d059cf1daf542ca034a9a2a412e1947e05384f07482ddb59af1",
+  "source_refs": [
+    {"path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/machine_readable/search_contract.json", "sha256": "a54290ec00454403817d5579a5a784084f912167b90b56a76e110dc02674605b", "read_lines": [1, 48]},
+    {"path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/03_HOME_SEARCH_AND_NAVIGATION.md", "sha256": "285f06762ea85e269a8e629b118126b3481669cc1f800a840ecbd997f97fa955", "read_lines": [1, 82]},
+    {"path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/machine_readable/supersessions.json", "sha256": "6b3984ad7d91f453791c48fd4d8bd7985a9ea9b8013a902f3055ffd53583bcd3", "read_lines": [1, 29]}
+  ],
+  "retained": ["K3 geometry", "current Escape order", "optional Back/Close presentation", "conditional already-supported Help", "SSYS-035 non-active manager-tab placement", "existing route and exact owner context", "selection distinct from native focus", "no manager hydration on result visibility"],
+  "verification": {
+    "settings_tests": {"command": "python3 -m unittest discover -s tests -p 'test_pm_settings*'", "passed": 19, "new_prose_tests": 4},
+    "index_generate_and_validate": "pass",
+    "index_plan_units": 6719,
+    "index_acceptance_units": 26224,
+    "changed_index_units": 37,
+    "changed_index_owner_only": "Plans/Settings_System.md",
+    "semantic_changed_units_only": ["SSYS-005", "SSYS-019"],
+    "other_index_unit_changes": "Settings source hash and source locations only",
+    "acceptance_added": ["SSYS-005-A006", "SSYS-005-A007", "SSYS-019-A005", "SSYS-019-A006"],
+    "acceptance_removed": [],
+    "shard_generate_and_check": {"status": "pass", "documents": 99, "shards": 2721, "changed_shard_files": 0},
+    "git_diff_check": "pass"
+  },
+  "separately_authorized_integration_diagnostic": {
+    "cause": "Already-integrated Tour ephemeral record-kind additions, not this Settings owner edit",
+    "path": "Plans/.plan_index/node_readiness_report.json",
+    "pointer": "/runtime_enablement_status/executable_lifecycle_certification_failures/4/expected",
+    "source_path": "Plans/storage_value_registry.json",
+    "error": "pnc019_source_hash_stale",
+    "before": "76813d70faa372b2c883f8042ee5295a8cca135ba788d3994cffdb5e41cb5640",
+    "after": "56c227c81bb1006d9799dad3c99b3685588817380ed84ffc8d9b356ad29838c4",
+    "sealed_actual_unchanged": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
+    "independent_parent_evidence": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/scm-tour-goal-index-delta-before-regeneration.json",
+    "independent_parent_evidence_sha256": "ceb10cf862660c607e81150e82662b4c5e2038bf24243e3cb7b5c20bdfbdb2b0",
+    "disposition": "Stopped and obtained exact parent authorization before commit; no other unrelated generated delta admitted"
+  },
+  "skill": {"path": "/mnt/Cursor/PuppetMaster/.agents/skills/pm-bootstrap-planning-ledger/SKILL.md", "use": "Read in full for PlanUnit/index generation boundaries; no ledger, WorkNodes, physical persistence or governance seal created"},
+  "claim_boundary": "Prose preservation and static regression/index checks only. Companion implementation is a separate next step; no native GUI, route execution, owner receipt, readiness, binding refresh or main landing."
+}
