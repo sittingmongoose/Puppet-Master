@@ -620,6 +620,172 @@ class ConditionalCreatedV2Tests(unittest.TestCase):
         self.assertIn('checkpoint_not_current', V2.advance_failures(None, incomplete, index, obs))
         self.assertIn('checkpoint_not_current', V2.source_failures(incomplete, index, obs, disclosure=True))
 
+    # S-02: every schema conditional has a negative on the current value, on a
+    # bare core and inside retired history, with the valid shapes as controls.
+    CONDITIONAL_VIOLATIONS = {
+        'current_filter_incomplete': {'state': 'current', 'filter_complete': False},
+        'current_health_degraded': {'state': 'current', 'health': 'degraded'},
+        'current_withdrawal_time': {'state': 'current', 'withdrawn_at_utc': '2026-09-11T20:00:00Z'},
+        'degraded_health_healthy': {'state': 'degraded', 'health': 'healthy'},
+        'degraded_withdrawal_time': {'state': 'degraded', 'health': 'degraded',
+                                     'withdrawn_at_utc': '2026-09-11T20:00:00Z'},
+        'withdrawn_null_time': {'state': 'withdrawn', 'withdrawn_at_utc': None},
+        'null_cursor_integer_bounds': {'source_cursor': None},
+        'cursor_null_bounds': {'first_retained_sequence_id': None, 'index_through_sequence_id': None},
+    }
+
+    def test_schema_conditionals_reject_each_violation(self):
+        _, first, _ = self.handoff(withdrawn=True)
+        rotated, _ = self.rotate(first, 'publication:created-v2-second', '2026-09-12T20:00:00Z')
+        self.assertEqual(V2.checkpoint_failures(rotated), [])
+        for name, change in self.CONDITIONAL_VIOLATIONS.items():
+            with self.subTest(violation=name):
+                value = {**copy.deepcopy(self.cp), **copy.deepcopy(change)}
+                self.assertEqual(V2.checkpoint_failures(value), ['checkpoint_schema'])
+                core = {k: v for k, v in value.items() if k != 'retired_generations'}
+                self.assertEqual(V2.core_failures(core), ['checkpoint_core_schema'])
+                retired = copy.deepcopy(rotated)
+                retired['retired_generations'][1]['checkpoint_core'].update(copy.deepcopy(change))
+                self.assertEqual(V2.checkpoint_failures(retired), ['checkpoint_schema'])
+        for name, change in {'degraded': {'state': 'degraded', 'health': 'degraded'},
+                             'withdrawn': {'state': 'withdrawn', 'withdrawn_at_utc': '2026-09-11T20:00:00Z'},
+                             'empty': {'source_cursor': None, 'first_retained_sequence_id': None,
+                                       'index_through_sequence_id': None}}.items():
+            with self.subTest(valid=name):
+                value = {**copy.deepcopy(self.cp), **change}
+                self.assertEqual(V2.checkpoint_failures(value), [])
+                self.assertEqual(V2.core_failures({k: v for k, v in value.items() if k != 'retired_generations'}), [])
+
+    def test_verified_empty_source_is_explicit_null_cursor(self):
+        cp, index, obs, _ = V2.fixture_values(generic_case='verified_empty')
+        self.assertEqual((cp['first_retained_sequence_id'], cp['index_through_sequence_id'], cp['source_cursor']),
+                         (None, None, None))
+        self.assertEqual(V2.advance_failures(None, cp, index, obs), [])
+        self.assertEqual(V2.source_failures(cp, index, obs, disclosure=True), [])
+        fabricated = {**cp, 'index_through_sequence_id': 0}
+        self.assertEqual(V2.checkpoint_failures(fabricated), ['checkpoint_schema'])
+        frame = {'segment_generation': 1, 'segment_name': 'seg-000001-00000000000000000000.active',
+                 'byte_offset': 0, 'frame_end_offset': 1, 'last_sequence_id': 0, 'last_event_id': 'event:fabricated'}
+        fabricated = {**cp, 'first_retained_sequence_id': 0, 'index_through_sequence_id': 0, 'source_cursor': frame}
+        self.assertEqual(V2.checkpoint_failures(fabricated), [])
+        self.assertEqual(V2.source_failures(fabricated, index, obs, disclosure=True), ['complete_examined_range_join'])
+
+    def test_source_withdrawn_and_project_join_rejected(self):
+        withdrawn = {**copy.deepcopy(self.cp), 'state': 'withdrawn', 'withdrawn_at_utc': self.cp['updated_at_utc']}
+        self.assertEqual(V2.source_failures(withdrawn, self.index, self.obs, disclosure=True), ['checkpoint_not_current'])
+        other = copy.deepcopy(self.obs); other['project_id'] = 'project-other'
+        self.assertEqual(V2.source_failures(self.cp, self.index, other), ['project_join'])
+        self.assertEqual(V2.source_failures(self.cp, self.index, other, disclosure=True), ['project_join'])
+
+    def test_refresh_negative_exits(self):
+        before = copy.deepcopy(self.cp)
+        after = copy.deepcopy(before); after['updated_at_utc'] = '2026-09-12T20:00:00Z'
+        obs = copy.deepcopy(self.obs); obs['prior_checkpoint'] = copy.deepcopy(before)
+        self.assertEqual(V2.advance_failures(before, after, self.index, obs), [])
+        invalid = {**copy.deepcopy(before), 'unexpected': True}
+        self.assertEqual(V2.advance_failures(invalid, after, self.index, obs), ['checkpoint_schema'])
+        wrong = copy.deepcopy(obs); wrong['prior_checkpoint'] = None
+        self.assertEqual(V2.advance_failures(before, after, self.index, wrong), ['prior_value_cas'])
+        cases = {
+            'withdrawn_requires_replacement': {'state': 'withdrawn', 'withdrawn_at_utc': before['updated_at_utc']},
+            'observation_time_regressed': {'updated_at_utc': '2026-09-13T20:00:00Z'},
+        }
+        for error, change in cases.items():
+            prior = {**copy.deepcopy(before), **change}
+            prior_obs = copy.deepcopy(obs); prior_obs['prior_checkpoint'] = copy.deepcopy(prior)
+            self.assertEqual(V2.advance_failures(prior, after, self.index, prior_obs), [error])
+        wider = copy.deepcopy(before)
+        wider['index_through_sequence_id'] += 1
+        wider['source_cursor']['last_sequence_id'] += 1
+        wider_obs = copy.deepcopy(obs); wider_obs['prior_checkpoint'] = copy.deepcopy(wider)
+        self.assertEqual(V2.advance_failures(wider, after, self.index, wider_obs), ['refresh_range_regressed'])
+        empty, empty_index, empty_obs, _ = V2.fixture_values(generic_case='verified_empty')
+        empty['updated_at_utc'] = '2026-09-12T20:00:00Z'
+        empty_obs['prior_checkpoint'] = copy.deepcopy(before)
+        self.assertEqual(V2.advance_failures(before, empty, empty_index, empty_obs), ['refresh_range_regressed'])
+
+    def test_generation_negative_exits(self):
+        self.assertEqual(V2.generation_failures(None, self.cp, None), ['generation_observation_schema'])
+        withdrawn = {**copy.deepcopy(self.cp), 'state': 'withdrawn', 'withdrawn_at_utc': self.cp['published_at_utc']}
+        self.assertEqual(V2.generation_failures(None, withdrawn, self.bind(None, withdrawn)), ['generation_birth'])
+        refreshed = {**copy.deepcopy(self.cp), 'updated_at_utc': '2026-09-12T20:00:00Z'}
+        self.assertEqual(V2.generation_failures(None, refreshed, self.bind(None, refreshed)), ['generation_birth'])
+        _, handed, _ = self.handoff()
+        self.assertEqual(V2.generation_failures(None, handed, self.bind(None, handed)), ['initial_history'])
+        custody = {'publication_id': 'publication:created-v1-custody', 'codec': 'messagepack_canonical', 'hold_refs': []}
+        self.assertEqual(V2.generation_failures(None, self.cp, self.bind(None, self.cp, custody)), ['initial_history'])
+        before, after, obs = self.handoff()
+        broken = {**copy.deepcopy(before), 'unexpected': True}
+        obs = self.bind(broken, after, obs['generation_transaction']['v1_custody'])
+        self.assertIn('legacy_schema', V2.generation_failures(broken, after, obs))
+        _, first, _ = self.handoff(withdrawn=True)
+        first['updated_at_utc'] = '2026-09-13T20:00:00Z'
+        second, obs = self.rotate(first, 'publication:created-v2-second', '2026-09-12T20:00:00Z')
+        self.assertEqual(V2.checkpoint_failures(second), [])
+        self.assertEqual(V2.generation_failures(first, second, obs), ['replacement_scope_or_time'])
+        _, first, _ = self.handoff(withdrawn=True)
+        second, obs = self.rotate(first, 'publication:created-v2-second', '2026-09-12T20:00:00Z')
+        self.assertEqual(V2.generation_failures(first, second, obs), [])
+        self.assertEqual(V2.generation_failures(first, second, self.bind(first, second, custody)),
+                         ['replacement_identity'])
+        reused, obs = self.rotate(first, first['publication_id'], '2026-09-12T20:00:00Z')
+        self.assertEqual(V2.generation_failures(first, reused, obs), ['history_identity'])
+
+    def test_history_time_negative_exits(self):
+        _, after, _ = self.handoff(withdrawn=True)
+        early = copy.deepcopy(after)
+        early['retired_generations'][0]['custody_bound_at_utc'] = '2026-09-11T12:00:30Z'
+        self.assertEqual(V2.checkpoint_failures(early), ['legacy_custody_time'])
+        late = copy.deepcopy(after)
+        late['retired_generations'][0]['custody_bound_at_utc'] = '2026-09-12T00:00:00Z'
+        self.assertEqual(V2.checkpoint_failures(late), ['history_time'])
+
+    def cleanup_obs(self, before, after, publication, now='2026-09-18T12:00:00Z'):
+        return {'prior_checkpoint': copy.deepcopy(before), 'now_utc': now, 'resolved_hold_refs': [],
+                'active_hold_refs': [], 'resolved_references': [], 'all_applicable_holds_enumerated': True,
+                'hold_ref_fence_current': True, 'cleanup_transaction_resolved': True,
+                'maintenance_authorized': True, 'access_allowed': True, 'deletion_allows_audit': True,
+                'cleanup_transaction': {
+                    'schema_id': 'pm.browser_workspace_created_checkpoint_cleanup_transaction.v2',
+                    'transaction_ref': 'transaction:created-v2-cleanup', 'before': copy.deepcopy(before),
+                    'after': copy.deepcopy(after), 'checkpoint_key': V2.key(before),
+                    'selected_publication_id': publication, 'committed_at_utc': now, 'status': 'committed'}}
+
+    def test_cleanup_negative_exits(self):
+        _, first, _ = self.handoff(withdrawn=True)
+        second, _ = self.rotate(first, 'publication:created-v2-second', '2026-09-12T20:00:00Z')
+        v1_publication = second['retired_generations'][0]['publication_id']
+        after = copy.deepcopy(second); after['retired_generations'].pop(0)
+        obs = self.cleanup_obs(second, after, v1_publication)
+        self.assertEqual(V2.cleanup_failures(second, after, v1_publication, obs), [])
+        self.assertEqual(V2.cleanup_failures(second, after, v1_publication, None), ['cleanup_observation_schema'])
+        invalid = {**copy.deepcopy(second), 'unexpected': True}
+        self.assertEqual(V2.cleanup_failures(invalid, after, v1_publication, obs), ['checkpoint_schema'])
+        self.assertEqual(V2.cleanup_failures(second, after, 'publication:missing', obs), ['cleanup_publication_missing'])
+        for now in ('not-a-time', None, 20260918):
+            changed = copy.deepcopy(obs); changed['now_utc'] = now
+            self.assertIn('cleanup_protected_or_unexpired', V2.cleanup_failures(second, after, v1_publication, changed))
+        missing = copy.deepcopy(obs); del missing['now_utc']
+        self.assertIn('cleanup_protected_or_unexpired', V2.cleanup_failures(second, after, v1_publication, missing))
+        malformed = copy.deepcopy(obs); malformed['cleanup_transaction']['status'] = 'pending'
+        self.assertEqual(V2.cleanup_failures(second, after, v1_publication, malformed), ['cleanup_transaction_schema'])
+        for target in ('current', 'sibling'):
+            altered = copy.deepcopy(after)
+            if target == 'current':
+                altered['updated_at_utc'] = '2026-09-18T12:00:00Z'
+            else:
+                altered['retired_generations'][0]['checkpoint_core']['hold_refs'] = ['hold:altered']
+            self.assertEqual(V2.checkpoint_failures(altered), [])
+            self.assertEqual(V2.cleanup_failures(second, altered, v1_publication,
+                                                 self.cleanup_obs(second, altered, v1_publication)),
+                             ['cleanup_changed_survivors'])
+        # A retired v2 core is anchored at its own first withdrawal.
+        v2_publication = second['retired_generations'][1]['checkpoint_core']['publication_id']
+        after = copy.deepcopy(second); after['retired_generations'].pop(1)
+        for now, expected in (('2026-09-19T19:59:59Z', ['cleanup_protected_or_unexpired']), ('2026-09-19T20:00:00Z', [])):
+            self.assertEqual(V2.cleanup_failures(second, after, v2_publication,
+                                                 self.cleanup_obs(second, after, v2_publication, now)), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

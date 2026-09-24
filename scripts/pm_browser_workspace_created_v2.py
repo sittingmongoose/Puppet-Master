@@ -255,7 +255,7 @@ def cleanup_failures(before, after, publication_id, observation, root=ROOT):
     holds = entry.get('hold_refs', entry.get('checkpoint_core', {}).get('hold_refs'))
     try:
         eligible = instant(observation['now_utc']) >= instant(anchor) + timedelta(seconds=604800)
-    except (ValueError, KeyError, TypeError):
+    except (ValueError, KeyError, TypeError, AttributeError):
         eligible = False
     resolved_holds = observation.get('resolved_hold_refs')
     if (not eligible or not isinstance(resolved_holds, list) or sorted(resolved_holds) != sorted(holds) or
