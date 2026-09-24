@@ -4255,6 +4255,8 @@ Hooks and registered commands remain least-authority components. Unknown hooks, 
 
 ### Conformance, supply chain, update, and rollback
 
+Package loading and conformance resolve schemas from the locally bundled, versioned schema set; loading never fetches a schema from the network. A manifest schema reference does not grant network access or bypass the existing closed-schema, containment, provenance, permission, or required-component checks.
+
 `PortableConformanceReport` is a compatibility-named internal-interchange report; it records the internal `plugin.json` hash, skills-root containment, internal `mcp.json` validation, unsupported components, `interchange_scope=pm_internal_only`, `direct_external_loadability=false`, and result. `TargetAdapterOutput` and `TargetAdapterConformanceReport` separately record one named ecosystem, current target paths, source/output hashes, source/generated inventories, target manifest and MCP schema IDs/validation refs, authority mapping, and `authority_widening=false`. `AgentPluginConformanceReport` records PM manifest and package hashes, component results, permissions/capabilities, sandbox, signature/provenance, entry/argv/environment/transport bounds, root/data separation, and result. All reports are immutable and generation-bound; none is runtime proof.
 
 Install/update admission requires package hash, publisher/signature/trust-root proof, license and SBOM refs, archive containment evidence, exact manifest hashes, target platform/architecture compatibility, known-bad check, and conformance refs. `PluginUpdateDiff` is the closed update-review record: it binds exact old/new package versions, generations, and hashes plus typed manifest, component, permission, capability, sandbox, executable/argv/environment/runtime-limit, transport/endpoint, license, SBOM, publisher, signature, provenance, known-bad, and runtime-compatibility axes. It also records authority change, reapproval state and ref, candidate signature status, retained prior generation, rollback package proof, and review disposition. `cmd.agent_plugin.update`, `.reload`, `.review_changes`, and `.rollback` request/result/receipt records require the exact `update_diff_ref`; an opaque permission/component ref is not a substitute. The prior verified generation remains available until replacement commit. Failure before commit leaves it active; failure after switch follows the recorded rollback plan and produces a typed rollback result. Missing rollback evidence cannot become success.
@@ -4345,6 +4347,7 @@ acceptance_criteria:
   - PLUGIN_ROOT is read-only and PLUGIN_DATA cannot shadow content or escape its per-plugin authority.
   - External processes and transport are bounded, allowlisted, governed, cancellable as a process tree, and unable to open unowned public/control/debug endpoints.
   - Internal-interchange, target-adapter, and PM-native conformance reports preserve exact generation, source/output hashes, inventories, schemas, component, authority, and provenance evidence without widening authority.
+  - Package loading and conformance resolve schemas from the locally bundled, versioned set; load-time schema resolution performs no network fetch and cannot bypass closed-schema, containment, provenance, permission, or required-component checks. An offline static validator alone does not prove native loader behavior.
 validation_surfaces: [Plans/plugin_package_contract_fixtures.json, path-traversal and symlink-escape rejection, broker-secret and HTTPS enforcement, component-isolation, crash-budget/bounded-log, stale-routine, signature-change, and containment fixtures]
 risk_class: plugin_package_escape_or_authority_widening
 reasoning_tier: high
@@ -4353,6 +4356,8 @@ implementation_surfaces: [Plans/Plugins_System.md, Plans/plugin_package_contract
 node_compile_hint: {mode: plugin_package_containment_conformance, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - register-egolite.md#PLG-02 (audited 2026-08-31)
+  - source_ref:packet:PKT-04/01_IMPLEMENTATION_PACKET.md:761
+  - source_ref:packet:PKT-04/sources/01_EGO_EVALUATION.md:606
 negative_constraints:
   - Do not expose AuthBrowserSession, raw secrets, private absolute paths, internal sockets, or an unbounded process/log stream to a plugin.
   - Do not let a plugin manifest, permission, or adapter become public endpoint authority.

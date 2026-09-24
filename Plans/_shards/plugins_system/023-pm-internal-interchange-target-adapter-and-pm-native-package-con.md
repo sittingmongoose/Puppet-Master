@@ -2,9 +2,9 @@
 
 Source: `Plans/Plugins_System.md`
 
-Source lines: L4221-L4424
+Source lines: L4221-L4429
 
-Source SHA256: `0b754bd9e29239becb917810f8b63479913ea56b425d53e00386acc65174f6da`
+Source SHA256: `5221647058ce770c078337c1e9c8b9c966059498610d062fa1f0988b6437c3c5`
 
 ---
 
@@ -44,6 +44,8 @@ A subprocess entry is represented as one exact executable token plus a bounded a
 Hooks and registered commands remain least-authority components. Unknown hooks, unsigned privileged packages, tool/command collisions without explicit policy, and permission/capability mismatch fail before activation. Child runs receive only the effective compatible subset and cannot widen tool, Browser, MCP, filesystem, network, or command authority. Protected `AuthBrowserSession` remains inaccessible to plugins and plugin adapters.
 
 ### Conformance, supply chain, update, and rollback
+
+Package loading and conformance resolve schemas from the locally bundled, versioned schema set; loading never fetches a schema from the network. A manifest schema reference does not grant network access or bypass the existing closed-schema, containment, provenance, permission, or required-component checks.
 
 `PortableConformanceReport` is a compatibility-named internal-interchange report; it records the internal `plugin.json` hash, skills-root containment, internal `mcp.json` validation, unsupported components, `interchange_scope=pm_internal_only`, `direct_external_loadability=false`, and result. `TargetAdapterOutput` and `TargetAdapterConformanceReport` separately record one named ecosystem, current target paths, source/output hashes, source/generated inventories, target manifest and MCP schema IDs/validation refs, authority mapping, and `authority_widening=false`. `AgentPluginConformanceReport` records PM manifest and package hashes, component results, permissions/capabilities, sandbox, signature/provenance, entry/argv/environment/transport bounds, root/data separation, and result. All reports are immutable and generation-bound; none is runtime proof.
 
@@ -135,6 +137,7 @@ acceptance_criteria:
   - PLUGIN_ROOT is read-only and PLUGIN_DATA cannot shadow content or escape its per-plugin authority.
   - External processes and transport are bounded, allowlisted, governed, cancellable as a process tree, and unable to open unowned public/control/debug endpoints.
   - Internal-interchange, target-adapter, and PM-native conformance reports preserve exact generation, source/output hashes, inventories, schemas, component, authority, and provenance evidence without widening authority.
+  - Package loading and conformance resolve schemas from the locally bundled, versioned set; load-time schema resolution performs no network fetch and cannot bypass closed-schema, containment, provenance, permission, or required-component checks. An offline static validator alone does not prove native loader behavior.
 validation_surfaces: [Plans/plugin_package_contract_fixtures.json, path-traversal and symlink-escape rejection, broker-secret and HTTPS enforcement, component-isolation, crash-budget/bounded-log, stale-routine, signature-change, and containment fixtures]
 risk_class: plugin_package_escape_or_authority_widening
 reasoning_tier: high
@@ -143,6 +146,8 @@ implementation_surfaces: [Plans/Plugins_System.md, Plans/plugin_package_contract
 node_compile_hint: {mode: plugin_package_containment_conformance, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - register-egolite.md#PLG-02 (audited 2026-08-31)
+  - source_ref:packet:PKT-04/01_IMPLEMENTATION_PACKET.md:761
+  - source_ref:packet:PKT-04/sources/01_EGO_EVALUATION.md:606
 negative_constraints:
   - Do not expose AuthBrowserSession, raw secrets, private absolute paths, internal sockets, or an unbounded process/log stream to a plugin.
   - Do not let a plugin manifest, permission, or adapter become public endpoint authority.
