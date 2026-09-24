@@ -22,10 +22,11 @@ in a truncated subcheck is therefore reported and stops the landing, since what 
 matched against the branch's paths.
 
 Governance staleness is what AGENTS.md names: Spec Lock `stale_hash`, stale owner or artifact
-evidence hashes (among them `event_authority_currentness_source_drift`), stale readiness rows and
-their growth counter, and the stale plan-migration snapshot. It never stops a landing. The readiness
-validator's total is that growth counter: its rise is staleness, not a truncated rise, when the rows
-it printed show stale readiness rows growing on the branch's own files and nothing else new.
+evidence hashes (among them `event_authority_currentness_source_drift` and `_validator_drift`), stale
+readiness rows and their growth counter, and the stale plan-migration snapshot. It never stops a
+landing. The readiness validator's total is that growth counter: its rise is staleness, not a
+truncated rise, when the rows it printed show stale readiness rows growing on the branch's own files
+and nothing else new.
 
 A failure that is not staleness, in a baseline bucket whose count on the branch has not risen, is
 pre-existing, whether or not its content changed: it never stops a landing, and it is reported as
@@ -122,6 +123,11 @@ STALENESS_ERRORS = {
     "event_authority_currentness_source_drift",
     # A readiness report whose recorded source hashes no longer match its sources: a stale report.
     "buildability_passed_with_stale_source_hashes",
+    # The currentness receipt stores the hash of its validator, scripts/pm-event-authority-currentness.py.
+    # A canon edit cannot move it, but an edit of that script does, and only a currentness edition,
+    # which refreshes the gitignored receipt, clears it: a stale evidence hash of an edited file, like
+    # the Spec Lock kinds of an edited validator script, reported with a reseal request.
+    "event_authority_currentness_validator_drift",
 }
 STALENESS_ERROR_PREFIXES = ("current_snapshot_",)
 # The readiness validator checks the Spec Lock hash of every file it certifies, one kind per family:

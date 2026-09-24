@@ -1185,6 +1185,7 @@ class RuleOneStalenessKinds(unittest.TestCase):
         "stale_hash",                                      # Spec Lock
         "artifact_hash_stale",                             # artifact evidence hashes
         "event_authority_currentness_source_drift",        # owner evidence hash of an edited source
+        "event_authority_currentness_validator_drift",     # the receipt's hash of an edited validator
         "pnc019_source_hash_stale",                        # stale readiness rows
         "buildability_gate_report_stale_or_not_canonical",
         "buildability_passed_with_stale_source_hashes",
@@ -1197,8 +1198,7 @@ class RuleOneStalenessKinds(unittest.TestCase):
     )
     NOT_NAMED = (
         "event_authority_currentness_audit_unavailable",   # the audit inputs are absent, not stale
-        "event_authority_currentness_artifact_drift",
-        "event_authority_currentness_validator_drift",
+        "event_authority_currentness_artifact_drift",       # gitignored artifacts: no branch moves them
         "event_authority_checkpoint_changed_requires_fresh_approval",
         "pnc019_source_hash_path_missing",
         "implementation_readiness_self_tests_failed",
@@ -1238,6 +1238,21 @@ class RuleOneOnABranch(LandingRun):
         self.assertIn("Naming a path this branch touches: 2", out)
         self.assertIn("excused as governance staleness, by kind (2 in total)", out)
         self.assertIn("event_authority_currentness_source_drift", out)
+
+    def test_an_edited_currentness_validator_is_staleness_with_a_reseal_request(self):
+        """Review L-12, as decided: editing the validator the currentness receipt hashes makes its
+        stored hash stale; only a currentness edition clears it, so it is reported, not blocked."""
+        self.stub(gates={self.RG_READINESS: [pnc_stale("Plans/Base.md")]})
+        self.record()
+        self.touch("scripts/pm-event-authority-currentness.py")
+        drifted = {"error": "event_authority_currentness_validator_drift",
+                   "validator_path": "scripts/pm-event-authority-currentness.py"}
+        self.stub(gates={self.RG_READINESS: [pnc_stale("Plans/Base.md"), drifted]})
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("Naming a path this branch touches: 1", out)
+        self.assertIn("event_authority_currentness_validator_drift", out)
+        self.assertIn("ask the Plans agent for a reseal", out)
 
     def test_a_readiness_failure_that_is_not_staleness_on_an_edited_document_exits_two(self):
         self.stub(gates={self.RG_READINESS: [pnc_stale("Plans/Base.md")]})

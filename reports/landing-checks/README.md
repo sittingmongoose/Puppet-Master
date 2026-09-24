@@ -92,7 +92,7 @@ them by error kind.
 | What AGENTS.md names | Error kinds |
 |---|---|
 | Spec Lock `stale_hash` | `stale_hash`, and every kind ending `_spec_lock_hash_stale`: the readiness validator's Spec Lock check for each family it certifies, today `event_record_`, `execution_unit_context_`, `non_executable_closure_` and `storage_value_registry_spec_lock_hash_stale` |
-| stale owner or artifact evidence hashes | `artifact_hash_stale`, `stale_audit_status_index`, `event_authority_currentness_source_drift` (the Event Authority currentness inventory's stored hash of an edited source), and an audit-closure failure whose detail says a stored hash "is stale" |
+| stale owner or artifact evidence hashes | `artifact_hash_stale`, `stale_audit_status_index`, `event_authority_currentness_source_drift` (the Event Authority currentness inventory's stored hash of an edited source), `event_authority_currentness_validator_drift` (the currentness receipt's stored hash of `scripts/pm-event-authority-currentness.py`: a canon edit cannot cause it, an edit of that script does, and its reseal is a currentness edition that refreshes the gitignored receipt), and an audit-closure failure whose detail says a stored hash "is stale" |
 | a stale readiness report | `pnc019_source_hash_stale`, `buildability_gate_report_stale_or_not_canonical`, `buildability_passed_with_stale_source_hashes`, the `_spec_lock_hash_stale` kinds above, and the readiness growth counter below |
 | the stale plan-migration snapshot | every `current_snapshot_*` kind, `stale_batch_report_sha256_after`, `complete_final_summary_live_plan_unit_count_stale`, `doc_count_mismatch`, `inventory_doc_set_mismatch`, `superseded_run_final_summary_missing` |
 
@@ -102,9 +102,9 @@ Deliberately not on the list: the shard and index kinds such as `shard_hash_stal
 `stale_generated_index_artifact`, because a branch that edits canon regenerates those and a stale one
 is the branch's to fix; `event_authority_currentness_audit_unavailable`, which says the ignored audit
 inputs are absent from the tree, not that a hash is stale;
-`event_authority_currentness_artifact_drift` and `_validator_drift`, because a canon edit changes
-neither an audit artifact nor the validator; `pnc019_source_hash_path_missing` and
-`implementation_readiness_self_tests_failed`.
+`event_authority_currentness_artifact_drift`, because the audit artifacts are gitignored and no
+branch can change them, so drift there means the ignored inputs changed;
+`pnc019_source_hash_path_missing` and `implementation_readiness_self_tests_failed`.
 
 ### The readiness growth counter
 
