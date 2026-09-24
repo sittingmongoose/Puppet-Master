@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L1744-L6569
+Source lines: L1744-L6570
 
-Source SHA256: `9af90b69abe5c8685b5de674fbc9f88b1acb6908d1b5d1d210db0b384c92c728`
+Source SHA256: `465f7536211786aebdc276a61a3ee4b6dadce5c49ba8743a2afaa207c5cfc854`
 
 ---
 
@@ -4371,8 +4371,9 @@ canonical_text: >-
   approved PNC-019 checkpoint in that same landing. The checkpoint constants in
   scripts/pm_pnc019_currentness.py, their provenance comment and the two test pins
   move with it, and a Decision Log entry records the new revision under this rule;
-  following the Step 4 and Step 8 precedent, the landing also regenerates the readiness
-  projections and the entry records the registry SHA-256. The Decision Log entry
+  following the Step 4 and Step 8 precedent, the landing also regenerates the derived plan
+  index (its readiness projection only; the implementation-readiness gate report is left to
+  the reseal by the designated Plans agent) and the entry records the registry SHA-256. The Decision Log entry
   each such landing adds names the family and is the decision entry its DL-077 admission
   record cites. Any other registry change, or a registration that skips part of the
   procedure, still needs Jared's own approval. Jared can revoke the rule at any time.
@@ -4382,7 +4383,7 @@ split_recommended: false
 depends_on: [DL-039, DL-045, DL-046]
 unblocks: []
 acceptance_criteria:
-  - A registration landing under this rule moves EVENT_FAMILY_REGISTRY_REVISION, EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT and their provenance comment, the test pins in tests/test_pm_testing_session_events.py and tests/test_pm_github_project_integration.py, and the readiness projections in the same landing.
+  - A registration landing under this rule moves EVENT_FAMILY_REGISTRY_REVISION, EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT and their provenance comment, the test pins in tests/test_pm_testing_session_events.py and tests/test_pm_github_project_integration.py, and the derived plan index in the same landing, leaving the implementation-readiness gate report to the reseal by the designated Plans agent.
   - Each such landing adds a Decision Log entry naming the new registry revision and SHA-256 and citing DL-078.
   - A registry change that is not a Step 9 registration passing the full procedure still needs Jared's own checkpoint approval.
   - The Step 9 procedure record states the rule.
