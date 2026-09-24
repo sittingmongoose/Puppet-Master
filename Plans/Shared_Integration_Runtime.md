@@ -1030,6 +1030,8 @@ acceptance_criteria:
   - Input acknowledgement, pause/stop acknowledgement, provider-fragment paint, idle, queue, and startup gates use P50/P95/P99, worst-case, and degraded/failure evidence.
   - Workloads cover 1, 10, 50, and 200 logical threads, many named Plans, browser/provider/tool saturation, old x86, Apple Silicon, native Windows without WSL, optional WSL, Linux/container/Kubernetes, low resources, restart, and a 24-hour soak.
   - Portable and optimized hot paths have equivalence, fuzz, boundary, and end-to-end evidence, and no unsupported runner is reported as pass.
+  - The initial calibration table below retains the exact modern/legacy P95 input, saturated Pause/Stop and provider-fragment paint targets as provisional implementation gates, never measured achievements; evidence names the actual hardware/workload and reports all required percentiles, worst case and degraded/failure states.
+  - The twelve mixed Settings/installation workload fixtures below are part of acceptance, including the historical 825+ search floor with the complete current inventory when larger, 100 detected installations and 50 MCP servers/tools; these fixture sizes are not product limits, new registry denominators or permission to hydrate every manager.
 validation_surfaces: [future full-thread benchmark matrix, process-tree resource captures, platform receipts, independent runtime audit]
 risk_class: static_evidence_promoted_to_performance_proof
 reasoning_tier: high
@@ -1039,9 +1041,39 @@ node_compile_hint: {mode: full_thread_performance_acceptance, create_worknodes: 
 source_lineage:
   - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/07_PERFORMANCE_PLATFORM_STORAGE_BENCHMARKS.md
   - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/08_ACCEPTANCE_TEST_AND_FAILURE_MATRIX.md
+  - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/source_inputs/09_optimization_settings_load_handoff.md#8-benchmark-additions
 negative_constraints:
   - Do not report schema, static wiring, concept UI, or an unavailable platform lane as runtime or performance success.
 ```
+
+#### Initial latency calibration and mixed-workload fixtures
+
+SIR-017 retains these source calibration targets. They are provisional implementation gates to calibrate against measured hardware and workloads, not recorded achievements or a new hardware-classification algorithm. A result identifies its actual machine, platform, configuration and load and the calibration profile it exercises; the labels modern and legacy do not substitute for that evidence.
+
+| Measured path | Modern P95 target | Legacy P95 target |
+|---|---|---|
+| Input-to-visible acknowledgement | ≤50 ms | ≤75 ms |
+| Pause/Stop acknowledgement under saturation | ≤100 ms | ≤150 ms |
+| Provider-fragment receive-to-paint | ≤50 ms | ≤100 ms |
+
+Record P50/P95/P99, worst case, failed and degraded runs, real queue/wait reasons, and whole-process-tree memory including unified graphics/media memory. Cached summary paint is distinct from live readiness, and acknowledgement is distinct from owner completion. Unmeasured or unavailable lanes never pass. The targets do not weaken durable acceptance, protected interactive reserve, the current renderer-owner selection order, or any security/recovery boundary.
+
+The existing workload matrix is supplemented by all twelve mixed-load fixtures below. Run them under the same RuntimeResourceGovernor and existing domain owners, retaining actual identities, revisions, authority and truthful ObservableWork rather than creating a Settings execution pool. Historical source counts describe minimum stress fixtures, not production ceilings or replacements for the current canonical inventory.
+
+1. Settings Home renders all compact manager summaries, then lazily hydrates one selected manager.
+2. Search spans at least 825 settings, using the complete current inventory when it is larger, without instantiating every manager.
+3. 100 detected installations collapse into a compact human-facing list without losing their distinct Installation/Host/Environment identity or ambiguity disclosures.
+4. Duplicate and shadowed binary resolution remains deterministic and respects actual ownership and explicit selection.
+5. Sound-pack import and local preview run during active Goal work without blocking the interactive/control or Goal lanes.
+6. Theme hot reload runs during streaming Chat without losing stream state or performing unrelated surface reloads.
+7. Settings import of hundreds of values commits through one atomic projection revision; partial acceptance is not a completed import.
+8. Project-index rebuild runs while many threads are active, with real resource admission and current-state recovery.
+9. 50 MCP servers/tools retain progressive disclosure without eagerly materializing every schema or runtime.
+10. Docker/Podman/Kubernetes discovery spans local and remote Hosts without collapsing their targets or authority.
+11. Activity Bar reorder and panel drag avoid inactive-panel layout work while preserving underlying owner state and the current gesture contract.
+12. App/content update checks run under poor network and sync load with bounded wait/retry and current owner results, not false completion.
+
+Static source/fixture retention can prove this corpus is specified; only native workload traces can prove latency, memory, isolation, lifecycle or recovery acceptance. No WorkNode, executable benchmark job, capability, command, EventRecord, storage family or governance clearance is created by this specification.
 
 ### SIR-018 - Platform-Specific Host Adapter Boundaries
 
