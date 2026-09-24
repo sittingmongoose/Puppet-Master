@@ -25,14 +25,15 @@ At landing, also pass `--keep-check-reports <dir>`, a directory under
 sampled subcheck's printed rows, which is what the readiness growth counter reads. The directory must
 be outside the repository: the check refuses one inside it with exit 3, before it runs anything.
 
-Exit codes: 0 nothing to report; 1 nothing it reports stops the landing, meaning governance
-staleness on files the branch edited, pre-existing failures whose count has not risen against a
-current baseline (see "Only against a current baseline" below), or failures that are new but name
-none of the branch's files; 2 something it reports does stop the landing,
-meaning a failure on the branch's files that is neither staleness nor pre-existing, a bucket that
-grew whose error kind is not staleness, or a rise in a subcheck whose failures are truncated, other
-than the readiness growth counter; 3 the check could not run, or a subcheck timed out while
-recording a baseline. A subcheck that timed out in a landing run never changes the exit code.
+Exit codes: 0 nothing to report, and every subcheck finished; 1 nothing it reports stops the
+landing, meaning governance staleness on files the branch edited, pre-existing failures whose count
+has not risen against a current baseline (see "Only against a current baseline" below), failures
+that are new but name none of the branch's files, or a subcheck that timed out, so that the run was
+not fully verified; 2 something it reports does stop the landing, meaning a failure on the branch's
+files that is neither staleness nor pre-existing, a bucket that grew whose error kind is not
+staleness, or a rise in a subcheck whose failures are truncated, other than the readiness growth
+counter; 3 the check could not run, or a subcheck timed out while recording a baseline. A subcheck
+that timed out in a landing run lifts an exit 0 to 1 and changes no other exit code.
 
 **It refuses a sparse worktree**, with exit 3, in both modes. The three checks read the whole
 repository, so every file outside a sparse cone reads as missing: a dry run at `ecb77f4e6c` on a
@@ -216,16 +217,20 @@ at landing that is `origin/main` just fetched.
 `--subcheck-timeout-seconds` and reports one `subprocess_timeout` row in its place, or
 `subcheck_timeout` for `verify_spec_lock`, the one subcheck it runs in-process. Such a subcheck has
 no result. Its row is an infrastructure result: printed on its own line under "Infrastructure
-results" with the command and how long the subcheck ran before it was killed, which is the bound, and
-never counted as a new failure, as growth of its subcheck's total, or as a blocker. The exit code is
-what it would be without it. The timed-out subcheck is left out of every comparison, so what the
-baseline recorded for it is not reported as gone either, and the summary ends by saying how many
-subchecks did not finish: rerun each on its own to see what it reports. A timeout hides everything
-the subcheck would have reported, including failures on the branch's own files, and the exit code
-does not show it. Before pushing `main`, the lander reruns each timed-out subcheck on its own and
-judges what it reports by the rules above. The summary never calls such a run clean. In `--json` the
-timed-out subchecks are listed under `infrastructure` with `elapsed_seconds`, beside the
-`subcheck_timeout_seconds` the run used.
+results" with the subcheck, the command, how long it ran before it was killed and the limit, which
+are the same number because the subcheck is killed when the limit runs out, and never counted as a
+new failure, as growth of its subcheck's total, or as a blocker. The run it happened in was not
+fully verified, so the timeout lifts an exit 0 to 1: exit 1 means reported, nothing stops the
+landing, which is exactly that (review L-08, as the brief owner answered it). It changes no other
+exit code: a 1 stays 1 and a 2 stays 2, and exit 0 is left for a complete run with nothing to
+report. The timed-out subcheck is left out of every comparison, so what the baseline recorded for it
+is not reported as gone either, and the summary ends by naming the subchecks that did not finish,
+with how long each ran and the limit: rerun each on its own to see what it reports. A timeout hides
+everything the subcheck would have reported, including failures on the branch's own files, and the
+exit code shows only that the run was not fully verified. Before pushing `main`, the lander reruns
+each timed-out subcheck on its own and judges what it reports by the rules above. The summary never
+calls such a run clean. In `--json` the timed-out subchecks are listed under `infrastructure` with
+`elapsed_seconds` and `limit_seconds`, beside the `subcheck_timeout_seconds` the run used.
 
 The landing check hands the aggregates a bound of 600 seconds by default, where it used to hand them
 180. The measured case: `lint-contractrefs` takes about 199 seconds in the shared checkout on the

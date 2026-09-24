@@ -38,11 +38,12 @@ as it was before rule 2, and the report's first lines say that the baseline is s
 re-recorded before the next landing, never to make this one pass.
 
 A subcheck that pm-plans-verify.py killed at --subcheck-timeout-seconds (600 by default here) has no
-result. Its timeout row is an infrastructure result, printed on its own line with how long the
-subcheck ran; it is never a new failure, growth or a blocker, and the exit code does not count it.
-A baseline is never recorded from a run that has one.
+result. Its timeout row is an infrastructure result, printed on its own line with the subcheck, how
+long it ran and the limit; it is never a new failure, growth or a blocker. The run it happened in was
+not fully verified, so it lifts exit 0 to 1 and changes no other exit code. A baseline is never
+recorded from a run that has one.
 
-It exits 0 when it has nothing to report.
+It exits 0 only when every subcheck finished and it has nothing to report.
 
 A key is `check | subcheck | error kind | path | fingerprint`. The fingerprint is a short digest of
 the failure's remaining fields after the parts that move on their own are removed: timestamps, hash
@@ -70,10 +71,11 @@ check's full report, every row it printed, is kept as DIR/<check>.json, so a lan
 replayed exactly.
 
 Exit codes:
-  0  nothing to report
+  0  nothing to report, and every subcheck finished
   1  nothing it reports stops the landing: governance staleness on files the branch edited,
      pre-existing failures whose count has not risen against a current baseline, or failures that
-     are new but name none of the branch's files (push, and report them)
+     are new but name none of the branch's files (push, and report them); or a subcheck timed out,
+     so the run was not fully verified (rerun it on its own before pushing)
   2  it reports something that does stop the landing: a failure on the branch's files that is
      neither staleness nor pre-existing, a bucket that grew whose error kind is not staleness, or a
      rise in a subcheck whose failures are truncated, where the on-branch match cannot see what was
@@ -378,9 +380,12 @@ def infrastructure_row(item: dict[str, Any]) -> dict[str, Any]:
 
 
 def describe_infrastructure(row: dict[str, Any]) -> str:
+    """The timeout line: the subcheck, how long it ran and the limit (review L-08)."""
     command = f" ({row['command_id']})" if row.get("command_id") else ""
-    ran = (f"killed after {row['elapsed_seconds']} s, its time bound" if row["elapsed_seconds"] is not None
-           else "killed at its time bound")
+    limit = row.get("limit_seconds")
+    at = f"at its limit of {limit} s" if limit is not None else "at its time limit"
+    ran = (f"killed after {row['elapsed_seconds']} s, {at}" if row["elapsed_seconds"] is not None
+           else f"killed {at}, after a time the check does not report")
     return (f"  [infrastructure] {row['check']}/{row['subcheck'] or '-'}  {row['error']}{command}  "
             f"{ran}; what it would report is unknown")
 
@@ -537,8 +542,20 @@ def blocking_items(
     )
 
 
-def exit_code(reported: list[Any], grown: list[Any], subcheck_growth: list[Any], blocking: list[Any]) -> int:
-    if not reported and not grown and not subcheck_growth:
+def exit_code(
+    reported: list[Any],
+    grown: list[Any],
+    subcheck_growth: list[Any],
+    blocking: list[Any],
+    infrastructure: list[Any] | tuple[Any, ...] = (),
+) -> int:
+    """0 only for a complete run with nothing to report (review L-08).
+
+    A subcheck that timed out hides whatever it would have reported, so a run with one was not fully
+    verified. Exit 1 means reported, nothing stops the landing, which is exactly that, so the timeout
+    lifts 0 to 1. It never turns a 1 into a 2 or a 2 into a 1.
+    """
+    if not reported and not grown and not subcheck_growth and not infrastructure:
         return 0
     return 2 if blocking else 1
 
@@ -994,6 +1011,8 @@ def main() -> int:
     ).stdout.strip()
 
     infrastructure, items = split_infrastructure(items)
+    for row in infrastructure:
+        row["limit_seconds"] = args.subcheck_timeout_seconds
     timed_out = {(row["check"], row["subcheck"]) for row in infrastructure}
 
     if args.record_baseline and infrastructure:
@@ -1220,8 +1239,9 @@ def main() -> int:
         print()
         if not reported and not grown and not subcheck_growth:
             if infrastructure:
-                print("Nothing reported by the subchecks that finished. This is not a clean result: "
-                      "the subchecks below the line did not finish.")
+                print("Nothing reported by the subchecks that finished. This is not a clean result: the "
+                      "subchecks named below did not finish, so the run was not fully verified and exits 1, "
+                      "not 0.")
             else:
                 print("Nothing to report. The three checks found only what the baseline already knew.")
         elif not blocking:
@@ -1244,12 +1264,18 @@ def main() -> int:
         else:
             print(f"{plural(len(blocking), 'item')} the baseline does not excuse. Fix them on this branch.")
         if infrastructure:
+            ran = ", ".join(
+                f"{row['check']}/{row['subcheck'] or '-'} "
+                + (f"killed after {row['elapsed_seconds']} s" if row["elapsed_seconds"] is not None
+                   else "killed at the limit")
+                for row in infrastructure)
             print(f"{plural(len(infrastructure), 'subcheck')} did not finish within "
-                  f"{args.subcheck_timeout_seconds} s, so what they would report is unknown and the exit "
-                  "code does not count them: rerun each on its own and judge what it reports by the same "
-                  "rules before pushing main.")
+                  f"{args.subcheck_timeout_seconds} s, the limit ({ran}), so what they would report is "
+                  "unknown and this run was not fully verified: it cannot exit 0, and it exits 1 unless "
+                  "something above stops the landing. Rerun each on its own and judge what it reports by "
+                  "the same rules before pushing main.")
 
-    return exit_code(reported, grown, subcheck_growth, blocking)
+    return exit_code(reported, grown, subcheck_growth, blocking, infrastructure)
 
 
 def untracked_check_inputs(root: Path) -> list[str]:

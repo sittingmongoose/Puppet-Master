@@ -1543,10 +1543,10 @@ class RuleThreeTimeouts(LandingRun):
         self.stub(gates={"verify_spec_lock": [STALE_HASH], "lint_contractrefs": [timeout_row()]},
                   audit={"support_refs": [timeout_row()]})
         code, out = self.compare("--subcheck-timeout-seconds", "180")
-        self.assertEqual(code, 0, out)
+        self.assertEqual(code, 1, out)  # review L-08: not fully verified, so never 0
         self.assertIn("Infrastructure results, not failures of this tree (never new, growth or blocking): 2", out)
         self.assertIn("[infrastructure] run-gates/lint_contractrefs  subprocess_timeout (lint-contractrefs)  "
-                      "killed after 180 s, its time bound; what it would report is unknown", out)
+                      "killed after 180 s, at its limit of 180 s; what it would report is unknown", out)
         self.assertIn("[infrastructure] audit-governance/support_refs  subprocess_timeout (lint-contractrefs)  "
                       "killed after 180 s", out)
         self.assertIn("New since the baseline: 0", out)
@@ -1554,27 +1554,30 @@ class RuleThreeTimeouts(LandingRun):
         self.assertIn("1 infrastructure result among them", out)
         self.assertIn("2 subchecks did not finish within 180 s", out)
         report = json.loads(self.compare("--json", "--subcheck-timeout-seconds", "180")[1])
-        self.assertEqual([(r["check"], r["subcheck"], r["elapsed_seconds"]) for r in report["infrastructure"]],
-                         [("run-gates", "lint_contractrefs", 180), ("audit-governance", "support_refs", 180)])
+        self.assertEqual([(r["check"], r["subcheck"], r["elapsed_seconds"], r["limit_seconds"])
+                          for r in report["infrastructure"]],
+                         [("run-gates", "lint_contractrefs", 180, 180), ("audit-governance", "support_refs", 180, 180)])
         self.assertEqual((report["new"], report["grown_subchecks"], report["blocking"]), ([], [], 0))
 
-    def test_a_timeout_never_changes_the_exit_code(self):
+    def test_a_timeout_lifts_exit_zero_to_one_and_leaves_one_and_two_alone(self):
+        """Review L-08: a timeout is never growth or a blocker, so it cannot make a 2; it only says the
+        run was not fully verified, which lifts a 0 to 1."""
         self.stub(gates={"verify_spec_lock": [STALE_HASH]})
         self.record()
         self.touch("Plans/Touched.md")
         cases = (
-            ([], 0),
-            ([{"path": "Plans/Glossary.md", "error": "brand_new_kind"}], 1),
-            ([{"path": "Plans/Touched.md", "error": "brand_new_kind"}], 2),
+            ([], 0, 1),
+            ([{"path": "Plans/Glossary.md", "error": "brand_new_kind"}], 1, 1),
+            ([{"path": "Plans/Touched.md", "error": "brand_new_kind"}], 2, 2),
         )
-        for extra, expected in cases:
-            with self.subTest(expected=expected):
+        for extra, expected_without, expected_with in cases:
+            with self.subTest(expected=expected_without):
                 self.stub(gates={"verify_spec_lock": [STALE_HASH] + extra})
                 without, _ = self.compare()
                 self.stub(gates={"verify_spec_lock": [STALE_HASH] + extra, "lint_contractrefs": [timeout_row()]},
                           audit={"support_refs": [timeout_row()]})
                 code, out = self.compare()
-                self.assertEqual((without, code), (expected, expected), out)
+                self.assertEqual((without, code), (expected_without, expected_with), out)
 
     def test_what_a_timed_out_subcheck_found_before_is_not_reported_gone(self):
         """Its result is unknown, so the baseline's rows for it are neither gone nor compared."""
@@ -1583,7 +1586,7 @@ class RuleThreeTimeouts(LandingRun):
         self.touch("Plans/Touched.md")
         self.stub(gates={"lint_contractrefs": [timeout_row()]})
         code, out = self.compare()
-        self.assertEqual(code, 0, out)
+        self.assertEqual(code, 1, out)  # review L-08: the timeout alone lifts 0 to 1
         self.assertIn("Gone since the baseline (nothing to do): 0", out)
 
     def test_a_baseline_is_not_recorded_from_a_run_with_a_timeout(self):
@@ -1645,16 +1648,53 @@ class ReviewLimits(LandingRun):
         self.assertNotIn("nothing for this branch to fix", out)
 
     def test_a_timeout_alone_is_not_reported_as_nothing(self):
-        """L-08: exit 0 is unchanged by the timeout, but the summary must not call the run clean."""
+        """L-08: the summary must not call the run clean; since the follow-up it exits 1, not 0."""
         self.stub(gates={"verify_spec_lock": [STALE_HASH]})
         self.record()
         self.touch("Plans/Touched.md")
         self.stub(gates={"verify_spec_lock": [STALE_HASH], "lint_path_refs": [timeout_row("lint-path-refs")]})
         code, out = self.compare()
-        self.assertEqual(code, 0, out)
+        self.assertEqual(code, 1, out)
         self.assertNotIn("Nothing to report.", out)
         self.assertIn("This is not a clean result", out)
         self.assertIn("before pushing main", out)
+
+
+class TimeoutsLiftExitZero(LandingRun):
+    """Review L-08, as the brief owner answered it: a subcheck timeout lifts exit 0 to 1, because the
+    run was not fully verified; exit 0 stays for a complete run with nothing to report."""
+
+    def run_with(self, *extra_subchecks):
+        self.stub(gates={"verify_spec_lock": [STALE_HASH]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"verify_spec_lock": [STALE_HASH], **dict(extra_subchecks)})
+        return self.compare()
+
+    def test_a_timeout_alone_exits_one_because_the_run_was_not_fully_verified(self):
+        code, out = self.run_with(("lint_path_refs", [timeout_row("lint-path-refs", 600)]))
+        self.assertEqual(code, 1, out)
+        self.assertIn("not fully verified and exits 1, not 0", out)
+        # The timeout line names the subcheck, how long it ran and the limit.
+        self.assertIn("[infrastructure] run-gates/lint_path_refs  subprocess_timeout (lint-path-refs)  "
+                      "killed after 600 s, at its limit of 600 s", out)
+        self.assertIn("1 subcheck did not finish within 600 s, the limit (run-gates/lint_path_refs killed after "
+                      "600 s)", out)
+        self.assertIn("it cannot exit 0", out)
+
+    def test_a_complete_run_with_nothing_to_report_still_exits_zero(self):
+        code, out = self.run_with()
+        self.assertEqual(code, 0, out)
+        self.assertIn("Nothing to report. The three checks found only what the baseline already knew.", out)
+        self.assertNotIn("not fully verified", out)
+
+    def test_the_exit_code_counts_a_timeout_only_where_it_would_otherwise_be_zero(self):
+        infra = [{"check": "run-gates", "subcheck": "lint_path_refs", "error": "subprocess_timeout"}]
+        blocking = [{"stale": False}]
+        self.assertEqual(M.exit_code([], [], [], []), 0)
+        self.assertEqual(M.exit_code([], [], [], [], infra), 1)
+        self.assertEqual(M.exit_code([{"k": 1}], [], [], [], infra), 1)
+        self.assertEqual(M.exit_code([{"k": 1}], [], [], blocking, infra), 2)
 
 
 class KeptCheckReports(LandingRun):
