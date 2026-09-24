@@ -4,9 +4,16 @@
  * t3 Skip restores everything; t4 resume after reload; t5 a missing target offers Take me there.
  * Each run asserts zero network requests and unchanged usage counters, and writes report.json + screenshots. */
 import { launch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
+import { tmpdir } from 'node:os';
+/* Remove a run's Chrome profile (~150 MB). The helper's close() kills Chrome without waiting, and Chrome's helpers
+   keep writing for a moment, so wait for the exit, then retry the removal; cleanup never fails the run. */
+const dropProfile = async (dir, chrome) => {
+  if (chrome && chrome.exitCode === null && chrome.signalCode === null) await new Promise((r) => { chrome.once('exit', r); setTimeout(r, 3000); });
+  for (let i = 0; i < 25; i++) { try { rmSync(dir, { recursive: true, force: true }); return; } catch (_) { await new Promise((r) => setTimeout(r, 200)); } }
+};
 
 const here = dirname(fileURLToPath(import.meta.url));
 const PAGE = resolve(here, '../../../TestOpus5.5PmConcept.html');
@@ -17,9 +24,11 @@ const only = opt('only', '') ? opt('only', '').split(',') : null;
 const theme = opt('theme', 'basic-dark');
 const snaps = argv.includes('--snaps');
 mkdirSync(out, { recursive: true });
+/* one Chrome profile for this run's browsers (they run one after another), removed at the end: each is ~150 MB */
+const PROFILE = `${tmpdir()}/pm-cdp-profile-${process.pid}-tour`;
 
 async function openPage() {
-  const { page, close } = await launch({ width: 1600, height: 1000 });
+  const { page, close, chrome } = await launch({ width: 1600, height: 1000, profile: PROFILE });
   const [fam, mode] = theme.split('-');
   await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: mode }] });
   await page.goto(pathToFileURL(PAGE).href + '?o55=off');
@@ -44,13 +53,13 @@ async function openPage() {
       const ix = Math.max(0, Math.min(a.right, h.x + h.w) - Math.max(a.left, h.x)), iy = Math.max(0, Math.min(a.bottom, h.y + h.h) - Math.max(a.top, h.y));
       const rec = window.__o55cover[st.step.id] || (window.__o55cover[st.step.id] = { n: 0, bad: 0, out: 0, max: 0, multi: !!st.step.avoid });
       rec.n++;
-      if (ix * iy > 300 && ix * iy > 0.02 * h.w * h.h) { rec.bad++; rec.max = Math.max(rec.max, Math.round((ix * iy) / (h.w * h.h) * 100)); }
+      if (ix * iy > 300 && ix * iy > 0.02 * h.w * h.h) { rec.bad++; rec.max = Math.max(rec.max, Math.round((ix * iy) / (h.w * h.h) * 100)); if (!rec.first) rec.first = { hole: [h.x, h.y, h.w, h.h].map(Math.round), callout: [a.left, a.top, a.width, a.height].map(Math.round), side: st.side, W: innerWidth, H: innerHeight, page: (document.querySelector('.page-tab.active[data-page]') || {}).id || '', drag: document.body.classList.contains('pm-home-dragging') }; }
       if (a.left < 0 || a.top < 0 || a.right > innerWidth || a.bottom > innerHeight) rec.out++;
     }, 250);
   });
   let n = 0;
   const t = {
-    page, close,
+    page, close, chrome,
     ev: (fn, ...a) => page.evaluate(fn, ...a),
     step: () => page.evaluate(() => window.O55.tour.state().step),
     async until(fn, what, timeout = 12000) { const t0 = Date.now(); while (Date.now() - t0 < timeout) { if (await page.evaluate(fn)) return true; await sleep(150); } throw new Error('timeout: ' + what + ' (step ' + await t.step() + ')'); },
@@ -58,11 +67,13 @@ async function openPage() {
     /* a real mouse click at an element's centre */
     /* like a person: wait until the control has stopped moving and nothing covers it, then click its centre */
     async click(sel, what) {
-      const probe = (s) => { const el = [...document.querySelectorAll(s)].find((e) => e.getClientRects().length && e.getBoundingClientRect().width > 0); if (!el) return null; el.scrollIntoView({ block: 'nearest' }); const r = el.getBoundingClientRect(); const x = r.left + r.width / 2, y = r.top + r.height / 2; const top = document.elementFromPoint(x, y); return { x, y, w: r.width, h: r.height, hit: !!top && (top === el || el.contains(top)), over: top ? (top.id || top.className || top.tagName).toString().slice(0, 60) : '' }; };
+      /* a control inside the tour callout counts as still only once the callout has arrived where it was placed: its
+         slide can start a frame or two late when the page is busy, and two probes inside one frame read as still */
+      const probe = (s) => { const el = [...document.querySelectorAll(s)].find((e) => e.getClientRects().length && e.getBoundingClientRect().width > 0); if (!el) return null; el.scrollIntoView({ block: 'nearest' }); const r = el.getBoundingClientRect(); const x = r.left + r.width / 2, y = r.top + r.height / 2; const top = document.elementFromPoint(x, y); const co = el.closest('#pm-o55-tour .o55t-callout'), st = window.O55 && window.O55.tour.st; let arrived = true; if (co && st && st.cpos) { const cr = co.getBoundingClientRect(); arrived = Math.abs(cr.left - st.cpos.x) < 1 && Math.abs(cr.top - st.cpos.y) < 1; } return { x, y, w: r.width, h: r.height, arrived, hit: !!top && (top === el || el.contains(top)), over: top ? (top.id || top.className || top.tagName).toString().slice(0, 60) : '' }; };
       const t0 = Date.now(); let c = null, prev = null;
       while (Date.now() - t0 < 4000) {
         c = await page.evaluate(probe, sel);
-        if (c && prev && c.hit && Math.abs(c.x - prev.x) < 0.5 && Math.abs(c.y - prev.y) < 0.5 && Math.abs(c.w - prev.w) < 0.5) break;
+        if (c && prev && c.hit && c.arrived && Math.abs(c.x - prev.x) < 0.5 && Math.abs(c.y - prev.y) < 0.5 && Math.abs(c.w - prev.w) < 0.5) break;
         prev = c; await sleep(60);
       }
       if (!c) throw new Error('no element ' + (what || sel) + ' at step ' + await t.step());
@@ -156,6 +167,12 @@ async function byHandChapter3(t, A) {
   await t.click('[data-o55p="why"]', 'Why this matters'); await t.click('[data-o55p="answer"][data-arg="few"]', 'A few organizers');
   await t.untilStep('review', 6000); await t.snap('answered');
   await t.click('[data-o55p="review"]', 'Review the plan');
+  await t.untilStep('review_parts', 6000);
+  const seen = new Set();
+  await t.until(() => !!document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="next"]'), 'the plan read part by part', 20000).catch(() => {});
+  for (const k of await t.ev(() => [window.O55.tour.st.part])) seen.add(k);
+  A.ok(await t.ev(() => window.O55.tour.st.partsDone === true), 'the review glides over every part of the plan before Next');
+  await t.callout('next');
   await t.untilStep('answer_edit', 6000); await t.snap('review');
   await t.click('[data-o55p="change"]', 'Change answer'); await t.click('[data-o55p="answer"][data-arg="me"]', 'Only me');
   await t.snap('consequence');
@@ -201,6 +218,7 @@ def('t2', 'Every action through Show Me, then Keep this layout', async (t, A) =>
     A.ok(true, 'Show Me completed ' + id);
     if (id === 'send_question') { await t.untilStep('answer_stream', 8000); await t.until(() => window.O55.tour.chat.answered('a1'), 'answer'); await t.callout('next'); }
     if (id === 'same_answer_eli5') { await sleep(1400); await t.callout('next'); await t.untilStep('workspace_orientation'); await t.until(() => !!document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="next"]'), 'orientation ready', 9000); await t.callout('next'); }
+    if (id === 'review') { await t.untilStep('review_parts', 8000); await t.until(() => !!document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="next"]'), 'plan read part by part', 20000); await t.callout('next'); }
     if (id === 'answer_edit') { await t.untilStep('consequence_changed', 6000); await t.callout('next'); }
   }
   await t.untilStep('completion_boundary'); await t.callout('finish', 'keep'); await sleep(1200);
@@ -242,7 +260,7 @@ def('t5', 'A missing target offers Take me there', async (t, A) => {
 });
 
 /* ------------------------------------------------------------------------------------------ runner */
-const report = [];
+const report = []; let lastChrome = null;
 for (const sc of SC) {
   if (only && !only.includes(sc.id)) continue;
   const t = await openPage(); const asserts = []; let error = null, inv = null; const t0 = Date.now();
@@ -258,7 +276,10 @@ for (const sc of SC) {
   const r = { id: sc.id, title: sc.title, ms: Date.now() - t0, pass: !error && asserts.every((x) => x.ok) && !t.page.errors.length, error, asserts, errors: t.page.errors.slice(0, 8), inv, state: await t.ev(() => window.O55.tour.state()).catch(() => null) };
   report.push(r);
   console.log((r.pass ? 'PASS ' : 'FAIL ') + sc.id + '  ' + sc.title + (error ? '  !! ' + error : '') + asserts.filter((x) => !x.ok).map((x) => '\n      x ' + x.m).join('') + (t.page.errors.length ? '\n      errors: ' + t.page.errors.slice(0, 3).join(' | ') : ''));
-  await t.close();
+  await t.close(); lastChrome = t.chrome;
+  /* the next scenario reuses this profile: let this Chrome finish exiting first */
+  if (t.chrome.exitCode === null && t.chrome.signalCode === null) await new Promise((r) => { t.chrome.once('exit', r); setTimeout(r, 3000); });
 }
 writeFileSync(join(out, 'report.json'), JSON.stringify(report, null, 1));
+await dropProfile(PROFILE, lastChrome);
 console.log(JSON.stringify({ scenarios: report.length, pass: report.filter((r) => r.pass).length, fail: report.filter((r) => !r.pass).map((r) => r.id) }));

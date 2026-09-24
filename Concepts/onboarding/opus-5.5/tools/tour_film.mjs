@@ -11,6 +11,12 @@ import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
 import { tmpdir } from 'node:os';
+/* Remove a run's Chrome profile (~150 MB). The helper's close() kills Chrome without waiting, and Chrome's helpers
+   keep writing for a moment, so wait for the exit, then retry the removal; cleanup never fails the run. */
+const dropProfile = async (dir, chrome) => {
+  if (chrome && chrome.exitCode === null && chrome.signalCode === null) await new Promise((r) => { chrome.once('exit', r); setTimeout(r, 3000); });
+  for (let i = 0; i < 25; i++) { try { rmSync(dir, { recursive: true, force: true }); return; } catch (_) { await new Promise((r) => setTimeout(r, 200)); } }
+};
 
 const here = dirname(fileURLToPath(import.meta.url));
 const pageFile = resolve(here, '../../../TestOpus5.5PmConcept.html');
@@ -57,6 +63,7 @@ const SCENES = {
   'sm-goal': { frames: 150, setup: async () => { await __f.start(); await __f.go('book_club_goal'); }, trigger: () => __f.showMe() },
   'sm-outcome': { frames: 130, setup: async () => { await __f.start(); await __f.practice(); await __f.go('three_outcomes'); }, trigger: () => __f.showMe() },
   'sm-answer': { frames: 230, setup: async () => { await __f.start(); await __f.outcome(); await __f.go('access_answer'); }, trigger: () => __f.showMe() },
+  'review-parts': { frames: 200, setup: async () => { await __f.start(); await __f.reviewed(); await __f.wait(2600); }, trigger: () => window.O55.tour.go('review_parts') },
   'sm-edit': { frames: 200, setup: async () => { await __f.start(); await __f.reviewed(); await __f.go('answer_edit'); }, trigger: () => __f.showMe() },
   'finish': { frames: 150, setup: async () => { await __f.start(); await __f.reviewed(); await __f.go('completion_boundary'); }, trigger: () => __f.click('#pm-o55-tour .o55t-callout [data-o55t="finish"][data-arg="restore"]') }
 };
@@ -64,7 +71,8 @@ const scenes = opt('scenes', Object.keys(SCENES).join(',')).split(',').filter((s
 
 async function filmTheme(theme) {
   const [fam, mode] = theme.split('-'); const films = [];
-  const { page, close } = await launch({ width: W, height: H, profile: `${tmpdir()}/pm-tourfilm-${process.pid}-${theme}` });
+  const profile = `${tmpdir()}/pm-tourfilm-${process.pid}-${theme}`;
+  const { page, close, chrome } = await launch({ width: W, height: H, profile });
   try {
     await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: mode }] });
     await page.goto(pathToFileURL(pageFile).href + '?o55=off');
@@ -97,7 +105,7 @@ async function filmTheme(theme) {
       films.push({ theme, scene: name, dir, frames: frames.length, lastMotionMs: frames[frames.length - 1].motionMs, lateFrames: frames.filter((f, k) => k && f.wallMs - frames[k - 1].wallMs > STEP * 1.5).length });
     }
     return { theme, films, errors: page.errors.slice(0, 10) };
-  } finally { await close(); }
+  } finally { await close(); await dropProfile(profile, chrome); }
 }
 
 mkdirSync(out, { recursive: true });

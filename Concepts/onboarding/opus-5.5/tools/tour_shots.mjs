@@ -3,10 +3,16 @@
  * node tools/tour_shots.mjs <out-dir> [--themes basic-dark,glass-light] [--width 1600] [--height 1000]
  * Writes <out>/<theme>/NN-<step>[-after|-drag].png and <out>/shots.json; tools/tour_sheets.py tiles them. */
 import { launch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
 import { tmpdir } from 'node:os';
+/* Remove a run's Chrome profile (~150 MB). The helper's close() kills Chrome without waiting, and Chrome's helpers
+   keep writing for a moment, so wait for the exit, then retry the removal; cleanup never fails the run. */
+const dropProfile = async (dir, chrome) => {
+  if (chrome && chrome.exitCode === null && chrome.signalCode === null) await new Promise((r) => { chrome.once('exit', r); setTimeout(r, 3000); });
+  for (let i = 0; i < 25; i++) { try { rmSync(dir, { recursive: true, force: true }); return; } catch (_) { await new Promise((r) => setTimeout(r, 200)); } }
+};
 
 const here = dirname(fileURLToPath(import.meta.url));
 const PAGE = resolve(here, '../../../TestOpus5.5PmConcept.html');
@@ -20,7 +26,8 @@ const W = Number(opt('width', 1600)), H = Number(opt('height', 1000));
 async function run(theme) {
   const dir = join(out, theme); mkdirSync(dir, { recursive: true });
   /* one Chrome profile per browser: parallel browsers sharing a profile directory crash each other */
-  const { page, close } = await launch({ width: W, height: H, profile: `${tmpdir()}/pm-cdp-profile-${process.pid}-${theme}` });
+  const profile = `${tmpdir()}/pm-cdp-profile-${process.pid}-${theme}`;
+  const { page, close, chrome } = await launch({ width: W, height: H, profile });
   const shots = []; let n = 0;
   const ev = (fn, ...a) => page.evaluate(fn, ...a);
   const step = () => ev(() => window.O55.tour.state().step);
@@ -84,7 +91,7 @@ async function run(theme) {
     await until(new Function(`return window.O55.tour.state().step !== ${JSON.stringify(id)}`), 'leave ' + id, 12000);
   }
   const errors = page.errors.slice(0, 10);
-  await close();
+  await close(); await dropProfile(profile, chrome);
   return { theme, shots, errors };
 }
 

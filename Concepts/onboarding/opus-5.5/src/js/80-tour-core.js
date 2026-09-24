@@ -183,7 +183,7 @@
     /* the callout is placed against where the spotlight is going, not where it is, so both travel once, together */
     st.dest = h && !st.missing ? h : null;
     if (h && !st.missing) { if (snap) { st.hole = h; drawHole(h); } else moveHole(h); }
-    else { st.hole = null; drawHole(null); }
+    else { if (st.spring) { st.spring.cancel(); st.spring = null; } st.hole = null; drawHole(null); } /* no phantom hole */
     placeBar(h); /* first: where the bar sits decides the room the callout has */
     placeCallout();
   }
@@ -350,16 +350,30 @@
   /* ------------------------------------------------------------------ step flow */
   async function goStep(i, o) {
     o = o || {};
+    /* the old step's loop stops first: while the new step's enter() runs (a page change, a card growing in) nothing
+       may measure or place against a half-built layout */
+    if (st.poll) { st.poll.cancel(); st.poll = null; }
     const prev = st.step;
     if (prev && prev.leave) { try { prev.leave(st); } catch (_) {} }
     if (i >= TR.defs.length) return finish(false);
     st.step = TR.defs[Math.max(0, i)]; st.sess.index = st.step.index; st.missing = false; st.missingSince = 0; st.advancing = false; st.lastReady = undefined; st.side = null; st.fixed = null;
     save();
     if (st.step.enter) { try { await st.step.enter(st, o); } catch (err) { console.warn('O55 tour: enter failed', st.step.id, err); } }
+    await stillTarget(); /* a page that slides in, a card that grows: place against where things come to rest */
     renderBar(); renderCallout(true);
     if (!o.silent) O55.sound.play(st.step.kind === 'info' ? 'spot' : 'step');
     U.announce(T('tour.bar.progress', { n: CHAPTERS.indexOf(st.step.chapter) + 1, name: T('tour.chapters.' + st.step.chapter), s: TR.defs.filter((d) => d.chapter === st.step.chapter).indexOf(st.step) + 1, total: TR.defs.filter((d) => d.chapter === st.step.chapter).length }) + '. ' + copy(st.step.id, 'title'), st.root);
     watch();
+  }
+  /* wait (up to 700 ms) until the step's target holds the same rectangle for two frames running */
+  async function stillTarget() {
+    let prev = null; const t0 = performance.now();
+    while (performance.now() - t0 < 700) {
+      await new Promise((r) => requestAnimationFrame(r));
+      const el = targetEl(); if (!el) return;
+      const r = el.getBoundingClientRect(), k = [r.left, r.top, r.width, r.height].map(Math.round).join();
+      if (k === prev) return; prev = k;
+    }
   }
   /* one loop: re-measure the target (it may move), check the success predicate, notice a missing target */
   function watch() {
@@ -497,7 +511,7 @@
     TR.landing && TR.landing();
     window.dispatchEvent(new CustomEvent('o55:tour', { detail: { type: 'finished', keep: !!keep, restored: res } }));
   }
-  TR.skip = skip; TR.finish = finish; TR.go = (id) => goStep(TR.byId[id].index); TR.minutes = () => 4;
+  TR.skip = skip; TR.finish = finish; TR.go = (id) => goStep(TR.byId[id].index);
   TR.state = () => ({ running: TR.running, step: st.step && st.step.id, done: st.sess ? st.sess.done.slice() : [], paused: st.paused, tips: st.tips });
 
   /* zero-usage proof: the counters a provider call or usage write would move */

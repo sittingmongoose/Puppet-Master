@@ -1229,6 +1229,19 @@
         "after": "Nothing has been built yet. This is your chance to check the outcome, the decisions Puppet Master used, and anything that is still uncertain.",
         "button": "Review the plan"
       },
+      "review_parts": {
+        "title": "Read the plan before anything is built.",
+        "part1": "Outcomes: what the finished website must do for the people who use it.",
+        "part1Eli5": "What the website must do.",
+        "part2": "Decisions: the choices your answers made. Change an answer and these change with it.",
+        "part2Eli5": "What your answers decided.",
+        "part3": "Assumptions: what Puppet Master takes for granted. Say so if one is wrong.",
+        "part3Eli5": "What Puppet Master assumes.",
+        "part4": "Still open: anything you have not decided yet. Puppet Master does not guess.",
+        "part4Eli5": "What is still undecided.",
+        "do": "Outcomes, decisions, assumptions and what is still open: read these before you let any work begin.",
+        "doEli5": "That is the whole plan. Read it before work begins."
+      },
       "answer_edit": {
         "title": "Plans change when answers change.",
         "do": "Change your answer and watch what moves.",

@@ -161,8 +161,10 @@
      through its real command and says so; it comes back when the tour ends (Restore or Keep). */
   const cramped = () => innerWidth < 600;
   S({ id: 'book_club_goal', chapter: 'plan', kind: 'action', planning: true, place: 'right',
-    enter(st) {
+    /* the practice goal grows into the page; the callout is placed once it has its final size, so it never jumps */
+    async enter(st) {
       goPage('wizard'); P.injectGoal();
+      const card = document.getElementById('o55pGoal'); if (card) await M.settled(card, { subtree: true, fallback: 900 });
       if (cramped() && C.chatVisible()) { api().setSurfaceVisible('chat', false, 'cmd.panel.switch'); st.sess.chatTucked = true; }
     },
     extra: (st) => (st.sess.chatTucked ? `<p class="o55t-tips">${O55.c.small('spark', 13)}<span>${U.esc(T('tour.steps.book_club_goal.tucked'))}</span></p>` : ''),
@@ -189,6 +191,23 @@
     target: () => (P.reviewed ? document.getElementById('pm6WizDoc') : q('[data-o55p="review"]')),
     done: () => P.reviewed,
     showMe: async (sm) => { await sm.click(q('[data-o55p="review"]')); },
+    goTo: () => goPage('wizard') });
+
+  /* the review, read part by part: the spotlight settles on each part of the Live Plan with a one-line caption (on the
+     tour's own clock, so Pause and Reduced Motion hold it), then opens onto the whole plan */
+  const PARTS = ['s-out', 's-dec', 's-as', 's-open'];
+  S({ id: 'review_parts', chapter: 'plan', kind: 'info', planning: true,
+    enter(st) { st.part = 0; st.partTicks = 0; st.partsDone = false; },
+    tick(st) {
+      if (st.partsDone || ++st.partTicks < 19) return; /* about 2.7 s per part */
+      st.partTicks = 0;
+      if (st.part < PARTS.length - 1) st.part++; else st.partsDone = true;
+      O55.sound.play('spot'); TR.refresh();
+    },
+    doKey: (st) => (st.partsDone ? 'do' : 'part' + ((st.part || 0) + 1)),
+    target: (st) => (st.partsDone ? document.getElementById('pm6WizDoc') : q(`#pm6WizDoc [data-key="${PARTS[st.part || 0]}"]`) || document.getElementById('pm6WizDoc')),
+    avoid: () => [document.getElementById('pm6WizDoc')],
+    ready: (st) => !!st.partsDone,
     goTo: () => goPage('wizard') });
 
   S({ id: 'answer_edit', chapter: 'plan', kind: 'action', planning: true, place: 'left',
@@ -228,6 +247,7 @@
     /* a phone-width window may have Chat over the Wizard again: say it where it will be seen as well */
     if (innerWidth < 600) O55.pageToast(T('tour.landing'), 6000);
   };
-  /* measured on the reference run: about four minutes at a reading pace, Show Me used twice */
-  TR.minutes = () => 4;
+  /* measured by tools/tour_census.mjs on the real tour: 4.5 minutes at 200 words a minute with every action shown
+     (Planning takes 7 of 14 actions and 53 % of the time); rounded up so the promise is kept */
+  TR.minutes = () => 5;
 })();
