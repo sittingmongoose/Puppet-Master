@@ -5,8 +5,8 @@
   "coverage": {
     "command_rows": 6,
     "local_action_rows": 1,
-    "positive_cases": 21,
-    "negative_cases": 9,
+    "positive_cases": 27,
+    "negative_cases": 95,
     "exact_gui_consumers": [
       "Doctor",
       "Goal handoff modal",
@@ -722,6 +722,456 @@
         }
       },
       "row_index": 80
+    },
+    {
+      "name": "positive.checkpoint.round_trip",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.goal_handoff.command_request.v1",
+          "record_kind": "GoalHandoffCommandRequest",
+          "command_id": "cmd.goal.checkpoint",
+          "operation": "checkpoint",
+          "command_instance_id": "command:goal_handoff:1",
+          "idempotency_key": "idempotency:goal_handoff:1",
+          "goal_id": "goal:1",
+          "goal_run_id": "goal-run:1",
+          "project_id": "project:1",
+          "source_location_id": "source-location:1",
+          "current_host_id": "host:current",
+          "expected_goal_generation": 7,
+          "expected_topology_generation": 5,
+          "expected_source_generation": 9,
+          "permission_snapshot_ref": "permission:goal_handoff:1",
+          "return_context": {
+            "surface_id": "goal.handoff",
+            "route_id": "goal/handoff",
+            "focus_target": "checkpoint-button",
+            "invocation_token": "return:goal.handoff:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.goal.checkpoint",
+            "checkpoint_id": "checkpoint:goal:1",
+            "source_snapshot_ref": "source-snapshot:1",
+            "artifact_manifest_ref": "artifact-manifest:1",
+            "runtime_safe_point_ref": "safe-point:1",
+            "live_process_serialized": false
+          }
+        },
+        "result": {
+          "schema_id": "pm.goal_handoff.command_result.v1",
+          "record_kind": "GoalHandoffCommandResult",
+          "command_id": "cmd.goal.checkpoint",
+          "operation": "checkpoint",
+          "command_instance_id": "command:goal_handoff:1",
+          "status": "succeeded",
+          "goal_id": "goal:1",
+          "goal_run_id": "goal-run:1",
+          "project_id": "project:1",
+          "source_location_id": "source-location:1",
+          "current_host_id": "host:current",
+          "expected_goal_generation": 7,
+          "expected_topology_generation": 5,
+          "expected_source_generation": 9,
+          "receipt_ref": "receipt:goal_handoff:1",
+          "observable_work_ref": "work:goal_handoff:1",
+          "return_context": {
+            "surface_id": "goal.handoff",
+            "route_id": "goal/handoff",
+            "focus_target": "checkpoint-button",
+            "invocation_token": "return:goal.handoff:1",
+            "return_generation": 3
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.goal.checkpoint",
+            "changed": true,
+            "state": "completed",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:goal_handoff:1",
+            "resulting_generation": 8,
+            "restart_disposition": "resume",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "positive.continue_on_host.round_trip",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.goal_handoff.command_request.v1",
+          "record_kind": "GoalHandoffCommandRequest",
+          "command_id": "cmd.goal.continue_on_host",
+          "operation": "continue_on_host",
+          "command_instance_id": "command:goal_handoff:2",
+          "idempotency_key": "idempotency:goal_handoff:2",
+          "goal_id": "goal:1",
+          "goal_run_id": "goal-run:1",
+          "project_id": "project:1",
+          "source_location_id": "source-location:1",
+          "current_host_id": "host:current",
+          "expected_goal_generation": 7,
+          "expected_topology_generation": 5,
+          "expected_source_generation": 9,
+          "permission_snapshot_ref": "permission:goal_handoff:2",
+          "return_context": {
+            "surface_id": "goal.handoff",
+            "route_id": "goal/handoff",
+            "focus_target": "continue-button",
+            "invocation_token": "return:goal.handoff:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.goal.continue_on_host",
+            "checkpoint_ref": "checkpoint:goal:1",
+            "target_host_id": "host:target",
+            "target_environment_id": "environment:target",
+            "compatibility_proof_ref": "compatibility:1",
+            "source_currentness_ref": "source-currentness:1"
+          }
+        },
+        "result": {
+          "schema_id": "pm.goal_handoff.command_result.v1",
+          "record_kind": "GoalHandoffCommandResult",
+          "command_id": "cmd.goal.continue_on_host",
+          "operation": "continue_on_host",
+          "command_instance_id": "command:goal_handoff:2",
+          "status": "succeeded",
+          "goal_id": "goal:1",
+          "goal_run_id": "goal-run:1",
+          "project_id": "project:1",
+          "source_location_id": "source-location:1",
+          "current_host_id": "host:current",
+          "expected_goal_generation": 7,
+          "expected_topology_generation": 5,
+          "expected_source_generation": 9,
+          "receipt_ref": "receipt:goal_handoff:2",
+          "observable_work_ref": "work:goal_handoff:2",
+          "return_context": {
+            "surface_id": "goal.handoff",
+            "route_id": "goal/handoff",
+            "focus_target": "continue-button",
+            "invocation_token": "return:goal.handoff:1",
+            "return_generation": 3
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.goal.continue_on_host",
+            "changed": true,
+            "state": "running",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:goal_handoff:2",
+            "resulting_generation": 8,
+            "restart_disposition": "resume",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "positive.handoff_cancel.round_trip",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.goal_handoff.command_request.v1",
+          "record_kind": "GoalHandoffCommandRequest",
+          "command_id": "cmd.goal.handoff.cancel",
+          "operation": "handoff_cancel",
+          "command_instance_id": "command:goal_handoff:3",
+          "idempotency_key": "idempotency:goal_handoff:3",
+          "goal_id": "goal:1",
+          "goal_run_id": "goal-run:1",
+          "project_id": "project:1",
+          "source_location_id": "source-location:1",
+          "current_host_id": "host:current",
+          "expected_goal_generation": 7,
+          "expected_topology_generation": 5,
+          "expected_source_generation": 9,
+          "permission_snapshot_ref": "permission:goal_handoff:3",
+          "return_context": {
+            "surface_id": "goal.handoff",
+            "route_id": "goal/handoff",
+            "focus_target": "cancel-button",
+            "invocation_token": "return:goal.handoff:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.goal.handoff.cancel",
+            "handoff_operation_id": "handoff:goal:1",
+            "cancellable_proof_ref": "cancellable:1",
+            "confirmation": true
+          }
+        },
+        "result": {
+          "schema_id": "pm.goal_handoff.command_result.v1",
+          "record_kind": "GoalHandoffCommandResult",
+          "command_id": "cmd.goal.handoff.cancel",
+          "operation": "handoff_cancel",
+          "command_instance_id": "command:goal_handoff:3",
+          "status": "succeeded",
+          "goal_id": "goal:1",
+          "goal_run_id": "goal-run:1",
+          "project_id": "project:1",
+          "source_location_id": "source-location:1",
+          "current_host_id": "host:current",
+          "expected_goal_generation": 7,
+          "expected_topology_generation": 5,
+          "expected_source_generation": 9,
+          "receipt_ref": "receipt:goal_handoff:3",
+          "observable_work_ref": null,
+          "return_context": {
+            "surface_id": "goal.handoff",
+            "route_id": "goal/handoff",
+            "focus_target": "cancel-button",
+            "invocation_token": "return:goal.handoff:1",
+            "return_generation": 3
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.goal.handoff.cancel",
+            "changed": true,
+            "state": "cancelled",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:goal_handoff:3",
+            "resulting_generation": 8,
+            "restart_disposition": "not_applicable",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "positive.handoff_retry.round_trip",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.goal_handoff.command_request.v1",
+          "record_kind": "GoalHandoffCommandRequest",
+          "command_id": "cmd.goal.handoff.retry",
+          "operation": "handoff_retry",
+          "command_instance_id": "command:goal_handoff:4",
+          "idempotency_key": "idempotency:goal_handoff:4",
+          "goal_id": "goal:1",
+          "goal_run_id": "goal-run:1",
+          "project_id": "project:1",
+          "source_location_id": "source-location:1",
+          "current_host_id": "host:current",
+          "expected_goal_generation": 7,
+          "expected_topology_generation": 5,
+          "expected_source_generation": 9,
+          "permission_snapshot_ref": "permission:goal_handoff:4",
+          "return_context": {
+            "surface_id": "goal.handoff",
+            "route_id": "goal/handoff",
+            "focus_target": "retry-button",
+            "invocation_token": "return:goal.handoff:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.goal.handoff.retry",
+            "handoff_operation_id": "handoff:goal:1",
+            "failure_ref": "failure:1",
+            "retry_budget_ref": "retry-budget:1",
+            "original_idempotency_key": "idempotency:goal:original"
+          }
+        },
+        "result": {
+          "schema_id": "pm.goal_handoff.command_result.v1",
+          "record_kind": "GoalHandoffCommandResult",
+          "command_id": "cmd.goal.handoff.retry",
+          "operation": "handoff_retry",
+          "command_instance_id": "command:goal_handoff:4",
+          "status": "succeeded",
+          "goal_id": "goal:1",
+          "goal_run_id": "goal-run:1",
+          "project_id": "project:1",
+          "source_location_id": "source-location:1",
+          "current_host_id": "host:current",
+          "expected_goal_generation": 7,
+          "expected_topology_generation": 5,
+          "expected_source_generation": 9,
+          "receipt_ref": "receipt:goal_handoff:4",
+          "observable_work_ref": "work:goal_handoff:4",
+          "return_context": {
+            "surface_id": "goal.handoff",
+            "route_id": "goal/handoff",
+            "focus_target": "retry-button",
+            "invocation_token": "return:goal.handoff:1",
+            "return_generation": 3
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.goal.handoff.retry",
+            "changed": true,
+            "state": "running",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:goal_handoff:4",
+            "resulting_generation": 8,
+            "restart_disposition": "resume",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "positive.pause.round_trip",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.goal_handoff.command_request.v1",
+          "record_kind": "GoalHandoffCommandRequest",
+          "command_id": "cmd.goal.pause",
+          "operation": "pause",
+          "command_instance_id": "command:goal_handoff:5",
+          "idempotency_key": "idempotency:goal_handoff:5",
+          "goal_id": "goal:1",
+          "goal_run_id": "goal-run:1",
+          "project_id": "project:1",
+          "source_location_id": "source-location:1",
+          "current_host_id": "host:current",
+          "expected_goal_generation": 7,
+          "expected_topology_generation": 5,
+          "expected_source_generation": 9,
+          "permission_snapshot_ref": "permission:goal_handoff:5",
+          "return_context": {
+            "surface_id": "goal.status",
+            "route_id": "goal/status",
+            "focus_target": "pause-button",
+            "invocation_token": "return:goal.status:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.goal.pause",
+            "safe_point_policy_ref": "safe-point-policy:1",
+            "pause_reason_ref": "pause-reason:user",
+            "live_process_frozen": false
+          }
+        },
+        "result": {
+          "schema_id": "pm.goal_handoff.command_result.v1",
+          "record_kind": "GoalHandoffCommandResult",
+          "command_id": "cmd.goal.pause",
+          "operation": "pause",
+          "command_instance_id": "command:goal_handoff:5",
+          "status": "succeeded",
+          "goal_id": "goal:1",
+          "goal_run_id": "goal-run:1",
+          "project_id": "project:1",
+          "source_location_id": "source-location:1",
+          "current_host_id": "host:current",
+          "expected_goal_generation": 7,
+          "expected_topology_generation": 5,
+          "expected_source_generation": 9,
+          "receipt_ref": "receipt:goal_handoff:5",
+          "observable_work_ref": "work:goal_handoff:5",
+          "return_context": {
+            "surface_id": "goal.status",
+            "route_id": "goal/status",
+            "focus_target": "pause-button",
+            "invocation_token": "return:goal.status:1",
+            "return_generation": 3
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.goal.pause",
+            "changed": true,
+            "state": "paused",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:goal_handoff:5",
+            "resulting_generation": 8,
+            "restart_disposition": "resume",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "positive.resume_here.round_trip",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.goal_handoff.command_request.v1",
+          "record_kind": "GoalHandoffCommandRequest",
+          "command_id": "cmd.goal.resume_here",
+          "operation": "resume_here",
+          "command_instance_id": "command:goal_handoff:6",
+          "idempotency_key": "idempotency:goal_handoff:6",
+          "goal_id": "goal:1",
+          "goal_run_id": "goal-run:1",
+          "project_id": "project:1",
+          "source_location_id": "source-location:1",
+          "current_host_id": "host:current",
+          "expected_goal_generation": 7,
+          "expected_topology_generation": 5,
+          "expected_source_generation": 9,
+          "permission_snapshot_ref": "permission:goal_handoff:6",
+          "return_context": {
+            "surface_id": "goal.status",
+            "route_id": "goal/status",
+            "focus_target": "resume-button",
+            "invocation_token": "return:goal.status:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.goal.resume_here",
+            "checkpoint_ref": "checkpoint:goal:1",
+            "reconstruction_proof_ref": "reconstruction-proof:1",
+            "current_host_id": "host:current",
+            "worktree_currentness_ref": "worktree-currentness:1"
+          }
+        },
+        "result": {
+          "schema_id": "pm.goal_handoff.command_result.v1",
+          "record_kind": "GoalHandoffCommandResult",
+          "command_id": "cmd.goal.resume_here",
+          "operation": "resume_here",
+          "command_instance_id": "command:goal_handoff:6",
+          "status": "succeeded",
+          "goal_id": "goal:1",
+          "goal_run_id": "goal-run:1",
+          "project_id": "project:1",
+          "source_location_id": "source-location:1",
+          "current_host_id": "host:current",
+          "expected_goal_generation": 7,
+          "expected_topology_generation": 5,
+          "expected_source_generation": 9,
+          "receipt_ref": "receipt:goal_handoff:6",
+          "observable_work_ref": "work:goal_handoff:6",
+          "return_context": {
+            "surface_id": "goal.status",
+            "route_id": "goal/status",
+            "focus_target": "resume-button",
+            "invocation_token": "return:goal.status:1",
+            "return_generation": 3
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.goal.resume_here",
+            "changed": true,
+            "state": "running",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:goal_handoff:6",
+            "resulting_generation": 8,
+            "restart_disposition": "resume",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
     }
   ],
   "invalid": [
@@ -1007,7 +1457,7 @@
             "route_id": "goal/handoff",
             "focus_target": "different-control",
             "invocation_token": "return:goal.handoff:1",
-            "return_generation": -1
+            "return_generation": 3
           },
           "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
           "output": {
@@ -1023,7 +1473,8 @@
           },
           "completed_at_utc": "2026-09-01T04:00:00Z"
         }
-      }
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
     },
     {
       "name": "negative.race_generation_regression",
@@ -1100,6 +1551,780 @@
           "completed_at_utc": "2026-09-01T04:00:00Z"
         }
       }
+    },
+    {
+      "name": "negative.checkpoint.join.command_instance_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.checkpoint.round_trip",
+      "patch": {
+        "result.command_instance_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.checkpoint.join.goal_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.checkpoint.round_trip",
+      "patch": {
+        "result.goal_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.checkpoint.join.goal_run_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.checkpoint.round_trip",
+      "patch": {
+        "result.goal_run_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.checkpoint.join.project_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.checkpoint.round_trip",
+      "patch": {
+        "result.project_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.checkpoint.join.source_location_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.checkpoint.round_trip",
+      "patch": {
+        "result.source_location_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.checkpoint.join.current_host_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.checkpoint.round_trip",
+      "patch": {
+        "result.current_host_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.checkpoint.join.expected_goal_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.checkpoint.round_trip",
+      "patch": {
+        "result.expected_goal_generation": 8
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.checkpoint.join.expected_topology_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.checkpoint.round_trip",
+      "patch": {
+        "result.expected_topology_generation": 6
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.checkpoint.join.expected_source_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.checkpoint.round_trip",
+      "patch": {
+        "result.expected_source_generation": 10
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.checkpoint.join.return_context.surface_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.checkpoint.round_trip",
+      "patch": {
+        "result.return_context.surface_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.checkpoint.join.return_context.route_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.checkpoint.round_trip",
+      "patch": {
+        "result.return_context.route_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.checkpoint.join.return_context.focus_target",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.checkpoint.round_trip",
+      "patch": {
+        "result.return_context.focus_target": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.checkpoint.join.return_context.invocation_token",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.checkpoint.round_trip",
+      "patch": {
+        "result.return_context.invocation_token": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.checkpoint.join.return_context.return_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.checkpoint.round_trip",
+      "patch": {
+        "result.return_context.return_generation": 4
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.continue_on_host.join.command_instance_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.continue_on_host.round_trip",
+      "patch": {
+        "result.command_instance_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.continue_on_host.join.goal_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.continue_on_host.round_trip",
+      "patch": {
+        "result.goal_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.continue_on_host.join.goal_run_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.continue_on_host.round_trip",
+      "patch": {
+        "result.goal_run_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.continue_on_host.join.project_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.continue_on_host.round_trip",
+      "patch": {
+        "result.project_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.continue_on_host.join.source_location_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.continue_on_host.round_trip",
+      "patch": {
+        "result.source_location_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.continue_on_host.join.current_host_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.continue_on_host.round_trip",
+      "patch": {
+        "result.current_host_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.continue_on_host.join.expected_goal_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.continue_on_host.round_trip",
+      "patch": {
+        "result.expected_goal_generation": 8
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.continue_on_host.join.expected_topology_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.continue_on_host.round_trip",
+      "patch": {
+        "result.expected_topology_generation": 6
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.continue_on_host.join.expected_source_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.continue_on_host.round_trip",
+      "patch": {
+        "result.expected_source_generation": 10
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.continue_on_host.join.return_context.surface_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.continue_on_host.round_trip",
+      "patch": {
+        "result.return_context.surface_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.continue_on_host.join.return_context.route_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.continue_on_host.round_trip",
+      "patch": {
+        "result.return_context.route_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.continue_on_host.join.return_context.focus_target",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.continue_on_host.round_trip",
+      "patch": {
+        "result.return_context.focus_target": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.continue_on_host.join.return_context.invocation_token",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.continue_on_host.round_trip",
+      "patch": {
+        "result.return_context.invocation_token": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.continue_on_host.join.return_context.return_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.continue_on_host.round_trip",
+      "patch": {
+        "result.return_context.return_generation": 4
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.handoff_cancel.join.command_instance_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_cancel.round_trip",
+      "patch": {
+        "result.command_instance_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.handoff_cancel.join.goal_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_cancel.round_trip",
+      "patch": {
+        "result.goal_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.handoff_cancel.join.goal_run_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_cancel.round_trip",
+      "patch": {
+        "result.goal_run_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.handoff_cancel.join.project_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_cancel.round_trip",
+      "patch": {
+        "result.project_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.handoff_cancel.join.source_location_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_cancel.round_trip",
+      "patch": {
+        "result.source_location_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.handoff_cancel.join.current_host_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_cancel.round_trip",
+      "patch": {
+        "result.current_host_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.handoff_cancel.join.expected_goal_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_cancel.round_trip",
+      "patch": {
+        "result.expected_goal_generation": 8
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.handoff_cancel.join.expected_topology_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_cancel.round_trip",
+      "patch": {
+        "result.expected_topology_generation": 6
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.handoff_cancel.join.expected_source_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_cancel.round_trip",
+      "patch": {
+        "result.expected_source_generation": 10
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.handoff_cancel.join.return_context.surface_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_cancel.round_trip",
+      "patch": {
+        "result.return_context.surface_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.handoff_cancel.join.return_context.route_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_cancel.round_trip",
+      "patch": {
+        "result.return_context.route_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.handoff_cancel.join.return_context.focus_target",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_cancel.round_trip",
+      "patch": {
+        "result.return_context.focus_target": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.handoff_cancel.join.return_context.invocation_token",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_cancel.round_trip",
+      "patch": {
+        "result.return_context.invocation_token": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.handoff_cancel.join.return_context.return_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_cancel.round_trip",
+      "patch": {
+        "result.return_context.return_generation": 4
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.handoff_retry.join.command_instance_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_retry.round_trip",
+      "patch": {
+        "result.command_instance_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.handoff_retry.join.goal_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_retry.round_trip",
+      "patch": {
+        "result.goal_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.handoff_retry.join.goal_run_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_retry.round_trip",
+      "patch": {
+        "result.goal_run_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.handoff_retry.join.project_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_retry.round_trip",
+      "patch": {
+        "result.project_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.handoff_retry.join.source_location_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_retry.round_trip",
+      "patch": {
+        "result.source_location_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.handoff_retry.join.current_host_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_retry.round_trip",
+      "patch": {
+        "result.current_host_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.handoff_retry.join.expected_goal_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_retry.round_trip",
+      "patch": {
+        "result.expected_goal_generation": 8
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.handoff_retry.join.expected_topology_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_retry.round_trip",
+      "patch": {
+        "result.expected_topology_generation": 6
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.handoff_retry.join.expected_source_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_retry.round_trip",
+      "patch": {
+        "result.expected_source_generation": 10
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.handoff_retry.join.return_context.surface_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_retry.round_trip",
+      "patch": {
+        "result.return_context.surface_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.handoff_retry.join.return_context.route_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_retry.round_trip",
+      "patch": {
+        "result.return_context.route_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.handoff_retry.join.return_context.focus_target",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_retry.round_trip",
+      "patch": {
+        "result.return_context.focus_target": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.handoff_retry.join.return_context.invocation_token",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_retry.round_trip",
+      "patch": {
+        "result.return_context.invocation_token": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.handoff_retry.join.return_context.return_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.handoff_retry.round_trip",
+      "patch": {
+        "result.return_context.return_generation": 4
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.pause.join.command_instance_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.pause.round_trip",
+      "patch": {
+        "result.command_instance_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.pause.join.goal_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.pause.round_trip",
+      "patch": {
+        "result.goal_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.pause.join.goal_run_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.pause.round_trip",
+      "patch": {
+        "result.goal_run_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.pause.join.project_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.pause.round_trip",
+      "patch": {
+        "result.project_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.pause.join.source_location_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.pause.round_trip",
+      "patch": {
+        "result.source_location_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.pause.join.current_host_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.pause.round_trip",
+      "patch": {
+        "result.current_host_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.pause.join.expected_goal_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.pause.round_trip",
+      "patch": {
+        "result.expected_goal_generation": 8
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.pause.join.expected_topology_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.pause.round_trip",
+      "patch": {
+        "result.expected_topology_generation": 6
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.pause.join.expected_source_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.pause.round_trip",
+      "patch": {
+        "result.expected_source_generation": 10
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.pause.join.return_context.surface_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.pause.round_trip",
+      "patch": {
+        "result.return_context.surface_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.pause.join.return_context.route_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.pause.round_trip",
+      "patch": {
+        "result.return_context.route_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.pause.join.return_context.focus_target",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.pause.round_trip",
+      "patch": {
+        "result.return_context.focus_target": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.pause.join.return_context.invocation_token",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.pause.round_trip",
+      "patch": {
+        "result.return_context.invocation_token": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.pause.join.return_context.return_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.pause.round_trip",
+      "patch": {
+        "result.return_context.return_generation": 4
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.resume_here.join.command_instance_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.resume_here.round_trip",
+      "patch": {
+        "result.command_instance_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.resume_here.join.goal_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.resume_here.round_trip",
+      "patch": {
+        "result.goal_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.resume_here.join.goal_run_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.resume_here.round_trip",
+      "patch": {
+        "result.goal_run_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.resume_here.join.project_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.resume_here.round_trip",
+      "patch": {
+        "result.project_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.resume_here.join.source_location_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.resume_here.round_trip",
+      "patch": {
+        "result.source_location_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.resume_here.join.current_host_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.resume_here.round_trip",
+      "patch": {
+        "result.current_host_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.request_result_identity"
+    },
+    {
+      "name": "negative.resume_here.join.expected_goal_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.resume_here.round_trip",
+      "patch": {
+        "result.expected_goal_generation": 8
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.resume_here.join.expected_topology_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.resume_here.round_trip",
+      "patch": {
+        "result.expected_topology_generation": 6
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.resume_here.join.expected_source_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.resume_here.round_trip",
+      "patch": {
+        "result.expected_source_generation": 10
+      },
+      "semantic_rule": "goal_handoff.request_generation_echo"
+    },
+    {
+      "name": "negative.resume_here.join.return_context.surface_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.resume_here.round_trip",
+      "patch": {
+        "result.return_context.surface_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.resume_here.join.return_context.route_id",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.resume_here.round_trip",
+      "patch": {
+        "result.return_context.route_id": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.resume_here.join.return_context.focus_target",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.resume_here.round_trip",
+      "patch": {
+        "result.return_context.focus_target": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.resume_here.join.return_context.invocation_token",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.resume_here.round_trip",
+      "patch": {
+        "result.return_context.invocation_token": "other:identity"
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.resume_here.join.return_context.return_generation",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.resume_here.round_trip",
+      "patch": {
+        "result.return_context.return_generation": 4
+      },
+      "semantic_rule": "goal_handoff.exact_return_context"
+    },
+    {
+      "name": "negative.resume_here.payload_host.GoalHandoffCommandRequest",
+      "definition": "GoalHandoffCommandRequest",
+      "base_valid": "positive.resume_here.request",
+      "patch": {
+        "payload.current_host_id": "host:other"
+      },
+      "semantic_rule": "goal_handoff.resume_current_host"
+    },
+    {
+      "name": "negative.resume_here.payload_host.GoalHandoffCommandRoundTrip",
+      "definition": "GoalHandoffCommandRoundTrip",
+      "base_valid": "positive.resume_here.round_trip",
+      "patch": {
+        "request.payload.current_host_id": "host:other"
+      },
+      "semantic_rule": "goal_handoff.resume_current_host"
     }
   ]
 }
