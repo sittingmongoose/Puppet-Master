@@ -1,7 +1,7 @@
 /* Boot check: load the base and the built concept, compare console errors and load timing, and confirm the
  * strip/patch results live in the page.  Usage: node tools/boot_check.mjs <out-dir> [themes=basic-dark,...]
  * Writes boot.json and a screenshot per page/theme into <out-dir> (never into the repository). */
-import { launch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs';
+import { launch, sleep } from './chrome.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';

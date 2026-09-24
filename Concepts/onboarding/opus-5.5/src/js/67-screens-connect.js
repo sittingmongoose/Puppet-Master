@@ -223,12 +223,15 @@
       /* Create a new Project comes first: it is the one choice this page adds (Jared's ask); opening an existing
          Project is a quiet pick from the Server's list */
       let out = `<button type="button" class="o55-card o55-card-link" data-o55-do="createNew" data-pm-hover-exempt="true" data-key="create">${C.glyph('seed')}<span class="o55-cardtext"><span class="o55-cardtitle">${U.esc(T('connect.ready.create'))}</span><span class="o55-cardsub">${U.esc(T('connect.ready.createSub', { name: s.name }))}</span></span><span class="o55-cardarrow" aria-hidden="true">›</span></button>`;
-      out += C.group(T('connect.ready.projectsTitle', { name: s.name }), C.cards('pickProject', s.projects.map((p) => ({ v: p.id, glyph: 'folder', title: p.name, sub: T('like.updated', { when: p.updated }), quiet: true })), sel, { cls: 'o55-choices-quiet', label: T('connect.ready.projectsTitle', { name: s.name }) }));
+      out += s.projects.length ? C.group(T('connect.ready.projectsTitle', { name: s.name }), C.cards('pickProject', s.projects.map((p) => ({ v: p.id, glyph: 'folder', title: p.name, sub: T('like.updated', { when: p.updated }), quiet: true })), sel, { cls: 'o55-choices-quiet', label: T('connect.ready.projectsTitle', { name: s.name }) }))
+        : C.note(T('connect.ready.noProjects', { name: s.name }), 'info', 'seed');
       if (s.accounts.length) out += C.group(T('connect.ready.aiTitle', { name: s.name }), s.accounts.map((a) => C.row({ key: a.label, glyph: 'spark', title: a.label, state: a.ready ? ['ready', T('ai.ready')] : ['needs', T('ai.notReady')] })).join(''));
       return out;
     },
     foot(S) {
-      const tour = O55.tour && O55.tour.start;
+      /* the Guided Tour ends on a real Project: a Server with none yet leads with creating one instead */
+      const tour = O55.tour && O55.tour.start, has = ((server(S) || {}).projects || []).length > 0;
+      if (!has) return { back: true, secondary: [{ label: T('connect.ready.enter'), do: 'enter' }], primary: { label: T('connect.ready.create'), do: 'createNew' } };
       return { back: true, secondary: tour ? [{ label: T('connect.ready.enter'), do: 'enter' }] : [], primary: tour ? { label: T('ready.tour'), do: 'tour' } : { label: T('connect.ready.enter'), do: 'enter' } };
     },
     do: {

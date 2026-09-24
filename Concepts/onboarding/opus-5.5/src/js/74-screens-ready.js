@@ -66,16 +66,16 @@
     scene: () => ({ id: 'ready', beat: 'curtain' }),
     eyebrow: () => T('ready.eyebrow'),
     title: () => T('ready.title'),
-    lead: (S) => (S.sess.commit && S.sess.commit.state === 'done' ? T('ready.lead', { name: md(S).project_name }) : T('ready.leadLater')),
+    lead: (S) => (md(S).project_mode !== 'later' && S.sess.commit && S.sess.commit.state === 'done' ? T('ready.lead', { name: md(S).project_name }) : T('ready.leadLater')),
     body(S) {
-      const later = !(S.sess.commit && S.sess.commit.state === 'done');
+      const later = md(S).project_mode === 'later' || !(S.sess.commit && S.sess.commit.state === 'done');
       let out = later ? '' : `<div class="o55-summary" data-key="summary">${summary(S)}</div>`;
       if (!later && O55.tour && O55.tour.start) out += C.note(T('ready.tourSub', { m: O55.tour.minutes ? O55.tour.minutes() : 4 }), 'info', 'spark');
       out += `<p class="o55-note o55-note-info" data-key="help">${C.small('person', 14)}<span>${U.esc(T('ready.help'))}</span></p>`;
       return out;
     },
     foot(S) {
-      const later = !(S.sess.commit && S.sess.commit.state === 'done');
+      const later = md(S).project_mode === 'later' || !(S.sess.commit && S.sess.commit.state === 'done');
       if (later) return { back: true, secondary: [{ label: T('ready.enter'), do: 'enter' }], primary: { label: T('ready.createNow'), do: 'createNow' } };
       if (O55.tour && O55.tour.start) return { back: false, secondary: [{ label: T('ready.enter'), do: 'enter' }], primary: { label: T('ready.tour'), do: 'tour' } };
       return { back: false, primary: { label: T('ready.enter'), do: 'enter' } };

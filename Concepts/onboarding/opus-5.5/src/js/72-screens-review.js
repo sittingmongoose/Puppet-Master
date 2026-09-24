@@ -37,6 +37,9 @@
     return P().docsPath(S, d.project_name);
   }
   const whereWork = (S) => (md(S).server_mode === 'this_device' ? T('where.this.title') : P().serverName(S));
+  /* a new Server's access away from home needs setting up unless it stays on the home network */
+  const needsRemote = (d) => d.server_mode === 'new_server' && d.remote_mode !== 'local_or_vpn' && d.remote_mode !== 'none';
+  const remoteLabel = (d) => (d.remote_mode === 'local_or_vpn' ? T('away.home.title') : d.remote_mode === 'tailscale' ? 'Tailscale' : d.remote_mode === 'reverse_proxy' ? d.proxy_hostname : T('away.link.title'));
   const buttonLabel = (d) => (d.project_mode === 'later' ? T('review.finish') : d.project_mode === 'new' ? T('review.create') : d.project_mode === 'restore' ? T('review.restoreBtn') : T('review.add'));
   function routeParams(S) {
     const d = md(S), start = { new: ['seed', T('art.labels.start')], existing_local: ['folder', T('art.labels.files')], existing_online: ['cloud', forgeName(d)], restore: ['rewind', T('art.labels.start')], later: ['seed', T('art.labels.start')] }[d.project_mode];
@@ -53,7 +56,7 @@
     scene: (S) => ({ id: 'route', beat: 'default', params: routeParams(S) }),
     eyebrow: () => T('review.eyebrow'),
     title(S) { const d = md(S); return d.project_mode === 'later' ? T('review.titleLater') : T(d.project_mode === 'new' ? 'review.titleNew' : d.project_mode === 'restore' ? 'review.titleRestore' : 'review.titleAdd', { name: d.project_name }); },
-    lead: (S) => (md(S).project_mode === 'later' ? T('review.leadLater') : T('review.lead')),
+    lead: (S) => (md(S).project_mode === 'later' ? (needsRemote(md(S)) ? T('review.leadLaterAccess', { name: P().serverName(S) }) : T('review.leadLater')) : T('review.lead')),
     enter(S) { S.sess.ui.returnTo = null; },
     body(S) {
       const d = md(S), row = (k, v, edit) => `<div class="o55-revrow" data-key="rv-${k}"><span class="o55-revk">${U.esc(T('review.rows.' + k))}</span><span class="o55-revv">${U.esc(v)}</span>${edit ? C.link(T('review.edit'), 'edit', edit) : ''}</div>`;
@@ -61,6 +64,9 @@
       let out = st && st.state === 'done' ? `<p class="o55-hint" data-key="checked">${C.small('check', 12)}${U.esc(T('review.checked'))}</p>` : F.phases(S, 'recheck:' + d.project_draft_revision, ['check'], { check: T('chrome.working') });
       if (d.project_mode === 'later') {
         out += C.group(T('review.groups.computer'), row('where', whereWork(S), 'where'));
+        if (d.server_mode === 'new_server') out += C.group(T('review.groups.access'), row('remote', remoteLabel(d), 'away'));
+        const willLater = [['seed', T('review.will.noProject')]].concat(needsRemote(d) ? [['globe', T('review.will.remote')]] : []);
+        out += C.group(T('review.willTitle', { button: buttonLabel(d) }), `<ul class="o55-will">${willLater.map(([g, t]) => `<li>${C.small(g, 14)}<span>${U.esc(t)}</span></li>`).join('')}</ul>`);
         return out;
       }
       const notSet = [];
@@ -68,11 +74,14 @@
       if (O55.like.eligible(S) || d.settings_transfer.mode === 'copy_from_project') proj += row('like', d.settings_transfer.mode === 'copy_from_project' ? T('review.copied', { project: (S.sess.like && S.sess.like.name) || '' }) : T('review.fresh'), 'like');
       out += C.group(T('review.groups.project'), proj);
       out += C.group(T('review.groups.computer'), row('where', whereWork(S), 'where') + row('files', filesAt(S), d.project_mode === 'existing_local' ? 'begin' : 'name'));
-      let safe = row('history', T('review.saved', { kind: d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git' }) + (d.filesafe ? ' · FileSafe' : ''), 'safe');
-      if (d.online_mode !== 'none') safe += row('online', d.project_mode === 'existing_online' ? forgeName(d) + ' · ' + d.repository_ref.replace(/^[a-z_]+:/, '') : forgeName(d) + ' · ' + (d.repository_container || S.sess.forgeAccounts[d.forge] || '') + '/' + d.repository_name, 'safe'); else notSet.push(T('safe.online.title').toLowerCase());
+      const fi = d.project_mode === 'existing_local' ? S.sess.folderInfo : null, kind = d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git';
+      let safe = row('history', (fi && fi.history ? T('review.savedExisting', { kind: fi.history === 'jujutsu' ? 'Jujutsu' : 'Git' }) : T('review.saved', { kind })) + (d.filesafe ? ' · FileSafe' : ''), 'safe');
+      if (d.online_mode !== 'none') safe += row('online', d.project_mode === 'existing_online' ? forgeName(d) + ' · ' + d.repository_ref.replace(/^[a-z_]+:/, '') : forgeName(d) + ' · ' + (d.repository_container || S.sess.forgeAccounts[d.forge] || '') + '/' + d.repository_name, 'safe');
+      else if (fi && fi.online) safe += row('online', O55.safe.forgeName(fi.online.forge) + ' · ' + fi.online.repo + ' · ' + T('safe.online.linked'), 'begin');
+      else notSet.push(T('safe.online.title').toLowerCase());
       if (S.sess.backup.dest) safe += row('backup', T('safe.backup.' + S.sess.backup.dest), 'safe'); else notSet.push(T('safe.backup.title').toLowerCase());
       out += C.group(T('review.groups.safe'), safe);
-      if (d.server_mode === 'new_server') out += C.group(T('review.groups.access'), row('remote', d.remote_mode === 'local_or_vpn' ? T('away.home.title') : d.remote_mode === 'tailscale' ? 'Tailscale' : d.remote_mode === 'reverse_proxy' ? d.proxy_hostname : T('away.link.title'), 'away'));
+      if (d.server_mode === 'new_server') out += C.group(T('review.groups.access'), row('remote', remoteLabel(d), 'away'));
       if (notSet.length) out += `<p class="o55-hint" data-key="notset">${U.esc(T('review.notSet', { list: notSet.join(', ') }))}</p>`;
       /* what the one click does */
       const will = [];
@@ -101,7 +110,13 @@
       edit(S, target) { S.sess.ui.returnTo = { screen: 'review', from: target }; S.save(); O55.ui.go(target === 'safe' ? 'safe' : target); },
       commit(S) {
         const d = md(S);
-        if (d.project_mode === 'later') { O55.draft.set(d, { review_confirmed: true }); S.sess.commit = { state: 'later' }; S.save(); return O55.ui.go('ready'); }
+        /* a deferred Project: nothing is created, but a new Server's access away from home is prepared now */
+        if (d.project_mode === 'later') {
+          O55.draft.set(d, { review_confirmed: true });
+          if (!needsRemote(d)) { S.sess.commit = { state: 'later' }; S.save(); return O55.ui.go('ready'); }
+          if (!S.sess.commit || S.sess.commit.state === 'none' || S.sess.commit.state === 'later') S.sess.commit = { state: 'running', later: true, key: 'prepare:' + d.project_draft_ref, attempt: 1, revision: d.project_draft_revision };
+          S.save(); return O55.ui.go('creating');
+        }
         /* one reviewed commit per draft: a second click (or a retry) reuses the same idempotency key */
         if (!S.sess.commit || S.sess.commit.state === 'none') { O55.draft.set(d, { review_confirmed: true }); S.sess.commit = { state: 'running', key: 'commit:' + d.project_draft_ref, attempt: 1, revision: d.project_draft_revision }; S.save(); }
         O55.sound.play('commit');
@@ -113,6 +128,7 @@
   /* ------------------------------------------------------------------ creating (the one commit) */
   function phasesFor(S) {
     const d = md(S), cm = S.sess.commit, list = [];
+    if (d.project_mode === 'later') return (needsRemote(d) ? ['remote'] : []).concat(['check']);
     if (d.project_mode === 'new') list.push('folder');
     if (d.project_mode === 'existing_local' && d.project_transport !== 'local') list.push('device');
     if (d.project_mode === 'existing_online') list.push('folder', 'clone');
@@ -162,6 +178,15 @@
   function runCommit(S) {
     const d = md(S), cm = S.sess.commit; if (!cm || cm.state === 'done' || cm.state === 'failed') return;
     const order = phasesFor(S);
+    if (d.project_mode === 'later') {
+      /* no Project record, folder, history or copy: only the new Server's access, then a check */
+      F.op(S, cm.key, remoteCmd(d), order.map((k) => ({ key: k, ms: PH_MS[k] })), {
+        payload: { idempotency_key: cm.key, draft: d.project_draft_ref },
+        onFail: (S2, st) => { cm.state = 'failed'; cm.code = st.code; S.save(); },
+        onDone: () => { cm.state = 'done'; cm.code = null; S.save(); O55.sound.play('success'); O55.ui.refresh(); }
+      });
+      return;
+    }
     const phases = order.map((k) => ({ key: k, ms: PH_MS[k], fail: () => {
       if (k === 'folder' || (k === 'device' && !cm.projectId) || (k === 'restore' && !cm.projectId) || (k === 'clone' && !cm.projectId)) ensureProject(S);
       if (CHILD[k]) O55.owners.dispatch(CHILD[k], { draft: d.project_draft_ref }, S.ctx(), () => ({ ok: true }));
@@ -193,8 +218,8 @@
     chapter: 'project', stage: 'automatic_preparation',
     scene: (S) => { const st = F.state(S, (S.sess.commit || {}).key); const done = st ? (st.phases || []).filter((p) => p.status === 'done').length : 0; return { id: 'creating', beat: S.sess.commit && S.sess.commit.state === 'done' ? 'done' : 'build', params: { step: done, total: phasesFor(S).length } }; },
     eyebrow: () => T('creating.eyebrow'),
-    title: (S) => (S.sess.commit && S.sess.commit.state === 'done' ? T('creating.doneTitle', { name: md(S).project_name }) : S.sess.commit && S.sess.commit.state === 'failed' ? T('creating.failTitle') : T('creating.title', { name: md(S).project_name })),
-    lead: (S) => (S.sess.commit && S.sess.commit.state === 'done' ? T('creating.doneLead') : S.sess.commit && S.sess.commit.state === 'failed' ? T('creating.failLead') : T('creating.lead')),
+    title: (S) => { const cm = S.sess.commit || {}, later = md(S).project_mode === 'later', nm = later ? P().serverName(S) : md(S).project_name; return cm.state === 'done' ? T(later ? 'creating.doneTitleLater' : 'creating.doneTitle', { name: nm }) : cm.state === 'failed' ? T('creating.failTitle') : T(later ? 'creating.titleLater' : 'creating.title', { name: nm }); },
+    lead: (S) => { const cm = S.sess.commit || {}, later = md(S).project_mode === 'later'; return cm.state === 'done' ? T(later ? 'creating.doneLeadLater' : 'creating.doneLead') : cm.state === 'failed' ? T('creating.failLead') : T('creating.lead'); },
     body(S) {
       const d = md(S), cm = S.sess.commit || {}, svc = forgeName(d);
       const labels = { folder: T('creating.phases.folder'), device: T('creating.phases.device', { device: (S.sess.nas && S.sess.nas.folderLabel) || P().serverName(S) }), clone: T('creating.phases.clone', { service: svc }), restore: T('creating.phases.restore'),
@@ -222,7 +247,7 @@
       rename(S) { S.sess.ui.returnTo = null; S.sess.commit.renaming = true; S.save(); O55.ui.go('online-details'); },
       askSkip(S) { S.sess.commit.confirmSkip = true; S.save(); O55.ui.refresh(); },
       skipOnline(S) { const cm = S.sess.commit; cm.skipOnline = true; cm.confirmSkip = false; cm.state = 'running'; O55.draft.set(md(S), { online_mode: 'none' }); S.save(); O55.ui.refresh(); runCommit(S); },
-      next(S) { O55.ui.go(S.sess.backup.dest ? 'protect' : 'ai'); }
+      next(S) { O55.ui.go(md(S).project_mode === 'later' ? 'ready' : S.sess.backup.dest ? 'protect' : 'ai'); }
     },
     onBack: () => false
   });

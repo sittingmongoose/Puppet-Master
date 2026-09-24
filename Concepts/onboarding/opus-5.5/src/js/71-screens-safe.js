@@ -270,7 +270,7 @@
       const list = env.repos.filter((r) => !q || r.name.includes(q));
       let out = C.field({ bind: 'q', label: T('online.repos.search'), value: S.sess.ui.repoQ || '', placeholder: T('chrome.search') });
       out += list.length ? C.cards('pick', list.map((r) => ({ v: r.owner + '/' + r.name, glyph: 'cloud', title: r.name, sub: r.owner + ' · ' + (r.private ? T('online.repos.private') : T('online.repos.public')) + ' · ' + r.updated })), d.repository_ref.replace(/^[a-z_]+:/, ''), { label: T('online.repos.title') }) : C.note(T('online.repos.empty'), 'info');
-      if (d.repository_ref) out += `<p class="o55-locline" data-key="copyto">${C.small('computer', 16)}<span>${U.esc(T('online.repos.copyTo', { path: O55.project.docsPath(S, d.project_name) }))}</span></p>`;
+      if (d.repository_ref) out += `<p class="o55-locline" data-key="copyto">${C.small(O55.project.onServer(S) ? 'server' : 'computer', 16)}<span>${U.esc(O55.project.onServer(S) ? T('online.repos.copyToServer', { name: O55.project.serverName(S) }) : T('online.repos.copyTo', { path: O55.project.docsPath(S, d.project_name) }))}</span></p>`;
       return out;
     },
     foot: (S) => ({ primary: { label: T('chrome.continue'), do: 'next', disabled: !md(S).repository_ref, reason: T('missing.repository') } }),
@@ -297,7 +297,10 @@
           + C.toggle({ do: 'filesafe', on: d.filesafe, label: T('safe.history.filesafe'), sub: T('safe.history.filesafeSub') }));
       /* 2. online copy */
       let onlineState, onlineBtn = '';
+      /* a folder that already has an online copy keeps it: show it, and do not offer a second one */
+      const folderOnline = d.project_mode === 'existing_local' && fi && fi.online;
       if (d.project_mode === 'existing_online') onlineState = forgeName(d.forge) + ' · ' + d.repository_ref.replace(/^[a-z_]+:/, '');
+      else if (folderOnline && d.online_mode === 'none') onlineState = forgeName(folderOnline.forge) + ' · ' + folderOnline.repo + ' · ' + T('safe.online.linked');
       else if (d.online_mode === 'new') {
         const privacy = d.forge === 'azure_devops' ? T('online.details.azurePrivacy') : d.repository_visibility === 'internal' ? T('online.details.internal', { org: d.repository_container }) : d.repository_visibility ? T('online.details.' + d.repository_visibility) : '';
         onlineState = T('safe.online.set', { service: forgeName(d.forge, d.forge_provider_variant), privacy });

@@ -1,6 +1,6 @@
 /* Screenshot the art lab pages (settled frames) for vision review.
  * Usage: node tools/artshot.mjs <artlab-dir> <out-dir> [families=basic,friendly,glass,retro] [cellWidth=390] [waitMs=3800] */
-import { launch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs';
+import { launch, sleep } from './chrome.mjs';
 import { mkdirSync, readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { resolve, join } from 'node:path';

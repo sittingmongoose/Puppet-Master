@@ -9,6 +9,8 @@
   const O55 = window.O55, C = O55.c, U = O55.util, F = O55.flow, T = (k, v) => O55.t(k, v), def = (id, d) => O55.screens.define(id, d);
   const md = (S) => S.sess.drafts.main;
   const N = (S) => (S.sess.nas = S.sess.nas || { purpose: 'source', method: 'ssh' });
+  /* the SSH steps belong to whatever they serve: a full or Server restore sits in the Computer chapter */
+  const chapterOf = (S) => (N(S).purpose === 'backup' && (S.sess.restore || {}).scope !== 'project' ? 'computer' : 'project');
   const dev = (S) => S.env.devices.find((d) => d.id === N(S).device) || null;
   const dname = (S) => (dev(S) || { name: '' }).name;
   const words = (seed) => O55.art.identity(seed).words.join(' ');
@@ -56,7 +58,12 @@
     foot(S) {
       const n = N(S), m = n.method || 'ssh', d = dev(S);
       let ok = false, reason = T('missing.storage');
-      if (m === 'ssh') { ok = n.manual ? S.env.devices.some((x) => x.address === String(n.addr || '').trim()) : !!(d && (d.ssh || d.pm)); if (d && !d.ssh && !d.pm) reason = T('nas.find.offTitle', { name: d.name }); }
+      if (m === 'ssh') {
+        ok = n.manual ? S.env.devices.some((x) => x.address === String(n.addr || '').trim()) : !!(d && (d.ssh || d.pm));
+        if (n.manual) reason = F.nonEmpty(n.addr) ? T('nas.find.noAnswer', { addr: String(n.addr).trim() }) : T('nas.find.addressLabel');
+        else if (d && !d.ssh && !d.pm) reason = T('nas.find.offTitle', { name: d.name });
+        else if (!d) reason = T('nas.find.choose');
+      }
       else if (m === 'mounted') ok = !!n.volume; else ok = !!n.share;
       return { primary: { label: T('chrome.continue'), do: 'next', disabled: !ok, reason } };
     },
@@ -95,7 +102,7 @@
     return known === d.hostKey ? 'known' : 'changed';
   }
   def('nas-identity', {
-    chapter: 'project', stage: 'server_storage_client',
+    chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'identity', params: sceneParams(S) }),
     eyebrow: () => T('nas.identity.eyebrow'),
     title: (S) => (hostState(S) === 'changed' && !N(S).acceptedNew ? T('nas.identity.changedTitle', { name: dname(S) }) : T('nas.identity.title')),
@@ -132,7 +139,7 @@
   const keyWhere = (k) => (k.where === 'file' && k.configHost ? T('nas.key.where.config', { host: k.configHost }) : T('nas.key.where.' + k.where));
   function defaultKey(S) { const works = S.env.here.sshKeys.find((k) => keyStatus(S, k) === 'works'); return works ? works.id : 'new'; }
   def('nas-key', {
-    chapter: 'project', stage: 'server_storage_client',
+    chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'keys', params: sceneParams(S) }),
     eyebrow: () => T('nas.key.eyebrow'),
     title: () => T('nas.key.title'),
@@ -180,7 +187,7 @@
 
   /* ------------------------------------------------------------------ sign in once (only when the key isn't there yet) */
   def('nas-signin', {
-    chapter: 'project', stage: 'server_storage_client',
+    chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'keys', params: sceneParams(S) }),
     eyebrow: () => T('nas.signin.eyebrow'),
     title: (S) => T('nas.signin.title', { name: dname(S) }),
@@ -224,7 +231,7 @@
 
   /* ------------------------------------------------------------------ automatic phases (selected-source auth) */
   def('nas-install', {
-    chapter: 'project', stage: 'server_storage_client',
+    chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => { const st = F.state(S, installKey(S)); return { id: 'nas', beat: st && st.state === 'done' ? 'verified' : 'install', params: sceneParams(S) }; },
     eyebrow: () => T('nas.install.eyebrow'),
     title: () => T('nas.install.title'),
@@ -257,7 +264,11 @@
         F.reset(S, installKey(S)); N(S).opKey = null; O55.ui.refresh(); run(S);
       },
       fixPerms(S) { dev(S).homePermsOpen = false; F.reset(S, installKey(S)); N(S).opKey = null; S.save(); O55.ui.refresh(); run(S); },
-      next(S) { O55.ui.go('nas-folder'); }
+      /* a backup source goes back to the restore (its backups are listed there), everything else picks a folder */
+      next(S) {
+        if (N(S).purpose === 'backup') { const r = S.sess.restore || {}; r.nasReady = true; S.save(); return O55.ui.go(r.scope !== 'project' ? 'r-unlock' : 'r-pick'); }
+        O55.ui.go('nas-folder');
+      }
     },
     skipOnBack: (S) => { const st = F.state(S, installKey(S)); return !!(st && st.state === 'done'); }
   });

@@ -5,7 +5,7 @@
  * Animations; O55.motion.setTimeScale slows every JS timer, tween and spring on the onboarding's own clock.
  * One screenshot per 16.667/rate ms of wall time = one true 60 fps frame. frames.json records each frame's motion
  * time. Output: <out>/<theme>/<scene>/f000.jpg... plus film.json. */
-import { launch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs';
+import { launch, sleep } from './chrome.mjs';
 import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';

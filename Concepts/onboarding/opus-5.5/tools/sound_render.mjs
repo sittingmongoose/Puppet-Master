@@ -2,7 +2,7 @@
  * node tools/sound_render.mjs <out-dir>
  * Writes <out>/<family>/<event>.wav, sound.json (peaks, durations, live checks). tools/sound_board.py then builds
  * the listening boards and spectrograms. Rendering uses OfflineAudioContext, so it works under --mute-audio. */
-import { launch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs';
+import { launch, sleep } from './chrome.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';

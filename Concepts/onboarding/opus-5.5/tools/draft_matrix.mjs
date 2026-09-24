@@ -2,7 +2,7 @@
  * remote mode and settings-transfer combination the onboarding can produce, then writes them for
  * tools/schema_check.py validate. (UI-path drivers in scenarios.mjs capture the drafts that real clicks produce.)
  * node tools/draft_matrix.mjs <out.json> */
-import { launch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs';
+import { launch, sleep } from './chrome.mjs';
 import { writeFileSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, dirname } from 'node:path';

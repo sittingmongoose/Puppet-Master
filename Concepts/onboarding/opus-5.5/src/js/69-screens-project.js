@@ -40,7 +40,7 @@
       ], sel, { label: T('begin.title') });
       if (sel === 'existing') {
         out += `<div class="o55-subchoices" data-key="sub">` + C.cards('sub', [
-          { v: 'folder', glyph: 'folder', title: T('begin.folder.title'), sub: T('begin.folder.sub'), quiet: true },
+          { v: 'folder', glyph: 'folder', title: onServer(S) ? T('begin.folderOn.title', { name: serverName(S) }) : T('begin.folder.title'), sub: onServer(S) ? T('begin.folderOn.sub', { name: serverName(S) }) : T('begin.folder.sub'), quiet: true },
           { v: 'online', glyph: 'cloud', title: T('begin.online.title'), sub: T('begin.online.sub'), quiet: true },
           { v: 'device', glyph: 'server', title: T('begin.device.title'), sub: T('begin.device.sub'), quiet: true }
         ], sub, { cls: 'o55-choices-quiet', label: T('begin.existing.title') }) + '</div>';
@@ -59,7 +59,9 @@
         O55.ui.charm(el, T('begin.' + v + '.title').split(' ').slice(0, 3).join(' '), { new: 'seed', existing: 'folder', restore: 'rewind' }[v]);
       },
       sub(S, v) { S.sess.ui.beginSub = v; S.save(); O55.ui.refresh(); },
-      later(S) { O55.draft.set(md(S), { project_mode: 'later', source_more: false, online_mode: 'none' }); S.sess.ui.begin = null; S.save(); O55.ui.go('review'); },
+      /* a Project can wait, but a new Server is being set up now: its access away from home is still asked (canon
+         skips only the provider phases for a deferred Project) */
+      later(S) { O55.draft.set(md(S), { project_mode: 'later', source_more: false, online_mode: 'none' }); S.sess.ui.begin = null; S.save(); O55.ui.go(md(S).server_mode === 'new_server' ? 'away' : 'review'); },
       next(S) {
         const d = md(S), sel = choiceOf(S), sub = S.sess.ui.beginSub;
         const clearOnline = d.project_mode === 'existing_online' ? { online_mode: 'none', repository_ref: '' } : {};
@@ -79,27 +81,32 @@
     '~': ['Documents', 'Desktop', 'Code', 'Downloads'], '~/Documents': ['recipe-app', 'Taxes 2025', 'Book club'], '~/Desktop': ['garden notes'],
     '~/Code': ['budget-tracker', 'dotfiles'], '~/Downloads': []
   };
+  /* the folders the work computer has: this computer's, or on a Server the Server's own */
+  const recent = (S) => (onServer(S) ? S.env.serverFolders : S.env.here.recentFolders);
+  const treeOf = (S) => (onServer(S) ? S.env.serverTree : TREE);
+  const treeRoot = (S) => (onServer(S) ? '/mnt/tank' : '~');
   function folderInfo(S, path) {
-    const r = S.env.here.recentFolders.find((f) => f.path === path);
+    const r = recent(S).find((f) => f.path === path);
     return r || { path, name: path.split('/').pop(), history: /budget|dotfiles/.test(path) ? 'git' : null, online: null };
   }
   def('ex-folder', {
     chapter: 'project', stage: 'first_project',
     scene: () => ({ id: 'begin', beat: 'folder' }),
     eyebrow: () => T('folder.eyebrow'),
-    title: () => T('folder.title'),
-    lead: () => T('folder.lead'),
+    title: (S) => (onServer(S) ? T('folder.titleOn', { name: serverName(S) }) : T('folder.title')),
+    lead: (S) => (onServer(S) ? T('folder.leadOn', { name: serverName(S) }) : T('folder.lead')),
     body(S) {
-      const f = S.sess.folder || {}, sheet = S.sess.ui.sheet === 'tree';
-      let out = C.group(T('folder.recent'), C.cards('pick', S.env.here.recentFolders.map((r) => ({ v: r.path, glyph: 'folder', title: r.name, sub: r.path }))
-        .concat(f.path && !S.env.here.recentFolders.some((r) => r.path === f.path) ? [{ v: f.path, glyph: 'folder', title: f.path.split('/').pop(), sub: f.path }] : []), f.path, { label: T('folder.recent') }));
+      const f = S.sess.folder || {}, sheet = S.sess.ui.sheet === 'tree', rs = recent(S), tree = treeOf(S), root = treeRoot(S);
+      let out = C.group(T('folder.recent'), C.cards('pick', rs.map((r) => ({ v: r.path, glyph: 'folder', title: r.name, sub: r.path }))
+        .concat(f.path && !rs.some((r) => r.path === f.path) ? [{ v: f.path, glyph: 'folder', title: f.path.split('/').pop(), sub: f.path }] : []), f.path, { label: T('folder.recent') }));
       out += `<div class="o55-sublinks" data-key="browse">${C.link(T('folder.browse'), 'browse')}</div>`;
       if (sheet) {
-        const at = S.sess.ui.treeAt || '~', kids = TREE[at] || [];
-        const crumbs = at.split('/').map((part, i, arr) => C.link(part === '~' ? T('folder.tree.home') : part, 'treeGo', arr.slice(0, i + 1).join('/'))).join(' <span aria-hidden="true">›</span> ');
+        const at = S.sess.ui.treeAt || root, kids = tree[at] || [];
+        const crumbs = at.split('/').map((part, i, arr) => ({ part, path: arr.slice(0, i + 1).join('/') })).filter((c) => c.path && (c.path === root || c.path.startsWith(root)))
+          .map((c) => C.link(c.path === root ? (root === '~' ? T('folder.tree.home') : serverName(S)) : c.part, 'treeGo', c.path)).join(' <span aria-hidden="true">›</span> ');
         const body = `<div class="o55-crumbs" data-key="crumbs">${crumbs}</div><div class="o55-treelist" role="listbox" aria-label="${U.esc(T('folder.picker'))}">`
           + kids.map((k) => `<button type="button" class="o55-treeitem" role="option" data-o55-do="treeGo" data-arg="${U.esc(at + '/' + k)}" data-pm-hover-exempt="true" data-key="ti-${U.esc(U.slug(k))}">${C.small('folder', 16)}<span>${U.esc(k)}</span></button>`).join('') + '</div>';
-        out += C.sheet(S, 'tree', T('folder.picker'), body, O55.ui.btn({ label: T('folder.open'), do: 'treePick', disabled: at === '~', reason: T('missing.folder') }, 'o55-primary'));
+        out += C.sheet(S, 'tree', T('folder.picker'), body, O55.ui.btn({ label: T('folder.open'), do: 'treePick', disabled: at === root, reason: T('missing.folder') }, 'o55-primary'));
       }
       if (f.path) {
         const st = F.state(S, 'folder:' + f.path);
@@ -118,8 +125,8 @@
     },
     do: {
       pick(S, path) { S.sess.folder = { path }; S.save(); F.op(S, 'folder:' + path, 'cmd.project.source_location.test', [{ key: 'read', ms: 700 }], { payload: { path } }); O55.ui.refresh(); },
-      browse(S) { S.sess.ui.sheet = 'tree'; S.sess.ui.treeAt = '~'; S.save(); O55.ui.refresh(); },
-      treeGo(S, path) { S.sess.ui.treeAt = path; if (!TREE[path]) TREE[path] = []; S.save(); O55.ui.refresh(); },
+      browse(S) { S.sess.ui.sheet = 'tree'; S.sess.ui.treeAt = treeRoot(S); S.save(); O55.ui.refresh(); },
+      treeGo(S, path) { const tree = treeOf(S); S.sess.ui.treeAt = path; if (!tree[path]) tree[path] = []; S.save(); O55.ui.refresh(); },
       treePick(S) { const path = S.sess.ui.treeAt; S.sess.ui.sheet = null; S.save(); O55.screens.defs['ex-folder'].do.pick(S, path); },
       next(S) {
         const path = S.sess.folder.path, info = folderInfo(S, path), d = md(S);
@@ -149,16 +156,18 @@
       const d = md(S), prob = nameProblem(S, d.project_name), touched = S.sess.ui.nameTouched;
       let out = C.field({ bind: 'name', label: T('name.label'), value: d.project_name, placeholder: T('name.placeholder'), hint: prob ? '' : (d.project_name ? T('name.ok') : ''), error: touched && prob ? prob : '', valid: !prob, invalid: touched && !!prob, autocomplete: 'off' });
       if (d.project_mode === 'new') out += F.chips('suggest', O55.tx('name.suggest'), d.project_name);
-      /* where its files live */
-      if (onServer(S)) {
+      /* where its files live: an existing folder stays where it is (also on a Server); a new or copied Project on a
+         Server offers the Server, this device or a network drive */
+      if (d.project_mode === 'existing_local') {
+        const path = d.project_transport === 'ssh' ? (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref : d.local_location;
+        out += `<p class="o55-locline" data-key="loc">${C.small('folder', 16)}<span>${U.esc(onServer(S) && d.project_transport === 'local' ? T('name.keptOn', { path, name: serverName(S) }) : T('name.kept', { path }))}</span></p>`;
+      } else if (onServer(S)) {
         const nm = serverName(S);
         out += C.group(T('name.serverTitle'), C.cards('storage', [
           { v: 'with_server', glyph: 'server', title: T('name.withServer', { name: nm }), sub: T('name.withServerSub'), tag: T('chrome.recommended') },
           { v: 'this_device', glyph: 'computer', title: T('name.onDevice'), sub: T('name.onDeviceSub', { name: nm }) },
           { v: 'network_location', glyph: 'folder', title: T('name.networkDrive'), sub: d.storage_location ? d.storage_location.replace(/^[a-z]+:/, '') : T('name.networkDriveSub') }
         ], d.storage_mode, { label: T('name.serverTitle') }));
-      } else if (d.project_mode === 'existing_local') {
-        out += `<p class="o55-locline" data-key="loc">${C.small('folder', 16)}<span>${U.esc(T('name.kept', { path: d.project_transport === 'ssh' ? (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref : d.local_location }))}</span></p>`;
       } else {
         const path = d.local_location_mode === 'custom' && d.local_location ? d.local_location : d.storage_mode === 'network_location' ? d.storage_location.replace(/^[a-z]+:/, '') : docsPath(S, d.project_name);
         out += `<p class="o55-locline" data-key="loc">${C.small('folder', 16)}<span>${U.esc(T('name.kept', { path }))}</span>${C.link(T('name.change'), 'change')}</p>`;

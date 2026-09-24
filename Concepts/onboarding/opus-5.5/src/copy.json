@@ -247,7 +247,8 @@
       "enter": "Enter Puppet Master",
       "open": "Open",
       "create": "Create a new Project",
-      "createSub": "Starts a new Project on {name}"
+      "createSub": "Starts a new Project on {name}",
+      "noProjects": "No Projects on {name} yet. Create the first one."
     }
   },
   "server": {
@@ -268,7 +269,7 @@
         "sub": "A Windows, Mac or Linux computer that stays on"
       },
       "installTitle": "Install Puppet Master on it",
-      "restore": "Setting up a replacement? Bring back an old Server"
+      "replaceNote": "Replacing an old Server? Set up this one first; then you can bring back the old one’s data."
     },
     "install": {
       "truenas": [
@@ -311,7 +312,10 @@
       "found": "Puppet Master on {name}",
       "notSetUp": "Not set up yet",
       "choose": "Set up this one",
-      "address": "Enter its address instead"
+      "address": "Enter its address instead",
+      "cloudNote": "A cloud computer does not show up on your home network. Enter the address its setup printed.",
+      "cloudLabel": "Its address",
+      "scan": "Look on this network instead"
     },
     "confirm": {
       "eyebrow": "New Server",
@@ -333,12 +337,22 @@
         "pair": "Pairing this device",
         "check": "Checking it works"
       },
-      "suggest": [
+      "willLine": "{name} becomes your Server, this device is paired with it, and only devices you approve can use it.",
+      "suggestNas": [
         "Home NAS",
         "Home server",
-        "Studio"
+        "Studio NAS"
       ],
-      "willLine": "{name} becomes your Server, this device is paired with it, and only devices you approve can use it."
+      "suggestCloud": [
+        "Cloud server",
+        "Rented server",
+        "Studio cloud"
+      ],
+      "suggestPc": [
+        "Studio PC",
+        "Office computer",
+        "Home server"
+      ]
     },
     "ready": {
       "eyebrow": "New Server",
@@ -446,7 +460,11 @@
       "sub": "A NAS, a network drive or another computer"
     },
     "later": "Set up a Project later",
-    "server": "On {name}"
+    "server": "On {name}",
+    "folderOn": {
+      "title": "A folder on {name}",
+      "sub": "Work that already sits on {name}"
+    }
   },
   "folder": {
     "eyebrow": "Your Project",
@@ -466,7 +484,9 @@
       "code": "Code",
       "downloads": "Downloads"
     },
-    "checking": "Looking inside…"
+    "checking": "Looking inside…",
+    "titleOn": "Which folder on {name}?",
+    "leadOn": "Puppet Master works on it right where it is on {name}."
   },
   "online": {
     "service": {
@@ -581,7 +601,8 @@
       "copyTo": "Copy kept on this computer in {path}",
       "private": "Private",
       "public": "Public",
-      "empty": "No Projects found in this account."
+      "empty": "No Projects found in this account.",
+      "copyToServer": "The copy is kept on {name}. You can choose another place on the next page."
     }
   },
   "name": {
@@ -615,7 +636,8 @@
     "networkDriveSub": "A NAS or shared folder",
     "storage": {
       "sshTitle": "Where on {device}?"
-    }
+    },
+    "keptOn": "Stays in {path} on {name}"
   },
   "like": {
     "eyebrow": "Your Project",
@@ -667,7 +689,8 @@
       "notNow": "Not now",
       "sub": "Keeps a copy on a website like GitHub",
       "set": "{service} · {privacy}",
-      "add": "Add one"
+      "add": "Add one",
+      "linked": "already linked"
     },
     "backup": {
       "title": "Backup",
@@ -769,7 +792,8 @@
       "online": "A private copy is made on {service}",
       "settings": "Settings from {project} are applied",
       "remote": "Access away from home is set up",
-      "server": "The Project lives on {server}"
+      "server": "The Project lives on {server}",
+      "noProject": "No Project is created; make one whenever you like"
     },
     "checked": "Checked just now",
     "changed": "{what} changed since you chose it. Take a look.",
@@ -777,7 +801,9 @@
     "add": "Add Project",
     "restoreBtn": "Restore Project",
     "finish": "Finish setup",
-    "edit": "Edit"
+    "edit": "Edit",
+    "leadLaterAccess": "No Project will be created now. Access to {name} from away is set up so it is ready when you are.",
+    "savedExisting": "Keeps its {kind} history"
   },
   "creating": {
     "eyebrow": "Creating",
@@ -806,7 +832,10 @@
     "doneTitle": "{name} is ready",
     "doneLead": "Everything is set up and checked.",
     "receipts": "Technical details",
-    "continue": "Continue"
+    "continue": "Continue",
+    "titleLater": "Setting up {name}",
+    "doneTitleLater": "{name} is ready",
+    "doneLeadLater": "Access from away is set up and checked. Create your first Project whenever you like."
   },
   "protect": {
     "eyebrow": "Keeping it safe",
@@ -979,7 +1008,9 @@
       "exports": "NFS shares found",
       "volumes": "Connected drives",
       "pmTag": "Runs Puppet Master",
-      "pmNote": "{name} runs Puppet Master, so they pair directly. No SSH password needed."
+      "pmNote": "{name} runs Puppet Master, so they pair directly. No SSH password needed.",
+      "noAnswer": "Nothing answered at {addr}. Check the address and that the device is on.",
+      "choose": "Choose a device"
     },
     "identity": {
       "eyebrow": "Check the device",

@@ -1,0 +1,124 @@
+# Onboarding logic audit — working notes (next milestone, after M2 lands)
+
+Jared, 2026-09-24: the onboarding gets at least the tour's depth, plus a logic audit —
+does the flow actually work; is each thing in the right order; are items shown based on prior selections;
+are options available based on selections. "The logic is extremely important. The details matter a lot."
+
+## Method
+1. Transition map: every screen (43), its entry conditions, what it shows conditionally, every outgoing action.
+2. Explorer: automated BFS over real clicks (fresh page per path prefix), state = screen + relevant draft fields;
+   finds dead ends, unreachable screens, controls that do nothing, Back/resume breakage.
+3. Rule table: each rule -> where enforced -> verified by (scenario / explorer / schema conditional).
+4. Ordering review with rationale (packet > canon; research), change where wrong.
+5. Copy/details per screen given prior choices (names, places, services, plural/singular, labels "on Home NAS").
+6. Visual/motion/sound pass per screen x 8 themes x (1600, 760, 390, short) with harness invariants
+   (raw copy keys, clipping/overflow, overlaps, focus, disabled reasons), films of every transition.
+
+## Candidate issues found while mapping (verify before changing)
+- C1 `begin` -> later jumps straight to review. On a new-Server path this skips "Use it away from home?"
+  (remote_access_setup) although the Server is being set up now and O55.stages.DEFERRED keeps
+  remote_access_setup (and source_control_setup, server_storage_client). Check PWIZ-021's deferred graph.
+- C2 `safe` -> next goes to `away` only for server_mode === 'new_server'. Check existing_server (connect ->
+  create new Project, "Home NAS is back" -> create) and whether remote access is already settled there.
+- C3 review `edit(target)` return paths: every target returns to review with the change reflected?
+- C4 `ai-none` next: back() unless Free Models chosen - is the finished state right after Skip?
+- C5 the where-screen's "This computer" sets remote_mode none; does choosing a Server later reset it?
+
+## Canon/packet facts for the audit
+- PWIZ-021: explicit Project deferral skips ONLY provider_setup and free_models_setup (not source control, storage,
+  remote access). => C1 confirmed as a real gap on Server paths (later on new_server must still offer away).
+- Packet 01 rules to test per path:
+  - fresh local user never sees remote pairing, proxy, source-host, settings-copy or multi-account PAGES;
+  - six concepts stay distinct (source files, history, online host, sync, backup, remote access), not all asked of all;
+  - "Keep your work safe" rows must follow the chosen begin path: existing online project already HAS an online copy
+    (show it, don't offer to create one); an existing folder with history keeps its engine (show, don't ask);
+    restore paths bring history/backup from the snapshot;
+  - Back may revise every earlier choice until Create; after commit, returning is an explicit edit, never "uncreate";
+  - returning user sees detected Projects and accounts immediately;
+  - Review answers: name, files location, work computer, fresh vs inherited, source/history/online/sync/backup, effects.
+- Remote access optional unless the selected route requires it.
+
+## More candidates from reading 66/69 (verify by running)
+- C6 where -> This computer sets server/storage/remote modes but leaves server_ref, storage_location, remote_* and
+  S.sess.server from an abandoned Server path; the committed draft may carry stale fields. Same for Server after
+  This computer (remote mode), and begin sub-choices after switching.
+- C7 begin -> existing -> "A folder on this computer" on a Server path: the plan says every step runs on the work
+  computer and labels name it ("a folder on Home NAS"); ex-folder browses S.env.here.recentFolders (this device).
+- C8 name on a Server path shows the three "where its files live" cards even for existing_local (a folder already
+  has a place) - should show the kept line instead; for existing_online the cards mean "where the copy goes" (ok,
+  but the wording must say copy).
+- C9 begin: "Restore a Project" on a Server path - restore onto the Server? check r-source labels/targets.
+- C10 name for existing_online: the name defaults to the online name (plan) - check it is prefilled and the
+  location line says "Where to keep the copy".
+
+## From reading 71 (safe / online / away)
+- C12 safe "Online copy" row for existing_local whose folder check found an online copy (folderInfo.online):
+  shows "Not now · Add" - it should show the copy it already has (service · repo) and not offer a second one.
+- C13 restore paths reach safe with Backup "Later": a restored Project came from a backup - offer that destination?
+- C14 safe shows the sync note on every Server path; plan: only when the user has more than one PM device - check
+  copy and condition.
+- C15 ex-repos "copy to" line uses this computer's Documents path even on Server paths ("on Home NAS").
+- ok: existing_online online row shows the existing repo (no add); privacy options per service; owner only if orgs;
+  name defaults to the online name.
+
+## From reading 72 (review / creating)
+- C16 review for project later shows only the Computer group; on a new Server with later, the Access row (and the
+  away step, C1) is missing although the Server is being set up.
+- C12b review for an existing folder that already has an online copy says "Not set up now: online copy" because the
+  draft never records the folder's existing online copy (check the schema: which fields/conditionals allow an
+  existing online copy on existing_local?).
+- C18 history row wording for existing history ("keeps its Git history" vs "every version saved").
+- ok: button label per mode; begins/files rows per mode; like row when eligible; Edit returns to Review via FLOW
+  order; creating phases per mode (no history phase when the folder has one; install when Git missing; online only
+  when new; settings only when copying; remote only for new Server beyond local/VPN).
+- C19 nas-find manual address that matches no device: Continue disabled with the generic 'missing.storage' reason; should say nothing answered at that address (and offer Check again).
+
+## From reading 67 (connect)
+- C20 c-ready always offers Take the Guided Tour; a Server with no Projects gives the tour no Project to end on
+  (the tour's rule: it ends on a real Project). Then Create a new Project should lead, and the tour wait.
+- C24 c-route: a server resolved through a web address or Remote Link stays chosen after switching back to
+  "On this network" although it was never picked from the list (check what Review then says).
+- ok: discovery is read-only and cached per scope; VPN is opt-in; pairing only after Connect on the review; a wrong
+  code shows one fix; Create a new Project starts the second draft on the same Server with the connect route copied.
+
+## From reading 68 (server)
+- C25 s-kind offers "Setting up a replacement? Bring back an old Server" before any Server is chosen or claimed;
+  check what the restore then targets (a replacement needs the new Server first, or the restore must claim it).
+- C26 the Server name defaults to "Home NAS" with suggestions Home NAS / Home server / Studio whatever the kind: a
+  rented cloud computer or another PC should not be called Home NAS.
+- C27 s-wait for "A cloud computer" scans the local network and offers the NAS found there; a cloud computer is
+  never on the local network: it should lead with its address (or the setup link it prints) instead.
+- ok: nothing is claimed until Set up Server; the setup code comes from the Server's own page; a wrong code keeps
+  the draft; the pairing card has QR, code, link, expiry, New code, Copy link.
+
+## Decisions taken while reading (to implement after the crawl)
+- C1/C16: canon (PWIZ-021) skips only the provider phases for a deferred Project, so "Set up a Project later" on a
+  new Server still asks "Use it away from home?", Review shows the Access group, and the remote-access phases run
+  in Creating without a Project (folder, history, online copy and settings phases do not).
+- C12: an existing folder's online copy is shown as it is ("GitHub · jared-p/recipe-app, already linked") on Keep
+  your work safe and in Review, and no second copy is offered; the draft keeps online_mode none (nothing new is
+  created), because recording it as existing would require a sign-in the person has not asked for.
+- Order: welcome -> look -> where -> (connect | server preflow) -> begin -> [folder | online | device] -> name ->
+  like? -> safe -> away? -> review -> creating -> protect? -> ai -> free? -> ready matches packet 01's fixed
+  dependency order (1 Welcome, 2 where, 3 how it begins, 4 draft, 5 start like, 6 source/history/sync/backup/remote,
+  7 review, 8 commit, 9 AI, 10 Free Models, 11 finish) and F3-520 (look at welcome, before infrastructure).
+
+## Resolutions (source changed; verified after the crawl)
+- C1/C16 fixed: later on a new Server -> away -> Review with the Access group -> Creating runs only the access and
+  check phases (no Project record, folder, history, copy or settings) -> Ready ("Home NAS is ready").
+- C6 fixed: choosing This computer clears the Server reference, trust and access-route fields an abandoned Server
+  path set.
+- C7 fixed: on a Server path the folder choice is "A folder on Home NAS" and browses the Server's own folders.
+- C8 fixed: an existing folder keeps its place on the name screen, also on a Server ("Stays in … on Home NAS").
+- C12 fixed: a folder's existing online copy shows as "already linked" on Keep your work safe and in Review; no
+  second copy offered; nothing listed as not set up. C18 fixed: "Keeps its Git history".
+- C15 fixed: the online Project's copy line names the Server on Server paths.
+- C19 fixed: an address nothing answers says so; no device chosen says "Choose a device".
+- C20 fixed: a Server with no Projects shows "No Projects on … yet" and leads with Create a new Project, no tour.
+- C25 fixed: the first Server screen no longer offers restoring before any Server exists; it says the old one's
+  data can come back once this one is set up (the link stays on the Server-ready page).
+- C26 fixed: names follow the kind (Home NAS / Cloud server / Studio PC and their suggestions).
+- C27 fixed: a cloud computer is reached by its address (no home-network scan); a separate cloud fixture.
+- C14 not an issue: on a Server path the sync line states a fact (every device on that Server sees the Project).
+  C14b left as a gap: the setup plan has no Project sync field (63 properties, only client_mode), so the onboarding
+  cannot record a sync choice without inventing canon; REPORT lists it.

@@ -3,7 +3,7 @@
  *        [--size 1440x900] [--scenario fresh] [--settle 1600] [--full]
  * Each screen is reached through O55.ui.go on one live page per theme (the same path a person clicks), so the shot
  * shows the real session state. Writes <screen>--<theme>--<WxH>.png and shots.json (errors, rects) into <out-dir>. */
-import { launch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs';
+import { launch, sleep } from './chrome.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';

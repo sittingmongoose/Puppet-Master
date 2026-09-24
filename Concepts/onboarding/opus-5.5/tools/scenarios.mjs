@@ -289,6 +289,78 @@ def('l1', 'fresh', 'Set up a Project later', async (d, A) => {
   A.capture('l1 later', await d.draft('main'));
 });
 
+/* ---------------------------------------------------------------------------------------------- logic audit (AUDIT.md) */
+/* welcome -> look -> where: a new Server -> NAS -> found -> claimed -> Server ready -> the Project chapter */
+async function toNewServer(d) {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'server'); await d.primary(); await d.primary();
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"pm:new\"]')", 'found truenas.local', 6000); await d.act('pick', 'pm:new'); await d.primary();
+  await d.type('code', '482 913'); await d.primary(); await d.untilScreen('s-ready', 8000); await d.primary();
+}
+def('a1', 'fresh', 'A Project later on a new Server still sets up its access, and nothing else', async (d, A) => {
+  await toNewServer(d); A.eq(await d.screen(), 'begin', 'Project chapter');
+  await d.act('later'); A.eq(await d.screen(), 'away', "the Server's access is still asked");
+  await d.act('pick', 'anywhere'); await d.primary(); A.eq(await d.screen(), 'review', 'review');
+  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding [data-key="rv-remote"]')), 'Review shows the access');
+  A.ok(await d.state(() => /No Project is created/.test((document.querySelector('#pm-o55-onboarding .o55-will') || {}).textContent || '')), 'Review says no Project is created');
+  await d.primary(); A.eq(await d.screen(), 'creating', 'the access is prepared');
+  await until(d, "window.O55.S.sess.commit.state === 'done'", 'prepared', 12000);
+  A.eq(await d.state(() => (window.O55.S.sess.ops[window.O55.S.sess.commit.key].phases || []).map((p) => p.key).join()), 'remote,check', 'only the access and a check run');
+  A.ok(await d.state(() => !window.O55.S.sess.commit.projectId && !document.querySelector('#projectMenu [data-project^="p-"]')), 'no Project record anywhere');
+  await d.primary(); A.eq(await d.screen(), 'ready', 'ready');
+  A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding [data-o55-do="tour"]') && !!document.querySelector('#pm-o55-onboarding [data-o55-do="createNow"]')), 'no tour without a Project; Create a Project now instead');
+  A.capture('a1 later on a new Server', await d.draft('main'));
+});
+def('a2', 'fresh', 'Connect to a Server with no Projects: Create a new Project leads, no tour', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'connect'); await d.primary();
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"pm:garage\"]')", 'found Garage Pi', 6000); await d.act('pickServer', 'pm:garage');
+  await d.primary(); await d.primary(); await until(d, 'window.O55.S.sess.connect.paired', 'approved', 9000); await d.primary();
+  A.eq(await d.screen(), 'c-ready', 'ready to meet');
+  A.ok(await d.state(() => /No Projects on Garage Pi yet/.test(document.querySelector('#pm-o55-onboarding').textContent)), 'says there are no Projects yet');
+  A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding [data-o55-do="tour"]')), 'no tour offered');
+  A.eq((await d.primaryInfo()).label, 'Create a new Project', 'Create a new Project leads');
+  await d.primary(); A.eq(await d.screen(), 'begin', 'the second draft begins');
+});
+def('a3', 'fresh', 'A cloud computer is reached by its address and is not called Home NAS', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'server'); await d.primary();
+  await d.act('kind', 'cloud'); await d.primary(); A.eq(await d.screen(), 's-wait', 'waiting');
+  A.ok(await d.state(() => !document.querySelector('.o55-card[data-arg="pm:new"]') && !!document.querySelector('#pm-o55-onboarding [data-o55-bind="addr"]')), 'no home-network scan; its address is asked');
+  await d.type('addr', '203.0.113.24'); await d.act('pick', 'pm:cloud'); await d.primary();
+  A.eq(await d.screen(), 's-confirm', 'confirm');
+  A.eq(await d.state(() => document.querySelector('#pm-o55-onboarding [data-o55-bind="name"]').value), 'Cloud server', 'named for what it is');
+});
+def('a4', 'fresh', 'On a new Server an existing folder is on the Server, keeps its place and keeps its online copy', async (d, A) => {
+  await toNewServer(d); await d.act('pick', 'existing');
+  A.ok(await d.state(() => /A folder on Home NAS/.test(document.querySelector('#pm-o55-onboarding').textContent)), 'the folder choice names the Server');
+  await d.act('sub', 'folder'); await d.primary(); A.eq(await d.screen(), 'ex-folder', 'folder');
+  await d.act('pick', '/mnt/tank/projects/recipe-app'); await until(d, "(window.O55.S.sess.ops['folder:/mnt/tank/projects/recipe-app']||{}).state === 'done'", 'checked', 5000);
+  await d.primary(); A.eq(await d.screen(), 'name', 'name');
+  A.ok(await d.state(() => /Stays in \/mnt\/tank\/projects\/recipe-app on Home NAS/.test(document.querySelector('#pm-o55-onboarding').textContent) && !document.querySelector('#pm-o55-onboarding [data-o55-do="storage"]')), 'kept in place, no storage question');
+  await d.primary(); if ((await d.screen()) === 'like') await d.primary();
+  A.eq(await d.screen(), 'safe', 'keep your work safe');
+  A.ok(await d.state(() => /already linked/.test(document.querySelector('#pm-o55-onboarding [data-key="r-online"]').textContent) && !document.querySelector('#pm-o55-onboarding [data-key="r-online"] [data-o55-do="online"]')), 'its online copy is shown, no second copy offered');
+  await d.primary(); A.eq(await d.screen(), 'away', 'away'); await d.primary(); A.eq(await d.screen(), 'review', 'review');
+  A.ok(await d.state(() => /already linked/.test(document.querySelector('#pm-o55-onboarding [data-key="rv-online"]').textContent) && !/online copy/i.test((document.querySelector('#pm-o55-onboarding [data-key="notset"]') || {}).textContent || '')), 'Review shows the linked copy and does not list it as not set up');
+  A.capture('a4 folder on the Server', await d.draft('main'));
+});
+def('a5', 'fresh', 'Restoring from a NAS shows its identity and sets up a key first', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
+  await d.act('pick', 'restore'); await d.primary(); A.eq(await d.screen(), 'r-source', 'backup source');
+  await d.act('source', 'nas'); await d.act('device', 'nas-home'); await d.primary();
+  A.eq(await d.screen(), 'nas-identity', 'identity before trust'); await d.primary();
+  A.eq(await d.screen(), 'nas-key', 'a key'); await until(d, "(window.O55.S.sess.ops['keys:nas-home']||{}).state === 'done'", 'keys tested', 5000); await d.primary();
+  A.eq(await d.screen(), 'nas-signin', 'sign in once'); await d.type('user', 'jared'); await d.type('pw', 'correct horse'); await d.primary();
+  await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:new']||{}).state === 'done'", 'key installed', 9000); await d.primary();
+  A.eq(await d.screen(), 'r-pick', 'then the backups');
+});
+def('a6', 'fresh', 'Choosing This computer after setting up a Server leaves nothing of the Server in the draft', async (d, A) => {
+  await toNewServer(d);
+  for (let i = 0; i < 8 && (await d.screen()) !== 'where'; i++) await d.back();
+  A.eq(await d.screen(), 'where', 'back to where the work runs');
+  await d.act('pick', 'this'); await d.primary(); A.eq(await d.screen(), 'begin', 'Project chapter');
+  const m = await d.draft('main');
+  A.ok(m.server_mode === 'this_device' && m.server_ref === '' && m.remote_mode === 'none' && m.server_trust_confirmed === false, 'no Server reference, trust or access route left behind');
+});
+
 /* ---------------------------------------------------------------------------------------------- runner */
 const report = [], drafts = [];
 for (const sc of SC) {

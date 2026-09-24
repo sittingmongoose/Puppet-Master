@@ -10,6 +10,12 @@
   const words = (seed) => O55.art.identity(seed).words.join(' ');
 
   const PLATFORMS = { nas: ['truenas', 'unraid', 'synology', 'qnap'], cloud: ['linux'], pc: ['windows', 'macos', 'linux'] };
+  /* the computer being set up: a rented cloud computer is reached by its address, never found on the home network */
+  const cloud = (S) => (S.sess.server.kind || 'nas') === 'cloud';
+  const unclaimed = (S) => (cloud(S) ? S.env.unclaimedCloud : S.env.unclaimed);
+  /* names that fit the kind of computer (a cloud computer is not a Home NAS) */
+  const suggestions = (S) => O55.tx('server.confirm.suggest' + { nas: 'Nas', cloud: 'Cloud', pc: 'Pc' }[S.sess.server.kind || 'nas']);
+  const serverNameOf = (S) => (S.sess.server.name == null ? suggestions(S)[0] : S.sess.server.name);
   const PLATFORM_NAMES = { truenas: 'TrueNAS', unraid: 'Unraid', synology: 'Synology', qnap: 'QNAP', linux: 'Linux', windows: 'Windows', macos: 'macOS' };
 
   /* ------------------------------------------------------------------ S1: what kind of computer + install steps */
@@ -26,14 +32,13 @@
         { v: 'cloud', glyph: 'cloud', title: T('server.kind.cloud.title'), sub: T('server.kind.cloud.sub') },
         { v: 'pc', glyph: 'computer', title: T('server.kind.pc.title'), sub: T('server.kind.pc.sub') }
       ], kind, { label: T('server.kind.title') });
-      out += `<div class="o55-sublinks" data-key="restore">${C.link(T('server.kind.restore'), 'restoreOld')}</div>`;
+      out += C.note(T('server.kind.replaceNote'), 'info', 'rewind');
       return out;
     },
     foot: () => ({ primary: { label: T('chrome.continue'), do: 'next' } }),
     do: {
-      kind(S, v, el) { S.sess.server.kind = v; S.sess.server.platform = PLATFORMS[v][0]; S.save(); O55.ui.refresh(); O55.ui.charm(el, T('server.kind.' + v + '.title').split(' ').slice(-2).join(' '), { nas: 'server', cloud: 'cloud', pc: 'computer' }[v]); },
-      restoreOld(S) { S.sess.restore = { scope: 'server' }; S.save(); O55.ui.go('r-source'); },
-      next(S) { if (!S.sess.server.kind) { S.sess.server.kind = 'nas'; S.sess.server.platform = 'truenas'; } S.save(); O55.ui.go('s-wait'); }
+      kind(S, v, el) { const sv = S.sess.server; if (sv.kind !== v) { sv.target = null; sv.manual = v === 'cloud'; sv.addr = ''; } sv.kind = v; sv.platform = PLATFORMS[v][0]; S.save(); O55.ui.refresh(); O55.ui.charm(el, T('server.kind.' + v + '.title').split(' ').slice(-2).join(' '), { nas: 'server', cloud: 'cloud', pc: 'computer' }[v]); },
+      next(S) { const sv = S.sess.server; if (!sv.kind) { sv.kind = 'nas'; sv.platform = 'truenas'; } if (sv.kind === 'cloud') sv.manual = true; S.save(); O55.ui.go('s-wait'); }
     }
   });
 
@@ -46,7 +51,7 @@
     title: () => T('server.wait.title'),
     lead: () => T('server.wait.lead'),
     body(S) {
-      const u = S.env.unclaimed, sv = S.sess.server, kind = sv.kind || 'nas';
+      const u = unclaimed(S), sv = S.sess.server, kind = sv.kind || 'nas';
       /* install steps sit beside the discovery: do them on the other computer, and it shows up here by itself */
       const plats = PLATFORMS[kind], plat = plats.includes(sv.platform) ? sv.platform : plats[0];
       const steps = O55.tx('server.install.' + plat);
@@ -57,7 +62,8 @@
       let out = C.group(T('server.kind.installTitle'), inner, { cls: 'o55-install' });
       if (sv.manual) {
         const hit = String(sv.addr || '').trim().toLowerCase() === u.address;
-        out += C.field({ bind: 'addr', label: T('connect.route.addressLabel'), value: sv.addr || '', placeholder: u.address, hint: hit ? T('server.wait.found', { name: u.name }) : T('connect.route.addressHint'), valid: hit });
+        if (kind === 'cloud') out += C.note(T('server.wait.cloudNote'), 'info', 'cloud');
+        out += C.field({ bind: 'addr', label: T(kind === 'cloud' ? 'server.wait.cloudLabel' : 'connect.route.addressLabel'), value: sv.addr || '', placeholder: u.address, hint: hit ? T('server.wait.found', { name: u.name }) : T('connect.route.addressHint'), valid: hit });
       } else if (!unclaimedFound(S)) {
         out += `<div class="o55-row o55-row-wait" data-key="scan"><span class="o55-spin" aria-hidden="true"></span><span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.wait.looking'))}</span></span></div>`;
       }
@@ -65,18 +71,20 @@
         out += C.cards('pick', [{ v: u.id, glyph: 'server', title: T('server.wait.found', { name: u.name }), sub: T('server.wait.notSetUp'), tag: '' }], sv.target, { label: T('server.wait.title') });
       }
       if (!sv.manual) out += `<div class="o55-sublinks" data-key="addr">${C.link(T('server.wait.address'), 'manualOn')}</div>`;
+      else if (kind !== 'cloud') out += `<div class="o55-sublinks" data-key="scanlink">${C.link(T('server.wait.scan'), 'manualOff')}</div>`;
       return out;
     },
-    mounted(S) { if (!S.sess.server.manual) F.op(S, 'discover:server', 'cmd.server.discovery.refresh', [{ key: 'lan', ms: 2600 }], { payload: { scope: 'unclaimed' } }); },
+    mounted(S) { if (!S.sess.server.manual && !cloud(S)) F.op(S, 'discover:server', 'cmd.server.discovery.refresh', [{ key: 'lan', ms: 2600 }], { payload: { scope: 'unclaimed' } }); },
     foot: (S) => ({ primary: { label: T('server.wait.choose'), do: 'next', disabled: !S.sess.server.target, reason: T('server.wait.looking') } }),
     do: {
       pick(S, id, el) { S.sess.server.target = id; S.save(); O55.ui.refresh(); },
       manualOn(S) { S.sess.server.manual = true; S.save(); O55.ui.refresh(); },
+      manualOff(S) { S.sess.server.manual = false; S.save(); O55.ui.refresh(); },
       platform(S, v) { S.sess.server.platform = v; S.save(); O55.ui.refresh(); },
       guide(S, plat) { O55.official.open(S, { kind: 'guide', name: 'Puppet Master', url: 'https://puppetmaster.app/install/' + plat }); },
       next(S) { O55.ui.go('s-confirm'); }
     },
-    bind: { addr(S, v) { S.sess.server.addr = v; if (String(v).trim().toLowerCase() !== S.env.unclaimed.address) S.sess.server.target = null; S.save(); O55.ui.refresh(); } }
+    bind: { addr(S, v) { S.sess.server.addr = v; if (String(v).trim().toLowerCase() !== unclaimed(S).address) S.sess.server.target = null; S.save(); O55.ui.refresh(); } }
   });
 
   /* ------------------------------------------------------------------ S2: name it and confirm (the Server preflow's commit) */
@@ -84,15 +92,15 @@
     chapter: 'computer', stage: 'server_storage_client',
     scene: (S) => ({ id: 'where', beat: 'server' }),
     eyebrow: () => T('server.confirm.eyebrow'),
-    title: (S) => T('server.confirm.title', { name: S.env.unclaimed.name }),
+    title: (S) => T('server.confirm.title', { name: unclaimed(S).name }),
     lead: () => T('server.confirm.lead'),
     body(S) {
-      const sv = S.sess.server, u = S.env.unclaimed;
-      const name = sv.name == null ? O55.tx('server.confirm.suggest')[0] : sv.name;
+      const sv = S.sess.server, u = unclaimed(S);
+      const name = serverNameOf(S);
       if (sv.claimed) return `<div class="o55-banner" data-key="done">${C.small('check', 18)}<span>${U.esc(T('chrome.alreadyDone'))}</span></div>`;
       let out = C.identity(u.seed, words(u.seed), u.address);
       out += C.field({ bind: 'name', label: T('server.confirm.nameLabel'), value: name, placeholder: 'Home NAS', error: F.nonEmpty(name) ? '' : T('name.empty'), invalid: !F.nonEmpty(name) });
-      out += F.chips('suggest', O55.tx('server.confirm.suggest'), name);
+      out += F.chips('suggest', suggestions(S), name);
       const st = F.state(S, 'claim:' + u.id);
       out += C.field({ bind: 'code', label: T('server.confirm.codeLabel'), value: sv.code || '', placeholder: '482 913', hint: T('server.confirm.codeHint', { name: u.name }), error: st && st.state === 'failed' ? T('server.confirm.codeWrong', { name: u.name }) : '', invalid: st && st.state === 'failed' });
       if (st && st.state !== 'failed') out += F.phases(S, 'claim:' + u.id, ['claim', 'pair', 'check'], { claim: T('server.confirm.phases.claim', { name: name }), pair: T('server.confirm.phases.pair'), check: T('server.confirm.phases.check') });
@@ -100,17 +108,17 @@
       return out;
     },
     foot(S) {
-      const sv = S.sess.server, st = F.state(S, 'claim:' + S.env.unclaimed.id);
+      const sv = S.sess.server, st = F.state(S, 'claim:' + unclaimed(S).id);
       if (sv.claimed) return { primary: { label: T('chrome.continue'), do: 'next' } };
-      const name = sv.name == null ? O55.tx('server.confirm.suggest')[0] : sv.name;
+      const name = serverNameOf(S);
       const running = st && st.state === 'running';
-      const reason = !F.nonEmpty(name) ? T('name.empty') : !F.nonEmpty(sv.code) ? T('server.confirm.codeHint', { name: S.env.unclaimed.name }) : running ? T('chrome.working') : '';
+      const reason = !F.nonEmpty(name) ? T('name.empty') : !F.nonEmpty(sv.code) ? T('server.confirm.codeHint', { name: unclaimed(S).name }) : running ? T('chrome.working') : '';
       return { primary: { label: T('server.confirm.button'), do: 'confirm', disabled: !!reason, reason } };
     },
     do: {
       suggest(S, v) { S.sess.server.name = v; S.save(); O55.ui.refresh(); },
       confirm(S) {
-        const sv = S.sess.server, u = S.env.unclaimed, name = (sv.name == null ? O55.tx('server.confirm.suggest')[0] : sv.name).trim();
+        const sv = S.sess.server, u = unclaimed(S), name = serverNameOf(S).trim();
         const ok = String(sv.code || '').replace(/\s/g, '') === u.setupCode.replace(/\s/g, '');
         sv.confirmed = true; S.save();
         F.reset(S, 'claim:' + u.id);
@@ -195,6 +203,12 @@
       next(S) {
         const r = R(S);
         /* a cloud account needs its sign-in first (selected-source auth); a NAS uses the saved SSH key or the SSH steps */
+        /* a backup on a NAS is reached over SSH like every other NAS: its identity is shown before it is trusted and
+           a key is set up (the SSH steps), then the restore continues */
+        if (r.source === 'nas' && !r.nasReady) {
+          const n = S.sess.nas = { purpose: 'backup', method: 'ssh', device: r.device, trusted: false, installed: false, key: null };
+          S.save(); return O55.ui.go('nas-identity');
+        }
         if (r.source === 'cloud' && !r.cloudSignedIn) return O55.official.signIn(S, { service: r.cloud, name: { gdrive: 'Google Drive', onedrive: 'OneDrive', s3: 'S3 / B2' }[r.cloud], kind: 'cloud', then: 'r-unlock', done: 'restoreCloud' });
         O55.ui.go(r.source === 'kit' || r.scope !== 'project' ? 'r-unlock' : 'r-pick');
       }
@@ -252,6 +266,7 @@
         if (r.scope === 'project') {
           const [bid] = r.pick.split('#'), b = S.env.backups.find((x) => x.id === bid);
           const transport = r.source === 'nas' ? 'ssh' : r.source === 'cloud' ? 'mounted' : 'local';
+          if (!S.sess.backup.dest && (r.source === 'nas' || r.source === 'cloud')) S.sess.backup.dest = r.source === 'nas' ? 'nas' : (r.cloud || 'gdrive');
           O55.draft.set(md(S), { project_mode: 'restore', backup_source_ref: 'backup:' + U.slug(b.where) + '/' + U.slug(b.project) + '#' + r.pick.split('#')[1], backup_transport: transport, project_name: md(S).project_name || b.project });
           if (r.source === 'cloud') S.sess.gaps = Object.assign(S.sess.gaps || {}, { cloudBackupTransport: true });
           S.save(); return O55.ui.go('name');

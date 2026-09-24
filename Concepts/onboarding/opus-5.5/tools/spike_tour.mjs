@@ -3,7 +3,7 @@
  * Checks: guided Teacher thread through the real composer (local stream, zero usage), ELI5 toggle, Teacher persona,
  * Chat drag to dock_left via real pointer input, layout snapshot -> o55RestoreSnapshot, Approval queue widget add,
  * Planning Wizard workspace stage structure. Writes spike.json + screenshots to <out-dir>. */
-import { launch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs';
+import { launch, sleep } from './chrome.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';

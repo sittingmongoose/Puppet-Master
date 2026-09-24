@@ -2,7 +2,7 @@
  * import { open } from './drive.mjs'; const d = await open({ scenario: 'fresh', theme: 'basic-dark' });
  * d.primary(), d.act('pick', 'this'), d.type('name', 'Book club website'), d.screen(), d.until(fn), d.snap(), d.close()
  * Every step waits for the screen to settle and records page errors, so a scenario reads like the person's clicks. */
-import { launch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs';
+import { launch, sleep } from './chrome.mjs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, dirname } from 'node:path';
 

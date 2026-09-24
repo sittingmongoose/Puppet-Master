@@ -53,7 +53,8 @@
       pick(S, v, el) { S.sess.ui.where = v; S.save(); if (v === 'this') runCheck(S); O55.ui.refresh(); O55.ui.charm(el, T('where.' + v + '.short'), { this: 'computer', connect: 'link', server: 'server' }[v]); },
       next(S) {
         const v = S.sess.ui.where || 'this';
-        if (v === 'this') { S.sess.active = 'main'; O55.draft.set(S.sess.drafts.main, { server_mode: 'this_device', storage_mode: 'this_device', remote_mode: 'none' }); S.save(); return O55.ui.go('begin'); }
+        /* This computer: whatever an abandoned Server path set (its reference, trust, access route) is cleared */
+        if (v === 'this') { S.sess.active = 'main'; O55.draft.set(S.sess.drafts.main, { server_mode: 'this_device', server_ref: '', server_trust_confirmed: false, server_connection_mode: 'discover', storage_mode: 'this_device', storage_location: '', remote_mode: 'none', remote_more: false, tailscale_control: null, headscale_url: '', remote_endpoint: '', proxy_kind: null, proxy_hosting: null, proxy_hostname: '', proxy_tls: null }); S.save(); return O55.ui.go('begin'); }
         if (v === 'connect') { S.sess.active = 'connect'; S.save(); return O55.ui.go('c-route'); }
         S.sess.active = 'main'; O55.draft.set(S.sess.drafts.main, { server_mode: 'new_server', storage_mode: 'with_server' }); S.save();
         return O55.ui.go('s-kind');
