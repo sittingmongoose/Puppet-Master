@@ -1,0 +1,35 @@
+{
+ "schema_id": "pm.assurance.event_authority.post_august_admission_record.v1",
+ "event_type": "context.compaction.completed",
+ "family_id": "event-family-context-compaction-completed",
+ "decision_ref": "Plans/Decision_Log.md#DL-040",
+ "decision_section_sha256": "2bfdfff9852d15855a294934ba6d1b0efacd590342b5480302a5c2f31ca5c3df",
+ "registry_before": {
+  "revision": "2026-08-27.1",
+  "sha256": "b7e124a977c13a3bf85df83549a6a265eda0f98a73bbf7a9053183935e28c123",
+  "family_count": 39
+ },
+ "registry_after": {
+  "revision": "2026-09-11.1",
+  "sha256": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a",
+  "family_count": 40
+ },
+ "registry_row_sha256": "0dd3d8d36cb59a099539137844cb9ea51567017c157e8b18e30903f7d2bb7409",
+ "depth_assessment": {
+  "path": "reports/event-authority-20260911/step-08-depth42-assessment-20260924.json",
+  "sha256": "ff7dbd59b678aa53f311e5c6727ea5835e2a03c398d9b5d4639d52957f73e30e"
+ },
+ "admission_landing": {
+  "commit": "b240dd93e2ebc44d4d7df468fb247cc0418082a8",
+  "record": "reports/event-authority-20260911/step-06-registration-application.json"
+ },
+ "criteria_not_passing_at_recording": [
+  "positive_negative_oracles"
+ ],
+ "status_at_recording": "incomplete_depth",
+ "recorded_by": "claude-opus-5.5:dl039-steps-8-9-20260924",
+ "recorded_at_utc": "2026-09-24T22:55:25Z",
+ "notes": [
+  "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
+ ]
+}

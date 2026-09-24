@@ -1,0 +1,36 @@
+{
+ "schema_id": "pm.assurance.event_authority.post_august_admission_record.v1",
+ "event_type": "browser.workspace.reset",
+ "family_id": "event-family-browser-workspace-reset",
+ "decision_ref": "Plans/Decision_Log.md#DL-046",
+ "decision_section_sha256": "94f3705169bf73f8c61d491e1a74ac643d0dc5afd31334358997757770b264a0",
+ "registry_before": {
+  "revision": "2026-09-11.2",
+  "sha256": "e0a368e89e89921726849f4724199c11b6f1a9b3a9e7d2bfb80b8ad0ccdbc623",
+  "family_count": 41
+ },
+ "registry_after": {
+  "revision": "2026-09-11.2",
+  "sha256": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80",
+  "family_count": 42
+ },
+ "registry_row_sha256": "b4aa4de2d9409199a0615c26a7ea7e581ee64fde6411625e393f83adcc479eb2",
+ "depth_assessment": {
+  "path": "reports/event-authority-20260911/step-08-depth42-assessment-20260924.json",
+  "sha256": "ff7dbd59b678aa53f311e5c6727ea5835e2a03c398d9b5d4639d52957f73e30e"
+ },
+ "admission_landing": {
+  "commit": "4fe66204bde92ab710a6d1f1cf9f46be75d18458",
+  "record": null
+ },
+ "criteria_not_passing_at_recording": [
+  "producer"
+ ],
+ "status_at_recording": "incomplete_depth",
+ "recorded_by": "claude-opus-5.5:dl039-steps-8-9-20260924",
+ "recorded_at_utc": "2026-09-24T22:55:25Z",
+ "notes": [
+  "The reset admission did not change the revision label: 2026-09-11.2 names both the 41-family and the 42-family registry. The SHA-256 values distinguish them.",
+  "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
+ ]
+}

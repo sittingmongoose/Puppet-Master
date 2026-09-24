@@ -1,0 +1,37 @@
+{
+ "schema_id": "pm.assurance.event_authority.post_august_admission_record.v1",
+ "event_type": "browser.workspace.created",
+ "family_id": "event-family-browser-workspace-created",
+ "decision_ref": "Plans/Decision_Log.md#DL-046",
+ "decision_section_sha256": "94f3705169bf73f8c61d491e1a74ac643d0dc5afd31334358997757770b264a0",
+ "registry_before": {
+  "revision": "2026-09-11.1",
+  "sha256": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a",
+  "family_count": 40
+ },
+ "registry_after": {
+  "revision": "2026-09-11.2",
+  "sha256": "e0a368e89e89921726849f4724199c11b6f1a9b3a9e7d2bfb80b8ad0ccdbc623",
+  "family_count": 41
+ },
+ "registry_row_sha256": "41a79eb9484860b8176893fca50173dab58f8cc068cb491b3fdc92db3e08cb06",
+ "depth_assessment": {
+  "path": "reports/event-authority-20260911/step-08-depth42-assessment-20260924.json",
+  "sha256": "ff7dbd59b678aa53f311e5c6727ea5835e2a03c398d9b5d4639d52957f73e30e"
+ },
+ "admission_landing": {
+  "commit": "69553720f1c55528ed423a8c723bc97ec9cc4281",
+  "record": null
+ },
+ "criteria_not_passing_at_recording": [
+  "producer",
+  "consumers_checkpoints",
+  "positive_negative_oracles"
+ ],
+ "status_at_recording": "incomplete_depth",
+ "recorded_by": "claude-opus-5.5:dl039-steps-8-9-20260924",
+ "recorded_at_utc": "2026-09-24T22:55:25Z",
+ "notes": [
+  "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
+ ]
+}
