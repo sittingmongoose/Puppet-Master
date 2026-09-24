@@ -32,9 +32,9 @@
   "rubric": "rubric.md in the evidence directory: the twelve criteria as the Browser pair assessment used them, with explicit rules for SP-278 (and DL-076's nine-field token), SP-286/CV-339 first-receipt adoption, the shared SeglogFrameV2 bytes, historical-only families, and three clarifications (owner anchors, pinned external oracle suites, DL-076).",
   "grading": "Six read-only grading passes by owner batch (GA, GB, GC, R, S, N), each citing current line ranges with exact quotes; compiled, checked and harmonized by the coordinating agent.",
   "quote_check": {
-   "exact": 2630
+   "exact": 2633
   },
-  "evidence_items": 2630
+  "evidence_items": 2633
  },
  "status_counts": {
   "PASS": 335,
@@ -19852,13 +19852,13 @@
     "positive_negative_oracles": {
      "status": "PARTIAL",
      "representation": "exact_normative_owner",
-     "finding": "In-repo: 6 positive and 6 negative closed value-shape cases (updated for DL-076), 31 authored native positive/negative pairs (NOT_RUN), ATS SEA-P01/P02/N01..N04. The relational join/prefix/retention suite SP-270 relies on is the 2026-09-11 frozen external subject, whose stored reader index_read_token still carries redb_snapshot_id, superseded by DL-076. Suites pinned by canon: the in-repo value-shape fixtures, native pairs and ATS SEA cases. The relational join/prefix/retention suite is reached only through a report (storage-plan.md 21463), so under clarification 2 it is not counted; without it that normative part has no canon-pinned oracle, and the cell stays PARTIAL on that ground as well as DL-076.",
+     "finding": "In-repo: 6 positive and 6 negative closed value-shape cases (updated for DL-076), 31 authored native positive/negative pairs (NOT_RUN), ATS SEA-P01/P02/N01..N04. The relational join/prefix/retention suite SP-270 relies on is the 2026-09-11 frozen external subject, whose stored reader index_read_token still carries redb_snapshot_id, superseded by DL-076. Suites pinned by canon: the in-repo value-shape fixtures, native pairs and ATS SEA cases, and the relational join/prefix/retention suite, whose manifest seglog_append_observability_contract_fixtures.json pins by path and SHA-256 (external_joined_subject, lines 5-7). That pinned suite still stores index_read_token with redb_snapshot_id, which DL-076 supersedes, so the cell stays PARTIAL on DL-076 alone.",
      "prior": {
       "source": "step-08-seglog-depth.json",
       "status": "PASS"
      },
      "change": "downgraded",
-     "change_reason": "The relational suite behind the prior PASS predates DL-076 and its stored reader checkpoints no longer match the current nine-field durable token. Review G-07 (2026-09-24): suites pinned by canon and suites pinned only by a report are distinguished; only canon-pinned suites count; the grade is unchanged.",
+     "change_reason": "The relational suite behind the prior PASS predates DL-076 and its stored reader checkpoints no longer match the current nine-field durable token. Review G-07 (2026-09-24): suites pinned by canon and suites pinned only by a report are distinguished; only canon-pinned suites count; the grade is unchanged. Corrected in review cycle 2: the fixture file pins the relational suite by path and SHA-256, so it counts, and the cell stays PARTIAL on DL-076 alone; the grade is unchanged.",
      "evidence": [
       {
        "path": "Plans/seglog_append_observability_contract_fixtures.json",
@@ -19901,6 +19901,20 @@
        "line_start": 21465,
        "line_end": 21465,
        "excerpt_sha256": "025a669d44239fe45de64d00a3d424a20ae5dfa687208cde43b3d8d497dd18f3"
+      },
+      {
+       "path": "Plans/seglog_append_observability_contract_fixtures.json",
+       "unit": "#/external_joined_subject",
+       "line_start": 6,
+       "line_end": 6,
+       "excerpt_sha256": "eab77a3c494ed99cd26c905a4a65e2f24e8288e2dca9bea72a4156aae483b374"
+      },
+      {
+       "path": "Plans/seglog_append_observability_contract_fixtures.json",
+       "unit": "#/external_joined_subject",
+       "line_start": 7,
+       "line_end": 7,
+       "excerpt_sha256": "a5c22f03b88634fabe83d707686abe99b5cad627ba9c79b06c87cb28b9ede568"
       }
      ]
     }
@@ -22944,13 +22958,13 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Authored: 21 valid and 9 invalid HoldV2/route cases pinned to the v9 manifest, ATS K37 retention-hold positives/negatives, the external v9 suite (371 cases, independently rerun) and the v4 full-value suite (558 plus 24). No stored checkpoint token exists, so DL-076 does not contradict them. Only native wire/crash/authentication remains NOT_RUN. Suites pinned by canon: the in-repo Hold fixtures and ATS cases. The external suites SP-288 relies on are reached only through a report (storage-plan.md 22946), so under clarification 2 they are not counted; the PASS rests on the in-repo fixtures and ATS cases.",
+     "finding": "Authored: 21 valid and 9 invalid HoldV2/route cases pinned to the v9 manifest, ATS K37 retention-hold positives/negatives, the external v9 suite (371 cases, independently rerun) and the v4 full-value suite (558 plus 24). No stored checkpoint token exists, so DL-076 does not contradict them. Only native wire/crash/authentication remains NOT_RUN. Suites pinned by canon: the in-repo Hold fixtures and ATS cases, and the external v9 suite, whose manifest storage_retention_hold_contract_fixtures.json pins by path and SHA-256 (source_manifest, lines 5-7), so it counts under clarification 2. The v4 full-value suite has no canon pin by path and SHA-256 that this grading found, so it is not counted. The PASS rests on the in-repo fixtures, the ATS cases and the pinned v9 suite.",
      "prior": {
       "source": "step-08-hold-depth.json",
       "status": "PARTIAL"
      },
      "change": "upgraded",
-     "change_reason": "The supplement's PARTIAL rested on native NOT_RUN, which the rubric says never lowers a grade. Review G-07 (2026-09-24): suites pinned by canon and suites pinned only by a report are distinguished; only canon-pinned suites count; the grade is unchanged.",
+     "change_reason": "The supplement's PARTIAL rested on native NOT_RUN, which the rubric says never lowers a grade. Review G-07 (2026-09-24): suites pinned by canon and suites pinned only by a report are distinguished; only canon-pinned suites count; the grade is unchanged. Corrected in review cycle 2: the fixture file pins the v9 suite by path and SHA-256, so it counts; the grade is unchanged.",
      "evidence": [
       {
        "path": "Plans/storage_retention_hold_contract_fixtures.json",
@@ -22972,6 +22986,13 @@
        "line_start": 22946,
        "line_end": 22946,
        "excerpt_sha256": "d1af21e0f9fc5eafdb2e308acba9e41a1dd427afb47d013f3693271bcb476699"
+      },
+      {
+       "path": "Plans/storage_retention_hold_contract_fixtures.json",
+       "unit": "#/source_manifest",
+       "line_start": 7,
+       "line_end": 7,
+       "excerpt_sha256": "7d7c9ef2608a97f7fa1ec8c3cc4425d78e7b3ee584b88ffda07e883bcc3952a8"
       }
      ]
     }
@@ -26507,7 +26528,7 @@
  ],
  "evidence": {
   "directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924",
-  "sha256sums_sha256": "dba75226da9ac1a472e90c426836436a44b2ad1a1ca66e77b009788fe60cd832",
+  "sha256sums_sha256": "d3bb2f551c5cc8fe6e9c7a8ab8f832e49be4a71a4661927fb87786fedabb9f8d",
   "members": [
    "rubric.md",
    "batches.md",

@@ -44,7 +44,7 @@ The card file is kept as presented, with its status line and blank Answer lines,
 - `workspace.layout_changed`, oracles;
 - `browser.workspace.reset`, consumers.
 
-So does the MD's table of lowering rules. The quoted bytes are unchanged, and all 2,630 quotes verify exactly against this branch.
+So does the MD's table of lowering rules. The quoted bytes are unchanged, and all quotes verify exactly against this branch (2,633 after the review cycle 2 repairs).
 
 ## Owner follow-ups
 
@@ -62,12 +62,12 @@ Follow-ups 1, 2 and 5 edit `Plans/Goal_Runtime_System.md` or `Plans/storage-plan
 - **Shards.** Regenerated with the ignored currentness edition present; the check passes for 99 documents and 2,722 shards. Only the `decision_log` shard tree changes.
 - **Index.** `pm-plan-index.py generate` and `validate` pass with 0 failures. PlanUnits go from 6,723 to 6,728 (DL-079 to DL-083) and acceptance units from 26,241 to 26,257, and only `Plans/Decision_Log.md` units change. The node readiness report's runtime status is unchanged from `main`.
 - **YAML.** Every new PlanUnit block parses, and every preserved token occurs in its unit's `canonical_text`.
-- **Assessment.** It was recompiled from the batch rows: 42 families, 2,630 quotes all exact, and the totals and dispositions as above. The builder of the JSON record fails if any cell status, evidence list or disposition of the 11 rows differs from before.
+- **Assessment.** It was recompiled from the batch rows: 42 families, all quotes exact (2,630 when the answers were applied, 2,633 after the review cycle 2 repairs), and the totals and dispositions as above. The builder of the JSON record fails if any cell status, evidence list or disposition of the 11 rows differs from before.
 
-Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-card-answers-20260924/`, whose `SHA256SUMS` (SHA-256 `a7981db1898c42cc18848562080d8067dcc4c6d8b3cce61cbbe7267d031c27f5`) covers:
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-card-answers-20260924/`, whose `SHA256SUMS` (SHA-256 `6c75b0a84efb2e96c8de5f8e1b7d719166dc376ed14f82214ca80299e88880d7`) covers:
 - the 11 rows before and after;
 - the scripts, and the Decision Log texts they insert;
-- the assessment JSON before the answers (`078d64bb5ec40c18308a342999962d8ac2cdb5fe439bf8d1b087abdf793ee1b9`, after review fix G-08) and after them (`ff7dbd59b678aa53f311e5c6727ea5835e2a03c398d9b5d4639d52957f73e30e`);
+- the assessment JSON before the answers (`078d64bb5ec40c18308a342999962d8ac2cdb5fe439bf8d1b087abdf793ee1b9`, after review fix G-08), after them (`ff7dbd59b678aa53f311e5c6727ea5835e2a03c398d9b5d4639d52957f73e30e`), and after the review cycle 2 repairs (`ba9b84f99e0e0761a8b435a16602d4c88d14589ef273f789fd5b92bdbd5849fd`);
 - a copy of the answers file.
 
 This records planning canon only. It admits, retires and registers nothing, and it changes no registry row, owner contract, retention policy or governance artifact.

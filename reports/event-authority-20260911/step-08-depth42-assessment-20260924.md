@@ -66,7 +66,7 @@ The dated matrix counted differently, so the rows above are not a straight trend
   - N: August and newly admitted families.
 
   Every cell cites current line ranges with an exact quote. The input packs carried each family's registry row, the dated matrix cells and every later supplement's cells, and all of those were treated as prior evidence to re-check, never as answers.
-- **Verification.** All 2,630 quotes were checked mechanically: every one is an exact substring of its cited lines. Each cited range's SHA-256 is recorded, and the quotes themselves are in the evidence bundle. The 42 rows match the registry exactly, in order.
+- **Verification.** All 2,633 quotes were checked mechanically: every one is an exact substring of its cited lines. Each cited range's SHA-256 is recorded, and the quotes themselves are in the evidence bundle. The 42 rows match the registry exactly, in order.
 - **Harmonization.** The batch results were compared criterion by criterion. Producers pass only where recovery through the first receipt adopts SP-286 by name, and N applied this to both Browser families as R and S did. The rule applies where publication or the returned result waits on the AppendReceipt (Section 15, 11626-11628). It does not apply where visibility rests on a verified seglog marker and recovery never needs the receipt (`storage-plan.md` 19298-19300); this decides compaction PASS and Browser reset PARTIAL. Consumers with an explicit `none_required` checkpoint pass where the owner names each reader, adopts SP-278 and stores no token. `context.compaction.completed` passes consumers through the rubric's equivalent-complete-checkpoint route (`storage-plan.md` 19304-19306) without naming SP-278; it is the only family that route decides. They stay PARTIAL where the owner itself flags a missing operating consumer (the historical-only families) or names only a generic consumer.
 - **Static suites** run on the assessed tree: Browser created 63 OK, Browser reset 53 OK, Browser admission 38 OK, restore phase contracts 10 OK, event-index binding 14 OK, emit-only boundaries 13 OK, holding bucket 13 OK, Goal lineage 1 OK and vocabulary migration 9 OK. PNC-019 currentness gave 8 OK and 1 failure on `f1ce058ccd`, because the shared currentness edition had already been rewritten for the reseal; it gives 9 OK on `792d2fb8b1`.
 
@@ -181,11 +181,11 @@ The 2026-08-13 queues are fully reviewed: 75 likely, 9 contested and 153 ambiguo
 
 | Artifact | SHA-256 |
 |---|---|
-| `step-08-depth42-assessment-20260924.json` (this assessment) | `ff7dbd59b678aa53f311e5c6727ea5835e2a03c398d9b5d4639d52957f73e30e` |
-| Evidence directory `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/`, `SHA256SUMS` | `725ac105851008a3f8a0863dd6efb63752e6b15612ba520a890b22a33d99bdbb` |
+| `step-08-depth42-assessment-20260924.json` (this assessment) | `ba9b84f99e0e0761a8b435a16602d4c88d14589ef273f789fd5b92bdbd5849fd` |
+| Evidence directory `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/`, `SHA256SUMS` | `d3bb2f551c5cc8fe6e9c7a8ab8f832e49be4a71a4661927fb87786fedabb9f8d` |
 | `rubric.md` | `81f1d8b25ee407975fea50d14ecf44f94127608b912e08b27edd7f62f9b10221` |
-| `compiled_rows.json` (every cell with its quotes) | `d5ba83aa6d1a837a1cc345a5aeae077c31d06838e257b9f49f4973cdbb4aaa5b` |
-| `verify.json` (2,630 quote checks) | `0a80bee7ac889c228140bd77ea41031b3993bc6e4f47a930dc557cd03a9d37f3` |
+| `compiled_rows.json` (every cell with its quotes) | `7781809f01b814c7d1d97e06508ce949db1d7143927d46c827f2f16afa1c6a1a` |
+| `verify.json` (2,633 quote checks) | `ac114a1a90d5ff04d2650dfc6db89667391679b9405e3c81cbaa301793af30fb` |
 | `compile_depth42.py` | `b22b2d1541d2626be06190ca042ce2ed3e99fce5fbb2e4f1e496b8f38c9785b8` |
 | `build_report.py` | `76936f33faf3124d2ada90eee09e56c1d6713f9fa12037909b0131a97f350573` |
 | Handover currentness pass, `depth_currentness2.json` | `4d19bc83b11638fd25960db9d40412b96d85940db1c5f79eb9671f85105a17f0` |
