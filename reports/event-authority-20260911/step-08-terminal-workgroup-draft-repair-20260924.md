@@ -1,6 +1,6 @@
-# Step 08 — terminal.workgroup_moved draft: repair before review
+# Step 08 — terminal.workgroup_moved draft: repair and review fixes
 
-Branch `plans/terminal-workgroup-depth-20260923` carries a new owner contract under DL-045 for the registered family `terminal.workgroup_moved`. SMPFS-170 in `Plans/Section15_MVP_Promoted_Features_Spec.md` defines the terminal owner's producer `terminal.workgroup_move_commit.v1@1.0.0` and the passive consumer `terminal.workgroup_move_history_read.v1@1.0.0`. SP-319 in `Plans/storage-plan.md` defines the Storage binding `storage.terminal_workgroup_move.inspect_current.v1@1.0.0` and the family checkpoint disposition `none_required`. The draft came from a retired Codex thread and was preserved unverified as `254505ccf9` (takeover report, "Inherited drafts" table). Jared authorized this repair through the coordinator. The repair rebases the draft, fixes the two recorded defects and aligns the text with DL-070 and DL-076. It does not land: a blind review follows, then the coordinator gives the landing go. No registry, payload, retention, admission or governance artifact changes, and no Step 08 or Step 09 count changes.
+Branch `plans/terminal-workgroup-depth-20260923` carries a new owner contract under DL-045 for the registered family `terminal.workgroup_moved`. SMPFS-170 in `Plans/Section15_MVP_Promoted_Features_Spec.md` defines the terminal owner's producer `terminal.workgroup_move_commit.v1@1.0.0` and the passive consumer `terminal.workgroup_move_history_read.v1@1.0.0`. SP-319 in `Plans/storage-plan.md` defines the Storage binding `storage.terminal_workgroup_move.inspect_current.v1@1.0.0` and the family checkpoint disposition `none_required`. The draft came from a retired Codex thread and was preserved unverified as `254505ccf9` (takeover report, "Inherited drafts" table). Jared authorized this repair through the coordinator. The repair rebases the draft, fixes the two recorded defects and aligns the text with DL-070 and DL-076. It does not land. A blind review then returned fix_then_land; its ten findings and one follow-up edit are applied as described in "Review fixes" below, and the branch waits for the coordinator's landing go. No registry, payload, retention, admission or governance artifact changes, and no Step 08 or Step 09 count changes.
 
 ## Commits
 
@@ -13,9 +13,9 @@ Branch `plans/terminal-workgroup-depth-20260923` carries a new owner contract un
 | 4a | `48fd2f065f` | Wording fixes to commit 4, found on re-reading before this report. |
 | 5 | `c34d93c9c3` | The SP-266 v2 subsection cites DL-076 for the nine-field token. |
 | 6 | none | The checks passed and the renumbering broke nothing, so there was nothing to fix. |
-| 7 | this commit | This report. |
+| 7 | `39915b7d30` | This report. |
 
-Commit 4a comes after 5 in history. Every commit that edits a Plans document carries its regenerated shards and `Plans/.plan_index`. After each regeneration, the only derived files that changed belonged to the two edited documents. The branch was pushed after every commit. The rebase replaced `254505ccf9` on both remotes using `--force-with-lease` pinned to that commit. `254505ccf9` is still recorded in the takeover report.
+Commit 4a comes after 5 in history. The review-fix commits come after the report and are listed in "Review fixes". Every commit that edits a Plans document carries its regenerated shards and `Plans/.plan_index`. After each regeneration, the only derived files that changed belonged to the two edited documents. The branch was pushed after every commit. The rebase replaced `254505ccf9` on both remotes using `--force-with-lease` pinned to that commit. `254505ccf9` is still recorded in the takeover report.
 
 ## 1. Rebase
 
@@ -96,7 +96,7 @@ Commit 4a is precision only. It moves SMPFS-170's DL-076 sentence so that "that 
 
 In "Conditional SP-266 v2 successor adopting the SP-278 read token — 2026-09-23" in `Plans/storage-plan.md`, one sentence changes. It no longer says "This follows the Storage owner decision on stored SP-278 checkpoint tokens, ruled by the coordinator on Jared's delegation on 2026-09-24:". It now says "This follows DL-076, the Storage owner decision on stored SP-278 checkpoint tokens:". Nothing else in the subsection changes, and SP-266's PlanUnit fields are unchanged.
 
-Not changed, because it is outside this task: `Plans/browser_workspace_created_checkpoint_v2.schema.json` still says "coordinator ruling of 2026-09-24" in its `durable_index_read_token` description. That is a one-line follow-up for the SP-278 v2 companion's owner.
+Not changed, because it is outside this task: `Plans/browser_workspace_created_checkpoint_v2.schema.json` still says "coordinator ruling of 2026-09-24" in its `durable_index_read_token` description. That is a one-line follow-up for the SP-278 v2 companion's owner. After the review, the coordinator asked for it on this branch: commit `0a114f2ce4`, described in "Review fixes".
 
 ## 6. Checks
 
@@ -139,7 +139,7 @@ The check outputs are in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-2026
 
 | Evidence file | SHA-256 |
 |---|---|
-| `dependency-summaries-by-commit.jsonl` (main, the pre-rebase draft and every repair commit) | `b8466bba8748d7c6419d994dbb82e7d311727a17ae03eba52873ab8cf380f16d` |
+| `dependency-summaries-by-commit.jsonl` (main, the pre-rebase draft, every repair commit and, since the review fixes, every review-fix commit; its first eight lines are the version first recorded here, SHA-256 `b8466bba8748d7c6419d994dbb82e7d311727a17ae03eba52873ab8cf380f16d`) | `c86d504573f02f6cbb9174ba373d516f4c822ba764a8f77f89ce3c5bbb1cb503` |
 | `shard-check-48fd2f065f.json` | `b8070a4e73ae546e6c7bb6814c469dd0d020724d62d5f13df27e79b6f067d55f` |
 | `plan-index-validate-48fd2f065f.json` | `3e230ff5f2ae1e0b549b0e459f988b6397ede6bd7c56e7d281d90ea2159b5174` |
 | `unittest-test_event_authority_holding_bucket-48fd2f065f.log` | `923142c15fca79652325ffc18bf7d5f79d5149d0758a13e8a5ee4f67ff3fc489` |
@@ -157,17 +157,102 @@ The check outputs are in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-2026
 | `pm-plans-verify-lint-path-refs-48fd2f065f.json` / `-main-9f0da5c2b1.json` | `95d0c7382c8356711f86c2d571e0c4264a3b85ac8c0fdb96cfca8deea78248c7` / `44444e0f5ff5bbb275d424d23398fe8b7361f812c39a06e3e4ee91fa1dd9d73e` |
 | `pm-plans-verify-validate-plan-graph-48fd2f065f.json` / `-main-9f0da5c2b1.json` | `4836f4092ae0f41198b71a573af47ea170fe7aed2b5eec4601e51b21abe84cc9` / `b560ab8149d1e9acfdde008ca1ac8a900905cd7a28f2f76f858313040f970379` |
 
+## Review fixes
+
+A blind review of tip `39915b7d30` returned **fix_then_land**: 10 findings, none blocking, six should_fix (T-01 to T-06) and four notes (T-07 to T-10). The review files are in `/home/sittingmongoose/PM-Experiments/terminal-draft-review-20260924/`:
+
+| Review file | SHA-256 |
+|---|---|
+| `REVIEW.md` (verdict, answers and the exact edits) | `bf0ec6d96c4ce3bb71bf645fdd5baf27521f3401252182d22519f6c004fb4074` |
+| `findings.jsonl` (T-01 to T-10 and the summary line) | `918fc99e612fa910c89acecef42c8494bfe6047ddc5273acabbbfd29cf937d1f` |
+| `RECONCILIATION.md` (the review compared with this report) | `d5d96de7578993856ff6915621866a8ef20a7b107f9c033aa43012dead5f0de7` |
+
+The coordinator asked for every edit to be applied as `REVIEW.md` states, one commit per finding in order, then one more commit for the schema citation. Each commit that edits a Plans document carries its regenerated shards and `Plans/.plan_index`. After each one: generate passed, there were 0 cycles, `build_order_available` stayed true, `depends_on` edges stayed at 15,666, and only the two documents' derived files changed. Every commit was pushed.
+
+| Finding | Commit | Edit (REVIEW.md) | What changed |
+|---|---|---|---|
+| T-01 | `86607345e6` | S6, first half | SMPFS-170 appends under the existing `ordinary` durability class of Case L-2 and CV-339, not a "post-mutation fact durability class". |
+| T-02 | `94ffa73a25` | S5 | `event_id` and `idempotency_key` are supplied by this producer, derived once from the original admitted operation and frozen before the first append. Their derivation and `replay_policy` are companion obligations, as SP-273 defines them for Home. Storage assigns only `sequence_id`, `observed_at_utc` and `persisted_at_utc`. |
+| T-03 | `0a796a1402` | S6 second half, P2 | Both units name `storage.first_append_receipt.resolve.v2` and `storage.first_append_receipt.resolve_full_value.v1`. A legacy selector or semantic reader gives no full-value proof. |
+| T-04 | `754c977abd` | S7, P1 | The new consumer serves only the already specified resolution of the committed EventRecord that the operation's CV-323 receipt and CV-333 response reference (UCC-144), and has no other caller. SP-319's reader is scoped to it. The reviewer's alternative, dropping the consumer, was not taken. |
+| T-05 | `bd2a89ca17` | S1, S2, S4 | The search list adds the two production wiring rows (handler `handlers::terminal::move_workgroup`, declared events `workspace.layout_changed` and `terminal.workgroup_moved`), FinalGUISpec's two DL-070 amendments and `Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json`. The producer is reached through that handler path. The rows' declared event set is unchanged, and each event follows its own owner's applicability. |
+| T-06 | `9b48df3099` | S3, S8, P3 | An admitted operation that ends `cancelled`, or `failed` with `rolled_back=true`, emits no moved event (CV-323). The acceptance criterion covers disabled, no_change, cancelled and failed operations. SP-319's paired negatives add such an operation carrying a moved event. |
+| T-07 | `92c0dcd89d` | N3, first option | The direction sentence now says SMPFS-170 does not list SP-319 in `depends_on`, instead of "only". |
+| T-08 | `ad2e923d70` | N1 | The vacated section stays empty and reusable with its guidance state (DL-070). As SMPFS-138 states, it may later be closed or reused and is never destroyed implicitly. |
+| T-09 | `b06d94210d` | N2 | The result content SMPFS-170 lists now records whether the move vacated its source section, and that section's resulting empty state. |
+| T-10 | `f52b05bcd9` | N4 | SP-319's renumbering note cites commit `93bbc67c85`, rebased from `254505ccf9`. |
+| Schema citation | `0a114f2ce4` | coordinator's follow-up | In `Plans/browser_workspace_created_checkpoint_v2.schema.json`, the `durable_index_read_token` description now cites DL-076 instead of the "coordinator ruling of 2026-09-24". Nothing else in the file changes. The file is not a shard or index source, so no derived file changed. The older hash `a881162262c63f9e278d50a7cf8bfb9125d80f8e0180915cef86a31e74810d5f` recorded in `step-08-browser-created-v2-companion-20260924.md` is labelled "File at `72efcb6655`" and remains a correct historical record. |
+
+**Before editing,** every canon fact the edits state was checked at `9f0da5c2b1`:
+- The two wiring rows name `handlers::terminal::move_workgroup` and the two declared events.
+- Case L-2 and CV-339 define exactly two durability classes, `ordinary` and `barrier`, and SP-273 appends its fact under `ordinary`.
+- SP-270 names both SP-286 resolver identities, and `Plans/event_append_receipt_contracts.schema.json` defines `full_value_request` and `full_value_result`.
+- CV-323 has the cancelled and failed (`rolled_back=true`) no-event rules and links the committed EventRecord.
+- UCC-144 has "Every applied/no_change/failed result follows CV-323 and the exact canonical event family".
+- Contracts_V0 section 1.2 makes `event_id` and `idempotency_key` producer-owned and excludes the three Storage-assigned fields.
+- The reconciliation JSON lists `terminal.workgroup_moved`.
+
+**After the ten finding commits,** both documents are byte-identical to the reviewer's dry run of every edit, `export-fixed/` in the review directory. Neither document contains "post-mutation fact" or "shared owner supplies" any more. PlanUnits stay at 6,721 and acceptance units at 26,233: T-06 rewords one criterion and adds none.
+
+**Checks at `0a114f2ce4`** (base still `9f0da5c2b1`, clean worktree):
+- `pm-shard-plans.py --check --config Plans/sharding_config.json`: pass, 99 documents, 2,722 shards, 0 failures.
+- `pm-plan-index.py validate`: pass, 0 failures.
+- Dependency graph: 0 cycle components and `build_order_available` true, with the build order covering all 6,721 units. There are 15,666 `depends_on` edges and 0 unresolved references. SMPFS-170 is at position 6,519 and SP-319 at 6,531.
+- The ten test modules: 311 tests, all OK.
+  - `test_event_authority_holding_bucket` 13
+  - `test_pm_assistant_contract_closure` 38
+  - `test_pm_browser_event_admission` 38
+  - `test_pm_browser_program_semantics` 10
+  - `test_pm_browser_result_binding` 54
+  - `test_pm_runtime_vocabulary_migration` 9
+  - `test_shared_runtime_storage_contracts` 15
+  - `test_pm_browser_workspace_reset` 53
+  - `test_pm_browser_workspace_created` 63
+  - `test_pm_plan_index` 18
+- `scripts/pm_browser_workspace_created_v2.py` prints `PASS` (`conditional_not_admitted`, native `NOT_RUN`, 3 positive cases).
+- The four lints have the same failure counts as main (1, 0, 103 and 876). Setting aside line numbers and current-hash values, there are no new failures, and none names SMPFS-170, SP-319, either new shard or the edited schema.
+
+| Authored file at `0a114f2ce4` | SHA-256 |
+|---|---|
+| `Plans/Section15_MVP_Promoted_Features_Spec.md` (equal to the review's `export-fixed/`) | `b64442645033baa1dde100a6480c9b6c337b89bfe12453ac6faf4ad52cc0c2e9` |
+| `Plans/storage-plan.md` (equal to the review's `export-fixed/`) | `bf6912ec8b3b0970f6654838b6e445b7cf70d6b3b59035e0403eddd014f018cb` |
+| `Plans/browser_workspace_created_checkpoint_v2.schema.json` (main `a881162262c63f9e278d50a7cf8bfb9125d80f8e0180915cef86a31e74810d5f`) | `6c9cd75980d17e79ed58c9a65f6483d7a37075fea467d3e544e16f0a23458ab6` |
+
+New evidence files in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/terminal-workgroup-draft-repair-20260924/`:
+
+| Evidence file at `0a114f2ce4` | SHA-256 |
+|---|---|
+| `shard-check-0a114f2ce4.json` | `b8070a4e73ae546e6c7bb6814c469dd0d020724d62d5f13df27e79b6f067d55f` |
+| `plan-index-validate-0a114f2ce4.json` | `e7bcd6f5af863bcea739a34f2eb3182328af0524aacb9c452e7b402fd009a308` |
+| `unittest-test_event_authority_holding_bucket-0a114f2ce4.log` | `a12ebdf9c9b6af54db78185bbcd39732fe037813934af68d4c2eec76f62e1225` |
+| `unittest-test_pm_assistant_contract_closure-0a114f2ce4.log` | `6a6be94467d4b38871943bbb54f70d10b13b96e9b9ad1a5d15112e40cc950421` |
+| `unittest-test_pm_browser_event_admission-0a114f2ce4.log` | `02b50fa641b2d20c79244438d334103a8f33e6e5e323214f8d92f6a284c4b3f4` |
+| `unittest-test_pm_browser_program_semantics-0a114f2ce4.log` | `31652e50be0f47d453dc5878fa445e778e6d1647f0d06a94cd1fb337464847d4` |
+| `unittest-test_pm_browser_result_binding-0a114f2ce4.log` | `1bf67e2096680fae21ec2fc3ecac8ca0f2010e1c84160907e26649ac1b108e1f` |
+| `unittest-test_pm_runtime_vocabulary_migration-0a114f2ce4.log` | `8199e8f141be872161eaf1a16a96c152d8de57ea0e9a5782e60b3bcdc1b1bf0b` |
+| `unittest-test_shared_runtime_storage_contracts-0a114f2ce4.log` | `b2af9fad8d72e1ec611eca4aa5f955a1ae5e187367477a15b860250c73ad179e` |
+| `unittest-test_pm_browser_workspace_reset-0a114f2ce4.log` | `dcc385be10cf18066d255cade3af8e79dab5a3b7c104ba71c9e5a51d60a3e916` |
+| `unittest-test_pm_browser_workspace_created-0a114f2ce4.log` | `0fbc3a898222d9dd651048f6d70669ef382d00b02c7125d8777a57249c382c91` |
+| `unittest-test_pm_plan_index-0a114f2ce4.log` | `8f666cc070fbd76ccecd73f8feb193d4f51b896c7698bc377ca650dca9884f57` |
+| `pm_browser_workspace_created_v2-oracle-0a114f2ce4.out` | `147638b2069a328005ff9f68581042a3c673bef833408a3964b63aaae5e49f49` |
+| `pm-plans-verify-lint-contractrefs-0a114f2ce4.json` | `d42785d31e91631c370a4559a25d6429b1a6ae237ddf1ef7e5e6b9f0a904163d` |
+| `pm-plans-verify-lint-banned-phrases-0a114f2ce4.json` | `45657fe7a0356261352b0e47da922bf38e9f301a6dabbedbbf8a87c4b7b901c3` |
+| `pm-plans-verify-lint-path-refs-0a114f2ce4.json` | `bf63563d70ac06022959432e8c973168e438d7b7ae117493ed7164680e02fd41` |
+| `pm-plans-verify-validate-plan-graph-0a114f2ce4.json` | `635974ad62cda8ad474f7063f5dc043d629507d87d20f2b8f3d777499a0a3f32` |
+
+The landing check has still not been run; it runs at landing. The review expects governance staleness for the two edited documents there: Spec Lock already marks `Plans/storage-plan.md` stale on main, and evidence hashes and the plan-migration live-unit count (6,719 to 6,721) will also go stale. Neither `Plans/Spec_Lock.json` nor `Plans/.evidence/**` pins the edited schema file. None of this stops the landing; it goes with a reseal request to the designated Plans agent. This review's cycle is closed by one confirmation pass over S1 to S8 and P1 to P3, and the cycle cap is two.
+
 ## Still open
 
-- **Review and landing.** The blind review of this branch, then the coordinator's landing go.
+- **Review and landing.** The confirmation pass on these fixes, then the coordinator's landing go.
 - **Companion work the contract itself requires.** Each still needs its own owner work before the producer or reader can be used:
-  - the closed original result and pending custody schemas;
+  - the closed original result and pending custody schemas, including the `event_id`, `idempotency_key` and `replay_policy` derivation named under T-02;
   - SIR delegation;
   - the private read-result schema;
   - the paired static oracles;
   - migration;
   - native proof.
 - **Depth status.** Nothing here gives the family a Step 08 depth pass. Its depth assessment against the current 42-family checkpoint remains Step 08 work.
-- **The schema description citation** named in section 5.
+- **DL-070's own YAML.** Its `canonical_text` still says "source_reseeded is always false for a move", while its dated addendum and FinalGUISpec retire the field. This branch follows the addendum. Aligning the YAML is a Decision Log owner item, raised by the review.
 
-Cost: one session, covering the rebase, five repair commits, 311 tests and four lints on the branch and on main; monetary attribution unavailable.
+Cost: one session, covering the rebase, five repair commits, ten review-fix commits and one schema-citation commit, and three runs each of the 311 tests and the four lints on the branch, with one baseline run of the lints on main; monetary attribution unavailable.
