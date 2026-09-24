@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19706-L19940
+Source lines: L19706-L19962
 
-Source SHA256: `cf2b2ef8bcbbae146826490c453dae1d2aa4d187b35b846887615661dbddfcf4`
+Source SHA256: `104c98f5177b2937d4cb51023628fde6944da58815b775cce3a56c5d02fa6277`
 
 ---
 
@@ -162,6 +162,28 @@ versioned v2 read consumer. It changes no event, source policy, payload, produce
 generic index owner, or Browser session/profile physical family. The v1 schema
 and stored digest meanings remain immutable compatibility custody; an old value
 is never default-filled or relabeled as a current v2 checkpoint.
+
+Newly authored under DL-046 for `browser.workspace.created` only, the v2 value is
+defined by `Plans/browser_workspace_created_checkpoint_v2.schema.json#/$defs/checkpoint`.
+The registry materialization must match that definition and the exact referenced
+SP-278 `read_token` and `coverage.last_frame` definitions. It fixes event,
+projector and schema identity and stores the complete read token, the examined
+global first/through bounds, an inclusive source cursor including frame-end
+offset, filter completeness, health, state and first-withdrawal time, plus
+`publication_id`, first `published_at_utc`, `hold_refs` and at most two
+`retired_generations`. The v1 `index_schema_id`, `index_schema_version`,
+`index_checkpoint_ref` and `current_selection_sha256` fields are not carried
+forward, and neither are the v1 cursor's `manifest_generation`, `recovery_epoch`,
+`survivor_prefix_sha256` and `projector_schema_version` components: the read
+token's source selection binds the manifest generation, recovery epoch and
+survivor prefix, the value's own schema and projector versions replace the
+cursor's projector schema version, and the cursor gains `frame_end_offset`.
+`#/$defs/generation_transaction`
+(`pm.browser_workspace_created_checkpoint_generation_transaction.v2`) and
+`#/$defs/cleanup_transaction`
+(`pm.browser_workspace_created_checkpoint_cleanup_transaction.v2`) are newly
+authored read-only resolver views of the actual same-key redb commit, not
+physical records; a supplied dictionary authenticates nothing.
 
 The v2 current value must bind the actual SP-278 `index_read_token`: exact generic
 root key, generation JSON Pointer, immutable anchor, advancing frontier revision
