@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L13-L1577
 
-Source SHA256: `20b218a99a44f7f51705b47116ce009eee6eb3297fba8b3f2d7f0ead8ef40344`
+Source SHA256: `7dfe4733894130a70b432667ab862e2b3373736d8bc2e13bc42a6f129a359602`
 
 ---
 
@@ -1518,7 +1518,7 @@ Answered on 2026-09-24 by Jared, in conversation with the coordinator, from the 
 
 **Question:** The frozen Event Authority seal check only accepts the 37 original families plus the two August ones, so should it be amended the way Step 3 amended it, to also accept a family you admitted later when that family has a complete admission record, or should the seal condition in DL-039 change instead?
 
-**Why:** DL-039 made the seal conditional on the independent seal check (`Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py`, frozen 2026-08-12) passing without modification. That check requires the registered families beyond the original 37 to be exactly the two August families, and fails with `unexpected_august_set` otherwise. Jared has since admitted `context.compaction.completed` (DL-040) and `browser.workspace.created` and `browser.workspace.reset` (DL-046), and every Step 9 registration adds another. Its record format also has no place for an admitted family that started among the 252 quarantined rows, so the compaction row still fails `individual_dispositions_evidence_gap_blocking`. No amount of contract work could make the unmodified check pass.
+**Why:** DL-039 made the seal conditional on the independent seal check (`Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py`, frozen 2026-08-12) passing without modification. That check requires the registered families beyond the original 37 to be exactly the two August families, and fails with `unexpected_august_set` otherwise. Since then `context.compaction.completed` was admitted in Step 6 under DL-039 and DL-040, and `browser.workspace.created` and `browser.workspace.reset` in their own Storage admission landings under DL-046, and every Step 9 registration adds another. Its record format also has no place for an admitted family that started among the 252 quarantined rows, so the compaction row still fails `individual_dispositions_evidence_gap_blocking`. No amount of contract work could make the unmodified check pass.
 
 **What you get:** The seal check keeps every rule it has. It additionally accepts a family registered after August only when that family has an admission record: the Decision Log entry that admitted it, the registry revision and SHA-256 before and after, and a current depth assessment with all twelve criteria passing. A family without one still fails.
 
