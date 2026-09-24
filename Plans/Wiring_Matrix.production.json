@@ -38527,7 +38527,7 @@
         "cmd.notifications.destination.test must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.notifications.destination.test must expose projected state selector and disabled reason before dispatch",
         "cmd.notifications.destination.test dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.notifications.destination.test must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.notifications.destination.test requires an action-specific typed payload/result contract and owner-verified effect evidence; a route/open no-persist disposition cannot substitute for the domain outcome.",
         "cmd.notifications.destination.test must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.notifications.destination.test; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
@@ -38535,7 +38535,7 @@
       "disabled_reason_projection": "state.commands.notifications_destination_test.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.notifications.destination.test has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "Explicit destination test requires current enabled destination authority, rate-limit admission and secret-safe CV-298 payload. Record the actual delivery-attempt outcome and redacted receipt, preserving mock versus live evidence and RAP-039 source/receipt projection. Acknowledgement, route/open or a generic dispatch receipt alone never proves delivery; no PM alert-state mutation is authorized (PS-124, SP-222, WM-039).",
         "receipt_or_event_refs": [
           "cmd.notifications.destination.test.dispatch_receipt"
         ]
@@ -38560,7 +38560,7 @@
         {
           "test_id": "wiring.catalog.notifications_destination_test.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.notifications.destination.test has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Explicit destination test requires current enabled destination authority, rate-limit admission and secret-safe CV-298 payload. Record the actual delivery-attempt outcome and redacted receipt, preserving mock versus live evidence and RAP-039 source/receipt projection. Acknowledgement, route/open or a generic dispatch receipt alone never proves delivery; no PM alert-state mutation is authorized (PS-124, SP-222, WM-039)."
         },
         {
           "test_id": "wiring.catalog.notifications_destination_test.accessibility",
@@ -38569,7 +38569,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.notifications.destination.test records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert the exact owner outcome above and reject navigation-only or acknowledgement-only completion; emit no unadmitted persisted domain event. Static fixtures grant no storage writer, delivery, export or runtime authority."
       ]
     },
     "catalog.notifications_destination_toggle": {
@@ -55506,7 +55506,7 @@
         "cmd.sound.asset.delete must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.sound.asset.delete must expose projected state selector and disabled reason before dispatch",
         "cmd.sound.asset.delete dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.sound.asset.delete must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.sound.asset.delete requires an action-specific typed payload/result contract and owner-verified effect evidence; a route/open no-persist disposition cannot substitute for the domain outcome.",
         "cmd.sound.asset.delete must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.sound.asset.delete; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
@@ -55514,7 +55514,7 @@
       "disabled_reason_projection": "state.commands.sound_asset_delete.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.sound.asset.delete has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "Report the actual Sound-owner soft-delete outcome for a user asset, preserving restoration and reference safety. Built-ins cannot be hard-deleted; permitted hide/disable behavior remains distinct. Route/open or a generic dispatch receipt alone never proves a lifecycle change (SP-222, UCC-103).",
         "receipt_or_event_refs": [
           "cmd.sound.asset.delete.dispatch_receipt"
         ]
@@ -55539,7 +55539,7 @@
         {
           "test_id": "wiring.catalog.sound_asset_delete.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.sound.asset.delete has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Report the actual Sound-owner soft-delete outcome for a user asset, preserving restoration and reference safety. Built-ins cannot be hard-deleted; permitted hide/disable behavior remains distinct. Route/open or a generic dispatch receipt alone never proves a lifecycle change (SP-222, UCC-103)."
         },
         {
           "test_id": "wiring.catalog.sound_asset_delete.accessibility",
@@ -55548,7 +55548,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.sound.asset.delete records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert the exact owner outcome above and reject navigation-only or acknowledgement-only completion; emit no unadmitted persisted domain event. Static fixtures grant no storage writer, delivery, export or runtime authority."
       ]
     },
     "catalog.sound_asset_export": {
@@ -55561,7 +55561,7 @@
         "cmd.sound.asset.export must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.sound.asset.export must expose projected state selector and disabled reason before dispatch",
         "cmd.sound.asset.export dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.sound.asset.export must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.sound.asset.export requires an action-specific typed payload/result contract and owner-verified effect evidence; a route/open no-persist disposition cannot substitute for the domain outcome.",
         "cmd.sound.asset.export must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.sound.asset.export; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
@@ -55569,7 +55569,7 @@
       "disabled_reason_projection": "state.commands.sound_asset_export.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.sound.asset.export has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "Report the actual Sound-owner export output and redacted export evidence, retaining selected asset/manifest identity and source/license/version/hash metadata without secrets. Runtime Artifacts may project the canonical evidence but does not gain export or storage authority. Route/open or a generic dispatch receipt alone never proves export (SP-222, RAP-039, UCC-103).",
         "receipt_or_event_refs": [
           "cmd.sound.asset.export.dispatch_receipt"
         ]
@@ -55594,7 +55594,7 @@
         {
           "test_id": "wiring.catalog.sound_asset_export.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.sound.asset.export has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Report the actual Sound-owner export output and redacted export evidence, retaining selected asset/manifest identity and source/license/version/hash metadata without secrets. Runtime Artifacts may project the canonical evidence but does not gain export or storage authority. Route/open or a generic dispatch receipt alone never proves export (SP-222, RAP-039, UCC-103)."
         },
         {
           "test_id": "wiring.catalog.sound_asset_export.accessibility",
@@ -55603,7 +55603,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.sound.asset.export records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert the exact owner outcome above and reject navigation-only or acknowledgement-only completion; emit no unadmitted persisted domain event. Static fixtures grant no storage writer, delivery, export or runtime authority."
       ]
     },
     "catalog.sound_asset_restore": {
@@ -55726,7 +55726,7 @@
         "cmd.sound.pack.import must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.sound.pack.import must expose projected state selector and disabled reason before dispatch",
         "cmd.sound.pack.import dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.sound.pack.import must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.sound.pack.import requires an action-specific typed payload/result contract and owner-verified effect evidence; a route/open no-persist disposition cannot substitute for the domain outcome.",
         "cmd.sound.pack.import must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.sound.pack.import; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
@@ -55734,7 +55734,7 @@
       "disabled_reason_projection": "state.commands.sound_pack_import.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.sound.pack.import has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "Verify imported pack compatibility, licensing, safe paths, supported format and size/duration/decode limits before reporting actual imported managed assets/manifests with source/license/version/hash metadata. Unknown manifest versions require review, and rejected members cannot be presented as imported. Route/open or a generic dispatch receipt alone never proves import (SP-222, F3-405, ATS-016).",
         "receipt_or_event_refs": [
           "cmd.sound.pack.import.dispatch_receipt"
         ]
@@ -55759,7 +55759,7 @@
         {
           "test_id": "wiring.catalog.sound_pack_import.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.sound.pack.import has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Verify imported pack compatibility, licensing, safe paths, supported format and size/duration/decode limits before reporting actual imported managed assets/manifests with source/license/version/hash metadata. Unknown manifest versions require review, and rejected members cannot be presented as imported. Route/open or a generic dispatch receipt alone never proves import (SP-222, F3-405, ATS-016)."
         },
         {
           "test_id": "wiring.catalog.sound_pack_import.accessibility",
@@ -55768,7 +55768,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.sound.pack.import records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert the exact owner outcome above and reject navigation-only or acknowledgement-only completion; emit no unadmitted persisted domain event. Static fixtures grant no storage writer, delivery, export or runtime authority."
       ]
     },
     "catalog.sound_preview": {
@@ -55836,7 +55836,7 @@
         "cmd.sound.upload must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.sound.upload must expose projected state selector and disabled reason before dispatch",
         "cmd.sound.upload dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.sound.upload must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.sound.upload requires an action-specific typed payload/result contract and owner-verified effect evidence; a route/open no-persist disposition cannot substitute for the domain outcome.",
         "cmd.sound.upload must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.sound.upload; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
@@ -55844,7 +55844,7 @@
       "disabled_reason_projection": "state.commands.sound_upload.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.sound.upload has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "Validate MIME/header/decode/path, WAV/MP3/OGG compatibility, 5 MiB source and 10-second decoded limits, warning above 3 seconds, normalization, silence trimming and duplicate content hash before reporting an owner-verified PM-managed asset/manifest result. Route/open or a generic dispatch receipt alone never proves asset storage; no raw secret or executable asset is admitted (SP-222, F3-405, ATS-016).",
         "receipt_or_event_refs": [
           "cmd.sound.upload.dispatch_receipt"
         ]
@@ -55869,7 +55869,7 @@
         {
           "test_id": "wiring.catalog.sound_upload.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.sound.upload has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Validate MIME/header/decode/path, WAV/MP3/OGG compatibility, 5 MiB source and 10-second decoded limits, warning above 3 seconds, normalization, silence trimming and duplicate content hash before reporting an owner-verified PM-managed asset/manifest result. Route/open or a generic dispatch receipt alone never proves asset storage; no raw secret or executable asset is admitted (SP-222, F3-405, ATS-016)."
         },
         {
           "test_id": "wiring.catalog.sound_upload.accessibility",
@@ -55878,7 +55878,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.sound.upload records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert the exact owner outcome above and reject navigation-only or acknowledgement-only completion; emit no unadmitted persisted domain event. Static fixtures grant no storage writer, delivery, export or runtime authority."
       ]
     },
     "catalog.source_control_accept_commit_group": {

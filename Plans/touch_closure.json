@@ -5467,7 +5467,7 @@
       "handler_owner": "Notification destination and Sound asset owners through UCC-103; native handler evidence is absent.",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Static catalog and production-intent rows only.",
+      "production_or_simulation": "Static catalog and production-intent rows only. RAP-039 applies to destination-test and asset-export evidence only; not local playback. Runtime Artifacts projects evidence without gaining delivery, export, storage, permission or alert-state authority.",
       "gui_triggers": [
         "Settings Notifications and Sounds manager"
       ],
@@ -5475,7 +5475,8 @@
       "reverse_consumers": [
         "Plans/Settings_System.md",
         "Plans/FinalGUISpec.md",
-        "Plans/Wiring_Matrix.production.json"
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/Runtime_Artifacts_Panel.md#RAP-039"
       ],
       "event_refs": [
         "owner events only after admitted authority"
@@ -5790,11 +5791,13 @@
       "profile_id": "TCP-TEACHER-HELP",
       "requirement_refs": [
         "Plans/UI_Command_Catalog.md#UCC-135",
-        "Plans/Settings_System.md#SSYS-023"
+        "Plans/Settings_System.md#SSYS-023",
+        "Plans/assistant-chat-design.md#ACD-426",
+        "Plans/Contracts_V0.md"
       ],
       "owner_plan": "Plans/UI_Command_Catalog.md",
       "plan_unit": "UCC-135",
-      "dry_contract_ref": "Plans/assistant-chat-design.md#Teacher-thread-owner",
+      "dry_contract_ref": "Plans/UI_Command_Catalog.md#UCC-135",
       "payload_schema_ref": "typed Project and thread identity",
       "result_schema_ref": "opened Assistant Chat thread route",
       "error_schema_ref": "thread unavailable, stale, permission, or handler reason",
@@ -11123,7 +11126,7 @@
       "command",
       "cmd.notifications.destination.test",
       "partial",
-      "Canonical destination-test catalog and production-intent row exist; native rate-limited delivery, masking, receipt, and runtime evidence are absent."
+      "Canonical destination-test catalog and production-intent row exist; native rate-limited delivery, masking, receipt, and runtime evidence are absent. Typed action request/result/error/permission/currentness and causal companion fixtures remain specification work; corrected wiring prose alone is not their completion. RAP-039 receipt/export projection composition also remains to be proven."
     ],
     [
       "TOUCH-PERM-001",
@@ -11179,7 +11182,7 @@
       "command",
       "cmd.sound.preview",
       "partial",
-      "Canonical local sound-preview catalog and production-intent row exist; native asset decode/playback and accessibility evidence are absent."
+      "Canonical local sound-preview catalog and production-intent row exist; native asset decode/playback and accessibility evidence are absent. Typed action request/result/error/permission/currentness and causal companion fixtures remain specification work; corrected wiring prose alone is not their completion."
     ],
     [
       "TOUCH-SOUND-002",
@@ -11187,7 +11190,7 @@
       "command",
       "cmd.sound.upload",
       "partial",
-      "Canonical sound-upload catalog and production-intent row exist; native FileSafe import, validation, persistence, and runtime evidence are absent."
+      "Canonical sound-upload catalog and production-intent row exist; native FileSafe import, validation, persistence, and runtime evidence are absent. Typed action request/result/error/permission/currentness and causal companion fixtures remain specification work; corrected wiring prose alone is not their completion."
     ],
     [
       "TOUCH-SOUND-003",
@@ -11195,7 +11198,7 @@
       "command",
       "cmd.sound.pack.import",
       "partial",
-      "Canonical sound-pack import catalog and production-intent row exist; native validation, collision, persistence, and runtime evidence are absent."
+      "Canonical sound-pack import catalog and production-intent row exist; native validation, collision, persistence, and runtime evidence are absent. Typed action request/result/error/permission/currentness and causal companion fixtures remain specification work; corrected wiring prose alone is not their completion."
     ],
     [
       "TOUCH-SOUND-004",
@@ -11203,7 +11206,7 @@
       "command",
       "cmd.sound.asset.delete",
       "partial",
-      "Canonical sound-asset delete catalog and production-intent row exist; native protected/built-in policy, recovery, and runtime evidence are absent."
+      "Canonical sound-asset delete catalog and production-intent row exist; native protected/built-in policy, recovery, and runtime evidence are absent. Typed action request/result/error/permission/currentness and causal companion fixtures remain specification work; corrected wiring prose alone is not their completion."
     ],
     [
       "TOUCH-SOUND-005",
@@ -11211,7 +11214,7 @@
       "command",
       "cmd.sound.asset.export",
       "partial",
-      "Canonical sound-asset export catalog and production-intent row exist; native redaction/FileSafe export and runtime evidence are absent."
+      "Canonical sound-asset export catalog and production-intent row exist; native redaction/FileSafe export and runtime evidence are absent. Typed action request/result/error/permission/currentness and causal companion fixtures remain specification work; corrected wiring prose alone is not their completion. RAP-039 receipt/export projection composition also remains to be proven."
     ],
     [
       "TOUCH-THEME-001",
@@ -11299,7 +11302,7 @@
       "command",
       "cmd.chat.open_thread",
       "partial",
-      "Canonical Assistant Chat route and production-intent row exist; native Teacher-thread routing and exact return evidence are absent."
+      "Canonical Assistant Chat route and production-intent row exist; native Teacher-thread routing and exact return evidence are absent. Typed existing-thread request/result/currentness/return joins remain specification work; this row does not implement a new Teacher launch."
     ],
     [
       "TOUCH-SEARCHIDX-001",
