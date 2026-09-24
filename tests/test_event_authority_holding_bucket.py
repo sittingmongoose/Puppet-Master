@@ -24,7 +24,8 @@ class HoldingBucketTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         paths = [Path('Plans/Decision_Log.md'), Path(self.v.HOLDING_RECEIPT),
                  AUDIT / 'cohort-pins/IMMUTABLE_COHORT_PINS.json',
-                 AUDIT / 'closed-world-census/admission/MACHINE_CONTRACT_EVENT_BINDING_SCAN.json']
+                 AUDIT / 'closed-world-census/admission/MACHINE_CONTRACT_EVENT_BINDING_SCAN.json',
+                 Path(self.v.POST_AUGUST_RECEIPT)]
         for rel in paths:
             dest = self.root / rel
             dest.parent.mkdir(parents=True, exist_ok=True)
@@ -234,6 +235,22 @@ class HoldingBucketTests(unittest.TestCase):
         self.aliases.remove(next(iter(self.aliases)))
         self.reject()
 
+    def test_holding_pin_follows_only_the_dl077_receipt_chain(self):
+        post = self.root / self.v.POST_AUGUST_RECEIPT
+        original = post.read_bytes()
+        self.assertEqual(self.check()[2], [])
+        post.unlink()
+        self.reject()  # the validator bytes changed after Step 3; only DL-077's receipt explains that
+        post.write_bytes(original)
+        for key, value in [('validator_before_sha256', '0' * 64), ('validator_after_sha256', '0' * 64),
+                           ('authority_section_sha256', '0' * 64), ('seal_authorized', True)]:
+            with self.subTest(key=key):
+                changed = json.loads(original)
+                changed[key] = value
+                post.write_text(json.dumps(changed))
+                self.reject()
+        post.write_bytes(original)
+
     def test_partition_never_expands_holding_to_compaction_or_august(self):
         for compact in [False, True]:
             for august in [False, True]:
@@ -242,6 +259,181 @@ class HoldingBucketTests(unittest.TestCase):
                         self.cohort, {}, self.scan, self.aliases,
                         qna_close=True, compact_not_admitted=compact, august_reclassified=august)
                     self.assertEqual(result['quarantined_not_admitted'], self.members)
+
+
+class PostAugustAdmissionTests(unittest.TestCase):
+    """DL-077: families registered after August are accepted only through complete admission records."""
+
+    POST = ['context.compaction.completed', 'browser.workspace.created', 'browser.workspace.reset']
+    DECISION = {'context.compaction.completed': 'DL-040', 'browser.workspace.created': 'DL-046',
+                'browser.workspace.reset': 'DL-046'}
+
+    def setUp(self):
+        spec = importlib.util.spec_from_file_location('post_august_validator', REPO / VALIDATOR)
+        self.v = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.v)
+        self.temp = tempfile.TemporaryDirectory(dir=os.environ.get('PM_TEST_EVIDENCE_DIR'))
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        for rel in [Path('Plans/Decision_Log.md'), Path(self.v.HOLDING_RECEIPT), Path(self.v.POST_AUGUST_RECEIPT)]:
+            dest = self.root / rel
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(REPO / rel, dest)
+        self.v.REPO = self.root
+        self.v.ROOT = self.root / 'Plans'
+        self.registry = self.v.load_json(REPO / 'Plans/event_family_registry.json')
+        self.known37 = self.v.load_json(REPO / AUDIT / 'known37/KNOWN37_FROM_PLANS.json')['event_types']
+        self.families = {f['event_type']: f for f in self.registry['families']}
+        self.assessment_rel = 'reports/fixture-depth-assessment.json'
+        self.assessment = {'rows': [{'event_type': et, 'cells': {c: {'status': 'PASS'} for c in self.v.EVIDENCE_FIELDS}}
+                                    for et in self.POST]}
+        self.record_dir = self.root / self.v.POST_AUGUST_RECORD_DIR
+        self.record_dir.mkdir(parents=True, exist_ok=True)
+        self.write_assessment()
+        for et in self.POST:
+            self.write_record(self.record_for(et))
+
+    def write_assessment(self):
+        path = self.root / self.assessment_rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(self.assessment))
+
+    def record_for(self, et):
+        section = self.v.decision_section_bytes(self.root / 'Plans/Decision_Log.md', self.DECISION[et])
+        n = self.POST.index(et)
+        return {
+            'schema_id': self.v.POST_AUGUST_RECORD_SCHEMA,
+            'event_type': et,
+            'family_id': self.families[et]['family_id'],
+            'decision_ref': 'Plans/Decision_Log.md#' + self.DECISION[et],
+            'decision_section_sha256': hashlib.sha256(section).hexdigest(),
+            'registry_before': {'revision': 'r' + str(n), 'sha256': str(n) * 64, 'family_count': 39 + n},
+            'registry_after': {'revision': 'r' + str(n + 1), 'sha256': str(n + 1) * 64, 'family_count': 40 + n},
+            'registry_row_sha256': self.v.canonical_json_sha256(self.families[et]),
+            'depth_assessment': {'path': self.assessment_rel,
+                                 'sha256': self.v.sha256_file(self.root / self.assessment_rel)},
+        }
+
+    def write_record(self, record, name=None):
+        (self.record_dir / ((name or record['event_type']) + '.json')).write_text(json.dumps(record))
+
+    def check(self):
+        return self.v.validate_post_august_admissions(self.registry, self.known37)
+
+    def test_complete_records_admit_exactly_the_post_august_families(self):
+        admitted, issues, receipt_sha = self.check()
+        self.assertEqual(issues, [])
+        self.assertEqual(admitted, set(self.POST))
+        self.assertEqual(receipt_sha, self.v.sha256_file(self.root / self.v.POST_AUGUST_RECEIPT))
+
+    def test_a_missing_record_fails_closed(self):
+        (self.record_dir / 'browser.workspace.reset.json').unlink()
+        admitted, issues, _ = self.check()
+        self.assertNotIn('browser.workspace.reset', admitted)
+        self.assertIn('browser.workspace.reset: no admission record', issues)
+
+    def test_any_depth_criterion_not_passing_fails_closed(self):
+        for status in ['PARTIAL', 'ABSENT', 'CONFLICT', None]:
+            with self.subTest(status=status):
+                self.assessment['rows'][0]['cells']['producer'] = {'status': status}
+                self.write_assessment()
+                for et in self.POST:
+                    self.write_record(self.record_for(et))
+                admitted, issues, _ = self.check()
+                self.assertNotIn(self.POST[0], admitted)
+                self.assertIn(self.POST[0] + ': depth_incomplete:producer', issues)
+
+    def test_changed_inputs_fail_closed(self):
+        et = self.POST[1]
+        good = self.record_for(et)
+        cases = {
+            'schema_id': ('schema_id', 'forged'),
+            'family_id': ('family_id', 'event-family-other'),
+            'decision_ref': ('decision_ref', 'Plans/Decision_Log.md#DL-39'),
+            'decision_section_sha256': ('decision_section_sha256', '0' * 64),
+            'registry_row_sha256': ('registry_row_sha256', '0' * 64),
+            'depth_assessment.sha256': ('depth_assessment', {'path': self.assessment_rel, 'sha256': '0' * 64}),
+            'depth_assessment.path': ('depth_assessment', {'path': '../escape.json', 'sha256': '0' * 64}),
+            'registry_before': ('registry_before', {'revision': '', 'sha256': 'x', 'family_count': '40'}),
+        }
+        for problem, (key, value) in cases.items():
+            with self.subTest(problem=problem):
+                changed = copy.deepcopy(good)
+                changed[key] = value
+                self.write_record(changed)
+                admitted, issues, _ = self.check()
+                self.assertNotIn(et, admitted)
+                self.assertIn(et + ': ' + problem, issues)
+        self.write_record(good)
+
+    def test_registry_must_grow_by_exactly_one_family(self):
+        et = self.POST[2]
+        for count in [0, 2, -1]:
+            with self.subTest(count=count):
+                record = self.record_for(et)
+                record['registry_after']['family_count'] = record['registry_before']['family_count'] + count
+                self.write_record(record)
+                admitted, issues, _ = self.check()
+                self.assertNotIn(et, admitted)
+                self.assertIn(et + ': registry_before_after_not_exactly_one_family', issues)
+
+    def test_a_changed_registry_row_or_decision_entry_fails_closed(self):
+        self.families[self.POST[0]]['family_revision'] = '9.9.9'
+        admitted, issues, _ = self.check()
+        self.assertIn(self.POST[0] + ': registry_row_sha256', issues)
+        self.assertNotIn(self.POST[0], admitted)
+        path = self.root / 'Plans/Decision_Log.md'
+        path.write_bytes(path.read_bytes().replace(b'Keep the bounded, content-free completion EventRecord indefinitely',
+                                                   b'Keep the bounded completion EventRecord indefinitely', 1))
+        admitted, issues, _ = self.check()
+        self.assertIn(self.POST[0] + ': decision_section_sha256', issues)
+
+    def test_records_for_other_families_and_misnamed_files_are_rejected(self):
+        record = self.record_for(self.POST[0])
+        record['event_type'] = 'workspace.layout_changed'
+        self.write_record(record)
+        self.write_record(self.record_for(self.POST[1]), name='misnamed')
+        admitted, issues, _ = self.check()
+        self.assertIn('workspace.layout_changed: admission record for a family not registered beyond Known37 and August', issues)
+        self.assertIn('misnamed.json: admission record name, event type or uniqueness mismatch', issues)
+        self.assertEqual(admitted, set(self.POST))
+
+    def test_an_unrecorded_new_registration_is_not_admitted(self):
+        extra = copy.deepcopy(self.families[self.POST[0]])
+        extra['event_type'] = 'example.future_family'
+        extra['family_id'] = 'event-family-example-future-family'
+        self.registry['families'].append(extra)
+        admitted, issues, _ = self.check()
+        self.assertNotIn('example.future_family', admitted)
+        self.assertIn('example.future_family: no admission record', issues)
+
+    def test_an_invalid_receipt_admits_nothing(self):
+        post = self.root / self.v.POST_AUGUST_RECEIPT
+        original = json.loads(post.read_text())
+        for key, value in [('schema_id', 'forged'), ('authority_ref', 'Plans/Decision_Log.md#DL-039'),
+                           ('authority_section_sha256', '0' * 64), ('validator_before_sha256', '0' * 64),
+                           ('validator_after_sha256', '0' * 64), ('record_dir', 'reports/elsewhere'),
+                           ('author_task', 'someone-else'), ('seal_applier_forbidden_task', 'someone-else'),
+                           ('seal_authorized', True), ('admission_authorized', True),
+                           ('contract_depth_complete', True)]:
+            with self.subTest(key=key):
+                changed = copy.deepcopy(original)
+                changed[key] = value
+                post.write_text(json.dumps(changed))
+                admitted, issues, receipt_sha = self.check()
+                self.assertEqual(admitted, set())
+                self.assertIsNone(receipt_sha)
+                self.assertTrue(issues and issues[0].startswith('post-August amendment receipt invalid'))
+        post.unlink()
+        admitted, issues, _ = self.check()
+        self.assertEqual(admitted, set())
+
+    def test_dl077_authority_text_is_pinned(self):
+        path = self.root / 'Plans/Decision_Log.md'
+        path.write_bytes(path.read_bytes().replace(b'complete admission record', b'admission record', 1))
+        admitted, issues, _ = self.check()
+        self.assertEqual(admitted, set())
+        self.assertTrue(issues[0].startswith('post-August amendment receipt invalid'))
 
 
 if __name__ == '__main__':
