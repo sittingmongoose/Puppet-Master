@@ -26,6 +26,9 @@ MAX_PAYLOAD_BYTES = 65536
 # adoptions. SMPFS-166's historical rows retain their original hash authority.
 ORIGINAL39_SHA256 = "f548a2977dc4f1c51dc0a4976940a0a3562de6281a707a96fbd5cee67f618c0e"
 ORIGINAL40_SHA256 = "4f701c9598003d7c01a405f18f7991b373379eca8b182cf6222540a4746d1756"
+# Current manifest re-frozen by the landed storage-registry repairs on
+# 2026-09-24. Keep its authority separate from the preparation-era lineage.
+CURRENT39_SHA256 = "e2b5a433c668a36ffe3ffdc329f90a0f860b680bbc54fb9c596d1a302c6cd306"
 COMPACTION_FAMILY = "event-family-context-compaction-completed"
 # Whole-row pins independently taken from each adoption commit, never generated
 # from the live registry. Historical pins are from b09294e44b. No sibling or
@@ -159,11 +162,12 @@ def preexisting_preservation(admission, registry_rows, *, allow_historical=False
         historical = []
     historical39 = [row for row in historical if row["family_id"] != COMPACTION_FAMILY]
     preserved39 = (len(historical39) == 39 and fingerprint(historical39) == ORIGINAL39_SHA256
-                   and admission["preexisting_family_rows_sha256"] == ORIGINAL39_SHA256
                    and [row["family_id"] for row in historical39] == ids)
     preserved40 = len(historical) == 40 and fingerprint(historical) == ORIGINAL40_SHA256
     if not preserved39 or not preserved40:
         failures.append({"error": "historical_preexisting_baseline_mismatch"})
+    if admission["preexisting_family_rows_sha256"] != CURRENT39_SHA256:
+        failures.append({"error": "current_preexisting_manifest_hash_mismatch"})
     # Do not let unrelated additions disappear through the baseline filter.
     browser_pairs = {(row["family_id"], row["event_type"]) for row in admission["rows"]}
     if any(row["family_id"] not in original_ids | {COMPACTION_FAMILY}
