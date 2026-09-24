@@ -3,6 +3,56 @@
   "owner_schema": "Plans/named_plan_system_contracts.schema.json",
   "valid": [
     {
+      "name": "accepted_create_has_group_route_and_initial_revision",
+      "definition": "named_plan_action_result",
+      "value": {
+        "schema_id": "pm.named_plan.action_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.named_plan.create",
+        "command_instance_id": "command:named_plan:create:02",
+        "outcome": "accepted",
+        "project_id": "project:01",
+        "named_plan_id": "named_plan:02",
+        "named_plan_revision": 1,
+        "currentness_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+        "thread_group_ref": "thread_group:named_plan:02",
+        "route_ref": "route:plans:project:01",
+        "receipt_refs": [
+          "receipt:named-plan:create:02"
+        ],
+        "projection_ref": "projection:named-plan:02",
+        "disabled_reason": null,
+        "error_code": null,
+        "child_work_mutated": false,
+        "replayed": false
+      }
+    },
+    {
+      "name": "accepted_create_replay_retains_original_initial_revision",
+      "definition": "named_plan_action_result",
+      "value": {
+        "schema_id": "pm.named_plan.action_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.named_plan.create",
+        "command_instance_id": "command:named_plan:create:03",
+        "outcome": "accepted",
+        "project_id": "project:01",
+        "named_plan_id": "named_plan:03",
+        "named_plan_revision": 1,
+        "currentness_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+        "thread_group_ref": "thread_group:named_plan:03",
+        "route_ref": "route:plans:project:01",
+        "receipt_refs": [
+          "receipt:named-plan:create:03"
+        ],
+        "projection_ref": "projection:named-plan:03",
+        "disabled_reason": null,
+        "error_code": null,
+        "child_work_mutated": false,
+        "replayed": true
+      }
+    },
+    {
       "name": "named_plan_with_explicit_project_and_child_refs",
       "definition": "named_plan_record",
       "value": {
@@ -268,6 +318,42 @@
     }
   ],
   "invalid": [
+    {
+      "name": "accepted_create_requires_thread_group",
+      "definition": "named_plan_action_result",
+      "base_valid": "accepted_create_has_group_route_and_initial_revision",
+      "patch": {
+        "thread_group_ref": null
+      },
+      "expected_invariant": "accepted_create_returns_original_revision_one_group_route_and_receipt"
+    },
+    {
+      "name": "accepted_create_requires_route",
+      "definition": "named_plan_action_result",
+      "base_valid": "accepted_create_has_group_route_and_initial_revision",
+      "patch": {
+        "route_ref": null
+      },
+      "expected_invariant": "accepted_create_returns_original_revision_one_group_route_and_receipt"
+    },
+    {
+      "name": "accepted_create_requires_initial_revision",
+      "definition": "named_plan_action_result",
+      "base_valid": "accepted_create_has_group_route_and_initial_revision",
+      "patch": {
+        "named_plan_revision": 2
+      },
+      "expected_invariant": "accepted_create_returns_original_revision_one_group_route_and_receipt"
+    },
+    {
+      "name": "accepted_create_replay_requires_original_initial_revision",
+      "definition": "named_plan_action_result",
+      "base_valid": "accepted_create_replay_retains_original_initial_revision",
+      "patch": {
+        "named_plan_revision": 2
+      },
+      "expected_invariant": "accepted_create_returns_original_revision_one_group_route_and_receipt"
+    },
     {
       "name": "candidate_identity_name_is_not_canonical",
       "definition": "named_plan_record",

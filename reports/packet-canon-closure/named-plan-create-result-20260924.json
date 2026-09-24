@@ -1,0 +1,70 @@
+{
+  "scope": "Accepted NamedPlan.create result specialization only",
+  "base_commit": "3b0bbb9e6352fa99fed5906cd47da426fe54a012",
+  "branch": "fix/named-plan-create-result-20260924",
+  "authority": {
+    "path": "Plans/Named_Plan_System.md",
+    "sha256": "c816bd4e15c76f174a57500ea1efe2cab43e8a19b364b83cafd9146c285d334a",
+    "lines": [
+      44,
+      52,
+      61,
+      63
+    ]
+  },
+  "changes": [
+    "One result allOf conditional: accepted cmd.named_plan.create requires existing safe_ref thread_group_ref and route_ref, and named_plan_revision exactly 1, including original-result replay.",
+    "Two accepted create/replay positive fixtures and four targeted negative fixtures; all existing 11 positives and 11 negatives unchanged.",
+    "Seven focused tests exercise nonnull references, original revision and replay, all five other commands, nonaccepted outcomes, existing receipt/no-child fences, and registered fixture entrypoints."
+  ],
+  "files_sha256": {
+    "Plans/named_plan_system_contracts.schema.json": "a27eb2832891d8a5070df1cab1ba08450c4d89ee1f6ee63a7ca86cb3de3ad72a",
+    "Plans/named_plan_system_contract_fixtures.json": "67277580e4a4d5fbf6d8b1a9b7789b4ed7c55be2aa44c8f963438b8ee916a9f7",
+    "tests/test_pm_named_plan_create_result.py": "12e87b7cfa64a24dafe61babbd8737f807cd79c9bb74eeea68811b93efbd4355"
+  },
+  "verification": {
+    "focused": {
+      "command": "python3 -m unittest discover -s tests -p test_pm_named_plan_create_result.py -v",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0
+    },
+    "red": {
+      "method": "Same current fixture/test bytes with exact base schema substituted in memory",
+      "tests": 7,
+      "failing_assertions": 10,
+      "errors": 0
+    },
+    "aggregate": {
+      "command": "python3 scripts/pm-new-contracts-verify.py",
+      "exit_code": 0,
+      "contract_pairs": 32,
+      "positive_cases_valid": 1165,
+      "negative_cases_rejected": 4028,
+      "findings": 0
+    },
+    "preservation": "Removing the sole new conditional produces the exact old schema JSON. Removing only the two new positives/four negatives produces the exact old fixtures JSON. git diff --check passes. The external red/green record precedes removal of one trailing blank line in the test; the final test hash above was rerun with all seven tests passing."
+  },
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/browser_scm_performance/named-plan-create-result-repair-proposal.json",
+      "sha256": "6841b0397c2bc8ff508f4c4936866ae2b032ec01c84b8b76d701bb65163feb74"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/browser_scm_performance/named-plan-create-result-red-green.json",
+      "sha256": "5a6ce9b98b46525c87ccf004862f5d785b00ecf1a9553453ecd3993444a900c4"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/browser_scm_performance/named-plan-create-result-full-gate.json",
+      "sha256": "ea9b5e21914a8e8c4012f9a4f09ea2d9453915d566437a2f78a8b25b91c0de17"
+    }
+  ],
+  "preserved_scope": "No other command specialization, rejected/cancelled/no_change shape, request schema, owner prose, .gitignore, generated artifact, storage, command/event/handler binding, governance or shared-main change.",
+  "remaining_work": [
+    "Request/result Project, command and instance identity joins remain outside this repair; create request has null unallocated NamedPlan identity and must not simply be equated to result identity.",
+    "Resolved group/route/projection/receipt identity and failure-receipt content joins are not proved by a safe_ref shape.",
+    "Existing create/no_change semantics are preserved rather than expanded.",
+    "Runtime atomic creation, idempotency store behavior, native execution and GUI work are not tested; no full Named Plan owner closure or readiness claim.",
+    "Root independent review is required before integration."
+  ]
+}
