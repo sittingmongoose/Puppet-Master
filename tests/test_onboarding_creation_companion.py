@@ -214,7 +214,15 @@ class CreationCompanionTests(unittest.TestCase):
             if key != "schema_id":
                 self.assertEqual(value, new["properties"][key], key)
         self.assertEqual(old["required"], new["required"][:-1])
-        self.assertEqual(old["allOf"], new["allOf"][:-2])
+        copied_rules = copy.deepcopy(new["allOf"][:-2])
+        azure_index = next(i for i, rule in enumerate(old["allOf"])
+            if rule.get("if", {}).get("properties", {}).get("forge") == {"const": "azure_devops"})
+        # Only the explicit-new-Azure branch changes its normal project absence;
+        # the separate pinned correction test proves the complete exact delta.
+        corrected = copied_rules[azure_index]
+        self.assertEqual({"const": ""}, corrected["then"]["allOf"][0]["then"]["properties"]["repository_project"])
+        copied_rules[azure_index] = copy.deepcopy(old["allOf"][azure_index])
+        self.assertEqual(old["allOf"], copied_rules)
         legacy = h.fixture("product_onboarding_contract_fixtures.json", "valid.session.active_without_branch")
         self.assertEqual([], h.validate("onboarding", "onboarding_session", legacy))
         self.assertTrue(h.validate("onboarding", "onboarding_session_current_write", legacy))
@@ -491,6 +499,7 @@ class CreationCompanionTests(unittest.TestCase):
         selection["azure_team_project_selection"] = {"mode": "create", "existing_project_ref": None,
             "project_name": "New Azure Project", "visibility": "private", "process_template_ref": "process-template:resolved",
             "version_control": "git"}
+        draft["repository_project"] = ""  # Explicit draft edit before reapproval, not history rewrite.
         h.refresh_review()
         self.assert_valid_records(h)
         got = h.produce()

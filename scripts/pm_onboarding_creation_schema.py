@@ -92,6 +92,24 @@ def build_onboarding_creation_defs(onboarding, forge):
         "else": {"properties": {"repository_creation_selection": {"type": "null"}}}})
     draft["allOf"].append({"if": {"properties": {"forge": {"not": {"const": "azure_devops"}}}, "required": ["forge"]},
                           "then": {"properties": {"repository_creation_selection": {"properties": {"azure_team_project_selection": {"type": "null"}}}}}})
+    # Pre-release v3 correction: a genuinely new Azure project has no existing
+    # project selection. The copied historical v2 rule is never changed in place.
+    azure_create = {"properties": {"repository_creation_selection": {
+        "type": "object", "required": ["azure_team_project_selection"],
+        "properties": {"azure_team_project_selection": {
+            "type": "object", "required": ["mode"],
+            "properties": {"mode": {"const": "create"}}}}}},
+        "required": ["repository_creation_selection"]}
+    azure_rules = [rule for rule in draft["allOf"]
+        if rule.get("if", {}).get("properties", {}).get("forge") == {"const": "azure_devops"}]
+    if len(azure_rules) != 1:
+        raise ValueError("azure_normal_project_rule_count")
+    azure_rule = azure_rules[0]
+    if azure_rule["then"]["properties"].pop("repository_project") != text:
+        raise ValueError("azure_historical_project_constraint_changed")
+    azure_rule["then"]["allOf"] = [{"if": azure_create,
+        "then": {"properties": {"repository_project": {"const": ""}}},
+        "else": {"properties": {"repository_project": text}}}]
     defs["onboarding_setup_plan_v3"] = draft
     defs["onboarding_setup_plan_current_write"] = ref("onboarding_setup_plan_v3")
 
