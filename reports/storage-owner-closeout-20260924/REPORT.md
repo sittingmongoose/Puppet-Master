@@ -1,8 +1,8 @@
 # Storage owner closeout, 2026-09-24
 
-STATUS: in progress. Task 1(a) and 1(b) committed and pushed (`c21befb8e9`, `af4d1737b6`, `cc10739917`, `60009eec0a`); Decision Log entry, Task 2 and Task 3 next.
+STATUS: in progress. All three tasks are committed, rebased onto `origin/main` `15ab001892` and pushed; the whole-suite and landing-check comparisons are running. Not landed.
 
-Branch `plans/storage-owner-closeout-20260924`, sparse worktree `~/pm-worktrees/storage-owner-closeout-20260924` (`Plans scripts reports tests .claude`). Not landed.
+Branch `plans/storage-owner-closeout-20260924`, sparse worktree `~/pm-worktrees/storage-owner-closeout-20260924` (`Plans scripts reports tests .claude`), rebased onto `origin/main` `15ab001892`. Not landed.
 
 Scope, on Jared's authorization relayed by the coordinator (Jared approved the coordinator deciding these on his behalf):
 1. The two Storage owner questions left open by `reports/storage-registry-repairs-20260923/REPORT.md` (review findings R-02 and R-05): the `whole_wrapper_sha256` preimage on the three SP-310 stored-profile union members, and `redb_snapshot_id` inside the persisted SP-278 read token.
@@ -16,6 +16,35 @@ Coordinator confirmations (2026-09-24, on Jared's delegation), after this branch
 - The 1(b) plan stands: the four checkpoint rows persist the nine-field durable token on the `DurableGenericToken` precedent, the live snapshot id is joined again at each read, SP-311's text stays as it is, the hash-pinned `Plans/event_record_index_checkpoint.schema.json` is not touched (each contract carries the projection locally), the frozen Home2 reader copy stays frozen, and readiness gains a rule, with self-tests, that rejects a persisted ten-field token.
 - The Decision Log entry quotes the Browser passage's "historical provenance" wording as the reading overridden and SP-311's "never persist" as the reason.
 - Currentness drift from the extra documents is expected at landing and lands under the staleness carve-out.
+
+## Result
+
+| | |
+|---|---|
+| Branch tip | `9006c719e0`, rebased onto `origin/main` `15ab001892`, pushed |
+| Decision Log | **DL-076**, with two items, in both sections |
+| 1(a) `whole_wrapper_sha256` | Recipe found and stated beside SP-310; readiness checks it (3 new self-test checks) |
+| 1(b) `redb_snapshot_id` | The four checkpoint rows store the nine-field durable token; SP-311 unchanged; readiness rejects a stored snapshot fence (5 new self-test checks) |
+| Task 2 | Both census tests re-pinned after tracing every moved value to a landed, recorded commit: 15/15 and 42/42 pass (before: 1 failure each) |
+| Task 3 | Three sentences in both rule files (landing lock, push-or-reset fast-forward, reseal scope), byte-identical passages, plus two `.gitignore` exception lines |
+| Readiness failures | 38 on `origin/main` `15ab001892`, 38 on the branch, with an identical keyed set |
+
+## Commits
+
+After the rebase onto `15ab001892`, in order:
+
+| Commit | What |
+|---|---|
+| `811ec3a4b7` | 1(a) owner text: the SP-310 follow-up that states the recipe, and the section 2.3.1 sentence. Storage-plan shards and the plan index regenerated. |
+| `c24e341b4c` | 1(a) readiness: the member digest check and 3 self-test checks; the representation test names 31 checks. |
+| `68c67c6e69` | This report, Task 1(a) section. |
+| `9225b8d077` | 1(b) canon: the SP-278 durable read token, four dated amendments and SP-282-A001, the section 2.3.1 bullet, five contracts, three fixture files, four registry rows, the Browser reset oracle and its test. Storage-plan and registry shards and the plan index regenerated. |
+| `730320a806` | 1(b) readiness: the durable-token exemption, the stored-fence rule and 5 self-test checks; the representation test names 36 checks. |
+| `d935bef56c` | This report, Task 1(b) section. |
+| `918c89ad5e` | DL-076 in both Decision Log sections. Decision_Log shards and the plan index regenerated. |
+| `cb4bbd45dc` | Task 2: the two census tests re-pinned. |
+| `9006c719e0` | Task 3: the three rule-file sentences and the two `.gitignore` lines. |
+| this commit | This report, completed. |
 
 ## Task 1(a): `whole_wrapper_sha256`
 
@@ -70,7 +99,7 @@ The reviewer tried compact and spaced separators, but not `indent=2`. The recipe
 
 **Reasoning, in three sentences.** A stored snapshot id served no function: every one of the four owners already forbade using it as a fence, a restart handle or a currentness proof, so it was an inert field whose only safe use was to be ignored, and it invited exactly the misuse those guards exist to prevent. Keeping SP-311's rule universal costs only planning churn now, because nothing is implemented, and the nine-field durable token is already canon in three consumer schemas. The alternative, an exception in SP-311 for checkpoint custody, would leave two meanings of "stored read token" in one Storage plan.
 
-**What changed** (commits `cc10739917` and `60009eec0a`).
+**What changed** (commits `9225b8d077` and `730320a806`).
 - `Plans/storage-plan.md`:
   - SP-278 gains a dated "2026-09-24: the durable read token" paragraph. It defines the stored form as the canonical token with `redb_snapshot_id` removed from `properties` and `required`, and says each read joins the snapshot id of its own live read transaction.
   - Dated DL-076 amendments in the four passages (SP-282, SP-270, SP-273, SP-275). The SP-282 amendment says outright that the "historical provenance" reading no longer applies. SP-282 criterion A001 is amended in place.
@@ -108,3 +137,80 @@ The reviewer tried compact and spaced separators, but not `indent=2`. The recipe
   - with the union rule removed, the union negative fails;
   - with the exemption limited to the whole token, the live-row positive fails;
   - with local references not followed, the local-reference negative fails.
+
+## DL-076
+
+`Plans/Decision_Log.md` now has **DL-076**, "Storage owner decisions — the SP-310 wrapper digest recipe, and stored read tokens without the live snapshot id", in both sections: the Entries section and a PlanUnit under PlanUnits.
+- It is written in the DL-036 plain-language form: each of the two items has a name, question, why, what you get, what it costs, options, recommendation and answer.
+- It is attributed "Decided by Jared, by delegation to the coordinator, 2026-09-24".
+- Item 2 quotes the Browser passage's "historical provenance, not a reopenable native snapshot or a restart credential" as the reading overridden, and SP-311's "is only a live transaction fence; never persist or manufacture it" as the reason.
+
+The number was the next free one when the branch was written and again after the rebase onto `15ab001892`. `main` ends at DL-075, and no other branch on the remote carries a DL-076. It has to be checked once more at landing. The owner edits cite DL-076 in `Plans/storage-plan.md` (SP-310, SP-278, SP-282, SP-270, SP-273, SP-275, section 2.3.1) and in the two validator scripts. If the number is taken by then, all of these move together to the next free number.
+
+The PlanUnit adds 1 PlanUnit and 4 acceptance units. Its `preserved_exact_tokens` (`whole_wrapper_sha256`, `redb_snapshot_id`, `DurableGenericToken`) all occur in its `canonical_text`. It depends on DL-045 and DL-046, the Step 8 and Browser technical-binding approvals under which the four checkpoints were defined.
+
+## Task 2: the two stale census tests
+
+**Before**, on the branch base: `tests.test_shared_runtime_storage_contracts` ran 15 tests with 1 failure (`294 != 84`), and `tests.test_pm_onboarding_phases` ran 42 with 1 failure (`294 != 90`). **After** (`cb4bbd45dc`): 15/15 and 42/42 pass. They were re-measured at the rebased tip; see "Checks and tests".
+
+**How each moved value was traced.** A per-commit history of `Plans/storage_value_registry.json` along `main` records, for every commit that touched the file, the family and policy counts, the status and tier counts, and which rows changed (`registry-history.json` in the evidence set). A script then confirmed that every commit named below is an ancestor of `origin/main` and that its cited record exists; a record under `reports/` is one the commit itself added.
+
+`tests/test_shared_runtime_storage_contracts.py`, `test_registry_has_exact_family_and_status_counts`:
+
+| Value | Old pin | Now | Moved by |
+|---|---|---|---|
+| families | 84 (the registry as of `dc3a300310`, the sweep that added this test) | 294 | `99a3c7db9d` +4; then the 26 commits `af6856d039` to `f6350caf27` +206; none removed |
+| materialized | 66 | 272 | the same 26 commits, +206 |
+| deferred | 17 | 21 | `99a3c7db9d`: the four Working Notebook families, recorded in `Plans/storage-plan.md` "Working Notebook And Context Transition Storage Addendum (2026-09-05)" (SP-255 to SP-257), which that commit added along with a governance reseal |
+| compatibility alias | 1 | 1 | unchanged |
+
+`tests/test_pm_onboarding_phases.py`, `test_existing_family_and_retention_census_is_unchanged`:
+
+| Value | Old pin | Now | Moved by |
+|---|---|---|---|
+| families (and unique ids) | 90 | 294 | the 25 commits `4d9d21297d` to `f6350caf27` in the readiness census comment, +204; none removed |
+| retention policies | 24 | 27 | `0fed14e345`, `74c5485e3b` and `6621d9dc1d`, each with its own record |
+| digest of the 88 prior rows | `91e394fe…`, "from `7db6a87c60`" | `de1461c6…` | Four rows changed, each by a recorded commit: `event_record_index` (`d21fd2cf23`, `step-08-generic-index-validation.md`), `restore_point_record` (`7fa3b65df7`, `step-08-restore-pair-validation.md`), `retention_hold_record` (`2080658ff8`, `step-08-hold-validation.md`) and `goal_receipt` (`679e066a2a`, `step-08-certified-custody-validation.md`; `274c681e43`, `step-08-current-child-scope-validation.md`) |
+| `run_started_index_checkpoint` digest | `04cd5eaa…` (as added by `af6856d039`) | `24060bdb…` | `38d896d3f0`, "Adopt versioned run-start and restore-created index checkpoints" (`step-08-index-adoption-validation.md`) |
+
+Findings behind the re-pin:
+- **The test's cited pin commit `7db6a87c60` is not on `main`.** It is the pre-rebase twin of `b09294e44b`, which carries the same subject and the same 88-row digest `91e394fe…`. The new comment names `b09294e44b`.
+- The 88 pinned rows still lead the registry in their original order, followed by the two families the test names. Every later family was appended after them. The test therefore now takes `families[:88]` and asserts the two names at positions 88 and 89, where it used to take "every row except the two", which was only 88 rows while the registry had 90.
+- The remaining assertions already held at the tip: the Browser created row equals `expected_storage_family()`, the Onboarding storage module validates the registry, and the Onboarding gate passes. Only the pinned values had moved.
+- The new pins are the same on `origin/main` and on this branch. This branch changes no row among the first 90.
+- The two tests re-pin literal values, with comments naming the commits, as instructed. Neither reads the readiness constants, so each stays an independent tripwire.
+- "Checkpoint 2026-09-11.2" in the request is the `registry_revision` of `Plans/event_family_registry.json`. The storage registry carries no checkpoint label; its census here is stated against `origin/main`.
+
+## Task 3: the rule-file sentences
+
+Commit `9006c719e0` changes `AGENTS.md`, `.claude/CLAUDE.md` and `.gitignore`. Before and after the edit, the "How to commit and push" and "How to land on main" sections compare byte-identical between the two files (1,009 and 6,767 characters after).
+- **Landing lock** (the new first bullet of "How to land on main"): "Before the fetch for a landing, run `mkdir /mnt/Cursor/PuppetMaster-Evidence/scratch/landing-lock/held`; success means you hold the landing lock, so write your agent name, branch and UTC time to `held/holder.txt`, hold it through the fast-forward, the checks, the push of `main` and the worktree removal, and release it with `rm -r` of that directory; if `mkdir` fails, read `holder.txt` and clear the directory only if it is older than 90 minutes, otherwise wait five minutes and retry; branch pushes need no lock, and `main` is never pushed without holding it." The parent directory exists, with a README that matches.
+- **After the fast-forward step**: "A fast-forward of the shared checkout's `main` is pushed in the same step or reset back to `origin/main` immediately, never left ahead of `origin` while checks or repairs run elsewhere."
+- **In the reseal sentence of "How to commit and push"**: "The designated Plans agent's reseal scope includes the one required row in `Plans/auto_decisions.jsonl`, the `refresh-batch-hashes` and `refresh-final-summary` pair on the current migration run, and the currentness edition written in place after a backup." Both subcommand names exist in `scripts/pm-plan-migration.py`.
+- **`.gitignore`**: `!/tests/test_pm_browser_workspace_reset.py` and `!/tests/test_shared_runtime_storage_contracts.py`. Both are tracked tests this branch edits. `git check-ignore` no longer matches either.
+
+## Rebase
+
+The branch started at `566970cb7b`. On 2026-09-24, after the session resumed, it was rebased onto `origin/main` `15ab001892`, 18 commits later. None of those commits touches a file this branch authors. They change `Plans/Commands_System.md`, `Plans/UI_Command_Catalog.md`, `Plans/multi_account_*`, `Plans/touch_closure.json`, Browser admission scripts and tests, `Concepts/**` and reports. Every passage this branch cites is byte-identical before and after.
+
+Only `Plans/.plan_index/*` conflicted. The conflicts came at the three commits that regenerate the index. Each was resolved by regenerating shards and the index at that commit, never by merging. Regenerating again at the tip changes only the four `generated_at_utc` stamps. The rebased branch was pushed with `--force-with-lease` pinned to the previous remote tip `239f2f87ec`.
+
+## Choices where canon was ambiguous
+
+1. **One Decision Log entry with two items.** Both questions came from the same review, are Storage-owned and were decided together, so one entry keeps the owner citations single (DL-076). Each item still has the full DL-036 form.
+2. **Where the durable token is defined.** `Plans/event_record_index_checkpoint.schema.json` is pinned by SHA-256 in 12 resource maps, so a `$defs/durable_read_token` there would have forced 12 unrelated re-pins. SP-278 instead defines the durable token in prose as an exact projection of the canonical definition, and each contract carries it locally, as the three goal_run consumer schemas already do with `DurableGenericToken`. The Browser reset oracle recomputes the projection from the canonical token and rejects a contract whose copy differs.
+3. **What "stored" means for the new readiness rule.** The rule reports a `redb_snapshot_id` property only where a stored value could actually hold it: from the row's value schema root, through subschema keywords and local references. `retention_hold_record` carries an unreferenced whole-token definition under `$defs/read_token`, and that is not reported. For the SP-310 union rows the rule scans every definition reached through the realm conservatively, as the secret scan does; none contains the field today.
+4. **The Home2 reader stays frozen.** `Plans/home_layout_pending_receipt_v2_reader.schema.json` "preserves the frozen external Home2 assertion-bearing schema and provenance", so its three embedded copies of the Home checkpoint keep the tenth field. It is not a registry row, and the SP-273 amendment says so. The Home3 receipt contract carries the current checkpoint definitions and was updated.
+5. **The Browser binding record is unchanged.** `x-pm-event-authority-binding.generic_index_read_token_ref` still names the canonical token, because that is the live token the checkpoint adopts. The stored form is its projection, which the new `binding_failures` check ties to it.
+6. **The fast-forward sentence names no command.** For the "reset back to `origin/main`" step, a shared checkout that holds other threads' uncommitted work needs `git reset --keep origin/main`; `--hard` would discard their work. The sentence was added as requested, without that detail. This report recommends it; it is not in the rule files.
+7. **Test method name kept.** `test_existing_family_and_retention_census_is_unchanged` keeps its name. Its comment now says it pins the landed, recorded state.
+
+## Open items, with owners
+
+- **Reseal** (the designated Plans agent):
+  - Spec Lock for `Plans/storage-plan.md`, `Plans/storage_value_registry.json` and `scripts/pm-implementation-readiness.py`, all already stale on `main`.
+  - A currentness edition for `Plans/storage-plan.md`, `Plans/storage_value_registry.json` and `Plans/Decision_Log.md`, whose drift rows already exist on `main`.
+  - The storage-plan and Decision_Log evidence entries, already stale.
+- **The landing baseline predates `main`'s own rises.** `reports/landing-checks/baseline.json` (recorded at `75bcda93bc`) has 665 `validate_evidence` and 665 `validate_plan_graph` failures; `main` has 847 of each. Every landing therefore reports a truncated-subcheck rise until the nightly refresh re-records it. Owner: the designated Plans agent's nightly run.
+- **The dead whole-token definition in `retention_hold_record`.** Its `$defs/read_token`, like its source `Plans/storage_retention_hold_value.schema.json`, carries the ten-field token, and nothing references it. The owner may remove it or replace it with the projection. Owner: Storage, SP-288.
+- **The landing check's staleness list** still lacks the readiness Spec Lock kinds and `event_authority_currentness_source_drift`; see the storage-registry-repairs report. Owner: landing-check tooling, for Jared.
