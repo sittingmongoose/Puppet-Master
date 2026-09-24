@@ -3327,7 +3327,7 @@
         "future ProviderRequestEnvelope and CLI bridge context payloads",
         "future bridged-provider adapter contracts"
       ],
-      "line_count": 2057,
+      "line_count": 2065,
       "path": "Plans/CLI_Bridged_Providers.md",
       "plan_unit_count": 31,
       "plan_unit_ids": [
@@ -3400,7 +3400,7 @@
         "stream_resilience_drift",
         "worktree_context_drift"
       ],
-      "sha256": "fd152e499c916023ef442a6aee30f924f7bcdf0d00b063a7bc567f86b6b081ff",
+      "sha256": "61ff77b13e19670cbcdced26ec1910102ac694ba9fbaace8f3dd8f3b684bb83f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 31
@@ -10510,7 +10510,7 @@
         "future AuthenticationProfileRegistry handlers",
         "future provider account/profile and credential-reference contracts"
       ],
-      "line_count": 5369,
+      "line_count": 5374,
       "path": "Plans/Multi-Account.md",
       "plan_unit_count": 72,
       "plan_unit_ids": [
@@ -10665,7 +10665,7 @@
         "usage_pressure_owner",
         "usage_runtime_visibility"
       ],
-      "sha256": "d2a7eb5beb660e11a81cd2336f1430121ced46fcd02ea15970a91be3e4b9391a",
+      "sha256": "6ce4ac59034f060b27d162a9195409d71b648b8cf2c748903b2e0754bd39dc47",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 72
@@ -19993,7 +19993,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T04:53:42Z",
+  "generated_at_utc": "2026-09-25T04:54:19Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

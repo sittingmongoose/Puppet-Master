@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L1641-L1758
+Source lines: L1641-L1766
 
-Source SHA256: `fd152e499c916023ef442a6aee30f924f7bcdf0d00b063a7bc567f86b6b081ff`
+Source SHA256: `61ff77b13e19670cbcdced26ec1910102ac694ba9fbaace8f3dd8f3b684bb83f`
 
 ---
 
@@ -20,6 +20,10 @@ This addendum adopts provider-facade policy from the corrected Remaining Runtime
 - `Auto` and `On` may maintain an already consented and bound provider installation under shared lifecycle policy. They are never first-acquisition consent. General `Auto | On | Off` provisioning for non-provider capabilities remains outside this provider exception and continues through the shared runtime plus the owning domain adapter.
 
 ### Separate installation, authentication, and readiness truth
+
+The September 3 simple-provider entry requirements include Claude subscription through `claude`, Antigravity subscription through `agy`, Grok Build subscription through `grok`, and Muse Code subscription through `muse`. These name the selected external runtime required by the source, not proof of an installed or supported version. Optional external OpenCode runtime installation through `opencode` is offered only when that external runtime is actually selected and needed. Initial acquisition remains an explicit selected-Host action through an officially verified provider method, followed by installation, executable, identity, capability and route-readiness verification. A missing verified acquisition/auth/probe manifest remains unavailable or setup-required; a catalog label or this requirement must not manufacture readiness.
+
+Cursor SDK/API-key routes, Anthropic API/cloud routes, Gemini API/Vertex, xAI API, Qwen/Alibaba Coding Plan and Token Plan, Z.AI Coding Plan, Kimi Code, OpenCode Go, OpenCode Zen, and Meta Model API do not expose provider-CLI Install merely because their internal adapter uses an SDK, bridge, or shipped runtime dependency. They use only their provider-supported sign-in or API-key flow. Preserve the Qwen/Alibaba Token Plan source requirement without asserting it is an alias of Coding Plan. Exact identity, endpoint, credentials, entitlement, supported method, and evidence are resolved by the existing provider-entry owner before a route can be enabled. These are required entry classifications, not verified current vendor offerings or a second Onboarding provider registry.
 
 The facade must preserve these independent provider facts for the selected installation/profile/route:
 
@@ -85,6 +89,9 @@ acceptance_criteria:
   - Failure classes and fingerprints are typed; unchanged automatic failures are suppressed by shared-runtime loop policy.
   - Secret material is represented only by OS credential-store handles or non-secret CLI profile refs and never enters runtime/storage evidence.
   - Native, WSL distribution, container, Kubernetes, and remote provider state is keyed by exact Host/Environment, and SQLite remains forbidden.
+  - Source-required external runtime mappings retain Claude subscription to claude, Antigravity subscription to agy, Grok Build subscription to grok, Muse Code subscription to muse, and conditional optional external OpenCode runtime to opencode; acquisition is explicit and exact-Host, never inferred from catalog presence.
+  - Cursor SDK/API-key, Anthropic API/cloud, Gemini API/Vertex, xAI API, Qwen/Alibaba Coding Plan and Token Plan, Z.AI Coding Plan, Kimi Code, OpenCode Go, OpenCode Zen, and Meta Model API routes expose no provider-CLI Install merely for an SDK/bridge/shipped dependency. Token Plan is not silently collapsed into Coding Plan.
+  - A named required route with missing verified acquisition/auth/probe evidence remains unavailable or setup-required, not ready; product retention does not invent provider IDs, endpoints, supported methods, entitlement or live integration facts.
 validation_surfaces:
   - bounded markdown/YAML structure check for CBP-028
   - future provider_setup_required and stale-continuation fixtures
@@ -101,6 +108,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/03_SIMPLE_PROVIDER_SETUP_AFTER_PROJECT.md:40-78
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/06_INSTALLATION_AUTH_UPDATE_AND_CAPABILITY_PROVISIONING.md
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/PROVIDER_IDENTIFICATION_INSTALLATION_AUTH_UPDATE_HANDOFF.md
