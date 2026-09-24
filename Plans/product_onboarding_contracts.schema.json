@@ -4588,11 +4588,52 @@
               },
               "repository_visibility": {
                 "type": "null"
-              },
-              "repository_project": {
-                "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
               }
-            }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "repository_creation_selection": {
+                      "type": "object",
+                      "required": [
+                        "azure_team_project_selection"
+                      ],
+                      "properties": {
+                        "azure_team_project_selection": {
+                          "type": "object",
+                          "required": [
+                            "mode"
+                          ],
+                          "properties": {
+                            "mode": {
+                              "const": "create"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "repository_creation_selection"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "repository_project": {
+                      "const": ""
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "repository_project": {
+                      "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+                    }
+                  }
+                }
+              }
+            ]
           }
         },
         {
