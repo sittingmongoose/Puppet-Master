@@ -342,13 +342,20 @@ class WorkspaceHistoricalReadTests(unittest.TestCase):
 
 
 # Conditional v2 successor: these tests do not replace v1 admission or prove
-# native migration, source bytes, permissions or crash recovery.
-V2_SPEC = importlib.util.spec_from_file_location('workspace_created_v2', ROOT / 'scripts/pm_browser_workspace_created_v2.py')
-V2 = importlib.util.module_from_spec(V2_SPEC)
-V2_SPEC.loader.exec_module(V2)
+# native migration, source bytes, permissions or crash recovery. The v2 module
+# is loaded in setUpClass, so a v2 import failure cannot fail the v1 suites.
+V2 = None
 
 
 class ConditionalCreatedV2Tests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        global V2
+        spec = importlib.util.spec_from_file_location('workspace_created_v2', ROOT / 'scripts/pm_browser_workspace_created_v2.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        V2 = module
+
     def setUp(self):
         self.cp, self.index, self.obs, self.old = V2.fixture_values()
 
@@ -526,7 +533,7 @@ class ConditionalCreatedV2Tests(unittest.TestCase):
         frontier['publication_revision'] += 1
         frontier['predecessor_frontier_sha256'] = before['index_read_token']['frontier_sha256']
         after['index_read_token']['frontier_revision'] = frontier['publication_revision']
-        after['index_read_token']['frontier_sha256'] = V2.sibling('pm_browser_workspace_reset').digest(frontier)
+        after['index_read_token']['frontier_sha256'] = V2.binding_digest(frontier)
         after['updated_at_utc'] = '2026-09-12T20:00:00Z'
         obs = copy.deepcopy(self.obs)
         obs.update(prior_checkpoint=before, redb_snapshot_id='snapshot:created-v2-refresh')
@@ -739,6 +746,53 @@ class ConditionalCreatedV2Tests(unittest.TestCase):
         late = copy.deepcopy(after)
         late['retired_generations'][0]['custody_bound_at_utc'] = '2026-09-12T00:00:00Z'
         self.assertEqual(V2.checkpoint_failures(late), ['history_time'])
+
+    def test_sp278_positive_sources_pin_the_created_token_join(self):
+        # Created v2 joins SP-278 itself, never the reset oracle: the default
+        # source resolves by path and pointer, and every SP-278 positive case
+        # is born and disclosed with its own coverage health.
+        self.assertNotIn('pm_browser_workspace_reset', Path(V2.__file__).read_text())
+        source = V2.load(V2.FIXTURES)['generic_fixture_source']
+        generic = V2.load(source['path'])
+        self.assertEqual(self.index, V2.resolve_pointer(generic, source['json_pointer'])['checkpoint'])
+        for case in generic['positive']:
+            with self.subTest(case=case):
+                cp, index, obs, _ = V2.fixture_values(generic_case=case)
+                coverage = index['generations'][index['current_generation_id']]['frontier']['coverage']
+                self.assertEqual((cp['health'], cp['source_cursor']), (coverage['health'], coverage['last_frame']))
+                self.assertNotIn('redb_snapshot_id', cp['index_read_token'])
+                self.assertEqual(V2.advance_failures(None, cp, index, obs), [])
+                self.assertEqual(V2.source_failures(cp, index, obs, disclosure=True), [])
+
+    def test_sp278_join_and_core_relation_exits(self):
+        # The created-side copies of the SP-278 join and core relations carry
+        # their own negatives, so no sibling suite has to pin them.
+        live = {**self.cp['index_read_token'], 'redb_snapshot_id': self.obs['redb_snapshot_id']}
+        self.assertEqual(V2.index_token_failures(live, self.index, self.obs), [])
+        index = copy.deepcopy(self.index); index['current_generation_id'] = None
+        self.assertEqual(V2.index_token_failures(live, index, self.obs), ['generic_generation_not_current'])
+        moved = copy.deepcopy(self.obs); moved['source_selection']['manifest_generation'] += 1
+        self.assertEqual(V2.index_token_failures(live, self.index, moved), ['generic_current_source_changed'])
+        index = copy.deepcopy(self.index)
+        frontier = index['generations'][index['current_generation_id']]['frontier']
+        frontier['source_selection']['storage_instance_id'] = '22222222-2222-4222-8222-222222222222'
+        foreign = {**live, 'frontier_sha256': V2.binding_digest(frontier),
+                   'source_selection': copy.deepcopy(frontier['source_selection'])}
+        obs = copy.deepcopy(self.obs); obs['source_selection'] = copy.deepcopy(frontier['source_selection'])
+        self.assertEqual(V2.index_token_failures(foreign, index, obs), ['generic_source_storage_mismatch'])
+        core = {k: v for k, v in self.cp.items() if k != 'retired_generations'}
+        self.assertEqual(V2.core_relation_failures(core), [])
+        for error, change in [
+                ('checkpoint_timestamp', {'updated_at_utc': '2026-02-30T00:00:00Z'}),
+                ('withdrawal_after_observation', {'state': 'withdrawn', 'withdrawn_at_utc': '2026-09-12T00:00:00Z'}),
+                ('generation_birth_after_observation_or_withdrawal', {'published_at_utc': '2026-09-12T00:00:00Z'}),
+                ('generation_birth_after_observation_or_withdrawal',
+                 {'state': 'withdrawn', 'withdrawn_at_utc': '2026-09-11T19:00:00Z'}),
+                ('checkpoint_scope_partition', {'scope_partition': 'project~other'}),
+                ('checkpoint_storage_identity', {'storage_instance_id': '22222222-2222-4222-8222-222222222222'}),
+                ('checkpoint_range_or_cursor', {'first_retained_sequence_id': 9})]:
+            with self.subTest(error=error, change=change):
+                self.assertEqual(V2.core_relation_failures({**copy.deepcopy(core), **change}), [error])
 
     def test_storage_instance_is_canonical_lowercase_uuid(self):
         # The key embeds this text verbatim; v1 pins it to lowercase hex.

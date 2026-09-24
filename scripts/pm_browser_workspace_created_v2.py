@@ -2,13 +2,17 @@
 
 Observations are synthetic adapter assumptions, not authenticated native receipts.
 This module never writes registries, storage, events or live Browser state. The
-v1 producer and immutable v1 schema remain owned by their existing module.
+v1 producer and immutable v1 schema remain owned by their existing module. The
+SP-278 token join and core relations are checked here against the SP-278 schema
+and its own digest recipe, not through the reset oracle, so a reset edit cannot
+change created v2 semantics.
 """
 from __future__ import annotations
 
 import copy
 import importlib.util
 import json
+import re
 from datetime import datetime, timedelta
 from functools import lru_cache
 from pathlib import Path
@@ -21,11 +25,12 @@ SCHEMA = 'Plans/browser_workspace_created_checkpoint_v2.schema.json'
 FIXTURES = 'Plans/browser_workspace_created_checkpoint_v2_fixtures.json'
 V1_SCHEMA = 'Plans/browser_workspace_created_contracts.schema.json'
 GENERIC = 'Plans/event_record_index_checkpoint.schema.json'
-GENERIC_FIXTURES = 'Plans/event_record_index_checkpoint_contract_fixtures.json'
 FAMILY = 'browser_workspace_created_index_checkpoint'
 V1_ID = 'pm.storage_value.browser_workspace_created_index_checkpoint.v1'
 V2_ID = 'pm.storage_value.browser_workspace_created_index_checkpoint.v2'
 SCOPE = ('storage_instance_id', 'project_id', 'scope_partition')
+TIMES = ('updated_at_utc', 'withdrawn_at_utc', 'published_at_utc')
+TIMESTAMP = re.compile(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})')
 
 
 def load(path, root=ROOT):
@@ -50,7 +55,8 @@ def validators(root=ROOT):
         return Draft202012Validator({'$ref': schema['$id'] + '#/$defs/' + definition},
                                      registry=registry, format_checker=FormatChecker())
     return {**{name: make(schemas[0], name) for name in ('checkpoint', 'checkpoint_core', 'generation_transaction', 'cleanup_transaction')},
-            'v1': make(schemas[1], 'checkpoint')}
+            'v1': make(schemas[1], 'checkpoint'),
+            'generic_read_token': make(schemas[2], 'read_token'), 'generic_checkpoint': make(schemas[2], 'checkpoint')}
 
 
 def instant(value):
@@ -74,8 +80,62 @@ def legacy_failures(value, root=ROOT):
 def core_failures(value, root=ROOT):
     if not validators(root)['checkpoint_core'].is_valid(value):
         return ['checkpoint_core_schema']
-    # These are generic decoded scope/range/time relations, not reset admission.
-    return sibling('pm_browser_workspace_reset', root).checkpoint_core_failures(value)
+    return core_relation_failures(value, root)
+
+
+def core_relation_failures(value, root=ROOT):
+    """Decoded scope, stored-token identity, range and time relations of one core."""
+    errors = []
+    if value['scope_partition'] != sibling('pm_browser_workspace_created', root).scope_partition(value['project_id']):
+        errors.append('checkpoint_scope_partition')
+    if value['index_read_token']['storage_instance_id'] != value['storage_instance_id']:
+        errors.append('checkpoint_storage_identity')
+    cursor = value['source_cursor']
+    if cursor is not None and (value['first_retained_sequence_id'] > value['index_through_sequence_id'] or
+                               cursor['last_sequence_id'] != value['index_through_sequence_id'] or
+                               cursor['byte_offset'] >= cursor['frame_end_offset']):
+        errors.append('checkpoint_range_or_cursor')
+    if any(value[name] is not None and not TIMESTAMP.fullmatch(value[name]) for name in TIMES):
+        return errors + ['checkpoint_timestamp']
+    try:
+        times = {name: instant(value[name]) for name in TIMES if value[name] is not None}
+    except ValueError:
+        return errors + ['checkpoint_timestamp']
+    if 'withdrawn_at_utc' in times and times['withdrawn_at_utc'] > times['updated_at_utc']:
+        errors.append('withdrawal_after_observation')
+    if times['published_at_utc'] > times['updated_at_utc'] or (
+            'withdrawn_at_utc' in times and times['published_at_utc'] > times['withdrawn_at_utc']):
+        errors.append('generation_birth_after_observation_or_withdrawal')
+    return errors
+
+
+def index_token_failures(token, index, observation, root=ROOT):
+    """Exact SP-278 join of a complete ten-field read token beneath an assumed native read."""
+    if not validators(root)['generic_read_token'].is_valid(token) or not validators(root)['generic_checkpoint'].is_valid(index):
+        return ['generic_index_schema']
+    if not isinstance(observation, dict) or observation.get('generic_source_verified') is not True:
+        return ['generic_source_unproved']
+    selected = index['current_generation_id']
+    node = index['generations'].get(selected) if selected is not None else None
+    if (node is None or node['state'] != 'current' or node['generation_id'] != selected or
+            sum(n['state'] == 'current' for n in index['generations'].values()) != 1):
+        return ['generic_generation_not_current']
+    root_key = 'event_record_index_checkpoint.v1:' + index['storage_instance_id']
+    frontier = node['frontier']
+    expected = {'storage_instance_id': index['storage_instance_id'], 'checkpoint_key': root_key,
+                'checkpoint_ref': root_key + '#/generations/' + selected, 'generation_id': selected,
+                'generation_anchor_sha256': binding_digest(node['anchor'], root),
+                'frontier_revision': frontier['publication_revision'], 'frontier_sha256': binding_digest(frontier, root),
+                'index_dataset_name': 'event_record_index.v2@' + selected,
+                'source_selection': frontier['source_selection'], 'redb_snapshot_id': observation.get('redb_snapshot_id')}
+    errors = []
+    if token != expected or node['index_dataset_name'] != expected['index_dataset_name']:
+        errors.append('generic_read_token_join')
+    if observation.get('source_selection') != frontier['source_selection']:
+        errors.append('generic_current_source_changed')
+    if frontier['source_selection']['storage_instance_id'] != index['storage_instance_id']:
+        errors.append('generic_source_storage_mismatch')
+    return errors
 
 
 def checkpoint_failures(value, root=ROOT):
@@ -189,8 +249,7 @@ def source_failures(candidate, index, observation, root=ROOT, *, disclosure=Fals
     # the snapshot they actually pinned; the complete ten-field SP-278 token
     # must then pass the exact join below. The joined token is never stored.
     token = {**candidate['index_read_token'], 'redb_snapshot_id': observation.get('redb_snapshot_id')}
-    errors += sibling('pm_browser_workspace_reset', root).index_token_failures(
-        token, index, observation, root=root)
+    errors += index_token_failures(token, index, observation, root)
     if errors:
         return errors
     for flag in ('project_filter_complete', 'created_sources_validated', 'source_dedupe_verified',
@@ -289,9 +348,24 @@ def binding_digest(value, root=ROOT):
     return sibling('pm_event_index_binding', root).binding_digest(value)
 
 
-def generic_case_values(checkpoint, observation, case, root=ROOT):
-    """Rebind the fixture's owner fields to one named SP-278 positive source."""
-    source = load(GENERIC_FIXTURES, root)['positive'][case]
+def resolve_pointer(document, pointer):
+    value = document
+    for part in pointer.lstrip('#').split('/')[1:]:
+        value = value[part.replace('~1', '/').replace('~0', '~')]
+    return value
+
+
+def fixture_values(root=ROOT, generic_case=None):
+    """Owner fixture joined to its SP-278 positive source, resolved by path and pointer.
+
+    generic_case selects another positive case in the same SP-278 fixture file.
+    The index, stored token, examined bounds, cursor and health, and the birth
+    transaction's key, after-value, publication and time are derived, never copied.
+    """
+    fixture = load(FIXTURES, root)
+    source_ref = fixture['generic_fixture_source']
+    pointer = source_ref['json_pointer'] if generic_case is None else '#/positive/' + generic_case
+    source = resolve_pointer(load(source_ref['path'], root), pointer)
     index = copy.deepcopy(source['checkpoint'])
     generation = index['current_generation_id']
     node = index['generations'][generation]
@@ -303,32 +377,30 @@ def generic_case_values(checkpoint, observation, case, root=ROOT):
              'frontier_revision': frontier['publication_revision'], 'frontier_sha256': binding_digest(frontier, root),
              'index_dataset_name': node['index_dataset_name'],
              'source_selection': copy.deepcopy(frontier['source_selection'])}
-    checkpoint = {**copy.deepcopy(checkpoint), 'storage_instance_id': index['storage_instance_id'],
+    checkpoint = {**copy.deepcopy(fixture['checkpoint_template']), 'storage_instance_id': index['storage_instance_id'],
                   'index_read_token': token,
                   'first_retained_sequence_id': coverage['first_retained_sequence_id'],
                   'index_through_sequence_id': coverage['through_sequence_id'],
                   'source_cursor': copy.deepcopy(coverage['last_frame']),
                   'state': 'current' if coverage['health'] == 'healthy' else 'degraded',
                   'health': coverage['health']}
-    observation = copy.deepcopy(observation)
+    observation = copy.deepcopy(fixture['observation_template'])
     observation['source_selection'] = copy.deepcopy(frontier['source_selection'])
-    observation['generation_transaction'].update(after=copy.deepcopy(checkpoint), checkpoint_key=key(checkpoint))
-    return checkpoint, index, observation
-
-
-def fixture_values(root=ROOT, generic_case=None):
-    """Fixture controls; generic_case rebinds them to that SP-278 positive source."""
-    fixture = load(FIXTURES, root)
-    checkpoint, index, observation, legacy = (copy.deepcopy(fixture[k]) for k in (
-        'checkpoint', 'generic_index', 'generic_observation', 'legacy_v1_checkpoint'))
-    if generic_case is not None:
-        checkpoint, index, observation = generic_case_values(checkpoint, observation, generic_case, root)
-    return checkpoint, index, observation, legacy
+    observation['generation_transaction'].update(
+        checkpoint_key=key(checkpoint), after=copy.deepcopy(checkpoint),
+        selected_publication_id=checkpoint['publication_id'], committed_at_utc=checkpoint['published_at_utc'])
+    return checkpoint, index, observation, copy.deepcopy(fixture['legacy_v1_checkpoint'])
 
 
 if __name__ == '__main__':
-    checkpoint, index, observation, _ = fixture_values()
-    errors = advance_failures(None, checkpoint, index, observation)
+    # The default source plus the lawful empty and degraded SP-278 shapes: each
+    # must be born and then disclosed. A pass is conditional validity only.
+    results = {}
+    for case in (None, 'verified_empty', 'degraded_survivors'):
+        checkpoint, index, observation, _ = fixture_values(generic_case=case)
+        results[case or 'default'] = (advance_failures(None, checkpoint, index, observation) +
+                                      source_failures(checkpoint, index, observation, disclosure=True))
+    errors = {case: found for case, found in results.items() if found}
     print(json.dumps({'status': 'FAIL' if errors else 'PASS', 'definition_status': 'conditional_not_admitted',
-                      'native': 'NOT_RUN', 'errors': errors}))
+                      'native': 'NOT_RUN', 'positive_cases': len(results), 'errors': errors}))
     raise SystemExit(bool(errors))
