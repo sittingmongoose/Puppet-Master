@@ -15169,7 +15169,7 @@ canonical_text: 'storage-plan owns persistence, replay, and projection boundarie
   editions keep their original closed scope, no existing birth is enrolled or cast, and whole-v2 certified rows
   keep their historical interpretation. The event family registry keeps this unit as the payload_owner_doc route
   for that family; this paragraph, added 2026-09-24, points the route at those owners and changes no payload, schema,
-  registry row, admission or behavior. goal_run.started and goal_run.cancelled v3 are likewise governed by GRS-079
+  registry row, admission or behavior. goal_run.started and goal_run.cancelled v3 keep their registry owners GRS-079
   with SP-311 and GRS-080 with SP-312.'
 gui_related: false
 gui_classification_reason: Goal Runtime persistence and projection ownership is backend storage behavior, not visual
