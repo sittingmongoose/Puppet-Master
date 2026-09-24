@@ -1,6 +1,6 @@
 # PMConcept7 promotion review, 2026-09-24
 
-STATUS: IN PROGRESS (steps 1-2 done; step 3 verifier runs and wave review under way)
+STATUS: IN PROGRESS (steps 1-2 done; verifier runs done; wave review being written)
 
 Branch `concept/pm7-promotion-20260924`, worktree `~/pm-worktrees/pm7-promotion-20260924`, from `origin/main` `566970cb7b`.
 
@@ -81,3 +81,34 @@ The published preview (`f1bc81ae...`, committed in `63bff67fb4` on 2026-09-10 th
 | `script#pm6-js-dashboard` (-1,742 bytes) | DL-070 only. The pre-DL-070 build's dashboard block is identical to the preview's. |
 
 So, apart from the tour guard, two inventory descriptions and DL-070, the rebuild ships bytes that were already published and checkpointed in the preview lane.
+
+## Step 1 (continued): the pipeline's verifiers against the exact candidate
+
+Candidate: `<scratch>/candidate/PMConcept7.html`, SHA-256 `da8561f6...` (read-only copy of the build). Browser: `/usr/bin/google-chrome` 154, headless, driven over `file://` by the runners' own methods: `pm_cdp.mjs` pipe, or playwright-core 1.62.1 with `pathToFileURL`. Every result below names that SHA-256 in its own report.
+
+| Runner | Scope | Result on `da8561f6` |
+|---|---|---|
+| `guided_tour_reload_checkpoint.mjs` | T45 tour reload guard (first real-browser run of this suite; it was only ever planned, never run, per `scratchpad/pm-tour-polish-20260906/browser-validation-35.json`) | PASS 36/36, 0 page errors, 0 requests |
+| `guided_tour_lifecycle_checkpoint.mjs` | tour Show Me journey, Finish/Keep/restore, Teacher isolation | PASS 13/13 |
+| `guided_tour_polish_checkpoint.mjs` (baseline = published `TestPMConcept.html`) | tour Planning edits; onboarding bands byte-identical to the preview | PASS 10/10 |
+| `guided_tour_checkpoint_selftest.mjs` | 158 source-extracted controller checks, Node VM doubles | PASS 158/158. This includes `adoptCheckpointRecovery`, which `SETTINGS_REFRESH_README.md` still lists as failing (0 !== 1). That entry is stale. |
+| `guided_tour_practice_selftest.mjs` | pure Planning practice reducer | PASS 9/9 |
+| `settings_sound_preview_selftest.mjs` | sound helper | PASS 11/11 |
+| `settings_refresh_checkpoint.mjs` | T50 manager kit: ≤6 tabs, one Advanced, flash metric, panels, dropdowns, Web Audio, 8 themes x 3 widths (96 cells) | PASS 17/17 |
+| `settings_placement_checkpoint.mjs` | 892-id exactly-once placement walk | PASS 12/12 |
+| `forge_backup_post_integration_checkpoint.mjs` | T46F bounded smoke | **FAIL**: 7 of 8 recorded checks pass. `backup_manager_overview_and_tab_census` fails, and the runner then aborts on a missing tab selector, so its last five checks never run. |
+| `settings_polish_checkpoint.mjs` | the 2026-09-07 Settings regression | FAIL at check 3 (the retired top-bar CTA count). `SETTINGS_REFRESH_README.md` documents this as by design after T50; its surfaces moved to `settings_refresh_checkpoint.mjs`. |
+| `build_testpm_settings_refresh.py --check` | the T50 lane reproduces the published preview `f1bc81ae` | PASS |
+| `build_testpm_settings_refresh.py --parity <candidate>` | Settings blocks: T50 lane against the full pipeline | FAIL on `pm7-settings-data` and `pm4-settings-js`. The other four Settings blocks are identical. The whole difference is the `84070fd6f5` inventory change, proven by substitution: two descriptions, the placement of one `options` field (key order only), and the embedded inventory hash. The lane's pinned base predates that change. This is not a T50 defect. |
+
+Repository checks listed in the README, run in the worktree:
+- PASS: `validate-usage-gui-fixtures`, `validate-usage-contract-drift`, `validate-wiring-matrix`, `pm-shared-runtime-command-contracts.py validate`. The fixture validators needed `tests/fixtures` added to the sparse cone.
+- FAIL: `validate-pm7-gui-fixtures`, with 3 context-compaction fixture failures. All three are in the landing baseline `75bcda93bc`. The validator reads Plans fixtures only, never the artifact, so promotion cannot change its result.
+
+Not run: the provenance-bound runners. They cannot be run honestly here. `settings_transactions.mjs` (T44), `onboarding_cinematic.mjs` (T45a), `guided_tour.mjs` (T45b), `systems_integration.mjs`, `plugin_projection_matrix.mjs` and `backup_browser_scm_matrix.mjs` (T46/T46F), `full_thread_performance.mjs` (T46P), `hover_tags.mjs` (T47), `accessibility_visual_matrix.mjs` (all-theme), `home_workspace_matrix.mjs` (T48 and DL-070), and `smoke.mjs` all import `browser_verifier_provenance.mjs`. That harness rejects direct execution. It requires `browser_verifier_provenance_launcher.py`, which in turn requires a network-boundary receipt of class `independently_verified_os_process_boundary`: `loopback_only`, `non_loopback_egress_denied`, bound to the current network namespace. No such receipt can be truthfully issued here. `unshare -rn` fails (`kernel.apparmor_restrict_unprivileged_userns = 1`: writing `/proc/self/uid_map` is not permitted), and this process's namespace has a default route out through `ens3`. The harness also serves the artifact from an ephemeral `127.0.0.1` server by design, so the `file://` method does not apply. Loopback HTTP from headless Chrome does work here (a 51 ms probe), so the transport is not the blocker; the trust root is. I did not shim or bypass the harness. `systems_integration.mjs` additionally reads an untracked input, `scratchpad/pm-integration-20260831/authority-repairs/server-gap-adjudication/pm7-consumer-audit/pm7-consumer-audit.json`, which exists only in the shared checkout's untracked `scratchpad/`. The consolidated film (`final_campaign_capture.mjs`) and the PM6 pixel matrix were not run. The film is approval-gated evidence, and the README forbids the PM6 pixel matrix.
+
+Direct probes (my own scripts over `file://`; they are not the pipeline's verifiers and are labelled so wherever used):
+- `backup_probe.mjs`: T50's Backup manager has 4 tabs (Backup, Destinations, Restore, History). Of T46F's specified terms, only "Automatic backups", "Recovery Kit" and "Save Recovery Kit" are present; there are 0 `.pm7-backup-destination` cards.
+- `dl070_probe.mjs`: reproduces the Home matrix case `terminal_new_section_recoverable` (same context, seed, onboarding dismissal and assertions). Details under DL-070 below.
+- `pageswitch_probe.mjs`: samples the Dashboard-to-Settings page switch every frame.
+- Applying today's T43 to the checked-in artifact reproduces `dc96d1f0...` exactly. That is the T43 audit's "probe4" build. Its full matrix is at `Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/browser/runs/t43-probe4-full-matrix/report.json`, untracked, present only in the shared checkout.
