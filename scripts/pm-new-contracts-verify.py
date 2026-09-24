@@ -32,6 +32,7 @@ from pm_browser_program_semantics import browser_program_semantic_failures
 from pm_onboarding_semantics import onboarding_semantic_failures, settings_draft_semantic_failures
 from pm_evidence_command_semantics import evidence_command_semantic_failures
 from pm_doctor_export_semantics import doctor_export_semantic_failures
+from pm_goal_handoff_semantics import goal_handoff_semantic_failures
 
 # Authored and intentionally closed.  Adding a contract pair is a reviewed gate
 # change, not an ambient glob that silently changes the validation denominator.
@@ -47,6 +48,7 @@ CONTRACT_PAIRS = (
     ("Plans/forge_integration_contracts.schema.json", "Plans/azure_devops_integration_fixtures.json"),
     ("Plans/forge_integration_contracts.schema.json", "Plans/bitbucket_integration_fixtures.json"),
     ("Plans/full_thread_runtime_contracts.schema.json", "Plans/full_thread_runtime_contract_fixtures.json"),
+    ("Plans/goal_handoff_contracts.schema.json", "Plans/goal_handoff_contract_fixtures.json"),
     ("Plans/guided_tour_contracts.schema.json", "Plans/guided_tour_contract_fixtures.json"),
     ("Plans/jujutsu_integration_contracts.schema.json", "Plans/jujutsu_integration_contract_fixtures.json"),
     ("Plans/named_plan_system_contracts.schema.json", "Plans/named_plan_system_contract_fixtures.json"),
@@ -69,7 +71,7 @@ CONTRACT_PAIRS = (
     ("Plans/artifact_recording_command_contracts.schema.json", "Plans/artifact_recording_command_contract_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 31
+EXPECTED_CONTRACT_PAIR_COUNT = 32
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1198,6 +1200,8 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel == "Plans/goal_handoff_contracts.schema.json":
+        return goal_handoff_semantic_failures(definition_name, value)
     if schema_rel == "Plans/doctor_contracts.schema.json":
         return doctor_export_semantic_failures(definition_name, value)
     if schema_rel in {"Plans/testing_session_command_contracts.schema.json", "Plans/artifact_recording_command_contracts.schema.json"}:
