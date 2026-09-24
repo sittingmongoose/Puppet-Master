@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L5194-L5452
 
-Source SHA256: `0bc116b1fe31e387db534f872f9b4900540fcc19107cc442096f3145ce4e7a76`
+Source SHA256: `0a0f2919249e9f92b970472d9675698e6fa56d0e082bb9dc3280605a13984747`
 
 ---
 
@@ -62,7 +62,7 @@ The 103 unique central obligations resolve to 100 distinct primary definitions i
 | `cmd.execution_host.remove` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_remove` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
 | `cmd.execution_host.set_default` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_set_default` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
 | `cmd.execution_host.test` | `Plans/Shared_Integration_Runtime.md` / `SIR-025` | `handlers::execution_topology::host_test` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ExecutionTopologyCommandResult` |
-| `cmd.forge.repository.create` | `Plans/Forge_Integrations.md` / `FGI-008` | `handlers::forge::repository_create` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` |
+| `cmd.forge.repository.create` | `Plans/Forge_Integrations.md` / `FGI-008` | `handlers::forge::repository_create` | `Plans/forge_integration_contracts.schema.json#/$defs/repository_create_command_request_v2` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` |
 | `cmd.goal.checkpoint` | `Plans/Goal_Runtime_System.md` / `GRS-047` | `handlers::goal_handoff::checkpoint` | `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandRequest` -> `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandResult` |
 | `cmd.goal.continue_on_host` | `Plans/Goal_Runtime_System.md` / `GRS-047` | `handlers::goal_handoff::continue_on_host` | `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandRequest` -> `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandResult` |
 | `cmd.goal.handoff.cancel` | `Plans/Goal_Runtime_System.md` / `GRS-047` | `handlers::goal_handoff::handoff_cancel` | `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandRequest` -> `Plans/goal_handoff_contracts.schema.json#/$defs/GoalHandoffCommandResult` |

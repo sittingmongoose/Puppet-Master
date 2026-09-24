@@ -29203,7 +29203,7 @@
     "catalog.forge_repository_create": {
       "acceptance_checks": [
         "cmd.forge.repository.create names exactly one specified target handlers::forge::repository_create; the target string is not implementation or dispatch proof.",
-        "Validate the exact request/result pair Plans/forge_integration_contracts.schema.json#/$defs/command_request -> Plans/forge_integration_contracts.schema.json#/$defs/command_result and reject unknown, stale, conflicting, or authority-widening fields.",
+        "Validate the exact request/result pair Plans/forge_integration_contracts.schema.json#/$defs/repository_create_command_request_v2 -> Plans/forge_integration_contracts.schema.json#/$defs/command_result and reject unknown, stale, conflicting, or authority-widening fields; enforce command_request_admission for every caller and reject historical v1 create at dispatch.",
         "Read state.commands.forge_repository_create.availability and state.commands.forge_repository_create.disabled_reason before dispatch; remain handler_unavailable until source-hashed native proof exists.",
         "Return receipt/projection evidence only and emit no unregistered EventRecord until Event Authority admits an exact event family.",
         "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return."
@@ -29229,7 +29229,7 @@
       "evidence_required": "Future production evidence for cmd.forge.repository.create: source-hashed dispatcher and native handler, typed request/result fixtures, state and disabled-reason fixtures, permission/FileSafe/currentness/idempotency and restart/race negatives, receipt/projection assertion with zero unregistered events, render/control/accessibility evidence, and exact reverse coverage. This production-intent row alone proves none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::forge::repository_create",
-      "request_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
+      "request_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/repository_create_command_request_v2",
       "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
       "state_selector": "state.commands.forge_repository_create.availability",
       "test_evidence": [

@@ -5968,6 +5968,1321 @@
         },
         "recorded_at_utc": "2026-08-31T21:12:00Z"
       }
+    },
+    {
+      "name": "creation_v2_actual_request",
+      "definition": "repository_create_command_request_v2",
+      "value": {
+        "schema_id": "pm.forge.repository_create_command_request.v2",
+        "command_id": "cmd.forge.repository.create",
+        "command_instance_id": "command:forge:creation:composition:1",
+        "idempotency_key": "idempotency:forge:creation:composition:1",
+        "provider": "gitlab",
+        "provider_variant": "gitlab_com",
+        "normalized_host": "gitlab.com",
+        "account_id": "account:gitlab:alpha",
+        "repo_id": null,
+        "repository_binding_ref": null,
+        "expected_binding_generation": 0,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "requested_capability": "repository",
+        "capability_snapshot_ref": "capability-snapshot:forge:3",
+        "api_compatibility_ref": "api-compatibility:forge:3",
+        "credential_or_grant_ref": "grant:forge:3",
+        "currentness": {
+          "binding_generation": 0,
+          "catalog_generation": 11,
+          "api_probe_ref": "api-probe:forge:3",
+          "state": "current",
+          "mutation_safety": "verified",
+          "projection_updated_at_utc": "2026-08-31T21:00:00Z",
+          "direct_revalidation_ref": "revalidation:forge:3",
+          "rate_budget_ref": "rate-budget:forge:3"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:3",
+          "decision": "allow",
+          "scope": "remote_side_effect",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:3",
+          "evaluated_at_utc": "2026-08-31T21:00:00Z"
+        },
+        "confirmation": null,
+        "target": {
+          "target_kind": "repository",
+          "identity_source": "validated_account_container",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": null,
+          "repository_locator_ref": "repository-locator:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": null,
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T21:00:00Z"
+        },
+        "observable_work_id": null,
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-09-24T12:00:00Z",
+        "file_safe_decision_ref": null,
+        "browser_handoff": null,
+        "repository_creation_intent": {
+          "schema_id": "pm.forge.repository_creation_intent.v1",
+          "intent_id": "creation-intent:fixture",
+          "subject": {
+            "provider": "gitlab",
+            "provider_variant": "gitlab_com",
+            "normalized_host": "gitlab.com",
+            "instance_profile_ref": "instance:fixture",
+            "connection_ref": "connection:fixture",
+            "account_id": "account:gitlab:alpha",
+            "account_generation": 4,
+            "account_verification_ref": "account-verification:fixture",
+            "account_container_ref": "container:fixture",
+            "container_kind": "group",
+            "namespace_external_id": "group:fixture",
+            "parent_container_external_id": null,
+            "provider_project_id": null,
+            "connection_id": "connection:fixture"
+          },
+          "choices": {
+            "schema_id": "pm.forge.repository_creation_choices.v1",
+            "repository_name": "fixture-repository",
+            "repository_description": "Reviewed fixture repository",
+            "provider_slug_or_path": "fixture-repository",
+            "visibility": "private",
+            "existing_or_create": "create",
+            "source_template_ref": null,
+            "initialization_policy": {
+              "initialize_readme": true,
+              "gitignore_selection": "none",
+              "license_selection": "none",
+              "preserve_existing_source_history": true
+            },
+            "requested_git_transport": "https",
+            "default_branch": "main",
+            "provider_options": {
+              "schema_id": "pm.forge.creation_option_selections.v1",
+              "selection_id": "selection:fixture",
+              "provider": "gitlab",
+              "provider_variant": "gitlab_com",
+              "normalized_host": "gitlab.com",
+              "instance_id": "instance:fixture",
+              "catalog_ref": "catalog:fixture",
+              "catalog_revision": 2,
+              "catalog_sha256": "45bff493b3ab07bfd67e9178486d9b800ee67284569584de2ee3d80219876d54",
+              "fields": [
+                {
+                  "field_id": "fixture-field-path",
+                  "category": "path",
+                  "owner_ref": "owner:forge",
+                  "effect_phase": "create_api",
+                  "capability_ref": "capability:fixture",
+                  "permission_ref": "permission:fixture",
+                  "value": {
+                    "kind": "boolean",
+                    "value": true
+                  }
+                },
+                {
+                  "field_id": "fixture-field-template",
+                  "category": "template",
+                  "owner_ref": "owner:forge",
+                  "effect_phase": "create_api",
+                  "capability_ref": "capability:fixture",
+                  "permission_ref": "permission:fixture",
+                  "value": {
+                    "kind": "boolean",
+                    "value": true
+                  }
+                },
+                {
+                  "field_id": "fixture-field-merge_request_settings",
+                  "category": "merge_request_settings",
+                  "owner_ref": "owner:forge",
+                  "effect_phase": "create_api",
+                  "capability_ref": "capability:fixture",
+                  "permission_ref": "permission:fixture",
+                  "value": {
+                    "kind": "boolean",
+                    "value": true
+                  }
+                },
+                {
+                  "field_id": "fixture-field-protected_branches",
+                  "category": "protected_branches",
+                  "owner_ref": "owner:forge",
+                  "effect_phase": "create_api",
+                  "capability_ref": "capability:fixture",
+                  "permission_ref": "permission:fixture",
+                  "value": {
+                    "kind": "boolean",
+                    "value": true
+                  }
+                },
+                {
+                  "field_id": "fixture-field-ci_variables",
+                  "category": "ci_variables",
+                  "owner_ref": "owner:forge",
+                  "effect_phase": "create_api",
+                  "capability_ref": "capability:fixture",
+                  "permission_ref": "permission:fixture",
+                  "value": {
+                    "kind": "boolean",
+                    "value": true
+                  }
+                },
+                {
+                  "field_id": "fixture-field-runners",
+                  "category": "runners",
+                  "owner_ref": "owner:forge",
+                  "effect_phase": "create_api",
+                  "capability_ref": "capability:fixture",
+                  "permission_ref": "permission:fixture",
+                  "value": {
+                    "kind": "boolean",
+                    "value": true
+                  }
+                }
+              ]
+            }
+          },
+          "resolved_slug_or_path": "fixture-repository",
+          "slug_derivation_ref": null,
+          "effective_visibility": "private",
+          "visibility_policy_ref": "visibility-policy:fixture",
+          "source_template_revision_ref": null,
+          "source_template_capability_ref": null,
+          "source_template_permission_ref": null,
+          "capability_binding": {
+            "capability_snapshot_ref": "capability-snapshot:forge:3",
+            "api_compatibility_ref": "api-compatibility:forge:3",
+            "api_probe_ref": "api-probe:forge:3",
+            "catalog_generation": 11,
+            "direct_revalidation_ref": "revalidation:forge:3",
+            "capability_revision_ref": "capability-revision:fixture"
+          },
+          "expected_name_availability_revision": "name-revision:fixture",
+          "source_control_transport_intent_ref": "transport-intent:fixture",
+          "approval_binding": {
+            "kind": "owner_approved",
+            "approval_ref": "approval:fixture",
+            "source_ref": "approved-source:fixture",
+            "source_revision": 5,
+            "source_sha256": "b111d2c7153d3d0e900cf127624c23aa97eab9ffd501069b97b56d0770ec9256",
+            "consent_ref": "consent:fixture",
+            "owner_operation_ref": "operation:fixture",
+            "onboarding_session_ref": null,
+            "reviewed_plan_ref": null,
+            "reviewed_plan_sha256": null,
+            "project_setup_binding_ref": null
+          }
+        },
+        "creation_preview_ref": "creation-preview:fixture",
+        "creation_preview_sha256": "5b8475696443bcb2c3fb15c333095f01bccb6f133c21cc5458894fc06e8eb45a"
+      }
+    },
+    {
+      "name": "creation_v2_actual_intent",
+      "definition": "repository_creation_intent",
+      "value": {
+        "schema_id": "pm.forge.repository_creation_intent.v1",
+        "intent_id": "creation-intent:fixture",
+        "subject": {
+          "provider": "gitlab",
+          "provider_variant": "gitlab_com",
+          "normalized_host": "gitlab.com",
+          "instance_profile_ref": "instance:fixture",
+          "connection_ref": "connection:fixture",
+          "account_id": "account:gitlab:alpha",
+          "account_generation": 4,
+          "account_verification_ref": "account-verification:fixture",
+          "account_container_ref": "container:fixture",
+          "container_kind": "group",
+          "namespace_external_id": "group:fixture",
+          "parent_container_external_id": null,
+          "provider_project_id": null,
+          "connection_id": "connection:fixture"
+        },
+        "choices": {
+          "schema_id": "pm.forge.repository_creation_choices.v1",
+          "repository_name": "fixture-repository",
+          "repository_description": "Reviewed fixture repository",
+          "provider_slug_or_path": "fixture-repository",
+          "visibility": "private",
+          "existing_or_create": "create",
+          "source_template_ref": null,
+          "initialization_policy": {
+            "initialize_readme": true,
+            "gitignore_selection": "none",
+            "license_selection": "none",
+            "preserve_existing_source_history": true
+          },
+          "requested_git_transport": "https",
+          "default_branch": "main",
+          "provider_options": {
+            "schema_id": "pm.forge.creation_option_selections.v1",
+            "selection_id": "selection:fixture",
+            "provider": "gitlab",
+            "provider_variant": "gitlab_com",
+            "normalized_host": "gitlab.com",
+            "instance_id": "instance:fixture",
+            "catalog_ref": "catalog:fixture",
+            "catalog_revision": 2,
+            "catalog_sha256": "45bff493b3ab07bfd67e9178486d9b800ee67284569584de2ee3d80219876d54",
+            "fields": [
+              {
+                "field_id": "fixture-field-path",
+                "category": "path",
+                "owner_ref": "owner:forge",
+                "effect_phase": "create_api",
+                "capability_ref": "capability:fixture",
+                "permission_ref": "permission:fixture",
+                "value": {
+                  "kind": "boolean",
+                  "value": true
+                }
+              },
+              {
+                "field_id": "fixture-field-template",
+                "category": "template",
+                "owner_ref": "owner:forge",
+                "effect_phase": "create_api",
+                "capability_ref": "capability:fixture",
+                "permission_ref": "permission:fixture",
+                "value": {
+                  "kind": "boolean",
+                  "value": true
+                }
+              },
+              {
+                "field_id": "fixture-field-merge_request_settings",
+                "category": "merge_request_settings",
+                "owner_ref": "owner:forge",
+                "effect_phase": "create_api",
+                "capability_ref": "capability:fixture",
+                "permission_ref": "permission:fixture",
+                "value": {
+                  "kind": "boolean",
+                  "value": true
+                }
+              },
+              {
+                "field_id": "fixture-field-protected_branches",
+                "category": "protected_branches",
+                "owner_ref": "owner:forge",
+                "effect_phase": "create_api",
+                "capability_ref": "capability:fixture",
+                "permission_ref": "permission:fixture",
+                "value": {
+                  "kind": "boolean",
+                  "value": true
+                }
+              },
+              {
+                "field_id": "fixture-field-ci_variables",
+                "category": "ci_variables",
+                "owner_ref": "owner:forge",
+                "effect_phase": "create_api",
+                "capability_ref": "capability:fixture",
+                "permission_ref": "permission:fixture",
+                "value": {
+                  "kind": "boolean",
+                  "value": true
+                }
+              },
+              {
+                "field_id": "fixture-field-runners",
+                "category": "runners",
+                "owner_ref": "owner:forge",
+                "effect_phase": "create_api",
+                "capability_ref": "capability:fixture",
+                "permission_ref": "permission:fixture",
+                "value": {
+                  "kind": "boolean",
+                  "value": true
+                }
+              }
+            ]
+          }
+        },
+        "resolved_slug_or_path": "fixture-repository",
+        "slug_derivation_ref": null,
+        "effective_visibility": "private",
+        "visibility_policy_ref": "visibility-policy:fixture",
+        "source_template_revision_ref": null,
+        "source_template_capability_ref": null,
+        "source_template_permission_ref": null,
+        "capability_binding": {
+          "capability_snapshot_ref": "capability-snapshot:forge:3",
+          "api_compatibility_ref": "api-compatibility:forge:3",
+          "api_probe_ref": "api-probe:forge:3",
+          "catalog_generation": 11,
+          "direct_revalidation_ref": "revalidation:forge:3",
+          "capability_revision_ref": "capability-revision:fixture"
+        },
+        "expected_name_availability_revision": "name-revision:fixture",
+        "source_control_transport_intent_ref": "transport-intent:fixture",
+        "approval_binding": {
+          "kind": "owner_approved",
+          "approval_ref": "approval:fixture",
+          "source_ref": "approved-source:fixture",
+          "source_revision": 5,
+          "source_sha256": "b111d2c7153d3d0e900cf127624c23aa97eab9ffd501069b97b56d0770ec9256",
+          "consent_ref": "consent:fixture",
+          "owner_operation_ref": "operation:fixture",
+          "onboarding_session_ref": null,
+          "reviewed_plan_ref": null,
+          "reviewed_plan_sha256": null,
+          "project_setup_binding_ref": null
+        }
+      }
+    },
+    {
+      "name": "creation_v2_actual_preview",
+      "definition": "repository_creation_preview",
+      "value": {
+        "schema_id": "pm.forge.repository_creation_preview.v1",
+        "preview_id": "creation-preview:fixture",
+        "intent_sha256": "efc279beeedeb13bfdfd12d436181452a3dd382c914567e25fee9ae2d4bc3219",
+        "subject": {
+          "provider": "gitlab",
+          "provider_variant": "gitlab_com",
+          "normalized_host": "gitlab.com",
+          "instance_profile_ref": "instance:fixture",
+          "connection_ref": "connection:fixture",
+          "account_id": "account:gitlab:alpha",
+          "account_generation": 4,
+          "account_verification_ref": "account-verification:fixture",
+          "account_container_ref": "container:fixture",
+          "container_kind": "group",
+          "namespace_external_id": "group:fixture",
+          "parent_container_external_id": null,
+          "provider_project_id": null,
+          "connection_id": "connection:fixture"
+        },
+        "approval_binding": {
+          "kind": "owner_approved",
+          "approval_ref": "approval:fixture",
+          "source_ref": "approved-source:fixture",
+          "source_revision": 5,
+          "source_sha256": "b111d2c7153d3d0e900cf127624c23aa97eab9ffd501069b97b56d0770ec9256",
+          "consent_ref": "consent:fixture",
+          "owner_operation_ref": "operation:fixture",
+          "onboarding_session_ref": null,
+          "reviewed_plan_ref": null,
+          "reviewed_plan_sha256": null,
+          "project_setup_binding_ref": null
+        },
+        "capability_binding": {
+          "capability_snapshot_ref": "capability-snapshot:forge:3",
+          "api_compatibility_ref": "api-compatibility:forge:3",
+          "api_probe_ref": "api-probe:forge:3",
+          "catalog_generation": 11,
+          "direct_revalidation_ref": "revalidation:forge:3",
+          "capability_revision_ref": "capability-revision:fixture"
+        },
+        "repository_locator_ref": "repository-locator:alpha",
+        "permission_snapshot_ref": "permission:forge:3",
+        "repository_name": "fixture-repository",
+        "resolved_slug_or_path": "fixture-repository",
+        "name_availability_revision": "name-revision:fixture",
+        "name_availability": "available",
+        "preview_state": "ready",
+        "observed_at_utc": "2026-09-24T11:00:00Z",
+        "expires_at_utc": "2026-09-25T00:00:00Z"
+      }
+    },
+    {
+      "name": "creation_v2_actual_options",
+      "definition": "creation_option_selections",
+      "value": {
+        "schema_id": "pm.forge.creation_option_selections.v1",
+        "selection_id": "selection:fixture",
+        "provider": "gitlab",
+        "provider_variant": "gitlab_com",
+        "normalized_host": "gitlab.com",
+        "instance_id": "instance:fixture",
+        "catalog_ref": "catalog:fixture",
+        "catalog_revision": 2,
+        "catalog_sha256": "45bff493b3ab07bfd67e9178486d9b800ee67284569584de2ee3d80219876d54",
+        "fields": [
+          {
+            "field_id": "fixture-field-path",
+            "category": "path",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          },
+          {
+            "field_id": "fixture-field-template",
+            "category": "template",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          },
+          {
+            "field_id": "fixture-field-merge_request_settings",
+            "category": "merge_request_settings",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          },
+          {
+            "field_id": "fixture-field-protected_branches",
+            "category": "protected_branches",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          },
+          {
+            "field_id": "fixture-field-ci_variables",
+            "category": "ci_variables",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          },
+          {
+            "field_id": "fixture-field-runners",
+            "category": "runners",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "creation_v2_actual_catalog",
+      "definition": "creation_field_catalog",
+      "value": {
+        "schema_id": "pm.forge.creation_field_catalog.v1",
+        "catalog_id": "catalog:fixture",
+        "catalog_revision": 2,
+        "provider": "gitlab",
+        "provider_variant": "gitlab_com",
+        "normalized_host": "gitlab.com",
+        "instance_id": "instance:fixture",
+        "owner_ref": "owner:forge",
+        "adapter_schema_ref": "adapter:fixture",
+        "adapter_schema_revision": 3,
+        "api_compatibility_ref": "api-compatibility:forge:3",
+        "capability_snapshot_ref": "capability-snapshot:forge:3",
+        "issued_at_utc": "2026-09-24T00:00:00Z",
+        "expires_at_utc": "2026-09-25T00:00:00Z",
+        "category_inventory": [
+          "path",
+          "template",
+          "merge_request_settings",
+          "protected_branches",
+          "ci_variables",
+          "runners"
+        ],
+        "fields": [
+          {
+            "field_id": "fixture-field-path",
+            "category": "path",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "supported": true,
+            "required_selection": false,
+            "data_classification": "non_secret",
+            "value_kind": "boolean",
+            "choices": [],
+            "resource_kind": null,
+            "minimum": null,
+            "maximum": null,
+            "min_length": null,
+            "max_length": null,
+            "pattern": null,
+            "min_items": null,
+            "max_items": null
+          },
+          {
+            "field_id": "fixture-field-template",
+            "category": "template",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "supported": true,
+            "required_selection": false,
+            "data_classification": "non_secret",
+            "value_kind": "boolean",
+            "choices": [],
+            "resource_kind": null,
+            "minimum": null,
+            "maximum": null,
+            "min_length": null,
+            "max_length": null,
+            "pattern": null,
+            "min_items": null,
+            "max_items": null
+          },
+          {
+            "field_id": "fixture-field-merge_request_settings",
+            "category": "merge_request_settings",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "supported": true,
+            "required_selection": false,
+            "data_classification": "non_secret",
+            "value_kind": "boolean",
+            "choices": [],
+            "resource_kind": null,
+            "minimum": null,
+            "maximum": null,
+            "min_length": null,
+            "max_length": null,
+            "pattern": null,
+            "min_items": null,
+            "max_items": null
+          },
+          {
+            "field_id": "fixture-field-protected_branches",
+            "category": "protected_branches",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "supported": true,
+            "required_selection": false,
+            "data_classification": "non_secret",
+            "value_kind": "boolean",
+            "choices": [],
+            "resource_kind": null,
+            "minimum": null,
+            "maximum": null,
+            "min_length": null,
+            "max_length": null,
+            "pattern": null,
+            "min_items": null,
+            "max_items": null
+          },
+          {
+            "field_id": "fixture-field-ci_variables",
+            "category": "ci_variables",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "supported": true,
+            "required_selection": false,
+            "data_classification": "non_secret",
+            "value_kind": "boolean",
+            "choices": [],
+            "resource_kind": null,
+            "minimum": null,
+            "maximum": null,
+            "min_length": null,
+            "max_length": null,
+            "pattern": null,
+            "min_items": null,
+            "max_items": null
+          },
+          {
+            "field_id": "fixture-field-runners",
+            "category": "runners",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "supported": true,
+            "required_selection": false,
+            "data_classification": "non_secret",
+            "value_kind": "boolean",
+            "choices": [],
+            "resource_kind": null,
+            "minimum": null,
+            "maximum": null,
+            "min_length": null,
+            "max_length": null,
+            "pattern": null,
+            "min_items": null,
+            "max_items": null
+          }
+        ],
+        "cross_field_constraints": []
+      }
+    },
+    {
+      "name": "creation_v2_actual_composition",
+      "definition": "repository_creation_validation_input",
+      "value": {
+        "schema_id": "pm.forge.repository_creation_validation_input.v1",
+        "runtime_record": false,
+        "request": {
+          "schema_id": "pm.forge.repository_create_command_request.v2",
+          "command_id": "cmd.forge.repository.create",
+          "command_instance_id": "command:forge:creation:composition:1",
+          "idempotency_key": "idempotency:forge:creation:composition:1",
+          "provider": "gitlab",
+          "provider_variant": "gitlab_com",
+          "normalized_host": "gitlab.com",
+          "account_id": "account:gitlab:alpha",
+          "repo_id": null,
+          "repository_binding_ref": null,
+          "expected_binding_generation": 0,
+          "requested_authority_role": "authority",
+          "effective_authority_role": "authority",
+          "requested_capability": "repository",
+          "capability_snapshot_ref": "capability-snapshot:forge:3",
+          "api_compatibility_ref": "api-compatibility:forge:3",
+          "credential_or_grant_ref": "grant:forge:3",
+          "currentness": {
+            "binding_generation": 0,
+            "catalog_generation": 11,
+            "api_probe_ref": "api-probe:forge:3",
+            "state": "current",
+            "mutation_safety": "verified",
+            "projection_updated_at_utc": "2026-08-31T21:00:00Z",
+            "direct_revalidation_ref": "revalidation:forge:3",
+            "rate_budget_ref": "rate-budget:forge:3"
+          },
+          "permission": {
+            "permission_snapshot_ref": "permission:forge:3",
+            "decision": "allow",
+            "scope": "remote_side_effect",
+            "actor_kind": "human",
+            "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "preflight_revision": "preflight:forge:3",
+            "evaluated_at_utc": "2026-08-31T21:00:00Z"
+          },
+          "confirmation": null,
+          "target": {
+            "target_kind": "repository",
+            "identity_source": "validated_account_container",
+            "remote_text_used_for_identity": false,
+            "provider_repository_id": null,
+            "repository_locator_ref": "repository-locator:alpha",
+            "mirror_id": null,
+            "source_binding_ref": null,
+            "destination_binding_ref": null,
+            "authority_resolution_state": null,
+            "provider_review_id": null,
+            "review_revision_ref": null,
+            "thread_id": null,
+            "left_review_revision_ref": null,
+            "right_review_revision_ref": null,
+            "source_revision": null,
+            "target_revision": null,
+            "pipeline_id": null,
+            "pipeline_definition_ref": null,
+            "job_id": null,
+            "delivery_id": null,
+            "connection_id": null,
+            "official_page_route_ref": null,
+            "webhook_redelivery_gate": null,
+            "source_control_handoff_ref": null
+          },
+          "availability": {
+            "requested": true,
+            "effective": true,
+            "state": "available",
+            "reason_codes": [],
+            "disabled_reason_code": null,
+            "allowed_action_ids": [],
+            "evaluated_at_utc": "2026-08-31T21:00:00Z"
+          },
+          "observable_work_id": null,
+          "invocation_source": "gui",
+          "requested_at_utc": "2026-09-24T12:00:00Z",
+          "file_safe_decision_ref": null,
+          "browser_handoff": null,
+          "repository_creation_intent": {
+            "schema_id": "pm.forge.repository_creation_intent.v1",
+            "intent_id": "creation-intent:fixture",
+            "subject": {
+              "provider": "gitlab",
+              "provider_variant": "gitlab_com",
+              "normalized_host": "gitlab.com",
+              "instance_profile_ref": "instance:fixture",
+              "connection_ref": "connection:fixture",
+              "account_id": "account:gitlab:alpha",
+              "account_generation": 4,
+              "account_verification_ref": "account-verification:fixture",
+              "account_container_ref": "container:fixture",
+              "container_kind": "group",
+              "namespace_external_id": "group:fixture",
+              "parent_container_external_id": null,
+              "provider_project_id": null,
+              "connection_id": "connection:fixture"
+            },
+            "choices": {
+              "schema_id": "pm.forge.repository_creation_choices.v1",
+              "repository_name": "fixture-repository",
+              "repository_description": "Reviewed fixture repository",
+              "provider_slug_or_path": "fixture-repository",
+              "visibility": "private",
+              "existing_or_create": "create",
+              "source_template_ref": null,
+              "initialization_policy": {
+                "initialize_readme": true,
+                "gitignore_selection": "none",
+                "license_selection": "none",
+                "preserve_existing_source_history": true
+              },
+              "requested_git_transport": "https",
+              "default_branch": "main",
+              "provider_options": {
+                "schema_id": "pm.forge.creation_option_selections.v1",
+                "selection_id": "selection:fixture",
+                "provider": "gitlab",
+                "provider_variant": "gitlab_com",
+                "normalized_host": "gitlab.com",
+                "instance_id": "instance:fixture",
+                "catalog_ref": "catalog:fixture",
+                "catalog_revision": 2,
+                "catalog_sha256": "45bff493b3ab07bfd67e9178486d9b800ee67284569584de2ee3d80219876d54",
+                "fields": [
+                  {
+                    "field_id": "fixture-field-path",
+                    "category": "path",
+                    "owner_ref": "owner:forge",
+                    "effect_phase": "create_api",
+                    "capability_ref": "capability:fixture",
+                    "permission_ref": "permission:fixture",
+                    "value": {
+                      "kind": "boolean",
+                      "value": true
+                    }
+                  },
+                  {
+                    "field_id": "fixture-field-template",
+                    "category": "template",
+                    "owner_ref": "owner:forge",
+                    "effect_phase": "create_api",
+                    "capability_ref": "capability:fixture",
+                    "permission_ref": "permission:fixture",
+                    "value": {
+                      "kind": "boolean",
+                      "value": true
+                    }
+                  },
+                  {
+                    "field_id": "fixture-field-merge_request_settings",
+                    "category": "merge_request_settings",
+                    "owner_ref": "owner:forge",
+                    "effect_phase": "create_api",
+                    "capability_ref": "capability:fixture",
+                    "permission_ref": "permission:fixture",
+                    "value": {
+                      "kind": "boolean",
+                      "value": true
+                    }
+                  },
+                  {
+                    "field_id": "fixture-field-protected_branches",
+                    "category": "protected_branches",
+                    "owner_ref": "owner:forge",
+                    "effect_phase": "create_api",
+                    "capability_ref": "capability:fixture",
+                    "permission_ref": "permission:fixture",
+                    "value": {
+                      "kind": "boolean",
+                      "value": true
+                    }
+                  },
+                  {
+                    "field_id": "fixture-field-ci_variables",
+                    "category": "ci_variables",
+                    "owner_ref": "owner:forge",
+                    "effect_phase": "create_api",
+                    "capability_ref": "capability:fixture",
+                    "permission_ref": "permission:fixture",
+                    "value": {
+                      "kind": "boolean",
+                      "value": true
+                    }
+                  },
+                  {
+                    "field_id": "fixture-field-runners",
+                    "category": "runners",
+                    "owner_ref": "owner:forge",
+                    "effect_phase": "create_api",
+                    "capability_ref": "capability:fixture",
+                    "permission_ref": "permission:fixture",
+                    "value": {
+                      "kind": "boolean",
+                      "value": true
+                    }
+                  }
+                ]
+              }
+            },
+            "resolved_slug_or_path": "fixture-repository",
+            "slug_derivation_ref": null,
+            "effective_visibility": "private",
+            "visibility_policy_ref": "visibility-policy:fixture",
+            "source_template_revision_ref": null,
+            "source_template_capability_ref": null,
+            "source_template_permission_ref": null,
+            "capability_binding": {
+              "capability_snapshot_ref": "capability-snapshot:forge:3",
+              "api_compatibility_ref": "api-compatibility:forge:3",
+              "api_probe_ref": "api-probe:forge:3",
+              "catalog_generation": 11,
+              "direct_revalidation_ref": "revalidation:forge:3",
+              "capability_revision_ref": "capability-revision:fixture"
+            },
+            "expected_name_availability_revision": "name-revision:fixture",
+            "source_control_transport_intent_ref": "transport-intent:fixture",
+            "approval_binding": {
+              "kind": "owner_approved",
+              "approval_ref": "approval:fixture",
+              "source_ref": "approved-source:fixture",
+              "source_revision": 5,
+              "source_sha256": "b111d2c7153d3d0e900cf127624c23aa97eab9ffd501069b97b56d0770ec9256",
+              "consent_ref": "consent:fixture",
+              "owner_operation_ref": "operation:fixture",
+              "onboarding_session_ref": null,
+              "reviewed_plan_ref": null,
+              "reviewed_plan_sha256": null,
+              "project_setup_binding_ref": null
+            }
+          },
+          "creation_preview_ref": "creation-preview:fixture",
+          "creation_preview_sha256": "5b8475696443bcb2c3fb15c333095f01bccb6f133c21cc5458894fc06e8eb45a"
+        },
+        "resolved_preview": {
+          "schema_id": "pm.forge.repository_creation_preview.v1",
+          "preview_id": "creation-preview:fixture",
+          "intent_sha256": "efc279beeedeb13bfdfd12d436181452a3dd382c914567e25fee9ae2d4bc3219",
+          "subject": {
+            "provider": "gitlab",
+            "provider_variant": "gitlab_com",
+            "normalized_host": "gitlab.com",
+            "instance_profile_ref": "instance:fixture",
+            "connection_ref": "connection:fixture",
+            "account_id": "account:gitlab:alpha",
+            "account_generation": 4,
+            "account_verification_ref": "account-verification:fixture",
+            "account_container_ref": "container:fixture",
+            "container_kind": "group",
+            "namespace_external_id": "group:fixture",
+            "parent_container_external_id": null,
+            "provider_project_id": null,
+            "connection_id": "connection:fixture"
+          },
+          "approval_binding": {
+            "kind": "owner_approved",
+            "approval_ref": "approval:fixture",
+            "source_ref": "approved-source:fixture",
+            "source_revision": 5,
+            "source_sha256": "b111d2c7153d3d0e900cf127624c23aa97eab9ffd501069b97b56d0770ec9256",
+            "consent_ref": "consent:fixture",
+            "owner_operation_ref": "operation:fixture",
+            "onboarding_session_ref": null,
+            "reviewed_plan_ref": null,
+            "reviewed_plan_sha256": null,
+            "project_setup_binding_ref": null
+          },
+          "capability_binding": {
+            "capability_snapshot_ref": "capability-snapshot:forge:3",
+            "api_compatibility_ref": "api-compatibility:forge:3",
+            "api_probe_ref": "api-probe:forge:3",
+            "catalog_generation": 11,
+            "direct_revalidation_ref": "revalidation:forge:3",
+            "capability_revision_ref": "capability-revision:fixture"
+          },
+          "repository_locator_ref": "repository-locator:alpha",
+          "permission_snapshot_ref": "permission:forge:3",
+          "repository_name": "fixture-repository",
+          "resolved_slug_or_path": "fixture-repository",
+          "name_availability_revision": "name-revision:fixture",
+          "name_availability": "available",
+          "preview_state": "ready",
+          "observed_at_utc": "2026-09-24T11:00:00Z",
+          "expires_at_utc": "2026-09-25T00:00:00Z"
+        },
+        "resolved_catalog": {
+          "schema_id": "pm.forge.creation_field_catalog.v1",
+          "catalog_id": "catalog:fixture",
+          "catalog_revision": 2,
+          "provider": "gitlab",
+          "provider_variant": "gitlab_com",
+          "normalized_host": "gitlab.com",
+          "instance_id": "instance:fixture",
+          "owner_ref": "owner:forge",
+          "adapter_schema_ref": "adapter:fixture",
+          "adapter_schema_revision": 3,
+          "api_compatibility_ref": "api-compatibility:forge:3",
+          "capability_snapshot_ref": "capability-snapshot:forge:3",
+          "issued_at_utc": "2026-09-24T00:00:00Z",
+          "expires_at_utc": "2026-09-25T00:00:00Z",
+          "category_inventory": [
+            "path",
+            "template",
+            "merge_request_settings",
+            "protected_branches",
+            "ci_variables",
+            "runners"
+          ],
+          "fields": [
+            {
+              "field_id": "fixture-field-path",
+              "category": "path",
+              "owner_ref": "owner:forge",
+              "effect_phase": "create_api",
+              "capability_ref": "capability:fixture",
+              "permission_ref": "permission:fixture",
+              "supported": true,
+              "required_selection": false,
+              "data_classification": "non_secret",
+              "value_kind": "boolean",
+              "choices": [],
+              "resource_kind": null,
+              "minimum": null,
+              "maximum": null,
+              "min_length": null,
+              "max_length": null,
+              "pattern": null,
+              "min_items": null,
+              "max_items": null
+            },
+            {
+              "field_id": "fixture-field-template",
+              "category": "template",
+              "owner_ref": "owner:forge",
+              "effect_phase": "create_api",
+              "capability_ref": "capability:fixture",
+              "permission_ref": "permission:fixture",
+              "supported": true,
+              "required_selection": false,
+              "data_classification": "non_secret",
+              "value_kind": "boolean",
+              "choices": [],
+              "resource_kind": null,
+              "minimum": null,
+              "maximum": null,
+              "min_length": null,
+              "max_length": null,
+              "pattern": null,
+              "min_items": null,
+              "max_items": null
+            },
+            {
+              "field_id": "fixture-field-merge_request_settings",
+              "category": "merge_request_settings",
+              "owner_ref": "owner:forge",
+              "effect_phase": "create_api",
+              "capability_ref": "capability:fixture",
+              "permission_ref": "permission:fixture",
+              "supported": true,
+              "required_selection": false,
+              "data_classification": "non_secret",
+              "value_kind": "boolean",
+              "choices": [],
+              "resource_kind": null,
+              "minimum": null,
+              "maximum": null,
+              "min_length": null,
+              "max_length": null,
+              "pattern": null,
+              "min_items": null,
+              "max_items": null
+            },
+            {
+              "field_id": "fixture-field-protected_branches",
+              "category": "protected_branches",
+              "owner_ref": "owner:forge",
+              "effect_phase": "create_api",
+              "capability_ref": "capability:fixture",
+              "permission_ref": "permission:fixture",
+              "supported": true,
+              "required_selection": false,
+              "data_classification": "non_secret",
+              "value_kind": "boolean",
+              "choices": [],
+              "resource_kind": null,
+              "minimum": null,
+              "maximum": null,
+              "min_length": null,
+              "max_length": null,
+              "pattern": null,
+              "min_items": null,
+              "max_items": null
+            },
+            {
+              "field_id": "fixture-field-ci_variables",
+              "category": "ci_variables",
+              "owner_ref": "owner:forge",
+              "effect_phase": "create_api",
+              "capability_ref": "capability:fixture",
+              "permission_ref": "permission:fixture",
+              "supported": true,
+              "required_selection": false,
+              "data_classification": "non_secret",
+              "value_kind": "boolean",
+              "choices": [],
+              "resource_kind": null,
+              "minimum": null,
+              "maximum": null,
+              "min_length": null,
+              "max_length": null,
+              "pattern": null,
+              "min_items": null,
+              "max_items": null
+            },
+            {
+              "field_id": "fixture-field-runners",
+              "category": "runners",
+              "owner_ref": "owner:forge",
+              "effect_phase": "create_api",
+              "capability_ref": "capability:fixture",
+              "permission_ref": "permission:fixture",
+              "supported": true,
+              "required_selection": false,
+              "data_classification": "non_secret",
+              "value_kind": "boolean",
+              "choices": [],
+              "resource_kind": null,
+              "minimum": null,
+              "maximum": null,
+              "min_length": null,
+              "max_length": null,
+              "pattern": null,
+              "min_items": null,
+              "max_items": null
+            }
+          ],
+          "cross_field_constraints": []
+        },
+        "execution_snapshot": {
+          "now_utc": "2026-09-24T12:00:00Z",
+          "subject": {
+            "provider": "gitlab",
+            "provider_variant": "gitlab_com",
+            "normalized_host": "gitlab.com",
+            "instance_profile_ref": "instance:fixture",
+            "connection_ref": "connection:fixture",
+            "account_id": "account:gitlab:alpha",
+            "account_generation": 4,
+            "account_verification_ref": "account-verification:fixture",
+            "account_container_ref": "container:fixture",
+            "container_kind": "group",
+            "namespace_external_id": "group:fixture",
+            "parent_container_external_id": null,
+            "provider_project_id": null,
+            "connection_id": "connection:fixture"
+          },
+          "capability_binding": {
+            "capability_snapshot_ref": "capability-snapshot:forge:3",
+            "api_compatibility_ref": "api-compatibility:forge:3",
+            "api_probe_ref": "api-probe:forge:3",
+            "catalog_generation": 11,
+            "direct_revalidation_ref": "revalidation:forge:3",
+            "capability_revision_ref": "capability-revision:fixture"
+          },
+          "approval_binding": {
+            "kind": "owner_approved",
+            "approval_ref": "approval:fixture",
+            "source_ref": "approved-source:fixture",
+            "source_revision": 5,
+            "source_sha256": "b111d2c7153d3d0e900cf127624c23aa97eab9ffd501069b97b56d0770ec9256",
+            "consent_ref": "consent:fixture",
+            "owner_operation_ref": "operation:fixture",
+            "onboarding_session_ref": null,
+            "reviewed_plan_ref": null,
+            "reviewed_plan_sha256": null,
+            "project_setup_binding_ref": null
+          },
+          "approved_intent_sha256": "efc279beeedeb13bfdfd12d436181452a3dd382c914567e25fee9ae2d4bc3219",
+          "approved_choices_sha256": "b111d2c7153d3d0e900cf127624c23aa97eab9ffd501069b97b56d0770ec9256",
+          "approval_expires_at_utc": "2026-09-25T00:00:00Z",
+          "permission": {
+            "permission_snapshot_ref": "permission:forge:3",
+            "decision": "allow",
+            "scope": "remote_side_effect",
+            "actor_kind": "human",
+            "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "preflight_revision": "preflight:forge:3",
+            "evaluated_at_utc": "2026-08-31T21:00:00Z"
+          },
+          "repository_locator_ref": "repository-locator:alpha",
+          "name_availability_revision": "name-revision:fixture",
+          "name_availability": "available",
+          "option_context": {
+            "provider": "gitlab",
+            "provider_variant": "gitlab_com",
+            "normalized_host": "gitlab.com",
+            "instance_id": "instance:fixture",
+            "catalog_ref": "catalog:fixture",
+            "catalog_revision": 2,
+            "adapter_schema_ref": "adapter:fixture",
+            "adapter_schema_revision": 3,
+            "api_compatibility_ref": "api-compatibility:forge:3",
+            "capability_snapshot_ref": "capability-snapshot:forge:3",
+            "catalog_owner_ref": "owner:forge",
+            "now_utc": "2026-09-24T12:00:00Z",
+            "admitted_capability_refs": [
+              "capability:fixture"
+            ],
+            "admitted_permission_refs": [
+              "permission:fixture"
+            ],
+            "allowed_effects": [
+              [
+                "owner:forge",
+                "create_api"
+              ]
+            ],
+            "admitted_resource_refs": [
+              [
+                "credential_grant",
+                "grant:fixture"
+              ],
+              [
+                "policy",
+                "policy:fixture"
+              ]
+            ]
+          },
+          "resolved_slug_or_path": "fixture-repository",
+          "effective_visibility": "private",
+          "visibility_policy_ref": "visibility-policy:fixture",
+          "source_template_revision_ref": null,
+          "source_template_capability_ref": null,
+          "source_template_permission_ref": null,
+          "source_control_transport_intent_ref": "transport-intent:fixture",
+          "command_envelope_binding": {
+            "command_id": "cmd.forge.repository.create",
+            "command_instance_id": "command:forge:creation:composition:1",
+            "idempotency_key": "idempotency:forge:creation:composition:1",
+            "provider": "gitlab",
+            "provider_variant": "gitlab_com",
+            "normalized_host": "gitlab.com",
+            "account_id": "account:gitlab:alpha",
+            "repo_id": null,
+            "repository_binding_ref": null,
+            "expected_binding_generation": 0,
+            "requested_authority_role": "authority",
+            "effective_authority_role": "authority",
+            "requested_capability": "repository",
+            "capability_snapshot_ref": "capability-snapshot:forge:3",
+            "api_compatibility_ref": "api-compatibility:forge:3",
+            "credential_or_grant_ref": "grant:forge:3",
+            "currentness": {
+              "binding_generation": 0,
+              "catalog_generation": 11,
+              "api_probe_ref": "api-probe:forge:3",
+              "state": "current",
+              "mutation_safety": "verified",
+              "projection_updated_at_utc": "2026-08-31T21:00:00Z",
+              "direct_revalidation_ref": "revalidation:forge:3",
+              "rate_budget_ref": "rate-budget:forge:3"
+            },
+            "permission": {
+              "permission_snapshot_ref": "permission:forge:3",
+              "decision": "allow",
+              "scope": "remote_side_effect",
+              "actor_kind": "human",
+              "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "preflight_revision": "preflight:forge:3",
+              "evaluated_at_utc": "2026-08-31T21:00:00Z"
+            },
+            "confirmation": null,
+            "target": {
+              "target_kind": "repository",
+              "identity_source": "validated_account_container",
+              "remote_text_used_for_identity": false,
+              "provider_repository_id": null,
+              "repository_locator_ref": "repository-locator:alpha",
+              "mirror_id": null,
+              "source_binding_ref": null,
+              "destination_binding_ref": null,
+              "authority_resolution_state": null,
+              "provider_review_id": null,
+              "review_revision_ref": null,
+              "thread_id": null,
+              "left_review_revision_ref": null,
+              "right_review_revision_ref": null,
+              "source_revision": null,
+              "target_revision": null,
+              "pipeline_id": null,
+              "pipeline_definition_ref": null,
+              "job_id": null,
+              "delivery_id": null,
+              "connection_id": null,
+              "official_page_route_ref": null,
+              "webhook_redelivery_gate": null,
+              "source_control_handoff_ref": null
+            },
+            "availability": {
+              "requested": true,
+              "effective": true,
+              "state": "available",
+              "reason_codes": [],
+              "disabled_reason_code": null,
+              "allowed_action_ids": [],
+              "evaluated_at_utc": "2026-08-31T21:00:00Z"
+            },
+            "observable_work_id": null,
+            "invocation_source": "gui",
+            "requested_at_utc": "2026-09-24T12:00:00Z",
+            "file_safe_decision_ref": null,
+            "browser_handoff": null
+          }
+        }
+      }
     }
   ],
   "invalid": [
@@ -7696,6 +9011,914 @@
         "currentness.binding_generation": 1
       },
       "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "creation_v2_semantic_outer_provider_variant",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_request_provider_variant",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.provider_variant": "different-variant"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_outer_normalized_host",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_request_normalized_host",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.normalized_host": "other.example"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_outer_account_id",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_request_account_id",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.account_id": "account:other"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_current_subject_account_generation",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_subject",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.subject.account_generation": 9
+      }
+    },
+    {
+      "name": "creation_v2_semantic_current_subject_account_container_ref",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_subject",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.subject.account_container_ref": "container:other"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_current_subject_namespace_external_id",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_subject",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.subject.namespace_external_id": "group:other"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_current_subject_account_verification_ref",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_subject",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.subject.account_verification_ref": "verification:other"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_current_subject_instance_profile_ref",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_subject",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.subject.instance_profile_ref": "instance:other"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_capability_capability_snapshot_ref",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_capability",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.capability_binding.capability_snapshot_ref": "other:revision"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_capability_api_compatibility_ref",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_capability",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.capability_binding.api_compatibility_ref": "other:revision"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_capability_capability_revision_ref",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_capability",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.capability_binding.capability_revision_ref": "other:revision"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_capability_api_probe_ref",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_capability",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.capability_binding.api_probe_ref": "other:revision"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_capability_direct_revalidation_ref",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_capability",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.capability_binding.direct_revalidation_ref": "other:revision"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_capability_catalog_generation",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_capability",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.capability_binding.catalog_generation": 99
+      }
+    },
+    {
+      "name": "creation_v2_semantic_approval_approval_ref",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_approval",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.approval_binding.approval_ref": "other:approval"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_approval_source_ref",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_approval",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.approval_binding.source_ref": "other:approval"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_approval_consent_ref",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_approval",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.approval_binding.consent_ref": "other:approval"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_approval_owner_operation_ref",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_approval",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.approval_binding.owner_operation_ref": "other:approval"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_approval_source_revision",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_approval",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.approval_binding.source_revision": 9
+      }
+    },
+    {
+      "name": "creation_v2_semantic_approval_source_digest",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_approval",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.approval_binding.source_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_approved_intent_sha256",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_approved_intent_digest",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.approved_intent_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_approved_choices_sha256",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_approved_choices_digest",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.approved_choices_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_preview_digest",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_preview_digest",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.creation_preview_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_preview_unresolved",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_preview_unresolved",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.creation_preview_ref": "preview:other"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_preview_intent_digest",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_preview_intent_digest",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "resolved_preview.intent_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_preview_name",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_preview_name",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "resolved_preview.repository_name": "different"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_preview_path",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_preview_path",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "resolved_preview.resolved_slug_or_path": "different"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_preview_name_revision",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_preview_name_revision",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "resolved_preview.name_availability_revision": "name:other"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_preview_permission",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_preview_permission",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "resolved_preview.permission_snapshot_ref": "permission:other"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_preview_locator",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_preview_locator",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "resolved_preview.repository_locator_ref": "locator:other"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_preview_preview_state",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_preview_unavailable",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "resolved_preview.preview_state": "unknown"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_preview_name_availability",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_preview_unavailable",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "resolved_preview.name_availability": "unknown"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_preview_expires_at_utc",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_preview_time",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "resolved_preview.expires_at_utc": "2026-09-24T12:00:00Z"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_preview_observed_at_utc",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_preview_time",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "resolved_preview.observed_at_utc": "2026-09-24T13:00:00Z"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_approval_expired",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_approval_expired",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.approval_expires_at_utc": "2026-09-24T12:00:00Z"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_current_name_unknown",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_name_unavailable",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.name_availability": "unknown"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_current_name_revision",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_name_revision",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.name_availability_revision": "name:other"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_current_permission",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_permission",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.permission.permission_snapshot_ref": "permission:other"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_current_locator",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_locator",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.repository_locator_ref": "locator:other"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_current_resolved_slug_or_path",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_resolved_slug_or_path",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.resolved_slug_or_path": "other:choice"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_current_visibility_policy_ref",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_visibility_policy_ref",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.visibility_policy_ref": "other:choice"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_current_source_control_transport_intent_ref",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_current_source_control_transport_intent_ref",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.source_control_transport_intent_ref": "other:choice"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_changed_description",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_approved_choices_digest",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.repository_creation_intent.choices.repository_description": "changed"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_changed_branch",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_approved_choices_digest",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.repository_creation_intent.choices.default_branch": "changed"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_changed_transport",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_approved_choices_digest",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.repository_creation_intent.choices.requested_git_transport": "ssh"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_changed_initialization",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_approved_choices_digest",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.repository_creation_intent.choices.initialization_policy.initialize_readme": false
+      }
+    },
+    {
+      "name": "creation_v2_semantic_option_provider",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "selection_current_provider_mismatch",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.repository_creation_intent.choices.provider_options.provider": "github"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_option_catalog_revision",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "selection_current_catalog_revision_mismatch",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.repository_creation_intent.choices.provider_options.catalog_revision": 9
+      }
+    },
+    {
+      "name": "creation_v2_semantic_option_catalog_digest",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "catalog_digest_mismatch",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.repository_creation_intent.choices.provider_options.catalog_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_option_field_id",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "selection_unknown_field:not-in-catalog",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.repository_creation_intent.choices.provider_options.fields": [
+          {
+            "field_id": "not-in-catalog",
+            "category": "path",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          },
+          {
+            "field_id": "fixture-field-template",
+            "category": "template",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          },
+          {
+            "field_id": "fixture-field-merge_request_settings",
+            "category": "merge_request_settings",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          },
+          {
+            "field_id": "fixture-field-protected_branches",
+            "category": "protected_branches",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          },
+          {
+            "field_id": "fixture-field-ci_variables",
+            "category": "ci_variables",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          },
+          {
+            "field_id": "fixture-field-runners",
+            "category": "runners",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "creation_v2_semantic_option_phase",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "selection_descriptor_effect_phase_mismatch:fixture-field-path",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.repository_creation_intent.choices.provider_options.fields": [
+          {
+            "field_id": "fixture-field-path",
+            "category": "path",
+            "owner_ref": "owner:forge",
+            "effect_phase": "post_create",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          },
+          {
+            "field_id": "fixture-field-template",
+            "category": "template",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          },
+          {
+            "field_id": "fixture-field-merge_request_settings",
+            "category": "merge_request_settings",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          },
+          {
+            "field_id": "fixture-field-protected_branches",
+            "category": "protected_branches",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          },
+          {
+            "field_id": "fixture-field-ci_variables",
+            "category": "ci_variables",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          },
+          {
+            "field_id": "fixture-field-runners",
+            "category": "runners",
+            "owner_ref": "owner:forge",
+            "effect_phase": "create_api",
+            "capability_ref": "capability:fixture",
+            "permission_ref": "permission:fixture",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "creation_v2_semantic_option_permission",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "selection_permission_not_admitted:fixture-field-path",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.option_context.admitted_permission_refs": []
+      }
+    },
+    {
+      "name": "creation_v2_semantic_option_capability",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "selection_capability_not_admitted:fixture-field-path",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.option_context.admitted_capability_refs": []
+      }
+    },
+    {
+      "name": "creation_v2_semantic_option_outer_join_provider",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_option_provider",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.option_context.provider": "github"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_option_outer_join_provider_variant",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_option_provider_variant",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.option_context.provider_variant": "other-variant"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_option_outer_join_normalized_host",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_option_normalized_host",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.option_context.normalized_host": "other.example"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_option_outer_join_instance_id",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_option_instance",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.option_context.instance_id": "instance:other"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_option_outer_join_now_utc",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_option_time",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.option_context.now_utc": "2026-09-24T12:01:00Z"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_option_outer_join_capability_snapshot_ref",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_option_capability_snapshot_ref",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.option_context.capability_snapshot_ref": "snapshot:other"
+      }
+    },
+    {
+      "name": "creation_v2_semantic_option_outer_join_api_compatibility_ref",
+      "definition": "repository_creation_validation_input",
+      "semantic_rule": "forge_creation_option_api_compatibility_ref",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "execution_snapshot.option_context.api_compatibility_ref": "api:other"
+      }
+    },
+    {
+      "name": "creation_v2_shape_legacy_create_admission",
+      "definition": "command_request_admission",
+      "base_valid": "uncreated_repository_request"
+    },
+    {
+      "name": "creation_v2_shape_missing_intent",
+      "definition": "repository_create_command_request_v2",
+      "base_valid": "creation_v2_actual_request",
+      "remove": [
+        "repository_creation_intent"
+      ]
+    },
+    {
+      "name": "creation_v2_shape_unknown_field",
+      "definition": "repository_create_command_request_v2",
+      "base_valid": "creation_v2_actual_request",
+      "patch": {
+        "caller_verified": true
+      }
+    },
+    {
+      "name": "creation_v2_semantic_envelope_credential_or_grant_ref",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.credential_or_grant_ref": "grant:other"
+      },
+      "semantic_rule": "forge_creation_current_envelope"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_rate_budget_ref",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.currentness.rate_budget_ref": "rate-budget:other"
+      },
+      "semantic_rule": "forge_creation_current_envelope"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_requested_authority_role",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.requested_authority_role": "not_applicable"
+      },
+      "semantic_rule": "forge_creation_current_envelope"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_projection_time",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.currentness.projection_updated_at_utc": "2026-09-24T13:00:00Z"
+      },
+      "semantic_rule": "forge_creation_current_envelope"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_availability_time",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.availability.evaluated_at_utc": "2026-09-24T13:00:00Z"
+      },
+      "semantic_rule": "forge_creation_current_envelope"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_availability_requested",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.availability.requested": false
+      },
+      "semantic_rule": "forge_creation_current_envelope"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_file_safe",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.file_safe_decision_ref": "filesafe:other"
+      },
+      "semantic_rule": "forge_creation_current_envelope"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_observable_work",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.observable_work_id": "work:other"
+      },
+      "semantic_rule": "forge_creation_current_envelope"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_target_namespace",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.target.target_namespace": "namespace:other"
+      },
+      "semantic_rule": "forge_creation_current_envelope"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_target_connection",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.target.connection_id": "connection:other"
+      },
+      "semantic_rule": "forge_creation_current_envelope"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_target_source_binding",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.target.source_binding_ref": "binding:other"
+      },
+      "semantic_rule": "forge_creation_current_envelope"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_target_transport_handoff",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.target.source_control_handoff_ref": "handoff:other"
+      },
+      "semantic_rule": "forge_creation_current_envelope"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_bound_repository_tuple",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.repo_id": "repo:other",
+        "request.repository_binding_ref": "binding:other",
+        "request.expected_binding_generation": 9,
+        "request.currentness.binding_generation": 9,
+        "request.target.provider_repository_id": "native:other"
+      },
+      "semantic_rule": "forge_creation_current_envelope"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_bound_repository_generation_mismatch",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.repo_id": "repo:other",
+        "request.repository_binding_ref": "binding:other",
+        "request.expected_binding_generation": 9,
+        "request.currentness.binding_generation": 2
+      },
+      "semantic_rule": "forge_creation_current_envelope"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_automation_binding",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.automation_binding_ref": "automation:other",
+        "request.expected_automation_binding_generation": 8
+      },
+      "semantic_rule": "forge_creation_current_envelope"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_future_evidence",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.availability.evaluated_at_utc": "2026-09-24T13:00:00Z",
+        "execution_snapshot.command_envelope_binding.availability.evaluated_at_utc": "2026-09-24T13:00:00Z"
+      },
+      "semantic_rule": "forge_creation_future_envelope_evidence"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_generation_consistency",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.repo_id": "repo:other",
+        "execution_snapshot.command_envelope_binding.repo_id": "repo:other",
+        "request.repository_binding_ref": "binding:other",
+        "execution_snapshot.command_envelope_binding.repository_binding_ref": "binding:other",
+        "request.expected_binding_generation": 9,
+        "execution_snapshot.command_envelope_binding.expected_binding_generation": 9,
+        "request.currentness.binding_generation": 2,
+        "execution_snapshot.command_envelope_binding.currentness.binding_generation": 2
+      },
+      "semantic_rule": "forge_creation_binding_generation"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_namespace_subject",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.target.target_namespace": "namespace:other",
+        "execution_snapshot.command_envelope_binding.target.target_namespace": "namespace:other"
+      },
+      "semantic_rule": "forge_creation_target_namespace"
+    },
+    {
+      "name": "creation_v2_semantic_envelope_connection_subject",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.target.connection_id": "connection:other",
+        "execution_snapshot.command_envelope_binding.target.connection_id": "connection:other"
+      },
+      "semantic_rule": "forge_creation_target_connection"
+    },
+    {
+      "name": "creation_v2_shape_absent_resolved_path",
+      "definition": "repository_creation_validation_input",
+      "base_valid": "creation_v2_actual_composition",
+      "patch": {
+        "request.repository_creation_intent.choices.provider_slug_or_path": null,
+        "request.repository_creation_intent.resolved_slug_or_path": null,
+        "request.repository_creation_intent.slug_derivation_ref": null,
+        "resolved_preview.resolved_slug_or_path": null,
+        "execution_snapshot.resolved_slug_or_path": null
+      }
     }
   ],
   "command_coverage": {

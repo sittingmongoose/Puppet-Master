@@ -3691,7 +3691,7 @@
       "owner_plan": "Plans/Forge_Integrations.md",
       "plan_unit": "FGI-008",
       "dry_contract_ref": "Plans/forge_integration_contracts.schema.json",
-      "payload_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
+      "payload_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request_admission",
       "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
       "error_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_error_record",
       "availability_rule": "Exact provider, connection, repository binding, authority role, immutable review revision, capability, generation, and rate budget are required. FGI-011's existing list command repository_list_scope requires current actual account/container, source/draft authorization and read scope; no Project/repository mutation.",
