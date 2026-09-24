@@ -1,0 +1,132 @@
+{
+  "scope": "NamedPlan static separately validated request/response identity and original-normalized replay proof",
+  "base_commit": "172df9ab38f42ea3a8cffa9e625df84b0fa5c7e9",
+  "branch": "fix/named-plan-identity-joins-20260924",
+  "owner_authority": [
+    {
+      "path": "Plans/Named_Plan_System.md",
+      "sha256": "c816bd4e15c76f174a57500ea1efe2cab43e8a19b364b83cafd9146c285d334a",
+      "ranges": [
+        [
+          34,
+          63
+        ],
+        [
+          75,
+          89
+        ],
+        [
+          155,
+          171
+        ]
+      ]
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "sha256": "9753361f6702fae3b897aa0d1791de664b1f4f0cac04959935ca948fe721862d",
+      "range": [
+        1916,
+        1937
+      ]
+    }
+  ],
+  "changes": [
+    "One closed named_plan_action_response_validation input references the existing request/result/error definitions and nullable original request/result. Explicitly validation-only: not a runtime record, storage family, command envelope, receipt resolver or incoming retry normalization policy.",
+    "Helper independently validates each record and then matches command_id, command_instance_id, project_id and any nonnull returned noncreate named_plan_id.",
+    "Replay requires the first original normalized request/result, exact complete request equality and exact result equality except replayed=true. Missing original, foreign identities, changed operands or changed original outcome/refs fail static proof.",
+    "Actual aggregate dispatcher invokes the helper for the paired validation input. Standalone owner records remain schema examples, not implicit paired evidence.",
+    "Added 15 paired positives, 14 structurally valid semantic negatives and 7 structural negatives. All original 13 positives/15 negatives and existing runtime definitions are unchanged.",
+    "Root authorized one seventh path: only the existing create-result fixture registry loop now recognizes explicit semantic negatives through the real aggregate dispatcher; its six create-boundary tests are unchanged."
+  ],
+  "verification": {
+    "command": "python3 -m unittest discover -s tests -p 'test_pm_named_plan_*.py' -v",
+    "tests": 15,
+    "failures": 0,
+    "errors": 0,
+    "join_test_details": {
+      "new_test_methods": 8,
+      "matched_result_outcome_pairs": 23,
+      "schema_valid_identity_negative_probes": 89,
+      "matched_original_replays": 23,
+      "replay_boundary_negative_probes": 69,
+      "additional_checks": "Typed stale-currentness and nullable unresolved target, six changed normalized-request fields, original pair validation, malformed wrappers/components and opaque-reference limits."
+    },
+    "red": {
+      "method": "Exact base contract_semantic_failures dispatcher substituted with current paired schemas, fixtures and tests",
+      "tests": 8,
+      "failed_assertions": 124,
+      "errors": 0
+    },
+    "aggregate": {
+      "command": "python3 scripts/pm-new-contracts-verify.py",
+      "exit_code": 0,
+      "contract_pairs": 32,
+      "positive_cases_valid": 1180,
+      "negative_cases_rejected": 4049,
+      "internal_self_tests_passed": 12,
+      "findings": 0
+    },
+    "preservation": "Exact JSON comparison after removing only the new validation definition/root admission and authored added fixtures reproduces base schema/fixtures. No runtime definition or six-command vocabulary changed."
+  },
+  "file_sha256": {
+    "Plans/named_plan_system_contracts.schema.json": "5422dbbb0506334f160743e3e829317de3c7d1f012acdce5c0e85c5b7755b303",
+    "Plans/named_plan_system_contract_fixtures.json": "d85e9e3e06364e355c0ab4e75d6c04d9150e0bd64cb64c8b31fa8c1a3e418f13",
+    "scripts/pm_named_plan_semantics.py": "5a964c2591e5004d3a7177f8503ff19893a41127a9c32ba8a1a2bea58cb84526",
+    "scripts/pm-new-contracts-verify.py": "26afc9f558fbab21d882be82d8fb23754c0738dc5e041e9c0944794b04dd3f66",
+    "tests/test_pm_named_plan_identity_joins.py": "95fb1ef650ab7643a8fa691b8d61b0c346613731f89f3a73f31b83624ea080b6",
+    "tests/test_pm_named_plan_create_result.py": "a9a9dc1565f9bfdb89c6bd29bb3a5ec4c5bbd030e2a6403f97536761361285ff"
+  },
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/browser_scm_performance/named-plan-identity-join-repair-proposal.json",
+      "sha256": "9040cf9a4aa809a308702484916513c63705bcd21ec9a2e60e69229058770e08"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/browser_scm_performance/named-plan-identity-joins-red-green.json",
+      "sha256": "d522a2b6580df74d82a2f13077ac9ac52dfd3cb2e3642b11758bd9ec2198db3c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/browser_scm_performance/named-plan-identity-joins-full-gate.json",
+      "sha256": "b649964d5e6f84de2098074a20db6280596d3a4a61242aa44eca408f0364daa9"
+    }
+  ],
+  "unresolved_questions": [
+    {
+      "id": "Q1_create_no_change",
+      "question": "Can cmd.named_plan.create produce no_change, or must an already-created same-binding request always return the original accepted result with replayed=true? Which owner clause defines any distinct no_change path?",
+      "recommendation": "Preserve current admission, but do not invent a normative positive/create no_change policy or close this outcome."
+    },
+    {
+      "id": "Q2_cancel_error_mapping",
+      "question": "For NamedPlanActionResult.outcome=cancelled, is error_code required cancelled, permitted null, or may it carry another failure reason? The schema admits multiple shapes and owner63 lists cancelled without specifying this exact cross-field mapping.",
+      "recommendation": "No tightening without exact owner authority."
+    },
+    {
+      "id": "Q3_receipt_resolution",
+      "question": "Which typed NamedPlan creation/mutation/navigation/failure receipt body and resolver binds receipt_refs to command/instance/Project/Plan/outcome/currentness? The named_plan_migration_receipt is a different purpose and cannot classify these action receipts.",
+      "recommendation": "Do not ban all nonaccepted receipts or inspect safe_ref prefixes. Authenticated resolved receipt context needs a separately source-backed companion contract."
+    },
+    {
+      "id": "Q4_revision_failure_transition",
+      "question": "Which owner-authorized before/after snapshot and operation-currentness relation proves rejected/cancelled/no_change did not advance this operation's aggregate state, and what are the precise revision rules for successful rename/archive/restore/priority? Concurrent legitimate changes cannot be rejected by comparing arbitrary snapshots.",
+      "recommendation": "Do not claim phase/atomicity/transition enforcement from current result fields alone."
+    },
+    {
+      "id": "Q5_normalized_retry_binding",
+      "question": "Which request fields may differ on a duplicate idempotency delivery (source surface, return route, command instance, currentness, permission snapshot), and where is that incoming request canonically bound to the original normalized request? NamedPlan states same binding but does not define a relaxation or transformation.",
+      "recommendation": "Exact-original static replay proof is bounded and implementable; do not turn its failure into a new runtime duplicate_id_conflict policy for all retries."
+    },
+    {
+      "id": "Q6_failure_identity_resolution",
+      "question": "Must a noncreate failed/cancelled result always repeat the requested named_plan_id, even when not found or unavailable, or is existing nullable unresolved identity intentional?",
+      "recommendation": "Reject mismatching nonnull target; retain null without inventing an all-outcomes nonnull requirement."
+    }
+  ],
+  "claim_boundary": [
+    "Static consistency of supplied owner records is not authenticity of supplied originals, authorization, resolved receipt/group/route ownership, native commit, atomicity, idempotency storage or runtime state transition proof.",
+    "The exact-original replay check is not a new duplicate-id conflict response policy. A differently delivered retry requires source-authorized normalization before this proof.",
+    "Failure receipts are not classified by safe_ref strings. Currentness differences, nullable failed targets, and create/no_change admission are preserved without adjudicating the remaining questions.",
+    "No owner prose, .gitignore, governance/binding, generated artifacts, command/event set, storage, GUI implementation, readiness or main changes.",
+    "Independent root review required before integration; no full NamedPlan owner closure claimed."
+  ]
+}

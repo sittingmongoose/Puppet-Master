@@ -9,9 +9,65 @@
     {"$ref": "#/$defs/named_plan_action_result"},
     {"$ref": "#/$defs/named_plan_action_error"},
     {"$ref": "#/$defs/named_plan_action_availability"},
-    {"$ref": "#/$defs/named_plan_migration_receipt"}
+    {"$ref": "#/$defs/named_plan_migration_receipt"},
+    {"$ref": "#/$defs/named_plan_action_response_validation"}
   ],
   "$defs": {
+    "named_plan_action_response_validation": {
+      "title": "Static NamedPlan action response validation input",
+      "description": "Validation-only input combining separately validated owner records. Not a runtime record, storage family, command envelope, receipt resolver or incoming retry normalization policy.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request",
+        "response",
+        "original_request",
+        "original_result"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.named_plan.action_response_validation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request": {
+          "$ref": "#/$defs/named_plan_action_request"
+        },
+        "response": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/named_plan_action_result"
+            },
+            {
+              "$ref": "#/$defs/named_plan_action_error"
+            }
+          ]
+        },
+        "original_request": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/named_plan_action_request"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_result": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/named_plan_action_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
     "non_empty_string": {"type": "string", "minLength": 1, "maxLength": 512},
     "safe_ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:secret|password|passwd|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"},
     "nullable_safe_ref": {"oneOf": [{"$ref": "#/$defs/safe_ref"}, {"type": "null"}]},
