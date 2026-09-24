@@ -66,29 +66,82 @@
     avoid: () => [ORIENT[0](), ORIENT[2]()],
     ready: (st) => st.orientLoops > 0 || st.orient === ORIENT.length - 1 });
 
+  /* Where Chat should go. On a wide window the workspace has side docks and Chat is dragged to the left dock. Below
+     the width where the workspace stacks its docks under the main area, the right dock's hit band spans the whole
+     width, so no dock can be reached by dragging; the reachable version there is a button that sends the same move
+     command (cmd.workspace_layout.move_surface) to put Chat above the work. Production impact noted in REPORT.md. */
+  const hostEl = (h) => document.querySelector(`#pm-home-workspace [data-pm-home-host="${h}"]`);
+  const stacked = () => { const m = hostEl('home_main'), r = hostEl('dock_right'); if (!m || !r) return false; const a = m.getBoundingClientRect(), b = r.getBoundingClientRect(); return b.width > 0 && b.top >= a.bottom - 4; };
   /* the left dock's entry band: 28 px inside the workspace's left edge (the engine's frozen dock latch) */
   function leftBand() { const ws = document.getElementById('pm-home-workspace'); if (!ws) return null; const r = ws.getBoundingClientRect(); return { x: r.left, y: r.top, w: 28, h: r.height }; }
+  TR.dockBand = () => { const b = leftBand(); return b ? Object.assign({ stacked: stacked(), drop: { x: b.x + 12, y: b.y + b.h * 0.45 } }, b) : null; };
   function showZone(on) {
     const z = document.querySelector('#pm-o55-tour .o55t-zone'); if (!z) return;
     const b = leftBand(); if (!on || !b) { z.classList.remove('o55t-on'); return; }
     z.style.transform = `translate(${b.x}px, ${b.y}px)`; z.style.width = b.w + 'px'; z.style.height = b.h + 'px'; z.classList.add('o55t-on');
   }
+  const dockDone = () => TR.st.sess.done.includes('move_or_dock_chat');
   S({ id: 'move_or_dock_chat', chapter: 'workspace', kind: 'action', after: true,
     enter() { goPage('dashboard'); if (!C.chatVisible()) api().setSurfaceVisible('chat', true, 'cmd.panel.switch'); },
-    tick() { showZone(!TR.st.sess.done.includes('move_or_dock_chat')); },
-    leave: () => showZone(false),
-    target: () => q('[data-pm-home-handle="chat"]'),
-    done: () => { const s = chatSurface(); return !!(s && s.host === 'dock_left' && s.visible); },
-    showMe: async (sm) => { const b = leftBand(); await sm.drag(q('[data-pm-home-handle="chat"]'), { x: b.x + 12, y: b.y + b.h * 0.45 }); },
+    tick(st) {
+      const sk = stacked(); if (st.dockStacked !== sk) { const first = st.dockStacked === undefined; st.dockStacked = sk; if (!first) TR.refresh(); }
+      showZone(!dockDone() && !sk);
+    },
+    leave: (st) => { showZone(false); st.dockStacked = undefined; },
+    doKey: () => (stacked() ? 'doTop' : 'do'),
+    extra: () => (stacked() && !dockDone() ? `<div class="o55t-inline">${TR.btn('moveChatTop', T('tour.steps.move_or_dock_chat.moveTop'), 'secondary')}</div>` : ''),
+    actions: { moveChatTop: () => { O55.sound.play('drop'); api().moveSurface('chat', 'dock_top'); } },
+    /* the grip while Chat is still in place; the drop zone while it is lifted; once it has moved, the whole panel */
+    target: () => (dockDone() ? document.getElementById('chatPanel')
+      : document.body.classList.contains('pm-home-dragging') ? document.querySelector('#pm-o55-tour .o55t-zone') : q('[data-pm-home-handle="chat"]')),
+    done: () => { const s = chatSurface(); return !!(s && s.visible && (s.host === 'dock_left' || s.host === 'dock_top')); },
+    showMe: async (sm) => {
+      if (stacked()) { await sm.click(document.querySelector('#pm-o55-tour [data-o55t="moveChatTop"]')); return; }
+      const b = leftBand(); if (b) await sm.drag(q('[data-pm-home-handle="chat"]'), { x: b.x + 12, y: b.y + b.h * 0.45 });
+    },
     goTo: () => goPage('dashboard') });
 
   const aqItem = () => [...document.querySelectorAll('.pm6-dash-catalog-item')].find((x) => TR.vis(x) && /approval queue/i.test(x.textContent)) || null;
   const aqWidget = () => [...document.querySelectorAll('[data-widget-id], .pm6-dash-widget')].find((w) => TR.vis(w) && /approval queue/i.test(w.textContent)) || null;
+  /* placed = the dashboard accepted a move or a resize of the Approval queue since this step began */
+  const AQ = 'pm6-dash-approval-queue';
+  const dashLogs = () => window.PM7_DASH_WIDGETS || { command_log: [], receipt_log: [] };
+  const placed = (st) => {
+    const w = dashLogs(), mine = w.command_log.slice(st.wlog || 0).filter((c) => (c.command_id === 'cmd.widget.move' || c.command_id === 'cmd.widget.resize') && c.instance_id === AQ);
+    return mine.some((c) => w.receipt_log.some((r) => r.command_instance_id === c.command_instance_id && (r.outcome === 'accepted' || r.outcome === 'applied')));
+  };
+  /* where to drop it: onto the card just before the new widget, so it moves up a place. The point is kept clear of
+     the dashboard's auto-scroll bands (about 80 px from its top and bottom edges), where a held pointer would scroll
+     the list under itself. No such point in view: the widget is placed by choosing a size instead. */
+  const dropSpot = () => {
+    const h = document.getElementById('dashGridMain'), sc = document.getElementById('pm6DashScroll'), w = aqWidget(); if (!h || !w) return null;
+    const v = sc ? sc.getBoundingClientRect() : { top: 0, bottom: innerHeight };
+    const cards = [...h.children].filter((c) => c.classList.contains('pm6-dash-card') && TR.vis(c)), at = cards.indexOf(w);
+    const prev = at > 0 ? cards[at - 1] : null; if (!prev) return null;
+    const r = prev.getBoundingClientRect(), lo = Math.max(r.top + 6, v.top + 86), hi = Math.min(r.bottom - 6, v.bottom - 86);
+    if (hi - lo < 12) return null;
+    return { card: prev, id: prev.getAttribute('data-widget-id'), x: r.left + r.width * 0.3, y: Math.max(lo, Math.min(hi, r.top + r.height * 0.35)) };
+  };
+  TR.dashDrop = () => { const d = dropSpot(); return d ? { id: d.id, x: d.x, y: d.y } : null; };
   S({ id: 'widget_action', chapter: 'workspace', kind: 'action', after: true,
-    enter() { goPage('dashboard'); },
-    target: () => (TR.st.sess.done.includes('widget_action') ? aqWidget() : aqItem() || q('#pm6DashAddBtn')),
-    done: () => !!aqWidget(),
-    showMe: async (sm) => { if (!aqItem()) { await sm.click(q('#pm6DashAddBtn')); await sm.wait(420); } await sm.click(aqItem()); },
+    enter(st) { goPage('dashboard'); st.wlog = dashLogs().command_log.length; st.wphase = null; },
+    /* two moves in one step: add it from the real catalog, then place it (drag its grip, or choose a size) */
+    tick(st) { const ph = aqWidget() ? 'place' : 'add'; if (st.wphase !== ph) { const first = st.wphase === null; st.wphase = ph; if (!first) { st.side = null; O55.sound.play('step'); TR.refresh(); } } },
+    /* while placing, the callout stands beside the dashboard column, never over the cards the widget can drop onto */
+    place: (st) => (st.wphase === 'place' ? 'left' : 'auto'),
+    doKey: (st) => (st.wphase === 'place' ? 'place' : 'do'),
+    target: (st) => { const w = aqWidget(); if (TR.st.sess.done.includes('widget_action')) return w; if (w) return w; return aqItem() || q('#pm6DashAddBtn'); },
+    done: (st) => !!aqWidget() && placed(st),
+    showMe: async (sm) => {
+      if (!aqWidget()) { if (!aqItem()) { await sm.click(q('#pm6DashAddBtn')); await sm.wait(420); } await sm.click(aqItem()); await sm.wait(900); }
+      const w = aqWidget(), grip = w && w.querySelector('.pm6-dash-drag'), to = dropSpot();
+      if (grip && to) { await sm.drag(grip, { x: to.x, y: to.y }); return; }
+      /* nothing above it in view: give it a size that reads at a glance */
+      const sizeBtn = w && w.querySelector('.pm7-dash-size-btn'); if (!sizeBtn) return;
+      await sm.click(sizeBtn); await sm.wait(320);
+      const cur = w.getAttribute('data-pm7-size'), pick = document.querySelector(`.pm7-dash-size-pop.open [data-size="${cur === '1x2' ? '2x1' : '1x2'}"]`);
+      if (pick) await sm.click(pick);
+    },
     goTo: () => goPage('dashboard') });
 
   /* ================================================================ chapter 3: Plan before building */

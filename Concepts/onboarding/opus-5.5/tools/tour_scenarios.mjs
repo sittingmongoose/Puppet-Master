@@ -25,6 +25,29 @@ async function openPage() {
   await page.goto(pathToFileURL(PAGE).href + '?o55=off');
   await sleep(1200);
   await page.evaluate((f, m) => { window.PM_THEME.setFamily(f, { persist: false }); window.PM_THEME.setMode(m, { persist: false }); localStorage.removeItem('pm.o55.tour.v1'); }, fam, mode);
+  /* two invariants watched for the whole run: no raw copy key ever shows in the tour, and once the callout and the
+     spotlight have settled the callout covers no part of the target and stays inside the window */
+  await page.evaluate(() => {
+    window.__o55raw = []; window.__o55cover = {}; window.__o55clicks = [];
+    /* the last trusted clicks, for diagnosing a click that did not land */
+    window.addEventListener('click', (e) => { if (!e.isTrusted) return; const el = e.target; window.__o55clicks.push(`${Math.round(e.clientX)},${Math.round(e.clientY)} ${(el.getAttribute && (el.getAttribute('data-o55t') || el.id || el.className) || el.tagName).toString().slice(0, 50)} @${window.O55 && window.O55.tour.state().step}`); if (window.__o55clicks.length > 24) window.__o55clicks.shift(); }, true);
+    const re = /\b(?:tour|wizard|teacher)\.[a-z_]+\.[A-Za-z_.]+/;
+    let pending = 0;
+    const scan = () => { pending = 0; const r = document.getElementById('pm-o55-tour'); if (!r || r.hidden) return; const m = r.innerText.match(re); if (m && !window.__o55raw.includes(m[0])) window.__o55raw.push(m[0]); };
+    new MutationObserver(() => { if (!pending) pending = setTimeout(scan, 200); }).observe(document.body, { subtree: true, childList: true, characterData: true });
+    setInterval(() => {
+      const TR = window.O55 && window.O55.tour; if (!TR || !TR.running) return;
+      const st = TR.st, h = st && (st.dest || st.hole); if (!st || !st.step || !h || !st.cpos) return;
+      const c = document.querySelector('#pm-o55-tour .o55t-callout'); if (!c) return;
+      const a = c.getBoundingClientRect();
+      if (Math.abs(a.left - st.cpos.x) > 2 || Math.abs(a.top - st.cpos.y) > 2) return; /* still gliding */
+      const ix = Math.max(0, Math.min(a.right, h.x + h.w) - Math.max(a.left, h.x)), iy = Math.max(0, Math.min(a.bottom, h.y + h.h) - Math.max(a.top, h.y));
+      const rec = window.__o55cover[st.step.id] || (window.__o55cover[st.step.id] = { n: 0, bad: 0, out: 0, max: 0, multi: !!st.step.avoid });
+      rec.n++;
+      if (ix * iy > 300 && ix * iy > 0.02 * h.w * h.h) { rec.bad++; rec.max = Math.max(rec.max, Math.round((ix * iy) / (h.w * h.h) * 100)); }
+      if (a.left < 0 || a.top < 0 || a.right > innerWidth || a.bottom > innerHeight) rec.out++;
+    }, 250);
+  });
   let n = 0;
   const t = {
     page, close,
@@ -49,7 +72,14 @@ async function openPage() {
     async callout(action, arg) { await t.click(`#pm-o55-tour .o55t-callout [data-o55t="${action}"]${arg ? `[data-arg="${arg}"]` : ''}`, 'callout ' + action); },
     /* a real mouse drag from an element to a point */
     async drag(sel, to) {
-      const a = await page.evaluate((s) => { const el = [...document.querySelectorAll(s)].find((e) => e.getClientRects().length); const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }, sel);
+      /* like a person: wait until the grip has stopped moving (a new widget scrolls into view), then take hold of it */
+      let a = null, prev = null; const t0 = Date.now();
+      while (Date.now() - t0 < 4000) {
+        a = await page.evaluate((s) => { const el = [...document.querySelectorAll(s)].find((e) => e.getClientRects().length); if (!el) return null; const r = el.getBoundingClientRect(); const x = r.left + r.width / 2, y = r.top + r.height / 2, top = document.elementFromPoint(x, y); return { x, y, hit: !!top && (top === el || el.contains(top)) }; }, sel);
+        if (a && prev && a.hit && Math.abs(a.x - prev.x) < 0.5 && Math.abs(a.y - prev.y) < 0.5) break;
+        prev = a; await sleep(80);
+      }
+      if (!a || !a.hit) throw new Error('cannot take hold of ' + sel + ' at step ' + await t.step());
       await page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: a.x, y: a.y });
       await page.send('Input.dispatchMouseEvent', { type: 'mousePressed', x: a.x, y: a.y, button: 'left', clickCount: 1 });
       /* eased travel, then a short dwell on the destination: the workspace adopts a new drop target only after it
@@ -100,7 +130,21 @@ async function byHandChapter2(t, A) {
   await t.click('#pm6DashAddBtn', 'Add widget'); await sleep(300);
   await t.ev(() => { const it = [...document.querySelectorAll('.pm6-dash-catalog-item')].find((x) => x.getClientRects().length && /approval queue/i.test(x.textContent)); if (it) it.setAttribute('data-o55-test', 'aq'); });
   await t.click('[data-o55-test="aq"]', 'Approval queue');
-  await t.untilStep('open_planning', 6000); await t.snap('widget');
+  await t.until(() => /place it|pick a size/i.test((document.querySelector('#pm-o55-tour .o55t-callout') || {}).textContent || ''), 'the step asks to place the widget', 4000);
+  A.ok(!(await t.ev(() => window.O55.tour.state().done.includes('widget_action'))), 'adding alone does not finish the widget step');
+  /* place it: a real drag of its grip onto the first card of the main column */
+  const drop = await t.ev(() => window.O55.tour.dashDrop());
+  if (drop) {
+    await t.drag('[data-widget-id="pm6-dash-approval-queue"] .pm6-dash-drag', drop);
+    await t.untilStep('open_planning', 6000); await t.snap('widget');
+    A.ok(await t.ev((id) => { const ks = [...document.getElementById('dashGridMain').children].filter((x) => x.classList.contains('pm6-dash-card')).map((x) => x.getAttribute('data-widget-id')); return ks.indexOf('pm6-dash-approval-queue') === ks.indexOf(id) - 1; }, drop.id), 'the Approval queue moved up to where it was dropped');
+  } else {
+    /* nothing above it in view: place it by size, through its real size menu */
+    await t.click('[data-widget-id="pm6-dash-approval-queue"] .pm7-dash-size-btn', 'widget size menu');
+    await t.click('.pm7-dash-size-pop.open [data-size="1x2"]', 'Tall');
+    await t.untilStep('open_planning', 6000); await t.snap('widget');
+    A.eq(await t.ev(() => document.querySelector('[data-widget-id="pm6-dash-approval-queue"]').getAttribute('data-pm7-size')), '1x2', 'the Approval queue took the size that was chosen');
+  }
 }
 async function byHandChapter3(t, A) {
   await t.click('#tab-wizard', 'Planning Wizard tab');
@@ -126,6 +170,7 @@ async function byHandChapter3(t, A) {
 def('t1', 'Every step by hand, then Restore my layout', async (t, A) => {
   const before = await counters(t);
   const layout0 = await t.ev(() => window.PM_HOME_WORKSPACE.layout.surfaces.find((s) => s.surface_kind === 'chat').host);
+  const dash0 = await t.ev(() => JSON.stringify(window.O55.tour.dashSnapshot()));
   await t.ev(() => window.PM7_GUIDED_TOUR.start({ project: 'tastebook' })); await sleep(900);
   await byHandChapter1(t, A); await byHandChapter2(t, A); await byHandChapter3(t, A);
   await t.callout('finish', 'restore'); await sleep(1200); await t.snap('landed');
@@ -134,6 +179,8 @@ def('t1', 'Every step by hand, then Restore my layout', async (t, A) => {
   A.eq(JSON.stringify(after.c.ledger), JSON.stringify(before.c.ledger), 'usage ledger unchanged');
   A.eq(after.c.context, before.c.context, 'chat context unchanged');
   A.eq(await t.ev(() => window.PM_HOME_WORKSPACE.layout.surfaces.find((s) => s.surface_kind === 'chat').host), layout0, 'layout restored (Chat back where it was)');
+  A.eq(await t.ev(() => JSON.stringify(window.O55.tour.dashSnapshot())), dash0, 'dashboard restored (the added widget gone, every card back in its place and size)');
+  A.eq(await t.ev(() => !![...document.querySelectorAll('.pm6-dash-catalog-item.pm6-is-added')].find((x) => /approval queue/i.test(x.textContent))), false, 'the catalog offers the Approval queue again');
   A.eq(await t.ev(() => (document.querySelector('.page-tab.active[data-page]') || {}).getAttribute('data-page')), 'wizard', 'lands on Planning Wizard');
   A.ok(await t.ev(() => !document.querySelector('#panel-wizard.o55p-practice') && !document.getElementById('o55pGoal')), 'practice surface removed');
   A.ok(await t.ev(() => !!document.getElementById('o55tLanding')), 'final prompt shown on the real Wizard');
@@ -158,6 +205,7 @@ def('t2', 'Every action through Show Me, then Keep this layout', async (t, A) =>
   }
   await t.untilStep('completion_boundary'); await t.callout('finish', 'keep'); await sleep(1200);
   A.eq(await t.ev(() => window.PM_HOME_WORKSPACE.layout.surfaces.find((s) => s.surface_kind === 'chat').host), 'dock_left', 'Keep this layout keeps Chat in the left dock');
+  A.ok(await t.ev(() => { const ks = [...document.getElementById('dashGridMain').children].filter((x) => x.classList.contains('pm6-dash-card')).map((x) => x.getAttribute('data-widget-id')); return ks.includes('pm6-dash-approval-queue') && ks.indexOf('pm6-dash-approval-queue') < ks.length - 1; }), 'Keep this layout keeps the Approval queue where Show Me placed it');
   const after = await counters(t);
   A.eq(after.net, before.net, 'no network requests'); A.eq(JSON.stringify(after.c.ledger), JSON.stringify(before.c.ledger), 'usage ledger unchanged');
 });
@@ -197,11 +245,17 @@ def('t5', 'A missing target offers Take me there', async (t, A) => {
 const report = [];
 for (const sc of SC) {
   if (only && !only.includes(sc.id)) continue;
-  const t = await openPage(); const asserts = []; let error = null; const t0 = Date.now();
+  const t = await openPage(); const asserts = []; let error = null, inv = null; const t0 = Date.now();
   const A = { ok: (c, m) => asserts.push({ ok: !!c, m }), eq: (a, b, m) => asserts.push({ ok: a === b, m: m + (a === b ? '' : ` (got ${JSON.stringify(a)}, want ${JSON.stringify(b)})`) }) };
   try { await sc.fn(t, A); } catch (e) { error = String(e.message || e).slice(0, 400); }
+  try {
+    inv = await t.ev(() => ({ raw: window.__o55raw, cover: window.__o55cover, clicks: window.__o55clicks }));
+    A.ok(!inv.raw.length, 'no raw copy keys on screen' + (inv.raw.length ? ' (' + inv.raw.join(', ') + ')' : ''));
+    const bad = Object.entries(inv.cover).filter(([, r]) => (r.bad && !r.multi) || r.out).map(([k, r]) => `${k} covers ${r.max}% in ${r.bad}/${r.n}${r.out ? `, outside ${r.out}` : ''}`);
+    A.ok(!bad.length, 'the callout never covers its target' + (bad.length ? ' (' + bad.join('; ') + ')' : ''));
+  } catch (_) {}
   try { await t.page.screenshot(join(out, sc.id + '.png')); } catch (_) {}
-  const r = { id: sc.id, title: sc.title, ms: Date.now() - t0, pass: !error && asserts.every((x) => x.ok) && !t.page.errors.length, error, asserts, errors: t.page.errors.slice(0, 8), state: await t.ev(() => window.O55.tour.state()).catch(() => null) };
+  const r = { id: sc.id, title: sc.title, ms: Date.now() - t0, pass: !error && asserts.every((x) => x.ok) && !t.page.errors.length, error, asserts, errors: t.page.errors.slice(0, 8), inv, state: await t.ev(() => window.O55.tour.state()).catch(() => null) };
   report.push(r);
   console.log((r.pass ? 'PASS ' : 'FAIL ') + sc.id + '  ' + sc.title + (error ? '  !! ' + error : '') + asserts.filter((x) => !x.ok).map((x) => '\n      x ' + x.m).join('') + (t.page.errors.length ? '\n      errors: ' + t.page.errors.slice(0, 3).join(' | ') : ''));
   await t.close();

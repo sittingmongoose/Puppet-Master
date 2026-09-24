@@ -28,8 +28,36 @@
       persona: ((document.querySelector('#chatPanel .persona-label') || {}).textContent || '').trim(),
       eli5: !!TR.q('span.chat-toggle-btn.toggle-eli5.active'),
       draft: ((TR.q('textarea.pm6-chat-input') || {}).value) || '',
-      widgets: dash && dash.state ? JSON.parse(JSON.stringify(dash.state)) : null
+      widgets: dashSnapshot()
     };
+  }
+  /* The Home dashboard's cards by host, in order, with their sizes (keys only, so the snapshot survives a reload) */
+  const DASH_HOSTS = ['dashGridMain', 'dashGridMetrics', 'dashGridMonitoring'];
+  const dashKey = (c) => c.getAttribute('data-widget-id') || c.getAttribute('data-widget-kind');
+  const dashCardsIn = (h) => [...h.children].filter((c) => c.classList.contains('pm6-dash-card') && !/placeholder/.test(c.className));
+  function dashSnapshot() {
+    const out = { hosts: {}, sizes: {} };
+    DASH_HOSTS.forEach((id) => { const h = document.getElementById(id); if (!h) return; out.hosts[id] = dashCardsIn(h).map((c) => { const k = dashKey(c); out.sizes[k] = [c.style.getPropertyValue('--dw').trim(), c.style.getPropertyValue('--dh').trim()]; return k; }); });
+    return out;
+  }
+  TR.dashSnapshot = dashSnapshot;
+  /* Put the dashboard back: widgets added during the tour leave through their own remove control (so the catalog
+     knows they can be added again), then every card returns to its host, place and size, and the dashboard saves. */
+  async function dashRestore(snap) {
+    if (!snap || !snap.hosts) return null;
+    const known = new Set(Object.values(snap.hosts).flat());
+    const all = () => DASH_HOSTS.flatMap((id) => { const h = document.getElementById(id); return h ? dashCardsIn(h) : []; });
+    const extra = all().filter((c) => !known.has(dashKey(c)));
+    extra.forEach((c) => { const x = c.querySelector('[data-pm6-dash="remove"]'); if (x) x.click(); else c.remove(); });
+    if (extra.length) await new Promise((res) => setTimeout(res, 260));
+    const byKey = {}; all().forEach((c) => { byKey[dashKey(c)] = c; });
+    Object.entries(snap.hosts).forEach(([id, keys]) => {
+      const h = document.getElementById(id); if (!h) return;
+      keys.forEach((k) => { const c = byKey[k]; if (!c) return; const sz = snap.sizes[k] || []; if (sz[0]) c.style.setProperty('--dw', sz[0]); if (sz[1]) c.style.setProperty('--dh', sz[1]); h.appendChild(c); });
+    });
+    await new Promise((res) => setTimeout(res, 90)); /* the dashboard re-syncs its cards on the move */
+    try { window.PM7_DASH_WIDGETS && window.PM7_DASH_WIDGETS.persist(); } catch (_) {}
+    return JSON.stringify(dashSnapshot()) === JSON.stringify({ hosts: snap.hosts, sizes: snap.sizes }) ? 'restored' : 'failed';
   }
   async function restore(snap, keep) {
     const out = { layout: null, widgets: null, chat: null };
@@ -39,14 +67,7 @@
       const r = api.o55RestoreSnapshot(snap.layout);
       out.layout = r && r.ok ? (r.result && r.result.command ? r.result.command.command_id : 'ok') : 'failed';
     }
-    if (!keep && snap.widgets && window.PM7_DASH_WIDGETS && window.PM7_DASH_WIDGETS.state) {
-      const dash = window.PM7_DASH_WIDGETS;
-      Object.keys(dash.state).forEach((k) => { if (!(k in snap.widgets)) delete dash.state[k]; });
-      Object.assign(dash.state, JSON.parse(JSON.stringify(snap.widgets)));
-      try { dash.persist && dash.persist(); } catch (_) {}
-      try { window.PM_DEMO && window.PM_DEMO.emit && window.PM_DEMO.emit('dash.widgets', { restore: true }); } catch (_) {}
-      out.widgets = 'restored';
-    }
+    if (!keep && snap.widgets) out.widgets = await dashRestore(snap.widgets);
     out.chat = TR.chat ? await TR.chat.restore(snap, keep) : null;
     if (TR.practice) TR.practice.remove();
     return out;
@@ -60,7 +81,8 @@
     r.id = ROOT; r.className = 'o55t-root'; r.hidden = true; r.setAttribute('data-pm-hover-exempt', 'true');
     r.innerHTML = `<svg class="o55t-scrim" aria-hidden="true"><path class="o55t-scrimpath" fill-rule="evenodd"/><rect class="o55t-ring" rx="12" ry="12"/></svg>`
       + `<div class="o55t-shield" aria-hidden="true"></div>`
-      + `<div class="o55t-zone" aria-hidden="true"></div>`
+      + `<div class="o55t-zone" aria-hidden="true"><span class="o55t-zonelabel"><svg viewBox="0 0 20 20" width="16" height="16"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+      + `<span class="o55t-zl-idle">${U.esc(T('tour.steps.move_or_dock_chat.zone'))}</span><span class="o55t-zl-hot">${U.esc(T('tour.steps.move_or_dock_chat.zoneHot'))}</span></span></div>`
       + `<div class="o55t-callout" role="dialog" aria-modal="false" aria-labelledby="o55t-h"></div>`
       + `<div class="o55t-bar" role="toolbar" aria-label="${U.esc(T('tour.bar.label'))}"></div>`
       + `<div class="o55t-pointer" aria-hidden="true"><svg viewBox="0 0 32 32" width="30" height="30"><path class="o55t-ptr" d="M6 3 L6 25 L12 19 L16 28 L20 26 L16 17 L24 17 Z"/></svg><span class="o55t-trail"></span></div>`
@@ -103,7 +125,7 @@
       + `<div class="o55t-actions">${btn('back', T('tour.controls.back'), 'ghost')}${btn('skipStep', T('tour.controls.next'), 'ghost')}${btn('takeMe', T('tour.controls.takeMe'), 'primary')}</div>`;
     if (s.render) return s.render(st, { btn, copy });
     const done = st.sess.done.includes(s.id) && s.kind === 'action';
-    const title = copy(s.id, 'title'), body = done && s.after ? T('tour.steps.' + s.id + '.after') : copy(s.id, 'do');
+    const title = copy(s.id, 'title'), body = done && s.after ? T('tour.steps.' + s.id + '.after') : copy(s.id, s.doKey ? s.doKey(st) : 'do');
     const extra = s.extra ? s.extra(st) : '';
     const actions = [];
     if (s.index > 0) actions.push(btn('back', T('tour.controls.back'), 'ghost'));
@@ -153,11 +175,13 @@
     if (!st.hole || !to) { st.hole = to; drawHole(to); return; }
     if (st.spring) { st.spring.retarget(to); return; }
     const from = Object.assign({}, st.hole);
-    st.spring = M.spring({ from, to, stiffness: 190, onUpdate: (v) => { st.hole = v; drawHole(v); placeCallout(); } });
+    st.spring = M.spring({ from, to, stiffness: 190, onUpdate: (v) => { st.hole = v; drawHole(v); } });
     st.spring.finished.then(() => { st.spring = null; });
   }
   function place(snap) {
     const el = targetEl(), h = holeFor(el);
+    /* the callout is placed against where the spotlight is going, not where it is, so both travel once, together */
+    st.dest = h && !st.missing ? h : null;
     if (h && !st.missing) { if (snap) { st.hole = h; drawHole(h); } else moveHole(h); }
     else { st.hole = null; drawHole(null); }
     placeCallout();
@@ -166,7 +190,7 @@
   function placeCallout() {
     const c = st.root.querySelector('.o55t-callout'); if (!c) return;
     const W = innerWidth, H = innerHeight, cw = c.offsetWidth || 360, chh = c.offsetHeight || 180, m = 16, gap = 18;
-    const h = st.hole && !st.missing ? st.hole : null;
+    const h = !st.missing ? st.dest || st.hole : null;
     let x, y, side = 'center';
     /* a step whose spotlight tours several places keeps one callout position for the whole step, chosen once to
        stay clear of every place it will visit, so its buttons never move under the learner's hand */
@@ -185,7 +209,7 @@
     }
     else if (!h || (st.step && st.step.place === 'center')) { x = (W - cw) / 2; y = Math.max(80, (H - chh) / 2 - 40); }
     else {
-      const pref = (st.step && st.step.place) || 'auto';
+      const pl = st.step && st.step.place, pref = (typeof pl === 'function' ? pl(st) : pl) || 'auto';
       const cands = { right: [h.x + h.w + gap, h.y + h.h / 2 - chh / 2], left: [h.x - gap - cw, h.y + h.h / 2 - chh / 2], bottom: [h.x + h.w / 2 - cw / 2, h.y + h.h + gap], top: [h.x + h.w / 2 - cw / 2, h.y - gap - chh] };
       const fits = (k) => { const [cx, cy] = cands[k]; return cx >= m && cy >= 56 && cx + cw <= W - m && cy + chh <= H - 70; };
       const order = pref !== 'auto' ? [pref, 'right', 'left', 'bottom', 'top'] : (h.x + h.w / 2 > W / 2 ? ['left', 'bottom', 'top', 'right'] : ['right', 'bottom', 'top', 'left']);
@@ -199,8 +223,18 @@
       const overlap = !(x + cw < h.x || x > h.x + h.w || y + chh < h.y || y > h.y + h.h);
       if (overlap) { x = h.x + h.w / 2 > W / 2 ? m : W - cw - m; y = h.y + h.h / 2 > H / 2 ? 64 : H - chh - 76; side = 'corner'; }
     }
-    const nx = Math.round(x), ny = Math.round(y);
+    let nx = Math.round(x), ny = Math.round(y);
+    /* within a step the callout holds still while its target only shifts a little (an answer growing, a relabel):
+       it moves only when the new place is far off, or where it stands would cover the target or leave the window.
+       A callout that slides away as the learner reaches for its button is the worst kind of motion. */
+    if (st.cpos && st.cposStep === (st.step && st.step.id) && (Math.abs(st.cpos.x - nx) > 3 || Math.abs(st.cpos.y - ny) > 3)) {
+      const ox = st.cpos.x, oy = st.cpos.y;
+      const inside = ox >= 8 && oy >= 8 && ox + cw <= W - 8 && oy + chh <= H - 8;
+      const covers = h && !(ox + cw < h.x || ox > h.x + h.w || oy + chh < h.y || oy > h.y + h.h);
+      if (inside && !covers && Math.hypot(ox - nx, oy - ny) < 140) { nx = ox; ny = oy; }
+    }
     if (!st.cpos || Math.abs(st.cpos.x - nx) > 3 || Math.abs(st.cpos.y - ny) > 3) { c.style.transform = `translate(${nx}px, ${ny}px)`; st.cpos = { x: nx, y: ny }; }
+    st.cposStep = st.step && st.step.id;
     c.setAttribute('data-side', side);
   }
   function placeBar(h) {
@@ -323,11 +357,12 @@
     const tick = () => {
       if (!TR.running || st.paused) { st.poll = M.after(250, tick); return; }
       const s = st.step, el = targetEl();
-      if (s.target && !el) { if (!st.missingSince) st.missingSince = performance.now(); if (!st.missing && performance.now() - st.missingSince > 1600) { st.missing = true; renderCallout(true); } }
+      /* a surface being dragged is hidden by the workspace on purpose; that is never a missing target */
+      if (s.target && !el && !document.body.classList.contains('pm-home-dragging')) { if (!st.missingSince) st.missingSince = performance.now(); if (!st.missing && performance.now() - st.missingSince > 1600) { st.missing = true; renderCallout(true); } }
       else { st.missingSince = 0; if (st.missing) { st.missing = false; renderCallout(false); } }
       if (s.tick) { try { s.tick(st); } catch (_) {} }
       if (s.kind === 'info' && s.ready) { const r = !!s.ready(st); if (r !== st.lastReady) { st.lastReady = r; renderCallout(false); } }
-      if (!st.spring) place(false);
+      place(false); /* the spring retargets in flight; the callout is placed against the destination */
       if (s.kind === 'action' && !st.sess.done.includes(s.id) && !st.advancing) {
         let ok = false; try { ok = !!s.done(st); } catch (_) {}
         if (ok) complete(s);
@@ -421,7 +456,7 @@
     /* land on the real Planning Wizard with the Project selected; nothing starts */
     if (st.sess.project && O55.shell) O55.shell.selectProject(st.sess.project, null);
     O55.shell && O55.shell.openWizard();
-    if (res && res.layout === 'failed') O55.pageToast(T('tour.restoreFailed'));
+    if (res && (res.layout === 'failed' || res.widgets === 'failed')) O55.pageToast(T('tour.restoreFailed'));
     TR.landing && TR.landing();
     window.dispatchEvent(new CustomEvent('o55:tour', { detail: { type: 'finished', keep: !!keep, restored: res } }));
   }
@@ -441,18 +476,25 @@
   }
   TR.audit = () => ({ before: st.counters, after: TR.counters() });
 
-  /* The activity-bar Chat icon: the shell's own handler does not toggle the Chat surface in this concept, so the
-     icon is wired to the real command (cmd.panel.switch). Production impact recorded in REPORT.md. */
+  /* The activity-bar Chat icon. The shell's handler picks its branch by the icon's title, which the hover-tag layer
+     moves aside on first hover, so a real click fell through to the side-panel branch and hid the Files panel
+     instead of showing Chat. The icon is wired to the real command (cmd.panel.switch) and the old branch never
+     runs. Production impact recorded in REPORT.md. */
   document.addEventListener('click', (e) => {
     const icon = e.target && e.target.closest ? e.target.closest('#activityBar .icon[data-ab-id="chat"]') : null;
     if (!icon) return;
-    const api = window.PM_HOME_WORKSPACE; if (!api) return;
-    const before = (api.layout.surfaces.find((s) => s.surface_kind === 'chat') || {}).visible;
-    setTimeout(() => {
-      const now = (api.layout.surfaces.find((s) => s.surface_kind === 'chat') || {}).visible;
-      if (now === before) api.setSurfaceVisible('chat', !before, 'cmd.panel.switch');
-    }, 0);
-  }, true); /* capture: the shell stops this click before it bubbles */
+    const api = window.PM_HOME_WORKSPACE; if (!api || !api.layout) return;
+    e.stopPropagation();
+    const shown = !!(api.layout.surfaces.find((s) => s.surface_kind === 'chat') || {}).visible;
+    api.setSurfaceVisible('chat', !shown, 'cmd.panel.switch');
+    icon.classList.toggle('active', !shown);
+  }, true);
+  /* the icon's lit state follows Chat however it was shown or hidden (its own close button, a layout restore) */
+  const syncChatIcon = () => {
+    const icon = document.querySelector('#activityBar .icon[data-ab-id="chat"]'), api = window.PM_HOME_WORKSPACE;
+    if (icon && api && api.layout) icon.classList.toggle('active', !!(api.layout.surfaces.find((s) => s.surface_kind === 'chat') || {}).visible);
+  };
+  window.addEventListener('pm:dispatch-receipt', () => setTimeout(syncChatIcon, 0));
 
   /* keep the look in step while the tour runs */
   new MutationObserver(() => { if (TR.running) { syncTheme(); TR.refresh(); } }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });

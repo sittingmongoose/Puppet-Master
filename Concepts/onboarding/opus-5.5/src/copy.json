@@ -1140,7 +1140,8 @@
     "steps": {
       "comfort_intro": {
         "title": "Let’s make Puppet Master feel familiar.",
-        "body": "You’ll try a few real actions. This guided example does not change your files or use your AI plan.",
+        "do": "You’ll try a few real actions. This guided example does not change your files or use your AI plan.",
+        "doEli5": "You’ll try a few real things. Nothing here changes your files or uses your AI plan.",
         "tips": "Tips: switch to ELI5 on the bar for simpler words. Reduced Motion lives in Settings.",
         "tipsEli5": "Tips: ELI5 gives you shorter, simpler hints. Reduced Motion is in Settings."
       },
@@ -1180,12 +1181,19 @@
         "title": "Move Chat to where it helps.",
         "do": "Drag Assistant Chat to the highlighted side of the workspace. You can move it again whenever your work changes.",
         "doEli5": "Drag Chat to the glowing left edge.",
-        "after": "The same Chat stays with you; only its place changed."
+        "doTop": "This window is narrow, so Chat moves above your work instead of beside it. Choose Move Chat to the top.",
+        "doTopEli5": "Choose Move Chat to the top.",
+        "after": "The same Chat stays with you; only its place changed.",
+        "zone": "Drop Chat here",
+        "zoneHot": "Let go",
+        "moveTop": "Move Chat to the top"
       },
       "widget_action": {
         "title": "Keep useful things in view.",
         "do": "Add the Approval queue widget, then place it where you can glance at it while planning.",
         "doEli5": "Add the Approval queue widget.",
+        "place": "Now place it: drag its grip to move it, or choose a size.",
+        "placeEli5": "Drag it to a new spot, or pick a size.",
         "after": "Widgets keep useful Project information nearby without taking you away from the page you’re using."
       },
       "open_planning": {

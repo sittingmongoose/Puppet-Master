@@ -22,18 +22,54 @@
 .o55t-root[data-paused] .o55t-ring, .o55t-root[data-hidden] .o55t-ring { animation-play-state: paused; }
 .o55t-shield { position: fixed; inset: 0; pointer-events: auto; background: transparent; clip-path: inset(50%); }
 
-/* the left dock's entry band glows while Chat is being moved */
-.o55t-zone { position: fixed; left: 0; top: 0; width: 28px; opacity: 0; pointer-events: none; border-radius: 10px;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--o55t-accent) 55%, transparent), transparent); box-shadow: inset 3px 0 0 var(--o55t-accent); transition: opacity 300ms ease; }
+/* the left dock's entry band: a glowing edge plus a label that points at it. It brightens while Chat is lifted and
+   says "Let go" once the workspace has adopted the left dock (the engine's own drop-active state), so the learner sees
+   the drop land before letting go. Nothing here takes pointer events; the engine hit-tests by position. */
+.o55t-zone { position: fixed; left: 0; top: 0; width: 28px; opacity: 0; pointer-events: none; border-radius: 10px; transition: opacity 300ms ease, box-shadow 220ms ease, background 220ms ease;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--o55t-accent) 62%, transparent), color-mix(in srgb, var(--o55t-accent) 14%, transparent));
+  box-shadow: inset 3px 0 0 var(--o55t-accent), 0 0 22px color-mix(in srgb, var(--o55t-accent) 38%, transparent); }
 .o55t-zone.o55t-on { opacity: 1; animation: o55t-zone 1.6s ease-in-out infinite alternate; }
-@keyframes o55t-zone { from { filter: brightness(0.85); } to { filter: brightness(1.25); } }
-.o55t-root[data-family="retro"] .o55t-zone { border-radius: 0; background: repeating-linear-gradient(0deg, var(--o55t-accent) 0 6px, transparent 6px 12px); opacity: 0; }
-.o55t-root[data-family="retro"] .o55t-zone.o55t-on { opacity: 0.85; animation: o55t-blink 1s steps(1) infinite; }
+@keyframes o55t-zone { from { filter: brightness(0.85); } to { filter: brightness(1.2); } }
+.o55t-zonelabel { position: absolute; left: calc(100% + 12px); top: 50%; display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px 8px 9px; border-radius: 999px; white-space: nowrap;
+  background: var(--o55t-accent); color: var(--background); font: 700 13px/1 var(--body-font); box-shadow: 0 12px 26px -10px rgba(0, 0, 0, 0.55); transform: translateY(-50%); transition: transform 220ms cubic-bezier(0.2, 0, 0, 1); }
+.o55t-zonelabel svg { flex: none; animation: o55t-nudge 1.1s cubic-bezier(0.3, 0, 0.2, 1) infinite; }
+@keyframes o55t-nudge { 45% { transform: translateX(-5px); } }
+.o55t-zl-hot { display: none; }
+body.pm-home-dragging .o55t-zone.o55t-on { animation: none; filter: brightness(1.15); box-shadow: inset 3px 0 0 var(--o55t-accent), 0 0 44px color-mix(in srgb, var(--o55t-accent) 70%, transparent); }
+body.pm-home-dragging .o55t-zonelabel { transform: translateY(-50%) scale(1.06); }
+body:has([data-pm-home-host="dock_left"].pm-home-drop-active) .o55t-zone.o55t-on { background: color-mix(in srgb, var(--o55t-accent) 78%, transparent); }
+body:has([data-pm-home-host="dock_left"].pm-home-drop-active) .o55t-zl-idle { display: none; }
+body:has([data-pm-home-host="dock_left"].pm-home-drop-active) .o55t-zl-hot { display: inline; }
+body:has([data-pm-home-host="dock_left"].pm-home-drop-active) .o55t-zonelabel svg { animation: none; }
+/* Basic: a drafting callout with a dimension-line edge */
+.o55t-root[data-family="basic"] .o55t-zone { border-radius: 3px; background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--o55t-accent) 34%, transparent) 0 4px, transparent 4px 10px); box-shadow: inset 2px 0 0 var(--o55t-accent), inset -1px 0 0 color-mix(in srgb, var(--o55t-accent) 50%, transparent); }
+.o55t-root[data-family="basic"] .o55t-zonelabel { border-radius: 4px; background: var(--surface); color: var(--o55t-accent); border: 1.5px solid var(--o55t-accent); font: 700 11.5px/1 var(--body-font); letter-spacing: 0.09em; text-transform: uppercase; }
+/* Friendly: a felt strip with a paper tab that bounces */
+.o55t-root[data-family="friendly"] .o55t-zone { border-radius: 14px; box-shadow: inset 0 0 0 2px var(--o55t-accent), 0 0 26px color-mix(in srgb, var(--o55t-accent) 40%, transparent); }
+.o55t-root[data-family="friendly"] .o55t-zonelabel { font-family: var(--display-font, var(--body-font)); box-shadow: 4px 5px 0 color-mix(in srgb, var(--text-primary) 18%, transparent); }
+.o55t-root[data-family="friendly"] .o55t-zonelabel svg { animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
+/* Glass: a column of light with a prism label */
+.o55t-root[data-family="glass"] .o55t-zone { background: linear-gradient(180deg, color-mix(in srgb, var(--accent-blue) 60%, transparent), color-mix(in srgb, var(--accent-magenta) 60%, transparent)); box-shadow: 0 0 30px color-mix(in srgb, var(--accent-magenta) 45%, transparent), inset 0 0 0 1px rgba(255, 255, 255, 0.35); }
+.o55t-root[data-family="glass"] .o55t-zonelabel { background: linear-gradient(135deg, var(--accent-blue), var(--accent-magenta)); color: #fff; box-shadow: 0 14px 34px -12px rgba(40, 10, 80, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.4); }
+/* Retro: blinking pixel stripes and a terminal label */
+.o55t-root[data-family="retro"] .o55t-zone { border-radius: 0; background: repeating-linear-gradient(0deg, var(--o55t-accent) 0 6px, transparent 6px 12px); box-shadow: none; }
+.o55t-root[data-family="retro"] .o55t-zone.o55t-on { opacity: 0.9; animation: o55t-blink 1s steps(1) infinite; }
+.o55t-root[data-family="retro"] .o55t-zonelabel { border-radius: 0; font-family: var(--display-font); text-transform: uppercase; box-shadow: 4px 4px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); transition-timing-function: steps(3, end); }
+.o55t-root[data-family="retro"] .o55t-zonelabel svg { animation: o55t-blink 0.8s steps(1) infinite; }
+.o55t-root[data-family="retro"] .o55t-zl-idle::before { content: '> '; }
 @keyframes o55t-blink { 50% { opacity: 0.35; } }
+
+/* while the tour runs, its callout is the only guide on screen: the app's hover tags would stack a second tooltip on
+   top of it wherever the mouse happens to rest */
+html[data-o55-tour] #pm-hover-tag-root { display: none !important; }
+/* while Chat is being dragged the guide steps back: the scrim thins and the callout fades so the learner sees the
+   workspace make room, and the spotlight sits on the drop zone */
+body.pm-home-dragging .o55t-scrimpath { fill-opacity: 0.35; }
+body.pm-home-dragging .o55t-callout { opacity: 0.16; }
 
 /* callout: one outcome, one instruction, Show Me and Back */
 .o55t-callout { position: fixed; left: 0; top: 0; width: min(380px, calc(100vw - 32px)); pointer-events: auto; padding: 18px 18px 14px; border-radius: var(--o55t-r);
-  background: var(--o55t-bg); border: 1px solid var(--o55t-line); box-shadow: 0 24px 60px -18px rgba(0, 0, 0, 0.55); transition: transform 420ms cubic-bezier(0.2, 0, 0, 1); will-change: transform; }
+  background: var(--o55t-bg); border: 1px solid var(--o55t-line); box-shadow: 0 24px 60px -18px rgba(0, 0, 0, 0.55); transition: transform 420ms cubic-bezier(0.2, 0, 0, 1), opacity 220ms ease; will-change: transform; }
 .o55t-root[data-family="friendly"] .o55t-callout { border: 2px solid color-mix(in srgb, var(--text-primary) 70%, transparent); box-shadow: 6px 8px 0 color-mix(in srgb, var(--text-primary) 16%, transparent), 0 24px 50px -20px rgba(0, 0, 0, 0.4); transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
 .o55t-root[data-family="glass"] .o55t-callout { border-color: rgba(255, 255, 255, 0.3); box-shadow: 0 30px 70px -16px rgba(25, 10, 50, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.35); transition-duration: 560ms; transition-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1); }
 .o55t-root[data-family="retro"] .o55t-callout { border: 3px solid var(--text-primary); box-shadow: 8px 8px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); transition-timing-function: steps(5, end); font-family: var(--display-font); }
@@ -124,6 +160,9 @@
 .o55p-goal { display: grid; gap: 10px; margin: 18px 0 8px; padding: 18px 20px; border-radius: 16px; border: 1px dashed color-mix(in srgb, var(--accent-blue) 60%, transparent); background: color-mix(in srgb, var(--accent-blue) 8%, var(--surface)); }
 .o55p-goaltext { margin: 0; font: 600 17px/1.45 var(--display-font, var(--body-font)); color: var(--text-primary); }
 .o55p-use { justify-self: start; }
+/* the shell's glass skin turns every big Wizard button into tinted glass but keeps its pale label, which leaves the
+   label unreadable; the practice button keeps a solid prism fill in glass */
+html[data-theme^="glass"] #o55pGoal .o55p-use { background: linear-gradient(135deg, var(--accent-blue), var(--accent-magenta)) !important; color: #fff !important; border-color: transparent !important; box-shadow: 0 12px 28px -12px rgba(40, 10, 80, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.35) !important; }
 .o55p-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; font: 700 11px/1.3 var(--body-font); letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-lime); background: color-mix(in srgb, var(--accent-lime) 14%, transparent); vertical-align: middle; }
 .o55p-bubble { display: grid; gap: 10px; padding: 14px 16px; border-radius: 14px; background: color-mix(in srgb, var(--text-primary) 5%, transparent); border: 1px solid var(--border); }
 .o55p-bubble p { margin: 0; font-weight: 650; font-size: 15px; }
@@ -156,17 +195,26 @@ html[data-theme-family="retro"] .o55p-pulse { animation-timing-function: steps(5
 
 /* Reduced Motion: sequence and cause/effect stay; movement becomes short fades */
 html[data-motion="reduced"] .o55t-callout, html[data-motion="reduced"] .o55t-bar { transition-duration: 0.01ms !important; }
-html[data-motion="reduced"] .o55t-ring, html[data-motion="reduced"] .o55t-zone { animation: none !important; }
+html[data-motion="reduced"] .o55t-ring, html[data-motion="reduced"] .o55t-zone, html[data-motion="reduced"] .o55t-zonelabel svg { animation: none !important; }
 html[data-motion="reduced"] .o55e-del { animation: none; display: none; }
 html[data-motion="reduced"] .o55e-ins, html[data-motion="reduced"] .o55p-fresh, html[data-motion="reduced"] .o55p-gone { animation-duration: 0.01ms !important; animation-delay: 0ms !important; }
 @media (prefers-reduced-motion: reduce) {
   .o55t-callout, .o55t-bar { transition-duration: 0.01ms !important; }
-  .o55t-ring, .o55t-zone { animation: none !important; }
+  .o55t-ring, .o55t-zone, .o55t-zonelabel svg { animation: none !important; }
   .o55e-del { animation: none; display: none; }
   .o55e-ins, .o55p-fresh, .o55p-gone { animation-duration: 0.01ms !important; animation-delay: 0ms !important; }
 }
+/* the concept demo pill steps aside while the tour runs (it would sit on the tour bar on narrow windows) */
+html[data-o55-tour] #o55-demo { display: none !important; }
+/* narrow windows: the bar keeps every control, sound included, by getting compact and then wrapping to two rows */
+@media (max-width: 900px) {
+  .o55t-brand > span, .o55t-seglabel { display: none; }
+  .o55t-bar { gap: 8px; padding: 5px 6px 5px 10px; }
+  .o55t-barbtn, .o55t-seg button { padding: 0 8px; }
+}
 @media (max-width: 760px) {
-  .o55t-bar { left: 8px; right: 8px; transform: none; overflow-x: auto; }
+  .o55t-bar { left: 8px; right: 8px; transform: none; justify-content: center; flex-wrap: wrap; row-gap: 4px; border-radius: 18px; white-space: normal; }
+  .o55t-pip:not(.o55t-cur) { display: none; }
   .o55t-pipname { display: none; }
   .o55t-callout { width: calc(100vw - 24px); }
 }
