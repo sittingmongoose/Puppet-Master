@@ -180,6 +180,8 @@ Examples:
 
 Each provider entry MUST also declare the allowed `auth_surface` values its runtime accepts so PM can validate account compatibility before scheduling and so the HTTP/client layer knows how credentials must be attached or delegated.
 
+Claude subscription and Anthropic API/cloud, Antigravity subscription and Gemini API/Vertex, Grok Build subscription and xAI API, and Muse Code subscription and Meta Model API remain separate account/product/auth/billing pools. OpenCode Go, OpenCode Zen, and an optional external OpenCode runtime are likewise not interchangeable. One credential legitimately supporting several internal adapters remains one visible account only where provider-owned evidence proves that relationship; a common vendor label, model, executable name, or adapter family never establishes credential or entitlement interchangeability. These source-required product distinctions do not by themselves verify that any external route is currently supported or ready.
+
 Provider-entry identity fields are part of Agent-Config/provider registry canon:
 - `provider_entry_id`
 - `provider_family_id`
@@ -1528,6 +1530,8 @@ acceptance_criteria:
 - Provider entries declare supported auth_surface values.
 - transport_kind remains direct_api, cli_runtime, or server_bridge.
 - Coding-plan provider identities preserve vendor-specific API boundaries.
+- Claude subscription versus Anthropic API/cloud, Antigravity subscription versus Gemini API/Vertex, Grok Build subscription versus xAI API, and Muse Code subscription versus Meta Model API preserve separate account/product/auth/billing pools; OpenCode Go, OpenCode Zen and optional external OpenCode runtime remain distinct.
+- A credential shared by internal adapters produces one visible account only under provider-owned evidence; vendor/model/adapter labels cannot prove interchangeability, support or readiness.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -1542,6 +1546,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0016
+- PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/03_SIMPLE_PROVIDER_SETUP_AFTER_PROJECT.md:72-78
 preserved_exact_tokens:
 - provider_entry_id
 - provider_family_id
