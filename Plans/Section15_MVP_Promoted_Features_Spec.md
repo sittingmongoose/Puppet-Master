@@ -11760,8 +11760,13 @@ The source search covered this document's SMPFS-138, including its DL-070
 vacated-section rule, UCC-144's exact
 `cmd.terminal.move_workgroup` row, CV-323's event and receipt boundary, Shared Integration Runtime's
 CommandOutcomeRecord rules, SP-245's Home persistence, SP-273/SIR-046's expressly
-Home-only custody, SP-278/SP-286, both event/storage registries, and the exact
-`Plans/event_payloads/terminal_workgroup_moved.schema.json`. These establish the
+Home-only custody, SP-278/SP-286, both event/storage registries, the exact
+`Plans/event_payloads/terminal_workgroup_moved.schema.json`, the production wiring
+rows `home.terminal_section.move_workgroup` and `home.terminal_section.new_section`
+in `Plans/Wiring_Matrix.production.json` (handler `handlers::terminal::move_workgroup`,
+declared events `workspace.layout_changed` and `terminal.workgroup_moved`),
+FinalGUISpec's two 2026-09-23 DL-070 amendments and
+`Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json`. These establish the
 move, identities, shared append and receipt constraints, but no terminal-family
 producer continuation, historical reader or checkpoint disposition. In particular,
 SP-273 explicitly leaves this sibling's producer and durable coordination to its
@@ -11771,7 +11776,8 @@ not current proof. Only this family receives the following definitions.
 ### Original producer and outcome
 
 Define **new producer** `terminal.workgroup_move_commit.v1@1.0.0`, the terminal
-owner's continuation of the existing admitted `cmd.terminal.move_workgroup`.
+owner's continuation of the existing admitted `cmd.terminal.move_workgroup`,
+reached through its existing `handlers::terminal::move_workgroup` path.
 It is not the Home producer, generic Storage projector, PTY manager or UI callback.
 Authenticate the actual original SIR request, command instance, operation,
 command payload/idempotency binding, full original owner identity and dispatch
@@ -11844,6 +11850,8 @@ An independently applicable `workspace.layout_changed` has its own Home operatio
 identity, payload, original receipt and completion; neither event is an alias or
 substitute. A Home event is emitted only if Home's own applicability predicate is
 met, and neither event is omitted merely because its sibling's binding is pending.
+The wiring rows' declared event set is unchanged; each event is emitted only under
+its own owner's applicability.
 If either required owner protocol is unavailable, refuse before effects.
 
 Build this family's unchanged closed payload from the actual original accepted
