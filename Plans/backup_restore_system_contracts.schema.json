@@ -30,6 +30,7 @@
     {"$ref": "#/$defs/restore_receipt"},
     {"$ref": "#/$defs/recovery_point_receipt"},
     {"$ref": "#/$defs/backup_restore_command_request"},
+    {"$ref": "#/$defs/backup_action_request_v2"},
     {"$ref": "#/$defs/backup_restore_command_result"},
     {"$ref": "#/$defs/backup_restore_command_error"},
     {"$ref": "#/$defs/backup_restore_command_availability"},
@@ -2468,6 +2469,118 @@
         ,"maintenance_lease_required"
         ,"archive_consent_required"
         ,"recovery_set_unavailable"
+      ]
+    },
+    "backup_destination_patch": {
+      "description": "Explicit nonsecret editable configuration only. Omitted fields stay unchanged; nullable owner references may be cleared explicitly. Identity, adapter/family, owning Server, generation, measured capabilities and health are never caller patch fields. Actual referenced configuration and authority still require owner resolution.",
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "display_name": {"$ref": "#/$defs/backup_destination/properties/display_name"},
+        "location_ref": {"$ref": "#/$defs/backup_destination/properties/location_ref"},
+        "auth_profile_ref": {"$ref": "#/$defs/backup_destination/properties/auth_profile_ref"},
+        "credential_ref": {"$ref": "#/$defs/backup_destination/properties/credential_ref"},
+        "oauth_registration_ref": {"$ref": "#/$defs/backup_destination/properties/oauth_registration_ref"}
+      }
+    },
+    "backup_destination_update_input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_server_id", "backup_destination_id", "expected_destination_generation", "patch"],
+      "properties": {
+        "target_server_id": {"$ref": "#/$defs/stable_id"},
+        "backup_destination_id": {"$ref": "#/$defs/stable_id"},
+        "expected_destination_generation": {"$ref": "#/$defs/backup_destination/properties/destination_generation"},
+        "patch": {"$ref": "#/$defs/backup_destination_patch"}
+      }
+    },
+    "backup_verify_input": {
+      "description": "Explicit repository-local immutable selection. Requested scope is not an achieved integrity level or a restore drill. Owner resolution must bind each selected snapshot to its actual manifest and result; references alone prove none of this.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository_id", "backup_destination_id", "snapshot_ids", "requested_scope", "cost_approval_ref"],
+      "properties": {
+        "repository_id": {"$ref": "#/$defs/stable_id"},
+        "backup_destination_id": {"$ref": "#/$defs/stable_id"},
+        "snapshot_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/stable_id"}},
+        "requested_scope": {"enum": ["structural", "sampled_data_read", "full_data_read"]},
+        "cost_approval_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+      }
+    },
+    "backup_drill_coverage": {
+      "description": "Requested coverage, never achieved proof or a waiver of mandatory native closure. The owner resolves selected families and path refs against the selected manifest. All-path selection is explicit, not inferred from an empty value.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selected_family_ids", "path_selection", "selected_path_refs"],
+      "properties": {
+        "selected_family_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/family_id"}},
+        "path_selection": {"enum": ["all_paths_in_selected_families", "selected_paths"]},
+        "selected_path_refs": {"$ref": "#/$defs/ref_list"}
+      },
+      "allOf": [
+        {"if": {"properties": {"path_selection": {"const": "all_paths_in_selected_families"}}, "required": ["path_selection"]}, "then": {"properties": {"selected_path_refs": {"maxItems": 0}}}},
+        {"if": {"properties": {"path_selection": {"const": "selected_paths"}}, "required": ["path_selection"]}, "then": {"properties": {"selected_path_refs": {"minItems": 1}}}}
+      ]
+    },
+    "backup_test_restore_input": {
+      "description": "Input selection only. Actual Restore/FileSafe target isolation, current authorization, native proof and original custody must be independently resolved before any effect. No live-target safety follows from a reference spelling.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository_id", "backup_destination_id", "snapshot_id", "isolated_destination_ref", "coverage", "cost_approval_ref"],
+      "properties": {
+        "repository_id": {"$ref": "#/$defs/stable_id"},
+        "backup_destination_id": {"$ref": "#/$defs/stable_id"},
+        "snapshot_id": {"$ref": "#/$defs/stable_id"},
+        "isolated_destination_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "coverage": {"$ref": "#/$defs/backup_drill_coverage"},
+        "cost_approval_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+      }
+    },
+    "backup_compare_input": {
+      "description": "Two explicit selected operands. Backup treats target_revision as opaque; target_ref must resolve through the existing File/SCM native revision owner. This shape does not authenticate the target or authorize its content read.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository_id", "backup_destination_id", "snapshot_id", "capture_set_id", "selected_path_ref", "target_ref", "target_revision", "target_server_id", "initiating_client_id", "source_host_id", "source_environment_id", "filesafe_decision_ref"],
+      "properties": {
+        "repository_id": {"$ref": "#/$defs/stable_id"},
+        "backup_destination_id": {"$ref": "#/$defs/stable_id"},
+        "snapshot_id": {"$ref": "#/$defs/stable_id"},
+        "capture_set_id": {"$ref": "#/$defs/stable_id"},
+        "selected_path_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "target_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "target_revision": {"$ref": "#/$defs/non_empty_string"},
+        "target_server_id": {"$ref": "#/$defs/backup_restore_command_request/properties/target_server_id"},
+        "initiating_client_id": {"$ref": "#/$defs/backup_restore_command_request/properties/initiating_client_id"},
+        "source_host_id": {"$ref": "#/$defs/backup_restore_command_request/properties/source_host_id"},
+        "source_environment_id": {"$ref": "#/$defs/backup_restore_command_request/properties/source_environment_id"},
+        "filesafe_decision_ref": {"$ref": "#/$defs/backup_restore_command_request/properties/filesafe_decision_ref"}
+      }
+    },
+    "backup_action_request_v2": {
+      "description": "Versioned explicit inputs for the four BRS-008 actions. All v1 definitions remain historical-readable unchanged. This request shape is not the completed current dispatch/result/owner-admission contract and creates no runtime availability.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "command_id", "command_instance_id", "actor_ref", "permission_snapshot_ref", "idempotency_key", "expected_currentness_ref", "expected_currentness_sha256", "source_surface", "return_route_ref", "action_input"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.action_request.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "command_id": {"enum": ["cmd.backup.destination.update", "cmd.backup.verify", "cmd.backup.test_restore", "cmd.backup.file.compare"]},
+        "command_instance_id": {"$ref": "#/$defs/backup_restore_command_request/properties/command_instance_id"},
+        "actor_ref": {"$ref": "#/$defs/backup_restore_command_request/properties/actor_ref"},
+        "permission_snapshot_ref": {"$ref": "#/$defs/backup_restore_command_request/properties/permission_snapshot_ref"},
+        "idempotency_key": {"$ref": "#/$defs/backup_restore_command_request/properties/idempotency_key"},
+        "expected_currentness_ref": {"$ref": "#/$defs/backup_restore_command_request/properties/expected_currentness_ref"},
+        "expected_currentness_sha256": {"$ref": "#/$defs/backup_restore_command_request/properties/expected_currentness_sha256"},
+        "source_surface": {"$ref": "#/$defs/backup_restore_command_request/properties/source_surface"},
+        "return_route_ref": {"$ref": "#/$defs/backup_restore_command_request/properties/return_route_ref"},
+        "action_input": {"type": "object"}
+      },
+      "allOf": [
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.destination.update"}}, "required": ["command_id"]}, "then": {"properties": {"action_input": {"$ref": "#/$defs/backup_destination_update_input"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.verify"}}, "required": ["command_id"]}, "then": {"properties": {"action_input": {"$ref": "#/$defs/backup_verify_input"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.test_restore"}}, "required": ["command_id"]}, "then": {"properties": {"action_input": {"$ref": "#/$defs/backup_test_restore_input"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.file.compare"}}, "required": ["command_id"]}, "then": {"properties": {"action_input": {"$ref": "#/$defs/backup_compare_input"}}}}
       ]
     },
     "backup_restore_command_request": {

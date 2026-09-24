@@ -161,8 +161,10 @@ canon and forbids treating this review record as a seal or readiness unlock.
   reason are repaired, with the blocked command and 80-token partition unchanged.
   See `artifacts-blocked-disposition-repair.md`; this does not admit a new route.
 - Backup: currentness-reviewed owner prose for ACT-089/101/102/110 is repaired.
-  Actual typed companions and owner joins remain open; see
-  `backup-four-operands-owner-repair.md`. The four findings are not closed.
+  Additive typed input shapes and their regression fixtures now follow that
+  repair; see `backup-four-operands-owner-repair.md` and `backup-input-shapes.md`.
+  Current admission, result companions and actual owner joins remain open.
+  The four findings are not closed.
 - Home/widgets: ordinary return behavior already exists in production wiring.
   Only the two Tour-only summary strings needed reconciliation; see
   `home-widget-return-metadata-repair.md`. Concrete exchange/storage coverage
