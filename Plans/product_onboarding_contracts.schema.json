@@ -23,7 +23,10 @@
     {"$ref": "#/$defs/bootstrap_restore_existing_pm_data_preflow"},
     {"$ref": "#/$defs/onboarding_connector_owner_projection"},
     {"$ref": "#/$defs/onboarding_legacy_migration_receipt"},
-    {"$ref": "#/$defs/onboarding_precommit_authorization"}
+    {"$ref": "#/$defs/onboarding_precommit_authorization"},
+    {"$ref": "#/$defs/onboarding_setup_plan_v3"},
+    {"$ref": "#/$defs/onboarding_session_v3"},
+    {"$ref": "#/$defs/onboarding_draft_format_migration"}
   ],
   "$defs": {
     "non_empty_string": {"type": "string", "minLength": 1, "maxLength": 512},
@@ -3259,6 +3262,2400 @@
               "source_revision": {"type": "integer", "minimum": 1},
               "draft_preview_ref": {"$ref": "#/$defs/safe_ref"},
               "draft_preview_sha256": {"$ref": "#/$defs/sha256"}
+            }
+          }
+        }
+      ]
+    },
+    "onboarding_creation_path_selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "value"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "unresolved",
+            "owner_derived",
+            "explicit"
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "explicit"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "unresolved"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "owner_derived"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "onboarding_creation_template_selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "ref"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "unresolved",
+            "none",
+            "selected"
+          ]
+        },
+        "ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/safe_ref"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "selected"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "$ref": "#/$defs/safe_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "unresolved"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "none"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "onboarding_creation_transport_selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "value"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "unresolved",
+            "selected"
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "enum": [
+                "automatic",
+                "https",
+                "ssh"
+              ]
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "selected"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "enum": [
+                  "automatic",
+                  "https",
+                  "ssh"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "unresolved"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "onboarding_creation_catalog_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "catalog_ref",
+        "catalog_revision",
+        "catalog_sha256"
+      ],
+      "properties": {
+        "catalog_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "catalog_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "catalog_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "onboarding_creation_option_choice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "field_id",
+        "category",
+        "value"
+      ],
+      "properties": {
+        "field_id": {
+          "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+        },
+        "category": {
+          "enum": [
+            "actions",
+            "branch_policy",
+            "ci_variables",
+            "existing_team_project",
+            "fork_policy",
+            "inherited_project_visibility",
+            "integrations",
+            "main_branch",
+            "merge_request_settings",
+            "mirror",
+            "path",
+            "pipelines",
+            "project_grouping",
+            "protected_branches",
+            "repository_permissions",
+            "repository_policy",
+            "repository_settings",
+            "runners",
+            "scoped_ca",
+            "slug",
+            "ssh_host",
+            "ssh_port",
+            "team_access",
+            "template"
+          ]
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/creation_option_value"
+        }
+      }
+    },
+    "onboarding_creation_options_selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "catalog_binding",
+        "choices"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "unresolved",
+            "none",
+            "selected"
+          ]
+        },
+        "catalog_binding": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/onboarding_creation_catalog_binding"
+            }
+          ]
+        },
+        "choices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/onboarding_creation_option_choice"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "unresolved"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "catalog_binding": {
+                "type": "null"
+              },
+              "choices": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "none"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "choices": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "selected"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "catalog_binding": {
+                "$ref": "#/$defs/onboarding_creation_catalog_binding"
+              },
+              "choices": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "onboarding_azure_team_project_selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "existing_project_ref",
+        "project_name",
+        "visibility",
+        "process_template_ref",
+        "version_control"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "existing",
+            "create"
+          ]
+        },
+        "existing_project_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/safe_ref"
+            }
+          ]
+        },
+        "project_name": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+            }
+          ]
+        },
+        "visibility": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "enum": [
+                "private",
+                "public"
+              ]
+            }
+          ]
+        },
+        "process_template_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/safe_ref"
+            }
+          ]
+        },
+        "version_control": {
+          "const": "git"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "existing"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "existing_project_ref": {
+                "$ref": "#/$defs/safe_ref"
+              },
+              "project_name": {
+                "type": "null"
+              },
+              "visibility": {
+                "type": "null"
+              },
+              "process_template_ref": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "existing_project_ref": {
+                "type": "null"
+              },
+              "project_name": {
+                "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+              },
+              "visibility": {
+                "enum": [
+                  "private",
+                  "public"
+                ]
+              },
+              "process_template_ref": {
+                "$ref": "#/$defs/safe_ref"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "onboarding_repository_creation_selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path_selection",
+        "source_template_selection",
+        "git_transport_selection",
+        "provider_options_selection",
+        "azure_team_project_selection"
+      ],
+      "properties": {
+        "path_selection": {
+          "$ref": "#/$defs/onboarding_creation_path_selection"
+        },
+        "source_template_selection": {
+          "$ref": "#/$defs/onboarding_creation_template_selection"
+        },
+        "git_transport_selection": {
+          "$ref": "#/$defs/onboarding_creation_transport_selection"
+        },
+        "provider_options_selection": {
+          "$ref": "#/$defs/onboarding_creation_options_selection"
+        },
+        "azure_team_project_selection": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/onboarding_azure_team_project_selection"
+            }
+          ]
+        }
+      }
+    },
+    "onboarding_setup_plan_v3": {
+      "title": "OnboardingSetupPlanV3",
+      "description": "One closed, planned-only, secret-free Product Onboarding draft. It records user choices and stable non-secret owner references, never live discovery/authentication/trust status or raw pairing, enrollment, credential, or authentication material.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "planned_only",
+        "applied",
+        "journey",
+        "theme_family",
+        "theme_mode",
+        "project_mode",
+        "project_name",
+        "project_source_ref",
+        "backup_source_ref",
+        "project_transport",
+        "backup_transport",
+        "local_location_mode",
+        "local_location",
+        "local_history",
+        "history_backend",
+        "filesafe",
+        "online_mode",
+        "forge",
+        "forge_provider_variant",
+        "forge_instance_url",
+        "forge_instance_profile",
+        "forge_account_action",
+        "forge_account_ref",
+        "repository_name",
+        "repository_description",
+        "repository_visibility",
+        "repository_owner_scope",
+        "repository_ref",
+        "repository_container",
+        "repository_project",
+        "repository_default_branch",
+        "repository_initialize_readme",
+        "repository_gitignore",
+        "repository_license",
+        "server_mode",
+        "server_connection_mode",
+        "server_ref",
+        "server_trust_confirmed",
+        "storage_mode",
+        "storage_transport",
+        "storage_location",
+        "client_mode",
+        "remote_mode",
+        "remote_more",
+        "include_vpn_networks",
+        "connection_pairing",
+        "tailscale_control",
+        "tailscale_account_action",
+        "headscale_url",
+        "remote_endpoint",
+        "proxy_kind",
+        "proxy_hosting",
+        "proxy_hostname",
+        "proxy_tls",
+        "source_more",
+        "review_confirmed",
+        "project_draft_ref",
+        "project_draft_revision",
+        "settings_transfer",
+        "preflight_result_refs",
+        "source_access_authorization_refs",
+        "project_created",
+        "repository_creation_selection"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.product_onboarding.setup_plan.v3"
+        },
+        "planned_only": {
+          "const": true
+        },
+        "applied": {
+          "const": false
+        },
+        "journey": {
+          "enum": [
+            "new_or_local",
+            "connect_existing"
+          ]
+        },
+        "theme_family": {
+          "enum": [
+            "friendly",
+            "glass",
+            "retro",
+            "basic"
+          ]
+        },
+        "theme_mode": {
+          "enum": [
+            "light",
+            "dark"
+          ]
+        },
+        "project_mode": {
+          "enum": [
+            "new",
+            "existing_local",
+            "existing_online",
+            "restore",
+            "later"
+          ]
+        },
+        "project_name": {
+          "$ref": "#/$defs/bounded_nonsecret_string"
+        },
+        "project_source_ref": {
+          "$ref": "#/$defs/bounded_nonsecret_string"
+        },
+        "backup_source_ref": {
+          "$ref": "#/$defs/bounded_nonsecret_string"
+        },
+        "project_transport": {
+          "enum": [
+            "local",
+            "mounted",
+            "ssh"
+          ]
+        },
+        "backup_transport": {
+          "enum": [
+            "local",
+            "mounted",
+            "ssh"
+          ]
+        },
+        "local_location_mode": {
+          "enum": [
+            "automatic",
+            "custom"
+          ]
+        },
+        "local_location": {
+          "$ref": "#/$defs/bounded_nonsecret_string"
+        },
+        "local_history": {
+          "type": "boolean"
+        },
+        "history_backend": {
+          "enum": [
+            "git",
+            "jujutsu"
+          ]
+        },
+        "filesafe": {
+          "type": "boolean"
+        },
+        "online_mode": {
+          "enum": [
+            "none",
+            "new",
+            "existing"
+          ]
+        },
+        "forge": {
+          "enum": [
+            "none",
+            "github",
+            "gitlab",
+            "azure_devops",
+            "bitbucket_cloud",
+            "bitbucket_data_center",
+            "forgejo",
+            "gitea",
+            "cursor_origin"
+          ]
+        },
+        "forge_provider_variant": {
+          "oneOf": [
+            {
+              "enum": [
+                "hosted",
+                "self_managed",
+                "cloud",
+                "data_center",
+                "preview",
+                "forgejo_self_managed",
+                "forgejo_cloud",
+                "gitea_self_managed",
+                "gitea_cloud"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "forge_instance_url": {
+          "$ref": "#/$defs/bounded_nonsecret_string"
+        },
+        "forge_instance_profile": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/onboarding_forge_instance_profile"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "forge_account_action": {
+          "oneOf": [
+            {
+              "enum": [
+                "sign_in_during_setup",
+                "create_account_during_setup",
+                "already_connected"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "forge_account_ref": {
+          "$ref": "#/$defs/bounded_nonsecret_string"
+        },
+        "repository_name": {
+          "$ref": "#/$defs/bounded_nonsecret_string"
+        },
+        "repository_description": {
+          "$ref": "#/$defs/bounded_nonsecret_string"
+        },
+        "repository_visibility": {
+          "oneOf": [
+            {
+              "enum": [
+                "private",
+                "public",
+                "internal"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repository_owner_scope": {
+          "enum": [
+            "personal",
+            "organization"
+          ]
+        },
+        "repository_ref": {
+          "$ref": "#/$defs/bounded_nonsecret_string"
+        },
+        "repository_container": {
+          "$ref": "#/$defs/bounded_nonsecret_string"
+        },
+        "repository_project": {
+          "$ref": "#/$defs/bounded_nonsecret_string"
+        },
+        "repository_default_branch": {
+          "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+        },
+        "repository_initialize_readme": {
+          "type": "boolean"
+        },
+        "repository_gitignore": {
+          "enum": [
+            "automatic",
+            "none",
+            "rust",
+            "node",
+            "python",
+            "slint"
+          ]
+        },
+        "repository_license": {
+          "enum": [
+            "none",
+            "mit",
+            "apache_2",
+            "gpl_3"
+          ]
+        },
+        "server_mode": {
+          "enum": [
+            "this_device",
+            "existing_server",
+            "new_server"
+          ]
+        },
+        "server_connection_mode": {
+          "enum": [
+            "discover",
+            "manual"
+          ]
+        },
+        "server_ref": {
+          "$ref": "#/$defs/bounded_nonsecret_string"
+        },
+        "server_trust_confirmed": {
+          "type": "boolean",
+          "deprecated": true,
+          "description": "Compatibility projection only. It never requires or represents a visible recognition checkbox and never substitutes for Server-owner pairing and trust results."
+        },
+        "storage_mode": {
+          "enum": [
+            "with_server",
+            "this_device",
+            "network_location"
+          ]
+        },
+        "storage_transport": {
+          "enum": [
+            "mounted",
+            "smb",
+            "nfs",
+            "ssh"
+          ]
+        },
+        "storage_location": {
+          "$ref": "#/$defs/bounded_nonsecret_string"
+        },
+        "client_mode": {
+          "const": "this_device"
+        },
+        "remote_mode": {
+          "enum": [
+            "none",
+            "local_or_vpn",
+            "tailscale",
+            "reverse_proxy",
+            "remote_link"
+          ]
+        },
+        "remote_more": {
+          "type": "boolean"
+        },
+        "include_vpn_networks": {
+          "type": "boolean"
+        },
+        "connection_pairing": {
+          "enum": [
+            "approval",
+            "code",
+            "qr"
+          ]
+        },
+        "tailscale_control": {
+          "oneOf": [
+            {
+              "enum": [
+                "hosted",
+                "headscale"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tailscale_account_action": {
+          "oneOf": [
+            {
+              "enum": [
+                "check_existing_then_sign_in_once",
+                "headscale_enrollment"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "headscale_url": {
+          "$ref": "#/$defs/bounded_nonsecret_string"
+        },
+        "remote_endpoint": {
+          "$ref": "#/$defs/bounded_nonsecret_string"
+        },
+        "proxy_kind": {
+          "oneOf": [
+            {
+              "enum": [
+                "caddy",
+                "nginx",
+                "traefik",
+                "nginx_proxy_manager"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "proxy_hosting": {
+          "oneOf": [
+            {
+              "enum": [
+                "generate_for_server",
+                "generate_only",
+                "existing_proxy"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "proxy_hostname": {
+          "$ref": "#/$defs/bounded_nonsecret_string"
+        },
+        "proxy_tls": {
+          "oneOf": [
+            {
+              "enum": [
+                "lets_encrypt",
+                "existing_certificate"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_more": {
+          "type": "boolean"
+        },
+        "review_confirmed": {
+          "type": "boolean"
+        },
+        "project_draft_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "project_draft_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "settings_transfer": {
+          "$ref": "#/$defs/onboarding_settings_transfer_selection"
+        },
+        "preflight_result_refs": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        },
+        "source_access_authorization_refs": {
+          "type": "array",
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        },
+        "project_created": {
+          "const": false
+        },
+        "repository_creation_selection": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/onboarding_repository_creation_selection"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "settings_transfer": {
+                "properties": {
+                  "mode": {
+                    "const": "copy_from_project"
+                  }
+                },
+                "required": [
+                  "mode"
+                ]
+              }
+            },
+            "required": [
+              "settings_transfer"
+            ]
+          },
+          "then": {
+            "properties": {
+              "journey": {
+                "const": "new_or_local"
+              },
+              "project_mode": {
+                "not": {
+                  "const": "later"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "journey": {
+                "const": "connect_existing"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_mode": {
+                "const": "later"
+              },
+              "local_history": {
+                "const": false
+              },
+              "online_mode": {
+                "const": "none"
+              },
+              "server_mode": {
+                "const": "existing_server"
+              },
+              "server_ref": {
+                "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+              },
+              "remote_mode": {
+                "enum": [
+                  "local_or_vpn",
+                  "tailscale",
+                  "reverse_proxy",
+                  "remote_link"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "project_mode": {
+                "const": "existing_local"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_source_ref": {
+                "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "project_mode": {
+                "const": "restore"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "backup_source_ref": {
+                "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "storage_mode": {
+                "const": "network_location"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "storage_location": {
+                "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "online_mode": {
+                "const": "none"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "forge": {
+                "const": "none"
+              },
+              "forge_provider_variant": {
+                "type": "null"
+              },
+              "forge_instance_url": {
+                "const": ""
+              },
+              "forge_instance_profile": {
+                "type": "null"
+              },
+              "forge_account_action": {
+                "type": "null"
+              },
+              "forge_account_ref": {
+                "const": ""
+              },
+              "repository_ref": {
+                "const": ""
+              },
+              "repository_visibility": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "online_mode": {
+                "enum": [
+                  "new",
+                  "existing"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "forge": {
+                "enum": [
+                  "github",
+                  "gitlab",
+                  "azure_devops",
+                  "bitbucket_cloud",
+                  "bitbucket_data_center",
+                  "forgejo",
+                  "gitea",
+                  "cursor_origin"
+                ]
+              },
+              "forge_provider_variant": {
+                "enum": [
+                  "hosted",
+                  "self_managed",
+                  "cloud",
+                  "data_center",
+                  "preview",
+                  "forgejo_self_managed",
+                  "forgejo_cloud",
+                  "gitea_self_managed",
+                  "gitea_cloud"
+                ]
+              },
+              "forge_instance_url": {
+                "$ref": "#/$defs/https_url"
+              },
+              "forge_account_action": {
+                "enum": [
+                  "sign_in_during_setup",
+                  "create_account_during_setup",
+                  "already_connected"
+                ]
+              },
+              "forge_account_ref": {
+                "$ref": "#/$defs/bounded_nonsecret_string"
+              },
+              "repository_name": {
+                "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+              },
+              "repository_ref": {
+                "$ref": "#/$defs/bounded_nonsecret_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "const": "github"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "forge_provider_variant": {
+                "enum": [
+                  "hosted",
+                  "self_managed"
+                ]
+              },
+              "repository_visibility": {
+                "enum": [
+                  "private",
+                  "public",
+                  "internal"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "const": "gitlab"
+              },
+              "forge_provider_variant": {
+                "const": "hosted"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "repository_visibility": {
+                "enum": [
+                  "private",
+                  "public"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "const": "gitlab"
+              },
+              "forge_provider_variant": {
+                "const": "self_managed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "repository_visibility": {
+                "enum": [
+                  "private",
+                  "public",
+                  "internal"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "const": "azure_devops"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "forge_provider_variant": {
+                "enum": [
+                  "cloud",
+                  "self_managed"
+                ]
+              },
+              "repository_visibility": {
+                "type": "null"
+              },
+              "repository_project": {
+                "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "const": "bitbucket_cloud"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "forge_provider_variant": {
+                "const": "cloud"
+              },
+              "repository_visibility": {
+                "enum": [
+                  "private",
+                  "public"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "const": "bitbucket_data_center"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "forge_provider_variant": {
+                "const": "data_center"
+              },
+              "repository_visibility": {
+                "oneOf": [
+                  {
+                    "enum": [
+                      "private",
+                      "public"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "const": "cursor_origin"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "forge_provider_variant": {
+                "const": "preview"
+              },
+              "forge_instance_url": {
+                "const": "https://origin.cursor.com"
+              },
+              "repository_visibility": {
+                "enum": [
+                  "private",
+                  "internal"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "const": "forgejo"
+              }
+            },
+            "required": [
+              "forge"
+            ]
+          },
+          "then": {
+            "properties": {
+              "forge_provider_variant": {
+                "enum": [
+                  "forgejo_self_managed",
+                  "forgejo_cloud"
+                ]
+              },
+              "forge_instance_profile": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/onboarding_forge_instance_profile"
+                  },
+                  {
+                    "properties": {
+                      "provider": {
+                        "const": "forgejo"
+                      },
+                      "detected_product": {
+                        "const": "forgejo"
+                      }
+                    }
+                  }
+                ]
+              },
+              "repository_visibility": {
+                "enum": [
+                  "private",
+                  "public",
+                  "internal"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "const": "gitea"
+              }
+            },
+            "required": [
+              "forge"
+            ]
+          },
+          "then": {
+            "properties": {
+              "forge_provider_variant": {
+                "enum": [
+                  "gitea_self_managed",
+                  "gitea_cloud"
+                ]
+              },
+              "forge_instance_profile": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/onboarding_forge_instance_profile"
+                  },
+                  {
+                    "properties": {
+                      "provider": {
+                        "const": "gitea"
+                      },
+                      "detected_product": {
+                        "const": "gitea"
+                      }
+                    }
+                  }
+                ]
+              },
+              "repository_visibility": {
+                "enum": [
+                  "private",
+                  "public",
+                  "internal"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "remote_mode": {
+                "const": "none"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "include_vpn_networks": {
+                "const": false
+              },
+              "tailscale_control": {
+                "type": "null"
+              },
+              "tailscale_account_action": {
+                "type": "null"
+              },
+              "headscale_url": {
+                "const": ""
+              },
+              "remote_endpoint": {
+                "const": ""
+              },
+              "proxy_kind": {
+                "type": "null"
+              },
+              "proxy_hosting": {
+                "type": "null"
+              },
+              "proxy_hostname": {
+                "const": ""
+              },
+              "proxy_tls": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "remote_mode": {
+                "const": "local_or_vpn"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "tailscale_control": {
+                "type": "null"
+              },
+              "tailscale_account_action": {
+                "type": "null"
+              },
+              "headscale_url": {
+                "const": ""
+              },
+              "proxy_kind": {
+                "type": "null"
+              },
+              "proxy_hosting": {
+                "type": "null"
+              },
+              "proxy_hostname": {
+                "const": ""
+              },
+              "proxy_tls": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "remote_mode": {
+                "const": "tailscale"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "server_connection_mode": {
+                "const": "discover"
+              },
+              "include_vpn_networks": {
+                "const": false
+              },
+              "tailscale_control": {
+                "enum": [
+                  "hosted",
+                  "headscale"
+                ]
+              },
+              "tailscale_account_action": {
+                "enum": [
+                  "check_existing_then_sign_in_once",
+                  "headscale_enrollment"
+                ]
+              },
+              "proxy_kind": {
+                "type": "null"
+              },
+              "proxy_hosting": {
+                "type": "null"
+              },
+              "proxy_hostname": {
+                "const": ""
+              },
+              "proxy_tls": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "remote_mode": {
+                "const": "tailscale"
+              },
+              "tailscale_control": {
+                "const": "hosted"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "tailscale_account_action": {
+                "const": "check_existing_then_sign_in_once"
+              },
+              "headscale_url": {
+                "const": ""
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "remote_mode": {
+                "const": "tailscale"
+              },
+              "tailscale_control": {
+                "const": "headscale"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "tailscale_account_action": {
+                "const": "headscale_enrollment"
+              },
+              "headscale_url": {
+                "$ref": "#/$defs/https_url"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "remote_mode": {
+                "const": "reverse_proxy"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "include_vpn_networks": {
+                "const": false
+              },
+              "tailscale_control": {
+                "type": "null"
+              },
+              "tailscale_account_action": {
+                "type": "null"
+              },
+              "headscale_url": {
+                "const": ""
+              },
+              "remote_endpoint": {
+                "const": ""
+              },
+              "proxy_hostname": {
+                "$ref": "#/$defs/https_url"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "journey": {
+                "const": "connect_existing"
+              },
+              "remote_mode": {
+                "const": "reverse_proxy"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "server_connection_mode": {
+                "const": "manual"
+              },
+              "proxy_kind": {
+                "type": "null"
+              },
+              "proxy_hosting": {
+                "type": "null"
+              },
+              "proxy_tls": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "remote_mode": {
+                "const": "remote_link"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "server_connection_mode": {
+                "const": "manual"
+              },
+              "include_vpn_networks": {
+                "const": false
+              },
+              "tailscale_control": {
+                "type": "null"
+              },
+              "tailscale_account_action": {
+                "type": "null"
+              },
+              "headscale_url": {
+                "const": ""
+              },
+              "remote_endpoint": {
+                "$ref": "#/$defs/nonsecret_endpoint_ref"
+              },
+              "proxy_kind": {
+                "type": "null"
+              },
+              "proxy_hosting": {
+                "type": "null"
+              },
+              "proxy_hostname": {
+                "const": ""
+              },
+              "proxy_tls": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge_account_action": {
+                "const": "already_connected"
+              }
+            },
+            "required": [
+              "forge_account_action"
+            ]
+          },
+          "then": {
+            "properties": {
+              "forge_account_ref": {
+                "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "online_mode": {
+                "const": "existing"
+              },
+              "review_confirmed": {
+                "const": true
+              }
+            },
+            "required": [
+              "online_mode",
+              "review_confirmed"
+            ]
+          },
+          "then": {
+            "properties": {
+              "repository_ref": {
+                "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "online_mode": {
+                "const": "new"
+              },
+              "journey": {
+                "const": "new_or_local"
+              },
+              "project_mode": {
+                "not": {
+                  "const": "later"
+                }
+              }
+            },
+            "required": [
+              "online_mode",
+              "journey",
+              "project_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "repository_creation_selection": {
+                "$ref": "#/$defs/onboarding_repository_creation_selection"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "repository_creation_selection": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "not": {
+                  "const": "azure_devops"
+                }
+              }
+            },
+            "required": [
+              "forge"
+            ]
+          },
+          "then": {
+            "properties": {
+              "repository_creation_selection": {
+                "properties": {
+                  "azure_team_project_selection": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "x-puppet-master-assertions": [
+        "project_transport and backup_transport describe how an existing folder or backup is reached; storage_transport independently describes the chosen network storage protocol",
+        "history_backend=git|jujutsu is a local Safe History choice independent from online_mode and forge; Git and Jujutsu never require an account",
+        "an online copy binds both forge_account_ref and repository_ref; already_connected means reuse that explicit account and repository binding and is never a no-op",
+        "connect_existing chooses a route first, then the owner discovers or accepts the selected server_ref and performs connection_pairing=approval|code|qr; server_trust_confirmed is compatibility state only and never creates a visible recognition-checkbox gate",
+        "local_or_vpn uses LAN discovery and optionally scans already-enabled VPN interfaces when include_vpn_networks=true; it never requires a private endpoint or configures a VPN",
+        "hosted Tailscale checks current owner state before at most one protected sign-in; live signed-in and peer-discovery status remains an owner projection rather than a durable setup choice",
+        "Headscale consumes headscale_url before owner-managed enrollment and subsequent Server discovery; it never uses hosted-Tailscale account sign-in",
+        "connect_existing reverse_proxy consumes only the existing HTTPS proxy_hostname plus Server pairing; null proxy_kind, proxy_hosting, and proxy_tls prove that it does not configure Caddy, NGINX, Traefik, certificates, or another proxy",
+        "remote_endpoint is a non-secret manual discovery fallback or Puppet Master Remote Link reference; it never contains raw pairing, enrollment, credential, or authentication material",
+        "repository_visibility=internal requires a current provider capability projection before dispatch; GitLab hosted means GitLab.com and rejects internal, self_managed GitLab remains capability-probed, Azure DevOps visibility belongs to its project and stays null, and Cursor Origin Preview permits only private or internal",
+        "Forgejo and Gitea each require a matching distinct onboarding_forge_instance_profile; forge_instance_url equals that profile's web_base_url and the profile's cached refs cannot be treated as live/current owner proof",
+        "before Project commit confirmation only bounded read-only validation and individually consented selected-source account authentication may run; repository creation, clone, history initialization, settings apply, folder mutation, broad provider setup and Project registration remain forbidden",
+        "after confirmation, account connection/authentication, Forge repository list/create/bind, backend-native clone/publish, optional AutomationBinding setup, and Project registration dispatch only through their canonical owners with currentness, permission, FileSafe, idempotency, ObservableWork, and typed terminal returns",
+        "AutomationBinding is independent from RepositoryForgeBinding and may name a different provider, instance, account, or host; absence of automation_binding_ref never disables ordinary Git or Jujutsu"
+      ]
+    },
+    "onboarding_setup_plan_current_write": {
+      "$ref": "#/$defs/onboarding_setup_plan_v3"
+    },
+    "onboarding_session_v3": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "onboarding_session_id",
+        "project_id",
+        "stage",
+        "status",
+        "simple_path_selection",
+        "scm_backend_selection",
+        "forge_provider_selection",
+        "active_branch",
+        "provider_selection_ref",
+        "project_selection_ref",
+        "owner_operation_refs",
+        "warning_codes",
+        "revision",
+        "continuation_generation",
+        "return_context",
+        "guided_tour_handoff_ref",
+        "updated_at_utc",
+        "setup_draft",
+        "draft_format_disposition",
+        "historical_owner_chain_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.product_onboarding.session.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "onboarding_session_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "stage": {
+          "$ref": "#/$defs/stage"
+        },
+        "status": {
+          "enum": [
+            "active",
+            "interrupted",
+            "deferred",
+            "skipped",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "simple_path_selection": {
+          "$ref": "#/$defs/simple_path_selection"
+        },
+        "scm_backend_selection": {
+          "$ref": "#/$defs/scm_backend_selection"
+        },
+        "forge_provider_selection": {
+          "$ref": "#/$defs/forge_provider_selection"
+        },
+        "active_branch": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/onboarding_branch_context"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "provider_selection_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "project_selection_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "owner_operation_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        },
+        "warning_codes": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "continuation_generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "return_context": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/onboarding_return_context"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "guided_tour_handoff_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "updated_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "setup_draft": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/onboarding_setup_plan_v3"
+                },
+                {
+                  "$ref": "#/$defs/onboarding_setup_plan"
+                }
+              ]
+            }
+          ]
+        },
+        "draft_format_disposition": {
+          "enum": [
+            "current_v3",
+            "retained_owner_chain_v2"
+          ]
+        },
+        "historical_owner_chain_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/safe_ref"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/onboarding_durable_setup_state_fields"
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stage": {
+                "const": "ready"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "deferred"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "return_context": {
+                "$ref": "#/$defs/onboarding_return_context"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "enum": [
+                  "first_project",
+                  "source_control_setup",
+                  "server_storage_client",
+                  "remote_access_setup",
+                  "review_setup_plan",
+                  "automatic_preparation",
+                  "provider_setup",
+                  "free_models_setup",
+                  "ready"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "simple_path_selection": {
+                "enum": [
+                  "start_on_this_computer",
+                  "connect_existing_server",
+                  "setup_server",
+                  "restore_backup"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "simple_path_selection": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stage": {
+                "enum": [
+                  "welcome",
+                  "simple_path"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "simple_path_selection": {
+                "const": "connect_existing_server"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stage": {
+                "enum": [
+                  "welcome",
+                  "simple_path",
+                  "remote_access_setup",
+                  "review_setup_plan",
+                  "automatic_preparation",
+                  "ready"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "queued_setup_plan_ref": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "queued_setup_plan_ref"
+            ]
+          },
+          "then": {
+            "properties": {
+              "setup_draft": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "queued_setup_plan_ref": {
+                "$ref": "#/$defs/safe_ref"
+              }
+            },
+            "required": [
+              "queued_setup_plan_ref"
+            ]
+          },
+          "then": {
+            "properties": {
+              "setup_draft": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/onboarding_setup_plan_v3"
+                  },
+                  {
+                    "$ref": "#/$defs/onboarding_setup_plan"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "draft_format_disposition": {
+                "const": "current_v3"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "setup_draft": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "#/$defs/onboarding_setup_plan_v3"
+                  }
+                ]
+              },
+              "historical_owner_chain_ref": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "setup_draft": {
+                "$ref": "#/$defs/onboarding_setup_plan"
+              },
+              "historical_owner_chain_ref": {
+                "$ref": "#/$defs/safe_ref"
+              }
+            },
+            "anyOf": [
+              {
+                "properties": {
+                  "project_disposition": {
+                    "const": "committed"
+                  }
+                },
+                "required": [
+                  "project_disposition"
+                ]
+              },
+              {
+                "properties": {
+                  "active_branch": {
+                    "type": "object",
+                    "properties": {
+                      "owner_phase": {
+                        "const": "project_commit"
+                      }
+                    },
+                    "required": [
+                      "owner_phase"
+                    ]
+                  }
+                },
+                "required": [
+                  "active_branch"
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "x-puppet-master-assertions": [
+        "setup_draft is the closed bounded typed choice snapshot, not a raw plan/transcript; its exact canonical bytes and draft identity/revision match the queued/reviewed plan binding. Return contexts and continuation projections retain references, not duplicate bodies."
+      ]
+    },
+    "onboarding_session_current_write": {
+      "$ref": "#/$defs/onboarding_session_v3"
+    },
+    "onboarding_draft_format_migration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "migration_id",
+        "storage_migration_receipt_ref",
+        "source_session_ref",
+        "source_session_sha256",
+        "source_schema_id",
+        "target_session_ref",
+        "target_session_sha256",
+        "target_schema_id",
+        "source_key_shape",
+        "target_key_shape",
+        "disposition",
+        "historical_owner_chain_ref",
+        "retained_draft_sha256",
+        "owner_work_replayed",
+        "emits_peer_storage_receipt",
+        "migrated_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.product_onboarding.draft_format_migration.v1"
+        },
+        "migration_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "storage_migration_receipt_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_session_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_session_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_schema_id": {
+          "const": "pm.product_onboarding.session.v2"
+        },
+        "target_session_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "target_session_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "target_schema_id": {
+          "const": "pm.product_onboarding.session.v3"
+        },
+        "source_key_shape": {
+          "const": "onboarding_state.v3:{onboarding_session_id}"
+        },
+        "target_key_shape": {
+          "const": "onboarding_state.v4:{onboarding_session_id}"
+        },
+        "disposition": {
+          "enum": [
+            "new_review_required",
+            "retained_committed",
+            "retained_reconciling",
+            "no_draft"
+          ]
+        },
+        "historical_owner_chain_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/safe_ref"
+            }
+          ]
+        },
+        "retained_draft_sha256": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/sha256"
+            }
+          ]
+        },
+        "owner_work_replayed": {
+          "const": false
+        },
+        "emits_peer_storage_receipt": {
+          "const": false
+        },
+        "migrated_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "disposition": {
+                "enum": [
+                  "retained_committed",
+                  "retained_reconciling"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "historical_owner_chain_ref": {
+                "$ref": "#/$defs/safe_ref"
+              },
+              "retained_draft_sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "historical_owner_chain_ref": {
+                "type": "null"
+              },
+              "retained_draft_sha256": {
+                "type": "null"
+              }
             }
           }
         }

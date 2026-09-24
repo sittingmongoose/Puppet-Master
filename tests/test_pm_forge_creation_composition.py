@@ -211,7 +211,19 @@ class CreationCompositionTests(unittest.TestCase):
         self.assertEqual(prefix + "command_request_admission", profile["payload_schema_ref"])
         storage = json.loads((ROOT / "Plans/storage_value_registry.json").read_text())
         previous = json.loads(subprocess.check_output(["git", "show", "47d055c035c14b2bd3442ea5f96515ef990c32dc:Plans/storage_value_registry.json"], cwd=ROOT, text=True))
-        self.assertEqual(previous["families"], storage["families"])
+        # Onboarding now consumes these Forge choices through its versioned
+        # existing family. Account for that exact owner-defined transformation,
+        # while still rejecting any new Forge family or unrelated family drift.
+        from pm_onboarding_creation_schema import build_onboarding_v3_storage_bundle, materialized_v3_registry
+        bundle = build_onboarding_v3_storage_bundle(*[
+            json.loads((ROOT / "Plans" / name).read_text())
+            for name in ("product_onboarding_contracts.schema.json", "project_system_contracts.schema.json",
+                         "settings_system_contracts.schema.json", "forge_integration_contracts.schema.json")
+        ])
+        expected_families = materialized_v3_registry(previous, bundle)["families"]
+        self.assertEqual(expected_families, storage["families"])
+        self.assertEqual([r["family_id"] for r in previous["families"]],
+                         [r["family_id"] for r in storage["families"]])
         self.assertEqual(previous["retention_policies"], storage["retention_policies"])
         key = "scd.forge.command_transport.v1"
         before = next(r for r in previous["contract_family_dispositions"] if r["disposition_id"] == key)

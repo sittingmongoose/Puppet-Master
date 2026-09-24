@@ -486,41 +486,33 @@ class OnboardingStorageTests(unittest.TestCase):
         cls.bundle = cls.storage.expected_bundle()
 
     def test_existing_family_and_retention_census_is_unchanged(self):
-        # Re-pinned 2026-09-24 (reports/storage-owner-closeout-20260924/REPORT.md, Task 2) to the
-        # landed, recorded registry. The earlier pin was the registry as of 7db6a87c60, whose landed
-        # twin is b09294e44b (same 88-row digest, including the corrected Onboarding schema), plus
-        # run_started_index_checkpoint (af6856d039) and browser_workspace_created_index_checkpoint
-        # (69553720f1). Every later move is a landed commit with its own record:
-        # - 204 more families through 4d9d21297d to f6350caf27, named in the census comment of
-        #   scripts/pm-implementation-readiness.py; none removed;
-        # - three retention policies, at 0fed14e345, 74c5485e3b and 6621d9dc1d;
-        # - four of the 88 rows: event_record_index (d21fd2cf23), restore_point_record (7fa3b65df7),
-        #   retention_hold_record (2080658ff8) and goal_receipt (679e066a2a, 274c681e43);
-        # - run_started_index_checkpoint, at 38d896d3f0.
+        import subprocess
+        from pm_onboarding_creation_schema import materialized_v3_registry
+        # Explicit reviewed landing baseline; never read a moving origin/main.
+        reviewed_main = "1e5d9b097b46aa58e7af488a9c38a87efb780d5f"
+        baseline = json.loads(subprocess.check_output(
+            ["git", "-C", str(ROOT), "show",
+             reviewed_main + ":Plans/storage_value_registry.json"], text=True))
+        expected = materialized_v3_registry(baseline, self.bundle)
         families = self.registry["families"]
         self.assertEqual(len(families), 294)
         self.assertEqual(len({row["family_id"] for row in families}), 294)
-        added = [row for row in families if row["family_id"] == "run_started_index_checkpoint"]
-        browser_checkpoint = [row for row in families if row["family_id"] == "browser_workspace_created_index_checkpoint"]
-        self.assertEqual(len(browser_checkpoint), 1)
-        self.assertEqual(len(added), 1)
-        # The 88 rows of the earlier pin still lead the registry in their order, followed by the
-        # two families it named; every later family is appended after them.
-        self.assertEqual(
-            [row["family_id"] for row in families[88:90]],
-            ["run_started_index_checkpoint", "browser_workspace_created_index_checkpoint"],
-        )
-        prior = families[:88]
-        self.assertEqual(len(prior), 88)
-        def canonical_digest(value):
-            return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
-        self.assertEqual(canonical_digest(prior), "de1461c6617b69ff9345c7723c24bc41ca89253a84f50d4351613efa37ae7617")
-        self.assertEqual(canonical_digest(added[0]), "24060bdb4077754dc609915d59ffd6357f3ae042e4ff34e75f91683937055842")
-        spec = importlib.util.spec_from_file_location("browser_created_storage_pin", ROOT / "scripts/pm_browser_workspace_created.py")
-        browser = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(browser)
-        self.assertEqual(browser_checkpoint[0], browser.expected_storage_family())
         self.assertEqual(len(self.registry["retention_policies"]), 27)
+        self.assertEqual(families, expected["families"])
+        self.assertEqual(self.registry["retention_policies"], baseline["retention_policies"])
+        self.assertEqual([row["family_id"] for row in families[88:90]],
+                         ["run_started_index_checkpoint", "browser_workspace_created_index_checkpoint"])
+        allowed = {"key_shape", "compatibility_key_shapes", "value_schema_id", "value_schema_ref", "schema_version",
+                   "required_fields", "optional_fields", "nullable_fields", "value_schema", "replay_behavior", "migration",
+                   "redaction_no_secret_rule", "legacy_canonical_crosswalk_status", "migration_disposition"}
+        for old, new in zip(baseline["families"], families):
+            if old["family_id"] != "onboarding_state":
+                self.assertEqual(old, new)
+            else:
+                self.assertTrue({key for key in old.keys() | new.keys()
+                                 if old.get(key) != new.get(key)} <= allowed)
+                self.assertEqual(new["key_shape"], "onboarding_state.v4:{onboarding_session_id}")
+                self.assertEqual(new["value_schema_id"], "pm.product_onboarding.session.v3")
         self.assertEqual(self.storage.validate(self.registry), [])
         failures, counts = GATE.validate_onboarding_storage_contract()
         self.assertEqual(failures, [])
@@ -542,14 +534,22 @@ class OnboardingStorageTests(unittest.TestCase):
                     walk(child)
         walk(self.bundle)
 
-    def test_every_session_round_trips_through_same_offline_bundle(self):
-        validator = GATE.Draft202012Validator(self.bundle)
+    def test_every_session_round_trips_through_its_exact_versioned_offline_bundle(self):
+        from pm_onboarding_semantics import onboarding_storage_value_schema
+        historical = onboarding_storage_value_schema(SCHEMA, PROJECT_SCHEMA,
+            json.loads((ROOT / "Plans/settings_system_contracts.schema.json").read_text()))
+        old_validator = GATE.Draft202012Validator(historical)
+        current_validator = GATE.Draft202012Validator(self.bundle)
         for row in PACK["valid"]:
-            if row["definition"] == "onboarding_session":
+            if row["definition"] in {"onboarding_session", "onboarding_session_v3"}:
                 with self.subTest(case=row["name"]):
                     restored = json.loads(json.dumps(row["value"]))
+                    current = row["definition"] == "onboarding_session_v3"
+                    validator = current_validator if current else old_validator
+                    wrong_writer = old_validator if current else current_validator
                     self.assertTrue(validator.is_valid(restored), list(validator.iter_errors(restored)))
-                    self.assertEqual(onboarding_semantic_failures("onboarding_session", restored), [])
+                    self.assertFalse(wrong_writer.is_valid(restored))
+                    self.assertEqual(onboarding_semantic_failures(row["definition"], restored), [])
 
     def test_inline_schema_drift_is_a_standard_contract_gate_failure(self):
         changed = copy.deepcopy(self.registry)

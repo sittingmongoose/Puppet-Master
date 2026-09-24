@@ -3766,13 +3766,13 @@
       "payload_schema_ref": "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_action_request",
       "result_schema_ref": "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_action_result",
       "error_schema_ref": "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_action_result",
-      "availability_rule": "Consume PWIZ-021's v2 stage graphs, bounded uncreated draft/revision/hash, owner-authorized precommit read/source-auth admission, exact Project commit binding, paid/free phases, continuation and current Client/focus. A ref-shaped string or cached projection alone admits nothing.",
+      "availability_rule": "Consume PWIZ-021's unchanged stage graphs with strict current v3 draft/session writers, bounded uncreated draft/revision/hash, owner-authorized precommit read/source-auth admission, exact Project commit binding, paid/free phases, continuation and current Client/focus. Historical v2 drafts are non-dispatchable committed/reconciling lineage only; a ref-shaped string or cached projection alone admits nothing.",
       "permission_gate": "Local actions grant no domain authority. Only owner-authorized read-only preflight/necessary selected-source auth is allowed before commit; PJCT-007 Review binding admits one Project chain, then paid/free setup requires the actual Project. Protected-auth and owner permission/capability boundaries remain effective.",
       "disabled_reason_rule": "Show one plain-language blocker and one owner-routed recovery action without false readiness; a missing, inactive, or mismatched initiating Client blocks protected-auth handoff.",
       "handler_owner": "Product Onboarding local transition controller plus owner routes; the authored browser-concept controller exists and the native Slint handler is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "V2 schema/fixture/static tests encode draft/copy/late commit/paid then Free Models and thirteen local actions. The authored browser concept is a separate not-yet-reconciled simulation; no native control/handler, protected auth, durable adapter, migration or provider execution is proven.",
+      "production_or_simulation": "Current v3 draft/session writers and v2 reference-only local action/result/continuation shapes encode draft/copy/late commit/paid then Free Models and the same thirteen local actions. Closed historical v2 draft/session readers remain migration inputs, never fresh create admission. Static tests prove no native control/handler, protected auth, durable adapter, migration or provider execution; the authored browser concept remains a separate not-yet-reconciled simulation.",
       "gui_triggers": [
         "PWIZ-021 main, connect-existing and explicit Project Later stage graphs",
         "First Project draft; fresh-settings default or searchable actual-Project copy preview",
@@ -3781,7 +3781,7 @@
         "Close/Defer/resume and phase-safe Back without undoing/repeating commit",
         "Ephemeral Details and inline SVG choice help"
       ],
-      "return_route": "PWIZ-021 v2 exact draft/review/hash, actual Project binding, paid/free phases/results, independent placements, branch/history, current Client and focus continuation. Close/resume never erases or recreates a Project; Project Later stays deferred.",
+      "return_route": "PWIZ-021 current v3 draft/session retains exact draft/review/hash, actual Project binding, paid/free phases/results, independent placements, branch/history, current Client and focus through unchanged reference-only continuations. Close/resume never erases or recreates a Project; Project Later stays deferred. Coordinator-only format migration preserves immutable approved v2 owner lineage without replay or fresh create admission, and editable old drafts require new unconfirmed review.",
       "reverse_consumers": [
         "Plans/Settings_System.md",
         "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -3807,27 +3807,31 @@
         "Preparation consumes owner work projections but does not own them."
       ],
       "persistence_refs": [
-        "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_session",
+        "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_session_v3",
         "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_continuation_snapshot",
         "Plans/storage-plan.md#SP-252",
         "Plans/storage_value_registry.json",
-        "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_setup_plan"
+        "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_setup_plan_v3"
       ],
       "migration_refs": [
         "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_legacy_migration_receipt",
+        "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_draft_format_migration",
+        "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_session",
+        "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_setup_plan",
         "Plans/Planning_Wizard.md#PWIZ-022"
       ],
       "test_refs": [
         "Plans/product_onboarding_contract_fixtures.json",
         "Concepts/pm7-tools/verify/onboarding_cinematic.mjs",
         "tests/test_pm_onboarding_phases.py",
+        "tests/test_onboarding_creation_companion.py",
         "tests/test_pm_settings_draft_transfer.py",
         "Plans/final_gui_interaction_contract_fixtures.json",
         "scripts/pm-onboarding-contracts.py",
         "scripts/pm-new-contracts-verify.py"
       ],
       "evidence_refs": [
-        "static_v2_schema_fixture_and_named_tests_only",
+        "static_v3_draft_session_and_v2_reference_only_actions_named_tests_only",
         "accepted_20260903_onboarding_source_reconciliation",
         "browser_concept_v2_reconciliation_and_exact_artifact_campaign_pending",
         "native_runtime_storage_and_owner_issuance_absent"

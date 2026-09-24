@@ -12,17 +12,17 @@ import json
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
-from pm_onboarding_semantics import onboarding_storage_value_schema
+from pm_onboarding_creation_schema import build_onboarding_v3_storage_bundle
 
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def expected_bundle():
-    return onboarding_storage_value_schema(*[
+    return build_onboarding_v3_storage_bundle(*[
         json.loads((ROOT / "Plans" / name).read_text())
         for name in ("product_onboarding_contracts.schema.json", "project_system_contracts.schema.json",
-                     "settings_system_contracts.schema.json")
+                     "settings_system_contracts.schema.json", "forge_integration_contracts.schema.json")
     ])
 
 
@@ -54,9 +54,11 @@ def validate(registry):
     for key, expected in expected_fields(bundle).items():
         if row.get(key) != expected:
             failures.append("onboarding_storage_" + key + "_drift")
-    if row["key_shape"] != "onboarding_state.v3:{onboarding_session_id}":
+    if row["key_shape"] != "onboarding_state.v4:{onboarding_session_id}":
         failures.append("onboarding_storage_current_write_key")
-    if row["compatibility_key_shapes"] != ["onboarding_state.v2:{onboarding_session_id}", "onboarding_state.v1:{project_id}", "onboarding:v1"]:
+    if row["value_schema_ref"] != "Plans/product_onboarding_contracts.schema.json#/$defs/onboarding_session_v3":
+        failures.append("onboarding_storage_current_writer_definition")
+    if row["compatibility_key_shapes"] != ["onboarding_state.v3:{onboarding_session_id}", "onboarding_state.v2:{onboarding_session_id}", "onboarding_state.v1:{project_id}", "onboarding:v1"]:
         failures.append("onboarding_storage_predecessor_key_census")
     return failures
 

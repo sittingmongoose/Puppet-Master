@@ -105,6 +105,10 @@ Non-provider capabilities resolve effective `Off`, `Auto`, or `On` from Global a
 
 The effective default and recommended value for non-provider provisioning is `Auto`; the provider-CLI first-acquisition exception below remains mandatory.
 
+Actual capability demand includes Project manifests, lockfiles, languages, build files, and framework metadata; opening or editing a file needing an LSP/formatter; user- or agent-requested test/debug/build/visual/media work; approved Plan validation needs; browser/native/mobile/emulator/simulator/device tasks; attachments or generated artifacts requiring media processing; and a capability becoming incompatible, missing, stale, or unhealthy. Invalidate affected requirements incrementally when their inputs change; do not rescan every tool/Project on startup. These are inputs to the existing resolver/provisioner, not permission to install, a new requirement registry, or admission of WorkNodes or an executable queue.
+
+The demand and its continuation retain existing originating-operation and Project identity, applicable Plan/Goal/thread/run lineage, required capability and version/compatibility, requested/effective policy, exact Host/Environment, and return/continuation binding. Application-scoped needs retain the Full-Thread scope contract's null Project/NamedPlan bindings rather than fabricating a Project; owner-specific Plan identities remain owner-defined. Verification may leave a capability ready after the originating context changes, but must not execute that stale continuation. Research-participant requests retain the Tools/MCP temporary isolated run-sandbox preference and ordinary explicit approval for persistent Project, Host, or Global effects; demand does not widen that scope.
+
 This policy never applies to first provider-CLI acquisition.
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Release_Supply_Chain.md
@@ -149,6 +153,14 @@ ContractRef: ContractName:Plans/Release_Supply_Chain.md, ContractName:Plans/Bina
 ### 4.8 Logical provisioning and update coalescing
 
 Coalescing here is operation-level deduplication inside `InstallationLifecycleManager`/`CapabilityProvisioner`, not presentation batching by `StreamCoalescer`. Provisioning or update requests from different Projects or Clients share one acquisition/update attempt only when operation kind, product/package, requested version or channel, desired effect, source/provenance, artifact hash, exact Host, exact Environment, ownership/delegation generation, and effective policy generation all match. The shared operation has one stable logical operation identity and one `ObservableWork`; every waiter retains its own permission/approval refs, continuation, cancellation, requested/effective result, and currentness check. A waiter cancellation detaches that waiter and does not cancel work still needed by another current waiter. A difference in any fingerprint or authority field, an incompatible permission/license/cost decision, or conflicting desired state prevents coalescing and instead remains separate, serialized under the package-manager-root lease, or blocked with a typed reason.
+
+Installation discovery and maintenance also retain these performance constraints:
+
+- Coalesce concurrent PATH/package-db/native metadata scans only within the same exact Host/Environment and current discovery/proof inputs. Initial discovery must not assume an Installation identity it has not established. Once resolved, checks deduplicate by actual Installation, not account, while retaining current target, proof, policy, and per-waiter authority. Matching account labels, paths, or versions alone never establish a shared target.
+- Refresh proof-based ownership incrementally from changed evidence under BinaryLocator's bounded inventory contract; reuse only still-current evidence. This does not skip required candidates, exact-Host validation, explicit rescan, disambiguation, or invalidation of stale ownership proof, and does not make BinaryLocator the lifecycle/coalescing policy owner.
+- Stagger permitted background version checks as low-priority maintenance under `RuntimeResourceGovernor`, below the existing interactive/provider/test reserve. Do not simultaneously probe every installed integration at startup. `automatic_check_policy=disabled` continues to forbid background and startup update checks; scheduling or deduplication never turns it on, changes routine notification preferences, or lends one waiter's approval to another.
+- Conflicting lifecycle effects require actual Installation identity exclusion as well as the existing package-manager-root serialization, using the existing governor admission and lease ownership. Use a consistent resource-acquisition, active-request drain, and replacement order that cannot deadlock; maintenance must not hold a lock or permit needed by an active request to reach its safe drain boundary while waiting for that request. Preserve active-work safety and last-verified activation until replacement commits.
+- Measure update check, download, install, verify, and rollback separately through existing operation/`ObservableWork` evidence, without replacing the current lifecycle state machine or registering new phase records. Bounded/coalesced logs and crash reconciliation remain mandatory; a crash is not permission to blindly rerun an installer. No numeric scan interval, priority weight, queue cap, or deadline is introduced here.
 
 ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#7.2, ContractName:Plans/Permissions_System.md, ContractName:Plans/Release_Supply_Chain.md
 
@@ -489,7 +501,18 @@ plan_unit_id: SIR-003
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Shared_Integration_Runtime.md
-canonical_text: InstallationResolver and InstallationLifecycleManager provide proof-based exact-target installation, update, repair, rollback, and non-provider provisioning while enforcing the explicit provider-CLI first-acquisition exception.
+canonical_text: >-
+  InstallationResolver and InstallationLifecycleManager provide proof-based exact-target installation, update, repair, rollback, and non-provider provisioning while enforcing the explicit provider-CLI first-acquisition exception.
+  Demand includes Project manifests, lockfiles, languages, build files and framework metadata; file-open/edit
+  LSP/formatter needs; user/agent test/debug/build/visual/media work; approved Plan validation needs;
+  browser/native/mobile/emulator/simulator/device tasks; attachment/generated-artifact media processing; and
+  incompatible, missing, stale, or unhealthy capabilities. Incrementally invalidate affected requirements rather
+  than rescan every tool/Project on startup. Preserve originating-operation and Project identity, applicable
+  Plan/Goal/thread/run lineage, capability/version compatibility, requested/effective policy, exact Host/Environment,
+  and return/continuation binding. Application scope retains null Project/NamedPlan bindings, not a fabricated
+  Project, and owner-specific Plan identities stay owner-defined. A ready capability never executes a stale originating continuation. Existing
+  Tools/MCP research-sandbox and explicit persistent-effect approval boundaries remain intact; these demand inputs
+  create no requirement registry, WorkNodes, executable queue, or additional acquisition authority.
 gui_related: false
 depends_on: [SIR-002]
 unblocks: []
@@ -497,6 +520,9 @@ acceptance_criteria:
   - Installation, authentication, readiness, and Usage evidence remain separate.
   - No provider CLI is silently acquired or treated as baseline.
   - Failed replacement preserves or restores the last verified installation.
+  - Each of the seven demand-source classes resolves through existing capability policy; changed inputs invalidate affected requirements incrementally without an all-tool/all-Project startup rescan.
+  - Continuation retains exact operation, Project, applicable Plan/Goal/thread/run lineage, capability/version, policy and Host/Environment bindings; a changed originating context leaves the capability ready without executing its stale continuation.
+  - Research capability requests preserve temporary isolated run scope and require ordinary explicit approval for persistent Project/Host/Global effects; source Approved Plan/WorkNode terminology creates no WorkNodes or executable queues here.
 validation_surfaces: [installation lifecycle tests, provider consent negative tests, rollback tests]
 risk_class: installation_authority_or_provenance_drift
 reasoning_tier: high
@@ -507,6 +533,11 @@ source_lineage:
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/06_INSTALLATION_AUTH_UPDATE_AND_CAPABILITY_PROVISIONING.md#shared-lifecycle
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md
   - 'Plans/runtime_integration_disposition.json#items[PROV-004,PROV-005,PROV-007,PROV-009,PROV-010,PROV-012,PROV-023,PROV-024]'
+  - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/source_inputs/07_demand_driven_capability_provisioning_handoff.md#requirement-sources-and-originating-operation-continuation
+preserved_exact_tokens: [LSP/formatter, test/debug/build/visual/media, browser/native/mobile/emulator/simulator/device, Host/Environment]
+negative_constraints:
+  - Do not turn demand into installation permission, silently acquire a provider CLI, widen research provisioning scope, or execute a stale continuation.
+  - Do not create WorkNodes, executable queues, or parallel requirement/installation registries from source conceptual record names.
 ```
 
 ```yaml
@@ -1252,6 +1283,14 @@ canonical_text: >-
   rather than redefines the common AuthenticationProfile and CredentialAttachment contract, carrying broker refs only
   and enforcing exact provider, Host, Environment, repository, operation/capability, expiry, revocation, and
   owner-generation attenuation.
+  Coalesce same-target current PATH/package-db/native metadata scans without assuming an undiscovered Installation;
+  refresh ownership proof incrementally under BinaryLocator and deduplicate resolved checks by actual Installation,
+  not account. Stagger permitted background version checks in low-priority maintenance without an all-integration
+  startup probe storm or overriding disabled checks. Exclude conflicting effects by Installation identity alongside
+  package-manager-root serialization; use deadlock-free resource acquisition, active-request drain and replacement
+  ordering under existing governor/lease ownership. Measure update check, download, install, verify, and rollback
+  separately without changing lifecycle states, retaining current proof, per-waiter authority, bounded logs, crash
+  reconciliation, active-work safety and last-verified activation. No numerical scheduling bound is created.
 gui_related: true
 gui_classification_reason: Ownership, check/update state, shared work, persistence, and credential attachment health are visible setup state.
 depends_on: [SIR-003, SIR-004, SIR-006, SIR-007, SIR-011, SIR-020, MA-045]
@@ -1269,14 +1308,19 @@ acceptance_criteria:
   - IRT-011 consumes the common AuthenticationProfile/CredentialAttachment contract and attaches only non-secret refs under exact provider/Host/Environment/repository/operation-capability scopes, expiry, revocation, owner generation, and broker enforcement.
   - IRT-011 negatives reject raw secret fields, expired/revoked/stale refs, provider/profile mismatch, Host/Environment/repository mismatch, operation/capability widening, and treating profile attachment as authentication/readiness proof.
   - Static schema/fixture success does not prove package-manager behavior, acquisition, update, persistence across replacement, broker isolation, or runtime recovery.
+  - Concurrent PATH/package-db/native metadata scans share only exact-Host/Environment current discovery inputs; resolved checks share actual Installation identity rather than account and retain independent waiter authority.
+  - Changed ownership evidence refreshes incrementally without skipping bounded inventory, explicit rescan, candidate disambiguation, or stale-proof invalidation; BinaryLocator remains the proof producer, not the lifecycle policy owner.
+  - Permitted version checks are staggered low-priority maintenance below interactive/provider/test reserve; startup does not probe every integration simultaneously, and disabled background checks remain disabled.
+  - Installation identity conflict exclusion and package-manager-root serialization use deadlock-free acquisition/drain/replacement ordering without retaining a maintenance resource needed for an active request to drain.
+  - Update check, download, install, verify, and rollback have separate measurement cuts in existing operation evidence; logs remain bounded/coalesced and recovery reconciles actual state rather than blindly rerunning an installer.
 validation_surfaces: [Plans/egolite_retained_requirement_contracts.schema.json, Plans/egolite_retained_requirement_contract_fixtures.json, Plans/shared_integration_runtime.schema.json, Plans/shared_integration_runtime_fixtures.json, tests/test_pm_installation_update_preferences.py, focused Egolite remediation validator, future ownership-maintenance positive/negative fixtures, future multi-Project/multi-Client coalescing matrix, future image/pod replacement recovery matrix, future broker attenuation and secret-isolation tests]
 risk_class: installation_ownership_mutation_or_persistence_secret_failure
 reasoning_tier: high
 context_scope: integration_installation_and_credential_closure
 implementation_surfaces: [Plans/Shared_Integration_Runtime.md, Plans/Multi-Account_Connection_Spec.md, future InstallationLifecycleManager and CapabilityProvisioner, future credential-attachment enforcement]
 node_compile_hint: {mode: shared_runtime_static_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-requirement:IRT-008, source_ref:egolite-requirement:IRT-009, source_ref:egolite-requirement:IRT-010, source_ref:egolite-requirement:IRT-011, source_ref:chat:user-update-options-correction-2026-09-09]
-preserved_exact_tokens: [check-and-notify, coalesce identical provisioning/update operations, Tool Store, isolated profiles, image replacement, pod replacement, AuthenticationProfile, CredentialAttachment]
+source_lineage: [source_ref:egolite-requirement:IRT-008, source_ref:egolite-requirement:IRT-009, source_ref:egolite-requirement:IRT-010, source_ref:egolite-requirement:IRT-011, source_ref:chat:user-update-options-correction-2026-09-09, PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/source_inputs/09_optimization_settings_load_handoff.md#shared-installation-lifecycle-performance]
+preserved_exact_tokens: [check-and-notify, coalesce identical provisioning/update operations, Tool Store, isolated profiles, image replacement, pod replacement, AuthenticationProfile, CredentialAttachment, PATH/package-db/native, Installation, BinaryLocator, package-manager-root]
 negative_constraints:
   - Do not mutate an externally managed installation under a PM-managed policy; a reviewed, exact durable delegation is required for its automatic updates.
   - Do not substitute ownership/consent categories for ordinary user-facing update choices, conflate manual actions with saved automatic policy, or reset disabled checks and routine-notification preferences when authority is revoked.
@@ -1284,6 +1328,8 @@ negative_constraints:
   - Do not claim readiness after image/pod replacement until exact durable-root reconciliation succeeds.
   - Do not re-own AuthenticationProfile lifecycle, provider authentication policy, or credential custody.
   - Do not persist raw credential material in Tool Store, profiles, attachments, records, or receipts.
+  - Do not use an account identity or matching path/version as actual Installation identity, share stale proof, or assume an Installation before discovery establishes it.
+  - Do not enable disabled checks, bypass per-waiter approval, create a peer governor or lease service, or invent numerical scheduling bounds through scan/check coalescing.
 ```
 
 ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#4.7, ContractName:Plans/Shared_Integration_Runtime.md#4.8, ContractName:Plans/Shared_Integration_Runtime.md#4.9, ContractName:Plans/Shared_Integration_Runtime.md#4.10, ContractName:Plans/Multi-Account_Connection_Spec.md
