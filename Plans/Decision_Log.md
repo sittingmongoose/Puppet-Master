@@ -1512,6 +1512,70 @@ SourceRef: `reports/storage-registry-repairs-20260923/REPORT.md` (open items); `
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/goal_workflow_cancel_contracts/physical-profiles.json, ContractName:Plans/event_record_index_checkpoint.schema.json
 
+### DL-077: The seal check accepts a family admitted after August only through a complete admission record
+
+Answered on 2026-09-24 by Jared, in conversation with the coordinator, from the card page: **Approve**, which selects option A on `EA-S10-VALIDATOR-LIVE-SET-001`, item 1.
+
+**Name:** Letting the seal check accept families you approved after August.
+
+**Question:** The frozen Event Authority seal check only accepts the 37 original families plus the two August ones, so should it be amended the way Step 3 amended it, to also accept a family you admitted later when that family has a complete admission record, or should the seal condition in DL-039 change instead?
+
+**Why:** DL-039 made the seal conditional on the independent seal check (`Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py`, frozen 2026-08-12) passing without modification. That check requires the registered families beyond the original 37 to be exactly the two August families, and fails with `unexpected_august_set` otherwise. Jared has since admitted `context.compaction.completed` (DL-040) and `browser.workspace.created` and `browser.workspace.reset` (DL-046), and every Step 9 registration adds another. Its record format also has no place for an admitted family that started among the 252 quarantined rows, so the compaction row still fails `individual_dispositions_evidence_gap_blocking`. No amount of contract work could make the unmodified check pass.
+
+**What you get:** The seal check keeps every rule it has. It additionally accepts a family registered after August only when that family has an admission record: the Decision Log entry that admitted it, the registry revision and SHA-256 before and after, and a current depth assessment with all twelve criteria passing. A family without one still fails.
+
+**What it costs:** A second change to a check that was frozen, done under the same guard as Step 3. The families already admitted need admission records in the new form. The amendment makes nothing pass by itself: the depth, denominator and other failures stay until the work closes them.
+
+**Options:**
+
+1. **A:** Amend the check with a receipted change like Step 3's, accepting post-August admissions only through complete admission records and failing closed otherwise (recommended).
+2. **B:** Keep the check frozen and let the seal proceed when every failure it reports is on a list of explained and accepted failures.
+3. **C:** Another rule.
+
+**Recommendation:** A.
+
+**Answer:** Approve (A).
+
+This authorizes exactly one more receipted change to the independent seal check, the second after DL-039's holding-bucket change. The agent that writes and lands it must not be the one that applies the seal, and it lands with a written receipt after a blind review. The amendment keeps every existing rule. It accepts a family registered beyond the original 37 and the two August families only with a complete admission record as defined above, and fails closed for any family without one, with a malformed or mismatched record, or with a depth assessment that shows any criterion not passing. DL-039's seal condition now reads: the seal check passes with the DL-039 holding-bucket change and this amendment, and with no other modification. DL-039's prohibition of any other validator edit stands.
+
+This decision registers no family, changes no registry row, restamps no freeze digest or closure hash, and certifies nothing. The records for the three families already admitted after August are written in the new form and say which of their criteria still fail.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_SEAL_CHECK.md`, SHA-256 `afdbdd4ebfef46e720ad31b28a7e27c0387ad377c32cfb834ed59bad5f091cdb`; card `reports/event-authority-20260911/step-10-validator-live-set-card-20260924.md`.
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/event_family_registry.json
+
+### DL-078: A Step 9 registration that passes the full procedure moves the approved checkpoint in its own landing
+
+Answered on 2026-09-24 by Jared, in conversation with the coordinator, from the card page: **Approve**, which selects option 2 on `EA-S10-VALIDATOR-LIVE-SET-001`, item 2.
+
+**Name:** How each Step 9 registration updates the approved checkpoint.
+
+**Question:** When Step 9 registers a family, should each new registry revision wait for Jared's own checkpoint approval, or should a registration that has passed the full Step 9 procedure move the approved checkpoint in the same landing?
+
+**Why:** The seal compares the live registry with a checkpoint Jared approves, pinned in `scripts/pm_pnc019_currentness.py` as the registry revision and its family count (`2026-09-11.2`, 42 families). He approved the last two by hand, in Step 4 and in Step 8. Every registration changes the revision and the hash, and readiness then reports that the checkpoint needs fresh approval.
+
+**What you get:** Each registration still needs everything Step 9 requires. The checkpoint bookkeeping moves in the same landing and is recorded in the Decision Log, and Jared can revoke the rule at any time.
+
+**What it costs:** Jared sees each checkpoint change in the landing record afterwards rather than approving it beforehand.
+
+**Options:**
+
+1. One approval per registration.
+2. A standing rule: a registration that passes the full Step 9 procedure moves the checkpoint in its own landing (recommended).
+3. Batch approvals.
+
+**Recommendation:** Option 2.
+
+**Answer:** Approve (option 2).
+
+The standing rule: a family registration that passes the full Step 9 procedure moves the approved PNC-019 checkpoint in the same landing. The procedure is the family's full Event Authority contract, a blind form-driven review, its own Storage admission landing with one family per landing, and the coordinator's landing go. In that landing, `EVENT_FAMILY_REGISTRY_REVISION` and `EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT` in `scripts/pm_pnc019_currentness.py` and their provenance comment move to the new registry revision and family count. The two test pins in `tests/test_pm_testing_session_events.py` and `tests/test_pm_github_project_integration.py` move with them, and the readiness projections are regenerated with the Step 4 commands. A Decision Log entry records the new revision and registry SHA-256 under this rule. Any other registry change still needs Jared's own checkpoint approval, and so does a registration that skips any part of the procedure. Revoking the rule returns to one approval per registration.
+
+This rule registers nothing and lowers no Step 9 requirement. It changes no other readiness check, seal condition or validator.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_SEAL_CHECK.md`, SHA-256 `afdbdd4ebfef46e720ad31b28a7e27c0387ad377c32cfb834ed59bad5f091cdb`; card `reports/event-authority-20260911/step-10-validator-live-set-card-20260924.md`; Step 9 procedure record `reports/event-authority-20260911/step-09-procedure-20260924.md`.
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/event_family_registry.json
+
 
 ## Owner / Consumer Map
 
@@ -5805,6 +5869,121 @@ negative_constraints:
   - Do not treat the wrapper digest as a stored-value hash or as the pm.goal.cancel_command_json.v1 codec.
 owner_hints:
   - Plans/storage-plan.md
+```
+
+### DL-077 - Seal Check Accepts Post-August Families Only Through Complete Admission Records
+
+```yaml
+plan_unit_id: DL-077
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option A) on 2026-09-24 to EA-S10-VALIDATOR-LIVE-SET-001
+  item 1: the frozen independent Event Authority seal check receives exactly one more
+  receipted amendment, in the style of DL-039's holding-bucket change. It keeps every
+  existing rule and accepts a family registered beyond the original 37 and the two
+  August families only with a complete admission record, namely the Decision Log entry
+  that admitted it, the registry revision and SHA-256 before and after, and a current
+  depth assessment with all twelve criteria passing. It fails closed otherwise. The agent
+  that writes and lands the amendment must not apply the seal. DL-039's seal condition
+  now reads as passing with the holding-bucket change and this amendment and no other
+  modification.
+gui_related: false
+gui_classification_reason: Defines seal-check and event admission governance, not visual presentation.
+split_recommended: false
+depends_on: [DL-039, DL-046]
+unblocks: []
+acceptance_criteria:
+  - The independent seal check keeps every existing rule and accepts a post-August registered family only with a complete admission record; a missing, malformed or mismatched record, or any depth criterion not passing, fails closed.
+  - The amendment lands with a written receipt after a blind review, and its receipt names the author and lander as barred from applying the seal.
+  - Admission records for context.compaction.completed, browser.workspace.created and browser.workspace.reset exist in the new form and state which criteria still fail.
+  - No registry row, family admission, freeze digest, closure hash, certification or seal follows from this decision.
+validation_surfaces:
+  - python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
+  - python3 -m unittest tests.test_event_authority_holding_bucket
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_seal_check_drift
+reasoning_tier: high
+context_scope: event_authority_seal_check_post_august
+implementation_surfaces:
+  - Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_SEAL_CHECK.md
+  - reports/event-authority-20260911/step-10-validator-live-set-card-20260924.md
+preserved_exact_tokens:
+  - "Approve"
+  - "unexpected_august_set"
+  - "EA-S10-VALIDATOR-LIVE-SET-001"
+negative_constraints:
+  - Do not edit the seal check beyond this one receipted amendment and the DL-039 holding-bucket change.
+  - Do not accept a post-August family without a complete admission record, and do not mark any criterion passing that the current depth assessment does not show passing.
+  - The author and lander of the amendment must not apply the seal.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Plan_To_Node_Compilation.md
+```
+
+### DL-078 - Step 9 Registration Moves The Approved Checkpoint Under A Standing Rule
+
+```yaml
+plan_unit_id: DL-078
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option 2) on 2026-09-24 to EA-S10-VALIDATOR-LIVE-SET-001
+  item 2: a family registration that passes the full Step 9 procedure, meaning its
+  full Event Authority contract, a blind form-driven review, its own Storage admission
+  landing with one family per landing and the coordinator's landing go, moves the
+  approved PNC-019 checkpoint in that same landing. The checkpoint constants in
+  scripts/pm_pnc019_currentness.py, their provenance comment and the two test pins
+  move with it, the readiness projections are regenerated, and a Decision Log entry
+  records the new revision and registry SHA-256 under this rule. Any other registry
+  change, or a registration that skips part of the procedure, still needs Jared's own
+  approval. Jared can revoke the rule at any time.
+gui_related: false
+gui_classification_reason: Defines checkpoint approval governance for event registration, not visual presentation.
+split_recommended: false
+depends_on: [DL-039, DL-045]
+unblocks: []
+acceptance_criteria:
+  - A registration landing under this rule moves EVENT_FAMILY_REGISTRY_REVISION, EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT and their provenance comment, the test pins in tests/test_pm_testing_session_events.py and tests/test_pm_github_project_integration.py, and the readiness projections in the same landing.
+  - Each such landing adds a Decision Log entry naming the new registry revision and SHA-256 and citing DL-078.
+  - A registry change that is not a Step 9 registration passing the full procedure still needs Jared's own checkpoint approval.
+  - The Step 9 procedure record states the rule.
+validation_surfaces:
+  - python3 -m unittest tests.test_pm_pnc019_currentness
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_checkpoint_approval_drift
+reasoning_tier: high
+context_scope: event_authority_step09_checkpoint_rule
+implementation_surfaces:
+  - scripts/pm_pnc019_currentness.py
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_SEAL_CHECK.md
+  - reports/event-authority-20260911/step-10-validator-live-set-card-20260924.md
+  - reports/event-authority-20260911/step-09-procedure-20260924.md
+preserved_exact_tokens:
+  - "Approve"
+  - "EVENT_FAMILY_REGISTRY_REVISION"
+  - "EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT"
+negative_constraints:
+  - Do not move the checkpoint for a registry change that is not a Step 9 registration passing the full procedure.
+  - Do not use this rule to lower any Step 9 requirement or to register more than one family per landing.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Plan_To_Node_Compilation.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired
