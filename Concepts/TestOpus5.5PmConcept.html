@@ -24529,6 +24529,9 @@ html[data-motion="reduced"] #pm-o55-onboarding.o55-handoff .o55-win { animation-
 .o55t-root[data-family="basic"] .o55t-callout::after { right: -6px; bottom: -6px; border-left: 0; border-top: 0; }
 .o55t-kicker { margin: 0 0 6px; font: 700 11px/1.2 var(--body-font); letter-spacing: 0.12em; text-transform: uppercase; color: var(--o55t-accent); }
 .o55t-root[data-family="retro"] .o55t-kicker::before { content: '> '; }
+/* the heading takes focus only so a screen reader announces the new step; it is not a control, so no ring (the
+   shell's family skins draw one on every focused element) */
+#pm-o55-tour .o55t-title:focus, #pm-o55-tour .o55t-title:focus-visible { outline: none !important; box-shadow: none !important; border-color: transparent !important; }
 .o55t-title { margin: 0 0 8px; font: 750 17px/1.3 var(--display-font, var(--body-font)); outline: none; text-wrap: balance; }
 .o55t-root[data-family="retro"] .o55t-title { text-transform: uppercase; font-size: 15px; }
 .o55t-root[data-family="retro"] .o55t-title::after { content: '_'; color: var(--o55t-accent); animation: o55t-blink 1s steps(1) infinite; }
@@ -24582,13 +24585,27 @@ html[data-motion="reduced"] #pm-o55-onboarding.o55-handoff .o55-win { animation-
 /* the Show Me pointer: a themed hand/orb that travels, presses, and drags */
 .o55t-pointer { position: fixed; left: 0; top: 0; width: 30px; height: 30px; margin: -4px 0 0 -6px; pointer-events: none; opacity: 0; transition: opacity 180ms ease; z-index: 2; }
 .o55t-pointer.o55t-on { opacity: 1; }
-.o55t-ptr { fill: var(--background); stroke: var(--text-primary); stroke-width: 1.8; stroke-linejoin: round; filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.45)); transition: transform 140ms ease; transform-origin: 6px 3px; }
-.o55t-pointer.o55t-press .o55t-ptr { transform: scale(0.86); }
-.o55t-root[data-family="basic"] .o55t-ptr { fill: color-mix(in srgb, var(--accent-blue) 30%, var(--background)); stroke: var(--accent-blue); }
-.o55t-root[data-family="friendly"] .o55t-ptr { fill: #fff; stroke: #2b2233; stroke-width: 2.2; }
-.o55t-root[data-family="glass"] .o55t-ptr { fill: color-mix(in srgb, var(--accent-magenta) 35%, #fff); stroke: #fff; }
-.o55t-root[data-family="glass"] .o55t-trail { position: absolute; left: 0; top: 0; width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--accent-magenta) 80%, #fff), transparent 70%); filter: blur(2px); }
-.o55t-root[data-family="retro"] .o55t-ptr { fill: var(--text-primary); stroke: var(--background); shape-rendering: crispEdges; }
+.o55t-ptr { display: none; transition: transform 140ms ease; transform-origin: 6px 3px; }
+.o55t-root[data-family="basic"] .o55t-pg-basic, .o55t-root[data-family="friendly"] .o55t-pg-friendly,
+.o55t-root[data-family="glass"] .o55t-pg-glass, .o55t-root[data-family="retro"] .o55t-pg-retro { display: inline; }
+.o55t-pointer.o55t-press .o55t-ptr { transform: scale(0.84); }
+/* Basic: a drafting crosshair, thin and exact */
+.o55t-pg-ring { fill: color-mix(in srgb, var(--accent-blue) 14%, transparent); stroke: var(--accent-blue); stroke-width: 1.5; }
+.o55t-pg-line { fill: none; stroke: var(--accent-blue); stroke-width: 1.5; stroke-linecap: square; }
+.o55t-pg-dot { fill: var(--accent-blue); }
+.o55t-root[data-family="basic"] .o55t-pointer.o55t-press .o55t-pg-ring { fill: color-mix(in srgb, var(--accent-blue) 34%, transparent); }
+/* Friendly: a cartoon glove with a soft paper shadow */
+.o55t-pg-glove { fill: #fff; stroke: #2b2233; stroke-width: 1.9; stroke-linejoin: round; filter: drop-shadow(2px 3px 0 rgba(43, 34, 51, 0.22)); }
+.o55t-pg-crease { fill: none; stroke: #2b2233; stroke-width: 1.3; stroke-linecap: round; }
+.o55t-pg-friendly .o55t-pg-cuff { fill: var(--accent-orange); stroke: #2b2233; stroke-width: 1.6; }
+/* Glass: an orb of light (its trail is the span beside it) */
+.o55t-orb-mid { stop-color: color-mix(in srgb, var(--accent-magenta) 40%, #fff); }
+.o55t-orb-edge { stop-color: var(--accent-magenta); stop-opacity: 0.85; }
+.o55t-pg-glass { filter: drop-shadow(0 0 8px color-mix(in srgb, var(--accent-magenta) 70%, transparent)); }
+/* Retro: a pixel hand, no smoothing, stepped moves */
+.o55t-pg-retro rect { fill: var(--text-primary); }
+.o55t-pg-retro rect.o55t-pg-cuff { fill: var(--o55t-accent); }
+.o55t-root[data-family="retro"] .o55t-pointer.o55t-press .o55t-ptr { transform: translate(0, 2px); }
 .o55t-root[data-family="retro"] .o55t-pointer { transition: opacity 0ms; }
 .o55t-cue { outline: 3px solid var(--accent-lime) !important; outline-offset: 3px; transition: outline-color 200ms ease; }
 
@@ -86303,7 +86320,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       + `<span class="o55t-zl-idle">${U.esc(T('tour.steps.move_or_dock_chat.zone'))}</span><span class="o55t-zl-hot">${U.esc(T('tour.steps.move_or_dock_chat.zoneHot'))}</span></span></div>`
       + `<div class="o55t-callout" role="dialog" aria-modal="false" aria-labelledby="o55t-h"></div>`
       + `<div class="o55t-bar" role="toolbar" aria-label="${U.esc(T('tour.bar.label'))}"></div>`
-      + `<div class="o55t-pointer" aria-hidden="true"><svg viewBox="0 0 32 32" width="30" height="30"><path class="o55t-ptr" d="M6 3 L6 25 L12 19 L16 28 L20 26 L16 17 L24 17 Z"/></svg><span class="o55t-trail"></span></div>`
+      /* one pointer per family, every glyph drawn with its hotspot at (6, 3): a drafting crosshair (Basic), a cartoon
+         glove (Friendly), a glowing orb with a trail (Glass), a pixel hand (Retro) */
+      + `<div class="o55t-pointer" aria-hidden="true"><svg viewBox="0 0 32 32" width="30" height="30" overflow="visible">`
+      + `<defs><radialGradient id="o55t-orb" cx="40%" cy="35%" r="65%"><stop offset="0" stop-color="#fff"/><stop offset="0.45" class="o55t-orb-mid"/><stop offset="1" class="o55t-orb-edge"/></radialGradient></defs>`
+      + `<g class="o55t-ptr o55t-pg-basic"><circle cx="6" cy="3" r="6.5" class="o55t-pg-ring"/><path class="o55t-pg-line" d="M6 -8.5V-2M6 8v6.5M-5.5 3h6.5M11 3h6.5"/><circle cx="6" cy="3" r="1.5" class="o55t-pg-dot"/></g>`
+      + `<g class="o55t-ptr o55t-pg-friendly"><path class="o55t-pg-glove" d="M3.5 15V6a2.5 2.5 0 0 1 5 0v6.2a1.8 1.8 0 0 1 3.6.3a1.8 1.8 0 0 1 3.5.5a1.7 1.7 0 0 1 3.3.8V20c0 2.6-2.2 4.2-5 4.2H8.6c-2.4 0-3.6-1.4-4.4-3L1.2 17.4c-.8-1.3.8-2.8 2.3-1.6z"/><path class="o55t-pg-crease" d="M8.5 12.6v2.9M12.1 12.8v2.4M15.6 13.2v2.2"/><rect class="o55t-pg-cuff" x="6.2" y="24" width="11.6" height="4.6" rx="1.6"/></g>`
+      + `<g class="o55t-ptr o55t-pg-glass"><circle cx="6" cy="3" r="7" fill="url(#o55t-orb)"/><circle cx="3.8" cy="0.6" r="2" fill="#fff" opacity="0.85"/></g>`
+      + `<g class="o55t-ptr o55t-pg-retro" shape-rendering="crispEdges"><rect x="5" y="3" width="2" height="2"/><rect x="5" y="5" width="2" height="2"/><rect x="5" y="7" width="2" height="2"/><rect x="5" y="9" width="2" height="2"/><rect x="7" y="9" width="2" height="2"/><rect x="9" y="9" width="2" height="2"/><rect x="11" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/><rect x="15" y="9" width="2" height="2"/><rect x="3" y="11" width="2" height="2"/><rect x="5" y="11" width="2" height="2"/><rect x="7" y="11" width="2" height="2"/><rect x="9" y="11" width="2" height="2"/><rect x="11" y="11" width="2" height="2"/><rect x="13" y="11" width="2" height="2"/><rect x="15" y="11" width="2" height="2"/><rect x="17" y="11" width="2" height="2"/><rect x="3" y="13" width="2" height="2"/><rect x="5" y="13" width="2" height="2"/><rect x="7" y="13" width="2" height="2"/><rect x="9" y="13" width="2" height="2"/><rect x="11" y="13" width="2" height="2"/><rect x="13" y="13" width="2" height="2"/><rect x="15" y="13" width="2" height="2"/><rect x="17" y="13" width="2" height="2"/><rect x="5" y="15" width="2" height="2"/><rect x="7" y="15" width="2" height="2"/><rect x="9" y="15" width="2" height="2"/><rect x="11" y="15" width="2" height="2"/><rect x="13" y="15" width="2" height="2"/><rect x="15" y="15" width="2" height="2"/><rect x="17" y="15" width="2" height="2"/><rect x="5" y="17" width="2" height="2"/><rect x="7" y="17" width="2" height="2"/><rect x="9" y="17" width="2" height="2"/><rect x="11" y="17" width="2" height="2"/><rect x="13" y="17" width="2" height="2"/><rect x="15" y="17" width="2" height="2"/><rect x="5" y="19" width="2" height="2" class="o55t-pg-cuff"/><rect x="7" y="19" width="2" height="2" class="o55t-pg-cuff"/><rect x="9" y="19" width="2" height="2" class="o55t-pg-cuff"/><rect x="11" y="19" width="2" height="2" class="o55t-pg-cuff"/><rect x="13" y="19" width="2" height="2" class="o55t-pg-cuff"/><rect x="15" y="19" width="2" height="2" class="o55t-pg-cuff"/><rect x="5" y="21" width="2" height="2" class="o55t-pg-cuff"/><rect x="7" y="21" width="2" height="2" class="o55t-pg-cuff"/><rect x="9" y="21" width="2" height="2" class="o55t-pg-cuff"/><rect x="11" y="21" width="2" height="2" class="o55t-pg-cuff"/><rect x="13" y="21" width="2" height="2" class="o55t-pg-cuff"/><rect x="15" y="21" width="2" height="2" class="o55t-pg-cuff"/></g>`
+      + `</svg><span class="o55t-trail"></span></div>`
       + `<div class="o55-live" aria-live="polite" role="status"></div>`;
     document.body.appendChild(r);
     st.root = r;

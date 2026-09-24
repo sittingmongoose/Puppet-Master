@@ -58,7 +58,7 @@ const SCENES = {
   'eli5': { frames: 150, setup: async () => { await __f.start(); await __f.asked(); await __f.go('same_answer_eli5'); }, trigger: () => __f.click('span.chat-toggle-btn.toggle-eli5') },
   'step-next': { frames: 80, setup: async () => { await __f.start(); await __f.asked(); await __f.go('answer_stream'); await __f.wait(500); }, trigger: () => __f.click('#pm-o55-tour .o55t-callout [data-o55t="next"]') },
   'sm-dock': { frames: 210, setup: async () => { await __f.start(); await __f.go('move_or_dock_chat'); }, trigger: () => __f.showMe() },
-  'sm-widget': { frames: 300, setup: async () => { await __f.start(); await __f.go('widget_action'); }, trigger: () => __f.showMe() },
+  'sm-widget': { frames: 480, setup: async () => { await __f.start(); await __f.go('widget_action'); }, trigger: () => __f.showMe() },
   'sm-plan': { frames: 120, setup: async () => { await __f.start(); await __f.go('open_planning'); }, trigger: () => __f.showMe() },
   'sm-goal': { frames: 150, setup: async () => { await __f.start(); await __f.go('book_club_goal'); }, trigger: () => __f.showMe() },
   'sm-outcome': { frames: 130, setup: async () => { await __f.start(); await __f.practice(); await __f.go('three_outcomes'); }, trigger: () => __f.showMe() },
