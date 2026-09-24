@@ -9,12 +9,14 @@ directories out of reach and assert a named failure and a nonzero exit instead.
 from __future__ import annotations
 
 import importlib.util
+import copy
 import json
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "pm-validate-pm7-gui-fixtures.py"
@@ -93,6 +95,86 @@ class MissingFixtureRoots(unittest.TestCase):
         """A guard on the guard: in a checkout that has the fixtures, this must find nothing, or
         every run would report a missing input that is right there."""
         self.assertEqual(load_validator().missing_inputs(), [])
+
+
+class CompactionOwnerBoundary(unittest.TestCase):
+    def setUp(self):
+        self.module = load_validator()
+        self.registry = self.module.load(self.module.EVENT_REGISTRY)
+        self.fixtures = self.module.load(self.module.COMMAND_FIXTURES)
+
+    def report(self, registry=None, fixtures=None):
+        original_load = self.module.load
+
+        def load(path):
+            if path == self.module.EVENT_REGISTRY:
+                return self.registry if registry is None else registry
+            if path == self.module.COMMAND_FIXTURES:
+                return self.fixtures if fixtures is None else fixtures
+            return original_load(path)
+
+        # This class tests the GUI census only. Run the real shared-contract
+        # validator separately; mocks cannot establish fixture value validity.
+        with patch.object(self.module, "load", side_effect=load), patch.object(
+            self.module.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "")
+        ):
+            return self.module.validate()
+
+    def test_current_committed_completion_contract_is_not_forbidden(self):
+        report = self.report()
+        self.assertEqual(report["failures"], [])
+        self.assertEqual(report["context_compaction_event_family_count"], 1)
+
+    def test_completion_membership_is_required_exactly_once(self):
+        for count in (0, 2):
+            registry = copy.deepcopy(self.registry)
+            family = next(f for f in registry["families"] if f["event_type"] == "context.compaction.completed")
+            registry["families"] = [f for f in registry["families"] if f["event_type"] != "context.compaction.completed"]
+            registry["families"].extend(copy.deepcopy(family) for _ in range(count))
+            with self.subTest(count=count):
+                self.assertIn("context_compaction_completion_family_count", {f["error"] for f in self.report(registry)["failures"]})
+
+    def test_unregistered_sibling_types_remain_forbidden(self):
+        for event_type in ("context.compaction.started", "context.compaction.failed", "context.compaction.future"):
+            registry = copy.deepcopy(self.registry)
+            registry["families"].append({"event_type": event_type})
+            with self.subTest(event_type=event_type):
+                failures = self.report(registry)["failures"]
+                self.assertIn({"error": "forbidden_context_compaction_event_family", "events": [event_type]}, failures)
+
+    def test_completion_cannot_borrow_another_payload_or_scope(self):
+        mutations = {
+            "family_id": "foreign-family", "family_revision": "2.0.0",
+            "scope_policy": "application_only", "payload_schema_id": "foreign.schema.v1",
+            "payload_schema_ref": {"path": "Plans/foreign.schema.json", "json_pointer": "#"},
+        }
+        for key, value in mutations.items():
+            registry = copy.deepcopy(self.registry)
+            family = next(f for f in registry["families"] if f["event_type"] == "context.compaction.completed")
+            family[key] = value
+            with self.subTest(field=key):
+                self.assertIn("context_compaction_completion_registry_mismatch", {f["error"] for f in self.report(registry)["failures"]})
+
+    def test_committed_completion_positive_is_required(self):
+        fixtures = copy.deepcopy(self.fixtures)
+        fixtures["valid"] = [f for f in fixtures["valid"] if f["name"] != "pm7_context_compaction_committed_completion_event"]
+        failures = self.report(fixtures=fixtures)["failures"]
+        self.assertIn({"error": "missing_pm7_valid_command_fixtures", "missing": ["pm7_context_compaction_committed_completion_event"]}, failures)
+
+    def test_each_current_completion_boundary_negative_is_required(self):
+        names = (
+            "pm7_context_compaction_completed_requires_event",
+            "pm7_context_compaction_completed_cannot_duplicate_event",
+            "pm7_context_compaction_failed_cannot_emit_completion",
+            "pm7_context_compaction_started_cannot_emit_completion",
+            "pm7_context_compaction_completed_cannot_emit_started",
+            "pm7_context_compaction_completed_cannot_emit_failed",
+        )
+        for name in names:
+            fixtures = copy.deepcopy(self.fixtures)
+            fixtures["invalid"] = [f for f in fixtures["invalid"] if f["name"] != name]
+            with self.subTest(name=name):
+                self.assertIn({"error": "missing_pm7_invalid_command_fixtures", "missing": [name]}, self.report(fixtures=fixtures)["failures"])
 
 
 class ExitCode(unittest.TestCase):
