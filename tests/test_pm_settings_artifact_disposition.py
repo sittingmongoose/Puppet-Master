@@ -43,6 +43,14 @@ class SettingsArtifactDispositionTests(unittest.TestCase):
         self.assertIsNone(artifact["typed_local_ui_action_id"])
         self.assertIsNone(artifact["typed_local_payload_schema_ref"])
 
+    def test_fixture_reason_does_not_claim_the_blocked_target_is_admitted(self):
+        fixtures = json.loads((ROOT / "Plans/settings_system_contract_fixtures.json").read_text())
+        reason = fixtures["packet_command_dispositions"]["cmd.artifact.manager.open"]["reason"]
+        self.assertIn("explicitly blocked", reason)
+        self.assertIn("not an admitted command or handler", reason)
+        self.assertIn("requires exact Runtime Artifacts and Commands route adjudication", reason)
+        self.assertIn("authorizes no dispatch", reason)
+
     def test_real_touch_projection_keeps_target_blocked_and_source_nonactionable(self):
         registry = json.loads((ROOT / "Plans/touch_closure.json").read_text())
         descriptor = next(row for row in registry["external_disposition_registries"]

@@ -10,6 +10,11 @@
     "topics": ["Back Seat Driver", "Context Lens"],
     "instruction": "Newer updates supersede packet-led repair assumptions; freeze old findings pending newer-authority revalidation. Surface other discovered topics before edits."
   },
+  "further_user_currentness_correction": {
+    "frozen_legacy_topics": ["Help/Teacher", "assistant-chat Plan behavior", "assistant-chat Full Thread/platforms"],
+    "conditional_topic": "Spellcheck: possibly valid only after checking newer authority",
+    "plan_owner_boundary": "NamedPlan is project-level aggregate; AssistantPlan is thread-level deliverable. Re-adjudicate packet references against the newer overhaul before either repair."
+  },
   "historical_inventory": {
     "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/case-inventory.json",
     "sha256": "7ebe983fcae633a0f017317367a53cfe0325c4c8bbdb85ce6cd4b6c19eac05f8",
@@ -64,6 +69,11 @@
       "path": "packet-wide-rebaseline/onboarding-doctor/inventory.json",
       "sha256": "db0233ca32cae8d8aee3c662a17f938e4348dcb6270f9b424732ca4149b8ebbb",
       "boundary": "44groupeditems15boundedcredits10branch-onlycandidates14unverified5implementation-only; no latest-main closure claim"
+    },
+    {
+      "path": "packet-wide-rebaseline/settings/assistant-newer-authority-overlay.json",
+      "sha256": "345a31148ce9f156649da80d8d7fb993b8b9f1d19174e539046848a5f269e019",
+      "boundary": "latest user authority: Help/Teacher, Plan and assistant FullThread/platform findings held; spelling currentness required; effective175unverified17historicalcredits7branch-onlycandidates"
     }
   ],
   "next_repair_batch": {

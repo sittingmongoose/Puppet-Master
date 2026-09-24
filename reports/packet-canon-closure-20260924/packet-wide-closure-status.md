@@ -12,6 +12,16 @@ supersession/currentness checks, not repair instructions. Other discovered topic
 must be surfaced to the user and checked against newer owner text and history
 before applying repairs. This branch snapshot is not current-main proof.
 
+Further user correction: Help/Teacher and assistant-chat Full Thread/platform
+behavior have substantial newer updates. Assistant-chat Plan behavior was
+completely overhauled; historical Plan findings must not be reapplied to it.
+Spellcheck is a possible valid topic only after checking newer authority. Freeze
+those older findings for supersession review. The present owners distinguish
+project-level `NamedPlan` (`Named_Plan_System.md`) from thread-level
+`AssistantPlan` (`Assistant_Plan_Runtime.md`); a packet's loose word “Plan” cannot
+establish which owner or behavior to change. Re-adjudicate that mapping before
+any Named Plan or Assistant Plan repair.
+
 ## What is actually accounted for
 
 All 13,416 frozen review entries have historical assessments. These are cases and
@@ -66,8 +76,8 @@ already established, not to every unresolved row in that feature.
 | Azure | Existing owner/draft/route repairs retained | One frozen residual: identity/admission/storage and transition findings; no further expansion before broad reconciliation |
 
 The Settings and Onboarding overlays are now delivered. Settings has 199 grouped
-topic/profile/repair rows: after the authority and newer-update overlays, 172 are
-unverified, 17 are bounded credits, and 10 are branch-snapshot gap candidates, with
+topic/profile/repair rows: after all three authority/newer-update overlays, 175 are
+unverified, 17 are bounded historical credits, and seven are branch-snapshot gap candidates, with
 zero established product decisions. Onboarding/Doctor has 44 grouped items: 15
 bounded repair credits, 10 branch-snapshot gap candidates, 14 unverified and five
 implementation-only. Neither grouping counts unique requirements or defects.
@@ -122,6 +132,7 @@ External evidence root:
 | `packet-wide-rebaseline/settings/inventory.json` | `daac00ece15a5b4422d1e9c8b8de1d4fa59444dbe2fdb5dec0f133023575b09a` |
 | `packet-wide-rebaseline/settings/authority-status-overlay.json` | `c0e83de466e96191fc5a2f044bb93d9d3353514106b823854ed961fb8089badc` |
 | `packet-wide-rebaseline/settings/newer-authority-freeze-overlay.json` | `031b8d6ddf84459df593c630113703988330e5449ccb202635d1a251d9837f70` |
+| `packet-wide-rebaseline/settings/assistant-newer-authority-overlay.json` | `345a31148ce9f156649da80d8d7fb993b8b9f1d19174e539046848a5f269e019` |
 | `packet-wide-rebaseline/onboarding-doctor/inventory.json` | `db0233ca32cae8d8aee3c662a17f938e4348dcb6270f9b424732ca4149b8ebbb` |
 | `server_forge_backup/non-azure-remaining-routing-038.md` | `6ec5d2583f953f986ac16e4feb91b950bd978a9e7ce4e54ff9c0df6f04df1b1e` |
 | `touch_closure/home-remaining-023.json` | `befb2980338b490a267196b9bc1fd02ab73faa99da8488cc51e5cd0e405135dc` |
