@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11753-L11950
+Source lines: L11753-L11954
 
-Source SHA256: `8d45e72925103e63b35248b3d21eca7a8f9f6ff7620d8a18c83a785a20c2e5d5`
+Source SHA256: `0eca260171f64e81d0a5db58722fbc3c707883cc02a34cb11947059e844b2054`
 
 ---
 
@@ -110,9 +110,13 @@ target sections, exact distinct complete contained pane/session ID sets,
 `section_created` equal to actual creation and `preserve_session_identity=true`.
 Array order is the original producer's frozen order, never a new sorting or digest
 recipe. EventRecord actor, causal scope and all producer-owned fields come from
-the original admitted command through CV-309/CV-317 and Case L-5; the shared owner supplies
-its existing idempotency/event identity and Storage-assigned fields. Never infer
-an event ID from a Home event, correlation alone or current layout.
+the original admitted command through CV-309/CV-317 and Case L-5. This producer
+supplies `event_id` and `idempotency_key`, derived once from the original admitted
+operation and frozen in the immutable ProducerInput before the first append; their
+exact derivation and `replay_policy` are obligations of the closed companion, as
+SP-273 defines them for the Home sibling. Storage assigns only `sequence_id`,
+`observed_at_utc` and `persisted_at_utc`. Never infer an event ID from a Home
+event, correlation alone or current layout.
 
 Call the actual Storage append owner with that same immutable ProducerInput,
 under the existing `ordinary` durability class of Case L-2 and CV-339 (a fact
