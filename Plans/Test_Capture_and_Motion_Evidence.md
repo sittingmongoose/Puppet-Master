@@ -341,13 +341,16 @@ acceptance_criteria:
   - ObservableWork never converts recording/finalizing/artifact-present into a test verdict.
   - GUI actions dispatch through registered generic command rows with exact identities.
   - The exact ten lane-owned command IDs validate action-specific target/currentness/privacy/derivation conditionals and reject protected-auth and PM Playwright-shaped requests.
+  - The acceptance matrix runs at least five simultaneous sessions comprising a visible browser controlled through compact Browser Script with continuous recording; a hidden/headless browser with no viewer, a rolling buffer, and named-action fallback; multi-page browser extraction using local RepresentationQuery and ProgramWorkspace checkpoints; an Android emulator with recording and touch trace; and a desktop app or remote stream waiting for a capture/encoder permit.
+  - The mixed-session matrix exercises Open, Watch, Take Over, Pause, Let Agent Continue, Stop but Keep Browser where valid, Start/Stop Recording, Change Capture Target, Bookmark, Save Recent Clip, Open Evidence, Create Demonstration Video, Inspect Provenance, and Details, proving that each action affects only its selected session through its existing registered route.
+  - The matrix covers viewer closure, PM-tab and external-application focus changes, Client disconnect while the Server/Execution Host continues, safe program-segment checkpoint/resume, timed_out_effect_state_unknown blocking automatic retry until reconciliation, non-effecting compile failure with corrected-script or guided-action fallback, and truthful OS suspend/disconnect interruption. A declared fixture or screenshot does not prove this mixed-session execution.
 validation_surfaces: [Plans/test_capture_motion_evidence_contracts.schema.json, Plans/test_capture_motion_evidence_contract_fixtures.json, future five-session GUI and all-theme motion-evidence matrix]
 risk_class: capture_gui_or_progress_truth_drift
 reasoning_tier: high
 context_scope: capture_playback_comparison_gui
 implementation_surfaces: [Plans/Test_Capture_and_Motion_Evidence.md, Plans/Runtime_Artifacts_Panel.md, Plans/Automated_Testing_System.md]
 node_compile_hint: {mode: capture_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-requirement:CAP-012, source_ref:egolite-requirement:GUI-003, source_ref:egolite-requirement:GUI-012, source_ref:packet:PKT-04/04_COMMAND_EVENT_WIRING_REGISTER.md:83-112, source_ref:packet:PKT-04/04_COMMAND_EVENT_WIRING_REGISTER.md:132-161, source_ref:packet:PKT-04/07_VALIDATION_AND_ACCEPTANCE.md:109-114]
+source_lineage: [source_ref:egolite-requirement:CAP-012, source_ref:egolite-requirement:GUI-003, source_ref:egolite-requirement:GUI-012, source_ref:packet:PKT-04/04_COMMAND_EVENT_WIRING_REGISTER.md:83-112, source_ref:packet:PKT-04/04_COMMAND_EVENT_WIRING_REGISTER.md:132-161, source_ref:packet:PKT-04/07_VALIDATION_AND_ACCEPTANCE.md:109-114, source_ref:packet:PKT-04/06_GUI_PMCONCEPT7_CONTRACT.md:84-104]
 negative_constraints:
   - Do not infer test success from capture visibility, progress, or artifact existence.
   - Do not make a viewer the capture lifecycle owner.
