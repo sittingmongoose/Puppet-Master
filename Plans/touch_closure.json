@@ -6820,7 +6820,7 @@
         "Required for asynchronous owner work; local actions create none and dispatch acceptance never equals completion."
       ],
       "owner_plan": "Plans/Source_Control_System.md",
-      "payload_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_lineage",
+      "payload_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request",
       "permission_gate": "Consume the owner-defined permission and FileSafe decision without widening identity, scope, credential, topology, or destructive authority.",
       "persistence_refs": [
         "Plans/Source_Control_System.md#SCS-008"
@@ -6829,12 +6829,12 @@
       "production_or_simulation": "Production-intent contract only; a handler path names the sole future target and is not native implementation or runtime proof.",
       "profile_id": "TCP-SCM-CHECKOUT-ALIAS",
       "receipt_refs": [
-        "Plans/source_control_contracts.schema.json#/$defs/source_control_command_lineage"
+        "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result"
       ],
       "requirement_refs": [
         "Plans/Source_Control_System.md#SCS-008"
       ],
-      "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_lineage",
+      "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result",
       "return_route": "Settle the exact initiating route, surface, focus, invocation, continuation, and currentness context.",
       "reverse_consumers": [
         "Doctor",

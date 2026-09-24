@@ -1243,6 +1243,24 @@ def forge_review_alias_failures(
     return failures
 
 
+def scm_checkout_alias_contract_failures(registry: dict[str, Any]) -> list[str]:
+    """SCS-008 aliases inherit the full target contract, not its lineage member."""
+    profiles = registry.get("profiles", [])
+    profiles = profiles if isinstance(profiles, list) else []
+    matches = [profile for profile in profiles if isinstance(profile, dict)
+               and profile.get("profile_id") == "TCP-SCM-CHECKOUT-ALIAS"]
+    if len(matches) != 1:
+        return ["SCS-008 checkout alias: expected one compatibility profile"]
+    prefix = "Plans/source_control_contracts.schema.json#/$defs/"
+    expected = {
+        "payload_schema_ref": prefix + "source_control_command_request",
+        "result_schema_ref": prefix + "source_control_command_result",
+        "receipt_refs": [prefix + "source_control_command_result"],
+    }
+    return [f"SCS-008 checkout alias: {field} must remain {value!r}"
+            for field, value in expected.items() if matches[0].get(field) != value]
+
+
 def permissions_rule_reference_failures(registry: dict[str, Any]) -> list[str]:
     """Keep the five rule controls bound to their existing semantic owners.
 
@@ -1528,6 +1546,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         settings_document = {}
     failures.extend(dry_guard_consumer_failures(registry, settings_document, production_actions))
     failures.extend(forge_review_alias_failures(registry, production_actions))
+    failures.extend(scm_checkout_alias_contract_failures(registry))
     failures.extend(permissions_rule_reference_failures(registry))
     alias_sources_with_peer_wiring = sorted(alias_row_actions & production_actions)
     if alias_sources_with_peer_wiring:
