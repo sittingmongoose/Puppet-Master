@@ -1568,7 +1568,7 @@ Answered on 2026-09-24 by Jared, in conversation with the coordinator, from the 
 
 **Answer:** Approve (option 2).
 
-The standing rule: a family registration that passes the full Step 9 procedure moves the approved PNC-019 checkpoint in the same landing. The procedure is the family's full Event Authority contract, a blind form-driven review, its own Storage admission landing with one family per landing, and the coordinator's landing go. In that landing, `EVENT_FAMILY_REGISTRY_REVISION` and `EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT` in `scripts/pm_pnc019_currentness.py` and their provenance comment move to the new registry revision and family count. The two test pins in `tests/test_pm_testing_session_events.py` and `tests/test_pm_github_project_integration.py` move with them, and the readiness projections are regenerated with the Step 4 commands. A Decision Log entry records the new revision and registry SHA-256 under this rule. The Decision Log entry each such landing adds names the family and is the decision entry its DL-077 admission record cites. Any other registry change still needs Jared's own checkpoint approval, and so does a registration that skips any part of the procedure. Revoking the rule returns to one approval per registration.
+The standing rule: a family registration that passes the full Step 9 procedure moves the approved PNC-019 checkpoint in the same landing. The procedure is the family's full Event Authority contract, a blind form-driven review, its own Storage admission landing with one family per landing, and the coordinator's landing go. In that landing, `EVENT_FAMILY_REGISTRY_REVISION` and `EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT` in `scripts/pm_pnc019_currentness.py` and their provenance comment move to the new registry revision and family count. The two test pins in `tests/test_pm_testing_session_events.py` and `tests/test_pm_github_project_integration.py` move with them, and a Decision Log entry records the new revision under this rule. Following the Step 4 and Step 8 precedent, that landing also regenerates the checkpoint's readiness projections with the Step 4 commands, and the entry also records the registry SHA-256; these are procedure, not part of the answer. The Decision Log entry each such landing adds names the family and is the decision entry its DL-077 admission record cites. Any other registry change still needs Jared's own checkpoint approval, and so does a registration that skips any part of the procedure. Revoking the rule returns to one approval per registration.
 
 This rule registers nothing and lowers no Step 9 requirement. It changes no other readiness check, seal condition or validator.
 
@@ -5945,8 +5945,9 @@ canonical_text: >-
   landing with one family per landing and the coordinator's landing go, moves the
   approved PNC-019 checkpoint in that same landing. The checkpoint constants in
   scripts/pm_pnc019_currentness.py, their provenance comment and the two test pins
-  move with it, the readiness projections are regenerated, and a Decision Log entry
-  records the new revision and registry SHA-256 under this rule. The Decision Log entry
+  move with it, and a Decision Log entry records the new revision under this rule;
+  following the Step 4 and Step 8 precedent, the landing also regenerates the readiness
+  projections and the entry records the registry SHA-256. The Decision Log entry
   each such landing adds names the family and is the decision entry its DL-077 admission
   record cites. Any other registry change, or a registration that skips part of the
   procedure, still needs Jared's own approval. Jared can revoke the rule at any time.

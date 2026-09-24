@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L1586-L6114
+Source lines: L1586-L6115
 
-Source SHA256: `0bfa28bd6ea890fb4eb590420ecabf7d2e8b54fce181fa055c95efb0eeb31fd6`
+Source SHA256: `145d2df7958637fa008fcf68985da1645ec423ab734a10290f3c423069fe1711`
 
 ---
 
@@ -4370,8 +4370,9 @@ canonical_text: >-
   landing with one family per landing and the coordinator's landing go, moves the
   approved PNC-019 checkpoint in that same landing. The checkpoint constants in
   scripts/pm_pnc019_currentness.py, their provenance comment and the two test pins
-  move with it, the readiness projections are regenerated, and a Decision Log entry
-  records the new revision and registry SHA-256 under this rule. The Decision Log entry
+  move with it, and a Decision Log entry records the new revision under this rule;
+  following the Step 4 and Step 8 precedent, the landing also regenerates the readiness
+  projections and the entry records the registry SHA-256. The Decision Log entry
   each such landing adds names the family and is the decision entry its DL-077 admission
   record cites. Any other registry change, or a registration that skips part of the
   procedure, still needs Jared's own approval. Jared can revoke the rule at any time.
