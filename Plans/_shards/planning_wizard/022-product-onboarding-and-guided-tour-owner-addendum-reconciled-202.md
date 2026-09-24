@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1775-L2092
+Source lines: L1775-L2103
 
-Source SHA256: `749c82fba7a86e5f50892335e3ec28ba0c0351be43db4fd9276a70aaf878b94d`
+Source SHA256: `4758841b6cf3ff7b15687f79c253a9d62d19401e986a0e1b61add8409e6f5ecd`
 
 ---
 
@@ -53,6 +53,10 @@ After the click, Project System may reserve the real never-reused identity neede
 Detection is bounded/cached and prioritized by the selected Execution Host, copied routes, and likely installed products. Compatible installation plus usable credentials is verified and connected automatically; missing/expired credentials expose Sign In or Enter API Key. Only a selected canonical route requiring an external vendor CLI/host binary exposes explicit Install. It uses the vendor's official method, exact selected Host/Environment, provenance and compatibility verification before authentication; no silent first install or bundled CLI is inferred. Shipped SDK/bridge/runtime dependencies and API-only paths expose no provider-CLI Install control. The current provider/account catalog remains authoritative, not a second hard-coded Onboarding list. Ordinary actions Connect, Use This Installation, Use This Provider and Open Installer are absent.
 
 Ready is derived from actual current owner account/route/entitlement/permission/capability and availability facts, not credential presence, cached installation, a timer, or UI selection. Usage may be exact, estimated, or unavailable; PM-observed usage does not become exact provider allowance. Multi-account setup never globally signs another account out. Remote install/auth still targets the selected Host and returns safely through the authorized Client. Free Models consumes `MS-118` through `MS-122`, preserves paid-first defaults and explicit saved top-10 ordering, and never creates its own credentials, silently reorders the list, or revives `cmd.onboarding.free_models.*`.
+
+Search-provider setup is also a consumer within the existing postcommit `provider_setup` phase, not a new dependency stage or a prerequisite that removes Skip. Offer `Automatic` — the first currently ready eligible search provider in the existing user-configurable owner priority order — and a searchable, capability-aware provider list from the same `WebProviderAdapterRegistry` consumed by Settings (`Plans/Tools.md` §§11–12, T-136/T-142). Show current readiness and credential state, search/fetch/crawl/map/extract support differences, official setup action/page, provider order, privacy, price/credit and fallback disclosures. Browser-backed or local fallbacks appear only where the current owner actually supports them; Automatic does not invent capability, ignore the selected account/model or applicable privacy/egress policy, or authorize a search merely by selecting a route. Unavailable or skipped setup remains truthful, not fabricated Ready.
+
+The existing Settings and provider/auth owners configure the same records used later in Settings; Onboarding adds no search registry, credential/quota store, per-operation priority editor or fixed provider list. Navigation consumes SSYS-019's exact Settings destination/context and bounded return; a selected setup effect additionally requires its existing owner command, current permission and result, not navigation success. Preserve the actual committed Project, selected Host/Environment, initiating Client, provider/route, operation and continuation generation/focus. A changed context rejects stale return without replacing newer selections or replaying owner work. Reference-only continuations retain owner refs rather than copying credentials or live readiness claims. Deferred-Project and connect-existing shortcuts remain unchanged; optional Free Models keeps its existing paid-provider-prompt ordering.
 
 ### Typed actions, persistence, and owner routing
 
@@ -137,6 +141,8 @@ depends_on:
 - PJCT-007
 - MACS-005
 - MS-122
+- T-136
+- T-142
 unblocks: []
 acceptance_criteria:
 - The eleven exact ordered stage IDs consume product_onboarding_contracts.schema.json main_stage_order; Final GUI
@@ -171,12 +177,15 @@ acceptance_criteria:
   typed and permission bound.
 - Ready starts no Goals, Plans, agents, builds or provider requests; optional Guided Tour follows PWIZ-023.
 - Hosted creation consumes the actual approved v3 setup draft through the initiating Project request's exact onboarding_setup_binding and FGI-011's current v2 create carrier; stale or changed source bytes, revisions, consent, account/container, catalog or preview block before mutation. A terminal listed Project is not a prerequisite for its own Forge child.
+- Search-provider setup stays inside postcommit provider_setup with Skip preserved; Automatic selects the first currently ready eligible provider in the shared owner priority order, while the searchable list retains capability, readiness, credential, official-setup, privacy, price/credit and fallback disclosures without issuing a search or inventing support.
+- Search-provider configuration and setup reuse the actual Settings/provider owner records and exact context-bound return; navigation alone grants no effect or Ready result, stale returns cannot replace current selections, and no stage, registry, credential store or per-operation priority editor is added.
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
 - tests/test_pm_onboarding_phases.py
 - tests/test_pm_settings_draft_transfer.py
 - future native owner-routing, restart, accessibility and visual/motion receipts; not_run
+- Plans/Settings_System.md#SSYS-019
 risk_class: onboarding_parallel_owner_or_overloaded_first_run
 reasoning_tier: high
 context_scope: product_onboarding_owner_and_flow
@@ -193,6 +202,8 @@ source_lineage:
 - source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/01_CANONICAL_NEWBIE_FLOW.md
 - source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/02_PROJECT_DRAFT_COPY_AND_COMMIT.md
 - source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/03_SIMPLE_PROVIDER_SETUP_AFTER_PROJECT.md
+- source_packet:PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/04_ACCOUNT_SIGNIN_AND_PROJECT_CREATION_MATRIX.md#12-search-providers-and-free-models
+- source_packet:PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/source_inputs/10_onboarding_baseline_handoff.md#6-search-provider-onboarding
 negative_constraints:
 - Do not create a Project, destination, history, repository, clone/import, Settings apply, sync/backup binding or
   broad provider work before the reviewed commit.
