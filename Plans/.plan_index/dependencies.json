@@ -6427,6 +6427,7 @@
     "UCC-146",
     "GRS-046",
     "MS-138",
+    "ACD-468",
     "SSYS-007",
     "SSYS-011",
     "GRS-080",
@@ -10493,6 +10494,21 @@
       "edge_type": "depends_on",
       "from": "ACD-467",
       "to": "ERS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-468",
+      "to": "SSYS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-468",
+      "to": "SSYS-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-468",
+      "to": "SSYS-008"
     },
     {
       "edge_type": "depends_on",
@@ -98445,7 +98461,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-24T04:43:14Z",
+  "generated_at_utc": "2026-09-24T05:41:38Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -107520,6 +107536,23 @@
         "heading_level": 3,
         "heading_line": 25740,
         "line": 25742,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "local_spelling_and_dictionary_behavior",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-468",
+      "reasoning_tier": "standard",
+      "risk_class": "passive_spelling_scope_or_provider_consent_drift",
+      "source_location": {
+        "heading": "ACD-468 - Passive Local Spelling And Dictionary Behavior",
+        "heading_level": 3,
+        "heading_line": 25802,
+        "line": 25804,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -212660,10 +212693,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15645,
+    "depends_on_edge_count": 15648,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18344,
-    "node_count": 6718,
+    "edge_count": 18347,
+    "node_count": 6719,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0

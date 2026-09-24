@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15645,
+    "depends_on_edge_count": 15648,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18344,
-    "node_count": 6718,
+    "edge_count": 18347,
+    "node_count": 6719,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-24T04:43:14Z",
+  "generated_at_utc": "2026-09-24T05:41:38Z",
   "gui_related_units": {
-    "count": 3196,
+    "count": 3197,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -3522,6 +3522,17 @@
           "heading_level": 3,
           "heading_line": 25740,
           "line": 25742,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-468",
+        "source_location": {
+          "heading": "ACD-468 - Passive Local Spelling And Dictionary Behavior",
+          "heading_level": 3,
+          "heading_line": 25802,
+          "line": 25804,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -35180,13 +35191,13 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6718,
+  "plan_unit_count": 6719,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
       "high": 2169,
       "low": 5,
       "medium": 8,
-      "standard": 4536
+      "standard": 4537
     },
     "risk_class_counts": {
       "a11y_regression": 1,
@@ -37352,6 +37363,7 @@
       "parser_failure_recovery_ux": 1,
       "partial_or_untruthful_restore": 1,
       "partial_status_update_api_opening": 1,
+      "passive_spelling_scope_or_provider_consent_drift": 1,
       "path_lookup_drift": 1,
       "path_normalization_and_worktree_handling": 1,
       "pause_cancel_resume_drift": 1,
@@ -39034,7 +39046,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6527,
+      "accepted": 6528,
       "retired": 182,
       "superseded": 9
     },
@@ -39101,7 +39113,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5276,
+      "requirement": 5277,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -39238,7 +39250,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "ef3085adb3068257c35b7d848fdf5f16c30257980ec1b414f02c4041c4232bed",
+        "expected": "a346b603c36b002ecb93ac82db796098385e85f218216b2c0cbe26a73946b6fb",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {
@@ -39292,6 +39304,14 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/UI_Command_Catalog.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Wiring_Matrix.production.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/assistant-chat-design.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
