@@ -540,9 +540,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 183,
-        "True": 283
+        "True": 284
       },
-      "heading_count": 682,
+      "heading_count": 684,
       "implementation_surfaces": [
         "AGENTS.md",
         "Concepts/chat-assistant-concepts/5.6 Pro/app.js",
@@ -589,6 +589,7 @@
         "Plans/Run_Modes.md",
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Settings_System.md",
         "Plans/Shared_Integration_Runtime.md",
         "Plans/Skills_System.md",
         "Plans/Tools.md",
@@ -620,9 +621,9 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 25786,
+      "line_count": 25859,
       "path": "Plans/assistant-chat-design.md",
-      "plan_unit_count": 466,
+      "plan_unit_count": 467,
       "plan_unit_ids": [
         "ACD-430",
         "ACD-424",
@@ -1089,7 +1090,8 @@
         "ACD-465",
         "ACD-464",
         "ACD-466",
-        "ACD-467"
+        "ACD-467",
+        "ACD-468"
       ],
       "reasoning_tiers": [
         "high",
@@ -1264,6 +1266,7 @@
         "pane_ia",
         "panel_docking_and_navigation_defect",
         "parent_mediated_clarification",
+        "passive_spelling_scope_or_provider_consent_drift",
         "payload_field_loss",
         "payload_schema",
         "performance",
@@ -1425,10 +1428,10 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "8b1cfe27bc861b853c0ed88c516e1c48a955074f926bcebded388e88f1a31e45",
+      "sha256": "83b9c60569d4c2bf386b21783cd218d79df08956078cd48e446f642a9a895ff1",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 466
+        "accepted": 467
       },
       "title": "Assistant & Chat UI -- Design Plan",
       "unit_type_counts": {
@@ -1437,7 +1440,7 @@
         "decision": 6,
         "gui_requirement": 5,
         "integration_contract": 1,
-        "requirement": 308,
+        "requirement": 309,
         "validation_rule": 2
       },
       "validation_surfaces": [
@@ -1488,6 +1491,7 @@
         "future GUI usage projection fixture suite",
         "future native destination and title currentness tests",
         "future onboarding Teacher handoff copy fixture",
+        "future passive spelling token-exclusion, no-autocorrect, source-fallback, scope, no-provider-Usage and accessibility fixtures; not_run",
         "future registered Lens dispatch and stale-preview fixtures",
         "future skipped-provider Teacher degraded-state fixture",
         "git diff --check",
@@ -1514,7 +1518,8 @@
         "reports/event-authority-20260911/step-08-restore-pair-validation.md",
         "rg newfeatures.md Plans/assistant-chat-design.md",
         "scripts/pm-assistant-contract-check.py",
-        "server-first Chat owner audit"
+        "server-first Chat owner audit",
+        "tests/test_pm_spellcheck_owner_prose.py (source-preservation checks only)"
       ]
     },
     {
@@ -19987,7 +19992,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T04:42:46Z",
+  "generated_at_utc": "2026-09-25T04:47:11Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19996,12 +20001,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3531,
-      "True": 3197
+      "True": 3198
     },
-    "plan_unit_count": 6728,
+    "plan_unit_count": 6729,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6537,
+      "accepted": 6538,
       "retired": 182,
       "superseded": 9
     },
@@ -20068,7 +20073,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5284,
+      "requirement": 5285,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

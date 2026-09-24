@@ -1,0 +1,79 @@
+{
+  "schema_id": "pm.packet_canon_repair.scoped_report.v1",
+  "finding_id": "SDR-004",
+  "base_commit": "e821ab7987a4780091dc192fd02724111c00cd14",
+  "status": "owner_prose_repaired_static_checks_pass",
+  "owner": "Plans/assistant-chat-design.md",
+  "plan_unit_id": "ACD-468",
+  "owner_lines": [25788, 25859],
+  "owner_before_sha256": "8b1cfe27bc861b853c0ed88c516e1c48a955074f926bcebded388e88f1a31e45",
+  "owner_after_sha256": "83b9c60569d4c2bf386b21783cd218d79df08956078cd48e446f642a9a895ff1",
+  "source_evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/sources/legacy-custody/raw/PKT-03-pm-settings-bakeoff-final-cumulative-2026-08-08/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/06_NOTIFICATIONS_SOUNDS_APPEARANCE_AND_INPUT.md",
+      "sha256": "7533b7e79f348fa4f6da9e1c92fb974ae58ab9b0ecd24c58d02f82fe915d8e4a",
+      "read_ranges": [[1, 136]],
+      "applicable_ranges": [[99, 132]],
+      "authority": "primary packet behavior"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/sources/legacy-custody/raw/PKT-03-pm-settings-bakeoff-final-cumulative-2026-08-08/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/DECISION_COVERAGE.json",
+      "sha256": "befbc67733876d9f03ea2aff526c166692348e629240800fcf7c5925a1dad46d",
+      "applicable_ranges": [[805, 824], [1372, 1383]],
+      "case_ids": ["CHAT-014", "CHAT-015", "MGR-030"],
+      "authority": "exact retained decision clauses, not prior audit verdict"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/sources/legacy-custody/raw/PKT-03-pm-settings-bakeoff-final-cumulative-2026-08-08/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md",
+      "sha256": "f20af36219e1d7d985a831c974d3008920483c3ee01a5696e49b2ac27888e467",
+      "applicable_ranges": [[731, 771]],
+      "authority": "corroborating local-service/action detail; candidate command IDs are not admitted"
+    }
+  ],
+  "current_authority": [
+    {
+      "path": "Plans/Crosswalk.md",
+      "sha256": "79b617d2d88be5533b0667255de5dc9644d0912f8aee855400e2c63302d46699",
+      "line": 3529,
+      "meaning": "Chat owner owns spellcheck and invisible composer buffer; no user-facing Draft product."
+    },
+    {
+      "path": "Plans/Settings_System.md",
+      "sha256": "ba6abdc766093aea83094fef229c086cc077391d2ff08c86e39c7868db3c82e4",
+      "plan_units": ["SSYS-002", "SSYS-006", "SSYS-008"],
+      "meaning": "Project-scoped ordinary preferences, shared row/manager presentation, secure reference custody; no invented global dictionary Settings authority."
+    }
+  ],
+  "retained_semantics": [
+    "Default-on local passive underlines and context-menu suggestions; explicit replacement/ignore/current-buffer/dictionary actions; no autocorrect or permanent toolbar.",
+    "Exact technical-token exclusions, Automatic OS-first then local source, Advanced System-only/local-only sources, language/personal/Project dictionaries, language packs and thread/Project overrides.",
+    "Distinct opt-in provider grammar/style with privacy/route/cost/Usage disclosure; ordinary spelling never silently becomes provider work."
+  ],
+  "supersession_handling": "Source ignore draft means current composer buffer only; current Crosswalk retires the Draft product. Older global ordinary Settings language cannot override current Settings owner. No dictionary implementation, provider, file format or candidate command is selected.",
+  "checks": {
+    "targeted_source_preservation": {"command": "python3 -m unittest discover -s tests -p test_pm_spellcheck_owner_prose.py", "base_tests": 4, "base_failures": 4, "repaired_tests": 4, "repaired_failures": 0},
+    "project_wiring_regression": {"tests": 5, "failures": 0},
+    "project_unarchive_regression": {"tests": 14, "failures": 0},
+    "shard_generation_and_check": {"docs": 99, "shards": 2721, "failures": 0},
+    "plan_index_generation_and_validation": {"status": "pass", "plan_units": 6719, "acceptance_units": 26218, "failures": 0},
+    "generated_owner_isolation": "Only chat owner shards changed. Index adds ACD-468 and eight acceptance rows; existing changed PlanUnit rows belong only to chat owner (source hash). No other owner rows changed.",
+    "diff_check": "pass",
+    "validation_order_note": "An early index validation overlapped generation and saw stale pre-generation files; the required post-generation validation passed with zero failures.",
+    "aggregate_landing_checks": "not_run; coordinator integration and landing responsibility"
+  },
+  "ignored_input_snapshot": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/event-authority-input-snapshot",
+    "validator_receipt_sha256": "af0bce7c65932afb2165cf64c0bd06c69f65e9a4b2007dd6ccc0125b56368f0e",
+    "disposition": "Existing unchanged snapshot linked read-only as generation input; no binding refreshed."
+  },
+  "remaining_work": [
+    "Owner-admitted typed spelling/dictionary action request/result/availability and exact Settings inventory mappings.",
+    "Scoped dictionary persistence, permissions and mutation bindings under existing owners, plus reverse consumers and accessibility fixtures.",
+    "Native local spelling, dictionary behavior, provider-consent separation and GUI evidence are not_run."
+  ],
+  "boundaries": [
+    "No commands, setting IDs, storage families, events, schema admissions, implementation technology or native handlers added.",
+    "No governance bindings refreshed; node-readiness status remains blocked_runtime_certification_incomplete.",
+    "This repairs retained owner prose only and does not close full packet, Touch, runtime or GUI coverage."
+  ]
+}
