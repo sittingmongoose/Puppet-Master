@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L1586-L6115
 
-Source SHA256: `355500af3d8b236eee8e5943a3ecfcd0dc4aaf637e6c38e77a741beca5f23f3d`
+Source SHA256: `a7482f7ac91ae1e433a382bff78143a13ee42258e5f51fc5650c66daa3d8607b`
 
 ---
 
@@ -4318,7 +4318,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: Defines seal-check and event admission governance, not visual presentation.
 split_recommended: false
-depends_on: [DL-039, DL-046]
+depends_on: [DL-039, DL-045, DL-046]
 unblocks: []
 acceptance_criteria:
   - The independent seal check keeps every existing rule and accepts a post-August registered family only with a complete admission record; a missing, malformed or mismatched record, or any depth criterion not passing, fails closed.
@@ -4379,7 +4379,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: Defines checkpoint approval governance for event registration, not visual presentation.
 split_recommended: false
-depends_on: [DL-039, DL-045]
+depends_on: [DL-039, DL-045, DL-046]
 unblocks: []
 acceptance_criteria:
   - A registration landing under this rule moves EVENT_FAMILY_REGISTRY_REVISION, EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT and their provenance comment, the test pins in tests/test_pm_testing_session_events.py and tests/test_pm_github_project_integration.py, and the readiness projections in the same landing.

@@ -2994,10 +2994,10 @@
     "DL-068",
     "DL-069",
     "DL-075",
-    "DL-078",
     "GRS-060",
     "DL-076",
     "DL-077",
+    "DL-078",
     "CV-346",
     "DP-006",
     "DP-025",
@@ -23977,6 +23977,11 @@
     {
       "edge_type": "depends_on",
       "from": "DL-077",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-077",
       "to": "DL-046"
     },
     {
@@ -23988,6 +23993,11 @@
       "edge_type": "depends_on",
       "from": "DL-078",
       "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-078",
+      "to": "DL-046"
     },
     {
       "edge_type": "depends_on",
@@ -98575,7 +98585,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-24T21:52:57Z",
+  "generated_at_utc": "2026-09-24T21:54:04Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -212875,9 +212885,9 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15670,
+    "depends_on_edge_count": 15672,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18369,
+    "edge_count": 18371,
     "node_count": 6723,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,

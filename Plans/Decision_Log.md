@@ -5893,7 +5893,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: Defines seal-check and event admission governance, not visual presentation.
 split_recommended: false
-depends_on: [DL-039, DL-046]
+depends_on: [DL-039, DL-045, DL-046]
 unblocks: []
 acceptance_criteria:
   - The independent seal check keeps every existing rule and accepts a post-August registered family only with a complete admission record; a missing, malformed or mismatched record, or any depth criterion not passing, fails closed.
@@ -5954,7 +5954,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: Defines checkpoint approval governance for event registration, not visual presentation.
 split_recommended: false
-depends_on: [DL-039, DL-045]
+depends_on: [DL-039, DL-045, DL-046]
 unblocks: []
 acceptance_criteria:
   - A registration landing under this rule moves EVENT_FAMILY_REGISTRY_REVISION, EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT and their provenance comment, the test pins in tests/test_pm_testing_session_events.py and tests/test_pm_github_project_integration.py, and the readiness projections in the same landing.
