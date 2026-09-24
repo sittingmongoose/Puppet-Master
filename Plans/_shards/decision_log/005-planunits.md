@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L1522-L5931
 
-Source SHA256: `f7858552f2f6ea1c50be4324be215965362af15d6d7c01e7cc5b0bbabd652897`
+Source SHA256: `a06547ceb8a1148389af65902b42669ee27db1c53015d812edd801e45e988907`
 
 ---
 
@@ -3967,7 +3967,7 @@ acceptance_criteria:
   - SMPFS-138 states that the move does not reseed the vacated section, with a DL-070 citation.
   - FinalGUISpec carries a dated DL-070 amendment retiring the move reseed; reset text is unchanged.
   - The GUI rebuild checklist and plans index note the retirement.
-  - Retiring the source_reseeded field and aligning the PM7 concept's move behavior remain open follow-ups for their owners.
+  - The source_reseeded field was retired on 2026-09-24 by FinalGUISpec's DL-070 follow-up amendment, which landed on main (566970cb7b); aligning the PM7 concept's move behavior remains an open follow-up for its owner.
 validation_surfaces:
   - reports/event-authority-20260911/decision-responses.jsonl
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json

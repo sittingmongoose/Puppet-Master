@@ -1279,7 +1279,7 @@ Answered on 2026-09-23 by Jared, in conversation with the coordinator, from the 
 Owner edits:
 
 - **Section 15 (SMPFS-138)** states that the move does not reseed.
-- **FinalGUISpec** retires its move-reseed sentence with a dated amendment, so the move payload's `source_reseeded` is always false.
+- **FinalGUISpec** retires its move-reseed sentence with a dated amendment, so the move payload's `source_reseeded` is always false. On 2026-09-24 `source_reseeded` was retired by FinalGUISpec's DL-070 follow-up amendment, which landed on main (566970cb7b); a move payload no longer carries the field.
 - **The GUI rebuild checklist and the plans index** note the retirement.
 
 Reset and boot-recovery reconstitution are unchanged and gain no creation authority.
@@ -5478,7 +5478,7 @@ acceptance_criteria:
   - SMPFS-138 states that the move does not reseed the vacated section, with a DL-070 citation.
   - FinalGUISpec carries a dated DL-070 amendment retiring the move reseed; reset text is unchanged.
   - The GUI rebuild checklist and plans index note the retirement.
-  - Retiring the source_reseeded field and aligning the PM7 concept's move behavior remain open follow-ups for their owners.
+  - The source_reseeded field was retired on 2026-09-24 by FinalGUISpec's DL-070 follow-up amendment, which landed on main (566970cb7b); aligning the PM7 concept's move behavior remains an open follow-up for its owner.
 validation_surfaces:
   - reports/event-authority-20260911/decision-responses.jsonl
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
