@@ -1,0 +1,455 @@
+{
+  "record_id": "EA-S08D-CARD-ANSWERS-20260924",
+  "recorded_at_utc": "2026-09-24",
+  "answers_source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_DEPTH_GRADING.md",
+  "answers_source_sha256": "cfea2eb818663d22eba69dca9296657aa05c51383a470bc1796b87aef65b923c",
+  "card_ref": "reports/event-authority-20260911/step-08-depth42-product-cards-20260924.md",
+  "card_sha256": "b83dbae42c81518394f5a73a06e5a36763018917d0d8f2fd10551677254aa6bb",
+  "decisions": [
+    {
+      "dl": "DL-079",
+      "card_id": "EA-S08D-GOAL-RECORD-EVENTS-001",
+      "response": "Approve",
+      "selected": "option 1",
+      "families": [
+        "goal.evidence_captured",
+        "goal.receipt_recorded",
+        "goal.tool_check_recorded"
+      ],
+      "effect_on_assessment": "Read-only history in the GRS-069..072 / SP-300..303 pattern. The product gap is answered; the conditional 'if retained' gap is dropped; the 'if retired' gap becomes the owner work. Disposition stays UNDISPOSITIONED and grades stand until the Goal Runtime owner writes the historical contracts (rubric: HISTORICAL_ONLY needs an owner unit)."
+    },
+    {
+      "dl": "DL-080",
+      "card_id": "EA-S08D-GOALRUN-LIFECYCLE-EVENTS-001",
+      "response": "Approve",
+      "selected": "option 1",
+      "families": [
+        "goal_run.blocked",
+        "goal_run.replanned",
+        "goal_run.stopped"
+      ],
+      "effect_on_assessment": "Current events: stopped and blocked first, replanned after the Replan v8 source work. The product gap is answered; the conditional 'if retired' gap is dropped; the 'if current' gap becomes the owner work. Disposition stays UNDISPOSITIONED and grades stand until the Workflow run lifecycle owner writes the current contracts."
+    },
+    {
+      "dl": "DL-081",
+      "card_id": "EA-S08D-VERIFICATION-EXCEPTION-001",
+      "response": "Approve",
+      "selected": "option 1",
+      "families": [
+        "goal.completed"
+      ],
+      "effect_on_assessment": "The exception route stays; the product gap on goal.completed is answered and becomes owner work (the route contract). No grade changes."
+    },
+    {
+      "dl": "DL-082",
+      "card_id": "EA-S08D-PLATFORM-CATALOG-001",
+      "response": "no answer",
+      "selected": "deferred to build time",
+      "families": [
+        "platform.capability_evaluated"
+      ],
+      "effect_on_assessment": "Deferred to build time, not an approval of option 1. The catalog product gap is recorded as deferred, with the worknode follow-up; the family stays registered and dormant. No grade changes."
+    },
+    {
+      "dl": "DL-083",
+      "card_id": "EA-S08D-OPERATIONAL-CARDINALITY-001",
+      "response": "Approve",
+      "selected": "option 1",
+      "families": [
+        "platform.capability_evaluated",
+        "storage.boot_recovery",
+        "storage.recovery_applied",
+        "storage.compaction_lifecycle_changed"
+      ],
+      "effect_on_assessment": "One application-wide bucket under RP-OPERATIONAL-2555D with the same cap and overflow. The four retention product gaps are answered and become Storage retention owner work; the four retention cells stay PARTIAL until the SP-291 policy text is amended."
+    }
+  ],
+  "assessment_json_sha256_before": "078d64bb5ec40c18308a342999962d8ac2cdb5fe439bf8d1b087abdf793ee1b9",
+  "assessment_json_sha256_after": "ff7dbd59b678aa53f311e5c6727ea5835e2a03c398d9b5d4639d52957f73e30e",
+  "totals_before": {
+    "PASS": 335,
+    "PARTIAL": 144,
+    "CONFLICT": 13,
+    "ABSENT": 12
+  },
+  "totals_after": {
+    "PASS": 335,
+    "PARTIAL": 144,
+    "CONFLICT": 13,
+    "ABSENT": 12
+  },
+  "rows": [
+    {
+      "event_type": "goal.evidence_captured",
+      "decisions": [
+        "DL-079"
+      ],
+      "disposition": "UNDISPOSITIONED",
+      "cell_statuses_unchanged": true,
+      "remaining_gaps_before": [
+        "PRODUCT: should goal.evidence_captured survive Goal V2? Options: retire it historical-only (the GRS-069..072 pattern: current-writer refusal plus an SP-300-style reader adopting SP-278), or re-specify it as a reference-only Goal event. Canon (l.11, l.56, GRS-009 banner, GRS-049) puts evidence with the producing workflow but rules on nothing for this family.",
+        "If retained, Goal_Runtime_System + Contracts_V0 + Storage must write a current-writer successor: producer and trigger, a V2-consistent envelope (revision semantics for an evidence-only event under GRS-064, currentness), and SP-286 adoption, then a consumer/checkpoint (goal_evidence_index or none_required) adopting SP-278 with the DL-076 token.",
+        "If retired, a GRS/CV/SP triple must add refusal before dedupe/CAS/append, preserved historical predicates, and a named reader with custody, access/deletion checks and withdrawal.",
+        "Either way the Goal owner must define event custody and a withdrawal rule, and oracle fixtures for whichever contract results; the v1-only fixture check does not cover v2."
+      ],
+      "remaining_gaps_after": [
+        "ANSWERED by DL-079 (Jared, 2026-09-24, card EA-S08D-GOAL-RECORD-EVENTS-001, option 1): goal.evidence_captured becomes read-only history in the GRS-069..072 pattern, with its own current-writer prohibition and an assigned historical reader adopting SP-278 (the SP-300..303 pattern). Until the Goal Runtime owner writes that contract, the family stays UNDISPOSITIONED and its grades stand.",
+        "Owner work under DL-079: a GRS/CV/SP triple must add refusal before dedupe/CAS/append, preserved historical predicates, and a named reader with custody, access/deletion checks and withdrawal.",
+        "The Goal owner must define event custody and a withdrawal rule, and oracle fixtures for the historical contract; the v1-only fixture check does not cover v2."
+      ],
+      "notes_before": "UNDISPOSITIONED. goal.evidence_captured is not among Goal V2's required event names (l.273), and no unit rules on it. The four-historical ruling covered goal.progressed, goal.replanned, goal.stopped and goal.verification_decided only. D-R07's basis cites GRS-008..012, of which GRS-008, 009 and 010 are superseded 'COMPATIBILITY AND SOURCE-LINEAGE ONLY' units. The closed_payload_schema CONFLICT rests on current ownership text (l.11, l.56, GRS-009 banner, GRS-049), not a retired phase/child/budget/role field; the payload requires none of those. Native NOT_RUN did not lower any grade.",
+      "notes_after": "UNDISPOSITIONED. goal.evidence_captured is not among Goal V2's required event names (l.273), and no unit rules on it. The four-historical ruling covered goal.progressed, goal.replanned, goal.stopped and goal.verification_decided only. D-R07's basis cites GRS-008..012, of which GRS-008, 009 and 010 are superseded 'COMPATIBILITY AND SOURCE-LINEAGE ONLY' units. The closed_payload_schema CONFLICT rests on current ownership text (l.11, l.56, GRS-009 banner, GRS-049), not a retired phase/child/budget/role field; the payload requires none of those. Native NOT_RUN did not lower any grade. DL-079 (Jared, 2026-09-24) decides read-only history for this family. The disposition stays UNDISPOSITIONED and the grades stand until the Goal Runtime owner writes the historical contract, because the rubric counts HISTORICAL_ONLY only where an owner unit prohibits current writes and defines the historical reader.",
+      "cell_findings_changed": {},
+      "batch_row_sha256_before": "9bea14096c3442788e6e9a3601e9e20da16af48819a5aa2a437129e33e7826a6",
+      "batch_row_sha256_after": "cef512ba4fa7f60f1af0c04f132eef237ade7d353cb0512afe4d47123cc75d06"
+    },
+    {
+      "event_type": "goal.receipt_recorded",
+      "decisions": [
+        "DL-079"
+      ],
+      "disposition": "UNDISPOSITIONED",
+      "cell_statuses_unchanged": true,
+      "remaining_gaps_before": [
+        "PRODUCT: should goal.receipt_recorded survive Goal V2, and under whom? Options: retire it historical-only (GRS-069..072 pattern), or re-specify it as a Goal-side association of an existing Workflow/Standard receipt without Goal-owned tier or certifier fields. GRS-065 keeps D-R09's evidence-only effect as a constraint but issues no ruling, and GRS-027 moved receipt semantics to Orchestrator/Executor.",
+        "If retained, Goal_Runtime_System + Contracts_V0 (with CV-340) + Storage must write a current-writer successor: producer ordering per GRS-065 l.6087, the body-writer path 'receipt association' (GRS-064 l.5909) versus 'changes evidence only', SP-286 adoption, a V2 envelope, and a consumer/checkpoint adopting SP-278 with the DL-076 token.",
+        "If retired, a GRS/CV/SP triple must add refusal before dedupe/CAS/append and a named historical reader with custody and withdrawal.",
+        "Readiness artifact Plans/.implementation_readiness/non_executable_closure_evidence.json (l.263-273) still lists 'goal.receipt.recorded' with producer 'Goal Runtime certifier'. The designated Plans agent should reconcile it at the next readiness regeneration."
+      ],
+      "remaining_gaps_after": [
+        "ANSWERED by DL-079 (Jared, 2026-09-24, card EA-S08D-GOAL-RECORD-EVENTS-001, option 1): goal.receipt_recorded becomes read-only history in the GRS-069..072 pattern, with its own current-writer prohibition and an assigned historical reader adopting SP-278 (the SP-300..303 pattern). Until the Goal Runtime owner writes that contract, the family stays UNDISPOSITIONED and its grades stand.",
+        "Owner work under DL-079: a GRS/CV/SP triple must add refusal before dedupe/CAS/append and a named historical reader with custody and withdrawal.",
+        "Readiness artifact Plans/.implementation_readiness/non_executable_closure_evidence.json (l.263-273) still lists 'goal.receipt.recorded' with producer 'Goal Runtime certifier'. The designated Plans agent should reconcile it at the next readiness regeneration."
+      ],
+      "notes_before": "UNDISPOSITIONED. Not among Goal V2's required names (l.273), and not covered by the four-historical ruling. GRS-065 prose (l.6087) is the only current text that treats D-R09 as live, and only for its pre-existing-receipt, evidence-only effect on a future producer. D-R09's basis cites GRS-013, 014 and 027, all superseded. A July readiness artifact names a differently spelled 'goal.receipt.recorded' with a retired 'Goal Runtime certifier' producer and broad consumers; it is generated evidence, not owner text, and was not counted. Native NOT_RUN did not lower any grade.",
+      "notes_after": "UNDISPOSITIONED. Not among Goal V2's required names (l.273), and not covered by the four-historical ruling. GRS-065 prose (l.6087) is the only current text that treats D-R09 as live, and only for its pre-existing-receipt, evidence-only effect on a future producer. D-R09's basis cites GRS-013, 014 and 027, all superseded. A July readiness artifact names a differently spelled 'goal.receipt.recorded' with a retired 'Goal Runtime certifier' producer and broad consumers; it is generated evidence, not owner text, and was not counted. Native NOT_RUN did not lower any grade. DL-079 (Jared, 2026-09-24) decides read-only history for this family. The disposition stays UNDISPOSITIONED and the grades stand until the Goal Runtime owner writes the historical contract, because the rubric counts HISTORICAL_ONLY only where an owner unit prohibits current writes and defines the historical reader.",
+      "cell_findings_changed": {},
+      "batch_row_sha256_before": "711a5f5ff2d885a49274a27d5589625beee2f86250c65cfc77e4a95201c380a9",
+      "batch_row_sha256_after": "461a4a95ce7b7edad8e6f785fb9b15c35477a8da0ba357c29fe0570691280c7b"
+    },
+    {
+      "event_type": "goal.tool_check_recorded",
+      "decisions": [
+        "DL-079"
+      ],
+      "disposition": "UNDISPOSITIONED",
+      "cell_statuses_unchanged": true,
+      "remaining_gaps_before": [
+        "PRODUCT: should goal.tool_check_recorded survive Goal V2? Options: retire it historical-only (GRS-069..072 pattern with a named reader adopting SP-278), or move tool-check records to the executing run or tool owner. Canon (GRS-049, GRS-009 banner, l.54) takes tool authority and evidence discipline away from the Goal but rules on nothing for this family.",
+        "If retained, the owner (Goal, or the executing run/tool owner per GRS-049) must write a current-writer contract with producer, ordering, SP-286 adoption, a V2-consistent envelope and revision semantics, and a consumer/checkpoint adopting SP-278 with the DL-076 token.",
+        "If retired, a GRS/CV/SP triple must add refusal before dedupe/CAS/append, preserved historical predicates, and a reader with custody, access/deletion checks and withdrawal.",
+        "Either way: event custody, a withdrawal rule, and oracle fixtures for the resulting contract; the v1-only fixture check does not cover v2."
+      ],
+      "remaining_gaps_after": [
+        "ANSWERED by DL-079 (Jared, 2026-09-24, card EA-S08D-GOAL-RECORD-EVENTS-001, option 1): goal.tool_check_recorded becomes read-only history in the GRS-069..072 pattern, with its own current-writer prohibition and an assigned historical reader adopting SP-278 (the SP-300..303 pattern). Until the Goal Runtime owner writes that contract, the family stays UNDISPOSITIONED and its grades stand.",
+        "Owner work under DL-079: a GRS/CV/SP triple must add refusal before dedupe/CAS/append, preserved historical predicates, and a reader with custody, access/deletion checks and withdrawal.",
+        "Event custody, a withdrawal rule, and oracle fixtures for the historical contract; the v1-only fixture check does not cover v2."
+      ],
+      "notes_before": "UNDISPOSITIONED. Not among Goal V2's required names (l.273), and not covered by the four-historical ruling. D-R13's basis cites GRS-009..011 and GRS-020; GRS-009 and GRS-010 are superseded by GRS-049. The closed_payload_schema CONFLICT rests on current ownership text (GRS-049, the GRS-009 banner, l.54 Permissions ownership), not a retired phase/child/budget/role field; the payload requires none of those. Native NOT_RUN did not lower any grade.",
+      "notes_after": "UNDISPOSITIONED. Not among Goal V2's required names (l.273), and not covered by the four-historical ruling. D-R13's basis cites GRS-009..011 and GRS-020; GRS-009 and GRS-010 are superseded by GRS-049. The closed_payload_schema CONFLICT rests on current ownership text (GRS-049, the GRS-009 banner, l.54 Permissions ownership), not a retired phase/child/budget/role field; the payload requires none of those. Native NOT_RUN did not lower any grade. DL-079 (Jared, 2026-09-24) decides read-only history for this family. The disposition stays UNDISPOSITIONED and the grades stand until the Goal Runtime owner writes the historical contract, because the rubric counts HISTORICAL_ONLY only where an owner unit prohibits current writes and defines the historical reader.",
+      "cell_findings_changed": {},
+      "batch_row_sha256_before": "4d70787340bcea238f6be227c733d57b5af705b05f4345c4bc4fe3df792e33ce",
+      "batch_row_sha256_after": "0f437ff917b11f35cbf0632a567d068e713dbb1e2b0a4ff835bde4de2651c54f"
+    },
+    {
+      "event_type": "goal_run.blocked",
+      "decisions": [
+        "DL-080"
+      ],
+      "disposition": "UNDISPOSITIONED",
+      "cell_statuses_unchanged": true,
+      "remaining_gaps_before": [
+        "PRODUCT: should Workflow runs get a current goal_run.blocked event, and under which owner? Known-37 section 10 names it for permission denial, GRS-026 gives blocked overlays to the Executor scheduler, and GRS-027 moved the loop to Orchestrator/Executor contracts that do not exist. Retiring the family historical-only is the other option.",
+        "If current, Orchestrator/Executor + Goal_Runtime_System + Storage must write a v3 successor on the current GoalRun envelope (Workflow clock, required inner key, no parent_goal_id, as GRS-079/080), an EP-118 writer listing, block-receipt/append/first-receipt ordering with SP-286, and GRS-085/SP-312 reducer support or a separate consumer adopting SP-278 with the DL-076 token.",
+        "If retired, a GRS/CV/SP triple must add refusal before dedupe/CAS/append and a named historical reader (custody, access/deletion checks, withdrawal).",
+        "Either way: event and block-receipt custody, a withdrawal rule, and oracle fixtures; GOAL-COMMON-04/13 must be re-keyed to whichever envelope survives."
+      ],
+      "remaining_gaps_after": [
+        "ANSWERED by DL-080 (Jared, 2026-09-24, card EA-S08D-GOALRUN-LIFECYCLE-EVENTS-001, option 1): goal_run.blocked becomes a current event, written with goal_run.stopped before goal_run.replanned, by the Workflow run lifecycle owner (Orchestrator and Executor, with Goal Runtime and Storage). Until that contract lands, the family stays UNDISPOSITIONED and its grades stand.",
+        "Owner work under DL-080: Orchestrator/Executor + Goal_Runtime_System + Storage must write a v3 successor on the current GoalRun envelope (Workflow clock, required inner key, no parent_goal_id, as GRS-079/080), an EP-118 writer listing, block-receipt/append/first-receipt ordering with SP-286, and GRS-085/SP-312 reducer support or a separate consumer adopting SP-278 with the DL-076 token.",
+        "Event and block-receipt custody, a withdrawal rule, and oracle fixtures; GOAL-COMMON-04/13 must be re-keyed to the current envelope."
+      ],
+      "notes_before": "UNDISPOSITIONED. GRS-085 (l.7883-7884) is not a disposition: it only makes the certified/started/cancelled projection halt on same-run blocked rows, and EP-118 generically refuses unlisted Workflow writers. The transitions cell is upgraded from CONFLICT to PARTIAL because GRS-065/080/082 keep GoalRun blocked as a live Workflow state; the remaining problem is non-adoption, not retirement. closed_payload_schema stays CONFLICT, now on the current GoalRun envelope (GRS-079/080), not on retired Goal structure; the payload requires none. Native NOT_RUN did not lower any grade.",
+      "notes_after": "UNDISPOSITIONED. GRS-085 (l.7883-7884) is not a disposition: it only makes the certified/started/cancelled projection halt on same-run blocked rows, and EP-118 generically refuses unlisted Workflow writers. The transitions cell is upgraded from CONFLICT to PARTIAL because GRS-065/080/082 keep GoalRun blocked as a live Workflow state; the remaining problem is non-adoption, not retirement. closed_payload_schema stays CONFLICT, now on the current GoalRun envelope (GRS-079/080), not on retired Goal structure; the payload requires none. Native NOT_RUN did not lower any grade. DL-080 (Jared, 2026-09-24) decides a current event for this family. The disposition stays UNDISPOSITIONED and the grades stand until the Workflow run lifecycle owner writes the current contract.",
+      "cell_findings_changed": {},
+      "batch_row_sha256_before": "ed49bafef5a87c47d4673892d84274f45e85f94155634311ddda1976f8b837d1",
+      "batch_row_sha256_after": "cc6fca2e25638ca62dd7d8612798903c0c501f5030de963fe3ce16df46c1f5b8"
+    },
+    {
+      "event_type": "goal_run.replanned",
+      "decisions": [
+        "DL-080"
+      ],
+      "disposition": "UNDISPOSITIONED",
+      "cell_statuses_unchanged": true,
+      "remaining_gaps_before": [
+        "PRODUCT: should a current Workflow replan event exist, and who owns it? GRS-070 calls goal_run.replanned 'separately governed' and Known-37 4.2 makes it the only resume path for blocked or stopped runs. But GRS-027 moved repair/replan custody to Orchestrator/Executor, EP-118 supplies no replanned route, GRS-082 adds no replan writer, and the Workflow standard source does not claim it occurs.",
+        "If current, Orchestrator/Executor + Goal_Runtime_System + Storage must write a v3 successor on the current GoalRun envelope (Workflow clock, required inner key, no parent_goal_id), an EP-118 writer listing, ordering with SP-286, GRS-085/SP-312 reducer support or a consumer adopting SP-278 with the DL-076 token, and a reconciliation of D-R19's cancel=>cancelled with GRS-080.",
+        "If retired, a GRS/CV/SP triple must add refusal and a historical reader, and Known-37 4.2's resume fence ('valid goal_run.replanned admission') must be rewritten, since blocked or stopped runs would otherwise have no resume path.",
+        "Either way: custody for replan and WorkNode-disposition records, a withdrawal rule, and oracle fixtures."
+      ],
+      "remaining_gaps_after": [
+        "ANSWERED by DL-080 (Jared, 2026-09-24, card EA-S08D-GOALRUN-LIFECYCLE-EVENTS-001, option 1): goal_run.replanned becomes a current event, written after goal_run.stopped and goal_run.blocked and after the Workflow Replan source work (the external pm.executor.workflow_source.all_writers.v8 package, which the answer makes needed without scheduling it), by the Workflow run lifecycle owner. The Known-37 4.2 resume fence keeps depending on it. Until that contract lands, the family stays UNDISPOSITIONED and its grades stand.",
+        "Owner work under DL-080: Orchestrator/Executor + Goal_Runtime_System + Storage must write a v3 successor on the current GoalRun envelope (Workflow clock, required inner key, no parent_goal_id), an EP-118 writer listing, ordering with SP-286, GRS-085/SP-312 reducer support or a consumer adopting SP-278 with the DL-076 token, and a reconciliation of D-R19's cancel=>cancelled with GRS-080.",
+        "Custody for replan and WorkNode-disposition records, a withdrawal rule, and oracle fixtures."
+      ],
+      "notes_before": "UNDISPOSITIONED. GRS-070 l.6566 and the Workflow standard protocol l.15 only acknowledge the family ('separately governed'; not claimed to occur). EP-118 and GRS-082 confirm no writer, and GRS-085 halts on it; none of these is a current-writer or historical-only ruling. The transitions cell is upgraded from CONFLICT to PARTIAL because the GoalRun lifecycle stays live (GRS-065/080/082). closed_payload_schema stays CONFLICT on the current GoalRun envelope (GRS-079/080). Retention is the only GC family on RP-RUNTIME-365D. Native NOT_RUN did not lower any grade.",
+      "notes_after": "UNDISPOSITIONED. GRS-070 l.6566 and the Workflow standard protocol l.15 only acknowledge the family ('separately governed'; not claimed to occur). EP-118 and GRS-082 confirm no writer, and GRS-085 halts on it; none of these is a current-writer or historical-only ruling. The transitions cell is upgraded from CONFLICT to PARTIAL because the GoalRun lifecycle stays live (GRS-065/080/082). closed_payload_schema stays CONFLICT on the current GoalRun envelope (GRS-079/080). Retention is the only GC family on RP-RUNTIME-365D. Native NOT_RUN did not lower any grade. DL-080 (Jared, 2026-09-24) decides a current event for this family. The disposition stays UNDISPOSITIONED and the grades stand until the Workflow run lifecycle owner writes the current contract.",
+      "cell_findings_changed": {},
+      "batch_row_sha256_before": "147ca46505f7bf0a23bc026a3cc9d4855cc0994c27a33f1a5a2bfed4dbc11ec8",
+      "batch_row_sha256_after": "9d9afda2e55a5722a4f3f19880069d66a6f2f38056b3598cee8bb8fbd8439de9"
+    },
+    {
+      "event_type": "goal_run.stopped",
+      "decisions": [
+        "DL-080"
+      ],
+      "disposition": "UNDISPOSITIONED",
+      "cell_statuses_unchanged": true,
+      "remaining_gaps_before": [
+        "PRODUCT: should Orchestrator Pause and runtime Abort Run emit a current goal_run.stopped, as the production wiring and UCC rows expect, and under which owner (GRS-071 'separately owned'; GRS-027 moved loop custody to Orchestrator/Executor)? The alternative is to re-route those commands and retire the family historical-only. Mapping a Pause command to a 'stopped' run state is itself an owner choice.",
+        "If current, Orchestrator/Executor + Goal_Runtime_System + Storage must write a v3 successor on the current GoalRun envelope, add EP-118 writer listings for the pause/abort handlers, order settlement, safe point, append and first receipt with SP-286, add GRS-085/SP-312 reducer support (today a same-run stopped row halts the mandatory projection) or a consumer adopting SP-278 with the DL-076 token, and reconcile D-R21 'all child settlements' with GRS-075.",
+        "If retired, the wiring rows catalog.orchestrator_pause and catalog.runtime_abort_run and UCC l.8108/l.8148 must drop their goal_run.stopped expectation, as was done for catalog.runtime_skip_node. Known-37 4.2's resume fence also depends on goal_run.replanned.",
+        "UCC l.8148 still lists goal.replanned, historical-only under GRS-070, among runtime dispatch events; it needs owner reconciliation alongside any goal_run.stopped decision."
+      ],
+      "remaining_gaps_after": [
+        "ANSWERED by DL-080 (Jared, 2026-09-24, card EA-S08D-GOALRUN-LIFECYCLE-EVENTS-001, option 1): goal_run.stopped becomes a current event, written first with goal_run.blocked, by the Workflow run lifecycle owner (Orchestrator and Executor, with Goal Runtime and Storage), so the Orchestrator Pause and runtime Abort Run wiring and the UCC rows that expect it keep working as specified. Until that contract lands, the family stays UNDISPOSITIONED and its grades stand.",
+        "Owner work under DL-080: Orchestrator/Executor + Goal_Runtime_System + Storage must write a v3 successor on the current GoalRun envelope, add EP-118 writer listings for the pause/abort handlers, order settlement, safe point, append and first receipt with SP-286, add GRS-085/SP-312 reducer support (today a same-run stopped row halts the mandatory projection) or a consumer adopting SP-278 with the DL-076 token, and reconcile D-R21 'all child settlements' with GRS-075.",
+        "UCC l.8148 still lists goal.replanned, historical-only under GRS-070, among runtime dispatch events; it needs owner reconciliation alongside the goal_run.stopped contract."
+      ],
+      "notes_before": "UNDISPOSITIONED. Beyond GRS-085 (halts the mandatory GoalRun projection on same-run stopped) and EP-118 (refuses unlisted Workflow writers), the only step-08 change touching this family is the skip-node wiring correction: Wiring_Matrix l.52685 now removes skip_node's unconditional goal_run.stopped expectation and demands that 'a separate run-stop event requires its own owner-admitted transition'. That correction is not a disposition; pause and abort_run rows still expect emission. The transitions cell is upgraded from CONFLICT to PARTIAL because GoalRun stopped is a live Workflow state (GRS-080), and D-R21's basis units are all still accepted. Native NOT_RUN did not lower any grade.",
+      "notes_after": "UNDISPOSITIONED. Beyond GRS-085 (halts the mandatory GoalRun projection on same-run stopped) and EP-118 (refuses unlisted Workflow writers), the only step-08 change touching this family is the skip-node wiring correction: Wiring_Matrix l.52685 now removes skip_node's unconditional goal_run.stopped expectation and demands that 'a separate run-stop event requires its own owner-admitted transition'. That correction is not a disposition; pause and abort_run rows still expect emission. The transitions cell is upgraded from CONFLICT to PARTIAL because GoalRun stopped is a live Workflow state (GRS-080), and D-R21's basis units are all still accepted. Native NOT_RUN did not lower any grade. DL-080 (Jared, 2026-09-24) decides a current event for this family. The disposition stays UNDISPOSITIONED and the grades stand until the Workflow run lifecycle owner writes the current contract.",
+      "cell_findings_changed": {},
+      "batch_row_sha256_before": "302bdfea2296163c53a7275c3bbf33e20d7169385e5a52dd472ad47492fbc400",
+      "batch_row_sha256_after": "a8638d0e55714d624607f06a0dbe26efe85e739af97fac33633d16983f2244fb"
+    },
+    {
+      "event_type": "goal.completed",
+      "decisions": [
+        "DL-081"
+      ],
+      "disposition": "UNDISPOSITIONED",
+      "cell_statuses_unchanged": true,
+      "remaining_gaps_before": [
+        "Goal_Runtime_System 'Goal V2 events' + Contracts_V0 + Storage: author a current-writer successor for goal.completed. The payload carries completion_evidence_refs by reference, revision and currentness_hash, with no Goal criteria or certifier decision; the transition is host-owned active -> completed under the GREPLAY-004..008 guards and PGOAL exactly-once. l.273 already requires the name, so this is owner work.",
+        "Same successor unit: bind the producer ordering (evaluation, body commit through owner.goal.body.mutation@1.0.0, append, first receipt) and adopt SP-286/CV-339 by name; define how Workflow certification (GRS-065/CV-340) or GoalRun completion integration (GRS-064 l.5909) may feed Goal completion.",
+        "SP-214 or a new Storage unit: define the goal.completed consumer/projector and checkpoint adopting SP-278 with the DL-076 nine-field token, or an owner-justified none_required. The GREPLAY-011 Activity history needs a named reader.",
+        "Goal owner: define event custody (original holder, backup/restore, access/deletion at read) and a v2 retained-reader and withdrawal rule once the successor exists.",
+        "PRODUCT: whether a Goal may complete on an approved verification exception (the old certified_with_approved_exception path). GRS-065 l.6081 says the exception/waiver owner route 'remains separately unbound'.",
+        "Commands_System l.5990 still lists goal.completed as requires_central_adjudication; routing must be reconciled when a successor lands."
+      ],
+      "remaining_gaps_after": [
+        "Goal_Runtime_System 'Goal V2 events' + Contracts_V0 + Storage: author a current-writer successor for goal.completed. The payload carries completion_evidence_refs by reference, revision and currentness_hash, with no Goal criteria or certifier decision; the transition is host-owned active -> completed under the GREPLAY-004..008 guards and PGOAL exactly-once. l.273 already requires the name, so this is owner work.",
+        "Same successor unit: bind the producer ordering (evaluation, body commit through owner.goal.body.mutation@1.0.0, append, first receipt) and adopt SP-286/CV-339 by name; define how Workflow certification (GRS-065/CV-340) or GoalRun completion integration (GRS-064 l.5909) may feed Goal completion.",
+        "SP-214 or a new Storage unit: define the goal.completed consumer/projector and checkpoint adopting SP-278 with the DL-076 nine-field token, or an owner-justified none_required. The GREPLAY-011 Activity history needs a named reader.",
+        "Goal owner: define event custody (original holder, backup/restore, access/deletion at read) and a v2 retained-reader and withdrawal rule once the successor exists.",
+        "ANSWERED by DL-081 (Jared, 2026-09-24, card EA-S08D-VERIFICATION-EXCEPTION-001, option 1): the verification exception route stays. The user who owns the project approves each exception through the existing human-in-the-loop approval flow, naming the residual risks, and the finish is labelled completed_with_approved_verification_exception, never a clean pass. Owner work: the Goal Runtime and Workflow certification owners, with the Human-in-the-loop owner, write the route contract (approval request, approver, waivable risks, receipt); until it lands GRS-065 l.6081 keeps the route 'separately unbound'.",
+        "Commands_System l.5990 still lists goal.completed as requires_central_adjudication; routing must be reconciled when a successor lands."
+      ],
+      "notes_before": "UNDISPOSITIONED. Goal V2 (l.273) requires goal.completed but demands its own registration and payload before emission. The registered v2 row predates Goal V2, and no current-writer or historical-only unit covers it; D-R04 has no disposition preamble. D-R04's basis cites GRS-013 and GRS-014, both superseded by GRS-050 ('COMPATIBILITY AND SOURCE-LINEAGE ONLY'). Both CONFLICT cells rest on current units (GRS-013 banner, GRS-048/049/050, GREPLAY-004..008). Native NOT_RUN was not used to lower any grade.",
+      "notes_after": "UNDISPOSITIONED. Goal V2 (l.273) requires goal.completed but demands its own registration and payload before emission. The registered v2 row predates Goal V2, and no current-writer or historical-only unit covers it; D-R04 has no disposition preamble. D-R04's basis cites GRS-013 and GRS-014, both superseded by GRS-050 ('COMPATIBILITY AND SOURCE-LINEAGE ONLY'). Both CONFLICT cells rest on current units (GRS-013 banner, GRS-048/049/050, GREPLAY-004..008). Native NOT_RUN was not used to lower any grade. DL-081 (Jared, 2026-09-24) keeps the verification exception route; it changes no grade of this row.",
+      "cell_findings_changed": {},
+      "batch_row_sha256_before": "7627fd7b449cf87046455dde534a84d8553e2173a1d1bd099c67570fa38ec11b",
+      "batch_row_sha256_after": "7641425e9ba7e97062d47b0150c764518d058e9d96b712eab3ef38016e20ea22"
+    },
+    {
+      "event_type": "platform.capability_evaluated",
+      "decisions": [
+        "DL-082",
+        "DL-083"
+      ],
+      "disposition": "CURRENT_WRITER",
+      "cell_statuses_unchanged": true,
+      "remaining_gaps_before": [
+        "PRODUCT: the active Platform capability catalog is empty (Plans/platform_capability_catalog.json entries []), and N2-157 says no production evaluation or event is emitted and no evaluation trigger is defined. Whether and when any capability enters the catalog, and what triggers an evaluation, is a product choice for the catalog owner (OSI Platform Capability Manager / N2-157).",
+        "SP-290/N2-157: close the output schema of storage.platform_capability_decision.read.v1 (the 'complete current read-through marker'), and name SP-278's generic read token (the nine-field durable projection) if a token is ever stored.",
+        "N2-157 states aggregate multi-capability requirement-set use is unavailable until an original context-owner requirement-set contract exists; any consumer asserting aggregate coverage needs that contract first.",
+        "Native capture, crash cuts, package lease, backup/cleanup and production admission remain NOT_RUN (does not lower grades).",
+        "PRODUCT (card EA-S08D-OPERATIONAL-CARDINALITY-001): how RP-OPERATIONAL-2555D's per-project 2,000,000-record cap counts this family's application-scoped evaluations; the Storage retention owner applies the answer."
+      ],
+      "remaining_gaps_after": [
+        "DEFERRED by DL-082 (Jared, 2026-09-24, card EA-S08D-PLATFORM-CATALOG-001, no answer): Jared defers filling the catalog to build time, right before Puppet Master is built, as part of the building process and likely as one of the worknodes, because provider capabilities will change before then. This is not an approval of the card's option 1. The family stays registered and dormant with an empty active catalog; filling the catalog, with owner-cited entries, evaluation contracts and tests, is a follow-up for whoever owns the worknode work.",
+        "SP-290/N2-157: close the output schema of storage.platform_capability_decision.read.v1 (the 'complete current read-through marker'), and name SP-278's generic read token (the nine-field durable projection) if a token is ever stored.",
+        "N2-157 states aggregate multi-capability requirement-set use is unavailable until an original context-owner requirement-set contract exists; any consumer asserting aggregate coverage needs that contract first.",
+        "Native capture, crash cuts, package lease, backup/cleanup and production admission remain NOT_RUN (does not lower grades).",
+        "ANSWERED by DL-083 (Jared, 2026-09-24, card EA-S08D-OPERATIONAL-CARDINALITY-001, option 1): the application-scoped evaluations count in one application-wide bucket under RP-OPERATIONAL-2555D, with its 2,000,000-record cap and fail-closed overflow. Owner work: the Storage retention owner writes it into the SP-291 policy text (storage-plan.md 23548); the retention cell stays PARTIAL until then."
+      ],
+      "notes_before": "No per-facet supplement existed, so priors come from the 2026-09-11 matrix. Upgrades rest on N2-157/SP-290/RSC-017 and DL-048 (2026-09-12), all re-read at current lines. Disposition is CURRENT_WRITER because an exact v2 current-writer contract exists. The owner states the empty active catalog admits no production evaluation or event today; that is catalog state, not a historical-only disposition, and is recorded as a PRODUCT gap. The consumers cell stays PARTIAL because the read-through output is not closed and aggregate requirement-set use is unavailable (review G-08).",
+      "notes_after": "No per-facet supplement existed, so priors come from the 2026-09-11 matrix. Upgrades rest on N2-157/SP-290/RSC-017 and DL-048 (2026-09-12), all re-read at current lines. Disposition is CURRENT_WRITER because an exact v2 current-writer contract exists. The owner states the empty active catalog admits no production evaluation or event today; that is catalog state, not a historical-only disposition, and Jared deferred filling the catalog to build time (DL-082, 2026-09-24). The consumers cell stays PARTIAL because the read-through output is not closed and aggregate requirement-set use is unavailable (review G-08).",
+      "cell_findings_changed": {
+        "retention": {
+          "finding_before": "The event keeps RP-OPERATIONAL-2555D@1.0.0 (cardinality_scope project, storage_value_registry.json:368) while the family is application_or_project (registry:923). SP-291 records application-scope enforcement under that bucket as an unproved policy-owner adapter seam (storage-plan.md:23548), so the application-scoped evaluations share the seam that keeps Boot, recovery-applied and compaction-lifecycle retention PARTIAL. Decision custody itself is settled by DL-048 (RP-PLATFORM-DECISION-REFERENCED@1.0.0). Jared's answer to card EA-S08D-OPERATIONAL-CARDINALITY-001 settles the seam.",
+          "finding_after": "The event keeps RP-OPERATIONAL-2555D@1.0.0 (cardinality_scope project, storage_value_registry.json:368) while the family is application_or_project (registry:923). SP-291 records application-scope enforcement under that bucket as an unproved policy-owner adapter seam (storage-plan.md:23548), so the application-scoped evaluations share the seam that keeps Boot, recovery-applied and compaction-lifecycle retention PARTIAL. Decision custody itself is settled by DL-048 (RP-PLATFORM-DECISION-REFERENCED@1.0.0). Jared answered card EA-S08D-OPERATIONAL-CARDINALITY-001 on 2026-09-24 (DL-083: one application-wide bucket with the same cap and overflow rule); the cell stays PARTIAL until the Storage retention owner writes that into the SP-291 policy text."
+        }
+      },
+      "batch_row_sha256_before": "877aaed76060771a3b243b7dd54e2cb8c71efdcb8ee6e99eb4e273f6ff117638",
+      "batch_row_sha256_after": "06e4f4c0c606b4f1dd2f31eb2b4527c9eb43f96af8fe6c9d66f78c5508154e1c"
+    },
+    {
+      "event_type": "storage.boot_recovery",
+      "decisions": [
+        "DL-083"
+      ],
+      "disposition": "CURRENT_WRITER",
+      "cell_statuses_unchanged": true,
+      "remaining_gaps_before": [
+        "SP-292: define the post-restore Boot transition (fresh occurrence admission under SP-286 'Actual fresh-operation admission after verified restore' and floor/anchor re-establishment after a confirmed older restore), or state that Boot production stays fenced; the owner says fresh producer acceptance after restore is not proved.",
+        "PRODUCT: SP-291 / RP-OPERATIONAL-2555D: application-scoped Boot events and aggregates fall under a project-scoped cardinality bucket; an owner adapter or an application bucket must be chosen (owner: 'unproved policy-owner adapter seam').",
+        "No consumer/projector of storage.boot_recovery EventRecords is named (CV-318 defers GUI disclosure); if one exists it needs an exact identity, checkpoint key/value, CAS and SP-278 nine-field token adoption, or the owner should state that the family has no checkpointed consumer.",
+        "Registry boot_recovery_history_anchor recovery strategy is deferred_owner_contract (native parent-recovery adapter unresolved); loss is disclosed as unavailable.",
+        "Native V5 obligations (all-absent discovery, codecs, redb atomicity, rename durability, restore) remain NOT_RUN."
+      ],
+      "remaining_gaps_after": [
+        "SP-292: define the post-restore Boot transition (fresh occurrence admission under SP-286 'Actual fresh-operation admission after verified restore' and floor/anchor re-establishment after a confirmed older restore), or state that Boot production stays fenced; the owner says fresh producer acceptance after restore is not proved.",
+        "ANSWERED by DL-083 (Jared, 2026-09-24, card EA-S08D-OPERATIONAL-CARDINALITY-001, option 1): application-scoped Boot events and aggregates count in one application-wide bucket under RP-OPERATIONAL-2555D, with its 2,000,000-record cap and fail-closed overflow. Owner work: the Storage retention owner writes it into the SP-291 policy text, replacing the 'unproved policy-owner adapter seam' statement (storage-plan.md 23548); the retention cell stays PARTIAL until then.",
+        "No consumer/projector of storage.boot_recovery EventRecords is named (CV-318 defers GUI disclosure); if one exists it needs an exact identity, checkpoint key/value, CAS and SP-278 nine-field token adoption, or the owner should state that the family has no checkpointed consumer.",
+        "Registry boot_recovery_history_anchor recovery strategy is deferred_owner_contract (native parent-recovery adapter unresolved); loss is disclosed as unavailable.",
+        "Native V5 obligations (all-absent discovery, codecs, redb atomicity, rename durability, restore) remain NOT_RUN."
+      ],
+      "notes_before": "No SP-278 read token is stored by any Boot value, so DL-076 does not apply. Boot schemas and fixtures are unchanged since d3c1179f78 (2026-09-12), so the pinned V5 suite is not contradicted by a later amendment. SP-180 still says the family is emitted after boot-time janitor cleanup; SP-291 narrows this (no-work emits nothing, janitor filenames are not evidence). Owner_doc PASS applies rubric clarification 1 (Case L-5 is an acceptable generic route).",
+      "notes_after": "No SP-278 read token is stored by any Boot value, so DL-076 does not apply. Boot schemas and fixtures are unchanged since d3c1179f78 (2026-09-12), so the pinned V5 suite is not contradicted by a later amendment. SP-180 still says the family is emitted after boot-time janitor cleanup; SP-291 narrows this (no-work emits nothing, janitor filenames are not evidence). Owner_doc PASS applies rubric clarification 1 (Case L-5 is an acceptable generic route).",
+      "cell_findings_changed": {
+        "retention": {
+          "finding_before": "Registered RP-OPERATIONAL-2555D@1.0.0 for the event and aggregate; floor/anchor RP-EVENT-IDENTITY-APPROOT; MigrationReceipt RP-AUTHORITY-INDEFINITE; pending has no own policy. But SP-291 states that application-scoped cardinality under this project-scoped policy is an unproved policy-owner adapter seam that no new bucket or value resolves.",
+          "finding_after": "Registered RP-OPERATIONAL-2555D@1.0.0 for the event and aggregate; floor/anchor RP-EVENT-IDENTITY-APPROOT; MigrationReceipt RP-AUTHORITY-INDEFINITE; pending has no own policy. But SP-291 states that application-scoped cardinality under this project-scoped policy is an unproved policy-owner adapter seam that no new bucket or value resolves. Jared answered the policy question on 2026-09-24 (DL-083: one application-wide bucket with the same cap and overflow rule); the cell stays PARTIAL until the Storage retention owner writes that into the SP-291 policy text."
+        }
+      },
+      "batch_row_sha256_before": "98dafd337b86247a339942b9d76ef328cf0e25bd90a0c8eaecf600aec2afbc7e",
+      "batch_row_sha256_after": "a85797eb064c83a96b7e80b59b705a0fe1a9c46e727231ab5439b31be604e9c6"
+    },
+    {
+      "event_type": "storage.recovery_applied",
+      "decisions": [
+        "DL-083"
+      ],
+      "disposition": "CURRENT_WRITER",
+      "cell_statuses_unchanged": true,
+      "remaining_gaps_before": [
+        "PRODUCT: RP-OPERATIONAL-2555D counts cardinality per project but storage.recovery_applied is application_only; SP-293 (or the policy owner) must bind an application-scope adapter or bucket (SP-291 records the same seam for Boot).",
+        "SP-293 / Case L-2: name the exact aftermath consumer(s) that act on recovery events (checkpoint_action/projection_action), with identity, version, checkpoint key/value, CAS and SP-278 nine-field durable token if they store a checkpoint.",
+        "SP-293: author oracle cases for every passive-read freshness/health path (owner: the current/degraded fixture does not establish every health path).",
+        "Native six-action codecs, installation, fsync/rename, restore, cold reopen and Boot ingestion of recovery results remain NOT_RUN."
+      ],
+      "remaining_gaps_after": [
+        "ANSWERED by DL-083 (Jared, 2026-09-24, card EA-S08D-OPERATIONAL-CARDINALITY-001, option 1): the application-only storage.recovery_applied records count in one application-wide bucket under RP-OPERATIONAL-2555D, with its 2,000,000-record cap and fail-closed overflow. Owner work: the Storage retention owner writes it into the SP-291 policy text, replacing the 'unproved policy-owner adapter seam' statement (storage-plan.md 23548), with SP-293 routing this family to it; the retention cell stays PARTIAL until then.",
+        "SP-293 / Case L-2: name the exact aftermath consumer(s) that act on recovery events (checkpoint_action/projection_action), with identity, version, checkpoint key/value, CAS and SP-278 nine-field durable token if they store a checkpoint.",
+        "SP-293: author oracle cases for every passive-read freshness/health path (owner: the current/degraded fixture does not establish every health path).",
+        "Native six-action codecs, installation, fsync/rename, restore, cold reopen and Boot ingestion of recovery results remain NOT_RUN."
+      ],
+      "notes_before": "No stored value carries an SP-278 token (schema and fixtures have no read_token/redb_snapshot_id), so DL-076 is not engaged. Recovery custody files unchanged since 21c646fb0b (2026-09-12). Owner_doc PASS applies clarification 1. The retention PARTIAL is a cross-family inference from the policy row plus SP-291's statement about the same policy; reviewers may prefer to track it once at the policy level.",
+      "notes_after": "No stored value carries an SP-278 token (schema and fixtures have no read_token/redb_snapshot_id), so DL-076 is not engaged. Recovery custody files unchanged since 21c646fb0b (2026-09-12). Owner_doc PASS applies clarification 1. The retention PARTIAL is a cross-family inference from the policy row plus SP-291's statement about the same policy; reviewers may prefer to track it once at the policy level.",
+      "cell_findings_changed": {
+        "retention": {
+          "finding_before": "Event stays RP-OPERATIONAL-2555D@1.0.0; the compact custody is RP-AUTHORITY-INDEFINITE; there is no derived checkpoint. But the policy counts cardinality per project while the family is application_only, and SP-291 (same owner and policy) records application-scope enforcement under that bucket as an unproved adapter seam. SP-293 does not address it.",
+          "finding_after": "Event stays RP-OPERATIONAL-2555D@1.0.0; the compact custody is RP-AUTHORITY-INDEFINITE; there is no derived checkpoint. But the policy counts cardinality per project while the family is application_only, and SP-291 (same owner and policy) records application-scope enforcement under that bucket as an unproved adapter seam. SP-293 does not address it. Jared answered the policy question on 2026-09-24 (DL-083: one application-wide bucket with the same cap and overflow rule); the cell stays PARTIAL until the Storage retention owner writes that into the SP-291 policy text."
+        }
+      },
+      "batch_row_sha256_before": "2fbcb85c076bb4f89ad39e4f4418318755c237b18d3728872274d63db5b9e07c",
+      "batch_row_sha256_after": "e7ed50166c09aba16d448eead0f40a754b539b5452d74e905d7abc598f006d0f"
+    },
+    {
+      "event_type": "storage.compaction_lifecycle_changed",
+      "decisions": [
+        "DL-083"
+      ],
+      "disposition": "CURRENT_WRITER",
+      "cell_statuses_unchanged": true,
+      "remaining_gaps_before": [
+        "PRODUCT: RP-OPERATIONAL-2555D counts cardinality per project but storage.compaction_lifecycle_changed is application_only; the owner must bind an application-scope adapter or bucket (SP-291 records the same seam).",
+        "SP-296/Case L-3: name the consumer(s) of compaction lifecycle EventRecords (projector, diagnostics, Settings status) with identity, version, checkpoint key/value, CAS and SP-278 nine-field durable token if stored.",
+        "SP-295..297: author negative oracle cases (static schema negatives and G01..G32 guard refusals, detail-retirement refusals, exceptional/recovery_required paths) beyond the positive ordinary-flow model.",
+        "Native installation, redb/fsync, exclusion, crash, restore and physical old-source deletion remain NOT_RUN."
+      ],
+      "remaining_gaps_after": [
+        "ANSWERED by DL-083 (Jared, 2026-09-24, card EA-S08D-OPERATIONAL-CARDINALITY-001, option 1): the application-only storage.compaction_lifecycle_changed records count in one application-wide bucket under RP-OPERATIONAL-2555D, with its 2,000,000-record cap and fail-closed overflow. Owner work: the Storage retention owner writes it into the SP-291 policy text, replacing the 'unproved policy-owner adapter seam' statement (storage-plan.md 23548), with the compaction text routing this family to it; the retention cell stays PARTIAL until then.",
+        "SP-296/Case L-3: name the consumer(s) of compaction lifecycle EventRecords (projector, diagnostics, Settings status) with identity, version, checkpoint key/value, CAS and SP-278 nine-field durable token if stored.",
+        "SP-295..297: author negative oracle cases (static schema negatives and G01..G32 guard refusals, detail-retirement refusals, exceptional/recovery_required paths) beyond the positive ordinary-flow model.",
+        "Native installation, redb/fsync, exclusion, crash, restore and physical old-source deletion remain NOT_RUN."
+      ],
+      "notes_before": "BATCHES question: SP-295..SP-297 ('Compaction original native source...') concern storage.compaction_lifecycle_changed (Storage seglog compaction), not context.compaction.completed; the section text names this event and the validation report says so. DL-076: storage_compaction_native_contracts.schema.json holds an unreferenced $defs/existing_index_root__read_token with redb_snapshot_id; no compaction stored value references it, so DL-076 is not engaged here. Outside this batch, Plans/goal_workflow_cancel_contracts/schemas/late-assignment.schema.json line 490 $refs that whole-token definition; the GA batch should check whether that is a persisted value. Owner_doc PASS applies clarification 1.",
+      "notes_after": "BATCHES question: SP-295..SP-297 ('Compaction original native source...') concern storage.compaction_lifecycle_changed (Storage seglog compaction), not context.compaction.completed; the section text names this event and the validation report says so. DL-076: storage_compaction_native_contracts.schema.json holds an unreferenced $defs/existing_index_root__read_token with redb_snapshot_id; no compaction stored value references it, so DL-076 is not engaged here. Outside this batch, Plans/goal_workflow_cancel_contracts/schemas/late-assignment.schema.json line 490 $refs that whole-token definition; the GA batch should check whether that is a persisted value. Owner_doc PASS applies clarification 1.",
+      "cell_findings_changed": {
+        "retention": {
+          "finding_before": "Event RP-OPERATIONAL-2555D@1.0.0; detail families RP-COMPACTION-DETAIL-7D@1.0.0 (DL-049, first-settlement anchor); live controls, terminal map and retirement intent RP-AUTHORITY-INDEFINITE. But the event policy counts cardinality per project while the family is application_only, a seam SP-291 records as unproved for this same policy; the compaction text does not bind it.",
+          "finding_after": "Event RP-OPERATIONAL-2555D@1.0.0; detail families RP-COMPACTION-DETAIL-7D@1.0.0 (DL-049, first-settlement anchor); live controls, terminal map and retirement intent RP-AUTHORITY-INDEFINITE. But the event policy counts cardinality per project while the family is application_only, a seam SP-291 records as unproved for this same policy; the compaction text does not bind it. Jared answered the policy question on 2026-09-24 (DL-083: one application-wide bucket with the same cap and overflow rule); the cell stays PARTIAL until the Storage retention owner writes that into the SP-291 policy text."
+        }
+      },
+      "batch_row_sha256_before": "ab0f985535b842d066df256b6ec81699d1254a66c1fae0510a76cfa88fa626e4",
+      "batch_row_sha256_after": "489378fd2dbe41b23f3330ca2108eb74fc47eb577948f7e5f8fc5c0ce6adf371"
+    }
+  ],
+  "re_anchored_citations": {
+    "from": "Plans/Decision_Log.md:5775",
+    "to": "Plans/Decision_Log.md:5997",
+    "unit": "DL-076",
+    "cells": [
+      [
+        "workspace.layout_changed",
+        "consumers_checkpoints"
+      ],
+      [
+        "workspace.layout_changed",
+        "positive_negative_oracles"
+      ],
+      [
+        "browser.workspace.reset",
+        "consumers_checkpoints"
+      ]
+    ],
+    "reason": "DL-077 and DL-078 (on main at ac9c0ad2e4) and DL-079 to DL-083 (this branch) were inserted above the DL-076 PlanUnit; the quoted bytes are unchanged and all 2,630 quotes verify exactly. The MD lowering table cites the new line."
+  },
+  "owner_follow_ups": [
+    {
+      "decision": "DL-079",
+      "owner": "Goal Runtime with Storage",
+      "work": "current-writer prohibition and assigned historical reader for goal.evidence_captured, goal.receipt_recorded and goal.tool_check_recorded (GRS-069..072 / SP-300..303 pattern)",
+      "documents": [
+        "Plans/Goal_Runtime_System.md",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "decision": "DL-080",
+      "owner": "Orchestrator and Executor, with Goal Runtime and Storage",
+      "work": "full current contracts: goal_run.stopped and goal_run.blocked first, goal_run.replanned after the Replan v8 source work (pm.executor.workflow_source.all_writers.v8), which is not scheduled by the answer",
+      "documents": [
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "decision": "DL-081",
+      "owner": "Goal Runtime and Workflow certification, with Human-in-the-loop",
+      "work": "the verification exception route contract: approval request, approver (the user who owns the project), waivable residual risks, receipt",
+      "documents": [
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/human-in-the-loop.md"
+      ]
+    },
+    {
+      "decision": "DL-082",
+      "owner": "whoever owns the worknode work",
+      "work": "fill the Platform capability catalog right before Puppet Master is built, as part of the building process (likely a worknode); each entry with owner-cited evidence, an evaluation contract and tests",
+      "documents": [
+        "Plans/platform_capability_catalog.json",
+        "Plans/newtools.md"
+      ]
+    },
+    {
+      "decision": "DL-083",
+      "owner": "Storage retention",
+      "work": "write the application-wide bucket into the SP-291 policy text (storage-plan.md 23548) and the units that route application-scoped records to RP-OPERATIONAL-2555D",
+      "documents": [
+        "Plans/storage-plan.md",
+        "Plans/storage_value_registry.json"
+      ]
+    }
+  ],
+  "notes": [
+    "Card 3 said the platform event's contract meets 11 of 12 criteria. Review G-01 later lowered its retention cell to PARTIAL (the application-scoped count that card 4 answers), so the assessment shows 10 of 12.",
+    "The card file is kept as presented (status line and blank Answer lines), as the DL-068 to DL-075 cards are; the answers are in DL-079 to DL-083 and decision-responses.jsonl.",
+    "No owner document other than Plans/Decision_Log.md is edited on this branch. The owner follow-ups above edit Plans/Goal_Runtime_System.md and Plans/storage-plan.md, whose plan-sharding evidence rows exceed the landing check's print cap, so they wait for the landing-check exports repair."
+  ]
+}

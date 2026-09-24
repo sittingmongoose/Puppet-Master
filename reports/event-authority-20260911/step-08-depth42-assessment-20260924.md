@@ -1,6 +1,6 @@
 # Step 8(a): current depth of the 42 registered families, 2026-09-24
 
-This replaces the dated 39-family matrix (`step-08-depth-assessment.json`, 2026-09-11) as the current depth picture. It grades all 42 families of `Plans/event_family_registry.json` at revision `2026-09-11.2` (SHA-256 `0be544181eda423dcea4d8661206e7da6d066fdcf51913d5962f1a283635c842`, the checkpoint Jared approved on 2026-09-23). It uses the twelve criteria of the Browser pair assessment, with a stricter producer rule (SP-286 adoption by name, `storage-plan.md` 22035-22036) that the Browser pair assessment did not apply, against the owner text on `main` `f1ce058ccd`. The text is identical at `792d2fb8b1`, because the reseal changed only governance artifacts.
+This replaces the dated 39-family matrix (`step-08-depth-assessment.json`, 2026-09-11) as the current depth picture. It grades all 42 families of `Plans/event_family_registry.json` at revision `2026-09-11.2` (SHA-256 `0be544181eda423dcea4d8661206e7da6d066fdcf51913d5962f1a283635c842`, the checkpoint Jared approved on 2026-09-23). It uses the twelve criteria of the Browser pair assessment, with a stricter producer rule (SP-286 adoption by name, `storage-plan.md` 22035-22036) that the Browser pair assessment did not apply, against the owner text on `main` `f1ce058ccd`. The text is identical at `792d2fb8b1`, because the reseal changed only governance artifacts. At this branch's current base (`main` `ac9c0ad2e4`) every cited line is still byte-identical. Only the three DL-076 citations moved, from `Decision_Log.md` 5775 to 5997, when DL-077 to DL-083 were inserted above them.
 
 It grades what canon says. It is not a runtime result. Native execution is NOT_RUN for every family, and that alone never lowers a grade. The machine-readable file is `step-08-depth42-assessment-20260924.json` (SHA-256 below).
 
@@ -22,6 +22,7 @@ It grades what canon says. It is not a runtime result. Native execution is NOT_R
   - `context.compaction.completed`: oracles; the PM7 GUI validator still rejects the family.
   - `browser.workspace.reset`: producer; SP-286 is not adopted by name.
 - **Dispositions:** 27 current writers, 7 historical-only, 8 with no current disposition.
+- **Answers since the grading:** Jared answered its product cards on 2026-09-24 (DL-079 to DL-083; one deferred). They are applied to the gaps and notes of 11 rows by `step-08-depth42-card-answers-20260924.md`. No grade or disposition changes until the owners write those answers into their text.
 
 The dated matrix counted differently, so the rows above are not a straight trend. Against it, the 468 old cells moved like this:
 - **Up to PASS: 133.** From PARTIAL 92, from CONFLICT 26, from ABSENT 15. The owner work since 2026-09-11 did this: the per-family supplements, the v3 Goal adoptions, the historical-only rulings, the shared wire, first-receipt and full-value definitions, and DL-076.
@@ -33,7 +34,7 @@ The dated matrix counted differently, so the rows above are not a straight trend
   |---|---|---:|
   | First-receipt recovery adopts SP-286 by name | `storage-plan.md` 22035-22036 | 1 |
   | An exact event-ID and idempotency-key recipe | `Contracts_V0.md` 1008, 1016, 1028 | 8 |
-  | DL-076 holds for oracle suites an owner unit pins | `Decision_Log.md` 5775; rubric clarification 2 | 2 |
+  | DL-076 holds for oracle suites an owner unit pins | `Decision_Log.md` 5997; rubric clarification 2 | 2 |
   | Untestable boundary or prose-only oracles | rubric criterion 12 | 10 |
   | Facet the owner itself leaves open | `storage-plan.md` 23548 and 22924; SP-292 | 6 |
   | Stale or disclaiming owner anchor | rubric clarification 1(a) and 1(b) | 2 |
@@ -65,7 +66,7 @@ The dated matrix counted differently, so the rows above are not a straight trend
   - N: August and newly admitted families.
 
   Every cell cites current line ranges with an exact quote. The input packs carried each family's registry row, the dated matrix cells and every later supplement's cells, and all of those were treated as prior evidence to re-check, never as answers.
-- **Verification.** All 2,626 quotes were checked mechanically: every one is an exact substring of its cited lines. Each cited range's SHA-256 is recorded, and the quotes themselves are in the evidence bundle. The 42 rows match the registry exactly, in order.
+- **Verification.** All 2,630 quotes were checked mechanically: every one is an exact substring of its cited lines. Each cited range's SHA-256 is recorded, and the quotes themselves are in the evidence bundle. The 42 rows match the registry exactly, in order.
 - **Harmonization.** The batch results were compared criterion by criterion. Producers pass only where recovery through the first receipt adopts SP-286 by name, and N applied this to both Browser families as R and S did. The rule applies where publication or the returned result waits on the AppendReceipt (Section 15, 11626-11628). It does not apply where visibility rests on a verified seglog marker and recovery never needs the receipt (`storage-plan.md` 19298-19300); this decides compaction PASS and Browser reset PARTIAL. Consumers with an explicit `none_required` checkpoint pass where the owner names each reader, adopts SP-278 and stores no token. `context.compaction.completed` passes consumers through the rubric's equivalent-complete-checkpoint route (`storage-plan.md` 19304-19306) without naming SP-278; it is the only family that route decides. They stay PARTIAL where the owner itself flags a missing operating consumer (the historical-only families) or names only a generic consumer.
 - **Static suites** run on the assessed tree: Browser created 63 OK, Browser reset 53 OK, Browser admission 38 OK, restore phase contracts 10 OK, event-index binding 14 OK, emit-only boundaries 13 OK, holding bucket 13 OK, Goal lineage 1 OK and vocabulary migration 9 OK. PNC-019 currentness gave 8 OK and 1 failure on `f1ce058ccd`, because the shared currentness edition had already been rewritten for the reseal; it gives 9 OK on `792d2fb8b1`.
 
@@ -132,7 +133,7 @@ Each row of the JSON lists its own gaps, naming the owner unit that would close 
 6. **Owner-anchor routing.**
    - `seglog.event_appended`: its semantic anchor (storage section 2.2.5) disclaims producer semantics and does not lead to SP-270.
    - `goal_run.certified`: its anchors still describe v2. Step 8(d) closes this with a routing edit (`plans/ea-certified-anchors-20260924`); the registry row is unchanged.
-7. **The eight undispositioned Goal families.** No current-writer contract and no historical-only ruling cover `goal.blocked`, `goal.completed`, `goal.evidence_captured`, `goal.receipt_recorded`, `goal.tool_check_recorded`, `goal_run.blocked`, `goal_run.replanned` or `goal_run.stopped`. Their v2 schemas and transitions conflict with Goal V2 (13 CONFLICT cells). Whether each gets a current writer or a historical-only ruling is partly a product question (below).
+7. **The eight undispositioned Goal families.** No current-writer contract and no historical-only ruling cover `goal.blocked`, `goal.completed`, `goal.evidence_captured`, `goal.receipt_recorded`, `goal.tool_check_recorded`, `goal_run.blocked`, `goal_run.replanned` or `goal_run.stopped`. Their v2 schemas and transitions conflict with Goal V2 (13 CONFLICT cells). Jared answered the product part on 2026-09-24: DL-079 makes `goal.evidence_captured`, `goal.receipt_recorded` and `goal.tool_check_recorded` read-only history, and DL-080 gives `goal_run.blocked`, `goal_run.replanned` and `goal_run.stopped` current events. `goal.blocked` and `goal.completed` were owner work already. All eight stay undispositioned until the owners write those contracts.
 8. **Owner-flagged open facets.** Examples:
    - Hold: post-restore acceptance of new hold commands.
    - Boot: post-restore continuity.
@@ -140,7 +141,7 @@ Each row of the JSON lists its own gaps, naming the owner unit that would close 
    - Restore created: capture-category assignment.
    - Goal updated: the agent-proposed approval provider.
    - Terminal move: pending/result companion schemas.
-   - Platform: the empty active catalog.
+   - Platform: the empty active catalog, which DL-082 defers to build time.
 
 ## Step 8(c): Browser-created
 
@@ -154,17 +155,22 @@ It is still PARTIAL on producer, consumers and oracles. The conditional v2 check
   - It would give `goal_run.replanned` a current writer, and with it possibly `goal_run.blocked` and `goal_run.stopped`. GRS-085's mandatory projection halts on unsupported same-run replanned, blocked or stopped rows.
   - These are three of the eight undispositioned families, together 27 non-PASS cells.
   - Canon disagrees on whether a current `goal_run.replanned` writer exists. The 2026-09-21 scope adjudication found no new product decision, because GRS-026 and D-R19 carry Replan. This grading found that EP-118, GRS-082 and the Workflow source list no writer.
+  - DL-080 (2026-09-24) settles the product side: the three become current events, `goal_run.replanned` after this source work. The package is therefore needed; when it is done is not decided here.
 - **Original capture for restore-point corruption** (79 external packages): it gates `restore_point.corrupt`'s producer, scope, replay, custody, transitions, consumers, withdrawal and oracles (8 cells). It also touches `restore_point.created`'s oracle cell, through capture-category assignment.
 - **Compaction currentness:** done here. All 23 cited Step 6 lines are byte-identical, and 20 of them moved. Only the oracle cell changed, to PARTIAL, because of the PM7 GUI validator.
 
-## Product questions this grading surfaced
+## Product questions this grading surfaced, and their answers
 
-These are recorded for Jared's cards. None is answered here.
+Jared answered the cards (`step-08-depth42-product-cards-20260924.md`) on 2026-09-24. His answers are in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_DEPTH_GRADING.md` (SHA-256 `cfea2eb818663d22eba69dca9296657aa05c51383a470bc1796b87aef65b923c`). They are recorded as DL-079 to DL-083 and applied to this assessment by `step-08-depth42-card-answers-20260924.md`. Each changes the owner work that is left, not a grade.
 
 - The Goal owner: for each of `goal.evidence_captured`, `goal.receipt_recorded`, `goal.tool_check_recorded`, `goal_run.blocked`, `goal_run.replanned` and `goal_run.stopped`, should it get a current writer or a historical-only ruling? `goal.blocked` and `goal.completed` are required current names (Goal V2 events), so their successors are owner work, not a product choice.
+  - **Answered:** DL-079 makes the first three read-only history, in the pattern of the four retired on 2026-09-12. DL-080 gives the three `goal_run` states current events: stopped and blocked first, replanned after the Replan source work.
 - `goal.completed`: may a Goal complete on an approved verification exception? GRS-065 calls that route "separately unbound".
+  - **Answered:** DL-081 keeps the exception route. The user who owns the project approves each exception through the existing approval flow, naming the residual risks, and the finish is labelled "completed with approved verification exception". The route contract is owner work.
 - `platform.capability_evaluated`: when is a first capability admitted to the active catalog, which is empty today?
-- The Storage retention policy that Boot, recovery, compaction lifecycle and Platform capability evaluation share counts cardinality per project, but the first three are application-only and Platform can be application-scoped; SP-291 calls this an "unproved policy-owner adapter seam". Jared's answer to card EA-S08D-OPERATIONAL-CARDINALITY-001 settles the four retention cells.
+  - **Deferred:** DL-082 records no answer. Jared defers filling the catalog to build time, as part of the building process and likely as one of the worknodes. The family stays registered and dormant. This is a follow-up for whoever owns the worknode work.
+- The Storage retention policy that Boot, recovery, compaction lifecycle and Platform capability evaluation share counts cardinality per project, but the first three are application-only and Platform can be application-scoped; SP-291 calls this an "unproved policy-owner adapter seam".
+  - **Answered:** DL-083 counts them in one application-wide bucket with the same cap and overflow rule. The four retention cells stay PARTIAL until the Storage retention owner writes that into the SP-291 policy text.
 
 ## Queue adjudication (the other half of Step 8)
 
@@ -174,11 +180,11 @@ The 2026-08-13 queues are fully reviewed: 75 likely, 9 contested and 153 ambiguo
 
 | Artifact | SHA-256 |
 |---|---|
-| `step-08-depth42-assessment-20260924.json` (this assessment) | see the commit; pinned by later admission records |
-| Evidence directory `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/`, `SHA256SUMS` | `26465e040fd23624102ca4b06e28047a0ee874580ea299d81c93c78a00df8a55` |
+| `step-08-depth42-assessment-20260924.json` (this assessment) | `ff7dbd59b678aa53f311e5c6727ea5835e2a03c398d9b5d4639d52957f73e30e` |
+| Evidence directory `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/`, `SHA256SUMS` | `725ac105851008a3f8a0863dd6efb63752e6b15612ba520a890b22a33d99bdbb` |
 | `rubric.md` | `81f1d8b25ee407975fea50d14ecf44f94127608b912e08b27edd7f62f9b10221` |
-| `compiled_rows.json` (every cell with its quotes) | `f35d5d1983120d9d4d9c268a25029caadbe5d9eef0ab7c85073f332d8957c854` |
-| `verify.json` (2,626 quote checks) | `55345757cc0ed768e141b8a2dfc8bb34ed3e1a059cb516697ba41b8741dd392a` |
+| `compiled_rows.json` (every cell with its quotes) | `d5ba83aa6d1a837a1cc345a5aeae077c31d06838e257b9f49f4973cdbb4aaa5b` |
+| `verify.json` (2,630 quote checks) | `0a80bee7ac889c228140bd77ea41031b3993bc6e4f47a930dc557cd03a9d37f3` |
 | `compile_depth42.py` | `b22b2d1541d2626be06190ca042ce2ed3e99fce5fbb2e4f1e496b8f38c9785b8` |
 | `build_report.py` | `76936f33faf3124d2ada90eee09e56c1d6713f9fa12037909b0131a97f350573` |
 | Handover currentness pass, `depth_currentness2.json` | `4d19bc83b11638fd25960db9d40412b96d85940db1c5f79eb9671f85105a17f0` |
