@@ -524,5 +524,16 @@
     "cohort_pins_changed": false,
     "denominator_removal_claimed": false,
     "depth_pass_claimed": false
+  },
+  "citation_anchor_revision": {
+    "new_citations": "792d2fb8b12fc2c12659aeec4b3f0b9f4640d9f8",
+    "applies_to": [
+      "Plans/assistant-chat-design.md:1380",
+      "Plans/Decision_Log.md#DL-074",
+      "Plans/Runtime_Artifacts_Panel.md:2472",
+      "Plans/storage-plan.md:17260",
+      "Plans/Decision_Log.md#DL-075"
+    ],
+    "note": "The line numbers this batch adds refer to main at this revision. Citations already in the rows keep the revisions they were written against (the 2026-09-11 review revision 45b9d3984f0247e17669eee3a83bf8c4c0a32b66) and are not refreshed here; refreshing them is outside what DL-074 and DL-075 decided."
   }
 }
