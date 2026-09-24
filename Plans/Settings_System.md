@@ -1081,7 +1081,7 @@ acceptance_criteria:
   - The strict manager registry contains exactly 38 keys and the named projection registry contains exactly teacher-help, project-search-index, and dry-method.
   - The packet disposition registry accepts exactly the 80 source tokens and no omissions, additions, duplicate keys, or unclassified token.
   - Disposition counts remain 41 reuse_canonical_command, 7 superseded_by_typed_local_ui_action, 1 retired_bakeoff_only, 31 rejected_with_reason, and 0 approved_alias.
-  - Every reused target names an already admitted canonical command; rejected tokens remain unavailable and are not converted into handlers by Settings.
+  - Every reused target has one existing catalog identity or remains explicitly blocked under UCC-120; cmd.artifacts.open_panel remains command_not_registered pending exact Runtime Artifacts and Commands route admission. A reuse disposition does not itself admit a command, alias, handler, route arguments, or successful navigation; rejected tokens remain unavailable.
   - Every typed local UI action validates a payload with domain_mutation_authorized=false, persistence_write_authorized=false, and owner_operation_authorized=false.
   - Missing denominator entries, a Settings runtime-owner claim, a local mutation claim, or native_handler_claim=true fails schema/fixture validation.
 validation_surfaces: [Plans/settings_system_contracts.schema.json, Plans/settings_system_contract_fixtures.json, exact packet-token denominator and replacement-target validator, named visible-state projection positive/negative fixtures]
