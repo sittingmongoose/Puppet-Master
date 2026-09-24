@@ -231,6 +231,18 @@ class OnboardingPhaseTests(unittest.TestCase):
                     self.assertEqual(row["value"]["review_confirmation"], "unconfirmed")
                     self.assertIsNone(row["value"]["approved_setup_plan_sha256"])
 
+    def test_migration_owner_criterion_consumes_current_path_definitions(self):
+        prose = (ROOT / "Plans/Planning_Wizard.md").read_text()
+        unit = prose.split("### PWIZ-022 -", 1)[1].split("### PWIZ-023 -", 1)[0]
+        for definition in ("main_stage_order", "connect_existing_stage_order",
+                           "deferred_project_stage_order"):
+            self.assertIn(definition, unit)
+        self.assertNotIn("maps unresolved work into the nine-/six-stage", unit)
+        target = SCHEMA["$defs"]["onboarding_legacy_migration_receipt"]["properties"]["target_state_machine"]["const"]
+        self.assertEqual(target, "eleven_stage_" + "_".join(SCHEMA["$defs"]["main_stage_order"]["const"]))
+        self.assertNotEqual(SCHEMA["$defs"]["main_stage_order"]["const"],
+                            SCHEMA["$defs"]["deferred_project_stage_order"]["const"])
+
 
 class ProjectCommitBindingTests(unittest.TestCase):
     def test_actual_listed_persisted_project_result_is_bound(self):

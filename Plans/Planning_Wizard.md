@@ -1996,8 +1996,10 @@ acceptance_criteria:
 - Focus and screen-reader output follow semantic stage state and never background refresh order; the modal releases
   inertness before Guided Tour starts, and a failed Tour start restores the transferred application focus target
   without claiming a successful handoff.
-- Legacy migration preserves decisions, warnings, and valid owner receipts, maps unresolved work into the nine-/six-stage
-  draft, requires an unconfirmed Review Setup Plan, and never reruns owner work.
+- Legacy migration preserves decisions, warnings, and valid owner receipts, maps unresolved work into the applicable
+  current draft using PWIZ-021's main_stage_order, connect_existing_stage_order, or deferred_project_stage_order
+  definitions, requires an unconfirmed Review Setup Plan, and never reruns owner work. A predecessor nine-stage
+  main path is migration input, not the current main path; the explicit Project-deferred path remains distinct.
 - The one-time domain migration receipt references the canonical storage migration receipt and reports exact accepted,
   stale, dropped, quarantined, per-stage, and per-path counts without storing secret bytes.
 validation_surfaces:
