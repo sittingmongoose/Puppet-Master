@@ -1110,5 +1110,222 @@
     "reset": "Reset everything",
     "tour": "Start the Guided Tour",
     "close": "Close"
+  },
+  "tour": {
+    "bar": {
+      "label": "Guided Tour",
+      "tips": "Tips",
+      "normal": "Normal",
+      "eli5": "ELI5",
+      "pause": "Pause",
+      "resume": "Resume",
+      "skip": "Skip Tour",
+      "progress": "Chapter {n} of 3: {name}, step {s} of {total}"
+    },
+    "chapters": {
+      "ask": "Ask and understand",
+      "workspace": "Make the workspace yours",
+      "plan": "Plan before building"
+    },
+    "controls": {
+      "tryIt": "Try it",
+      "showMe": "Show Me",
+      "back": "Back",
+      "next": "Next",
+      "start": "Start",
+      "done": "Done",
+      "takeMe": "Take me there",
+      "interrupted": "Your turn — carry on whenever you like."
+    },
+    "steps": {
+      "comfort_intro": {
+        "title": "Let’s make Puppet Master feel familiar.",
+        "body": "You’ll try a few real actions. This guided example does not change your files or use your AI plan.",
+        "tips": "Tips: switch to ELI5 on the bar for simpler words. Reduced Motion lives in Settings.",
+        "tipsEli5": "Tips: ELI5 gives you shorter, simpler hints. Reduced Motion is in Settings."
+      },
+      "open_chat": {
+        "title": "Assistant Chat is where you ask Puppet Master for help.",
+        "do": "Open Assistant Chat with the Chat icon.",
+        "doEli5": "Click the Chat icon to open Chat."
+      },
+      "select_teacher": {
+        "title": "Teacher can explain the screen you’re on, an unfamiliar term, or why a choice matters.",
+        "do": "Choose Teacher in the guide picker.",
+        "doEli5": "Pick Teacher from the list."
+      },
+      "send_question": {
+        "title": "Ask Teacher something.",
+        "do": "Send the question: What happens before Puppet Master changes my files?",
+        "doEli5": "Send the question below."
+      },
+      "answer_stream": {
+        "title": "Teacher answers right in the chat.",
+        "do": "Read the answer. It is a guided example, written for this tour.",
+        "doEli5": "Read the answer."
+      },
+      "same_answer_eli5": {
+        "title": "ELI5 makes the same answer simpler.",
+        "do": "Turn on ELI5 in Chat.",
+        "doEli5": "Click ELI5 in Chat.",
+        "after": "Same meaning, fewer words. You can switch it any time.",
+        "ask": "Ask: What is a Project?"
+      },
+      "workspace_orientation": {
+        "title": "Your workspace",
+        "do": "Pages sit across the top. Panels like Chat can live wherever suits you.",
+        "doEli5": "Pages are on top. Panels can move."
+      },
+      "move_or_dock_chat": {
+        "title": "Move Chat to where it helps.",
+        "do": "Drag Assistant Chat to the highlighted side of the workspace. You can move it again whenever your work changes.",
+        "doEli5": "Drag Chat to the glowing left edge.",
+        "after": "The same Chat stays with you; only its place changed."
+      },
+      "widget_action": {
+        "title": "Keep useful things in view.",
+        "do": "Add the Approval queue widget, then place it where you can glance at it while planning.",
+        "doEli5": "Add the Approval queue widget.",
+        "after": "Widgets keep useful Project information nearby without taking you away from the page you’re using."
+      },
+      "open_planning": {
+        "title": "Planning Wizard helps turn a rough idea into a plan you can inspect before work begins.",
+        "do": "Open Planning Wizard.",
+        "doEli5": "Click Planning Wizard at the top."
+      },
+      "book_club_goal": {
+        "title": "Start with a practice goal.",
+        "do": "Use the practice goal to see how planning works.",
+        "doEli5": "Use the practice goal.",
+        "goal": "Create a simple website for my neighborhood book club. It should show the next meeting, the current book, and how to join.",
+        "use": "Use this practice goal",
+        "kicker": "Guided example"
+      },
+      "three_outcomes": {
+        "title": "The idea becomes three clear outcomes.",
+        "do": "Open one of the outcomes.",
+        "doEli5": "Click one outcome."
+      },
+      "access_answer": {
+        "title": "Planning Wizard only asks what changes the result.",
+        "do": "Answer the question. Open Why this matters if you’re curious.",
+        "doEli5": "Pick an answer."
+      },
+      "review": {
+        "title": "Review before anything is built.",
+        "do": "Choose Review the plan.",
+        "doEli5": "Click Review the plan.",
+        "after": "Nothing has been built yet. This is your chance to check the outcome, the decisions Puppet Master used, and anything that is still uncertain.",
+        "button": "Review the plan"
+      },
+      "answer_edit": {
+        "title": "Plans change when answers change.",
+        "do": "Change your answer and watch what moves.",
+        "doEli5": "Change your answer."
+      },
+      "consequence_changed": {
+        "title": "Only the affected parts changed.",
+        "do": "Everything else kept its place, so you can see cause and effect.",
+        "doEli5": "Only those rows changed."
+      },
+      "completion_boundary": {
+        "title": "You decide when work begins.",
+        "do": "That is the planning loop: describe the outcome, answer only the questions that matter, review the plan, then decide whether to begin.",
+        "doEli5": "Describe it, answer, review, then decide."
+      }
+    },
+    "teacher": {
+      "thread": "Guided example",
+      "label": "Guided example · Teacher",
+      "labelUser": "Guided example",
+      "popover": "Written in advance for the Guided Tour. It doesn’t use your AI plan.",
+      "q1": "What happens before Puppet Master changes my files?",
+      "a1": "Before work begins, Puppet Master turns your request into a plan. You can review the important choices, correct anything that looks wrong, and decide when to begin. Your Project permissions still control what the work may change.",
+      "a1eli5": "First, Puppet Master writes down what it thinks you want. You can fix the plan before anything starts. It waits for your decision to begin.",
+      "q2": "What is a Project?",
+      "a2": "A Project keeps one body of work—its files, plans, history, and Project-specific settings—together.",
+      "a2eli5": "A Project is one workspace for one thing you are making. It keeps the right files and decisions together.",
+      "suggest": "Ask:",
+      "own": "Teacher answers tour questions from its guide. Try one of these:",
+      "topics": {
+        "chat": "What can Assistant Chat do?",
+        "plan": "What does Planning Wizard do?",
+        "safe": "How do I undo a change?"
+      },
+      "answers": {
+        "chat": "Assistant Chat is where you ask for help, get explanations, and start work. Teacher explains; other guides help you build.",
+        "plan": "Planning Wizard turns a rough idea into outcomes and a few real decisions, so you can check the plan before any work starts.",
+        "safe": "Safe History saves every version of your Project. You can go back to any earlier version from the History panel."
+      }
+    },
+    "wizard": {
+      "badge": "Guided example",
+      "title": "Book club website",
+      "state": "Practice · nothing will be built",
+      "topics": "Outcomes",
+      "count": "{n} outcomes",
+      "outcomes": {
+        "o1": {
+          "title": "Visitors can see the next meeting",
+          "sub": "Date, time and place, always current"
+        },
+        "o2": {
+          "title": "Visitors can see the current book",
+          "sub": "Title, cover and a short note"
+        },
+        "o3": {
+          "title": "New members can learn how to join",
+          "sub": "A simple way to ask to join"
+        }
+      },
+      "question": "Who should be able to update the meeting and book?",
+      "choices": {
+        "me": "Only me",
+        "few": "A few organizers",
+        "unsure": "I’m not sure yet"
+      },
+      "why": "Why this matters",
+      "whyText": "This decides whether the site needs shared sign-in and editing. Answering now keeps Puppet Master from planning the wrong kind of site.",
+      "change": "Change answer",
+      "doc": {
+        "title": "Live plan preview",
+        "outcomes": "Outcomes",
+        "decisions": "Decisions",
+        "assumptions": "Assumptions",
+        "unresolved": "Still open",
+        "none": "Nothing open",
+        "signin": "Shared sign-in for organizers",
+        "access": "Organizer access to edit the meeting and book",
+        "single": "One editor account (you)",
+        "assume1": "The site is public and read-only for visitors",
+        "assume2": "Meetings happen at most once a week",
+        "unsureRow": "Who can update the site — not decided yet",
+        "boundary": "Nothing has been built yet."
+      },
+      "rail": {
+        "title": "Before work begins",
+        "g1": "Outcomes agreed",
+        "g2": "Decisions recorded",
+        "g3": "Nothing left open",
+        "fence": "Practice — this button is shown, not pressed"
+      }
+    },
+    "finish": {
+      "title": "Tour complete",
+      "body": "Your Project is ready. Start with one sentence about what you want to make or change.",
+      "restore": "Restore my layout",
+      "keep": "Keep this layout",
+      "restoreSub": "Put Chat and widgets back where they were",
+      "keepSub": "Keep what you set up during the tour",
+      "finish": "Finish tour"
+    },
+    "missing": {
+      "title": "That part isn’t on screen right now.",
+      "body": "Take me there, or skip this step."
+    },
+    "skipped": "Guided Tour closed. Replay it any time from Settings › Replay Guided Tour.",
+    "restoreFailed": "Your layout couldn’t be put back exactly. Open Settings › Home layout to reset it.",
+    "landing": "Your Project is ready. Start with one sentence about what you want to make or change.",
+    "resume": "Resume the Guided Tour"
   }
 }

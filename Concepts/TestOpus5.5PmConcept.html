@@ -24438,6 +24438,186 @@ html[data-motion="reduced"] .o55-it { transition-duration: 140ms !important; }
   .o55-it { transition-duration: 140ms !important; }
 }
 
+/* ---- css/40-tour.css ---- */
+/* ---- O55 Guided Tour: scrim + spotlight, callout, tour bar, Show Me pointer, ELI5 rewrite, Wizard practice ------
+   The scrim is tinted by the theme (never black) and does not block the app unless a step asks it to. Families differ
+   in material and motion: Basic blueprint (leader lines, crosshair pointer), Friendly paper (bubble, glove), Glass light
+   (glowing ring and orb), Retro terminal (marching ants, pixel hand, stepped moves). */
+.o55t-root { position: fixed; inset: 0; z-index: 2147481500; pointer-events: none; font-family: var(--body-font, Inter, system-ui, sans-serif); color: var(--text-primary);
+  --o55t-accent: var(--accent-blue); --o55t-r: 14px; --o55t-bg: var(--surface); --o55t-line: var(--border); --o55t-scrim: color-mix(in srgb, var(--background) 62%, transparent); }
+.o55t-root[hidden] { display: none !important; }
+.o55t-root[data-family="friendly"] { --o55t-accent: var(--accent-orange); --o55t-r: 20px; }
+.o55t-root[data-family="glass"] { --o55t-accent: var(--accent-magenta); --o55t-r: 18px; --o55t-bg: linear-gradient(var(--surface), var(--surface)), var(--background); }
+.o55t-root[data-family="retro"] { --o55t-r: 0; }
+.o55t-root[data-family="retro"][data-mode="dark"] { --o55t-accent: var(--accent-lime); }
+
+/* scrim with a spotlight hole; the ring marks the target */
+.o55t-scrim { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; }
+.o55t-scrimpath { fill: var(--o55t-scrim); transition: fill 300ms ease; }
+.o55t-ring { fill: none; stroke: var(--o55t-accent); stroke-width: 2.5; filter: drop-shadow(0 0 8px color-mix(in srgb, var(--o55t-accent) 70%, transparent)); animation: o55t-ringpulse 2.4s ease-in-out infinite; }
+@keyframes o55t-ringpulse { 50% { stroke-opacity: 0.55; } }
+.o55t-root[data-family="basic"] .o55t-ring { stroke-dasharray: 10 5; filter: none; animation: o55t-march 1.4s linear infinite; }
+.o55t-root[data-family="retro"] .o55t-ring { stroke-dasharray: 6 6; stroke-width: 3; filter: none; animation: o55t-march 0.8s steps(4) infinite; }
+.o55t-root[data-family="friendly"] .o55t-ring { stroke-width: 3.5; stroke-linecap: round; }
+@keyframes o55t-march { to { stroke-dashoffset: -30; } }
+.o55t-root[data-paused] .o55t-ring, .o55t-root[data-hidden] .o55t-ring { animation-play-state: paused; }
+.o55t-shield { position: fixed; inset: 0; pointer-events: auto; background: transparent; clip-path: inset(50%); }
+
+/* the left dock's entry band glows while Chat is being moved */
+.o55t-zone { position: fixed; left: 0; top: 0; width: 28px; opacity: 0; pointer-events: none; border-radius: 10px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--o55t-accent) 55%, transparent), transparent); box-shadow: inset 3px 0 0 var(--o55t-accent); transition: opacity 300ms ease; }
+.o55t-zone.o55t-on { opacity: 1; animation: o55t-zone 1.6s ease-in-out infinite alternate; }
+@keyframes o55t-zone { from { filter: brightness(0.85); } to { filter: brightness(1.25); } }
+.o55t-root[data-family="retro"] .o55t-zone { border-radius: 0; background: repeating-linear-gradient(0deg, var(--o55t-accent) 0 6px, transparent 6px 12px); opacity: 0; }
+.o55t-root[data-family="retro"] .o55t-zone.o55t-on { opacity: 0.85; animation: o55t-blink 1s steps(1) infinite; }
+@keyframes o55t-blink { 50% { opacity: 0.35; } }
+
+/* callout: one outcome, one instruction, Show Me and Back */
+.o55t-callout { position: fixed; left: 0; top: 0; width: min(380px, calc(100vw - 32px)); pointer-events: auto; padding: 18px 18px 14px; border-radius: var(--o55t-r);
+  background: var(--o55t-bg); border: 1px solid var(--o55t-line); box-shadow: 0 24px 60px -18px rgba(0, 0, 0, 0.55); transition: transform 420ms cubic-bezier(0.2, 0, 0, 1); will-change: transform; }
+.o55t-root[data-family="friendly"] .o55t-callout { border: 2px solid color-mix(in srgb, var(--text-primary) 70%, transparent); box-shadow: 6px 8px 0 color-mix(in srgb, var(--text-primary) 16%, transparent), 0 24px 50px -20px rgba(0, 0, 0, 0.4); transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
+.o55t-root[data-family="glass"] .o55t-callout { border-color: rgba(255, 255, 255, 0.3); box-shadow: 0 30px 70px -16px rgba(25, 10, 50, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.35); transition-duration: 560ms; transition-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1); }
+.o55t-root[data-family="retro"] .o55t-callout { border: 3px solid var(--text-primary); box-shadow: 8px 8px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); transition-timing-function: steps(5, end); font-family: var(--display-font); }
+.o55t-root[data-family="basic"] .o55t-callout::before, .o55t-root[data-family="basic"] .o55t-callout::after { content: ''; position: absolute; width: 14px; height: 14px; border: 2px solid var(--o55t-accent); }
+.o55t-root[data-family="basic"] .o55t-callout::before { left: -6px; top: -6px; border-right: 0; border-bottom: 0; }
+.o55t-root[data-family="basic"] .o55t-callout::after { right: -6px; bottom: -6px; border-left: 0; border-top: 0; }
+.o55t-kicker { margin: 0 0 6px; font: 700 11px/1.2 var(--body-font); letter-spacing: 0.12em; text-transform: uppercase; color: var(--o55t-accent); }
+.o55t-root[data-family="retro"] .o55t-kicker::before { content: '> '; }
+.o55t-title { margin: 0 0 8px; font: 750 17px/1.3 var(--display-font, var(--body-font)); outline: none; text-wrap: balance; }
+.o55t-root[data-family="retro"] .o55t-title { text-transform: uppercase; font-size: 15px; }
+.o55t-root[data-family="retro"] .o55t-title::after { content: '_'; color: var(--o55t-accent); animation: o55t-blink 1s steps(1) infinite; }
+.o55t-body, .o55t-try { margin: 0 0 12px; font-size: 14px; line-height: 1.5; color: var(--text-secondary); }
+.o55t-trylabel { display: inline-block; margin-right: 8px; padding: 2px 8px; border-radius: 999px; font: 700 11px/1.5 var(--body-font); letter-spacing: 0.06em; text-transform: uppercase; background: color-mix(in srgb, var(--o55t-accent) 16%, transparent); color: var(--o55t-accent); }
+.o55t-root[data-family="retro"] .o55t-trylabel { border-radius: 0; }
+.o55t-tips { display: flex; gap: 8px; align-items: flex-start; margin: 0 0 12px; padding: 9px 11px; border-radius: 10px; background: color-mix(in srgb, var(--text-primary) 6%, transparent); font-size: 13px; line-height: 1.45; color: var(--text-secondary); }
+.o55t-tips .o55-sg { flex: none; margin-top: 2px; color: var(--o55t-accent); }
+.o55t-actions, .o55t-inline { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+.o55t-inline { justify-content: flex-start; margin: -4px 0 10px; }
+.o55t-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 34px; padding: 0 14px; border-radius: 9px; border: 1px solid transparent; font: 650 13.5px/1 var(--body-font); cursor: pointer; background: transparent; color: var(--text-primary); }
+.o55t-primary { background: var(--o55t-accent); color: var(--background); }
+.o55t-root[data-family="glass"] .o55t-primary { background: linear-gradient(135deg, var(--accent-blue), var(--accent-magenta)); color: #fff; }
+.o55t-secondary { border-color: var(--o55t-line); }
+.o55t-ghost { color: var(--text-secondary); }
+.o55t-btn[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
+.o55t-btn:focus-visible, .o55t-barbtn:focus-visible, .o55t-seg button:focus-visible, .o55t-choice:focus-visible { outline: 2px solid var(--o55t-accent); outline-offset: 2px; }
+.o55t-root[data-family="friendly"] .o55t-btn { border-radius: 999px; }
+.o55t-root[data-family="retro"] .o55t-btn { border-radius: 0; border: 2px solid var(--text-primary); text-transform: uppercase; font-family: var(--display-font); font-size: 12px; }
+.o55t-callout.o55t-success { box-shadow: 0 0 0 2px var(--accent-lime), 0 24px 60px -18px rgba(0, 0, 0, 0.55); }
+.o55t-finish { display: grid; gap: 8px; margin: 0 0 12px; }
+.o55t-choice { display: grid; gap: 2px; text-align: left; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--o55t-line); background: transparent; color: var(--text-primary); font: inherit; cursor: pointer; }
+.o55t-choice strong { font-size: 14px; } .o55t-choice span { font-size: 12.5px; color: var(--text-secondary); }
+.o55t-choice.o55t-on { border-color: var(--o55t-accent); background: color-mix(in srgb, var(--o55t-accent) 12%, transparent); }
+
+/* tour bar: chapters with step ticks, Tips (Normal | ELI5), Pause, Skip, sound */
+.o55t-bar { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; padding: 6px 8px 6px 14px; pointer-events: auto; border-radius: 999px;
+  background: var(--o55t-bg); border: 1px solid var(--o55t-line); box-shadow: 0 12px 34px -12px rgba(0, 0, 0, 0.5); font-size: 12.5px; white-space: nowrap; transition: bottom 360ms cubic-bezier(0.2, 0, 0, 1), top 360ms cubic-bezier(0.2, 0, 0, 1); }
+.o55t-bar.o55t-top { bottom: auto; top: 50px; }
+.o55t-root[data-family="retro"] .o55t-bar { border-radius: 0; border: 2px solid var(--text-primary); font-family: var(--display-font); }
+.o55t-brand { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--o55t-accent); }
+.o55t-pips { display: inline-flex; align-items: center; gap: 10px; }
+.o55t-pip { display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted); }
+.o55t-pip.o55t-cur { color: var(--text-primary); font-weight: 650; }
+.o55t-pip.o55t-done { color: var(--text-secondary); }
+.o55t-pipname { max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
+.o55t-pip:not(.o55t-cur) .o55t-pipname { max-width: 0; opacity: 0; transition: max-width 300ms ease, opacity 200ms ease; }
+.o55t-ticks { display: inline-flex; gap: 3px; }
+.o55t-tick { display: block; width: 6px; height: 6px; border-radius: 50%; background: color-mix(in srgb, var(--text-primary) 22%, transparent); }
+.o55t-tick.o55t-on { background: var(--accent-lime); }
+.o55t-tick.o55t-cur { background: var(--o55t-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--o55t-accent) 25%, transparent); }
+.o55t-root[data-family="retro"] .o55t-tick { border-radius: 0; }
+.o55t-seg { display: inline-flex; align-items: center; gap: 2px; padding: 2px; border-radius: 999px; background: color-mix(in srgb, var(--text-primary) 7%, transparent); }
+.o55t-seglabel { padding: 0 6px 0 8px; color: var(--text-muted); }
+.o55t-seg button { height: 24px; padding: 0 10px; border-radius: 999px; border: 0; background: transparent; color: var(--text-secondary); font: 600 12px/1 var(--body-font); cursor: pointer; }
+.o55t-seg button.o55t-on { background: var(--o55t-bg); color: var(--text-primary); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25); }
+.o55t-root[data-family="retro"] .o55t-seg, .o55t-root[data-family="retro"] .o55t-seg button { border-radius: 0; }
+.o55t-barbtn { height: 28px; padding: 0 10px; border-radius: 999px; border: 0; background: transparent; color: var(--text-secondary); font: 600 12.5px/1 var(--body-font); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.o55t-barbtn:hover { background: color-mix(in srgb, var(--text-primary) 8%, transparent); color: var(--text-primary); }
+
+/* the Show Me pointer: a themed hand/orb that travels, presses, and drags */
+.o55t-pointer { position: fixed; left: 0; top: 0; width: 30px; height: 30px; margin: -4px 0 0 -6px; pointer-events: none; opacity: 0; transition: opacity 180ms ease; z-index: 2; }
+.o55t-pointer.o55t-on { opacity: 1; }
+.o55t-ptr { fill: var(--background); stroke: var(--text-primary); stroke-width: 1.8; stroke-linejoin: round; filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.45)); transition: transform 140ms ease; transform-origin: 6px 3px; }
+.o55t-pointer.o55t-press .o55t-ptr { transform: scale(0.86); }
+.o55t-root[data-family="basic"] .o55t-ptr { fill: color-mix(in srgb, var(--accent-blue) 30%, var(--background)); stroke: var(--accent-blue); }
+.o55t-root[data-family="friendly"] .o55t-ptr { fill: #fff; stroke: #2b2233; stroke-width: 2.2; }
+.o55t-root[data-family="glass"] .o55t-ptr { fill: color-mix(in srgb, var(--accent-magenta) 35%, #fff); stroke: #fff; }
+.o55t-root[data-family="glass"] .o55t-trail { position: absolute; left: 0; top: 0; width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--accent-magenta) 80%, #fff), transparent 70%); filter: blur(2px); }
+.o55t-root[data-family="retro"] .o55t-ptr { fill: var(--text-primary); stroke: var(--background); shape-rendering: crispEdges; }
+.o55t-root[data-family="retro"] .o55t-pointer { transition: opacity 0ms; }
+.o55t-cue { outline: 3px solid var(--accent-lime) !important; outline-offset: 3px; transition: outline-color 200ms ease; }
+
+/* suggested prompt chip above the real composer */
+.o55t-chip { position: fixed; left: 0; top: 0; display: inline-flex; align-items: center; gap: 7px; min-height: 34px; padding: 6px 12px; pointer-events: auto; cursor: pointer; border-radius: 12px;
+  border: 1px dashed var(--o55t-accent); background: var(--o55t-bg); color: var(--text-primary); font: 600 13px/1.3 var(--body-font); text-align: left; box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.5); animation: o55t-chipin 420ms cubic-bezier(0.2, 0, 0, 1) both; }
+.o55t-chip .o55-sg { flex: none; color: var(--o55t-accent); }
+@keyframes o55t-chipin { from { opacity: 0; transform: translateY(8px); } }
+.o55t-root[data-family="retro"] .o55t-chip { border-radius: 0; animation-timing-function: steps(3); }
+
+/* ELI5: kept words stay, removed words fold away, new words type in */
+.o55e-w { display: inline; transition: opacity 300ms ease; }
+.o55e-del { display: inline-block; overflow: hidden; white-space: pre; vertical-align: bottom; animation: o55e-fold 520ms cubic-bezier(0.3, 0, 0.2, 1) forwards; color: var(--text-muted); text-decoration: line-through; }
+@keyframes o55e-fold { 0% { max-width: 12em; opacity: 1; } 60% { opacity: 0; } 100% { max-width: 0; opacity: 0; } }
+.o55e-ins { opacity: 0; animation: o55e-type 260ms ease forwards; animation-delay: calc(560ms + var(--k, 0) * 45ms); color: var(--accent-lime); }
+@keyframes o55e-type { from { opacity: 0; } to { opacity: 1; color: inherit; } }
+.o55-guided-thread .thread-title::before { content: ''; display: inline-block; width: 6px; height: 6px; margin-right: 6px; border-radius: 50%; background: var(--accent-lime); vertical-align: middle; }
+
+/* Planning Wizard practice (Guided example inside the real Wizard) */
+.o55p-goal { display: grid; gap: 10px; margin: 18px 0 8px; padding: 18px 20px; border-radius: 16px; border: 1px dashed color-mix(in srgb, var(--accent-blue) 60%, transparent); background: color-mix(in srgb, var(--accent-blue) 8%, var(--surface)); }
+.o55p-goaltext { margin: 0; font: 600 17px/1.45 var(--display-font, var(--body-font)); color: var(--text-primary); }
+.o55p-use { justify-self: start; }
+.o55p-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; font: 700 11px/1.3 var(--body-font); letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-lime); background: color-mix(in srgb, var(--accent-lime) 14%, transparent); vertical-align: middle; }
+.o55p-bubble { display: grid; gap: 10px; padding: 14px 16px; border-radius: 14px; background: color-mix(in srgb, var(--text-primary) 5%, transparent); border: 1px solid var(--border); }
+.o55p-bubble p { margin: 0; font-weight: 650; font-size: 15px; }
+.o55p-who { font: 700 11px/1 var(--body-font); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+.o55p-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.o55p-why { justify-self: start; padding: 0; border: 0; background: none; color: var(--accent-blue); font: 600 13px/1.4 var(--body-font); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.o55p-whytext { margin: 0 !important; font-weight: 400 !important; font-size: 13.5px !important; line-height: 1.5; color: var(--text-secondary); }
+.o55p-row { transition: background 400ms ease; }
+.o55p-pulse { animation: o55p-pulse 1400ms cubic-bezier(0.2, 0, 0, 1) 1; border-radius: 8px; }
+@keyframes o55p-pulse { 0% { background: transparent; } 22% { background: color-mix(in srgb, var(--accent-lime) 22%, transparent); } 100% { background: transparent; } }
+html[data-theme-family="retro"] .o55p-pulse { animation-timing-function: steps(5, end); }
+.o55p-fresh { animation: o55p-in 620ms cubic-bezier(0.2, 0, 0, 1) both; background: color-mix(in srgb, var(--accent-lime) 16%, transparent); border-radius: 8px; }
+@keyframes o55p-in { from { opacity: 0; transform: translateX(-10px); max-height: 0; } to { opacity: 1; transform: none; max-height: 60px; } }
+.o55p-gone { animation: o55p-out 560ms cubic-bezier(0.3, 0, 1, 1) forwards; overflow: hidden; color: var(--text-muted); text-decoration: line-through; }
+@keyframes o55p-out { 0% { opacity: 1; max-height: 60px; } 70% { opacity: 0; } 100% { opacity: 0; max-height: 0; margin: 0; padding: 0; } }
+.o55p-open { color: var(--accent-orange); }
+.o55p-boundary { border-top: 1px dashed var(--border); padding-top: 8px; }
+.o55p-fence { position: relative; display: grid; gap: 6px; margin-top: 10px; padding: 8px; border-radius: 12px; border: 2px dashed color-mix(in srgb, var(--text-primary) 35%, transparent); }
+.o55p-approve { pointer-events: none; opacity: 0.6; filter: saturate(0.6); }
+.o55p-fencenote { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
+.o55t-landing { display: flex; align-items: center; gap: 10px; margin: 14px 0 6px; padding: 12px 16px; border-radius: 14px; background: color-mix(in srgb, var(--accent-lime) 12%, var(--surface)); color: var(--text-primary); font: 600 15px/1.4 var(--body-font); animation: o55t-chipin 520ms cubic-bezier(0.2, 0, 0, 1) both; }
+.o55t-landing .o55-sg { color: var(--accent-lime); flex: none; }
+.o55t-landing.o55t-leaving { opacity: 0; transition: opacity 400ms ease; }
+
+/* open / close */
+.o55t-root.o55t-opening .o55t-scrim { animation: o55-fadeonly 420ms ease both; }
+.o55t-root.o55t-opening .o55t-bar { animation: o55t-barin 520ms cubic-bezier(0.2, 0, 0, 1) both; }
+@keyframes o55t-barin { from { opacity: 0; transform: translate(-50%, 16px); } }
+.o55t-root.o55t-closing { animation: o55-fadeout 340ms ease both; }
+
+/* Reduced Motion: sequence and cause/effect stay; movement becomes short fades */
+html[data-motion="reduced"] .o55t-callout, html[data-motion="reduced"] .o55t-bar { transition-duration: 0.01ms !important; }
+html[data-motion="reduced"] .o55t-ring, html[data-motion="reduced"] .o55t-zone { animation: none !important; }
+html[data-motion="reduced"] .o55e-del { animation: none; display: none; }
+html[data-motion="reduced"] .o55e-ins, html[data-motion="reduced"] .o55p-fresh, html[data-motion="reduced"] .o55p-gone { animation-duration: 0.01ms !important; animation-delay: 0ms !important; }
+@media (prefers-reduced-motion: reduce) {
+  .o55t-callout, .o55t-bar { transition-duration: 0.01ms !important; }
+  .o55t-ring, .o55t-zone { animation: none !important; }
+  .o55e-del { animation: none; display: none; }
+  .o55e-ins, .o55p-fresh, .o55p-gone { animation-duration: 0.01ms !important; animation-delay: 0ms !important; }
+}
+@media (max-width: 760px) {
+  .o55t-bar { left: 8px; right: 8px; transform: none; overflow-x: auto; }
+  .o55t-pipname { display: none; }
+  .o55t-callout { width: calc(100vw - 24px); }
+}
+
+.o55-pagetoast { position: fixed; left: 50%; bottom: 72px; z-index: 2147481900; max-width: min(520px, calc(100vw - 32px)); padding: 11px 16px; border-radius: 12px; background: var(--text-primary); color: var(--background);
+  font: 600 13.5px/1.4 var(--body-font, system-ui); transform: translate(-50%, 10px); opacity: 0; pointer-events: none; transition: opacity 260ms ease, transform 260ms ease; }
+.o55-pagetoast.o55-on { opacity: 1; transform: translate(-50%, 0); }
+
+.o55t-btn.o55t-prompt { height: auto; min-height: 34px; padding: 7px 12px; text-align: left; line-height: 1.35; border-style: dashed; border-color: var(--o55t-accent); }
+
 </style>
 <!-- O55:CSS:END -->
 </head>
@@ -80690,7 +80870,7 @@ policies for tenant isolation, and add migration script.</textarea>
 </script>
 <!-- O55:BODY:START -->
 <script id="pm-o55-js">
-window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progress","progress":"Chapter {n} of {total}: {name}","close":"Close","closeHint":"Close — your choices are saved","back":"Back","continue":"Continue","recommended":"Recommended","done":"Done","soundOn":"Sound on — click to mute","soundOff":"Sound off — click to turn on","resume":"Finish setting up","resumeOptional":"Continue optional setup","hide":"Hide","notNow":"Not now","later":"Do this later","skip":"Skip","optional":"Optional","working":"Working…","tryAgain":"Try again","edit":"Edit","change":"Change","alreadyDone":"Already done","checkedNow":"Checked just now","copy":"Copy","copied":"Copied","newCode":"New code","expiresIn":"Expires in {m}:{s}","search":"Search","show":"Show","hideText":"Hide","or":"or"},"chapters":{"welcome":"Welcome","computer":"Computer","project":"Project","ai":"AI","ready":"Ready"},"welcome":{"eyebrow":"Welcome","title":"Welcome to Puppet Master","lead":"Describe what you want to make. Puppet Master plans it with you, then coordinates the work.","promise":{"describe":"Say what you want in your own words","plan":"Check the plan before anything starts","work":"Puppet Master coordinates the work"},"resumed":"Picking up where you left off.","startOver":"Start over","returning":"Welcome back — found {projects} {and} {ai} on this computer.","oneProject":"1 Project","nProjects":"{n} Projects","and":"and","skip":"Skip","start":"Get Started"},"look":{"eyebrow":"Make it yours","title":"Pick a look","lead":"Pictures, movement and sound all follow this look. Change it any time.","modeLabel":"Light or dark","light":"Light","dark":"Dark","hint":"Starts from your computer's setting.","families":{"basic":{"name":"Basic","sub":"Blueprint · calm and precise"},"friendly":{"name":"Friendly","sub":"Paper theatre · warm and playful"},"glass":{"name":"Glass","sub":"Light lab · glowing and airy"},"retro":{"name":"Retro","sub":"Arcade · pixel-sharp and fun"}},"keep":"Your current look is selected. Continue to keep it."},"where":{"eyebrow":"The computer","title":"Where should Puppet Master do the work?","lead":"Most people use this computer. You can add others later.","this":{"title":"This computer","sub":"Everything stays here. The easiest start.","short":"This computer"},"connect":{"title":"Connect this device","sub":"Use a Puppet Master you already have on another computer.","short":"Connect"},"server":{"title":"Set up or restore a Server","sub":"A NAS, home server or cloud computer that stays on.","short":"Server"},"check":{"label":"Quick check of this computer","space":"{gb} GB free","history":"Safe History ready","historyLater":"Safe History added at the end","internet":"Online","offline":"Offline — local work still works","checking":"Checking…"},"restoreAll":"Moving from an old computer? Restore everything","detailsLabel":"What is a Server?","details":"The computer that does the work is called a Server. This computer can be one. A Server that stays on — like a NAS — can keep working while your laptop sleeps."},"missing":{"name":"Give your Project a name first.","folder":"Choose the folder first.","repository":"Choose which online Project to bring in.","backup":"Choose the backup to restore.","storage":"Choose where on the network the files will live.","signin":"Sign in to the online service first.","server":"Choose your Puppet Master first.","azureProject":"Choose the Azure DevOps project first.","remoteLink":"Paste the Remote Link first.","proxyAddress":"Enter your web address first.","headscale":"Enter your Headscale address first."},"art":{"hero":"A marionette control bar with three helpers on strings","route":"The route your choices make","nas":"This computer and the storage device exchanging a key","where":"Where the work happens","labels":{"thisComputer":"this computer","thisDevice":"this device","homeNas":"home nas","strings":"strings","plan":"the plan","ready":"ready","start":"Start","new":"new","files":"Files","documents":"documents","worksHere":"Works here","you":"You","lookingNearby":"looking nearby","itsId":"its id","yourKeys":"your keys","addingKey":"adding your key","projectsFolder":"projects","yourPm":"your puppet master","alwaysOn":"always on","pressStart":"press start"}},"connect":{"route":{"eyebrow":"Connect this device","title":"Which Puppet Master should this device use?","lead":"Puppet Masters on your network show up here.","looking":"Looking on your network…","found":"Found on your network","projects":"{n} Projects","oneProject":"1 Project","vpn":"Also look on my VPN","vpnSub":"Finds Puppet Masters on a work or home VPN too","address":"Enter an address instead","addressLabel":"Its address","addressHint":"For example home-nas.local or 192.168.1.20","none":"Nothing found yet. Make sure it is turned on and on the same network.","more":"Other ways to connect","tailscale":{"title":"Tailscale","sub":"Reach it from anywhere with Tailscale","hosted":"Tailscale account","headscale":"My own Headscale server","headscaleLabel":"Headscale address"},"proxy":{"title":"My own web address","sub":"It already has an address like pm.example.com","label":"Web address","detail":"This is a reverse proxy address (Caddy, NGINX, Traefik or Nginx Proxy Manager) that the Server owner already set up."},"link":{"title":"Puppet Master Remote Link","sub":"Paste the link your Server gave you","label":"Remote Link"},"local":"On this network"},"review":{"eyebrow":"Connect this device","title":"Connect this device to {name}","lead":"{name} will ask you to confirm it is really you.","route":"How it connects","confirmTitle":"How do you want to confirm?","approve":{"title":"Approve from another device","sub":"{device} will show a request"},"code":{"title":"Enter the code it shows","sub":"Open {name}'s page and read its code"},"qr":{"title":"Scan its QR code","sub":"Uses this device's camera"},"button":"Connect"},"pair":{"eyebrow":"Connecting","title":"Check the picture matches","lead":"{name} shows this same picture. If it looks different, stop here.","phases":{"reach":"Reaching {name}","approve":"Waiting for approval on {device}","code":"Checking the code","qr":"Reading the QR code","trust":"Pairing this device"},"approved":"Approved on {device}","resend":"Didn't get a request? Send it again","codeLabel":"Code from {name}","codeHint":"8 letters and numbers, like A7K9-M2Q4","codeWrong":"That code doesn't match. Check it on {name} and try again.","qrAim":"Point your camera at the QR code on {name}","expired":"The request expired.","done":"This device is paired with {name}","check":"Check code"},"ready":{"eyebrow":"Connected","title":"This device is ready to meet your Puppet Master","lead":"{name} has {projects} and {ai}.","noAi":"no AI account yet","aiReady":"{n} AI account ready","projectsTitle":"Projects on {name}","aiTitle":"AI on {name}","enter":"Enter Puppet Master","open":"Open","create":"Create a new Project","createSub":"Starts a new Project on {name}"}},"server":{"kind":{"eyebrow":"New Server","title":"What kind of computer will it be?","lead":"Puppet Master gets installed on it once. After that it does the work, even when this device sleeps.","nas":{"title":"A NAS or home server","sub":"Synology, TrueNAS, Unraid, QNAP"},"cloud":{"title":"A cloud computer","sub":"A server you rent online"},"pc":{"title":"Another computer","sub":"A Windows, Mac or Linux computer that stays on"},"installTitle":"Install Puppet Master on it","restore":"Setting up a replacement? Bring back an old Server"},"install":{"truenas":["Open TrueNAS and go to Apps","Search for Puppet Master and choose Install","Keep the suggested settings"],"unraid":["Open Unraid and go to Apps","Search for Puppet Master and choose Install"],"synology":["Open Container Manager on the Synology","Add the Puppet Master image and start it"],"qnap":["Open Container Station on the QNAP","Add the Puppet Master image and start it"],"linux":["Open a terminal on it","Paste this line and press Enter"],"windows":["Download Puppet Master for Windows on that computer","Open it and choose Run as a Server"],"macos":["Download Puppet Master for Mac on that computer","Open it and choose Run as a Server"],"guide":"Open the install guide","command":"curl -fsSL https://get.puppetmaster.app/server | sh"},"wait":{"eyebrow":"New Server","title":"Waiting for it to appear","lead":"Install Puppet Master on it. It shows up here by itself once it's running.","looking":"Looking on your network…","found":"Puppet Master on {name}","notSetUp":"Not set up yet","choose":"Set up this one","address":"Enter its address instead"},"confirm":{"eyebrow":"New Server","title":"Set up {name} as your Server?","lead":"Give it a name you'll recognise.","nameLabel":"Name","codeLabel":"Setup code","codeHint":"Shown on {name}'s setup page, like 482 913","codeWrong":"That setup code doesn't match {name}.","willTitle":"What happens next","will":["{name} becomes your Server","This device is paired with it","Only devices you approve can use it"],"button":"Set up Server","phases":{"claim":"Making {name} yours","pair":"Pairing this device","check":"Checking it works"},"suggest":["Home NAS","Home server","Studio"],"willLine":"{name} becomes your Server, this device is paired with it, and only devices you approve can use it."},"ready":{"eyebrow":"New Server","title":"{name} is ready","lead":"Other devices can join with this code. You can also do it later.","pairTitle":"Add another device","pairSub":"On the other device choose Connect this device, then scan this or enter the code.","link":"Local link","anotherTitle":"Pair another device","restore":"Bring back old data","restoreSub":"From a Recovery Kit or an old backup"}},"restore":{"source":{"eyebrow":"Restore","title":"Where is the backup?","lead":"Nothing on this computer is replaced without asking.","kit":{"title":"A Recovery Kit file","sub":"The file you saved when you set up backups"},"folder":{"title":"A folder on this computer","sub":"Or a drive you plugged in"},"nas":{"title":"A NAS or another computer","sub":"Uses a secure connection (SSH)"},"cloud":{"title":"A cloud account","sub":"Google Drive, OneDrive, S3 or B2"}},"unlock":{"eyebrow":"Restore","title":"Unlock the backup","lead":"Enter the recovery phrase from your Recovery Kit. It is used once and never saved.","label":"Recovery phrase","hint":"Six words, like: river candle orbit maple quiet lantern","wrong":"That phrase doesn't unlock this backup."},"pick":{"eyebrow":"Restore","title":"Choose what to bring back","lead":"Pick the copy you want.","full":"Everything from {label}","project":"{project} from {where}"},"preview":{"eyebrow":"Restore","title":"Here's what comes back","lead":"Check it before anything changes.","projects":"{n} Projects with their history","accounts":"{n} AI accounts (you sign in again)","settings":"Your settings and look","never":"Passwords and keys never come back from a backup. You sign in again where needed.","button":"Restore"},"apply":{"phases":{"fetch":"Getting the backup","check":"Checking it is complete","projects":"Bringing back Projects","settings":"Bringing back settings"}},"done":{"eyebrow":"Restored","titleServer":"{name} is back","titleHere":"Everything is back","lead":"{n} Projects are ready. AI accounts need a quick sign-in.","enter":"Enter Puppet Master","open":"Open a Project","create":"Create a new Project"}},"begin":{"eyebrow":"Your Project","title":"How should your Project begin?","lead":"A Project keeps one thing you are making: its files, plans and history.","new":{"title":"Start a new Project","sub":"Begin with an empty folder"},"existing":{"title":"Use work that already exists","sub":"A folder, an online Project, or files on another device"},"restore":{"title":"Restore a Project","sub":"From a backup"},"folder":{"title":"A folder on this computer","sub":"Pick the folder"},"online":{"title":"A Project stored online","sub":"GitHub, GitLab and others"},"device":{"title":"Files on another computer or storage device","sub":"A NAS, a network drive or another computer"},"later":"Set up a Project later","server":"On {name}"},"folder":{"eyebrow":"Your Project","title":"Which folder?","lead":"Puppet Master reads it but changes nothing until you create the Project.","recent":"Recent folders","browse":"Browse…","hasHistory":"Has its own history ({kind})","noHistory":"No history yet — Safe History is added","online":"Online copy on {service}","picker":"Choose a folder","open":"Choose this folder","tree":{"home":"Home","documents":"Documents","desktop":"Desktop","code":"Code","downloads":"Downloads"},"checking":"Looking inside…"},"online":{"service":{"eyebrow":"Online copy","title":"Where should the online copy live?","titleSource":"Where is the Project stored?","lead":"GitHub is a free website that keeps an online copy of your work.","github":{"title":"GitHub","sub":"Most popular. Free for private Projects."},"others":"Other services","gitlab":"GitLab","azure_devops":"Azure DevOps","bitbucket_cloud":"Bitbucket","bitbucket_data_center":"Bitbucket Data Center","forgejo":"Forgejo","gitea":"Gitea","cursor_origin":"Cursor Origin","github_enterprise":"GitHub Enterprise","preview":"Preview","hosted":"{name}.com","selfManaged":"My company's own server","addressLabel":"Server address","addressHint":"For example https://git.example.com","azureServices":"Azure DevOps Services","azureServer":"Azure DevOps Server","bbCloud":"Bitbucket Cloud","bbDc":"Bitbucket Data Center","forgejoCloud":"Codeberg (hosted Forgejo)","giteaCloud":"Gitea Cloud","ownServer":"My own server"},"signin":{"eyebrow":"Online copy","title":"Sign in to {name}","lead":"Puppet Master only asks {name} for access to the Project you choose.","signIn":"Sign in","create":"Create account","connected":"Use {account}","connectedSub":"Already connected on this computer","another":"Use a different account","opened":"Your browser opened {name}'s sign-in page","waiting":"Waiting for you in your browser…","noBrowser":"Browser didn't open?","codeLead":"Go to {url} and enter this code:","codeExpires":"The code expires in 15 minutes.","signedIn":"Signed in as {account}","createOpened":"{name}'s sign-up page opened","finished":"Finished? Sign in","email":"Check your email to confirm your new account","confirmed":"I confirmed it","token":"Use an access token instead","tokenLabel":"Access token","tokenHint":"Create one on your server under Settings › Applications. It is kept in your system keychain, never in Puppet Master's files.","tokenBad":"That token was not accepted.","admin":"Sign-up is turned off on this server. Ask your administrator for an account.","simTitle":"Simulated {name} page","simNote":"Concept only: a real sign-up happens on {name}'s own website.","simUser":"Username","simEmail":"Email","simButton":"Create account"},"details":{"eyebrow":"Online copy","title":"Name on {name}","lead":"This is how the online copy appears on {name}.","nameLabel":"Name on {name}","available":"Available","taken":"That name is already used in {owner}","checking":"Checking…","privacy":"Who can see it","private":"Only you","privateSub":"And people you invite","public":"Everyone","publicSub":"Anyone on the internet can see it","internal":"Everyone in {org}","internalSub":"People in your organization","azurePrivacy":"Follows your Azure DevOps project's settings","owner":"Whose account keeps it?","personal":"Your account ({account})","container":"Organization","project":"Team project","workspace":"Workspace","advanced":"More options","description":"Description","branch":"Main branch name","readme":"Add a README file","readmeSub":"A short page that says what the Project is","gitignore":"Files to leave out","license":"License","gitignoreOpts":{"automatic":"Chosen for you","none":"None","rust":"Rust","node":"Node","python":"Python","slint":"Slint"},"licenseOpts":{"none":"No license","mit":"MIT","apache_2":"Apache 2.0","gpl_3":"GPL 3.0"}},"repos":{"eyebrow":"Your Project","title":"Choose the Project to bring in","lead":"From {account} on {name}.","search":"Search your Projects","copyTo":"Copy kept on this computer in {path}","private":"Private","public":"Public","empty":"No Projects found in this account."}},"name":{"eyebrow":"Your Project","title":"Name your Project","lead":"Use words you'll recognise later.","label":"Project name","placeholder":"Book club website","ok":"Good name","empty":"Give it a name","long":"Keep it under 60 characters","exists":"You already have a Project called {name}","suggest":["Book club website","Family recipes","Garden planner"],"kept":"Kept in {path}","change":"Change","changeTitle":"Where should its files live?","thisComputer":"On this computer","otherFolder":"Another folder on this computer","network":"A network drive or NAS","networkSub":"Uses a secure connection (SSH) by default","serverTitle":"Where should its files live?","withServer":"On {name}","withServerSub":"Recommended. The Server keeps them next to the work.","onDevice":"On this device","onDeviceSub":"{name} reaches them over the network","networkDrive":"A network drive","networkDriveSub":"A NAS or shared folder","storage":{"sshTitle":"Where on {device}?"}},"like":{"eyebrow":"Your Project","title":"Start like another Project?","lead":"Reuse the setup you already trust, or begin fresh.","fresh":"Start fresh","freshSub":"Puppet Master's standard settings","updated":"Used {when}","previewTitle":"What comes along","preview":"Uses the same {groups}. Your new files, history, Goals and Plans stay separate.","never":"Never copied: sign-ins and keys, files, history, Goals and Plans.","choose":"Choose settings","chooseTitle":"Choose what to copy","from":"from {project}","unavailable":"{project} used an account that isn't on this computer. You'll sign in later.","count":"{n} settings","groups":{"Appearance & input":"look and input","Notifications & sounds":"notifications","AI providers & accounts":"AI accounts","Model routing":"model choices","Goals & personas":"personas","Permissions":"permissions","Project & sync":"project options","Context & memory behavior":"memory settings","Testing profiles":"testing defaults","Source control":"history settings"},"and":"and"},"safe":{"eyebrow":"Keeping it safe","title":"Keep your work safe","lead":"Every version is saved on this computer. Online copies and backups are optional.","history":{"title":"Every version saved on this computer","sub":"Safe History — undo any change, any time","subExisting":"Keeps the folder's own history","git":"Git","gitSub":"Recommended. Works with GitHub and most tools.","jj":"Jujutsu","jjSub":"Newer. Easier to undo mistakes.","filesafe":"FileSafe","filesafeSub":"Keeps a safety copy of each file before big changes","detailsLabel":"How is it saved?"},"online":{"title":"Online copy","notNow":"Not now","sub":"Keeps a copy on a website like GitHub","set":"{service} · {privacy}","add":"Add one"},"backup":{"title":"Backup","later":"Later","sub":"A full copy you can restore from","set":"{where}","sheetTitle":"Where should backups go?","note":"You'll sign in right after your Project is created.","nas":"Home NAS","nasSub":"Over your home network","gdrive":"Google Drive","onedrive":"OneDrive","s3":"S3 or B2","s3Sub":"A cloud storage bucket","sftp":"Another server (SFTP or WebDAV)","none":"Not now"},"sync":"Your other Puppet Master devices see this Project automatically.","notNow":"Not now"},"away":{"eyebrow":"Access","title":"Use it away from home?","lead":"{name} can stay reachable when you're out. You can change this any time.","home":{"title":"Only at home for now","sub":"On your home network or VPN"},"anywhere":{"title":"Also away from home","sub":"Tailscale, built into Puppet Master — sign in once"},"more":"Other ways to connect","proxy":{"title":"My own web address","sub":"Puppet Master sets up Caddy with a free certificate","label":"Web address","hosting":"Who runs it?","pm":"Puppet Master sets it up","generate":"Only make the settings file","existing":"I already have one","tls":"Certificate","free":"A free certificate","own":"My own certificate","kind":"Which proxy","detail":"Caddy is the default. NGINX, Traefik and Nginx Proxy Manager are also supported."},"link":{"title":"Puppet Master Remote Link","sub":"A private link through Puppet Master's relay","label":"Remote Link","hint":"Your Server shows it under Settings › Access"},"headscale":"My own Headscale server"},"review":{"eyebrow":"Review","titleNew":"Ready to create {name}","titleAdd":"Ready to add {name}","titleRestore":"Ready to restore {name}","titleLater":"Ready to finish setup","lead":"Nothing has been created yet. Check it, then create it in one step.","leadLater":"Nothing will be created now.","groups":{"project":"Project","computer":"Computer","safe":"Keeping it safe","access":"Access"},"rows":{"name":"Name","begins":"Begins as","like":"Settings","where":"Work happens on","files":"Files kept in","history":"Every version","online":"Online copy","backup":"Backup","remote":"Away from home"},"begins":{"new":"A new, empty Project","existing_local":"Folder {path}","existing_online":"{repo} from {service}","restore":"Backup of {project}","device":"Files on {device}"},"fresh":"Start fresh","copied":"Like {project}","saved":"Saved with {kind}","notSet":"Not set up now: {list}","willTitle":"When you click {button}:","will":{"folder":"A folder is made in {path}","useFolder":"Puppet Master starts using {path}","history":"Safe History starts saving every version","clone":"The Project is copied from {service}","restore":"The backup is brought back","online":"A private copy is made on {service}","settings":"Settings from {project} are applied","remote":"Access away from home is set up","server":"The Project lives on {server}"},"checked":"Checked just now","changed":"{what} changed since you chose it. Take a look.","create":"Create Project","add":"Add Project","restoreBtn":"Restore Project","finish":"Finish setup","edit":"Edit"},"creating":{"eyebrow":"Creating","title":"Creating {name}","lead":"This takes a moment. You can close the window; it keeps going.","phases":{"folder":"Making the folder","history":"Starting Safe History","historyInstall":"Installing Safe History","clone":"Copying from {service}","restore":"Bringing back the backup","device":"Connecting to {device}","online":"Making the online copy on {service}","settings":"Applying settings from {project}","remote":"Setting up access away from home","check":"Checking everything works"},"failTitle":"Almost there","failLead":"Your folder and Safe History are ready. The online copy wasn't made.","taken":"{service} says the name {repo} is already used.","network":"The connection dropped while talking to {service}.","retry":"Try again","rename":"Change the name on {service}","skipOnline":"Skip the online copy","skipConfirm":"Skip the online copy? You can add one later from Settings.","doneTitle":"{name} is ready","doneLead":"Everything is set up and checked.","receipts":"Technical details","continue":"Continue"},"protect":{"eyebrow":"Keeping it safe","title":"Finish protecting your work","lead":"Your backup to {where} needs a quick sign-in and one test.","steps":{"signin":"Sign in to {where}","test":"Run a quick test","kit":"Save your Recovery Kit","kitTest":"Check your Recovery Kit","policy":"Turn on daily backups"},"kitWhy":"The Recovery Kit is the only way back in if this computer is lost. Keep it somewhere safe, like a password manager.","save":"Save Recovery Kit","saved":"Saved to Downloads","checkLabel":"Type word {n} of your recovery phrase","checkBad":"That isn't word {n}. Open the kit and try again.","done":"Backups are on. Next one tonight.","later":"Do this later"},"ai":{"eyebrow":"AI","title":"Choose what powers Puppet Master","lead":"Use an AI subscription or API account you already have. You can add more later.","checking":"Checking…","ready":"Ready","readyVia":"Ready · uses your {plan}","charged":{"subscription":"Charged to your {plan}","api":"Charged to your API account","runtime":"Uses your own OpenCode setup"},"found":"Found on this computer","foundOn":"Found on {host}","from":"From {project}","unavailable":"{project} used this — sign in on {host}","install":"Install","installOn":"Install on {host}","signIn":"Sign In","key":"Enter API Key","keyLabel":"API key for {name}","keyHint":"Kept in your system keychain. Never shown again.","keyBad":"That key wasn't accepted. Check it and try again.","verify":"Check key","installAsk":"Install {name} on {host}? It uses {vendor}'s official installer.","installGo":"Install","installPhases":{"download":"Downloading from {vendor}","install":"Installing","verify":"Checking it works"},"signinWait":"Finish signing in in your browser…","notReady":"Not signed in","seeAll":"See all providers","allTitle":"All providers","subs":"Subscriptions and plans","subsSub":"A monthly plan you already pay for","apis":"Pay-as-you-go API accounts","apisSub":"Billed by what you use","none":"I don't have any of these","another":"Add another account","skip":"Skip for now","skipNote":"Puppet Master can't plan or work until an AI is added.","free":{"title":"Set Up Free Models","sub":"Add free options for suitable tasks. Availability and limits can vary."},"pairs":{"claude":"Claude plan, not the Anthropic API","anthropic-api":"Pay as you go, separate from a Claude plan","antigravity":"Antigravity plan, not the Gemini API","gemini-api":"Pay as you go, separate from Antigravity","vertex":"Google Cloud billing","grok":"Grok Build plan, not the xAI API","xai-api":"Pay as you go, separate from Grok Build","muse":"Muse Code plan, not the Meta Model API","meta-api":"Pay as you go, separate from Muse Code","opencode-go":"OpenCode's monthly plan","opencode-zen":"OpenCode pay as you go","opencode-runtime":"OpenCode installed on your computer"},"names":{"opencode-runtime":"OpenCode on your computer"},"notInstalled":"Not installed"},"aiNone":{"eyebrow":"AI","title":"No AI account yet? That's fine","lead":"Puppet Master needs one AI to plan and work. Pick whichever suits you.","sub":{"title":"A monthly plan","sub":"Like Claude or ChatGPT. One price each month."},"api":{"title":"Pay as you go","sub":"Like the Anthropic or Gemini API. Pay for what you use."},"free":{"title":"Free Models","sub":"Free options with limits. Good for trying things out."},"signup":"Open {name}'s sign-up page"},"free":{"eyebrow":"AI","title":"Set Up Free Models","lead":"Add free options for suitable tasks. Availability and limits can vary.","needsSignin":"Needs sign-in","ready":"Ready","limited":"Rate limited right now","signIn":"Sign in","setup":"Set up","reconnect":"Reconnect","paidFirst":"Your paid accounts are used first.","attribution":"Free model list based on the community free-coding-models list","done":"Done"},"ready":{"eyebrow":"Ready","title":"You're ready","lead":"{name} is set up.","leadLater":"Puppet Master is set up. Create a Project whenever you like.","project":"Project","ai":"AI","free":"Free Models","backup":"Backup","noAi":"None yet — Puppet Master can't plan until you add one","noFree":"Not set up","noBackup":"Not set up","help":"Need help later? Ask Assistant Chat for Teacher, or open Settings for the full controls.","tour":"Take the Guided Tour","tourSub":"About {m} minutes. Uses a practice example; nothing changes.","enter":"Enter Puppet Master","createNow":"Create a Project now"},"nas":{"find":{"eyebrow":"Files on another device","titleSource":"Which device has the files?","titleStorage":"Which device should keep the files?","lead":"Puppet Master looks on your network. Nothing is changed.","method":"How to connect","ssh":"SSH","sshSub":"Recommended","smb":"SMB","smbSub":"Windows and Mac sharing","nfs":"NFS","mounted":"Already connected","looking":"Looking on your network…","sshOn":"SSH on","sshOff":"SSH off","fromConfig":"From your SSH settings","user":"user {user}","address":"Type an address instead","addressLabel":"Address","portLabel":"Port","addressHint":"For example 192.168.1.20 or nas.local","offTitle":"Turn on SSH on {name}","offLead":"SSH is how Puppet Master connects securely. It's a switch in {brand}'s settings:","checkAgain":"Check again","stillOff":"SSH is still off on {name}.","steps":{"Synology":"Control Panel › Terminal & SNMP › Terminal › Enable SSH service","TrueNAS":"System Settings › Services › SSH","QNAP":"Control Panel › Network & File Services › Telnet / SSH","Unraid":"Settings › Management Access"},"shares":"Shared folders found","exports":"NFS shares found","volumes":"Connected drives","pmTag":"Runs Puppet Master","pmNote":"{name} runs Puppet Master, so they pair directly. No SSH password needed."},"identity":{"eyebrow":"Check the device","title":"Is this your device?","lead":"Every device has its own picture. Check it matches what {name} shows in its settings, if you can.","known":"You've connected to {name} before — same ID","confirm":"Yes, this is my device","changedTitle":"{name}'s ID has changed","changedLead":"This happens after a reset — or if something else is pretending to be {name}. Don't continue unless you reset it.","trustNew":"I reset it — trust the new ID","stop":"Stop","details":"Show the technical fingerprint","fingerprint":"SHA256 fingerprint","old":"Previously"},"key":{"eyebrow":"Secure connection","title":"Choose a key","lead":"A key lets Puppet Master connect without a password. These keys are already on this computer.","looking":"Looking for your keys…","testing":"Testing with {name}…","where":{"agent":"In your SSH agent","file":"File in your .ssh folder","config":"Named for {host} in your SSH settings","1password":"1Password SSH agent","secretive":"Secretive","hardware":"Hardware key — needs a touch"},"works":"Already works with {name}","notAdded":"Not added to {name} yet","locked":"Locked with a passphrase","old":"Older key type — not recommended","new":"Make a new key just for Puppet Master","newSub":"Easy to remove later. Doesn't touch your other keys.","none":"No keys found on this computer. Puppet Master will make one.","detailsLabel":"What does Puppet Master read?","details":"Only the public half of each key. Private keys are never read, copied or stored — the key stays where it is, and Puppet Master remembers which one you chose.","passTitle":"Unlock {key}","passLabel":"Passphrase","passNote":"In the app your SSH agent asks for this. It unlocks the key on this computer and isn't saved.","passCancel":"Cancel","passOk":"Unlock"},"signin":{"eyebrow":"Secure connection","title":"Sign in to {name} once","lead":"Only to add your key. After this, no password is needed.","user":"Username","userHint":"The name you use for {name}'s web page","password":"Password","passwordHint":"Used once to add your key. Never saved.","button":"Add my key","wrong":"{name} didn't accept that username and password.","lockout":"Some NAS devices block sign-in after several tries. If it stops working, wait a few minutes.","self":"I'll add the key myself","selfLead":"Add this line to ~/.ssh/authorized_keys on {name}, then check again.","selfCheck":"I added it — check again","selfNot":"The key isn't on {name} yet."},"install":{"eyebrow":"Secure connection","title":"Setting up the secure connection","lead":"This takes a few seconds.","phases":{"make":"Making a new key","unlock":"Unlocking {key}","add":"Adding your key to {name}","verify":"Checking it works without a password","perms":"Checking you can use the folders","pmpair":"Pairing with Puppet Master on {name}"},"fail":{"wrong_password":"{name} didn't accept the password.","refused":"{name} refused the key because its home folder is shared too widely.","refusedFix":"Fix the folder permissions","not_allowed":"This account isn't allowed to use SSH on {name}.","notAllowedFix":"Turn it on in {brand}: Control Panel › User › Edit › Applications › SSH, then try again","cancelled":"The passphrase prompt was closed, so {key} stayed locked.","tryAgain":"Try again"},"done":"Connected securely with your key. No password saved."},"folder":{"eyebrow":"Choose a folder","title":"Choose a folder on {name}","lead":"Pick where the Project's files are.","leadStorage":"Pick where the Project's files should go.","newFolder":"New folder","newName":"Folder name","newNote":"The folder is made when you create the Project.","readOnly":"This folder is read-only for {user}. Choose another.","use":"Use this folder","empty":"Empty folder"},"smb":{"eyebrow":"Shared folder","title":"Sign in to the shared folder","lead":"Puppet Master checks it can read the folder. Your sign-in is kept in the system keychain.","user":"Username","password":"Password","check":"Check access","phases":{"mount":"Opening the shared folder","read":"Checking it can be read"}},"nfs":{"eyebrow":"NFS share","title":"Choose the NFS share","lead":"Puppet Master checks it can read the share.","phases":{"mount":"Opening the share","read":"Checking it can be read"}},"mounted":{"eyebrow":"Connected drive","title":"Choose the drive","lead":"Drives this computer already shows in its file browser."}},"demo":{"pill":"Concept demo · Opus 5.5","title":"Try a situation","note":"Changes the pretend world this concept runs in. Nothing real is touched.","restart":"Restart onboarding","reset":"Reset everything","tour":"Start the Guided Tour","close":"Close"}};
+window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progress","progress":"Chapter {n} of {total}: {name}","close":"Close","closeHint":"Close — your choices are saved","back":"Back","continue":"Continue","recommended":"Recommended","done":"Done","soundOn":"Sound on — click to mute","soundOff":"Sound off — click to turn on","resume":"Finish setting up","resumeOptional":"Continue optional setup","hide":"Hide","notNow":"Not now","later":"Do this later","skip":"Skip","optional":"Optional","working":"Working…","tryAgain":"Try again","edit":"Edit","change":"Change","alreadyDone":"Already done","checkedNow":"Checked just now","copy":"Copy","copied":"Copied","newCode":"New code","expiresIn":"Expires in {m}:{s}","search":"Search","show":"Show","hideText":"Hide","or":"or"},"chapters":{"welcome":"Welcome","computer":"Computer","project":"Project","ai":"AI","ready":"Ready"},"welcome":{"eyebrow":"Welcome","title":"Welcome to Puppet Master","lead":"Describe what you want to make. Puppet Master plans it with you, then coordinates the work.","promise":{"describe":"Say what you want in your own words","plan":"Check the plan before anything starts","work":"Puppet Master coordinates the work"},"resumed":"Picking up where you left off.","startOver":"Start over","returning":"Welcome back — found {projects} {and} {ai} on this computer.","oneProject":"1 Project","nProjects":"{n} Projects","and":"and","skip":"Skip","start":"Get Started"},"look":{"eyebrow":"Make it yours","title":"Pick a look","lead":"Pictures, movement and sound all follow this look. Change it any time.","modeLabel":"Light or dark","light":"Light","dark":"Dark","hint":"Starts from your computer's setting.","families":{"basic":{"name":"Basic","sub":"Blueprint · calm and precise"},"friendly":{"name":"Friendly","sub":"Paper theatre · warm and playful"},"glass":{"name":"Glass","sub":"Light lab · glowing and airy"},"retro":{"name":"Retro","sub":"Arcade · pixel-sharp and fun"}},"keep":"Your current look is selected. Continue to keep it."},"where":{"eyebrow":"The computer","title":"Where should Puppet Master do the work?","lead":"Most people use this computer. You can add others later.","this":{"title":"This computer","sub":"Everything stays here. The easiest start.","short":"This computer"},"connect":{"title":"Connect this device","sub":"Use a Puppet Master you already have on another computer.","short":"Connect"},"server":{"title":"Set up or restore a Server","sub":"A NAS, home server or cloud computer that stays on.","short":"Server"},"check":{"label":"Quick check of this computer","space":"{gb} GB free","history":"Safe History ready","historyLater":"Safe History added at the end","internet":"Online","offline":"Offline — local work still works","checking":"Checking…"},"restoreAll":"Moving from an old computer? Restore everything","detailsLabel":"What is a Server?","details":"The computer that does the work is called a Server. This computer can be one. A Server that stays on — like a NAS — can keep working while your laptop sleeps."},"missing":{"name":"Give your Project a name first.","folder":"Choose the folder first.","repository":"Choose which online Project to bring in.","backup":"Choose the backup to restore.","storage":"Choose where on the network the files will live.","signin":"Sign in to the online service first.","server":"Choose your Puppet Master first.","azureProject":"Choose the Azure DevOps project first.","remoteLink":"Paste the Remote Link first.","proxyAddress":"Enter your web address first.","headscale":"Enter your Headscale address first."},"art":{"hero":"A marionette control bar with three helpers on strings","route":"The route your choices make","nas":"This computer and the storage device exchanging a key","where":"Where the work happens","labels":{"thisComputer":"this computer","thisDevice":"this device","homeNas":"home nas","strings":"strings","plan":"the plan","ready":"ready","start":"Start","new":"new","files":"Files","documents":"documents","worksHere":"Works here","you":"You","lookingNearby":"looking nearby","itsId":"its id","yourKeys":"your keys","addingKey":"adding your key","projectsFolder":"projects","yourPm":"your puppet master","alwaysOn":"always on","pressStart":"press start"}},"connect":{"route":{"eyebrow":"Connect this device","title":"Which Puppet Master should this device use?","lead":"Puppet Masters on your network show up here.","looking":"Looking on your network…","found":"Found on your network","projects":"{n} Projects","oneProject":"1 Project","vpn":"Also look on my VPN","vpnSub":"Finds Puppet Masters on a work or home VPN too","address":"Enter an address instead","addressLabel":"Its address","addressHint":"For example home-nas.local or 192.168.1.20","none":"Nothing found yet. Make sure it is turned on and on the same network.","more":"Other ways to connect","tailscale":{"title":"Tailscale","sub":"Reach it from anywhere with Tailscale","hosted":"Tailscale account","headscale":"My own Headscale server","headscaleLabel":"Headscale address"},"proxy":{"title":"My own web address","sub":"It already has an address like pm.example.com","label":"Web address","detail":"This is a reverse proxy address (Caddy, NGINX, Traefik or Nginx Proxy Manager) that the Server owner already set up."},"link":{"title":"Puppet Master Remote Link","sub":"Paste the link your Server gave you","label":"Remote Link"},"local":"On this network"},"review":{"eyebrow":"Connect this device","title":"Connect this device to {name}","lead":"{name} will ask you to confirm it is really you.","route":"How it connects","confirmTitle":"How do you want to confirm?","approve":{"title":"Approve from another device","sub":"{device} will show a request"},"code":{"title":"Enter the code it shows","sub":"Open {name}'s page and read its code"},"qr":{"title":"Scan its QR code","sub":"Uses this device's camera"},"button":"Connect"},"pair":{"eyebrow":"Connecting","title":"Check the picture matches","lead":"{name} shows this same picture. If it looks different, stop here.","phases":{"reach":"Reaching {name}","approve":"Waiting for approval on {device}","code":"Checking the code","qr":"Reading the QR code","trust":"Pairing this device"},"approved":"Approved on {device}","resend":"Didn't get a request? Send it again","codeLabel":"Code from {name}","codeHint":"8 letters and numbers, like A7K9-M2Q4","codeWrong":"That code doesn't match. Check it on {name} and try again.","qrAim":"Point your camera at the QR code on {name}","expired":"The request expired.","done":"This device is paired with {name}","check":"Check code"},"ready":{"eyebrow":"Connected","title":"This device is ready to meet your Puppet Master","lead":"{name} has {projects} and {ai}.","noAi":"no AI account yet","aiReady":"{n} AI account ready","projectsTitle":"Projects on {name}","aiTitle":"AI on {name}","enter":"Enter Puppet Master","open":"Open","create":"Create a new Project","createSub":"Starts a new Project on {name}"}},"server":{"kind":{"eyebrow":"New Server","title":"What kind of computer will it be?","lead":"Puppet Master gets installed on it once. After that it does the work, even when this device sleeps.","nas":{"title":"A NAS or home server","sub":"Synology, TrueNAS, Unraid, QNAP"},"cloud":{"title":"A cloud computer","sub":"A server you rent online"},"pc":{"title":"Another computer","sub":"A Windows, Mac or Linux computer that stays on"},"installTitle":"Install Puppet Master on it","restore":"Setting up a replacement? Bring back an old Server"},"install":{"truenas":["Open TrueNAS and go to Apps","Search for Puppet Master and choose Install","Keep the suggested settings"],"unraid":["Open Unraid and go to Apps","Search for Puppet Master and choose Install"],"synology":["Open Container Manager on the Synology","Add the Puppet Master image and start it"],"qnap":["Open Container Station on the QNAP","Add the Puppet Master image and start it"],"linux":["Open a terminal on it","Paste this line and press Enter"],"windows":["Download Puppet Master for Windows on that computer","Open it and choose Run as a Server"],"macos":["Download Puppet Master for Mac on that computer","Open it and choose Run as a Server"],"guide":"Open the install guide","command":"curl -fsSL https://get.puppetmaster.app/server | sh"},"wait":{"eyebrow":"New Server","title":"Waiting for it to appear","lead":"Install Puppet Master on it. It shows up here by itself once it's running.","looking":"Looking on your network…","found":"Puppet Master on {name}","notSetUp":"Not set up yet","choose":"Set up this one","address":"Enter its address instead"},"confirm":{"eyebrow":"New Server","title":"Set up {name} as your Server?","lead":"Give it a name you'll recognise.","nameLabel":"Name","codeLabel":"Setup code","codeHint":"Shown on {name}'s setup page, like 482 913","codeWrong":"That setup code doesn't match {name}.","willTitle":"What happens next","will":["{name} becomes your Server","This device is paired with it","Only devices you approve can use it"],"button":"Set up Server","phases":{"claim":"Making {name} yours","pair":"Pairing this device","check":"Checking it works"},"suggest":["Home NAS","Home server","Studio"],"willLine":"{name} becomes your Server, this device is paired with it, and only devices you approve can use it."},"ready":{"eyebrow":"New Server","title":"{name} is ready","lead":"Other devices can join with this code. You can also do it later.","pairTitle":"Add another device","pairSub":"On the other device choose Connect this device, then scan this or enter the code.","link":"Local link","anotherTitle":"Pair another device","restore":"Bring back old data","restoreSub":"From a Recovery Kit or an old backup"}},"restore":{"source":{"eyebrow":"Restore","title":"Where is the backup?","lead":"Nothing on this computer is replaced without asking.","kit":{"title":"A Recovery Kit file","sub":"The file you saved when you set up backups"},"folder":{"title":"A folder on this computer","sub":"Or a drive you plugged in"},"nas":{"title":"A NAS or another computer","sub":"Uses a secure connection (SSH)"},"cloud":{"title":"A cloud account","sub":"Google Drive, OneDrive, S3 or B2"}},"unlock":{"eyebrow":"Restore","title":"Unlock the backup","lead":"Enter the recovery phrase from your Recovery Kit. It is used once and never saved.","label":"Recovery phrase","hint":"Six words, like: river candle orbit maple quiet lantern","wrong":"That phrase doesn't unlock this backup."},"pick":{"eyebrow":"Restore","title":"Choose what to bring back","lead":"Pick the copy you want.","full":"Everything from {label}","project":"{project} from {where}"},"preview":{"eyebrow":"Restore","title":"Here's what comes back","lead":"Check it before anything changes.","projects":"{n} Projects with their history","accounts":"{n} AI accounts (you sign in again)","settings":"Your settings and look","never":"Passwords and keys never come back from a backup. You sign in again where needed.","button":"Restore"},"apply":{"phases":{"fetch":"Getting the backup","check":"Checking it is complete","projects":"Bringing back Projects","settings":"Bringing back settings"}},"done":{"eyebrow":"Restored","titleServer":"{name} is back","titleHere":"Everything is back","lead":"{n} Projects are ready. AI accounts need a quick sign-in.","enter":"Enter Puppet Master","open":"Open a Project","create":"Create a new Project"}},"begin":{"eyebrow":"Your Project","title":"How should your Project begin?","lead":"A Project keeps one thing you are making: its files, plans and history.","new":{"title":"Start a new Project","sub":"Begin with an empty folder"},"existing":{"title":"Use work that already exists","sub":"A folder, an online Project, or files on another device"},"restore":{"title":"Restore a Project","sub":"From a backup"},"folder":{"title":"A folder on this computer","sub":"Pick the folder"},"online":{"title":"A Project stored online","sub":"GitHub, GitLab and others"},"device":{"title":"Files on another computer or storage device","sub":"A NAS, a network drive or another computer"},"later":"Set up a Project later","server":"On {name}"},"folder":{"eyebrow":"Your Project","title":"Which folder?","lead":"Puppet Master reads it but changes nothing until you create the Project.","recent":"Recent folders","browse":"Browse…","hasHistory":"Has its own history ({kind})","noHistory":"No history yet — Safe History is added","online":"Online copy on {service}","picker":"Choose a folder","open":"Choose this folder","tree":{"home":"Home","documents":"Documents","desktop":"Desktop","code":"Code","downloads":"Downloads"},"checking":"Looking inside…"},"online":{"service":{"eyebrow":"Online copy","title":"Where should the online copy live?","titleSource":"Where is the Project stored?","lead":"GitHub is a free website that keeps an online copy of your work.","github":{"title":"GitHub","sub":"Most popular. Free for private Projects."},"others":"Other services","gitlab":"GitLab","azure_devops":"Azure DevOps","bitbucket_cloud":"Bitbucket","bitbucket_data_center":"Bitbucket Data Center","forgejo":"Forgejo","gitea":"Gitea","cursor_origin":"Cursor Origin","github_enterprise":"GitHub Enterprise","preview":"Preview","hosted":"{name}.com","selfManaged":"My company's own server","addressLabel":"Server address","addressHint":"For example https://git.example.com","azureServices":"Azure DevOps Services","azureServer":"Azure DevOps Server","bbCloud":"Bitbucket Cloud","bbDc":"Bitbucket Data Center","forgejoCloud":"Codeberg (hosted Forgejo)","giteaCloud":"Gitea Cloud","ownServer":"My own server"},"signin":{"eyebrow":"Online copy","title":"Sign in to {name}","lead":"Puppet Master only asks {name} for access to the Project you choose.","signIn":"Sign in","create":"Create account","connected":"Use {account}","connectedSub":"Already connected on this computer","another":"Use a different account","opened":"Your browser opened {name}'s sign-in page","waiting":"Waiting for you in your browser…","noBrowser":"Browser didn't open?","codeLead":"Go to {url} and enter this code:","codeExpires":"The code expires in 15 minutes.","signedIn":"Signed in as {account}","createOpened":"{name}'s sign-up page opened","finished":"Finished? Sign in","email":"Check your email to confirm your new account","confirmed":"I confirmed it","token":"Use an access token instead","tokenLabel":"Access token","tokenHint":"Create one on your server under Settings › Applications. It is kept in your system keychain, never in Puppet Master's files.","tokenBad":"That token was not accepted.","admin":"Sign-up is turned off on this server. Ask your administrator for an account.","simTitle":"Simulated {name} page","simNote":"Concept only: a real sign-up happens on {name}'s own website.","simUser":"Username","simEmail":"Email","simButton":"Create account"},"details":{"eyebrow":"Online copy","title":"Name on {name}","lead":"This is how the online copy appears on {name}.","nameLabel":"Name on {name}","available":"Available","taken":"That name is already used in {owner}","checking":"Checking…","privacy":"Who can see it","private":"Only you","privateSub":"And people you invite","public":"Everyone","publicSub":"Anyone on the internet can see it","internal":"Everyone in {org}","internalSub":"People in your organization","azurePrivacy":"Follows your Azure DevOps project's settings","owner":"Whose account keeps it?","personal":"Your account ({account})","container":"Organization","project":"Team project","workspace":"Workspace","advanced":"More options","description":"Description","branch":"Main branch name","readme":"Add a README file","readmeSub":"A short page that says what the Project is","gitignore":"Files to leave out","license":"License","gitignoreOpts":{"automatic":"Chosen for you","none":"None","rust":"Rust","node":"Node","python":"Python","slint":"Slint"},"licenseOpts":{"none":"No license","mit":"MIT","apache_2":"Apache 2.0","gpl_3":"GPL 3.0"}},"repos":{"eyebrow":"Your Project","title":"Choose the Project to bring in","lead":"From {account} on {name}.","search":"Search your Projects","copyTo":"Copy kept on this computer in {path}","private":"Private","public":"Public","empty":"No Projects found in this account."}},"name":{"eyebrow":"Your Project","title":"Name your Project","lead":"Use words you'll recognise later.","label":"Project name","placeholder":"Book club website","ok":"Good name","empty":"Give it a name","long":"Keep it under 60 characters","exists":"You already have a Project called {name}","suggest":["Book club website","Family recipes","Garden planner"],"kept":"Kept in {path}","change":"Change","changeTitle":"Where should its files live?","thisComputer":"On this computer","otherFolder":"Another folder on this computer","network":"A network drive or NAS","networkSub":"Uses a secure connection (SSH) by default","serverTitle":"Where should its files live?","withServer":"On {name}","withServerSub":"Recommended. The Server keeps them next to the work.","onDevice":"On this device","onDeviceSub":"{name} reaches them over the network","networkDrive":"A network drive","networkDriveSub":"A NAS or shared folder","storage":{"sshTitle":"Where on {device}?"}},"like":{"eyebrow":"Your Project","title":"Start like another Project?","lead":"Reuse the setup you already trust, or begin fresh.","fresh":"Start fresh","freshSub":"Puppet Master's standard settings","updated":"Used {when}","previewTitle":"What comes along","preview":"Uses the same {groups}. Your new files, history, Goals and Plans stay separate.","never":"Never copied: sign-ins and keys, files, history, Goals and Plans.","choose":"Choose settings","chooseTitle":"Choose what to copy","from":"from {project}","unavailable":"{project} used an account that isn't on this computer. You'll sign in later.","count":"{n} settings","groups":{"Appearance & input":"look and input","Notifications & sounds":"notifications","AI providers & accounts":"AI accounts","Model routing":"model choices","Goals & personas":"personas","Permissions":"permissions","Project & sync":"project options","Context & memory behavior":"memory settings","Testing profiles":"testing defaults","Source control":"history settings"},"and":"and"},"safe":{"eyebrow":"Keeping it safe","title":"Keep your work safe","lead":"Every version is saved on this computer. Online copies and backups are optional.","history":{"title":"Every version saved on this computer","sub":"Safe History — undo any change, any time","subExisting":"Keeps the folder's own history","git":"Git","gitSub":"Recommended. Works with GitHub and most tools.","jj":"Jujutsu","jjSub":"Newer. Easier to undo mistakes.","filesafe":"FileSafe","filesafeSub":"Keeps a safety copy of each file before big changes","detailsLabel":"How is it saved?"},"online":{"title":"Online copy","notNow":"Not now","sub":"Keeps a copy on a website like GitHub","set":"{service} · {privacy}","add":"Add one"},"backup":{"title":"Backup","later":"Later","sub":"A full copy you can restore from","set":"{where}","sheetTitle":"Where should backups go?","note":"You'll sign in right after your Project is created.","nas":"Home NAS","nasSub":"Over your home network","gdrive":"Google Drive","onedrive":"OneDrive","s3":"S3 or B2","s3Sub":"A cloud storage bucket","sftp":"Another server (SFTP or WebDAV)","none":"Not now"},"sync":"Your other Puppet Master devices see this Project automatically.","notNow":"Not now"},"away":{"eyebrow":"Access","title":"Use it away from home?","lead":"{name} can stay reachable when you're out. You can change this any time.","home":{"title":"Only at home for now","sub":"On your home network or VPN"},"anywhere":{"title":"Also away from home","sub":"Tailscale, built into Puppet Master — sign in once"},"more":"Other ways to connect","proxy":{"title":"My own web address","sub":"Puppet Master sets up Caddy with a free certificate","label":"Web address","hosting":"Who runs it?","pm":"Puppet Master sets it up","generate":"Only make the settings file","existing":"I already have one","tls":"Certificate","free":"A free certificate","own":"My own certificate","kind":"Which proxy","detail":"Caddy is the default. NGINX, Traefik and Nginx Proxy Manager are also supported."},"link":{"title":"Puppet Master Remote Link","sub":"A private link through Puppet Master's relay","label":"Remote Link","hint":"Your Server shows it under Settings › Access"},"headscale":"My own Headscale server"},"review":{"eyebrow":"Review","titleNew":"Ready to create {name}","titleAdd":"Ready to add {name}","titleRestore":"Ready to restore {name}","titleLater":"Ready to finish setup","lead":"Nothing has been created yet. Check it, then create it in one step.","leadLater":"Nothing will be created now.","groups":{"project":"Project","computer":"Computer","safe":"Keeping it safe","access":"Access"},"rows":{"name":"Name","begins":"Begins as","like":"Settings","where":"Work happens on","files":"Files kept in","history":"Every version","online":"Online copy","backup":"Backup","remote":"Away from home"},"begins":{"new":"A new, empty Project","existing_local":"Folder {path}","existing_online":"{repo} from {service}","restore":"Backup of {project}","device":"Files on {device}"},"fresh":"Start fresh","copied":"Like {project}","saved":"Saved with {kind}","notSet":"Not set up now: {list}","willTitle":"When you click {button}:","will":{"folder":"A folder is made in {path}","useFolder":"Puppet Master starts using {path}","history":"Safe History starts saving every version","clone":"The Project is copied from {service}","restore":"The backup is brought back","online":"A private copy is made on {service}","settings":"Settings from {project} are applied","remote":"Access away from home is set up","server":"The Project lives on {server}"},"checked":"Checked just now","changed":"{what} changed since you chose it. Take a look.","create":"Create Project","add":"Add Project","restoreBtn":"Restore Project","finish":"Finish setup","edit":"Edit"},"creating":{"eyebrow":"Creating","title":"Creating {name}","lead":"This takes a moment. You can close the window; it keeps going.","phases":{"folder":"Making the folder","history":"Starting Safe History","historyInstall":"Installing Safe History","clone":"Copying from {service}","restore":"Bringing back the backup","device":"Connecting to {device}","online":"Making the online copy on {service}","settings":"Applying settings from {project}","remote":"Setting up access away from home","check":"Checking everything works"},"failTitle":"Almost there","failLead":"Your folder and Safe History are ready. The online copy wasn't made.","taken":"{service} says the name {repo} is already used.","network":"The connection dropped while talking to {service}.","retry":"Try again","rename":"Change the name on {service}","skipOnline":"Skip the online copy","skipConfirm":"Skip the online copy? You can add one later from Settings.","doneTitle":"{name} is ready","doneLead":"Everything is set up and checked.","receipts":"Technical details","continue":"Continue"},"protect":{"eyebrow":"Keeping it safe","title":"Finish protecting your work","lead":"Your backup to {where} needs a quick sign-in and one test.","steps":{"signin":"Sign in to {where}","test":"Run a quick test","kit":"Save your Recovery Kit","kitTest":"Check your Recovery Kit","policy":"Turn on daily backups"},"kitWhy":"The Recovery Kit is the only way back in if this computer is lost. Keep it somewhere safe, like a password manager.","save":"Save Recovery Kit","saved":"Saved to Downloads","checkLabel":"Type word {n} of your recovery phrase","checkBad":"That isn't word {n}. Open the kit and try again.","done":"Backups are on. Next one tonight.","later":"Do this later"},"ai":{"eyebrow":"AI","title":"Choose what powers Puppet Master","lead":"Use an AI subscription or API account you already have. You can add more later.","checking":"Checking…","ready":"Ready","readyVia":"Ready · uses your {plan}","charged":{"subscription":"Charged to your {plan}","api":"Charged to your API account","runtime":"Uses your own OpenCode setup"},"found":"Found on this computer","foundOn":"Found on {host}","from":"From {project}","unavailable":"{project} used this — sign in on {host}","install":"Install","installOn":"Install on {host}","signIn":"Sign In","key":"Enter API Key","keyLabel":"API key for {name}","keyHint":"Kept in your system keychain. Never shown again.","keyBad":"That key wasn't accepted. Check it and try again.","verify":"Check key","installAsk":"Install {name} on {host}? It uses {vendor}'s official installer.","installGo":"Install","installPhases":{"download":"Downloading from {vendor}","install":"Installing","verify":"Checking it works"},"signinWait":"Finish signing in in your browser…","notReady":"Not signed in","seeAll":"See all providers","allTitle":"All providers","subs":"Subscriptions and plans","subsSub":"A monthly plan you already pay for","apis":"Pay-as-you-go API accounts","apisSub":"Billed by what you use","none":"I don't have any of these","another":"Add another account","skip":"Skip for now","skipNote":"Puppet Master can't plan or work until an AI is added.","free":{"title":"Set Up Free Models","sub":"Add free options for suitable tasks. Availability and limits can vary."},"pairs":{"claude":"Claude plan, not the Anthropic API","anthropic-api":"Pay as you go, separate from a Claude plan","antigravity":"Antigravity plan, not the Gemini API","gemini-api":"Pay as you go, separate from Antigravity","vertex":"Google Cloud billing","grok":"Grok Build plan, not the xAI API","xai-api":"Pay as you go, separate from Grok Build","muse":"Muse Code plan, not the Meta Model API","meta-api":"Pay as you go, separate from Muse Code","opencode-go":"OpenCode's monthly plan","opencode-zen":"OpenCode pay as you go","opencode-runtime":"OpenCode installed on your computer"},"names":{"opencode-runtime":"OpenCode on your computer"},"notInstalled":"Not installed"},"aiNone":{"eyebrow":"AI","title":"No AI account yet? That's fine","lead":"Puppet Master needs one AI to plan and work. Pick whichever suits you.","sub":{"title":"A monthly plan","sub":"Like Claude or ChatGPT. One price each month."},"api":{"title":"Pay as you go","sub":"Like the Anthropic or Gemini API. Pay for what you use."},"free":{"title":"Free Models","sub":"Free options with limits. Good for trying things out."},"signup":"Open {name}'s sign-up page"},"free":{"eyebrow":"AI","title":"Set Up Free Models","lead":"Add free options for suitable tasks. Availability and limits can vary.","needsSignin":"Needs sign-in","ready":"Ready","limited":"Rate limited right now","signIn":"Sign in","setup":"Set up","reconnect":"Reconnect","paidFirst":"Your paid accounts are used first.","attribution":"Free model list based on the community free-coding-models list","done":"Done"},"ready":{"eyebrow":"Ready","title":"You're ready","lead":"{name} is set up.","leadLater":"Puppet Master is set up. Create a Project whenever you like.","project":"Project","ai":"AI","free":"Free Models","backup":"Backup","noAi":"None yet — Puppet Master can't plan until you add one","noFree":"Not set up","noBackup":"Not set up","help":"Need help later? Ask Assistant Chat for Teacher, or open Settings for the full controls.","tour":"Take the Guided Tour","tourSub":"About {m} minutes. Uses a practice example; nothing changes.","enter":"Enter Puppet Master","createNow":"Create a Project now"},"nas":{"find":{"eyebrow":"Files on another device","titleSource":"Which device has the files?","titleStorage":"Which device should keep the files?","lead":"Puppet Master looks on your network. Nothing is changed.","method":"How to connect","ssh":"SSH","sshSub":"Recommended","smb":"SMB","smbSub":"Windows and Mac sharing","nfs":"NFS","mounted":"Already connected","looking":"Looking on your network…","sshOn":"SSH on","sshOff":"SSH off","fromConfig":"From your SSH settings","user":"user {user}","address":"Type an address instead","addressLabel":"Address","portLabel":"Port","addressHint":"For example 192.168.1.20 or nas.local","offTitle":"Turn on SSH on {name}","offLead":"SSH is how Puppet Master connects securely. It's a switch in {brand}'s settings:","checkAgain":"Check again","stillOff":"SSH is still off on {name}.","steps":{"Synology":"Control Panel › Terminal & SNMP › Terminal › Enable SSH service","TrueNAS":"System Settings › Services › SSH","QNAP":"Control Panel › Network & File Services › Telnet / SSH","Unraid":"Settings › Management Access"},"shares":"Shared folders found","exports":"NFS shares found","volumes":"Connected drives","pmTag":"Runs Puppet Master","pmNote":"{name} runs Puppet Master, so they pair directly. No SSH password needed."},"identity":{"eyebrow":"Check the device","title":"Is this your device?","lead":"Every device has its own picture. Check it matches what {name} shows in its settings, if you can.","known":"You've connected to {name} before — same ID","confirm":"Yes, this is my device","changedTitle":"{name}'s ID has changed","changedLead":"This happens after a reset — or if something else is pretending to be {name}. Don't continue unless you reset it.","trustNew":"I reset it — trust the new ID","stop":"Stop","details":"Show the technical fingerprint","fingerprint":"SHA256 fingerprint","old":"Previously"},"key":{"eyebrow":"Secure connection","title":"Choose a key","lead":"A key lets Puppet Master connect without a password. These keys are already on this computer.","looking":"Looking for your keys…","testing":"Testing with {name}…","where":{"agent":"In your SSH agent","file":"File in your .ssh folder","config":"Named for {host} in your SSH settings","1password":"1Password SSH agent","secretive":"Secretive","hardware":"Hardware key — needs a touch"},"works":"Already works with {name}","notAdded":"Not added to {name} yet","locked":"Locked with a passphrase","old":"Older key type — not recommended","new":"Make a new key just for Puppet Master","newSub":"Easy to remove later. Doesn't touch your other keys.","none":"No keys found on this computer. Puppet Master will make one.","detailsLabel":"What does Puppet Master read?","details":"Only the public half of each key. Private keys are never read, copied or stored — the key stays where it is, and Puppet Master remembers which one you chose.","passTitle":"Unlock {key}","passLabel":"Passphrase","passNote":"In the app your SSH agent asks for this. It unlocks the key on this computer and isn't saved.","passCancel":"Cancel","passOk":"Unlock"},"signin":{"eyebrow":"Secure connection","title":"Sign in to {name} once","lead":"Only to add your key. After this, no password is needed.","user":"Username","userHint":"The name you use for {name}'s web page","password":"Password","passwordHint":"Used once to add your key. Never saved.","button":"Add my key","wrong":"{name} didn't accept that username and password.","lockout":"Some NAS devices block sign-in after several tries. If it stops working, wait a few minutes.","self":"I'll add the key myself","selfLead":"Add this line to ~/.ssh/authorized_keys on {name}, then check again.","selfCheck":"I added it — check again","selfNot":"The key isn't on {name} yet."},"install":{"eyebrow":"Secure connection","title":"Setting up the secure connection","lead":"This takes a few seconds.","phases":{"make":"Making a new key","unlock":"Unlocking {key}","add":"Adding your key to {name}","verify":"Checking it works without a password","perms":"Checking you can use the folders","pmpair":"Pairing with Puppet Master on {name}"},"fail":{"wrong_password":"{name} didn't accept the password.","refused":"{name} refused the key because its home folder is shared too widely.","refusedFix":"Fix the folder permissions","not_allowed":"This account isn't allowed to use SSH on {name}.","notAllowedFix":"Turn it on in {brand}: Control Panel › User › Edit › Applications › SSH, then try again","cancelled":"The passphrase prompt was closed, so {key} stayed locked.","tryAgain":"Try again"},"done":"Connected securely with your key. No password saved."},"folder":{"eyebrow":"Choose a folder","title":"Choose a folder on {name}","lead":"Pick where the Project's files are.","leadStorage":"Pick where the Project's files should go.","newFolder":"New folder","newName":"Folder name","newNote":"The folder is made when you create the Project.","readOnly":"This folder is read-only for {user}. Choose another.","use":"Use this folder","empty":"Empty folder"},"smb":{"eyebrow":"Shared folder","title":"Sign in to the shared folder","lead":"Puppet Master checks it can read the folder. Your sign-in is kept in the system keychain.","user":"Username","password":"Password","check":"Check access","phases":{"mount":"Opening the shared folder","read":"Checking it can be read"}},"nfs":{"eyebrow":"NFS share","title":"Choose the NFS share","lead":"Puppet Master checks it can read the share.","phases":{"mount":"Opening the share","read":"Checking it can be read"}},"mounted":{"eyebrow":"Connected drive","title":"Choose the drive","lead":"Drives this computer already shows in its file browser."}},"demo":{"pill":"Concept demo · Opus 5.5","title":"Try a situation","note":"Changes the pretend world this concept runs in. Nothing real is touched.","restart":"Restart onboarding","reset":"Reset everything","tour":"Start the Guided Tour","close":"Close"},"tour":{"bar":{"label":"Guided Tour","tips":"Tips","normal":"Normal","eli5":"ELI5","pause":"Pause","resume":"Resume","skip":"Skip Tour","progress":"Chapter {n} of 3: {name}, step {s} of {total}"},"chapters":{"ask":"Ask and understand","workspace":"Make the workspace yours","plan":"Plan before building"},"controls":{"tryIt":"Try it","showMe":"Show Me","back":"Back","next":"Next","start":"Start","done":"Done","takeMe":"Take me there","interrupted":"Your turn — carry on whenever you like."},"steps":{"comfort_intro":{"title":"Let’s make Puppet Master feel familiar.","body":"You’ll try a few real actions. This guided example does not change your files or use your AI plan.","tips":"Tips: switch to ELI5 on the bar for simpler words. Reduced Motion lives in Settings.","tipsEli5":"Tips: ELI5 gives you shorter, simpler hints. Reduced Motion is in Settings."},"open_chat":{"title":"Assistant Chat is where you ask Puppet Master for help.","do":"Open Assistant Chat with the Chat icon.","doEli5":"Click the Chat icon to open Chat."},"select_teacher":{"title":"Teacher can explain the screen you’re on, an unfamiliar term, or why a choice matters.","do":"Choose Teacher in the guide picker.","doEli5":"Pick Teacher from the list."},"send_question":{"title":"Ask Teacher something.","do":"Send the question: What happens before Puppet Master changes my files?","doEli5":"Send the question below."},"answer_stream":{"title":"Teacher answers right in the chat.","do":"Read the answer. It is a guided example, written for this tour.","doEli5":"Read the answer."},"same_answer_eli5":{"title":"ELI5 makes the same answer simpler.","do":"Turn on ELI5 in Chat.","doEli5":"Click ELI5 in Chat.","after":"Same meaning, fewer words. You can switch it any time.","ask":"Ask: What is a Project?"},"workspace_orientation":{"title":"Your workspace","do":"Pages sit across the top. Panels like Chat can live wherever suits you.","doEli5":"Pages are on top. Panels can move."},"move_or_dock_chat":{"title":"Move Chat to where it helps.","do":"Drag Assistant Chat to the highlighted side of the workspace. You can move it again whenever your work changes.","doEli5":"Drag Chat to the glowing left edge.","after":"The same Chat stays with you; only its place changed."},"widget_action":{"title":"Keep useful things in view.","do":"Add the Approval queue widget, then place it where you can glance at it while planning.","doEli5":"Add the Approval queue widget.","after":"Widgets keep useful Project information nearby without taking you away from the page you’re using."},"open_planning":{"title":"Planning Wizard helps turn a rough idea into a plan you can inspect before work begins.","do":"Open Planning Wizard.","doEli5":"Click Planning Wizard at the top."},"book_club_goal":{"title":"Start with a practice goal.","do":"Use the practice goal to see how planning works.","doEli5":"Use the practice goal.","goal":"Create a simple website for my neighborhood book club. It should show the next meeting, the current book, and how to join.","use":"Use this practice goal","kicker":"Guided example"},"three_outcomes":{"title":"The idea becomes three clear outcomes.","do":"Open one of the outcomes.","doEli5":"Click one outcome."},"access_answer":{"title":"Planning Wizard only asks what changes the result.","do":"Answer the question. Open Why this matters if you’re curious.","doEli5":"Pick an answer."},"review":{"title":"Review before anything is built.","do":"Choose Review the plan.","doEli5":"Click Review the plan.","after":"Nothing has been built yet. This is your chance to check the outcome, the decisions Puppet Master used, and anything that is still uncertain.","button":"Review the plan"},"answer_edit":{"title":"Plans change when answers change.","do":"Change your answer and watch what moves.","doEli5":"Change your answer."},"consequence_changed":{"title":"Only the affected parts changed.","do":"Everything else kept its place, so you can see cause and effect.","doEli5":"Only those rows changed."},"completion_boundary":{"title":"You decide when work begins.","do":"That is the planning loop: describe the outcome, answer only the questions that matter, review the plan, then decide whether to begin.","doEli5":"Describe it, answer, review, then decide."}},"teacher":{"thread":"Guided example","label":"Guided example · Teacher","labelUser":"Guided example","popover":"Written in advance for the Guided Tour. It doesn’t use your AI plan.","q1":"What happens before Puppet Master changes my files?","a1":"Before work begins, Puppet Master turns your request into a plan. You can review the important choices, correct anything that looks wrong, and decide when to begin. Your Project permissions still control what the work may change.","a1eli5":"First, Puppet Master writes down what it thinks you want. You can fix the plan before anything starts. It waits for your decision to begin.","q2":"What is a Project?","a2":"A Project keeps one body of work—its files, plans, history, and Project-specific settings—together.","a2eli5":"A Project is one workspace for one thing you are making. It keeps the right files and decisions together.","suggest":"Ask:","own":"Teacher answers tour questions from its guide. Try one of these:","topics":{"chat":"What can Assistant Chat do?","plan":"What does Planning Wizard do?","safe":"How do I undo a change?"},"answers":{"chat":"Assistant Chat is where you ask for help, get explanations, and start work. Teacher explains; other guides help you build.","plan":"Planning Wizard turns a rough idea into outcomes and a few real decisions, so you can check the plan before any work starts.","safe":"Safe History saves every version of your Project. You can go back to any earlier version from the History panel."}},"wizard":{"badge":"Guided example","title":"Book club website","state":"Practice · nothing will be built","topics":"Outcomes","count":"{n} outcomes","outcomes":{"o1":{"title":"Visitors can see the next meeting","sub":"Date, time and place, always current"},"o2":{"title":"Visitors can see the current book","sub":"Title, cover and a short note"},"o3":{"title":"New members can learn how to join","sub":"A simple way to ask to join"}},"question":"Who should be able to update the meeting and book?","choices":{"me":"Only me","few":"A few organizers","unsure":"I’m not sure yet"},"why":"Why this matters","whyText":"This decides whether the site needs shared sign-in and editing. Answering now keeps Puppet Master from planning the wrong kind of site.","change":"Change answer","doc":{"title":"Live plan preview","outcomes":"Outcomes","decisions":"Decisions","assumptions":"Assumptions","unresolved":"Still open","none":"Nothing open","signin":"Shared sign-in for organizers","access":"Organizer access to edit the meeting and book","single":"One editor account (you)","assume1":"The site is public and read-only for visitors","assume2":"Meetings happen at most once a week","unsureRow":"Who can update the site — not decided yet","boundary":"Nothing has been built yet."},"rail":{"title":"Before work begins","g1":"Outcomes agreed","g2":"Decisions recorded","g3":"Nothing left open","fence":"Practice — this button is shown, not pressed"}},"finish":{"title":"Tour complete","body":"Your Project is ready. Start with one sentence about what you want to make or change.","restore":"Restore my layout","keep":"Keep this layout","restoreSub":"Put Chat and widgets back where they were","keepSub":"Keep what you set up during the tour","finish":"Finish tour"},"missing":{"title":"That part isn’t on screen right now.","body":"Take me there, or skip this step."},"skipped":"Guided Tour closed. Replay it any time from Settings › Replay Guided Tour.","restoreFailed":"Your layout couldn’t be put back exactly. Open Settings › Home layout to reset it.","landing":"Your Project is ready. Start with one sentence about what you want to make or change.","resume":"Resume the Guided Tour"}};
 /* ---- js/00-namespace.js ---- */
 /* O55 — Product Onboarding + Guided Tour for TestOpus5.5PmConcept (Opus 5.5).
    Namespace, copy lookup and shared constants. Every user-facing string lives in src/copy.json. */
@@ -85966,6 +86146,944 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   });
 })();
 
+/* ---- js/80-tour-core.js ---- */
+/* O55.tour — the Guided Tour engine, in the real shell. Try it, then Show Me: each step brings its target into view,
+   explains one outcome and asks for the real action; Show Me drives the same handler with a visible pointer (pre-cue,
+   travel, arrival, settle). A step completes only when its success predicate observes the result, never on a timer.
+   The workspace session is reversible: a snapshot at start, restore at the end unless the person keeps the layout.
+   Checkpoints hold step ids and completed predicates only. Nothing here calls an AI provider or uses allowance. */
+(function () {
+  'use strict';
+  const O55 = window.O55, U = O55.util, T = (k, v) => O55.t(k, v), M = O55.motion;
+  const TR = O55.tour = { defs: [], byId: {}, running: false };
+  const KEY = 'tour', ROOT = 'pm-o55-tour';
+  const st = TR.st = { sess: null, root: null, step: null, advancing: false, show: null, hole: null, spring: null, poll: null, raf: 0, snap: null, missingSince: 0, tips: 'normal', paused: false };
+  const CHAPTERS = ['ask', 'workspace', 'plan'];
+  TR.CHAPTERS = CHAPTERS;
+  TR.define = (def) => { def.index = TR.defs.length; TR.defs.push(def); TR.byId[def.id] = def; return def; };
+  const vis = (el) => !!(el && el.isConnected && el.getClientRects().length && el.getBoundingClientRect().width > 0);
+  TR.vis = vis;
+  TR.q = (sel) => [...document.querySelectorAll(sel)].find(vis) || null;
+
+  /* ------------------------------------------------------------------ snapshot / restore (reversible session) */
+  function snapshot() {
+    const api = window.PM_HOME_WORKSPACE, d = window.PM_DEMO, dash = window.PM7_DASH_WIDGETS;
+    const tab = document.querySelector('.page-tab.active[data-page]');
+    return {
+      at: new Date().toISOString(),
+      layout: api ? JSON.parse(JSON.stringify(api.layout)) : null,
+      page: tab ? tab.getAttribute('data-page') : 'dashboard',
+      thread: d && d.state && d.state.chat ? d.state.chat.activeThread : null,
+      persona: ((document.querySelector('#chatPanel .persona-label') || {}).textContent || '').trim(),
+      eli5: !!TR.q('span.chat-toggle-btn.toggle-eli5.active'),
+      draft: ((TR.q('textarea.pm6-chat-input') || {}).value) || '',
+      widgets: dash && dash.state ? JSON.parse(JSON.stringify(dash.state)) : null
+    };
+  }
+  async function restore(snap, keep) {
+    const out = { layout: null, widgets: null, chat: null };
+    if (!snap) return out;
+    const api = window.PM_HOME_WORKSPACE;
+    if (!keep && api && api.o55RestoreSnapshot && snap.layout) {
+      const r = api.o55RestoreSnapshot(snap.layout);
+      out.layout = r && r.ok ? (r.result && r.result.command ? r.result.command.command_id : 'ok') : 'failed';
+    }
+    if (!keep && snap.widgets && window.PM7_DASH_WIDGETS && window.PM7_DASH_WIDGETS.state) {
+      const dash = window.PM7_DASH_WIDGETS;
+      Object.keys(dash.state).forEach((k) => { if (!(k in snap.widgets)) delete dash.state[k]; });
+      Object.assign(dash.state, JSON.parse(JSON.stringify(snap.widgets)));
+      try { dash.persist && dash.persist(); } catch (_) {}
+      try { window.PM_DEMO && window.PM_DEMO.emit && window.PM_DEMO.emit('dash.widgets', { restore: true }); } catch (_) {}
+      out.widgets = 'restored';
+    }
+    out.chat = TR.chat ? await TR.chat.restore(snap, keep) : null;
+    if (TR.practice) TR.practice.remove();
+    return out;
+  }
+  TR.snapshot = snapshot;
+
+  /* ------------------------------------------------------------------ DOM */
+  function build() {
+    if (st.root) return st.root;
+    const r = document.createElement('div');
+    r.id = ROOT; r.className = 'o55t-root'; r.hidden = true; r.setAttribute('data-pm-hover-exempt', 'true');
+    r.innerHTML = `<svg class="o55t-scrim" aria-hidden="true"><path class="o55t-scrimpath" fill-rule="evenodd"/><rect class="o55t-ring" rx="12" ry="12"/></svg>`
+      + `<div class="o55t-shield" aria-hidden="true"></div>`
+      + `<div class="o55t-zone" aria-hidden="true"></div>`
+      + `<div class="o55t-callout" role="dialog" aria-modal="false" aria-labelledby="o55t-h"></div>`
+      + `<div class="o55t-bar" role="toolbar" aria-label="${U.esc(T('tour.bar.label'))}"></div>`
+      + `<div class="o55t-pointer" aria-hidden="true"><svg viewBox="0 0 32 32" width="30" height="30"><path class="o55t-ptr" d="M6 3 L6 25 L12 19 L16 28 L20 26 L16 17 L24 17 Z"/></svg><span class="o55t-trail"></span></div>`
+      + `<div class="o55-live" aria-live="polite" role="status"></div>`;
+    document.body.appendChild(r);
+    st.root = r;
+    r.addEventListener('click', onClick);
+    ['keydown', 'keyup', 'keypress'].forEach((ev) => r.addEventListener(ev, (e) => { e.stopPropagation(); if (ev === 'keydown' && e.key === 'Escape') { e.preventDefault(); togglePause(); } }));
+    /* any real input during Show Me hands control back at once */
+    ['pointerdown', 'keydown', 'wheel'].forEach((ev) => document.addEventListener(ev, (e) => { if (st.show && e.isTrusted && !r.contains(e.target)) interruptShow(); }, true));
+    window.addEventListener('resize', () => { if (TR.running) { st.fixed = null; place(true); } });
+    document.addEventListener('visibilitychange', () => { if (st.root) st.root.toggleAttribute('data-hidden', document.hidden); });
+    return r;
+  }
+  const family = () => O55.theme().family;
+  function syncTheme() { if (!st.root) return; const th = O55.theme(); st.root.setAttribute('data-family', th.family); st.root.setAttribute('data-mode', th.mode); }
+
+  /* ------------------------------------------------------------------ bar */
+  function renderBar() {
+    const bar = st.root.querySelector('.o55t-bar'), s = st.step, ch = s ? s.chapter : 'ask';
+    const ci = CHAPTERS.indexOf(ch), inCh = TR.defs.filter((d) => d.chapter === ch), si = inCh.indexOf(s);
+    const pips = CHAPTERS.map((c, i) => {
+      const steps = TR.defs.filter((d) => d.chapter === c);
+      const ticks = steps.map((d) => `<i class="o55t-tick${st.sess.done.includes(d.id) ? ' o55t-on' : ''}${d === s ? ' o55t-cur' : ''}"></i>`).join('');
+      return `<span class="o55t-pip${i < ci ? ' o55t-done' : i === ci ? ' o55t-cur' : ''}" title="${U.esc(T('tour.chapters.' + c))}"><span class="o55t-pipname">${U.esc(T('tour.chapters.' + c))}</span><span class="o55t-ticks">${ticks}</span></span>`;
+    }).join('');
+    bar.innerHTML = `<span class="o55t-brand">${O55.c.small('spark', 14)}<span>${U.esc(T('tour.bar.label'))}</span></span><span class="o55t-pips" aria-label="${U.esc(T('tour.bar.progress', { n: ci + 1, name: T('tour.chapters.' + ch), s: si + 1, total: inCh.length }))}">${pips}</span>`
+      + `<span class="o55t-seg" role="radiogroup" aria-label="${U.esc(T('tour.bar.tips'))}"><span class="o55t-seglabel">${U.esc(T('tour.bar.tips'))}</span>`
+      + ['normal', 'eli5'].map((v) => `<button type="button" role="radio" aria-checked="${st.tips === v}" class="${st.tips === v ? 'o55t-on' : ''}" data-o55t="tips" data-arg="${v}" data-pm-hover-exempt="true">${U.esc(T('tour.bar.' + v))}</button>`).join('') + '</span>'
+      + `<button type="button" class="o55t-barbtn" data-o55t="pause" data-pm-hover-exempt="true">${U.esc(st.paused ? T('tour.bar.resume') : T('tour.bar.pause'))}</button>`
+      + `<button type="button" class="o55t-barbtn" data-o55t="skip" data-pm-hover-exempt="true">${U.esc(T('tour.bar.skip'))}</button>`
+      + O55.sound.buttonHtml('o55t-barbtn o55t-sound').replace('data-o55-do="sound"', 'data-o55t="sound"');
+  }
+
+  /* ------------------------------------------------------------------ callout */
+  const copy = (id, k) => { const tips = st.tips === 'eli5'; const v = O55.tx('tour.steps.' + id + '.' + k + (tips ? 'Eli5' : '')); return typeof v === 'string' ? v : T('tour.steps.' + id + '.' + k); };
+  function calloutHtml() {
+    const s = st.step; if (!s) return '';
+    if (st.missing) return `<p class="o55t-kicker">${U.esc(T('tour.bar.label'))}</p><h2 class="o55t-title" id="o55t-h" tabindex="-1">${U.esc(T('tour.missing.title'))}</h2><p class="o55t-body">${U.esc(T('tour.missing.body'))}</p>`
+      + `<div class="o55t-actions">${btn('back', T('tour.controls.back'), 'ghost')}${btn('skipStep', T('tour.controls.next'), 'ghost')}${btn('takeMe', T('tour.controls.takeMe'), 'primary')}</div>`;
+    if (s.render) return s.render(st, { btn, copy });
+    const done = st.sess.done.includes(s.id) && s.kind === 'action';
+    const title = copy(s.id, 'title'), body = done && s.after ? T('tour.steps.' + s.id + '.after') : copy(s.id, 'do');
+    const extra = s.extra ? s.extra(st) : '';
+    const actions = [];
+    if (s.index > 0) actions.push(btn('back', T('tour.controls.back'), 'ghost'));
+    if (s.kind === 'action' && !done && s.showMe) actions.push(btn('showMe', T('tour.controls.showMe'), 'secondary'));
+    if (s.kind === 'info' || done) {
+      const ready = s.kind !== 'info' || !s.ready || s.ready(st);
+      actions.push(ready ? btn('next', s.nextLabel ? s.nextLabel(st) : T('tour.controls.next'), 'primary') : `<button type="button" class="o55t-btn o55t-primary" aria-disabled="true" data-pm-hover-exempt="true">${U.esc(s.nextLabel ? s.nextLabel(st) : T('tour.controls.next'))}</button>`);
+    }
+    return `<p class="o55t-kicker">${U.esc(T('tour.chapters.' + s.chapter))}</p><h2 class="o55t-title" id="o55t-h" tabindex="-1">${U.esc(title)}</h2>`
+      + (s.kind === 'action' && !done ? `<p class="o55t-try"><span class="o55t-trylabel">${U.esc(T('tour.controls.tryIt'))}</span>${U.esc(body)}</p>` : `<p class="o55t-body">${U.esc(body)}</p>`)
+      + extra + `<div class="o55t-actions">${actions.join('')}</div>`;
+  }
+  function btn(action, label, kind, arg) { return `<button type="button" class="o55t-btn o55t-${kind}" data-o55t="${action}"${arg != null ? ` data-arg="${U.esc(arg)}"` : ''} data-pm-hover-exempt="true">${U.esc(label)}</button>`; }
+  TR.btn = btn;
+  function renderCallout(focus) {
+    const c = st.root.querySelector('.o55t-callout');
+    U.morph(c, calloutHtml());
+    c.setAttribute('data-step', st.step ? st.step.id : '');
+    place(false);
+    if (focus) M.after(80, () => { const h = c.querySelector('#o55t-h'); if (h && TR.running && !st.show) h.focus({ preventScroll: true }); });
+  }
+  TR.refresh = () => { if (TR.running) { renderBar(); renderCallout(false); } };
+
+  /* ------------------------------------------------------------------ spotlight + placement */
+  function targetEl() { const s = st.step; if (!s || !s.target) return null; try { return s.target(st); } catch (_) { return null; } }
+  function holeFor(el) {
+    if (!el) return null;
+    const r = el.getBoundingClientRect(), pad = (st.step && st.step.pad) != null ? st.step.pad : 8;
+    return { x: r.left - pad, y: r.top - pad, w: r.width + pad * 2, h: r.height + pad * 2 };
+  }
+  function drawHole(h) {
+    const W = innerWidth, H = innerHeight, svg = st.root.querySelector('.o55t-scrim');
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('width', W); svg.setAttribute('height', H);
+    const outer = `M0 0H${W}V${H}H0Z`;
+    if (!h || h.w <= 0) { svg.querySelector('.o55t-scrimpath').setAttribute('d', outer); svg.querySelector('.o55t-ring').setAttribute('width', 0); return; }
+    const r = Math.min(14, h.w / 2, h.h / 2), x = h.x, y = h.y, w = h.w, hh = h.h;
+    const hole = `M${x + r} ${y}H${x + w - r}Q${x + w} ${y} ${x + w} ${y + r}V${y + hh - r}Q${x + w} ${y + hh} ${x + w - r} ${y + hh}H${x + r}Q${x} ${y + hh} ${x} ${y + hh - r}V${y + r}Q${x} ${y} ${x + r} ${y}Z`;
+    svg.querySelector('.o55t-scrimpath').setAttribute('d', outer + hole);
+    const ring = svg.querySelector('.o55t-ring');
+    ring.setAttribute('x', x); ring.setAttribute('y', y); ring.setAttribute('width', w); ring.setAttribute('height', hh);
+    /* the click shield covers everything but the hole on steps that must not be interrupted */
+    const sh = st.root.querySelector('.o55t-shield');
+    sh.style.clipPath = st.step && st.step.block ? `polygon(evenodd, 0 0, ${W}px 0, ${W}px ${H}px, 0 ${H}px, 0 0, ${x}px ${y}px, ${x}px ${y + hh}px, ${x + w}px ${y + hh}px, ${x + w}px ${y}px, ${x}px ${y}px)` : 'inset(50%)';
+  }
+  /* the hole glides to each new target on a critically damped spring (no overshoot), retargeting mid-flight */
+  function moveHole(to) {
+    if (!st.hole || !to) { st.hole = to; drawHole(to); return; }
+    if (st.spring) { st.spring.retarget(to); return; }
+    const from = Object.assign({}, st.hole);
+    st.spring = M.spring({ from, to, stiffness: 190, onUpdate: (v) => { st.hole = v; drawHole(v); placeCallout(); } });
+    st.spring.finished.then(() => { st.spring = null; });
+  }
+  function place(snap) {
+    const el = targetEl(), h = holeFor(el);
+    if (h && !st.missing) { if (snap) { st.hole = h; drawHole(h); } else moveHole(h); }
+    else { st.hole = null; drawHole(null); }
+    placeCallout();
+    placeBar(h);
+  }
+  function placeCallout() {
+    const c = st.root.querySelector('.o55t-callout'); if (!c) return;
+    const W = innerWidth, H = innerHeight, cw = c.offsetWidth || 360, chh = c.offsetHeight || 180, m = 16, gap = 18;
+    const h = st.hole && !st.missing ? st.hole : null;
+    let x, y, side = 'center';
+    /* a step whose spotlight tours several places keeps one callout position for the whole step, chosen once to
+       stay clear of every place it will visit, so its buttons never move under the learner's hand */
+    const avoid = st.step && st.step.avoid && !st.missing ? st.step.avoid(st).filter(Boolean).map((e) => e.getBoundingClientRect()) : null;
+    if (avoid && avoid.length) {
+      if (!st.fixed) {
+        const cost = (cx, cy) => avoid.reduce((a, r) => a + Math.max(0, Math.min(cx + cw, r.right + gap) - Math.max(cx, r.left - gap)) * Math.max(0, Math.min(cy + chh, r.bottom + gap) - Math.max(cy, r.top - gap)), 0);
+        let best = null;
+        for (const fy of [0.45, 0.3, 0.6, 0.15, 0.8]) for (const fx of [0.5, 0.35, 0.65, 0.15, 0.85]) {
+          const cx = m + (W - cw - 2 * m) * fx, cy = 56 + (H - chh - 126) * fy, k = cost(cx, cy);
+          if (!best || k < best.k - 1) best = { x: cx, y: cy, k };
+        }
+        st.fixed = best;
+      }
+      x = st.fixed.x; y = st.fixed.y; side = 'fixed';
+    }
+    else if (!h || (st.step && st.step.place === 'center')) { x = (W - cw) / 2; y = Math.max(80, (H - chh) / 2 - 40); }
+    else {
+      const pref = (st.step && st.step.place) || 'auto';
+      const cands = { right: [h.x + h.w + gap, h.y + h.h / 2 - chh / 2], left: [h.x - gap - cw, h.y + h.h / 2 - chh / 2], bottom: [h.x + h.w / 2 - cw / 2, h.y + h.h + gap], top: [h.x + h.w / 2 - cw / 2, h.y - gap - chh] };
+      const fits = (k) => { const [cx, cy] = cands[k]; return cx >= m && cy >= 56 && cx + cw <= W - m && cy + chh <= H - 70; };
+      const order = pref !== 'auto' ? [pref, 'right', 'left', 'bottom', 'top'] : (h.x + h.w / 2 > W / 2 ? ['left', 'bottom', 'top', 'right'] : ['right', 'bottom', 'top', 'left']);
+      /* sticky side: a callout keeps its side for the whole step while that side still fits, so it never wanders
+         under the pointer as the target grows or the spotlight glides */
+      side = st.side && cands[st.side] && fits(st.side) ? st.side : order.find(fits) || order[0];
+      st.side = side;
+      [x, y] = cands[side];
+      x = Math.max(m, Math.min(W - cw - m, x)); y = Math.max(56, Math.min(H - chh - 70, y));
+      /* never cover the target: if the clamped box still overlaps the hole, park it in the emptiest corner */
+      const overlap = !(x + cw < h.x || x > h.x + h.w || y + chh < h.y || y > h.y + h.h);
+      if (overlap) { x = h.x + h.w / 2 > W / 2 ? m : W - cw - m; y = h.y + h.h / 2 > H / 2 ? 64 : H - chh - 76; side = 'corner'; }
+    }
+    const nx = Math.round(x), ny = Math.round(y);
+    if (!st.cpos || Math.abs(st.cpos.x - nx) > 3 || Math.abs(st.cpos.y - ny) > 3) { c.style.transform = `translate(${nx}px, ${ny}px)`; st.cpos = { x: nx, y: ny }; }
+    c.setAttribute('data-side', side);
+  }
+  function placeBar(h) {
+    const bar = st.root.querySelector('.o55t-bar'); if (!bar) return;
+    const H = innerHeight, bh = bar.offsetHeight || 44, bottomY = H - bh - 14;
+    const hitsBottom = h && h.y + h.h > bottomY - 6;
+    bar.classList.toggle('o55t-top', !!hitsBottom);
+  }
+
+  /* ------------------------------------------------------------------ the pointer (Show Me) */
+  const P = TR.pointer = {
+    el: () => st.root.querySelector('.o55t-pointer'),
+    pos: null,
+    show(x, y) { const p = P.el(); P.pos = { x, y }; p.style.transform = `translate(${x}px, ${y}px)`; p.classList.add('o55t-on'); },
+    hide() { const p = P.el(); p.classList.remove('o55t-on', 'o55t-press'); },
+    /* travel on a gentle arc; the destination is pre-cued before the pointer leaves */
+    async moveTo(x, y, dur) {
+      if (!P.pos) { const c = st.root.querySelector('.o55t-callout').getBoundingClientRect(); P.show(c.left + c.width / 2, c.top + c.height / 2); await M.delay(120); }
+      const from = Object.assign({}, P.pos), mx = (from.x + x) / 2, my = Math.min(from.y, y) - Math.min(120, Math.hypot(x - from.x, y - from.y) * 0.25);
+      const retro = family() === 'retro';
+      await new Promise((res) => {
+        M.tween({ from: 0, to: 1, duration: dur || M.T.travel, ease: retro ? M.ease.steps(10) : M.ease.emphasized, ignoreReduced: false, onUpdate: (t) => {
+          if (st.show && st.show.cancelled) return;
+          const px = (1 - t) * (1 - t) * from.x + 2 * (1 - t) * t * mx + t * t * x, py = (1 - t) * (1 - t) * from.y + 2 * (1 - t) * t * my + t * t * y;
+          P.pos = { x: px, y: py }; P.el().style.transform = `translate(${px}px, ${py}px)`;
+        } }).finished.then(res);
+      });
+    },
+    async press(on) { P.el().classList.toggle('o55t-press', on !== false); await M.delay(on === false ? 60 : 140); }
+  };
+  const center = (el) => { const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; };
+  TR.center = center;
+  /* Show Me helpers: every action goes through the real control or the real handler */
+  const SM = TR.sm = {
+    cancelled: () => !st.show || st.show.cancelled,
+    wait: (ms) => M.delay(ms),
+    async cue(el) { if (!el) return; el.classList.add('o55t-cue'); await M.delay(360); el.classList.remove('o55t-cue'); },
+    async click(el, o) {
+      if (!el || SM.cancelled()) return false;
+      el.scrollIntoView && el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      await SM.cue(el); if (SM.cancelled()) return false;
+      const c = center(el); await P.moveTo(c.x, c.y); if (SM.cancelled()) return false;
+      await P.press(true); O55.sound.play('tap');
+      const opts = { bubbles: true, cancelable: true, clientX: c.x, clientY: c.y, button: 0, pointerId: 1, pointerType: 'mouse', isPrimary: true };
+      el.dispatchEvent(new PointerEvent('pointerdown', opts)); el.dispatchEvent(new MouseEvent('mousedown', opts));
+      el.dispatchEvent(new PointerEvent('pointerup', opts)); el.dispatchEvent(new MouseEvent('mouseup', opts));
+      if (!(o && o.noClick)) el.click();
+      await P.press(false);
+      return true;
+    },
+    /* a real drag: pointerdown on the grip, a stream of pointermoves, pointerup at the destination */
+    async drag(el, to, o) {
+      if (!el || SM.cancelled()) return false;
+      const a = center(el); await SM.cue(el); await P.moveTo(a.x, a.y); if (SM.cancelled()) return false;
+      await P.press(true); O55.sound.play('pickup');
+      const base = { bubbles: true, cancelable: true, button: 0, buttons: 1, pointerId: 7, pointerType: 'mouse', isPrimary: true };
+      el.dispatchEvent(new PointerEvent('pointerdown', Object.assign({ clientX: a.x, clientY: a.y }, base)));
+      const steps = (o && o.steps) || 42, dur = (o && o.dur) || 1500;
+      const mx = (a.x + to.x) / 2, my = Math.min(a.y, to.y) - 60;
+      for (let i = 1; i <= steps; i++) {
+        if (SM.cancelled()) break;
+        const t = M.ease.emphasized(i / steps), x = (1 - t) * (1 - t) * a.x + 2 * (1 - t) * t * mx + t * t * to.x, y = (1 - t) * (1 - t) * a.y + 2 * (1 - t) * t * my + t * t * to.y;
+        P.pos = { x, y }; P.el().style.transform = `translate(${x}px, ${y}px)`;
+        const tgt = document.elementFromPoint(x, y) || document;
+        tgt.dispatchEvent(new PointerEvent('pointermove', Object.assign({ clientX: x, clientY: y }, base)));
+        await M.delay(dur / steps);
+      }
+      /* dwell on the destination the way a hand does: the workspace adopts a new drop target only after
+         it has held for two frames, so a few small moves across several frames let the preview settle */
+      for (let j = 0; j < 4 && !SM.cancelled(); j++) {
+        const x = to.x + (j % 2), y = to.y + j * 0.5;
+        (document.elementFromPoint(x, y) || document).dispatchEvent(new PointerEvent('pointermove', Object.assign({ clientX: x, clientY: y }, base)));
+        await M.delay(48);
+      }
+      await M.delay(260); /* the destination has reacted (preview) before the drop */
+      const end = document.elementFromPoint(to.x, to.y) || document;
+      end.dispatchEvent(new PointerEvent('pointerup', Object.assign({ clientX: to.x, clientY: to.y }, base, { buttons: 0 })));
+      await P.press(false); O55.sound.play('drop');
+      return true;
+    },
+    async type(el, text) {
+      if (!el || SM.cancelled()) return false;
+      await SM.click(el, { noClick: true }); el.focus();
+      for (const ch of text) { if (SM.cancelled()) return false; el.value += ch; el.dispatchEvent(new Event('input', { bubbles: true })); await M.delay(18); }
+      return true;
+    }
+  };
+  async function showMe() {
+    const s = st.step; if (!s || !s.showMe || st.show) return;
+    st.show = { cancelled: false };
+    st.root.setAttribute('data-showme', 'true');
+    O55.sound.play('spot');
+    try { await s.showMe(SM, st); } catch (err) { console.warn('O55 tour: Show Me stopped', err); }
+    await M.delay(600); /* settle: the result stays visible while the guide names the change */
+    st.show = null; st.root.removeAttribute('data-showme'); P.hide();
+  }
+  function interruptShow() {
+    if (!st.show) return;
+    st.show.cancelled = true; st.show = null; st.root.removeAttribute('data-showme'); P.hide();
+    U.announce(T('tour.controls.interrupted'), st.root);
+  }
+
+  /* ------------------------------------------------------------------ step flow */
+  async function goStep(i, o) {
+    o = o || {};
+    const prev = st.step;
+    if (prev && prev.leave) { try { prev.leave(st); } catch (_) {} }
+    if (i >= TR.defs.length) return finish(false);
+    st.step = TR.defs[Math.max(0, i)]; st.sess.index = st.step.index; st.missing = false; st.missingSince = 0; st.advancing = false; st.lastReady = undefined; st.side = null; st.fixed = null;
+    save();
+    if (st.step.enter) { try { await st.step.enter(st, o); } catch (err) { console.warn('O55 tour: enter failed', st.step.id, err); } }
+    renderBar(); renderCallout(true);
+    if (!o.silent) O55.sound.play(st.step.kind === 'info' ? 'spot' : 'step');
+    U.announce(T('tour.bar.progress', { n: CHAPTERS.indexOf(st.step.chapter) + 1, name: T('tour.chapters.' + st.step.chapter), s: TR.defs.filter((d) => d.chapter === st.step.chapter).indexOf(st.step) + 1, total: TR.defs.filter((d) => d.chapter === st.step.chapter).length }) + '. ' + copy(st.step.id, 'title'), st.root);
+    watch();
+  }
+  /* one loop: re-measure the target (it may move), check the success predicate, notice a missing target */
+  function watch() {
+    if (st.poll) st.poll.cancel();
+    const tick = () => {
+      if (!TR.running || st.paused) { st.poll = M.after(250, tick); return; }
+      const s = st.step, el = targetEl();
+      if (s.target && !el) { if (!st.missingSince) st.missingSince = performance.now(); if (!st.missing && performance.now() - st.missingSince > 1600) { st.missing = true; renderCallout(true); } }
+      else { st.missingSince = 0; if (st.missing) { st.missing = false; renderCallout(false); } }
+      if (s.tick) { try { s.tick(st); } catch (_) {} }
+      if (s.kind === 'info' && s.ready) { const r = !!s.ready(st); if (r !== st.lastReady) { st.lastReady = r; renderCallout(false); } }
+      if (!st.spring) place(false);
+      if (s.kind === 'action' && !st.sess.done.includes(s.id) && !st.advancing) {
+        let ok = false; try { ok = !!s.done(st); } catch (_) {}
+        if (ok) complete(s);
+      }
+      st.poll = M.after(140, tick);
+    };
+    st.poll = M.after(140, tick);
+  }
+  /* success: acknowledge in the same frame, show the "after" line, then move on (the advance guard stops doubles) */
+  function complete(s) {
+    if (st.advancing) return; st.advancing = true;
+    if (!st.sess.done.includes(s.id)) st.sess.done.push(s.id);
+    save(); O55.sound.play('step'); renderBar(); renderCallout(false);
+    const hold = s.after ? 2200 : 900;
+    st.root.querySelector('.o55t-callout').classList.add('o55t-success');
+    M.after(hold, () => { const c = st.root.querySelector('.o55t-callout'); c.classList.remove('o55t-success'); if (TR.running && st.step === s && !s.stay) goStep(s.index + 1); else st.advancing = false; });
+  }
+  TR.complete = () => st.step && complete(st.step);
+
+  function onClick(e) {
+    const b = e.target.closest('[data-o55t]'); if (!b) return;
+    e.preventDefault(); e.stopPropagation();
+    const a = b.getAttribute('data-o55t'), arg = b.getAttribute('data-arg');
+    if (a === 'next') { O55.sound.play('next'); if (st.step.onNext) st.step.onNext(st); return goStep(st.step.index + 1); }
+    if (a === 'back') { O55.sound.play('back'); return goStep(Math.max(0, st.step.index - 1), { back: true }); }
+    if (a === 'showMe') return showMe();
+    if (a === 'skip') return skip();
+    if (a === 'pause') return togglePause();
+    if (a === 'tips') { st.tips = arg; st.sess.tips = arg; save(); O55.sound.play('select'); renderBar(); renderCallout(false); return; }
+    if (a === 'sound') { O55.sound.toggle('tour'); renderBar(); return; }
+    if (a === 'takeMe') { if (st.step.goTo) st.step.goTo(st); st.missing = false; st.missingSince = 0; renderCallout(false); return; }
+    if (a === 'skipStep') return goStep(st.step.index + 1);
+    if (a === 'finish') return finish(arg === 'keep');
+    if (st.step && st.step.actions && st.step.actions[a]) return st.step.actions[a](st, arg, b);
+  }
+  function togglePause() {
+    st.paused = !st.paused; st.root.toggleAttribute('data-paused', st.paused);
+    if (st.paused) interruptShow();
+    renderBar(); O55.sound.play(st.paused ? 'toggleOff' : 'toggleOn');
+  }
+  function save() { O55.store.set(KEY, { v: 1, status: st.sess.status, index: st.sess.index, done: st.sess.done, tips: st.tips, started: st.sess.started, project: st.sess.project, snap: st.snap }); }
+
+  /* ------------------------------------------------------------------ lifecycle */
+  TR.start = async function start(o) {
+    o = o || {};
+    if (O55.S && O55.S.open) O55.ui.close('done');
+    const saved = O55.store.get(KEY, null);
+    const resume = !o.fresh && saved && saved.status === 'running' && typeof saved.index === 'number';
+    build(); syncTheme();
+    st.sess = resume ? { status: 'running', index: saved.index, done: saved.done || [], started: saved.started, project: saved.project || o.project || null } : { status: 'running', index: 0, done: [], started: new Date().toISOString(), project: o.project || null };
+    st.tips = (resume && saved.tips) || 'normal';
+    st.snap = resume && saved.snap ? saved.snap : snapshot();
+    st.counters = TR.counters();
+    TR.running = true; st.paused = false;
+    document.documentElement.setAttribute('data-o55-tour', 'true');
+    if (window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.pause) { try { window.PM_DEMO.clock.pause(); st.pausedClock = true; } catch (_) {} }
+    TR.chat && TR.chat.install();
+    st.root.hidden = false; st.root.classList.add('o55t-opening');
+    M.after(700, () => st.root && st.root.classList.remove('o55t-opening'));
+    O55.sound.play('open');
+    window.dispatchEvent(new CustomEvent('o55:tour', { detail: { type: resume ? 'resumed' : 'started' } }));
+    await goStep(st.sess.index, { silent: true });
+    return true;
+  };
+  async function end(status, keep) {
+    TR.running = false; if (st.poll) st.poll.cancel(); interruptShow();
+    if (st.step && st.step.leave) { try { st.step.leave(st); } catch (_) {} }
+    const res = await restore(st.snap, keep);
+    TR.chat && TR.chat.uninstall();
+    st.sess.status = status; st.sess.restored = res; O55.store.set(KEY, { v: 1, status, done: st.sess.done, finished: new Date().toISOString(), keep: !!keep, restored: res });
+    document.documentElement.removeAttribute('data-o55-tour');
+    if (st.pausedClock && window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.resume) { try { window.PM_DEMO.clock.resume(); } catch (_) {} }
+    st.root.classList.add('o55t-closing'); O55.sound.play(status === 'done' ? 'finish' : 'close');
+    M.after(360, () => { st.root.hidden = true; st.root.classList.remove('o55t-closing'); st.step = null; st.hole = null; });
+    return res;
+  }
+  /* a toast that belongs to the page (the tour root and the onboarding window may both be gone) */
+  O55.pageToast = function pageToast(text, ms) {
+    let el = document.getElementById('o55-pagetoast');
+    if (!el) { el = document.createElement('div'); el.id = 'o55-pagetoast'; el.className = 'o55-pagetoast'; el.setAttribute('role', 'status'); document.body.appendChild(el); }
+    el.textContent = text; el.classList.remove('o55-on'); void el.offsetWidth; el.classList.add('o55-on');
+    M.after(ms || 4200, () => el.classList.remove('o55-on'));
+  };
+  async function skip() {
+    await end('skipped', false);
+    O55.pageToast(T('tour.skipped'));
+    window.dispatchEvent(new CustomEvent('o55:tour', { detail: { type: 'skipped' } }));
+  }
+  async function finish(keep) {
+    const res = await end('done', keep);
+    /* land on the real Planning Wizard with the Project selected; nothing starts */
+    if (st.sess.project && O55.shell) O55.shell.selectProject(st.sess.project, null);
+    O55.shell && O55.shell.openWizard();
+    if (res && res.layout === 'failed') O55.pageToast(T('tour.restoreFailed'));
+    TR.landing && TR.landing();
+    window.dispatchEvent(new CustomEvent('o55:tour', { detail: { type: 'finished', keep: !!keep, restored: res } }));
+  }
+  TR.skip = skip; TR.finish = finish; TR.go = (id) => goStep(TR.byId[id].index); TR.minutes = () => 4;
+  TR.state = () => ({ running: TR.running, step: st.step && st.step.id, done: st.sess ? st.sess.done.slice() : [], paused: st.paused, tips: st.tips });
+
+  /* zero-usage proof: the counters a provider call or usage write would move */
+  TR.counters = function counters() {
+    const d = window.PM_DEMO;
+    return { ledger: d && d.state && d.state.usage && d.state.usage.ledger ? d.state.usage.ledger.length : null, context: d && d.state && d.state.chat && d.state.chat.context ? d.state.chat.context.used : null, fetches: window.__o55net ? window.__o55net.count : null };
+  };
+  /* count network requests from page start (a guided example must make none) */
+  if (!window.__o55net) {
+    window.__o55net = { count: 0 };
+    const f = window.fetch; if (f) window.fetch = function () { window.__o55net.count++; return f.apply(this, arguments); };
+    const X = XMLHttpRequest.prototype.open; XMLHttpRequest.prototype.open = function () { window.__o55net.count++; return X.apply(this, arguments); };
+  }
+  TR.audit = () => ({ before: st.counters, after: TR.counters() });
+
+  /* The activity-bar Chat icon: the shell's own handler does not toggle the Chat surface in this concept, so the
+     icon is wired to the real command (cmd.panel.switch). Production impact recorded in REPORT.md. */
+  document.addEventListener('click', (e) => {
+    const icon = e.target && e.target.closest ? e.target.closest('#activityBar .icon[data-ab-id="chat"]') : null;
+    if (!icon) return;
+    const api = window.PM_HOME_WORKSPACE; if (!api) return;
+    const before = (api.layout.surfaces.find((s) => s.surface_kind === 'chat') || {}).visible;
+    setTimeout(() => {
+      const now = (api.layout.surfaces.find((s) => s.surface_kind === 'chat') || {}).visible;
+      if (now === before) api.setSurfaceVisible('chat', !before, 'cmd.panel.switch');
+    }, 0);
+  }, true); /* capture: the shell stops this click before it bubbles */
+
+  /* keep the look in step while the tour runs */
+  new MutationObserver(() => { if (TR.running) { syncTheme(); TR.refresh(); } }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+
+/* ---- js/81-tour-chat.js ---- */
+/* O55.tour.chat — the Teacher fixture inside the real Assistant Chat. A "Guided example" thread is created through the
+   chat facade; sends in that thread (and only that thread) are answered locally through the real stream path, so the
+   finished Chat UI shows the answer with no provider call, no usage and no context growth. Guided messages are labelled
+   honestly ("Guided example · Teacher") instead of the chat's model/token/cost line. ELI5 rewrites the same bubble:
+   kept words stay, removed words fold away, new words type in. */
+(function () {
+  'use strict';
+  const O55 = window.O55, U = O55.util, T = (k, v) => O55.t(k, v), M = O55.motion, TR = O55.tour;
+  const C = TR.chat = { threadId: null, answers: {}, sent: [], lastMid: null };
+  let origSend = null, obs = null;
+  const d = () => window.PM_DEMO;
+  const eli5On = () => !!TR.q('span.chat-toggle-btn.toggle-eli5.active');
+  const guided = (id) => { const th = d() && d().state.chat.threads[id]; return !!(th && th.guided_example); };
+
+  /* ---------------------------------------------------------------- answers (local, grouped Teacher topics) */
+  function answerFor(text) {
+    const q = String(text || '').trim().toLowerCase();
+    const tx = (k) => T('tour.teacher.' + k);
+    if (q.includes('before puppet master changes') || q.includes('changes my files')) return { key: 'a1', html: `<p>${U.esc(eli5On() ? tx('a1eli5') : tx('a1'))}</p>` };
+    if (q.includes('what is a project')) return { key: 'a2', html: `<p>${U.esc(eli5On() ? tx('a2eli5') : tx('a2'))}</p>` };
+    const topics = O55.tx('tour.teacher.answers');
+    const hit = [['chat', /chat|ask|teacher/], ['plan', /plan|wizard|build/], ['safe', /undo|history|back|safe|mistake/]].find(([, re]) => re.test(q));
+    if (hit) return { key: hit[0], html: `<p>${U.esc(topics[hit[0]])}</p>` };
+    const sugg = Object.values(O55.tx('tour.teacher.topics'));
+    return { key: 'suggest', html: `<p>${U.esc(tx('own'))}</p><ul>${sugg.map((s) => `<li>${U.esc(s)}</li>`).join('')}</ul>` };
+  }
+
+  /* ---------------------------------------------------------------- install / uninstall */
+  C.install = function install() {
+    const dm = d(); if (!dm || !dm.chat || origSend) return;
+    origSend = dm.chat.send;
+    dm.chat.send = function (threadId, text) {
+      if (!guided(threadId)) return origSend.apply(dm.chat, arguments);
+      return localSend(threadId, text);
+    };
+    obs = new MutationObserver((muts) => { for (const m of muts) for (const n of m.addedNodes) if (n.nodeType === 1) relabelWithin(n); });
+    const panel = document.getElementById('chatPanel'); if (panel) obs.observe(panel, { childList: true, subtree: true });
+  };
+  C.uninstall = function uninstall() { const dm = d(); if (dm && origSend) dm.chat.send = origSend; origSend = null; if (obs) obs.disconnect(); obs = null; };
+
+  function localSend(threadId, text) {
+    const dm = d(), th = dm.state.chat.threads[threadId];
+    C.sent.push(String(text || ''));
+    th.messages.push({ role: 'user', text, guided_example: true });
+    dm.emit('chat.stream', { threadId, type: 'user', text });
+    const a = answerFor(text), msgId = 'o55-teacher-' + Date.now().toString(36);
+    C.lastMid = msgId; C.answers[msgId] = { key: a.key, question: text };
+    /* a short, honest pause before the guided answer streams through the real renderer */
+    M.after(450, () => {
+      dm.emit('chat.stream', { threadId, msgId, type: 'start', intent: 'guided_teacher' });
+      dm.stream.start((chunk) => dm.emit('chat.stream', { threadId, msgId, type: 'chunk', html: chunk }), a.html, {
+        onDone: () => { th.messages.push({ role: 'assistant', html: a.html, guided_example: true }); dm.emit('chat.stream', { threadId, msgId, type: 'done' }); C.answers[msgId].done = true; relabelWithin(document.getElementById('chatPanel')); }
+      });
+    });
+    return { ok: true, local_deterministic: true };
+  }
+
+  /* ---------------------------------------------------------------- honest labels on guided messages */
+  function relabelWithin(root) {
+    if (!root || !C.threadId || d().state.chat.activeThread !== C.threadId) return;
+    const msgs = root.matches && root.matches('.pm6-chat-msg') ? [root] : [...root.querySelectorAll('.pm6-chat-msg')];
+    msgs.forEach((m) => {
+      if (m.getAttribute('data-o55-guided') === '1') return;
+      if (!m.closest('#chatPanel')) return;
+      m.setAttribute('data-o55-guided', '1');
+      const assistant = m.classList.contains('assistant');
+      const snap = m.querySelector('.runtime-snapshot'); if (snap) snap.textContent = assistant ? T('tour.teacher.label') : T('tour.teacher.labelUser');
+      const pop = m.querySelector('.msg-runtime-popover'); if (pop) pop.innerHTML = `<div class="popover-row"><span class="popover-value">${U.esc(T('tour.teacher.popover'))}</span></div>`;
+      m.querySelectorAll('.msg-hover-row .msg-meta, .msg-meta-model').forEach((n) => { n.textContent = T('tour.teacher.label'); });
+    });
+  }
+  C.relabel = () => relabelWithin(document.getElementById('chatPanel'));
+
+  /* ---------------------------------------------------------------- the guided thread */
+  C.ensureThread = async function ensureThread() {
+    const dm = d(); if (!dm) return null;
+    if (C.threadId && dm.state.chat.threads[C.threadId]) return C.threadId;
+    const made = dm.chat.newThread('teacher'), id = made && made.threadId; if (!id) return null;
+    const th = dm.state.chat.threads[id]; th.title = T('tour.teacher.thread'); th.guided_example = true;
+    if (window.PM6_CHAT_THREADS && window.PM6_CHAT_THREADS[id]) window.PM6_CHAT_THREADS[id].title = T('tour.teacher.thread');
+    C.threadId = id;
+    await M.delay(160);
+    const row = document.querySelector(`.chat-thread-item[data-thread="${id}"]`);
+    if (row) { const t = row.querySelector('.thread-title'); if (t) t.textContent = T('tour.teacher.thread'); row.classList.add('o55-guided-thread'); row.click(); }
+    return id;
+  };
+  C.selectThread = (id) => { const row = document.querySelector(`.chat-thread-item[data-thread="${id}"]`); if (row) row.click(); };
+
+  /* ---------------------------------------------------------------- controls (real) */
+  C.personaBtn = () => TR.q('.pm6-chat-personabtn');
+  C.personaItem = (name) => TR.q(`.pm6-chat-personaitem[data-persona="${name}"]`);
+  C.persona = () => ((TR.q('#chatPanel .persona-label') || {}).textContent || '').trim();
+  C.eli5Btn = () => TR.q('span.chat-toggle-btn.toggle-eli5');
+  C.composer = () => TR.q('#chatPanel textarea.pm6-chat-input') || TR.q('textarea.pm6-chat-input');
+  C.sendBtn = () => TR.q('#chatPanel .pm6-chat-send') || TR.q('.pm6-chat-send');
+  C.chatVisible = () => { const api = window.PM_HOME_WORKSPACE, s = api && api.layout.surfaces.find((x) => x.surface_kind === 'chat'); const p = document.getElementById('chatPanel'); return !!(s && s.visible && p && !p.classList.contains('hidden') && p.getBoundingClientRect().width > 40); };
+  C.lastAnswerEl = () => { const mid = C.lastMid; return mid ? document.querySelector(`#chatPanel [data-pm6-mid="${mid}"]`) : null; };
+  C.answered = (key) => Object.values(C.answers).some((a) => a.key === key && a.done);
+
+  /* ---------------------------------------------------------------- ELI5: rewrite the same bubble */
+  function words(s) { return String(s).split(/\s+/).filter(Boolean); }
+  function diff(a, b) {
+    const n = a.length, m = b.length, L = Array.from({ length: n + 1 }, () => new Int16Array(m + 1));
+    const norm = (w) => w.toLowerCase().replace(/[^a-z0-9’']/g, '');
+    for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--) L[i][j] = norm(a[i]) === norm(b[j]) ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
+    const ops = []; let i = 0, j = 0;
+    while (i < n && j < m) { if (norm(a[i]) === norm(b[j])) { ops.push(['keep', b[j]]); i++; j++; } else if (L[i + 1][j] >= L[i][j + 1]) ops.push(['del', a[i++]]); else ops.push(['ins', b[j++]]); }
+    while (i < n) ops.push(['del', a[i++]]); while (j < m) ops.push(['ins', b[j++]]);
+    return ops;
+  }
+  C.rewrite = function rewrite(toEli5) {
+    const el = C.lastAnswerEl(); if (!el) return false;
+    const info = C.answers[C.lastMid]; if (!info || !/^a[12]$/.test(info.key)) return false;
+    const from = T('tour.teacher.' + info.key + (toEli5 ? '' : 'eli5')), to = T('tour.teacher.' + info.key + (toEli5 ? 'eli5' : ''));
+    const sink = el.querySelector('.pm6-chat-sink') || el.querySelector('.msg-body'); if (!sink) return false;
+    if (M.reduced()) { sink.innerHTML = `<p>${U.esc(to)}</p>`; return true; }
+    let k = 0;
+    sink.innerHTML = '<p class="o55e">' + diff(words(from), words(to)).map(([op, w]) => {
+      if (op === 'keep') return `<span class="o55e-w">${U.esc(w)} </span>`;
+      if (op === 'del') return `<span class="o55e-w o55e-del">${U.esc(w)} </span>`;
+      return `<span class="o55e-w o55e-ins" style="--k:${k++}">${U.esc(w)} </span>`;
+    }).join('') + '</p>';
+    O55.sound.play('select');
+    M.after(700 + k * 45 + 400, () => { if (sink.isConnected) sink.innerHTML = `<p>${U.esc(to)}</p>`; });
+    return true;
+  };
+  C.eli5Shown = () => { const el = C.lastAnswerEl(); if (!el) return false; const info = C.answers[C.lastMid]; return !!(info && el.textContent.includes(T('tour.teacher.' + info.key + 'eli5').slice(0, 24))); };
+
+  /* ---------------------------------------------------------------- restore */
+  C.restore = async function restore(snap, keep) {
+    const dm = d(); const out = {};
+    if (!dm || !snap) return out;
+    if (!keep) {
+      if (snap.eli5 !== eli5On() && C.eli5Btn()) { C.eli5Btn().click(); out.eli5 = 'restored'; }
+      if (snap.persona && C.persona() !== snap.persona && C.personaBtn()) {
+        C.personaBtn().click(); await M.delay(260);
+        const it = [...document.querySelectorAll('.pm6-chat-personaitem')].find((b) => TR.vis(b) && (b.getAttribute('data-persona') === snap.persona || b.textContent.trim() === snap.persona));
+        if (it) { it.click(); out.persona = 'restored'; } else document.body.click();
+      }
+      if (snap.thread && dm.state.chat.threads[snap.thread]) { C.selectThread(snap.thread); out.thread = 'restored'; }
+      if (C.threadId && dm.state.chat.threads[C.threadId]) {
+        /* the Guided example thread leaves with the tour */
+        delete dm.state.chat.threads[C.threadId];
+        dm.state.chat.order = (dm.state.chat.order || []).filter((x) => x !== C.threadId);
+        const row = document.querySelector(`.chat-thread-item[data-thread="${C.threadId}"]`); if (row) row.remove();
+        out.guided = 'removed';
+      }
+      const ta = C.composer(); if (ta && ta.value !== snap.draft) { ta.value = snap.draft || ''; ta.dispatchEvent(new Event('input', { bubbles: true })); }
+    }
+    C.threadId = null; C.lastMid = null; C.answers = {};
+    return out;
+  };
+})();
+
+/* ---- js/82-tour-wizard.js ---- */
+/* O55.tour.practice — the Planning Wizard practice run, a scoped "Guided example" inside the real Wizard page. It uses
+   the Wizard's own stage and regions (topic map, interview thread, live plan preview, readiness rail) and its own
+   component classes, saves what those regions held, and puts them back when the tour ends. The Wizard's planning state
+   is never touched, and Approve And Build is shown fenced, never pressed. */
+(function () {
+  'use strict';
+  const O55 = window.O55, U = O55.util, T = (k, v) => O55.t(k, v), M = O55.motion, TR = O55.tour;
+  const P = TR.practice = { active: false, outcome: null, answer: null, prev: null, why: false, reviewed: false, edited: false, saved: null, goalShown: false };
+  const W = (k, v) => T('tour.wizard.' + k, v);
+  const byId = (id) => document.getElementById(id);
+  const REGIONS = ['pm6WizTopicList', 'pm6WizThread', 'pm6WizDoc', 'pm6WizRail', 'pm6WizRunState', 'pm6WizTopicCount', 'pm6WizDocTitle', 'pm6WizDocMeta', 'pm6WizIntegrateDock'];
+  const icon = (name) => (window.PM_ICONS && window.PM_ICONS[name] ? `<span class="pm6-ico" aria-hidden="true">${window.PM_ICONS[name]}</span>` : '');
+
+  /* ---------------------------------------------------------------- the practice goal card on the real intake */
+  P.injectGoal = function injectGoal() {
+    const scroll = document.querySelector('#pm6WizStageIntake .pm6-wiz-intake-scroll'); if (!scroll) return null;
+    let card = byId('o55pGoal');
+    if (!card) {
+      card = document.createElement('div'); card.id = 'o55pGoal'; card.className = 'o55p-goal'; card.setAttribute('data-pm-hover-exempt', 'true');
+      card.innerHTML = `<span class="o55p-badge">${U.esc(T('tour.steps.book_club_goal.kicker'))}</span><p class="o55p-goaltext">“${U.esc(T('tour.steps.book_club_goal.goal'))}”</p>`
+        + `<button type="button" class="pm6-wiz-bigbtn o55p-use" data-o55p="useGoal" data-pm-hover-exempt="true">${U.esc(T('tour.steps.book_club_goal.use'))} <span class="pm6-wiz-glyph">→</span></button>`;
+      const hero = scroll.querySelector('.pm6-wiz-hero');
+      scroll.insertBefore(card, hero ? hero.nextSibling : scroll.firstChild);
+    }
+    P.goalShown = true;
+    return card;
+  };
+
+  /* ---------------------------------------------------------------- start / remove */
+  function activeStage() { const s = document.querySelector('#panel-wizard .pm6-wiz-stage.active'); return s ? s.getAttribute('data-wiz-stage') : 'intake'; }
+  function setStage(name) { document.querySelectorAll('#panel-wizard .pm6-wiz-stage').forEach((s) => s.classList.toggle('active', s.getAttribute('data-wiz-stage') === name)); }
+  P.start = function start() {
+    if (P.active) return;
+    const saved = { stage: activeStage(), regions: {}, title: (document.querySelector('#pm6WizRunHead .pm6-wiz-runhead-title') || {}).textContent };
+    REGIONS.forEach((id) => { const el = byId(id); if (el) saved.regions[id] = el.innerHTML; });
+    P.saved = saved; P.active = true; P.outcome = null; P.answer = null; P.why = false; P.reviewed = false; P.edited = false;
+    byId('panel-wizard').classList.add('o55p-practice');
+    setStage('workspace');
+    const title = document.querySelector('#pm6WizRunHead .pm6-wiz-runhead-title'); if (title) title.innerHTML = `${U.esc(W('title'))} <span class="o55p-badge">${U.esc(W('badge'))}</span>`;
+    render(true);
+    O55.sound.play('success');
+  };
+  P.remove = function remove() {
+    const card = byId('o55pGoal'); if (card) card.remove();
+    P.goalShown = false;
+    if (!P.active || !P.saved) { P.active = false; return; }
+    REGIONS.forEach((id) => { const el = byId(id); if (el && P.saved.regions[id] != null) el.innerHTML = P.saved.regions[id]; });
+    const title = document.querySelector('#pm6WizRunHead .pm6-wiz-runhead-title'); if (title && P.saved.title != null) title.textContent = P.saved.title;
+    setStage(P.saved.stage || 'intake');
+    const pw = byId('panel-wizard'); if (pw) pw.classList.remove('o55p-practice');
+    P.active = false; P.saved = null;
+  };
+
+  /* ---------------------------------------------------------------- rendering into the Wizard's regions */
+  const OUT = ['o1', 'o2', 'o3'];
+  function topicsHtml() {
+    return OUT.map((id, i) => {
+      const open = P.outcome === id, answered = !!P.answer;
+      const state = answered ? 'ready' : open ? 'active' : 'not_started';
+      return `<button type="button" class="pm6-wiz-topic-card pm-sheen${open ? ' open' : ''} o55p-outcome" data-tstate="${state}" style="--i:${i}" data-o55p="open" data-arg="${id}" data-key="t-${id}" data-pm-hover-exempt="true">`
+        + `<span class="pm6-wiz-topic-toprow">${icon('clipboard')}<span class="pm6-wiz-topic-name">${i + 1} · ${U.esc(W('outcomes.' + id + '.title'))}</span>`
+        + `<span class="pm6-wiz-schip" data-state="${state}"><span class="pm6-wiz-sdot"></span>${U.esc(answered ? 'Ready' : open ? 'Open' : 'Not started')}</span></span>`
+        + `<span class="pm6-wiz-topic-sub">${U.esc(W('outcomes.' + id + '.sub'))}</span>`
+        + `<span class="pm6-wiz-topic-prog"><span class="pm6-wiz-topic-prog-fill" style="width:${answered ? 100 : open ? 40 : 8}%"></span></span></button>`;
+    }).join('');
+  }
+  function threadHtml() {
+    const head = `<div class="pm6-wiz-thread-head">${icon('clipboard')}<div class="pm6-wiz-thread-title">${U.esc(P.reviewed ? T('tour.steps.review.button') : P.outcome ? W('outcomes.' + P.outcome + '.title') : W('topics'))}</div></div>`;
+    if (!P.outcome) return head + `<div class="pm6-wiz-thread-body"><div class="pm6-wiz-thread-note">${U.esc(T('tour.steps.three_outcomes.title'))}</div></div>`;
+    if (P.reviewed && !P.changing) {
+      return head + `<div class="pm6-wiz-thread-body o55p-review" data-key="rev"><div class="pm6-wiz-thread-note">${U.esc(T('tour.steps.review.after'))}</div>`
+        + answerRow() + `<div class="pm6-wiz-thread-actions"><button type="button" class="pm6-wiz-btn" data-o55p="change" data-pm-hover-exempt="true">${U.esc(W('change'))}</button></div></div>`;
+    }
+    let body = `<div class="o55p-bubble" data-key="q"><span class="o55p-who">${U.esc(W('badge'))}</span><p>${U.esc(W('question'))}</p>`
+      + `<div class="o55p-opts" role="radiogroup" aria-label="${U.esc(W('question'))}">`
+      + ['me', 'few', 'unsure'].map((v) => `<button type="button" class="pm6-wiz-opt${P.answer === v ? ' sel' : ''}" role="radio" aria-checked="${P.answer === v}" data-o55p="answer" data-arg="${v}" data-pm-hover-exempt="true">${U.esc(W('choices.' + v))}</button>`).join('') + '</div>'
+      + `<button type="button" class="o55p-why" data-o55p="why" aria-expanded="${P.why}" data-pm-hover-exempt="true">${U.esc(W('why'))}</button>`
+      + (P.why ? `<p class="o55p-whytext">${U.esc(W('whyText'))}</p>` : '') + '</div>';
+    if (P.answer && !P.changing) body += answerRow() + `<div class="pm6-wiz-thread-actions"><button type="button" class="pm6-wiz-btn primary" data-o55p="review" data-pm-hover-exempt="true">${U.esc(T('tour.steps.review.button'))} <span class="pm6-wiz-glyph">→</span></button></div>`;
+    return head + `<div class="pm6-wiz-thread-body">${body}</div>`;
+  }
+  function answerRow() {
+    return `<div class="pm6-wiz-ans" data-key="ans"><span class="pm6-wiz-ans-check">${O55.c.small('check', 12)}</span><div><div class="pm6-wiz-ans-q">${U.esc(W('question'))}</div><div class="pm6-wiz-ans-a">${U.esc(W('choices.' + P.answer))}</div><div class="pm6-wiz-ans-src">${U.esc(W('badge'))}</div></div></div>`;
+  }
+  /* The live plan: keyed rows so a changed answer moves only what it affects */
+  function planRows() {
+    const dec = P.answer === 'few' ? [['sig', W('doc.signin')], ['acc', W('doc.access')]] : P.answer === 'me' ? [['one', W('doc.single')]] : [];
+    const open = P.answer === 'unsure' ? [['unsure', W('doc.unsureRow')]] : [];
+    return { dec, open };
+  }
+  function docHtml(gone) {
+    const { dec, open } = planRows();
+    const row = (k, text, cls) => `<div class="pm6-wiz-doc-decision o55p-row${cls ? ' ' + cls : ''}" data-key="r-${k}"><span class="pm6-wiz-glyph">${cls && cls.includes('gone') ? '−' : O55.c.small('check', 12)}</span><span>${U.esc(text)}</span></div>`;
+    const decRows = dec.map(([k, t]) => row(k, t, P.fresh && P.fresh.includes(k) ? 'o55p-fresh' : '')).concat((gone || []).filter((g) => g.sec === 'dec').map((g) => row(g.k, g.t, 'o55p-gone')));
+    const openRows = open.map(([k, t]) => row(k, t, P.fresh && P.fresh.includes(k) ? 'o55p-fresh o55p-open' : 'o55p-open')).concat((gone || []).filter((g) => g.sec === 'open').map((g) => row(g.k, g.t, 'o55p-gone')));
+    return `<div class="pm6-wiz-doc-h" data-key="h">${U.esc(W('title'))} — ${U.esc(W('badge'))}</div>`
+      + `<div class="pm6-wiz-doc-sec" data-key="s-out"><div class="pm6-wiz-doc-sec-h">${U.esc(W('doc.outcomes'))}</div>${OUT.map((id) => `<div class="pm6-wiz-doc-para" data-key="o-${id}">${U.esc(W('outcomes.' + id + '.title'))}</div>`).join('')}</div>`
+      + `<div class="pm6-wiz-doc-sec" data-key="s-dec"><div class="pm6-wiz-doc-sec-h">${U.esc(W('doc.decisions'))}</div>${decRows.join('') || `<div class="pm6-wiz-doc-sec-p" data-key="dec-none"><em>—</em></div>`}</div>`
+      + `<div class="pm6-wiz-doc-sec" data-key="s-as"><div class="pm6-wiz-doc-sec-h">${U.esc(W('doc.assumptions'))}</div><div class="pm6-wiz-doc-para" data-key="a1">${U.esc(W('doc.assume1'))}</div><div class="pm6-wiz-doc-para" data-key="a2">${U.esc(W('doc.assume2'))}</div></div>`
+      + `<div class="pm6-wiz-doc-sec" data-key="s-open"><div class="pm6-wiz-doc-sec-h">${U.esc(W('doc.unresolved'))}</div>${openRows.join('') || `<div class="pm6-wiz-doc-sec-p" data-key="open-none"><em>${U.esc(W('doc.none'))}</em></div>`}</div>`
+      + `<div class="pm6-wiz-doc-sec o55p-boundary" data-key="s-b"><div class="pm6-wiz-doc-sec-p"><strong>${U.esc(W('doc.boundary'))}</strong></div></div>`;
+  }
+  function railHtml() {
+    const g = (done, label) => `<div class="pm6-wiz-gate${done ? ' done' : ''}"><span class="pm6-wiz-gate-mark">${done ? O55.c.small('check', 11) : ''}</span><span>${U.esc(label)}</span></div>`;
+    return `<div class="pm6-wiz-rail-title">${U.esc(W('rail.title'))}</div>` + g(true, W('rail.g1')) + g(!!P.answer && P.answer !== 'unsure', W('rail.g2')) + g(!!P.answer && P.answer !== 'unsure', W('rail.g3'))
+      + `<div class="o55p-fence" data-key="fence"><button type="button" class="pm6-wiz-approve o55p-approve" aria-disabled="true" data-pm-hover-exempt="true" tabindex="-1">${icon('rocket')}Approve And Build</button><span class="o55p-fencenote">${O55.c.small('lock', 13)}${U.esc(W('rail.fence'))}</span></div>`;
+  }
+  function render(first, gone) {
+    if (!P.active) return;
+    const set = (id, html) => { const el = byId(id); if (el) { if (first) el.innerHTML = html; else U.morph(el, html); } };
+    set('pm6WizTopicList', topicsHtml()); set('pm6WizThread', threadHtml()); set('pm6WizDoc', docHtml(gone)); set('pm6WizRail', railHtml());
+    set('pm6WizRunState', `<span class="pm6-wiz-statepill">${U.esc(W('state'))}</span>`);
+    const cnt = byId('pm6WizTopicCount'); if (cnt) cnt.textContent = W('count', { n: 3 });
+    const dt = byId('pm6WizDocTitle'); if (dt) dt.textContent = W('doc.title');
+    const dm = byId('pm6WizDocMeta'); if (dm) dm.textContent = W('badge');
+    const dock = byId('pm6WizIntegrateDock'); if (dock) dock.innerHTML = '';
+  }
+  P.render = () => render(false);
+
+  /* ---------------------------------------------------------------- the learner's actions (real clicks) */
+  function answer(v) {
+    const before = planRows(), prev = P.answer;
+    if (prev === v) return;
+    if (prev && P.reviewed) { P.edited = true; P.prev = prev; }
+    P.answer = v; P.changing = false;
+    const after = planRows();
+    const key = (r) => r[0];
+    const gone = before.dec.filter((r) => !after.dec.some((x) => key(x) === key(r))).map(([k, t]) => ({ sec: 'dec', k, t }))
+      .concat(before.open.filter((r) => !after.open.some((x) => key(x) === key(r))).map(([k, t]) => ({ sec: 'open', k, t })));
+    P.fresh = after.dec.concat(after.open).filter((r) => !before.dec.concat(before.open).some((x) => key(x) === key(r))).map(key);
+    P.changed = P.fresh.concat(gone.map((g) => g.k));
+    /* evidence that only the affected rows changed: every other keyed node is the same node, and the outcomes
+       did not move */
+    const doc = byId('pm6WizDoc'), nodes = doc ? [...doc.querySelectorAll('[data-key]')] : [];
+    const tops = OUT.map((id) => { const el = doc && doc.querySelector(`[data-key="o-${id}"]`); return el ? Math.round(el.getBoundingClientRect().top) : null; });
+    render(false, gone);
+    P.lastChange = { from: prev, to: v, fresh: P.fresh.slice(), gone: gone.map((g) => g.k).sort(),
+      replaced: nodes.filter((n) => !n.isConnected).length, kept: nodes.length,
+      outcomesMoved: OUT.some((id, i) => { const el = doc && doc.querySelector(`[data-key="o-${id}"]`); return !el || Math.round(el.getBoundingClientRect().top) !== tops[i]; }) };
+    O55.sound.play('select');
+    /* removed rows fold away, then leave the document; unaffected rows never moved */
+    M.after(620, () => { if (P.active) { P.fresh = []; render(false); } });
+  }
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest && e.target.closest('[data-o55p]'); if (!b) return;
+    const a = b.getAttribute('data-o55p'), arg = b.getAttribute('data-arg');
+    e.preventDefault();
+    if (a === 'useGoal') { P.start(); return; }
+    if (!P.active) return;
+    if (a === 'open') { P.outcome = arg; P.changing = false; O55.sound.play('select'); render(false); return; }
+    if (a === 'answer') { answer(arg); return; }
+    if (a === 'why') { P.why = !P.why; O55.sound.play('tap'); render(false); return; }
+    if (a === 'review') { P.reviewed = true; O55.sound.play('next'); render(false); return; }
+    if (a === 'change') { P.changing = true; O55.sound.play('tap'); render(false); }
+  }, true);
+})();
+
+/* ---- js/83-tour-steps.js ---- */
+/* The Guided Tour's steps (canonical phase ids). Chapter 1 Ask and understand, chapter 2 Make the workspace yours,
+   chapter 3 Plan before building — which carries more than half of the learner's actions. Every action step has a real
+   target, a success predicate that reads the real result, and a Show Me that goes through the same control. */
+(function () {
+  'use strict';
+  const O55 = window.O55, U = O55.util, T = (k, v) => O55.t(k, v), M = O55.motion, TR = O55.tour, C = TR.chat, P = TR.practice;
+  const S = (d) => TR.define(d);
+  const api = () => window.PM_HOME_WORKSPACE;
+  const chatSurface = () => api() && api().layout.surfaces.find((s) => s.surface_kind === 'chat');
+  const page = () => ((document.querySelector('.page-tab.active[data-page]') || {}).getAttribute ? document.querySelector('.page-tab.active[data-page]').getAttribute('data-page') : '');
+  const goPage = (p) => { if (page() !== p) { const t = TR.q(`.page-tab[data-page="${p}"]`); if (t) t.click(); } };
+  const q = TR.q;
+
+  /* ================================================================ chapter 1: Ask and understand */
+  S({ id: 'comfort_intro', chapter: 'ask', kind: 'info', place: 'center',
+    extra: (st) => `<p class="o55t-tips">${O55.c.small('spark', 13)}<span>${U.esc(T('tour.steps.comfort_intro.' + (st.tips === 'eli5' ? 'tipsEli5' : 'tips')))}</span></p>`,
+    nextLabel: () => T('tour.controls.start') });
+
+  S({ id: 'open_chat', chapter: 'ask', kind: 'action', planning: false,
+    /* the tour tucks Chat away (it comes back with the layout restore) so opening it is a real action */
+    enter() { goPage('dashboard'); const s = chatSurface(); if (s && s.visible) api().setSurfaceVisible('chat', false, 'cmd.panel.switch'); },
+    target: () => q('#activityBar .icon[data-ab-id="chat"]'),
+    done: () => C.chatVisible(),
+    showMe: async (sm) => { await sm.click(q('#activityBar .icon[data-ab-id="chat"]')); },
+    goTo: () => goPage('dashboard') });
+
+  S({ id: 'select_teacher', chapter: 'ask', kind: 'action',
+    async enter() { if (!C.chatVisible()) api().setSurfaceVisible('chat', true, 'cmd.panel.switch'); await C.ensureThread(); },
+    target: () => C.personaItem('Teacher') || C.personaBtn(),
+    done: () => C.persona() === 'Teacher',
+    showMe: async (sm) => { if (!C.personaItem('Teacher')) { await sm.click(C.personaBtn()); await sm.wait(320); } await sm.click(C.personaItem('Teacher')); },
+    goTo: () => { goPage('dashboard'); api().setSurfaceVisible('chat', true, 'cmd.panel.switch'); } });
+
+  /* the suggested prompt lives in the callout: it fills the real composer, and the learner sends it with the real Send */
+  function fill(text) { const t = C.composer(); if (!t) return false; t.focus(); t.value = text; t.dispatchEvent(new Event('input', { bubbles: true })); O55.sound.play('select'); return true; }
+  const filled = () => { const t = C.composer(); return !!t && t.value.trim() === T('tour.teacher.q1'); };
+  S({ id: 'send_question', chapter: 'ask', kind: 'action', pad: 10,
+    enter() { if (!C.chatVisible()) api().setSurfaceVisible('chat', true, 'cmd.panel.switch'); },
+    target: () => (filled() ? C.sendBtn() : C.composer()),
+    extra: () => `<div class="o55t-inline">${TR.btn('fillQuestion', T('tour.teacher.q1'), 'secondary o55t-prompt')}</div>`,
+    actions: { fillQuestion: () => { fill(T('tour.teacher.q1')); TR.refresh(); } },
+    done: () => C.sent.some((x) => x.trim() === T('tour.teacher.q1')),
+    showMe: async (sm) => { await sm.click(document.querySelector('#pm-o55-tour [data-o55t="fillQuestion"]')); await sm.wait(300); await sm.click(C.sendBtn()); } });
+
+  S({ id: 'answer_stream', chapter: 'ask', kind: 'info', pad: 6,
+    target: () => C.lastAnswerEl(),
+    ready: () => C.answered('a1') });
+
+  S({ id: 'same_answer_eli5', chapter: 'ask', kind: 'action', after: true,
+    /* the real ELI5 toggle; when it turns on, the same bubble is rewritten (and back if it turns off) */
+    tick(st) { const on = !!q('span.chat-toggle-btn.toggle-eli5.active'); if (on !== st.eli5Shown) { st.eli5Shown = on; if (C.lastAnswerEl()) C.rewrite(on); } },
+    enter(st) { st.eli5Shown = !!q('span.chat-toggle-btn.toggle-eli5.active'); },
+    target: () => (TR.st.sess.done.includes('same_answer_eli5') ? C.lastAnswerEl() : C.eli5Btn()),
+    done: (st) => st.eli5Shown && C.eli5Shown(),
+    extra: (st) => (st.sess.done.includes('same_answer_eli5') ? `<div class="o55t-inline">${TR.btn('askProject', T('tour.steps.same_answer_eli5.ask'), 'secondary')}</div>` : ''),
+    actions: { askProject: async () => { const t = C.composer(); if (!t) return; t.focus(); t.value = T('tour.teacher.q2'); t.dispatchEvent(new Event('input', { bubbles: true })); await M.delay(120); const b = C.sendBtn(); if (b) b.click(); } },
+    stay: true,
+    showMe: async (sm) => { await sm.click(C.eli5Btn()); } });
+
+  /* ================================================================ chapter 2: Make the workspace yours */
+  const ORIENT = [() => q('.page-tabs'), () => document.getElementById('pm-home-workspace'), () => document.getElementById('chatPanel')];
+  S({ id: 'workspace_orientation', chapter: 'workspace', kind: 'info',
+    enter(st) { goPage('dashboard'); st.orient = 0; st.orientAt = performance.now(); st.orientLoops = 0; },
+    tick(st) { if (performance.now() - st.orientAt > 1700) { st.orient = (st.orient + 1) % ORIENT.length; st.orientAt = performance.now(); if (st.orient === 0) st.orientLoops++; O55.sound.play('spot'); } },
+    target: (st) => ORIENT[st.orient || 0](),
+    avoid: () => [ORIENT[0](), ORIENT[2]()],
+    ready: (st) => st.orientLoops > 0 || st.orient === ORIENT.length - 1 });
+
+  /* the left dock's entry band: 28 px inside the workspace's left edge (the engine's frozen dock latch) */
+  function leftBand() { const ws = document.getElementById('pm-home-workspace'); if (!ws) return null; const r = ws.getBoundingClientRect(); return { x: r.left, y: r.top, w: 28, h: r.height }; }
+  function showZone(on) {
+    const z = document.querySelector('#pm-o55-tour .o55t-zone'); if (!z) return;
+    const b = leftBand(); if (!on || !b) { z.classList.remove('o55t-on'); return; }
+    z.style.transform = `translate(${b.x}px, ${b.y}px)`; z.style.width = b.w + 'px'; z.style.height = b.h + 'px'; z.classList.add('o55t-on');
+  }
+  S({ id: 'move_or_dock_chat', chapter: 'workspace', kind: 'action', after: true,
+    enter() { goPage('dashboard'); if (!C.chatVisible()) api().setSurfaceVisible('chat', true, 'cmd.panel.switch'); },
+    tick() { showZone(!TR.st.sess.done.includes('move_or_dock_chat')); },
+    leave: () => showZone(false),
+    target: () => q('[data-pm-home-handle="chat"]'),
+    done: () => { const s = chatSurface(); return !!(s && s.host === 'dock_left' && s.visible); },
+    showMe: async (sm) => { const b = leftBand(); await sm.drag(q('[data-pm-home-handle="chat"]'), { x: b.x + 12, y: b.y + b.h * 0.45 }); },
+    goTo: () => goPage('dashboard') });
+
+  const aqItem = () => [...document.querySelectorAll('.pm6-dash-catalog-item')].find((x) => TR.vis(x) && /approval queue/i.test(x.textContent)) || null;
+  const aqWidget = () => [...document.querySelectorAll('[data-widget-id], .pm6-dash-widget')].find((w) => TR.vis(w) && /approval queue/i.test(w.textContent)) || null;
+  S({ id: 'widget_action', chapter: 'workspace', kind: 'action', after: true,
+    enter() { goPage('dashboard'); },
+    target: () => (TR.st.sess.done.includes('widget_action') ? aqWidget() : aqItem() || q('#pm6DashAddBtn')),
+    done: () => !!aqWidget(),
+    showMe: async (sm) => { if (!aqItem()) { await sm.click(q('#pm6DashAddBtn')); await sm.wait(420); } await sm.click(aqItem()); },
+    goTo: () => goPage('dashboard') });
+
+  /* ================================================================ chapter 3: Plan before building */
+  S({ id: 'open_planning', chapter: 'plan', kind: 'action', planning: true,
+    target: () => q('#tab-wizard'),
+    done: () => page() === 'wizard',
+    showMe: async (sm) => { await sm.click(q('#tab-wizard')); } });
+
+  S({ id: 'book_club_goal', chapter: 'plan', kind: 'action', planning: true, place: 'right',
+    enter() { goPage('wizard'); P.injectGoal(); },
+    target: () => q('#o55pGoal'),
+    done: () => P.active,
+    showMe: async (sm) => { await sm.click(q('#o55pGoal .o55p-use')); },
+    goTo: () => { goPage('wizard'); P.injectGoal(); } });
+
+  S({ id: 'three_outcomes', chapter: 'plan', kind: 'action', planning: true,
+    target: () => document.getElementById('pm6WizTopicList'),
+    done: () => !!P.outcome,
+    showMe: async (sm) => { await sm.click(q('.o55p-outcome[data-arg="o1"]')); },
+    goTo: () => goPage('wizard') });
+
+  S({ id: 'access_answer', chapter: 'plan', kind: 'action', planning: true,
+    target: () => q('#pm6WizThread .o55p-bubble'),
+    done: () => !!P.answer,
+    showMe: async (sm) => { await sm.click(q('[data-o55p="why"]')); await sm.wait(900); await sm.click(q('[data-o55p="answer"][data-arg="few"]')); },
+    goTo: () => goPage('wizard') });
+
+  S({ id: 'review', chapter: 'plan', kind: 'action', planning: true, after: true,
+    target: () => (P.reviewed ? document.getElementById('pm6WizDoc') : q('[data-o55p="review"]')),
+    done: () => P.reviewed,
+    showMe: async (sm) => { await sm.click(q('[data-o55p="review"]')); },
+    goTo: () => goPage('wizard') });
+
+  S({ id: 'answer_edit', chapter: 'plan', kind: 'action', planning: true,
+    target: () => (P.edited ? document.getElementById('pm6WizDoc') : q('#pm6WizThread .o55p-bubble') || q('[data-o55p="change"]')),
+    done: () => P.edited,
+    showMe: async (sm) => {
+      if (!q('#pm6WizThread .o55p-bubble')) { await sm.click(q('[data-o55p="change"]')); await sm.wait(400); }
+      await sm.click(q(`[data-o55p="answer"][data-arg="${P.answer === 'few' ? 'me' : 'few'}"]`));
+    },
+    goTo: () => goPage('wizard') });
+
+  /* the spotlight narrows to the decisions the answer touched, and the new rows glow once more */
+  S({ id: 'consequence_changed', chapter: 'plan', kind: 'info', planning: true,
+    enter() { M.after(420, () => (P.changed || []).forEach((k) => { const r = q(`#pm6WizDoc [data-key="r-${k}"]`); if (r) { r.classList.remove('o55p-pulse'); void r.offsetWidth; r.classList.add('o55p-pulse'); } })); },
+    leave() { document.querySelectorAll('#pm6WizDoc .o55p-pulse').forEach((r) => r.classList.remove('o55p-pulse')); },
+    target: () => q('#pm6WizDoc [data-key="s-dec"]') || document.getElementById('pm6WizDoc'),
+    goTo: () => goPage('wizard') });
+
+  S({ id: 'completion_boundary', chapter: 'plan', kind: 'info', planning: true, place: 'left',
+    target: () => q('.o55p-fence'),
+    render(st, h) {
+      return `<p class="o55t-kicker">${U.esc(T('tour.chapters.plan'))}</p><h2 class="o55t-title" id="o55t-h" tabindex="-1">${U.esc(h.copy('completion_boundary', 'title'))}</h2>`
+        + `<p class="o55t-body">${U.esc(h.copy('completion_boundary', 'do'))}</p>`
+        + `<div class="o55t-finish" role="group" aria-label="${U.esc(T('tour.finish.title'))}">`
+        + `<button type="button" class="o55t-choice o55t-on" data-o55t="finish" data-arg="restore" data-pm-hover-exempt="true"><strong>${U.esc(T('tour.finish.restore'))}</strong><span>${U.esc(T('tour.finish.restoreSub'))}</span></button>`
+        + `<button type="button" class="o55t-choice" data-o55t="finish" data-arg="keep" data-pm-hover-exempt="true"><strong>${U.esc(T('tour.finish.keep'))}</strong><span>${U.esc(T('tour.finish.keepSub'))}</span></button></div>`
+        + `<div class="o55t-actions">${h.btn('back', T('tour.controls.back'), 'ghost')}</div>`;
+    } });
+
+  /* landing: a short note on the real Planning Wizard once the tour has gone */
+  TR.landing = function landing() {
+    const host = document.querySelector('#pm6WizStageIntake .pm6-wiz-intake-scroll'); if (!host) return;
+    let note = document.getElementById('o55tLanding');
+    if (!note) { note = document.createElement('div'); note.id = 'o55tLanding'; note.className = 'o55t-landing'; note.setAttribute('role', 'status'); const hero = host.querySelector('.pm6-wiz-hero'); host.insertBefore(note, hero ? hero.nextSibling : host.firstChild); }
+    note.innerHTML = `${O55.c.small('seed', 16)}<span>${U.esc(T('tour.landing'))}</span>`;
+    M.after(9000, () => { if (note.isConnected) note.classList.add('o55t-leaving'); M.after(500, () => note.remove()); });
+  };
+  /* measured on the reference run: about four minutes at a reading pace, Show Me used twice */
+  TR.minutes = () => 4;
+})();
+
 /* ---- js/90-demo.js ---- */
 /* Concept demo pill — outside the onboarding window and never part of the product. It switches the fixture world
    (the packet's scenarios) and restarts onboarding, so every path can be reached by ordinary clicks. It stays usable
@@ -86047,7 +87165,18 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     el.innerHTML = `<button type="button" data-o55-chip="resume" data-pm-hover-exempt="true">${O55.c.small('history', 14)}<span>${U.esc(committed ? T('chrome.resumeOptional') : T('chrome.resume'))}</span></button>`
       + `<button type="button" class="o55-resume-x" data-o55-chip="hide" aria-label="${U.esc(T('chrome.hide'))}" data-pm-hover-exempt="true">×</button>`;
   }
-  O55.boot = { chip };
+  /* A tour interrupted by a reload offers to carry on from its last safe step. */
+  function tourChip() {
+    const t = O55.store.get('tour', null);
+    let el = document.getElementById('o55-tourchip');
+    if (!(t && t.status === 'running')) { if (el) el.remove(); return; }
+    if (!el) {
+      el = document.createElement('div'); el.id = 'o55-tourchip'; el.className = 'o55-resume'; el.setAttribute('data-pm-hover-exempt', 'true'); document.body.appendChild(el);
+      el.addEventListener('click', (e) => { const b = e.target.closest('[data-o55-chip]'); if (!b) return; el.remove(); if (b.getAttribute('data-o55-chip') === 'resume') O55.tour.start({}); else { O55.store.set('tour', Object.assign(t, { status: 'skipped' })); } });
+    }
+    el.innerHTML = `<button type="button" data-o55-chip="resume" data-pm-hover-exempt="true">${O55.c.small('spark', 14)}<span>${U.esc(T('tour.resume'))}</span></button><button type="button" class="o55-resume-x" data-o55-chip="hide" aria-label="${U.esc(T('chrome.hide'))}" data-pm-hover-exempt="true">×</button>`;
+  }
+  O55.boot = { chip, tourChip };
 
   function start() {
     O55.motion.watchLongTasks();
@@ -86056,6 +87185,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (sw.startsWith('screen=')) return O55.ui.open({ screen: sw.slice(7) });
     if (sw === 'tour') return O55.tour && O55.tour.start && O55.tour.start({ source: 'switch' });
     const saved = O55.store.get('onboarding', null);
+    tourChip();
     if (!saved) return O55.ui.open({});
     if (saved.status === 'closed') chip();
   }
