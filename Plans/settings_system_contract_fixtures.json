@@ -866,7 +866,7 @@
       ],
       "typed_local_ui_action_id": null,
       "typed_local_payload_schema_ref": null,
-      "reason": "The packet spelling is replaced by canonical cmd.artifacts.open_panel.",
+      "reason": "Retained in the fixed reuse partition as the explicitly blocked cmd.artifacts.open_panel replacement under UCC-120, not an admitted command or handler. The packet action still requires exact Runtime Artifacts and Commands route adjudication; this disposition authorizes no dispatch and supplies no panel or object arguments.",
       "native_handler_claim": false
     }
   },

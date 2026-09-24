@@ -47,3 +47,13 @@ Evidence root:
 The PM planning-ledger skill kept owner prose and companion work separate and
 preserved the governance boundary. No native proof, governance reseal, main
 landing, or completion of packet-wide closure is claimed.
+
+## Separate fixture follow-up
+
+After owner commit `b4af2b05b3`, the single Artifacts disposition reason now says
+the replacement is explicitly blocked, not admitted, and grants no dispatch or
+panel/object arguments. The disposition enum, target, all other records and all
+payload/schema values remain unchanged. A fourth regression checks that wording;
+all 33 Settings tests pass. The binding remains stale and unchanged: no governance
+hash was refreshed. This companion closes the wording inconsistency only, not
+the eventual owner route/admission question.
