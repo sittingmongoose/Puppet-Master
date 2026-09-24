@@ -21,7 +21,7 @@ Coordinator confirmations (2026-09-24, on Jared's delegation), after this branch
 
 | | |
 |---|---|
-| Branch tip | `9006c719e0`, rebased onto `origin/main` `15ab001892`, pushed |
+| Branch | `plans/storage-owner-closeout-20260924`, rebased onto `origin/main` `15ab001892` and pushed to both push URLs of `origin` (GitHub and the NAS). The last task commit is `9006c719e0`; only report commits follow it. |
 | Decision Log | **DL-076**, with two items, in both sections |
 | 1(a) `whole_wrapper_sha256` | Recipe found and stated beside SP-310; readiness checks it (3 new self-test checks) |
 | 1(b) `redb_snapshot_id` | The four checkpoint rows store the nine-field durable token; SP-311 unchanged; readiness rejects a stored snapshot fence (5 new self-test checks) |
@@ -44,7 +44,7 @@ After the rebase onto `15ab001892`, in order:
 | `918c89ad5e` | DL-076 in both Decision Log sections. Decision_Log shards and the plan index regenerated. |
 | `cb4bbd45dc` | Task 2: the two census tests re-pinned. |
 | `9006c719e0` | Task 3: the three rule-file sentences and the two `.gitignore` lines. |
-| this commit | This report, completed. |
+| `3561b01c9f`, `f485cc6e74`, `9183da847a` and this commit | This report, completed after the rebase. |
 
 ## Task 1(a): `whole_wrapper_sha256`
 
