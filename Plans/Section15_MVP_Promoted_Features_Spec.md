@@ -11864,7 +11864,12 @@ Call the actual Storage append owner with that same immutable ProducerInput,
 under the existing `ordinary` durability class of Case L-2 and CV-339 (a fact
 recorded after the accepted mutation, not a mutation-authorizing receipt) and the
 existing append protocol. Validate original source/first AppendReceipt/full-value
-custody under SP-286 and CV-339, and current source observation under
+custody under SP-286 and CV-339 through explicitly adopted
+`storage.first_append_receipt.resolve.v2` (the original eleven-field receipt and
+four-field result) and `storage.first_append_receipt.resolve_full_value.v1` (the
+closed `full_value_request`/`full_value_result` of
+`Plans/event_append_receipt_contracts.schema.json`); a legacy selector or semantic
+reader supplies no full-value proof. Validate current source observation under
 SP-278/SP-319. Do not synthesize an
 AppendReceipt or remint Storage-assigned fields. An authentic issued event may
 precede local recording of its result. Lost acknowledgement, uncertain append or

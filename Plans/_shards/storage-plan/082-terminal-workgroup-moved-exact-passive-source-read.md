@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L26642-L26830
+Source lines: L26642-L26833
 
-Source SHA256: `7c4924f6b9125fd9f76d1d713d0e3108bc9344a51cf9f331eeb105c7e13948d2`
+Source SHA256: `2085ee0d86118065d30b8a4164844fe66847cc1cba2fe53be98458fc1b257c7c`
 
 ---
 
@@ -78,8 +78,11 @@ source section the move vacated, with no replacement workgroup, pane or session
 any applicable sibling
 settlement, original result/SIR/CV-333 joins, and genuine original append authority.
 SP-286/CV-339 require the real eleven-field first AppendReceipt and original append
-result, actual original full EventRecord commitment and Storage-assignment joins;
-producer-semantic equality alone is insufficient. Do not acquire disposed controls
+result, actual original full EventRecord commitment and Storage-assignment joins,
+resolved only through explicitly adopted `storage.first_append_receipt.resolve.v2`
+and `storage.first_append_receipt.resolve_full_value.v1`; producer-semantic
+equality, a legacy selector or a semantic reader alone is insufficient. Do not
+acquire disposed controls
 or reconstruct missing original command/result custody from a current terminal,
 Home receipt or self-consistent event. The unchanged event payload has no result
 or revision fields; resolve those obligations only through independently admitted

@@ -26709,8 +26709,11 @@ source section the move vacated, with no replacement workgroup, pane or session
 any applicable sibling
 settlement, original result/SIR/CV-333 joins, and genuine original append authority.
 SP-286/CV-339 require the real eleven-field first AppendReceipt and original append
-result, actual original full EventRecord commitment and Storage-assignment joins;
-producer-semantic equality alone is insufficient. Do not acquire disposed controls
+result, actual original full EventRecord commitment and Storage-assignment joins,
+resolved only through explicitly adopted `storage.first_append_receipt.resolve.v2`
+and `storage.first_append_receipt.resolve_full_value.v1`; producer-semantic
+equality, a legacy selector or a semantic reader alone is insufficient. Do not
+acquire disposed controls
 or reconstruct missing original command/result custody from a current terminal,
 Home receipt or self-consistent event. The unchanged event payload has no result
 or revision fields; resolve those obligations only through independently admitted
