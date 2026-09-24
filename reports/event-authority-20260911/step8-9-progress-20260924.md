@@ -1,4 +1,4 @@
-STATUS: orientation complete and handover evidence verified; last completed step: none of 8(a)-(d) or 9 yet (8(a) in progress on plans/ea-step08-depth42-20260924).
+STATUS: last completed step: 8(d) (certified owner anchors, branch plans/ea-certified-anchors-20260924 at a8c5ff6a39, not landed). 8(a) in progress on plans/ea-step08-depth42-20260924.
 
 # DL-039 Steps 8 and 9: progress, 2026-09-24
 
@@ -24,7 +24,7 @@ Opus agent under the coordinator's thread, continuing the DL-039 step list on Ja
 | 8(a) | Current depth assessment of the 42 registered families at checkpoint `2026-09-11.2`, replacing the dated 39-family matrix | in progress |
 | 8(b) | Remaining source work: Replan Stop route; original capture for restore-point corruption; native v8 installation; consumer adoption; compaction depth currentness | not started |
 | 8(c) | Browser-created PARTIAL criteria after the SP-278 v2 companion (`22e516b456`) and `terminal.workgroup_moved` (`566576ea55`) | not started |
-| 8(d) | `goal_run.certified` older owner anchors (GRS-084) | not started |
+| 8(d) | `goal_run.certified` older owner anchors (GRS-084) | done on `plans/ea-certified-anchors-20260924` (`b7128bfeac` owner edit, `a8c5ff6a39` report); bounded owner edit, registry and checkpoint unchanged; waiting for review and the landing go |
 | 9 | J248 campaign: 226 remaining of 252 (0 registered, 6 excluded, 20 carded) | not started |
 
 ## Landings
@@ -33,7 +33,8 @@ None yet. The first landing waits for the coordinator's word that the reseal and
 
 ## Open items (running)
 
-1. The eight answered cards (DL-068 to DL-075) did not include `step-09-interaction-cards.md` or `step-09-extensions-cards.md`; their status needs a check (carried from `card-answers-dl068-075-20260923.md`).
+1. Closed: `step-09-interaction-cards.md` says both of its former cards were approved and applied (DL-041, DL-042) and none is pending; `step-09-extensions-cards.md` says no card is justified. Neither holds a pending question.
+2. The certified registry anchors themselves still point at the old sections; moving them changes the registry hash, so it should ride with the next registry revision that needs a checkpoint approval anyway (8(d) report).
 
 ## Commits on this branch
 
