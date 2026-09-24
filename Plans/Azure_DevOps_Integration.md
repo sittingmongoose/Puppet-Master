@@ -396,3 +396,96 @@ preserved_exact_tokens: [policy evaluations, status check, informational, gate]
 negative_constraints: [Do not show one provider check in both groups at once., Do not present an unwatched status check as a gate., Do not join the two lists on an inferred key.]
 owner_hints: [Plans/Azure_DevOps_Integration.md, Plans/Source_Control_System.md]
 ```
+
+
+## Explicit New Team-Project Creation Prerequisite — 2026-09-24
+
+### ADO-008 - Explicit New Team-Project Child Operation
+
+```yaml
+plan_unit_id: ADO-008
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Azure_DevOps_Integration.md
+canonical_text: >-
+  Creating an Azure DevOps team project is an explicitly selected Azure-owned child operation inside the
+  reviewed Project-owner commit chain, distinct from both Puppet Master Project registration and Git repository
+  creation. The ordinary path still creates a repository in an existing verified Azure team project. The optional
+  path preserves the exact approved new-project name, visibility, process template/capabilities and Git-only
+  version-control selection; it requires its own current preview, permission, explicit consent and asynchronous
+  operation identity. Repository creation waits for reconciled terminal success and a separately verified real
+  project resource with provider_project_id. No operation acceptance, URL, name, account sign-in or timer supplies
+  that project identity or proves completion.
+gui_related: true
+gui_classification_reason: The optional action has distinct reviewed fields, consequence disclosure, permissions, progress and recovery presentation.
+depends_on: [ADO-001, ADO-002, ADO-004, FGI-011, FGI-015, PWIZ-021, PJCT-007]
+unblocks: []
+acceptance_criteria:
+  - >-
+    The approved source is the actual current Onboarding draft and initiating Project request with its existing
+    onboarding_setup_binding, exact revision/hash, authorization, initiating Client, selected Host/Execution
+    Environment, owner operation and bounded return context. The terminal Puppet Master Project result is not
+    a prerequisite for its own child. Source-selection precommit access does not authorize destination creation.
+  - >-
+    An explicit create selection has no existing Azure project identity. The current writer distinguishes that
+    absence from the ordinary existing-project selection without a fabricated project ref, name-as-ID or GUID.
+    Historical v2 shapes remain unchanged; all unrelated normal and advanced choices retain their semantics.
+  - >-
+    Azure resolves the selected account and organization or collection to actual current provider identities,
+    generation, verification and access. Selected refs, native IDs and the eventual project/container refs remain
+    distinct. Services uses the current Microsoft Entra route; Server uses its exact supported on-premises
+    authentication and signed host/version catalog. No cloud API/auth or capability parity is inherited by Server.
+  - >-
+    Preview resolves the exact selected process-template ref to its current native template identity and allowed
+    capabilities from the authenticated versioned owner catalog. It presents project name, project visibility,
+    Git version control, process selection, known provider-created resources and effects, and required permission
+    separately from repository-create permission. No universal process GUID, Agile/default process, public-project
+    availability, numeric vendor limits or arbitrary JSON capability patch is inferred. TFVC is unsupported,
+    never represented as Git. Unresolved or unsupported choices remain blocked with a specific reason.
+  - >-
+    Admission revalidates preview/source/catalog hashes and revisions, name availability, exact organization or
+    collection, account generation, current project-create permission, scoped grant, consent, expiry, rate budget
+    and per-endpoint API compatibility. A changed consequence returns to review. Account authentication,
+    repository-create access or a displayed preview alone is not authority to create a team project.
+  - >-
+    Dispatch has its own owner operation and dedupe identity under the initiating Project operation. An accepted
+    provider operation is pending and carries ObservableWork linked to that same chain; it is not a project GUID,
+    repository binding or succeeded Project result. Observation binds the same provider operation, account,
+    organization/collection, variant, host and API compatibility. Unknown or out-of-order observations cannot
+    advance the chain. Reopening, Client loss and restart re-observe/reconcile that operation rather than posting
+    a second creation request.
+  - >-
+    Repository handoff requires the original operation's terminal success plus current authoritative readback of
+    the resulting ready Git project resource, its actual name and provider_project_id, organization/collection,
+    visibility and resolved process/capability identity. The result must be causally attributable to this exact
+    operation and reviewed source, not merely a same-name search result. Missing evidence remains pending,
+    blocked or effect_unknown; a failed or cancelled operation supplies no success handoff.
+  - >-
+    The original approved create selection and source bytes/hash remain immutable. A typed result-derived
+    destination binding carries the created project's real identity into a fresh repository preview and the
+    actual repository-create request under that same parent chain. It is not a rewrite from create to existing,
+    a replacement draft approval, a caller-supplied GUID or an invitation to reuse stale repository permission.
+    Repository creation still requires its own current name availability, visibility inheritance and consent.
+  - >-
+    Known implicit provider resources are disclosed before consent and verified after creation. A collision
+    with a provider-created default repository does not authorize silent adoption, deletion, renaming or a
+    second submission. An unresolved collision returns through current review/recovery; no existing remote
+    resource is mutated or removed as automatic rollback. Navigation cancellation never implies remote
+    cancellation; only an actually supported owner cancellation with its own current authority may do so.
+  - >-
+    Typed operation, preview, admission, observation, result and result-to-repository handoff companions must be
+    materialized and independently checked before dispatch admission. Common command/target/capability and
+    storage disposition owners must review any required registrations. Neither an existing repository command
+    nor a wrapper-only fixture stands in for the separate Azure operation. No new provider-specific command
+    namespace, native readiness, physical storage family, EventRecord or runtime capability is admitted here.
+validation_surfaces: [Plans/azure_devops_integration_fixtures.json, future closed Azure team-project operation companions, cross-account/organization/variant and stale-preview negatives, asynchronous reconciliation and no-replay tests]
+risk_class: azure_team_project_mutation_or_identity_without_reviewed_authority
+reasoning_tier: high
+context_scope: azure_devops_team_project_creation
+implementation_surfaces: [Plans/Azure_DevOps_Integration.md, Plans/Forge_Integrations.md, Plans/Planning_Wizard.md, future Azure owner adapter]
+node_compile_hint: {mode: azure_devops_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: ["packet:PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/04_ACCOUNT_SIGNIN_AND_PROJECT_CREATION_MATRIX.md#section-4", Plans/Forge_Integrations.md#FGI-011, Plans/Planning_Wizard.md#PWIZ-021]
+preserved_exact_tokens: [Microsoft Entra, process template, Git, TFVC, provider_project_id, ObservableWork, onboarding_setup_binding, effect_unknown, create, existing]
+negative_constraints: [Do not conflate Azure and Puppet Master Project creation., Do not hide team-project creation inside repository creation., Do not parse a project GUID from a URL or name., Do not rewrite approved create intent as existing., Do not replay ambiguous effects., Do not infer a provider process or visibility default., Do not admit native dispatch from a static fixture.]
+owner_hints: [Plans/Azure_DevOps_Integration.md, Plans/Forge_Integrations.md, Plans/Planning_Wizard.md, Plans/Project_System.md]
+```
