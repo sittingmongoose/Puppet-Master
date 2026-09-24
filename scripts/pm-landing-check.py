@@ -21,6 +21,13 @@ is never keyed, and the on-branch match runs over the sample, not over the whole
 in a truncated subcheck is therefore reported and stops the landing, since what was added cannot be
 matched against the branch's paths.
 
+The two aggregates run the same validators. Where a run-gates subcheck prints only a sample and the
+audit-governance copy of the same validator, run at the same version on the same inputs in the same
+landing run, prints every failure with the same total, the audit-governance rows key the failures and
+the run-gates copy is not judged: neither its rows nor its total (review L-07). Otherwise the
+run-gates copy falls back to the truncated rule. The summary prints each such pairing and why, and
+--json carries it as `validator_pairs`, so a replay shows which copy was judged.
+
 Governance staleness is what AGENTS.md names: Spec Lock `stale_hash`, stale owner or artifact
 evidence hashes (among them `event_authority_currentness_source_drift` and `_validator_drift`), stale
 readiness rows and their growth counter, and the stale plan-migration snapshot. It never stops a
@@ -87,11 +94,13 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import re
 import subprocess
 import sys
 import tempfile
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -888,6 +897,212 @@ def stale_baseline_notice(currency: dict[str, Any]) -> list[str]:
     ]
 
 
+# --------------------------------------------------------------------- validators both aggregates run
+
+
+def listed_totals(check: str, report: dict[str, Any]) -> dict[str, int]:
+    """Every subcheck an aggregate ran, passing ones too, with its reported total.
+
+    run-gates keeps them under `checks`, audit-governance at its top level. The failure blocks name
+    only the subcheck that failed, so a copy that passed is found here, with 0.
+    """
+    if check == "run-gates":
+        holder = report.get("checks") if isinstance(report.get("checks"), dict) else {}
+    elif check == "audit-governance":
+        holder = report
+    else:
+        return {}
+    return {
+        name: int(entry["failures"])
+        for name, entry in holder.items()
+        if isinstance(entry, dict) and isinstance(entry.get("failures"), int) and not isinstance(entry.get("failures"), bool)
+    }
+
+
+def aggregate_subcheck_commands(
+    root: Path,
+    names: dict[str, set[str]],
+    timeout_seconds: int,
+) -> dict[tuple[str, str], str]:
+    """What each aggregate subcheck runs, as scripts/pm-plans-verify.py itself decides it (review L-07).
+
+    Both aggregates re-invoke a subcheck as `pm-plans-verify.py <command> --report <tmp> <arguments>`
+    and take the command and the arguments from the subcheck's name with the script's own
+    `_aggregate_subcheck_command_id` and `_aggregate_subcheck_cli_args`, read here from the checked
+    tree. Two subchecks that map to the same command line run the same validator; `verify_spec_lock`,
+    which run-gates runs in-process, calls the function its `verify-spec-lock` command runs. Raises
+    when the script or those two functions cannot be read. Writes no bytecode and leaves sys.path as
+    it found it.
+    """
+    path = root / "scripts" / "pm-plans-verify.py"
+    if not path.is_file():
+        raise RuntimeError("scripts/pm-plans-verify.py is missing")
+    spec = importlib.util.spec_from_file_location("pm_plans_verify_subcheck_commands", path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError("scripts/pm-plans-verify.py cannot be loaded")
+    module = importlib.util.module_from_spec(spec)
+    saved_path, saved_bytecode = list(sys.path), sys.dont_write_bytecode
+    sys.dont_write_bytecode = True
+    try:
+        spec.loader.exec_module(module)
+    finally:
+        sys.path[:] = saved_path
+        sys.dont_write_bytecode = saved_bytecode
+    command_of = getattr(module, "_aggregate_subcheck_command_id")
+    arguments_of = getattr(module, "_aggregate_subcheck_cli_args")
+    # The aggregates give their subchecks neither a run directory nor a registry of their own.
+    namespace = argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)
+    return {
+        (check, name): " ".join(
+            [str(command_of(name)), *(str(arg) for arg in arguments_of(name, namespace, timeout_seconds=timeout_seconds))])
+        for check in sorted(names)
+        for name in sorted(names[check])
+    }
+
+
+def tree_state(root: Path) -> dict[str, Any]:
+    """HEAD and a digest of every file under scripts/, where the validators live (review L-07).
+
+    Taken before the first aggregate and after the second: when neither moved, both aggregates ran
+    the same validator code at the same commit.
+    """
+    scripts = root / "scripts"
+    files = sorted(
+        path for path in scripts.rglob("*") if path.is_file() and "__pycache__" not in path.parts
+    ) if scripts.is_dir() else []
+    digest = hashlib.sha256()
+    for path in files:
+        digest.update(path.relative_to(root).as_posix().encode("utf-8") + b"\0")
+        try:
+            digest.update(hashlib.sha256(path.read_bytes()).digest())
+        except OSError:
+            digest.update(b"<unreadable>")
+    return {"head": git_out(root, "rev-parse", "HEAD"), "scripts_sha256": digest.hexdigest()}
+
+
+def version_change(before: dict[str, Any] | None, after: dict[str, Any] | None) -> str | None:
+    """Why the two aggregates may not have run the same validator version, or None."""
+    if before is None or after is None:
+        return "the validator version could not be compared between the two aggregate runs"
+    if before["head"] != after["head"]:
+        return (f"HEAD moved from {str(before['head'])[:12]} to {str(after['head'])[:12]} between the two "
+                "aggregate runs")
+    if before["scripts_sha256"] != after["scripts_sha256"]:
+        return "a file under scripts/ changed between the two aggregate runs"
+    return None
+
+
+def row_tail(item: dict[str, Any]) -> str:
+    """A failure's key without its check and subcheck: the same failure, printed by either aggregate."""
+    return item["key"].split("|", 2)[2]
+
+
+def pair_validators(
+    counts: dict[str, dict[str, dict[str, int]]],
+    listed: dict[str, dict[str, int]],
+    baseline_checks: dict[str, Any],
+    timed_out: set[tuple[str, str]],
+    items: list[dict[str, Any]],
+    commands: dict[tuple[str, str], str] | str,
+    changed: str | None,
+) -> list[dict[str, Any]]:
+    """Review L-07: which run-gates copies of a validator are judged by their audit-governance copy.
+
+    One row for every run-gates subcheck whose printed failures are only a sample, in this run or
+    when the baseline was recorded, since those are the copies the baseline cannot key in full. Such
+    a copy is paired with the audit-governance subcheck that runs the same command, and judged by its
+    rows, only when both ran the same validator at the same version in this run (`changed` is None),
+    neither timed out, their totals agree, the audit-governance copy printed every failure now and at
+    the baseline, and every row the run-gates copy printed is among its rows, which with the equal
+    totals is the evidence that both saw the same inputs. Otherwise the row says why not, and the
+    run-gates copy keeps the truncated rule. `commands` is what each subcheck runs, or why that could
+    not be read.
+    """
+    recorded = {check: ((baseline_checks.get(check) or {}).get("subchecks") or {})
+                for check in ("run-gates", "audit-governance")}
+
+    def now(check: str, name: str) -> dict[str, int]:
+        counted = (counts.get(check) or {}).get(name)
+        if counted:
+            return {"reported": int(counted["reported"]), "sampled": int(counted["sampled"])}
+        return {"reported": int((listed.get(check) or {}).get(name, 0)), "sampled": 0}
+
+    def then(check: str, name: str) -> dict[str, int]:
+        entry = recorded[check].get(name) or {}
+        return {"baseline_reported": int(entry.get("reported", 0)), "baseline_sampled": int(entry.get("sampled", 0))}
+
+    def rows_of(check: str, name: str) -> Counter:
+        return Counter(row_tail(item) for item in items if (item["check"], item["subcheck"]) == (check, name))
+
+    pairs = []
+    for name in sorted(set(counts.get("run-gates") or {}) | set(recorded["run-gates"])):
+        own = {**now("run-gates", name), **then("run-gates", name)}
+        if own["sampled"] >= own["reported"] and own["baseline_sampled"] >= own["baseline_reported"]:
+            continue
+        row: dict[str, Any] = {
+            "run_gates": name, "audit_governance": None, "command": None, "paired": False,
+            "judged": f"run-gates/{name}", "run_gates_counts": own, "audit_governance_counts": None,
+        }
+        pairs.append(row)
+        if isinstance(commands, str):
+            row["reason"] = f"what each subcheck runs could not be read from scripts/pm-plans-verify.py ({commands})"
+            continue
+        row["command"] = commands.get(("run-gates", name))
+        twins = sorted(other for (check, other), line in commands.items()
+                       if check == "audit-governance" and row["command"] is not None and line == row["command"])
+        if len(twins) != 1:
+            row["reason"] = ("no audit-governance subcheck runs the same command" if not twins else
+                             f"more than one audit-governance subcheck runs the same command: {', '.join(twins)}")
+            continue
+        twin = twins[0]
+        other = {**now("audit-governance", twin), **then("audit-governance", twin)}
+        row["audit_governance"], row["audit_governance_counts"] = twin, other
+        unmatched = 0
+        if ("run-gates", name) in timed_out:
+            row["reason"] = "the run-gates copy timed out"
+        elif ("audit-governance", twin) in timed_out:
+            row["reason"] = "the audit-governance copy timed out"
+        elif changed:
+            row["reason"] = changed
+        elif own["reported"] != other["reported"]:
+            row["reason"] = f"the totals disagree: run-gates {own['reported']}, audit-governance {other['reported']}"
+        elif other["sampled"] < other["reported"]:
+            row["reason"] = (f"the audit-governance copy prints {other['sampled']} of {other['reported']}, so its "
+                             "rows do not key every failure")
+        elif other["baseline_sampled"] < other["baseline_reported"]:
+            row["reason"] = (f"the audit-governance copy printed {other['baseline_sampled']} of "
+                             f"{other['baseline_reported']} when the baseline was recorded, so the baseline does "
+                             "not key every failure either")
+        else:
+            missing = rows_of("run-gates", name)
+            missing.subtract(rows_of("audit-governance", twin))
+            unmatched = sum(count for count in missing.values() if count > 0)
+            if unmatched:
+                row["reason"] = (f"{unmatched} of the rows the run-gates copy printed "
+                                 f"{'is' if unmatched == 1 else 'are'} not among the audit-governance copy's rows")
+            else:
+                row["paired"] = True
+                row["judged"] = f"audit-governance/{twin}"
+                row["reason"] = (f"the same command ({row['command']}) at the same version, totals "
+                                 f"{own['reported']} = {other['reported']}, and every run-gates row is among the "
+                                 f"audit-governance rows, which are all {other['reported']} of its failures "
+                                 f"(all {other['baseline_reported']} at the baseline)")
+    return pairs
+
+
+def describe_pair(row: dict[str, Any]) -> str:
+    counted = row["run_gates_counts"]
+    own = f"{counted['sampled']} of {counted['reported']} printed"
+    if counted["baseline_sampled"] < counted["baseline_reported"]:
+        own += f", {counted['baseline_sampled']} of {counted['baseline_reported']} in the baseline"
+    if row["paired"]:
+        return (f"    [paired    ] run-gates/{row['run_gates']} ({own}) is judged by "
+                f"audit-governance/{row['audit_governance']}: {row['reason']}")
+    twin = f" and audit-governance/{row['audit_governance']}" if row["audit_governance"] else ""
+    return (f"    [not paired] run-gates/{row['run_gates']}{twin} ({own}): {row['reason']}; the run-gates copy "
+            "is judged on its own, by the truncated rule")
+
+
 # ---------------------------------------------------------------------------------------- output
 
 
@@ -991,7 +1206,11 @@ def main() -> int:
 
     items: list[dict[str, Any]] = []
     counts: dict[str, dict[str, dict[str, int]]] = {}
+    listed: dict[str, dict[str, int]] = {}
     statuses: dict[str, str] = {}
+    # Review L-07: whether both aggregates ran the same validator code at the same commit.
+    before = None if args.record_baseline else tree_state(root)
+    after = None
     for check in CHECKS:
         try:
             report = run_check(check, root, run_dir, args.subcheck_timeout_seconds)
@@ -1005,6 +1224,9 @@ def main() -> int:
         check_items, check_counts = extract(check, report, root)
         items.extend(check_items)
         counts[check] = check_counts
+        listed[check] = listed_totals(check, report)
+        if check == "audit-governance" and before is not None:
+            after = tree_state(root)
 
     commit = subprocess.run(
         ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True
@@ -1051,6 +1273,27 @@ def main() -> int:
         check: {name: counted for name, counted in counts[check].items() if (check, name) not in timed_out}
         for check in counts
     }
+    # Review L-07: a run-gates copy judged by its complete audit-governance copy is taken out of the
+    # judgement: its rows are the same failures the audit-governance rows list in full, and its total
+    # is not used for growth. The baseline keeps both copies, for a landing where they do not pair.
+    names = {
+        check: set(listed.get(check) or {}) | set(counts.get(check) or {})
+        | set(((baseline.get("checks") or {}).get(check) or {}).get("subchecks") or {})
+        for check in ("run-gates", "audit-governance")
+    }
+    try:
+        commands: dict[tuple[str, str], str] | str = aggregate_subcheck_commands(
+            root, names, args.subcheck_timeout_seconds)
+    except Exception as exc:  # noqa: BLE001 - an unreadable map only means that no copy is paired.
+        commands = f"{type(exc).__name__}: {exc}"
+    pairs = pair_validators(counts, listed, baseline.get("checks") or {}, timed_out, items, commands,
+                            version_change(before, after))
+    paired = {("run-gates", row["run_gates"]) for row in pairs if row["paired"]}
+    items = [item for item in items if (item["check"], item["subcheck"]) not in paired]
+    compared = {
+        check: {name: counted for name, counted in compared[check].items() if (check, name) not in paired}
+        for check in compared
+    }
     partial = partial_subchecks(compared, baseline.get("checks") or {})
 
     run_counts = bucket_counts(items)
@@ -1096,6 +1339,7 @@ def main() -> int:
     resolved = sorted(
         name for name in set(baseline_counts) - set(seen_buckets)
         if bucket_subcheck(name) not in partial and bucket_subcheck(name) not in timed_out
+        and bucket_subcheck(name) not in paired
     )
 
     reported_keys = (
@@ -1118,7 +1362,8 @@ def main() -> int:
                 "baseline_currency": currency,
                 "branch_units": len(units),
                 "derived_paths_excluded": derived,
-                "subchecks_compared_by_total_only": sorted(f"{c}/{s}" for c, s in partial),
+                "subchecks_compared_by_total_only": sorted(f"{c}/{s}" for c, s in partial - paired),
+                "validator_pairs": pairs,
                 "generated_at_utc": utc_now(),
                 "commit": commit,
                 "base": args.base,
@@ -1167,17 +1412,25 @@ def main() -> int:
             print(f"  full check reports kept in {keep_dir}")
         truncated = [
             f"{check}/{name}" for check in CHECKS for name in sorted(counts[check])
-            if counts[check][name]["sampled"] < counts[check][name]["reported"]
+            if counts[check][name]["sampled"] < counts[check][name]["reported"] and (check, name) not in paired
         ]
         if truncated:
             hidden = sum(
                 counts[check][name]["reported"] - counts[check][name]["sampled"]
-                for check in CHECKS for name in counts[check]
+                for check in CHECKS for name in counts[check] if (check, name) not in paired
             )
             print(f"  {len(truncated)} subchecks print only part of their failures: "
                   f"{hidden} failures are never keyed, and the on-branch match runs over the rest")
-            print(f"  {len(partial)} subchecks are compared by their total only, because which rows "
+            print(f"  {len(partial - paired)} subchecks are compared by their total only, because which rows "
                   f"they print can change on its own")
+        if pairs:
+            judged = sum(1 for row in pairs if row["paired"])
+            sample = "prints only a sample of its" if len(pairs) == 1 else "print only a sample of their"
+            print(f"  {plural(len(pairs), 'run-gates subcheck')} {sample} failures, now or in the baseline; "
+                  f"{judged} of them {'is' if judged == 1 else 'are'} judged by the audit-governance copy of "
+                  "the same validator, which prints every failure (review L-07):")
+            for row in pairs:
+                print(describe_pair(row))
         if derived:
             print(f"  {len(derived)} regenerated files are matched on the units they name, "
                   f"not on their own paths ({len(units)} units owned by documents this branch changed)")

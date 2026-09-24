@@ -1407,7 +1407,8 @@ class RuleTwoPreExisting(LandingRun):
     def test_a_row_the_baseline_sample_never_printed_is_not_in_the_baseline_and_blocks(self):
         """Rule 2 reads baseline.json. A row that sat above the baseline's print cap is not in it, so
         when it falls inside the sample on a touched file it is judged as before. The storage registry
-        repairs landing's run-gates copy of the self-test row was such a row."""
+        repairs landing's run-gates copy of the self-test row was such a row; with no audit-governance
+        copy to judge it instead (review L-07, PairedValidatorCopies below), it still blocks."""
         filler = [registry_row(n) for n in range(50)]
         row = self_test_row("check_0")
         self.stub(gates={self.RG_READINESS: (filler + [row], 51)})
@@ -1658,6 +1659,141 @@ class ReviewLimits(LandingRun):
         self.assertNotIn("Nothing to report.", out)
         self.assertIn("This is not a clean result", out)
         self.assertIn("before pushing main", out)
+
+
+def same_validator_commands(root, names, timeout_seconds):
+    """Stands in for pm-plans-verify.py's own map: `validate_<x>` in run-gates and `<x>` in
+    audit-governance run one command, as they do in the real script."""
+    def command(name):
+        return "validate-" + (name[len("validate_"):] if name.startswith("validate_") else name).replace("_", "-")
+    return {(check, name): command(name) for check in names for name in names[check]}
+
+
+class PairedValidatorCopies(LandingRun):
+    """Review L-07, as the brief owner answered it: the run-gates copy of a validator is judged by its
+    audit-governance copy when both ran the same validator at the same version on the same inputs in
+    the same run and their totals agree, and the audit-governance copy printed every failure; then
+    the run-gates sample is not used. Otherwise the run-gates copy keeps the truncated rule, and the
+    summary says why. Either way it prints the pairing, so a replay shows which copy was judged."""
+
+    VALIDATOR = "scripts/pm-implementation-readiness.py"
+
+    def setUp(self):
+        super().setUp()
+        self.module.aggregate_subcheck_commands = same_validator_commands
+
+    def storage_shape(self, gates=None, audit=None):
+        """The storage registry repairs landing of 2026-09-24. At the baseline the readiness validator
+        reported 79: run-gates printed 50 of them, without the self-test row, and audit-governance all
+        79, with it. On the branch, which edits the validator, both print all 33, and the self-test row
+        lists three false checks instead of seven."""
+        at_baseline = [registry_row(n) for n in range(78)] + [self_test_row(*[f"check_{n}" for n in range(7)])]
+        self.stub(gates={self.RG_READINESS: at_baseline}, audit={self.AG_READINESS: at_baseline})
+        self.record()
+        self.touch(self.VALIDATOR)
+        on_branch = [registry_row(n) for n in range(32)] + [self_test_row("check_0", "check_1", "check_2")]
+        self.stub(gates={self.RG_READINESS: on_branch if gates is None else gates},
+                  audit={self.AG_READINESS: on_branch if audit is None else audit})
+        return on_branch
+
+    def test_the_storage_registry_shape_is_judged_by_the_complete_audit_governance_copy(self):
+        """The motivating case: exit 2 on the run-gates copy's row before, exit 1 now."""
+        self.storage_shape()
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("1 run-gates subcheck prints only a sample of its failures, now or in the baseline; 1 of "
+                      "them is judged by the audit-governance copy", out)
+        self.assertIn("[paired    ] run-gates/validate_implementation_readiness (33 of 33 printed, 50 of 79 in "
+                      "the baseline) is judged by audit-governance/implementation_readiness: the same command "
+                      "(validate-implementation-readiness) at the same version, totals 33 = 33", out)
+        self.assertIn("[pre-existing] audit-governance/implementation_readiness  "
+                      "implementation_readiness_self_tests_failed  scripts/pm-implementation-readiness.py  1 -> 1", out)
+        self.assertNotIn("[blocking", out)
+        report = json.loads(self.compare("--json")[1])
+        self.assertEqual(report["blocking"], 0)
+        [pair] = report["validator_pairs"]
+        self.assertEqual((pair["paired"], pair["judged"], pair["audit_governance"]),
+                         (True, "audit-governance/implementation_readiness", "implementation_readiness"))
+        self.assertEqual({row["check"] for row in report["on_branch"]}, {"audit-governance"})
+        self.assertNotIn("run-gates/validate_implementation_readiness", report["subchecks_compared_by_total_only"])
+
+    def test_totals_that_disagree_fall_back_to_the_truncated_rule_and_say_why(self):
+        on_branch = self.storage_shape(audit=[registry_row(n) for n in range(1, 32)]
+                                       + [self_test_row("check_0", "check_1", "check_2")])
+        self.assertEqual(len(on_branch), 33)
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn("[not paired] run-gates/validate_implementation_readiness and "
+                      "audit-governance/implementation_readiness (33 of 33 printed, 50 of 79 in the baseline): "
+                      "the totals disagree: run-gates 33, audit-governance 32; the run-gates copy is judged on "
+                      "its own, by the truncated rule", out)
+        self.assertIn("[blocking    ] run-gates/validate_implementation_readiness", out)
+
+    def test_a_timeout_in_the_audit_governance_copy_falls_back(self):
+        self.storage_shape(audit=[timeout_row("validate-implementation-readiness", 600)])
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn("(33 of 33 printed, 50 of 79 in the baseline): the audit-governance copy timed out;", out)
+        self.assertIn("[blocking    ] run-gates/validate_implementation_readiness", out)
+
+    def test_a_run_gates_row_the_audit_governance_copy_lacks_falls_back(self):
+        """Equal totals are not enough: the rows must be the same failures."""
+        self.storage_shape(gates=[registry_row(n) for n in range(32)] + [self_test_row("check_9")])
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn(": 1 of the rows the run-gates copy printed is not among the audit-governance copy's rows;", out)
+
+    def test_validator_code_that_changes_between_the_two_aggregates_falls_back(self):
+        self.storage_shape()
+        inner = self.module.run_check
+
+        def run_check(name, root, run_dir, timeout):
+            if name == "audit-governance":
+                (self.repo / "scripts" / "pm-plans-verify-helper.py").write_text("edited mid-run\n", encoding="utf-8")
+            return inner(name, root, run_dir, timeout)
+        self.module.run_check = run_check
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn(": a file under scripts/ changed between the two aggregate runs;", out)
+
+    def test_an_audit_governance_copy_that_prints_only_a_sample_does_not_judge(self):
+        """The evidence and plan-graph shape: both copies are truncated, so both rises still block."""
+        stale_rows = [{"path": f"Plans/_shards/d{n}/manifest.json", "error": "artifact_hash_stale"} for n in range(3)]
+        self.stub(gates={"validate_evidence": (stale_rows[:2], 665)}, audit={"evidence": (stale_rows[:2], 665)})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"validate_evidence": (stale_rows, 876)}, audit={"evidence": (stale_rows, 876)})
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn("[not paired] run-gates/validate_evidence and audit-governance/evidence (3 of 876 printed, "
+                      "2 of 665 in the baseline): the audit-governance copy prints 3 of 876, so its rows do not "
+                      "key every failure", out)
+        self.assertIn("[blocking ] run-gates/validate_evidence  665 -> 876", out)
+        self.assertIn("[blocking ] audit-governance/evidence  665 -> 876", out)
+
+    def test_without_the_subcheck_map_nothing_is_paired(self):
+        """A tree whose scripts/pm-plans-verify.py cannot be read pairs nothing and says so."""
+        self.module.aggregate_subcheck_commands = M.aggregate_subcheck_commands
+        self.storage_shape()
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn("what each subcheck runs could not be read from scripts/pm-plans-verify.py "
+                      "(RuntimeError: scripts/pm-plans-verify.py is missing)", out)
+
+    def test_the_real_pm_plans_verify_map_pairs_what_both_aggregates_run(self):
+        names = {"run-gates": {"validate_implementation_readiness", "verify_spec_lock", "lint_contractrefs",
+                               "validate_evidence", "validate_new_contracts"},
+                 "audit-governance": {"implementation_readiness", "spec_lock", "support_refs", "plan_graph"}}
+        path_before = list(sys.path)
+        commands = M.aggregate_subcheck_commands(ROOT, names, 600)
+        self.assertEqual(sys.path, path_before)
+        self.assertEqual(commands[("run-gates", "validate_implementation_readiness")],
+                         "validate-implementation-readiness --subcheck-timeout-seconds 600")
+        self.assertEqual(commands[("run-gates", "validate_implementation_readiness")],
+                         commands[("audit-governance", "implementation_readiness")])
+        self.assertEqual(commands[("run-gates", "verify_spec_lock")], commands[("audit-governance", "spec_lock")])
+        self.assertEqual(commands[("run-gates", "lint_contractrefs")], commands[("audit-governance", "support_refs")])
+        self.assertNotEqual(commands[("run-gates", "validate_evidence")], commands[("audit-governance", "plan_graph")])
 
 
 class TimeoutsLiftExitZero(LandingRun):

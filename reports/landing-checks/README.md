@@ -94,6 +94,48 @@ otherwise read as a new failure at every landing. Its rows are still read for th
 which does not depend on the baseline. Where a subcheck prints every failure, a row that was not
 there before really is new, and is reported as such.
 
+### A validator both aggregates run
+
+`run-gates` and `audit-governance` run the same validators. `pm-plans-verify.py` re-invokes every
+subcheck of either aggregate as `pm-plans-verify.py <command> --report <tmp> <arguments>`, and for
+`validate_implementation_readiness` in one and `implementation_readiness` in the other it builds the
+same command line. The two copies differ only in what they print: 50 rows and 100. Where the
+run-gates copy prints only a sample, in this run or when the baseline was recorded, and the
+audit-governance copy prints every failure, the audit-governance rows are the complete list, and the
+run-gates copy is judged by them (review L-07, as the brief owner answered it). The run-gates copy's
+rows are then not keyed, not matched against the branch's paths and not counted, its total is not
+used for growth, and its baseline buckets are not reported gone. The audit-governance copy's rows are
+judged by every rule in this file, and a rise in its total is not a truncated rise, because every row
+it adds is printed and judged.
+
+A run-gates copy is paired with its audit-governance copy only when all of these hold. Otherwise it
+keeps the truncated rule, and the summary says which condition failed:
+
+- both run the same command with the same arguments, as `scripts/pm-plans-verify.py` itself builds
+  them from the subcheck's name with `_aggregate_subcheck_command_id` and
+  `_aggregate_subcheck_cli_args`, read from the checked tree; `verify_spec_lock`, which run-gates
+  runs in-process, calls the function its `verify-spec-lock` command runs;
+- at the same version: `HEAD` and a digest of every file under `scripts/` are the same before the
+  run-gates run and after the audit-governance run of the one landing check;
+- neither copy timed out;
+- their totals agree;
+- the audit-governance copy printed every failure, in this run and when the baseline was recorded;
+- every row the run-gates copy printed is among the audit-governance copy's rows.
+
+The inputs themselves cannot be hashed, since each validator reads its own set of files. The equal
+totals and the rows found in both copies are the evidence that both saw the same inputs. The summary
+prints one line for each run-gates subcheck whose failures are a sample, saying which copy was judged
+and why, and `--json` carries the same as `validator_pairs`, so a replay shows which copy was judged.
+The baseline still records both copies, for a landing where they do not pair.
+
+Replayed over the retained reports of 2026-09-21 and 2026-09-24, this pairs only the readiness
+validator, and only where its total was 100 or less: 33 at the storage registry repairs landing and
+39 at the terminal.workgroup_moved and landing-check rules landings. The other truncated validators
+do not pair, because their audit-governance copies print only 100 rows: evidence and plan-graph (876
+at those landings, 1,552 on 2026-09-21), audit-closure (201), the PRD contracts (1,240), and on
+2026-09-21 readiness itself (218 and 124) and plan-migration (181). A rise in them still stops the
+landing.
+
 ## What counts as governance staleness
 
 AGENTS.md names four things as governance staleness: Spec Lock `stale_hash`, stale owner or artifact
@@ -173,11 +215,11 @@ What this cannot see: a failure that sat above its subcheck's print cap when the
 recorded is not in `baseline.json`, so when it later falls inside the sample on a touched file it is
 judged as before and stops the landing. The run-gates copy of that self-test row was one: run-gates
 printed 50 of the baseline's 79 readiness rows and the self-test row was not among them, while the
-audit-governance copy, printed in full, was. So the brief's motivating case, the storage registry
-repairs landing's self-test row, would still exit 2 in reality, and the rule's seven-to-three test
-passes only on a synthetic, uncapped copy. A follow-up outside this rule could judge the run-gates
-copy of a validator that both aggregates run by the audit-governance copy's complete counts whenever
-the latter is not truncated.
+audit-governance copy, printed in full, was. That run-gates copy is now judged by its
+audit-governance copy instead (see "A validator both aggregates run" above), so the brief's
+motivating case, the storage registry repairs landing, replays as exit 1 with 0 blocking items
+instead of 2 with 1. The edge remains for a validator that only run-gates runs, or whose
+audit-governance copy prints only a sample too.
 
 It cannot tell one failure from another of the same kind on the same path. A branch that fixes one
 missing reference in a document it edits and adds another keeps the bucket's count, so the new one
