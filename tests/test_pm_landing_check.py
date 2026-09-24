@@ -1305,6 +1305,102 @@ class RuleOneReadinessGrowthCounter(LandingRun):
         self.assertIn("[blocking ] run-gates/validate_evidence  665 -> 876", out)
 
 
+def self_test_row(*failing, scenario="case_l_verification_integration"):
+    """implementation_readiness_self_tests_failed as the readiness validator prints it: it names the
+    validator and lists the scenario's checks that came out false."""
+    return {"path": "scripts/pm-implementation-readiness.py",
+            "error": "implementation_readiness_self_tests_failed",
+            "failures": [{"scenario": scenario, "checks": {name: False for name in failing}}]}
+
+
+class RuleTwoPreExisting(LandingRun):
+    """Rule 2: a failure in a baseline bucket whose count has not risen is pre-existing, content
+    changed or not. It never blocks and is reported as pre-existing or improved with both counts."""
+
+    VALIDATOR = "scripts/pm-implementation-readiness.py"
+
+    def test_seven_rows_dropping_to_three_on_a_touched_file_are_improved_and_exit_one(self):
+        seven = [self_test_row(f"check_{n}") for n in range(7)]
+        self.stub(audit={self.AG_READINESS: seven})
+        self.record()
+        self.touch(self.VALIDATOR)
+        three = [self_test_row(f"check_{n}", "residual") for n in range(3)]  # the content moved too
+        self.stub(audit={self.AG_READINESS: three})
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("New since the baseline: 0", out)
+        self.assertIn("Pre-existing, in a baseline bucket whose count has not risen (never blocks): 3", out)
+        self.assertIn("[improved    ] audit-governance/implementation_readiness  "
+                      "implementation_readiness_self_tests_failed  scripts/pm-implementation-readiness.py  7 -> 3", out)
+        self.assertIn("nothing for this branch to fix", out)
+        report = json.loads(self.compare("--json")[1])
+        self.assertEqual(report["blocking"], 0)
+        self.assertEqual({(i["standing"], i["baseline_count"], i["count"]) for i in report["on_branch"]},
+                         {("improved", 7, 3)})
+
+    def test_the_recorded_shape_one_row_whose_list_shrank_is_pre_existing(self):
+        """What the storage registry repairs landing saw: one row listing seven false checks on main
+        and three on the branch. One bucket of one row both times; only the fingerprint moved."""
+        self.stub(audit={self.AG_READINESS: [self_test_row(*[f"check_{n}" for n in range(7)])]})
+        self.record()
+        self.touch(self.VALIDATOR)
+        self.stub(audit={self.AG_READINESS: [self_test_row("check_0", "check_1", "check_2")]})
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("[pre-existing] audit-governance/implementation_readiness  "
+                      "implementation_readiness_self_tests_failed  scripts/pm-implementation-readiness.py  1 -> 1", out)
+
+    def test_a_count_that_rose_on_a_touched_file_still_blocks(self):
+        three = [self_test_row(f"check_{n}") for n in range(3)]
+        self.stub(audit={self.AG_READINESS: three})
+        self.record()
+        self.touch(self.VALIDATOR)
+        self.stub(audit={self.AG_READINESS: three + [self_test_row("check_new")]})
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn("Pre-existing, in a baseline bucket whose count has not risen (never blocks): 0", out)
+        self.assertIn("Checks whose failure count rose: 1", out)
+        self.assertIn("3 -> 4", out)
+
+    def test_changed_content_off_the_branch_is_pre_existing_not_new(self):
+        """Before rule 2 this row read as new; it is the same failure with a different surface."""
+        self.stub(gates={"lint_path_refs": [PATH_REF]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"lint_path_refs": [dict(PATH_REF, implementation_surface="tests/fixtures/other")]})
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("New since the baseline: 0", out)
+        self.assertIn("1 -> 1", out)
+        self.assertIn("(content changed)", out)
+
+    def test_a_sampled_subcheck_compares_the_counts_inside_its_sample(self):
+        """In a truncated subcheck both counts are the rows printed; the row is in both samples."""
+        filler = [registry_row(n) for n in range(49)]
+        row = self_test_row("check_0")
+        self.stub(gates={self.RG_READINESS: ([row] + filler, 79)})
+        self.record()
+        self.touch(self.VALIDATOR)
+        self.stub(gates={self.RG_READINESS: ([self_test_row("check_1")] + filler, 79)})
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("[pre-existing] run-gates/validate_implementation_readiness", out)
+
+    def test_a_row_the_baseline_sample_never_printed_is_not_in_the_baseline_and_blocks(self):
+        """Rule 2 reads baseline.json. A row that sat above the baseline's print cap is not in it, so
+        when it falls inside the sample on a touched file it is judged as before. The storage registry
+        repairs landing's run-gates copy of the self-test row was such a row."""
+        filler = [registry_row(n) for n in range(50)]
+        row = self_test_row("check_0")
+        self.stub(gates={self.RG_READINESS: (filler + [row], 51)})
+        self.record()
+        self.touch(self.VALIDATOR)
+        self.stub(gates={self.RG_READINESS: ([row] + filler, 51)})
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn("the baseline does not excuse", out)
+
+
 class BaselineReading(unittest.TestCase):
     def test_a_foreign_document_is_refused(self):
         import tempfile

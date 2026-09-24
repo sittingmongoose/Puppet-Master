@@ -16,10 +16,11 @@ file any landing branch touched: stale governance hashes, and a plan-migration s
     python3 scripts/pm-landing-check.py --record-baseline    # refresh, in a full checkout at main
 
 Exit codes: 0 nothing to report; 1 nothing it reports stops the landing, meaning governance
-staleness on files the branch edited or failures that are new but name none of the branch's files;
-2 something it reports does stop the landing, meaning a failure on the branch's files that is not
-staleness, a bucket that grew whose error kind is not staleness, or a rise in a subcheck whose
-failures are truncated, other than the readiness growth counter; 3 the check could not run.
+staleness on files the branch edited, pre-existing failures whose count has not risen, or failures
+that are new but name none of the branch's files; 2 something it reports does stop the landing,
+meaning a failure on the branch's files that is neither staleness nor pre-existing, a bucket that
+grew whose error kind is not staleness, or a rise in a subcheck whose failures are truncated, other
+than the readiness growth counter; 3 the check could not run.
 
 **It refuses a sparse worktree**, with exit 3, in both modes. The three checks read the whole
 repository, so every file outside a sparse cone reads as missing: a dry run at `ecb77f4e6c` on a
@@ -126,6 +127,34 @@ sample explains is not caught. Every truncated subcheck has that hole; here it i
 the rule names the counter as staleness. The evidence and plan-graph subchecks get no such exception,
 and a rise in them still stops the landing. In `--json`, each row of `grown_subchecks` carries
 `stale`, true for the readiness growth counter.
+
+## Pre-existing and improved failures
+
+A failure that is not staleness, in a bucket the baseline holds, whose count on the branch has not
+risen above the baseline's, is pre-existing, whether or not its content changed. It never stops a
+landing. It is reported as `pre-existing` when the count is the same and `improved` when it fell,
+with both counts, whenever it would have been reported at all: when it names a file the branch
+touched, or when its content changed so that its fingerprint is not in the baseline. One with
+unchanged content that names no branch file is not reported, as before.
+
+The count is the bucket's, `check | subcheck | error | path`, because that is what the baseline
+records; the fingerprint is not part of it. That is what makes a changed row pre-existing. The
+storage registry repairs landing of 2026-09-24 stopped on an
+`implementation_readiness_self_tests_failed` row, one in each aggregate, that listed seven failing
+self-test checks on `main` and three on the branch: one row in one bucket both times, with only its
+fingerprint moved. In a subcheck that prints only a sample, both counts are the rows inside the
+sample, since the baseline was recorded from the printed rows too.
+
+A bucket whose count rose is not pre-existing: its rows on a touched file stop the landing, and a
+grown bucket whose kind is not staleness stops it, as before. In `--json`, `pre_existing` lists every
+reported pre-existing failure, and those rows and the matching `on_branch` rows carry `standing`,
+`baseline_count` and `count`.
+
+What this cannot see: a failure that sat above its subcheck's print cap when the baseline was
+recorded is not in `baseline.json`, so when it later falls inside the sample on a touched file it is
+judged as before and stops the landing. The run-gates copy of that self-test row was one: run-gates
+printed 50 of the baseline's 79 readiness rows and the self-test row was not among them, while the
+audit-governance copy, printed in full, was.
 
 ## Which paths count as the branch's
 

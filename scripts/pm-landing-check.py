@@ -27,6 +27,10 @@ their growth counter, and the stale plan-migration snapshot. It never stops a la
 validator's total is that growth counter: its rise is staleness, not a truncated rise, when the rows
 it printed show stale readiness rows growing and nothing else new.
 
+A failure that is not staleness, in a baseline bucket whose count on the branch has not risen, is
+pre-existing, whether or not its content changed: it never stops a landing, and it is reported as
+"pre-existing" or "improved" with the baseline's count and the branch's.
+
 It exits 0 when it has nothing to report.
 
 A key is `check | subcheck | error kind | path | fingerprint`. The fingerprint is a short digest of
@@ -51,12 +55,13 @@ the checks' own inputs.
 
 Exit codes:
   0  nothing to report
-  1  nothing it reports stops the landing: governance staleness on files the branch edited, or
-     failures that are new but name none of the branch's files (push, and report them)
-  2  it reports something that does stop the landing: a failure on the branch's files that is not
-     staleness, a bucket that grew whose error kind is not staleness, or a rise in a subcheck whose
-     failures are truncated, where the on-branch match cannot see what was added, other than the
-     readiness growth counter
+  1  nothing it reports stops the landing: governance staleness on files the branch edited,
+     pre-existing failures whose count has not risen, or failures that are new but name none of the
+     branch's files (push, and report them)
+  2  it reports something that does stop the landing: a failure on the branch's files that is
+     neither staleness nor pre-existing, a bucket that grew whose error kind is not staleness, or a
+     rise in a subcheck whose failures are truncated, where the on-branch match cannot see what was
+     added, other than the readiness growth counter
   3  the script could not run a check or could not read the baseline or the branch paths
 """
 from __future__ import annotations
@@ -393,6 +398,18 @@ def bucket_rose(count: int, baseline_count: int | None) -> bool:
     return baseline_count is None or count > baseline_count
 
 
+def standing_of(count: int, baseline_count: int | None) -> str | None:
+    """Rule 2: "pre-existing" or "improved" for a bucket the baseline holds whose count has not risen.
+
+    A failure in such a bucket was on `main` before the branch, whatever its content says now: the
+    self-test failure that listed seven failing checks on `main` and three on the branch is one row
+    of one bucket both times, and only its fingerprint moved. None means the bucket is new or grew.
+    """
+    if bucket_rose(count, baseline_count):
+        return None
+    return "pre-existing" if count == baseline_count else "improved"
+
+
 def readiness_counter_is_staleness(
     row: dict[str, Any],
     items: list[dict[str, Any]],
@@ -430,14 +447,15 @@ def blocking_items(
 ) -> list[dict[str, Any]]:
     """What stops a landing, by the rule in AGENTS.md.
 
-    A failure on a file the branch touched that is not governance staleness; a bucket that grew whose
-    error kind is not staleness; and a rise in a truncated subcheck, whose added failures nothing can
-    match against the branch's paths, unless it is the readiness growth counter of stale readiness
-    rows (`stale` on the row). A failure that is new but names none of the branch's files does not
-    stop the landing: it is reported and pushed, exactly as the shard-check rule reads.
+    A failure on a file the branch touched that is neither governance staleness nor pre-existing
+    (`standing` on the item, rule 2); a bucket that grew whose error kind is not staleness; and a rise
+    in a truncated subcheck, whose added failures nothing can match against the branch's paths,
+    unless it is the readiness growth counter of stale readiness rows (`stale` on the row). A failure
+    that is new but names none of the branch's files does not stop the landing: it is reported and
+    pushed, exactly as the shard-check rule reads.
     """
     return (
-        [item for item in on_branch if not item["stale"]]
+        [item for item in on_branch if not item["stale"] and not item.get("standing")]
         + [row for row in grown if not row["stale"]]
         + [row for row in subcheck_growth if row["truncated"] and not row.get("stale")]
     )
@@ -703,12 +721,26 @@ def plural(count: int, word: str) -> str:
     return f"{count} {word}" + ("" if count == 1 else "s")
 
 
-def describe(item: dict[str, Any], width: int = 150) -> str:
-    tag = "staleness" if item["stale"] else "blocking "
+def item_tag(item: dict[str, Any], on_branch: bool) -> str:
+    """What a reported failure is: staleness, pre-existing or improved (rule 2), blocking, or new."""
+    if item["stale"]:
+        return "staleness"
+    if item.get("standing"):
+        return item["standing"]
+    return "blocking" if on_branch else "new"
+
+
+def describe(item: dict[str, Any], tag: str, width: int = 150) -> str:
+    """One line per failure. Only the trailing fields are cut to fit, never the identity or the
+    baseline and branch counts that rule 2 reports."""
     where = item["path"] or "(no path)"
+    counted = f"  {item['baseline_count']} -> {item['count']}" if item.get("standing") else ""
+    head = f"  [{tag:<12}] {item['check']}/{item['subcheck'] or '-'}  {item['error']}  {where}{counted}"
     fields = canonical(item["fields"])
-    line = f"  [{tag}] {item['check']}/{item['subcheck'] or '-'}  {item['error']}  {where}  {fields}"
-    return line if len(line) <= width else line[: width - 3] + "..."
+    room = width - len(head) - 2
+    if len(fields) > room:
+        fields = fields[: max(room - 3, 0)] + "..."
+    return f"{head}  {fields}"
 
 
 def main() -> int:
@@ -802,23 +834,36 @@ def main() -> int:
     units = units_of_touched_docs(root, direct)
     partial = partial_subchecks(counts, baseline.get("checks") or {})
 
+    run_counts = bucket_counts(items)
     new_items: list[dict[str, Any]] = []
     on_branch: list[dict[str, Any]] = []
+    pre_existing: list[dict[str, Any]] = []
     seen_buckets: dict[str, int] = {}
     for item in items:
         name = bucket_of(item)
+        fresh = False
         if (item["check"], item["subcheck"]) not in partial:
             seen_buckets[name] = seen_buckets.get(name, 0) + 1
             fingerprints = known.get(name, set())
-            if fingerprints is not None and item["key"].rsplit("|", 1)[1] not in fingerprints:
-                new_items.append(item)
+            fresh = fingerprints is not None and item["key"].rsplit("|", 1)[1] not in fingerprints
+        # Rule 2: a failure that is not staleness, in a bucket the baseline holds whose count has not
+        # risen, is pre-existing, content changed or not. It never blocks and is reported with both
+        # counts whenever it would have been reported at all: on a branch file, or with new content.
+        standing = None if item["stale"] else standing_of(run_counts[name], baseline_counts.get(name))
+        counted = (
+            {"standing": standing, "baseline_count": baseline_counts[name], "count": run_counts[name]}
+            if standing else {}
+        )
         hits = names_branch_path(item, tokens, root, units)
+        if fresh and not standing:
+            new_items.append(item)
+        if standing and (fresh or hits):
+            pre_existing.append({**public(item), **counted, "branch_paths": hits})
         if hits:
-            on_branch.append({**public(item), "branch_paths": hits})
+            on_branch.append({**public(item), "branch_paths": hits, **counted})
 
     grown = grown_buckets(seen_buckets, baseline_counts)
     subcheck_growth = grown_subchecks(counts, baseline.get("checks") or {})
-    run_counts = bucket_counts(items)
     for row in subcheck_growth:
         row["stale"] = readiness_counter_is_staleness(row, items, run_counts, baseline_counts)
     resolved = sorted(
@@ -826,7 +871,11 @@ def main() -> int:
         if bucket_subcheck(name) not in partial
     )
 
-    reported_keys = {item["key"] for item in new_items} | {item["key"] for item in on_branch}
+    reported_keys = (
+        {item["key"] for item in new_items}
+        | {item["key"] for item in on_branch}
+        | {item["key"] for item in pre_existing}
+    )
     reported = [item for item in items if item["key"] in reported_keys]
     blocking = blocking_items(on_branch, grown, subcheck_growth)
 
@@ -853,6 +902,7 @@ def main() -> int:
                 },
                 "new": [public(item) for item in new_items],
                 "on_branch": on_branch,
+                "pre_existing": pre_existing,
                 "grown_buckets": grown,
                 "grown_subchecks": subcheck_growth,
                 "excused_by_kind": excused_by_kind(on_branch),
@@ -887,11 +937,18 @@ def main() -> int:
             print(f"  {len(derived)} regenerated files are matched on the units they name, "
                   f"not on their own paths ({len(units)} units owned by documents this branch changed)")
         print()
+        on_branch_keys = {item["key"] for item in on_branch}
         print(f"New since the baseline: {len(new_items)}")
         for item in new_items[:40]:
-            print(describe(item))
+            print(describe(item, item_tag(item, item["key"] in on_branch_keys)))
         if len(new_items) > 40:
             print(f"  ... {len(new_items) - 40} more")
+        print(f"Pre-existing, in a baseline bucket whose count has not risen (never blocks): {len(pre_existing)}")
+        for item in pre_existing[:40]:
+            where = f"  (names {', '.join(item['branch_paths'])})" if item["branch_paths"] else "  (content changed)"
+            print(describe(item, item_tag(item, bool(item["branch_paths"]))) + where)
+        if len(pre_existing) > 40:
+            print(f"  ... {len(pre_existing) - 40} more")
         print(f"Checks whose failure count rose: {len(grown)}")
         for row in grown[:40]:
             print(f"  [{'staleness' if row['stale'] else 'blocking '}] {row['bucket']}  "
@@ -916,8 +973,11 @@ def main() -> int:
             print(f"  of which excused as governance staleness, by kind ({sum(excused.values())} in total):")
             for kind, count in excused.items():
                 print(f"      {count:7d}  {kind}")
+        pre_on_branch = sum(1 for item in on_branch if item.get("standing"))
+        if pre_on_branch:
+            print(f"  of which pre-existing or improved, listed above: {pre_on_branch}")
         for item in on_branch[:40]:
-            print(describe(item))
+            print(describe(item, item_tag(item, True)))
         if len(on_branch) > 40:
             print(f"  ... {len(on_branch) - 40} more")
         print(f"Gone since the baseline (nothing to do): {len(resolved)}")
@@ -928,6 +988,8 @@ def main() -> int:
             advice = []
             if any(item["stale"] for item in on_branch):
                 advice.append("governance staleness for what this branch edited, so ask the Plans agent for a reseal")
+            if pre_existing:
+                advice.append("pre-existing failures whose count has not risen, so nothing for this branch to fix")
             if any(item["key"] not in {other["key"] for other in on_branch} for item in new_items):
                 advice.append("new but names no file this branch touched, so report it to Jared")
             if any(row["stale"] for row in subcheck_growth):
