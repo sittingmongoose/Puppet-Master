@@ -740,6 +740,18 @@ class ConditionalCreatedV2Tests(unittest.TestCase):
         late['retired_generations'][0]['custody_bound_at_utc'] = '2026-09-12T00:00:00Z'
         self.assertEqual(V2.checkpoint_failures(late), ['history_time'])
 
+    def test_storage_instance_is_canonical_lowercase_uuid(self):
+        # The key embeds this text verbatim; v1 pins it to lowercase hex.
+        upper = 'ABCDEF12-1111-4111-8111-111111111111'
+        changed = copy.deepcopy(self.cp)
+        changed['storage_instance_id'] = upper
+        changed['index_read_token']['storage_instance_id'] = upper
+        changed['index_read_token']['source_selection']['storage_instance_id'] = upper
+        self.assertEqual(V2.checkpoint_failures(changed), ['checkpoint_schema'])
+        core = {k: v for k, v in changed.items() if k != 'retired_generations'}
+        self.assertEqual(V2.core_failures(core), ['checkpoint_core_schema'])
+        self.assertEqual(V2.legacy_failures({**copy.deepcopy(self.old), 'storage_instance_id': upper}), ['legacy_schema'])
+
     def test_only_one_v1_custody_entry(self):
         _, after, _ = self.handoff()
         duplicate = copy.deepcopy(after['retired_generations'][0])
