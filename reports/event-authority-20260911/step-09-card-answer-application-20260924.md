@@ -27,7 +27,7 @@ All in `Plans/.audits/event-authority-2026-08-12/`, following the pattern of the
 - `individual-disposition/LEDGER.jsonl` and `census-adjudication/LEDGER.jsonl`: the same 20 lines, rewritten from the row objects with each file's own serialization and each line's own line ending. No other line changes.
 - `individual-disposition/OWNER_VETOES.jsonl`: the 20 answered vetoes are removed. It lists pending vetoes, and none is pending now; it is back to the empty state it had before the cards were raised. The removed objects are kept verbatim in the application record.
 
-The application record `step-09-card-answer-application-20260924.json` (SHA-256 `4fc7b86d35378fbe9af58ed1a589cb5dec4f1046cbfade4e06f9a418600b4fb1`) lists every row with its before and after SHA-256, the before and after hash of each ledger file, the two answers with their source, and the removed vetoes.
+The application record `step-09-card-answer-application-20260924.json` (SHA-256 `c2522e12fda594b407ed07800ea6c51480bf6b154b212e65570372b26bbfce64`) lists every row with its before and after SHA-256, the before and after hash of each ledger file, the two answers with their source, and the removed vetoes.
 
 ## Checks (worktree at the branch tip, base `origin/main` `792d2fb8b1`)
 
