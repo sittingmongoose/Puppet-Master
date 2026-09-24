@@ -22,8 +22,11 @@ At landing, also pass `--keep-check-reports <dir>`, a directory under
 `/mnt/Cursor/PuppetMaster-Evidence/`. It keeps each check's full report, every row it printed, as
 `<dir>/<check>.json` beside the `--json` output, so the landing can later be replayed exactly. The
 `--json` report keeps only the rows it reports, and a replay from it alone cannot see the rest of a
-sampled subcheck's printed rows, which is what the readiness growth counter reads. The directory must
-be outside the repository: the check refuses one inside it with exit 3, before it runs anything.
+sampled subcheck's printed rows, which is what the readiness growth counter reads. It also keeps each
+export the landing ran (see "Subchecks keyed from their export" below) as
+`<dir>/exports/<command>.json`: the command line, how the run ended and the report it wrote. The
+directory must be outside the repository: the check refuses one inside it with exit 3, before it runs
+anything.
 
 Exit codes: 0 nothing to report, and every subcheck finished; 1 nothing it reports stops the
 landing, meaning governance staleness on files the branch edited, pre-existing failures whose count
@@ -33,7 +36,8 @@ not fully verified; 2 something it reports does stop the landing, meaning a fail
 files that is neither staleness nor pre-existing, a bucket that grew whose error kind is not
 staleness, or a rise in a subcheck whose failures are truncated, other than the readiness growth
 counter; 3 the check could not run, or a subcheck timed out while recording a baseline. A subcheck
-that timed out in a landing run lifts an exit 0 to 1 and changes no other exit code.
+that timed out in a landing run lifts an exit 0 to 1 and changes no other exit code. A subcheck keyed
+from its export is not truncated; one whose export falls back is, and the summary says why.
 
 **It refuses a sparse worktree**, with exit 3, in both modes. The three checks read the whole
 repository, so every file outside a sparse cone reads as missing: a dry run at `ecb77f4e6c` on a
@@ -70,11 +74,12 @@ that is refreshed on a schedule megabytes long. `fingerprints: null` in a bucket
 ## What the match can and cannot see
 
 The two aggregate checks print at most 50 (run-gates) or 100 (audit-governance) failures per subcheck
-but report the true total, so the baseline stores both. In the recorded baseline that means **only
-1,007 of the 9,807 failures those two checks report are ever keyed**: 12 subchecks are truncated and
-8,800 failures are never seen one by one. The worst are `validate_evidence` and `validate_plan_graph`,
-which report 1,552 each against a 50-row sample, a 97 percent blind spot. `plan-migration-validate`
-prints all 28,128 of its failures, so those are keyed in full.
+but report the true total, so the baseline stores both. In the first recorded baseline, of
+2026-09-21, that meant **only 1,007 of the 9,807 failures those two checks report were ever keyed**:
+12 subchecks were truncated and 8,800 failures were never seen one by one. The worst were
+`validate_evidence` and `validate_plan_graph`, which reported 1,552 each against a 50-row sample, a 97
+percent blind spot. `plan-migration-validate` prints all of its failures, so those are keyed in full.
+Most of that hole is now closed by keying a truncated subcheck from its export, below.
 
 The match against the branch's paths therefore runs over the printed sample, not over every failure.
 A failure that names a file the branch touched but lands above its subcheck's cap is not matched.
@@ -134,7 +139,142 @@ validator, and only where its total was 100 or less: 33 at the storage registry 
 do not pair, because their audit-governance copies print only 100 rows: evidence and plan-graph (876
 at those landings, 1,552 on 2026-09-21), audit-closure (201), the PRD contracts (1,240), and on
 2026-09-21 readiness itself (218 and 124) and plan-migration (181). A rise in them still stops the
-landing.
+landing, unless the subcheck is keyed from its export, below. A run-gates copy keyed from its export,
+or compared with the rows the baseline recorded from one, is no sample and is not paired.
+
+### Subchecks keyed from their export
+
+A subcheck's printed rows are a sample, but its command writes all of them. Both aggregates re-invoke
+every subcheck as `pm-plans-verify.py <command> --report <tmp> <arguments>` (`_run_subprocess_check`),
+take its total as the number of rows in that report (`compact_gate_report`) and print the first 50
+(`cmd_run_gates`) or 100 (`cmd_audit_governance`) of them. `run-gates` runs `verify_spec_lock`
+in-process, but through `cmd_verify_spec_lock`, the function its `verify-spec-lock` command runs.
+So when the landing check runs a subcheck's command line again, with the arguments
+`pm-plans-verify.py` itself builds for it (`_aggregate_subcheck_command_id` and
+`_aggregate_subcheck_cli_args`), the report that run writes is the complete list of what the subcheck
+counted: its export (the exports brief of 2026-09-24).
+
+**Which subchecks have one.** It was read in `scripts/pm-plans-verify.py` at `bc1d99c11e`, and in
+every validator it calls. The two aggregates run 36 commands: 36 subchecks in `run-gates` and 33 in
+`audit-governance`, with both copies of a validator running one command line. None of the commands
+drops rows before it reports them, but one: `validate-audit-closure`, whose
+`cmd_validate_audit_closure` keeps only the first 200 of `pm-audit-closure.py`'s errors, so its own
+report is a sample whenever there are more. That pair, `validate_audit_closure` and `audit_closure`,
+has no complete export and keeps the truncated rule. Two commands keep 50 entries of a list nested
+inside one row (`gui_asset_policy_failed.failures` and `audit_closure_reopened_rows_present.rows`).
+That changes what the row says, not how many rows there are. The list is `EXPORT_COMMANDS` in the
+script, and the run header prints it. A command added to the aggregates later has no export until
+someone reads it, and `test_the_real_map_reads_every_aggregate_command_as_a_complete_export_but_audit_closure`
+fails until then.
+
+| Command | `run-gates` subcheck | `audit-governance` subcheck |
+|---|---|---|
+| `check-project-artifacts` | `check_project_artifact_requirements` | `project_artifacts` |
+| `check-shards` | `check_shards` | `shards` |
+| `json-syntax` | `json_syntax` | (not run) |
+| `lint-banned-phrases` | `lint_banned_phrases` | (not run) |
+| `lint-contractrefs` | `lint_contractrefs` | `support_refs` |
+| `lint-path-refs` | `lint_path_refs` | `path_refs` |
+| `validate-audit-closure` (no complete export) | `validate_audit_closure` | `audit_closure` |
+| `validate-audit-status-index` | `validate_audit_status_index` | `audit_status_index` |
+| `validate-auto-decisions` | `validate_auto_decisions` | `auto_decisions` |
+| `validate-browser-event-admission` | `validate_browser_event_admission` | `browser_event_admission` |
+| `validate-case-l-non-event-materialization` | `validate_case_l_non_event_materialization` | `case_l_non_event_materialization` |
+| `validate-evidence` | `validate_evidence` | `evidence` |
+| `validate-filesafe-security-policy` | `validate_filesafe_security_policy` | `filesafe_security_policy` |
+| `validate-forge-backup-acceptance` | `validate_forge_backup_acceptance` | `forge_backup_acceptance` |
+| `validate-github-project-integration` | `validate_github_project_integration` | `github_project_integration` |
+| `validate-goal-runtime-event-fixtures` | `validate_goal_runtime_event_fixtures` | `goal_runtime_event_fixtures` |
+| `validate-gui-asset-policy` | `validate_gui_asset_policy` | `gui_asset_policy` |
+| `validate-implementation-readiness` | `validate_implementation_readiness` | `implementation_readiness` |
+| `validate-new-contracts` | `validate_new_contracts` | (not run) |
+| `validate-plan-graph` | `validate_plan_graph` | `plan_graph` |
+| `validate-plan-migration` | `validate_plan_migration` | `plan_migration` |
+| `validate-plans-to-code-handoff-schema` | `validate_plans_to_code_handoff_schema` | `plans_to_code_handoff_schema` |
+| `validate-pm7-gui-fixtures` | `validate_pm7_gui_fixtures` | `pm7_gui_fixtures` |
+| `validate-prd-planning-runtime-contracts` | `validate_prd_planning_runtime_contracts` | `prd_planning_runtime_contracts` |
+| `validate-project-output-fixtures` | `validate_project_output_fixtures` | `project_output_fixtures` |
+| `validate-runtime-artifact-schemas` | `validate_runtime_artifact_schemas` | `runtime_artifact_schemas` |
+| `validate-server-command-gap` | `validate_server_command_gap` | `server_command_gap` |
+| `validate-testing-session-event-admission` | `validate_testing_session_event_admission` | `testing_session_event_admission` |
+| `validate-touch-closure` | `validate_touch_closure` | `touch_closure` |
+| `validate-ui-command-response` | `validate_ui_command_response` | `ui_command_response` |
+| `validate-usage-contract-drift` | `validate_usage_contract_drift` | `usage_contract_drift` |
+| `validate-usage-gui-fixtures` | `validate_usage_gui_fixtures` | `usage_gui_fixtures` |
+| `validate-web-capability-contracts` | `validate_web_capability_contracts` | `web_capability_contracts` |
+| `validate-wiring-matrix` | `validate_wiring_matrix` | `wiring_matrix` |
+| `validate-working-notebook-contracts` | `validate_working_notebook_contracts` | `working_notebook_contracts` |
+| `verify-spec-lock` | `verify_spec_lock` | `spec_lock` |
+
+**When a subcheck is keyed.** A subcheck that prints only a sample in a landing run is keyed from its
+export when all of these hold:
+
+- its command writes a complete export, as above;
+- the baseline holds its rows in full, because it printed all of them or recorded them from an
+  export;
+- the export finished within `--subcheck-timeout-seconds` and could be read;
+- the export's total equals the printed total.
+
+Then every row is keyed from the export and the subcheck is not truncated. The kind rules judge every
+row, as for a subcheck that prints everything: staleness is excused, a pre-existing or improved count
+never blocks, and a failure that is not staleness on a file the branch touched blocks, whether or not
+it falls inside the printed sample. A rise in the total stops nothing by itself, because every row it
+adds is keyed and judged. One export run serves both copies of a validator. The summary prints a line
+for each keyed subcheck, with how its rows came out, for example
+`[keyed    ] run-gates/validate_plan_graph (50 of 133 printed): its export (validate-plan-graph) holds
+all 133 rows, the printed total: 132 staleness, 1 pre-existing`.
+
+**When it falls back.** Otherwise the truncated rule applies as before, and the summary says which case
+and why, ending "the truncated rule applies":
+
+- *no complete export*: the audit-closure pair, a command the list does not name, or a
+  `pm-plans-verify.py` whose map of subchecks to commands cannot be read;
+- *baseline sample*: the baseline printed only part of the subcheck's rows and recorded no export.
+  Complete rows now against a sample then would read every pre-existing failure outside the sample as
+  grown, so the export is not run;
+- *total mismatch*: the export holds a different number of rows than the printed total, for example
+  because the tree changed between the two runs: "its export (validate-plan-graph) holds 132 rows, but
+  the printed total is 133";
+- *export timeout* or *unreadable*: the export did not finish within the bound, or its report is not
+  JSON or holds no list of failures. This is not an infrastructure result: the subcheck itself
+  finished, so its total and its printed rows are known, and only the keying falls back.
+
+**How the export runs.** `python3 scripts/pm-plans-verify.py <command> --report <file> <arguments>`
+from the root, in a process group of its own and marked `PM_PLANS_VERIFY_AGGREGATE_CHILD=1` as the
+aggregates mark their children, so that a validator it starts stays in that group. It is killed with
+the whole group at `--subcheck-timeout-seconds`. The file is in a scratch directory outside the
+repository and is deleted again. Only subchecks that print a sample are exported, so a landing without
+one runs nothing more. On local disk `validate-plan-graph` took 13 seconds, `validate-evidence` 12
+and `validate-prd-planning-runtime-contracts` under one.
+
+**The baseline.** `--record-baseline` keys from exports too. For every subcheck it keys, the baseline
+records `exported` beside `reported` and `sampled`, and the complete rows as `export_buckets`, next to
+`buckets`, which still holds the printed rows of every subcheck. A landing that keys the subcheck from
+its own export, or in which it prints every failure, compares with `export_buckets`. A landing whose
+export falls back compares its printed sample with the printed `buckets`, sample with sample, exactly
+as before. The baseline recorded at `792d2fb8b1` has no exports. Until the next nightly refresh, the
+two subchecks it holds only a sample of, the PRD contracts (1,240) and audit-closure (201), keep the
+truncated rule as a baseline sample. The refresh records the PRD contracts from their export.
+Evidence and plan-graph are complete in that baseline (0 each), so a landing keys them already.
+
+In `--json`, `exports` carries `complete_export_commands` and `no_complete_export`, and under
+`subchecks` one row per sampled subcheck. Each row has its `case` (`keyed`, `no_export`,
+`baseline_sample`, `total_mismatch`, `export_timeout` or `export_unreadable`), the `reason`, the
+number of rows `exported`, and for a keyed subcheck its `classes`. `compared_with_baseline_exports`
+names the subchecks compared with the baseline's export rows without being exported themselves. A
+keyed subcheck's count carries `exported`, and its row in `grown_subchecks` carries
+`keyed_from_export`.
+
+The motivating case: `plans/ea-certified-anchors-20260924`, rebased on `b3169c48d9`, edits
+`Goal_Runtime_System.md` and `storage-plan.md`. `validate_plan_graph` rises from 1 to 133, with 132
+`artifact_hash_stale` rows for the two documents and their 130 shards in the live plan-sharding
+evidence bundle, plus `main`'s one `missing_ref`. That was a truncated rise past both print caps,
+so the check exited 2 on staleness the rule says never stops a landing. Keyed from its export, the
+same run exits 1: the 132 rows are staleness and the `missing_ref` is pre-existing.
+
+What this leaves open: audit-closure stays sampled, and its validator's errors past the first 200
+are seen by nothing. The export is a second run of the same validator. The equal total is the
+evidence that it saw what the aggregate saw; the rows are not compared one by one.
 
 ## What counts as governance staleness
 
@@ -367,8 +507,10 @@ Four things that make the difference between a good baseline and a misleading on
   `origin/main` itself, which rule 2 needs on the history of every later base.
 - Both files in one commit, so the baseline and the run it describes never disagree.
 
-Takes about ten minutes. The run also ends at a new `current_run.json`, so the next landing check
-validates the new snapshot rather than the one it replaced.
+Takes about ten minutes, plus the exports of the subchecks that print only a sample (see "Subchecks
+keyed from their export"), which the baseline records so that the next day's landings can key those
+subchecks. The run also ends at a new `current_run.json`, so the next landing check validates the new
+snapshot rather than the one it replaced.
 
 If `--record-baseline` refuses with exit 3 because a subcheck timed out, rerun it the same night with
 a larger `--subcheck-timeout-seconds`, for example `--subcheck-timeout-seconds 1200`; never skip the
