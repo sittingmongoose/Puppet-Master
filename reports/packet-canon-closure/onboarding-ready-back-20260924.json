@@ -1,0 +1,51 @@
+{
+  "repair": "Phase-safe Onboarding Ready Back",
+  "base_commit": "3b0bbb9e6352fa99fed5906cd47da426fe54a012",
+  "branch": "fix/onboarding-ready-back-20260924",
+  "claim_boundary": "Static schema and already-validated value joins only; no runtime persistence, native owner dispatch, GUI execution, or governance reseal.",
+  "authority": [
+    {"path": "Plans/FinalGUISpec.md", "PlanUnit": "F3-520", "lines": [35088, 35100], "sha256": "1b7b0f4674c9088b4e042040be5522e66badc19d0008b0d55f9fe63c31ccc4f0"},
+    {"path": "Plans/Planning_Wizard.md", "PlanUnit": "PWIZ-021", "lines": [1775, 1799, 1801, 1825, 1827, 1831], "sha256": "9197b8b63f86f3f01c384c692193c2221d73fc347fc78356158f19f73ae73b79"}
+  ],
+  "transitions": [
+    {"path_kind": "guided_setup", "project_disposition": "committed", "before": "ready", "after": "free_models_setup"},
+    {"path_kind": "guided_setup", "project_disposition": "deferred", "before": "ready", "after": "automatic_preparation"},
+    {"path_kind": "connect_existing", "project_disposition": "not_applicable", "before": "ready", "after": "automatic_preparation"}
+  ],
+  "implementation": {
+    "schema": "Only onboarding_action_request/result change: Ready admitted for Back and three exact result destinations bound to path/disposition. Earlier Back stages unchanged, including provider_setup still excluded.",
+    "join": "Applied Ready Back requires a prevalidated ready_back_session with active status and exact common session/continuation fields. It pops exactly the prior history entry; every other continuation field is preserved except the existing incremented revision. Request focus remains exact. No new owner route, operation or production receipt is permitted.",
+    "admission": "Missing, mismatched, interrupted, deferred, skipped, completed or cancelled session cannot authorize applied Back. resume_session is not a substitute. Existing nonwriting disabled/rejected outcomes require no active Ready witness.",
+    "caller_obligation": "All supplied values, including ready_back_session, must first pass schema and individual semantic validation and native reference authentication. This helper never supplies that authority.",
+    "artifact_hashes": {
+      "Plans/product_onboarding_contracts.schema.json": "55fd62eed4bcfb17085aec951434d17af5a474aa80206bcfd705b486119143d4",
+      "scripts/pm_onboarding_semantics.py": "2e4959f4ba9ee4a37aebb654fcde3a7b13885b8bf74236292f0faad24259900b",
+      "tests/test_pm_onboarding_action_causality.py": "69a2c5e8910623d8a16bcddcc1ce3e812ba68173892bc216d3dca167ef1b5746"
+    }
+  },
+  "verification": {
+    "base_counterfactual": "All three final positive continuations and active sessions validate against base; all three requests and all three results fail base Ready exclusions. Old join returns no findings without an active session witness. New schema and join admit the exact positives.",
+    "action_causality_tests": {"total": 28, "passed": 28, "new_ready_back_methods": 15},
+    "adjacent_phase_tests": {"total": 54, "passed": 53, "preexisting_failures": 1},
+    "adjacent_settings_draft_tests": {"total": 11, "passed": 11},
+    "preexisting_failure": "test_existing_family_and_retention_census_is_unchanged hard-codes 90 families; base and current registry contain 294. Both test file and registry are byte-identical to base. The other 53 phase tests pass; no census or governance artifact was changed.",
+    "causal_checks": "Schema-plus-semantic-valid substitutions test Client/focus/SCM/forge, deferred/connect plan refs, request/result correlation, witness identity/revision/generation/state, all nonactive statuses, focus redirects and owner dispatch. Complete preservation is additionally guarded field-by-field with explicit defensive invalid-value tests, not misreported as causal-valid negatives.",
+    "refusal_checks": "Disabled and rejected outcomes for all three paths are valid, same-stage and nonwriting; attempted session write is structurally rejected.",
+    "new_contracts": {"contract_pairs": 32, "positive_cases": 1163, "positive_cases_valid": 1163, "negative_cases": 4024, "negative_cases_rejected": 4024, "internal_self_tests": 12, "internal_self_tests_passed": 12, "findings": 0},
+    "full_report": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/server_forge_backup/onboarding-ready-back-new-contracts-report.json",
+      "sha256": "7abb02368cd856844cd1f61bd00011ed4eb7e9b05804d51a381f6bfa0ce6b267"
+    },
+    "unchanged_schema_definitions": 38,
+    "persisted_bundle_equal_to_base": true,
+    "persisted_bundle_canonical_json_sha256": "380e0e871c6cc7b79566ae6beaa4c9215bdc3f68252a4d1502ac77e977823797",
+    "git_diff_check": "pass"
+  },
+  "preserved_composition_boundaries": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/server_forge_backup/onboarding-ready-back-composition-boundaries.json",
+    "sha256": "0d27b6523b31121bbe978388dc7f662870e1c38a64e59344437e294f33acd08e",
+    "null_draft_projection": "The existing connect Ready projection schema admits null draft references that cannot match a valid queued durable session. PWIZ-021 requires retained draft identity distinct from Project identity. The exact join rejects this incomplete projection without normalizing it; the standalone schema looseness is not repaired or claimed closed here.",
+    "active_branch": "Current owner phases do not admit any non-null active branch at Ready. Valid positives preserve null; injection is an existing semantic rejection as well as an equality rejection, not a causal-valid negative. No artificial Ready owner branch was introduced."
+  },
+  "untouched": ["owner prose", "persisted schema definitions", "storage value registry", "fixture packs", "event and domain registries", "generated indexes and shards", "governance bindings", "shared main checkout"]
+}
