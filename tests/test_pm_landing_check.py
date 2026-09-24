@@ -7,6 +7,7 @@ checks; the report shapes are copied from what `run-gates`, `audit-governance` a
 
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 import os
@@ -15,6 +16,8 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import textwrap
+import time
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -1862,6 +1865,533 @@ class KeptCheckReports(LandingRun):
         self.assertEqual(ran, [])
         self.assertFalse((self.repo / "kept").exists())
         self.assertIn("--keep-check-reports must name a directory outside the repository", self.stderr)
+
+
+# ------------------------------------------------------------------ keyed from exports (2026-09-24)
+
+# The reviewer's export of validate-plan-graph on plans/ea-certified-anchors-20260924 rebased on b3169c48d9
+# (~/PM-Experiments/review-ea-anchors-20260924/chk-validate-plan-graph-export-rebased.json, SHA-256
+# c6a0a6d105ae113d6ea58e538314df2deec448483e0a6b2b59cdeb7ba4934063): 133 rows in this order. First 132
+# artifact_hash_stale rows of the live plan-sharding evidence bundle, for Plans/storage-plan.md, its 84
+# shards, Plans/Goal_Runtime_System.md and its 46 shards; then main's one missing_ref. The artifacts and the
+# missing_ref are copied as they are. The hash values are stand-ins: the key drops `expected` and `actual`
+# (VALUE_KEYS), and nothing else reads them.
+EA_EVIDENCE_BUNDLE = "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+EA_STORAGE_PLAN_SHARDS = (
+    "00-index.md", "manifest.json", "001-preamble.md", "002-canonical-owner-section-requirements.md",
+    "003-summary.md", "004-table-of-contents.md", "005-1.-definitions-and-concepts.md",
+    "006-2.-how-we-re-going-to-do-it.md", "007-3.-implementation-checklist.md",
+    "008-4.-impact-on-chat-assistant-interview.md", "009-5.-gaps-and-how-we-address-them.md",
+    "010-6.-potential-problems-and-solutions.md",
+    "011-7.-backup-restore-compaction-and-optional-storage-enhancements.md",
+    "012-8.-implementation-order-and-testing.md", "013-version-history.md",
+    "014-scheduler-runtime-safe-point-and-remediation-storage-addendum-20.md",
+    "015-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-.md",
+    "016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md",
+    "017-runtime-recovery-persistence-and-restart-canonical-alignment-202.md",
+    "018-permission-snapshot-storage-and-safe-point-namespace-addendum.md",
+    "019-assistant-worktree-binding-storage-addendum.md", "020-8.-web-content-caching-persistence.md",
+    "021-owner-consumer-map.md", "022-planunits.md", "023-migration-coverage.md",
+    "024-ledger-compile-addendum-pldg-20260614-001.md", "025-ledger-compile-addendum-pldg-20260616-001.md",
+    "026-ledger-compile-addendum-pldg-20260616-002.md",
+    "027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+    "028-ledger-compile-addendum-pldg-20260622-001-fff.md",
+    "029-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+    "030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+    "031-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+    "032-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+    "033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+    "034-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+    "035-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
+    "036-usage-gui-propagation-addendum-2026-07-09.md", "037-case-l-durable-state-owner-canon-2026-07-17.md",
+    "038-known-37-case-l-owner-materialization.md", "039-pmconcept7-home-workspace-layout-2026-08-04.md",
+    "040-run-debug-revival-addendum-2026-07-27.md",
+    "041-shared-integration-runtime-persistence-and-migration-addendum-20.md",
+    "042-u11-prism-ii-usage-view-state-addendum-2026-08-18.md",
+    "043-pmconcept7-recovery-settled-layout-addendum-2026-08-27.md",
+    "044-packet-authoritative-storage-disposition-and-redaction-addendum-.md",
+    "045-back-seat-driver-contract-family-persistence-disposition-addendu.md",
+    "046-forge-backup-v2-and-go-tsnet-storage-redaction-transaction-2026-.md",
+    "047-additive-correction-v4-records-replay-and-migration-matrix-2026-.md",
+    "048-working-notebook-and-context-transition-storage-addendum-2026-09.md",
+    "049-research-decision-disposition-persistence.md",
+    "050-compaction-completion-persistence-contract-dl-039-and-dl-040.md",
+    "051-dl-042-historical-todo-event-migration-consumer-boundary-2026-09.md",
+    "052-scoped-browser-event-persistence-2026-09-10.md", "053-jujutsu-d5-owner-requirements-2026-09-11.md",
+    "054-run-start-index-consumers-and-checkpoint-2026-09-11.md",
+    "055-browser-workspace-created-index-and-checkpoint-2026-09-11.md",
+    "056-restore-point-created-consumer-checkpoint-contract.md", "057-restore-point-retention-summary-contract.md",
+    "058-run-start-and-restore-created-versioned-index-adoption.md",
+    "059-browser-workspace-reset-filtered-checkpoint-2026-09-11.md", "060-first-append-receipt-custody.md",
+    "061-goal-body-storage-custody.md", "062-restore-point-deletion-custody-and-checkpoint.md",
+    "063-restore-point-delete-original-result-custody.md", "064-restore-point-expired-custody-and-checkpoint.md",
+    "065-restore-point-original-admission-and-retained-custody-read-phase.md",
+    "066-legal-hold-transition-custody-and-passive-history.md",
+    "067-original-standard-certification-receipt-custody.md",
+    "068-storage-integrity-finding-custody-and-read-contract.md", "069-platform-capability-decision-custody.md",
+    "070-boot-recovery-aggregate-and-original-producer-custody.md",
+    "071-boot-earliest-receipt-continuity-and-activation.md",
+    "072-recovery-original-action-custody-and-publication.md",
+    "073-goal-start-original-command-custody-and-publication.md",
+    "074-sp-294-goal-start-original-command-custody-and-publication.md",
+    "075-compaction-original-native-source-phase-custody-and-detail-retir.md",
+    "076-goal-created-passive-current-reader-and-original-command-members.md",
+    "077-original-goal-update-source-physical-custody-and-publication.md",
+    "078-sp-314-original-standard-authority-families-and-fresh-whole-stor.md",
+    "079-sp-315-certified-producer-current-and-retained-source-disclosure.md",
+    "080-sp-316-seven-compact-authority-families-eleven-v7-profile-qualif.md",
+    "081-sp-317-two-projection-checkpoint-families-and-exact-rp-projectio.md",
+    "082-terminal-workgroup-moved-exact-passive-source-read.md",
+)
+EA_GOAL_RUNTIME_SHARDS = (
+    "00-index.md", "manifest.json", "001-preamble.md", "002-0.-scope.md", "003-1.-ownership-and-consumers.md",
+    "004-goal-v2-record-and-retired-fields.md", "005-durable-host-continuation.md", "006-goal-change-authority.md",
+    "007-goal-activity-domain-surface.md", "008-internal-workflow-use-of-goal-v2.md",
+    "009-retired-goal-structure-and-negative-ownership.md",
+    "010-goal-v2-exact-commands-and-required-result-boundaries.md", "011-goal-v2-events.md",
+    "012-goal-v1-to-v2-migration.md", "013-goal-v2-verification.md", "014-2.-canonical-planunits.md",
+    "015-server-command-gap-owner-closure-goal-handoff-family-2026-09-01.md",
+    "016-remaining-runtime-integration-addendum-2026-08-13.md",
+    "017-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+    "018-3.-contracts-schemas-events-or-data-shapes.md", "019-4.-integration-surfaces.md",
+    "020-5.-validation-and-acceptance.md", "021-6.-plan-to-node-readiness.md",
+    "022-7.-deferred-retired-compatibility-and-non-goals.md", "023-8.-source-lineage-and-governance.md",
+    "024-ledger-compile-addendum-pldg-20260616-002.md",
+    "025-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+    "026-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+    "027-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+    "028-case-l-durable-goal-recovery-consumer-addendum-2026-07-17.md",
+    "029-additive-correction-v4-goal-replay-lineage-completion-guards-and.md",
+    "030-working-notebook-authority-boundary-addendum-2026-09-05.md",
+    "031-cumulative-v3-goal-activity-detail-and-plan-binding-specificatio.md",
+    "032-goal-body-currentness-and-history.md", "033-current-creation-consumers-and-canonical-goal-state.md",
+    "034-current-update-consumers-and-accepted-goal-state.md", "035-original-standard-certification-receipt.md",
+    "036-original-goal-creation-command-settlement.md", "037-grs-066-original-goal-creation-command-settlement.md",
+    "038-passive-original-goal-creation-observation.md",
+    "039-original-goal-objective-update-acceptance-and-settlement.md",
+    "040-current-workflow-activation-and-certification-child-scope.md",
+    "041-grs-082-fresh-standard-workflow-certification-original-source-20.md",
+    "042-grs-083-original-certified-producer-composition-and-source-only-.md",
+    "043-grs-084-whole-certified-v3-event-identity-released-custody-nativ.md",
+    "044-grs-085-mandatory-started-cancelled-certified-prefix-projection-.md",
+)
+PLAN_GRAPH_MISSING_REF = {"error": "missing_ref", "node_id": "pm.p6.personas-ledger-transfer", "output": ".gitignore",
+                          "output_ref": ".gitignore", "path": "Plans/plan_graph.json"}
+
+
+def ea_anchors_rows(kind="artifact_hash_stale"):
+    """The reviewer's export, with every artifact row's error kind replaced by `kind` for the negative case."""
+    artifacts = (["Plans/storage-plan.md"] + [f"Plans/_shards/storage-plan/{name}" for name in EA_STORAGE_PLAN_SHARDS]
+                 + ["Plans/Goal_Runtime_System.md"]
+                 + [f"Plans/_shards/goal_runtime_system/{name}" for name in EA_GOAL_RUNTIME_SHARDS])
+    rows = [{"path": EA_EVIDENCE_BUNDLE, "artifact": artifact, "error": kind,
+             "expected": hashlib.sha256(f"expected {artifact}".encode()).hexdigest(),
+             "actual": hashlib.sha256(f"actual {artifact}".encode()).hexdigest()} for artifact in artifacts]
+    return rows + [dict(PLAN_GRAPH_MISSING_REF)]
+
+
+def contract_rows(count, touched_at=None, touched_ref="#/$defs/moved"):
+    """validate-prd-planning-runtime-contracts rows: unresolved local refs in one schema, and optionally one
+    in Plans/Touched.schema.json at position `touched_at`."""
+    rows = [{"path": "Plans/home_layout_event_contracts.schema.json", "error": "unresolved_local_ref",
+             "ref": f"#/$defs/row{n}"} for n in range(count)]
+    if touched_at is not None:
+        rows[touched_at] = {"path": "Plans/Touched.schema.json", "error": "unresolved_local_ref", "ref": touched_ref}
+    return rows
+
+
+def same_validator_argv(root, names, timeout_seconds):
+    """same_validator_commands, as the argument lists run_export is handed."""
+    return {key: [line] for key, line in same_validator_commands(root, names, timeout_seconds).items()}
+
+
+def flat(text):
+    """The summary with its wrapped lines joined, so a phrase can be found across a line break."""
+    return " ".join(line.strip() for line in text.splitlines())
+
+
+class ExportKeyedSubchecks(LandingRun):
+    """The exports brief of 2026-09-24. A subcheck that prints only a sample is keyed from the complete
+    export its command writes, when the export's total equals the printed total and the baseline holds its
+    rows in full. It is then not truncated, and the kind rules judge every row. Otherwise the truncated rule
+    applies as before, and the summary says which case and why.
+
+    The motivating case is plans/ea-certified-anchors-20260924, rebased on b3169c48d9. It edits two canon
+    documents, and validate_plan_graph rises from main's 1 to 133, past both print caps, so the check exited
+    2 on staleness that the rule says never stops a landing."""
+
+    TOUCHED = ("Plans/Goal_Runtime_System.md", "Plans/storage-plan.md",
+               "Plans/_shards/storage-plan/00-index.md", "Plans/.plan_index/plan_units.jsonl")
+    PRD_RG, PRD_AG, PRD = ("validate_prd_planning_runtime_contracts", "prd_planning_runtime_contracts",
+                           "validate-prd-planning-runtime-contracts")
+
+    def setUp(self):
+        super().setUp()
+        self.module.aggregate_subcheck_argv = same_validator_argv
+        self.exports = {}
+        self.export_calls = []
+
+        def run_export(root, argv, timeout_seconds):
+            self.export_calls.append(list(argv))
+            rows = self.exports.get(argv[0], "unreadable")
+            if rows == "timeout":
+                return {"report": None, "timed_out": True, "error": None, "elapsed_seconds": timeout_seconds}
+            if rows == "unreadable":
+                return {"report": None, "timed_out": False, "error": "its report is not JSON (stand-in)",
+                        "elapsed_seconds": 0.1}
+            return {"report": {"check": argv[0], "status": "fail" if rows else "pass",
+                               "failures": [dict(row) for row in rows]},
+                    "timed_out": False, "error": None, "elapsed_seconds": 0.1}
+        self.module.run_export = run_export
+
+    def land_ea_anchors(self, rows, export=None, argv=()):
+        """main's one missing_ref in both copies of the plan-graph validator at the baseline; on the branch,
+        the two documents and their regenerated files, and `rows`, of which each copy prints 50 or 100."""
+        self.stub(gates={"validate_plan_graph": [PLAN_GRAPH_MISSING_REF]}, audit={"plan_graph": [PLAN_GRAPH_MISSING_REF]})
+        self.record()
+        for rel in self.TOUCHED:
+            self.touch(rel)
+        self.stub(gates={"validate_plan_graph": (rows, len(rows))}, audit={"plan_graph": (rows, len(rows))})
+        self.exports["validate-plan-graph"] = rows if export is None else export
+        return self.compare(*argv)
+
+    def record_contracts(self, rows):
+        """A baseline in which both copies of the contracts validator print a sample of `rows` and are keyed
+        from its export."""
+        self.stub(gates={self.PRD_RG: rows}, audit={self.PRD_AG: rows})
+        self.exports[self.PRD] = rows
+        code, out = self.run_main("--record-baseline", "--baseline", "baseline.json")
+        self.assertEqual(code, 0, out + self.stderr)
+        return out, json.loads((self.repo / "baseline.json").read_text(encoding="utf-8"))
+
+    def test_the_reviewers_export_is_keyed_and_exits_one(self):
+        """132 artifact_hash_stale rows on the two edited documents and their shards, and main's one
+        missing_ref: staleness and pre-existing, every row keyed from the export, so exit 1, not 2."""
+        rows = ea_anchors_rows()
+        self.assertEqual((len(rows), sum(row["error"] == "artifact_hash_stale" for row in rows)), (133, 132))
+        code, out = self.land_ea_anchors(rows)
+        self.assertEqual(code, 1, out)
+        for check, subcheck, printed in (("run-gates", "validate_plan_graph", 50), ("audit-governance", "plan_graph", 100)):
+            self.assertIn(f"[keyed    ] {check}/{subcheck} ({printed} of 133 printed): its export (validate-plan-graph) "
+                          "holds all 133 rows, the printed total: 132 staleness, 1 pre-existing", out)
+            self.assertIn(f"[keyed    ] {check}/{subcheck}  1 -> 133 (keyed from its export", out)
+        self.assertIn("2 subchecks print only a sample of their failures in this run; 2 of them are keyed from the "
+                      "export of their command", out)
+        self.assertEqual(self.export_calls, [["validate-plan-graph"]])  # one run serves both copies
+        self.assertNotIn("[blocking", out)
+        self.assertIn("Naming a path this branch touches: 4", out)
+        self.assertIn("      4  artifact_hash_stale", out)
+        self.assertIn("with every failure keyed from its export", out)
+        report = json.loads(self.compare("--json")[1])
+        self.assertEqual(report["blocking"], 0)
+        self.assertEqual((len(report["new"]), {row["error"] for row in report["new"]}, {row["stale"] for row in report["new"]}),
+                         (264, {"artifact_hash_stale"}, {True}))
+        self.assertEqual(sorted(path for row in report["on_branch"] for path in row["branch_paths"]),
+                         ["Plans/Goal_Runtime_System.md"] * 2 + ["Plans/storage-plan.md"] * 2)
+        self.assertTrue(all(row["stale"] for row in report["on_branch"]))
+        # The missing_ref is unchanged and names no branch file: counted as pre-existing, not listed.
+        self.assertEqual(report["pre_existing"], [])
+        self.assertEqual([(row["check"], row["case"], row["exported"], row["classes"]) for row in report["exports"]["subchecks"]],
+                         [("run-gates", "keyed", 133, {"staleness": 132, "pre-existing": 1}),
+                          ("audit-governance", "keyed", 133, {"staleness": 132, "pre-existing": 1})])
+        self.assertEqual(report["subchecks_compared_by_total_only"], [])
+        self.assertEqual(report["checks"]["run-gates"]["subchecks"]["validate_plan_graph"],
+                         {"reported": 133, "sampled": 50, "exported": 133})
+        self.assertEqual([(row["subcheck"], row["truncated"], row.get("keyed_from_export")) for row in report["grown_subchecks"]],
+                         [("plan_graph", False, True), ("validate_plan_graph", False, True)])
+
+    def test_the_same_rows_with_a_kind_that_is_not_staleness_exit_two(self):
+        code, out = self.land_ea_anchors(ea_anchors_rows(kind="missing_artifact"))
+        self.assertEqual(code, 2, out)
+        self.assertIn("[keyed    ] run-gates/validate_plan_graph (50 of 133 printed): its export (validate-plan-graph) holds "
+                      "all 133 rows, the printed total: 130 new, 2 blocking, 1 pre-existing", out)
+        self.assertIn(f"[blocking    ] run-gates/validate_plan_graph  missing_artifact  {EA_EVIDENCE_BUNDLE}", out)
+        self.assertIn(f"[blocking    ] audit-governance/plan_graph  missing_artifact  {EA_EVIDENCE_BUNDLE}", out)
+        self.assertIn("4 items the baseline does not excuse", out)
+        report = json.loads(self.compare("--json")[1])
+        self.assertEqual(report["blocking"], 4)
+        self.assertEqual(sorted(path for row in report["on_branch"] for path in row["branch_paths"]),
+                         ["Plans/Goal_Runtime_System.md"] * 2 + ["Plans/storage-plan.md"] * 2)
+        self.assertFalse(any(row["stale"] for row in report["on_branch"]))
+
+    def test_an_export_whose_total_disagrees_falls_back_to_the_truncated_rule_and_says_why(self):
+        rows = ea_anchors_rows()
+        code, out = self.land_ea_anchors(rows, export=rows[:-1])
+        self.assertEqual(code, 2, out)
+        self.assertIn("[not keyed] run-gates/validate_plan_graph (50 of 133 printed): its export (validate-plan-graph) holds "
+                      "132 rows, but the printed total is 133; the truncated rule applies", out)
+        self.assertIn("[not keyed] audit-governance/plan_graph (100 of 133 printed): its export (validate-plan-graph) holds "
+                      "132 rows, but the printed total is 133; the truncated rule applies", out)
+        self.assertIn("[blocking ] run-gates/validate_plan_graph  1 -> 133 (only 50 of 133 are printed, so what was added "
+                      "cannot be matched)", out)
+        self.assertIn("[blocking ] audit-governance/plan_graph  1 -> 133 (only 100 of 133 are printed", out)
+        report = json.loads(self.compare("--json")[1])
+        self.assertEqual([(row["case"], row["keyed"], row["exported"]) for row in report["exports"]["subchecks"]],
+                         [("total_mismatch", False, 132)] * 2)
+        self.assertEqual(report["checks"]["run-gates"]["subchecks"]["validate_plan_graph"], {"reported": 133, "sampled": 50})
+        self.assertEqual(report["subchecks_compared_by_total_only"],
+                         ["audit-governance/plan_graph", "run-gates/validate_plan_graph"])
+        self.assertEqual(report["blocking"], 2)
+
+    def test_an_export_that_times_out_or_cannot_be_read_falls_back_and_says_so(self):
+        for export, reason in (("timeout", "did not finish within 600 s"),
+                               ("unreadable", "could not be read: its report is not JSON (stand-in)")):
+            with self.subTest(export=export):
+                self.setUp()
+                code, out = self.land_ea_anchors(ea_anchors_rows(), export=export)
+                self.assertEqual(code, 2, out)
+                self.assertIn(f"[not keyed] run-gates/validate_plan_graph (50 of 133 printed): its export "
+                              f"(validate-plan-graph) {reason}; the truncated rule applies", out)
+                self.assertIn("[blocking ] run-gates/validate_plan_graph  1 -> 133", out)
+                # The subcheck itself finished: an export that did not is no infrastructure result.
+                self.assertIn("Infrastructure results, not failures of this tree (never new, growth or blocking): 0", out)
+
+    def test_a_command_without_a_complete_export_keeps_the_truncated_rule_and_is_never_run(self):
+        closure = [{"path": "Plans/.audits/_semantic_closure_registry.jsonl", "error": "audit_closure_validator_error",
+                    "detail": f"closure row {n} lacks its evidence"} for n in range(201)]
+        self.stub(gates={"validate_audit_closure": (closure, 200)}, audit={"audit_closure": (closure, 200)})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"validate_audit_closure": (closure, 201)}, audit={"audit_closure": (closure, 201)})
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn("[not keyed] run-gates/validate_audit_closure (50 of 201 printed): validate-audit-closure writes no "
+                      "complete export: cmd_validate_audit_closure keeps only the first 200 of pm-audit-closure.py's "
+                      "errors, so its own report is a sample whenever there are more; the truncated rule applies", out)
+        self.assertIn("[blocking ] run-gates/validate_audit_closure  200 -> 201", out)
+        self.assertEqual(self.export_calls, [])
+
+    def test_a_baseline_that_holds_only_a_sample_is_not_compared_with_an_export(self):
+        """Until a baseline is recorded from exports, a subcheck it holds only a sample of keeps the
+        truncated rule: complete rows now against a sample then would read pre-existing failures as grown."""
+        rows = contract_rows(120)
+        self.stub(gates={self.PRD_RG: rows}, audit={self.PRD_AG: rows})
+        self.exports[self.PRD] = "unreadable"
+        code, out = self.run_main("--record-baseline", "--baseline", "baseline.json")
+        self.assertEqual(code, 0, out)
+        self.assertIn("[not keyed] run-gates/validate_prd_planning_runtime_contracts (50 of 120 printed): its export "
+                      "(validate-prd-planning-runtime-contracts) could not be read: its report is not JSON (stand-in); "
+                      "the baseline records only its printed sample, so landings keep the truncated rule for it", out)
+        baseline = json.loads((self.repo / "baseline.json").read_text(encoding="utf-8"))
+        self.assertEqual(baseline["checks"]["run-gates"]["subchecks"][self.PRD_RG], {"reported": 120, "sampled": 50})
+        self.assertEqual(baseline["export_buckets"], [])
+        calls = len(self.export_calls)
+        self.touch("Plans/Touched.md")
+        self.exports[self.PRD] = rows
+        code, out = self.compare()
+        self.assertEqual(code, 0, out)
+        self.assertEqual(len(self.export_calls), calls)  # nothing to compare an export with, so none is run
+        self.assertIn("[not keyed] run-gates/validate_prd_planning_runtime_contracts (50 of 120 printed): the baseline "
+                      "printed 50 of its 120 and recorded no export, so it holds no complete rows to compare an export "
+                      "with; the truncated rule applies", out)
+
+    def test_a_baseline_recorded_from_exports_keys_rows_beyond_the_printed_sample(self):
+        """The row on the touched schema sits at 110 of 120, past both print caps, where the truncated rule
+        never saw it. Recorded from the export, the baseline holds it, and each landing judges it."""
+        out, baseline = self.record_contracts(contract_rows(120, touched_at=110))
+        self.assertIn("export buckets: 4, the complete rows of 2 subchecks keyed from their export", out)
+        self.assertIn("[keyed    ] run-gates/validate_prd_planning_runtime_contracts (50 of 120 printed): its export "
+                      "(validate-prd-planning-runtime-contracts) holds all 120 rows, the printed total", out)
+        self.assertEqual(baseline["checks"]["run-gates"]["subchecks"][self.PRD_RG],
+                         {"reported": 120, "sampled": 50, "exported": 120})
+        self.assertEqual(baseline["checks"]["audit-governance"]["subchecks"][self.PRD_AG],
+                         {"reported": 120, "sampled": 100, "exported": 120})
+        self.assertEqual([(row["check"], row["count"]) for row in baseline["export_buckets"]
+                          if row["path"] == "Plans/Touched.schema.json"], [("audit-governance", 1), ("run-gates", 1)])
+        self.assertFalse(any(row["path"] == "Plans/Touched.schema.json" for row in baseline["buckets"]))
+
+        # The branch edits the schema, and the row's content moves: pre-existing, listed with both counts.
+        self.touch("Plans/Touched.schema.json")
+        moved = contract_rows(120, touched_at=110, touched_ref="#/$defs/renamed")
+        self.stub(gates={self.PRD_RG: moved}, audit={self.PRD_AG: moved})
+        self.exports[self.PRD] = moved
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("[pre-existing] run-gates/validate_prd_planning_runtime_contracts  unresolved_local_ref  "
+                      "Plans/Touched.schema.json  1 -> 1", out)
+        self.assertIn("holds all 120 rows, the printed total: 120 pre-existing", out)
+        # The control: with the export gone the same row is past the sample and unseen, as before.
+        self.exports[self.PRD] = "timeout"
+        code, out = self.compare()
+        self.assertEqual(code, 0, out)
+        self.assertIn("Naming a path this branch touches: 0", out)
+
+        # A row added on the touched schema: its bucket grew, so it blocks, and it is named.
+        added = moved + [{"path": "Plans/Touched.schema.json", "error": "unresolved_local_ref", "ref": "#/$defs/added"}]
+        self.stub(gates={self.PRD_RG: added}, audit={self.PRD_AG: added})
+        self.exports[self.PRD] = added
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn("[blocking    ] run-gates/validate_prd_planning_runtime_contracts  unresolved_local_ref  "
+                      "Plans/Touched.schema.json", out)
+        self.assertIn("[keyed    ] run-gates/validate_prd_planning_runtime_contracts  120 -> 121 (keyed from its export", out)
+        self.assertNotIn("cannot be matched", out)
+
+    def test_an_export_that_falls_back_after_an_exported_baseline_compares_the_printed_samples(self):
+        """The baseline keeps its printed rows beside the exported ones, so a fallback compares sample with
+        sample, as before: 50 -> 50, not the export's 119 against a sample of 50."""
+        self.record_contracts(contract_rows(120, touched_at=110))
+        self.touch("Plans/home_layout_event_contracts.schema.json")
+        self.exports[self.PRD] = "timeout"
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("did not finish within 600 s; the truncated rule applies", out)
+        self.assertIn("[pre-existing] run-gates/validate_prd_planning_runtime_contracts  unresolved_local_ref  "
+                      "Plans/home_layout_event_contracts.schema.json  50 -> 50", out)
+        self.assertNotIn("[improved", out)
+        self.assertIn("Checks whose failure count rose: 0", out)
+
+    def test_a_readiness_copy_recorded_from_its_export_is_judged_on_its_own_rows(self):
+        """Review L-07 judges a sampled run-gates copy by its complete audit-governance copy. The storage
+        registry shape, recorded from its export, is complete at the baseline, so the run-gates copy needs
+        no pairing: it is compared with the rows the baseline recorded from the export."""
+        self.module.aggregate_subcheck_commands = same_validator_commands
+        rg, ag = "validate_implementation_readiness", "implementation_readiness"
+        at_baseline = [registry_row(n) for n in range(78)] + [self_test_row(*[f"check_{n}" for n in range(7)])]
+        self.stub(gates={rg: at_baseline}, audit={ag: at_baseline})
+        self.exports["validate-implementation-readiness"] = at_baseline
+        self.record()
+        self.touch("scripts/pm-implementation-readiness.py")
+        on_branch = [registry_row(n) for n in range(32)] + [self_test_row("check_0", "check_1", "check_2")]
+        self.stub(gates={rg: on_branch}, audit={ag: on_branch})
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("compared with the complete rows the baseline recorded from their export, since they print every "
+                      "failure now: run-gates/validate_implementation_readiness", out)
+        report = json.loads(self.compare("--json")[1])
+        self.assertEqual((report["validator_pairs"], report["blocking"]), ([], 0))
+        self.assertEqual(report["exports"]["compared_with_baseline_exports"], ["run-gates/validate_implementation_readiness"])
+        self.assertEqual({(row["check"], row["standing"]) for row in report["on_branch"]},
+                         {("run-gates", "pre-existing"), ("audit-governance", "pre-existing")})
+
+    def test_the_run_header_lists_the_commands_that_write_a_complete_export(self):
+        self.stub(gates={"verify_spec_lock": [STALE_HASH]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        code, out = self.compare()
+        self.assertEqual(code, 0, out)
+        header = flat(out.split("\n\n", 1)[0])
+        self.assertIn("complete exports, read in scripts/pm-plans-verify.py: the report each of these 35 commands writes "
+                      "with --report holds every row it counts, so a subcheck that runs one and prints only a sample is "
+                      "keyed from it when its total equals the printed total:", header)
+        for command in sorted(M.EXPORT_COMMANDS):
+            self.assertIn(f" {command}", header)
+        self.assertIn("no complete export: validate-audit-closure, because cmd_validate_audit_closure keeps only the "
+                      "first 200 of pm-audit-closure.py's errors", header)
+        self.assertEqual(self.export_calls, [])
+        report = json.loads(self.compare("--json")[1])
+        self.assertEqual((len(report["exports"]["complete_export_commands"]), report["exports"]["subchecks"]), (35, []))
+        self.assertEqual(sorted(report["exports"]["no_complete_export"]), ["validate-audit-closure"])
+
+    def test_kept_check_reports_keep_each_export(self):
+        with tempfile.TemporaryDirectory() as keep:
+            code, out = self.land_ea_anchors(ea_anchors_rows(), argv=("--keep-check-reports", keep))
+            self.assertEqual(code, 1, out)
+            kept = json.loads((Path(keep) / "exports" / "validate-plan-graph.json").read_text(encoding="utf-8"))
+            self.assertEqual((kept["argv"], kept["timed_out"], len(kept["report"]["failures"])),
+                             (["validate-plan-graph"], False, 133))
+
+    def test_the_real_map_reads_every_aggregate_command_as_a_complete_export_but_audit_closure(self):
+        """The enumeration against scripts/pm-plans-verify.py as it stands: every subcheck the two aggregates
+        run maps to a command in EXPORT_COMMANDS, except the audit-closure pair, and both copies of a validator
+        run one command line. A command added to the aggregates later fails here until someone reads it."""
+        import ast
+        tree = ast.parse((ROOT / "scripts" / "pm-plans-verify.py").read_text(encoding="utf-8"))
+        names = {}
+        for node in tree.body:
+            if isinstance(node, ast.FunctionDef) and node.name in ("cmd_run_gates", "cmd_audit_governance"):
+                for sub in ast.walk(node):
+                    if isinstance(sub, ast.Assign) and any(getattr(t, "id", None) == "check_specs" for t in sub.targets):
+                        names["run-gates" if node.name == "cmd_run_gates" else "audit-governance"] = {
+                            element.elts[0].value for element in sub.value.elts}
+        path_before = list(sys.path)
+        argv = M.aggregate_subcheck_argv(ROOT, names, 600)
+        self.assertEqual(sys.path, path_before)
+        commands = {line[0] for line in argv.values()}
+        self.assertEqual(commands - M.EXPORT_COMMANDS, set(M.NO_EXPORT_COMMANDS))
+        self.assertEqual(M.EXPORT_COMMANDS - commands, set())
+        self.assertEqual({key for key, line in argv.items() if line[0] in M.NO_EXPORT_COMMANDS},
+                         {("run-gates", "validate_audit_closure"), ("audit-governance", "audit_closure")})
+        for rg, ag in (("validate_plan_graph", "plan_graph"), ("validate_evidence", "evidence"),
+                       ("validate_prd_planning_runtime_contracts", "prd_planning_runtime_contracts"),
+                       ("validate_implementation_readiness", "implementation_readiness")):
+            self.assertEqual(argv[("run-gates", rg)], argv[("audit-governance", ag)], rg)
+        self.assertEqual(argv[("run-gates", "validate_plan_graph")], ["validate-plan-graph"])
+        self.assertEqual(M.aggregate_subcheck_commands(ROOT, {"run-gates": {"validate_implementation_readiness"}}, 600),
+                         {("run-gates", "validate_implementation_readiness"):
+                          "validate-implementation-readiness --subcheck-timeout-seconds 600"})
+
+
+class RunExport(unittest.TestCase):
+    """run_export against a stand-in scripts/pm-plans-verify.py, not a stub: the report it writes with
+    --report, output that is not a report, and a command killed with its whole process group at the bound."""
+
+    def setUp(self):
+        self.scratch = tempfile.TemporaryDirectory()
+        self.addCleanup(self.scratch.cleanup)
+        self.root = Path(self.scratch.name)
+        (self.root / "scripts").mkdir()
+
+    def fake(self, body):
+        (self.root / "scripts" / "pm-plans-verify.py").write_text(textwrap.dedent(body), encoding="utf-8")
+
+    def test_the_report_written_with_report_is_read_and_the_file_is_outside_the_repository(self):
+        self.fake("""
+            import json, os, sys
+            args = sys.argv[1:]
+            path = args[args.index("--report") + 1]
+            rows = [{"error": "e", "n": n, "argv": args, "child": os.environ.get("PM_PLANS_VERIFY_AGGREGATE_CHILD")}
+                    for n in range(3)]
+            open(path, "w").write(json.dumps({"check": args[0], "status": "fail", "failures": rows}))
+            print("{}")
+            sys.exit(1)
+        """)
+        result = M.run_export(self.root, ["validate-plan-graph", "--subcheck-timeout-seconds", "600"], 30)
+        self.assertEqual((result["timed_out"], result["error"]), (False, None))
+        rows = result["report"]["failures"]
+        self.assertEqual(len(rows), 3)
+        self.assertEqual((rows[0]["argv"][:2], rows[0]["argv"][3:]),
+                         (["validate-plan-graph", "--report"], ["--subcheck-timeout-seconds", "600"]))
+        self.assertEqual(rows[0]["child"], "1")  # run as an aggregate's child, so its validators share its group
+        written = Path(rows[0]["argv"][2])
+        self.assertNotIn(self.root, written.parents)
+        self.assertFalse(written.exists())
+
+    def test_stdout_is_read_when_no_report_file_is_written_and_garbage_is_an_error(self):
+        self.fake("""
+            import json
+            print(json.dumps({"check": "x", "status": "fail", "failures": [{"error": "e"}]}))
+        """)
+        result = M.run_export(self.root, ["validate-evidence"], 30)
+        self.assertEqual(len(result["report"]["failures"]), 1)
+        self.fake("print('not a report')")
+        result = M.run_export(self.root, ["validate-evidence"], 30)
+        self.assertIsNone(result["report"])
+        self.assertIn("its report is not JSON", result["error"])
+        self.fake("import json; print(json.dumps({'failures': 3}))")
+        self.assertEqual(M.run_export(self.root, ["validate-evidence"], 30)["error"], "its report holds no list of failures")
+
+    def test_a_command_that_runs_past_the_bound_is_killed_with_its_whole_group(self):
+        pid_file = self.root / "grandchild.pid"
+        self.fake(f"""
+            import subprocess, sys, time
+            child = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(60)"])
+            open({str(pid_file)!r}, "w").write(str(child.pid))
+            time.sleep(60)
+        """)
+        started = time.monotonic()
+        result = M.run_export(self.root, ["validate-evidence"], 2)
+        self.assertLess(time.monotonic() - started, 30)
+        self.assertEqual((result["timed_out"], result["report"]), (True, None))
+        pid = int(pid_file.read_text(encoding="utf-8"))
+        deadline = time.monotonic() + 10
+        while time.monotonic() < deadline:
+            state = Path(f"/proc/{pid}/status")
+            if not state.exists() or "\nState:\tZ" in state.read_text(encoding="utf-8"):
+                break
+            time.sleep(0.1)
+        else:
+            self.fail(f"the command's own child {pid} outlived the bound")
 
 
 class BaselineReading(unittest.TestCase):

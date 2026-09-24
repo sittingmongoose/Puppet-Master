@@ -28,6 +28,21 @@ the run-gates copy is not judged: neither its rows nor its total (review L-07). 
 run-gates copy falls back to the truncated rule. The summary prints each such pairing and why, and
 --json carries it as `validator_pairs`, so a replay shows which copy was judged.
 
+A subcheck that prints only a sample is keyed from its export instead, where it has one (the exports
+brief of 2026-09-24). Both aggregates re-invoke every subcheck as `pm-plans-verify.py <command> --report
+<tmp> <arguments>`, count the rows of that report and print the first 50 or 100 of them, so the report the
+same command line writes when this script runs it again is the complete list of what the subcheck counts:
+its export. Read in pm-plans-verify.py and in every validator it calls, each command the aggregates run
+writes a complete one except `validate-audit-closure`, which keeps only the first 200 of its validator's
+errors (EXPORT_COMMANDS, NO_EXPORT_COMMANDS). When the export's total equals the printed total, and the
+baseline holds that subcheck's rows in full, printed or recorded from an export, every row is keyed from
+the export and the subcheck is not truncated: the kind rules judge every row, and a rise in its total
+stops nothing by itself. Otherwise the truncated rule applies as before, and the summary says which case
+and why: no complete export, a baseline that holds only a sample, an export whose total disagrees, or one
+that timed out or could not be read. The run header lists the commands that write a complete export and
+the subchecks keyed from one. --record-baseline keys from exports too and records their rows beside the
+printed ones, which stay what a landing whose export falls back compares with.
+
 Governance staleness is what AGENTS.md names: Spec Lock `stale_hash`, stale owner or artifact
 evidence hashes (among them `event_authority_currentness_source_drift` and `_validator_drift`), stale
 readiness rows and their growth counter, and the stale plan-migration snapshot. It never stops a
@@ -86,7 +101,7 @@ Exit codes:
   2  it reports something that does stop the landing: a failure on the branch's files that is
      neither staleness nor pre-existing, a bucket that grew whose error kind is not staleness, or a
      rise in a subcheck whose failures are truncated, where the on-branch match cannot see what was
-     added, other than the readiness growth counter
+     added, other than the readiness growth counter; a subcheck keyed from its export is not truncated
   3  the script could not run a check or could not read the baseline or the branch paths, or a
      subcheck timed out while recording a baseline
 """
@@ -96,10 +111,14 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import os
 import re
+import signal
 import subprocess
 import sys
 import tempfile
+import textwrap
+import time
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
@@ -167,6 +186,40 @@ READINESS_SUBCHECKS = {
 }
 
 CHECKS = ("run-gates", "audit-governance", "plan-migration-validate")
+
+# The exports brief of 2026-09-24: the commands whose report is a complete export of the rows the
+# aggregates count. Read in scripts/pm-plans-verify.py at bc1d99c11e: both aggregates re-invoke every
+# subcheck as `pm-plans-verify.py <command> --report <tmp> <arguments>` (`_run_subprocess_check`), take its
+# total as len(failures) of that report (`compact_gate_report`) and print report["failures"][:50]
+# (`cmd_run_gates`) or [:100] (`cmd_audit_governance`) of it. run-gates runs `verify_spec_lock` in-process,
+# through `cmd_verify_spec_lock`, the function its `verify-spec-lock` command runs. The command's `main()`
+# writes the whole report with --report. So running a subcheck's command line again writes every row the
+# aggregate counted, and none of these commands, nor any validator they call, drops rows before it
+# reports them. Two keep only 50 entries of a list nested inside one row (`gui_asset_policy_failed`,
+# `audit_closure_reopened_rows_present`), which changes what that row says, never how many rows there
+# are. A command that is not listed here, such as one added later, has no export until someone reads it.
+EXPORT_COMMANDS = frozenset({
+    "check-project-artifacts", "check-shards", "json-syntax", "lint-banned-phrases", "lint-contractrefs",
+    "lint-path-refs", "validate-audit-status-index", "validate-auto-decisions", "validate-browser-event-admission",
+    "validate-case-l-non-event-materialization", "validate-evidence", "validate-filesafe-security-policy",
+    "validate-forge-backup-acceptance", "validate-github-project-integration", "validate-goal-runtime-event-fixtures",
+    "validate-gui-asset-policy", "validate-implementation-readiness", "validate-new-contracts",
+    "validate-plan-graph", "validate-plan-migration", "validate-plans-to-code-handoff-schema",
+    "validate-pm7-gui-fixtures", "validate-prd-planning-runtime-contracts", "validate-project-output-fixtures",
+    "validate-runtime-artifact-schemas", "validate-server-command-gap", "validate-testing-session-event-admission",
+    "validate-touch-closure", "validate-ui-command-response", "validate-usage-contract-drift",
+    "validate-usage-gui-fixtures", "validate-web-capability-contracts", "validate-wiring-matrix",
+    "validate-working-notebook-contracts", "verify-spec-lock",
+})
+# Commands the aggregates run whose own report is not a complete list, and why.
+NO_EXPORT_COMMANDS = {
+    "validate-audit-closure": "cmd_validate_audit_closure keeps only the first 200 of pm-audit-closure.py's "
+                              "errors, so its own report is a sample whenever there are more",
+}
+# pm-plans-verify.py marks an aggregate's child with this variable, so that a validator the child starts
+# stays in the child's process group and dies with it when the aggregate's bound runs out. An export is
+# run the same way.
+AGGREGATE_CHILD_ENV = "PM_PLANS_VERIFY_AGGREGATE_CHILD"
 
 # Failure kinds that say a subcheck did not finish, not that the tree is wrong. pm-plans-verify.py
 # kills a subcheck at --subcheck-timeout-seconds and reports that as the subcheck's only failure:
@@ -408,6 +461,12 @@ def bucket_of(item: dict[str, Any]) -> str:
     return f"{item['check']}|{item['subcheck']}|{item['error']}|{item['path']}"
 
 
+def keyed_rows(counted: dict[str, Any]) -> int:
+    """How many of a subcheck's failures are keyed: every one when its rows came from its export (its
+    `exported` count, the exports brief), otherwise the ones it printed (`sampled`)."""
+    return max(int(counted.get("sampled", 0) or 0), int(counted.get("exported", 0) or 0))
+
+
 def grown_subchecks(
     counts: dict[str, dict[str, dict[str, int]]],
     baseline_checks: dict[str, Any],
@@ -418,7 +477,8 @@ def grown_subchecks(
     most of a large subcheck is never keyed and never matched against the branch's paths. Comparing
     the totals is the only way a failure added above the cap announces itself. When the subcheck is
     truncated the rise stops the landing, because nothing can say whether what was added names a
-    file the branch touched.
+    file the branch touched. A subcheck keyed from its export is not truncated: every row it counts
+    was keyed and matched, so its rise is marked `keyed_from_export` and stops nothing by itself.
     """
     rows = []
     for check in sorted(counts):
@@ -428,14 +488,17 @@ def grown_subchecks(
             was = int((recorded.get(subcheck) or {}).get("reported", 0))
             if now["reported"] <= was:
                 continue
-            rows.append({
+            row = {
                 "check": check,
                 "subcheck": subcheck,
                 "baseline_reported": was,
                 "reported": now["reported"],
                 "sampled": now["sampled"],
-                "truncated": now["sampled"] < now["reported"],
-            })
+                "truncated": keyed_rows(now) < now["reported"],
+            }
+            if now.get("exported"):
+                row["keyed_from_export"] = True
+            rows.append(row)
     return rows
 
 
@@ -448,16 +511,17 @@ def partial_subchecks(
     Which rows land inside a 50- or 100-row sample can change without a single failure being added
     or removed, so a fingerprint appearing there for the first time means nothing. For these the
     total is the only sound comparison, and it is compared. Their rows are still read, because the
-    branch match does not depend on the baseline.
+    branch match does not depend on the baseline. A subcheck keyed from its export, in this run or when
+    the baseline was recorded, counts as printing every failure on that side (`keyed_rows`).
     """
     out: set[tuple[str, str]] = set()
     for check in counts:
         for name, counted in counts[check].items():
-            if counted["sampled"] < counted["reported"]:
+            if keyed_rows(counted) < counted["reported"]:
                 out.add((check, name))
     for check, entry in (baseline_checks or {}).items():
         for name, counted in ((entry or {}).get("subchecks") or {}).items():
-            if int(counted.get("sampled", 0)) < int(counted.get("reported", 0)):
+            if keyed_rows(counted) < int(counted.get("reported", 0)):
                 out.add((check, name))
     return out
 
@@ -759,7 +823,38 @@ def build_baseline(
     statuses: dict[str, str],
     max_fingerprints: int,
     untracked_inputs: list[str],
+    export_items: list[dict[str, Any]] | tuple[dict[str, Any], ...] = (),
 ) -> dict[str, Any]:
+    """The baseline document. `items` are the rows the checks printed; `export_items` the complete rows
+    of the subchecks keyed from their export (the exports brief), whose counts carry `exported`.
+
+    `buckets` holds the printed rows of every subcheck, the exported ones included, because a landing
+    whose export falls back compares its printed sample with the baseline's printed sample, as before.
+    `export_buckets` holds the exported rows, which a landing keyed from its own export, or printing
+    every failure, compares with instead.
+    """
+    return {
+        "schema_id": BASELINE_SCHEMA_ID,
+        "recorded_at_utc": utc_now(),
+        "commit": commit,
+        "run_dir": run_dir,
+        "max_fingerprints_per_bucket": max_fingerprints,
+        "untracked_inputs": sorted(untracked_inputs),
+        "checks": {
+            check: {
+                "status": statuses.get(check, "unknown"),
+                "failure_total": sum(c["reported"] for c in counts.get(check, {}).values()),
+                "subchecks": {name: counts[check][name] for name in sorted(counts.get(check, {}))},
+            }
+            for check in CHECKS
+        },
+        "buckets": bucket_rows(items, max_fingerprints),
+        "export_buckets": bucket_rows(list(export_items), max_fingerprints),
+    }
+
+
+def bucket_rows(items: list[dict[str, Any]], max_fingerprints: int) -> list[dict[str, Any]]:
+    """The baseline's rows for these failures: one per bucket, with its count and fingerprints."""
     buckets: dict[str, list[str]] = {}
     for item in items:
         buckets.setdefault(bucket_of(item), []).append(item["key"].rsplit("|", 1)[1])
@@ -779,23 +874,7 @@ def build_baseline(
         # baseline says which ones those are.
         row["fingerprints"] = fingerprints if len(fingerprints) <= max_fingerprints else None
         rows.append(row)
-    return {
-        "schema_id": BASELINE_SCHEMA_ID,
-        "recorded_at_utc": utc_now(),
-        "commit": commit,
-        "run_dir": run_dir,
-        "max_fingerprints_per_bucket": max_fingerprints,
-        "untracked_inputs": sorted(untracked_inputs),
-        "checks": {
-            check: {
-                "status": statuses.get(check, "unknown"),
-                "failure_total": sum(c["reported"] for c in counts.get(check, {}).values()),
-                "subchecks": {name: counts[check][name] for name in sorted(counts.get(check, {}))},
-            }
-            for check in CHECKS
-        },
-        "buckets": rows,
-    }
+    return rows
 
 
 def load_baseline(path: Path) -> dict[str, Any]:
@@ -805,14 +884,25 @@ def load_baseline(path: Path) -> dict[str, Any]:
     return doc
 
 
-def baseline_index(doc: dict[str, Any]) -> tuple[dict[str, set[str] | None], dict[str, int]]:
+def baseline_index(
+    doc: dict[str, Any],
+    exported: set[tuple[str, str]] | frozenset[tuple[str, str]] = frozenset(),
+) -> tuple[dict[str, set[str] | None], dict[str, int]]:
+    """({bucket: fingerprints, or None for a count-only bucket}, {bucket: count}) of a baseline.
+
+    A subcheck in `exported` is read from `export_buckets`, the complete rows the baseline recorded from
+    its export, instead of from its printed sample in `buckets` (the exports brief).
+    """
     known: dict[str, set[str] | None] = {}
     counts: dict[str, int] = {}
-    for row in doc.get("buckets") or []:
-        name = f"{row['check']}|{row.get('subcheck', '')}|{row['error']}|{row.get('path', '')}"
-        fingerprints = row.get("fingerprints")
-        known[name] = set(fingerprints) if isinstance(fingerprints, list) else None
-        counts[name] = int(row.get("count", 0))
+    for field in ("buckets", "export_buckets"):
+        for row in doc.get(field) or []:
+            if ((row["check"], row.get("subcheck", "")) in exported) != (field == "export_buckets"):
+                continue
+            name = f"{row['check']}|{row.get('subcheck', '')}|{row['error']}|{row.get('path', '')}"
+            fingerprints = row.get("fingerprints")
+            known[name] = set(fingerprints) if isinstance(fingerprints, list) else None
+            counts[name] = int(row.get("count", 0))
     return known, counts
 
 
@@ -934,6 +1024,19 @@ def aggregate_subcheck_commands(
     when the script or those two functions cannot be read. Writes no bytecode and leaves sys.path as
     it found it.
     """
+    return {key: " ".join(argv) for key, argv in aggregate_subcheck_argv(root, names, timeout_seconds).items()}
+
+
+def aggregate_subcheck_argv(
+    root: Path,
+    names: dict[str, set[str]],
+    timeout_seconds: int,
+) -> dict[tuple[str, str], list[str]]:
+    """The command and the arguments each aggregate subcheck runs, as a list: what
+    aggregate_subcheck_commands joins into one line, and what run_export runs (the exports brief).
+    Read from the checked tree's scripts/pm-plans-verify.py with its own `_aggregate_subcheck_command_id`
+    and `_aggregate_subcheck_cli_args`; raises when the script or those two functions cannot be read.
+    """
     path = root / "scripts" / "pm-plans-verify.py"
     if not path.is_file():
         raise RuntimeError("scripts/pm-plans-verify.py is missing")
@@ -953,8 +1056,8 @@ def aggregate_subcheck_commands(
     # The aggregates give their subchecks neither a run directory nor a registry of their own.
     namespace = argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)
     return {
-        (check, name): " ".join(
-            [str(command_of(name)), *(str(arg) for arg in arguments_of(name, namespace, timeout_seconds=timeout_seconds))])
+        (check, name): [str(command_of(name)),
+                        *(str(arg) for arg in arguments_of(name, namespace, timeout_seconds=timeout_seconds))]
         for check in sorted(names)
         for name in sorted(names[check])
     }
@@ -1005,6 +1108,7 @@ def pair_validators(
     items: list[dict[str, Any]],
     commands: dict[tuple[str, str], str] | str,
     changed: str | None,
+    keyed: set[tuple[str, str]] | frozenset[tuple[str, str]] = frozenset(),
 ) -> list[dict[str, Any]]:
     """Review L-07: which run-gates copies of a validator are judged by their audit-governance copy.
 
@@ -1016,7 +1120,9 @@ def pair_validators(
     the baseline, and every row the run-gates copy printed is among its rows, which with the equal
     totals is the evidence that both saw the same inputs. Otherwise the row says why not, and the
     run-gates copy keeps the truncated rule. `commands` is what each subcheck runs, or why that could
-    not be read.
+    not be read. A run-gates copy in `keyed` has every failure keyed from an export, in this run and at
+    the baseline or printed in full on the other side, so it is no sample and gets no row (the exports
+    brief).
     """
     recorded = {check: ((baseline_checks.get(check) or {}).get("subchecks") or {})
                 for check in ("run-gates", "audit-governance")}
@@ -1036,6 +1142,8 @@ def pair_validators(
 
     pairs = []
     for name in sorted(set(counts.get("run-gates") or {}) | set(recorded["run-gates"])):
+        if ("run-gates", name) in keyed:
+            continue
         own = {**now("run-gates", name), **then("run-gates", name)}
         if own["sampled"] >= own["reported"] and own["baseline_sampled"] >= own["baseline_reported"]:
             continue
@@ -1101,6 +1209,202 @@ def describe_pair(row: dict[str, Any]) -> str:
     twin = f" and audit-governance/{row['audit_governance']}" if row["audit_governance"] else ""
     return (f"    [not paired] run-gates/{row['run_gates']}{twin} ({own}): {row['reason']}; the run-gates copy "
             "is judged on its own, by the truncated rule")
+
+
+# ------------------------------------------------------------- subchecks keyed from their export
+
+
+def run_export(root: Path, argv: list[str], timeout_seconds: int) -> dict[str, Any]:
+    """Run one subcheck's command on its own and read the report it writes: its export (the exports brief).
+
+    `argv` is the command and its arguments exactly as pm-plans-verify.py builds them for the aggregates
+    (aggregate_subcheck_argv). It runs the way an aggregate runs it: `python3 scripts/pm-plans-verify.py
+    <command> --report <file> <arguments>` from the root, in a process group of its own, marked as an
+    aggregate's child so that a validator it starts stays in that group, and killed with the whole group
+    when `timeout_seconds` runs out. The file is in a scratch directory outside the repository and is
+    deleted again; like the aggregates, it reads the command's stdout when the file is empty. Returns
+    {"report": the report or None, "timed_out": bool, "error": why it could not be read or None,
+    "elapsed_seconds": how long it ran}.
+    """
+    started = time.monotonic()
+    with tempfile.TemporaryDirectory(prefix="pm-landing-check-export-") as scratch:
+        report_file = Path(scratch) / "export.json"
+        command = [sys.executable, "scripts/pm-plans-verify.py", argv[0], "--report", str(report_file), *argv[1:]]
+        env = dict(os.environ)
+        env[AGGREGATE_CHILD_ENV] = "1"
+        proc = subprocess.Popen(command, cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+                                start_new_session=True, env=env)
+        try:
+            out, err = proc.communicate(timeout=timeout_seconds if timeout_seconds > 0 else None)
+        except subprocess.TimeoutExpired:
+            try:
+                os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+            except OSError:
+                try:
+                    proc.kill()
+                except OSError:
+                    pass
+            try:
+                proc.communicate(timeout=5)
+            except Exception:  # noqa: BLE001 - the group is killed; nothing more to read.
+                pass
+            return {"report": None, "timed_out": True, "error": None,
+                    "elapsed_seconds": round(time.monotonic() - started, 1)}
+        elapsed = round(time.monotonic() - started, 1)
+        written = report_file.is_file() and report_file.stat().st_size > 0
+        payload = report_file.read_text(encoding="utf-8") if written else out
+    try:
+        report = json.loads(payload)
+    except Exception as exc:  # noqa: BLE001 - an unreadable export only means the truncated rule applies.
+        return {"report": None, "timed_out": False, "elapsed_seconds": elapsed,
+                "error": f"its report is not JSON ({exc}); returncode {proc.returncode}; "
+                         f"stderr tail: {(err or '')[-300:].strip()}"}
+    if not isinstance(report, dict) or not isinstance(report.get("failures"), list):
+        return {"report": None, "timed_out": False, "elapsed_seconds": elapsed,
+                "error": "its report holds no list of failures"}
+    return {"report": report, "timed_out": False, "error": None, "elapsed_seconds": elapsed}
+
+
+def keep_export(keep_dir: Path, name: str, argv: list[str], result: dict[str, Any]) -> None:
+    """With --keep-check-reports, keep an export as DIR/exports/<name>.json beside the check reports, so a
+    replay can feed it back: its command line, how the run ended and the report it wrote."""
+    folder = keep_dir / "exports"
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / f"{name}.json").write_text(json.dumps({"argv": argv, **result}, indent=1, sort_keys=True) + "\n",
+                                         encoding="utf-8")
+
+
+def key_from_exports(
+    root: Path,
+    counts: dict[str, dict[str, dict[str, int]]],
+    baseline_checks: dict[str, Any] | None,
+    timed_out: set[tuple[str, str]],
+    argv_map: dict[tuple[str, str], list[str]] | str,
+    timeout_seconds: int,
+    keep_dir: Path | None = None,
+) -> tuple[dict[tuple[str, str], list[dict[str, Any]]], list[dict[str, Any]]]:
+    """The exports brief: key each subcheck that prints only a sample from its complete export.
+
+    One row for every run-gates or audit-governance subcheck whose printed failures are a sample in this
+    run and that did not time out, saying whether it was keyed and why. It is keyed when its command
+    writes a complete export (EXPORT_COMMANDS), the baseline holds its rows in full, printed or recorded
+    from an export (`baseline_checks` is None when a baseline is being recorded), the export finished
+    within `timeout_seconds` and could be read, and the export's total equals the printed total. One
+    command line is run once, for every subcheck that runs it. Sets `exported` on the count of every
+    keyed subcheck and returns ({(check, subcheck): the export's rows, normalized}, the rows).
+    """
+    rows: list[dict[str, Any]] = []
+    planned: dict[tuple[str, ...], list[dict[str, Any]]] = {}
+    for check in ("run-gates", "audit-governance"):
+        for name in sorted(counts.get(check) or {}):
+            counted = counts[check][name]
+            if counted["sampled"] >= counted["reported"] or (check, name) in timed_out:
+                continue
+            row: dict[str, Any] = {
+                "check": check, "subcheck": name, "command": None, "reported": counted["reported"],
+                "sampled": counted["sampled"], "keyed": False, "case": "no_export", "reason": "", "exported": None,
+            }
+            rows.append(row)
+            if isinstance(argv_map, str):
+                row["reason"] = f"what it runs could not be read from scripts/pm-plans-verify.py ({argv_map})"
+                continue
+            argv = argv_map.get((check, name))
+            if not argv:
+                row["reason"] = "scripts/pm-plans-verify.py names no command for it"
+                continue
+            row["command"] = argv[0]
+            if argv[0] not in EXPORT_COMMANDS:
+                row["reason"] = (f"{argv[0]} writes no complete export: {NO_EXPORT_COMMANDS[argv[0]]}"
+                                 if argv[0] in NO_EXPORT_COMMANDS else
+                                 f"{argv[0]} is not among the commands read to write a complete export")
+                continue
+            if baseline_checks is not None:
+                was = ((baseline_checks.get(check) or {}).get("subchecks") or {}).get(name) or {}
+                if keyed_rows(was) < int(was.get("reported", 0)):
+                    row["case"] = "baseline_sample"
+                    row["reason"] = (f"the baseline printed {int(was.get('sampled', 0))} of its "
+                                     f"{int(was.get('reported', 0))} and recorded no export, so it holds no complete "
+                                     "rows to compare an export with")
+                    continue
+            planned.setdefault(tuple(argv), []).append(row)
+
+    exported: dict[tuple[str, str], list[dict[str, Any]]] = {}
+    commands = Counter(argv[0] for argv in planned)
+    for argv in sorted(planned):
+        result = run_export(root, list(argv), timeout_seconds)
+        if keep_dir is not None:
+            unique = commands[argv[0]] == 1
+            keep_export(keep_dir, argv[0] if unique else f"{argv[0]}-{hashlib.sha256(' '.join(argv).encode()).hexdigest()[:8]}",
+                        list(argv), result)
+        report = result.get("report")
+        failures = report.get("failures") if isinstance(report, dict) else None
+        # The export's own subcheck killed at a bound: what it would have written is unknown.
+        stalled = isinstance(failures, list) and any(
+            isinstance(failure, dict) and failure.get("error") in INFRASTRUCTURE_ERRORS for failure in failures)
+        for row in planned[argv]:
+            row["elapsed_seconds"] = result.get("elapsed_seconds")
+            if result.get("timed_out") or stalled:
+                row["case"] = "export_timeout"
+                row["reason"] = f"its export ({argv[0]}) did not finish within {timeout_seconds} s"
+            elif not isinstance(failures, list):
+                row["case"] = "export_unreadable"
+                row["reason"] = f"its export ({argv[0]}) could not be read: {result.get('error')}"
+            elif len(failures) != row["reported"]:
+                row["case"], row["exported"] = "total_mismatch", len(failures)
+                row["reason"] = (f"its export ({argv[0]}) holds {len(failures)} rows, but the printed total is "
+                                 f"{row['reported']}")
+            else:
+                row["case"], row["exported"], row["keyed"] = "keyed", len(failures), True
+                row["reason"] = f"its export ({argv[0]}) holds all {len(failures)} rows, the printed total"
+                key = (row["check"], row["subcheck"])
+                exported[key] = [normalize(row["check"], row["subcheck"], failure, root) for failure in failures]
+                counts[row["check"]][row["subcheck"]]["exported"] = len(failures)
+    return exported, rows
+
+
+def replace_rows(
+    items: list[dict[str, Any]],
+    exported: dict[tuple[str, str], list[dict[str, Any]]],
+) -> list[dict[str, Any]]:
+    """`items` with the printed rows of every subcheck keyed from its export replaced, where they stood,
+    by the export's rows."""
+    out: list[dict[str, Any]] = []
+    done: set[tuple[str, str]] = set()
+    for item in items:
+        key = (item["check"], item["subcheck"])
+        if key not in exported:
+            out.append(item)
+        elif key not in done:
+            out.extend(exported[key])
+            done.add(key)
+    for key in sorted(set(exported) - done):
+        out.extend(exported[key])
+    return out
+
+
+def describe_export_commands(width: int = 150) -> list[str]:
+    """The run header's list of the commands whose report is a complete export, and of those whose report
+    is not (the exports brief)."""
+    wrap = dict(width=width, subsequent_indent="      ", break_on_hyphens=False, break_long_words=False)
+    lines = textwrap.wrap(
+        f"  complete exports, read in scripts/pm-plans-verify.py: the report each of these {len(EXPORT_COMMANDS)} "
+        "commands writes with --report holds every row it counts, so a subcheck that runs one and prints only a "
+        "sample is keyed from it when its total equals the printed total: " + ", ".join(sorted(EXPORT_COMMANDS)),
+        **wrap)
+    for command, why in sorted(NO_EXPORT_COMMANDS.items()):
+        lines += textwrap.wrap(f"    no complete export: {command}, because {why}", **wrap)
+    return lines
+
+
+def describe_export(row: dict[str, Any], fallback: str = "the truncated rule applies") -> str:
+    """One line per subcheck that prints only a sample: keyed from its export, with what its rows are, or
+    why not, and what follows from that (`fallback`)."""
+    head = (f"    [{'keyed' if row['keyed'] else 'not keyed':<9}] {row['check']}/{row['subcheck']} "
+            f"({row['sampled']} of {row['reported']} printed): {row['reason']}")
+    if not row["keyed"]:
+        return f"{head}; {fallback}"
+    classes = row.get("classes") or {}
+    return head + (": " + ", ".join(f"{count} {name}" for name, count in classes.items()) if classes else "")
 
 
 # ---------------------------------------------------------------------------------------- output
@@ -1248,9 +1552,26 @@ def main() -> int:
               f"{args.subcheck_timeout_seconds}.", file=sys.stderr)
         return 3
 
+    # The exports brief: a run-gates or audit-governance subcheck that prints only a sample is keyed from
+    # the complete report its command writes, when that report's total equals the printed total and the
+    # baseline holds its rows in full. A baseline is recorded from exports too, so that landings can be.
+    sampled = {check: {name for name, counted in (counts.get(check) or {}).items()
+                       if counted["sampled"] < counted["reported"]}
+               for check in ("run-gates", "audit-governance")}
+    argv_map: dict[tuple[str, str], list[str]] | str = {}
+    if any(sampled.values()):
+        try:
+            argv_map = aggregate_subcheck_argv(root, sampled, args.subcheck_timeout_seconds)
+        except Exception as exc:  # noqa: BLE001 - an unreadable map only means that nothing is keyed from an export.
+            argv_map = f"{type(exc).__name__}: {exc}"
+    exported, export_rows = key_from_exports(
+        root, counts, None if args.record_baseline else (baseline.get("checks") or {}), timed_out, argv_map,
+        args.subcheck_timeout_seconds, keep_dir)
+
     if args.record_baseline:
         untracked = untracked_check_inputs(root)
-        doc = build_baseline(commit, run_dir, items, counts, statuses, args.max_fingerprints, untracked)
+        doc = build_baseline(commit, run_dir, items, counts, statuses, args.max_fingerprints, untracked,
+                             [item for key in sorted(exported) for item in exported[key]])
         baseline_path.parent.mkdir(parents=True, exist_ok=True)
         baseline_path.write_text(json.dumps(doc, indent=1, sort_keys=True) + "\n", encoding="utf-8")
         print(f"pm-landing-check: baseline written to {baseline_path.relative_to(root)} at commit {commit}")
@@ -1260,11 +1581,30 @@ def main() -> int:
                   f"in {plural(len(entry['subchecks']), 'check')}")
         print(f"  buckets: {len(doc['buckets'])}, "
               f"of which {sum(1 for row in doc['buckets'] if row['fingerprints'] is None)} matched by count only")
+        print(f"  export buckets: {len(doc['export_buckets'])}, the complete rows of "
+              f"{plural(len(exported), 'subcheck')} keyed from their export")
+        for row in export_rows:
+            print(describe_export(row, "the baseline records only its printed sample, so landings keep the "
+                                       "truncated rule for it"))
         if untracked:
             print("  recorded with these gitignored inputs present: " + ", ".join(sorted(untracked)))
         return 0
 
-    known, baseline_counts = baseline_index(baseline)
+    keyed_now = set(exported)
+    items = replace_rows(items, exported)
+    baseline_checks = baseline.get("checks") or {}
+    current_partial = {(check, name) for check in counts for name, counted in counts[check].items()
+                       if keyed_rows(counted) < counted["reported"]}
+    # A subcheck the baseline recorded from its export is compared with those complete rows wherever this
+    # run keys every one of its failures too; where it is a sample now, the printed samples are compared,
+    # as before, because the baseline keeps its printed rows as well.
+    from_export = {
+        (check, name)
+        for check, entry in baseline_checks.items()
+        for name, counted in ((entry or {}).get("subchecks") or {}).items()
+        if int(counted.get("sampled", 0)) < int(counted.get("reported", 0)) <= int(counted.get("exported", 0) or 0)
+    } - current_partial - timed_out
+    known, baseline_counts = baseline_index(baseline, from_export)
     direct, derived = split_touched(touched)
     tokens = path_tokens(direct)
     units = units_of_touched_docs(root, direct)
@@ -1287,7 +1627,7 @@ def main() -> int:
     except Exception as exc:  # noqa: BLE001 - an unreadable map only means that no copy is paired.
         commands = f"{type(exc).__name__}: {exc}"
     pairs = pair_validators(counts, listed, baseline.get("checks") or {}, timed_out, items, commands,
-                            version_change(before, after))
+                            version_change(before, after), keyed_now | from_export)
     paired = {("run-gates", row["run_gates"]) for row in pairs if row["paired"]}
     items = [item for item in items if (item["check"], item["subcheck"]) not in paired]
     compared = {
@@ -1321,6 +1661,9 @@ def main() -> int:
             if standing else {}
         )
         hits = names_branch_path(item, tokens, root, units)
+        # What the row is, for the line of a subcheck keyed from its export.
+        item["_class"] = ("staleness" if item["stale"] else standing if standing else "blocking" if hits
+                          else "new" if fresh else "in a baseline bucket")
         if fresh and not standing:
             new_items.append(item)
         if standing and (fresh or hits):
@@ -1330,6 +1673,12 @@ def main() -> int:
             changed_on_branch += 1 if (fresh and hits) else 0
         if hits:
             on_branch.append({**public(item), "branch_paths": hits, **counted})
+
+    for row in export_rows:
+        if row["keyed"]:
+            tally = Counter(item["_class"] for item in items
+                            if (item["check"], item["subcheck"]) == (row["check"], row["subcheck"]))
+            row["classes"] = dict(sorted(tally.items(), key=lambda pair: (-pair[1], pair[0])))
 
     grown = grown_buckets(seen_buckets, baseline_counts)
     subcheck_growth = grown_subchecks(compared, baseline.get("checks") or {})
@@ -1364,6 +1713,12 @@ def main() -> int:
                 "derived_paths_excluded": derived,
                 "subchecks_compared_by_total_only": sorted(f"{c}/{s}" for c, s in partial - paired),
                 "validator_pairs": pairs,
+                "exports": {
+                    "complete_export_commands": sorted(EXPORT_COMMANDS),
+                    "no_complete_export": dict(sorted(NO_EXPORT_COMMANDS.items())),
+                    "subchecks": export_rows,
+                    "compared_with_baseline_exports": sorted(f"{c}/{s}" for c, s in from_export - keyed_now),
+                },
                 "generated_at_utc": utc_now(),
                 "commit": commit,
                 "base": args.base,
@@ -1410,13 +1765,27 @@ def main() -> int:
         print(f"  branch paths from git diff --name-only {args.base}..HEAD: {len(touched)}")
         if keep_dir is not None:
             print(f"  full check reports kept in {keep_dir}")
+        for line in describe_export_commands():
+            print(line)
+        if export_rows:
+            keyed_count = sum(1 for row in export_rows if row["keyed"])
+            one = len(export_rows) == 1
+            print(f"  {plural(len(export_rows), 'subcheck')} {'prints' if one else 'print'} only a sample of "
+                  f"{'its' if one else 'their'} failures in this run; {keyed_count} of them "
+                  f"{'is' if keyed_count == 1 else 'are'} keyed from the export of {'its' if one else 'their'} "
+                  "command (the exports brief):")
+            for row in export_rows:
+                print(describe_export(row))
+        if from_export - keyed_now:
+            print("  compared with the complete rows the baseline recorded from their export, since they print every "
+                  "failure now: " + ", ".join(sorted(f"{c}/{s}" for c, s in from_export - keyed_now)))
         truncated = [
             f"{check}/{name}" for check in CHECKS for name in sorted(counts[check])
-            if counts[check][name]["sampled"] < counts[check][name]["reported"] and (check, name) not in paired
+            if keyed_rows(counts[check][name]) < counts[check][name]["reported"] and (check, name) not in paired
         ]
         if truncated:
             hidden = sum(
-                counts[check][name]["reported"] - counts[check][name]["sampled"]
+                counts[check][name]["reported"] - keyed_rows(counts[check][name])
                 for check in CHECKS for name in counts[check] if (check, name) not in paired
             )
             print(f"  {len(truncated)} subchecks print only part of their failures: "
@@ -1466,6 +1835,9 @@ def main() -> int:
             elif row["truncated"]:
                 tag = "blocking "
                 note = f" (only {row['sampled']} of {row['reported']} are printed, so what was added cannot be matched)"
+            elif row.get("keyed_from_export"):
+                tag = "keyed    "
+                note = " (keyed from its export: every row is judged above, so the rise itself stops nothing)"
             else:
                 tag = "off-branch"
                 note = ""
@@ -1511,8 +1883,11 @@ def main() -> int:
                 advice.append("new but names no file this branch touched, so report it to Jared")
             if any(row["stale"] for row in subcheck_growth):
                 advice.append("the readiness growth counter of stale readiness rows, so ask for a reseal")
-            if any(not row["stale"] for row in subcheck_growth):
+            if any(not row["stale"] and not row.get("keyed_from_export") for row in subcheck_growth):
                 advice.append("a subcheck that reports more than the baseline, with every failure still printed")
+            if any(not row["stale"] and row.get("keyed_from_export") for row in subcheck_growth):
+                advice.append("a subcheck that reports more than the baseline, with every failure keyed from its "
+                              "export")
             print("Nothing reported stops the landing: it is " + "; and ".join(advice) + ".")
         else:
             print(f"{plural(len(blocking), 'item')} the baseline does not excuse. Fix them on this branch.")
