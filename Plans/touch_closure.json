@@ -7061,6 +7061,42 @@
     {
       "availability_rule": "The exact typed local action is available only from a current owner projection and mounted local controller; it dispatches no domain command.",
       "disabled_reason_rule": "Expose the exact owner disabled reason, including handler_unavailable or stale projection, and never simulate success.",
+      "dry_contract_ref": "Plans/protected_auth_browser_contracts.schema.json",
+      "error_schema_ref": "Plans/protected_auth_browser_contracts.schema.json#/$defs/ProtectedAuthLocalActionResult",
+      "event_refs": ["none_pending_event_authority"],
+      "evidence_refs": ["static_owner_schema_and_fixture_only"],
+      "gui_triggers": [
+        "human-only protected-auth local controller",
+        "Settings and Doctor: launcher or redacted lifecycle-only consumer; never protected-content access"
+      ],
+      "handler_owner": "Owner-local typed protected-auth UI controller only; no semantic-domain handler.",
+      "handler_status": "specified",
+      "migration_refs": ["Plans/Shared_Integration_Runtime.md#SIR-031"],
+      "observable_work": ["Local presentation only; no domain work or dispatch-completion claim."],
+      "owner_plan": "Plans/Shared_Integration_Runtime.md",
+      "payload_schema_ref": "Plans/protected_auth_browser_contracts.schema.json#/$defs/ProtectedAuthLocalActionRequest",
+      "permission_gate": "Human-only, non-recordable, non-inspectable, unavailable to agents and adapters, non-persistent, and incapable of protected-content exposure; no domain mutation authority.",
+      "persistence_refs": ["Plans/Shared_Integration_Runtime.md#SIR-031"],
+      "plan_unit": "SIR-031",
+      "production_or_simulation": "Owner-local typed action contract only; no domain handler, production UICommand row, EventRecord, or runtime claim.",
+      "profile_id": "TCP-PROTECTED-AUTH-LOCAL",
+      "receipt_refs": ["Plans/protected_auth_browser_contracts.schema.json#/$defs/ProtectedAuthLocalActionResult"],
+      "requirement_refs": ["Plans/Shared_Integration_Runtime.md#SIR-031"],
+      "result_schema_ref": "Plans/protected_auth_browser_contracts.schema.json#/$defs/ProtectedAuthLocalActionResult",
+      "return_route": "Settle the exact initiating route, surface, focus, invocation, continuation, and currentness context without protected content.",
+      "reverse_consumers": [
+        "human-only protected-auth local controller",
+        "Settings and Doctor: launcher or redacted lifecycle-only consumer; never protected-content access"
+      ],
+      "test_refs": [
+        "Plans/protected_auth_browser_contract_fixtures.json",
+        "tests/test_pm_protected_auth_touch.py"
+      ],
+      "wiring_status": "specified"
+    },
+    {
+      "availability_rule": "The exact typed local action is available only from a current owner projection and mounted local controller; it dispatches no domain command.",
+      "disabled_reason_rule": "Expose the exact owner disabled reason, including handler_unavailable or stale projection, and never simulate success.",
       "dry_contract_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
       "error_schema_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalActionResult",
       "event_refs": [
@@ -12344,7 +12380,7 @@
     ],
     [
       "TOUCH-SGAPLOCAL-007",
-      "TCP-SIR-GAP-LOCAL",
+      "TCP-PROTECTED-AUTH-LOCAL",
       "ui_action",
       "ui.auth_session.close_secure_browser",
       "partial",
@@ -12352,7 +12388,7 @@
     ],
     [
       "TOUCH-SGAPLOCAL-008",
-      "TCP-SIR-GAP-LOCAL",
+      "TCP-PROTECTED-AUTH-LOCAL",
       "ui_action",
       "ui.auth_session.copy_device_code",
       "partial",
@@ -12360,7 +12396,7 @@
     ],
     [
       "TOUCH-SGAPLOCAL-009",
-      "TCP-SIR-GAP-LOCAL",
+      "TCP-PROTECTED-AUTH-LOCAL",
       "ui_action",
       "ui.auth_session.open_details",
       "partial",
