@@ -435,6 +435,19 @@ class PostAugustAdmissionTests(unittest.TestCase):
         self.assertEqual(admitted, set())
         self.assertTrue(issues[0].startswith('post-August amendment receipt invalid'))
 
+    def test_decision_entry_must_name_the_family(self):
+        et = self.POST[1]
+        for number in ['DL-041', 'DL-040', 'DL-077']:
+            with self.subTest(number=number):
+                record = self.record_for(et)
+                section = self.v.decision_section_bytes(self.root / 'Plans/Decision_Log.md', number)
+                record['decision_ref'] = 'Plans/Decision_Log.md#' + number
+                record['decision_section_sha256'] = hashlib.sha256(section).hexdigest()
+                self.write_record(record)
+                admitted, issues, _ = self.check()
+                self.assertNotIn(et, admitted)
+                self.assertIn(et + ': decision_ref_not_for_family', issues)
+
 
 if __name__ == '__main__':
     unittest.main()

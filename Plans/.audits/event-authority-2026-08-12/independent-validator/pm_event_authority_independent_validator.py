@@ -202,6 +202,9 @@ def admission_record_problems(record, family) -> list:
         section = decision_section_bytes(ROOT / "Decision_Log.md", match.group(1))
         if record.get("decision_section_sha256") != hashlib.sha256(section).hexdigest():
             problems.append("decision_section_sha256")
+        named = re.search(rb"(?<![A-Za-z0-9_.])" + re.escape(str(event_type)).encode() + rb"(?![A-Za-z0-9_]|\.[A-Za-z0-9_])", section)
+        if match.group(1) in ("DL-077", "DL-078") or not named:
+            problems.append("decision_ref_not_for_family")
     sides_ok = True
     for side in ("registry_before", "registry_after"):
         value = record.get(side)
