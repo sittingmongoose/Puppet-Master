@@ -18662,16 +18662,17 @@ plan_unit_id: SP-252
 unit_type: migration_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: The existing onboarding_state family uses onboarding_state.v3:{onboarding_session_id} for pm.product_onboarding.session.v2,
+canonical_text: The existing onboarding_state family uses onboarding_state.v4:{onboarding_session_id} for pm.product_onboarding.session.v3,
   with the exact closed owner schema deterministically bundled by scripts/pm-onboarding-contracts.py. The session
   stores the bounded typed setup_draft choices once, plus exact draft/queued/reviewed refs, revisions and canonical
   hash, current dependency-path state, actual Project commit binding, provider/free-model progress, owner refs and
   continuation. Return contexts/snapshots keep refs rather than duplicate draft bodies. Eleven-stage/deferred-Project/six-stage
   paths consume the Onboarding owner, and no Project or broad provider effect is inferred from draft persistence.
-  v2 session-key/v1 values and older Project/global keys are coordinator-only migration inputs. Unresolved drafts
+  v3 session-key/v2 values, v2 session-key/v1 values and older Project/global keys are coordinator-only migration inputs. Unresolved drafts
   are unconfirmed; already committed rows resume provider setup only after exact owner-result/receipt validation.
   Migration emits the sole durable Storage migration receipt, reports exact disposition/stage/path/committed-resume
-  counts with a hashed per-row manifest, and never replays owner work. Domain reconciliation remains separately
+  counts with a hashed per-row manifest, and never replays owner work. Historical approved v2 draft bytes/hash survive
+  only as independently revalidated committed/reconciling owner lineage, never current create admission. Domain reconciliation remains separately
   pending physical admission. No physical family, retention policy, native store, readiness or recovery certification
   is added.
 gui_related: true
@@ -18683,11 +18684,13 @@ depends_on:
 - PWIZ-022
 unblocks: []
 acceptance_criteria:
-- The exact owner v2 session schema and required/nullable fields are deterministically bundled into the existing
-  onboarding_state family; the registry contains the same 88 families and 24 retention policies.
-- New writes use only onboarding_state.v3:{onboarding_session_id}; onboarding_state.v2:{onboarding_session_id},
+- The exact owner v3 session schema and required/nullable fields are deterministically bundled into the existing
+  onboarding_state family; preserve every existing physical-family and retention-policy identity and membership
+  from the current pre-change registry baseline, changing only the versioned value/key binding of this existing family.
+- New writes use only onboarding_state.v4:{onboarding_session_id}; onboarding_state.v3:{onboarding_session_id}, onboarding_state.v2:{onboarding_session_id},
   onboarding_state.v1:{project_id} and onboarding:v1 are read-once coordinator copy-forward inputs, never dual-read
   or current writes.
+- The bounded schema bundle resolves the actual Onboarding, Project, Settings and Forge owner definitions offline. Advanced draft choices remain pure typed selections/provenance; runtime preview, live owner currentness, credentials and permission snapshots are not copied into durable draft authority. Historical v2 readers remain exact and are not current write schemas.
 - Missing state begins at welcome. A current queued draft has the closed bounded setup_draft choices with matching
   draft identity/revision; the confirmed plan hash matches its canonical bytes.
 - A typed setup_draft is not an arbitrary plan/transcript body or a new physical family. Return contexts and continuation

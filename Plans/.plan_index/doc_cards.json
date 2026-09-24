@@ -13535,7 +13535,7 @@
         "False": 7,
         "True": 21
       },
-      "heading_count": 65,
+      "heading_count": 66,
       "implementation_surfaces": [
         "Plans/.implementation_readiness/buildability_gate_report.json",
         "Plans/.implementation_readiness/readiness_blockers.jsonl",
@@ -13575,7 +13575,7 @@
         "future Product Onboarding and Bootstrap projection controllers",
         "future Product Onboarding native controller"
       ],
-      "line_count": 2554,
+      "line_count": 2567,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 28,
       "plan_unit_ids": [
@@ -13630,7 +13630,7 @@
         "tour_fake_shell_or_layout_loss",
         "unbounded_review_loop_or_suppressed_finding"
       ],
-      "sha256": "9197b8b63f86f3f01c384c692193c2221d73fc347fc78356158f19f73ae73b79",
+      "sha256": "749c82fba7a86e5f50892335e3ec28ba0c0351be43db4fd9276a70aaf878b94d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 27,
@@ -17368,7 +17368,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 26475,
+      "line_count": 26478,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 312,
       "plan_unit_ids": [
@@ -17784,7 +17784,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "f8781a617fff053dd9e9f8dc529e4f248791530a6d553dd40dec182058508c53",
+      "sha256": "6cb03555f08e98804d757f2e7f8c07904bd200adcafb27feee12b3defcd84f63",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 309,
@@ -19953,7 +19953,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-24T11:39:17Z",
+  "generated_at_utc": "2026-09-24T11:49:35Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
