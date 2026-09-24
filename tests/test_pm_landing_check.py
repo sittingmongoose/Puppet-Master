@@ -1521,6 +1521,47 @@ class RuleThreeTimeouts(LandingRun):
         self.assertEqual(M.split_infrastructure([crash]), ([], [crash]))
 
 
+class ReviewLimits(LandingRun):
+    """Review findings L-02, L-04 and L-08 of the 2026-09-24 blind review."""
+
+    def test_a_readiness_rise_whose_stale_growth_names_no_branch_file_blocks(self):
+        """L-02: main's own drift rows are visible, the branch's edited files show no staleness, and
+        a real failure sits above the cap. The rise is not the branch's staleness, so it blocks."""
+        rows = [pnc_stale(f"Plans/P{n}.md") for n in range(60)] + [registry_row(n) for n in range(64)]
+        self.stub(gates={self.RG_READINESS: (rows, 124)}, audit={self.AG_READINESS: (rows, 124)})
+        self.record()
+        self.touch("Plans/Touched.md")
+        grown = [drift(f"Plans/D{n}.md") for n in range(94)] + rows
+        self.stub(gates={self.RG_READINESS: (grown, 218)}, audit={self.AG_READINESS: (grown, 218)})
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertIn("[blocking ] run-gates/validate_implementation_readiness  124 -> 218", out)
+
+    def test_a_same_bucket_swap_on_a_touched_file_is_pre_existing_and_flagged(self):
+        """L-04, a documented limit of rule 2: one missing ref fixed and another added on the same
+        edited document keeps the bucket count, so it does not block, but it is not called clean."""
+        self.stub(gates={"lint_path_refs": [dict(MISSING_REF, path="Plans/Touched.md")]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"lint_path_refs": [dict(MISSING_REF, path="Plans/Touched.md", bad_ref="Plans/Other.md")]})
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("1 of them with changed content on files this branch touched", out)
+        self.assertNotIn("nothing for this branch to fix", out)
+
+    def test_a_timeout_alone_is_not_reported_as_nothing(self):
+        """L-08: exit 0 is unchanged by the timeout, but the summary must not call the run clean."""
+        self.stub(gates={"verify_spec_lock": [STALE_HASH]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"verify_spec_lock": [STALE_HASH], "lint_path_refs": [timeout_row("lint-path-refs")]})
+        code, out = self.compare()
+        self.assertEqual(code, 0, out)
+        self.assertNotIn("Nothing to report.", out)
+        self.assertIn("This is not a clean result", out)
+        self.assertIn("before pushing main", out)
+
+
 class BaselineReading(unittest.TestCase):
     def test_a_foreign_document_is_refused(self):
         import tempfile
