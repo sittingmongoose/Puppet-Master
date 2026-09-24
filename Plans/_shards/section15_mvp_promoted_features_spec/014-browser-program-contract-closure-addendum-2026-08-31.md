@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L8826-L9074
+Source lines: L8830-L9080
 
-Source SHA256: `35619c401d0d37fbce387c2b1f5c43765d4b453a33f2f43581f4dca925c7d1fb`
+Source SHA256: `ffb7defe4207388f29bc48b89b3a01b922c7f92f7df598b40529f80ae1defd3e`
 
 ---
 
@@ -123,13 +123,14 @@ acceptance_criteria:
   - Every result directly includes result_count, omitted_count, byte_estimate, and token_estimate; coverage and base generation are semantically checked, and stale rejection requires an invalidation reason with no continuation.
   - Delta requires an admitted base and stale generations cannot be presented as current.
   - Site Reader and Browser Program representations remain explicitly distinct owners.
+  - Measured worst-case indexing/query acceptance uses pages with 20,000 or more nodes, one representation index per document/PageGeneration, O(1) node/layout/clickability lookups and no full-array rescan per node. Reports disclose workload and applicable budgets; supplied schema values alone are not measured performance and no unapproved latency/memory threshold is inferred.
 validation_surfaces: [Plans/section15_browser_program_contract_fixtures.json, future large-page budget partial stale and synthetic-ID collision matrix]
 risk_class: representation_generation_coverage_or_owner_drift
 reasoning_tier: high
 context_scope: browser_program_representation_query
 implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Tools.md]
 node_compile_hint: {mode: browser_program_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-requirement:EGO-003, source_ref:egolite-requirement:HBU-010, source_ref:egolite-requirement:HBU-011, source_ref:egolite-requirement:BRW-014, source_ref:packet:PKT-04/01_IMPLEMENTATION_PACKET.md:309-356, source_ref:packet:PKT-04/09_HERMES_BROWSER_USE_INTEGRATION_DELTA.md:109-139]
+source_lineage: [source_ref:egolite-requirement:EGO-003, source_ref:egolite-requirement:HBU-010, source_ref:egolite-requirement:HBU-011, source_ref:egolite-requirement:BRW-014, source_ref:packet:PKT-04/01_IMPLEMENTATION_PACKET.md:309-356, source_ref:packet:PKT-04/09_HERMES_BROWSER_USE_INTEGRATION_DELTA.md:109-139, source_ref:packet:PKT-04/sources/26_HERMES_BROWSER_USE_EVALUATION_2026-08-11.md:458-467]
 negative_constraints:
   - Do not cite Site Reader representation as the full Browser Program action representation.
   - Do not accept stale or partial data as complete/current.
@@ -181,6 +182,7 @@ acceptance_criteria:
   - Screenshot attachment policy cannot bypass capture identity, permission, redaction, or budgets.
   - Routine promotion is explicit and later capability/API/fixture/policy drift invalidates or disables it.
   - External adapters use allowlisted env, scoped credentials, private runtime, typed IPC/artifacts, independent budgets, process-tree cancellation, and explicit billable close.
+  - External/cloud browser sessions disclose requested/effective isolation and cost-aware idle-expiration/close behavior per session, participate in the existing Shared Integration Runtime admission/reaping/teardown lifecycle, and retain actual disposition plus the cost/session-close receipt for explicit or idle-triggered close. No separate governor or universal timeout is introduced.
   - The controlled benchmark runner requires all four exact arms and the current preregistered `4 arms × 2 tiers × 1 task × 1 trial = 8 cells` denominator, every held-condition pin, and all `36 leaves/cell = 288` success/call/token/byte/time/resource/intervention/evidence/recording-overhead observations; unavailable arms remain explicit and make the result not comparable rather than silently disappearing.
   - Current static PM7 evidence may retain an `open_not_comparable` receipt, but no savings, winner, ordering, runtime, provider, network, or readiness claim exists until every cell executes under held conditions.
 validation_surfaces: [Plans/section15_browser_program_contract_fixtures.json, scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current/runner.py, scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current/self_test.py, controlled production benchmark evidence]
@@ -189,7 +191,7 @@ reasoning_tier: high
 context_scope: browser_routing_routines_adapters
 implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Test_Capture_and_Motion_Evidence.md, Plans/Tools.md, scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current]
 node_compile_hint: {mode: browser_program_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-requirement:HBU-012, source_ref:egolite-requirement:HBU-014, source_ref:egolite-requirement:HBU-016, source_ref:egolite-requirement:HBU-019, source_ref:egolite-requirement:HBU-020, source_ref:egolite-requirement:HBU-024, source_ref:packet:PKT-04/09_HERMES_BROWSER_USE_INTEGRATION_DELTA.md:140-219]
+source_lineage: [source_ref:egolite-requirement:HBU-012, source_ref:egolite-requirement:HBU-014, source_ref:egolite-requirement:HBU-016, source_ref:egolite-requirement:HBU-019, source_ref:egolite-requirement:HBU-020, source_ref:egolite-requirement:HBU-024, source_ref:packet:PKT-04/09_HERMES_BROWSER_USE_INTEGRATION_DELTA.md:140-219, source_ref:packet:PKT-04/07_VALIDATION_AND_ACCEPTANCE.md:31, source_ref:packet:PKT-04/sources/26_HERMES_BROWSER_USE_EVALUATION_2026-08-11.md:638-642]
 negative_constraints:
   - Do not treat an optional adapter or benchmark hypothesis as Browser Program ownership or empirical proof.
   - Do not expose global Expert Mode or Python/Browser Use/Playwright product jargon.

@@ -867,6 +867,8 @@ Representation modes are `minimal`, `standard`, `full`, `scoped`, and `delta`. A
 
 One base index is built per PageGeneration and may serve concurrent bounded queries. Frames may be collected concurrently, but result ordering and coverage are deterministic. Every query result directly carries nonnegative integer `result_count`, `omitted_count`, `byte_estimate`, and `token_estimate`; these measures cannot be replaced by a promise in a companion record. Coverage discloses complete, partial, root-only, cross-origin/frame/shadow/virtualized/listener/style/layout omissions and budget consumption. Covered frames cannot exceed total frames; complete coverage cannot hide omissions, exhaustion, or synthetic-ID collisions. `base_index_generation` equals the subject PageGeneration. An invalidated result is `stale_rejected`, carries a closed `invalidation_reason`, and has no continuation; a current result carries no invalidation reason. Stale generations are rejected as current; delta requires an admitted base; synthetic action/node IDs are generation-scoped and collision-detected.
 
+Representation acceptance measures worst-case indexing and query budgets on pages with 20,000 or more nodes. The implementation builds one representation index per document/PageGeneration, uses O(1) node/layout/clickability lookups, and does not perform a full-array rescan per node. A supplied 20,000-node schema fixture is not a measured performance result. Measured results disclose the workload and applicable budgets; this requirement does not invent a latency or memory threshold absent an approved benchmark contract.
+
 Navigation, redirect, reload, document replacement, crash/restore, and controller handoff advance or revalidate PageGeneration and invalidate incompatible representations. A stale representation can remain historical evidence but cannot authorize a current mutation.
 
 #### Workspace isolation, leases, takeover, and handoff
@@ -898,6 +900,8 @@ Screenshot model attachment is `auto`, `always`, or `never` and is independent o
 Routines are typed, versioned, hashed, scoped, provenance-bearing, reversible, and validated against declared fixtures and capability/API digests. Generated experience may be proposed only after a validated task result; promotion is explicit. Capability/API/fixture/policy drift invalidates or disables the routine. Experience distillation never changes permissions or becomes empirical efficiency proof.
 
 Optional external adapters, including an Ego-style adapter, are isolated strategies rather than Browser Program owners. They receive a minimal allowlisted environment, scoped credentials, private runtime directory, bounded/versioned typed IPC, independent input/output/artifact budgets, and process-tree cancellation. They never return stdout paths as artifact authority. Billable external sessions close explicitly and emit a cost/session-close receipt.
+
+Optional external/cloud browser sessions have an explicit cost-aware idle-expiration and close policy, with requested/effective isolation and requested/effective idle/close behavior disclosed per session. The adapter participates in Shared Integration Runtime's existing admission, idle-resource reaping, and teardown lifecycle; explicit close and idle-triggered cleanup report the actual session disposition and retain the cost/session-close receipt. This binding creates no separate lifecycle governor and prescribes no universal idle timeout.
 
 Controlled efficiency claims require a preregistered four-arm, multi-tier benchmark under held conditions and must measure success, turns/calls, tokens, bytes, time, resources, intervention, evidence, and recording overhead. Packet or external savings are hypotheses until fresh empirical proof exists.
 
@@ -8938,13 +8942,14 @@ acceptance_criteria:
   - Every result directly includes result_count, omitted_count, byte_estimate, and token_estimate; coverage and base generation are semantically checked, and stale rejection requires an invalidation reason with no continuation.
   - Delta requires an admitted base and stale generations cannot be presented as current.
   - Site Reader and Browser Program representations remain explicitly distinct owners.
+  - Measured worst-case indexing/query acceptance uses pages with 20,000 or more nodes, one representation index per document/PageGeneration, O(1) node/layout/clickability lookups and no full-array rescan per node. Reports disclose workload and applicable budgets; supplied schema values alone are not measured performance and no unapproved latency/memory threshold is inferred.
 validation_surfaces: [Plans/section15_browser_program_contract_fixtures.json, future large-page budget partial stale and synthetic-ID collision matrix]
 risk_class: representation_generation_coverage_or_owner_drift
 reasoning_tier: high
 context_scope: browser_program_representation_query
 implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Tools.md]
 node_compile_hint: {mode: browser_program_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-requirement:EGO-003, source_ref:egolite-requirement:HBU-010, source_ref:egolite-requirement:HBU-011, source_ref:egolite-requirement:BRW-014, source_ref:packet:PKT-04/01_IMPLEMENTATION_PACKET.md:309-356, source_ref:packet:PKT-04/09_HERMES_BROWSER_USE_INTEGRATION_DELTA.md:109-139]
+source_lineage: [source_ref:egolite-requirement:EGO-003, source_ref:egolite-requirement:HBU-010, source_ref:egolite-requirement:HBU-011, source_ref:egolite-requirement:BRW-014, source_ref:packet:PKT-04/01_IMPLEMENTATION_PACKET.md:309-356, source_ref:packet:PKT-04/09_HERMES_BROWSER_USE_INTEGRATION_DELTA.md:109-139, source_ref:packet:PKT-04/sources/26_HERMES_BROWSER_USE_EVALUATION_2026-08-11.md:458-467]
 negative_constraints:
   - Do not cite Site Reader representation as the full Browser Program action representation.
   - Do not accept stale or partial data as complete/current.
@@ -8996,6 +9001,7 @@ acceptance_criteria:
   - Screenshot attachment policy cannot bypass capture identity, permission, redaction, or budgets.
   - Routine promotion is explicit and later capability/API/fixture/policy drift invalidates or disables it.
   - External adapters use allowlisted env, scoped credentials, private runtime, typed IPC/artifacts, independent budgets, process-tree cancellation, and explicit billable close.
+  - External/cloud browser sessions disclose requested/effective isolation and cost-aware idle-expiration/close behavior per session, participate in the existing Shared Integration Runtime admission/reaping/teardown lifecycle, and retain actual disposition plus the cost/session-close receipt for explicit or idle-triggered close. No separate governor or universal timeout is introduced.
   - The controlled benchmark runner requires all four exact arms and the current preregistered `4 arms × 2 tiers × 1 task × 1 trial = 8 cells` denominator, every held-condition pin, and all `36 leaves/cell = 288` success/call/token/byte/time/resource/intervention/evidence/recording-overhead observations; unavailable arms remain explicit and make the result not comparable rather than silently disappearing.
   - Current static PM7 evidence may retain an `open_not_comparable` receipt, but no savings, winner, ordering, runtime, provider, network, or readiness claim exists until every cell executes under held conditions.
 validation_surfaces: [Plans/section15_browser_program_contract_fixtures.json, scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current/runner.py, scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current/self_test.py, controlled production benchmark evidence]
@@ -9004,7 +9010,7 @@ reasoning_tier: high
 context_scope: browser_routing_routines_adapters
 implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Test_Capture_and_Motion_Evidence.md, Plans/Tools.md, scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current]
 node_compile_hint: {mode: browser_program_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-requirement:HBU-012, source_ref:egolite-requirement:HBU-014, source_ref:egolite-requirement:HBU-016, source_ref:egolite-requirement:HBU-019, source_ref:egolite-requirement:HBU-020, source_ref:egolite-requirement:HBU-024, source_ref:packet:PKT-04/09_HERMES_BROWSER_USE_INTEGRATION_DELTA.md:140-219]
+source_lineage: [source_ref:egolite-requirement:HBU-012, source_ref:egolite-requirement:HBU-014, source_ref:egolite-requirement:HBU-016, source_ref:egolite-requirement:HBU-019, source_ref:egolite-requirement:HBU-020, source_ref:egolite-requirement:HBU-024, source_ref:packet:PKT-04/09_HERMES_BROWSER_USE_INTEGRATION_DELTA.md:140-219, source_ref:packet:PKT-04/07_VALIDATION_AND_ACCEPTANCE.md:31, source_ref:packet:PKT-04/sources/26_HERMES_BROWSER_USE_EVALUATION_2026-08-11.md:638-642]
 negative_constraints:
   - Do not treat an optional adapter or benchmark hypothesis as Browser Program ownership or empirical proof.
   - Do not expose global Expert Mode or Python/Browser Use/Playwright product jargon.

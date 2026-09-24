@@ -3348,6 +3348,8 @@ depends_on: [ATS-032, ATS-033]
 unblocks: []
 acceptance_criteria:
   - Concurrent-agent fixtures prove separate storage/profile, proxy, locale, device, extension, permission, download, artifact, log, and cleanup scope where policy requires isolation.
+  - Acceptance includes at least eight simultaneous BrowserWorkspaces across multiple agents with independent actions, ProgramWorkspace data, cookies/storage, downloads, evidence, and capture. No global Browser Use or MCP-style execution lock serializes unrelated agents; resource-pressure cases queue with a human wait reason and preserve the shared governor's reserved control capacity without merging workspaces.
+  - The concurrency matrix also exercises 1, 4, 10, and governor-limited concurrent-agent workspace workloads, including independent same-origin state, per-session dialogs/transfers/network mocks/recorders, scoped takeover and delegation, lease expiry, fenced late actions, and shared-versus-isolated-process crash dispositions. The minimum-eight acceptance does not retire the ten-workspace case or permit an entirely queued run to stand in for simultaneous execution.
   - Same-page mutation races prove exactly one live BrowserControllerLease per PageGeneration, deterministic loser behavior, and no duplicate or reordered mutation.
   - Navigation, redirect, reload, crash, restore, controller handoff, lease renewal, and owner-epoch fixtures advance or validate PageGeneration and reject late actions.
   - Observer fixtures prove read-only viewing cannot click, type, navigate, grant permissions, alter storage, or acquire controller authority implicitly.
@@ -3361,6 +3363,8 @@ context_scope: multi_agent_browser_fencing
 implementation_surfaces: [Plans/Automated_Testing_System.md, Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md]
 node_compile_hint: {mode: multi_agent_browser_fencing_matrix_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
+  - source_ref:packet:PKT-04/07_VALIDATION_AND_ACCEPTANCE.md:23-31
+  - source_ref:packet:PKT-04/sources/02_PRIOR_PACKET_V2.md:1064-1072
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/09_TEST_MIGRATION_AND_ACCEPTANCE_MATRIX.md
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md
