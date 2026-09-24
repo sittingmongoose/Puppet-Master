@@ -913,6 +913,7 @@ def main() -> int:
     new_items: list[dict[str, Any]] = []
     on_branch: list[dict[str, Any]] = []
     pre_existing: list[dict[str, Any]] = []
+    changed_on_branch = 0
     seen_buckets: dict[str, int] = {}
     for item in items:
         name = bucket_of(item)
@@ -934,6 +935,9 @@ def main() -> int:
             new_items.append(item)
         if standing and (fresh or hits):
             pre_existing.append({**public(item), **counted, "branch_paths": hits})
+            # Same bucket count, different content, on a file the branch touched: the brief's rule
+            # excuses it, but it may be one failure fixed and another added. Say so.
+            changed_on_branch += 1 if (fresh and hits) else 0
         if hits:
             on_branch.append({**public(item), "branch_paths": hits, **counted})
 
@@ -1072,7 +1076,11 @@ def main() -> int:
             advice = []
             if any(item["stale"] for item in on_branch):
                 advice.append("governance staleness for what this branch edited, so ask the Plans agent for a reseal")
-            if pre_existing:
+            if pre_existing and changed_on_branch:
+                advice.append(f"pre-existing failures whose count has not risen, {changed_on_branch} of them "
+                              "with changed content on files this branch touched, so compare those with the "
+                              "baseline's rows: the same count can hide one failure fixed and another added")
+            elif pre_existing:
                 advice.append("pre-existing failures whose count has not risen, so nothing for this branch to fix")
             if any(item["key"] not in {other["key"] for other in on_branch} for item in new_items):
                 advice.append("new but names no file this branch touched, so report it to Jared")

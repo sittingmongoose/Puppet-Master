@@ -1332,7 +1332,7 @@ class RuleTwoPreExisting(LandingRun):
         self.assertIn("Pre-existing, in a baseline bucket whose count has not risen (never blocks): 3", out)
         self.assertIn("[improved    ] audit-governance/implementation_readiness  "
                       "implementation_readiness_self_tests_failed  scripts/pm-implementation-readiness.py  7 -> 3", out)
-        self.assertIn("nothing for this branch to fix", out)
+        self.assertIn("3 of them with changed content on files this branch touched", out)
         report = json.loads(self.compare("--json")[1])
         self.assertEqual(report["blocking"], 0)
         self.assertEqual({(i["standing"], i["baseline_count"], i["count"]) for i in report["on_branch"]},

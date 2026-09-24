@@ -162,6 +162,11 @@ judged as before and stops the landing. The run-gates copy of that self-test row
 printed 50 of the baseline's 79 readiness rows and the self-test row was not among them, while the
 audit-governance copy, printed in full, was.
 
+It cannot tell one failure from another of the same kind on the same path. A branch that fixes one
+missing reference in a document it edits and adds another keeps the bucket's count, so the new one
+reads as pre-existing. The summary counts such rows, meaning changed content on a file the branch
+touched, so that the lander compares them with the baseline's.
+
 ## Subchecks that time out
 
 `pm-plans-verify.py` kills an aggregate subcheck that is still running at
