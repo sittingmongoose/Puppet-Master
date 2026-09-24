@@ -1,6 +1,6 @@
 # Storage registry repairs, 2026-09-23
 
-STATUS: front 1 complete, including the seven blind-review fixes, and pushed (last step: review-fix section written). Held for the coordinator's go; front 2 lands after it.
+STATUS: front 1 landed on `main` on 2026-09-24; the landing record is `reports/landing-checks/LANDING_20260924_STORAGE_REGISTRY_REPAIRS.md`. Front 2 lands next.
 
 Branch `fix/storage-registry-repairs-20260923`, from `origin/main` `dca3c3349e`, in the sparse worktree `~/pm-worktrees/storage-registry-repairs-20260923` (`Plans scripts reports tests`). Not landed.
 
