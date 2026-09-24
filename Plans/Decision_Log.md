@@ -5880,7 +5880,8 @@ status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   Jared answered Approve (option A) on 2026-09-24 to EA-S10-VALIDATOR-LIVE-SET-001
-  item 1: the frozen independent Event Authority seal check receives exactly one more
+  item 1: the frozen independent Event Authority seal check, which fails every family
+  registered after August with unexpected_august_set, receives exactly one more
   receipted amendment, in the style of DL-039's holding-bucket change. It keeps every
   existing rule and accepts a family registered beyond the original 37 and the two
   August families only with a complete admission record, namely Jared's decision entry
