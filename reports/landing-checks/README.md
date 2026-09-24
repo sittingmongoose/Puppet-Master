@@ -121,16 +121,18 @@ rise is instead the growth counter of the stale readiness rows, and counts as st
 rows it printed say so:
 
 - at least one printed row is a staleness kind whose bucket is new or holds more rows than the
-  baseline's, so the stale growth is visible; and
+  baseline's, and that row names a file this branch touched, so the stale growth is visible and is
+  the branch's; and
 - no printed row that is not staleness is new or in a bucket that grew, so nothing else is visibly
   growing.
 
-Otherwise it is judged like any other truncated rise and stops the landing. The rows above the print
-cap stay unseen: a readiness failure that is not staleness and lands above the cap during a rise the
-sample explains is not caught. Every truncated subcheck has that hole; here it is accepted because
-the rule names the counter as staleness. The evidence and plan-graph subchecks get no such exception,
-and a rise in them still stops the landing. In `--json`, each row of `grown_subchecks` carries
-`stale`, true for the readiness growth counter.
+Otherwise it is judged like any other truncated rise and stops the landing. Stale growth that names
+only files the branch did not touch, such as `main`'s own drift since the baseline, does not count.
+The rows above the print cap stay unseen: a readiness failure that is not staleness and lands above
+the cap during a rise the sample explains is not caught. Every truncated subcheck has that hole; here
+it is accepted because the rule names the counter as staleness. The evidence and plan-graph subchecks
+get no such exception, and a rise in them still stops the landing. In `--json`, each row of
+`grown_subchecks` carries `stale`, true for the readiness growth counter.
 
 ## Pre-existing and improved failures
 

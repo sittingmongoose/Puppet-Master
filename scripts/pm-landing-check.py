@@ -25,7 +25,7 @@ Governance staleness is what AGENTS.md names: Spec Lock `stale_hash`, stale owne
 evidence hashes (among them `event_authority_currentness_source_drift`), stale readiness rows and
 their growth counter, and the stale plan-migration snapshot. It never stops a landing. The readiness
 validator's total is that growth counter: its rise is staleness, not a truncated rise, when the rows
-it printed show stale readiness rows growing and nothing else new.
+it printed show stale readiness rows growing on the branch's own files and nothing else new.
 
 A failure that is not staleness, in a baseline bucket whose count on the branch has not risen, is
 pre-existing, whether or not its content changed: it never stops a landing, and it is reported as
@@ -465,15 +465,18 @@ def readiness_counter_is_staleness(
     items: list[dict[str, Any]],
     run_counts: dict[str, int],
     baseline_counts: dict[str, int],
+    on_branch_keys: set[str] | None = None,
 ) -> bool:
     """Whether a readiness subcheck's rise is the growth counter of stale readiness rows.
 
     The readiness validator prints 50 or 100 rows of a total that every canon edit can lift, so the
     rise itself cannot be matched row by row, and a rise in a truncated subcheck otherwise stops the
     landing. It counts as staleness when the rows it did print say so: at least one printed row is a
-    staleness kind whose bucket is new or grew, so the stale growth is visible, and no printed row
-    that is not staleness is new or in a grown bucket, so nothing else is visibly growing. Rows above
-    the print cap stay unseen either way; README.md says what that leaves open.
+    staleness kind whose bucket is new or grew and that names a file the branch touched (its key is
+    in `on_branch_keys`), so the stale growth is visible and is the branch's, and no printed row that
+    is not staleness is new or in a grown bucket, so nothing else is visibly growing. Stale growth
+    that names only files the branch did not touch, such as main's own drift, does not count. Rows
+    above the print cap stay unseen either way; README.md says what that leaves open.
     """
     if (row["check"], row["subcheck"]) not in READINESS_SUBCHECKS:
         return False
@@ -484,7 +487,7 @@ def readiness_counter_is_staleness(
         name = bucket_of(item)
         rose = bucket_rose(run_counts.get(name, 0), baseline_counts.get(name))
         if item["stale"]:
-            stale_growth = stale_growth or rose
+            stale_growth = stale_growth or (rose and (on_branch_keys is None or item["key"] in on_branch_keys))
         elif rose:
             return False
     return stale_growth
@@ -937,7 +940,8 @@ def main() -> int:
     grown = grown_buckets(seen_buckets, baseline_counts)
     subcheck_growth = grown_subchecks(compared, baseline.get("checks") or {})
     for row in subcheck_growth:
-        row["stale"] = readiness_counter_is_staleness(row, items, run_counts, baseline_counts)
+        row["stale"] = readiness_counter_is_staleness(row, items, run_counts, baseline_counts,
+                                                      {item["key"] for item in on_branch})
     resolved = sorted(
         name for name in set(baseline_counts) - set(seen_buckets)
         if bucket_subcheck(name) not in partial and bucket_subcheck(name) not in timed_out
@@ -1034,7 +1038,7 @@ def main() -> int:
             if row["stale"]:
                 tag = "staleness"
                 note = (" (the readiness growth counter: its printed rows show stale readiness rows "
-                        "growing and nothing else new)")
+                        "growing on this branch's files and nothing else new)")
             elif row["truncated"]:
                 tag = "blocking "
                 note = f" (only {row['sampled']} of {row['reported']} are printed, so what was added cannot be matched)"
