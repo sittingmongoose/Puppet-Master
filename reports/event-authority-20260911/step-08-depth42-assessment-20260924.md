@@ -121,11 +121,11 @@ P = PASS, p = PARTIAL, C = CONFLICT, A = ABSENT. Columns follow the rubric order
 Each row of the JSON lists its own gaps, naming the owner unit that would close each one. Most of them fall into eight groups:
 
 1. **Producers that recover through the first receipt without adopting SP-286 by name.** `browser.workspace.created` and `browser.workspace.reset`, `restore_point.applied` and `restore_point.corrupt`, `safe_point.recovery_unavailable`, `storage.deletion_lifecycle_changed` and `storage.value_quarantine_changed`. Several of these also lack an exact emitter and an ordering of commit, append and publication.
-2. **No event-ID or idempotency-key recipe.** `goal.updated`, `goal.cancelled`, the three restore families above, `safe_point.recovery_unavailable`, `terminal.workgroup_moved` (deferred to its companion schemas) and the two Storage lifecycle families.
+2. **No event-ID or idempotency-key recipe.** `goal.updated`, `goal.cancelled`, the two restore families above, `safe_point.recovery_unavailable`, `terminal.workgroup_moved` (deferred to its companion schemas) and the two Storage lifecycle families.
 3. **No explicit withdrawal protocol.** `goal_run.started`, `goal_run.cancelled`, `goal.cancelled`, `restore_point.applied` and `restore_point.corrupt`, `safe_point.recovery_unavailable`, and the Storage deletion and quarantine families.
 4. **No consumer, checkpoint or SP-278 adoption.**
    - ABSENT: the eight undispositioned Goal families, `restore_point.applied`, `restore_point.corrupt`, and the Storage deletion and quarantine families.
-   - PARTIAL: the seven historical-only readers, which name no operating consumer; `platform.capability_evaluated` and `safe_point.recovery_unavailable`, where SP-278 is not adopted; and the Boot, recovery and compaction-lifecycle families, which have only generic consumers.
+   - PARTIAL: the seven historical-only readers, which name no operating consumer; `platform.capability_evaluated` and `safe_point.recovery_unavailable`, where SP-278 is not adopted; `browser.workspace.created`, whose registered v1 checkpoint lacks the SP-278 token (Step 8(c)); and the Boot, recovery and compaction-lifecycle families, which have only generic consumers.
 5. **Pinned oracle suites that predate DL-076.** They still store `redb_snapshot_id` in a persisted token: the external suites pinned by SP-270 (seglog), SP-273 (Home) and SP-275 (restore expiry). Re-freezing and repinning them closes three oracle cells.
 6. **Owner-anchor routing.**
    - `seglog.event_appended`: its semantic anchor (storage section 2.2.5) disclaims producer semantics and does not lead to SP-270.
