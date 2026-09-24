@@ -1,6 +1,6 @@
 # Step 8(a): current depth of the 42 registered families, 2026-09-24
 
-This replaces the dated 39-family matrix (`step-08-depth-assessment.json`, 2026-09-11) as the current depth picture. It grades all 42 families of `Plans/event_family_registry.json` at revision `2026-09-11.2` (SHA-256 `0be544181eda423dcea4d8661206e7da6d066fdcf51913d5962f1a283635c842`, the checkpoint Jared approved on 2026-09-23). It uses the twelve criteria of the Browser pair assessment, against the owner text on `main` `f1ce058ccd`. The text is identical at `792d2fb8b1`, because the reseal changed only governance artifacts.
+This replaces the dated 39-family matrix (`step-08-depth-assessment.json`, 2026-09-11) as the current depth picture. It grades all 42 families of `Plans/event_family_registry.json` at revision `2026-09-11.2` (SHA-256 `0be544181eda423dcea4d8661206e7da6d066fdcf51913d5962f1a283635c842`, the checkpoint Jared approved on 2026-09-23). It uses the twelve criteria of the Browser pair assessment, with a stricter producer rule (SP-286 adoption by name, `storage-plan.md` 22035-22036) that the Browser pair assessment did not apply, against the owner text on `main` `f1ce058ccd`. The text is identical at `792d2fb8b1`, because the reseal changed only governance artifacts.
 
 It grades what canon says. It is not a runtime result. Native execution is NOT_RUN for every family, and that alone never lowers a grade. The machine-readable file is `step-08-depth42-assessment-20260924.json` (SHA-256 below).
 
@@ -39,6 +39,8 @@ The dated matrix counted differently, so the rows above are not a straight trend
   | Stale or disclaiming owner anchor | rubric clarification 1(a) and 1(b) | 2 |
   | Missing transition ordering barrier | rubric criterion 9 | 1 |
   | Total | | 30 |
+
+  Against later supplements, 4 more cells fell to PARTIAL: the producer cells of both Browser families (against the Browser pair assessment, under the stricter producer rule), `workspace.layout_changed` oracles (against the Home supplement, DL-076) and `context.compaction.completed` oracles (against Step 6, the PM7 GUI validator).
 
 ## Method
 
