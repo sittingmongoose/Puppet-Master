@@ -516,7 +516,7 @@
         "reason": {"oneOf": [{"$ref": "#/$defs/non_empty_string"}, {"type": "null"}]},
         "domain_mutation": {"const": false},
         "persistence_write": {"const": false},
-        "return_focus_id": {"const": "guided_tour.usage.heading"},
+        "return_focus_id": {"const": "guided_tour.workspace.heading"},
         "result_revision": {"type": "integer", "minimum": 1}
       },
       "allOf": [
