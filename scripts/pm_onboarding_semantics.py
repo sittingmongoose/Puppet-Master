@@ -11,6 +11,19 @@ import copy
 from typing import Any
 
 
+# PWIZ-021/UIW-015: a dismissal or restoration is not a draft edit or
+# owner transition. Session/generation/revision are joined separately below.
+_PRESERVED_CONTINUATION_FIELDS = (
+    "stage", "simple_path_selection", "scm_backend_selection", "forge_provider_selection",
+    "history", "initiating_client_id", "return_focus_id", "active_branch", "path_kind",
+    "queued_setup_plan_ref", "queued_setup_plan_revision", "reviewed_setup_plan_revision",
+    "review_confirmation", "approved_setup_plan_sha256", "automatic_preparation_currentness_ref",
+    "project_draft_ref", "project_draft_revision", "project_disposition", "project_commit_binding",
+    "provider_phase_status", "free_models_phase_status", "provider_owner_result_refs",
+    "free_models_owner_result_refs",
+)
+
+
 def settings_draft_semantic_failures(definition: str, value: Any) -> list[str]:
     if not isinstance(value, dict):
         return []
@@ -323,7 +336,9 @@ def onboarding_precommit_join_failures(request, authorization, owner_request, cu
 def onboarding_action_join_failures(current, request, result, *, resume_session=None):
     """Join validated values; resume needs both prior continuation and session.
 
-    The continuation proves exact restoration; the separately schema/semantic-
+    Close/Defer and resume consume a complete validated prior continuation,
+    not only a session projection. The continuation proves exact restoration;
+    the separately schema/semantic-
     validated session proves nonterminal admission, which a continuation alone
     cannot establish. Neither value grants a fresh owner authorization.
     """
@@ -349,15 +364,7 @@ def onboarding_action_join_failures(current, request, result, *, resume_session=
             if resume:
                 # Restoration consumes the complete prior continuation, not a
                 # partial session projection or a fresh-start reconstruction.
-                preserved = (
-                    "stage", "simple_path_selection", "scm_backend_selection", "forge_provider_selection",
-                    "history", "initiating_client_id", "return_focus_id", "active_branch", "path_kind",
-                    "queued_setup_plan_ref", "queued_setup_plan_revision", "reviewed_setup_plan_revision",
-                    "review_confirmation", "approved_setup_plan_sha256", "automatic_preparation_currentness_ref",
-                    "project_draft_ref", "project_draft_revision", "project_disposition", "project_commit_binding",
-                    "provider_phase_status", "free_models_phase_status", "provider_owner_result_refs",
-                    "free_models_owner_result_refs",
-                )
+                preserved = _PRESERVED_CONTINUATION_FIELDS
                 if not isinstance(resume_session, dict):
                     failures.append("onboarding_resume_missing_prior_session")
                 else:
@@ -379,6 +386,21 @@ def onboarding_action_join_failures(current, request, result, *, resume_session=
                         or any(result[field] is not None for field in
                                ("owner_route_ref", "owner_operation_ref", "production_receipt_ref"))):
                     failures.append("onboarding_resume_dispatches_owner_work")
+        if request["action_id"] in {"ui.onboarding.close", "ui.onboarding.defer"}:
+            for field in _PRESERVED_CONTINUATION_FIELDS:
+                if field not in current:
+                    failures.append("onboarding_dismissal_missing_current_" + field)
+                elif after is None or field not in after or after[field] != current[field]:
+                    failures.append("onboarding_dismissal_changes_" + field)
+            if request["return_focus_id"] != current.get("return_focus_id"):
+                failures.append("onboarding_dismissal_request_focus_mismatch")
+            if (request["owner_route_ref"] is not None
+                    or any(result[field] is not None for field in
+                           ("owner_route_ref", "owner_operation_ref", "production_receipt_ref"))):
+                failures.append("onboarding_dismissal_dispatches_owner_work")
+        if request["action_id"] == "ui.onboarding.choose_simple_path":
+            if after is None or after["simple_path_selection"] != request["choice"]:
+                failures.append("onboarding_selected_path_result_mismatch")
         if current["project_disposition"] == "committed" and after is not None:
             if after["project_commit_binding"] != current["project_commit_binding"] or after["project_disposition"] != "committed":
                 failures.append("onboarding_navigation_discards_committed_project")
