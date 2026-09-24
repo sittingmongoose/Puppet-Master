@@ -1,0 +1,78 @@
+{
+  "scope": "Source-preserving ACD-460 Subcompact per-Apply message cap; prose only",
+  "base_commit": "ad9b8c10c861d0c39a639fe2c2d7855ea1bbce75",
+  "owner": "Plans/assistant-chat-design.md#ACD-460",
+  "owner_sha256": "a3fea5b5d0104d239eb54477da4e9c42ad6a1f4719a7e78d29a2e6f9ada9c52f",
+  "source": {
+    "archive": "Concepts/chat-assistant-concepts/PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10 (1).zip",
+    "archive_sha256": "a391ed571c9a2f27adb14c923c7a914f685a6486d4944a000e1ec5d6bd6083fc",
+    "member_root": "PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10/",
+    "members": [
+      {
+        "path": "02_FIXED_PRODUCT_BEHAVIOR.md",
+        "sha256": "a1c01a0cefc29b2067eb903230681154ff9652d433acc2808e1a4fd0d46fc626",
+        "clause_lines": [103, 119],
+        "full_read_lines": [1, 196]
+      },
+      {
+        "path": "reference/original_handoff/01_FIXED_REQUIREMENTS.md",
+        "sha256": "8e5c391bc44c3caa6af33aa12bfc6b7d03134a2be80ae4fedcb829bd93c65399",
+        "clause_lines": [364, 380],
+        "read_lines": [288, 384]
+      },
+      {
+        "path": "machine/original_requirements.json",
+        "sha256": "a57caa2f58bacbf7d3ae2bfa5a96fb8962f8b335e1fe1fc6514cea6290ea6025",
+        "pointer": "/fixedInteractionContracts/contextLens/maximumMessagesPerApply",
+        "read_lines": [1, 180]
+      }
+    ],
+    "proposal": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/settings_dependencies/context-lens-companion-proposal.md",
+    "proposal_sha256": "4325be599f58886294396e317da5ab464de70af84dfc9e882c8ddc06470467a1",
+    "authority": "Root independently reread these primary clauses, ACD-460, consumed-v4 and PP-084 and authorized this prose-only preservation. Original Additive Correction v4 raw custody remains unlocated; current consumed-v4 explicitly preserves Lens."
+  },
+  "preserved_behavior": [
+    "One Subcompact Apply supports up to 25 messages.",
+    "This is not a thread-wide total; multiple operations may accumulate.",
+    "The bound imposes no Mute/Focus selection cap and no summary byte cap or extraction algorithm.",
+    "Existing explicit Apply, source/shaping currentness, Cancel, duplicate result, Turn Off, canonical-history and branch boundaries remain unchanged."
+  ],
+  "checks": {
+    "new_static_prose_tests": {
+      "command": "python3 -m unittest discover -s tests -p test_pm_context_lens_cap_prose.py",
+      "tests": 4,
+      "status": "pass",
+      "test_sha256": "c1c40fbe16c5b90bcaba20308d635ba17d483b340eaa927b292d5467354b27e8"
+    },
+    "existing_spellcheck_prose_tests": {
+      "command": "python3 -m unittest discover -s tests -p test_pm_spellcheck_owner_prose.py",
+      "tests": 4,
+      "status": "pass"
+    },
+    "shard_generate": {"status": "pass", "documents": 99, "shards": 2721},
+    "shard_check": {"status": "pass", "documents": 99, "shards": 2721},
+    "index_generate": {"status": "pass", "plan_units": 6719, "acceptance_units": 26225},
+    "index_validate": {"status": "pass", "plan_units": 6719, "acceptance_units": 26225},
+    "diff_check": "pass",
+    "full_aggregate_governance_and_landing": "not_run; this is an unlanded reviewed branch step, not main or a governance reseal"
+  },
+  "derived_scope": {
+    "changed_plan_unit_count": 467,
+    "hash_only_plan_units": 459,
+    "hash_and_source_location_only_plan_units": 7,
+    "semantic_plan_units": ["ACD-460"],
+    "plan_unit_identity_set_unchanged": true,
+    "added_acceptance_units": 1,
+    "changed_shard_owner": "Plans/assistant-chat-design.md",
+    "readiness_changed_top_keys": ["generated_at_utc", "gui_related_units"],
+    "readiness_diagnostics_unchanged": true,
+    "readiness_status": "blocked_runtime_certification_incomplete"
+  },
+  "preflight_failures_retained": [
+    "Initial local ignored snapshot symlink was placed at .audits instead of required Plans/.audits; index generation exposed missing-input diagnostics. Corrected the local symlink to the unchanged snapshot, removed only the mistakenly created symlink/empty directory, regenerated and did not commit those diagnostics.",
+    "An overlapping first index validation observed the earlier missing-input output and returned stale_generated_index_artifact for node_readiness_report. The final validation was rerun after corrected generation completed and passed."
+  ],
+  "audit_input_receipt_sha256": "af0bce7c65932afb2165cf64c0bd06c69f65e9a4b2007dd6ccc0125b56368f0e",
+  "skill_use": "Read pm-bootstrap-planning-ledger completely for owner-derived generation. Retained existing gui_related classification, exact source lineage and tokens; generated no WorkNodes/NodeSeeds and changed no governance bindings. No ledger was compiled.",
+  "claim_boundary": "Static owner-prose/source preservation only. No command/schema companion, native GUI or dispatcher, summarizer, mode-switch/overlap adjudication, storage/event admission, provider execution, governance seal, readiness unlock or whole-packet closure. Companion implementation awaits independent prose review and separate root authorization."
+}
