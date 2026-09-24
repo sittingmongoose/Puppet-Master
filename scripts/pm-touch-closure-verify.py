@@ -1199,11 +1199,19 @@ def forge_review_alias_failures(
         "owner_plan": "Plans/Forge_Integrations.md", "plan_unit": "FGI-008",
         "dry_contract_ref": "Plans/Forge_Integrations.md#FGI-008",
         "payload_schema_ref": schema_prefix + "command_request",
-        "result_schema_ref": schema_prefix + "command_receipt",
+        "result_schema_ref": schema_prefix + "command_result",
         "error_schema_ref": schema_prefix + "command_error_record",
         "handler_status": "specified", "wiring_status": "specified", "event_refs": [],
     }.items():
         require(profile.get(field) == expected, f"profile {field} must remain {expected!r}")
+    # Compatibility inputs return the canonical target's transport result;
+    # its separately referenced durable receipt is not a substitute result.
+    compat_profiles = [item for item in list_value(registry, "profiles")
+                       if isinstance(item, dict) and item.get("profile_id") == "TCP-FORGE-PR-COMPAT"]
+    require(len(compat_profiles) == 1, "expected one Source Control review compatibility profile")
+    for compat_profile in compat_profiles:
+        require(compat_profile.get("result_schema_ref") == schema_prefix + "command_result",
+                "TCP-FORGE-PR-COMPAT result_schema_ref must use canonical command_result")
     for ref in (
         "Plans/Decision_Log.md#DL-044", "Plans/UI_Command_Catalog.md#UCC-122",
         "Plans/UI_Command_Catalog.md#UCC-132", "Plans/Forge_Integrations.md#FGI-008",

@@ -11,6 +11,8 @@ import sys
 import unittest
 from unittest import mock
 
+from jsonschema import Draft202012Validator
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -574,7 +576,7 @@ class ForgeReviewAliasConsumerTests(unittest.TestCase):
         profile = self.profile(self.registry)
         expected = {"owner_plan": "Plans/Forge_Integrations.md", "plan_unit": "FGI-008",
                     "payload_schema_ref": self.SCHEMA + "command_request",
-                    "result_schema_ref": self.SCHEMA + "command_receipt",
+                    "result_schema_ref": self.SCHEMA + "command_result",
                     "error_schema_ref": self.SCHEMA + "command_error_record"}
         for field, value in expected.items():
             self.assertEqual(profile[field], value)
@@ -582,11 +584,36 @@ class ForgeReviewAliasConsumerTests(unittest.TestCase):
             self.profile(registry)[field] = "wrong_owner_or_schema"
             with self.subTest(field=field):
                 self.assertTrue(self.check(registry))
+
         for ref in self.REFS:
             self.assertIn(ref, profile["requirement_refs"])
             registry = copy.deepcopy(self.registry)
             self.profile(registry)["requirement_refs"].remove(ref)
             with self.subTest(missing_ref=ref):
+                self.assertTrue(self.check(registry))
+
+    def test_both_alias_profiles_use_result_not_durable_receipt(self):
+        schema = json.loads((ROOT / "Plans/forge_integration_contracts.schema.json").read_text())
+        fixtures = json.loads((ROOT / "Plans/forge_integration_contract_fixtures.json").read_text())
+        result = next(case["value"] for case in fixtures["valid"]
+                      if case["name"] == "command_result_succeeded")
+        receipt_validator = Draft202012Validator(
+            {"$ref": "#/$defs/command_receipt", "$defs": schema["$defs"]})
+        for profile_id in ("TCP-GITHUB-PR", "TCP-FORGE-PR-COMPAT"):
+            profile = next(p for p in self.registry["profiles"] if p["profile_id"] == profile_id)
+            with self.subTest(profile=profile_id):
+                self.assertEqual(profile["result_schema_ref"], self.SCHEMA + "command_result")
+                self.assertTrue(any("command_receipt" in ref for ref in profile["receipt_refs"]))
+                for command in ("cmd.forge.review.create", "cmd.forge.review.merge"):
+                    value = copy.deepcopy(result)
+                    value.update(command_id=command, provider="github", target_ref="review:test:1")
+                    result_validator = Draft202012Validator(
+                        {"$ref": "#/$defs/command_result", "$defs": schema["$defs"]})
+                    self.assertEqual(list(result_validator.iter_errors(value)), [])
+                    self.assertTrue(list(receipt_validator.iter_errors(value)))
+                registry = copy.deepcopy(self.registry)
+                stale = next(p for p in registry["profiles"] if p["profile_id"] == profile_id)
+                stale["result_schema_ref"] = self.SCHEMA + "command_receipt"
                 self.assertTrue(self.check(registry))
 
     def test_planned_normalizer_cannot_be_promoted_to_runtime_proof(self):
