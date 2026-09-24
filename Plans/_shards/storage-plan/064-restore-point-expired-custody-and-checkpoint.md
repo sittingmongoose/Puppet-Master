@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L22427-L22626
+Source lines: L22441-L22642
 
-Source SHA256: `bd6e93bb28c734306e9f8e7991db3d2ffd715c50c8362beacc7c3ae27a0cc384`
+Source SHA256: `720e2fa91b54d99e28e3c406021d543103d3fdc6ff1c1628d0e99c8647901931`
 
 ---
 
@@ -91,6 +91,8 @@ This first-native expiry checkpoint is its own v1 binding, with exact required g
 Within one actual redb snapshot, resolve event_record_index_checkpoint.v1:{storage_instance_id}, its selected current_generation_id and actual event_record_index.v2@{generation_id} dataset. Every row's key/source identity/digests and checkpoint_ref resolve the actual generation node. publication_locator joins its immutable generation birth anchor; an old row is not required to carry the latest append manifest. Separately validate actual CURRENT/manifest/source-control bytes, recovery epoch, inventory, synced watermarks, survivor/exclusion/gap facts and the complete advancing frontier across all scopes and families. Full row cardinality/row-set hash and exact retained source coverage precede any filtering.
 
 For this newly introduced expiry index_selection_sha256, use the exact canonical SP-278 binding codec over its closed selection object (read_token excluding redb_snapshot_id). This is a local checkpoint binding assignment, not an alteration of EventRecord payload/source, producer semantic or point hash recipes. generic_read_token additionally carries the actual redb_snapshot_id. full_index_checkpoint_ref, selection digest, current-source traversal cursor, actual index row and actual event all join that snapshot. The cursor marks the final verified global record, including nonmatching application/project events. A matching expiry event is not necessarily the traversal boundary. Same-generation append changes the full frontier token and invalidates old filtered publication even if no matching expiry event was added.
+
+**2026-09-24 amendment (DL-076).** `generic_read_token` in the checkpoint and in its retired generations stores the nine-field durable read token that SP-278 defines on 2026-09-24. It is the same closed selection object that `index_selection_sha256` already hashes. The actual `redb_snapshot_id` is joined at each read and is no longer stored, so the sentence above saying that `generic_read_token` additionally carries it is superseded.
 
 Original expiry receipt/source evidence remains separate from these current coordinates. Revalidate current source/index, phase-appropriate authenticated retained receipt/point/summary custody under SP-285, with full original controls required at initial admission, owner gates, permissions/deletion and prior filtered-checkpoint CAS immediately before committing the one owned checkpoint and again before disclosure. No row/schema/ref alone authenticates a frame or policy decision. The original payload, immutable point, original append-input and producer-semantic hash algorithms remain unchanged. Source frame/CRC/native MessagePack/control encodings, sync and locking are native obligations, not established by the synthetic single-segment adapter.
 

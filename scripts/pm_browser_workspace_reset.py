@@ -67,7 +67,8 @@ def validators(root=ROOT):
 
     registry = Registry(retrieve=refuse).with_resources(resources).crawl()
     result = {}
-    for prefix, schema, names in (("", own, ("resolved_transition", "checkpoint", "subject", "generation_transaction")),
+    for prefix, schema, names in (("", own, ("resolved_transition", "checkpoint", "subject", "generation_transaction",
+                                            "durable_read_token")),
                                   ("generic_", generic, ("checkpoint", "read_token")),
                                   ("", owner, ("browser_command_request", "browser_command_result"))):
         Draft202012Validator.check_schema(schema)
@@ -222,19 +223,30 @@ class ResetOracle:
         return "reset_event_committed_and_published"
 
 
+def durable_read_token_schema(root=ROOT):
+    """SP-278 durable read token (Plans/storage-plan.md, 2026-09-24; DL-076).
+
+    The canonical read_token without its live redb_snapshot_id: the stored form. A read joins
+    the snapshot ID of its own live read transaction; no stored value carries one.
+    """
+    token = copy.deepcopy(load(GENERIC_PATH, root)["$defs"]["read_token"])
+    token["required"] = [name for name in token["required"] if name != "redb_snapshot_id"]
+    del token["properties"]["redb_snapshot_id"]
+    return token
+
+
 def checkpoint_bundle(root=ROOT):
-    """Inline this owner's closed value/history and two exact SP-278 values."""
+    """Inline this owner's closed value/history, its durable SP-278 read token and one exact SP-278 value."""
     own, generic = load(CONTRACT_PATH, root), load(GENERIC_PATH, root)
     cp = copy.deepcopy(own["$defs"]["checkpoint"])
-    cp["properties"]["index_read_token"] = {"$ref": "#/$defs/generic_read_token"}
+    cp["properties"]["index_read_token"] = {"$ref": "#/$defs/durable_read_token"}
     cp["properties"]["source_cursor"] = {"$ref": "#/$defs/generic_source_cursor"}
     cp["$defs"] = {name: copy.deepcopy(own["$defs"][name]) for name in
-                   ("timestamp", "non_secret_ref", "checkpoint_core", "retired_generation")}
+                   ("timestamp", "non_secret_ref", "checkpoint_core", "retired_generation", "durable_read_token")}
     cp["$defs"].update({
-                   "generic_read_token": copy.deepcopy(generic["$defs"]["read_token"]),
                    "generic_source_cursor": copy.deepcopy(generic["$defs"]["coverage"]["properties"]["last_frame"])})
     core = cp["$defs"]["checkpoint_core"]
-    core["properties"]["index_read_token"] = {"$ref": "#/$defs/generic_read_token"}
+    core["properties"]["index_read_token"] = {"$ref": "#/$defs/durable_read_token"}
     core["properties"]["source_cursor"] = {"$ref": "#/$defs/generic_source_cursor"}
     return cp
 
@@ -267,7 +279,7 @@ def expected_storage_family(root=ROOT):
         "owner_doc": owner, "producer": [PROJECTOR + "@" + VERSION], "consumers": [CONSUMER + "@" + VERSION],
         "schema_version": VERSION, "encoding": "messagepack_canonical", "required_fields": schema["required"],
         "optional_fields": [], "nullable_fields": ["first_retained_sequence_id", "index_through_sequence_id", "source_cursor", "withdrawn_at_utc"],
-        "replay_behavior": "Explicitly adopt the SP-278 root/generation/anchor/frontier/source/read token and complete global captured range. Verify the exact Project/reset filter and original source bytes. Commit only this checkpoint under exact prior-value/cursor CAS and source/access/deletion fences; recheck before historical disclosure. Stored snapshot ID is provenance, never a restart handle. No index/global-checkpoint/Browser/Usage/Prompt mutation.",
+        "replay_behavior": "Explicitly adopt the SP-278 root/generation/anchor/frontier/source/read token and complete global captured range. Verify the exact Project/reset filter and original source bytes. Commit only this checkpoint under exact prior-value/cursor CAS and source/access/deletion fences; recheck before historical disclosure. The stored token is the SP-278 nine-field durable read token; every read joins the snapshot ID of its own live read, and no snapshot ID is stored. No index/global-checkpoint/Browser/Usage/Prompt mutation.",
         "migration": "StorageMigrationCoordinator alone installs the exact reset-only derived family through actual graph/ceilings. Unsupported binding or cursor regression requires governed rebuild from CURRENT-selected source; no sibling reuse, lazy source rewrite, alias or guessed store-version integer.",
         "migration_disposition": {"mode": "current_schema", "canonical_write_key_only": True, "compatibility_keys_read_only": False, "ambiguity_policy": "not_applicable", "source_refs": [owner]},
         "restore_disposition": {"mode": "rebuild_from_authority", "transaction_family_id": None, "outcome_owner_ref": owner, "mutation_fence_on_unresolved": True, "source_refs": [owner]},
@@ -287,6 +299,8 @@ def binding_failures(row, *, root=ROOT):
     errors = []
     if load(CONTRACT_PATH, root)["x-pm-event-authority-binding"] != expected:
         errors.append("exact_reset_authority_binding_mismatch")
+    if load(CONTRACT_PATH, root)["$defs"].get("durable_read_token") != durable_read_token_schema(root):
+        errors.append("reset_durable_read_token_not_sp278_projection")
     if row.get("authority_contract_ref") != CONTRACT_PATH + "#/x-pm-event-authority-binding":
         errors.append("reset_authority_contract_ref_mismatch")
     if row.get("semantic_owner_ref") != expected["semantic_owner_ref"] or row.get("producer_component") != expected["producer_component"]:
@@ -387,12 +401,19 @@ def generation_admission_failures(before, after, observation, *, root=ROOT):
 
 
 def index_token_failures(token, index, observation, *, root=ROOT):
-    """Exact SP-278 decoded-value join beneath an assumed verified native read."""
-    if (not validators(root)["generic_read_token"].is_valid(token) or
+    """Exact SP-278 decoded-value join beneath an assumed verified native read.
+
+    ``token`` is the stored nine-field durable read token. The live ten-field token joins the
+    actual snapshot ID of this read, taken from the observation; no stored value supplies,
+    rewrites or manufactures one (DL-076).
+    """
+    if (not validators(root)["durable_read_token"].is_valid(token) or
             not validators(root)["generic_checkpoint"].is_valid(index)):
         return ["generic_index_schema"]
     if not isinstance(observation, dict) or observation.get("generic_source_verified") is not True:
         return ["generic_source_unproved"]
+    if not validators(root)["generic_read_token"].is_valid({**token, "redb_snapshot_id": observation.get("redb_snapshot_id")}):
+        return ["generic_live_snapshot_unproved"]
     selected = index["current_generation_id"]
     node = index["generations"].get(selected) if selected is not None else None
     if node is None or node["state"] != "current" or node["generation_id"] != selected or sum(n["state"] == "current" for n in index["generations"].values()) != 1:
@@ -404,7 +425,7 @@ def index_token_failures(token, index, observation, *, root=ROOT):
                 "generation_anchor_sha256": digest(node["anchor"]),
                 "frontier_revision": frontier["publication_revision"], "frontier_sha256": digest(frontier),
                 "index_dataset_name": "event_record_index.v2@" + selected,
-                "source_selection": frontier["source_selection"], "redb_snapshot_id": observation.get("redb_snapshot_id")}
+                "source_selection": frontier["source_selection"]}
     errors = []
     if token != expected or node["index_dataset_name"] != expected["index_dataset_name"]:
         errors.append("generic_read_token_join")
@@ -500,11 +521,10 @@ class CheckpointOracle:
         if (not isinstance(observation, dict) or cp is None or checkpoint_failures(cp) or
                 cp["state"] == "withdrawn" or not cp["filter_complete"] or observation.get("project_id") != cp["project_id"]):
             return "read_unavailable_no_disclosure"
-        # Stored native snapshot identity is provenance, never a live handle.
-        # Reacquire only this transient field; all persistent source/publication
-        # joins must still match. A read-only reader need not write a checkpoint.
-        token = {**cp["index_read_token"], "redb_snapshot_id": observation.get("redb_snapshot_id")}
-        if (index_token_failures(token, index, observation) or
+        # No snapshot ID is stored: the read joins the ID of its own live snapshot to
+        # the stored durable token, and all persistent source/publication joins must
+        # still match. A read-only reader need not write a checkpoint.
+        if (index_token_failures(cp["index_read_token"], index, observation) or
                 any(observation.get(name) is not True for name in ("access_allowed", "deletion_allows_audit", "disclosure_fence_current"))):
             return "read_unavailable_no_disclosure"
         self.disclosure_count += 1
@@ -562,8 +582,7 @@ def fixture_values(root=ROOT, generic_case="initial_mixed_scope"):
              "checkpoint_ref": source["checkpoint_key"] + "#/generations/" + generation,
              "generation_id": generation, "generation_anchor_sha256": digest(node["anchor"]),
              "frontier_revision": frontier["publication_revision"], "frontier_sha256": digest(frontier),
-             "index_dataset_name": node["index_dataset_name"], "source_selection": copy.deepcopy(frontier["source_selection"]),
-             "redb_snapshot_id": "snapshot:reset-fixture"}
+             "index_dataset_name": node["index_dataset_name"], "source_selection": copy.deepcopy(frontier["source_selection"])}
     coverage = frontier["coverage"]
     checkpoint = {"schema_id": "pm.storage_value.browser_workspace_reset_index_checkpoint.v1", "schema_version": VERSION,
                   "checkpoint_id": EVENT_TYPE, "storage_instance_id": index["storage_instance_id"], "project_id": "project-browser",
@@ -575,7 +594,7 @@ def fixture_values(root=ROOT, generic_case="initial_mixed_scope"):
                   "health": coverage["health"], "updated_at_utc": "2026-09-11T20:00:00Z", "withdrawn_at_utc": None,
                   "publication_id": "publication:reset-fixture-1", "published_at_utc": "2026-09-11T20:00:00Z",
                   "hold_refs": [], "retired_generations": []}
-    observation = {"generic_source_verified": True, "redb_snapshot_id": token["redb_snapshot_id"],
+    observation = {"generic_source_verified": True, "redb_snapshot_id": "snapshot:reset-fixture",
                    "source_selection": copy.deepcopy(frontier["source_selection"]), "project_id": "project-browser",
                    "project_filter_complete": True, "reset_sources_validated": True, "source_dedupe_verified": True,
                    "access_allowed": True, "deletion_allows_audit": True, "binding_supported": True,

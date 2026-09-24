@@ -986,8 +986,7 @@
             "frontier_revision",
             "frontier_sha256",
             "index_dataset_name",
-            "source_selection",
-            "redb_snapshot_id"
+            "source_selection"
           ],
           "properties": {
             "storage_instance_id": {
@@ -1096,10 +1095,6 @@
                   "pattern": "^[0-9a-f]{64}$"
                 }
               }
-            },
-            "redb_snapshot_id": {
-              "type": "string",
-              "minLength": 1
             }
           }
         },
@@ -1292,8 +1287,7 @@
                       "frontier_revision",
                       "frontier_sha256",
                       "index_dataset_name",
-                      "source_selection",
-                      "redb_snapshot_id"
+                      "source_selection"
                     ],
                     "properties": {
                       "storage_instance_id": {
@@ -1402,10 +1396,6 @@
                             "pattern": "^[0-9a-f]{64}$"
                           }
                         }
-                      },
-                      "redb_snapshot_id": {
-                        "type": "string",
-                        "minLength": 1
                       }
                     }
                   }
@@ -2170,8 +2160,7 @@
             "frontier_revision",
             "frontier_sha256",
             "index_dataset_name",
-            "source_selection",
-            "redb_snapshot_id"
+            "source_selection"
           ],
           "properties": {
             "storage_instance_id": {
@@ -2280,10 +2269,6 @@
                   "pattern": "^[0-9a-f]{64}$"
                 }
               }
-            },
-            "redb_snapshot_id": {
-              "type": "string",
-              "minLength": 1
             }
           }
         }

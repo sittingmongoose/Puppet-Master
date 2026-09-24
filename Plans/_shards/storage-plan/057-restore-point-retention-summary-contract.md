@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L20215-L21075
+Source lines: L20215-L21077
 
-Source SHA256: `bd6e93bb28c734306e9f8e7991db3d2ffd715c50c8362beacc7c3ae27a0cc384`
+Source SHA256: `720e2fa91b54d99e28e3c406021d543103d3fdc6ff1c1628d0e99c8647901931`
 
 ---
 
@@ -792,6 +792,8 @@ Reserve a slot before staging. If all three slots are protected by current selec
 Missing, malformed or inconsistent derived checkpoint/index bytes enter existing Q-DERIVED quarantine before governed rebuild. Source loss uses canonical recovery and disclosure, not reconstruction from the checkpoint. Projectors and rebuild writes honor aggregate lock, maintenance lease, space/I/O budget and viewer/read-only gates; this family creates no hidden writer. Read-only valid existing inspection may continue under current owner permissions. Retained metadata contains only non-secret relative control names, identities, hashes, cursors and authorized refs; redaction does not authorize exposing referenced content.
 
 **Consumer integration and proof boundary.** This supplies the actual generic publication prerequisite for run-start (SP-265), restore-created (SP-281), and other admitted filtered readers. Each filtered owner must adopt the exact root/generation/current-frontier read token and still satisfy its own complete filter, source payload, snapshot/restore-point, permission, hold and cursor CAS joins. A metadata index row alone never satisfies those dependencies. Frozen sibling proposals are not silently rewritten or upgraded. A full-index checkpoint change invalidates a dependent publication token even when its generation ID stays stable through an append. A generation-only comparison is insufficient.
+
+**2026-09-24: the durable read token (DL-076).** The read token's tenth field, `redb_snapshot_id`, is only a live transaction fence, and no stored value keeps it. A stored value that records a read token keeps the nine-field durable read token: `Plans/event_record_index_checkpoint.schema.json#/$defs/read_token` with `redb_snapshot_id` removed from `properties` and `required`, every other field, constraint and order unchanged. It is the `DurableGenericToken` that SP-311, SP-312 and the certified consumer already store. Each advance, read, recovery or disclosure forms the live ten-field token from the stored nine fields and the snapshot ID of its own actual read transaction, and revalidates the whole token. No stored value supplies, rewrites or manufactures a snapshot ID. The canonical schema file is unchanged; each contract that stores the token carries this projection as its own local definition. The four filtered checkpoints that stored the whole token (SP-282 Browser reset, SP-270 seglog observability reader, SP-273 Home layout reader and SP-275 restore-point expiry) store the durable token from 2026-09-24. Decided by Jared, by delegation to the coordinator, on 2026-09-24.
 
 Static fixtures are single-segment adapters; multi-segment rotation/global lifetime history remain unexecuted source-adapter obligations. Static fixtures demonstrate admitted shape, real JSON-pointer resolution, mixed scopes, proven empty source, preserved old rows across a changed manifest, current read without old control snapshots, gaps, target activation and exact semantic translation. Their source adapters, control encodings and transaction witnesses are explicitly synthetic. Native SeglogFrameV2/CRC, real CURRENT/manifest codec, disk sync, redb atomicity, source locks, concurrency, migration, retention, backup and crash behavior remain NOT_RUN. No row obtains DEPTH_PASS from these fixtures.
 

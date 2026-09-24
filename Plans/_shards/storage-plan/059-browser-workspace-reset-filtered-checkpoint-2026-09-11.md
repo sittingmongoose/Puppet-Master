@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L21139-L21887
+Source lines: L21141-L21901
 
-Source SHA256: `bd6e93bb28c734306e9f8e7991db3d2ffd715c50c8362beacc7c3ae27a0cc384`
+Source SHA256: `720e2fa91b54d99e28e3c406021d543103d3fdc6ff1c1628d0e99c8647901931`
 
 ---
 
@@ -61,6 +61,14 @@ root/generation/anchor/frontier/source bindings remain unchanged. Bind that new
 ID only to the actual newly acquired read snapshot; do not rewrite the stored
 checkpoint merely to inspect it. This transient rebind grants no permission to
 replace any persistent token field or accept changed source/frontier coverage.
+
+**2026-09-24 amendment (DL-076).** `index_read_token` stores the nine-field durable
+read token that SP-278 defines on 2026-09-24, and the registry materialization matches
+that projection. No snapshot ID is stored, so the reading above that kept a stored
+snapshot ID as historical provenance no longer applies. Each advance, read and recovery
+joins the ID of its own actual reader snapshot to the stored nine fields and revalidates
+the complete ten-field token. A fresh read still never rewrites the stored checkpoint
+merely to inspect it.
 
 ### Complete source filter and atomic advancement
 
@@ -217,7 +225,7 @@ gui_classification_reason: Defines backend persistence, replay and source author
 depends_on: [DL-046, SP-262, SP-278, SMPFS-168]
 unblocks: []
 acceptance_criteria:
-  - The exact family/key/value/producer/consumer and SP-278 read-token schema are registered without sibling or compatibility substitution.
+  - The exact family/key/value/producer/consumer and SP-278 read-token schema are registered without sibling or compatibility substitution. Amended 2026-09-24 — the registered value carries the nine-field durable projection of that schema, without `redb_snapshot_id` (DL-076).
   - Complete global captured range and Project/reset source filter are verified, including empty, zero-match, degraded and unavailable distinctions.
   - Same-generation frontier changes invalidate publication; prior-value CAS and before/after-commit source/access/deletion fences prevent false advance or disclosure.
   - Recovery and withdrawal preserve original reset effects, source identity, actual owner custody boundaries and exact existing retention policies.
@@ -323,6 +331,8 @@ Do not recursively follow metadata-about-metadata chains. New producer emission 
 A complete checkpoint requires the full retained range, verified gaps/removals, CURRENT generation and source joins. An unreadable potentially relevant original is not a filter skip. Proven source removal is reported honestly as source_removed; unexplained absence is source_unavailable. The reader may expose already verified partial diagnostics, but cannot claim complete healthy coverage across an unresolved join. Metadata expiry does not imply original-event loss, and metadata presence does not authorize replaying its original action.
 
 The reader adopts SP-278 reader.storage.event_record_index@1.0.0 and stores the exact closed read_token as index_read_token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection and redb_snapshot_id. The ref resolves the actual checkpoints root and its generation JSON Pointer in the same redb database as the selected generation dataset; no flat-table or foreign-database fallback is allowed. Row publication locators bind the immutable birth anchor; currentness separately binds the advancing frontier. An ordinary append changes the token even when generation and older rows remain fixed. Resolve actual selected source frames and both original and metadata EventRecord envelopes; recompute existing payload and producer-semantic digests without changing their codecs. The typed joins in the frozen joined-evidence schema pinned by reports/event-authority-20260911/step-08-seglog-validation.md are decoded adapter inputs, not replacements for native owner controls or receipts. The reader writes only its filtered checkpoint in one redb transaction under unchanged full generic token, CURRENT, source/survivor, access/deletion and prior-cursor fences. Read-only joins publish after commit under that exact snapshot token and are revalidated before disclosure. They have no separate durable effect. Crash before commit leaves prior progress; after commit recomputes the same join. These three consumers cannot advance a business projector, global index checkpoint, UsageRecord, canonical state or dispatch on the basis of this metadata. The original event's owner reducer still processes its original source exactly once under its own checkpoint.
+
+**2026-09-24 amendment (DL-076).** `index_read_token` in the reader checkpoint, in its retired generations and in `reader_core` stores the nine-field durable read token that SP-278 defines on 2026-09-24, not the whole token: `redb_snapshot_id` is not stored. The reader still commits and discloses only under the live ten-field token of its actual read transaction.
 
 Compaction may translate producer/reader cursors only by preserved semantic identity and verified survivor evidence, otherwise rebuild as defined. Target shadows publish only after the existing synchronized CURRENT selection. No retired locator survives and no timestamp steers selection. The original first-append segment reference is historical provenance, not permission to open a retired physical file.
 
@@ -569,6 +579,8 @@ Adopt actual canonical SP-278, not an opaque generic-index pointer. Under one ac
 Separately verify the complete advancing CURRENT-selected frontier: Storage instance, actual CURRENT and manifest bytes, selected segment generation, recovery epoch, retained inventory, watermarks, exclusions, survivors, complete global row set/count and retained source coverage. Coverage is global across application/project scopes and all event families; filtering workspace.layout_changed happens afterward. Every filtered candidate must resolve its original payload and Home terminal receipt. Missing/unverified or ambiguous filtered matches cannot be hidden by a healthy generic range. Nonmatches still belong in generic global coverage. A metadata row is not a receipt or frame authority.
 
 reader_checkpoint.generic_read_token is the exact canonical SP-278 read_token schema, including root key/ref, generation anchor digest, frontier revision/hash, dataset, full source selection and actual redb_snapshot_id. The filtered checkpoint also joins current source selection digest using unchanged SP-278 binding codec, source cursor to the actual selected frame, the separately admitted historical original receipt, selected Home exact bytes, slot generation and full terminal receipt byte digest. Check generic and filtered prior-CAS, actual source/permission/deletion/receipt/layout/slot evidence immediately before the same redb publication and before disclosure. A same-generation append changes frontier freshness and invalidates the full token even when no matching workspace event was appended. A withdrawn or degraded filtered checkpoint cannot return current. Static mixed-scope append coverage preserves the old row anchor while catching up to a newer manifest; native source/CRC/fsync and locking remain NOT_RUN.
+
+**2026-09-24 amendment (DL-076).** `generic_read_token` in `reader_checkpoint`, in `previous_generations` and in `reader_checkpoint_core` stores the nine-field durable read token that SP-278 defines on 2026-09-24; `redb_snapshot_id` is not stored. The prior-CAS, publication and disclosure checks above run under the live ten-field token of the actual read transaction. The Home3 receipt contract `Plans/home_layout_pending_receipt.schema.json` carries the same checkpoint definitions and follows. The frozen Home2 reader schema `Plans/home_layout_pending_receipt_v2_reader.schema.json` keeps its original copy as frozen provenance; it is not a current checkpoint writer contract.
 
 ### Concrete three-generation history and refresh
 

@@ -38750,7 +38750,7 @@
         "source_cursor",
         "withdrawn_at_utc"
       ],
-      "replay_behavior": "Explicitly adopt the SP-278 root/generation/anchor/frontier/source/read token and complete global captured range. Verify the exact Project/reset filter and original source bytes. Commit only this checkpoint under exact prior-value/cursor CAS and source/access/deletion fences; recheck before historical disclosure. Stored snapshot ID is provenance, never a restart handle. No index/global-checkpoint/Browser/Usage/Prompt mutation.",
+      "replay_behavior": "Explicitly adopt the SP-278 root/generation/anchor/frontier/source/read token and complete global captured range. Verify the exact Project/reset filter and original source bytes. Commit only this checkpoint under exact prior-value/cursor CAS and source/access/deletion fences; recheck before historical disclosure. The stored token is the SP-278 nine-field durable read token; every read joins the snapshot ID of its own live read, and no snapshot ID is stored. No index/global-checkpoint/Browser/Usage/Prompt mutation.",
       "migration": "StorageMigrationCoordinator alone installs the exact reset-only derived family through actual graph/ceilings. Unsupported binding or cursor regression requires governed rebuild from CURRENT-selected source; no sibling reuse, lazy source rewrite, alias or guessed store-version integer.",
       "migration_disposition": {
         "mode": "current_schema",
@@ -38850,7 +38850,7 @@
             "const": "browser.workspace.reset"
           },
           "index_read_token": {
-            "$ref": "#/$defs/generic_read_token"
+            "$ref": "#/$defs/durable_read_token"
           },
           "first_retained_sequence_id": {
             "type": [
@@ -39092,7 +39092,7 @@
                 "const": "browser.workspace.reset"
               },
               "index_read_token": {
-                "$ref": "#/$defs/generic_read_token"
+                "$ref": "#/$defs/durable_read_token"
               },
               "first_retained_sequence_id": {
                 "type": [
@@ -39282,7 +39282,7 @@
               }
             }
           },
-          "generic_read_token": {
+          "durable_read_token": {
             "type": "object",
             "additionalProperties": false,
             "required": [
@@ -39294,8 +39294,7 @@
               "frontier_revision",
               "frontier_sha256",
               "index_dataset_name",
-              "source_selection",
-              "redb_snapshot_id"
+              "source_selection"
             ],
             "properties": {
               "storage_instance_id": {
@@ -39404,10 +39403,6 @@
                     "pattern": "^[0-9a-f]{64}$"
                   }
                 }
-              },
-              "redb_snapshot_id": {
-                "type": "string",
-                "minLength": 1
               }
             }
           },
@@ -40692,8 +40687,7 @@
               "frontier_revision",
               "frontier_sha256",
               "index_dataset_name",
-              "source_selection",
-              "redb_snapshot_id"
+              "source_selection"
             ],
             "properties": {
               "storage_instance_id": {
@@ -40802,10 +40796,6 @@
                     "pattern": "^[0-9a-f]{64}$"
                   }
                 }
-              },
-              "redb_snapshot_id": {
-                "type": "string",
-                "minLength": 1
               }
             }
           },
@@ -40998,8 +40988,7 @@
                         "frontier_revision",
                         "frontier_sha256",
                         "index_dataset_name",
-                        "source_selection",
-                        "redb_snapshot_id"
+                        "source_selection"
                       ],
                       "properties": {
                         "storage_instance_id": {
@@ -41108,10 +41097,6 @@
                               "pattern": "^[0-9a-f]{64}$"
                             }
                           }
-                        },
-                        "redb_snapshot_id": {
-                          "type": "string",
-                          "minLength": 1
                         }
                       }
                     }
@@ -53582,8 +53567,7 @@
               "frontier_revision",
               "frontier_sha256",
               "index_dataset_name",
-              "source_selection",
-              "redb_snapshot_id"
+              "source_selection"
             ],
             "properties": {
               "storage_instance_id": {
@@ -53692,10 +53676,6 @@
                     "pattern": "^[0-9a-f]{64}$"
                   }
                 }
-              },
-              "redb_snapshot_id": {
-                "type": "string",
-                "minLength": 1
               }
             }
           },
@@ -53925,8 +53905,7 @@
                         "frontier_revision",
                         "frontier_sha256",
                         "index_dataset_name",
-                        "source_selection",
-                        "redb_snapshot_id"
+                        "source_selection"
                       ],
                       "properties": {
                         "storage_instance_id": {
@@ -54035,10 +54014,6 @@
                               "pattern": "^[0-9a-f]{64}$"
                             }
                           }
-                        },
-                        "redb_snapshot_id": {
-                          "type": "string",
-                          "minLength": 1
                         }
                       }
                     },
@@ -57446,8 +57421,7 @@
                         "frontier_revision",
                         "frontier_sha256",
                         "index_dataset_name",
-                        "source_selection",
-                        "redb_snapshot_id"
+                        "source_selection"
                       ],
                       "properties": {
                         "storage_instance_id": {
@@ -57556,10 +57530,6 @@
                               "pattern": "^[0-9a-f]{64}$"
                             }
                           }
-                        },
-                        "redb_snapshot_id": {
-                          "type": "string",
-                          "minLength": 1
                         }
                       }
                     }
@@ -57589,8 +57559,7 @@
               "frontier_revision",
               "frontier_sha256",
               "index_dataset_name",
-              "source_selection",
-              "redb_snapshot_id"
+              "source_selection"
             ],
             "properties": {
               "storage_instance_id": {
@@ -57699,10 +57668,6 @@
                     "pattern": "^[0-9a-f]{64}$"
                   }
                 }
-              },
-              "redb_snapshot_id": {
-                "type": "string",
-                "minLength": 1
               }
             }
           }

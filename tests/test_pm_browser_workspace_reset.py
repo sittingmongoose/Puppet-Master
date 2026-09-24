@@ -271,7 +271,6 @@ class CheckpointTests(unittest.TestCase):
             "frontier_sha256": "0" * 64,
             "index_dataset_name": "event_record_index.v2@eig_" + "0" * 64,
             "source_selection": {**token["source_selection"], "manifest_generation": 999},
-            "redb_snapshot_id": "snapshot:other",
         }
         self.assertEqual(set(changed_values), set(token))
         for field, value in changed_values.items():
@@ -281,6 +280,31 @@ class CheckpointTests(unittest.TestCase):
                 self.assertTrue(reset_contract.index_token_failures(cp["index_read_token"], self.index, self.obs))
                 self.assertNotEqual(self.advance(cp=cp), "checkpoint_committed_no_runtime_effect")
                 self.assert_no_commit()
+
+    def test_stored_token_never_carries_a_snapshot_id(self):
+        # DL-076: the stored token is SP-278's nine-field durable read token. A stored
+        # snapshot ID is rejected even when it equals the live one.
+        self.assertNotIn("redb_snapshot_id", self.cp["index_read_token"])
+        cp = copy.deepcopy(self.cp)
+        cp["index_read_token"]["redb_snapshot_id"] = self.obs["redb_snapshot_id"]
+        self.assertEqual(reset_contract.checkpoint_failures(cp), ["checkpoint_schema"])
+        self.assertEqual(reset_contract.index_token_failures(cp["index_read_token"], self.index, self.obs), ["generic_index_schema"])
+        self.assertEqual(self.advance(cp=cp), "checkpoint_invalid_no_advance")
+        self.assert_no_commit()
+
+    def test_contract_durable_token_is_the_sp278_projection(self):
+        durable = reset_contract.durable_read_token_schema()
+        generic = reset_contract.load(reset_contract.GENERIC_PATH)["$defs"]["read_token"]
+        self.assertEqual(durable["required"], [name for name in generic["required"] if name != "redb_snapshot_id"])
+        self.assertEqual(reset_contract.load(reset_contract.CONTRACT_PATH)["$defs"]["durable_read_token"], durable)
+        row = next(row for row in reset_contract.load("Plans/browser_event_admission.json")["rows"]
+                   if row["event_type"] == reset_contract.EVENT_TYPE)
+        original_load = reset_contract.load
+        contract = copy.deepcopy(original_load(reset_contract.CONTRACT_PATH))
+        contract["$defs"]["durable_read_token"] = copy.deepcopy(generic)
+        with mock.patch.object(reset_contract, "load", side_effect=lambda path, root=ROOT:
+                contract if path == reset_contract.CONTRACT_PATH else original_load(path, root)):
+            self.assertIn("reset_durable_read_token_not_sp278_projection", reset_contract.binding_failures(row))
 
     def test_unresolved_root_current_generation_and_dataset(self):
         for mutation in ("no_current", "missing_node", "wrong_dataset", "wrong_node_identity"):
@@ -353,9 +377,10 @@ class CheckpointTests(unittest.TestCase):
             with self.subTest(field=field):
                 self.assertEqual(self.advance(obs=obs), "generic_index_unavailable_no_advance")
                 self.assert_no_commit()
-        for field, value in (("redb_snapshot_id", "snapshot:other"), ("generic_source_verified", False)):
+        # The live snapshot ID comes only from this read's observation (DL-076).
+        for field, value in (("redb_snapshot_id", None), ("redb_snapshot_id", ""), ("generic_source_verified", False)):
             obs = {**self.obs, field: value}
-            with self.subTest(field=field):
+            with self.subTest(field=field, value=value):
                 self.assertEqual(self.advance(obs=obs), "generic_index_unavailable_no_advance")
                 self.assert_no_commit()
 
@@ -392,18 +417,16 @@ class CheckpointTests(unittest.TestCase):
         self.assertEqual(self.advance(), "checkpoint_committed_no_runtime_effect")
         before = copy.deepcopy(self.oracle.checkpoint)
         obs = {**self.obs, "redb_snapshot_id": "snapshot:read-only-restart"}
-        # A token presented as an exact current read still requires its snapshot.
-        self.assertTrue(reset_contract.index_token_failures(self.cp["index_read_token"], self.index, obs))
-        # The read oracle may reacquire a snapshot for the unchanged persistent
-        # binding. The stored historical snapshot identifier is not rewritten.
+        # No snapshot ID is stored (DL-076): the stored durable token joins the new live
+        # snapshot of this read, and the checkpoint is not rewritten to inspect it.
+        self.assertNotIn("redb_snapshot_id", self.oracle.checkpoint["index_read_token"])
+        self.assertEqual(reset_contract.index_token_failures(self.cp["index_read_token"], self.index, obs), [])
         self.assertEqual(self.oracle.disclose(self.index, obs), "historical_reset_fact_no_runtime_authority")
         self.assertEqual(self.oracle.checkpoint, before)
         self.assertEqual((self.oracle.commit_count, self.oracle.disclosure_count, self.oracle.runtime_effect_count), (1, 1, 0))
 
     def test_new_snapshot_does_not_relax_any_persistent_token_join(self):
         for field in self.cp["index_read_token"]:
-            if field == "redb_snapshot_id":
-                continue
             cp = copy.deepcopy(self.cp)
             value = cp["index_read_token"][field]
             if isinstance(value, dict):
@@ -739,15 +762,20 @@ class ResetBindingTests(unittest.TestCase):
     def test_mutated_missing_and_duplicate_storage_bindings_are_rejected(self):
         original_load = reset_contract.load
         original_registry = original_load("Plans/storage_value_registry.json")
-        for mutation in ("absent", "duplicate", "producer", "consumer", "key", "schema", "retention", "generic_token"):
+        for mutation in ("absent", "duplicate", "producer", "consumer", "key", "schema", "retention", "durable_token",
+                         "stored_snapshot_id"):
             registry = copy.deepcopy(original_registry)
             family = next(f for f in registry["families"] if f["family_id"] == reset_contract.CHECKPOINT_FAMILY)
             if mutation == "absent":
                 registry["families"].remove(family)
             elif mutation == "duplicate":
                 registry["families"].append(copy.deepcopy(family))
-            elif mutation == "generic_token":
-                family["value_schema"]["$defs"]["generic_read_token"]["required"].remove("frontier_sha256")
+            elif mutation == "durable_token":
+                family["value_schema"]["$defs"]["durable_read_token"]["required"].remove("frontier_sha256")
+            elif mutation == "stored_snapshot_id":
+                token = family["value_schema"]["$defs"]["durable_read_token"]
+                token["required"].append("redb_snapshot_id")
+                token["properties"]["redb_snapshot_id"] = {"type": "string", "minLength": 1}
             else:
                 key = {"producer": "producer", "consumer": "consumers", "key": "key_shape",
                        "schema": "schema_version", "retention": "retention_policy_ref"}[mutation]
