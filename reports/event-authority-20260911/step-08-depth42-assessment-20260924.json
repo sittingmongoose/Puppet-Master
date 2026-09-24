@@ -15742,13 +15742,13 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "There are ATS CAP-POS-001..010 and CAP-NEG-001..014, Plans decision fixtures (24 value-shape cases, zero production entries, prospective-only) and package-map fixtures (11), plus the pinned v11 suite (455 scoped checks) cited by SP-290. No persisted checkpoint token exists, so no DL-076 conflict. Positives are prospective-only by owner design because the catalog is empty.",
+     "finding": "There are ATS CAP-POS-001..010 and CAP-NEG-001..014, Plans decision fixtures (24 value-shape cases, zero production entries, prospective-only) and package-map fixtures (11). SP-290 also cites a v11 suite (455 scoped checks), but pins it only through the report step-08-platform-custody-validation.md (storage-plan.md 23471), not by path and hash in canon, so under clarification 2 it is not counted. No persisted checkpoint token exists, so no DL-076 conflict. Positives are prospective-only by owner design because the catalog is empty. The PASS rests on the in-repo Plans fixtures and the ATS CAP-POS/CAP-NEG cases.",
      "prior": {
       "source": "old_matrix",
       "status": "PASS"
      },
      "change": "carried",
-     "change_reason": "The oracle sets and fixtures are present; native NOT_RUN and the empty catalog do not lower the grade.",
+     "change_reason": "The oracle sets and fixtures are present; native NOT_RUN and the empty catalog do not lower the grade. Review G-07 (2026-09-24): suites pinned by canon and suites pinned only by a report are distinguished; only canon-pinned suites count; the grade is unchanged.",
      "evidence": [
       {
        "path": "Plans/Automated_Testing_System.md",
@@ -19851,13 +19851,13 @@
     "positive_negative_oracles": {
      "status": "PARTIAL",
      "representation": "exact_normative_owner",
-     "finding": "In-repo: 6 positive and 6 negative closed value-shape cases (updated for DL-076), 31 authored native positive/negative pairs (NOT_RUN), ATS SEA-P01/P02/N01..N04. The relational join/prefix/retention suite SP-270 relies on is the 2026-09-11 frozen external subject, whose stored reader index_read_token still carries redb_snapshot_id, superseded by DL-076.",
+     "finding": "In-repo: 6 positive and 6 negative closed value-shape cases (updated for DL-076), 31 authored native positive/negative pairs (NOT_RUN), ATS SEA-P01/P02/N01..N04. The relational join/prefix/retention suite SP-270 relies on is the 2026-09-11 frozen external subject, whose stored reader index_read_token still carries redb_snapshot_id, superseded by DL-076. Suites pinned by canon: the in-repo value-shape fixtures, native pairs and ATS SEA cases. The relational join/prefix/retention suite is reached only through a report (storage-plan.md 21463), so under clarification 2 it is not counted; without it that normative part has no canon-pinned oracle, and the cell stays PARTIAL on that ground as well as DL-076.",
      "prior": {
       "source": "step-08-seglog-depth.json",
       "status": "PASS"
      },
      "change": "downgraded",
-     "change_reason": "The relational suite behind the prior PASS predates DL-076 and its stored reader checkpoints no longer match the current nine-field durable token.",
+     "change_reason": "The relational suite behind the prior PASS predates DL-076 and its stored reader checkpoints no longer match the current nine-field durable token. Review G-07 (2026-09-24): suites pinned by canon and suites pinned only by a report are distinguished; only canon-pinned suites count; the grade is unchanged.",
      "evidence": [
       {
        "path": "Plans/seglog_append_observability_contract_fixtures.json",
@@ -20423,13 +20423,13 @@
     "positive_negative_oracles": {
      "status": "PARTIAL",
      "representation": "exact_normative_owner",
-     "finding": "Authored: 15 positive and 10 negative typed Boot custody fixtures, ATS BR-P01..05 and BR-N01..05, and the external V5 suite (175 integrated plus 120 standalone, independent 308) pinned by the SP-291/292 lineage report. SP-292 itself says its model does not prove fresh producer acceptance after restore, and the application cardinality adapter is untested.",
+     "finding": "Authored: 15 positive and 10 negative typed Boot custody fixtures, ATS BR-P01..05 and BR-N01..05, and the external V5 suite (175 integrated plus 120 standalone, independent 308) pinned by the SP-291/292 lineage report. SP-292 itself says its model does not prove fresh producer acceptance after restore, and the application cardinality adapter is untested. Suites pinned by canon: the in-repo fixtures and ATS cases; the Boot fixtures name their external suite only through a source report, so under clarification 2 it is not counted.",
      "prior": {
       "source": "old_matrix",
       "status": "PASS"
      },
      "change": "downgraded",
-     "change_reason": "Owner text names normative facets (post-restore producer acceptance, application cardinality adapter) that its oracle model does not cover.",
+     "change_reason": "Owner text names normative facets (post-restore producer acceptance, application cardinality adapter) that its oracle model does not cover. Review G-07 (2026-09-24): suites pinned by canon and suites pinned only by a report are distinguished; only canon-pinned suites count; the grade is unchanged.",
      "evidence": [
       {
        "path": "Plans/storage_boot_custody_fixtures.json",
@@ -20942,13 +20942,13 @@
     "positive_negative_oracles": {
      "status": "PARTIAL",
      "representation": "exact_normative_owner",
-     "finding": "Authored: ATS K37-CMP-P01..P13 and N01..N15 (prose, NOT_EXECUTABLE) and the external ordinary-flow model and canonical capture (positive shape only, pinned in the compaction report). The SP-295..297 native custody (16 families, G01..G32, detail retirement) has no authored negative cases; the owner says the model does not establish exceptional, crash or recovery paths.",
+     "finding": "Authored: ATS K37-CMP-P01..P13 and N01..N15 (prose, NOT_EXECUTABLE) and the external ordinary-flow model and canonical capture (positive shape only, pinned in the compaction report). The SP-295..297 native custody (16 families, G01..G32, detail retirement) has no authored negative cases; the owner says the model does not establish exceptional, crash or recovery paths. Suites pinned by canon: the in-repo ATS K37-CMP cases and the storage_compaction_contracts guards. The external ordinary-flow model and canonical capture are reached only through the compaction report, so under clarification 2 they are not counted.",
      "prior": {
       "source": "old_matrix",
       "status": "PASS"
      },
      "change": "downgraded",
-     "change_reason": "Negative oracles for the SP-295..297 custody contracts are not authored; only prose lifecycle oracles and a positive-only model exist.",
+     "change_reason": "Negative oracles for the SP-295..297 custody contracts are not authored; only prose lifecycle oracles and a positive-only model exist. Review G-07 (2026-09-24): suites pinned by canon and suites pinned only by a report are distinguished; only canon-pinned suites count; the grade is unchanged.",
      "evidence": [
       {
        "path": "Plans/Automated_Testing_System.md",
@@ -21894,13 +21894,13 @@
     "positive_negative_oracles": {
      "status": "PARTIAL",
      "representation": "exact_normative_owner",
-     "finding": "Authored: 8 positive and 4 negative finding fixtures, ATS IN-P01..05 and IN-N01..05, and the external wire suite (407 checks) and full-value suite (371 plus 137 checks) pinned in the checks records. The owner states the full-u64 payload semantic adapter is missing (downstream NOT_RUN_NO_CONFORMING_FIXTURE_ADAPTER) and exact_event corroboration has no oracle.",
+     "finding": "Authored: 8 positive and 4 negative finding fixtures, ATS IN-P01..05 and IN-N01..05, and the external wire suite (407 checks) and full-value suite (371 plus 137 checks) pinned in the checks records. The owner states the full-u64 payload semantic adapter is missing (downstream NOT_RUN_NO_CONFORMING_FIXTURE_ADAPTER) and exact_event corroboration has no oracle. Suites pinned by canon: the in-repo finding fixtures and ATS IN cases; the external wire and full-value suites are named only through source reports, so under clarification 2 they are not counted.",
      "prior": {
       "source": "old_matrix",
       "status": "PASS"
      },
      "change": "downgraded",
-     "change_reason": "The owner itself records that full-u64 semantic-digest cases and exact_event corroboration cannot be tested with the authored oracles.",
+     "change_reason": "The owner itself records that full-u64 semantic-digest cases and exact_event corroboration cannot be tested with the authored oracles. Review G-07 (2026-09-24): suites pinned by canon and suites pinned only by a report are distinguished; only canon-pinned suites count; the grade is unchanged.",
      "evidence": [
       {
        "path": "Plans/storage_integrity_finding_contract_fixtures.json",
@@ -22425,13 +22425,13 @@
     "positive_negative_oracles": {
      "status": "PARTIAL",
      "representation": "exact_normative_owner",
-     "finding": "Authored: 24 phase-value positives and 12 shape negatives, ATS RA-P01..06 and RA-N01..06, and the external v4 suite (984 cases, independently rerun) pinned in the checks record. No later amendment contradicts them. SP-293 itself says the fixture's current/degraded case does not establish every health path of the passive read result.",
+     "finding": "Authored: 24 phase-value positives and 12 shape negatives, ATS RA-P01..06 and RA-N01..06, and the external v4 suite (984 cases, independently rerun) pinned in the checks record. No later amendment contradicts them. SP-293 itself says the fixture's current/degraded case does not establish every health path of the passive read result. Suites pinned by canon: the in-repo fixtures and ATS cases; external suites reached only through a report are not counted under clarification 2.",
      "prior": {
       "source": "old_matrix",
       "status": "PASS"
      },
      "change": "downgraded",
-     "change_reason": "Owner text states a normative read facet (health paths) that the authored oracles do not cover.",
+     "change_reason": "Owner text states a normative read facet (health paths) that the authored oracles do not cover. Review G-07 (2026-09-24): suites pinned by canon and suites pinned only by a report are distinguished; only canon-pinned suites count; the grade is unchanged.",
      "evidence": [
       {
        "path": "Plans/storage_recovery_action_custody_contract_fixtures.json",
@@ -22943,13 +22943,13 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Authored: 21 valid and 9 invalid HoldV2/route cases pinned to the v9 manifest, ATS K37 retention-hold positives/negatives, the external v9 suite (371 cases, independently rerun) and the v4 full-value suite (558 plus 24). No stored checkpoint token exists, so DL-076 does not contradict them. Only native wire/crash/authentication remains NOT_RUN.",
+     "finding": "Authored: 21 valid and 9 invalid HoldV2/route cases pinned to the v9 manifest, ATS K37 retention-hold positives/negatives, the external v9 suite (371 cases, independently rerun) and the v4 full-value suite (558 plus 24). No stored checkpoint token exists, so DL-076 does not contradict them. Only native wire/crash/authentication remains NOT_RUN. Suites pinned by canon: the in-repo Hold fixtures and ATS cases. The external suites SP-288 relies on are reached only through a report (storage-plan.md 22946), so under clarification 2 they are not counted; the PASS rests on the in-repo fixtures and ATS cases.",
      "prior": {
       "source": "step-08-hold-depth.json",
       "status": "PARTIAL"
      },
      "change": "upgraded",
-     "change_reason": "The supplement's PARTIAL rested on native NOT_RUN, which the rubric says never lowers a grade.",
+     "change_reason": "The supplement's PARTIAL rested on native NOT_RUN, which the rubric says never lowers a grade. Review G-07 (2026-09-24): suites pinned by canon and suites pinned only by a report are distinguished; only canon-pinned suites count; the grade is unchanged.",
      "evidence": [
       {
        "path": "Plans/storage_retention_hold_contract_fixtures.json",
@@ -26506,7 +26506,7 @@
  ],
  "evidence": {
   "directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924",
-  "sha256sums_sha256": "f0f564c49d97363614ba089e5d4b2956165867c2768765874957a1a41b2a3840",
+  "sha256sums_sha256": "de9fee040e11a781d1e87d95d0492b50982fc146e98258a654cafa1b96077c52",
   "members": [
    "rubric.md",
    "batches.md",
