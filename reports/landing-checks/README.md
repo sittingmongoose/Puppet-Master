@@ -168,7 +168,9 @@ reads as pre-existing. The summary counts such rows, meaning changed content on 
 touched, so that the lander compares them with the baseline's. The count it compares against is the
 baseline's, not `main`'s. A failure that `main` fixed after the baseline's commit, and that a branch
 brings back on a file it edits, reads as pre-existing, so the older the baseline, the more such
-regressions it excuses.
+regressions it excuses. A count that fell because the subcheck stopped part-way reads as improved.
+The stop itself stops the landing only if it names a file of the branch's; otherwise it is reported
+as new.
 
 ## Subchecks that time out
 
