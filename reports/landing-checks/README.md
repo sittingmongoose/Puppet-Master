@@ -230,8 +230,9 @@ and why, ending "the truncated rule applies":
 - *no complete export*: the audit-closure pair, a command the list does not name, or a
   `pm-plans-verify.py` whose map of subchecks to commands cannot be read;
 - *baseline sample*: the baseline printed only part of the subcheck's rows and recorded no export.
-  Complete rows now against a sample then would read every pre-existing failure outside the sample as
-  grown, so the export is not run;
+  Complete rows now against a sample then cannot be judged by the kind rules: a pre-existing failure
+  outside the baseline's sample, on a file the branch touched, would read as new and block, and a rise
+  elsewhere would go unjudged, so the export is not run;
 - *total mismatch*: the export holds a different number of rows than the printed total, for example
   because the tree changed between the two runs: "its export (validate-plan-graph) holds 132 rows, but
   the printed total is 133";
