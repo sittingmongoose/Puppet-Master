@@ -1581,6 +1581,8 @@ def main() -> int:
                   f"in {plural(len(entry['subchecks']), 'check')}")
         print(f"  buckets: {len(doc['buckets'])}, "
               f"of which {sum(1 for row in doc['buckets'] if row['fingerprints'] is None)} matched by count only")
+        for line in describe_export_commands():
+            print(line)
         print(f"  export buckets: {len(doc['export_buckets'])}, the complete rows of "
               f"{plural(len(exported), 'subcheck')} keyed from their export")
         for row in export_rows:

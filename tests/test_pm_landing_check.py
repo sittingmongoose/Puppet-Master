@@ -2190,6 +2190,7 @@ class ExportKeyedSubchecks(LandingRun):
         never saw it. Recorded from the export, the baseline holds it, and each landing judges it."""
         out, baseline = self.record_contracts(contract_rows(120, touched_at=110))
         self.assertIn("export buckets: 4, the complete rows of 2 subchecks keyed from their export", out)
+        self.assertIn("complete exports, read in scripts/pm-plans-verify.py", out)  # the record run lists them too
         self.assertIn("[keyed    ] run-gates/validate_prd_planning_runtime_contracts (50 of 120 printed): its export "
                       "(validate-prd-planning-runtime-contracts) holds all 120 rows, the printed total", out)
         self.assertEqual(baseline["checks"]["run-gates"]["subchecks"][self.PRD_RG],
