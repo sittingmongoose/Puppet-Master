@@ -5093,7 +5093,7 @@
         "Home panel undock/redock controls",
         "Guided Tour Chat visibility and captured-state restoration"
       ],
-      "return_route": "Tour target plus restorable pre-tour layout/focus.",
+      "return_route": "Ordinary Home or the owning panel host returns focus deterministically after dispatch or error; Guided Tour retains its target and restorable pre-tour layout/focus.",
       "reverse_consumers": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Concepts/pm7-tools/guided_tour_source.py",
@@ -5141,7 +5141,7 @@
         "Usage and Dashboard widget options",
         "Guided Tour workspace widget practice and captured-state restoration"
       ],
-      "return_route": "Tour target plus restorable pre-tour widget layout/focus.",
+      "return_route": "Ordinary Usage or Dashboard returns focus to the owning host deterministically after dispatch or error; Guided Tour retains its target and restorable pre-tour widget layout/focus.",
       "reverse_consumers": [
         "Concepts/pm7-tools/usage_corrections_source.py",
         "Concepts/pm7-tools/widget_interaction_repairs_source.py",
