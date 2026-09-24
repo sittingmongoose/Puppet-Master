@@ -678,6 +678,9 @@
         "codec": "hevc_export_only"
       }
     },
+    {"name":"selected_capture_identity_rejects_null","definition":"capture_provenance_selection","base_valid":"latest_selection_requires_identity_and_continuity_verification","patch":{"selected_capture_id":null},"expected_invariant":"selected_capture_has_existing_nonempty_id_contract"},
+    {"name":"selected_capture_identity_rejects_empty","definition":"capture_provenance_selection","base_valid":"latest_selection_requires_identity_and_continuity_verification","patch":{"selected_capture_id":""},"expected_invariant":"selected_capture_has_existing_nonempty_id_contract"},
+    {"name":"selected_capture_identity_rejects_malformed","definition":"capture_provenance_selection","base_valid":"latest_selection_requires_identity_and_continuity_verification","patch":{"selected_capture_id":"not a capture id"},"expected_invariant":"selected_capture_has_existing_nonempty_id_contract"},
     {"name":"capture_command_rejects_unassigned_session_command_id","definition":"capture_command_request","base_valid":"command_capture_pause","patch":{"command_id":"cmd.testing.session.open"},"expected_invariant":"exact_10_command_ids_only_without_duplicate_central_rows"},
     {"name":"capture_start_rejects_protected_auth_target_identity","definition":"capture_command_request","base_valid":"command_capture_start","patch":{"target":{"target_id":"AuthBrowserSession-target","target_family":"desktop_window","target_generation":1,"target_security_class":"ordinary","window_id":"window-protected-01"}},"expected_invariant":"auth_browser_session_is_human_only_non_recordable_non_inspectable"},
     {"name":"capture_start_rejects_playwright_runtime_engine","definition":"capture_command_request","base_valid":"command_capture_start","patch":{"requested_engine":"playwright"},"expected_invariant":"no_pm_playwright_runtime_or_facade"},

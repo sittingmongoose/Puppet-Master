@@ -58,5 +58,52 @@ class CaptureTargetPolicyTests(unittest.TestCase):
                 self.assertFalse(self.validator.is_valid(value))
 
 
+class CaptureProvenanceSelectionTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.schema = json.loads((ROOT / "Plans/test_capture_motion_evidence_contracts.schema.json").read_text())
+        cls.fixtures = json.loads((ROOT / "Plans/test_capture_motion_evidence_contract_fixtures.json").read_text())
+        cls.positives = {case["name"]: case["value"] for case in cls.fixtures["valid"]}
+        cls.validator = Draft202012Validator({
+            "$schema": cls.schema["$schema"], "$defs": cls.schema["$defs"],
+            "$ref": "#/$defs/capture_provenance_selection",
+        })
+        cls.root_validator = Draft202012Validator(cls.schema)
+
+    def test_selected_requires_existing_nonempty_capture_id_contract(self):
+        original = self.positives["latest_selection_requires_identity_and_continuity_verification"]
+        for capture_id in (original["selected_capture_id"], None, "", "not a capture id"):
+            with self.subTest(capture_id=capture_id):
+                value = copy.deepcopy(original)
+                value["selected_capture_id"] = capture_id
+                expected = capture_id == original["selected_capture_id"]
+                self.assertEqual(expected, self.validator.is_valid(value))
+                self.assertEqual(expected, self.root_validator.is_valid(value))
+
+    def test_missing_original_and_no_candidate_preserve_null_identity(self):
+        original = self.positives["missing_original_is_admitted_without_reenactment"]
+        for disposition in ("original_missing", "no_candidate"):
+            with self.subTest(disposition=disposition):
+                value = copy.deepcopy(original)
+                value["disposition"] = disposition
+                if disposition == "no_candidate":
+                    value["candidate_capture_ids"] = []
+                self.assertIsNone(value["selected_capture_id"])
+                self.assertTrue(self.validator.is_valid(value))
+                self.assertTrue(self.root_validator.is_valid(value))
+
+    def test_authored_selected_identity_negatives_have_valid_bases(self):
+        negatives = {case["name"]: case for case in self.fixtures["invalid"]}
+        for suffix, replacement in (("null", None), ("empty", ""), ("malformed", "not a capture id")):
+            with self.subTest(suffix=suffix):
+                case = negatives[f"selected_capture_identity_rejects_{suffix}"]
+                self.assertEqual("capture_provenance_selection", case["definition"])
+                self.assertEqual({"selected_capture_id": replacement}, case["patch"])
+                value = copy.deepcopy(self.positives[case["base_valid"]])
+                self.assertTrue(self.validator.is_valid(value))
+                value.update(case["patch"])
+                self.assertFalse(self.validator.is_valid(value))
+
+
 if __name__ == "__main__":
     unittest.main()
