@@ -27,13 +27,18 @@ The dated matrix counted differently, so the rows above are not a straight trend
 - **Up to PASS: 133.** From PARTIAL 92, from CONFLICT 26, from ABSENT 15. The owner work since 2026-09-11 did this: the per-family supplements, the v3 Goal adoptions, the historical-only rulings, the shared wire, first-receipt and full-value definitions, and DL-076.
 - **Better but still short: 15.** ABSENT to PARTIAL 12, CONFLICT to PARTIAL 3.
 - **Unchanged: 290.** PASS 171, PARTIAL 94, CONFLICT 13, ABSENT 12.
-- **Lower: 30, all PASS to PARTIAL, and no canon was removed.** The rubric now states rules the old matrix left implicit:
-  - a producer whose recovery depends on the first receipt must adopt SP-286 by name;
-  - scope and identity need an event-ID and idempotency-key recipe, not "captured at source";
-  - withdrawal needs an explicit protocol, not only compatibility readers;
-  - an oracle suite pinned by an owner unit must agree with DL-076.
+- **Lower: 30, all PASS to PARTIAL, and no canon was removed.** The rubric applies rules the old matrix did not apply, and each lowered cell names its rule in its `change_reason`:
 
-  Each such cell says so in its `change_reason`.
+  | Rule | Canon basis or rubric clause | Cells |
+  |---|---|---:|
+  | First-receipt recovery adopts SP-286 by name | `storage-plan.md` 22035-22036 | 1 |
+  | An exact event-ID and idempotency-key recipe | `Contracts_V0.md` 1008, 1016, 1028 | 8 |
+  | DL-076 holds for oracle suites an owner unit pins | `Decision_Log.md` 5775; rubric clarification 2 | 2 |
+  | Untestable boundary or prose-only oracles | rubric criterion 12 | 10 |
+  | Facet the owner itself leaves open | `storage-plan.md` 23548 and 22924; SP-292 | 6 |
+  | Stale or disclaiming owner anchor | rubric clarification 1(a) and 1(b) | 2 |
+  | Missing transition ordering barrier | rubric criterion 9 | 1 |
+  | Total | | 30 |
 
 ## Method
 
@@ -43,7 +48,12 @@ The dated matrix counted differently, so the rows above are not a straight trend
   - the shared SeglogFrameV2 bytes;
   - historical-only families.
 
-  Three clarifications were added during grading: generic Storage anchors are acceptable owner routes; pinned external oracle suites count, unless a later amendment contradicts them; and DL-076 applies to every stored token. The rubric is in the evidence directory.
+  Three clarifications were added during grading.
+  1. An anchor that resolves to a generic Storage persistence section governing every family (Case L-5) is an acceptable payload route, and a whole-document semantic anchor is acceptable when the document holds the governing text. An anchor grades PARTIAL only when (a) it resolves to text that is stale for the registered version, or (b) it resolves to text that explicitly disclaims the role it is anchored for, and in either case the governing text cannot be reached from it.
+  2. Pinned external oracle suites count, unless a later owner amendment contradicts them.
+  3. DL-076 applies to every stored token.
+
+  The rubric is in the evidence directory.
 - **Grading.** Six read-only passes by owner batch:
   - GA: Goal current writers.
   - GB: Goal historical-only families.
