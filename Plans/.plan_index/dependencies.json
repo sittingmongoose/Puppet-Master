@@ -5741,7 +5741,6 @@
     "OSI-180",
     "OSI-181",
     "OSI-177",
-    "SP-266",
     "CRAU-094",
     "CRAU-098",
     "CRAU-101",
@@ -5936,6 +5935,7 @@
     "GRS-065",
     "SMPFS-168",
     "SP-265",
+    "SP-266",
     "SP-271",
     "SP-285",
     "SP-300",
@@ -68136,6 +68136,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-266",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-268",
       "to": "SP-269"
     },
@@ -98445,7 +98450,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-24T13:35:12Z",
+  "generated_at_utc": "2026-09-24T13:36:48Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -212660,9 +212665,9 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15645,
+    "depends_on_edge_count": 15646,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18344,
+    "edge_count": 18345,
     "node_count": 6718,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,

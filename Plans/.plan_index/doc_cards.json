@@ -16156,7 +16156,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "7d9aa4f24e9ad375fb0e045d78cb837cd7f27a547ebc0b75030491c9c8c821d4",
+      "sha256": "138d57ec43325256585bfa978167666dab32d96465f4025dc0614a62e1f9a05c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 167,
@@ -16201,6 +16201,7 @@
         "Plans/Automated_Testing_System.md — DL-035 terminal acceptance fixtures (future execution)",
         "Plans/Wiring_Matrix.production.json",
         "Plans/browser_event_admission_fixtures.json",
+        "Plans/browser_workspace_created_checkpoint_v2.schema.json",
         "Plans/browser_workspace_created_contract_fixtures.json",
         "Plans/browser_workspace_created_contracts.schema.json",
         "Plans/browser_workspace_reset_contract_fixtures.json",
@@ -17776,7 +17777,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "0113e9e305be7a84302ec069430f423fd3de957f65265379bb952d1da97b0611",
+      "sha256": "5044ca80c582deac8cc5d531882a92240ebdd13011d54f0089f97f0e24f15c9c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 309,
@@ -17836,6 +17837,8 @@
         "Plans/assistant_plan_cancel_contracts/publication-dependencies.json",
         "Plans/assistant_plan_cancel_custody.schema.json",
         "Plans/browser_event_admission_fixtures.json",
+        "Plans/browser_workspace_created_checkpoint_v2.schema.json",
+        "Plans/browser_workspace_created_checkpoint_v2_fixtures.json",
         "Plans/browser_workspace_created_contract_fixtures.json",
         "Plans/browser_workspace_created_contracts.schema.json",
         "Plans/browser_workspace_reset_contract_fixtures.json",
@@ -18036,6 +18039,7 @@
         "python3 scripts/pm-storage-recovery-contracts.py --self-test",
         "python3 scripts/pm-terminal-command-block-contracts.py",
         "python3 scripts/pm-working-notebook-contracts.py validate",
+        "python3 scripts/pm_browser_workspace_created_v2.py",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
         "reports/event-authority-20260911/step-08-certified-custody-validation.md",
@@ -19945,7 +19949,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-24T13:35:12Z",
+  "generated_at_utc": "2026-09-24T13:36:48Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

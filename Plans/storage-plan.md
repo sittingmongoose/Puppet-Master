@@ -20008,7 +20008,7 @@ canonical_text: >-
   binding; native producer, durability, security and runtime acceptance remain open.
 gui_related: false
 gui_classification_reason: This defines Storage persistence and replay authority, not visual design.
-depends_on: [DL-046, SP-262, SMPFS-167, CV-332]
+depends_on: [DL-046, SP-262, SP-278, SMPFS-167, CV-332]
 unblocks: []
 acceptance_criteria:
   - Exactly one new event family and one derived checkpoint may be admitted by this landing; all preceding event/storage rows and all 24 retention policies remain unchanged.
@@ -20017,19 +20017,19 @@ acceptance_criteria:
   - Empty-range proof is explicit; replay duplicates, restart, compaction, deletion, withdrawal and lost acknowledgement cannot resurrect or duplicate a workspace.
   - Static positive/negative schemas and semantic oracles are separate from unperformed native crash, producer, permission and storage proofs.
   - A v2 SP-278 successor requires complete frontier/source token, authenticated same-key v1 retirement and lawful three-generation custody before current use; v1 remains current until that separate admission.
-validation_surfaces: [Plans/browser_workspace_created_contracts.schema.json, Plans/browser_workspace_created_contract_fixtures.json, tests/test_pm_browser_workspace_created.py, python3 scripts/pm-browser-event-admission.py]
+validation_surfaces: [Plans/browser_workspace_created_contracts.schema.json, Plans/browser_workspace_created_contract_fixtures.json, tests/test_pm_browser_workspace_created.py, python3 scripts/pm-browser-event-admission.py, Plans/browser_workspace_created_checkpoint_v2.schema.json, Plans/browser_workspace_created_checkpoint_v2_fixtures.json, python3 scripts/pm_browser_workspace_created_v2.py]
 risk_class: browser_workspace_created_source_or_checkpoint_authority_drift
 reasoning_tier: high
 context_scope: browser_workspace_created_single_family_storage
 implementation_surfaces: [Plans/event_family_registry.json, Plans/browser_event_admission.json, Plans/storage_value_registry.json, Plans/browser_workspace_created_contracts.schema.json]
 node_compile_hint: {mode: static_single_family_admission, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/Decision_Log.md#DL-046, Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe]
+source_lineage: [Plans/Decision_Log.md#DL-046, Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe, Plans/storage-plan.md#SP-278]
 negative_constraints:
   - No other Browser event, canonical Browser physical record, new retention/deletion choice, native proof, WorkNode, NodeSeed, readiness or governance seal.
   - Never borrow another family's binding identifiers, manufacture currentness or rewrite original event identities.
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-046, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-167, ContractName:Plans/Contracts_V0.md#CV-332, SchemaID:pm.storage_value.event_record_index.v2, SchemaID:pm.storage_value.browser_workspace_created_index_checkpoint.v1
+ContractRef: ContractName:Plans/Decision_Log.md#DL-046, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-167, ContractName:Plans/Contracts_V0.md#CV-332, SchemaID:pm.storage_value.event_record_index.v2, SchemaID:pm.storage_value.browser_workspace_created_index_checkpoint.v1, ContractName:Plans/storage-plan.md#SP-278, SchemaID:pm.storage_value.browser_workspace_created_index_checkpoint.v2
 
 
 ## Restore-point created consumer checkpoint contract
