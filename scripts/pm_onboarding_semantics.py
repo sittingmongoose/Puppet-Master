@@ -181,7 +181,7 @@ def onboarding_semantic_failures(definition: str, value: Any) -> list[str]:
 
     if "queued_setup_plan_ref" in value and "project_disposition" in value:
         state(value)
-    if definition == "onboarding_session" and value["setup_draft"] is not None:
+    if definition in {"onboarding_session", "onboarding_session_v3", "onboarding_session_current_write"} and value["setup_draft"] is not None:
         from pm_ui_command_response import owner_result_digest
 
         draft = value["setup_draft"]

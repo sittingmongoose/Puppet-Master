@@ -486,26 +486,23 @@ class OnboardingStorageTests(unittest.TestCase):
         cls.bundle = cls.storage.expected_bundle()
 
     def test_existing_family_and_retention_census_is_unchanged(self):
-        families = self.registry["families"]
-        self.assertEqual(len(families), 90)
-        self.assertEqual(len({row["family_id"] for row in families}), 90)
-        added = [row for row in families if row["family_id"] == "run_started_index_checkpoint"]
-        browser_checkpoint = [row for row in families if row["family_id"] == "browser_workspace_created_index_checkpoint"]
-        self.assertEqual(len(browser_checkpoint), 1)
-        prior = [row for row in families if row["family_id"] not in {"run_started_index_checkpoint", "browser_workspace_created_index_checkpoint"}]
-        self.assertEqual(len(added), 1)
-        self.assertEqual(len(prior), 88)
-        # Pin ordered semantic bytes from 7db6a87c60, including the corrected
-        # Onboarding schema; af6856d039 separately adds only this exact family.
-        def canonical_digest(value):
-            return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
-        self.assertEqual(canonical_digest(prior), "91e394fed0c152620b9b64a92fe2572103b60c01e63f62d5bdece0d93b137730")
-        self.assertEqual(canonical_digest(added[0]), "04cd5eaaeaa937b76706cf061bad80e64950976e8c55fb36b8086fd39f580af7")
-        spec = importlib.util.spec_from_file_location("browser_created_storage_pin", ROOT / "scripts/pm_browser_workspace_created.py")
-        browser = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(browser)
-        self.assertEqual(browser_checkpoint[0], browser.expected_storage_family())
-        self.assertEqual(len(self.registry["retention_policies"]), 24)
+        from onboarding_creation_fixtures import FixtureHarness
+        from pm_onboarding_creation_schema import materialized_v3_registry
+        baseline = FixtureHarness(ROOT).baseline("storage_value_registry.json")
+        self.assertEqual(self.registry, materialized_v3_registry(baseline, self.bundle))
+        self.assertEqual([r["family_id"] for r in baseline["families"]],
+                         [r["family_id"] for r in self.registry["families"]])
+        self.assertEqual(baseline["retention_policies"], self.registry["retention_policies"])
+        allowed = {"key_shape", "compatibility_key_shapes", "value_schema_id", "value_schema_ref", "schema_version",
+                   "required_fields", "optional_fields", "nullable_fields", "value_schema", "replay_behavior", "migration",
+                   "redaction_no_secret_rule", "legacy_canonical_crosswalk_status", "migration_disposition"}
+        for old, new in zip(baseline["families"], self.registry["families"]):
+            if old["family_id"] != "onboarding_state":
+                self.assertEqual(old, new)
+            else:
+                self.assertTrue({k for k in old if old[k] != new[k]} <= allowed)
+                self.assertEqual(new["key_shape"], "onboarding_state.v4:{onboarding_session_id}")
+                self.assertEqual(new["value_schema_id"], "pm.product_onboarding.session.v3")
         self.assertEqual(self.storage.validate(self.registry), [])
         failures, counts = GATE.validate_onboarding_storage_contract()
         self.assertEqual(failures, [])
@@ -527,14 +524,22 @@ class OnboardingStorageTests(unittest.TestCase):
                     walk(child)
         walk(self.bundle)
 
-    def test_every_session_round_trips_through_same_offline_bundle(self):
-        validator = GATE.Draft202012Validator(self.bundle)
+    def test_every_session_round_trips_through_its_exact_versioned_offline_bundle(self):
+        from pm_onboarding_semantics import onboarding_storage_value_schema
+        historical = onboarding_storage_value_schema(SCHEMA, PROJECT_SCHEMA,
+            json.loads((ROOT / "Plans/settings_system_contracts.schema.json").read_text()))
+        old_validator = GATE.Draft202012Validator(historical)
+        current_validator = GATE.Draft202012Validator(self.bundle)
         for row in PACK["valid"]:
-            if row["definition"] == "onboarding_session":
+            if row["definition"] in {"onboarding_session", "onboarding_session_v3"}:
                 with self.subTest(case=row["name"]):
                     restored = json.loads(json.dumps(row["value"]))
+                    current = row["definition"] == "onboarding_session_v3"
+                    validator = current_validator if current else old_validator
+                    wrong_writer = old_validator if current else current_validator
                     self.assertTrue(validator.is_valid(restored), list(validator.iter_errors(restored)))
-                    self.assertEqual(onboarding_semantic_failures("onboarding_session", restored), [])
+                    self.assertFalse(wrong_writer.is_valid(restored))
+                    self.assertEqual(onboarding_semantic_failures(row["definition"], restored), [])
 
     def test_inline_schema_drift_is_a_standard_contract_gate_failure(self):
         changed = copy.deepcopy(self.registry)

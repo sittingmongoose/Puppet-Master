@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L1208-L1319
+Source lines: L1239-L1365
 
-Source SHA256: `eb4a4b81220a9185f08df2bbaec9325977d4eeec5637ec600caa4d9a4bd7084b`
+Source SHA256: `e6dec4b6391e267dfca403d838336740260d51c3913433859559a889a7d105da`
 
 ---
 
@@ -55,6 +55,14 @@ canonical_text: >-
   rather than redefines the common AuthenticationProfile and CredentialAttachment contract, carrying broker refs only
   and enforcing exact provider, Host, Environment, repository, operation/capability, expiry, revocation, and
   owner-generation attenuation.
+  Coalesce same-target current PATH/package-db/native metadata scans without assuming an undiscovered Installation;
+  refresh ownership proof incrementally under BinaryLocator and deduplicate resolved checks by actual Installation,
+  not account. Stagger permitted background version checks in low-priority maintenance without an all-integration
+  startup probe storm or overriding disabled checks. Exclude conflicting effects by Installation identity alongside
+  package-manager-root serialization; use deadlock-free resource acquisition, active-request drain and replacement
+  ordering under existing governor/lease ownership. Measure update check, download, install, verify, and rollback
+  separately without changing lifecycle states, retaining current proof, per-waiter authority, bounded logs, crash
+  reconciliation, active-work safety and last-verified activation. No numerical scheduling bound is created.
 gui_related: true
 gui_classification_reason: Ownership, check/update state, shared work, persistence, and credential attachment health are visible setup state.
 depends_on: [SIR-003, SIR-004, SIR-006, SIR-007, SIR-011, SIR-020, MA-045]
@@ -72,14 +80,19 @@ acceptance_criteria:
   - IRT-011 consumes the common AuthenticationProfile/CredentialAttachment contract and attaches only non-secret refs under exact provider/Host/Environment/repository/operation-capability scopes, expiry, revocation, owner generation, and broker enforcement.
   - IRT-011 negatives reject raw secret fields, expired/revoked/stale refs, provider/profile mismatch, Host/Environment/repository mismatch, operation/capability widening, and treating profile attachment as authentication/readiness proof.
   - Static schema/fixture success does not prove package-manager behavior, acquisition, update, persistence across replacement, broker isolation, or runtime recovery.
+  - Concurrent PATH/package-db/native metadata scans share only exact-Host/Environment current discovery inputs; resolved checks share actual Installation identity rather than account and retain independent waiter authority.
+  - Changed ownership evidence refreshes incrementally without skipping bounded inventory, explicit rescan, candidate disambiguation, or stale-proof invalidation; BinaryLocator remains the proof producer, not the lifecycle policy owner.
+  - Permitted version checks are staggered low-priority maintenance below interactive/provider/test reserve; startup does not probe every integration simultaneously, and disabled background checks remain disabled.
+  - Installation identity conflict exclusion and package-manager-root serialization use deadlock-free acquisition/drain/replacement ordering without retaining a maintenance resource needed for an active request to drain.
+  - Update check, download, install, verify, and rollback have separate measurement cuts in existing operation evidence; logs remain bounded/coalesced and recovery reconciles actual state rather than blindly rerunning an installer.
 validation_surfaces: [Plans/egolite_retained_requirement_contracts.schema.json, Plans/egolite_retained_requirement_contract_fixtures.json, Plans/shared_integration_runtime.schema.json, Plans/shared_integration_runtime_fixtures.json, tests/test_pm_installation_update_preferences.py, focused Egolite remediation validator, future ownership-maintenance positive/negative fixtures, future multi-Project/multi-Client coalescing matrix, future image/pod replacement recovery matrix, future broker attenuation and secret-isolation tests]
 risk_class: installation_ownership_mutation_or_persistence_secret_failure
 reasoning_tier: high
 context_scope: integration_installation_and_credential_closure
 implementation_surfaces: [Plans/Shared_Integration_Runtime.md, Plans/Multi-Account_Connection_Spec.md, future InstallationLifecycleManager and CapabilityProvisioner, future credential-attachment enforcement]
 node_compile_hint: {mode: shared_runtime_static_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-requirement:IRT-008, source_ref:egolite-requirement:IRT-009, source_ref:egolite-requirement:IRT-010, source_ref:egolite-requirement:IRT-011, source_ref:chat:user-update-options-correction-2026-09-09]
-preserved_exact_tokens: [check-and-notify, coalesce identical provisioning/update operations, Tool Store, isolated profiles, image replacement, pod replacement, AuthenticationProfile, CredentialAttachment]
+source_lineage: [source_ref:egolite-requirement:IRT-008, source_ref:egolite-requirement:IRT-009, source_ref:egolite-requirement:IRT-010, source_ref:egolite-requirement:IRT-011, source_ref:chat:user-update-options-correction-2026-09-09, PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/source_inputs/09_optimization_settings_load_handoff.md#shared-installation-lifecycle-performance]
+preserved_exact_tokens: [check-and-notify, coalesce identical provisioning/update operations, Tool Store, isolated profiles, image replacement, pod replacement, AuthenticationProfile, CredentialAttachment, PATH/package-db/native, Installation, BinaryLocator, package-manager-root]
 negative_constraints:
   - Do not mutate an externally managed installation under a PM-managed policy; a reviewed, exact durable delegation is required for its automatic updates.
   - Do not substitute ownership/consent categories for ordinary user-facing update choices, conflate manual actions with saved automatic policy, or reset disabled checks and routine-notification preferences when authority is revoked.
@@ -87,6 +100,8 @@ negative_constraints:
   - Do not claim readiness after image/pod replacement until exact durable-root reconciliation succeeds.
   - Do not re-own AuthenticationProfile lifecycle, provider authentication policy, or credential custody.
   - Do not persist raw credential material in Tool Store, profiles, attachments, records, or receipts.
+  - Do not use an account identity or matching path/version as actual Installation identity, share stale proof, or assume an Installation before discovery establishes it.
+  - Do not enable disabled checks, bypass per-waiter approval, create a peer governor or lease service, or invent numerical scheduling bounds through scan/check coalescing.
 ```
 
 ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#4.7, ContractName:Plans/Shared_Integration_Runtime.md#4.8, ContractName:Plans/Shared_Integration_Runtime.md#4.9, ContractName:Plans/Shared_Integration_Runtime.md#4.10, ContractName:Plans/Multi-Account_Connection_Spec.md
