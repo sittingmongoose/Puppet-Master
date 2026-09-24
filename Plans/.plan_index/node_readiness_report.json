@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-24T02:07:33Z",
+  "generated_at_utc": "2026-09-24T04:43:14Z",
   "gui_related_units": {
     "count": 3196,
     "units": [
@@ -25883,8 +25883,8 @@
         "source_location": {
           "heading": "PWIZ-023 - Guided Tour newbie-first real-application practice",
           "heading_level": 3,
-          "heading_line": 2031,
-          "line": 2033,
+          "heading_line": 2033,
+          "line": 2035,
           "path": "Plans/Planning_Wizard.md"
         }
       },
@@ -25894,8 +25894,8 @@
         "source_location": {
           "heading": "PWIZ-024 - Visible project routes, independent placement, and live reviewed setup draft",
           "heading_level": 3,
-          "heading_line": 2084,
-          "line": 2086,
+          "heading_line": 2086,
+          "line": 2088,
           "path": "Plans/Planning_Wizard.md"
         }
       },
@@ -25905,8 +25905,8 @@
         "source_location": {
           "heading": "PWIZ-025 - Bootstrap recovery, connector phases, and forge parity",
           "heading_level": 3,
-          "heading_line": 2181,
-          "line": 2183,
+          "heading_line": 2183,
+          "line": 2185,
           "path": "Plans/Planning_Wizard.md"
         }
       },
@@ -25916,8 +25916,8 @@
         "source_location": {
           "heading": "PWIZ-027 - Research Decision Dispositions Into Topics And Amendments",
           "heading_level": 3,
-          "heading_line": 2356,
-          "line": 2358,
+          "heading_line": 2358,
+          "line": 2360,
           "path": "Plans/Planning_Wizard.md"
         }
       },
@@ -39202,7 +39202,7 @@
       {
         "actual": "fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0",
         "error": "pnc019_source_hash_stale",
-        "expected": "60b87b69635821bcf9ed89fa516a22e53955046cc4e8dcf34a2128127da34679",
+        "expected": "9197b8b63f86f3f01c384c692193c2221d73fc347fc78356158f19f73ae73b79",
         "source_path": "Plans/Planning_Wizard.md"
       },
       {
@@ -39284,6 +39284,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/FinalGUISpec.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Planning_Wizard.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
