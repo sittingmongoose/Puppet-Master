@@ -220,6 +220,14 @@ canonical_text: >-
   Forge-owned `repository_automation` occupant labeled Actions & Pipelines and binds through AutomationBinding;
   `github_actions` is compatibility-only. Git-only staging and stash are absent for JJ. Settings routes one source-control manager with Local Tools, Repositories, Accounts and
   Sign-In, Hosting Services, Defaults, Automation, Safety, Advanced, and Diagnostics and Receipts.
+  Compatible surfaces consume one shared repository status snapshot for the same exact current RepositoryContext;
+  sharing never merges distinct workspace, backend, revision, source-location or topology identities. Coalesce
+  filesystem watcher bursts before refresh and use file-watcher invalidation with stable content identity. For Git,
+  batch plumbing/object reads instead of launching one Git process per row/widget. Enable and test Git FSMonitor
+  and untracked-cache support only where actual repository/filesystem compatibility permits, with deterministic
+  fallback/rescan behavior; remote shares use bounded reconciliation, not constant full scans. These Git-specific
+  optimizations do not become Jujutsu requirements, alter credentials or mutation permissions, or authorize repository
+  or global configuration changes outside existing owner gates.
 gui_related: true
 gui_classification_reason: This unit defines visible panel sections, labels, Settings manager domains, and disabled/degraded presentation.
 depends_on: [SCS-002, SCS-003, SCS-004, FGI-003]
@@ -240,14 +248,17 @@ acceptance_criteria:
     already require, in its `disclosed_remote_scope` field - `no_remote`, `one_remote` or `all_remotes` - and its
     `disclosed_remote_identity_refs` list.
   - The source-control manager is the unique operational destination; browser-scm remains a non-owning dependency summary.
+  - Compatible surfaces share current repository status work only within the exact RepositoryContext; filesystem bursts are coalesced and stable content identity drives watcher invalidation rather than per-surface full scans.
+  - Git plumbing/object reads are batched, with no Git subprocess per visible row/widget; Git FSMonitor and untracked-cache optimizations require actual repository/filesystem compatibility and deterministic fallback/rescan behavior.
+  - Remote-share reconciliation remains bounded instead of constant full scans; Git-specific facilities impose no Jujutsu behavior and grant no additional credential, mutation or configuration authority.
 validation_surfaces: [source_control_projection fixtures, future Slint panel fixtures, Settings search and route dedupe fixtures]
 risk_class: gui_backend_or_owner_misrepresentation
 reasoning_tier: high
 context_scope: source_control_gui_and_settings
 implementation_surfaces: [Plans/Settings_System.md, Plans/FinalGUISpec.md, future Source Control Slint components]
 node_compile_hint: {mode: adaptive_source_control_projection, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:UI-01, source_ref:egolite-register:UI-03, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-bookmark-disclosure-dl057]
-preserved_exact_tokens: [Changes, Workspaces, History, Git Branches, JJ Bookmarks, Review Versions, Threads, current checks, Source of Truth, Mirror Health, repository_automation, "Actions & Pipelines", github_actions, Diagnostics and Receipts, synced, unsynced, tracked per remote, combined, absent, disclosed_remote_scope, disclosed_remote_identity_refs]
+source_lineage: [source_ref:egolite-register:UI-01, source_ref:egolite-register:UI-03, source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-bookmark-disclosure-dl057, source_packet:PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08:source_inputs/01_prior_full_thread_decision_register.md:325-334]
+preserved_exact_tokens: [Changes, Workspaces, History, Git Branches, JJ Bookmarks, Review Versions, Threads, current checks, Source of Truth, Mirror Health, repository_automation, "Actions & Pipelines", github_actions, Diagnostics and Receipts, synced, unsynced, tracked per remote, combined, absent, disclosed_remote_scope, disclosed_remote_identity_refs, shared repository status snapshot, RepositoryContext, file-watcher invalidation, stable content identity, plumbing/object reads, Git process per row/widget, Git FSMonitor, untracked-cache, deterministic fallback/rescan, bounded reconciliation]
 negative_constraints: [Do not create a panel per forge or backend., Do not show staging or stash for JJ., Do not expose underscore enums or raw IDs in ordinary UI.]
 owner_hints: [Plans/Source_Control_System.md, Plans/Settings_System.md, Plans/FinalGUISpec.md]
 ```
