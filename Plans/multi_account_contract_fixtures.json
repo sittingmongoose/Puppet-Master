@@ -1218,6 +1218,42 @@
       "expected_invalid_reason": "profile selection is an explicit human action"
     },
     {
+      "name": "owner_reconciler_cannot_rename",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "server_gap_rename_request",
+      "patch": {
+        "origin": "owner_reconciler"
+      },
+      "expected_invalid_reason": "the owner reconciler is permitted only for bounded verify"
+    },
+    {
+      "name": "owner_reconciler_cannot_revoke",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "server_gap_revoke_request",
+      "patch": {
+        "origin": "owner_reconciler"
+      },
+      "expected_invalid_reason": "the owner reconciler is permitted only for bounded verify"
+    },
+    {
+      "name": "owner_reconciler_cannot_transfer_preview",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "server_gap_transfer_preview_request",
+      "patch": {
+        "origin": "owner_reconciler"
+      },
+      "expected_invalid_reason": "the owner reconciler is permitted only for bounded verify"
+    },
+    {
+      "name": "owner_reconciler_cannot_transfer_apply",
+      "target_def": "AuthProfileCommandRequest",
+      "base_positive_case": "server_gap_transfer_apply_request",
+      "patch": {
+        "origin": "owner_reconciler"
+      },
+      "expected_invalid_reason": "the owner reconciler is permitted only for bounded verify"
+    },
+    {
       "name": "permission_cannot_expose_protected_content",
       "target_def": "AuthProfilePermissionDecision",
       "instance": {
@@ -1985,7 +2021,7 @@
       "cmd.auth_profile.transfer.preview"
     ],
     "request_case_count": 12,
-    "negative_case_count": 36,
+    "negative_case_count": 40,
     "human_only_boundary_covered": true,
     "non_recordable_boundary_covered": true,
     "non_inspectable_boundary_covered": true,

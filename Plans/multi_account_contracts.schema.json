@@ -660,6 +660,28 @@
         {
           "if": {
             "properties": {
+              "origin": {
+                "const": "owner_reconciler"
+              }
+            },
+            "required": [
+              "origin"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.auth_profile.verify"
+              },
+              "operation": {
+                "const": "verify"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
               "command_id": {
                 "const": "cmd.auth_profile.sign_in"
               }

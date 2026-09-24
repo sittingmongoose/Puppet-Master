@@ -1,4 +1,4 @@
-"""Two owner-bound result effects; static checks, not authentication/runtime proof."""
+"""Owner-bound effects and origins; static checks, not authentication/runtime proof."""
 
 import copy
 import importlib.util
@@ -64,6 +64,39 @@ class AuthProfileEffectContractsTests(unittest.TestCase):
                         value = copy.deepcopy(self.positive_by_name[BASE_CASES[command]])
                         value.update(outcome=outcome, effect_kind=effect)
                         self.assertEqual(effect in allowed, self.result_validator.is_valid(value))
+
+    def test_owner_reconciler_is_admitted_only_for_verify(self):
+        validator = GATE.validator_for(
+            self.schema, {"$ref": "#/$defs/AuthProfileCommandRequest"}, self.registry,
+        )
+        commands = set()
+        for case in self.positives:
+            original = case["instance"]
+            if original.get("record_kind") != "AuthProfileCommandRequest":
+                continue
+            command = original["command_id"]
+            commands.add(command)
+            with self.subTest(case=case["name"], command=command):
+                self.assertTrue(validator.is_valid(original))
+                value = copy.deepcopy(original)
+                value["origin"] = "owner_reconciler"
+                self.assertEqual(command == "cmd.auth_profile.verify", validator.is_valid(value))
+        self.assertEqual(set(self.schema["$defs"]["AuthProfileCommandId"]["enum"]), commands)
+
+    def test_maintenance_origin_negatives_preserve_both_human_origins(self):
+        validator = GATE.validator_for(
+            self.schema, {"$ref": "#/$defs/AuthProfileCommandRequest"}, self.registry,
+        )
+        cases = {case["name"]: case for case in self.negatives}
+        for operation in ("rename", "revoke", "transfer_preview", "transfer_apply"):
+            with self.subTest(operation=operation):
+                case = cases[f"owner_reconciler_cannot_{operation}"]
+                self.assertEqual({"origin": "owner_reconciler"}, case["patch"])
+                value = GATE.materialize_invalid(case, self.positive_by_name)
+                self.assertFalse(validator.is_valid(value))
+                for origin in ("human_gui", "human_palette"):
+                    value["origin"] = origin
+                    self.assertTrue(validator.is_valid(value))
 
     def test_no_effect_preserves_noop_and_non_success_result_context(self):
         for command in ALLOWED_EFFECTS:
