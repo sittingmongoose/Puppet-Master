@@ -8,13 +8,12 @@ It grades what canon says. It is not a runtime result. Native execution is NOT_R
 
 | | PASS | PARTIAL | CONFLICT | ABSENT | Cells |
 |---|---:|---:|---:|---:|---:|
-| All 42 families | 336 | 143 | 13 | 12 | 504 |
+| All 42 families | 335 | 144 | 13 | 12 | 504 |
 | The 39 families of the dated matrix, then (2026-09-11) | 201 | 186 | 42 | 39 | 468 |
-| The same 39 families, now | 305 | 138 | 13 | 12 | 468 |
+| The same 39 families, now | 304 | 139 | 13 | 12 | 468 |
 
 - **Normatively complete (12 of 12):** `goal.created`, `restore_point.deleted` and `run.started`.
 - **One criterion short (11 of 12):**
-  - `platform.capability_evaluated`: consumers; SP-278 is only a declared dependency of its reader.
   - `restore_point.created`: oracles; capture-category assignment is undefined, so it cannot be tested.
   - `restore_point.expired`: oracles; its pinned suite still stores `redb_snapshot_id`, which DL-076 forbids.
   - `storage.integrity_detected`: oracles; the owner says the full-u64 adapter is missing.
@@ -27,8 +26,8 @@ It grades what canon says. It is not a runtime result. Native execution is NOT_R
 The dated matrix counted differently, so the rows above are not a straight trend. Against it, the 468 old cells moved like this:
 - **Up to PASS: 133.** From PARTIAL 92, from CONFLICT 26, from ABSENT 15. The owner work since 2026-09-11 did this: the per-family supplements, the v3 Goal adoptions, the historical-only rulings, the shared wire, first-receipt and full-value definitions, and DL-076.
 - **Better but still short: 15.** ABSENT to PARTIAL 12, CONFLICT to PARTIAL 3.
-- **Unchanged: 291.** PASS 172, PARTIAL 94, CONFLICT 13, ABSENT 12.
-- **Lower: 29, all PASS to PARTIAL, and no canon was removed.** The rubric now states rules the old matrix left implicit:
+- **Unchanged: 290.** PASS 171, PARTIAL 94, CONFLICT 13, ABSENT 12.
+- **Lower: 30, all PASS to PARTIAL, and no canon was removed.** The rubric now states rules the old matrix left implicit:
   - a producer whose recovery depends on the first receipt must adopt SP-286 by name;
   - scope and identity need an event-ID and idempotency-key recipe, not "captured at source";
   - withdrawal needs an explicit protocol, not only compatibility readers;
@@ -85,7 +84,7 @@ P = PASS, p = PARTIAL, C = CONFLICT, A = ABSENT. Columns follow the rubric order
 | `goal.tool_check_recorded` | undispositioned | P | P | p | C | p | p | P | p | C | A | p | p | 3 |
 | `goal.updated` | current writer | P | P | p | P | p | P | P | P | P | P | P | p | 9 |
 | `goal.verification_decided` | historical only | P | P | p | P | P | P | P | P | P | p | P | p | 9 |
-| `platform.capability_evaluated` | current writer | P | P | P | P | P | P | P | P | P | p | P | P | 11 |
+| `platform.capability_evaluated` | current writer | P | P | P | P | P | P | p | P | P | p | P | P | 10 |
 | `restore_point.applied` | current writer | P | P | p | P | p | p | P | p | P | A | p | p | 5 |
 | `restore_point.corrupt` | current writer | P | P | p | P | p | p | P | p | p | A | p | p | 4 |
 | `restore_point.created` | current writer | P | P | P | P | P | P | P | P | P | P | P | p | 11 |
@@ -153,7 +152,7 @@ These are recorded for Jared's cards. None is answered here.
 - The Goal owner: for each of `goal.evidence_captured`, `goal.receipt_recorded`, `goal.tool_check_recorded`, `goal_run.blocked`, `goal_run.replanned` and `goal_run.stopped`, should it get a current writer or a historical-only ruling? `goal.blocked` and `goal.completed` are required current names (Goal V2 events), so their successors are owner work, not a product choice.
 - `goal.completed`: may a Goal complete on an approved verification exception? GRS-065 calls that route "separately unbound".
 - `platform.capability_evaluated`: when is a first capability admitted to the active catalog, which is empty today?
-- The Storage retention policy that Boot, recovery and compaction lifecycle share counts cardinality per project, but those families are application-only; SP-291 calls this an "unproved policy-owner adapter seam".
+- The Storage retention policy that Boot, recovery, compaction lifecycle and Platform capability evaluation share counts cardinality per project, but the first three are application-only and Platform can be application-scoped; SP-291 calls this an "unproved policy-owner adapter seam". Jared's answer to card EA-S08D-OPERATIONAL-CARDINALITY-001 settles the four retention cells.
 
 ## Queue adjudication (the other half of Step 8)
 

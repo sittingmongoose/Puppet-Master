@@ -32,13 +32,13 @@
   "rubric": "rubric.md in the evidence directory: the twelve criteria as the Browser pair assessment used them, with explicit rules for SP-278 (and DL-076's nine-field token), SP-286/CV-339 first-receipt adoption, the shared SeglogFrameV2 bytes, historical-only families, and three clarifications (owner anchors, pinned external oracle suites, DL-076).",
   "grading": "Six read-only grading passes by owner batch (GA, GB, GC, R, S, N), each citing current line ranges with exact quotes; compiled, checked and harmonized by the coordinating agent.",
   "quote_check": {
-   "exact": 2626
+   "exact": 2629
   },
-  "evidence_items": 2626
+  "evidence_items": 2629
  },
  "status_counts": {
-  "PASS": 336,
-  "PARTIAL": 143,
+  "PASS": 335,
+  "PARTIAL": 144,
   "CONFLICT": 13,
   "ABSENT": 12
  },
@@ -67,8 +67,8 @@
    "PASS": 28
   },
   "retention": {
-   "PASS": 39,
-   "PARTIAL": 3
+   "PASS": 38,
+   "PARTIAL": 4
   },
   "redaction_custody": {
    "PARTIAL": 13,
@@ -104,12 +104,12 @@
   "run.started"
  ],
  "change_against_prior": {
-  "carried": 343,
+  "carried": 342,
   "upgraded": 129,
-  "downgraded": 32
+  "downgraded": 33
  },
  "transitions_from_dated_matrix_39_families": {
-  "PASS->PASS": 172,
+  "PASS->PASS": 171,
   "PARTIAL->PARTIAL": 94,
   "CONFLICT->CONFLICT": 13,
   "CONFLICT->PARTIAL": 3,
@@ -117,7 +117,7 @@
   "PARTIAL->PASS": 92,
   "CONFLICT->PASS": 26,
   "ABSENT->PASS": 15,
-  "PASS->PARTIAL": 29,
+  "PASS->PARTIAL": 30,
   "ABSENT->PARTIAL": 12
  },
  "native_execution": "NOT_RUN for every family",
@@ -15272,7 +15272,7 @@
    "family_revision": "2.0.0",
    "registry_pointer": "#/families/21",
    "disposition": "CURRENT_WRITER",
-   "pass_count": 11,
+   "pass_count": 10,
    "normative_depth_complete": false,
    "native_execution": "NOT_RUN",
    "current_owner_units": [
@@ -15521,15 +15521,15 @@
      ]
     },
     "retention": {
-     "status": "PASS",
+     "status": "PARTIAL",
      "representation": "exact_normative_owner",
-     "finding": "The event keeps RP-OPERATIONAL-2555D@1.0.0 (registry and Storage table). Decision custody uses RP-PLATFORM-DECISION-REFERENCED@1.0.0, implementing Jared's DL-048: pending plus every retained event, frozen-snapshot and hold reference protects it, and there is no extra grace after release. No derived checkpoint exists, and no retention choice is open.",
+     "finding": "The event keeps RP-OPERATIONAL-2555D@1.0.0 (cardinality_scope project, storage_value_registry.json:368) while the family is application_or_project (registry:923). SP-291 records application-scope enforcement under that bucket as an unproved policy-owner adapter seam (storage-plan.md:23548), so the application-scoped evaluations share the seam that keeps Boot, recovery-applied and compaction-lifecycle retention PARTIAL. Decision custody itself is settled by DL-048 (RP-PLATFORM-DECISION-REFERENCED@1.0.0). Jared's answer to card EA-S08D-OPERATIONAL-CARDINALITY-001 settles the seam.",
      "prior": {
       "source": "old_matrix",
       "status": "PASS"
      },
-     "change": "carried",
-     "change_reason": "Event policy unchanged; the decision-custody lifetime choice was answered (DL-048) and applied.",
+     "change": "downgraded",
+     "change_reason": "Review G-01 (2026-09-24): one rule for all four families under RP-OPERATIONAL-2555D. The per-project cardinality seam that lowered the Boot, recovery-applied and compaction-lifecycle retention cells applies equally to this family's application-scoped evaluations.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -15558,6 +15558,27 @@
        "line_start": 659,
        "line_end": 659,
        "excerpt_sha256": "c354f95cbdde633eb5634e57d8e561479650975bedeb38fd213a78baafcacb0f"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "retention_policies RP-OPERATIONAL-2555D",
+       "line_start": 368,
+       "line_end": 368,
+       "excerpt_sha256": "49740309784fc9046b9b259951706196e1d2c8f5e973c31fd23013aa317126dd"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/21",
+       "line_start": 923,
+       "line_end": 923,
+       "excerpt_sha256": "55b20b8e144f037ea7397f5b2d1f85c5581ab86fbc0319a1647be2003fd993e6"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-291 aggregate custody",
+       "line_start": 23548,
+       "line_end": 23548,
+       "excerpt_sha256": "f9bc8ef3a6aa7d968119176cbff47250b966b18e564199dbd8861cd729d35197"
       }
      ]
     },
@@ -15764,7 +15785,8 @@
     "PRODUCT: the active Platform capability catalog is empty (Plans/platform_capability_catalog.json entries []), and N2-157 says no production evaluation or event is emitted and no evaluation trigger is defined. Whether and when any capability enters the catalog, and what triggers an evaluation, is a product choice for the catalog owner (OSI Platform Capability Manager / N2-157).",
     "SP-290/N2-157: close the output schema of storage.platform_capability_decision.read.v1 (the 'complete current read-through marker'), naming SP-278's generic read token (nine-field durable projection if ever stored) instead of only a depends_on entry.",
     "N2-157 states aggregate multi-capability requirement-set use is unavailable until an original context-owner requirement-set contract exists; any consumer asserting aggregate coverage needs that contract first.",
-    "Native capture, crash cuts, package lease, backup/cleanup and production admission remain NOT_RUN (does not lower grades)."
+    "Native capture, crash cuts, package lease, backup/cleanup and production admission remain NOT_RUN (does not lower grades).",
+    "PRODUCT (card EA-S08D-OPERATIONAL-CARDINALITY-001): how RP-OPERATIONAL-2555D's per-project 2,000,000-record cap counts this family's application-scoped evaluations; the Storage retention owner applies the answer."
    ],
    "grading_batch": "R"
   },
@@ -26484,7 +26506,7 @@
  ],
  "evidence": {
   "directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924",
-  "sha256sums_sha256": "26465e040fd23624102ca4b06e28047a0ee874580ea299d81c93c78a00df8a55",
+  "sha256sums_sha256": "f0f564c49d97363614ba089e5d4b2956165867c2768765874957a1a41b2a3840",
   "members": [
    "rubric.md",
    "batches.md",

@@ -128,13 +128,13 @@ Card ID: `EA-S08D-PLATFORM-CATALOG-001`. Owner: Platform Capability Manager (Orc
 
 ## Card 4: the record cap for application-wide Storage events
 
-Card ID: `EA-S08D-OPERATIONAL-CARDINALITY-001`. Owner: Storage retention. Families: `storage.boot_recovery`, `storage.recovery_applied`, `storage.compaction_lifecycle_changed`.
+Card ID: `EA-S08D-OPERATIONAL-CARDINALITY-001`. Owner: Storage retention. Families: `storage.boot_recovery`, `storage.recovery_applied`, `storage.compaction_lifecycle_changed`, and the application-scoped evaluations of `platform.capability_evaluated`.
 
 **Name:** How the seven-year operational record cap counts events that belong to no project.
 
 **Question:** The seven-year operational retention policy caps records at 2,000,000 per project. How should that cap count Storage events that belong to the whole application rather than to a project?
 
-**Why:** Boot recovery, recovery-applied and compaction-lifecycle events are application-wide. They carry no project. The policy they use (`RP-OPERATIONAL-2555D`: seven years, 2,000,000 records, per-project counting, fail-closed overflow) counts only per project. Storage's own text calls application-scoped counting under that policy "an unproved policy-owner adapter seam" and says no invented project, new bucket, cap or policy value may resolve it. Retention choices are Jared's (DL-045).
+**Why:** Boot recovery, recovery-applied and compaction-lifecycle events are application-wide. They carry no project. Platform capability evaluations use the same policy and can also be application-scoped. The policy they use (`RP-OPERATIONAL-2555D`: seven years, 2,000,000 records, per-project counting, fail-closed overflow) counts only per project. Storage's own text calls application-scoped counting under that policy "an unproved policy-owner adapter seam" and says no invented project, new bucket, cap or policy value may resolve it. Retention choices are Jared's (DL-045).
 
 **What you get:**
 - **One application-wide bucket:** the same guard for application events as for project events, with the same numbers.
