@@ -233,6 +233,13 @@ canonical_text: >-
   hydration merely because a search row is visible. Long or localized content expands rather than clipping. Category
   group headers are rows of the same virtualized model, measured like any row and never a separate non-virtualized
   wrapper, and the list may scroll with the page rather than inside a fixed-height box (USER-SETTINGS-MANAGER-REFRESH-20260908).
+  Every result carries an immutable result identity, human label, result type, complete human-readable Settings path,
+  canonical destination, and owner-derived availability or reason where applicable; relevant object/provider identity
+  is disclosed when needed to distinguish the destination. Result kinds preserve ordinary settings, managers,
+  managed objects/resources, actions, setup/repair workflows, diagnostics/read-only status, unavailable capabilities,
+  and Help/documentation only where already supported. Non-setting results do not enter the ordinary-setting census.
+  Result identity and the exact destination remain joined across grouping, ranking, duplicate labels, and
+  virtualization; visual array position, grouped-list position, display labels, and rendered path text are not routing authority.
 gui_related: true
 gui_classification_reason: Search, facets, highlighting, keyboard selection, and virtualized rows are user-visible interactions.
 depends_on: [SSYS-003, SSYS-004, F3-433]
@@ -243,6 +250,8 @@ acceptance_criteria:
   - Arrow navigation, Enter focus, Escape clearing, pointer activation, and screen-reader result announcements retain one active stable ID.
   - Variable-height tests preserve the anchor across expansion, wrapping, status changes, theme changes, and facet/search changes.
   - Searching 828 settings does not instantiate or probe every manager.
+  - Search-result fixtures cover grouped results, duplicate labels, typo/fuzzy matches, unavailable results, manager objects, deep setting rows, and return to the query and same selected immutable result.
+  - Search-result metadata and canonical destination agree without executing a displayed action or hydrating every manager; Help results require an already-supported owner destination.
 validation_surfaces: [future fuzzy-search fixtures, future variable-height virtualization tests, future accessibility tests]
 risk_class: settings_search_or_virtualization_drift
 reasoning_tier: high
@@ -251,6 +260,8 @@ implementation_surfaces: [Plans/Settings_System.md, future Slint Settings models
 node_compile_hint: {mode: settings_search_virtualization_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - Plans/FinalGUISpec.md#F3-433
+  - source_ref:packet:PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/03_HOME_SEARCH_AND_NAVIGATION.md:17-55
+  - source_ref:packet:PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/machine_readable/search_contract.json:1-48
   - Concepts/settings-redesign-concepts/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/authority/base_packet/reference/PERFORMANCE_SETTINGS_RETURN.md
 preserved_exact_tokens: ["+40", "+22", "+10", "80 ms", "60", variable-height virtualization, setting_id]
 negative_constraints: [Do not eagerly hydrate managers or run broad probes for search., Do not use fixed-height clipping for long rows., Do not let facets create a second inventory.]
@@ -885,6 +896,16 @@ canonical_text: >-
   preserves the current surface. The route-only UI actions settings.onboarding.open, settings.onboarding.run_again,
   settings.guided_tour.replay, settings.doctor.open, and settings.doctor.remediation.open all dispatch cmd.settings.open;
   they authorize navigation only and never execute Onboarding, tour, probe, repair, or remediation work.
+  Search selection uses the same exact Settings route and owner context: realize the current domain/page and
+  applicable manager, select the exact object and subsection or manager tab, reveal the exact row, focus the
+  destination, and apply a brief calm non-flashing locator. A setting inside a non-active manager tab retains
+  its current canonical placement under SSYS-035; remembered shell state cannot substitute another destination.
+  This is navigation, not execution of a displayed domain action. Search-origin return preserves the query and
+  same selected immutable result separately from focus and scroll. origin_focus_id remains focus restoration,
+  not search-result identity; selection cannot depend on a recycled native row or the input retaining focus.
+  Re-grouping may change visual position but not the selected destination. If that result/destination or the
+  continuation/context is no longer valid, reject the stale return and preserve the current surface rather than
+  selecting a nearby result. These semantics retain K3 geometry, optional visible Back/Close controls, and the current Escape order.
 gui_related: true
 gui_classification_reason: This unit defines visible Settings navigation, deterministic close/Escape behavior, and focus/query/scroll restoration.
 depends_on: [SSYS-006, SSYS-014, SSYS-018]
@@ -894,6 +915,8 @@ acceptance_criteria:
   - Exact return restores focus, query, and scroll only when continuation generation and context still match.
   - The five route-only UI actions use the frozen manager/detail targets and authorize no owner operation.
   - Visible Back/Close presentation remains host/K3-controlled while the semantic Back/Close/Escape contract is mandatory.
+  - Search activation reveals the exact resource, subsection and row, including a setting in a non-active manager tab, with destination focus and a calm non-flashing locator.
+  - Return restores the same selected immutable result independently of native focus; regrouped and duplicate-label fixtures preserve identity, while missing or retargeted results reject without fallback or owner work.
 validation_surfaces: [Plans/settings_system_contracts.schema.json, Plans/settings_system_contract_fixtures.json, future navigation and stale-return fixtures]
 risk_class: settings_route_or_return_context_drift
 reasoning_tier: high
@@ -902,6 +925,9 @@ implementation_surfaces: [Plans/Settings_System.md, Plans/settings_system_contra
 node_compile_hint: {mode: settings_route_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - source_ref:chat:settings-route-contract-lane-2026-08-31
+  - source_ref:packet:PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/03_HOME_SEARCH_AND_NAVIGATION.md:34-55
+  - source_ref:packet:PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/machine_readable/search_contract.json:15-47
+  - Plans/Settings_System.md#SSYS-035
   - Plans/Settings_System.md#SSYS-006
   - Plans/Settings_System.md#SSYS-014
 preserved_exact_tokens: [settings.onboarding.open, settings.onboarding.run_again, settings.guided_tour.replay, settings.doctor.open, settings.doctor.remediation.open, close_transient, close_details, clear_query, return_to_opener]
