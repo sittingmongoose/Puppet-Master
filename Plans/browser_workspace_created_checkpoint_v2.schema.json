@@ -19,7 +19,7 @@
       "format": "date-time"
     },
     "durable_index_read_token": {
-      "description": "Nine-field durable projection of the SP-278 read_token: every field except redb_snapshot_id, each exactly its SP-278 definition. A stored checkpoint token never persists the snapshot id (Storage owner decision, coordinator ruling of 2026-09-24, DurableGenericToken precedent); the writer before commit and each reader before disclosure join the id of the redb read snapshot they actually pinned.",
+      "description": "Nine-field durable projection of the SP-278 read_token: every field except redb_snapshot_id, each exactly its SP-278 definition. A stored checkpoint token never persists the snapshot id (Storage owner decision, DL-076, DurableGenericToken precedent); the writer before commit and each reader before disclosure join the id of the redb read snapshot they actually pinned.",
       "type": "object",
       "additionalProperties": false,
       "required": [
