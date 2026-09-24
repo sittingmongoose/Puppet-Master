@@ -23,4 +23,6 @@
 
 **Expected at landing.** Governance staleness for the two edited documents: their Spec Lock hash (`storage-plan.md`), evidence and plan-graph artifact hashes, `event_authority_currentness_source_drift` rows and plan-migration snapshot rows. That is a reseal request, not a blocker.
 
+**Certified-family pins (review A-07).** The edit moves `Plans/Goal_Runtime_System.md` off the whole-file hash and line numbers the certified family pins: the Goal_Runtime_System.md member of `Plans/goal_certified_family_composition.json` (`ccedade9fde5fdf69f10fca4fb7d67eec1869e2d52364f010f95e80c06dcd863`) and the consumer source-citations C01 to C05, whose lines move by two. The cited passages themselves are byte-unchanged. Nothing in the certified contracts changes on this branch. The certified-family owner refreshes those pins at the next reseal, together with the `storage-plan.md` member (`328858615b...`), which was already stale on `main`. This is part of the reseal request below.
+
 **Follow-up, not done here.** Moving the two registry anchors themselves to GRS-084 and SP-316 would change the registry hash and so needs a fresh checkpoint approval. It can ride along with the next registry revision that needs one anyway (for example the first Step 9 admission), so that it costs no separate approval.
