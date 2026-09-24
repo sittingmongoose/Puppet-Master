@@ -1373,6 +1373,8 @@ class RuleTwoPreExisting(LandingRun):
         self.assertIn("New since the baseline: 0", out)
         self.assertIn("1 -> 1", out)
         self.assertIn("(content changed)", out)
+        recorded = json.loads((self.repo / "baseline.json").read_text(encoding="utf-8"))["commit"]
+        self.assertIn(f"counted against the baseline recorded at {recorded[:12]}, not against main", out)
 
     def test_a_sampled_subcheck_compares_the_counts_inside_its_sample(self):
         """In a truncated subcheck both counts are the rows printed; the row is in both samples."""

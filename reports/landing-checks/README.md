@@ -165,7 +165,10 @@ audit-governance copy, printed in full, was.
 It cannot tell one failure from another of the same kind on the same path. A branch that fixes one
 missing reference in a document it edits and adds another keeps the bucket's count, so the new one
 reads as pre-existing. The summary counts such rows, meaning changed content on a file the branch
-touched, so that the lander compares them with the baseline's.
+touched, so that the lander compares them with the baseline's. The count it compares against is the
+baseline's, not `main`'s. A failure that `main` fixed after the baseline's commit, and that a branch
+brings back on a file it edits, reads as pre-existing, so the older the baseline, the more such
+regressions it excuses.
 
 ## Subchecks that time out
 

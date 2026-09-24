@@ -1028,6 +1028,11 @@ def main() -> int:
         if len(new_items) > 40:
             print(f"  ... {len(new_items) - 40} more")
         print(f"Pre-existing, in a baseline bucket whose count has not risen (never blocks): {len(pre_existing)}")
+        if pre_existing:
+            # Rule 2 counts against the baseline's commit, not main: a failure main fixed after that
+            # commit and this branch brings back reads as pre-existing.
+            print(f"  counted against the baseline recorded at {str(baseline.get('commit'))[:12]}, not against "
+                  "main: a failure main fixed after that commit and this branch brings back reads as pre-existing")
         for item in pre_existing[:40]:
             where = f"  (names {', '.join(item['branch_paths'])})" if item["branch_paths"] else "  (content changed)"
             print(describe(item, item_tag(item, bool(item["branch_paths"]))) + where)
