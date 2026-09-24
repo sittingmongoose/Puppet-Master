@@ -1472,7 +1472,16 @@
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.start"}}},
-          "then": {"properties": {"stage": {"const": "welcome"}, "local_context": {"properties": {"intent": {"enum": ["start", "resume"]}}}}}
+          "then": {
+            "properties": {"local_context": {"properties": {"intent": {"enum": ["start", "resume"]}}}},
+            "allOf": [
+              {
+                "if": {"properties": {"local_context": {"properties": {"intent": {"const": "start"}}}}},
+                "then": {"properties": {"stage": {"const": "welcome"}}},
+                "else": {"properties": {"source_surface": {"const": "resume"}, "choice": {"type": "null"}, "owner_route_ref": {"type": "null"}}}
+              }
+            ]
+          }
         },
         {
           "if": {"properties": {"action_id": {"const": "ui.onboarding.next"}}},
@@ -1938,6 +1947,7 @@
           "enum": [
             "none",
             "session_started",
+            "session_resumed",
             "advanced",
             "returned",
             "session_closed",
@@ -2018,11 +2028,19 @@
           "if": {"properties": {"status": {"const": "applied"}, "action_id": {"const": "ui.onboarding.start"}}},
           "then": {
             "properties": {
-              "stage_before": {"const": "welcome"},
-              "stage_after": {"const": "simple_path"},
               "session_status_after": {"const": "active"},
-              "local_effect": {"const": "session_started"}
-            }
+              "local_effect": {"enum": ["session_started", "session_resumed"]}
+            },
+            "allOf": [
+              {
+                "if": {"properties": {"local_effect": {"const": "session_started"}}},
+                "then": {"properties": {"stage_before": {"const": "welcome"}, "stage_after": {"const": "simple_path"}}},
+                "else": {
+                  "$ref": "#/$defs/same_stage_transition",
+                  "properties": {"owner_route_ref": {"type": "null"}, "owner_operation_ref": {"type": "null"}, "production_receipt_ref": {"type": "null"}}
+                }
+              }
+            ]
           }
         },
         {
@@ -2321,7 +2339,9 @@
         "path_kind is null before a path choice, equals connect_existing only for connect_existing_server, and equals guided_setup only for the three normal choices",
         "queued_setup_plan_ref and queued_setup_plan_revision are a paired durable reference and revision; person confirmation binds reviewed_setup_plan_revision to that exact queued revision and approved_setup_plan_sha256 to the exact reviewed bytes without embedding the plan",
         "automatic_preparation and ready require a person-confirmed reviewed plan plus a non-null automatic_preparation_currentness_ref; unconfirmed state carries null reviewed revision, approved hash, and currentness reference",
-        "ui.onboarding.start advances welcome -> simple_path; ui.onboarding.choose_simple_path advances simple_path -> first_project except that connect_existing_server advances simple_path -> remote_access_setup",
+        "ui.onboarding.start intent=start advances welcome -> simple_path with session_started; intent=resume restores the exact current continuation at the same stage with session_resumed, preserving draft/review/hash/history/branch/Project/provider/Client/focus bindings, advancing only the local revision and never dispatching or replaying owner work",
+        "the resume request/result join consumes both the prior validated continuation snapshot and the matching validated onboarding_session at the same revision/generation and durable setup state; only active/interrupted/deferred sessions are resumable, while completed/skipped/cancelled require the explicit rerun path; a fresh-start snapshot or a session projection missing history/Client/focus is insufficient and restoration itself grants no fresh owner authorization or readiness",
+        "ui.onboarding.choose_simple_path advances simple_path -> first_project except that connect_existing_server advances simple_path -> remote_access_setup",
         "ui.onboarding.back returns to the exact preceding entry in durable history, so remote_access_setup returns to simple_path on connect_existing_server and to server_storage_client on the main path",
         "precommit owner routes require a current selected-source-only read-only/auth authorization; Project/repository/filesystem/settings mutation requires exact reviewed-plan commit consent; broad provider work requires actual Project commit binding",
         "server_setup is predecessor seven-stage lineage only and is rejected by every current stage, scope, session, continuation, return-context, request, and result field",

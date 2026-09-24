@@ -320,8 +320,13 @@ def onboarding_precommit_join_failures(request, authorization, owner_request, cu
     return sorted(set(failures))
 
 
-def onboarding_action_join_failures(current, request, result):
-    """Check local request/result causality against the prior session snapshot."""
+def onboarding_action_join_failures(current, request, result, *, resume_session=None):
+    """Join validated values; resume needs both prior continuation and session.
+
+    The continuation proves exact restoration; the separately schema/semantic-
+    validated session proves nonterminal admission, which a continuation alone
+    cannot establish. Neither value grants a fresh owner authorization.
+    """
     failures = []
     for field in ("onboarding_session_id", "continuation_generation"):
         if request[field] != current[field] or result[field] != current[field]:
@@ -336,6 +341,44 @@ def onboarding_action_join_failures(current, request, result):
         failures.append("onboarding_action_result_revision_mismatch")
     if result["status"] == "applied":
         after = result["continuation_snapshot"]
+        if request["action_id"] == "ui.onboarding.start":
+            resume = request["local_context"]["intent"] == "resume"
+            expected_effect = "session_resumed" if resume else "session_started"
+            if result["local_effect"] != expected_effect:
+                failures.append("onboarding_start_intent_result_mismatch")
+            if resume:
+                # Restoration consumes the complete prior continuation, not a
+                # partial session projection or a fresh-start reconstruction.
+                preserved = (
+                    "stage", "simple_path_selection", "scm_backend_selection", "forge_provider_selection",
+                    "history", "initiating_client_id", "return_focus_id", "active_branch", "path_kind",
+                    "queued_setup_plan_ref", "queued_setup_plan_revision", "reviewed_setup_plan_revision",
+                    "review_confirmation", "approved_setup_plan_sha256", "automatic_preparation_currentness_ref",
+                    "project_draft_ref", "project_draft_revision", "project_disposition", "project_commit_binding",
+                    "provider_phase_status", "free_models_phase_status", "provider_owner_result_refs",
+                    "free_models_owner_result_refs",
+                )
+                if not isinstance(resume_session, dict):
+                    failures.append("onboarding_resume_missing_prior_session")
+                else:
+                    if resume_session.get("status") not in {"active", "interrupted", "deferred"}:
+                        failures.append("onboarding_resume_session_not_resumable")
+                    session_fields = ("onboarding_session_id", "revision", "continuation_generation") + tuple(
+                        field for field in preserved if field not in {"history", "initiating_client_id", "return_focus_id"})
+                    for field in session_fields:
+                        if field not in resume_session or field not in current or resume_session[field] != current[field]:
+                            failures.append("onboarding_resume_session_" + field + "_mismatch")
+                for field in preserved:
+                    if field not in current:
+                        failures.append("onboarding_resume_missing_current_" + field)
+                    elif after is None or field not in after or after[field] != current[field]:
+                        failures.append("onboarding_resume_changes_" + field)
+                if request["return_focus_id"] != current.get("return_focus_id"):
+                    failures.append("onboarding_resume_request_focus_mismatch")
+                if (request["owner_route_ref"] is not None
+                        or any(result[field] is not None for field in
+                               ("owner_route_ref", "owner_operation_ref", "production_receipt_ref"))):
+                    failures.append("onboarding_resume_dispatches_owner_work")
         if current["project_disposition"] == "committed" and after is not None:
             if after["project_commit_binding"] != current["project_commit_binding"] or after["project_disposition"] != "committed":
                 failures.append("onboarding_navigation_discards_committed_project")
