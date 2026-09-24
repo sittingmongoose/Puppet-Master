@@ -1481,7 +1481,16 @@
           "evaluated_at_utc": "2026-08-31T20:00:00Z"
         },
         "file_safe_decision_ref": "filesafe:decision:17",
-        "confirmation": null,
+        "confirmation": {
+          "confirmation_id": "confirmation:jj:17",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-08-31T20:00:00Z",
+          "confirmation_text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "target_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "expected_revision_ref": "revision:jj:17",
+          "disclosed_remote_scope": "one_remote",
+          "disclosed_remote_identity_refs": ["remote:jj:17"]
+        },
         "target": {
           "target_kind": "bookmark",
           "change_id": null,
@@ -4396,6 +4405,40 @@
         "credential_lease_ref": "credential-lease:jj:16"
       },
       "expected_error": "tracking a bookmark is a local view transaction and never consumes a credential lease"
+    },
+    {
+      "name": "untrack_requires_confirmation",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_bookmark_untrack",
+      "patch": {"confirmation": null},
+      "expected_error": "single-remote untrack requires its existing confirmation record"
+    },
+    {
+      "name": "untrack_cannot_disclose_no_remote",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_bookmark_untrack",
+      "patch": {
+        "confirmation.disclosed_remote_scope": "no_remote",
+        "confirmation.disclosed_remote_identity_refs": []
+      },
+      "expected_error": "single-remote untrack cannot disclose no remote"
+    },
+    {
+      "name": "untrack_cannot_disclose_all_remotes",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_bookmark_untrack",
+      "patch": {"confirmation.disclosed_remote_scope": "all_remotes"},
+      "expected_error": "the admitted untrack target is one remote, not all remotes"
+    },
+    {
+      "name": "untrack_confirmation_names_target_remote",
+      "definition": "command_request",
+      "base_valid": "command_request_jujutsu_bookmark_untrack",
+      "patch": {
+        "confirmation.disclosed_remote_identity_refs": ["remote:jj:not-the-target"]
+      },
+      "semantic_rule": "jujutsu_untrack_confirmation_remote_mismatch",
+      "expected_error": "untrack confirmation names the exact existing target remote"
     },
     {
       "name": "command_request_bookmark_untrack_is_not_a_transport_mutation",

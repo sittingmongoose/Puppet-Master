@@ -903,5 +903,30 @@ class HoverTimingResidualTests(unittest.TestCase):
         self.assertIn("pending or unproven", row[5])
 
 
+class JujutsuEvidenceResidualTests(unittest.TestCase):
+    def test_dedicated_jj_fixtures_are_retained_beside_neutral_fixtures(self):
+        registry = json.loads((ROOT / "Plans/touch_closure.json").read_text())
+        profile = next(p for p in registry["profiles"] if p["profile_id"] == "TCP-JJ")
+        self.assertEqual(profile["test_refs"], [
+            "Plans/source_control_contract_fixtures.json",
+            "Plans/jujutsu_integration_contract_fixtures.json",
+        ])
+
+    def test_tracking_residuals_require_local_proof_not_transport(self):
+        registry = json.loads((ROOT / "Plans/touch_closure.json").read_text())
+        schema = json.loads((ROOT / "Plans/jujutsu_integration_contracts.schema.json").read_text())
+        owner = (ROOT / "Plans/Jujutsu_Integration.md").read_text()
+        self.assertIn("they make no remote call", owner)
+        self.assertEqual(len(schema["$defs"]["command_id"]["enum"]), 31)
+        for row_id in ("TOUCH-JJI-016", "TOUCH-JJI-017"):
+            with self.subTest(row=row_id):
+                row = next(r for r in registry["rows"] if r[0] == row_id)
+                self.assertEqual(row[4], "partial")
+                self.assertIn("local tracking-state mutation evidence are absent", row[5])
+                self.assertIn("make no remote call and require no credential lease", row[5])
+                self.assertIn("native runtime proof remains absent", row[5])
+                self.assertNotIn("Git transport evidence", row[5])
+
+
 if __name__ == "__main__":
     unittest.main()
