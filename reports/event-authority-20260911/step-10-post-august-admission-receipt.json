@@ -1,0 +1,63 @@
+{
+ "schema_id": "pm.assurance.event_authority.post_august_admission_change.v1",
+ "authority_ref": "Plans/Decision_Log.md#DL-077",
+ "authority_section_sha256": "b93a7d768eb301b81ce0eaa38345f0f49ff9b3d74b76e721418d6d2dce2d67d4",
+ "owner_response": {
+  "card_id": "EA-S10-VALIDATOR-LIVE-SET-001",
+  "item": 1,
+  "response": "Approve",
+  "selected_option": "A",
+  "decided_by": "Jared",
+  "recorded_on": "2026-09-24",
+  "source": "jared_chat_2026-09-24_coordinator_card_page",
+  "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_SEAL_CHECK.md",
+  "source_sha256": "afdbdd4ebfef46e720ad31b28a7e27c0387ad377c32cfb834ed59bad5f091cdb"
+ },
+ "author_task": "claude-opus-5.5:dl039-steps-8-9-20260924",
+ "lander_task": "claude-opus-5.5:dl039-steps-8-9-20260924",
+ "seal_applier_forbidden_task": "claude-opus-5.5:dl039-steps-8-9-20260924",
+ "seal_authorized": false,
+ "admission_authorized": false,
+ "contract_depth_complete": false,
+ "validator_path": "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py",
+ "validator_before_sha256": "bd54afffc689146753daec474d6cdbc7ac663afaf21d842aad4fcf10255112d5",
+ "validator_after_sha256": "f3289d49d053784e209a9f7376d0cfa7c538deae2fb7416db4f85095c76988d4",
+ "prior_receipt": {
+  "path": "reports/event-authority-20260911/step-03-holding-bucket-receipt.json",
+  "sha256": "d7800b98e7304f1f2853ea786f6b438b7df5753c3f62fd365f50c7a55d0ca8b3",
+  "note": "Unchanged. Its validator_after_sha256 is this receipt's validator_before_sha256; the holding check now accepts that pin only through this receipt's chain."
+ },
+ "record_dir": "reports/event-authority-20260911/admission-records",
+ "record_schema_id": "pm.assurance.event_authority.post_august_admission_record.v1",
+ "record_contract": {
+  "file": "<record_dir>/<event_type>.json, one per family registered beyond Known37 and the two August families",
+  "event_type": "the registered family's exact event type",
+  "family_id": "equal to the live registry row's family_id",
+  "decision_ref": "Plans/Decision_Log.md#DL-NNN, Jared's decision entry for that family; for a Step 9 registration under DL-078, the Decision Log entry its landing adds, which names the family",
+  "decision_section_sha256": "SHA-256 of that entry's prose section bytes, from its '### DL-NNN:' heading to the next heading of level 1 to 3",
+  "registry_before": "{revision, sha256, family_count} of the registry before the family's admission landing",
+  "registry_after": "{revision, sha256, family_count} after it; family_count exactly one more and a different sha256",
+  "registry_row_sha256": "SHA-256 of the live registry row as JSON with sorted keys, separators (',', ':') and ensure_ascii false",
+  "depth_assessment": "{path under reports/, sha256}: a depth assessment whose rows[] entry for this event type has all twelve criteria with status PASS"
+ },
+ "changes": [
+  "Constants and helper functions for DL-077: the receipt and record locations, the record schema id, the DL-077 required tokens and the author identity.",
+  "decision_section_bytes: pins one Decision Log prose entry (the Step 3 extraction rule, generalized to any DL-NNN).",
+  "post_august_receipt_state: this receipt must pin DL-077, the current validator bytes and the Step 3 chain, or everything that depends on it fails closed.",
+  "holding_validator_pin: the Step 3 holding check's validator pin now follows the chain; without a valid DL-077 receipt it still requires the current file, so any other change fails the holding check.",
+  "admission_record_problems and validate_post_august_admissions: a family beyond Known37 and August is accepted only through its complete record; a missing, malformed or stale record, or any depth criterion not passing, is reported as post_august_admission_incomplete and the family stays outside the accepted set.",
+  "Live-set rule: live_august now excludes only the completely recorded post-August families; any other family beyond Known37 and August still fails unexpected_august_set.",
+  "Disposition and depth rules: a completely recorded post-August family is represented by its record, so its old quarantine ledger row does not count as blocking and its depth is taken from the pinned assessment instead of the ledger row's cells. Every other row is judged as before.",
+  "post_august_admission_incomplete joins the depth-blocking error set, and the receipt pins this receipt's SHA-256.",
+  "Documents, as Step 3's change did: INDEPENDENT_EA_VALIDATOR_SPEC.md gains a DL-077 section, and INDIVIDUAL_DISPOSITION_SCHEMA.md a note that DL-077 adds no bucket or row field and that a completely recorded family is judged by its record."
+ ],
+ "unchanged": [
+  "Every other rule of the validator, including the denominator, census, partition, exclusion, August checkpoint, holding bucket, evidence-shape and oracle-harness checks.",
+  "The Step 3 receipt, the owner decision sheet, cohort pins, freeze digests, closure hashes, the registry and every ledger."
+ ],
+ "notes": [
+  "DL-077 authorizes this amendment only. It admits no family, registers nothing, and makes no family pass by itself.",
+  "Author and lander are this agent task, not a claimed human identity. This task must never apply the seal.",
+  "The records written with this amendment (context.compaction.completed, browser.workspace.created, browser.workspace.reset) each carry their current depth assessment; the amended check fails closed for each until its assessment shows all twelve criteria passing."
+ ]
+}

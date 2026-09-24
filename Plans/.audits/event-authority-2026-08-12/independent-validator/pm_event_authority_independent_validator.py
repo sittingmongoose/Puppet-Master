@@ -77,6 +77,23 @@ OWNER_DECISION_IDS = {
     "J40-VETO-BATCH", "COMPACT-001",
 }
 
+# DL-077 (Jared, 2026-09-24): the second and last authorized receipted change.
+# A family registered beyond Known37 and the two August families is accepted
+# only through its complete admission record; everything else fails closed.
+POST_AUGUST_RECEIPT = "reports/event-authority-20260911/step-10-post-august-admission-receipt.json"
+POST_AUGUST_AUTHORITY = "Plans/Decision_Log.md#DL-077"
+POST_AUGUST_RECORD_DIR = "reports/event-authority-20260911/admission-records"
+POST_AUGUST_RECORD_SCHEMA = "pm.assurance.event_authority.post_august_admission_record.v1"
+POST_AUGUST_RECEIPT_SCHEMA = "pm.assurance.event_authority.post_august_admission_change.v1"
+POST_AUGUST_AUTHOR = "claude-opus-5.5:dl039-steps-8-9-20260924"
+POST_AUGUST_REQUIRED = (
+    b"EA-S10-VALIDATOR-LIVE-SET-001",
+    b"complete admission record",
+    b"fails closed",
+    b"must not be the one that applies the seal",
+)
+HEX64 = re.compile(r"[0-9a-f]{64}")
+
 
 def holding_authority_bytes(path: Path) -> bytes:
     """Pin only the canonical DL-039 body, not unrelated Decision Log edits."""
@@ -108,6 +125,160 @@ def holding_timestamp(value):
     if stamp.tzinfo is None:
         raise ValueError("timestamp requires timezone")
     return stamp
+
+
+def decision_section_bytes(path: Path, number: str, required=()) -> bytes:
+    """Bytes of one Decision Log prose entry, from its '### DL-NNN:' heading to the next heading."""
+    raw = path.read_bytes()
+    marker = ("### " + number + ":").encode()
+    if raw.count(marker) != 1:
+        raise ValueError(number + " prose entry missing or duplicated")
+    start = raw.index(marker)
+    body_start = raw.index(b"\n", start) + 1
+    next_heading = re.search(rb"(?m)^#{1,3} ", raw[body_start:])
+    end = body_start + next_heading.start() if next_heading else len(raw)
+    section = raw[start:end]
+    if not all(token in section for token in required):
+        raise ValueError(number + " authority text missing or changed")
+    return section
+
+
+def canonical_json_sha256(value) -> str:
+    return hashlib.sha256(
+        json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    ).hexdigest()
+
+
+def post_august_receipt_state():
+    """DL-077's receipt must pin DL-077, the current validator bytes and the Step 3 chain."""
+    path = REPO / POST_AUGUST_RECEIPT
+    receipt = load_json(path)
+    step3 = load_json(REPO / HOLDING_RECEIPT)
+    section_hash = hashlib.sha256(
+        decision_section_bytes(ROOT / "Decision_Log.md", "DL-077", POST_AUGUST_REQUIRED)
+    ).hexdigest()
+    if (not isinstance(receipt, dict)
+            or receipt.get("schema_id") != POST_AUGUST_RECEIPT_SCHEMA
+            or receipt.get("authority_ref") != POST_AUGUST_AUTHORITY
+            or receipt.get("authority_section_sha256") != section_hash
+            or receipt.get("validator_before_sha256") != step3.get("validator_after_sha256")
+            or receipt.get("validator_after_sha256") != sha256_file(Path(__file__))
+            or receipt.get("record_dir") != POST_AUGUST_RECORD_DIR
+            or receipt.get("record_schema_id") != POST_AUGUST_RECORD_SCHEMA
+            or receipt.get("author_task") != POST_AUGUST_AUTHOR
+            or receipt.get("lander_task") != POST_AUGUST_AUTHOR
+            or receipt.get("seal_applier_forbidden_task") != POST_AUGUST_AUTHOR
+            or receipt.get("seal_authorized") is not False
+            or receipt.get("admission_authorized") is not False
+            or receipt.get("contract_depth_complete") is not False):
+        raise ValueError("post-August amendment receipt identity, authority or hash mismatch")
+    return receipt, sha256_file(path)
+
+
+def holding_validator_pin() -> str:
+    """Step 3 pinned the bytes it landed; DL-077's receipt chains from that pin.
+
+    Without a valid DL-077 receipt the Step 3 pin must equal the current file,
+    so any other change to this validator fails the holding check closed.
+    """
+    if (REPO / POST_AUGUST_RECEIPT).exists():
+        receipt, _ = post_august_receipt_state()
+        return receipt["validator_before_sha256"]
+    return sha256_file(Path(__file__))
+
+
+def admission_record_problems(record, family) -> list:
+    """Every problem with one DL-077 admission record; empty means complete."""
+    problems = []
+    event_type = record.get("event_type")
+    if record.get("schema_id") != POST_AUGUST_RECORD_SCHEMA:
+        problems.append("schema_id")
+    if record.get("family_id") != family.get("family_id"):
+        problems.append("family_id")
+    match = re.fullmatch(r"Plans/Decision_Log\.md#(DL-\d{3})", str(record.get("decision_ref", "")))
+    if not match:
+        problems.append("decision_ref")
+    else:
+        section = decision_section_bytes(ROOT / "Decision_Log.md", match.group(1))
+        if record.get("decision_section_sha256") != hashlib.sha256(section).hexdigest():
+            problems.append("decision_section_sha256")
+    sides_ok = True
+    for side in ("registry_before", "registry_after"):
+        value = record.get(side)
+        if (not isinstance(value, dict)
+                or not isinstance(value.get("revision"), str) or not value["revision"]
+                or not HEX64.fullmatch(str(value.get("sha256", "")))
+                or type(value.get("family_count")) is not int):
+            problems.append(side)
+            sides_ok = False
+    if sides_ok:
+        before, after = record["registry_before"], record["registry_after"]
+        if after["family_count"] != before["family_count"] + 1 or after["sha256"] == before["sha256"]:
+            problems.append("registry_before_after_not_exactly_one_family")
+    if record.get("registry_row_sha256") != canonical_json_sha256(family):
+        problems.append("registry_row_sha256")
+    depth = record.get("depth_assessment")
+    depth_path = depth.get("path") if isinstance(depth, dict) else None
+    if (not isinstance(depth_path, str) or not depth_path.startswith("reports/")
+            or ".." in Path(depth_path).parts):
+        problems.append("depth_assessment.path")
+        return problems
+    full = REPO / depth_path
+    if not full.is_file() or sha256_file(full) != depth.get("sha256"):
+        problems.append("depth_assessment.sha256")
+        return problems
+    rows = [r for r in (load_json(full).get("rows") or []) if isinstance(r, dict) and r.get("event_type") == event_type]
+    if len(rows) != 1:
+        problems.append("depth_assessment.row")
+        return problems
+    cells = rows[0].get("cells")
+    if not isinstance(cells, dict) or set(cells) != set(EVIDENCE_FIELDS):
+        problems.append("depth_assessment.criteria")
+        return problems
+    failing = [f for f in EVIDENCE_FIELDS if not isinstance(cells.get(f), dict) or cells[f].get("status") != "PASS"]
+    if failing:
+        problems.append("depth_incomplete:" + ",".join(failing))
+    return problems
+
+
+def validate_post_august_admissions(registry, known37):
+    """DL-077: accept a family registered beyond Known37 and August only through
+    its complete admission record. Returns (admitted, issues, receipt_sha256)."""
+    live = {f.get("event_type"): f for f in registry.get("families", []) if isinstance(f, dict)}
+    beyond = set(live) - set(known37) - AUGUST
+    try:
+        _, receipt_sha = post_august_receipt_state()
+    except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
+        return set(), ["post-August amendment receipt invalid: " + str(exc)], None
+    admitted, issues, records = set(), [], {}
+    record_dir = REPO / POST_AUGUST_RECORD_DIR
+    for path in (sorted(record_dir.glob("*.json")) if record_dir.is_dir() else []):
+        try:
+            record = load_json(path)
+        except (OSError, ValueError) as exc:
+            issues.append(path.name + ": unreadable admission record: " + str(exc))
+            continue
+        event_type = record.get("event_type") if isinstance(record, dict) else None
+        if not isinstance(event_type, str) or path.name != event_type + ".json" or event_type in records:
+            issues.append(path.name + ": admission record name, event type or uniqueness mismatch")
+            continue
+        records[event_type] = record
+    for event_type in sorted(beyond):
+        record = records.get(event_type)
+        if record is None:
+            issues.append(event_type + ": no admission record")
+            continue
+        try:
+            problems = admission_record_problems(record, live[event_type])
+        except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
+            problems = ["malformed: " + str(exc)]
+        if problems:
+            issues.extend(event_type + ": " + p for p in problems)
+        else:
+            admitted.add(event_type)
+    for event_type in sorted(set(records) - beyond):
+        issues.append(event_type + ": admission record for a family not registered beyond Known37 and August")
+    return admitted, issues, receipt_sha
 
 
 def validate_holding_bucket(cohort, machine_scan, alias_types, decisions, ledger, live_set, denom):
@@ -152,7 +323,7 @@ def validate_holding_bucket(cohort, machine_scan, alias_types, decisions, ledger
                 or receipt.get("authority_ref") != HOLDING_AUTHORITY
                 or receipt.get("authority_section_sha256") != section_hash
                 or receipt.get("owner_responses") != {did: sheet[did]["owner_response"] for did in HOLDING_DECISIONS}
-                or receipt.get("validator_after_sha256") != sha256_file(Path(__file__))
+                or receipt.get("validator_after_sha256") != holding_validator_pin()
                 or receipt.get("author_task") != HOLDING_AUTHOR
                 or receipt.get("lander_task") != HOLDING_AUTHOR
                 or receipt.get("seal_applier_forbidden_task") != HOLDING_AUTHOR
@@ -430,7 +601,19 @@ def main() -> int:
     named["august_reclassified"] = august_reclassified
     named["compact_not_admitted"] = compact_not_admitted
 
-    live_august = live_set - set(known37)
+    post_august_admitted, post_august_issues, post_august_receipt_sha = validate_post_august_admissions(
+        registry, known37,
+    )
+    named["post_august_admitted"] = sorted(post_august_admitted)
+    named["post_august_admission_records_ok"] = not post_august_issues
+    if post_august_issues:
+        failures.append({
+            "error": "post_august_admission_incomplete",
+            "issue_count": len(post_august_issues),
+            "issues": post_august_issues[:50],
+            "detail": "DL-077: a family registered beyond Known37 and August needs a complete admission record",
+        })
+    live_august = live_set - set(known37) - post_august_admitted
     expected_august = set() if august_reclassified else set(AUGUST)
     named["august_set_ok"] = live_august == expected_august
     if not named["august_set_ok"]:
@@ -1225,11 +1408,13 @@ def main() -> int:
                             })
 
     # --- Blocking disposition states (quarantine / unresolved / owner-veto / evidence-gap) ---
-    owner_veto_blocking = [r for r in ledger if r.get("disposition") == "NEEDS_OWNER_VETO"]
-    evidence_gap_blocking = [r for r in ledger if r.get("disposition") == "NEEDS_MORE_EVIDENCE"]
-    unresolved_blocking = [r for r in ledger if r.get("bucket") == "unresolved"]
+    # DL-077: a completely recorded post-August admission supersedes its old quarantine row.
+    blocking_ledger = [r for r in ledger if r.get("event_type") not in post_august_admitted]
+    owner_veto_blocking = [r for r in blocking_ledger if r.get("disposition") == "NEEDS_OWNER_VETO"]
+    evidence_gap_blocking = [r for r in blocking_ledger if r.get("disposition") == "NEEDS_MORE_EVIDENCE"]
+    unresolved_blocking = [r for r in blocking_ledger if r.get("bucket") == "unresolved"]
     quarantine_blocking = [
-        r for r in ledger
+        r for r in blocking_ledger
         if r.get("bucket") == "confirmed_persisted_unregistered"
         and r.get("disposition") in {"NEEDS_OWNER_VETO", "NEEDS_MORE_EVIDENCE"}
     ]
@@ -1281,7 +1466,7 @@ def main() -> int:
     for r in ledger:
         disp = r.get("disposition")
         et = r.get("event_type")
-        if disp == "KEEP_REGISTERED" or et in live_set:
+        if (disp == "KEEP_REGISTERED" or et in live_set) and et not in post_august_admitted:
             registered_like.append(r)
         ev = evidence_map(r)
         # Every row must have all 12 fields present
@@ -1411,6 +1596,7 @@ def main() -> int:
         "md_only_bindings_not_adjudicated",
     }
     depth_blocking = set(denominator_blocking) | {
+        "post_august_admission_incomplete",
         "registered_contract_depth_incomplete",
         "executable_oracle_harness_missing_or_failed",
         "evidence_rule_failures",
@@ -1483,6 +1669,7 @@ def main() -> int:
     pins = {
         "holding_bucket_change_receipt_sha256": sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None,
         "holding_authority_source_sha256": sha256_file(ROOT / "Decision_Log.md") if (ROOT / "Decision_Log.md").exists() else None,
+        "post_august_admission_receipt_sha256": post_august_receipt_sha,
         "known37_sha256": sha256_file(K37),
         "cohort_pins_sha256": sha256_file(COHORT),
         "denominator_sha256": sha256_file(DENOM),

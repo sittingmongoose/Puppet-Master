@@ -41,6 +41,8 @@ Each holding row requires a `holding_authority` object with `authority_ref: "Pla
 
 The row's retained `evidence` object must match its receipt member's `retained_evidence_sha256`, computed from UTF-8 JSON with sorted keys and compact separators. This preserves existing gaps and history; it does not endorse the evidence's correctness or confer contract depth. Holding does not relax existing evidence checks, declare persistence proof, authorize a seal, or grant PNC-019 closure.
 
+DL-077 adds no bucket and no row field. A family registered after August that has a complete admission record under `reports/event-authority-20260911/admission-records/` (defined in the independent validator spec) is judged by that record, not by its row here. The row, for example `context.compaction.completed`, stays as written but no longer counts as blocking, and the family's depth comes from the pinned depth assessment. Without a complete record the row is judged exactly as before.
+
 This schema addition does **not** claim contract-depth complete, seal, validator `pass`, or PNC-019.
 
 ## Row object
