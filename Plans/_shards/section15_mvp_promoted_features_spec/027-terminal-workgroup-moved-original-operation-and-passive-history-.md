@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11753-L11972
+Source lines: L11753-L11973
 
-Source SHA256: `8fb0e2df529b58403568b6a18fa95a12c883b7dd537f07b8de1f12cd284bf696`
+Source SHA256: `b64442645033baa1dde100a6480c9b6c337b89bfe12453ac6faf4ad52cc0c2e9`
 
 ---
 
@@ -70,7 +70,8 @@ this one admitted operation, joined to the SIR-owned CommandOutcomeRecord and
 CV-333 response through their existing result ref/schema/hash rules. It records
 the actual applied/no_change/cancelled/failed outcome, original command/operation
 and dispatch receipt, source/target section and workgroup, complete pane/session
-identity sets, actual section-created fact, accepted before/after terminal
+identity sets, actual section-created fact, whether the move vacated its source section and that
+section's resulting empty state, accepted before/after terminal
 revision and any independently applicable Home revision, and this operation's
 actual event/result references. These are required semantic joins, not additional
 fields in the registered event payload or permission to fabricate a typed result.

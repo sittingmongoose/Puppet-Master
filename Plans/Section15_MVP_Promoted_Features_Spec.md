@@ -11812,7 +11812,8 @@ this one admitted operation, joined to the SIR-owned CommandOutcomeRecord and
 CV-333 response through their existing result ref/schema/hash rules. It records
 the actual applied/no_change/cancelled/failed outcome, original command/operation
 and dispatch receipt, source/target section and workgroup, complete pane/session
-identity sets, actual section-created fact, accepted before/after terminal
+identity sets, actual section-created fact, whether the move vacated its source section and that
+section's resulting empty state, accepted before/after terminal
 revision and any independently applicable Home revision, and this operation's
 actual event/result references. These are required semantic joins, not additional
 fields in the registered event payload or permission to fabricate a typed result.
