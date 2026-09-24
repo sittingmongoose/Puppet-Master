@@ -1,0 +1,90 @@
+{
+  "schema_id": "pm.packet_canon_closure_index.v1",
+  "repair_base": "6fe29ed2748128e0e9295c3161a9dd6a7f083d61",
+  "report": "reports/packet-canon-closure-20260924/packet-wide-closure-status.md",
+  "complete": false,
+  "main_landing_claim": false,
+  "native_execution_claim": false,
+  "azure_expansion_frozen": true,
+  "user_currentness_correction": {
+    "topics": ["Back Seat Driver", "Context Lens"],
+    "instruction": "Newer updates supersede packet-led repair assumptions; freeze old findings pending newer-authority revalidation. Surface other discovered topics before edits."
+  },
+  "historical_inventory": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/case-inventory.json",
+    "sha256": "7ebe983fcae633a0f017317367a53cfe0325c4c8bbdb85ce6cd4b6c19eac05f8",
+    "entry_count": 13416,
+    "count_semantics": "historical assessment cases/dimensions, not distinct current requirements or defects",
+    "suite_counts": {
+      "dependency_correction": 933,
+      "doctor": 76,
+      "egolite_browser_scm_origin": 672,
+      "full_thread_performance": 104,
+      "guided_tour": 97,
+      "onboarding": 152,
+      "onboarding_doctor": 295,
+      "server_wan_backup": 2034,
+      "settings": 694,
+      "touch_closure": 8359
+    }
+  },
+  "evidence_root": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF",
+  "current_overlays": [
+    {
+      "path": "packet-wide-rebaseline/server-backup/historical-residual-inventory-001.json",
+      "sha256": "85e0bd833fde857300fe59e3b8d6e89e5e614c5a133985efcb6a65ece6be195b",
+      "boundary": "169 historical open cases preserved; use current-overlay-002 before interpreting statuses"
+    },
+    {
+      "path": "packet-wide-rebaseline/server-backup/current-overlay-002.json",
+      "sha256": "4a59629b0fff573ddc33829b487772f645ad4d0eacde3d0347b6fa6257097ec3",
+      "boundary": "five exact case determinations, not complete Server/Backup family closure"
+    },
+    {
+      "path": "packet-wide-rebaseline/settings/inventory.json",
+      "sha256": "daac00ece15a5b4422d1e9c8b8de1d4fa59444dbe2fdb5dec0f133023575b09a",
+      "boundary": "199 topic/profile/repair rows, not unique defects; product_choice labels still need source-authority adjudication before user questions"
+    },
+    {
+      "path": "packet-wide-rebaseline/settings/authority-status-overlay.json",
+      "sha256": "c0e83de466e96191fc5a2f044bb93d9d3353514106b823854ed961fb8089badc",
+      "boundary": "overrides three premature product_choice labels; unresolved authority is not automatically a user decision"
+    },
+    {
+      "path": "packet-wide-rebaseline/settings/newer-authority-freeze-overlay.json",
+      "sha256": "031b8d6ddf84459df593c630113703988330e5449ccb202635d1a251d9837f70",
+      "boundary": "freezes BSD and Context Lens older findings; effective172unverified17boundedcredits10branch-onlycandidates"
+    },
+    {
+      "path": "packet-wide-rebaseline/server-backup/counts-and-supersession-boundary-004.json",
+      "sha256": "cd31aa68b826a59d2223f5c9e303a68318666eed264d6c106fcaff5084739dd8",
+      "boundary": "exact join gives162unverified6confirmedrows1credit=169; supersession restrictions override older routing"
+    },
+    {
+      "path": "packet-wide-rebaseline/onboarding-doctor/inventory.json",
+      "sha256": "db0233ca32cae8d8aee3c662a17f938e4348dcb6270f9b424732ca4149b8ebbb",
+      "boundary": "44groupeditems15boundedcredits10branch-onlycandidates14unverified5implementation-only; no latest-main closure claim"
+    }
+  ],
+  "next_repair_batch": {
+    "area": "Backup input contracts and owner composition",
+    "status": "branch_snapshot_gaps_pending_newer_authority_revalidation",
+    "canonical_writes_started": false,
+    "cases": [
+      {"case_id": "ACT-089", "requirement": "selected destination update configuration/patch"},
+      {"case_id": "ACT-101", "requirement": "selected verification snapshot set and verification level"},
+      {"case_id": "ACT-102", "requirement": "selected isolated test-restore destination and drill coverage"},
+      {"case_id": "ACT-110", "requirement": "selected comparison revision operand"}
+    ],
+    "sequence": ["source and owner adjudication", "owner prose if needed", "typed companions and causal tests", "independent review", "branch push"],
+    "forbidden_shortcuts": ["inventing new restore effects", "token-only tests as composition proof", "governance refresh", "claiming native backup execution"]
+  },
+  "remaining_obligations": [
+    "finish current overlays for all packet families and raw semantic sections",
+    "reconcile source authority before escalating genuine product decisions",
+    "repair verified non-GUI specification gaps across the full scope",
+    "verify bounded repaired requirements without reopening stale findings",
+    "preserve implementation-only and GUI obligations separately",
+    "current-main reconciliation, locked landing and full failure-key comparison under exact authorized exception"
+  ]
+}
