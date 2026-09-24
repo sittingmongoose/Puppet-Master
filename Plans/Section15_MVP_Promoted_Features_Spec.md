@@ -11756,7 +11756,8 @@ negative_constraints:
 
 This is a **NEW owner contract** under DL-045 for the already registered
 `terminal.workgroup_moved@1.0.0`, not a new feature, payload version or admission.
-The source search covered this document's SMPFS-138, UCC-144's exact
+The source search covered this document's SMPFS-138, including its DL-070
+vacated-section rule, UCC-144's exact
 `cmd.terminal.move_workgroup` row, CV-323's event and receipt boundary, Shared Integration Runtime's
 CommandOutcomeRecord rules, SP-245's Home persistence, SP-273/SIR-046's expressly
 Home-only custody, SP-278/SP-286, both event/storage registries, and the exact
@@ -11789,6 +11790,15 @@ section is created only through its actual existing owner. Freeze the exact
 accepted destination and membership before mutation; retries cannot choose a
 new target, recreate a section or obtain fresh session identities.
 
+When the moved workgroup is the last one in its source section, that section
+stays empty and reusable with its guidance state, as SMPFS-138 states under
+DL-070. The move allocates no replacement workgroup, pane or session, opens no
+terminal session and records no reseed; creating another workgroup or terminal
+there is a separate action. The payload has no `source_reseeded` field, and
+`section_created` reports only whether the target section was created. Reset and
+boot-recovery reconstitution are unchanged and gain no creation authority from a
+move.
+
 The original owner result is the exact authenticated CV-323 dispatch result for
 this one admitted operation, joined to the SIR-owned CommandOutcomeRecord and
 CV-333 response through their existing result ref/schema/hash rules. It records
@@ -11802,6 +11812,9 @@ SIR alone authenticates acknowledgement and produces its outcome; an event or
 owner result cannot create acknowledgement or completion. The result's exact
 closed schema, original pending/result storage and SIR delegation must be
 materialized and admitted by their actual owners before this producer activates.
+If those companions store an SP-278 read token, they store the nine-field durable
+token without `redb_snapshot_id` (DL-076), and every read joins the snapshot ID of
+its own live read transaction.
 No existing Home receipt, restore-point result, arbitrary ref or shared descriptive
 role supplies that missing admission. This prose establishes those obligations;
 it does not claim the companion schemas/physical custody exist.
@@ -11820,8 +11833,9 @@ and supported migration are installed, producer admission is disabled.
 
 A real changed move preserves every pane/session binding and PTY, commits the
 actual accepted terminal membership through its owner, and verifies full readback
-before admitting this fact event. Source-section empty state and any created
-section must match the accepted result. A pending candidate is not published as
+before admitting this fact event. A vacated source section's empty state, with
+no replacement workgroup, pane or session (DL-070), and any created target section
+must match the accepted result. A pending candidate is not published as
 successful terminal state. CV-323 failure requires verified rollback and no success
 event; a failed rollback remains fenced. No cross-owner atomic transaction is
 assumed. The admitted operation protocol must durably coordinate terminal state,
@@ -11902,14 +11916,17 @@ canonical_text: The new terminal.workgroup_move_commit.v1 producer and terminal.
   consumer bind the existing terminal.workgroup_moved family to its original admitted identity-preserving
   move, exact original result and shared append authority. Terminal and applicable Home obligations remain
   independently owned and durably coordinated. Producer activation waits for exact original pending/result
-  companions and owner admission; passive history has no terminal effects or family checkpoint.
+  companions and owner admission; passive history has no terminal effects or family checkpoint. A move
+  that vacates its source section leaves it empty and reusable, with no replacement workgroup, pane or
+  session (DL-070).
 gui_related: true
 gui_classification_reason: Preserves existing workgroup placement, section limits and visible terminal identity.
-depends_on: [SMPFS-138, UCC-144, CV-323, CV-333, CV-339, SP-245, SP-273, SP-278, SP-286, DL-045]
+depends_on: [SMPFS-138, UCC-144, CV-323, CV-333, CV-339, SP-245, SP-273, SP-278, SP-286, DL-045, DL-070]
 unblocks: []
 acceptance_criteria:
   - Authenticate the original request, operation, full owner identity, revisions, current authority and complete membership before effects.
   - Preserve every pane/session/PTY owner binding; disabled and no_change actions produce no moved event.
+  - Moving a source section's last workgroup leaves that section empty and reusable; the move allocates no replacement workgroup, pane or session, opens no terminal session and reports no reseed (DL-070).
   - Bind exact original owner result, real SIR acknowledgement/outcome and CV-333 response without borrowing Home custody.
   - Refuse producer admission until its closed pending/result companions, SIR delegation and migration are installed.
   - Coordinate independently applicable Home effects and events before success; uncertainty fences without reminting or false rollback.
@@ -11921,10 +11938,11 @@ reasoning_tier: high
 context_scope: terminal_workgroup_moved_only
 implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/storage-plan.md]
 node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false, runtime_enabled: false}
-source_lineage: [Plans/Decision_Log.md#DL-039, Plans/Decision_Log.md#DL-045, Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-138, Plans/Contracts_V0.md#CV-323]
+source_lineage: [Plans/Decision_Log.md#DL-039, Plans/Decision_Log.md#DL-045, Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-138, Plans/Contracts_V0.md#CV-323, Plans/Decision_Log.md#DL-070, Plans/Decision_Log.md#DL-076]
 negative_constraints:
   - No payload, registry, retention, public command, PTY or session-lifetime change.
   - No Home custody alias, missing-source reconstruction, native proof or complete event-depth claim.
+  - No reseed of a vacated source section, no source_reseeded field and no new creation authority for reset or boot recovery (DL-070).
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-319, ContractName:Plans/Contracts_V0.md#CV-323, ContractName:Plans/Decision_Log.md#DL-045
+ContractRef: ContractName:Plans/storage-plan.md#SP-319, ContractName:Plans/Contracts_V0.md#CV-323, ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/Decision_Log.md#DL-070, ContractName:Plans/Decision_Log.md#DL-076

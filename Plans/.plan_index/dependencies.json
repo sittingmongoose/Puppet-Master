@@ -62830,6 +62830,11 @@
     {
       "edge_type": "depends_on",
       "from": "SMPFS-170",
+      "to": "DL-070"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-170",
       "to": "SMPFS-138"
     },
     {
@@ -69471,6 +69476,11 @@
       "edge_type": "depends_on",
       "from": "SP-319",
       "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-319",
+      "to": "DL-076"
     },
     {
       "edge_type": "depends_on",
@@ -98543,7 +98553,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-24T15:25:57Z",
+  "generated_at_utc": "2026-09-24T15:29:35Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -194316,8 +194326,8 @@
       "source_location": {
         "heading": "SMPFS-170 - Terminal workgroup moved original operation and historical consumer",
         "heading_level": 3,
-        "heading_line": 11894,
-        "line": 11896,
+        "heading_line": 11908,
+        "line": 11910,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -199637,8 +199647,8 @@
       "source_location": {
         "heading": "SP-319 - Terminal workgroup moved passive source and checkpoint disposition",
         "heading_level": 3,
-        "heading_line": 26775,
-        "line": 26777,
+        "heading_line": 26784,
+        "line": 26786,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -212809,9 +212819,9 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15664,
+    "depends_on_edge_count": 15666,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18363,
+    "edge_count": 18365,
     "node_count": 6721,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,
