@@ -925,13 +925,16 @@ STORAGE_VALUE_STORED_PROFILE_UNION_CONTRACT = {
     "composition_schema_version": "1.0.0",
 }
 STORAGE_VALUE_STORED_PROFILE_UNION_COMPOSITION_KEYWORDS = frozenset({"$id", "$comment", "oneOf"})
-# SP-278 read token (Plans/storage-plan.md section 2.3.1, 2026-09-23): a closed, non-secret read
-# selector of Storage identity, relative control names, hashes, generation and frontier, plus the
-# live redb_snapshot_id (whether rows should persist that fence is a Storage-owner question). A field
-# named read_token or *_read_token is a read selector, not secret material, only when its whole
-# schema is exactly this canonical definition, inline or through a local $defs reference.
+# SP-278 read token (Plans/storage-plan.md section 2.3.1, 2026-09-23; amended 2026-09-24, DL-076):
+# a closed, non-secret read selector of Storage identity, relative control names, hashes,
+# generation and frontier. The whole token adds the live redb_snapshot_id of one read transaction;
+# its nine-field durable projection drops it, and that projection is the only form a stored value
+# keeps. A field named read_token or *_read_token is a read selector, not secret material, only
+# when its whole schema is exactly the canonical definition or its durable projection, inline or
+# through a local $defs reference. No stored value may hold redb_snapshot_id (SP-311's rule).
 STORAGE_VALUE_READ_TOKEN_SCHEMA_PATH = PLANS / "event_record_index_checkpoint.schema.json"
 STORAGE_VALUE_READ_TOKEN_POINTER = "/$defs/read_token"
+STORAGE_VALUE_LIVE_SNAPSHOT_FENCE = "redb_snapshot_id"
 # Legacy import-only reader rows (SIR full-thread addendum 2026-08-31; Plans/storage-plan.md
 # section 2.3.1, 2026-09-23): exactly the two MVP-required families the owner passage names were
 # retired to a one-time owner-boundary import; they have no writer, their only consumer is the
@@ -2171,15 +2174,41 @@ def storage_value_canonical_read_token_schema() -> dict[str, Any] | None:
     return _STORAGE_VALUE_READ_TOKEN_CACHE["schema"]
 
 
+def storage_value_durable_read_token_schema() -> dict[str, Any] | None:
+    """The SP-278 durable read token (Plans/storage-plan.md SP-278, 2026-09-24; DL-076).
+
+    The canonical definition with redb_snapshot_id removed from its properties and required list,
+    every other field, constraint and order unchanged; None when the canonical token is unreadable.
+    """
+    canonical = storage_value_canonical_read_token_schema()
+    if canonical is None:
+        return None
+    durable = json.loads(json.dumps(canonical))
+    required, properties = durable.get("required"), durable.get("properties")
+    if (
+        not isinstance(required, list)
+        or not isinstance(properties, dict)
+        or STORAGE_VALUE_LIVE_SNAPSHOT_FENCE not in required
+        or STORAGE_VALUE_LIVE_SNAPSHOT_FENCE not in properties
+    ):
+        return None
+    durable["required"] = [field for field in required if field != STORAGE_VALUE_LIVE_SNAPSHOT_FENCE]
+    del properties[STORAGE_VALUE_LIVE_SNAPSHOT_FENCE]
+    return durable
+
+
 def storage_value_read_token_name(name: str) -> bool:
     return name == "read_token" or name.endswith("_read_token")
 
 
 def storage_value_is_canonical_read_token(name: str, schema: Any, root: Any) -> bool:
-    """True only for a read-token-named key whose whole schema is the canonical SP-278 read token.
+    """True only for a read-token-named key whose whole schema is an SP-278 read token.
 
-    The schema may be the definition inline or a single local "#/..." reference to it inside the
-    same value schema. Any other shape, name or reference keeps the secret-material rule.
+    That is the canonical definition or its nine-field durable projection. The schema may be the
+    definition inline or a single local "#/..." reference to it inside the same value schema. Any
+    other shape, name or reference keeps the secret-material rule. Whether a stored value may hold
+    the canonical form's live redb_snapshot_id is a separate rule
+    (storage_value_live_snapshot_fence_pointers).
     """
     if not storage_value_read_token_name(name):
         return False
@@ -2195,7 +2224,87 @@ def storage_value_is_canonical_read_token(name: str, schema: Any, root: Any) -> 
             target = resolve_local_schema_ref(root, ref)
         except (KeyError, ValueError):
             return False
-    return target == canonical
+    return target == canonical or target == storage_value_durable_read_token_schema()
+
+
+_STORAGE_VALUE_SUBSCHEMA_KEYWORDS = (
+    "additionalProperties",
+    "items",
+    "contains",
+    "not",
+    "if",
+    "then",
+    "else",
+    "unevaluatedProperties",
+    "unevaluatedItems",
+)
+_STORAGE_VALUE_SUBSCHEMA_LIST_KEYWORDS = ("allOf", "anyOf", "oneOf", "prefixItems", "items")
+_STORAGE_VALUE_SUBSCHEMA_MAP_KEYWORDS = ("properties", "patternProperties", "dependentSchemas")
+
+
+def storage_value_live_snapshot_fence_pointers(value_schema: Any) -> list[str]:
+    """Where a stored value of this inline schema could hold redb_snapshot_id (SP-311; DL-076).
+
+    The walk starts at the row's value schema and follows every subschema keyword and every local
+    "#/..." reference, so it reports a fence that any stored value can reach and never one inside
+    a $defs entry that nothing references. Pointers name the property's location in the schema.
+    """
+    found: set[str] = set()
+    seen: set[int] = set()
+    stack: list[tuple[Any, str]] = [(value_schema, "$")]
+    while stack:
+        node, pointer = stack.pop()
+        if not isinstance(node, dict) or id(node) in seen:
+            continue
+        seen.add(id(node))
+        reference = node.get("$ref")
+        if isinstance(reference, str) and reference.startswith("#/") and isinstance(value_schema, dict):
+            try:
+                target = resolve_local_schema_ref(value_schema, reference)
+            except (KeyError, ValueError):
+                target = None
+            if target is not None:
+                tokens = [part.replace("~1", "/").replace("~0", "~") for part in reference[2:].split("/")]
+                stack.append((target, "$" + "".join(f".{part}" for part in tokens)))
+        for keyword in _STORAGE_VALUE_SUBSCHEMA_MAP_KEYWORDS:
+            children = node.get(keyword)
+            if isinstance(children, dict):
+                for name, child in children.items():
+                    child_pointer = f"{pointer}.{keyword}.{name}"
+                    if keyword == "properties" and name == STORAGE_VALUE_LIVE_SNAPSHOT_FENCE:
+                        found.add(child_pointer)
+                    stack.append((child, child_pointer))
+        for keyword in _STORAGE_VALUE_SUBSCHEMA_KEYWORDS:
+            if isinstance(node.get(keyword), dict):
+                stack.append((node[keyword], f"{pointer}.{keyword}"))
+        for keyword in _STORAGE_VALUE_SUBSCHEMA_LIST_KEYWORDS:
+            children = node.get(keyword)
+            if isinstance(children, list):
+                for index, child in enumerate(children):
+                    stack.append((child, f"{pointer}.{keyword}[{index}]"))
+    return sorted(found)
+
+
+def storage_value_live_snapshot_fence_declarations(node: Any, *, pointer: str) -> list[str]:
+    """Every object schema anywhere inside ``node`` that declares a redb_snapshot_id property.
+
+    This is the conservative scan used for the SP-310 union record graphs, which readiness reaches
+    through the declared realm the same way it scans them for secret material.
+    """
+    found: list[str] = []
+    stack: list[tuple[Any, str]] = [(node, pointer)]
+    while stack:
+        current, current_pointer = stack.pop()
+        if isinstance(current, dict):
+            properties = current.get("properties")
+            if isinstance(properties, dict) and STORAGE_VALUE_LIVE_SNAPSHOT_FENCE in properties:
+                found.append(f"{current_pointer}.properties.{STORAGE_VALUE_LIVE_SNAPSHOT_FENCE}")
+            for key, child in current.items():
+                stack.append((child, f"{current_pointer}.{key}"))
+        elif isinstance(current, list):
+            for index, child in enumerate(current):
+                stack.append((child, f"{current_pointer}[{index}]"))
+    return sorted(found)
 
 
 def storage_value_secret_key_failures(
@@ -6264,6 +6373,9 @@ def storage_value_stored_profile_union_failures(
                     nodes[pointer], path_label=row_path, pointer=f"{path}#{pointer}", root=document
                 )
             )
+            # SP-278 durable read token (2026-09-24; DL-076): no stored record holds the live fence.
+            for fence_pointer in storage_value_live_snapshot_fence_declarations(nodes[pointer], pointer=f"{path}#{pointer}"):
+                fail("storage_value_registry_live_snapshot_fence_persisted", pointer=fence_pointer)
     row_keys = [part.strip() for part in str(family.get("key_shape", "")).split(" OR ") if part.strip()]
     declared_keys = [key for member in members for key in (member.get("key_shapes") or [])]
     if row_keys != declared_keys:
@@ -6751,6 +6863,15 @@ def storage_value_registry_data_failures(
                     }
                 )
             failures.extend(storage_value_secret_key_failures(value_schema, path_label=row_path))
+            for pointer in storage_value_live_snapshot_fence_pointers(value_schema):
+                failures.append(
+                    {
+                        "path": row_path,
+                        "error": "storage_value_registry_live_snapshot_fence_persisted",
+                        "family_id": family_id,
+                        "pointer": pointer,
+                    }
+                )
         elif status == "deferred_not_build_blocking":
             for field in ["deferred_owner", "deferred_reason", "reopen_condition"]:
                 if not family.get(field):
@@ -8370,6 +8491,14 @@ def storage_value_representation_self_test_checks(
         "storage_value_registry_stored_profile_union_reference_unresolved",
         reference=outside_reference,
     )
+    fence_resources, fence_read = realm_with(*v2_record, {STORAGE_VALUE_LIVE_SNAPSHOT_FENCE: {"type": "string", "minLength": 1}})
+    checks["stored_profile_union_record_graph_snapshot_fence_rejected"] = has(
+        storage_value_stored_profile_union_failures(
+            union_row, row_path="self-test:union-record-fence", declaration=declaration,
+            resources=fence_resources, read_bytes=fence_read,
+        ),
+        "storage_value_registry_live_snapshot_fence_persisted",
+    )
     key_drift = clone_registry()
     key_row = family_of(key_drift, "goal_cancel_progress")
     key_row["key_shape"] = " OR ".join(part for part in key_row["key_shape"].split(" OR ") if ".v2:" in part)
@@ -8430,11 +8559,69 @@ def storage_value_representation_self_test_checks(
     )
     widened_local = clone_registry()
     widened_local_row = family_of(widened_local, "browser_workspace_reset_index_checkpoint")
-    widened_local_row["value_schema"]["$defs"]["generic_read_token"]["additionalProperties"] = True
+    widened_local_row["value_schema"]["$defs"]["durable_read_token"]["additionalProperties"] = True
     widened_local_failures = errors(widened_local, "read-token-local-ref")
     checks["read_token_local_reference_to_altered_definition_rejected"] = has(
         widened_local_failures, "storage_value_secret_material_key", pointer="$.properties.index_read_token"
     ) and has(widened_local_failures, "storage_value_secret_material_field", field="index_read_token")
+
+    # SP-278 durable read token (2026-09-24; DL-076): stored values keep the nine-field projection
+    # and never the live redb_snapshot_id.
+    durable_token = storage_value_durable_read_token_schema()
+    persisted_tokens = {
+        "browser_workspace_reset_index_checkpoint": ("$defs", "durable_read_token"),
+        "seglog_observability_reader_checkpoint": ("properties", "index_read_token"),
+        "home_layout_event_reader_checkpoint": ("properties", "generic_read_token"),
+        "restore_point_expired_checkpoint": ("properties", "generic_read_token"),
+    }
+    retention_hold_schema = family_of(live_registry, "retention_hold_record")["value_schema"]
+    checks["sp278_persisted_read_tokens_are_durable"] = (
+        durable_token is not None
+        and len(durable_token.get("required", [])) == 9
+        and all(
+            family_of(live_registry, family_id)["value_schema"][container][name] == durable_token
+            for family_id, (container, name) in persisted_tokens.items()
+        )
+        and not has(live_failures, "storage_value_registry_live_snapshot_fence_persisted")
+        # The unreferenced whole-token definition in retention_hold_record is not a stored field.
+        and retention_hold_schema.get("$defs", {}).get("read_token") == storage_value_canonical_read_token_schema()
+        and storage_value_live_snapshot_fence_pointers(retention_hold_schema) == []
+    )
+    whole_token = clone_registry()
+    family_of(whole_token, "home_layout_event_reader_checkpoint")["value_schema"]["properties"]["generic_read_token"] = json.loads(
+        json.dumps(storage_value_canonical_read_token_schema())
+    )
+    whole_token_failures = errors(whole_token, "persisted-whole-token")
+    checks["persisted_whole_read_token_rejected"] = has(
+        whole_token_failures,
+        "storage_value_registry_live_snapshot_fence_persisted",
+        family_id="home_layout_event_reader_checkpoint",
+        pointer="$.properties.generic_read_token.properties.redb_snapshot_id",
+    ) and not any(
+        str(failure.get("error", "")).startswith("storage_value_secret_material")
+        and failure.get("field") == "generic_read_token"
+        for failure in whole_token_failures
+    )
+    fence_by_reference = clone_registry()
+    fenced_definition = family_of(fence_by_reference, "browser_workspace_reset_index_checkpoint")["value_schema"]["$defs"][
+        "durable_read_token"
+    ]
+    fenced_definition["required"].append(STORAGE_VALUE_LIVE_SNAPSHOT_FENCE)
+    fenced_definition["properties"][STORAGE_VALUE_LIVE_SNAPSHOT_FENCE] = {"type": "string", "minLength": 1}
+    checks["persisted_snapshot_fence_through_local_reference_rejected"] = has(
+        errors(fence_by_reference, "persisted-fence-local-ref"),
+        "storage_value_registry_live_snapshot_fence_persisted",
+        family_id="browser_workspace_reset_index_checkpoint",
+        pointer="$.$defs.durable_read_token.properties.redb_snapshot_id",
+    )
+    durable_renamed = clone_registry()
+    durable_renamed_row = family_of(durable_renamed, "approved_plan_pack")
+    durable_renamed_row["required_fields"].append("api_token")
+    durable_renamed_row["value_schema"]["required"].append("api_token")
+    durable_renamed_row["value_schema"]["properties"]["api_token"] = json.loads(json.dumps(durable_token))
+    checks["durable_read_token_schema_under_other_name_rejected"] = has(
+        errors(durable_renamed, "durable-token-renamed"), "storage_value_secret_material_field", field="api_token"
+    )
 
     # Census re-pinned to the landed registry.
     checks["landed_census_accepted"] = not any(
