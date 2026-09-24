@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L1461
+Source lines: L13-L1513
 
-Source SHA256: `daa68e9c6155c3b937896eeab640403235315784ba54db71af05e7c04e03e945`
+Source SHA256: `9047f3f2c11514ebae488b7f68ece59fd752c6ac1793d901bec746bea43ce41d`
 
 ---
 
@@ -1457,3 +1457,55 @@ Owner edits: `Plans/Runtime_Artifacts_Panel.md` and the Case L-3 retention text 
 SourceRef: the answers file above; card `reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md`.
 
 ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json
+
+### DL-076: Storage owner decisions — the SP-310 wrapper digest recipe, and stored read tokens without the live snapshot id
+
+Decided by Jared, by delegation to the coordinator, 2026-09-24. Jared approved the coordinator deciding these two Storage owner questions on his behalf. Both were left open by the 2026-09-23 Storage registry repairs and their blind review.
+
+**Item 1**
+
+**Name:** The wrapper digests in the Goal cancellation storage profile declaration.
+
+**Question:** The declaration for the three Goal cancellation storage families gives every stored wrapper a SHA-256 digest (`whole_wrapper_sha256`), but no document said how it is computed. Should the recipe be stated and checked, or should the field be retired?
+
+**Why:** Readiness could not check the six digests, because no plain hash of a wrapper reproduced them. The review therefore recorded the recipe as an open question.
+
+**What you get:** The generator that wrote the declaration is still on file, pinned by its commit's own record, and its recipe reproduces all six values. The digest is the SHA-256 of the wrapper definition written as JSON with two-space indentation, keys in document order and one final newline. With the recipe stated, readiness binds each reviewed wrapper definition. A changed wrapper then needs a newly declared digest, even when its document hash is refreshed.
+
+**What it costs:** Whoever changes one of the six wrapper definitions must recompute its digest. The recipe is a formatting convention, not a codec, so SP-310 writes it out exactly.
+
+**Options:**
+
+1. State the recipe beside SP-310 and have readiness check it (recommended).
+2. Retire the field from the three families with a dated note.
+
+**Recommendation:** Option 1.
+
+**Answer:** Option 1.
+
+**Item 2**
+
+**Name:** The snapshot id inside stored read tokens.
+
+**Question:** Four stored checkpoints (Browser workspace reset, seglog observability reader, Home layout reader and restore-point expiry) kept the whole ten-field Storage read token, including `redb_snapshot_id`. SP-311 says that id "is only a live transaction fence; never persist or manufacture it". Should the four checkpoints drop it, or should SP-311 gain an exception for checkpoint custody?
+
+**Why:** The Browser reset passage called its stored copy "historical provenance, not a reopenable native snapshot or a restart credential", while SP-311 forbids storing the same field. Both readings cannot stand in one Storage plan.
+
+**What you get:** One rule for every stored value. A stored read token is the nine-field durable token that the goal_run consumers already store as `DurableGenericToken`, and every read joins the snapshot id of its own live read transaction. Readiness rejects a snapshot id that any stored value could hold.
+
+**What it costs:** The four checkpoint contracts, their registry rows and fixtures, the Home3 receipt copy of the Home checkpoint, and the Browser reset oracle and its tests change now. Nothing is implemented yet, so no stored data migrates. The frozen Home2 reader schema keeps its original copy.
+
+**Options:**
+
+1. The four checkpoints store the nine-field durable token, and SP-311's rule stays whole (recommended).
+2. SP-311 gains an explicit exception that lets checkpoints keep the snapshot id as provenance.
+
+**Recommendation:** Option 1.
+
+**Answer:** Option 1. The Browser passage's "historical provenance" reading is overridden, for SP-311's reason: the snapshot id "is only a live transaction fence; never persist or manufacture it".
+
+Owner edits: in `Plans/storage-plan.md`, SP-310 (the 2026-09-24 follow-up), SP-278 (the durable read token), dated amendments in SP-282, SP-270, SP-273 and SP-275, and section 2.3.1; the four rows of `Plans/storage_value_registry.json`; the Browser reset, seglog observability, Home layout event, Home3 receipt and restore-point expiry contracts and three contract fixture files; `scripts/pm-implementation-readiness.py`, `scripts/pm_browser_workspace_reset.py` and their tests. `Plans/event_record_index_checkpoint.schema.json`, `Plans/goal_workflow_cancel_contracts/physical-profiles.json` and SP-311's text are unchanged. No family, retention policy or stored identity is added, and no runtime is authorized.
+
+SourceRef: `reports/storage-registry-repairs-20260923/REPORT.md` (open items); `/home/sittingmongoose/PM-Experiments/storage-registry-repairs-review-20260923/findings.jsonl`; `reports/storage-owner-closeout-20260924/REPORT.md`; the generator `build_proposal.py` of the physical source package pinned by `reports/event-authority-20260911/step-08-goal-workflow-coordinator-checks.json`.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/goal_workflow_cancel_contracts/physical-profiles.json, ContractName:Plans/event_record_index_checkpoint.schema.json

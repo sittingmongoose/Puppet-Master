@@ -2995,6 +2995,7 @@
     "DL-069",
     "DL-075",
     "GRS-060",
+    "DL-076",
     "CV-346",
     "DP-006",
     "DP-025",
@@ -23953,6 +23954,16 @@
       "edge_type": "depends_on",
       "from": "DL-075",
       "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-076",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-076",
+      "to": "DL-046"
     },
     {
       "edge_type": "depends_on",
@@ -98450,7 +98461,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-24T14:48:29Z",
+  "generated_at_utc": "2026-09-24T14:49:20Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -126682,8 +126693,8 @@
       "source_location": {
         "heading": "DL-001 - Decision Log Source-Preserving Bridge Retired",
         "heading_level": 3,
-        "heading_line": 5699,
-        "line": 5701,
+        "heading_line": 5809,
+        "line": 5811,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126699,8 +126710,8 @@
       "source_location": {
         "heading": "DL-002 - Decision Log Human-Authored Ledger Boundary",
         "heading_level": 3,
-        "heading_line": 1472,
-        "line": 1474,
+        "heading_line": 1524,
+        "line": 1526,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126716,8 +126727,8 @@
       "source_location": {
         "heading": "DL-003 - OpenCode Extraction Reference Aid Boundary",
         "heading_level": 3,
-        "heading_line": 1518,
-        "line": 1520,
+        "heading_line": 1570,
+        "line": 1572,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126733,8 +126744,8 @@
       "source_location": {
         "heading": "DL-004 - Extraction Section Number Drift Guard",
         "heading_level": 3,
-        "heading_line": 1559,
-        "line": 1561,
+        "heading_line": 1611,
+        "line": 1613,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126750,8 +126761,8 @@
       "source_location": {
         "heading": "DL-005 - Node Graph Execution Model",
         "heading_level": 3,
-        "heading_line": 1598,
-        "line": 1600,
+        "heading_line": 1650,
+        "line": 1652,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126767,8 +126778,8 @@
       "source_location": {
         "heading": "DL-006 - Governance Role Split",
         "heading_level": 3,
-        "heading_line": 1646,
-        "line": 1648,
+        "heading_line": 1698,
+        "line": 1700,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126784,8 +126795,8 @@
       "source_location": {
         "heading": "DL-007 - Completion Promotion Distinctions",
         "heading_level": 3,
-        "heading_line": 1692,
-        "line": 1694,
+        "heading_line": 1744,
+        "line": 1746,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126801,8 +126812,8 @@
       "source_location": {
         "heading": "DL-008 - Weak Integration First Class Scope",
         "heading_level": 3,
-        "heading_line": 1738,
-        "line": 1740,
+        "heading_line": 1790,
+        "line": 1792,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126818,8 +126829,8 @@
       "source_location": {
         "heading": "DL-009 - Corroboration Threshold Rule",
         "heading_level": 3,
-        "heading_line": 1783,
-        "line": 1785,
+        "heading_line": 1835,
+        "line": 1837,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126835,8 +126846,8 @@
       "source_location": {
         "heading": "DL-010 - Graph Patch Lineage Generation",
         "heading_level": 3,
-        "heading_line": 1827,
-        "line": 1829,
+        "heading_line": 1879,
+        "line": 1881,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126852,8 +126863,8 @@
       "source_location": {
         "heading": "DL-011 - Source Control Worktree First Boundary",
         "heading_level": 3,
-        "heading_line": 1872,
-        "line": 1874,
+        "heading_line": 1924,
+        "line": 1926,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126869,8 +126880,8 @@
       "source_location": {
         "heading": "DL-012 - Shared Runtime Identity Actor Scope",
         "heading_level": 3,
-        "heading_line": 1917,
-        "line": 1919,
+        "heading_line": 1969,
+        "line": 1971,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126886,8 +126897,8 @@
       "source_location": {
         "heading": "DL-013 - Blocked Approval Runtime Identity",
         "heading_level": 3,
-        "heading_line": 1967,
-        "line": 1969,
+        "heading_line": 2019,
+        "line": 2021,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126903,8 +126914,8 @@
       "source_location": {
         "heading": "DL-014 - Navigation Primitive Boundary",
         "heading_level": 3,
-        "heading_line": 2015,
-        "line": 2017,
+        "heading_line": 2067,
+        "line": 2069,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126920,8 +126931,8 @@
       "source_location": {
         "heading": "DL-015 - Debug Evidence Capture Hygiene",
         "heading_level": 3,
-        "heading_line": 2063,
-        "line": 2065,
+        "heading_line": 2115,
+        "line": 2117,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126937,8 +126948,8 @@
       "source_location": {
         "heading": "DL-016 - Provider Runtime Actor Envelope",
         "heading_level": 3,
-        "heading_line": 2116,
-        "line": 2118,
+        "heading_line": 2168,
+        "line": 2170,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126954,8 +126965,8 @@
       "source_location": {
         "heading": "DL-017 - Support Decision Drift Guard",
         "heading_level": 3,
-        "heading_line": 2172,
-        "line": 2174,
+        "heading_line": 2224,
+        "line": 2226,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126971,8 +126982,8 @@
       "source_location": {
         "heading": "DL-018 - Governance Label Copy Boundary",
         "heading_level": 3,
-        "heading_line": 2223,
-        "line": 2225,
+        "heading_line": 2275,
+        "line": 2277,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -126988,8 +126999,8 @@
       "source_location": {
         "heading": "DL-019 - Graph Owned Governance Semantics",
         "heading_level": 3,
-        "heading_line": 2282,
-        "line": 2284,
+        "heading_line": 2334,
+        "line": 2336,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127005,8 +127016,8 @@
       "source_location": {
         "heading": "DL-020 - Seam Weak Integration UI Visibility",
         "heading_level": 3,
-        "heading_line": 2337,
-        "line": 2339,
+        "heading_line": 2389,
+        "line": 2391,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127022,8 +127033,8 @@
       "source_location": {
         "heading": "DL-021 - Reopen Revocation Weak Integration Policy",
         "heading_level": 3,
-        "heading_line": 2395,
-        "line": 2397,
+        "heading_line": 2447,
+        "line": 2449,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127039,8 +127050,8 @@
       "source_location": {
         "heading": "DL-022 - Approval Anchoring Evidence Governance",
         "heading_level": 3,
-        "heading_line": 2454,
-        "line": 2456,
+        "heading_line": 2506,
+        "line": 2508,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127056,8 +127067,8 @@
       "source_location": {
         "heading": "DL-023 - Blocked Episode Identity Migration",
         "heading_level": 3,
-        "heading_line": 2508,
-        "line": 2510,
+        "heading_line": 2560,
+        "line": 2562,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127073,8 +127084,8 @@
       "source_location": {
         "heading": "DL-024 - Corroboration Disagreement Outcome",
         "heading_level": 3,
-        "heading_line": 2564,
-        "line": 2566,
+        "heading_line": 2616,
+        "line": 2618,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127090,8 +127101,8 @@
       "source_location": {
         "heading": "DL-025 - Help Clusters Alias Limits",
         "heading_level": 3,
-        "heading_line": 2613,
-        "line": 2615,
+        "heading_line": 2665,
+        "line": 2667,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127107,8 +127118,8 @@
       "source_location": {
         "heading": "DL-026 - Lane Cleanup Retained Transition",
         "heading_level": 3,
-        "heading_line": 2674,
-        "line": 2676,
+        "heading_line": 2726,
+        "line": 2728,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127124,8 +127135,8 @@
       "source_location": {
         "heading": "DL-027 - Case L Bundle A Recovery And Migration Decisions",
         "heading_level": 3,
-        "heading_line": 2722,
-        "line": 2724,
+        "heading_line": 2774,
+        "line": 2776,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127141,8 +127152,8 @@
       "source_location": {
         "heading": "DL-028 - Case L Bundle B Seglog Durability Recovery Decisions",
         "heading_level": 3,
-        "heading_line": 2786,
-        "line": 2788,
+        "heading_line": 2838,
+        "line": 2840,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127158,8 +127169,8 @@
       "source_location": {
         "heading": "DL-029 - Case L Bundle C Retention Compaction Quarantine Decisions",
         "heading_level": 3,
-        "heading_line": 2867,
-        "line": 2869,
+        "heading_line": 2919,
+        "line": 2921,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127175,8 +127186,8 @@
       "source_location": {
         "heading": "DL-030 - Case L Bundle D Storage Root Lock And Fallback Decisions",
         "heading_level": 3,
-        "heading_line": 2944,
-        "line": 2946,
+        "heading_line": 2996,
+        "line": 2998,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127192,8 +127203,8 @@
       "source_location": {
         "heading": "DL-031 - Case L Bundle E EventRecord Scope And Replay Decisions",
         "heading_level": 3,
-        "heading_line": 3017,
-        "line": 3019,
+        "heading_line": 3069,
+        "line": 3071,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127209,8 +127220,8 @@
       "source_location": {
         "heading": "DL-032 - Case L Bundle F Restore Safe Point And Chat Decisions",
         "heading_level": 3,
-        "heading_line": 3081,
-        "line": 3083,
+        "heading_line": 3133,
+        "line": 3135,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127226,8 +127237,8 @@
       "source_location": {
         "heading": "DL-033 - Case L Supplemental Probe Packet Decisions",
         "heading_level": 3,
-        "heading_line": 3155,
-        "line": 3157,
+        "heading_line": 3207,
+        "line": 3209,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127243,8 +127254,8 @@
       "source_location": {
         "heading": "DL-034 - Case L Supplemental Kernel Depth Decisions",
         "heading_level": 3,
-        "heading_line": 3228,
-        "line": 3230,
+        "heading_line": 3280,
+        "line": 3282,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127260,8 +127271,8 @@
       "source_location": {
         "heading": "DL-035 - Terminal Research Decisions Own Engine And Accepted Proposals",
         "heading_level": 3,
-        "heading_line": 3309,
-        "line": 3311,
+        "heading_line": 3361,
+        "line": 3363,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127277,8 +127288,8 @@
       "source_location": {
         "heading": "DL-036 - Research Decision Packet Review Flow",
         "heading_level": 3,
-        "heading_line": 3387,
-        "line": 3389,
+        "heading_line": 3439,
+        "line": 3441,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127294,8 +127305,8 @@
       "source_location": {
         "heading": "DL-037 - Terminal Input Protection Persistence",
         "heading_level": 3,
-        "heading_line": 3455,
-        "line": 3457,
+        "heading_line": 3507,
+        "line": 3509,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127311,8 +127322,8 @@
       "source_location": {
         "heading": "DL-038 - Terminal Input Protection User And Agent Scope",
         "heading_level": 3,
-        "heading_line": 3502,
-        "line": 3504,
+        "heading_line": 3554,
+        "line": 3556,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127328,8 +127339,8 @@
       "source_location": {
         "heading": "DL-039 - Event Authority Owner Decisions August Sheet Answered",
         "heading_level": 3,
-        "heading_line": 3555,
-        "line": 3557,
+        "heading_line": 3607,
+        "line": 3609,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127345,8 +127356,8 @@
       "source_location": {
         "heading": "DL-043 - Jujutsu Research Decisions Forty Four Answers",
         "heading_level": 3,
-        "heading_line": 3633,
-        "line": 3635,
+        "heading_line": 3685,
+        "line": 3687,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127362,8 +127373,8 @@
       "source_location": {
         "heading": "DL-044 - Forge Review Wiring Vocabulary And Create Alias",
         "heading_level": 3,
-        "heading_line": 3703,
-        "line": 3705,
+        "heading_line": 3755,
+        "line": 3757,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127379,8 +127390,8 @@
       "source_location": {
         "heading": "DL-045 - Bounded Event Authority Technical Binding Definition Approval",
         "heading_level": 3,
-        "heading_line": 3792,
-        "line": 3794,
+        "heading_line": 3844,
+        "line": 3846,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127396,8 +127407,8 @@
       "source_location": {
         "heading": "DL-046 - Bounded Browser Technical Binding Authority And Individual Admission",
         "heading_level": 3,
-        "heading_line": 3847,
-        "line": 3849,
+        "heading_line": 3899,
+        "line": 3901,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127413,8 +127424,8 @@
       "source_location": {
         "heading": "DL-047 - Goal Objective And Revision Retention Follows Chat",
         "heading_level": 3,
-        "heading_line": 3897,
-        "line": 3899,
+        "heading_line": 3949,
+        "line": 3951,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127430,8 +127441,8 @@
       "source_location": {
         "heading": "DL-048 - Platform Decision Custody Reference Lifetime",
         "heading_level": 3,
-        "heading_line": 3968,
-        "line": 3970,
+        "heading_line": 4020,
+        "line": 4022,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127447,8 +127458,8 @@
       "source_location": {
         "heading": "DL-049 - Completed Compaction Detail Seven-Day Retention",
         "heading_level": 3,
-        "heading_line": 4031,
-        "line": 4033,
+        "heading_line": 4083,
+        "line": 4085,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127464,8 +127475,8 @@
       "source_location": {
         "heading": "DL-050 - Hosted Repo Requests Route By Selected Adapter",
         "heading_level": 3,
-        "heading_line": 4091,
-        "line": 4093,
+        "heading_line": 4143,
+        "line": 4145,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127481,8 +127492,8 @@
       "source_location": {
         "heading": "DL-051 - New Repository Object Format Picker Evidence Gated",
         "heading_level": 3,
-        "heading_line": 4166,
-        "line": 4168,
+        "heading_line": 4218,
+        "line": 4220,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127498,8 +127509,8 @@
       "source_location": {
         "heading": "DL-052 - Source Graph Parent Reference Bound Thirty Two With Fetch The Rest",
         "heading_level": 3,
-        "heading_line": 4236,
-        "line": 4238,
+        "heading_line": 4288,
+        "line": 4290,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127515,8 +127526,8 @@
       "source_location": {
         "heading": "DL-053 - Source Graph Node Reference Unique Within A Page",
         "heading_level": 3,
-        "heading_line": 4302,
-        "line": 4304,
+        "heading_line": 4354,
+        "line": 4356,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127532,8 +127543,8 @@
       "source_location": {
         "heading": "DL-054 - Parent List Truncates Only At The Bound And Expansion Echoes Currentness",
         "heading_level": 3,
-        "heading_line": 4363,
-        "line": 4365,
+        "heading_line": 4415,
+        "line": 4417,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127549,8 +127560,8 @@
       "source_location": {
         "heading": "DL-055 - Plan Layer Seal Is A Production Seal With Repository Gates At Landing",
         "heading_level": 3,
-        "heading_line": 4431,
-        "line": 4433,
+        "heading_line": 4483,
+        "line": 4485,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127566,8 +127577,8 @@
       "source_location": {
         "heading": "DL-056 - Conflict And Merge Editors Are Read Only Or Built In On A Jujutsu Workspace",
         "heading_level": 3,
-        "heading_line": 4518,
-        "line": 4520,
+        "heading_line": 4570,
+        "line": 4572,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127583,8 +127594,8 @@
       "source_location": {
         "heading": "DL-057 - A Bookmark Control Says Which Remotes It Touches Before It Touches Them",
         "heading_level": 3,
-        "heading_line": 4589,
-        "line": 4591,
+        "heading_line": 4641,
+        "line": 4643,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127600,8 +127611,8 @@
       "source_location": {
         "heading": "DL-058 - The Seven Shapes The Continuation 4 Corrections Take",
         "heading_level": 3,
-        "heading_line": 4664,
-        "line": 4666,
+        "heading_line": 4716,
+        "line": 4718,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127617,8 +127628,8 @@
       "source_location": {
         "heading": "DL-059 - Branch Policies Are Shown On A Pull Request And The Branch Read Is Deferred",
         "heading_level": 3,
-        "heading_line": 4750,
-        "line": 4752,
+        "heading_line": 4802,
+        "line": 4804,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127634,8 +127645,8 @@
       "source_location": {
         "heading": "DL-060 - An Azure Vote Is Bound To The Revision Puppet Master Observed",
         "heading_level": 3,
-        "heading_line": 4803,
-        "line": 4805,
+        "heading_line": 4855,
+        "line": 4857,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127651,8 +127662,8 @@
       "source_location": {
         "heading": "DL-061 - The Checks View Leads With Evaluations And Separates Unwatched Statuses",
         "heading_level": 3,
-        "heading_line": 4859,
-        "line": 4861,
+        "heading_line": 4911,
+        "line": 4913,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127668,8 +127679,8 @@
       "source_location": {
         "heading": "DL-062 - One Gate List With A Source Column And An Enforcement Column",
         "heading_level": 3,
-        "heading_line": 4915,
-        "line": 4917,
+        "heading_line": 4967,
+        "line": 4969,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127685,8 +127696,8 @@
       "source_location": {
         "heading": "DL-063 - The Merge Command Gains A Typed Strategy Field That Is Always Shown",
         "heading_level": 3,
-        "heading_line": 4973,
-        "line": 4975,
+        "heading_line": 5025,
+        "line": 5027,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127702,8 +127713,8 @@
       "source_location": {
         "heading": "DL-064 - A Requeue Command Disabled With A Typed Reason Where There Is No Equivalent",
         "heading_level": 3,
-        "heading_line": 5030,
-        "line": 5032,
+        "heading_line": 5082,
+        "line": 5084,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127719,8 +127730,8 @@
       "source_location": {
         "heading": "DL-065 - A Provider Neutral Vote And Reviewer Carrier Bound The Way DL-060 Binds",
         "heading_level": 3,
-        "heading_line": 5087,
-        "line": 5089,
+        "heading_line": 5139,
+        "line": 5141,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127736,8 +127747,8 @@
       "source_location": {
         "heading": "DL-066 - Plan Seal Acceptance Is Bounded By One Review And One Repair Round",
         "heading_level": 3,
-        "heading_line": 5147,
-        "line": 5149,
+        "heading_line": 5199,
+        "line": 5201,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127753,8 +127764,8 @@
       "source_location": {
         "heading": "DL-067 - Landing Checks Report Only Failures New Since A Recorded Baseline",
         "heading_level": 3,
-        "heading_line": 5216,
-        "line": 5218,
+        "heading_line": 5268,
+        "line": 5270,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127770,8 +127781,8 @@
       "source_location": {
         "heading": "DL-068 - Quarantine Cleanup Keeps Only The Existing Audit Trail",
         "heading_level": 3,
-        "heading_line": 5302,
-        "line": 5304,
+        "heading_line": 5354,
+        "line": 5356,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127787,8 +127798,8 @@
       "source_location": {
         "heading": "DL-069 - SafePoint Summary Retention Clock Starts At First Durable Publication",
         "heading_level": 3,
-        "heading_line": 5356,
-        "line": 5358,
+        "heading_line": 5408,
+        "line": 5410,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127804,8 +127815,8 @@
       "source_location": {
         "heading": "DL-070 - Moving The Last Terminal Workgroup Leaves The Old Section Empty",
         "heading_level": 3,
-        "heading_line": 5405,
-        "line": 5407,
+        "heading_line": 5457,
+        "line": 5459,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127821,8 +127832,8 @@
       "source_location": {
         "heading": "DL-071 - Account Switch History Uses The Existing Switch Record",
         "heading_level": 3,
-        "heading_line": 5461,
-        "line": 5463,
+        "heading_line": 5513,
+        "line": 5515,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127838,8 +127849,8 @@
       "source_location": {
         "heading": "DL-072 - Continuation Suppression Diagnostic Stays Transient",
         "heading_level": 3,
-        "heading_line": 5510,
-        "line": 5512,
+        "heading_line": 5562,
+        "line": 5564,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127855,8 +127866,8 @@
       "source_location": {
         "heading": "DL-073 - Doctor Media Check Result Stays Check Output",
         "heading_level": 3,
-        "heading_line": 5555,
-        "line": 5557,
+        "heading_line": 5607,
+        "line": 5609,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127872,8 +127883,8 @@
       "source_location": {
         "heading": "DL-074 - Task Failure Is A Presentation Notification Over Child Run History",
         "heading_level": 3,
-        "heading_line": 5598,
-        "line": 5600,
+        "heading_line": 5650,
+        "line": 5652,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -127889,8 +127900,25 @@
       "source_location": {
         "heading": "DL-075 - Runtime Artifact Event Histories Are Kept Indefinitely",
         "heading_level": 3,
-        "heading_line": 5646,
-        "line": 5648,
+        "heading_line": 5698,
+        "line": 5700,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "storage_owner_closeout_20260924",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-076",
+      "reasoning_tier": "high",
+      "risk_class": "storage_digest_recipe_or_persisted_live_fence_drift",
+      "source_location": {
+        "heading": "DL-076 - Storage Wrapper Digest Recipe And Durable Read Token Without Snapshot Id",
+        "heading_level": 3,
+        "heading_line": 5751,
+        "line": 5753,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -212665,10 +212693,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15646,
+    "depends_on_edge_count": 15648,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18345,
-    "node_count": 6718,
+    "edge_count": 18347,
+    "node_count": 6719,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0

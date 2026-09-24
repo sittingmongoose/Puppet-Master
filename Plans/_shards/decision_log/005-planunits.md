@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L1470-L5820
+Source lines: L1522-L5930
 
-Source SHA256: `daa68e9c6155c3b937896eeab640403235315784ba54db71af05e7c04e03e945`
+Source SHA256: `9047f3f2c11514ebae488b7f68ece59fd752c6ac1793d901bec746bea43ce41d`
 
 ---
 
@@ -4234,6 +4234,64 @@ negative_constraints:
   - Do not let event retention grant access to a linked artifact body or override an applicable deletion requirement.
 owner_hints:
   - Plans/Runtime_Artifacts_Panel.md
+  - Plans/storage-plan.md
+```
+
+### DL-076 - Storage Wrapper Digest Recipe And Durable Read Token Without Snapshot Id
+
+```yaml
+plan_unit_id: DL-076
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared, by delegation to the coordinator, decided two Storage owner questions on
+  2026-09-24. Each whole_wrapper_sha256 in the SP-310 physical profile declaration is
+  the SHA-256 of the resolved wrapper definition written as two-space indented JSON
+  with keys in document order and one final LF; SP-310 states the recipe and readiness
+  checks it. A stored SP-278 read token is the nine-field durable token
+  (DurableGenericToken) without redb_snapshot_id. The four filtered checkpoints that
+  stored the whole token store the durable token, every read joins the snapshot id of
+  its own live read, and SP-311's never-persist rule stays whole.
+gui_related: false
+gui_classification_reason: Decides Storage digest and persisted-token rules, not visual presentation.
+split_recommended: false
+depends_on: [DL-045, DL-046]
+unblocks: []
+acceptance_criteria:
+  - SP-310 states the whole_wrapper_sha256 recipe with a DL-076 citation, and readiness rejects a member whose declared digest differs from the recomputed one.
+  - SP-278 defines the nine-field durable read token; SP-282, SP-270, SP-273 and SP-275 store it, and no stored value holds redb_snapshot_id.
+  - Readiness rejects any redb_snapshot_id property that a stored value could hold, with positive and negative self-tests.
+  - Plans/event_record_index_checkpoint.schema.json, the frozen Home2 reader schema and SP-311's text are unchanged.
+validation_surfaces:
+  - python3 scripts/pm-implementation-readiness.py validate
+  - python3 -m unittest tests.test_pm_runtime_vocabulary_migration tests.test_pm_browser_workspace_reset
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: storage_digest_recipe_or_persisted_live_fence_drift
+reasoning_tier: high
+context_scope: storage_owner_closeout_20260924
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - scripts/pm-implementation-readiness.py
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/storage-registry-repairs-20260923/REPORT.md
+  - reports/storage-owner-closeout-20260924/REPORT.md
+  - reports/event-authority-20260911/step-08-goal-workflow-coordinator-checks.json
+preserved_exact_tokens:
+  - "whole_wrapper_sha256"
+  - "redb_snapshot_id"
+  - "DurableGenericToken"
+negative_constraints:
+  - Do not persist or manufacture a redb snapshot id in any stored value.
+  - Do not change Plans/event_record_index_checkpoint.schema.json or the frozen Home2 reader schema for this decision.
+  - Do not treat the wrapper digest as a stored-value hash or as the pm.goal.cancel_command_json.v1 codec.
+owner_hints:
   - Plans/storage-plan.md
 ```
 

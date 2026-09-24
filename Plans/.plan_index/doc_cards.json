@@ -5404,10 +5404,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 34,
+        "False": 35,
         "True": 38
       },
-      "heading_count": 150,
+      "heading_count": 152,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5480,13 +5480,14 @@
         "Plans/storage_value_registry.json",
         "Plans/storage_value_registry.schema.json",
         "Plans/touch_closure.json",
+        "scripts/pm-implementation-readiness.py",
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 5848,
+      "line_count": 5958,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 72,
+      "plan_unit_count": 73,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5559,6 +5560,7 @@
         "DL-073",
         "DL-074",
         "DL-075",
+        "DL-076",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5624,6 +5626,7 @@
         "silent_no_op_or_undisclosed_build_cancellation",
         "silently_transferred_approval_evidence",
         "source_control_orchestrator_boundary_drift",
+        "storage_digest_recipe_or_persisted_live_fence_drift",
         "support_decision_state_drift",
         "task_failure_persistence_boundary_drift",
         "terminal_input_protection_scope_bypass",
@@ -5638,16 +5641,16 @@
         "unrenderable_branch_policy_promise",
         "weak_integration_underclassification"
       ],
-      "sha256": "daa68e9c6155c3b937896eeab640403235315784ba54db71af05e7c04e03e945",
+      "sha256": "9047f3f2c11514ebae488b7f68ece59fd752c6ac1793d901bec746bea43ce41d",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 72
+        "accepted": 73
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 69
+        "requirement": 70
       },
       "validation_surfaces": [
         "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
@@ -5667,10 +5670,12 @@
         "exact supplemental nine-packet set-equality check",
         "exact supplemental three-packet set-equality check",
         "python3 -m unittest tests.test_pm_jujutsu_closure_semantics",
+        "python3 -m unittest tests.test_pm_runtime_vocabulary_migration tests.test_pm_browser_workspace_reset",
         "python3 -m unittest tests.test_pm_source_control_effects",
         "python3 -m unittest tests.test_pm_wiring_vocabulary",
         "python3 scripts/pm-browser-event-admission.py",
         "python3 scripts/pm-event-authority-currentness.py validate",
+        "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-landing-check.py --base origin/main",
         "python3 scripts/pm-landing-check.py --record-baseline",
         "python3 scripts/pm-new-contracts-verify.py",
@@ -19949,7 +19954,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-24T14:48:29Z",
+  "generated_at_utc": "2026-09-24T14:49:20Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19957,13 +19962,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3522,
+      "False": 3523,
       "True": 3196
     },
-    "plan_unit_count": 6718,
+    "plan_unit_count": 6719,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6527,
+      "accepted": 6528,
       "retired": 182,
       "superseded": 9
     },
@@ -20030,7 +20035,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5276,
+      "requirement": 5277,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
