@@ -72,6 +72,10 @@
     accelerate: bezier(0.3, 0, 1, 1),
     overshoot: bezier(0.34, 1.56, 0.64, 1),
     glide: bezier(0.22, 0.61, 0.36, 1),
+    /* a hand reaching for something: speeds up, then slows into the target (the Show Me pointer and its drags) */
+    hand: bezier(0.45, 0.05, 0.2, 1),
+    handSpring: bezier(0.42, 0, 0.3, 1.16),
+    handGlide: bezier(0.32, 0.08, 0.12, 1),
     steps: (n) => (t) => Math.min(1, Math.floor(t * n + 1e-9) / n)
   };
   /* Per-family curves: Basic crisp standard, Friendly springy overshoot, Glass long emphasized glide, Retro stepped. */

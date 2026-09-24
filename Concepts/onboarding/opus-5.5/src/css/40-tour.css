@@ -73,7 +73,9 @@ body.pm-home-dragging .o55t-callout { opacity: 0.16; }
 .o55t-root[data-family="glass"] .o55t-morph { border-color: rgba(255, 255, 255, 0.3); box-shadow: 0 30px 70px -16px rgba(25, 10, 50, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.35); }
 .o55t-root[data-family="retro"] .o55t-morph { border: 3px solid var(--text-primary); box-shadow: 8px 8px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); }
 .o55t-callout.o55t-morphing { opacity: 0; }
-#pm-o55-onboarding.o55-handoff .o55-win { animation: none !important; opacity: 0 !important; }
+/* the window's words fade out over the same surface that then shrinks into the callout: a hand-over, not a blink */
+#pm-o55-onboarding.o55-handoff .o55-win { animation: o55-fadeout 140ms ease both !important; }
+html[data-motion="reduced"] #pm-o55-onboarding.o55-handoff .o55-win { animation-duration: 100ms !important; }
 
 /* callout: one outcome, one instruction, Show Me and Back */
 .o55t-callout { position: fixed; left: 0; top: 0; width: min(380px, calc(100vw - 32px)); pointer-events: auto; padding: 18px 18px 14px; border-radius: var(--o55t-r);

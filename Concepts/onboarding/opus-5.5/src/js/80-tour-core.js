@@ -189,6 +189,7 @@
   }
   function placeCallout() {
     const c = st.root.querySelector('.o55t-callout'); if (!c) return;
+    if (document.body.classList.contains('pm-home-dragging') && st.cpos) return; /* it has stepped back; it holds still */
     const W = innerWidth, H = innerHeight, cw = c.offsetWidth || 360, chh = c.offsetHeight || 180, m = 16, gap = 18;
     const h = !st.missing ? st.dest || st.hole : null;
     /* the band the callout may use: below the title bar and clear of the tour bar, wherever the bar sits (on a narrow
@@ -257,11 +258,14 @@
     hide() { const p = P.el(); p.classList.remove('o55t-on', 'o55t-press'); },
     /* travel on a gentle arc; the destination is pre-cued before the pointer leaves */
     async moveTo(x, y, dur) {
-      if (!P.pos) { const c = st.root.querySelector('.o55t-callout').getBoundingClientRect(); P.show(c.left + c.width / 2, c.top + c.height / 2); await M.delay(120); }
-      const from = Object.assign({}, P.pos), mx = (from.x + x) / 2, my = Math.min(from.y, y) - Math.min(120, Math.hypot(x - from.x, y - from.y) * 0.25);
-      const retro = family() === 'retro';
+      /* the pointer emerges from the Show Me button the learner just pressed (else from the callout's middle) */
+      if (!P.pos) { const b = st.root.querySelector('.o55t-callout [data-o55t="showMe"]'), c = (b || st.root.querySelector('.o55t-callout')).getBoundingClientRect(); P.show(c.left + c.width / 2, c.top + c.height / 2); await M.delay(80); }
+      const from = Object.assign({}, P.pos), dist = Math.hypot(x - from.x, y - from.y), mx = (from.x + x) / 2, my = Math.min(from.y, y) - Math.min(120, dist * 0.25);
+      /* like a hand: time grows with distance (Fitts), speed up then settle into the target, in the family's manner */
+      const fam = family(), d = dur || Math.round(Math.min(760, Math.max(420, 360 + dist * 0.32)));
+      const ease = fam === 'retro' ? M.ease.steps(8) : fam === 'friendly' ? M.ease.handSpring : fam === 'glass' ? M.ease.handGlide : M.ease.hand;
       await new Promise((res) => {
-        M.tween({ from: 0, to: 1, duration: dur || M.T.travel, ease: retro ? M.ease.steps(10) : M.ease.emphasized, ignoreReduced: false, onUpdate: (t) => {
+        M.tween({ from: 0, to: 1, duration: fam === 'glass' ? Math.round(d * 1.12) : d, ease, ignoreReduced: false, onUpdate: (t) => {
           if (st.show && st.show.cancelled) return;
           const px = (1 - t) * (1 - t) * from.x + 2 * (1 - t) * t * mx + t * t * x, py = (1 - t) * (1 - t) * from.y + 2 * (1 - t) * t * my + t * t * y;
           P.pos = { x: px, y: py }; P.el().style.transform = `translate(${px}px, ${py}px)`;
@@ -280,7 +284,8 @@
     async click(el, o) {
       if (!el || SM.cancelled()) return false;
       el.scrollIntoView && el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-      await SM.cue(el); if (SM.cancelled()) return false;
+      /* the destination is cued as the pointer sets off, not before: the glow and the travel overlap */
+      SM.cue(el); await M.delay(90); if (SM.cancelled()) return false;
       const c = center(el); await P.moveTo(c.x, c.y); if (SM.cancelled()) return false;
       await P.press(true); O55.sound.play('tap');
       const opts = { bubbles: true, cancelable: true, clientX: c.x, clientY: c.y, button: 0, pointerId: 1, pointerType: 'mouse', isPrimary: true };
@@ -293,15 +298,15 @@
     /* a real drag: pointerdown on the grip, a stream of pointermoves, pointerup at the destination */
     async drag(el, to, o) {
       if (!el || SM.cancelled()) return false;
-      const a = center(el); await SM.cue(el); await P.moveTo(a.x, a.y); if (SM.cancelled()) return false;
+      const a = center(el); SM.cue(el); await M.delay(90); await P.moveTo(a.x, a.y); if (SM.cancelled()) return false;
       await P.press(true); O55.sound.play('pickup');
       const base = { bubbles: true, cancelable: true, button: 0, buttons: 1, pointerId: 7, pointerType: 'mouse', isPrimary: true };
       el.dispatchEvent(new PointerEvent('pointerdown', Object.assign({ clientX: a.x, clientY: a.y }, base)));
-      const steps = (o && o.steps) || 42, dur = (o && o.dur) || 1500;
+      const span = Math.hypot(to.x - a.x, to.y - a.y), steps = (o && o.steps) || 42, dur = (o && o.dur) || Math.round(Math.min(1500, Math.max(900, 700 + span * 0.5)));
       const mx = (a.x + to.x) / 2, my = Math.min(a.y, to.y) - 60;
       for (let i = 1; i <= steps; i++) {
         if (SM.cancelled()) break;
-        const t = M.ease.emphasized(i / steps), x = (1 - t) * (1 - t) * a.x + 2 * (1 - t) * t * mx + t * t * to.x, y = (1 - t) * (1 - t) * a.y + 2 * (1 - t) * t * my + t * t * to.y;
+        const t = (family() === 'retro' ? M.ease.steps(12) : M.ease.hand)(i / steps), x = (1 - t) * (1 - t) * a.x + 2 * (1 - t) * t * mx + t * t * to.x, y = (1 - t) * (1 - t) * a.y + 2 * (1 - t) * t * my + t * t * to.y;
         P.pos = { x, y }; P.el().style.transform = `translate(${x}px, ${y}px)`;
         const tgt = document.elementFromPoint(x, y) || document;
         tgt.dispatchEvent(new PointerEvent('pointermove', Object.assign({ clientX: x, clientY: y }, base)));
@@ -375,7 +380,11 @@
       st.poll = M.after(140, tick);
     };
     st.poll = M.after(140, tick);
+    /* a command receipt (a panel moved, a widget placed) re-checks at once, so success is acknowledged in the frame
+       the app confirms it rather than at the next poll */
+    st.kick = () => { if (!TR.running || st.paused) return; if (st.poll) st.poll.cancel(); tick(); };
   }
+  window.addEventListener('pm:dispatch-receipt', () => { if (st.kick && TR.running) queueMicrotask(st.kick); });
   /* success: acknowledge in the same frame, show the "after" line, then move on (the advance guard stops doubles) */
   function complete(s) {
     if (st.advancing) return; st.advancing = true;

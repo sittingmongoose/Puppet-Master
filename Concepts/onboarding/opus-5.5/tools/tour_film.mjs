@@ -41,7 +41,8 @@ const HELPERS = `window.__f = {
 
 /* setup(): bring the page to the moment (normal speed, then it settles). trigger(): the action filmed at t = 0. */
 const SCENES = {
-  'handoff': { frames: 110, setup: async () => { if (window.O55.tour.running) await window.O55.tour.skip(); localStorage.removeItem('pm.o55.tour.v1'); window.O55.ui.open({ fresh: true }); await __f.wait(1200); window.O55.ui.go('ready', { silent: true }); await __f.wait(1600); },
+  /* the Ready screen of a finished setup (a committed Project), where Take the Guided Tour is offered */
+  'handoff': { frames: 110, setup: async () => { if (window.O55.tour.running) await window.O55.tour.skip(); localStorage.removeItem('pm.o55.tour.v1'); window.O55.ui.open({ fresh: true }); await __f.wait(1200); const S = window.O55.ui.S; S.sess.drafts.main.project_name = 'Book club website'; S.sess.commit = { state: 'done', projectId: 'tastebook' }; window.O55.ui.go('ready', { silent: true }); await __f.wait(1800); },
     trigger: () => __f.click('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-primary') },
   'tour-open': { frames: 96, setup: async () => { if (window.O55.tour.running) await window.O55.tour.skip(); localStorage.removeItem('pm.o55.tour.v1'); },
     trigger: () => window.PM7_GUIDED_TOUR.start({ project: 'tastebook', fresh: true }) },
