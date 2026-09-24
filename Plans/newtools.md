@@ -8726,6 +8726,22 @@ Doctor owns exactly one `DoctorCheckDescriptor` registry. Every active row has a
 
 Registration is fail-closed. Duplicate active IDs, missing owners, missing schemas, an unregistered remediation action, a mutating probe, an unbounded target selector, protected-auth access, or a secret-bearing result schema rejects the descriptor. A domain owner may mark a check unavailable or unsupported; Doctor shows that truth and does not synthesize healthy. SQLite detection is `blocked`, never a supported backend option.
 
+### Required diagnostic coverage
+
+The September 3 diagnostic census is a coverage obligation for this one registry, not a second registry or a fixed count of runtime probes. Each applicable dimension below must resolve to an owner-backed active descriptor or an explicit unavailable/unsupported projection. A descriptor may compose bounded owner evidence, and one check may project into multiple relevant groups without duplicate active IDs or duplicate probes. Applicability, intentional Off, support, permission, cost, cache, currentness and resource admission remain the rules above. All probes remain read-only: fetch/push permission health never authorizes a fetch, push, repair or sign-in mutation.
+
+| Group | Required diagnostic dimensions |
+|---|---|
+| Puppet Master Server | Claim/owner state, Server identity, Catalog/Project-Vault access, Client/Server protocol compatibility, current Client connection, Nearby discovery freshness, endpoint identity deduplication, and application update/restart requirement. |
+| Devices & Remote Access | Trusted Clients and pairing health; LAN; PM Go/tsnet connector process/version/persistent identity; hosted Tailscale authentication and private listener/reachability; Headscale control/registration; Funnel only when enabled; nginx/Traefik TLS/origin/WebSocket/trusted-proxy policy; Remote Link signaling/direct/relay/end-to-end encryption; manually configured VPN endpoint/identity/protocol readiness. Reuse N2-156 connector axes, not a second connector probe. |
+| AI Services | Provider installation only where required, authentication profile, account/product selection, model/capability, generation readiness, and independent Usage telemetry. Authentication or account success implies neither generation nor Usage success. |
+| Code & Version History | Source path/mount/SSH reachability; Git/JJ executable and repository health; remote identity; separate fetch and push credential/permission readiness; conflicts, LFS and submodules; forge API account/scopes/version/capabilities; review API; provider-appropriate Actions/Pipelines; Origin CLI/profile only when used. Forge API authentication cannot substitute for Git transport readiness. |
+| Backups & Recovery | Destination authentication/reachability, encrypted repository unlock status, Recovery Key/Kit public readiness, last complete backup, source/JJ coverage, verification/integrity, restore drill, retention/hold/prune, quota/archive retrieval and restore compatibility. Reuse N2-156 owner evidence and protected-data/no-mutation rules; Doctor never reads key/Kit bytes or unlocks a repository. |
+| Updates | Application version/channel/install source, content/catalog currentness, helper/tool update readiness, migration/pre-update backup/recovery, rollback availability, and Client/Server protocol compatibility. Application update appearing in Server and Updates is one shared fact, not permission for duplicate active check identities. |
+| Optional Capabilities | WSL, Apple Linux environment, GPU/KVM/Android/attached devices, container engines/clusters/registries, testing/debugging, LSP/formatters, plugins/skills/tools/MCP, only when configured, enabled or required by active work. Preserve each composite dimension; one Android or MCP check does not cover its sibling capabilities. Intentional Off is healthy when no active work requires it. Reuse existing domain checks, including N2-154 plugin checks; skill validation errors and formatter binary availability are required diagnostic dimensions, not merely audit suggestions. |
+
+Source matrix labels identify retained obligations, not newly registered `doctor.*` IDs. Its 52 group occurrences contain 51 distinct tokens (`app_update` appears in two groups); neither count prescribes the runtime descriptor cardinality. Descriptor/schema/fixture companions must account for every source occurrence and the detailed composite dimensions, with exact owner, applicability and unsupported outcomes. A schema-valid generic descriptor alone does not prove that coverage or native execution. Final Product Onboarding invokes only its draft-required subset, not this whole inventory.
+
 ### Scheduling, caching, and stale rejection
 
 Opening Doctor reads bounded cached projections first. It does not probe every configured record. The router selects visible, configured, relevant, stale, user-requested, or prerequisite checks; coalesces equal owner/target requests; obtains RuntimeResourceGovernor admission; and exposes one owner `ObservableWork` record. Cost classes are `instant_cached`, `light_local`, `network_bounded`, or `expensive_explicit`. Only `instant_cached` may run at entry without a user gesture. `expensive_explicit` requires an exact target and explicit action.
@@ -8733,6 +8749,10 @@ Opening Doctor reads bounded cached projections first. It does not probe every c
 Every request binds `doctor_request_id`, `check_id`, Project/Server/Host/Environment/route/object identities as applicable, descriptor revision, owner projection generation, cache generation, deadline, permission snapshot, actor, redaction profile, and idempotency key. Results carry the same identities plus observed generation, start/finish time, evidence refs, receipt refs, and an owner result ref. Older descriptor, target, owner, cache, or continuation generations cannot overwrite a newer projection. Timeout, disconnect, interruption, and cancellation preserve the last known result with stale/interrupted disclosure; they do not become `healthy`.
 
 Low-resource mode reduces concurrency and schedules checks in waves without removing domains. Closing Doctor detaches the viewer and does not cancel owner work; reopening joins the existing `ObservableWork` and current projection. A Client switch, Server restart, route change, or reconnect resumes only through matching durable owner identity and currentness.
+
+An explicit user-requested **Run All Checks** is a finite, applicability-scoped composition of existing exact owner checks for the selected Doctor scope, never unbounded global discovery or an automatic entry sweep. Resolve applicable configured/current targets through this registry and freeze their exact owner, target, descriptor and currentness bindings for the request. Run only admitted read-only checks under existing per-check timeout, cost, coalescing and RuntimeResourceGovernor rules. Low-resource waves retain required domains. A target or descriptor change invalidates affected work rather than silently broadening the frozen set. Unsupported, deferred, skipped, cancelled, stale and failed items remain explicit; a partial batch cannot claim complete health.
+
+The composition exposes truthful progress and stop/cancel/retry through existing owner `ObservableWork` semantics. Stopping future scheduling is not proof that an in-flight owner operation was cancelled; each running check uses its owner's supported cancellation boundary, and unsupported cancellation stays visible. Closing Doctor only detaches the viewer. Settings, Onboarding and other Clients join identical in-flight owner work rather than duplicate probes. This bounded composition does not register `cmd.doctor.run_all`, authorize mutation, create a Doctor domain handler or turn `refresh_visible` into an unrestricted all-record sweep. Its finite-set/controller contract and causal fixtures must be materialized separately; this prose does not claim that the existing single-check/visible-refresh schemas already enforce batch semantics.
 
 ### Normalized finding projection
 
@@ -8771,7 +8791,7 @@ plan_unit_id: N2-152
 unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Doctor owns one versioned registry of stable read-only check descriptors and one bounded cached-first router with exact targets, cost classes, RuntimeResourceGovernor admission, ObservableWork, dedupe, freshness, generation fencing, redaction, and owner remediation routing; domain owners retain truth and every mutation.
+canonical_text: Doctor owns one versioned registry of stable read-only check descriptors covering the required seven diagnostic groups and one bounded cached-first router with exact targets, cost classes, RuntimeResourceGovernor admission, ObservableWork, dedupe, freshness, generation fencing, redaction, owner remediation routing and explicitly requested finite Run All composition; domain owners retain truth and every mutation.
 gui_related: false
 depends_on: [N2-151, SIR-003, SIR-004, SIR-007, PSB-001]
 unblocks: []
@@ -8780,6 +8800,11 @@ acceptance_criteria:
   - Cached entry does not trigger an exhaustive probe storm and stale results cannot overwrite newer owner state.
   - Closing Doctor detaches the viewer without cancelling owner work.
   - One-time registry/cache migration preserves descriptor/finding currentness, names every dropped or quarantined row, references the canonical storage migration receipt, and cannot replay owner work or perform private repair.
+  - Every applicable September 3 source diagnostic dimension maps to an owner-backed descriptor or explicit unsupported/unavailable projection across Server, Devices and Remote Access, AI Services, Code and Version History, Backups and Recovery, Updates, and Optional Capabilities; source labels/counts do not mint active IDs or prove native checks.
+  - Composite dimensions preserve fetch versus push, forge API versus Git transport, reachability versus protocol/trust, Remote Link direct versus relay/E2E, LSP versus formatter availability, skill validation and independent provider generation versus Usage; optional Off does not degrade unrelated health.
+  - Explicit Run All freezes a finite applicable owner/target/descriptor/currentness set, coalesces existing work, obeys per-check bounds and governor admission, and uses waves without dropping required domains; entry, stale-set broadening and mutating probes are forbidden.
+  - Run All progress distinguishes partial, deferred, unsupported, cancelled, stale and failed work from complete health; stop-future-scheduling, supported owner cancellation and viewer detachment remain distinct, with no cmd.doctor.run_all registration or unrestricted refresh_visible sweep.
+  - Final Product Onboarding runs only draft-required checks; full source coverage and finite-batch semantics require separate exact companion validation, not a generic-descriptor or single-check schema pass.
 validation_surfaces: [Plans/doctor_contracts.schema.json, Plans/doctor_contract_fixtures.json, registry and scheduling negative fixtures]
 risk_class: doctor_registry_collision_or_parallel_engine
 reasoning_tier: high
@@ -8788,6 +8813,9 @@ implementation_surfaces: [Plans/newtools.md, Plans/doctor_contracts.schema.json]
 node_compile_hint: {mode: doctor_registry_router_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - "source_report:register-settings-onboarding.md#D-01-through-D-07"
+  - PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/07_DOCTOR_HEALTH_AND_REMEDIATION.md:7-35,95-103,124-126
+  - PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/machine/doctor_check_matrix.json
+  - PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/10_ACCEPTANCE_FAILURE_AND_USABILITY_MATRIX.md:103-110
 negative_constraints: [Do not let Doctor own domain truth., Do not run mutating or unbounded probes., Do not expose protected authentication content.]
 ```
 
@@ -8880,6 +8908,8 @@ Doctor remains a registry/router/projection owner, not the owner of every diagno
 | 50 / `machine/command_census.json:540` | `cmd.doctor.run_check` -> `ui.doctor.run_check` | Run one exact bounded check through its domain owner and replace state only from a fresh owner result. |
 
 The six `ui.doctor.*` rows have typed request/result records, but no Doctor semantic-domain handler and no domain EventRecord. A local controller may route `run_check` or `open_remediation` to an already-admitted exact semantic-owner operation; that owner result remains the only mutation/truth evidence. Local results are bounded and redacted, preserve exact currentness/focus/return context, and cannot claim owner success from navigation, focus, cache, or stale state.
+
+The retained rejection of the packet spelling `cmd.doctor.run_all` concerns that unbounded global sweep, not the September 3 requirement for explicitly requested bounded Run All Checks. The latter is the finite owner-check composition specified by N2-152 above. It does not change the historical rejection record, register a new command/local-action identity or claim an existing batch carrier.
 
 The exact GUI consumers for the export and all six local actions are Settings > Doctor and Doctor finding/detail/return surfaces.
 
