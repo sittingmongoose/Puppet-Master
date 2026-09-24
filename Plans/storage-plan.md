@@ -26774,7 +26774,8 @@ exact membership and created-section truth, unchanged closed payload, original
 result/append joins and complete current SP-278 source/token. Paired negatives
 must reject a foreign operation/correlation, source owning another workgroup,
 missing/extra/duplicated pane or session identity, changed PTY, wrong creation
-fact, same-section no-op masquerading as move, a reseeded vacated source section
+fact, same-section no-op masquerading as move, a cancelled or failed
+(rolled_back=true) operation carrying a moved event, a reseeded vacated source section
 or reported reseed (DL-070), fifth-section admission, false
 rollback after possible append, lost acknowledgement remint, missing required
 Home sibling settlement, first-receipt/full-value substitution, stale same-generation

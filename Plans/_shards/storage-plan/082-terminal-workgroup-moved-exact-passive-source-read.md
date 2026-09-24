@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L26642-L26834
+Source lines: L26642-L26835
 
-Source SHA256: `8b37bd1b8ee875c5fa67f4ec56509c096cfbd262606cdb686df16061e1db826f`
+Source SHA256: `469e461c1cf890f2feff2b67738eaf884d4ca99dfb468d9d512b0431784f792c`
 
 ---
 
@@ -143,7 +143,8 @@ exact membership and created-section truth, unchanged closed payload, original
 result/append joins and complete current SP-278 source/token. Paired negatives
 must reject a foreign operation/correlation, source owning another workgroup,
 missing/extra/duplicated pane or session identity, changed PTY, wrong creation
-fact, same-section no-op masquerading as move, a reseeded vacated source section
+fact, same-section no-op masquerading as move, a cancelled or failed
+(rolled_back=true) operation carrying a moved event, a reseeded vacated source section
 or reported reseed (DL-070), fifth-section admission, false
 rollback after possible append, lost acknowledgement remint, missing required
 Home sibling settlement, first-receipt/full-value substitution, stale same-generation

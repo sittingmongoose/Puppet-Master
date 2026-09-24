@@ -11791,7 +11791,9 @@ complete source/target sections, workgroup membership, pane/session bindings and
 unchanged PTY ownership. The request's source must actually own the workgroup.
 Use the existing four-section/four-visible-pane rules; disabled-at-limit operations
 do not dispatch, create a section or emit this event. A move to the already-owned
-section with no semantic change is `no_change`, never a fabricated move. A new
+section with no semantic change is `no_change`, never a fabricated move. An
+admitted operation that ends `cancelled`, or `failed` with `rolled_back=true`,
+emits no moved event (CV-323). A new
 section is created only through its actual existing owner. Freeze the exact
 accepted destination and membership before mutation; retries cannot choose a
 new target, recreate a section or obtain fresh session identities.
@@ -11948,7 +11950,7 @@ depends_on: [SMPFS-138, UCC-144, CV-323, CV-333, CV-339, SP-245, SP-273, SP-278,
 unblocks: []
 acceptance_criteria:
   - Authenticate the original request, operation, full owner identity, revisions, current authority and complete membership before effects.
-  - Preserve every pane/session/PTY owner binding; disabled and no_change actions produce no moved event.
+  - Preserve every pane/session/PTY owner binding; disabled, no_change, cancelled and failed (rolled_back=true) operations produce no moved event.
   - Moving a source section's last workgroup leaves that section empty and reusable; the move allocates no replacement workgroup, pane or session, opens no terminal session and reports no reseed (DL-070).
   - Bind exact original owner result, real SIR acknowledgement/outcome and CV-333 response without borrowing Home custody.
   - Refuse producer admission until its closed pending/result companions, SIR delegation and migration are installed.
