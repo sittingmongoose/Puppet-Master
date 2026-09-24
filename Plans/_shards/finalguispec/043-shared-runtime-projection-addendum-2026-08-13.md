@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5308-L26381
+Source lines: L5311-L26397
 
-Source SHA256: `1b7b0f4674c9088b4e042040be5522e66badc19d0008b0d55f9fe63c31ccc4f0`
+Source SHA256: `67f37b6d89db7c1aba45288acbc4f9df3bb02753aca6b03c453b2dbe81fb6a4a`
 
 ---
 
@@ -4275,6 +4275,12 @@ canonical_text: >-
   Theme loading scans custom theme TOML files on startup, validates token schema, skips invalid
   files with warning/toast disclosure, and hot-reloads modified active themes while prompting for
   restart on font changes.
+  Debounce custom-theme file-watch events and suppress retry loops for unchanged invalid theme content while
+  retaining warnings and the last valid effective theme. Large theme/font inventory details are lazy and bounded,
+  without skipping required startup TOML discovery/validation or selected-theme validation. Theme preview and
+  accepted reload invalidate affected token consumers without recompiling/reloading unrelated surfaces. Consume
+  Settings' reversible non-persistent preview and atomic committed Project theme snapshot; font changes retain
+  the restart prompt, not a silent effective-font change.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible theme loading, validation, toast, and live theme update behavior.
@@ -4282,6 +4288,9 @@ split_recommended: true
 depends_on: []
 unblocks: []
 acceptance_criteria:
+- "Theme watch bursts are debounced; unchanged invalid content does not retry-loop or replace the last valid theme."
+- "Lazy bounded theme/font details preserve startup and selected-theme validation, warnings and the font-change restart boundary."
+- "Reversible preview and accepted reload update affected token consumers without recompiling/reloading unrelated surfaces or creating another theme authority."
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
@@ -4299,6 +4308,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0064"
+- PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/source_inputs/09_optimization_settings_load_handoff.md#themes
 preserved_exact_tokens:
 - ".toml"
 - "Theme '{name}' has errors -- see log for details"
@@ -4307,6 +4317,9 @@ preserved_exact_tokens:
 - "re-scan"
 - "font changes"
 - "prompt for restart"
+- "unchanged invalid theme content"
+- "theme/font inventory"
+- "recompiling/reloading unrelated surfaces"
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []

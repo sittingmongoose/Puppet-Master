@@ -89,6 +89,16 @@ ContractRef: SchemaID:pm.shared_runtime.contracts.v1, ContractName:Plans/BinaryL
 
 Discovery success, process exit zero, a PATH hit, version text, authentication state, and usage telemetry are separate evidence layers. None alone proves installation readiness.
 
+For an admitted capability need, resolve in this order:
+
+1. a healthy compatible existing `Installation` / `Connection` in the exact Host/Environment;
+2. a compatible PM-managed `ToolPackage` already in the persistent Tool Store;
+3. a trusted vendor/package source with a supported installation recipe;
+4. a user/organization-managed installation selected explicitly;
+5. unavailable/manual-only with the exact reason.
+
+The first branch includes an already verified compatible explicitly selected installation regardless of ownership. `cmd.installation.select` / SIR-020 selects that exact existing installation without acquisition or authentication; the fourth fallback is not permission to displace it with a cached package or a PATH-order winner. An unverified, incompatible, ambiguous, stale, wrong-topology, or policy-denied candidate is not promoted to ready by selection. The fallback sequence identifies resolution candidates, not authorization to install or mutate them. Each applicable acquisition/activation/maintenance step retains current Off/Auto/On policy, ownership-compatible permission, license/cost, credential, elevation, FileSafe, destructive/paid/external-network approval, provenance and compatibility checks. Provider-CLI first acquisition still stops for explicit official-source Install/Setup under §4.3, never silent demand installation or pre-seeding; user/organization ownership never becomes PM mutation authority through discovery or selection. Unknown ownership remains manual-only. Exact-target coalescing, immutable-image protection, and current originating-operation continuation retain §4.4 and §4.7-§4.9.
+
 ContractRef: ContractName:Plans/BinaryLocator_Spec.md, ContractName:Plans/Release_Supply_Chain.md, SchemaID:pm.shared_runtime.contracts.v1
 
 ### 4.3 Provider CLI exception
@@ -513,6 +523,15 @@ canonical_text: >-
   Project, and owner-specific Plan identities stay owner-defined. A ready capability never executes a stale originating continuation. Existing
   Tools/MCP research-sandbox and explicit persistent-effect approval boundaries remain intact; these demand inputs
   create no requirement registry, WorkNodes, executable queue, or additional acquisition authority.
+  Resolve first a healthy compatible existing Installation/Connection in the exact Host/Environment, then a
+  compatible PM-managed ToolPackage already in the persistent Tool Store, then a trusted vendor/package source
+  with a supported installation recipe, then a user/organization-managed installation selected explicitly, then
+  unavailable/manual-only with the exact reason. A verified compatible explicitly selected installation belongs
+  to the existing-installation branch regardless of ownership; SIR-020 selection does not acquire or authenticate,
+  and the fallback order cannot displace that selection with a cached package or PATH-order winner. Every
+  applicable effect retains current policy, permission, ownership, provenance and approval gates; the sequence
+  never silently acquires a provider CLI, promotes an unverified candidate to ready, or grants external-installation
+  mutation authority. Unknown ownership remains manual-only.
 gui_related: false
 depends_on: [SIR-002]
 unblocks: []
@@ -523,6 +542,8 @@ acceptance_criteria:
   - Each of the seven demand-source classes resolves through existing capability policy; changed inputs invalidate affected requirements incrementally without an all-tool/all-Project startup rescan.
   - Continuation retains exact operation, Project, applicable Plan/Goal/thread/run lineage, capability/version, policy and Host/Environment bindings; a changed originating context leaves the capability ready without executing its stale continuation.
   - Research capability requests preserve temporary isolated run scope and require ordinary explicit approval for persistent Project/Host/Global effects; source Approved Plan/WorkNode terminology creates no WorkNodes or executable queues here.
+  - Resolution preserves all five ordered branches; verified compatible explicit selections are existing installations, not deferred behind package acquisition, and unavailable/manual-only states explain the exact reason.
+  - Candidate resolution never bypasses Off policy, provider-CLI explicit official-source acquisition, ownership-compatible authority, provenance or current approval checks; SIR-020 still cannot acquire, authenticate or select an unverified candidate.
 validation_surfaces: [installation lifecycle tests, provider consent negative tests, rollback tests]
 risk_class: installation_authority_or_provenance_drift
 reasoning_tier: high
@@ -534,7 +555,8 @@ source_lineage:
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md
   - 'Plans/runtime_integration_disposition.json#items[PROV-004,PROV-005,PROV-007,PROV-009,PROV-010,PROV-012,PROV-023,PROV-024]'
   - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/source_inputs/07_demand_driven_capability_provisioning_handoff.md#requirement-sources-and-originating-operation-continuation
-preserved_exact_tokens: [LSP/formatter, test/debug/build/visual/media, browser/native/mobile/emulator/simulator/device, Host/Environment]
+  - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/source_inputs/07_demand_driven_capability_provisioning_handoff.md#resolution-and-installation
+preserved_exact_tokens: [LSP/formatter, test/debug/build/visual/media, browser/native/mobile/emulator/simulator/device, Host/Environment, Installation/Connection, ToolPackage, unavailable/manual-only, user/organization-managed]
 negative_constraints:
   - Do not turn demand into installation permission, silently acquire a provider CLI, widen research provisioning scope, or execute a stale continuation.
   - Do not create WorkNodes, executable queues, or parallel requirement/installation registries from source conceptual record names.

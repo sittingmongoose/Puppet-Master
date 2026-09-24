@@ -4242,7 +4242,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 23380,
+      "line_count": 23391,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 350,
       "plan_unit_ids": [
@@ -4950,7 +4950,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "9753361f6702fae3b897aa0d1791de664b1f4f0cac04959935ca948fe721862d",
+      "sha256": "64b412d47d476cf1263a73af7bea0c2c90ab5922d86473d87eb74550b652a5ae",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 350
@@ -7169,7 +7169,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 38217,
+      "line_count": 38244,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 561,
       "plan_unit_ids": [
@@ -7833,7 +7833,7 @@
         "visualizer_script_policy_drift",
         "wand_overflow_or_demo_command_pollution"
       ],
-      "sha256": "1b7b0f4674c9088b4e042040be5522e66badc19d0008b0d55f9fe63c31ccc4f0",
+      "sha256": "67f37b6d89db7c1aba45288acbc4f9df3bb02753aca6b03c453b2dbe81fb6a4a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 560,
@@ -16749,7 +16749,7 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 3133,
+      "line_count": 3155,
       "path": "Plans/Shared_Integration_Runtime.md",
       "plan_unit_count": 52,
       "plan_unit_ids": [
@@ -16863,7 +16863,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "e6dec4b6391e267dfca403d838336740260d51c3913433859559a889a7d105da",
+      "sha256": "fd0e31ff97d87160dde834b06d9d4d17f4bd2b36d14180e2f75498ef229c47d0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -20004,7 +20004,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T05:02:04Z",
+  "generated_at_utc": "2026-09-25T05:02:42Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
