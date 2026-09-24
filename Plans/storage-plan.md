@@ -26824,7 +26824,7 @@ node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_n
 source_lineage: [Plans/Decision_Log.md#DL-039, Plans/Decision_Log.md#DL-045, Plans/Contracts_V0.md#CV-323, Plans/storage-plan.md#SP-278, Plans/Decision_Log.md#DL-070, Plans/Decision_Log.md#DL-076, reports/event-authority-20260911/takeover-20260923.md, reports/event-authority-20260911/step-08-terminal-workgroup-draft-repair-20260924.md]
 preserved_exact_tokens: [terminal.workgroup_moved, none_required, RP-AUTHORITY-INDEFINITE]
 stale_retired_dispositions:
-  - Drafted as SP-314 on the unlanded branch plans/terminal-workgroup-depth-20260923 (commit 254505ccf9) and renumbered SP-319 on 2026-09-24,
+  - Drafted as SP-314 on the unlanded branch plans/terminal-workgroup-depth-20260923 (commit 93bbc67c85, rebased from 254505ccf9) and renumbered SP-319 on 2026-09-24,
     because SP-314 on main is a different accepted unit. SP-314 is not an alias of this unit and never resolves to it.
 negative_constraints:
   - No registry, payload, retention policy, physical family/key, current terminal state or Home custody change.
