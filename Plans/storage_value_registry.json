@@ -884,7 +884,12 @@
         "pm.guided_tour.session.v2",
         "pm.guided_tour.action_request.v2",
         "pm.guided_tour.session.v3",
-        "pm.guided_tour.action_request.v3"
+        "pm.guided_tour.action_request.v3",
+        "pm.guided_tour.action_result.v3",
+        "pm.guided_tour.action_exchange.v3",
+        "pm.guided_tour.resume_result.v3",
+        "pm.guided_tour.terminal_result.v3",
+        "pm.guided_tour.focus_route_result.v1"
       ],
       "persistence_disposition": "ephemeral_nonpersisted",
       "physical_family_status": "not_applicable_nonpersisted",
