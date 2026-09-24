@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2082-L2177
+Source lines: L2094-L2190
 
-Source SHA256: `9197b8b63f86f3f01c384c692193c2221d73fc347fc78356158f19f73ae73b79`
+Source SHA256: `749c82fba7a86e5f50892335e3ec28ba0c0351be43db4fd9276a70aaf878b94d`
 
 ---
 
@@ -53,6 +53,7 @@ acceptance_criteria:
   result is the only recognition boundary.
 - The Review summary is a live projection of the exact current draft, including edits, skips, destinations, transport,
   privacy, account/repository binding, pairing method, deferred items, and setup consequences.
+- The same v3 draft retains every normal repository field and a typed advanced creation selection; its deterministic producer checks the full source-to-Forge mapping against current verified owner facts. Local-only, existing-repository, connect-existing and deferred paths carry no fake creation selection, account or Project, and unsupported requested options are never dropped.
 - Before commit, only local draft writes, bounded read-only source/Project/Server/folder validation and selected-source
   authentication with current owner authorization may run; no Project/destination/history/repository/clone/Settings/sync
   mutation or unrelated provider work occurs.
