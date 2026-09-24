@@ -291,26 +291,41 @@ class OnboardingStorageTests(unittest.TestCase):
         cls.bundle = cls.storage.expected_bundle()
 
     def test_existing_family_and_retention_census_is_unchanged(self):
+        # Re-pinned 2026-09-24 (reports/storage-owner-closeout-20260924/REPORT.md, Task 2) to the
+        # landed, recorded registry. The earlier pin was the registry as of 7db6a87c60, whose landed
+        # twin is b09294e44b (same 88-row digest, including the corrected Onboarding schema), plus
+        # run_started_index_checkpoint (af6856d039) and browser_workspace_created_index_checkpoint
+        # (69553720f1). Every later move is a landed commit with its own record:
+        # - 204 more families through 4d9d21297d to f6350caf27, named in the census comment of
+        #   scripts/pm-implementation-readiness.py; none removed;
+        # - three retention policies, at 0fed14e345, 74c5485e3b and 6621d9dc1d;
+        # - four of the 88 rows: event_record_index (d21fd2cf23), restore_point_record (7fa3b65df7),
+        #   retention_hold_record (2080658ff8) and goal_receipt (679e066a2a, 274c681e43);
+        # - run_started_index_checkpoint, at 38d896d3f0.
         families = self.registry["families"]
-        self.assertEqual(len(families), 90)
-        self.assertEqual(len({row["family_id"] for row in families}), 90)
+        self.assertEqual(len(families), 294)
+        self.assertEqual(len({row["family_id"] for row in families}), 294)
         added = [row for row in families if row["family_id"] == "run_started_index_checkpoint"]
         browser_checkpoint = [row for row in families if row["family_id"] == "browser_workspace_created_index_checkpoint"]
         self.assertEqual(len(browser_checkpoint), 1)
-        prior = [row for row in families if row["family_id"] not in {"run_started_index_checkpoint", "browser_workspace_created_index_checkpoint"}]
         self.assertEqual(len(added), 1)
+        # The 88 rows of the earlier pin still lead the registry in their order, followed by the
+        # two families it named; every later family is appended after them.
+        self.assertEqual(
+            [row["family_id"] for row in families[88:90]],
+            ["run_started_index_checkpoint", "browser_workspace_created_index_checkpoint"],
+        )
+        prior = families[:88]
         self.assertEqual(len(prior), 88)
-        # Pin ordered semantic bytes from 7db6a87c60, including the corrected
-        # Onboarding schema; af6856d039 separately adds only this exact family.
         def canonical_digest(value):
             return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
-        self.assertEqual(canonical_digest(prior), "91e394fed0c152620b9b64a92fe2572103b60c01e63f62d5bdece0d93b137730")
-        self.assertEqual(canonical_digest(added[0]), "04cd5eaaeaa937b76706cf061bad80e64950976e8c55fb36b8086fd39f580af7")
+        self.assertEqual(canonical_digest(prior), "de1461c6617b69ff9345c7723c24bc41ca89253a84f50d4351613efa37ae7617")
+        self.assertEqual(canonical_digest(added[0]), "24060bdb4077754dc609915d59ffd6357f3ae042e4ff34e75f91683937055842")
         spec = importlib.util.spec_from_file_location("browser_created_storage_pin", ROOT / "scripts/pm_browser_workspace_created.py")
         browser = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(browser)
         self.assertEqual(browser_checkpoint[0], browser.expected_storage_family())
-        self.assertEqual(len(self.registry["retention_policies"]), 24)
+        self.assertEqual(len(self.registry["retention_policies"]), 27)
         self.assertEqual(self.storage.validate(self.registry), [])
         failures, counts = GATE.validate_onboarding_storage_contract()
         self.assertEqual(failures, [])

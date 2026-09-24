@@ -202,13 +202,20 @@ class SharedRuntimeStorageContractsTest(unittest.TestCase):
             Draft202012Validator.check_schema(schema)
 
     def test_registry_has_exact_family_and_status_counts(self) -> None:
-        self.assertEqual(len(self.registry["families"]), 84)
+        # Re-pinned 2026-09-24 (reports/storage-owner-closeout-20260924/REPORT.md, Task 2) to the
+        # landed, recorded registry. The earlier pin, 84 families (66 materialized, 17 deferred,
+        # 1 alias), was the registry as of dc3a300310. 99a3c7db9d added the four deferred Working
+        # Notebook families (Plans/storage-plan.md, Working Notebook And Context Transition Storage
+        # Addendum, SP-255 to SP-257), giving 88. The 26 recorded commits af6856d039 to f6350caf27
+        # named in the census comment of scripts/pm-implementation-readiness.py then added 206
+        # materialized families and removed none; f6350caf27 moved the count last.
+        self.assertEqual(len(self.registry["families"]), 294)
         self.assertEqual(
             Counter(row["status"] for row in self.registry["families"]),
             Counter(
                 {
-                    "materialized": 66,
-                    "deferred_not_build_blocking": 17,
+                    "materialized": 272,
+                    "deferred_not_build_blocking": 21,
                     "compatibility_alias": 1,
                 }
             ),
