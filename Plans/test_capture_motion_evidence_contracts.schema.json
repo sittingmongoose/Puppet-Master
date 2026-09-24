@@ -501,7 +501,7 @@
       "allOf": [
         {
           "if": {"properties": {"disposition": {"const": "selected"}}, "required": ["disposition"]},
-          "then": {"properties": {"identity_verified": {"const": true}, "continuity_verified": {"const": true}, "original_available": {"const": true}}, "required": ["selected_capture_id"]}
+          "then": {"properties": {"selected_capture_id": {"$ref": "#/$defs/id"}, "identity_verified": {"const": true}, "continuity_verified": {"const": true}, "original_available": {"const": true}}, "required": ["selected_capture_id"]}
         }
       ]
     },
