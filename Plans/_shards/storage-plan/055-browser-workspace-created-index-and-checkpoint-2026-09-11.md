@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19706-L20031
+Source lines: L19706-L20032
 
-Source SHA256: `f83f286324ee7b83f3c48111b8b63aaa534fd7b7a49bb7b3701838eb87a34ecb`
+Source SHA256: `0113e9e305be7a84302ec069430f423fd3de957f65265379bb952d1da97b0611`
 
 ---
 
@@ -213,9 +213,10 @@ frames and full-index checkpoint, and revalidates the complete token and
 Project/access/deletion fence before disclosure. An append may change the frontier
 without changing the generation or an older row; generation equality, maximum
 matching sequence and old selection digest cannot establish currentness. The
-filtered writer still commits only its own checkpoint and historical join under
-prior-value CAS and unchanged source/currentness fences; uncertainty refuses
-publication.
+filtered writer still commits only its own checkpoint under prior-value CAS and
+unchanged source/currentness fences; the historical join is published read-only
+from that exact snapshot and is never a durable Browser projection row.
+Uncertainty refuses publication.
 
 StorageMigrationCoordinator alone may install this successor against the actual
 store graph and version ceilings. It first authenticates the old v1 row, codec,
