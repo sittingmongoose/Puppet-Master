@@ -1,0 +1,42 @@
+{
+  "scope": "SIR-031 protected-auth local Touch composition repair; static contracts only",
+  "base_commit": "68af8b8d5bad5a9259448148198d92828f758eaa",
+  "witness": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/server_forge_backup/protected-auth-touch-composition-witness.json",
+  "witness_sha256": "ec154ad6a61afd2564966fb3dc1de5e9c07c3d82a9ca3d959899c10e6ee8d4b0",
+  "changed_rows": ["TOUCH-SGAPLOCAL-007", "TOUCH-SGAPLOCAL-008", "TOUCH-SGAPLOCAL-009"],
+  "new_profile": "TCP-PROTECTED-AUTH-LOCAL",
+  "request_definition": "Plans/protected_auth_browser_contracts.schema.json#/$defs/ProtectedAuthLocalActionRequest",
+  "result_error_receipt_definition": "Plans/protected_auth_browser_contracts.schema.json#/$defs/ProtectedAuthLocalActionResult",
+  "preservation": {
+    "generic_non_auth_rows_byte_equivalent": 11,
+    "existing_profiles_unchanged": 133,
+    "all_other_registry_fields_equal": true,
+    "all_row_ids_action_ids_kinds_dispositions_residual_text_unchanged": true,
+    "row_count": 643,
+    "profile_count_before": 133,
+    "profile_count_after": 134,
+    "sidecar_source_mappings_unchanged": true
+  },
+  "verification": {
+    "focused_test_methods": 6,
+    "protected_request_positive_controls": 3,
+    "protected_result_positive_controls": 3,
+    "individual_forbidden_boolean_or_omission_rejections": 84,
+    "generic_rebinding_ablation_accepts_same_84_invalid_records": true,
+    "non_auth_positive_controls": 22,
+    "existing_touch_source_tests": "51 passed",
+    "existing_protected_auth_tests": "8 passed",
+    "full_touch_verifier": "pass; zero failures; 643 rows, 134 profiles",
+    "shard_check": "pass; 99 documents, 2721 shards",
+    "new_contracts_verifier": "pass; 31 contract pairs, 1067 positive cases, 3493 negative cases, 12 internal self-tests",
+    "git_diff_check": "pass"
+  },
+  "root_integration_review": {
+    "evidence": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/protected-auth-touch-independent-review.json",
+    "sha256": "04e30e2b6828220d5e4af16bab2b11601180f35578f25f69680d0eceed90da84",
+    "independent_branch_tests": "57 passed in 14.508 seconds",
+    "combined_root_tests": "73 passed in 17.276 seconds: Touch source, protected-auth Touch, Doctor export joins and Doctor action bounds",
+    "merge_resolution": "Both SCM checkout alias and protected-auth reference guard functions and their full-verifier calls preserved. No generated-file conflict."
+  },
+  "claim_boundary": "No owner prose, schema, sidecar, source binding, command, domain handler, EventRecord, storage, GUI implementation, native runtime, readiness or governance artifact changed. All 643 Touch obligations remain open. Full landing/governance delta checks remain the landing owner's responsibility; no main fetch or push occurred."
+}
