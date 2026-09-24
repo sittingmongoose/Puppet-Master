@@ -78,7 +78,7 @@ class GuidedTourV3ContractTests(unittest.TestCase):
         self.assertEqual(self.fixtures["owner_schema"], "Plans/guided_tour_contracts.schema.json")
 
     def test_all_positive_controls_validate_their_named_definitions(self) -> None:
-        self.assertEqual(len(self.fixtures["valid"]), 24)
+        self.assertEqual(sum(case["definition"] not in {"guided_tour_action_exchange", "guided_tour_action_result"} for case in self.fixtures["valid"]), 24)
         for case in self.fixtures["valid"]:
             self.assertFalse(
                 self.errors(case["definition"], case["value"]),
@@ -86,8 +86,10 @@ class GuidedTourV3ContractTests(unittest.TestCase):
             )
 
     def test_all_counterexamples_are_rejected_by_the_target_definition(self) -> None:
-        self.assertEqual(len(self.fixtures["invalid"]), 56)
+        self.assertEqual(sum(case["definition"] not in {"guided_tour_action_exchange", "guided_tour_action_result"} for case in self.fixtures["invalid"]), 56)
         for case in self.fixtures["invalid"]:
+            if case.get("semantic_rule"):
+                continue  # Joined semantic counterexamples are checked by the action suite and gate.
             base = self.positives[case["base_valid"]]["value"]
             instance = self.materialize(base, case)
             self.assertTrue(
