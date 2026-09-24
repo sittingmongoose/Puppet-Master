@@ -1,0 +1,55 @@
+import { chromium } from '/home/sittingmongoose/.npm/_npx/9833c18b2d85bc59/node_modules/playwright-core/index.mjs';
+import fs from 'node:fs';
+const FILE = process.env.PMF_FILE;
+fs.mkdirSync('shots', { recursive: true });
+const browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome', headless: true, args: ['--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--allow-file-access-from-files'] });
+const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+const errs=[]; page.on('pageerror', e => errs.push(e.message)); page.on('console', m=>{ if(m.type()==='error') errs.push('console: '+m.text().slice(0,200)); });
+await page.addInitScript(()=>{ try{ localStorage.clear(); localStorage.setItem('pmf.onboarding.v1', JSON.stringify({completed:true, provider_done:true})); }catch(e){} });
+await page.goto(FILE, { waitUntil: 'load', timeout: 60000 });
+await page.waitForTimeout(1500);
+await page.evaluate(()=>window.PM_THEME.set('friendly-dark')); await page.waitForTimeout(400);
+const R = [];
+const ok = (label, v)=>R.push(`${v?'PASS':'FAIL'} ${label}`);
+await page.evaluate(()=>window.PMF_TOUR.start({source:'test'})); await page.waitForTimeout(900);
+ok('controls ELI5/Pause/Skip present', await page.evaluate(()=>['eli5','pause','skip'].every(a=>!!document.querySelector(`#pmf-tour .pmft-controls [data-act="${a}"]`))));
+ok('intro mentions ELI5 and Reduced Motion', await page.evaluate(()=>/ELI5/.test(document.querySelector('#pmft-card-body').textContent) && /Reduced Motion/.test(document.querySelector('#pmft-card-body').textContent)));
+ok('heading focused, not a button', await page.evaluate(()=>document.activeElement && document.activeElement.id==='pmft-title'));
+await page.screenshot({ path: 'shots/al_01_intro.png', clip: { x: 0, y: 0, width: 720, height: 420 } });
+// ELI5 toggle changes card copy
+await page.evaluate(()=>document.querySelector('#pmf-tour [data-act="eli5"]').click()); await page.waitForTimeout(300);
+ok('ELI5 pressed and copy simplified', await page.evaluate(()=>document.querySelector('#pmf-tour [data-act="eli5"]').getAttribute('aria-pressed')==='true' && /simpler words/.test(document.querySelector('#pmft-card-body').textContent)));
+await page.screenshot({ path: 'shots/al_02_intro_eli5.png', clip: { x: 0, y: 0, width: 720, height: 420 } });
+await page.evaluate(()=>document.querySelector('#pmf-tour [data-act="eli5"]').click()); await page.waitForTimeout(200);
+// pause / resume on an action step
+await page.evaluate(()=>window.PMF_TOUR.actions.next()); await page.waitForTimeout(900);
+await page.evaluate(()=>document.querySelector('#pmf-tour .pmft-controls [data-act="pause"]').click()); await page.waitForTimeout(400);
+ok('paused card + Resume label', await page.evaluate(()=>window.PMF_TOUR.state.paused && /paused/i.test(document.querySelector('#pmft-title').textContent) && document.querySelector('#pmf-tour .pmft-controls [data-act="pause"]').textContent==='Resume'));
+await page.screenshot({ path: 'shots/al_03_paused.png', clip: { x: 0, y: 0, width: 720, height: 420 } });
+await page.evaluate(()=>window.PMF_TOUR.h.showChat()); await page.waitForTimeout(500);
+ok('predicate ignored while paused', await page.evaluate(()=>!window.PMF_TOUR.state.done['open-chat']));
+await page.evaluate(()=>document.querySelector('#pmf-tour .pmft-controls [data-act="pause"]').click()); await page.waitForTimeout(700);
+ok('resumed and predicate fired', await page.evaluate(()=>!window.PMF_TOUR.state.paused && window.PMF_TOUR.state.done['open-chat']===true));
+// library: ask a different question, then header ELI5 rewrites it
+await page.evaluate(()=>window.PMF_TOUR.actions.next()); await page.waitForTimeout(900);
+ok('library toggle present', await page.evaluate(()=>!!document.querySelector('.pmft-library-toggle')));
+await page.evaluate(()=>document.querySelector('.pmft-library-toggle').click()); await page.waitForTimeout(300);
+await page.screenshot({ path: 'shots/al_04_library.png', clip: { x: 1040, y: 380, width: 400, height: 520 } });
+await page.evaluate(()=>document.querySelector('[data-pmft-suggest="1"]').click());
+await page.waitForFunction(()=>window.PMF_TOUR.fx.teacherShown, null, { timeout: 8000 }).catch(()=>{});
+ok('library question answered (Planning Wizard item)', await page.evaluate(()=>window.PMF_TOUR.fx.teacherShown && /asks only the questions/.test(document.getElementById('pmft-teacher-msg').textContent) && /What does the Planning Wizard do/.test(document.querySelector('#chatPanel .message-stream').textContent)));
+await page.evaluate(()=>window.PMF_TOUR.actions.next()); await page.waitForTimeout(900);
+await page.evaluate(()=>document.querySelector('#pmf-tour [data-act="eli5"]').click()); await page.waitForTimeout(700);
+ok('header ELI5 rewrote the same answer and satisfied the step', await page.evaluate(()=>window.PMF_TOUR.fx.eli5Applied && window.PMF_TOUR.state.done['eli5']===true && /Nothing starts until you say yes/.test(document.getElementById('pmft-teacher-msg').textContent)));
+await page.screenshot({ path: 'shots/al_05_eli5_answer.png', clip: { x: 1040, y: 40, width: 400, height: 860 } });
+await page.evaluate(()=>document.querySelector('#pmf-tour [data-act="eli5"]').click()); await page.waitForTimeout(700);
+ok('header ELI5 off reverts the answer', await page.evaluate(()=>!window.PMF_TOUR.fx.eli5Applied && /asks only the questions/.test(document.getElementById('pmft-teacher-msg').textContent)));
+ok('no command ids/receipts in visible tour copy', await page.evaluate(()=>!/cmd\.|ui\.guided|rcpt-|receipt/i.test(document.getElementById('pmft-card').textContent)));
+ok('zero demo sends', await page.evaluate(()=>window.PMF_TOUR.provider_requests===0));
+// onboarding success copy has no receipt id
+await page.evaluate(()=>window.PMF_TOUR.skip()); await page.waitForTimeout(500);
+await page.evaluate(()=>{ const P=window.PMF_ONBOARDING; P.open({fresh:true, source:'test'}); }); await page.waitForTimeout(1500);
+await page.evaluate(()=>{ const P=window.PMF_ONBOARDING; const d=P.draft(); d.mode='new'; d.name='Book club website'; d.committed={project_id:'bcw', receipt_id:'rcpt-should-not-show', at:''}; P.state.stack=['welcome']; P.go('commit'); }); await page.waitForTimeout(1200);
+ok('no receipt id in onboarding success copy', await page.evaluate(()=>!/rcpt-/.test(document.querySelector('#pmf-onboarding .pmf-body').textContent)));
+console.log(R.join('\n')); console.log('errors', JSON.stringify(errs.slice(0,5)));
+await browser.close();

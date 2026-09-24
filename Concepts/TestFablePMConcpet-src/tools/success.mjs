@@ -4,7 +4,7 @@ const browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome'
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 page.on('pageerror', e => console.log('PAGEERROR', e.message));
 await page.addInitScript(()=>{ try{ localStorage.clear(); }catch(e){} });
-await page.goto('file:///mnt/Cursor/PuppetMaster/Concepts/TestFablePMConcpet.html', { waitUntil: 'load', timeout: 60000 });
+await page.goto((process.env.PMF_FILE || 'file:///mnt/Cursor/PuppetMaster/Concepts/TestFablePMConcpet.html'), { waitUntil: 'load', timeout: 60000 });
 await page.waitForTimeout(2200);
 for (const t of THEMES) { await page.evaluate(t=>window.PM_THEME.set(t), t); await page.waitForTimeout(800); await page.screenshot({ path: `shots/v3_welcome_${t}.png` }); }
 await page.evaluate(()=>{ const P=window.PMF_ONBOARDING; const d=P.draft(); d.mode='new'; d.name='Book club website'; d.online=true; d.online_account='jared'; d.history=true; d.committed={project_id:'book-club-website', receipt_id:'rcpt-demo-1', at:''}; P.state.stack=['welcome']; P.go('commit'); });

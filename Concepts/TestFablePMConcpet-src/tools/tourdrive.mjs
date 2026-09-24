@@ -4,7 +4,7 @@ const browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome'
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 const errs=[]; page.on('pageerror', e => errs.push(e.message)); page.on('console', m=>{ if(m.type()==='error') errs.push('console: '+m.text().slice(0,300)); });
 await page.addInitScript(()=>{ try{ localStorage.clear(); localStorage.setItem('pmf.onboarding.v1', JSON.stringify({completed:true, provider_done:true})); }catch(e){} });
-await page.goto('file:///mnt/Cursor/PuppetMaster/Concepts/TestFablePMConcpet.html', { waitUntil: 'load', timeout: 60000 });
+await page.goto((process.env.PMF_FILE || 'file:///mnt/Cursor/PuppetMaster/Concepts/TestFablePMConcpet.html'), { waitUntil: 'load', timeout: 60000 });
 await page.waitForTimeout(1500);
 await page.evaluate(t=>window.PM_THEME.set(t), theme); await page.waitForTimeout(600);
 // count provider/demo sends

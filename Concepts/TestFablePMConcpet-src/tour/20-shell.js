@@ -4,7 +4,7 @@
 (function () {
   'use strict';
   var T = window.PMF_TOUR, U = T.util, esc = U.esc, $ = U.$, $$ = U.$$, I = T.icons, PR = T.practice;
-  T.state = { running: false, index: -1, snapshot: null, source: null, done: {}, keepLayout: null };
+  T.state = { running: false, index: -1, snapshot: null, source: null, done: {}, keepLayout: null, eli5: false, paused: false };
   T.current = null;
   var pollTimer = 0;
 
@@ -19,7 +19,7 @@
     if (T.state.running) return true;
     var saved = T.store.read();
     T.state.running = true; T.state.source = opts.source || 'settings'; T.state.started_at = U.now(); T.state.project_id = opts.project_id || null;
-    T.fx.teacherShown = false; T.fx.eli5Applied = false; T.fx.goalSubmitted = false; T.fx.answer = null; T.fx.answerChanged = false; T.fx.whyOpen = false; T.fx.answerHistory = [];
+    T.fx.teacherShown = false; T.fx.eli5Applied = false; T.fx.goalSubmitted = false; T.fx.answer = null; T.fx.answerChanged = false; T.fx.whyOpen = false; T.fx.answerHistory = []; T.fx.asked = null; T.state.paused = false;
     T.command('ui.guided_tour.start', { source: T.state.source });
     T.emit('started', { source: T.state.source });
     T.show();
@@ -69,7 +69,7 @@
     if (prev && prev.onExit) { try { prev.onExit(); } catch (e) { console.error(e); } }
     T.cancelShowMe(); clearInterval(pollTimer); pollTimer = 0; T.noteHide();
     var step = T.STEPS[i]; if (!step) { T.finish(); return; }
-    T.state.index = i; T.current = step; T.state.done[step.id] = false; T.cardFollow = !!step.follow;
+    T.state.index = i; T.current = step; T.state.done[step.id] = false; T.cardFollow = !!step.follow; T.state.paused = false; var pb = $('#pmf-tour .pmft-controls [data-act="pause"]'); if (pb) pb.textContent = 'Pause';
     T.command('ui.guided_tour.step', { id: step.id, index: i });
     if (step.onEnter) { try { step.onEnter(); } catch (e) { console.error('[pmf-tour] onEnter', step.id, e); } }
     persist();
@@ -82,7 +82,7 @@
     T.spotlight(el, { pad: step.pad, precue: !!step.action, block: false });
     T.renderChapters(T.CHAPTERS, step.chapter, chapterProgress(step));
     var n = T.state.index + 1, total = T.STEPS.length;
-    var body = '<div class="pmft-step">Step ' + n + ' of ' + total + '</div><h2 class="pmft-title" id="pmft-title">' + esc(step.title) + '</h2><p class="pmft-body">' + step.body + '</p>';
+    var body = '<div class="pmft-step">Step ' + n + ' of ' + total + '</div><h2 class="pmft-title" id="pmft-title">' + esc(step.title) + '</h2><p class="pmft-body">' + ((T.state.eli5 && step.bodyEli5) ? step.bodyEli5 : step.body) + '</p>';
     var foot;
     if (step.action) {
       body += '<div id="pmft-status"><span class="pmft-wait"><i></i>Your turn. Try it in the real interface.</span></div>';
@@ -96,7 +96,7 @@
     }
   }
   function checkPredicate(step) {
-    if (T.current !== step || T.state.done[step.id]) return;
+    if (T.current !== step || T.state.done[step.id] || T.state.paused) return;
     var ok = false; try { ok = !!step.predicate(); } catch (e) {}
     if (!ok) return;
     T.state.done[step.id] = true; clearInterval(pollTimer); pollTimer = 0;
@@ -119,6 +119,20 @@
     T.emit('recovery', { id: step.id });
   }
   T.actions.retry = function () { T.goto(T.state.index); };
+  // ELI5 beside Pause and Skip: simpler card copy for every scene, and the same
+  // ELI5 rewrite of the Teacher answer when one is on screen.
+  T.actions.eli5 = function () {
+    var on = !T.state.eli5; T.setEli5(on);
+    if (document.getElementById('pmft-teacher-msg')) { if (on) T.h.applyEli5(); else T.h.revertEli5(); }
+  };
+  T.actions.pause = function () {
+    if (!T.current) return;
+    var hb = $('#pmf-tour .pmft-controls [data-act="pause"]');
+    if (T.state.paused) { T.state.paused = false; if (hb) hb.textContent = 'Pause'; T.command('ui.guided_tour.resume', { id: T.current.id }); targetAndRender(T.current); return; }
+    T.state.paused = true; if (hb) hb.textContent = 'Resume'; T.cancelShowMe(); clearInterval(pollTimer); pollTimer = 0; T.noteHide();
+    T.command('ui.guided_tour.pause', { id: T.current.id });
+    T.renderCard('<div class="pmft-step">Paused</div><h2 class="pmft-title" id="pmft-title">The tour is paused.</h2><p class="pmft-body">Everything on screen stays as it is. Press Resume when you are ready.</p>', '<div class="pmft-foot-left"></div><div class="pmft-foot-right"><button type="button" class="pmft-btn is-primary" data-act="pause">Resume' + I.play + '</button></div>');
+  };
   T.actions.next = function () { T.command('ui.guided_tour.next', { from: T.current && T.current.id }); T.goto(T.state.index + 1); };
   T.actions.back = function () { if (T.state.index > 0) { T.command('ui.guided_tour.back', { from: T.current && T.current.id }); T.goto(T.state.index - 1); } };
   T.next = function () { T.actions.next(); };

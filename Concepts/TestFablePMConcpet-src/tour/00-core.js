@@ -92,7 +92,8 @@
     cardBody.innerHTML = U.str(html); cardFoot.innerHTML = U.str(footHtml || '');
     $$('button, [tabindex]', card).forEach(function (el) { el.setAttribute('data-pm-hover-exempt', 'true'); });
     T.placeCard();
-    if (!opts.keepFocus) setTimeout(function () { var f = $('.pmft-btn.is-primary, .pmft-btn', cardFoot) || $('.pmft-skip', card); if (f) { try { f.focus({ preventScroll: true }); } catch (e) {} } }, U.reduced() ? 10 : 200);
+    // scene transitions focus the scene heading, never an action
+    if (!opts.keepFocus) setTimeout(function () { var f = $('#pmft-title', card); if (f) { f.setAttribute('tabindex', '-1'); try { f.focus({ preventScroll: true }); } catch (e) {} } }, U.reduced() ? 10 : 200);
   };
   T.renderChapters = function (list, currentIndex, progress) {
     chapters.innerHTML = list.map(function (c, i) { var st = i < currentIndex ? 'done' : i === currentIndex ? 'current' : 'todo'; var p = st === 'done' ? 1 : st === 'current' ? progress : 0; return '<div class="pmft-chapter" data-state="' + st + '" style="--p:' + p.toFixed(2) + '"><i></i><span>' + esc(c) + '</span></div>'; }).join('');
@@ -122,6 +123,13 @@
     card.setAttribute('data-place', place);
     if (!quiet) { card.classList.add('is-moving'); setTimeout(function () { card.classList.remove('is-moving'); }, 600); }
     card.style.left = x + 'px'; card.style.top = y + 'px';
+  };
+  T.setEli5 = function (on, opts) {
+    opts = opts || {};
+    T.state.eli5 = !!on;
+    var b = $('[data-act="eli5"]', root); if (b) b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    if (!opts.quiet) T.command('ui.guided_tour.eli5', { on: !!on });
+    var body = $('.pmft-body', card); if (body && T.current) body.innerHTML = (on && T.current.bodyEli5) ? T.current.bodyEli5 : T.current.body;
   };
   T.setPrimary = function (patch) { var b = $('.pmft-btn.is-primary', cardFoot); if (!b) return; if (patch.disabled != null) b.setAttribute('aria-disabled', patch.disabled ? 'true' : 'false'); if (patch.label) b.innerHTML = esc(patch.label) + (patch.icon ? T.icons[patch.icon] : ''); };
   T.status = function (html) { var s = $('#pmft-status', card); if (s) s.innerHTML = U.str(html); };

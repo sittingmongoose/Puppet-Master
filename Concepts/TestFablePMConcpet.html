@@ -23396,9 +23396,20 @@ html[data-reduced-motion="1"] .pmf .pmf-screen[data-phase="exit"] { animation: p
 .pmft-chapter[data-state="current"] i { width: 30px; }
 .pmft-chapter span { display: none; }
 .pmft-chapter[data-state="current"] span { display: inline; }
-.pmft-skip { font: inherit; font-size: 12px; font-weight: 600; color: var(--text-muted); background: transparent; border: 0; padding: 4px 8px; border-radius: 999px; cursor: pointer; transition: color var(--pmft-dur-s), background var(--pmft-dur-s); }
-.pmft-skip:hover { color: var(--text-primary); background: var(--surface-alt, var(--surface)); }
-.pmft-skip:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent-primary); }
+.pmft-controls { display: flex; align-items: center; gap: 2px; }
+.pmft-ctl, .pmft-skip { font: inherit; font-size: 12px; font-weight: 600; color: var(--text-muted); background: transparent; border: 1px solid transparent; padding: 4px 8px; border-radius: 999px; cursor: pointer; transition: color var(--pmft-dur-s), background var(--pmft-dur-s), border-color var(--pmft-dur-s); }
+.pmft-ctl:hover, .pmft-skip:hover { color: var(--text-primary); background: var(--surface-alt, var(--surface)); }
+.pmft-ctl:focus-visible, .pmft-skip:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent-primary); }
+.pmft-ctl[aria-pressed="true"] { color: var(--accent-lime); border-color: color-mix(in srgb, var(--accent-lime) 45%, transparent); background: color-mix(in srgb, var(--accent-lime) 10%, transparent); }
+.pmft-title:focus { outline: none; }
+.pmft-title:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent-primary); border-radius: 4px; }
+.pmft-library { display: flex; flex-direction: column; gap: 4px; margin-top: 2px; }
+.pmft-library-toggle { font: inherit; font-size: 12px; font-weight: 600; color: var(--accent-primary); background: none; border: 0; padding: 4px 2px; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 4px; }
+.pmft-library-toggle svg { width: 12px; height: 12px; transition: transform var(--pmft-dur-s); }
+.pmft-library[data-open="true"] .pmft-library-toggle svg { transform: rotate(180deg); }
+.pmft-library-list { display: none; flex-direction: column; gap: 4px; max-height: 190px; overflow-y: auto; }
+.pmft-library[data-open="true"] .pmft-library-list { display: flex; }
+.pmft-library-list .pmft-suggest-btn { font-size: 12.5px; padding: 6px 9px; }
 .pmft-step { font-size: 11.5px; color: var(--text-muted); }
 .pmft-title { font-family: var(--display-font); font-size: 17px; font-weight: 700; letter-spacing: -.01em; line-height: 1.25; margin: 0; }
 .pmft-body { font-size: 13.5px; line-height: 1.5; color: var(--text-secondary); margin: 0; }
@@ -70982,7 +70993,7 @@ policies for tenant isolation, and add migration script.</textarea>
     caption: function (d) { return [{ text: d.committed ? 'Your Project exists.' : 'Creating. Each step is real and reported as it happens.', primary: true }]; },
     render: function (d, tmp) {
       if (d.committed) return h`${heading('Review', d.name + ' is ready', 'Your Project exists. Next, choose what powers the work.')}
-        <div class="pmf-success">${raw('<span class="pmf-success-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10.5"/><path d="M7 12.5l3.2 3.2L17 9"/></svg></span>')}<div class="pmf-success-text"><b>${commitLabel(d).replace(' Project', 'd') + ' on ' + serverName(d)}</b><span>${d.mode === 'new' ? 'Folder, history' + (d.online && !d.online_skipped ? ', online copy' : '') + (d.inherit ? ', copied settings' : '') + ' and Project record are in place.' : d.mode === 'existing' ? 'Your files are untouched. Puppet Master now works alongside them.' : 'Files and settings are back where they were.'}</span><span class="pmf-receipt">Receipt ${d.committed.receipt_id}</span></div></div>
+        <div class="pmf-success">${raw('<span class="pmf-success-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10.5"/><path d="M7 12.5l3.2 3.2L17 9"/></svg></span>')}<div class="pmf-success-text"><b>${commitLabel(d).replace(' Project', 'd') + ' on ' + serverName(d)}</b><span>${d.mode === 'new' ? 'Folder, history' + (d.online && !d.online_skipped ? ', online copy' : '') + (d.inherit ? ', copied settings' : '') + ' and Project record are in place.' : d.mode === 'existing' ? 'Your files are untouched. Puppet Master now works alongside them.' : 'Files and settings are back where they were.'}</span></div></div>
         <div id="pmf-commit-phases"></div>`;
       return h`${heading('Review', (d.mode === 'restore' ? 'Restoring ' : d.mode === 'existing' ? 'Adding ' : 'Creating ') + (d.name || 'your Project'), 'A few steps. This is the only time anything is created.')}<div id="pmf-commit-host"></div><div id="pmf-commit-msg"></div>`;
     },
@@ -71423,7 +71434,7 @@ policies for tenant isolation, and add migration script.</textarea>
     <div class="pmft-card-arrow"></div>
     <header class="pmft-card-head">
       <div class="pmft-chapters" id="pmft-chapters"></div>
-      <button type="button" class="pmft-skip" data-act="skip" title="Skip Tour">Skip Tour</button>
+      <div class="pmft-controls"><button type="button" class="pmft-ctl" data-act="eli5" aria-pressed="false" title="Simpler words for every explanation">ELI5</button><button type="button" class="pmft-ctl" data-act="pause" title="Pause the tour">Pause</button><button type="button" class="pmft-ctl pmft-skip" data-act="skip" title="Skip Tour">Skip Tour</button></div>
     </header>
     <div class="pmft-card-body" id="pmft-card-body"></div>
     <footer class="pmft-card-foot" id="pmft-card-foot"></footer>
@@ -71526,7 +71537,8 @@ policies for tenant isolation, and add migration script.</textarea>
     cardBody.innerHTML = U.str(html); cardFoot.innerHTML = U.str(footHtml || '');
     $$('button, [tabindex]', card).forEach(function (el) { el.setAttribute('data-pm-hover-exempt', 'true'); });
     T.placeCard();
-    if (!opts.keepFocus) setTimeout(function () { var f = $('.pmft-btn.is-primary, .pmft-btn', cardFoot) || $('.pmft-skip', card); if (f) { try { f.focus({ preventScroll: true }); } catch (e) {} } }, U.reduced() ? 10 : 200);
+    // scene transitions focus the scene heading, never an action
+    if (!opts.keepFocus) setTimeout(function () { var f = $('#pmft-title', card); if (f) { f.setAttribute('tabindex', '-1'); try { f.focus({ preventScroll: true }); } catch (e) {} } }, U.reduced() ? 10 : 200);
   };
   T.renderChapters = function (list, currentIndex, progress) {
     chapters.innerHTML = list.map(function (c, i) { var st = i < currentIndex ? 'done' : i === currentIndex ? 'current' : 'todo'; var p = st === 'done' ? 1 : st === 'current' ? progress : 0; return '<div class="pmft-chapter" data-state="' + st + '" style="--p:' + p.toFixed(2) + '"><i></i><span>' + esc(c) + '</span></div>'; }).join('');
@@ -71556,6 +71568,13 @@ policies for tenant isolation, and add migration script.</textarea>
     card.setAttribute('data-place', place);
     if (!quiet) { card.classList.add('is-moving'); setTimeout(function () { card.classList.remove('is-moving'); }, 600); }
     card.style.left = x + 'px'; card.style.top = y + 'px';
+  };
+  T.setEli5 = function (on, opts) {
+    opts = opts || {};
+    T.state.eli5 = !!on;
+    var b = $('[data-act="eli5"]', root); if (b) b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    if (!opts.quiet) T.command('ui.guided_tour.eli5', { on: !!on });
+    var body = $('.pmft-body', card); if (body && T.current) body.innerHTML = (on && T.current.bodyEli5) ? T.current.bodyEli5 : T.current.body;
   };
   T.setPrimary = function (patch) { var b = $('.pmft-btn.is-primary', cardFoot); if (!b) return; if (patch.disabled != null) b.setAttribute('aria-disabled', patch.disabled ? 'true' : 'false'); if (patch.label) b.innerHTML = esc(patch.label) + (patch.icon ? T.icons[patch.icon] : ''); };
   T.status = function (html) { var s = $('#pmft-status', card); if (s) s.innerHTML = U.str(html); };
@@ -71620,6 +71639,16 @@ policies for tenant isolation, and add migration script.</textarea>
     prompt: 'What happens before Puppet Master changes my files?',
     teacher: 'Before work begins, Puppet Master turns your request into a plan. You can review the important choices, correct anything that looks wrong, and decide when to begin. Your Project permissions still control what the work may change.',
     teacher_eli5: 'First, Puppet Master writes down what it thinks you want. You can fix the plan before anything starts. It waits for your decision to begin.',
+    library: [
+      { q: 'What is a Project?', a: 'A Project keeps one body of work together: its files, plans, history, and Project-specific settings.', e: 'A Project is one workspace for one thing you are making. It keeps the right files and decisions together.' },
+      { q: 'What does the Planning Wizard do?', a: 'It turns a sentence about what you want into a plan you can read, asks only the questions that change the result, and waits for your approval before any work starts.', e: 'You say what you want. It writes a plan and asks a few questions. Nothing starts until you say yes.' },
+      { q: 'Will Puppet Master change my files without asking?', a: 'No. Work begins only after you approve a plan, and your Project permissions decide what the work may change. You can review every change afterwards.', e: 'No. It waits for your yes, and it only touches what you allowed.' },
+      { q: 'What is history?', a: 'History is a timeline of saved versions of your files. Each time work is completed, a new version is kept, so you can look back or go back.', e: 'History remembers older versions of your files, so you can go back if you need to.' },
+      { q: 'What is an AI account for?', a: 'Puppet Master uses an AI account to write plans and do the work. It is charged to that account. You can add more than one and choose which does what.', e: 'The AI account is what does the thinking. You pay for it through that account.' },
+      { q: 'What is a widget?', a: 'A widget is a small card on the Home page that shows something useful, like progress or approvals, so you can keep an eye on it while you do other things.', e: 'A widget is a little card that shows you one useful thing at a glance.' },
+      { q: 'What does Approve mean?', a: 'Approve means you have read the plan and agree with it. It is the moment work is allowed to start. Before that, nothing is built.', e: 'Approve means "yes, go ahead". Nothing happens before you say it.' },
+      { q: 'Can I undo something?', a: 'Yes. Completed work is kept in history, so you can return to an earlier version. Plans can be changed before you approve them.', e: 'Yes. You can go back to an older version, and you can change a plan before saying yes.' }
+    ],
     goal: 'Create a simple website for my neighborhood book club. It should show the next meeting, the current book, and how to join.',
     outcomes: [
       { id: 'o1', text: 'Visitors can see the next meeting', sub: 'Date, time, and place on the front page' },
@@ -71640,7 +71669,7 @@ policies for tenant isolation, and add migration script.</textarea>
       unsure: { outcomes: [], decisions: [{ id: 'd3', text: 'Editing access still to decide', sub: 'Puppet Master plans a single editor for now and asks again before building sign-in' }] }
     }
   };
-  T.fx = { teacherShown: false, eli5Applied: false, goalSubmitted: false, answer: null, answerChanged: false, reviewSeen: false, answerHistory: [] };
+  T.fx = { teacherShown: false, eli5Applied: false, goalSubmitted: false, answer: null, answerChanged: false, reviewSeen: false, answerHistory: [], asked: null };
 
   // ---- shell helpers ---------------------------------------------------------------
   function chatSurface() { var l = HW() && HW().layout; return l && (l.surfaces || []).filter(function (s) { return (s.surface_instance_id || s.surface_id) === 'chat'; })[0]; }
@@ -71673,40 +71702,52 @@ policies for tenant isolation, and add migration script.</textarea>
   function mountSuggest() {
     var comp = chatComposer(); if (!comp || $('.pmft-suggest')) return;
     var box = document.createElement('div'); box.className = 'pmft-suggest'; box.setAttribute('data-pm-hover-exempt', 'true');
-    box.innerHTML = '<div class="pmft-suggest-label">' + I.sparkles + '<span>Try asking Teacher</span></div><button type="button" class="pmft-suggest-btn" data-pmft-suggest data-pm-hover-exempt="true"><span>' + esc(T.fixture.prompt) + '</span>' + I.next + '</button>';
+    box.innerHTML = '<div class="pmft-suggest-label">' + I.sparkles + '<span>Try asking Teacher</span></div><button type="button" class="pmft-suggest-btn" data-pmft-suggest data-pm-hover-exempt="true"><span>' + esc(T.fixture.prompt) + '</span>' + I.next + '</button>' +
+      '<div class="pmft-library" data-open="false"><button type="button" class="pmft-library-toggle" data-pmft-library-toggle data-pm-hover-exempt="true"><span>More beginner questions</span>' + I.chevron + '</button><div class="pmft-library-list">' + T.fixture.library.map(function (it, i) { return '<button type="button" class="pmft-suggest-btn" data-pmft-suggest="' + i + '" data-pm-hover-exempt="true"><span>' + esc(it.q) + '</span>' + I.next + '</button>'; }).join('') + '</div></div>';
     comp.parentNode.insertBefore(box, comp);
-    box.querySelector('[data-pmft-suggest]').addEventListener('click', function () { T.h.sendGuided(); });
+    $$('[data-pmft-suggest]', box).forEach(function (b) { b.addEventListener('click', function () { var i = b.getAttribute('data-pmft-suggest'); T.h.sendGuided(i === '' ? null : T.fixture.library[parseInt(i, 10)]); }); });
+    box.querySelector('[data-pmft-library-toggle]').addEventListener('click', function () { var lib = box.querySelector('.pmft-library'); lib.setAttribute('data-open', lib.getAttribute('data-open') === 'true' ? 'false' : 'true'); T.relayout(); });
     var inp = chatInput();
     if (inp && !inp.__pmftBound) { inp.__pmftBound = true; inp.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' && !ev.shiftKey && T.state.running && T.current && T.current.id === 'teacher-ask' && /before puppet master changes/i.test(inp.value)) { ev.preventDefault(); ev.stopImmediatePropagation(); inp.value = ''; T.h.sendGuided(); } }, true); }
   }
   function unmountSuggest() { var b = $('.pmft-suggest'); if (b) b.remove(); }
   T.h.mountSuggest = mountSuggest; T.h.unmountSuggest = unmountSuggest;
-  T.h.sendGuided = function () {
+  T.h.sendGuided = function (item) {
     if (T.fx.teacherShown) return;
     var s = chatStream(); if (!s) return;
+    var asked = item ? { q: item.q, a: item.a, e: item.e } : { q: T.fixture.prompt, a: T.fixture.teacher, e: T.fixture.teacher_eli5 };
+    T.fx.asked = asked;
     T.command('cmd.chat.send', { thread: 'guided_example', local_fixture: true, provider_request: false });
     ensureSysNote(); unmountSuggest();
     var u = document.createElement('div'); u.className = 'message user pm6-chat-msg pmft-msg'; u.setAttribute('data-pm6-role', 'user');
-    u.innerHTML = '<div class="msg-body"><div class="runtime-snapshot"><span class="pmft-tag">Example</span><span>you</span></div>' + esc(T.fixture.prompt) + '</div>';
+    u.innerHTML = '<div class="msg-body"><div class="runtime-snapshot"><span class="pmft-tag">Example</span><span>you</span></div>' + esc(asked.q) + '</div>';
     s.appendChild(u); s.scrollTop = s.scrollHeight;
     var typing = document.createElement('div'); typing.className = 'message assistant pm6-chat-msg pmft-msg pmft-typing'; typing.innerHTML = '<div class="msg-body"><div class="runtime-snapshot"><span class="pmft-tag">Example</span><span class="pmft-teacher">Teacher</span></div><span class="pmft-cursor"></span></div>';
     setTimeout(function () {
       s.appendChild(typing); s.scrollTop = s.scrollHeight;
       var body = typing.querySelector('.msg-body'); var target = body; body.innerHTML = '<div class="runtime-snapshot"><span class="pmft-tag">Example</span><span class="pmft-teacher">Teacher</span></div><div class="pmft-morph"><span class="pmft-text is-new" id="pmft-teacher-text"></span></div>';
-      var textEl = body.querySelector('#pmft-teacher-text'); var words = T.fixture.teacher.split(' '); var i = 0;
+      var textEl = body.querySelector('#pmft-teacher-text'); var words = (T.state.eli5 ? asked.e : asked.a).split(' '); var i = 0;
       var cur = document.createElement('span'); cur.className = 'pmft-cursor'; textEl.appendChild(cur);
       (function tick() {
         if (i < words.length) { cur.insertAdjacentText('beforebegin', (i ? ' ' : '') + words[i]); i++; s.scrollTop = s.scrollHeight; setTimeout(tick, U.reduced() ? 8 : 38 + Math.random() * 40); }
-        else { cur.remove(); typing.classList.remove('pmft-typing'); typing.id = 'pmft-teacher-msg'; T.fx.teacherShown = true; T.receipt('guided_example.teacher', 'ok', { provider_request: false }); T.emit('teacher-shown'); }
+        else { cur.remove(); typing.classList.remove('pmft-typing'); typing.id = 'pmft-teacher-msg'; T.fx.teacherShown = true; if (T.state.eli5) { T.fx.eli5Applied = true; T.h.markEli5(typing); } T.receipt('guided_example.teacher', 'ok', { provider_request: false }); T.emit('teacher-shown'); }
       })();
     }, U.reduced() ? 60 : 520);
   };
+  T.h.markEli5 = function (msg) { if (msg.querySelector('.pmft-eli5-tag')) return; var tag = document.createElement('span'); tag.className = 'pmft-eli5-tag'; tag.innerHTML = I.sparkles + '<span>ELI5: simpler words, same meaning</span>'; msg.querySelector('.msg-body').appendChild(tag); };
   T.h.applyEli5 = function () {
     var msg = document.getElementById('pmft-teacher-msg'); if (!msg || T.fx.eli5Applied) return;
     T.command('cmd.chat.eli5.apply', { thread: 'guided_example', local_fixture: true });
-    T.morphText(msg, T.fixture.teacher_eli5);
-    var tag = document.createElement('span'); tag.className = 'pmft-eli5-tag'; tag.innerHTML = I.sparkles + '<span>ELI5: simpler words, same meaning</span>'; msg.querySelector('.msg-body').appendChild(tag);
-    T.fx.eli5Applied = true; T.emit('eli5-applied');
+    T.morphText(msg, (T.fx.asked || { e: T.fixture.teacher_eli5 }).e);
+    T.h.markEli5(msg);
+    T.fx.eli5Applied = true; T.setEli5(true, { quiet: true }); T.emit('eli5-applied');
+  };
+  T.h.revertEli5 = function () {
+    var msg = document.getElementById('pmft-teacher-msg'); if (!msg || !T.fx.eli5Applied) return;
+    T.command('cmd.chat.eli5.revert', { thread: 'guided_example', local_fixture: true });
+    T.morphText(msg, (T.fx.asked || { a: T.fixture.teacher }).a);
+    var tag = msg.querySelector('.pmft-eli5-tag'); if (tag) tag.remove();
+    T.fx.eli5Applied = false;
   };
 
   // ---- practice sheet inside the Planning Wizard --------------------------------------
@@ -71786,45 +71827,45 @@ policies for tenant isolation, and add migration script.</textarea>
   // ---- steps ---------------------------------------------------------------------------
   T.CHAPTERS = ['Ask', 'Arrange', 'Plan'];
   T.STEPS = [
-    { id: 'intro', chapter: 0, title: 'Let\'s make Puppet Master feel familiar.', body: 'You will try a few real actions. This guided example does not change your files or use your AI plan.', target: null, action: false, primary: 'Start', onEnter: function () { T.snapshotLayout(); if (chatVisible()) hideChat(); } },
-    { id: 'open-chat', chapter: 0, title: 'Open Assistant Chat', body: 'Click the <strong>Chat</strong> icon at the top of the left rail. Assistant Chat is where you ask Puppet Master for help.', target: chatIcon, pad: 6, place: 'right', action: true, block: false,
+    { id: 'intro', chapter: 0, title: 'Let\'s make Puppet Master feel familiar.', body: 'You will try a few real actions. This guided example does not change your files or use your AI plan. <strong>ELI5</strong> at the top makes any explanation simpler. If you prefer less animation, Reduced Motion is in Settings.', bodyEli5: 'You will try a few real things. Nothing here changes your files or costs anything. ELI5 at the top uses simpler words. Less animation is in Settings, under Reduced Motion.', target: null, action: false, primary: 'Start', onEnter: function () { T.snapshotLayout(); if (chatVisible()) hideChat(); } },
+    { id: 'open-chat', chapter: 0, title: 'Open Assistant Chat', body: 'Click the <strong>Chat</strong> icon at the top of the left rail. Assistant Chat is where you ask Puppet Master for help.', bodyEli5: 'Click the <strong>Chat</strong> icon on the left. That is where you ask for help.', target: chatIcon, pad: 6, place: 'right', action: true, block: false,
       predicate: chatVisible, ack: 'Assistant Chat is open.',
       onEnter: function () { var ic = chatIcon(); if (ic && !ic.__pmftBound) { ic.__pmftBound = true; ic.addEventListener('click', function () { setTimeout(function () { if (T.state.running && T.current && T.current.id === 'open-chat' && !chatVisible()) showChat(); }, 60); }); } },
       showMe: async function () { var ic = chatIcon(); await T.demo.travelClick(ic, 'Click'); if (!chatVisible()) showChat(); } },
-    { id: 'teacher-ask', chapter: 0, title: 'Ask Teacher a question', body: 'Teacher can explain the screen you are on, an unfamiliar term, or why a choice matters. Send the suggested question.', target: function () { return $('.pmft-suggest') || chatComposer(); }, pad: 8, place: 'left', action: true,
+    { id: 'teacher-ask', chapter: 0, title: 'Ask Teacher a question', body: 'Teacher can explain the screen you are on, an unfamiliar term, or why a choice matters. Send the suggested question.', bodyEli5: 'Teacher explains things. Send the question it suggests, or pick another.', target: function () { return $('.pmft-suggest') || chatComposer(); }, pad: 8, place: 'left', action: true,
       predicate: function () { return T.fx.teacherShown; }, ack: 'Teacher answered inside Assistant Chat.',
       onEnter: function () { if (!chatVisible()) showChat(); setTimeout(function () { ensureSysNote(); mountSuggest(); T.relayout(); }, 120); },
       showMe: async function () { var b = $('.pmft-suggest-btn'); if (!b) return; await T.demo.travelClick(b, 'Send'); },
       onExit: function () { unmountSuggest(); } },
-    { id: 'eli5', chapter: 0, title: 'Make it simpler with ELI5', body: 'Click <strong>ELI5</strong> under the message box. The same answer becomes shorter and simpler, and still accurate.', target: eli5Toggle, pad: 8, place: 'left', action: true,
+    { id: 'eli5', chapter: 0, title: 'Make it simpler with ELI5', body: 'Click <strong>ELI5</strong> under the message box. The same answer becomes shorter and simpler, and still accurate.', bodyEli5: 'Click <strong>ELI5</strong> under the message box. The answer gets simpler but stays true.', target: eli5Toggle, pad: 8, place: 'left', action: true,
       predicate: function () { return T.fx.eli5Applied; }, ack: 'Same answer, simpler words.',
       onEnter: function () { var t = eli5Toggle(); if (t && !t.__pmftBound) { t.__pmftBound = true; t.addEventListener('click', function () { if (T.state.running && T.current && T.current.id === 'eli5') setTimeout(T.h.applyEli5, 40); }); } },
       showMe: async function () { var t = eli5Toggle(); await T.demo.travelClick(t, 'Click'); setTimeout(T.h.applyEli5, 40); } },
-    { id: 'move-chat', chapter: 1, title: 'Move Assistant Chat', body: 'Drag the grip at the top-right corner of Chat to the <strong>left side</strong> of the workspace. The destination lights up as you get close.', target: chatGrip, pad: 10, place: 'left', action: true,
+    { id: 'move-chat', chapter: 1, title: 'Move Assistant Chat', body: 'Drag the grip at the top-right corner of Chat to the <strong>left side</strong> of the workspace. The destination lights up as you get close.', bodyEli5: 'Grab the corner of Chat and drag it to the <strong>left</strong>. The spot lights up when you are close.', target: chatGrip, pad: 10, place: 'left', action: true,
       predicate: function () { var s = chatSurface(); return !!(s && s.visible && s.host !== T.state.snapshot.chat_host && s.host !== 'floating'); }, ack: 'The same Chat stays with you; only its place changed.',
       showMe: async function () { await T.demo.dragChatLeft(); } },
-    { id: 'add-widget', chapter: 1, title: 'Add a widget', body: 'Click <strong>Add widget</strong> on the Home page, then choose <strong>Approval queue</strong>. Widgets keep useful Project information nearby.', target: function () { return catalogItem() && catalogItem().offsetParent ? catalogItem() : addWidgetBtn(); }, pad: 8, place: 'below', action: true, follow: true,
+    { id: 'add-widget', chapter: 1, title: 'Add a widget', body: 'Click <strong>Add widget</strong> on the Home page, then choose <strong>Approval queue</strong>. Widgets keep useful Project information nearby.', bodyEli5: 'Click <strong>Add widget</strong>, then pick <strong>Approval queue</strong>. A widget is a small card that shows one useful thing.', target: function () { return catalogItem() && catalogItem().offsetParent ? catalogItem() : addWidgetBtn(); }, pad: 8, place: 'below', action: true, follow: true,
       predicate: function () { return !!widgetCard(); }, ack: 'Widgets keep useful Project information nearby without taking you away from the page you are using.',
       onEnter: function () { try { if (window.PM_PAGES && window.PM_PAGES.current !== 'dashboard') window.PM_PAGES.go('dashboard'); } catch (e) {} },
       showMe: async function () { var b = addWidgetBtn(); await T.demo.travelClick(b, 'Click'); var ok = await T.until(function () { return catalogItem() && catalogItem().offsetParent; }, 2500); if (!ok) return; await U.sleep(U.reduced() ? 10 : 500); T.relayout(); await T.demo.travelClick(catalogItem(), 'Choose'); } },
-    { id: 'open-wizard', chapter: 2, title: 'Open the Planning Wizard', body: 'Click <strong>Planning Wizard</strong> in the top bar. Planning is where Puppet Master turns an idea into a plan you can check.', target: wizardTab, pad: 6, place: 'below', action: true,
+    { id: 'open-wizard', chapter: 2, title: 'Open the Planning Wizard', body: 'Click <strong>Planning Wizard</strong> in the top bar. Planning is where Puppet Master turns an idea into a plan you can check.', bodyEli5: 'Click <strong>Planning Wizard</strong> at the top. That is where ideas become plans.', target: wizardTab, pad: 6, place: 'below', action: true,
       predicate: function () { return window.PM_PAGES && window.PM_PAGES.current === 'wizard'; }, ack: 'This is the Planning Wizard.',
       showMe: async function () { await T.demo.travelClick(wizardTab(), 'Click'); } },
-    { id: 'practice-goal', chapter: 2, title: 'Plan a practice idea', body: 'Press <strong>Plan this</strong>. Puppet Master turns the sentence into outcomes it can check.', target: function () { return document.getElementById('pmft-goal'); }, pad: 10, place: 'below', action: true,
+    { id: 'practice-goal', chapter: 2, title: 'Plan a practice idea', body: 'Press <strong>Plan this</strong>. Puppet Master turns the sentence into outcomes it can check.', bodyEli5: 'Press <strong>Plan this</strong>. The sentence turns into a short list of goals.', target: function () { return document.getElementById('pmft-goal'); }, pad: 10, place: 'below', action: true,
       predicate: function () { return T.fx.goalSubmitted && PR.stage !== 'goal'; }, ack: 'One sentence became three outcomes.',
       onEnter: function () { PR.stage = T.fx.goalSubmitted ? 'outcomes' : 'goal'; PR.mount(); setTimeout(T.relayout, 200); },
       showMe: async function () { await T.demo.travelClick($('[data-pmft="submit-goal"]'), 'Press'); } },
-    { id: 'answer-question', chapter: 2, title: 'Answer one real question', body: 'Puppet Master asks only what changes the plan. Pick an answer. <strong>Why this matters</strong> explains the effect.', target: function () { return document.getElementById('pmft-question'); }, pad: 10, place: 'right', action: true,
+    { id: 'answer-question', chapter: 2, title: 'Answer one real question', body: 'Puppet Master asks only what changes the plan. Pick an answer. <strong>Why this matters</strong> explains the effect.', bodyEli5: 'It asks one question that changes the plan. Pick an answer. <strong>Why this matters</strong> tells you why.', target: function () { return document.getElementById('pmft-question'); }, pad: 10, place: 'right', action: true,
       predicate: function () { return !!T.fx.answer; }, ack: 'Answered. That single choice shapes the plan.',
       onEnter: function () { PR.mount(); PR.stage = 'question'; PR.render(); setTimeout(T.relayout, 200); },
       showMe: async function () { var w = $('[data-pmft="why"]'); if (w) { await T.demo.travelClick(w, 'Read why'); await U.sleep(U.reduced() ? 20 : 1400); } var c = $('[data-pmft="choose"][data-choice="me"]'); await T.demo.travelClick(c, 'Choose'); } },
-    { id: 'review-plan', chapter: 2, title: 'Review the plan', body: 'Outcomes, the decision you made, what Puppet Master assumed, and what is still open. Nothing has been built yet.', target: function () { return document.getElementById('pmft-boundary'); }, pad: 10, place: 'above', action: false, primary: 'Continue',
+    { id: 'review-plan', chapter: 2, title: 'Review the plan', body: 'Outcomes, the decision you made, what Puppet Master assumed, and what is still open. Nothing has been built yet.', bodyEli5: 'Here is the plan: goals, your answer, guesses it made, and open questions. Nothing is built yet.', target: function () { return document.getElementById('pmft-boundary'); }, pad: 10, place: 'above', action: false, primary: 'Continue',
       onEnter: function () { PR.mount(); PR.stage = 'review'; PR.render(); T.fx.reviewSeen = true; setTimeout(T.relayout, 200); } },
-    { id: 'edit-answer', chapter: 2, title: 'Change your answer', body: 'Press <strong>Edit</strong> on the decision and choose <strong>A few organizers</strong>. Watch which parts of the plan change. Everything else stays still.', target: function () { return document.getElementById('pmft-question') || $('#pmft-decisions [data-pid="d1"]'); }, pad: 10, place: 'right', action: true, follow: true,
+    { id: 'edit-answer', chapter: 2, title: 'Change your answer', body: 'Press <strong>Edit</strong> on the decision and choose <strong>A few organizers</strong>. Watch which parts of the plan change. Everything else stays still.', bodyEli5: 'Press <strong>Edit</strong> and pick <strong>A few organizers</strong>. Only the parts that depend on it change.', target: function () { return document.getElementById('pmft-question') || $('#pmft-decisions [data-pid="d1"]'); }, pad: 10, place: 'right', action: true, follow: true,
       predicate: function () { return T.fx.answerChanged; }, ack: 'Only the affected parts moved: shared sign-in and organizer access appeared.',
       onEnter: function () { PR.mount(); if (PR.stage !== 'edit') { PR.stage = 'review'; PR.render(); } setTimeout(T.relayout, 200); },
       showMe: async function () { var e = $('[data-pmft="edit-answer"]'); if (e) { await T.demo.travelClick(e, 'Edit'); await U.sleep(U.reduced() ? 20 : 600); T.relayout(); } var other = T.fx.answer === 'organizers' ? 'me' : 'organizers'; var c = $('[data-pmft="choose"][data-choice="' + other + '"]'); await T.demo.travelClick(c, 'Choose'); } },
-    { id: 'approval', chapter: 2, title: 'The approval boundary', body: 'That is the planning loop: describe the outcome, answer only the questions that matter, review the plan, then decide whether to begin. Nothing runs until you approve.', target: function () { return $('.pmft-p-approve'); }, pad: 10, place: 'above', action: false, primary: 'Finish tour',
+    { id: 'approval', chapter: 2, title: 'The approval boundary', body: 'That is the planning loop: describe the outcome, answer only the questions that matter, review the plan, then decide whether to begin. Nothing runs until you approve.', bodyEli5: 'Say what you want, answer a few questions, check the plan, then say yes. Nothing starts before your yes.', target: function () { return $('.pmft-p-approve'); }, pad: 10, place: 'above', action: false, primary: 'Finish tour',
       onEnter: function () { PR.stage = 'review'; PR.render(); setTimeout(T.relayout, 200); } }
   ];
 
@@ -71880,7 +71921,7 @@ policies for tenant isolation, and add migration script.</textarea>
 (function () {
   'use strict';
   var T = window.PMF_TOUR, U = T.util, esc = U.esc, $ = U.$, $$ = U.$$, I = T.icons, PR = T.practice;
-  T.state = { running: false, index: -1, snapshot: null, source: null, done: {}, keepLayout: null };
+  T.state = { running: false, index: -1, snapshot: null, source: null, done: {}, keepLayout: null, eli5: false, paused: false };
   T.current = null;
   var pollTimer = 0;
 
@@ -71895,7 +71936,7 @@ policies for tenant isolation, and add migration script.</textarea>
     if (T.state.running) return true;
     var saved = T.store.read();
     T.state.running = true; T.state.source = opts.source || 'settings'; T.state.started_at = U.now(); T.state.project_id = opts.project_id || null;
-    T.fx.teacherShown = false; T.fx.eli5Applied = false; T.fx.goalSubmitted = false; T.fx.answer = null; T.fx.answerChanged = false; T.fx.whyOpen = false; T.fx.answerHistory = [];
+    T.fx.teacherShown = false; T.fx.eli5Applied = false; T.fx.goalSubmitted = false; T.fx.answer = null; T.fx.answerChanged = false; T.fx.whyOpen = false; T.fx.answerHistory = []; T.fx.asked = null; T.state.paused = false;
     T.command('ui.guided_tour.start', { source: T.state.source });
     T.emit('started', { source: T.state.source });
     T.show();
@@ -71945,7 +71986,7 @@ policies for tenant isolation, and add migration script.</textarea>
     if (prev && prev.onExit) { try { prev.onExit(); } catch (e) { console.error(e); } }
     T.cancelShowMe(); clearInterval(pollTimer); pollTimer = 0; T.noteHide();
     var step = T.STEPS[i]; if (!step) { T.finish(); return; }
-    T.state.index = i; T.current = step; T.state.done[step.id] = false; T.cardFollow = !!step.follow;
+    T.state.index = i; T.current = step; T.state.done[step.id] = false; T.cardFollow = !!step.follow; T.state.paused = false; var pb = $('#pmf-tour .pmft-controls [data-act="pause"]'); if (pb) pb.textContent = 'Pause';
     T.command('ui.guided_tour.step', { id: step.id, index: i });
     if (step.onEnter) { try { step.onEnter(); } catch (e) { console.error('[pmf-tour] onEnter', step.id, e); } }
     persist();
@@ -71958,7 +71999,7 @@ policies for tenant isolation, and add migration script.</textarea>
     T.spotlight(el, { pad: step.pad, precue: !!step.action, block: false });
     T.renderChapters(T.CHAPTERS, step.chapter, chapterProgress(step));
     var n = T.state.index + 1, total = T.STEPS.length;
-    var body = '<div class="pmft-step">Step ' + n + ' of ' + total + '</div><h2 class="pmft-title" id="pmft-title">' + esc(step.title) + '</h2><p class="pmft-body">' + step.body + '</p>';
+    var body = '<div class="pmft-step">Step ' + n + ' of ' + total + '</div><h2 class="pmft-title" id="pmft-title">' + esc(step.title) + '</h2><p class="pmft-body">' + ((T.state.eli5 && step.bodyEli5) ? step.bodyEli5 : step.body) + '</p>';
     var foot;
     if (step.action) {
       body += '<div id="pmft-status"><span class="pmft-wait"><i></i>Your turn. Try it in the real interface.</span></div>';
@@ -71972,7 +72013,7 @@ policies for tenant isolation, and add migration script.</textarea>
     }
   }
   function checkPredicate(step) {
-    if (T.current !== step || T.state.done[step.id]) return;
+    if (T.current !== step || T.state.done[step.id] || T.state.paused) return;
     var ok = false; try { ok = !!step.predicate(); } catch (e) {}
     if (!ok) return;
     T.state.done[step.id] = true; clearInterval(pollTimer); pollTimer = 0;
@@ -71995,6 +72036,20 @@ policies for tenant isolation, and add migration script.</textarea>
     T.emit('recovery', { id: step.id });
   }
   T.actions.retry = function () { T.goto(T.state.index); };
+  // ELI5 beside Pause and Skip: simpler card copy for every scene, and the same
+  // ELI5 rewrite of the Teacher answer when one is on screen.
+  T.actions.eli5 = function () {
+    var on = !T.state.eli5; T.setEli5(on);
+    if (document.getElementById('pmft-teacher-msg')) { if (on) T.h.applyEli5(); else T.h.revertEli5(); }
+  };
+  T.actions.pause = function () {
+    if (!T.current) return;
+    var hb = $('#pmf-tour .pmft-controls [data-act="pause"]');
+    if (T.state.paused) { T.state.paused = false; if (hb) hb.textContent = 'Pause'; T.command('ui.guided_tour.resume', { id: T.current.id }); targetAndRender(T.current); return; }
+    T.state.paused = true; if (hb) hb.textContent = 'Resume'; T.cancelShowMe(); clearInterval(pollTimer); pollTimer = 0; T.noteHide();
+    T.command('ui.guided_tour.pause', { id: T.current.id });
+    T.renderCard('<div class="pmft-step">Paused</div><h2 class="pmft-title" id="pmft-title">The tour is paused.</h2><p class="pmft-body">Everything on screen stays as it is. Press Resume when you are ready.</p>', '<div class="pmft-foot-left"></div><div class="pmft-foot-right"><button type="button" class="pmft-btn is-primary" data-act="pause">Resume' + I.play + '</button></div>');
+  };
   T.actions.next = function () { T.command('ui.guided_tour.next', { from: T.current && T.current.id }); T.goto(T.state.index + 1); };
   T.actions.back = function () { if (T.state.index > 0) { T.command('ui.guided_tour.back', { from: T.current && T.current.id }); T.goto(T.state.index - 1); } };
   T.next = function () { T.actions.next(); };

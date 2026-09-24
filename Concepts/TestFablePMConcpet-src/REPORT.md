@@ -201,6 +201,79 @@ transition), `tour-showme-open_sheet.png`, `tour-drag_sheet.png`,
     estimated quota) are represented in onboarding fixtures and receipts but
     not surfaced in Doctor.
 
+## Alignment to F3-520 / F3-521 (2026-09-24)
+
+The concept was built from the 2026-09-03 packet. The Plan units it feeds
+(`F3-520` Product Onboarding, `F3-521` Guided Tour, `PWIZ-021`/`PWIZ-023`)
+were reconciled on 2026-09-06 and are the current authority. Compared on
+2026-09-24 after the PM7 promotion review flagged the same units:
+
+Already matching: the eight-theme choice at welcome; a reversible uncreated
+draft; review with Edit routes; one late Create/Add/Restore commit with
+observed phases; provider setup after commit, then Free Models, then Ready;
+tour chapter order `chat_teacher` -> `workspace` -> `planning_wizard`; Chat
+opened through its real control; Try it and Show Me sharing one handler and
+predicate; Planning owning at least half of actions and dwell; Skip restoring
+the captured layout; Finish restoring by default or keeping on explicit
+selection; reload resuming a checkpoint; no left-edge accent rail; no black or
+empty flash.
+
+Closed in this pass (branch `concept/testfable-align-20260924`):
+
+- `ELI5` and `Pause` sit beside `Skip Tour` in the coach card header. ELI5
+  swaps every scene's copy for a simpler variant and applies the same ELI5
+  rewrite to the Teacher answer on screen (or reverts it); the ELI5 step's
+  predicate accepts either control. Pause stops predicates and Show Me, keeps
+  the spotlight and the mounted state, and Resume re-targets the same step.
+- The opening scene calls out ELI5 and says Reduced Motion lives in Settings.
+- Teacher has a discoverable beginner question library (eight questions with
+  regular and ELI5 answers) under the suggested question; any of them
+  satisfies the Teacher step and streams in the same labelled example thread.
+- Automatic scene transitions focus the scene heading (`#pmft-title`), never
+  a button.
+- Receipt identifiers no longer appear in user-visible onboarding copy
+  (receipts stay in `PMF_ONBOARDING.receipts`).
+- Tools take `PMF_ROOT` / `PMF_FILE` so the assembler and drivers work on a
+  worktree copy instead of the shared checkout.
+
+Evidence (raw captures live on the evidence share, not in this repository):
+  - `/mnt/Cursor/PuppetMaster-Evidence/tests/testfable-align-20260924/01_intro.png` sha256 `a7fcaa6dfe9e2065a62ac508db10007c5f35bbbc921cd71bffa13c2c0a0e20e1`
+  - `/mnt/Cursor/PuppetMaster-Evidence/tests/testfable-align-20260924/02_intro_eli5.png` sha256 `977da50d79b49ede03e6084a82db451fa9e614080dbc5ab297a99b0a82f5681f`
+  - `/mnt/Cursor/PuppetMaster-Evidence/tests/testfable-align-20260924/03_paused.png` sha256 `dd2a85487c6b286b65d6303b300b783435dd52a2a64bc63d0730606af7eccbde`
+  - `/mnt/Cursor/PuppetMaster-Evidence/tests/testfable-align-20260924/04_library.png` sha256 `7ca25b46976b75c4019655644d750025f91cd5bfb1461180d575953c22448671`
+  - `/mnt/Cursor/PuppetMaster-Evidence/tests/testfable-align-20260924/05_eli5_answer.png` sha256 `3ced128acc5b0976e93671e957946a37d72d9c2de1969b2d09228edab8dbcfdc`
+  - `/mnt/Cursor/PuppetMaster-Evidence/tests/testfable-align-20260924/aligncheck.mjs` sha256 `fe26b1e541ad23b8157def5647edf133db8d1c98beddd58ecb0d56a8c1f8eff3`
+  `tools/aligncheck.mjs` passes 14 of 14 assertions; `tools/tourdrive.mjs`
+  completes all 12 steps via Show Me with 0 demo sends and 0 provider
+  requests; `tools/matrix.mjs` passes 48 of 48 assertions over 15 scenarios
+  with no page errors. The harness now waits for the committed state instead
+  of a fixed delay, because the 2026-09-07 sweep lengthened the screen-exit
+  transition and a timer-based click landed while the commit was still
+  running (a harness race, not a product defect).
+
+Still open, because they change the flow's shape and need a product decision:
+
+1. **Stage order.** F3-520/PWIZ-021 define eleven dependency stages with an
+   explicit `server_storage_client` stage (where work runs, where files live,
+   current Client) after `source_control_setup`, and a `remote_access_setup`
+   stage (private access plan or explicit skip) before review. This concept
+   asks "Where should the work run?" first, folds storage into the Project
+   path, and has no private-access stage on the main path.
+2. **First Project routes.** F3-520 wants four equal aligned routes visible
+   together (Start a new project, Open a folder here, Bring one from online,
+   Restore a backup). This concept shows three and folds folder / online /
+   another device under "Use work that already exists".
+3. **Safe History vocabulary.** F3-520 names Safe History with Git
+   recommended, Jujutsu as a no-account alternative, FileSafe recovery points,
+   and the online copy as separate. This concept offers a single "Keep
+   history" toggle without naming the engines.
+4. **Project Later.** F3-520 defines a deferred-Project path with both
+   provider phases deferred. This concept only offers "No Project for now" on
+   the connect-existing Ready screen.
+5. **Connect-existing shortcut.** PWIZ-021's six-stage shortcut includes
+   `review_setup_plan` and `automatic_preparation`; this concept goes from
+   pairing to Ready without a review step.
+
 ## Round-two evidence
 
 `evidence/v3_welcome_sheet.png` and `evidence/v3_success_sheet.png` show the

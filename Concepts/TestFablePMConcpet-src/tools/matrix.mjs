@@ -6,7 +6,7 @@ async function scenario(name, fn, opts={}) {
   const page = await ctx.newPage();
   const errs=[]; page.on('pageerror', e => errs.push(e.message)); page.on('console', m=>{ if(m.type()==='error') errs.push('console: '+m.text().slice(0,200)); });
   await page.addInitScript((pre)=>{ try{ if(!sessionStorage.getItem('mx-init')){ localStorage.clear(); sessionStorage.setItem('mx-init','1'); if(pre) Object.keys(pre).forEach(k=>localStorage.setItem(k, pre[k])); } }catch(e){} }, opts.pre||null);
-  await page.goto('file:///mnt/Cursor/PuppetMaster/Concepts/TestFablePMConcpet.html' + (opts.hash||''), { waitUntil: 'load', timeout: 60000 });
+  await page.goto((process.env.PMF_FILE || 'file:///mnt/Cursor/PuppetMaster/Concepts/TestFablePMConcpet.html') + (opts.hash||''), { waitUntil: 'load', timeout: 60000 });
   await page.waitForTimeout(600);
   try { await page.waitForFunction(()=>window.PMF_ONBOARDING && (!window.PMF_ONBOARDING.state.open || !!window.PMF_ONBOARDING.state.screen), null, { timeout: 8000 }); } catch (e) {}
   await page.waitForTimeout(400);
@@ -20,7 +20,9 @@ async function scenario(name, fn, opts={}) {
     type: async (sel, text)=>{ await page.evaluate(s=>document.querySelector(s).focus(), sel); await page.type(sel, text, {delay: 8}); await page.waitForTimeout(150); },
     scenario: async (id)=>{ await page.evaluate(id=>{ window.PMF_ONBOARDING.scenario_id=id; const P=window.PMF_ONBOARDING; P.state.draft=P.newDraft(); P.state.stack=[]; P.go('welcome','back',{replace:true}); }, id); await page.waitForTimeout(600); },
     expect: async (label, pred)=>{ const ok = await page.evaluate(pred); results.push(`  [${name}] ${ok?'PASS':'FAIL'} ${label}`); return ok; },
-    wait: (ms)=>page.waitForTimeout(ms)
+    wait: (ms)=>page.waitForTimeout(ms),
+    // the commit's phases are timers; wait for the committed state and an enabled Continue instead of a fixed delay
+    waitCommitted: async ()=>{ await page.waitForFunction(()=>{ const P=window.PMF_ONBOARDING; const b=document.querySelector('#pmf-onboarding .pmf-foot .pmf-btn.is-primary'); return !!(P.draft() && P.draft().committed) && !!b && b.getAttribute('aria-disabled')==='false'; }, null, { timeout: 20000 }).catch(()=>{}); await page.waitForTimeout(500); }
   };
   try { await fn(H); } catch(e) { results.push(`  [${name}] EXCEPTION ${e.message.slice(0,200)}`); }
   results.push(`  [${name}] errors: ${errs.length? JSON.stringify(errs.slice(0,3)) : 'none'}`);
@@ -48,7 +50,7 @@ await scenario('folder', async (H)=>{
   await H.next(); await H.next(); await H.click('#pmf-onboarding [data-group="mode"][data-arg="existing"]'); await H.next(); await H.shot('01_existing');
   await H.click('#pmf-onboarding [data-group="source"][data-arg="folder"]'); await H.next(); await H.click('#pmf-onboarding [data-group="folder"][data-arg="~/dev/tastebook"]'); await H.shot('02_folder_picked');
   await H.next(); await H.shot('03_review'); await H.expect('Add Project label', ()=>document.querySelector('#pmf-onboarding .pmf-foot .pmf-btn.is-primary').textContent.includes('Add Project'));
-  await H.next(3500); await H.expect('committed', ()=>!!window.PMF_ONBOARDING.draft().committed);
+  await H.next(600); await H.waitCommitted(); await H.expect('committed', ()=>!!window.PMF_ONBOARDING.draft().committed);
 });
 // 3. existing online with JIT sign-in
 await scenario('online', async (H)=>{
@@ -92,7 +94,7 @@ await scenario('returning', async (H)=>{
   await H.expect('preview shown', ()=>document.querySelector('#pmf-inherit-preview').textContent.includes('planning preferences'));
   await H.click('#pmf-onboarding [data-act="choose-groups"]', 600); await H.shot('03_groups'); await H.click('#pmf-onboarding [data-act="group-toggle"][data-arg="appearance"]'); await H.click('#pmf-onboarding [data-act="sheet-close"]');
   await H.next(); await H.next(); await H.shot('04_review'); await H.expect('review shows inherit', ()=>document.querySelector('#pmf-onboarding .pmf-review').textContent.includes('Like Tastebook'));
-  await H.next(3800); await H.next(1800); await H.shot('05_power_ready');
+  await H.next(600); await H.waitCommitted(); await H.next(1800); await H.shot('05_power_ready');
   await H.expect('claude auto ready', ()=>(window.PMF_ONBOARDING.draft().providers.claude_sub||{}).state==='ready');
   await H.expect('cursor shows Sign in', ()=>!!document.querySelector('#pmf-onboarding [data-act="prov-signin"][data-arg="cursor"]'));
   await H.expect('antigravity shows Install', ()=>!!document.querySelector('#pmf-onboarding [data-act="prov-install"][data-arg="antigravity"]'));
@@ -133,7 +135,7 @@ await scenario('skipprov', async (H)=>{
 });
 // 11. close after commit and reopen resumes at provider phase
 await scenario('postcommit', async (H)=>{
-  await H.next(); await H.next(); await H.click('#pmf-onboarding [data-group="mode"][data-arg="new"]'); await H.next(); await H.type('#pmf-name','Post'); await H.next(); await H.next(); await H.next(3200);
+  await H.next(); await H.next(); await H.click('#pmf-onboarding [data-group="mode"][data-arg="new"]'); await H.next(); await H.type('#pmf-name','Post'); await H.next(); await H.next(); await H.next(600); await H.waitCommitted();
   await H.expect('committed', ()=>!!window.PMF_ONBOARDING.draft().committed);
   await H.click('#pmf-onboarding [data-act="close"]', 500); await H.page.reload({waitUntil:'load'}); await H.wait(2600); await H.shot('01_reopen');
   await H.expect('reopens at power', ()=>window.PMF_ONBOARDING.state.open && window.PMF_ONBOARDING.state.screen==='power');

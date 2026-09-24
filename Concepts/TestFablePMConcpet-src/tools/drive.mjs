@@ -6,7 +6,7 @@ const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } })
 const page = await ctx.newPage();
 const errs=[]; page.on('pageerror', e => errs.push(e.message)); page.on('console', m=>{ if(m.type()==='error'||m.type()==='warning') errs.push(m.type()+': '+m.text().slice(0,300)); });
 await page.addInitScript((t)=>{ try{ localStorage.clear(); localStorage.setItem('pm.theme', t);}catch(e){} }, theme);
-await page.goto('file:///mnt/Cursor/PuppetMaster/Concepts/TestFablePMConcpet.html', { waitUntil: 'load', timeout: 60000 });
+await page.goto((process.env.PMF_FILE || 'file:///mnt/Cursor/PuppetMaster/Concepts/TestFablePMConcpet.html'), { waitUntil: 'load', timeout: 60000 });
 await page.waitForTimeout(2400);
 const shot = async (name)=>{ await page.screenshot({ path: `${out}_${name}.png` }); };
 const st = async ()=> page.evaluate(()=>({open:window.PMF_ONBOARDING.state.open, screen:window.PMF_ONBOARDING.state.screen, motion:document.getElementById('pmf-onboarding').dataset.motion}));

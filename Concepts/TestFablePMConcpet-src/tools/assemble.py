@@ -5,8 +5,8 @@ First run (no markers present): strips the legacy pm7 onboarding/tour blocks and
 plants four marker pairs. Every run: replaces marker contents with the current
 sources from ./src. Idempotent.
 """
-import re, sys, pathlib, hashlib
-ROOT = pathlib.Path('/mnt/Cursor/PuppetMaster/Concepts/TestFablePMConcpet.html')
+import re, sys, os, pathlib, hashlib
+ROOT = pathlib.Path(os.environ.get('PMF_ROOT') or (pathlib.Path(__file__).resolve().parent.parent.parent / 'TestFablePMConcpet.html'))
 SRC = pathlib.Path(__file__).resolve().parent.parent
 doc = ROOT.read_text(encoding='utf-8')
 

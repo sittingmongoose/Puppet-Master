@@ -12,6 +12,16 @@
     prompt: 'What happens before Puppet Master changes my files?',
     teacher: 'Before work begins, Puppet Master turns your request into a plan. You can review the important choices, correct anything that looks wrong, and decide when to begin. Your Project permissions still control what the work may change.',
     teacher_eli5: 'First, Puppet Master writes down what it thinks you want. You can fix the plan before anything starts. It waits for your decision to begin.',
+    library: [
+      { q: 'What is a Project?', a: 'A Project keeps one body of work together: its files, plans, history, and Project-specific settings.', e: 'A Project is one workspace for one thing you are making. It keeps the right files and decisions together.' },
+      { q: 'What does the Planning Wizard do?', a: 'It turns a sentence about what you want into a plan you can read, asks only the questions that change the result, and waits for your approval before any work starts.', e: 'You say what you want. It writes a plan and asks a few questions. Nothing starts until you say yes.' },
+      { q: 'Will Puppet Master change my files without asking?', a: 'No. Work begins only after you approve a plan, and your Project permissions decide what the work may change. You can review every change afterwards.', e: 'No. It waits for your yes, and it only touches what you allowed.' },
+      { q: 'What is history?', a: 'History is a timeline of saved versions of your files. Each time work is completed, a new version is kept, so you can look back or go back.', e: 'History remembers older versions of your files, so you can go back if you need to.' },
+      { q: 'What is an AI account for?', a: 'Puppet Master uses an AI account to write plans and do the work. It is charged to that account. You can add more than one and choose which does what.', e: 'The AI account is what does the thinking. You pay for it through that account.' },
+      { q: 'What is a widget?', a: 'A widget is a small card on the Home page that shows something useful, like progress or approvals, so you can keep an eye on it while you do other things.', e: 'A widget is a little card that shows you one useful thing at a glance.' },
+      { q: 'What does Approve mean?', a: 'Approve means you have read the plan and agree with it. It is the moment work is allowed to start. Before that, nothing is built.', e: 'Approve means "yes, go ahead". Nothing happens before you say it.' },
+      { q: 'Can I undo something?', a: 'Yes. Completed work is kept in history, so you can return to an earlier version. Plans can be changed before you approve them.', e: 'Yes. You can go back to an older version, and you can change a plan before saying yes.' }
+    ],
     goal: 'Create a simple website for my neighborhood book club. It should show the next meeting, the current book, and how to join.',
     outcomes: [
       { id: 'o1', text: 'Visitors can see the next meeting', sub: 'Date, time, and place on the front page' },
@@ -32,7 +42,7 @@
       unsure: { outcomes: [], decisions: [{ id: 'd3', text: 'Editing access still to decide', sub: 'Puppet Master plans a single editor for now and asks again before building sign-in' }] }
     }
   };
-  T.fx = { teacherShown: false, eli5Applied: false, goalSubmitted: false, answer: null, answerChanged: false, reviewSeen: false, answerHistory: [] };
+  T.fx = { teacherShown: false, eli5Applied: false, goalSubmitted: false, answer: null, answerChanged: false, reviewSeen: false, answerHistory: [], asked: null };
 
   // ---- shell helpers ---------------------------------------------------------------
   function chatSurface() { var l = HW() && HW().layout; return l && (l.surfaces || []).filter(function (s) { return (s.surface_instance_id || s.surface_id) === 'chat'; })[0]; }
@@ -65,40 +75,52 @@
   function mountSuggest() {
     var comp = chatComposer(); if (!comp || $('.pmft-suggest')) return;
     var box = document.createElement('div'); box.className = 'pmft-suggest'; box.setAttribute('data-pm-hover-exempt', 'true');
-    box.innerHTML = '<div class="pmft-suggest-label">' + I.sparkles + '<span>Try asking Teacher</span></div><button type="button" class="pmft-suggest-btn" data-pmft-suggest data-pm-hover-exempt="true"><span>' + esc(T.fixture.prompt) + '</span>' + I.next + '</button>';
+    box.innerHTML = '<div class="pmft-suggest-label">' + I.sparkles + '<span>Try asking Teacher</span></div><button type="button" class="pmft-suggest-btn" data-pmft-suggest data-pm-hover-exempt="true"><span>' + esc(T.fixture.prompt) + '</span>' + I.next + '</button>' +
+      '<div class="pmft-library" data-open="false"><button type="button" class="pmft-library-toggle" data-pmft-library-toggle data-pm-hover-exempt="true"><span>More beginner questions</span>' + I.chevron + '</button><div class="pmft-library-list">' + T.fixture.library.map(function (it, i) { return '<button type="button" class="pmft-suggest-btn" data-pmft-suggest="' + i + '" data-pm-hover-exempt="true"><span>' + esc(it.q) + '</span>' + I.next + '</button>'; }).join('') + '</div></div>';
     comp.parentNode.insertBefore(box, comp);
-    box.querySelector('[data-pmft-suggest]').addEventListener('click', function () { T.h.sendGuided(); });
+    $$('[data-pmft-suggest]', box).forEach(function (b) { b.addEventListener('click', function () { var i = b.getAttribute('data-pmft-suggest'); T.h.sendGuided(i === '' ? null : T.fixture.library[parseInt(i, 10)]); }); });
+    box.querySelector('[data-pmft-library-toggle]').addEventListener('click', function () { var lib = box.querySelector('.pmft-library'); lib.setAttribute('data-open', lib.getAttribute('data-open') === 'true' ? 'false' : 'true'); T.relayout(); });
     var inp = chatInput();
     if (inp && !inp.__pmftBound) { inp.__pmftBound = true; inp.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' && !ev.shiftKey && T.state.running && T.current && T.current.id === 'teacher-ask' && /before puppet master changes/i.test(inp.value)) { ev.preventDefault(); ev.stopImmediatePropagation(); inp.value = ''; T.h.sendGuided(); } }, true); }
   }
   function unmountSuggest() { var b = $('.pmft-suggest'); if (b) b.remove(); }
   T.h.mountSuggest = mountSuggest; T.h.unmountSuggest = unmountSuggest;
-  T.h.sendGuided = function () {
+  T.h.sendGuided = function (item) {
     if (T.fx.teacherShown) return;
     var s = chatStream(); if (!s) return;
+    var asked = item ? { q: item.q, a: item.a, e: item.e } : { q: T.fixture.prompt, a: T.fixture.teacher, e: T.fixture.teacher_eli5 };
+    T.fx.asked = asked;
     T.command('cmd.chat.send', { thread: 'guided_example', local_fixture: true, provider_request: false });
     ensureSysNote(); unmountSuggest();
     var u = document.createElement('div'); u.className = 'message user pm6-chat-msg pmft-msg'; u.setAttribute('data-pm6-role', 'user');
-    u.innerHTML = '<div class="msg-body"><div class="runtime-snapshot"><span class="pmft-tag">Example</span><span>you</span></div>' + esc(T.fixture.prompt) + '</div>';
+    u.innerHTML = '<div class="msg-body"><div class="runtime-snapshot"><span class="pmft-tag">Example</span><span>you</span></div>' + esc(asked.q) + '</div>';
     s.appendChild(u); s.scrollTop = s.scrollHeight;
     var typing = document.createElement('div'); typing.className = 'message assistant pm6-chat-msg pmft-msg pmft-typing'; typing.innerHTML = '<div class="msg-body"><div class="runtime-snapshot"><span class="pmft-tag">Example</span><span class="pmft-teacher">Teacher</span></div><span class="pmft-cursor"></span></div>';
     setTimeout(function () {
       s.appendChild(typing); s.scrollTop = s.scrollHeight;
       var body = typing.querySelector('.msg-body'); var target = body; body.innerHTML = '<div class="runtime-snapshot"><span class="pmft-tag">Example</span><span class="pmft-teacher">Teacher</span></div><div class="pmft-morph"><span class="pmft-text is-new" id="pmft-teacher-text"></span></div>';
-      var textEl = body.querySelector('#pmft-teacher-text'); var words = T.fixture.teacher.split(' '); var i = 0;
+      var textEl = body.querySelector('#pmft-teacher-text'); var words = (T.state.eli5 ? asked.e : asked.a).split(' '); var i = 0;
       var cur = document.createElement('span'); cur.className = 'pmft-cursor'; textEl.appendChild(cur);
       (function tick() {
         if (i < words.length) { cur.insertAdjacentText('beforebegin', (i ? ' ' : '') + words[i]); i++; s.scrollTop = s.scrollHeight; setTimeout(tick, U.reduced() ? 8 : 38 + Math.random() * 40); }
-        else { cur.remove(); typing.classList.remove('pmft-typing'); typing.id = 'pmft-teacher-msg'; T.fx.teacherShown = true; T.receipt('guided_example.teacher', 'ok', { provider_request: false }); T.emit('teacher-shown'); }
+        else { cur.remove(); typing.classList.remove('pmft-typing'); typing.id = 'pmft-teacher-msg'; T.fx.teacherShown = true; if (T.state.eli5) { T.fx.eli5Applied = true; T.h.markEli5(typing); } T.receipt('guided_example.teacher', 'ok', { provider_request: false }); T.emit('teacher-shown'); }
       })();
     }, U.reduced() ? 60 : 520);
   };
+  T.h.markEli5 = function (msg) { if (msg.querySelector('.pmft-eli5-tag')) return; var tag = document.createElement('span'); tag.className = 'pmft-eli5-tag'; tag.innerHTML = I.sparkles + '<span>ELI5: simpler words, same meaning</span>'; msg.querySelector('.msg-body').appendChild(tag); };
   T.h.applyEli5 = function () {
     var msg = document.getElementById('pmft-teacher-msg'); if (!msg || T.fx.eli5Applied) return;
     T.command('cmd.chat.eli5.apply', { thread: 'guided_example', local_fixture: true });
-    T.morphText(msg, T.fixture.teacher_eli5);
-    var tag = document.createElement('span'); tag.className = 'pmft-eli5-tag'; tag.innerHTML = I.sparkles + '<span>ELI5: simpler words, same meaning</span>'; msg.querySelector('.msg-body').appendChild(tag);
-    T.fx.eli5Applied = true; T.emit('eli5-applied');
+    T.morphText(msg, (T.fx.asked || { e: T.fixture.teacher_eli5 }).e);
+    T.h.markEli5(msg);
+    T.fx.eli5Applied = true; T.setEli5(true, { quiet: true }); T.emit('eli5-applied');
+  };
+  T.h.revertEli5 = function () {
+    var msg = document.getElementById('pmft-teacher-msg'); if (!msg || !T.fx.eli5Applied) return;
+    T.command('cmd.chat.eli5.revert', { thread: 'guided_example', local_fixture: true });
+    T.morphText(msg, (T.fx.asked || { a: T.fixture.teacher }).a);
+    var tag = msg.querySelector('.pmft-eli5-tag'); if (tag) tag.remove();
+    T.fx.eli5Applied = false;
   };
 
   // ---- practice sheet inside the Planning Wizard --------------------------------------
@@ -178,45 +200,45 @@
   // ---- steps ---------------------------------------------------------------------------
   T.CHAPTERS = ['Ask', 'Arrange', 'Plan'];
   T.STEPS = [
-    { id: 'intro', chapter: 0, title: 'Let\'s make Puppet Master feel familiar.', body: 'You will try a few real actions. This guided example does not change your files or use your AI plan.', target: null, action: false, primary: 'Start', onEnter: function () { T.snapshotLayout(); if (chatVisible()) hideChat(); } },
-    { id: 'open-chat', chapter: 0, title: 'Open Assistant Chat', body: 'Click the <strong>Chat</strong> icon at the top of the left rail. Assistant Chat is where you ask Puppet Master for help.', target: chatIcon, pad: 6, place: 'right', action: true, block: false,
+    { id: 'intro', chapter: 0, title: 'Let\'s make Puppet Master feel familiar.', body: 'You will try a few real actions. This guided example does not change your files or use your AI plan. <strong>ELI5</strong> at the top makes any explanation simpler. If you prefer less animation, Reduced Motion is in Settings.', bodyEli5: 'You will try a few real things. Nothing here changes your files or costs anything. ELI5 at the top uses simpler words. Less animation is in Settings, under Reduced Motion.', target: null, action: false, primary: 'Start', onEnter: function () { T.snapshotLayout(); if (chatVisible()) hideChat(); } },
+    { id: 'open-chat', chapter: 0, title: 'Open Assistant Chat', body: 'Click the <strong>Chat</strong> icon at the top of the left rail. Assistant Chat is where you ask Puppet Master for help.', bodyEli5: 'Click the <strong>Chat</strong> icon on the left. That is where you ask for help.', target: chatIcon, pad: 6, place: 'right', action: true, block: false,
       predicate: chatVisible, ack: 'Assistant Chat is open.',
       onEnter: function () { var ic = chatIcon(); if (ic && !ic.__pmftBound) { ic.__pmftBound = true; ic.addEventListener('click', function () { setTimeout(function () { if (T.state.running && T.current && T.current.id === 'open-chat' && !chatVisible()) showChat(); }, 60); }); } },
       showMe: async function () { var ic = chatIcon(); await T.demo.travelClick(ic, 'Click'); if (!chatVisible()) showChat(); } },
-    { id: 'teacher-ask', chapter: 0, title: 'Ask Teacher a question', body: 'Teacher can explain the screen you are on, an unfamiliar term, or why a choice matters. Send the suggested question.', target: function () { return $('.pmft-suggest') || chatComposer(); }, pad: 8, place: 'left', action: true,
+    { id: 'teacher-ask', chapter: 0, title: 'Ask Teacher a question', body: 'Teacher can explain the screen you are on, an unfamiliar term, or why a choice matters. Send the suggested question.', bodyEli5: 'Teacher explains things. Send the question it suggests, or pick another.', target: function () { return $('.pmft-suggest') || chatComposer(); }, pad: 8, place: 'left', action: true,
       predicate: function () { return T.fx.teacherShown; }, ack: 'Teacher answered inside Assistant Chat.',
       onEnter: function () { if (!chatVisible()) showChat(); setTimeout(function () { ensureSysNote(); mountSuggest(); T.relayout(); }, 120); },
       showMe: async function () { var b = $('.pmft-suggest-btn'); if (!b) return; await T.demo.travelClick(b, 'Send'); },
       onExit: function () { unmountSuggest(); } },
-    { id: 'eli5', chapter: 0, title: 'Make it simpler with ELI5', body: 'Click <strong>ELI5</strong> under the message box. The same answer becomes shorter and simpler, and still accurate.', target: eli5Toggle, pad: 8, place: 'left', action: true,
+    { id: 'eli5', chapter: 0, title: 'Make it simpler with ELI5', body: 'Click <strong>ELI5</strong> under the message box. The same answer becomes shorter and simpler, and still accurate.', bodyEli5: 'Click <strong>ELI5</strong> under the message box. The answer gets simpler but stays true.', target: eli5Toggle, pad: 8, place: 'left', action: true,
       predicate: function () { return T.fx.eli5Applied; }, ack: 'Same answer, simpler words.',
       onEnter: function () { var t = eli5Toggle(); if (t && !t.__pmftBound) { t.__pmftBound = true; t.addEventListener('click', function () { if (T.state.running && T.current && T.current.id === 'eli5') setTimeout(T.h.applyEli5, 40); }); } },
       showMe: async function () { var t = eli5Toggle(); await T.demo.travelClick(t, 'Click'); setTimeout(T.h.applyEli5, 40); } },
-    { id: 'move-chat', chapter: 1, title: 'Move Assistant Chat', body: 'Drag the grip at the top-right corner of Chat to the <strong>left side</strong> of the workspace. The destination lights up as you get close.', target: chatGrip, pad: 10, place: 'left', action: true,
+    { id: 'move-chat', chapter: 1, title: 'Move Assistant Chat', body: 'Drag the grip at the top-right corner of Chat to the <strong>left side</strong> of the workspace. The destination lights up as you get close.', bodyEli5: 'Grab the corner of Chat and drag it to the <strong>left</strong>. The spot lights up when you are close.', target: chatGrip, pad: 10, place: 'left', action: true,
       predicate: function () { var s = chatSurface(); return !!(s && s.visible && s.host !== T.state.snapshot.chat_host && s.host !== 'floating'); }, ack: 'The same Chat stays with you; only its place changed.',
       showMe: async function () { await T.demo.dragChatLeft(); } },
-    { id: 'add-widget', chapter: 1, title: 'Add a widget', body: 'Click <strong>Add widget</strong> on the Home page, then choose <strong>Approval queue</strong>. Widgets keep useful Project information nearby.', target: function () { return catalogItem() && catalogItem().offsetParent ? catalogItem() : addWidgetBtn(); }, pad: 8, place: 'below', action: true, follow: true,
+    { id: 'add-widget', chapter: 1, title: 'Add a widget', body: 'Click <strong>Add widget</strong> on the Home page, then choose <strong>Approval queue</strong>. Widgets keep useful Project information nearby.', bodyEli5: 'Click <strong>Add widget</strong>, then pick <strong>Approval queue</strong>. A widget is a small card that shows one useful thing.', target: function () { return catalogItem() && catalogItem().offsetParent ? catalogItem() : addWidgetBtn(); }, pad: 8, place: 'below', action: true, follow: true,
       predicate: function () { return !!widgetCard(); }, ack: 'Widgets keep useful Project information nearby without taking you away from the page you are using.',
       onEnter: function () { try { if (window.PM_PAGES && window.PM_PAGES.current !== 'dashboard') window.PM_PAGES.go('dashboard'); } catch (e) {} },
       showMe: async function () { var b = addWidgetBtn(); await T.demo.travelClick(b, 'Click'); var ok = await T.until(function () { return catalogItem() && catalogItem().offsetParent; }, 2500); if (!ok) return; await U.sleep(U.reduced() ? 10 : 500); T.relayout(); await T.demo.travelClick(catalogItem(), 'Choose'); } },
-    { id: 'open-wizard', chapter: 2, title: 'Open the Planning Wizard', body: 'Click <strong>Planning Wizard</strong> in the top bar. Planning is where Puppet Master turns an idea into a plan you can check.', target: wizardTab, pad: 6, place: 'below', action: true,
+    { id: 'open-wizard', chapter: 2, title: 'Open the Planning Wizard', body: 'Click <strong>Planning Wizard</strong> in the top bar. Planning is where Puppet Master turns an idea into a plan you can check.', bodyEli5: 'Click <strong>Planning Wizard</strong> at the top. That is where ideas become plans.', target: wizardTab, pad: 6, place: 'below', action: true,
       predicate: function () { return window.PM_PAGES && window.PM_PAGES.current === 'wizard'; }, ack: 'This is the Planning Wizard.',
       showMe: async function () { await T.demo.travelClick(wizardTab(), 'Click'); } },
-    { id: 'practice-goal', chapter: 2, title: 'Plan a practice idea', body: 'Press <strong>Plan this</strong>. Puppet Master turns the sentence into outcomes it can check.', target: function () { return document.getElementById('pmft-goal'); }, pad: 10, place: 'below', action: true,
+    { id: 'practice-goal', chapter: 2, title: 'Plan a practice idea', body: 'Press <strong>Plan this</strong>. Puppet Master turns the sentence into outcomes it can check.', bodyEli5: 'Press <strong>Plan this</strong>. The sentence turns into a short list of goals.', target: function () { return document.getElementById('pmft-goal'); }, pad: 10, place: 'below', action: true,
       predicate: function () { return T.fx.goalSubmitted && PR.stage !== 'goal'; }, ack: 'One sentence became three outcomes.',
       onEnter: function () { PR.stage = T.fx.goalSubmitted ? 'outcomes' : 'goal'; PR.mount(); setTimeout(T.relayout, 200); },
       showMe: async function () { await T.demo.travelClick($('[data-pmft="submit-goal"]'), 'Press'); } },
-    { id: 'answer-question', chapter: 2, title: 'Answer one real question', body: 'Puppet Master asks only what changes the plan. Pick an answer. <strong>Why this matters</strong> explains the effect.', target: function () { return document.getElementById('pmft-question'); }, pad: 10, place: 'right', action: true,
+    { id: 'answer-question', chapter: 2, title: 'Answer one real question', body: 'Puppet Master asks only what changes the plan. Pick an answer. <strong>Why this matters</strong> explains the effect.', bodyEli5: 'It asks one question that changes the plan. Pick an answer. <strong>Why this matters</strong> tells you why.', target: function () { return document.getElementById('pmft-question'); }, pad: 10, place: 'right', action: true,
       predicate: function () { return !!T.fx.answer; }, ack: 'Answered. That single choice shapes the plan.',
       onEnter: function () { PR.mount(); PR.stage = 'question'; PR.render(); setTimeout(T.relayout, 200); },
       showMe: async function () { var w = $('[data-pmft="why"]'); if (w) { await T.demo.travelClick(w, 'Read why'); await U.sleep(U.reduced() ? 20 : 1400); } var c = $('[data-pmft="choose"][data-choice="me"]'); await T.demo.travelClick(c, 'Choose'); } },
-    { id: 'review-plan', chapter: 2, title: 'Review the plan', body: 'Outcomes, the decision you made, what Puppet Master assumed, and what is still open. Nothing has been built yet.', target: function () { return document.getElementById('pmft-boundary'); }, pad: 10, place: 'above', action: false, primary: 'Continue',
+    { id: 'review-plan', chapter: 2, title: 'Review the plan', body: 'Outcomes, the decision you made, what Puppet Master assumed, and what is still open. Nothing has been built yet.', bodyEli5: 'Here is the plan: goals, your answer, guesses it made, and open questions. Nothing is built yet.', target: function () { return document.getElementById('pmft-boundary'); }, pad: 10, place: 'above', action: false, primary: 'Continue',
       onEnter: function () { PR.mount(); PR.stage = 'review'; PR.render(); T.fx.reviewSeen = true; setTimeout(T.relayout, 200); } },
-    { id: 'edit-answer', chapter: 2, title: 'Change your answer', body: 'Press <strong>Edit</strong> on the decision and choose <strong>A few organizers</strong>. Watch which parts of the plan change. Everything else stays still.', target: function () { return document.getElementById('pmft-question') || $('#pmft-decisions [data-pid="d1"]'); }, pad: 10, place: 'right', action: true, follow: true,
+    { id: 'edit-answer', chapter: 2, title: 'Change your answer', body: 'Press <strong>Edit</strong> on the decision and choose <strong>A few organizers</strong>. Watch which parts of the plan change. Everything else stays still.', bodyEli5: 'Press <strong>Edit</strong> and pick <strong>A few organizers</strong>. Only the parts that depend on it change.', target: function () { return document.getElementById('pmft-question') || $('#pmft-decisions [data-pid="d1"]'); }, pad: 10, place: 'right', action: true, follow: true,
       predicate: function () { return T.fx.answerChanged; }, ack: 'Only the affected parts moved: shared sign-in and organizer access appeared.',
       onEnter: function () { PR.mount(); if (PR.stage !== 'edit') { PR.stage = 'review'; PR.render(); } setTimeout(T.relayout, 200); },
       showMe: async function () { var e = $('[data-pmft="edit-answer"]'); if (e) { await T.demo.travelClick(e, 'Edit'); await U.sleep(U.reduced() ? 20 : 600); T.relayout(); } var other = T.fx.answer === 'organizers' ? 'me' : 'organizers'; var c = $('[data-pmft="choose"][data-choice="' + other + '"]'); await T.demo.travelClick(c, 'Choose'); } },
-    { id: 'approval', chapter: 2, title: 'The approval boundary', body: 'That is the planning loop: describe the outcome, answer only the questions that matter, review the plan, then decide whether to begin. Nothing runs until you approve.', target: function () { return $('.pmft-p-approve'); }, pad: 10, place: 'above', action: false, primary: 'Finish tour',
+    { id: 'approval', chapter: 2, title: 'The approval boundary', body: 'That is the planning loop: describe the outcome, answer only the questions that matter, review the plan, then decide whether to begin. Nothing runs until you approve.', bodyEli5: 'Say what you want, answer a few questions, check the plan, then say yes. Nothing starts before your yes.', target: function () { return $('.pmft-p-approve'); }, pad: 10, place: 'above', action: false, primary: 'Finish tour',
       onEnter: function () { PR.stage = 'review'; PR.render(); setTimeout(T.relayout, 200); } }
   ];
 

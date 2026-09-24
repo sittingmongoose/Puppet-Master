@@ -9,7 +9,7 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 const errs=[]; page.on('pageerror', e => errs.push(e.message));
 const onbState = scenario.startsWith('tour') ? JSON.stringify({completed:true, provider_done:true}) : null;
 await page.addInitScript((s)=>{ try{ localStorage.clear(); if(s) localStorage.setItem('pmf.onboarding.v1', s);}catch(e){} }, onbState);
-await page.goto('file:///mnt/Cursor/PuppetMaster/Concepts/TestFablePMConcpet.html#no-onboarding', { waitUntil: 'load', timeout: 60000 });
+await page.goto((process.env.PMF_FILE || (process.env.PMF_FILE || 'file:///mnt/Cursor/PuppetMaster/Concepts/TestFablePMConcpet.html')) + '#no-onboarding', { waitUntil: 'load', timeout: 60000 });
 await page.waitForTimeout(1200);
 await page.evaluate(t=>window.PM_THEME.set(t), theme); await page.waitForTimeout(500);
 const SLOW = parseFloat(process.env.SLOW||'1');

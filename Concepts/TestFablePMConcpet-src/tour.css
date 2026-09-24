@@ -64,9 +64,20 @@
 .pmft-chapter[data-state="current"] i { width: 30px; }
 .pmft-chapter span { display: none; }
 .pmft-chapter[data-state="current"] span { display: inline; }
-.pmft-skip { font: inherit; font-size: 12px; font-weight: 600; color: var(--text-muted); background: transparent; border: 0; padding: 4px 8px; border-radius: 999px; cursor: pointer; transition: color var(--pmft-dur-s), background var(--pmft-dur-s); }
-.pmft-skip:hover { color: var(--text-primary); background: var(--surface-alt, var(--surface)); }
-.pmft-skip:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent-primary); }
+.pmft-controls { display: flex; align-items: center; gap: 2px; }
+.pmft-ctl, .pmft-skip { font: inherit; font-size: 12px; font-weight: 600; color: var(--text-muted); background: transparent; border: 1px solid transparent; padding: 4px 8px; border-radius: 999px; cursor: pointer; transition: color var(--pmft-dur-s), background var(--pmft-dur-s), border-color var(--pmft-dur-s); }
+.pmft-ctl:hover, .pmft-skip:hover { color: var(--text-primary); background: var(--surface-alt, var(--surface)); }
+.pmft-ctl:focus-visible, .pmft-skip:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent-primary); }
+.pmft-ctl[aria-pressed="true"] { color: var(--accent-lime); border-color: color-mix(in srgb, var(--accent-lime) 45%, transparent); background: color-mix(in srgb, var(--accent-lime) 10%, transparent); }
+.pmft-title:focus { outline: none; }
+.pmft-title:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent-primary); border-radius: 4px; }
+.pmft-library { display: flex; flex-direction: column; gap: 4px; margin-top: 2px; }
+.pmft-library-toggle { font: inherit; font-size: 12px; font-weight: 600; color: var(--accent-primary); background: none; border: 0; padding: 4px 2px; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 4px; }
+.pmft-library-toggle svg { width: 12px; height: 12px; transition: transform var(--pmft-dur-s); }
+.pmft-library[data-open="true"] .pmft-library-toggle svg { transform: rotate(180deg); }
+.pmft-library-list { display: none; flex-direction: column; gap: 4px; max-height: 190px; overflow-y: auto; }
+.pmft-library[data-open="true"] .pmft-library-list { display: flex; }
+.pmft-library-list .pmft-suggest-btn { font-size: 12.5px; padding: 6px 9px; }
 .pmft-step { font-size: 11.5px; color: var(--text-muted); }
 .pmft-title { font-family: var(--display-font); font-size: 17px; font-weight: 700; letter-spacing: -.01em; line-height: 1.25; margin: 0; }
 .pmft-body { font-size: 13.5px; line-height: 1.5; color: var(--text-secondary); margin: 0; }
