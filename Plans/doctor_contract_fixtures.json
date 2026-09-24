@@ -2425,6 +2425,55 @@
       "expected_error": "static Doctor fixtures are not runtime evidence"
     },
     {
+      "name": "run_check_requires_check_id",
+      "definition": "doctor_action_request",
+      "base_valid": "server_gap_b.local.6.request",
+      "patch": {"check_id": null},
+      "expected_error": "an exact bounded check cannot omit its check identity"
+    },
+    {
+      "name": "run_check_requires_target_kind",
+      "definition": "doctor_action_request",
+      "base_valid": "server_gap_b.local.6.request",
+      "patch": {"target_kind": null},
+      "expected_error": "an exact bounded check cannot omit its target kind"
+    },
+    {
+      "name": "run_check_requires_target_id",
+      "definition": "doctor_action_request",
+      "base_valid": "server_gap_b.local.6.request",
+      "patch": {"target_id": null},
+      "expected_error": "an exact bounded check cannot omit its target identity"
+    },
+    {
+      "name": "run_check_requires_expected_descriptor_revision",
+      "definition": "doctor_action_request",
+      "base_valid": "server_gap_b.local.6.request",
+      "patch": {"expected_descriptor_revision": null},
+      "expected_error": "an exact bounded check cannot omit descriptor currentness"
+    },
+    {
+      "name": "run_check_requires_expected_owner_generation",
+      "definition": "doctor_action_request",
+      "base_valid": "server_gap_b.local.6.request",
+      "patch": {"expected_owner_generation": null},
+      "expected_error": "an exact bounded check cannot omit owner currentness"
+    },
+    {
+      "name": "run_check_requires_permission_snapshot_ref",
+      "definition": "doctor_action_request",
+      "base_valid": "server_gap_b.local.6.request",
+      "patch": {"permission_snapshot_ref": null},
+      "expected_error": "an exact bounded check cannot omit its permission snapshot"
+    },
+    {
+      "name": "applied_owner_result_requires_reference",
+      "definition": "doctor_action_result",
+      "base_valid": "server_gap_b.local.6.result",
+      "patch": {"semantic_owner_result_ref": null},
+      "expected_error": "owner_result_applied requires an owner result reference; navigation is not owner success"
+    },
+    {
       "name": "backup_connector_cannot_invent_event_family",
       "definition": "doctor_backup_connector_consumer_projection",
       "base_valid": "backup_connector_consumer_projection_is_read_only_protected_and_event_silent",

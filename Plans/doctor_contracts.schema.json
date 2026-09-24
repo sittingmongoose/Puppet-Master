@@ -400,6 +400,26 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.doctor.run_check"
+              }
+            },
+            "required": ["action_id"]
+          },
+          "then": {
+            "properties": {
+              "check_id": {"type": "string"},
+              "target_kind": {"$ref": "#/$defs/target_kind"},
+              "target_id": {"$ref": "#/$defs/safe_ref"},
+              "expected_descriptor_revision": {"type": "integer", "minimum": 1},
+              "expected_owner_generation": {"type": "integer", "minimum": 0},
+              "permission_snapshot_ref": {"$ref": "#/$defs/safe_ref"}
+            }
+          }
         }
       ]
     },
@@ -1834,7 +1854,22 @@
         "return_route_ref": {
           "$ref": "#/$defs/nullable_safe_ref"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "currentness": {"const": "owner_result_applied"}
+            },
+            "required": ["currentness"]
+          },
+          "then": {
+            "properties": {
+              "semantic_owner_result_ref": {"$ref": "#/$defs/safe_ref"}
+            }
+          }
+        }
+      ]
     },
     "DoctorReportExportNonSecretRef": {
       "type": "string",
