@@ -21,14 +21,14 @@
  },
  "admission_landing": {
   "commit": "4fe66204bde92ab710a6d1f1cf9f46be75d18458",
-  "record": null
+  "record": "reports/packet-gap-closure-20260910/browser-workspace-reset-root-review-20260911.json"
  },
  "criteria_not_passing_at_recording": [
   "producer"
  ],
  "status_at_recording": "incomplete_depth",
  "recorded_by": "claude-opus-5.5:dl039-steps-8-9-20260924",
- "recorded_at_utc": "2026-09-24T23:15:29Z",
+ "recorded_at_utc": "2026-09-24T23:38:53Z",
  "notes": [
   "The reset admission did not change the revision label: 2026-09-11.2 names both the 41-family and the 42-family registry. The SHA-256 values distinguish them.",
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."

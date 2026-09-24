@@ -21,7 +21,7 @@
  },
  "admission_landing": {
   "commit": "69553720f1c55528ed423a8c723bc97ec9cc4281",
-  "record": null
+  "record": "reports/packet-gap-closure-20260910/browser-workspace-created-root-review-20260911.json"
  },
  "criteria_not_passing_at_recording": [
   "producer",
@@ -30,8 +30,9 @@
  ],
  "status_at_recording": "incomplete_depth",
  "recorded_by": "claude-opus-5.5:dl039-steps-8-9-20260924",
- "recorded_at_utc": "2026-09-24T23:15:29Z",
+ "recorded_at_utc": "2026-09-24T23:38:53Z",
  "notes": [
+  "Verification record: reports/packet-gap-closure-20260910/browser-workspace-created-verification-20260911.json (f359b6aed3).",
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ]
 }
