@@ -269,5 +269,47 @@ class SourceGraphPageSemanticTests(unittest.TestCase):
         )
 
 
+class SourceControlPermissionPointerTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.owner = (ROOT / "Plans/Source_Control_System.md").read_text()
+        cls.schema = json.loads((ROOT / "Plans/source_control_contracts.schema.json").read_text())
+
+    def test_eight_ordinary_routes_reference_required_request_permission_context(self):
+        section = self.owner.split("## Central Sole Future Handler Binding Addendum - 2026-09-01", 1)[1]
+        section = section.split("### SCS-010", 1)[0]
+        rows = [line for line in section.splitlines() if line.startswith("| `cmd.source_control.")]
+        expected = {"diff.open", "history.open", "remote.fetch", "remote.publish", "remote.sync",
+                    "repository.unbind", "workspace.list", "workspace.open"}
+        self.assertEqual({line.split("`")[1] for line in rows},
+                         {"cmd.source_control." + suffix for suffix in expected})
+        prefix = "Plans/source_control_contracts.schema.json#/$defs/"
+        cell = (f"`{prefix}source_control_command_error` / "
+                f"`{prefix}source_control_command_request/properties/permission_snapshot_ref` + "
+                f"`{prefix}source_control_command_request/properties/file_safe_decision_ref`")
+        for line in rows:
+            with self.subTest(command=line.split("`")[1]):
+                self.assertEqual(line.split(" | ")[-1].removesuffix(" |"), cell)
+
+    def test_pointers_resolve_to_existing_required_non_secret_refs(self):
+        request = self.schema["$defs"]["source_control_command_request"]
+        for field in ("permission_snapshot_ref", "file_safe_decision_ref"):
+            with self.subTest(field=field):
+                self.assertIn(field, request["required"])
+                self.assertEqual(request["properties"][field], {"$ref": "#/$defs/non_secret_ref"})
+        unit = self.owner.split("### SCS-010", 1)[1].split("```", 2)[1]
+        self.assertIn("required permission_snapshot_ref and file_safe_decision_ref", unit)
+
+    def test_checkpoint_decision_classes_and_three_bindings_remain_separate(self):
+        decision = self.schema["$defs"]["source_control_permission_decision"]
+        self.assertEqual(set(decision["properties"]["permission_class"]["enum"]),
+                         {"source_control.checkpoint.inspect", "source_control.checkpoint.mutate"})
+        bindings = self.schema["x-server-gap-command-contracts"]
+        self.assertEqual(set(bindings), {"cmd.source_control.checkpoint." + suffix
+                                         for suffix in ("create", "inspect", "restore")})
+        for binding in bindings.values():
+            self.assertEqual(binding["permission_ref"], "#/$defs/source_control_permission_decision")
+
+
 if __name__ == "__main__":
     unittest.main()
