@@ -11845,7 +11845,7 @@ an event ID from a Home event, correlation alone or current layout.
 Call the actual Storage append owner with that same immutable ProducerInput,
 under the existing post-mutation fact durability class and append protocol.
 Validate original source/first AppendReceipt/full-value custody under SP-286 and
-CV-339, and current source observation under SP-278/SP-314. Do not synthesize an
+CV-339, and current source observation under SP-278/SP-319. Do not synthesize an
 AppendReceipt or remint Storage-assigned fields. An authentic issued event may
 precede local recording of its result. Lost acknowledgement, uncertain append or
 uncertain readback preserves the same pending operation, blocks conflicting
@@ -11870,13 +11870,13 @@ acknowledgement or event. Historical reads never enter this producer.
 ### Passive consumer and withdrawal
 
 Define **new consumer** `terminal.workgroup_move_history_read.v1@1.0.0` for the
-single-event historical inspection owned by SP-314. It observes this existing
+single-event historical inspection owned by SP-319. It observes this existing
 fact only; it owns no live-terminal projection, durable effect, cursor or family
 checkpoint. It cannot restore a workgroup, attach a session, open a terminal,
 spawn a PTY, acknowledge a command, create a section, advance a revision or select
 current terminal state from history. Current terminal state always comes from its
 live owner, regardless of event order. Original move validation and current
-source-read authorization are separate, as defined by SP-314.
+source-read authorization are separate, as defined by SP-319.
 
 Withdrawal stops new producer admission and new reader disclosure independently.
 Already admitted operations retain their original owner/custody and settle under
@@ -11901,7 +11901,7 @@ canonical_text: The new terminal.workgroup_move_commit.v1 producer and terminal.
   companions and owner admission; passive history has no terminal effects or family checkpoint.
 gui_related: true
 gui_classification_reason: Preserves existing workgroup placement, section limits and visible terminal identity.
-depends_on: [SMPFS-138, UCC-144, CV-323, CV-333, CV-339, SP-245, SP-273, SP-278, SP-286, SP-314, DL-045]
+depends_on: [SMPFS-138, UCC-144, CV-323, CV-333, CV-339, SP-245, SP-273, SP-278, SP-286, SP-319, DL-045]
 unblocks: []
 acceptance_criteria:
   - Authenticate the original request, operation, full owner identity, revisions, current authority and complete membership before effects.
@@ -11911,7 +11911,7 @@ acceptance_criteria:
   - Coordinate independently applicable Home effects and events before success; uncertainty fences without reminting or false rollback.
   - Retry returns the same original result and event without repeating any terminal or Home effect.
   - Passive history grants no live-state, action, replay or checkpoint authority; withdrawal preserves unresolved original obligations.
-validation_surfaces: [Plans/event_payloads/terminal_workgroup_moved.schema.json, Plans/event_family_registry.json, Plans/storage-plan.md#SP-314]
+validation_surfaces: [Plans/event_payloads/terminal_workgroup_moved.schema.json, Plans/event_family_registry.json, Plans/storage-plan.md#SP-319]
 risk_class: terminal_move_original_result_or_sibling_event_authority_escape
 reasoning_tier: high
 context_scope: terminal_workgroup_moved_only
@@ -11923,4 +11923,4 @@ negative_constraints:
   - No Home custody alias, missing-source reconstruction, native proof or complete event-depth claim.
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-314, ContractName:Plans/Contracts_V0.md#CV-323, ContractName:Plans/Decision_Log.md#DL-045
+ContractRef: ContractName:Plans/storage-plan.md#SP-319, ContractName:Plans/Contracts_V0.md#CV-323, ContractName:Plans/Decision_Log.md#DL-045

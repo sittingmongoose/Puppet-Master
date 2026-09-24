@@ -16163,7 +16163,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "da3b49da8c84a9f3fa7ed795661da30a6f8b60b0ebb130438f460553a3270e7c",
+      "sha256": "16d849f88fb6ba0660a86c5f37867f2a5a97d0cf1404fe505e818ec6b8ab0495",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 168,
@@ -16220,7 +16220,7 @@
         "Plans/event_payloads/terminal_workgroup_moved.schema.json",
         "Plans/section15_browser_program_contract_fixtures.json",
         "Plans/section15_browser_program_contracts.schema.json",
-        "Plans/storage-plan.md#SP-314",
+        "Plans/storage-plan.md#SP-319",
         "Plans/touch_closure.json",
         "Position/bounds queries are O(viewport) and redaction-aware",
         "Prompt markers degrade when tmux passthrough is unverified",
@@ -17373,7 +17373,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 26812,
+      "line_count": 26815,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 313,
       "plan_unit_ids": [
@@ -17689,7 +17689,7 @@
         "SP-315",
         "SP-316",
         "SP-317",
-        "SP-314"
+        "SP-319"
       ],
       "reasoning_tiers": [
         "high",
@@ -17791,7 +17791,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "20547aad79e5da5f4de7822d3a463a25d10b10c8b7fa5f2adfe1b7bab019e04d",
+      "sha256": "92878371b1960f0f3dc0ca9f6b53ff07b10ac0bf2d6468d20d5007b075ec92ed",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 310,
@@ -19965,7 +19965,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-24T15:18:46Z",
+  "generated_at_utc": "2026-09-24T15:24:15Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

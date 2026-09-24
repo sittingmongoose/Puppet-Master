@@ -2,51 +2,15 @@
   "build_order": [],
   "build_order_blocked_nodes": [
     {
-      "plan_unit_id": "ATS-055",
-      "remaining_depends_on": [
-        "SP-314"
-      ]
-    },
-    {
-      "plan_unit_id": "ATS-056",
-      "remaining_depends_on": [
-        "ATS-055"
-      ]
-    },
-    {
-      "plan_unit_id": "ATS-057",
-      "remaining_depends_on": [
-        "ATS-056"
-      ]
-    },
-    {
       "plan_unit_id": "SMPFS-170",
       "remaining_depends_on": [
-        "SP-314"
+        "SP-319"
       ]
     },
     {
-      "plan_unit_id": "SP-314",
+      "plan_unit_id": "SP-319",
       "remaining_depends_on": [
         "SMPFS-170"
-      ]
-    },
-    {
-      "plan_unit_id": "SP-315",
-      "remaining_depends_on": [
-        "SP-314"
-      ]
-    },
-    {
-      "plan_unit_id": "SP-316",
-      "remaining_depends_on": [
-        "SP-315"
-      ]
-    },
-    {
-      "plan_unit_id": "SP-317",
-      "remaining_depends_on": [
-        "SP-316"
       ]
     }
   ],
@@ -54,11 +18,11 @@
     {
       "plan_unit_id": "SMPFS-170",
       "remaining_depends_on": [
-        "SP-314"
+        "SP-319"
       ]
     },
     {
-      "plan_unit_id": "SP-314",
+      "plan_unit_id": "SP-319",
       "remaining_depends_on": [
         "SMPFS-170"
       ]
@@ -69,48 +33,11 @@
       "component_id": "cycle-001",
       "plan_unit_ids": [
         "SMPFS-170",
-        "SP-314"
+        "SP-319"
       ]
     }
   ],
-  "downstream_blocked_nodes": [
-    {
-      "plan_unit_id": "ATS-055",
-      "remaining_depends_on": [
-        "SP-314"
-      ]
-    },
-    {
-      "plan_unit_id": "ATS-056",
-      "remaining_depends_on": [
-        "ATS-055"
-      ]
-    },
-    {
-      "plan_unit_id": "ATS-057",
-      "remaining_depends_on": [
-        "ATS-056"
-      ]
-    },
-    {
-      "plan_unit_id": "SP-315",
-      "remaining_depends_on": [
-        "SP-314"
-      ]
-    },
-    {
-      "plan_unit_id": "SP-316",
-      "remaining_depends_on": [
-        "SP-315"
-      ]
-    },
-    {
-      "plan_unit_id": "SP-317",
-      "remaining_depends_on": [
-        "SP-316"
-      ]
-    }
-  ],
+  "downstream_blocked_nodes": [],
   "edges": [
     {
       "edge_type": "depends_on",
@@ -56240,7 +56167,7 @@
     {
       "edge_type": "depends_on",
       "from": "SMPFS-170",
-      "to": "SP-314"
+      "to": "SP-319"
     },
     {
       "edge_type": "depends_on",
@@ -62790,27 +62717,7 @@
     {
       "edge_type": "depends_on",
       "from": "SP-314",
-      "to": "CV-323"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "SP-314",
-      "to": "CV-339"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "SP-314",
       "to": "CV-350"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "SP-314",
-      "to": "DL-045"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "SP-314",
-      "to": "SMPFS-170"
     },
     {
       "edge_type": "depends_on",
@@ -62821,16 +62728,6 @@
       "edge_type": "depends_on",
       "from": "SP-314",
       "to": "SP-278"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "SP-314",
-      "to": "SP-278"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "SP-314",
-      "to": "SP-286"
     },
     {
       "edge_type": "depends_on",
@@ -62876,6 +62773,36 @@
       "edge_type": "depends_on",
       "from": "SP-318",
       "to": "SP-251"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-319",
+      "to": "CV-323"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-319",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-319",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-319",
+      "to": "SMPFS-170"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-319",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-319",
+      "to": "SP-286"
     },
     {
       "edge_type": "depends_on",
@@ -91933,7 +91860,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-24T15:18:46Z",
+  "generated_at_utc": "2026-09-24T15:24:15Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -192950,23 +192877,6 @@
       "unit_type": "requirement"
     },
     {
-      "context_scope": "terminal_workgroup_moved_only",
-      "gui_related": false,
-      "owner_doc": "Plans/storage-plan.md",
-      "plan_unit_id": "SP-314",
-      "reasoning_tier": "high",
-      "risk_class": "terminal_move_history_source_or_original_authority_escape",
-      "source_location": {
-        "heading": "SP-314 - Terminal workgroup moved passive source and checkpoint disposition",
-        "heading_level": 3,
-        "heading_line": 26775,
-        "line": 26777,
-        "path": "Plans/storage-plan.md"
-      },
-      "status": "accepted",
-      "unit_type": "schema_contract"
-    },
-    {
       "context_scope": "sp-315_certified_producer_source",
       "gui_related": false,
       "owner_doc": "Plans/storage-plan.md",
@@ -193033,6 +192943,23 @@
       },
       "status": "accepted",
       "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "terminal_workgroup_moved_only",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-319",
+      "reasoning_tier": "high",
+      "risk_class": "terminal_move_history_source_or_original_authority_escape",
+      "source_location": {
+        "heading": "SP-319 - Terminal workgroup moved passive source and checkpoint disposition",
+        "heading_level": 3,
+        "heading_line": 26775,
+        "line": 26777,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
     },
     {
       "context_scope": "scheduling_precedence",
@@ -206197,10 +206124,10 @@
   "source_plan_unit_index": "Plans/.plan_index/plan_units.jsonl",
   "summary": {
     "build_order_available": false,
-    "build_order_blocked_node_count": 8,
+    "build_order_blocked_node_count": 2,
     "cycle_blocker_count": 2,
     "depends_on_edge_count": 15665,
-    "downstream_blocked_node_count": 6,
+    "downstream_blocked_node_count": 0,
     "edge_count": 18364,
     "node_count": 6721,
     "true_cycle_component_count": 1,

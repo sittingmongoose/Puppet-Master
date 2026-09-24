@@ -6,54 +6,13 @@
         {
           "plan_unit_id": "SMPFS-170",
           "remaining_depends_on": [
-            "SP-314"
+            "SP-319"
           ]
         },
         {
-          "plan_unit_id": "SP-314",
+          "plan_unit_id": "SP-319",
           "remaining_depends_on": [
             "SMPFS-170"
-          ]
-        }
-      ]
-    },
-    {
-      "blocker_type": "dependency_cycle_downstream_blocked_nodes",
-      "items": [
-        {
-          "plan_unit_id": "ATS-055",
-          "remaining_depends_on": [
-            "SP-314"
-          ]
-        },
-        {
-          "plan_unit_id": "ATS-056",
-          "remaining_depends_on": [
-            "ATS-055"
-          ]
-        },
-        {
-          "plan_unit_id": "ATS-057",
-          "remaining_depends_on": [
-            "ATS-056"
-          ]
-        },
-        {
-          "plan_unit_id": "SP-315",
-          "remaining_depends_on": [
-            "SP-314"
-          ]
-        },
-        {
-          "plan_unit_id": "SP-316",
-          "remaining_depends_on": [
-            "SP-315"
-          ]
-        },
-        {
-          "plan_unit_id": "SP-317",
-          "remaining_depends_on": [
-            "SP-316"
           ]
         }
       ]
@@ -61,17 +20,17 @@
   ],
   "dependency_graph_summary": {
     "build_order_available": false,
-    "build_order_blocked_node_count": 8,
+    "build_order_blocked_node_count": 2,
     "cycle_blocker_count": 2,
     "depends_on_edge_count": 15665,
-    "downstream_blocked_node_count": 6,
+    "downstream_blocked_node_count": 0,
     "edge_count": 18364,
     "node_count": 6721,
     "true_cycle_component_count": 1,
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-24T15:18:47Z",
+  "generated_at_utc": "2026-09-24T15:24:15Z",
   "gui_related_units": {
     "count": 3197,
     "units": [
@@ -39394,6 +39353,6 @@
   },
   "schema_id": "pm.plan_index.node_readiness_report.v1",
   "source_plan_unit_index": "Plans/.plan_index/plan_units.jsonl",
-  "status": "blocked_plans_incomplete",
-  "status_reason": "PlanUnit coverage or required metadata is incomplete; see missing_required_metadata and coverage_report blockers."
+  "status": "blocked_runtime_certification_incomplete",
+  "status_reason": "Plans are indexed with required PlanUnit metadata and the PlanCompile compiler contract is accepted, but native runtime readiness remains blocked by PNC-019 until an executable lifecycle certification harness passes and records evidence for the enabled runtime boundary."
 }

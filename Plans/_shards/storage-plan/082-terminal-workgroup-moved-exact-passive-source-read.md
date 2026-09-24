@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L26642-L26812
+Source lines: L26642-L26815
 
-Source SHA256: `20547aad79e5da5f4de7822d3a463a25d10b10c8b7fa5f2adfe1b7bab019e04d`
+Source SHA256: `92878371b1960f0f3dc0ca9f6b53ff07b10ac0bf2d6468d20d5007b075ec92ed`
 
 ---
 
@@ -141,10 +141,10 @@ current source yields unavailable with no event. Reader withdrawal yields no
 new disclosure. These are required paired oracles for the companion task, not
 claims of executed cases or native proof.
 
-### SP-314 - Terminal workgroup moved passive source and checkpoint disposition
+### SP-319 - Terminal workgroup moved passive source and checkpoint disposition
 
 ```yaml
-plan_unit_id: SP-314
+plan_unit_id: SP-319
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
@@ -171,8 +171,11 @@ reasoning_tier: high
 context_scope: terminal_workgroup_moved_only
 implementation_surfaces: [Plans/storage-plan.md, Plans/Section15_MVP_Promoted_Features_Spec.md]
 node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false, runtime_enabled: false}
-source_lineage: [Plans/Decision_Log.md#DL-039, Plans/Decision_Log.md#DL-045, Plans/Contracts_V0.md#CV-323, Plans/storage-plan.md#SP-278]
+source_lineage: [Plans/Decision_Log.md#DL-039, Plans/Decision_Log.md#DL-045, Plans/Contracts_V0.md#CV-323, Plans/storage-plan.md#SP-278, reports/event-authority-20260911/takeover-20260923.md, reports/event-authority-20260911/step-08-terminal-workgroup-draft-repair-20260924.md]
 preserved_exact_tokens: [terminal.workgroup_moved, none_required, RP-AUTHORITY-INDEFINITE]
+stale_retired_dispositions:
+  - Drafted as SP-314 on the unlanded branch plans/terminal-workgroup-depth-20260923 (commit 254505ccf9) and renumbered SP-319 on 2026-09-24,
+    because SP-314 on main is a different accepted unit. SP-314 is not an alias of this unit and never resolves to it.
 negative_constraints:
   - No registry, payload, retention policy, physical family/key, current terminal state or Home custody change.
   - No source reconstruction, implied original producer success, native proof, DEPTH_PASS or governance seal.
