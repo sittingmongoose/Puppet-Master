@@ -32,9 +32,9 @@
   "rubric": "rubric.md in the evidence directory: the twelve criteria as the Browser pair assessment used them, with explicit rules for SP-278 (and DL-076's nine-field token), SP-286/CV-339 first-receipt adoption, the shared SeglogFrameV2 bytes, historical-only families, and three clarifications (owner anchors, pinned external oracle suites, DL-076).",
   "grading": "Six read-only grading passes by owner batch (GA, GB, GC, R, S, N), each citing current line ranges with exact quotes; compiled, checked and harmonized by the coordinating agent.",
   "quote_check": {
-   "exact": 2629
+   "exact": 2630
   },
-  "evidence_items": 2629
+  "evidence_items": 2630
  },
  "status_counts": {
   "PASS": 335,
@@ -15660,13 +15660,13 @@
     "consumers_checkpoints": {
      "status": "PARTIAL",
      "representation": "exact_normative_owner",
-     "finding": "The consumers are exact: storage.platform_capability_decision.read.v1 serves config, runner, UI and diagnostics; platform.capability_run_context.consume.v1@1.0.0 has a closed result with checkpoint_disposition none_required. No checkpoint is persisted, so DL-076 is moot. However, SP-278 appears only as a depends_on/ContractRef; the reader's 'complete current read-through marker' has no closed output schema; aggregate requirement-set use is explicitly unavailable.",
+     "finding": "The consumers are exact: storage.platform_capability_decision.read.v1 serves config, runner, UI and diagnostics; platform.capability_run_context.consume.v1@1.0.0 has a closed result with checkpoint_disposition none_required. No checkpoint is persisted, so DL-076 is moot. The cell is PARTIAL because the reader's 'complete current read-through marker' has no closed output schema and aggregate requirement-set use is explicitly unavailable. SP-290 names SP-278 in its depends_on and ContractRef; a dependency named that way is not counted against the cell, as it is not for goal.created's producer and SP-286.",
      "prior": {
       "source": "old_matrix",
       "status": "ABSENT"
      },
      "change": "upgraded",
-     "change_reason": "N2-157/SP-290 now name exact consumers and a deliberate no-checkpoint read-through, but the SP-278 read binding and read output are not closed.",
+     "change_reason": "N2-157/SP-290 now name exact consumers and a deliberate no-checkpoint read-through, but the read output is not closed and aggregate use is unavailable. Review G-08 (2026-09-24): the PARTIAL rests on those two reasons; SP-278 being named only as a dependency is no longer one of them, since goal.created's producer PASS accepts SP-286 named the same way. The grade is unchanged.",
      "evidence": [
       {
        "path": "Plans/newtools.md",
@@ -15695,6 +15695,13 @@
        "line_start": 23492,
        "line_end": 23492,
        "excerpt_sha256": "395801aa18ad985d7b7b8194c4d1b9408ca94ea311d3447e4915c4f97f5ed761"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "Platform capability consumer roles and frozen-context use",
+       "line_start": 9029,
+       "line_end": 9029,
+       "excerpt_sha256": "a82c28175dac5dde079a54a749225708f37e249f8958978c13dbe178f3b912c4"
       }
      ]
     },
@@ -15783,7 +15790,7 @@
    },
    "remaining_gaps": [
     "PRODUCT: the active Platform capability catalog is empty (Plans/platform_capability_catalog.json entries []), and N2-157 says no production evaluation or event is emitted and no evaluation trigger is defined. Whether and when any capability enters the catalog, and what triggers an evaluation, is a product choice for the catalog owner (OSI Platform Capability Manager / N2-157).",
-    "SP-290/N2-157: close the output schema of storage.platform_capability_decision.read.v1 (the 'complete current read-through marker'), naming SP-278's generic read token (nine-field durable projection if ever stored) instead of only a depends_on entry.",
+    "SP-290/N2-157: close the output schema of storage.platform_capability_decision.read.v1 (the 'complete current read-through marker'), and name SP-278's generic read token (the nine-field durable projection) if a token is ever stored.",
     "N2-157 states aggregate multi-capability requirement-set use is unavailable until an original context-owner requirement-set contract exists; any consumer asserting aggregate coverage needs that contract first.",
     "Native capture, crash cuts, package lease, backup/cleanup and production admission remain NOT_RUN (does not lower grades).",
     "PRODUCT (card EA-S08D-OPERATIONAL-CARDINALITY-001): how RP-OPERATIONAL-2555D's per-project 2,000,000-record cap counts this family's application-scoped evaluations; the Storage retention owner applies the answer."
@@ -26506,7 +26513,7 @@
  ],
  "evidence": {
   "directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924",
-  "sha256sums_sha256": "de9fee040e11a781d1e87d95d0492b50982fc146e98258a654cafa1b96077c52",
+  "sha256sums_sha256": "5604365f664dc41764e779c7fca473d2a8a7d926ac61369fa2ba9fe4f4ae9178",
   "members": [
    "rubric.md",
    "batches.md",
