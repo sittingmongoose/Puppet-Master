@@ -345,14 +345,51 @@ class OnboardingReadyBackTests(unittest.TestCase):
             self.assertEqual(self.join(*values), [rule])
 
     def test_null_draft_projection_cannot_match_a_durable_ready_session(self):
-        # This permissive projection is independently valid, but PWIZ-021's
-        # queued durable draft has an identity. Do not normalize it silently.
+        # PWIZ-021 requires queued projections to retain the durable draft's
+        # identity even without a Project. Reject; never normalize silently.
         current, request, result, session = values = ready_back("connect_existing")
         for value in (current, result["continuation_snapshot"]):
             value.update(project_draft_ref=None, project_draft_revision=None)
-        self.assert_valid_values(*values)
+        self.assertFalse(valid("onboarding_continuation_snapshot", current))
+        self.assertFalse(valid("onboarding_action_result", result))
+        self.assertTrue(valid("onboarding_session", session))
+        # The join is an additional guard, not a substitute for validation.
         self.assertEqual(self.join(*values), ["onboarding_ready_back_session_project_draft_ref_mismatch",
                                              "onboarding_ready_back_session_project_draft_revision_mismatch"])
+
+    def test_queued_draft_identity_is_required_in_every_projection(self):
+        for path in ("deferred", "connect_existing"):
+            current, _, result, session = ready_back(path)
+            returned = copy.deepcopy(CASES["valid.session.deferred_with_active_branch"]["return_context"])
+            returned.update({key: copy.deepcopy(value) for key, value in current.items() if key in returned})
+            returned.update(project_id=None, owner_route_ref=None, owner_operation_id=None,
+                            expected_revision=current["revision"])
+            deferred = copy.deepcopy(session)
+            deferred.update(status="deferred", return_context=returned)
+            rows = (("onboarding_continuation_snapshot", current, None),
+                    ("onboarding_action_result", result, "continuation_snapshot"),
+                    ("onboarding_return_context", returned, None),
+                    ("onboarding_session", session, None),
+                    ("onboarding_session", deferred, "return_context"))
+            for definition, original, nested in rows:
+                with self.subTest(path=path, definition=definition, nested=nested):
+                    self.assertTrue(valid(definition, original))
+                    self.assertEqual(onboarding_semantic_failures(definition, original), [])
+                    for fields in (("project_draft_ref",), ("project_draft_revision",),
+                                   ("project_draft_ref", "project_draft_revision")):
+                        changed = copy.deepcopy(original)
+                        target = changed[nested] if nested else changed
+                        target.update({field: None for field in fields})
+                        with self.subTest(fields=fields):
+                            self.assertFalse(valid(definition, changed))
+
+    def test_unqueued_welcome_projection_needs_no_invented_draft(self):
+        current, _, _ = selected_path()
+        current.update(stage="welcome", history=["welcome"],
+                       project_draft_ref=None, project_draft_revision=None,
+                       project_disposition="not_selected")
+        self.assertTrue(valid("onboarding_continuation_snapshot", current))
+        self.assertEqual(onboarding_semantic_failures("onboarding_continuation_snapshot", current), [])
 
     def test_schema_valid_session_identity_revision_generation_and_state_mismatch(self):
         for path in self.paths:
