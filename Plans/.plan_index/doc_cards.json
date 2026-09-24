@@ -5404,10 +5404,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 37,
+        "False": 42,
         "True": 38
       },
-      "heading_count": 156,
+      "heading_count": 166,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5475,6 +5475,7 @@
         "Plans/jujutsu_integration_contracts.schema.json",
         "Plans/newtools.md",
         "Plans/orchestrator-subagent-integration.md",
+        "Plans/platform_capability_catalog.json",
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
         "Plans/storage-plan.md",
@@ -5487,9 +5488,9 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 6143,
+      "line_count": 6597,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 75,
+      "plan_unit_count": 80,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5565,6 +5566,11 @@
         "DL-076",
         "DL-077",
         "DL-078",
+        "DL-079",
+        "DL-080",
+        "DL-081",
+        "DL-082",
+        "DL-083",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5603,6 +5609,8 @@
         "extraction_mapping_overauthority",
         "forge_wiring_provider_vocabulary_drift",
         "goal_body_retention_and_deletion",
+        "goal_record_event_disposition_drift",
+        "goal_run_lifecycle_event_disposition_drift",
         "governance_label_copy_drift",
         "governance_role_conflation",
         "graph_governance_semantics_drift",
@@ -5615,8 +5623,10 @@
         "lane_cleanup_retention_loss",
         "migration_lineage",
         "navigation_primitive_boundary_drift",
+        "operational_retention_cardinality_scope_drift",
         "orchestration_model_drift",
         "permanent_repository_format_chosen_without_evidence",
+        "platform_capability_catalog_deferral_drift",
         "platform_decision_custody_retention_and_cleanup",
         "provider_runtime_actor_envelope_gap",
         "quarantine_disposal_boundary_drift",
@@ -5645,18 +5655,19 @@
         "undefined_merge_editor_availability_or_unsafe_external_write_to_a_jujutsu_workspace",
         "undisclosed_remote_scope_on_a_destructive_bookmark_action",
         "unrenderable_branch_policy_promise",
-        "weak_integration_underclassification"
+        "weak_integration_underclassification",
+        "workflow_verification_exception_route_drift"
       ],
-      "sha256": "2940d3aba9081faa0f28ac1dff306b56adb5038fa229ca5c0743e3ee0b8bce08",
+      "sha256": "9af90b69abe5c8685b5de674fbc9f88b1acb6908d1b5d1d210db0b384c92c728",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 75
+        "accepted": 80
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 72
+        "requirement": 77
       },
       "validation_surfaces": [
         "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
@@ -19974,7 +19985,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-24T21:55:07Z",
+  "generated_at_utc": "2026-09-24T22:44:47Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19982,13 +19993,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3526,
+      "False": 3531,
       "True": 3197
     },
-    "plan_unit_count": 6723,
+    "plan_unit_count": 6728,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6532,
+      "accepted": 6537,
       "retired": 182,
       "superseded": 9
     },
@@ -20055,7 +20066,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5279,
+      "requirement": 5284,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

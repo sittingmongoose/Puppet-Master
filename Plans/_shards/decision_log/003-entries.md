@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L1577
+Source lines: L13-L1735
 
-Source SHA256: `2940d3aba9081faa0f28ac1dff306b56adb5038fa229ca5c0743e3ee0b8bce08`
+Source SHA256: `9af90b69abe5c8685b5de674fbc9f88b1acb6908d1b5d1d210db0b384c92c728`
 
 ---
 
@@ -1573,3 +1573,161 @@ This rule registers nothing and lowers no Step 9 requirement. It changes no othe
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_SEAL_CHECK.md`, SHA-256 `afdbdd4ebfef46e720ad31b28a7e27c0387ad377c32cfb834ed59bad5f091cdb`; card `reports/event-authority-20260911/step-10-validator-live-set-card-20260924.md`; Step 9 procedure record `reports/event-authority-20260911/step-09-procedure-20260924.md`.
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/event_family_registry.json
+
+### DL-079: The three old Goal record events become read-only history
+
+Answered on 2026-09-24 by Jared, in conversation with the coordinator, from the card page: **Approve** on `EA-S08D-GOAL-RECORD-EVENTS-001`, which selects option 1.
+
+**Name:** The old Goal events for evidence, receipts and tool checks.
+
+**Question:** Should the three registered Goal events `goal.evidence_captured`, `goal.receipt_recorded` and `goal.tool_check_recorded` become read-only history, like the four Goal events retired on 2026-09-12, or should each be rewritten as a current event under the owner that now does that work?
+
+**Why:** Goal V2 (the text-first Goal) moved evidence, tool checks and certification receipts out of the Goal and into the Workflow or run that does the work. These three events were registered before that change. Their payloads still assume the old Goal, their contracts cite superseded units, and no current rule says whether they are still written. Four sibling events (`goal.progressed`, `goal.replanned`, `goal.stopped` and `goal.verification_decided`) were already given read-only historical status; these three were not.
+
+**What you get:** One consistent rule. Old records stay readable and nothing writes these events any more. The work they described stays recorded by its current owner: the Workflow's own evidence, the run's tool checks and the Standard certification receipt.
+
+**What it costs:** There is no separate Goal-level stream of these three facts. Anyone who wants them reads the owning Workflow or run records.
+
+**Options:**
+
+1. **Read-only history for all three** (recommended): the pattern of the four already retired. Current writes are refused and a historical reader keeps old records readable.
+2. **Rewrite all three as current events** under their current owners.
+3. **Decide one by one.**
+
+**Recommendation:** Option 1.
+
+**Answer:** Approve (option 1).
+
+Each of the three families gets its own current-writer prohibition and an assigned historical reader, following the four retired on 2026-09-12 (GRS-069 to GRS-072, with the readers SP-300 to SP-303), which kept their registry membership, original schemas and retention assignments. The Goal Runtime owner, with Storage, writes those contracts. This entry does not write them: until they land, the three families stay undispositioned in the Step 8 depth assessment and their grades stand. It changes no registry row and registers, admits or removes nothing.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_DEPTH_GRADING.md`, SHA-256 `cfea2eb818663d22eba69dca9296657aa05c51383a470bc1796b87aef65b923c`; card `reports/event-authority-20260911/step-08-depth42-product-cards-20260924.md` (Card 1a); application record `reports/event-authority-20260911/step-08-depth42-card-answers-20260924.md`.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/event_family_registry.json
+
+### DL-080: Workflow runs get current events when they are blocked, replanned or stopped
+
+Answered on 2026-09-24 by Jared, in conversation with the coordinator, from the card page: **Approve** on `EA-S08D-GOALRUN-LIFECYCLE-EVENTS-001`, which selects option 1.
+
+**Name:** Run history events for blocked, replanned and stopped runs.
+
+**Question:** Should Workflow runs publish a current event when they become blocked, are replanned or are stopped, as they already do when they start, are cancelled or are certified?
+
+**Why:** The Workflow run lifecycle is live in current canon, and `goal_run.started`, `goal_run.cancelled` and `goal_run.certified` have full current event contracts; `goal_run.blocked`, `goal_run.replanned` and `goal_run.stopped` do not. Canon points both ways. The Pause and Abort Run commands and their production wiring expect `goal_run.stopped`, the rule for resuming a blocked or stopped run depends on `goal_run.replanned`, and a 2026-09-21 review found that the existing Workflow rules already carry Replan. But the Workflow writer list names no writer for these three, and the one run-history projection that must stay complete stops at their rows. So today nothing can write them, and the projection cannot pass one.
+
+**What you get:** A complete run history, in which a person or an agent can see when and why a run was blocked, replanned or paused. The resume rule and the Pause and Abort wiring keep working as specified.
+
+**What it costs:** Three new full contracts. The replanned one is large, because it depends on the Workflow Replan source work that is still unfinished (the external "Replan v8" package).
+
+**Options:**
+
+1. **Current events for all three** (recommended): stopped and blocked first, then replanned once the Replan source work is done.
+2. **Read-only history for all three,** with the Pause and Abort wiring, the command catalog rows and the resume rule rewritten so that they no longer expect these events.
+3. **Mixed,** for example a current `goal_run.stopped` with the other two read-only.
+
+**Recommendation:** Option 1.
+
+**Answer:** Approve (option 1).
+
+The Workflow run lifecycle owner (Orchestrator and Executor, with Goal Runtime and Storage) writes a full current Event Authority contract for each of the three families: `goal_run.stopped` and `goal_run.blocked` first, and `goal_run.replanned` after the Workflow Replan source work. That source work, the external `pm.executor.workflow_source.all_writers.v8` package that the Step 8 grading found gates the replanned family, is therefore needed; this entry does not schedule it. Each contract names the family's writer, which the Workflow writer list lacks today, and extends the mandatory run-history projection (GRS-085) to its rows. This entry writes none of them: until they land, the three families stay undispositioned in the Step 8 depth assessment and their grades stand. It changes no registry row, command, wiring or resume rule, and registers, admits or removes nothing.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_DEPTH_GRADING.md`, SHA-256 `cfea2eb818663d22eba69dca9296657aa05c51383a470bc1796b87aef65b923c`; card `reports/event-authority-20260911/step-08-depth42-product-cards-20260924.md` (Card 1b); application record `reports/event-authority-20260911/step-08-depth42-card-answers-20260924.md`.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/storage-plan.md, ContractName:Plans/event_family_registry.json
+
+### DL-081: A Workflow run may finish with an approved verification exception
+
+Answered on 2026-09-24 by Jared, in conversation with the coordinator, from the card page: **Approve** on `EA-S08D-VERIFICATION-EXCEPTION-001`, which selects option 1.
+
+**Name:** Completing a Workflow when a check is knowingly waived.
+
+**Question:** When a Workflow's final verification finds a gap that a person has approved as an accepted risk, may the run still finish as "completed with an approved verification exception", and if so, who approves the exception?
+
+**Why:** The Workflow rules have always had two truthful endings: "certified", and "certified with an approved exception", shown as "completed with approved verification exception". The 2026-09-12 certification contract (GRS-065) built only the first route. It keeps the exception meaning but states that "the exact original exception/waiver owner route remains separately unbound". Without a route, a run that cannot clear one check stays unfinished until someone cancels it.
+
+**What you get:** A run can finish honestly when a known gap is accepted. The finish is labelled as an exception, with the approver and the remaining risks recorded, and is never shown as a clean pass.
+
+**What it costs:** One more contract (the approval request, who may approve, which risks may be waived, and the receipt), and the risk that exceptions get approved too easily.
+
+**Options:**
+
+1. **Keep the exception route** (recommended): the user who owns the project approves each exception through the existing approval (human-in-the-loop) flow, naming the specific residual risks, and the finish is labelled "completed with approved verification exception".
+2. **Remove the exception route:** a run either certifies cleanly or does not finish.
+3. **Another rule,** for example exceptions allowed only for particular checks, or a different approver.
+
+**Recommendation:** Option 1.
+
+**Answer:** Approve (option 1).
+
+The exception route stays. The user who owns the project approves each exception through the existing human-in-the-loop approval flow, naming the specific residual risks. The run then finishes with the truthful label "completed with approved verification exception" (`completed_with_approved_verification_exception`, the D-R18 branch `certified_with_approved_exception` that CV-340 preserves), with the approver and the remaining risks recorded, and is never shown as a clean pass. The Goal Runtime and Workflow certification owners, with the Human-in-the-loop owner, write the one route contract this needs: the approval request, who may approve, which risks may be waived, and the receipt. Until it lands, GRS-065's statement that the route "remains separately unbound" stands, the Standard writer stays limited to clean certification, and the Step 8 depth assessment keeps its grades. This entry changes no certification contract or registry row and registers or admits nothing.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_DEPTH_GRADING.md`, SHA-256 `cfea2eb818663d22eba69dca9296657aa05c51383a470bc1796b87aef65b923c`; card `reports/event-authority-20260911/step-08-depth42-product-cards-20260924.md` (Card 2); application record `reports/event-authority-20260911/step-08-depth42-card-answers-20260924.md`.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md
+
+### DL-082: Filling the platform capability catalog is deferred to build time
+
+Jared gave **no answer** to `EA-S08D-PLATFORM-CATALOG-001` on 2026-09-24, in conversation with the coordinator, from the card page, and wrote his reason, quoted below. It is recorded as deferred to build time. It is not an approval of option 1, although the catalog stays empty either way.
+
+**Name:** Whether any platform capability is checked at run start yet.
+
+**Question:** The platform capability catalog is empty, so no capability is evaluated at run start and the registered `platform.capability_evaluated` event never occurs. Should the owner add entries now for the provider features that already shape subagent behavior, or keep the catalog empty until a specific feature needs a capability check?
+
+**Why:** Canon specifies a run-start capability snapshot (for example Cursor skills, Claude plugins, Gemini extensions, Codex MCP and Copilot skills in the Platform Capability Manager). It also allows only owner-cited catalog entries and forbids placeholders, and the active catalog is empty: all production admission attempts refuse, and no Platform event is emitted. Whether the event ever fires depends on the catalog.
+
+**What you get:**
+
+- **Adding entries:** run-start snapshots that gate provider-specific features, recorded as replayable events.
+- **Keeping it empty:** no new work. Nothing depends on the snapshot today.
+
+**What it costs:**
+
+- **Adding entries:** each needs owner-cited evidence (the live discovery, provider policy or static baseline source), an evaluation contract and tests, plus a decision about which features each entry gates.
+- **Keeping it empty:** the registered event stays dormant, and features that could vary by provider have no recorded capability check.
+
+**Options:**
+
+1. **Keep the catalog empty until a feature needs a capability check** (recommended).
+2. **Add entries now** for the provider features named in the Platform Capability Manager.
+3. **Add specific entries.**
+
+**Recommendation:** Option 1.
+
+**Answer:** No answer. Jared's reason, verbatim:
+
+> We will need to fill this in right before we build puppet master.  I dont want to do this now because their capabilities will change by the time we build it.  I supposed filling this in should be part of the building process, like one of the worknodes.(Though we havent gotten to the worknode work yet)
+
+The catalog is filled in right before Puppet Master is built, as part of the building process, likely as one of the worknodes; worknode work has not started. Until then `platform.capability_evaluated` stays registered and dormant: the active catalog stays empty, production admission attempts refuse, and no Platform event is emitted. Filling the catalog is carried as a follow-up for whoever owns the worknode work. When entries are added, each still needs its owner-cited evidence, evaluation contract and tests. This entry adds no catalog entry and changes no registry row, contract or retention assignment.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_DEPTH_GRADING.md`, SHA-256 `cfea2eb818663d22eba69dca9296657aa05c51383a470bc1796b87aef65b923c`; card `reports/event-authority-20260911/step-08-depth42-product-cards-20260924.md` (Card 3); application record `reports/event-authority-20260911/step-08-depth42-card-answers-20260924.md`.
+
+ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/platform_capability_catalog.json, ContractName:Plans/event_family_registry.json
+
+### DL-083: Application-wide Storage records count in one application-wide bucket under the operational record cap
+
+Answered on 2026-09-24 by Jared, in conversation with the coordinator, from the card page: **Approve** on `EA-S08D-OPERATIONAL-CARDINALITY-001`, which selects option 1.
+
+**Name:** How the seven-year operational record cap counts events that belong to no project.
+
+**Question:** The seven-year operational retention policy caps records at 2,000,000 per project. How should that cap count Storage events that belong to the whole application rather than to a project?
+
+**Why:** Boot recovery, recovery-applied and compaction-lifecycle events are application-wide and carry no project. Platform capability evaluations use the same policy and can also be application-scoped. That policy, `RP-OPERATIONAL-2555D` (seven years, 2,000,000 records, per-project counting, fail-closed overflow), counts only per project. Storage's own text (the Boot aggregate custody text of SP-291) calls application-scoped counting under that policy "an unproved policy-owner adapter seam" and says that no invented project, new bucket, cap or policy value may resolve it. Retention choices are Jared's (DL-045).
+
+**What you get:** The same guard for application events as for project events, with the same numbers.
+
+**What it costs:** In the extremely unlikely case of more than 2,000,000 such events within seven years, new ones are refused (fail closed), exactly as for a project.
+
+**Options:**
+
+1. **Count them in one application-wide bucket with the same cap and overflow rule** (recommended).
+2. **Apply no count cap to application-wide records;** the seven-year limit still applies.
+3. **Give them their own new policy.**
+
+**Recommendation:** Option 1.
+
+**Answer:** Approve (option 1).
+
+Under `RP-OPERATIONAL-2555D`, the records of `storage.boot_recovery`, `storage.recovery_applied` and `storage.compaction_lifecycle_changed`, and the application-scoped evaluations of `platform.capability_evaluated`, are counted in one application-wide bucket. It takes the place of the project bucket and has the same 2,000,000-record cap, the same fail-closed overflow and the same seven-year period. Project-scoped records keep their per-project counting, and no project behavior changes. This is the policy-owner decision the Storage adapter seam waits for. The Storage retention owner writes it into the SP-291 policy text and binds the bucket technically under DL-045; no new policy object is created and no other policy value changes. Until that owner edit lands, the four retention cells in the Step 8 depth assessment stay PARTIAL. This entry registers or admits nothing.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_DEPTH_GRADING.md`, SHA-256 `cfea2eb818663d22eba69dca9296657aa05c51383a470bc1796b87aef65b923c`; card `reports/event-authority-20260911/step-08-depth42-product-cards-20260924.md` (Card 4); application record `reports/event-authority-20260911/step-08-depth42-card-answers-20260924.md`.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/event_family_registry.json

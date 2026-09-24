@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L1586-L6115
+Source lines: L1744-L6569
 
-Source SHA256: `2940d3aba9081faa0f28ac1dff306b56adb5038fa229ca5c0743e3ee0b8bce08`
+Source SHA256: `9af90b69abe5c8685b5de674fbc9f88b1acb6908d1b5d1d210db0b384c92c728`
 
 ---
 
@@ -4414,6 +4414,302 @@ negative_constraints:
 owner_hints:
   - Plans/Decision_Log.md
   - Plans/Plan_To_Node_Compilation.md
+```
+
+### DL-079 - Old Goal Record Events Become Read-Only History
+
+```yaml
+plan_unit_id: DL-079
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option 1) on 2026-09-24 to EA-S08D-GOAL-RECORD-EVENTS-001:
+  goal.evidence_captured, goal.receipt_recorded and goal.tool_check_recorded become
+  read-only history in the pattern of the four Goal events retired on 2026-09-12
+  (GRS-069 to GRS-072 with the readers SP-300 to SP-303). Each gets its own
+  current-writer prohibition and an assigned historical reader, and keeps its registry
+  membership, original schema and retention assignment. The Goal Runtime owner, with
+  Storage, writes those contracts; until they land the three families stay
+  undispositioned in the Step 8 depth assessment. No registry row changes and nothing
+  is registered, admitted or removed.
+gui_related: false
+gui_classification_reason: Decides event family disposition, not visual presentation.
+split_recommended: false
+depends_on: [DL-039, DL-045]
+unblocks: []
+acceptance_criteria:
+  - Goal Runtime and Storage owner text gives each of goal.evidence_captured, goal.receipt_recorded and goal.tool_check_recorded its own current-writer prohibition and an assigned historical reader, in the pattern of GRS-069 to GRS-072 and SP-300 to SP-303.
+  - The registry membership, original schemas and retention assignments of the three families are preserved, and no current writer emits them.
+  - Until those owner contracts land, the Step 8 depth assessment keeps the three families undispositioned.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: goal_record_event_disposition_drift
+reasoning_tier: high
+context_scope: goal_record_events_read_only_history
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_DEPTH_GRADING.md
+  - reports/event-authority-20260911/step-08-depth42-product-cards-20260924.md
+  - reports/event-authority-20260911/step-08-depth42-card-answers-20260924.md
+preserved_exact_tokens:
+  - "Approve"
+  - "EA-S08D-GOAL-RECORD-EVENTS-001"
+  - "goal.evidence_captured"
+  - "goal.receipt_recorded"
+  - "goal.tool_check_recorded"
+negative_constraints:
+  - Do not let any current writer emit the three families once their historical contracts land.
+  - Do not remove the three families from the registry or drop their original schemas or retention assignments.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/storage-plan.md
+```
+
+### DL-080 - Workflow Runs Get Current Blocked Replanned And Stopped Events
+
+```yaml
+plan_unit_id: DL-080
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option 1) on 2026-09-24 to EA-S08D-GOALRUN-LIFECYCLE-EVENTS-001:
+  goal_run.blocked, goal_run.replanned and goal_run.stopped become current events.
+  The Workflow run lifecycle owner, Orchestrator and Executor with Goal Runtime and
+  Storage, writes a full current Event Authority contract for each, goal_run.stopped
+  and goal_run.blocked first and goal_run.replanned after the Workflow Replan source
+  work, the external pm.executor.workflow_source.all_writers.v8 package, which this
+  answer makes needed without scheduling it. Each contract names its writer and extends
+  the mandatory GRS-085 run-history projection to its rows. Until they land the three
+  families stay undispositioned in the Step 8 depth assessment. No registry row,
+  command, wiring or resume rule changes and nothing is registered or admitted.
+gui_related: false
+gui_classification_reason: Decides event family disposition and contract order, not visual presentation.
+split_recommended: false
+depends_on: [DL-039, DL-045]
+unblocks: []
+acceptance_criteria:
+  - Full current Event Authority contracts for goal_run.stopped and goal_run.blocked land before the contract for goal_run.replanned, each with a named writer and its rows carried by the mandatory GRS-085 run-history projection.
+  - The goal_run.replanned contract follows the Workflow Replan source work in pm.executor.workflow_source.all_writers.v8.
+  - The Pause and Abort Run wiring and the resume rule keep expecting these events.
+  - Until the contracts land, the Step 8 depth assessment keeps the three families undispositioned.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: goal_run_lifecycle_event_disposition_drift
+reasoning_tier: high
+context_scope: goal_run_lifecycle_current_events
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Orchestrator_Page.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_DEPTH_GRADING.md
+  - reports/event-authority-20260911/step-08-depth42-product-cards-20260924.md
+  - reports/event-authority-20260911/step-08-depth42-card-answers-20260924.md
+preserved_exact_tokens:
+  - "Approve"
+  - "EA-S08D-GOALRUN-LIFECYCLE-EVENTS-001"
+  - "goal_run.blocked"
+  - "goal_run.replanned"
+  - "goal_run.stopped"
+  - "pm.executor.workflow_source.all_writers.v8"
+negative_constraints:
+  - Do not retire the three families or rewrite the Pause, Abort Run or resume wiring to stop expecting them.
+  - Do not write the goal_run.replanned contract ahead of the Workflow Replan source work, and do not treat this answer as scheduling that work.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Orchestrator_Page.md
+  - Plans/storage-plan.md
+```
+
+### DL-081 - Workflow Runs May Finish With An Approved Verification Exception
+
+```yaml
+plan_unit_id: DL-081
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option 1) on 2026-09-24 to EA-S08D-VERIFICATION-EXCEPTION-001:
+  the verification exception route stays. The user who owns the project approves each
+  exception through the existing human-in-the-loop approval flow, naming the specific
+  residual risks, and the run finishes labelled completed_with_approved_verification_exception
+  (the D-R18 branch certified_with_approved_exception that CV-340 preserves), with the
+  approver and remaining risks recorded, never as a clean pass. The Goal Runtime and
+  Workflow certification owners, with the Human-in-the-loop owner, write the one route
+  contract, covering the approval request, who may approve, which risks may be waived
+  and the receipt. Until it lands, GRS-065 keeps the route separately unbound and the
+  Standard writer stays limited to clean certification. No certification contract or
+  registry row changes and nothing is registered or admitted.
+gui_related: false
+gui_classification_reason: Decides a run outcome and its approval route; the existing label is unchanged.
+split_recommended: false
+depends_on: [DL-039, DL-045]
+unblocks: []
+acceptance_criteria:
+  - An exception route contract names the approval request, the approver (the user who owns the project, through the existing human-in-the-loop approval flow), the waivable residual risks and the receipt.
+  - A run finished through the route carries the label completed_with_approved_verification_exception with the approver and remaining risks recorded, and is never presented as a clean pass.
+  - Until that contract lands, GRS-065 keeps the route separately unbound and the Standard writer stays limited to clean certification.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: workflow_verification_exception_route_drift
+reasoning_tier: high
+context_scope: workflow_certification_exception_route
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Contracts_V0.md
+  - Plans/human-in-the-loop.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_DEPTH_GRADING.md
+  - reports/event-authority-20260911/step-08-depth42-product-cards-20260924.md
+  - reports/event-authority-20260911/step-08-depth42-card-answers-20260924.md
+preserved_exact_tokens:
+  - "Approve"
+  - "EA-S08D-VERIFICATION-EXCEPTION-001"
+  - "completed_with_approved_verification_exception"
+  - "certified_with_approved_exception"
+negative_constraints:
+  - Do not present a run finished through an approved exception as a clean pass or certified outcome.
+  - Do not let anyone other than the user who owns the project approve an exception, or approve one without naming its residual risks.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Contracts_V0.md
+  - Plans/human-in-the-loop.md
+```
+
+### DL-082 - Platform Capability Catalog Filling Deferred To Build Time
+
+```yaml
+plan_unit_id: DL-082
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared gave no answer on 2026-09-24 to EA-S08D-PLATFORM-CATALOG-001 and deferred
+  filling the Platform capability catalog to build time. The catalog is filled in right
+  before Puppet Master is built, as part of the building process and likely as one of
+  the worknodes, because provider capabilities will change before then; worknode work
+  has not started. This is not an approval of option 1. Until then
+  platform.capability_evaluated stays registered and dormant, with an empty active
+  catalog, refused production admission and no Platform event. Filling the catalog is
+  a follow-up for whoever owns the worknode work, and each entry added then still needs
+  its owner-cited evidence, evaluation contract and tests. No catalog entry, registry
+  row, contract or retention assignment changes.
+gui_related: false
+gui_classification_reason: Defers catalog content, not visual presentation.
+split_recommended: false
+depends_on: [DL-039, DL-045]
+unblocks: []
+acceptance_criteria:
+  - The active Platform capability catalog stays empty and platform.capability_evaluated stays registered and dormant until entries are added at build time.
+  - Filling the catalog is carried as a follow-up for the owner of the worknode work, and each entry added then has owner-cited evidence, an evaluation contract and tests.
+  - The deferral is not recorded as an approval of option 1 of EA-S08D-PLATFORM-CATALOG-001.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: platform_capability_catalog_deferral_drift
+reasoning_tier: high
+context_scope: platform_capability_catalog_build_time
+implementation_surfaces:
+  - Plans/platform_capability_catalog.json
+  - Plans/newtools.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_DEPTH_GRADING.md
+  - reports/event-authority-20260911/step-08-depth42-product-cards-20260924.md
+  - reports/event-authority-20260911/step-08-depth42-card-answers-20260924.md
+preserved_exact_tokens:
+  - "EA-S08D-PLATFORM-CATALOG-001"
+  - "platform.capability_evaluated"
+negative_constraints:
+  - Do not add catalog entries before build time on the strength of this entry, and do not add placeholder entries.
+  - Do not read the deferral as an approval of option 1 or as a retirement of platform.capability_evaluated.
+owner_hints:
+  - Plans/newtools.md
+  - Plans/platform_capability_catalog.json
+```
+
+### DL-083 - Application-Wide Records Count In One Application Bucket Under RP-OPERATIONAL-2555D
+
+```yaml
+plan_unit_id: DL-083
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option 1) on 2026-09-24 to EA-S08D-OPERATIONAL-CARDINALITY-001:
+  under RP-OPERATIONAL-2555D, the records of storage.boot_recovery,
+  storage.recovery_applied and storage.compaction_lifecycle_changed, and the
+  application-scoped evaluations of platform.capability_evaluated, are counted in one
+  application-wide bucket that takes the place of the project bucket, with the same
+  2,000,000-record cap, fail-closed overflow and seven-year period. Project-scoped
+  records keep per-project counting. This is the policy-owner decision the SP-291
+  adapter seam waits for; the Storage retention owner writes it into its policy text and
+  binds the bucket under DL-045, with no new policy object and no other policy value
+  changed. Until that owner edit lands, the four retention cells in the Step 8 depth
+  assessment stay PARTIAL. Nothing is registered or admitted.
+gui_related: false
+gui_classification_reason: Decides retention cardinality counting, not visual presentation.
+split_recommended: false
+depends_on: [DL-039, DL-045]
+unblocks: []
+acceptance_criteria:
+  - Storage owner text counts the application-scoped records of the four families in one application-wide bucket under RP-OPERATIONAL-2555D with its unchanged cap, overflow and period, and replaces the unproved adapter seam statement with that binding.
+  - No new retention policy object is created and no RP-OPERATIONAL-2555D value changes; project-scoped records keep per-project counting.
+  - Until that owner edit lands, the Step 8 depth assessment keeps the four retention cells PARTIAL.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: operational_retention_cardinality_scope_drift
+reasoning_tier: high
+context_scope: operational_retention_application_bucket
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_DEPTH_GRADING.md
+  - reports/event-authority-20260911/step-08-depth42-product-cards-20260924.md
+  - reports/event-authority-20260911/step-08-depth42-card-answers-20260924.md
+preserved_exact_tokens:
+  - "Approve"
+  - "EA-S08D-OPERATIONAL-CARDINALITY-001"
+  - "RP-OPERATIONAL-2555D"
+negative_constraints:
+  - Do not create a new retention policy or change any RP-OPERATIONAL-2555D value to implement the application-wide bucket.
+  - Do not invent a project for application-wide records or change per-project counting for project-scoped records.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired
