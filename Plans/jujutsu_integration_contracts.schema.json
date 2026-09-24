@@ -2018,6 +2018,24 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {"const": "cmd.jujutsu.bookmark.untrack"}
+            },
+            "required": ["command_id"]
+          },
+          "then": {
+            "properties": {
+              "confirmation": {
+                "$ref": "#/$defs/confirmation",
+                "properties": {
+                  "disclosed_remote_scope": {"const": "one_remote"}
+                }
+              }
+            }
+          }
         }
       ],
       "x-puppet-master-assertions": [

@@ -3672,7 +3672,8 @@
         "Plans/Jujutsu_Integration.md#7.1"
       ],
       "test_refs": [
-        "Plans/source_control_contract_fixtures.json"
+        "Plans/source_control_contract_fixtures.json",
+        "Plans/jujutsu_integration_contract_fixtures.json"
       ],
       "evidence_refs": [
         "static_schema_fixture_and_concept_only"
@@ -9658,7 +9659,7 @@
       "command",
       "cmd.jujutsu.bookmark.track",
       "partial",
-      "Static JJ contract exists; native adapter and Git transport evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Static JJ contract exists; native adapter and local tracking-state mutation evidence are absent. Track and untrack make no remote call and require no credential lease. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
     ],
     [
       "TOUCH-JJI-017",
@@ -9666,7 +9667,7 @@
       "command",
       "cmd.jujutsu.bookmark.untrack",
       "partial",
-      "Static JJ contract exists; native adapter and Git transport evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Static JJ contract exists; native adapter and local tracking-state mutation evidence are absent. Track and untrack make no remote call and require no credential lease. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
     ],
     [
       "TOUCH-JJI-018",

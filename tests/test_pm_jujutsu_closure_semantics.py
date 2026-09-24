@@ -1,6 +1,6 @@
 """Regression tests for the Jujutsu branch of the contract semantic gate.
 
-Claim boundary: these tests exercise the four JJI-006 and JJI-008 relations that
+Claim boundary: these tests exercise five authorized JJ relations that
 JSON Schema cannot express, as evaluated by
 ``scripts/pm-new-contracts-verify.py``. They prove that the authored negatives
 are structurally valid and fail exactly one named rule, that every shipped
@@ -28,6 +28,7 @@ AUTHORIZED_RULES = {
     "jujutsu_operation_heads_changed_during_read_only_verification",
     "jujutsu_closure_publishes_a_head_before_its_dependencies",
     "jujutsu_recovery_action_not_in_canonical_inventory",
+    "jujutsu_untrack_confirmation_remote_mismatch",
 }
 
 
@@ -89,7 +90,7 @@ class JujutsuClosureSemanticTests(unittest.TestCase):
                     self.semantic_failures(case["value"], case["definition"]), []
                 )
 
-    def test_authored_semantic_rules_are_exactly_the_authorized_four(self):
+    def test_authored_semantic_rules_are_exactly_the_authorized_five(self):
         authored = {
             case["semantic_rule"]
             for case in self.fixtures["invalid"]
@@ -214,6 +215,77 @@ class JujutsuClosureSemanticTests(unittest.TestCase):
     def test_a_non_object_instance_is_left_alone(self):
         self.assertEqual(self.semantic_failures([], "backup_jj_closure_record"), [])
         self.assertEqual(self.semantic_failures("not a record", "command_availability"), [])
+
+    def untrack_with_confirmation(self):
+        value = self.positive("command_request_jujutsu_bookmark_untrack")
+        confirmation = self.positive("command_request_jujutsu_bookmark_delete")["confirmation"]
+        confirmation["disclosed_remote_scope"] = "one_remote"
+        confirmation["disclosed_remote_identity_refs"] = [value["target"]["remote_identity"]]
+        value["confirmation"] = confirmation
+        return value
+
+    def test_untrack_requires_its_existing_single_remote_confirmation(self):
+        value = self.untrack_with_confirmation()
+        self.assertTrue(self.validator_for("command_request").is_valid(value))
+        self.assertEqual(self.semantic_failures(value, "command_request"), [])
+        for scope in (None, "no_remote", "all_remotes"):
+            with self.subTest(scope=scope):
+                candidate = copy.deepcopy(value)
+                if scope is None:
+                    candidate["confirmation"] = None
+                else:
+                    candidate["confirmation"]["disclosed_remote_scope"] = scope
+                    if scope == "no_remote":
+                        candidate["confirmation"]["disclosed_remote_identity_refs"] = []
+                self.assertFalse(self.validator_for("command_request").is_valid(candidate))
+        del value["confirmation"]
+        self.assertFalse(self.validator_for("command_request").is_valid(value))
+
+    def test_untrack_confirmation_names_the_exact_existing_target(self):
+        value = self.untrack_with_confirmation()
+        value["confirmation"]["disclosed_remote_identity_refs"] = ["remote:jj:not-the-target"]
+        self.assertTrue(self.validator_for("command_request").is_valid(value))
+        self.assertEqual(self.semantic_failures(value, "command_request"),
+                         ["jujutsu_untrack_confirmation_remote_mismatch"])
+        self.assertEqual(self.semantic_failures(value, "command_result"), [])
+        self.assertEqual(self.gate.contract_semantic_failures(
+            "Plans/source_control_contracts.schema.json", "command_request", value), [])
+
+    def test_untrack_join_does_not_change_track_or_other_confirmation_policies(self):
+        value = self.positive("command_request_jujutsu_bookmark_track")
+        self.assertIsNone(value["confirmation"])
+        self.assertIsNone(value["credential_lease_ref"])
+        self.assertEqual(value["command_class"], "local_mutation")
+        self.assertTrue(self.validator_for("command_request").is_valid(value))
+        self.assertEqual(self.semantic_failures(value, "command_request"), [])
+        value["confirmation"] = self.untrack_with_confirmation()["confirmation"]
+        self.assertNotEqual(value["confirmation"]["disclosed_remote_identity_refs"],
+                            [value["target"]["remote_identity"]])
+        self.assertEqual(self.semantic_failures(value, "command_request"), [])
+        delete = self.positive("command_request_jujutsu_bookmark_delete")
+        self.assertTrue(self.validator_for("command_request").is_valid(delete))
+        delete["confirmation"] = None
+        self.assertFalse(self.validator_for("command_request").is_valid(delete))
+
+    def test_shipped_untrack_positive_preserves_local_authority_and_disclosure(self):
+        value = self.positive("command_request_jujutsu_bookmark_untrack")
+        self.assertIsInstance(value["confirmation"], dict)
+        self.assertEqual(value["confirmation"]["disclosed_remote_scope"], "one_remote")
+        self.assertEqual(value["confirmation"]["disclosed_remote_identity_refs"],
+                         [value["target"]["remote_identity"]])
+        self.assertEqual(value["command_class"], "local_mutation")
+        self.assertIsNone(value["credential_lease_ref"])
+        self.assertTrue(self.validator_for("command_request").is_valid(value))
+        self.assertEqual(self.semantic_failures(value, "command_request"), [])
+
+    def test_untrack_join_leaves_malformed_shapes_to_schema(self):
+        for confirmation in (None, [], {}, {"disclosed_remote_scope": "one_remote",
+                                          "disclosed_remote_identity_refs": [17]}):
+            with self.subTest(confirmation=confirmation):
+                value = self.untrack_with_confirmation()
+                value["confirmation"] = confirmation
+                self.assertFalse(self.validator_for("command_request").is_valid(value))
+                self.assertEqual(self.semantic_failures(value, "command_request"), [])
 
 
 if __name__ == "__main__":

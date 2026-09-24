@@ -1109,13 +1109,14 @@ def jujutsu_admitted_action_ids() -> frozenset[str]:
 
 
 def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
-    """Evaluate the four JJI-008 and JJI-006 relations JSON Schema cannot express.
+    """Evaluate five authorized JJ relations JSON Schema cannot express.
 
     Every rule is a relation between sibling fields of one record, so no
     ambient file, network, or runtime state is consulted beyond the owner
     schema's own closed vocabularies.  A record that satisfies every per-field
     bound can still be internally inconsistent; that is what this checks and
-    all that it claims.  Authorized for exactly these four rules.
+    all that it claims.  The original four JJI-008/JJI-006 rules and the
+    SCS-005/DL-057 single-remote untrack disclosure join are the entire scope.
     """
 
     if not isinstance(value, dict):
@@ -1196,6 +1197,22 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
                     if isinstance(action_id, str) and action_id not in admitted:
                         failures.append("jujutsu_recovery_action_not_in_canonical_inventory")
                         break
+
+    # SCS-005/DL-057: the already-admitted untrack command names one remote.
+    # Schema checks the confirmation shape and one_remote scope; this joins
+    # the disclosed identity to that exact target, without contacting it.
+    if definition_name == "command_request" and value.get("command_id") == "cmd.jujutsu.bookmark.untrack":
+        confirmation = value.get("confirmation")
+        target = value.get("target")
+        if isinstance(confirmation, dict) and isinstance(target, dict):
+            remote = target.get("remote_identity")
+            disclosed = confirmation.get("disclosed_remote_identity_refs")
+            if (isinstance(remote, str) and remote
+                    and confirmation.get("disclosed_remote_scope") == "one_remote"
+                    and isinstance(disclosed, list) and len(disclosed) == 1
+                    and isinstance(disclosed[0], str)):
+                if disclosed != [remote]:
+                    failures.append("jujutsu_untrack_confirmation_remote_mismatch")
 
     return sorted(set(failures))
 
