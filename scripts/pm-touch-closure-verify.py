@@ -1261,6 +1261,64 @@ def scm_checkout_alias_contract_failures(registry: dict[str, Any]) -> list[str]:
             for field, value in expected.items() if matches[0].get(field) != value]
 
 
+def protected_auth_local_reference_failures(registry: dict[str, Any]) -> list[str]:
+    """Select SIR-031's protected composition for exactly three local actions.
+
+    The eleven other SIR local actions retain the generic shared contract. This
+    reference guard claims no controller execution or protected-content access.
+    """
+    failures: list[str] = []
+
+    def require(condition: bool, detail: str) -> None:
+        if not condition:
+            failures.append(f"Protected-auth local references: {detail}")
+
+    profile_id = "TCP-PROTECTED-AUTH-LOCAL"
+    profiles = registry.get("profiles", [])
+    profiles = profiles if isinstance(profiles, list) else []
+    selected = [p for p in profiles if isinstance(p, dict) and p.get("profile_id") == profile_id]
+    require(len(selected) == 1, "expected one protected-auth local profile")
+    profile = selected[0] if selected else {}
+    schema = "Plans/protected_auth_browser_contracts.schema.json"
+    result = schema + "#/$defs/ProtectedAuthLocalActionResult"
+    for field, expected in {
+        "owner_plan": "Plans/Shared_Integration_Runtime.md", "plan_unit": "SIR-031",
+        "dry_contract_ref": schema,
+        "payload_schema_ref": schema + "#/$defs/ProtectedAuthLocalActionRequest",
+        "result_schema_ref": result, "error_schema_ref": result, "receipt_refs": [result],
+        "handler_status": "specified", "wiring_status": "specified",
+        "event_refs": ["none_pending_event_authority"],
+        "evidence_refs": ["static_owner_schema_and_fixture_only"],
+        "permission_gate": "Human-only, non-recordable, non-inspectable, unavailable to agents and adapters, non-persistent, and incapable of protected-content exposure; no domain mutation authority.",
+    }.items():
+        require(profile.get(field) == expected, f"{field} must remain {expected!r}")
+    consumer = "Settings and Doctor: launcher or redacted lifecycle-only consumer; never protected-content access"
+    for field in ("gui_triggers", "reverse_consumers"):
+        require(profile.get(field) == ["human-only protected-auth local controller", consumer],
+                f"{field} must retain protected controller versus launcher/redacted consumer boundary")
+    rows = registry.get("rows", [])
+    rows = [r for r in rows if isinstance(r, list) and len(r) == 6] if isinstance(rows, list) else []
+    expected_rows = [
+        [f"TOUCH-SGAPLOCAL-{number:03d}", profile_id, "ui_action", "ui.auth_session." + action, "partial"]
+        for number, action in ((7, "close_secure_browser"), (8, "copy_device_code"), (9, "open_details"))
+    ]
+    protected_actions = {r[3] for r in expected_rows}
+    selected_rows = [r for r in rows if r[1] == profile_id or r[3] in protected_actions]
+    require(sorted(r[:5] for r in selected_rows) == sorted(expected_rows),
+            "retain exactly SGAPLOCAL-007/008/009 with their existing partial local-action identities")
+    generic = [p for p in profiles if isinstance(p, dict) and p.get("profile_id") == "TCP-SIR-GAP-LOCAL"]
+    require(len(generic) == 1, "retain one generic SIR local profile")
+    generic = generic[0] if generic else {}
+    prefix = "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SIRLocalAction"
+    for field, expected in {"payload_schema_ref": prefix + "Request", "result_schema_ref": prefix + "Result",
+                            "error_schema_ref": prefix + "Result", "receipt_refs": [prefix + "Result"]}.items():
+        require(generic.get(field) == expected, f"generic {field} must not acquire protected-auth restrictions")
+    generic_rows = [r for r in rows if r[1] == "TCP-SIR-GAP-LOCAL"]
+    require(len(generic_rows) == 11 and not any(r[3] in protected_actions for r in generic_rows),
+            "retain the eleven non-auth generic local rows")
+    return failures
+
+
 def permissions_rule_reference_failures(registry: dict[str, Any]) -> list[str]:
     """Keep the five rule controls bound to their existing semantic owners.
 
@@ -1548,6 +1606,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     failures.extend(forge_review_alias_failures(registry, production_actions))
     failures.extend(scm_checkout_alias_contract_failures(registry))
     failures.extend(permissions_rule_reference_failures(registry))
+    failures.extend(protected_auth_local_reference_failures(registry))
     alias_sources_with_peer_wiring = sorted(alias_row_actions & production_actions)
     if alias_sources_with_peer_wiring:
         failures.append(
@@ -1823,7 +1882,9 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         "row_count": 643,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
-        "profile_count": 133,
+        # SIR-031: three protected-auth locals select the existing protected
+        # composition; eleven generic locals remain unchanged. No new rows.
+        "profile_count": 134,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
         "production_wiring_entry_count": 1142,
