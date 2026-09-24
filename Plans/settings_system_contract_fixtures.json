@@ -2915,6 +2915,3445 @@
         "explicit_choices_preserved": true,
         "settings_applied": false
       }
+    },
+    {
+      "case_id": "search-manager-object",
+      "schema_ref": "#/$defs/settings_search_route_exchange",
+      "record": {
+        "selected_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "current_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "route_request": {
+          "record_type": "settings_route_request",
+          "schema_id": "pm.settings_route_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.settings.open",
+          "route_id": "route-instance:settings/1",
+          "project_id": "project:demo",
+          "target": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "return_contract": {
+            "continuation_id": "continuation:settings/1",
+            "continuation_generation": 2,
+            "origin_surface": "settings",
+            "origin_route": "route:settings/all-settings",
+            "origin_focus_id": "focus:settings-search-input",
+            "origin_query": "provider",
+            "origin_scroll_anchor": "anchor:search/provider",
+            "close_behavior": "return_to_opener",
+            "escape_order": [
+              "close_transient",
+              "close_details",
+              "clear_query",
+              "return_to_opener"
+            ],
+            "exact_context": {
+              "project_id": "project:demo",
+              "server_id": "server:home",
+              "vault_id": "vault:demo",
+              "host_id": "host:local",
+              "environment_id": "environment:desktop",
+              "client_id": "client:one",
+              "provider_id": "provider:openai",
+              "provider_route_id": "provider-route:direct",
+              "thread_id": "thread:one",
+              "operation_id": "operation:setup/1",
+              "topology_generation": 9,
+              "expected_revision": 44
+            },
+            "expires_at_utc": "2026-08-31T12:30:00Z",
+            "stale_return_policy": "reject_and_keep_current_context",
+            "origin_search_result_id": "search-result:provider-openai"
+          },
+          "requested_at_utc": "2026-08-31T12:05:00Z"
+        },
+        "current_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "current_continuation": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "settings",
+          "origin_route": "route:settings/all-settings",
+          "origin_focus_id": "focus:settings-search-input",
+          "origin_query": "provider",
+          "origin_scroll_anchor": "anchor:search/provider",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context",
+          "origin_search_result_id": "search-result:provider-openai"
+        },
+        "route_availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "cmd.settings.open",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "route_outcome": "admitted",
+        "disabled_reason": null,
+        "return_result": {
+          "record_type": "settings_route_return",
+          "schema_id": "pm.settings_route_return.v1",
+          "schema_version": "1.0.0",
+          "route_id": "route-instance:settings/1",
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "outcome": "returned",
+          "restored_focus_id": "focus:settings-search-input",
+          "restored_query": "provider",
+          "restored_scroll_anchor": "anchor:search/provider",
+          "disabled_reason": null,
+          "returned_at_utc": "2026-08-31T12:06:00Z",
+          "restored_search_result_id": "search-result:provider-openai"
+        },
+        "evaluated_at_utc": "2026-08-31T12:06:00Z",
+        "evidence_scope": "contract_fixture_only",
+        "native_runtime_executed": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "search-grouped-results",
+      "schema_ref": "#/$defs/settings_search_route_exchange",
+      "record": {
+        "selected_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "current_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "OpenAI account",
+          "result_type": "managed_object",
+          "complete_settings_path": "Project Settings / AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "route_request": {
+          "record_type": "settings_route_request",
+          "schema_id": "pm.settings_route_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.settings.open",
+          "route_id": "route-instance:settings/1",
+          "project_id": "project:demo",
+          "target": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "return_contract": {
+            "continuation_id": "continuation:settings/1",
+            "continuation_generation": 2,
+            "origin_surface": "settings",
+            "origin_route": "route:settings/all-settings",
+            "origin_focus_id": "focus:settings-search-input",
+            "origin_query": "provider",
+            "origin_scroll_anchor": "anchor:search/provider",
+            "close_behavior": "return_to_opener",
+            "escape_order": [
+              "close_transient",
+              "close_details",
+              "clear_query",
+              "return_to_opener"
+            ],
+            "exact_context": {
+              "project_id": "project:demo",
+              "server_id": "server:home",
+              "vault_id": "vault:demo",
+              "host_id": "host:local",
+              "environment_id": "environment:desktop",
+              "client_id": "client:one",
+              "provider_id": "provider:openai",
+              "provider_route_id": "provider-route:direct",
+              "thread_id": "thread:one",
+              "operation_id": "operation:setup/1",
+              "topology_generation": 9,
+              "expected_revision": 44
+            },
+            "expires_at_utc": "2026-08-31T12:30:00Z",
+            "stale_return_policy": "reject_and_keep_current_context",
+            "origin_search_result_id": "search-result:provider-openai"
+          },
+          "requested_at_utc": "2026-08-31T12:05:00Z"
+        },
+        "current_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "current_continuation": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "settings",
+          "origin_route": "route:settings/all-settings",
+          "origin_focus_id": "focus:settings-search-input",
+          "origin_query": "provider",
+          "origin_scroll_anchor": "anchor:search/provider",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context",
+          "origin_search_result_id": "search-result:provider-openai"
+        },
+        "route_availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "cmd.settings.open",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "route_outcome": "admitted",
+        "disabled_reason": null,
+        "return_result": {
+          "record_type": "settings_route_return",
+          "schema_id": "pm.settings_route_return.v1",
+          "schema_version": "1.0.0",
+          "route_id": "route-instance:settings/1",
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "outcome": "returned",
+          "restored_focus_id": "focus:settings-search-input",
+          "restored_query": "provider",
+          "restored_scroll_anchor": "anchor:search/provider",
+          "disabled_reason": null,
+          "returned_at_utc": "2026-08-31T12:06:00Z",
+          "restored_search_result_id": "search-result:provider-openai"
+        },
+        "evaluated_at_utc": "2026-08-31T12:06:00Z",
+        "evidence_scope": "contract_fixture_only",
+        "native_runtime_executed": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "search-duplicate-labels",
+      "schema_ref": "#/$defs/settings_search_route_exchange",
+      "record": {
+        "selected_result": {
+          "immutable_result_id": "search-result:provider-anthropic",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / Anthropic",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:anthropic"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:anthropic",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "Anthropic",
+          "provider_qualifier": "Anthropic"
+        },
+        "current_result": {
+          "immutable_result_id": "search-result:provider-anthropic",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / Anthropic",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:anthropic"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:anthropic",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "Anthropic",
+          "provider_qualifier": "Anthropic"
+        },
+        "route_request": {
+          "record_type": "settings_route_request",
+          "schema_id": "pm.settings_route_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.settings.open",
+          "route_id": "route-instance:settings/1",
+          "project_id": "project:demo",
+          "target": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:anthropic"
+          },
+          "return_contract": {
+            "continuation_id": "continuation:settings/1",
+            "continuation_generation": 2,
+            "origin_surface": "settings",
+            "origin_route": "route:settings/all-settings",
+            "origin_focus_id": "focus:settings-search-input",
+            "origin_query": "provider",
+            "origin_scroll_anchor": "anchor:search/provider",
+            "close_behavior": "return_to_opener",
+            "escape_order": [
+              "close_transient",
+              "close_details",
+              "clear_query",
+              "return_to_opener"
+            ],
+            "exact_context": {
+              "project_id": "project:demo",
+              "server_id": "server:home",
+              "vault_id": "vault:demo",
+              "host_id": "host:local",
+              "environment_id": "environment:desktop",
+              "client_id": "client:one",
+              "provider_id": "provider:anthropic",
+              "provider_route_id": "provider-route:direct",
+              "thread_id": "thread:one",
+              "operation_id": "operation:setup/1",
+              "topology_generation": 9,
+              "expected_revision": 44
+            },
+            "expires_at_utc": "2026-08-31T12:30:00Z",
+            "stale_return_policy": "reject_and_keep_current_context",
+            "origin_search_result_id": "search-result:provider-anthropic"
+          },
+          "requested_at_utc": "2026-08-31T12:05:00Z"
+        },
+        "current_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:anthropic",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "current_continuation": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "settings",
+          "origin_route": "route:settings/all-settings",
+          "origin_focus_id": "focus:settings-search-input",
+          "origin_query": "provider",
+          "origin_scroll_anchor": "anchor:search/provider",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:anthropic",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context",
+          "origin_search_result_id": "search-result:provider-anthropic"
+        },
+        "route_availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "cmd.settings.open",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "route_outcome": "admitted",
+        "disabled_reason": null,
+        "return_result": {
+          "record_type": "settings_route_return",
+          "schema_id": "pm.settings_route_return.v1",
+          "schema_version": "1.0.0",
+          "route_id": "route-instance:settings/1",
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "outcome": "returned",
+          "restored_focus_id": "focus:settings-search-input",
+          "restored_query": "provider",
+          "restored_scroll_anchor": "anchor:search/provider",
+          "disabled_reason": null,
+          "returned_at_utc": "2026-08-31T12:06:00Z",
+          "restored_search_result_id": "search-result:provider-anthropic"
+        },
+        "evaluated_at_utc": "2026-08-31T12:06:00Z",
+        "evidence_scope": "contract_fixture_only",
+        "native_runtime_executed": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "search-typo-fuzzy-match",
+      "schema_ref": "#/$defs/settings_search_route_exchange",
+      "record": {
+        "selected_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "current_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "route_request": {
+          "record_type": "settings_route_request",
+          "schema_id": "pm.settings_route_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.settings.open",
+          "route_id": "route-instance:settings/1",
+          "project_id": "project:demo",
+          "target": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "return_contract": {
+            "continuation_id": "continuation:settings/1",
+            "continuation_generation": 2,
+            "origin_surface": "settings",
+            "origin_route": "route:settings/all-settings",
+            "origin_focus_id": "focus:settings-search-input",
+            "origin_query": "provder",
+            "origin_scroll_anchor": "anchor:search/provider",
+            "close_behavior": "return_to_opener",
+            "escape_order": [
+              "close_transient",
+              "close_details",
+              "clear_query",
+              "return_to_opener"
+            ],
+            "exact_context": {
+              "project_id": "project:demo",
+              "server_id": "server:home",
+              "vault_id": "vault:demo",
+              "host_id": "host:local",
+              "environment_id": "environment:desktop",
+              "client_id": "client:one",
+              "provider_id": "provider:openai",
+              "provider_route_id": "provider-route:direct",
+              "thread_id": "thread:one",
+              "operation_id": "operation:setup/1",
+              "topology_generation": 9,
+              "expected_revision": 44
+            },
+            "expires_at_utc": "2026-08-31T12:30:00Z",
+            "stale_return_policy": "reject_and_keep_current_context",
+            "origin_search_result_id": "search-result:provider-openai"
+          },
+          "requested_at_utc": "2026-08-31T12:05:00Z"
+        },
+        "current_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "current_continuation": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "settings",
+          "origin_route": "route:settings/all-settings",
+          "origin_focus_id": "focus:settings-search-input",
+          "origin_query": "provder",
+          "origin_scroll_anchor": "anchor:search/provider",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context",
+          "origin_search_result_id": "search-result:provider-openai"
+        },
+        "route_availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "cmd.settings.open",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "route_outcome": "admitted",
+        "disabled_reason": null,
+        "return_result": {
+          "record_type": "settings_route_return",
+          "schema_id": "pm.settings_route_return.v1",
+          "schema_version": "1.0.0",
+          "route_id": "route-instance:settings/1",
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "outcome": "returned",
+          "restored_focus_id": "focus:settings-search-input",
+          "restored_query": "provder",
+          "restored_scroll_anchor": "anchor:search/provider",
+          "disabled_reason": null,
+          "returned_at_utc": "2026-08-31T12:06:00Z",
+          "restored_search_result_id": "search-result:provider-openai"
+        },
+        "evaluated_at_utc": "2026-08-31T12:06:00Z",
+        "evidence_scope": "contract_fixture_only",
+        "native_runtime_executed": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "search-unavailable-result",
+      "schema_ref": "#/$defs/settings_search_route_exchange",
+      "record": {
+        "selected_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "unavailable_capability",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": {
+            "state": "disabled",
+            "reason_code": "setup_required",
+            "human_reason": "Provider setup is required; the information destination remains available.",
+            "selector_ref": "provider:openai",
+            "evaluated_at_utc": "2026-08-31T12:06:00Z",
+            "projection_generation": 8
+          },
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "current_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "unavailable_capability",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": {
+            "state": "disabled",
+            "reason_code": "setup_required",
+            "human_reason": "Provider setup is required; the information destination remains available.",
+            "selector_ref": "provider:openai",
+            "evaluated_at_utc": "2026-08-31T12:06:00Z",
+            "projection_generation": 8
+          },
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "route_request": {
+          "record_type": "settings_route_request",
+          "schema_id": "pm.settings_route_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.settings.open",
+          "route_id": "route-instance:settings/1",
+          "project_id": "project:demo",
+          "target": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "return_contract": {
+            "continuation_id": "continuation:settings/1",
+            "continuation_generation": 2,
+            "origin_surface": "settings",
+            "origin_route": "route:settings/all-settings",
+            "origin_focus_id": "focus:settings-search-input",
+            "origin_query": "provider",
+            "origin_scroll_anchor": "anchor:search/provider",
+            "close_behavior": "return_to_opener",
+            "escape_order": [
+              "close_transient",
+              "close_details",
+              "clear_query",
+              "return_to_opener"
+            ],
+            "exact_context": {
+              "project_id": "project:demo",
+              "server_id": "server:home",
+              "vault_id": "vault:demo",
+              "host_id": "host:local",
+              "environment_id": "environment:desktop",
+              "client_id": "client:one",
+              "provider_id": "provider:openai",
+              "provider_route_id": "provider-route:direct",
+              "thread_id": "thread:one",
+              "operation_id": "operation:setup/1",
+              "topology_generation": 9,
+              "expected_revision": 44
+            },
+            "expires_at_utc": "2026-08-31T12:30:00Z",
+            "stale_return_policy": "reject_and_keep_current_context",
+            "origin_search_result_id": "search-result:provider-openai"
+          },
+          "requested_at_utc": "2026-08-31T12:05:00Z"
+        },
+        "current_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "current_continuation": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "settings",
+          "origin_route": "route:settings/all-settings",
+          "origin_focus_id": "focus:settings-search-input",
+          "origin_query": "provider",
+          "origin_scroll_anchor": "anchor:search/provider",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context",
+          "origin_search_result_id": "search-result:provider-openai"
+        },
+        "route_availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "cmd.settings.open",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "route_outcome": "admitted",
+        "disabled_reason": null,
+        "return_result": {
+          "record_type": "settings_route_return",
+          "schema_id": "pm.settings_route_return.v1",
+          "schema_version": "1.0.0",
+          "route_id": "route-instance:settings/1",
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "outcome": "returned",
+          "restored_focus_id": "focus:settings-search-input",
+          "restored_query": "provider",
+          "restored_scroll_anchor": "anchor:search/provider",
+          "disabled_reason": null,
+          "returned_at_utc": "2026-08-31T12:06:00Z",
+          "restored_search_result_id": "search-result:provider-openai"
+        },
+        "evaluated_at_utc": "2026-08-31T12:06:00Z",
+        "evidence_scope": "contract_fixture_only",
+        "native_runtime_executed": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "search-deep-setting-row",
+      "schema_ref": "#/$defs/settings_search_route_exchange",
+      "record": {
+        "selected_result": {
+          "immutable_result_id": "search-result:general-visual-theme",
+          "human_label": "Theme",
+          "result_type": "setting",
+          "complete_settings_path": "Basics / Appearance / Visual / Theme",
+          "destination": {
+            "target_type": "setting",
+            "setting_id": "general.visual.theme",
+            "manager_id": null,
+            "detail_id": null
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "current_result": {
+          "immutable_result_id": "search-result:general-visual-theme",
+          "human_label": "Theme",
+          "result_type": "setting",
+          "complete_settings_path": "Basics / Appearance / Visual / Theme",
+          "destination": {
+            "target_type": "setting",
+            "setting_id": "general.visual.theme",
+            "manager_id": null,
+            "detail_id": null
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "route_request": {
+          "record_type": "settings_route_request",
+          "schema_id": "pm.settings_route_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.settings.open",
+          "route_id": "route-instance:settings/1",
+          "project_id": "project:demo",
+          "target": {
+            "target_type": "setting",
+            "setting_id": "general.visual.theme",
+            "manager_id": null,
+            "detail_id": null
+          },
+          "return_contract": {
+            "continuation_id": "continuation:settings/1",
+            "continuation_generation": 2,
+            "origin_surface": "settings",
+            "origin_route": "route:settings/all-settings",
+            "origin_focus_id": "focus:settings-search-input",
+            "origin_query": "provider",
+            "origin_scroll_anchor": "anchor:search/provider",
+            "close_behavior": "return_to_opener",
+            "escape_order": [
+              "close_transient",
+              "close_details",
+              "clear_query",
+              "return_to_opener"
+            ],
+            "exact_context": {
+              "project_id": "project:demo",
+              "server_id": "server:home",
+              "vault_id": "vault:demo",
+              "host_id": "host:local",
+              "environment_id": "environment:desktop",
+              "client_id": "client:one",
+              "provider_id": "provider:openai",
+              "provider_route_id": "provider-route:direct",
+              "thread_id": "thread:one",
+              "operation_id": "operation:setup/1",
+              "topology_generation": 9,
+              "expected_revision": 44
+            },
+            "expires_at_utc": "2026-08-31T12:30:00Z",
+            "stale_return_policy": "reject_and_keep_current_context",
+            "origin_search_result_id": "search-result:general-visual-theme"
+          },
+          "requested_at_utc": "2026-08-31T12:05:00Z"
+        },
+        "current_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "current_continuation": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "settings",
+          "origin_route": "route:settings/all-settings",
+          "origin_focus_id": "focus:settings-search-input",
+          "origin_query": "provider",
+          "origin_scroll_anchor": "anchor:search/provider",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context",
+          "origin_search_result_id": "search-result:general-visual-theme"
+        },
+        "route_availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "cmd.settings.open",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "route_outcome": "admitted",
+        "disabled_reason": null,
+        "return_result": {
+          "record_type": "settings_route_return",
+          "schema_id": "pm.settings_route_return.v1",
+          "schema_version": "1.0.0",
+          "route_id": "route-instance:settings/1",
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "outcome": "returned",
+          "restored_focus_id": "focus:settings-search-input",
+          "restored_query": "provider",
+          "restored_scroll_anchor": "anchor:search/provider",
+          "disabled_reason": null,
+          "returned_at_utc": "2026-08-31T12:06:00Z",
+          "restored_search_result_id": "search-result:general-visual-theme"
+        },
+        "evaluated_at_utc": "2026-08-31T12:06:00Z",
+        "evidence_scope": "contract_fixture_only",
+        "native_runtime_executed": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "search-back-restores-query",
+      "schema_ref": "#/$defs/settings_search_route_exchange",
+      "record": {
+        "selected_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "current_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "route_request": {
+          "record_type": "settings_route_request",
+          "schema_id": "pm.settings_route_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.settings.open",
+          "route_id": "route-instance:settings/1",
+          "project_id": "project:demo",
+          "target": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "return_contract": {
+            "continuation_id": "continuation:settings/1",
+            "continuation_generation": 2,
+            "origin_surface": "settings",
+            "origin_route": "route:settings/all-settings",
+            "origin_focus_id": "focus:settings-search-input",
+            "origin_query": "provider",
+            "origin_scroll_anchor": "anchor:search/provider",
+            "close_behavior": "return_to_opener",
+            "escape_order": [
+              "close_transient",
+              "close_details",
+              "clear_query",
+              "return_to_opener"
+            ],
+            "exact_context": {
+              "project_id": "project:demo",
+              "server_id": "server:home",
+              "vault_id": "vault:demo",
+              "host_id": "host:local",
+              "environment_id": "environment:desktop",
+              "client_id": "client:one",
+              "provider_id": "provider:openai",
+              "provider_route_id": "provider-route:direct",
+              "thread_id": "thread:one",
+              "operation_id": "operation:setup/1",
+              "topology_generation": 9,
+              "expected_revision": 44
+            },
+            "expires_at_utc": "2026-08-31T12:30:00Z",
+            "stale_return_policy": "reject_and_keep_current_context",
+            "origin_search_result_id": "search-result:provider-openai"
+          },
+          "requested_at_utc": "2026-08-31T12:05:00Z"
+        },
+        "current_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "current_continuation": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "settings",
+          "origin_route": "route:settings/all-settings",
+          "origin_focus_id": "focus:settings-search-input",
+          "origin_query": "provider",
+          "origin_scroll_anchor": "anchor:search/provider",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context",
+          "origin_search_result_id": "search-result:provider-openai"
+        },
+        "route_availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "cmd.settings.open",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "route_outcome": "admitted",
+        "disabled_reason": null,
+        "return_result": {
+          "record_type": "settings_route_return",
+          "schema_id": "pm.settings_route_return.v1",
+          "schema_version": "1.0.0",
+          "route_id": "route-instance:settings/1",
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "outcome": "returned",
+          "restored_focus_id": "focus:settings-search-input",
+          "restored_query": "provider",
+          "restored_scroll_anchor": "anchor:search/provider",
+          "disabled_reason": null,
+          "returned_at_utc": "2026-08-31T12:06:00Z",
+          "restored_search_result_id": "search-result:provider-openai"
+        },
+        "evaluated_at_utc": "2026-08-31T12:06:00Z",
+        "evidence_scope": "contract_fixture_only",
+        "native_runtime_executed": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "search-supported-optional-help",
+      "schema_ref": "#/$defs/settings_search_route_exchange",
+      "record": {
+        "selected_result": {
+          "immutable_result_id": "search-result:teacher-help",
+          "human_label": "Help",
+          "result_type": "intentional_help_result",
+          "complete_settings_path": "System / Teacher and Help",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "teacher-help",
+            "detail_id": null
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "current_result": {
+          "immutable_result_id": "search-result:teacher-help",
+          "human_label": "Help",
+          "result_type": "intentional_help_result",
+          "complete_settings_path": "System / Teacher and Help",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "teacher-help",
+            "detail_id": null
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "route_request": {
+          "record_type": "settings_route_request",
+          "schema_id": "pm.settings_route_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.settings.open",
+          "route_id": "route-instance:settings/1",
+          "project_id": "project:demo",
+          "target": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "teacher-help",
+            "detail_id": null
+          },
+          "return_contract": {
+            "continuation_id": "continuation:settings/1",
+            "continuation_generation": 2,
+            "origin_surface": "settings",
+            "origin_route": "route:settings/all-settings",
+            "origin_focus_id": "focus:settings-search-input",
+            "origin_query": "provider",
+            "origin_scroll_anchor": "anchor:search/provider",
+            "close_behavior": "return_to_opener",
+            "escape_order": [
+              "close_transient",
+              "close_details",
+              "clear_query",
+              "return_to_opener"
+            ],
+            "exact_context": {
+              "project_id": "project:demo",
+              "server_id": "server:home",
+              "vault_id": "vault:demo",
+              "host_id": "host:local",
+              "environment_id": "environment:desktop",
+              "client_id": "client:one",
+              "provider_id": "provider:openai",
+              "provider_route_id": "provider-route:direct",
+              "thread_id": "thread:one",
+              "operation_id": "operation:setup/1",
+              "topology_generation": 9,
+              "expected_revision": 44
+            },
+            "expires_at_utc": "2026-08-31T12:30:00Z",
+            "stale_return_policy": "reject_and_keep_current_context",
+            "origin_search_result_id": "search-result:teacher-help"
+          },
+          "requested_at_utc": "2026-08-31T12:05:00Z"
+        },
+        "current_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "current_continuation": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "settings",
+          "origin_route": "route:settings/all-settings",
+          "origin_focus_id": "focus:settings-search-input",
+          "origin_query": "provider",
+          "origin_scroll_anchor": "anchor:search/provider",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context",
+          "origin_search_result_id": "search-result:teacher-help"
+        },
+        "route_availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "cmd.settings.open",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "route_outcome": "admitted",
+        "disabled_reason": null,
+        "return_result": {
+          "record_type": "settings_route_return",
+          "schema_id": "pm.settings_route_return.v1",
+          "schema_version": "1.0.0",
+          "route_id": "route-instance:settings/1",
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "outcome": "returned",
+          "restored_focus_id": "focus:settings-search-input",
+          "restored_query": "provider",
+          "restored_scroll_anchor": "anchor:search/provider",
+          "disabled_reason": null,
+          "returned_at_utc": "2026-08-31T12:06:00Z",
+          "restored_search_result_id": "search-result:teacher-help"
+        },
+        "evaluated_at_utc": "2026-08-31T12:06:00Z",
+        "evidence_scope": "contract_fixture_only",
+        "native_runtime_executed": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "search-admitted-before-return",
+      "schema_ref": "#/$defs/settings_search_route_exchange",
+      "record": {
+        "selected_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "current_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "route_request": {
+          "record_type": "settings_route_request",
+          "schema_id": "pm.settings_route_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.settings.open",
+          "route_id": "route-instance:settings/1",
+          "project_id": "project:demo",
+          "target": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "return_contract": {
+            "continuation_id": "continuation:settings/1",
+            "continuation_generation": 2,
+            "origin_surface": "settings",
+            "origin_route": "route:settings/all-settings",
+            "origin_focus_id": "focus:settings-search-input",
+            "origin_query": "provider",
+            "origin_scroll_anchor": "anchor:search/provider",
+            "close_behavior": "return_to_opener",
+            "escape_order": [
+              "close_transient",
+              "close_details",
+              "clear_query",
+              "return_to_opener"
+            ],
+            "exact_context": {
+              "project_id": "project:demo",
+              "server_id": "server:home",
+              "vault_id": "vault:demo",
+              "host_id": "host:local",
+              "environment_id": "environment:desktop",
+              "client_id": "client:one",
+              "provider_id": "provider:openai",
+              "provider_route_id": "provider-route:direct",
+              "thread_id": "thread:one",
+              "operation_id": "operation:setup/1",
+              "topology_generation": 9,
+              "expected_revision": 44
+            },
+            "expires_at_utc": "2026-08-31T12:30:00Z",
+            "stale_return_policy": "reject_and_keep_current_context",
+            "origin_search_result_id": "search-result:provider-openai"
+          },
+          "requested_at_utc": "2026-08-31T12:05:00Z"
+        },
+        "current_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "current_continuation": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "settings",
+          "origin_route": "route:settings/all-settings",
+          "origin_focus_id": "focus:settings-search-input",
+          "origin_query": "provider",
+          "origin_scroll_anchor": "anchor:search/provider",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context",
+          "origin_search_result_id": "search-result:provider-openai"
+        },
+        "route_availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "cmd.settings.open",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "route_outcome": "admitted",
+        "disabled_reason": null,
+        "return_result": null,
+        "evaluated_at_utc": "2026-08-31T12:06:00Z",
+        "evidence_scope": "contract_fixture_only",
+        "native_runtime_executed": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "search-deleted-rejects-without-fallback",
+      "schema_ref": "#/$defs/settings_search_route_exchange",
+      "record": {
+        "selected_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "current_result": null,
+        "route_request": {
+          "record_type": "settings_route_request",
+          "schema_id": "pm.settings_route_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.settings.open",
+          "route_id": "route-instance:settings/1",
+          "project_id": "project:demo",
+          "target": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "return_contract": {
+            "continuation_id": "continuation:settings/1",
+            "continuation_generation": 2,
+            "origin_surface": "settings",
+            "origin_route": "route:settings/all-settings",
+            "origin_focus_id": "focus:settings-search-input",
+            "origin_query": "provider",
+            "origin_scroll_anchor": "anchor:search/provider",
+            "close_behavior": "return_to_opener",
+            "escape_order": [
+              "close_transient",
+              "close_details",
+              "clear_query",
+              "return_to_opener"
+            ],
+            "exact_context": {
+              "project_id": "project:demo",
+              "server_id": "server:home",
+              "vault_id": "vault:demo",
+              "host_id": "host:local",
+              "environment_id": "environment:desktop",
+              "client_id": "client:one",
+              "provider_id": "provider:openai",
+              "provider_route_id": "provider-route:direct",
+              "thread_id": "thread:one",
+              "operation_id": "operation:setup/1",
+              "topology_generation": 9,
+              "expected_revision": 44
+            },
+            "expires_at_utc": "2026-08-31T12:30:00Z",
+            "stale_return_policy": "reject_and_keep_current_context",
+            "origin_search_result_id": "search-result:provider-openai"
+          },
+          "requested_at_utc": "2026-08-31T12:05:00Z"
+        },
+        "current_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "current_continuation": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "settings",
+          "origin_route": "route:settings/all-settings",
+          "origin_focus_id": "focus:settings-search-input",
+          "origin_query": "provider",
+          "origin_scroll_anchor": "anchor:search/provider",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context",
+          "origin_search_result_id": "search-result:provider-openai"
+        },
+        "route_availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "cmd.settings.open",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "route_outcome": "rejected",
+        "disabled_reason": "target_missing",
+        "return_result": {
+          "record_type": "settings_route_return",
+          "schema_id": "pm.settings_route_return.v1",
+          "schema_version": "1.0.0",
+          "route_id": "route-instance:settings/1",
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "outcome": "rejected_stale",
+          "restored_focus_id": null,
+          "restored_query": "",
+          "restored_scroll_anchor": null,
+          "disabled_reason": "target_missing",
+          "returned_at_utc": "2026-08-31T12:06:00Z",
+          "restored_search_result_id": null
+        },
+        "evaluated_at_utc": "2026-08-31T12:06:00Z",
+        "evidence_scope": "contract_fixture_only",
+        "native_runtime_executed": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "search-retargeted-rejects",
+      "schema_ref": "#/$defs/settings_search_route_exchange",
+      "record": {
+        "selected_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "current_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:anthropic"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "route_request": {
+          "record_type": "settings_route_request",
+          "schema_id": "pm.settings_route_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.settings.open",
+          "route_id": "route-instance:settings/1",
+          "project_id": "project:demo",
+          "target": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "return_contract": {
+            "continuation_id": "continuation:settings/1",
+            "continuation_generation": 2,
+            "origin_surface": "settings",
+            "origin_route": "route:settings/all-settings",
+            "origin_focus_id": "focus:settings-search-input",
+            "origin_query": "provider",
+            "origin_scroll_anchor": "anchor:search/provider",
+            "close_behavior": "return_to_opener",
+            "escape_order": [
+              "close_transient",
+              "close_details",
+              "clear_query",
+              "return_to_opener"
+            ],
+            "exact_context": {
+              "project_id": "project:demo",
+              "server_id": "server:home",
+              "vault_id": "vault:demo",
+              "host_id": "host:local",
+              "environment_id": "environment:desktop",
+              "client_id": "client:one",
+              "provider_id": "provider:openai",
+              "provider_route_id": "provider-route:direct",
+              "thread_id": "thread:one",
+              "operation_id": "operation:setup/1",
+              "topology_generation": 9,
+              "expected_revision": 44
+            },
+            "expires_at_utc": "2026-08-31T12:30:00Z",
+            "stale_return_policy": "reject_and_keep_current_context",
+            "origin_search_result_id": "search-result:provider-openai"
+          },
+          "requested_at_utc": "2026-08-31T12:05:00Z"
+        },
+        "current_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "current_continuation": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "settings",
+          "origin_route": "route:settings/all-settings",
+          "origin_focus_id": "focus:settings-search-input",
+          "origin_query": "provider",
+          "origin_scroll_anchor": "anchor:search/provider",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context",
+          "origin_search_result_id": "search-result:provider-openai"
+        },
+        "route_availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "cmd.settings.open",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "route_outcome": "rejected",
+        "disabled_reason": "target_changed",
+        "return_result": {
+          "record_type": "settings_route_return",
+          "schema_id": "pm.settings_route_return.v1",
+          "schema_version": "1.0.0",
+          "route_id": "route-instance:settings/1",
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "outcome": "rejected_stale",
+          "restored_focus_id": null,
+          "restored_query": "",
+          "restored_scroll_anchor": null,
+          "disabled_reason": "target_changed",
+          "returned_at_utc": "2026-08-31T12:06:00Z",
+          "restored_search_result_id": null
+        },
+        "evaluated_at_utc": "2026-08-31T12:06:00Z",
+        "evidence_scope": "contract_fixture_only",
+        "native_runtime_executed": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "search-context-changed-rejects",
+      "schema_ref": "#/$defs/settings_search_route_exchange",
+      "record": {
+        "selected_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "current_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "route_request": {
+          "record_type": "settings_route_request",
+          "schema_id": "pm.settings_route_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.settings.open",
+          "route_id": "route-instance:settings/1",
+          "project_id": "project:demo",
+          "target": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "return_contract": {
+            "continuation_id": "continuation:settings/1",
+            "continuation_generation": 2,
+            "origin_surface": "settings",
+            "origin_route": "route:settings/all-settings",
+            "origin_focus_id": "focus:settings-search-input",
+            "origin_query": "provider",
+            "origin_scroll_anchor": "anchor:search/provider",
+            "close_behavior": "return_to_opener",
+            "escape_order": [
+              "close_transient",
+              "close_details",
+              "clear_query",
+              "return_to_opener"
+            ],
+            "exact_context": {
+              "project_id": "project:demo",
+              "server_id": "server:home",
+              "vault_id": "vault:demo",
+              "host_id": "host:local",
+              "environment_id": "environment:desktop",
+              "client_id": "client:one",
+              "provider_id": "provider:openai",
+              "provider_route_id": "provider-route:direct",
+              "thread_id": "thread:one",
+              "operation_id": "operation:setup/1",
+              "topology_generation": 9,
+              "expected_revision": 44
+            },
+            "expires_at_utc": "2026-08-31T12:30:00Z",
+            "stale_return_policy": "reject_and_keep_current_context",
+            "origin_search_result_id": "search-result:provider-openai"
+          },
+          "requested_at_utc": "2026-08-31T12:05:00Z"
+        },
+        "current_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:other",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "current_continuation": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "settings",
+          "origin_route": "route:settings/all-settings",
+          "origin_focus_id": "focus:settings-search-input",
+          "origin_query": "provider",
+          "origin_scroll_anchor": "anchor:search/provider",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context",
+          "origin_search_result_id": "search-result:provider-openai"
+        },
+        "route_availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "cmd.settings.open",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "route_outcome": "rejected",
+        "disabled_reason": "target_changed",
+        "return_result": {
+          "record_type": "settings_route_return",
+          "schema_id": "pm.settings_route_return.v1",
+          "schema_version": "1.0.0",
+          "route_id": "route-instance:settings/1",
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "outcome": "rejected_context_changed",
+          "restored_focus_id": null,
+          "restored_query": "",
+          "restored_scroll_anchor": null,
+          "disabled_reason": "target_changed",
+          "returned_at_utc": "2026-08-31T12:06:00Z",
+          "restored_search_result_id": null
+        },
+        "evaluated_at_utc": "2026-08-31T12:06:00Z",
+        "evidence_scope": "contract_fixture_only",
+        "native_runtime_executed": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "search-expired-rejects",
+      "schema_ref": "#/$defs/settings_search_route_exchange",
+      "record": {
+        "selected_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "current_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "route_request": {
+          "record_type": "settings_route_request",
+          "schema_id": "pm.settings_route_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.settings.open",
+          "route_id": "route-instance:settings/1",
+          "project_id": "project:demo",
+          "target": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "return_contract": {
+            "continuation_id": "continuation:settings/1",
+            "continuation_generation": 2,
+            "origin_surface": "settings",
+            "origin_route": "route:settings/all-settings",
+            "origin_focus_id": "focus:settings-search-input",
+            "origin_query": "provider",
+            "origin_scroll_anchor": "anchor:search/provider",
+            "close_behavior": "return_to_opener",
+            "escape_order": [
+              "close_transient",
+              "close_details",
+              "clear_query",
+              "return_to_opener"
+            ],
+            "exact_context": {
+              "project_id": "project:demo",
+              "server_id": "server:home",
+              "vault_id": "vault:demo",
+              "host_id": "host:local",
+              "environment_id": "environment:desktop",
+              "client_id": "client:one",
+              "provider_id": "provider:openai",
+              "provider_route_id": "provider-route:direct",
+              "thread_id": "thread:one",
+              "operation_id": "operation:setup/1",
+              "topology_generation": 9,
+              "expected_revision": 44
+            },
+            "expires_at_utc": "2026-08-31T12:30:00Z",
+            "stale_return_policy": "reject_and_keep_current_context",
+            "origin_search_result_id": "search-result:provider-openai"
+          },
+          "requested_at_utc": "2026-08-31T12:05:00Z"
+        },
+        "current_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "current_continuation": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "settings",
+          "origin_route": "route:settings/all-settings",
+          "origin_focus_id": "focus:settings-search-input",
+          "origin_query": "provider",
+          "origin_scroll_anchor": "anchor:search/provider",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context",
+          "origin_search_result_id": "search-result:provider-openai"
+        },
+        "route_availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "cmd.settings.open",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "route_outcome": "rejected",
+        "disabled_reason": "currentness_expired",
+        "return_result": {
+          "record_type": "settings_route_return",
+          "schema_id": "pm.settings_route_return.v1",
+          "schema_version": "1.0.0",
+          "route_id": "route-instance:settings/1",
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "outcome": "rejected_stale",
+          "restored_focus_id": null,
+          "restored_query": "",
+          "restored_scroll_anchor": null,
+          "disabled_reason": "currentness_expired",
+          "returned_at_utc": "2026-08-31T12:30:00Z",
+          "restored_search_result_id": null
+        },
+        "evaluated_at_utc": "2026-08-31T12:30:00Z",
+        "evidence_scope": "contract_fixture_only",
+        "native_runtime_executed": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "search-route-disabled-rejects",
+      "schema_ref": "#/$defs/settings_search_route_exchange",
+      "record": {
+        "selected_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "current_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "route_request": {
+          "record_type": "settings_route_request",
+          "schema_id": "pm.settings_route_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.settings.open",
+          "route_id": "route-instance:settings/1",
+          "project_id": "project:demo",
+          "target": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "return_contract": {
+            "continuation_id": "continuation:settings/1",
+            "continuation_generation": 2,
+            "origin_surface": "settings",
+            "origin_route": "route:settings/all-settings",
+            "origin_focus_id": "focus:settings-search-input",
+            "origin_query": "provider",
+            "origin_scroll_anchor": "anchor:search/provider",
+            "close_behavior": "return_to_opener",
+            "escape_order": [
+              "close_transient",
+              "close_details",
+              "clear_query",
+              "return_to_opener"
+            ],
+            "exact_context": {
+              "project_id": "project:demo",
+              "server_id": "server:home",
+              "vault_id": "vault:demo",
+              "host_id": "host:local",
+              "environment_id": "environment:desktop",
+              "client_id": "client:one",
+              "provider_id": "provider:openai",
+              "provider_route_id": "provider-route:direct",
+              "thread_id": "thread:one",
+              "operation_id": "operation:setup/1",
+              "topology_generation": 9,
+              "expected_revision": 44
+            },
+            "expires_at_utc": "2026-08-31T12:30:00Z",
+            "stale_return_policy": "reject_and_keep_current_context",
+            "origin_search_result_id": "search-result:provider-openai"
+          },
+          "requested_at_utc": "2026-08-31T12:05:00Z"
+        },
+        "current_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "current_continuation": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "settings",
+          "origin_route": "route:settings/all-settings",
+          "origin_focus_id": "focus:settings-search-input",
+          "origin_query": "provider",
+          "origin_scroll_anchor": "anchor:search/provider",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context",
+          "origin_search_result_id": "search-result:provider-openai"
+        },
+        "route_availability": {
+          "state": "disabled",
+          "reason_code": "handler_unavailable",
+          "human_reason": "Settings navigation handler is unavailable.",
+          "selector_ref": "cmd.settings.open",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "route_outcome": "rejected",
+        "disabled_reason": "handler_unavailable",
+        "return_result": {
+          "record_type": "settings_route_return",
+          "schema_id": "pm.settings_route_return.v1",
+          "schema_version": "1.0.0",
+          "route_id": "route-instance:settings/1",
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "outcome": "rejected_stale",
+          "restored_focus_id": null,
+          "restored_query": "",
+          "restored_scroll_anchor": null,
+          "disabled_reason": "handler_unavailable",
+          "returned_at_utc": "2026-08-31T12:06:00Z",
+          "restored_search_result_id": null
+        },
+        "evaluated_at_utc": "2026-08-31T12:06:00Z",
+        "evidence_scope": "contract_fixture_only",
+        "native_runtime_executed": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "search-unadmitted-owner-rejects",
+      "schema_ref": "#/$defs/settings_search_route_exchange",
+      "record": {
+        "selected_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "manager",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "not-admitted",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "current_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "manager",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "not-admitted",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "route_request": {
+          "record_type": "settings_route_request",
+          "schema_id": "pm.settings_route_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.settings.open",
+          "route_id": "route-instance:settings/1",
+          "project_id": "project:demo",
+          "target": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "not-admitted",
+            "detail_id": "provider:openai"
+          },
+          "return_contract": {
+            "continuation_id": "continuation:settings/1",
+            "continuation_generation": 2,
+            "origin_surface": "settings",
+            "origin_route": "route:settings/all-settings",
+            "origin_focus_id": "focus:settings-search-input",
+            "origin_query": "provider",
+            "origin_scroll_anchor": "anchor:search/provider",
+            "close_behavior": "return_to_opener",
+            "escape_order": [
+              "close_transient",
+              "close_details",
+              "clear_query",
+              "return_to_opener"
+            ],
+            "exact_context": {
+              "project_id": "project:demo",
+              "server_id": "server:home",
+              "vault_id": "vault:demo",
+              "host_id": "host:local",
+              "environment_id": "environment:desktop",
+              "client_id": "client:one",
+              "provider_id": "provider:openai",
+              "provider_route_id": "provider-route:direct",
+              "thread_id": "thread:one",
+              "operation_id": "operation:setup/1",
+              "topology_generation": 9,
+              "expected_revision": 44
+            },
+            "expires_at_utc": "2026-08-31T12:30:00Z",
+            "stale_return_policy": "reject_and_keep_current_context",
+            "origin_search_result_id": "search-result:provider-openai"
+          },
+          "requested_at_utc": "2026-08-31T12:05:00Z"
+        },
+        "current_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "current_continuation": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "settings",
+          "origin_route": "route:settings/all-settings",
+          "origin_focus_id": "focus:settings-search-input",
+          "origin_query": "provider",
+          "origin_scroll_anchor": "anchor:search/provider",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context",
+          "origin_search_result_id": "search-result:provider-openai"
+        },
+        "route_availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "cmd.settings.open",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "route_outcome": "rejected",
+        "disabled_reason": "owner_contract_missing",
+        "return_result": {
+          "record_type": "settings_route_return",
+          "schema_id": "pm.settings_route_return.v1",
+          "schema_version": "1.0.0",
+          "route_id": "route-instance:settings/1",
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "outcome": "rejected_stale",
+          "restored_focus_id": null,
+          "restored_query": "",
+          "restored_scroll_anchor": null,
+          "disabled_reason": "owner_contract_missing",
+          "returned_at_utc": "2026-08-31T12:06:00Z",
+          "restored_search_result_id": null
+        },
+        "evaluated_at_utc": "2026-08-31T12:06:00Z",
+        "evidence_scope": "contract_fixture_only",
+        "native_runtime_executed": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "search-cancelled-without-restoration",
+      "schema_ref": "#/$defs/settings_search_route_exchange",
+      "record": {
+        "selected_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "current_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "route_request": {
+          "record_type": "settings_route_request",
+          "schema_id": "pm.settings_route_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.settings.open",
+          "route_id": "route-instance:settings/1",
+          "project_id": "project:demo",
+          "target": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "return_contract": {
+            "continuation_id": "continuation:settings/1",
+            "continuation_generation": 2,
+            "origin_surface": "settings",
+            "origin_route": "route:settings/all-settings",
+            "origin_focus_id": "focus:settings-search-input",
+            "origin_query": "provider",
+            "origin_scroll_anchor": "anchor:search/provider",
+            "close_behavior": "return_to_opener",
+            "escape_order": [
+              "close_transient",
+              "close_details",
+              "clear_query",
+              "return_to_opener"
+            ],
+            "exact_context": {
+              "project_id": "project:demo",
+              "server_id": "server:home",
+              "vault_id": "vault:demo",
+              "host_id": "host:local",
+              "environment_id": "environment:desktop",
+              "client_id": "client:one",
+              "provider_id": "provider:openai",
+              "provider_route_id": "provider-route:direct",
+              "thread_id": "thread:one",
+              "operation_id": "operation:setup/1",
+              "topology_generation": 9,
+              "expected_revision": 44
+            },
+            "expires_at_utc": "2026-08-31T12:30:00Z",
+            "stale_return_policy": "reject_and_keep_current_context",
+            "origin_search_result_id": "search-result:provider-openai"
+          },
+          "requested_at_utc": "2026-08-31T12:05:00Z"
+        },
+        "current_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "current_continuation": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "settings",
+          "origin_route": "route:settings/all-settings",
+          "origin_focus_id": "focus:settings-search-input",
+          "origin_query": "provider",
+          "origin_scroll_anchor": "anchor:search/provider",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context",
+          "origin_search_result_id": "search-result:provider-openai"
+        },
+        "route_availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "cmd.settings.open",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "route_outcome": "admitted",
+        "disabled_reason": null,
+        "return_result": {
+          "record_type": "settings_route_return",
+          "schema_id": "pm.settings_route_return.v1",
+          "schema_version": "1.0.0",
+          "route_id": "route-instance:settings/1",
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "outcome": "cancelled",
+          "restored_focus_id": null,
+          "restored_query": "",
+          "restored_scroll_anchor": null,
+          "disabled_reason": null,
+          "returned_at_utc": "2026-08-31T12:06:00Z",
+          "restored_search_result_id": null
+        },
+        "evaluated_at_utc": "2026-08-31T12:06:00Z",
+        "evidence_scope": "contract_fixture_only",
+        "native_runtime_executed": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "search-result-identity-without-native-focus",
+      "schema_ref": "#/$defs/settings_search_route_exchange",
+      "record": {
+        "selected_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "current_result": {
+          "immutable_result_id": "search-result:provider-openai",
+          "human_label": "Provider",
+          "result_type": "managed_object",
+          "complete_settings_path": "AI Tools / Providers / OpenAI",
+          "destination": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "availability": null,
+          "object_qualifier": "OpenAI",
+          "provider_qualifier": "OpenAI"
+        },
+        "route_request": {
+          "record_type": "settings_route_request",
+          "schema_id": "pm.settings_route_request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.settings.open",
+          "route_id": "route-instance:settings/1",
+          "project_id": "project:demo",
+          "target": {
+            "target_type": "manager",
+            "setting_id": null,
+            "manager_id": "providers-accounts-models",
+            "detail_id": "provider:openai"
+          },
+          "return_contract": {
+            "continuation_id": "continuation:settings/1",
+            "continuation_generation": 2,
+            "origin_surface": "settings",
+            "origin_route": "route:settings/all-settings",
+            "origin_focus_id": null,
+            "origin_query": "provider",
+            "origin_scroll_anchor": "anchor:search/provider",
+            "close_behavior": "return_to_opener",
+            "escape_order": [
+              "close_transient",
+              "close_details",
+              "clear_query",
+              "return_to_opener"
+            ],
+            "exact_context": {
+              "project_id": "project:demo",
+              "server_id": "server:home",
+              "vault_id": "vault:demo",
+              "host_id": "host:local",
+              "environment_id": "environment:desktop",
+              "client_id": "client:one",
+              "provider_id": "provider:openai",
+              "provider_route_id": "provider-route:direct",
+              "thread_id": "thread:one",
+              "operation_id": "operation:setup/1",
+              "topology_generation": 9,
+              "expected_revision": 44
+            },
+            "expires_at_utc": "2026-08-31T12:30:00Z",
+            "stale_return_policy": "reject_and_keep_current_context",
+            "origin_search_result_id": "search-result:provider-openai"
+          },
+          "requested_at_utc": "2026-08-31T12:05:00Z"
+        },
+        "current_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "current_continuation": {
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "origin_surface": "settings",
+          "origin_route": "route:settings/all-settings",
+          "origin_focus_id": null,
+          "origin_query": "provider",
+          "origin_scroll_anchor": "anchor:search/provider",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:openai",
+            "provider_route_id": "provider-route:direct",
+            "thread_id": "thread:one",
+            "operation_id": "operation:setup/1",
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context",
+          "origin_search_result_id": "search-result:provider-openai"
+        },
+        "route_availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "cmd.settings.open",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "route_outcome": "admitted",
+        "disabled_reason": null,
+        "return_result": {
+          "record_type": "settings_route_return",
+          "schema_id": "pm.settings_route_return.v1",
+          "schema_version": "1.0.0",
+          "route_id": "route-instance:settings/1",
+          "continuation_id": "continuation:settings/1",
+          "continuation_generation": 2,
+          "outcome": "returned",
+          "restored_focus_id": null,
+          "restored_query": "provider",
+          "restored_scroll_anchor": "anchor:search/provider",
+          "disabled_reason": null,
+          "returned_at_utc": "2026-08-31T12:06:00Z",
+          "restored_search_result_id": "search-result:provider-openai"
+        },
+        "evaluated_at_utc": "2026-08-31T12:06:00Z",
+        "evidence_scope": "contract_fixture_only",
+        "native_runtime_executed": false,
+        "owner_operation_authorized": false
+      }
+    },
+    {
+      "case_id": "search-result-kind-manager",
+      "schema_ref": "#/$defs/settings_search_result",
+      "record": {
+        "immutable_result_id": "search-result:search-result-kind-manager",
+        "human_label": "Provider",
+        "result_type": "manager",
+        "complete_settings_path": "AI Tools / Providers / OpenAI",
+        "destination": {
+          "target_type": "manager",
+          "setting_id": null,
+          "manager_id": "providers-accounts-models",
+          "detail_id": "provider:openai"
+        },
+        "exact_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "availability": null,
+        "object_qualifier": "OpenAI",
+        "provider_qualifier": "OpenAI"
+      }
+    },
+    {
+      "case_id": "search-result-kind-action",
+      "schema_ref": "#/$defs/settings_search_result",
+      "record": {
+        "immutable_result_id": "search-result:search-result-kind-action",
+        "human_label": "Provider",
+        "result_type": "action",
+        "complete_settings_path": "AI Tools / Providers / OpenAI",
+        "destination": {
+          "target_type": "manager",
+          "setting_id": null,
+          "manager_id": "providers-accounts-models",
+          "detail_id": "provider:openai"
+        },
+        "exact_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "availability": null,
+        "object_qualifier": "OpenAI",
+        "provider_qualifier": "OpenAI"
+      }
+    },
+    {
+      "case_id": "search-result-kind-setup_or_repair_workflow",
+      "schema_ref": "#/$defs/settings_search_result",
+      "record": {
+        "immutable_result_id": "search-result:search-result-kind-setup_or_repair_workflow",
+        "human_label": "Provider",
+        "result_type": "setup_or_repair_workflow",
+        "complete_settings_path": "AI Tools / Providers / OpenAI",
+        "destination": {
+          "target_type": "manager",
+          "setting_id": null,
+          "manager_id": "providers-accounts-models",
+          "detail_id": "provider:openai"
+        },
+        "exact_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "availability": null,
+        "object_qualifier": "OpenAI",
+        "provider_qualifier": "OpenAI"
+      }
+    },
+    {
+      "case_id": "search-result-kind-diagnostic_or_read_only_status",
+      "schema_ref": "#/$defs/settings_search_result",
+      "record": {
+        "immutable_result_id": "search-result:search-result-kind-diagnostic_or_read_only_status",
+        "human_label": "Provider",
+        "result_type": "diagnostic_or_read_only_status",
+        "complete_settings_path": "AI Tools / Providers / OpenAI",
+        "destination": {
+          "target_type": "manager",
+          "setting_id": null,
+          "manager_id": "providers-accounts-models",
+          "detail_id": "provider:openai"
+        },
+        "exact_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "availability": null,
+        "object_qualifier": "OpenAI",
+        "provider_qualifier": "OpenAI"
+      }
+    },
+    {
+      "case_id": "search-result-kind-setting",
+      "schema_ref": "#/$defs/settings_search_result",
+      "record": {
+        "immutable_result_id": "search-result:search-result-kind-setting",
+        "human_label": "Theme",
+        "result_type": "setting",
+        "complete_settings_path": "Basics / Appearance / Visual / Theme",
+        "destination": {
+          "target_type": "setting",
+          "setting_id": "general.visual.theme",
+          "manager_id": null,
+          "detail_id": null
+        },
+        "exact_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "availability": null,
+        "object_qualifier": "OpenAI",
+        "provider_qualifier": "OpenAI"
+      }
+    },
+    {
+      "case_id": "search-result-kind-managed-object",
+      "schema_ref": "#/$defs/settings_search_result",
+      "record": {
+        "immutable_result_id": "search-result:search-result-kind-managed-object",
+        "human_label": "Provider",
+        "result_type": "managed_object",
+        "complete_settings_path": "AI Tools / Providers / OpenAI",
+        "destination": {
+          "target_type": "manager",
+          "setting_id": null,
+          "manager_id": "providers-accounts-models",
+          "detail_id": "provider:openai"
+        },
+        "exact_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "availability": null,
+        "object_qualifier": "OpenAI",
+        "provider_qualifier": "OpenAI"
+      }
+    },
+    {
+      "case_id": "search-result-kind-unavailable",
+      "schema_ref": "#/$defs/settings_search_result",
+      "record": {
+        "immutable_result_id": "search-result:search-result-kind-unavailable",
+        "human_label": "Provider",
+        "result_type": "unavailable_capability",
+        "complete_settings_path": "AI Tools / Providers / OpenAI",
+        "destination": {
+          "target_type": "manager",
+          "setting_id": null,
+          "manager_id": "providers-accounts-models",
+          "detail_id": "provider:openai"
+        },
+        "exact_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "availability": {
+          "state": "disabled",
+          "reason_code": "setup_required",
+          "human_reason": "Provider setup is required; the information destination remains available.",
+          "selector_ref": "provider:openai",
+          "evaluated_at_utc": "2026-08-31T12:06:00Z",
+          "projection_generation": 8
+        },
+        "object_qualifier": "OpenAI",
+        "provider_qualifier": "OpenAI"
+      }
+    },
+    {
+      "case_id": "search-result-kind-help",
+      "schema_ref": "#/$defs/settings_search_result",
+      "record": {
+        "immutable_result_id": "search-result:search-result-kind-help",
+        "human_label": "Help",
+        "result_type": "intentional_help_result",
+        "complete_settings_path": "System / Teacher and Help",
+        "destination": {
+          "target_type": "manager",
+          "setting_id": null,
+          "manager_id": "teacher-help",
+          "detail_id": null
+        },
+        "exact_context": {
+          "project_id": "project:demo",
+          "server_id": "server:home",
+          "vault_id": "vault:demo",
+          "host_id": "host:local",
+          "environment_id": "environment:desktop",
+          "client_id": "client:one",
+          "provider_id": "provider:openai",
+          "provider_route_id": "provider-route:direct",
+          "thread_id": "thread:one",
+          "operation_id": "operation:setup/1",
+          "topology_generation": 9,
+          "expected_revision": 44
+        },
+        "availability": null,
+        "object_qualifier": "OpenAI",
+        "provider_qualifier": "OpenAI"
+      }
     }
   ],
   "negative_cases": [
@@ -3442,6 +6881,365 @@
         "settings_applied": false
       },
       "expected_keyword": "type"
+    },
+    {
+      "case_id": "search-invalid-duplicate-label-target-swap",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "route_request.target.detail_id": "provider:anthropic"
+      },
+      "semantic_rule": "search_request_binding"
+    },
+    {
+      "case_id": "search-invalid-group-position-retarget",
+      "base_valid": "search-grouped-results",
+      "patch": {
+        "route_request.target.manager_id": "all-settings"
+      },
+      "semantic_rule": "search_request_binding"
+    },
+    {
+      "case_id": "search-invalid-focus-instead-of-result",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "route_request.return_contract.origin_search_result_id": "focus:settings-search-input",
+        "current_continuation.origin_search_result_id": "focus:settings-search-input",
+        "return_result.restored_search_result_id": "focus:settings-search-input"
+      },
+      "semantic_rule": "search_request_binding"
+    },
+    {
+      "case_id": "search-invalid-selection-missing",
+      "base_valid": "search-admitted-before-return",
+      "remove": [
+        "route_request.return_contract.origin_search_result_id",
+        "current_continuation.origin_search_result_id"
+      ],
+      "semantic_rule": "search_request_binding"
+    },
+    {
+      "case_id": "search-invalid-retarget-current-id",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "current_result.destination.detail_id": "provider:anthropic"
+      },
+      "semantic_rule": "search_currentness_admission"
+    },
+    {
+      "case_id": "search-invalid-nearby-result-after-delete",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "current_result.immutable_result_id": "search-result:nearby"
+      },
+      "semantic_rule": "search_currentness_admission"
+    },
+    {
+      "case_id": "search-invalid-deleted-current",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "current_result": null
+      },
+      "semantic_rule": "search_currentness_admission"
+    },
+    {
+      "case_id": "search-invalid-current-project_id",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "current_context.project_id": "project:other"
+      },
+      "semantic_rule": "search_currentness_admission"
+    },
+    {
+      "case_id": "search-invalid-current-host_id",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "current_context.host_id": "host:other"
+      },
+      "semantic_rule": "search_currentness_admission"
+    },
+    {
+      "case_id": "search-invalid-current-provider_id",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "current_context.provider_id": "provider:other"
+      },
+      "semantic_rule": "search_currentness_admission"
+    },
+    {
+      "case_id": "search-invalid-current-expected_revision",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "current_context.expected_revision": 45
+      },
+      "semantic_rule": "search_currentness_admission"
+    },
+    {
+      "case_id": "search-invalid-current-topology_generation",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "current_context.topology_generation": 10
+      },
+      "semantic_rule": "search_currentness_admission"
+    },
+    {
+      "case_id": "search-invalid-incomplete-provider-context",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "selected_result.exact_context.provider_id": null,
+        "current_result.exact_context.provider_id": null,
+        "route_request.return_contract.exact_context.provider_id": null,
+        "current_context.provider_id": null,
+        "current_continuation.exact_context.provider_id": null
+      },
+      "semantic_rule": "search_currentness_admission"
+    },
+    {
+      "case_id": "search-invalid-expired-currentness",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "evaluated_at_utc": "2026-08-31T12:30:00Z",
+        "return_result.returned_at_utc": "2026-08-31T12:30:00Z"
+      },
+      "semantic_rule": "search_currentness_admission"
+    },
+    {
+      "case_id": "search-invalid-stale-continuation",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "current_continuation.continuation_id": "continuation:other"
+      },
+      "semantic_rule": "search_currentness_admission"
+    },
+    {
+      "case_id": "search-invalid-stale-generation",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "current_continuation.continuation_generation": 3
+      },
+      "semantic_rule": "search_currentness_admission"
+    },
+    {
+      "case_id": "search-invalid-stale-query-context",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "current_continuation.origin_query": "different"
+      },
+      "semantic_rule": "search_currentness_admission"
+    },
+    {
+      "case_id": "search-invalid-command_not_registered",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "route_availability.state": "disabled",
+        "route_availability.reason_code": "command_not_registered",
+        "route_availability.human_reason": "Navigation is unavailable."
+      },
+      "semantic_rule": "search_currentness_admission"
+    },
+    {
+      "case_id": "search-invalid-handler_unavailable",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "route_availability.state": "disabled",
+        "route_availability.reason_code": "handler_unavailable",
+        "route_availability.human_reason": "Navigation is unavailable."
+      },
+      "semantic_rule": "search_currentness_admission"
+    },
+    {
+      "case_id": "search-invalid-unknown-owner-admitted",
+      "base_valid": "search-unadmitted-owner-rejects",
+      "patch": {
+        "route_outcome": "admitted",
+        "disabled_reason": null,
+        "return_result": null
+      },
+      "semantic_rule": "search_currentness_admission"
+    },
+    {
+      "case_id": "search-invalid-wrong-selected-return-same-focus",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "return_result.restored_search_result_id": "search-result:nearby"
+      },
+      "semantic_rule": "search_return_restoration"
+    },
+    {
+      "case_id": "search-invalid-wrong-return-query",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "return_result.restored_query": "different"
+      },
+      "semantic_rule": "search_return_restoration"
+    },
+    {
+      "case_id": "search-invalid-wrong-return-focus",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "return_result.restored_focus_id": "focus:other"
+      },
+      "semantic_rule": "search_return_restoration"
+    },
+    {
+      "case_id": "search-invalid-wrong-return-scroll",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "return_result.restored_scroll_anchor": "anchor:other"
+      },
+      "semantic_rule": "search_return_restoration"
+    },
+    {
+      "case_id": "search-invalid-deleted-fallback-selection",
+      "base_valid": "search-deleted-rejects-without-fallback",
+      "patch": {
+        "return_result.restored_search_result_id": "search-result:nearby"
+      },
+      "semantic_rule": "search_return_restoration"
+    },
+    {
+      "case_id": "search-invalid-return-route_id",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "return_result.route_id": "route-instance:other"
+      },
+      "semantic_rule": "search_return_correlation"
+    },
+    {
+      "case_id": "search-invalid-return-continuation_id",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "return_result.continuation_id": "continuation:other"
+      },
+      "semantic_rule": "search_return_correlation"
+    },
+    {
+      "case_id": "search-invalid-return-continuation_generation",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "return_result.continuation_generation": 3
+      },
+      "semantic_rule": "search_return_correlation"
+    },
+    {
+      "case_id": "search-invalid-future-observation",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "route_availability.evaluated_at_utc": "2026-08-31T12:07:00Z"
+      },
+      "semantic_rule": "search_observation_clock"
+    },
+    {
+      "case_id": "search-invalid-other-selector",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "route_availability.selector_ref": "cmd.settings.transaction.apply"
+      },
+      "semantic_rule": "search_observation_clock"
+    },
+    {
+      "case_id": "search-invalid-return-after-observation",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "return_result.returned_at_utc": "2026-08-31T12:31:00Z"
+      },
+      "semantic_rule": "search_observation_clock"
+    },
+    {
+      "case_id": "search-invalid-help-at-unrelated-manager",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "selected_result.result_type": "intentional_help_result",
+        "current_result.result_type": "intentional_help_result"
+      },
+      "semantic_rule": "search_result_kind"
+    },
+    {
+      "case_id": "search-invalid-available-unavailable-kind",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "selected_result.result_type": "unavailable_capability"
+      },
+      "semantic_rule": "search_result_kind"
+    },
+    {
+      "case_id": "search-invalid-missing-human-label",
+      "base_valid": "search-result-kind-manager",
+      "remove": [
+        "human_label"
+      ],
+      "expected_keyword": "structural"
+    },
+    {
+      "case_id": "search-invalid-invalid-result-kind",
+      "base_valid": "search-result-kind-manager",
+      "patch": {
+        "result_type": "visual_array_index"
+      },
+      "expected_keyword": "structural"
+    },
+    {
+      "case_id": "search-invalid-ambiguous-destination",
+      "base_valid": "search-result-kind-manager",
+      "patch": {
+        "destination.setting_id": "general.visual.theme"
+      },
+      "expected_keyword": "structural"
+    },
+    {
+      "case_id": "search-invalid-new-selection-not-string",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "return_result.restored_search_result_id": 3
+      },
+      "expected_keyword": "structural"
+    },
+    {
+      "case_id": "search-invalid-origin-selection-not-string",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "route_request.return_contract.origin_search_result_id": 3
+      },
+      "expected_keyword": "structural"
+    },
+    {
+      "case_id": "search-invalid-missing-result-path",
+      "base_valid": "search-result-kind-manager",
+      "remove": [
+        "complete_settings_path"
+      ],
+      "expected_keyword": "structural"
+    },
+    {
+      "case_id": "search-invalid-owner-dispatch-claimed",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "owner_operation_authorized": true
+      },
+      "expected_keyword": "structural"
+    },
+    {
+      "case_id": "search-invalid-command-payload-hidden-in-result",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "selected_result.command_id": "cmd.installation.install"
+      },
+      "expected_keyword": "structural"
+    },
+    {
+      "case_id": "search-invalid-positional-selector",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "selected_result.visual_array_index": 2
+      },
+      "expected_keyword": "structural"
+    },
+    {
+      "case_id": "search-invalid-native-work-claimed",
+      "base_valid": "search-manager-object",
+      "patch": {
+        "native_runtime_executed": true
+      },
+      "expected_keyword": "structural"
     }
   ]
 }

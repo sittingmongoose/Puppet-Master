@@ -184,6 +184,7 @@ codex_goal_transfer_kit/
 
 # Python cache
 !/tests/test_pm_settings_search_prose.py
+!/tests/test_pm_settings_search_contracts.py
 .pytest_cache/
 __pycache__/
 *.pyc

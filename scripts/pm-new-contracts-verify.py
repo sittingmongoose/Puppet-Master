@@ -30,6 +30,7 @@ from pm_full_thread_semantics import full_thread_semantic_failures
 from pm_restore_semantics import restore_semantic_failures
 from pm_browser_program_semantics import browser_program_semantic_failures
 from pm_onboarding_semantics import onboarding_semantic_failures, settings_draft_semantic_failures
+from pm_settings_search_semantics import settings_search_semantic_failures
 from pm_evidence_command_semantics import evidence_command_semantic_failures
 from pm_doctor_export_semantics import doctor_export_semantic_failures
 from pm_goal_handoff_semantics import goal_handoff_semantic_failures
@@ -1212,7 +1213,8 @@ def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any
     if schema_rel == "Plans/product_onboarding_contracts.schema.json":
         return onboarding_semantic_failures(definition_name, value)
     if schema_rel == "Plans/settings_system_contracts.schema.json":
-        return settings_draft_semantic_failures(definition_name, value)
+        return sorted(set(settings_draft_semantic_failures(definition_name, value)
+                          + settings_search_semantic_failures(definition_name, value)))
     if schema_rel == "Plans/section15_browser_program_contracts.schema.json":
         # The explicit non-runtime validation input binds actual serialized result
         # bytes to a producing program/schema/context. A standalone result fails
