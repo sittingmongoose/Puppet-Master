@@ -245,6 +245,11 @@ def admission_record_problems(record, family) -> list:
     failing = [f for f in EVIDENCE_FIELDS if not isinstance(cells.get(f), dict) or cells[f].get("status") != "PASS"]
     if failing:
         problems.append("depth_incomplete:" + ",".join(failing))
+    uncited = [f for f in EVIDENCE_FIELDS if f not in failing and not any(
+        isinstance(e, dict) and str(e.get("path", "")).startswith("Plans/")
+        for e in (cells[f].get("evidence") if isinstance(cells[f].get("evidence"), list) else []))]
+    if uncited:
+        problems.append("depth_pass_without_plans_evidence:" + ",".join(uncited))
     return problems
 
 

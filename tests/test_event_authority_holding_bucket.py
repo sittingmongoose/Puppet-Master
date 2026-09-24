@@ -287,7 +287,8 @@ class PostAugustAdmissionTests(unittest.TestCase):
         self.assessment_rel = 'reports/fixture-depth-assessment.json'
         self.assessment = {'rows': [{'event_type': et, 'family_id': self.families[et]['family_id'],
                                      'family_revision': self.families[et]['family_revision'],
-                                     'cells': {c: {'status': 'PASS'} for c in self.v.EVIDENCE_FIELDS}}
+                                     'cells': {c: {'status': 'PASS', 'evidence': [{'path': 'Plans/fixture.md'}]}
+                                               for c in self.v.EVIDENCE_FIELDS}}
                                     for et in self.POST]}
         self.record_dir = self.root / self.v.POST_AUGUST_RECORD_DIR
         self.record_dir.mkdir(parents=True, exist_ok=True)
@@ -337,7 +338,7 @@ class PostAugustAdmissionTests(unittest.TestCase):
     def test_any_depth_criterion_not_passing_fails_closed(self):
         for status in ['PARTIAL', 'ABSENT', 'CONFLICT', None]:
             with self.subTest(status=status):
-                self.assessment['rows'][0]['cells']['producer'] = {'status': status}
+                self.assessment['rows'][0]['cells']['producer'] = {'status': status, 'evidence': [{'path': 'Plans/fixture.md'}]}
                 self.write_assessment()
                 for et in self.POST:
                     self.write_record(self.record_for(et))
@@ -451,6 +452,16 @@ class PostAugustAdmissionTests(unittest.TestCase):
                 admitted, issues, _ = self.check()
                 self.assertNotIn(self.POST[2], admitted)
                 self.assertIn(self.POST[2] + ': depth_assessment.family_revision', issues)
+
+    def test_a_pass_without_plans_evidence_fails_closed(self):
+        for evidence in [None, [], [{'path': 'reports/x.md'}], 'Plans/x.md']:
+            with self.subTest(evidence=evidence):
+                self.setUp()
+                self.assessment['rows'][0]['cells']['retention'] = {'status': 'PASS', 'evidence': evidence}
+                self.rewrite_records()
+                admitted, issues, _ = self.check()
+                self.assertNotIn(self.POST[0], admitted)
+                self.assertIn(self.POST[0] + ': depth_pass_without_plans_evidence:retention', issues)
 
     def test_decision_entry_must_name_the_family(self):
         et = self.POST[1]
